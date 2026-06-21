@@ -183,7 +183,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
           <h1>{title}</h1>
           <p>
             {isSignUp
-              ? "One account keeps every generated course and learning app cleanly separated."
+              ? "One account keeps every generated course and learning workspace cleanly separated."
               : "Continue learning with your saved Library, chat history, and AI settings."}
           </p>
         </div>

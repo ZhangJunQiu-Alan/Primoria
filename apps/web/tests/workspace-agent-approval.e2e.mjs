@@ -111,7 +111,6 @@ async function main() {
         capabilities: [
           { kind: "skill", source: "system", path: "/skills/project-breakdown", enabled: true },
           { kind: "internal_tool", toolName: "create_workspace_task", approval: "always", enabled: true },
-          { kind: "internal_tool", toolName: "share_learning_app", approval: "always", enabled: true },
           { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
         ],
       }),
@@ -155,16 +154,14 @@ async function main() {
           { type: "status", label: "started", payload: { test: true }, createdAt: now },
           {
             type: "approval_request",
-            label: "share_learning_app",
+            label: "save_learning_artifact",
             payload: {
               input: {
-                appId: `approval_app_${RUN_ID}`,
-                version: 1,
-                title: `Approved Visual ${RUN_ID}`,
-                description: "Approved app from e2e.",
-                primaryAction: "Open app",
+                title: `Approved Artifact ${RUN_ID}`,
+                description: "Approved learning artifact from e2e.",
+                groups: ["Artifact"],
               },
-              policy: { visibleLabel: "Share app", risk: "write" },
+              policy: { visibleLabel: "Save artifact", risk: "write" },
             },
             createdAt: now + 1,
           },
@@ -175,21 +172,21 @@ async function main() {
           threadId,
           senderName: member.displayName,
           senderKind: "agent",
-          content: `${AGENT_NAME} is waiting for approval before sharing an app.`,
+          content: `${AGENT_NAME} is waiting for approval before saving an artifact.`,
           createdAt: now + 3,
         },
       }),
     }, ownerCookie);
-    const pendingApproval = approvalView.agentApprovals.find((approval) => approval.toolName === "share_learning_app" && approval.status === "pending");
-    assert(pendingApproval, "seeded workspace exposes pending app approval");
+    const pendingApproval = approvalView.agentApprovals.find((approval) => approval.toolName === "save_learning_artifact" && approval.status === "pending");
+    assert(pendingApproval, "seeded workspace exposes pending artifact approval");
 
     const approved = await requestJson(`/api/workspaces/${workspaceId}/agent-approvals/${pendingApproval.id}`, {
       method: "PATCH",
       body: JSON.stringify({ decision: "approved" }),
     }, ownerCookie);
-    assert(approved.run.status === "completed", "approval API completes waiting app run");
-    assert(approved.message?.artifact?.type === "app", "approval API creates app artifact message");
-    assert(approved.agentRunEvents?.some((event) => event.type === "artifact" && event.label === "share_learning_app"), "approval API records artifact event");
+    assert(approved.run.status === "completed", "approval API completes waiting artifact run");
+    assert(approved.message?.artifact?.type === "task", "approval API creates learning artifact message");
+    assert(approved.agentRunEvents?.some((event) => event.type === "artifact" && event.label === "save_learning_artifact"), "approval API records artifact event");
 
     const retrySeed = await requestJson(`/api/workspaces/${workspaceId}/test-seed-agent-run`, {
       method: "POST",
@@ -227,9 +224,9 @@ async function main() {
     const page = await browser.newPage({ viewport: { width: 1360, height: 860 } });
     await openWorkspaceThread(page, ownerCookieValue, WORKSPACE_NAME, ROOM_NAME);
 
-    const appMessage = page.locator(".workspace-message.agent", { hasText: `Approved Visual ${RUN_ID}` }).last();
-    await appMessage.waitFor();
-    await appMessage.locator(".workspace-app-card", { hasText: `Approved Visual ${RUN_ID}` }).waitFor();
+    const artifactMessage = page.locator(".workspace-message.agent", { hasText: `Approved Artifact ${RUN_ID}` }).last();
+    await artifactMessage.waitFor();
+    await artifactMessage.locator(".workspace-assignment-card", { hasText: `Approved Artifact ${RUN_ID}` }).waitFor();
 
     const failedMessage = page.locator(".workspace-message.agent", { hasText: "seeded retry failure" }).last();
     await failedMessage.waitFor();
@@ -243,7 +240,7 @@ async function main() {
     const finalView = await requestJson(`/api/workspaces/${workspaceId}`, undefined, ownerCookie);
     assert(finalView.agentRuns.some((run) => run.id !== failedRun.id && run.inputMessageId === sourceMessage.id && run.status === "completed"), "retry creates a new completed run from original input");
     assert(finalView.agentRunEvents.some((event) => event.label === "retried"), "retry persists source-run audit event");
-    assert(finalView.messages.some((message) => message.artifact?.type === "app" && message.artifact.title === `Approved Visual ${RUN_ID}`), "final view includes approved app artifact");
+    assert(finalView.messages.some((message) => message.artifact?.type === "task" && message.artifact.title === `Approved Artifact ${RUN_ID}`), "final view includes approved learning artifact");
 
     log("ALL CHECKS PASSED");
   } catch (error) {

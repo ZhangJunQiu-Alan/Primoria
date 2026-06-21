@@ -152,7 +152,6 @@ async function main() {
         capabilities: [
           { kind: "skill", source: "system", path: "/skills/project-breakdown", enabled: true },
           { kind: "internal_tool", toolName: "create_workspace_task", approval: "always", enabled: true },
-          { kind: "internal_tool", toolName: "share_learning_app", approval: "always", enabled: true },
           { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
         ],
       }),

@@ -403,8 +403,7 @@ async function main() {
   assert(source.includes("function formatTaskAssigneeOption"), "task assignee labels can identify people and agents explicitly");
   assert(source.includes("Agent collaborator"), "task assignee picker exposes agents as task collaborators");
   assert(source.includes("Person collaborator"), "task assignee picker exposes people as task collaborators");
-  assert(source.includes("Can share learning apps"), "agent builder can toggle learning app sharing tool");
-  assert(source.includes("share_learning_app"), "agent capability payload can include approved app sharing tool");
+
   assert(source.includes("Can save reviewable memories"), "agent builder can toggle reviewable memory tool");
   assert(source.includes("save_agent_memory"), "agent capability payload can include the guarded memory tool");
   assert(workspaceStore.includes("function isAutomaticAgentRunMemoryScope"), "workspace store names the automatic run-memory scope boundary");
@@ -419,8 +418,6 @@ async function main() {
   assert(source.includes("create_quiz"), "agent capability payload can include quiz generation tool");
   assert(source.includes("Can generate course drafts"), "agent builder can toggle course generation tool");
   assert(source.includes("generate_course"), "agent capability payload can include approved course generation tool");
-  assert(source.includes("Can render interactive widgets"), "agent builder can toggle interactive widget rendering tool");
-  assert(source.includes("render_interactive_widget"), "agent capability payload can include approved widget rendering tool");
   assert(source.includes("Can save learning artifacts"), "agent builder can toggle artifact saving tool");
   assert(source.includes("save_learning_artifact"), "agent capability payload can include approved artifact saving tool");
   assert(source.includes("agentCanCreateQuiz"), "new custom agent form tracks quiz action capability");
@@ -429,8 +426,6 @@ async function main() {
   assert(source.includes("agentEditCanSearchMessages"), "agent editor tracks search action capability");
   assert(source.includes("agentCanUpdateTasks"), "new custom agent form tracks task update action capability");
   assert(source.includes("agentEditCanUpdateTasks"), "agent editor tracks task update action capability");
-  assert(source.includes("agentCanShareApps"), "new custom agent form tracks app sharing action capability");
-  assert(source.includes("agentEditCanShareApps"), "agent editor tracks app sharing action capability");
   assert(source.includes("agentCanSaveMemory"), "new custom agent form tracks memory-write capability separately from memory scope");
   assert(source.includes("agentEditCanSaveMemory"), "agent editor tracks memory-write capability separately from memory scope");
   assert(agentsRoute.includes("profileId: z.string"), "agent API accepts existing profile ids for saved-agent add flow");

@@ -1,4 +1,3 @@
-import type { LearningAppTemplate } from "@/lib/capability-library/types";
 import type { AgentEvent, AgentSignal } from "@primoria/contracts/agent";
 
 export type WorkspaceThreadType = "room" | "direct";
@@ -102,23 +101,12 @@ export type WorkspaceThread = {
   updatedAt: number;
 };
 
-export type WorkspaceMessageArtifact =
-  | {
-      type: "app";
-      appId?: string;
-      version?: number;
-      template?: LearningAppTemplate;
-      title: string;
-      description: string;
-      primaryAction: string;
-      secondaryAction?: string;
-    }
-  | {
-      type: "task";
-      title: string;
-      description: string;
-      groups: string[];
-    };
+export type WorkspaceMessageArtifact = {
+  type: "task";
+  title: string;
+  description: string;
+  groups: string[];
+};
 
 export type WorkspaceMessage = {
   id: string;
@@ -131,7 +119,7 @@ export type WorkspaceMessage = {
   createdAt: number;
 };
 
-export type WorkspaceArtifactKind = "app" | "task_result" | "course" | "saved_artifact";
+export type WorkspaceArtifactKind = "task_result" | "course" | "saved_artifact";
 export type WorkspaceArtifactReviewStatus = "needs_review" | "reviewed";
 
 export type WorkspaceArtifact = {

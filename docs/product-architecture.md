@@ -323,7 +323,6 @@ The platform is not static infrastructure. It learns from aggregate feedback:
 | Routing strategy | Aggregate which agent wins in which context | Better matchmaking over time |
 | Teaching method effectiveness | "learner-type × concept × method → success rate" | Evidence base for pedagogy |
 | Course template evolution | Which block combinations/orderings → good outcomes | New courses use winning patterns |
-| App recommendation model | Which capability-library apps get reused in which contexts | Recommend to similar users |
 | Agent quality standards | What capability/persona/knowledge → high adoption rate | Advise agent creators |
 
 ---

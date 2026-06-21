@@ -52,7 +52,7 @@ ANTHROPIC_MODEL=your-model
 
 ### Supabase cloud database and accounts
 
-Primoria currently uses Postgres for account creation, user sessions, CopilotKit chat history, provider settings, generated courses, learning apps, and workspace collaboration state. For team collaboration, use a shared Supabase cloud Postgres database.
+Primoria currently uses Postgres for account creation, user sessions, CopilotKit chat history, provider settings, generated courses, and workspace collaboration state. For team collaboration, use a shared Supabase cloud Postgres database.
 
 ```bash
 DATABASE_URL="postgresql://postgres.[project-ref]:[db-password]@[pooler-host].pooler.supabase.com:5432/postgres"
@@ -181,8 +181,7 @@ Current roadmap issues live in GitHub Issues. Major planned areas include:
 - 3D interactive UI
 - Long-term memory / mem0-style integration
 - Account creation and identity
-- Personalized mini learning applications
-- Workspace communication for teachers, students, homework, and shared apps
+- Workspace communication for teachers, students, and homework
 
 ## Contribution workflow
 
@@ -197,9 +196,8 @@ Please do not push directly to `main` for issue work.
 
 ## Local data files
 
-During local development, generated courses and apps may be stored in workspace-level JSON files such as:
+During local development, generated courses may be stored in workspace-level JSON files such as:
 
 - `.primoria-courses.json`
-- `.primoria-capability-library.json`
 
 Treat these as local development artifacts unless intentionally adding fixtures.

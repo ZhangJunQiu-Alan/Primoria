@@ -42,9 +42,7 @@ async function main() {
       { id: "cap_summary", profileId: "agent_profile_tools", kind: "internal_tool", toolName: "summarize_thread", approval: "never", enabled: true },
       { id: "cap_task", profileId: "agent_profile_tools", kind: "internal_tool", toolName: "create_workspace_task", approval: "on_risk", enabled: true },
       { id: "cap_update_task", profileId: "agent_profile_tools", kind: "internal_tool", toolName: "update_workspace_task", approval: "on_risk", enabled: true },
-      { id: "cap_share_app", profileId: "agent_profile_tools", kind: "internal_tool", toolName: "share_learning_app", approval: "on_risk", enabled: true },
       { id: "cap_save_artifact", profileId: "agent_profile_tools", kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-      { id: "cap_widget", profileId: "agent_profile_tools", kind: "internal_tool", toolName: "render_interactive_widget", approval: "always", enabled: true },
       { id: "cap_quiz", profileId: "agent_profile_tools", kind: "internal_tool", toolName: "create_quiz", approval: "never", enabled: true },
       { id: "cap_course", profileId: "agent_profile_tools", kind: "internal_tool", toolName: "generate_course", approval: "always", enabled: true },
       { id: "cap_memory", profileId: "agent_profile_tools", kind: "internal_tool", toolName: "save_agent_memory", approval: "always", enabled: true },
@@ -126,7 +124,6 @@ async function main() {
   const manifestRegistry = createWorkspaceInternalToolRegistry();
   const rendererRegistry = createWorkspaceToolRendererRegistry();
   const taskManifest = manifestRegistry.get("create_workspace_task");
-  const widgetManifest = manifestRegistry.get("render_interactive_widget");
   assert(manifests.length === Object.keys(WORKSPACE_INTERNAL_TOOL_POLICIES).length, "Agent OS manifest list covers every internal workspace tool policy");
   assert(taskManifest?.source === "internal", "internal tool manifest records internal source");
   assert(taskManifest?.risk === "write" && taskManifest.approval === "on_risk", "internal tool manifest preserves risk and approval");
@@ -135,7 +132,6 @@ async function main() {
   assert(taskManifest?.execution?.available === true, "internal tool manifest records execution availability");
   assert(taskManifest?.inspector?.label === "Create task", "internal tool manifest exposes inspector metadata");
   assert(taskManifest?.render?.renderer === "workspace-task-card", "internal tool manifest exposes renderer metadata");
-  assert(widgetManifest?.render?.streamingRenderer === "workspace-widget-stream", "streaming renderer metadata is available for widgets");
   assert(rendererRegistry.findForTool("create_workspace_task")?.key === "workspace-task-card", "renderer registry can look up a tool renderer");
   assert(rendererRegistry.findForArtifact("course")?.key === "workspace-course-card", "renderer registry can look up an artifact renderer");
 
@@ -176,9 +172,7 @@ async function main() {
   const summarize = specs.find((spec) => spec.name === "summarize_thread");
   const createTask = specs.find((spec) => spec.name === "create_workspace_task");
   const updateTask = specs.find((spec) => spec.name === "update_workspace_task");
-  const shareApp = specs.find((spec) => spec.name === "share_learning_app");
   const saveArtifact = specs.find((spec) => spec.name === "save_learning_artifact");
-  const renderWidget = specs.find((spec) => spec.name === "render_interactive_widget");
   const createQuiz = specs.find((spec) => spec.name === "create_quiz");
   const generateCourse = specs.find((spec) => spec.name === "generate_course");
   const saveMemory = specs.find((spec) => spec.name === "save_agent_memory");
@@ -186,18 +180,14 @@ async function main() {
   assert(summarize?.invoke, "summarize tool exposes a guarded invoker");
   assert(createTask, "risky task tool is exposed by capability");
   assert(updateTask?.invoke, "update task tool exposes a guarded invoker");
-  assert(shareApp?.invoke, "share app tool exposes a guarded invoker");
   assert(saveArtifact?.invoke, "save artifact tool exposes a guarded invoker");
-  assert(renderWidget?.invoke, "render widget tool exposes a guarded invoker");
   assert(createQuiz?.invoke, "create quiz tool exposes a guarded invoker");
   assert(generateCourse?.invoke, "generate course tool exposes a guarded invoker");
   assert(saveMemory?.invoke, "save agent memory tool exposes a guarded invoker");
   assert(!requiresWorkspaceToolApproval(search.policy), "read-only search does not require approval");
   assert(requiresWorkspaceToolApproval(createTask.policy), "write task tool requires approval");
   assert(requiresWorkspaceToolApproval(updateTask.policy), "update task tool requires approval");
-  assert(requiresWorkspaceToolApproval(shareApp.policy), "share app tool requires approval");
   assert(requiresWorkspaceToolApproval(saveArtifact.policy), "save artifact tool requires approval");
-  assert(requiresWorkspaceToolApproval(renderWidget.policy), "render widget tool requires approval");
   assert(!requiresWorkspaceToolApproval(createQuiz.policy), "create quiz is a low-risk learning artifact and does not require approval");
   assert(requiresWorkspaceToolApproval(generateCourse.policy), "generate course is costly and requires approval");
   assert(requiresWorkspaceToolApproval(saveMemory.policy), "save agent memory requires explicit approval");
@@ -280,38 +270,6 @@ async function main() {
   const updateDenied = await updateTask.invoke({ taskId: openTask.id, status: "done" }).catch((error) => error);
   assert(updateDenied instanceof WorkspaceToolApprovalRequiredError, "guarded update task raises approval interrupt before writing");
   assert(updateDenied.policy.toolName === "update_workspace_task", "update approval error carries tool policy");
-
-  const shareDenied = await shareApp.invoke({ title: "Derivative Visualizer", description: "Interactive derivative intuition app", appId: "app_derivative" }).catch((error) => error);
-  assert(shareDenied instanceof WorkspaceToolApprovalRequiredError, "guarded share app raises approval interrupt before writing");
-  assert(shareDenied.policy.toolName === "share_learning_app", "share app approval error carries tool policy");
-
-  const sharedAppResult = await executeWorkspaceInternalTool(profile, context, {
-    toolName: "share_learning_app",
-    input: { title: "Derivative Visualizer", description: "Interactive derivative intuition app", appId: "app_derivative" },
-    approval: "approved",
-  });
-  const sharedAppPayload = JSON.parse(sharedAppResult);
-  assert(sharedAppPayload.tool === "share_learning_app", "approved share app returns a structured app payload");
-  assert(sharedAppPayload.summary.includes("Derivative Visualizer"), "approved share app returns a user-visible summary");
-  assert(sharedAppPayload.appIds.includes("app_derivative"), "approved share app exposes linked app ids");
-  assert(Array.isArray(sharedAppPayload.artifactIds) && sharedAppPayload.artifactIds.length === 0, "approved share app declares artifact ids as empty before persistence");
-  assert(sharedAppPayload.artifact.type === "app", "approved share app payload describes an app artifact");
-  assert(sharedAppPayload.artifact.appId === "app_derivative", "approved share app preserves app id");
-
-  const widgetDenied = await renderWidget.invoke({ title: "Derivative Widget", html: "<section>widget</section>" }).catch((error) => error);
-  assert(widgetDenied instanceof WorkspaceToolApprovalRequiredError, "guarded render widget raises approval interrupt before rendering");
-  assert(widgetDenied.policy.toolName === "render_interactive_widget", "render widget approval error carries tool policy");
-  const widgetResult = await executeWorkspaceInternalTool(profile, context, {
-    toolName: "render_interactive_widget",
-    input: { title: "Derivative Widget", description: "Slope visual", html: "<section>widget</section>" },
-    approval: "approved",
-  });
-  const widgetPayload = JSON.parse(widgetResult);
-  assert(widgetPayload.tool === "render_interactive_widget", "approved render widget returns a structured widget payload");
-  assert(widgetPayload.summary.includes("Derivative Widget"), "approved render widget returns a user-visible summary");
-  assert(Array.isArray(widgetPayload.artifactIds) && widgetPayload.artifactIds.length === 0, "approved render widget declares artifact ids as empty before persistence");
-  assert(widgetPayload.artifact.type === "app", "approved render widget payload describes an app artifact");
-  assert(widgetPayload.artifact.template.type === "html", "approved render widget keeps html template");
 
   const artifactDenied = await saveArtifact.invoke({ title: "Derivative hints", description: "Reusable hint ladder" }).catch((error) => error);
   assert(artifactDenied instanceof WorkspaceToolApprovalRequiredError, "guarded save artifact raises approval interrupt before writing");

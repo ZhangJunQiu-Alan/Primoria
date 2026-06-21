@@ -10,7 +10,6 @@ import {
   createWorkspaceAgentRunId,
   isTerminalAgentRunStatus,
   readObject,
-  readOptionalNumber,
   readOptionalString,
   readStringArray,
 } from "./agent-run-helpers";
@@ -2952,8 +2951,6 @@ async function buildApprovedWorkspaceAgentToolExecution(
   if (
     approval.toolName !== "create_workspace_task" &&
     approval.toolName !== "update_workspace_task" &&
-    approval.toolName !== "share_learning_app" &&
-    approval.toolName !== "render_interactive_widget" &&
     approval.toolName !== "generate_course" &&
     approval.toolName !== "save_learning_artifact" &&
     approval.toolName !== "save_agent_memory"
@@ -2969,8 +2966,6 @@ async function buildApprovedWorkspaceAgentToolExecution(
   }
 
   if (
-    approval.toolName === "share_learning_app" ||
-    approval.toolName === "render_interactive_widget" ||
     approval.toolName === "generate_course" ||
     approval.toolName === "save_learning_artifact"
   ) {
@@ -3246,54 +3241,27 @@ function buildApprovedWorkspaceAgentArtifactExecution(
   const input = readObject(approval.input);
   const title =
     readOptionalString(input.title) ||
-    (approval.toolName === "share_learning_app"
-      ? "Shared learning app"
-      : approval.toolName === "render_interactive_widget"
-        ? "Interactive widget"
-        : approval.toolName === "generate_course"
-          ? "Generated course"
-          : "Saved learning artifact");
+    (approval.toolName === "generate_course" ? "Generated course" : "Saved learning artifact");
   const description =
     readOptionalString(input.description) ||
     readOptionalString(input.summary) ||
     (approval.toolName === "generate_course" ? describeGeneratedCourse(input) : "Shared by the agent after approval.");
-  const artifactPayload: WorkspaceMessageArtifact =
-    approval.toolName === "share_learning_app" || approval.toolName === "render_interactive_widget"
-      ? {
-          type: "app",
-          appId: readOptionalString(input.appId),
-          version: readOptionalNumber(input.version),
-          template:
-            approval.toolName === "render_interactive_widget"
-              ? buildInteractiveWidgetTemplate(input, title, description)
-              : readLearningAppTemplate(input.template),
-          title,
-          description,
-          primaryAction: readOptionalString(input.primaryAction) || (approval.toolName === "render_interactive_widget" ? "Open widget" : "Open app"),
-          secondaryAction: readOptionalString(input.secondaryAction),
-        }
-      : {
-          type: "task",
-          title,
-          description,
-          groups: readStringArray(input.groups, approval.toolName === "generate_course" ? ["Course", "Plan"] : ["Artifact"]),
-        };
+  const artifactPayload: WorkspaceMessageArtifact = {
+    type: "task",
+    title,
+    description,
+    groups: readStringArray(input.groups, approval.toolName === "generate_course" ? ["Course", "Plan"] : ["Artifact"]),
+  };
   const kind: WorkspaceArtifactKind | undefined =
     approval.toolName === "generate_course"
       ? "course"
       : approval.toolName === "save_learning_artifact"
         ? "saved_artifact"
-        : approval.toolName === "share_learning_app" || approval.toolName === "render_interactive_widget"
-          ? "app"
-          : undefined;
+        : undefined;
   const messageContent =
-    approval.toolName === "share_learning_app"
-      ? `Shared app "${title}" after approval.`
-      : approval.toolName === "render_interactive_widget"
-        ? `Rendered widget "${title}" after approval.`
-        : approval.toolName === "generate_course"
-          ? `Generated course "${title}" after approval.`
-          : `Saved artifact "${title}" after approval.`;
+    approval.toolName === "generate_course"
+      ? `Generated course "${title}" after approval.`
+      : `Saved artifact "${title}" after approval.`;
   const bundle = buildWorkspaceArtifactMessageBundle({
     workspaceId: run.workspaceId,
     threadId: run.threadId,
@@ -3348,29 +3316,6 @@ function describeGeneratedCourse(input: Record<string, unknown>) {
     assessments.length ? `${assessments.length} assessment checkpoint${assessments.length === 1 ? "" : "s"}.` : undefined,
   ].filter(Boolean);
   return pieces.join(" ") || "Generated course draft.";
-}
-
-function readLearningAppTemplate(value: unknown): Extract<WorkspaceMessageArtifact, { type: "app" }>["template"] | undefined {
-  const template = readObject(value);
-  const type = readOptionalString(template.type);
-  if (type === "html") {
-    const source = readOptionalString(template.source);
-    return source ? { type: "html", source } : undefined;
-  }
-  if (type === "generator") {
-    const prompt = readOptionalString(template.prompt);
-    return prompt ? { type: "generator", prompt } : undefined;
-  }
-  return undefined;
-}
-
-function buildInteractiveWidgetTemplate(input: Record<string, unknown>, title: string, description: string): Extract<WorkspaceMessageArtifact, { type: "app" }>["template"] {
-  const explicitTemplate = readLearningAppTemplate(input.template);
-  if (explicitTemplate) return explicitTemplate;
-  const html = readOptionalString(input.html) || readOptionalString(input.source);
-  if (html) return { type: "html", source: html };
-  const prompt = readOptionalString(input.prompt) || `Create an interactive learning widget titled "${title}". ${description}`;
-  return { type: "generator", prompt };
 }
 
 function buildApprovedToolEvents(

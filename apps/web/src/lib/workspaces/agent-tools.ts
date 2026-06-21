@@ -93,14 +93,6 @@ export const WORKSPACE_INTERNAL_TOOL_POLICIES = {
     visibleLabel: "Update task",
     description: "Update a task in the current workspace.",
   },
-  share_learning_app: {
-    toolName: "share_learning_app",
-    risk: "write",
-    approval: "on_risk",
-    scopes: ["workspace:read", "apps:share"],
-    visibleLabel: "Share app",
-    description: "Share a learning app card into the current chat.",
-  },
   generate_course: {
     toolName: "generate_course",
     risk: "costly",
@@ -108,14 +100,6 @@ export const WORKSPACE_INTERNAL_TOOL_POLICIES = {
     scopes: ["courses:write"],
     visibleLabel: "Generate course",
     description: "Generate a structured course draft.",
-  },
-  render_interactive_widget: {
-    toolName: "render_interactive_widget",
-    risk: "costly",
-    approval: "on_risk",
-    scopes: ["apps:write"],
-    visibleLabel: "Render widget",
-    description: "Render an interactive learning widget.",
   },
   create_quiz: {
     toolName: "create_quiz",
@@ -152,9 +136,7 @@ export const WORKSPACE_INTERNAL_TOOL_EXECUTORS = {
   summarize_thread: (context, input) => summarizeWorkspaceThread(context, input),
   create_workspace_task: (context, input) => buildWorkspaceTaskToolPayload(context, input, "create_workspace_task"),
   update_workspace_task: (context, input) => buildWorkspaceTaskToolPayload(context, input, "update_workspace_task"),
-  share_learning_app: (context, input) => buildWorkspaceAppArtifactPayload(context, input, "share_learning_app"),
   generate_course: (context, input) => generateWorkspaceCourseDraft(context, input),
-  render_interactive_widget: (context, input) => buildWorkspaceAppArtifactPayload(context, input, "render_interactive_widget"),
   create_quiz: (context, input) => createWorkspaceQuiz(context, input),
   save_learning_artifact: (context, input) => buildWorkspaceSavedArtifactPayload(context, input),
   save_agent_memory: (context, input) => buildWorkspaceAgentMemoryPayload(context, input),
@@ -557,45 +539,6 @@ function generateWorkspaceCourseDraft(context: WorkspaceInternalToolExecutionCon
   );
 }
 
-function buildWorkspaceAppArtifactPayload(
-  context: WorkspaceInternalToolExecutionContext,
-  input: unknown,
-  toolName: "share_learning_app" | "render_interactive_widget",
-) {
-  const record = toRecord(input);
-  const title = readString(record.title) || (toolName === "render_interactive_widget" ? "Interactive widget" : "Shared learning app");
-  const description = readString(record.description) || readString(record.summary) || `Created by ${context.member.displayName} in ${context.thread.name}.`;
-  const artifact = {
-    type: "app",
-    appId: readString(record.appId) || undefined,
-    version: readOptionalNumber(record.version),
-    title,
-    description,
-    primaryAction: readString(record.primaryAction) || (toolName === "render_interactive_widget" ? "Open widget" : "Open app"),
-    secondaryAction: readString(record.secondaryAction) || undefined,
-    template: toolName === "render_interactive_widget" ? buildWidgetTemplate(record, title, description) : readTemplate(record.template),
-  };
-  return JSON.stringify(
-    {
-      tool: toolName,
-      summary: `${toolName === "render_interactive_widget" ? "Prepared widget" : "Prepared app"} artifact "${title}".`,
-      workspaceName: context.workspaceName,
-      thread: {
-        id: context.thread.id,
-        name: context.thread.name,
-        type: context.thread.type,
-      },
-      sourceMessageIds: recentSourceMessageIds(context, 3),
-      appIds: artifact.appId ? [artifact.appId] : [],
-      artifactIds: [],
-      artifact,
-      nextStep: toolName === "render_interactive_widget" ? "Share the widget card in the thread for review." : "Share the app card in the thread.",
-    },
-    null,
-    2,
-  );
-}
-
 function buildWorkspaceSavedArtifactPayload(context: WorkspaceInternalToolExecutionContext, input: unknown) {
   const record = toRecord(input);
   const title = readString(record.title) || "Saved learning artifact";
@@ -629,28 +572,6 @@ function recentSourceMessageIds(context: WorkspaceInternalToolExecutionContext, 
   return readContextVisibleMessages(context)
     .slice(-limit)
     .map((message) => message.id);
-}
-
-function buildWidgetTemplate(record: Record<string, unknown>, title: string, description: string) {
-  const explicitTemplate = readTemplate(record.template);
-  if (explicitTemplate) return explicitTemplate;
-  const html = readString(record.html) || readString(record.source);
-  if (html) return { type: "html", source: html };
-  return { type: "generator", prompt: readString(record.prompt) || `Create an interactive learning widget titled "${title}". ${description}` };
-}
-
-function readTemplate(value: unknown) {
-  const template = toRecord(value);
-  const type = readString(template.type);
-  if (type === "html") {
-    const source = readString(template.source);
-    return source ? { type: "html", source } : undefined;
-  }
-  if (type === "generator") {
-    const prompt = readString(template.prompt);
-    return prompt ? { type: "generator", prompt } : undefined;
-  }
-  return undefined;
 }
 
 function selectCourseModuleFocus(topic: string, learningGoal: string, step: number) {
@@ -692,15 +613,6 @@ function buildExpectedQuizAnswer(topic: string, focus: string) {
 function summarizeText(value: string, limit: number) {
   const text = value.replace(/\s+/g, " ").trim();
   return text.length <= limit ? text : `${text.slice(0, Math.max(0, limit - 3))}...`;
-}
-
-function readOptionalNumber(value: unknown) {
-  if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "string") {
-    const parsed = Number.parseInt(value, 10);
-    return Number.isFinite(parsed) ? parsed : undefined;
-  }
-  return undefined;
 }
 
 function readStringList(value: unknown, fallback: string[]) {

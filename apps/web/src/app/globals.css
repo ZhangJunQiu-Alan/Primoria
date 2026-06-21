@@ -3577,83 +3577,28 @@ cpk-web-inspector {
 }
 
 .workspace-message p,
-.workspace-app-card p,
 .workspace-assignment-card p {
   margin: 0;
   color: var(--muted);
   line-height: 1.5;
 }
 
-.workspace-app-card,
 .workspace-assignment-card {
   border: 1px solid rgba(23, 19, 15, 0.09);
   border-radius: 18px;
   background: #fffdf8;
 }
 
-.workspace-message-list > .workspace-app-card,
 .workspace-message-list > .workspace-assignment-card {
   margin-left: 52px;
 }
 
-.workspace-app-card {
-  display: grid;
-  grid-template-columns: 170px minmax(0, 1fr);
-  gap: 18px;
-  padding: 16px;
-}
-
-.workspace-app-preview {
-  min-height: 150px;
-  position: relative;
-  border-radius: 14px;
-  overflow: hidden;
-  background:
-    linear-gradient(135deg, rgba(185, 215, 255, 0.76), rgba(255, 229, 143, 0.58)),
-    #f8f0e5;
-  border: 1px solid rgba(23, 19, 15, 0.08);
-}
-
-.workspace-app-preview span,
-.workspace-app-preview i,
-.workspace-app-preview b {
-  position: absolute;
-  display: block;
-  background: #17130f;
-}
-
-.workspace-app-preview span {
-  left: 20px;
-  right: 18px;
-  bottom: 34px;
-  height: 2px;
-  transform: rotate(-17deg);
-}
-
-.workspace-app-preview i {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  left: 34px;
-  bottom: 42px;
-}
-
-.workspace-app-preview b {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  right: 36px;
-  top: 42px;
-}
-
-.workspace-app-card h2,
 .workspace-assignment-card h2 {
   margin: 8px 0 8px;
   font-size: 19px;
   line-height: 1.15;
 }
 
-.workspace-app-card.inline,
 .workspace-assignment-card.inline {
   margin: 12px 0 0;
 }
@@ -4967,132 +4912,6 @@ cpk-web-inspector {
   font-weight: 850;
 }
 
-.workspace-preview-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 70;
-  display: grid;
-  place-items: center;
-  padding: 22px;
-}
-
-.workspace-preview-backdrop {
-  position: absolute;
-  inset: 0;
-  border: 0;
-  background: rgba(23, 19, 15, 0.42);
-  cursor: pointer;
-}
-
-.workspace-preview-dialog {
-  position: relative;
-  z-index: 1;
-  width: min(1040px, 100%);
-  max-height: min(820px, calc(100vh - 44px));
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  overflow: hidden;
-  border: 1px solid rgba(23, 19, 15, 0.12);
-  border-radius: 18px;
-  background: #fffdf8;
-  box-shadow: 0 24px 80px rgba(23, 19, 15, 0.22);
-}
-
-.workspace-preview-header,
-.workspace-preview-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 14px 16px;
-  border-bottom: 1px solid rgba(23, 19, 15, 0.08);
-  background: rgba(255, 250, 242, 0.94);
-}
-
-.workspace-preview-header h2 {
-  margin: 5px 0 5px;
-  font-size: 20px;
-  line-height: 1.1;
-}
-
-.workspace-preview-header p,
-.workspace-preview-state p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.45;
-}
-
-.workspace-preview-header button,
-.workspace-preview-actions button,
-.workspace-preview-state button {
-  min-height: 36px;
-  border: 1px solid rgba(23, 19, 15, 0.14);
-  border-radius: 999px;
-  padding: 0 13px;
-  background: #17130f;
-  color: #fffdf8;
-  font-size: 13px;
-  font-weight: 850;
-}
-
-.workspace-preview-header button {
-  flex: 0 0 auto;
-  background: #fffdf8;
-  color: var(--ink);
-}
-
-.workspace-preview-body {
-  min-height: 0;
-  overflow: auto;
-  padding: 16px;
-  background:
-    linear-gradient(180deg, rgba(255, 253, 248, 0.94), rgba(247, 243, 234, 0.7));
-}
-
-.workspace-preview-body .widget-renderer-shell {
-  width: 100%;
-  margin: 0;
-}
-
-.workspace-preview-body .widget-frame {
-  min-height: 430px;
-}
-
-.workspace-preview-state {
-  min-height: 240px;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 10px;
-  padding: 24px;
-  border: 1px solid rgba(23, 19, 15, 0.08);
-  border-radius: 14px;
-  background: #fffdf8;
-  text-align: center;
-}
-
-.workspace-preview-state.generator {
-  place-items: start;
-  text-align: left;
-}
-
-.workspace-preview-state.generator p {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  background: rgba(243, 238, 231, 0.7);
-  color: var(--ink);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 12px;
-  overflow-wrap: anywhere;
-}
-
-.workspace-preview-actions {
-  justify-content: flex-end;
-  border-top: 1px solid rgba(23, 19, 15, 0.08);
-  border-bottom: 0;
-}
-
 @media (max-width: 1120px) {
   .collaboration-workspace {
     position: static;
@@ -5132,17 +4951,8 @@ cpk-web-inspector {
     padding: 8px 10px;
   }
 
-  .workspace-app-card,
   .workspace-assignment-card {
     margin-left: 0;
-  }
-
-  .workspace-app-card {
-    grid-template-columns: 1fr;
-  }
-
-  .workspace-app-preview {
-    min-height: 120px;
   }
 
   .workspace-assignment-card {
@@ -5203,25 +5013,6 @@ cpk-web-inspector {
     width: 100%;
   }
 
-  .workspace-preview-layer {
-    padding: 10px;
-  }
-
-  .workspace-preview-dialog {
-    max-height: calc(100vh - 20px);
-    border-radius: 14px;
-  }
-
-  .workspace-preview-header,
-  .workspace-preview-actions {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .workspace-preview-header button,
-  .workspace-preview-actions button {
-    width: 100%;
-  }
 }
 
 /* ── course detail page ────────────────────────────────────────────── */

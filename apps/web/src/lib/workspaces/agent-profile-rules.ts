@@ -28,7 +28,6 @@ export const WORKSPACE_AGENT_TEMPLATES: WorkspaceAgentTemplate[] = [
     memoryScope: "workspace",
     capabilities: [
       { kind: "skill", source: "system", path: "/skills/visual-explainer", enabled: true },
-      { kind: "internal_tool", toolName: "render_interactive_widget", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
     ],
   },

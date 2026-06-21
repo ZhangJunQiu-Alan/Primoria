@@ -38,7 +38,6 @@ Use four label families on implementation issues:
 | `type:workspace` | Workspace communication, members, tasks, class/team flows. |
 | `type:agent-runtime` | Agent runs, approvals, DeepAgent runtime, skills, tools, connections. |
 | `type:memory` | Reviewable memory, preference extraction, long-term personalization. |
-| `type:learning-app` | Personalized mini apps, practice apps, app result capture. |
 | `type:data-architecture` | Database, portability, service boundaries, infra abstractions. |
 | `type:sharing` | Published courses, learning paths, community or teacher distribution. |
 | `type:onboarding` | Cold-start learner preferences and first-run setup. |
@@ -87,7 +86,6 @@ Use four label families on implementation issues:
 | #10 Selected-text Course Copilot UI | `type:course-copilot`, `area:course`, `priority:P0`, `status:ready` | A focused UX slice inside #1. |
 | #17 React artifact renderer | `type:renderer`, `area:artifact`, `priority:P1`, `status:needs-slice` | Needed for complex stateful artifacts, but should align with artifact IR. |
 | #5 Long-term memory | `type:memory`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:needs-slice` | Memory should consume reviewed evidence, not replace raw signals. |
-| #7 Personalized mini learning apps | `type:learning-app`, `area:artifact`, `area:adaptive-learning`, `priority:P1`, `status:needs-slice` | Needs result capture and learning-signal feedback. |
 | #8 Workspace communication | `type:workspace`, `area:workspace`, `priority:P1`, `status:needs-slice` | Workspace exists, but classroom/homework slices need tighter issue boundaries. |
 | #15 Onboarding preferences | `type:onboarding`, `area:memory`, `priority:P1`, `status:ready` | Good cold-start signal source for adaptive decisions. |
 | #16 Postgres-first architecture | `type:data-architecture`, `area:infra`, `priority:P1`, `status:ready` | Current implementation is already Postgres-first; keep boundaries explicit. |

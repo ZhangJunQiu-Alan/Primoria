@@ -114,7 +114,7 @@ async function main() {
     capabilities: [
       { id: "cap_delegate_skill", profileId: "agent_profile_visualizer", kind: "skill", source: "system", path: "/skills/visual-explainer", enabled: true },
       { id: "cap_delegate_read", profileId: "agent_profile_visualizer", kind: "internal_tool", toolName: "summarize_thread", approval: "never", enabled: true },
-      { id: "cap_delegate_write", profileId: "agent_profile_visualizer", kind: "internal_tool", toolName: "share_learning_app", approval: "on_risk", enabled: true },
+      { id: "cap_delegate_write", profileId: "agent_profile_visualizer", kind: "internal_tool", toolName: "save_learning_artifact", approval: "on_risk", enabled: true },
     ],
     createdAt: 3,
     updatedAt: 4,

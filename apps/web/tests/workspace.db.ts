@@ -428,9 +428,7 @@ async function main() {
         { kind: "skill", source: "system", path: "/skills/project-breakdown", enabled: true },
         { kind: "internal_tool", toolName: "create_workspace_task", approval: "always", enabled: true },
         { kind: "internal_tool", toolName: "update_workspace_task", approval: "always", enabled: true },
-        { kind: "internal_tool", toolName: "share_learning_app", approval: "always", enabled: true },
         { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-        { kind: "internal_tool", toolName: "render_interactive_widget", approval: "always", enabled: true },
         { kind: "internal_tool", toolName: "generate_course", approval: "always", enabled: true },
         { kind: "internal_tool", toolName: "save_agent_memory", approval: "always", enabled: true },
       ],
@@ -438,7 +436,7 @@ async function main() {
     assert(customizedCoachProfile.id === coachProfile.id, "DB updated agent profile keeps identity");
     assert(customizedCoachProfile.handle === "db-coach", "DB updated agent profile keeps stable handle");
     assert(customizedCoachProfile.displayName === "DB Learning Guide", "DB updated agent profile changes display name");
-    assert(customizedCoachProfile.capabilities.length === 8, "DB updated agent profile replaces capabilities");
+    assert(customizedCoachProfile.capabilities.length === 6, "DB updated agent profile replaces capabilities");
     const customProfile = await createWorkspaceAgentProfile(ownerId, {
       workspaceId: ownerView.workspace.id,
       displayName: "DB Maker",
@@ -1080,9 +1078,7 @@ async function main() {
         { kind: "skill", source: "system", path: "/skills/project-breakdown", enabled: true },
         { kind: "internal_tool", toolName: "create_workspace_task", approval: "always", enabled: true },
         { kind: "internal_tool", toolName: "update_workspace_task", approval: "always", enabled: true },
-        { kind: "internal_tool", toolName: "share_learning_app", approval: "always", enabled: true },
         { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-        { kind: "internal_tool", toolName: "render_interactive_widget", approval: "always", enabled: true },
         { kind: "internal_tool", toolName: "generate_course", approval: "always", enabled: true },
         { kind: "subagent", agentProfileId: customProfile.id, enabled: true },
       ],
@@ -2115,90 +2111,6 @@ async function main() {
     assert(joinerRejectedUserMemoryArchive, "DB other workspace members cannot archive someone else's user-scope memory by id");
     assert(approvedUpdate.events.some((event) => event.type === "tool_end" && event.label === "update_workspace_task"), "DB approved update tool records tool_end");
 
-    const approvedAppMention = await createWorkspaceMessage(ownerId, {
-      workspaceId: ownerView.workspace.id,
-      threadId: direct.id,
-      content: "@DB Learning Guide share an approved DB app",
-      senderName: "Workspace Owner",
-    });
-    const approvedAppTurn = await runWorkspaceAgentTurn(ownerId, {
-      workspaceId: ownerView.workspace.id,
-      threadId: direct.id,
-      message: approvedAppMention,
-      runner: async () => ({
-        content: "",
-        status: "waiting_for_approval",
-        events: [
-          {
-            type: "approval_request",
-            label: "share_learning_app",
-            payload: {
-              input: {
-                appId: "db_approved_app",
-                version: 4,
-                title: "DB Approved App",
-                description: "DB approved app card.",
-                primaryAction: "Open app",
-              },
-            },
-          },
-        ],
-      }),
-    });
-    const approvedApp = await decideWorkspaceAgentApproval(ownerId, {
-      workspaceId: ownerView.workspace.id,
-      approvalId: approvedAppTurn.approvals?.[0]?.id ?? "",
-      decision: "approved",
-      decidedBy: "Workspace Owner",
-    });
-    assert(approvedApp.message?.artifact?.type === "app", "DB approved share app creates app artifact message");
-    assert(approvedApp.message?.artifact?.type === "app" && approvedApp.message.artifact.appId === "db_approved_app", "DB approved share app preserves app id");
-    assert(approvedApp.run.status === "completed", "DB approved share app completes waiting run");
-    assert(approvedApp.events.some((event) => event.type === "artifact" && event.label === "share_learning_app"), "DB approved share app records artifact event");
-
-    const approvedWidgetMention = await createWorkspaceMessage(ownerId, {
-      workspaceId: ownerView.workspace.id,
-      threadId: direct.id,
-      content: "@DB Learning Guide render an approved DB widget",
-      senderName: "Workspace Owner",
-    });
-    const approvedWidgetTurn = await runWorkspaceAgentTurn(ownerId, {
-      workspaceId: ownerView.workspace.id,
-      threadId: direct.id,
-      message: approvedWidgetMention,
-      runner: async () => ({
-        content: "",
-        status: "waiting_for_approval",
-        events: [
-          {
-            type: "approval_request",
-            label: "render_interactive_widget",
-            payload: {
-              input: {
-                appId: "db_approved_widget",
-                version: 2,
-                title: "DB Approved Widget",
-                description: "DB approved interactive widget.",
-                html: "<section><h1>DB widget</h1></section>",
-                primaryAction: "Open widget",
-              },
-            },
-          },
-        ],
-      }),
-    });
-    const approvedWidget = await decideWorkspaceAgentApproval(ownerId, {
-      workspaceId: ownerView.workspace.id,
-      approvalId: approvedWidgetTurn.approvals?.[0]?.id ?? "",
-      decision: "approved",
-      decidedBy: "Workspace Owner",
-    });
-    assert(approvedWidget.message?.artifact?.type === "app", "DB approved render widget creates app artifact message");
-    assert(approvedWidget.message?.artifact?.type === "app" && approvedWidget.message.artifact.appId === "db_approved_widget", "DB approved render widget preserves app id");
-    assert(approvedWidget.message?.artifact?.type === "app" && approvedWidget.message.artifact.template?.type === "html", "DB approved render widget stores html template snapshot");
-    assert(approvedWidget.run.status === "completed", "DB approved render widget completes waiting run");
-    assert(approvedWidget.events.some((event) => event.type === "artifact" && event.label === "render_interactive_widget"), "DB approved render widget records artifact event");
-
     const approvedCourseMention = await createWorkspaceMessage(ownerId, {
       workspaceId: ownerView.workspace.id,
       threadId: direct.id,
@@ -2347,9 +2259,7 @@ async function main() {
     assert(ownerAfter.messages.some((entry) => entry.id === approvedGuardedTool.message?.id), "owner sees approved guarded tool message");
     assert(ownerAfter.tasks.some((entry) => entry.id === approvedUpdate.task?.id && entry.status === "done" && entry.resultSummary === "DB updated after approval."), "owner sees approved update task");
     assert(ownerAfter.messages.some((entry) => entry.id === approvedUpdate.message?.id), "owner sees approved update message");
-    assert(ownerAfter.messages.some((entry) => entry.id === approvedApp.message?.id && entry.artifact?.type === "app"), "owner sees approved app artifact message");
     assert(ownerAfter.messages.some((entry) => entry.id === approvedArtifact.message?.id && entry.artifact?.type === "task"), "owner sees approved saved artifact message");
-    assert(ownerAfter.artifacts.some((entry) => entry.sourceMessageId === approvedApp.message?.id && entry.kind === "app"), "owner sees approved app in first-class artifacts view");
     assert(ownerAfter.artifacts.some((entry) => entry.sourceRunId === approvedCourse.run.id && entry.kind === "course"), "owner sees approved course in first-class artifacts view");
     assert(ownerAfter.artifacts.some((entry) => entry.sourceRunId === approvedArtifact.run.id && entry.title === "DB Approved Artifact" && entry.kind === "saved_artifact"), "owner sees approved saved artifact in first-class artifacts view");
     assert(ownerAfter.agentMemories.some((entry) => entry.id === dbThreadMemory.id && entry.title === "DB learner preference"), "owner sees persisted thread agent memory");

@@ -158,9 +158,7 @@ async function main() {
       { kind: "skill", source: "system", path: "/skills/project-breakdown", enabled: true },
       { kind: "internal_tool", toolName: "create_workspace_task", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "update_workspace_task", approval: "always", enabled: true },
-      { kind: "internal_tool", toolName: "share_learning_app", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-      { kind: "internal_tool", toolName: "render_interactive_widget", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "generate_course", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "save_agent_memory", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "summarize_thread", approval: "never", enabled: false },
@@ -170,7 +168,7 @@ async function main() {
   assert(customizedCoachProfile.handle === "unit-coach", "updated agent profile keeps stable handle");
   assert(customizedCoachProfile.displayName === "Unit Learning Guide", "updated agent profile changes display name");
   assert(customizedCoachProfile.memoryScope === "workspace", "updated agent profile changes memory scope");
-  assert(customizedCoachProfile.capabilities.length === 9, "updated agent profile replaces capabilities");
+  assert(customizedCoachProfile.capabilities.length === 7, "updated agent profile replaces capabilities");
   assert(
     customizedCoachProfile.capabilities.some((capability) => capability.kind === "internal_tool" && capability.toolName === "create_workspace_task" && capability.approval === "always"),
     "updated agent profile stores tool approval policy",
@@ -579,9 +577,7 @@ async function main() {
       { kind: "skill", source: "system", path: "/skills/project-breakdown", enabled: true },
       { kind: "internal_tool", toolName: "create_workspace_task", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "update_workspace_task", approval: "always", enabled: true },
-      { kind: "internal_tool", toolName: "share_learning_app", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true },
-      { kind: "internal_tool", toolName: "render_interactive_widget", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "generate_course", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "save_agent_memory", approval: "always", enabled: true },
       { kind: "internal_tool", toolName: "summarize_thread", approval: "never", enabled: false },
@@ -1579,69 +1575,6 @@ async function main() {
   assert(approvedGuardedTool.events.some((event) => event.type === "tool_start" && event.label === "create_workspace_task"), "approved guarded create task records tool_start");
   assert(approvedGuardedTool.events.some((event) => event.type === "tool_end" && event.label === "create_workspace_task"), "approved guarded create task records tool_end");
 
-  const appMessage = await createWorkspaceMessage(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    threadId: newThread.id,
-    content: "workspace unit app card",
-    senderName: "Test User",
-    artifact: {
-      type: "app",
-      appId: "unit_app",
-      version: 2,
-      title: "Unit App",
-      description: "test app card",
-      primaryAction: "Open app",
-      secondaryAction: "Create task",
-    },
-  });
-  assert(appMessage.artifact?.type === "app", "created app artifact message");
-  assert(appMessage.artifact?.type === "app" && appMessage.artifact.appId === "unit_app", "created app artifact reference");
-  const viewWithAppArtifact = await getWorkspaceView(null, createdWorkspace.workspace.id);
-  assert(
-    viewWithAppArtifact.artifacts.some((artifact) => artifact.sourceMessageId === appMessage.id && artifact.kind === "app" && artifact.title === "Unit App"),
-    "created app artifact is indexed as a first-class workspace artifact",
-  );
-  const indexedAppArtifact = viewWithAppArtifact.artifacts.find((artifact) => artifact.sourceMessageId === appMessage.id);
-  assert(indexedAppArtifact?.payload === appMessage.artifact, "manual app card uses one compatibility snapshot for message and first-class payload");
-  assert(indexedAppArtifact?.description === appMessage.artifact?.description, "manual app card keeps first-class artifact description aligned to snapshot");
-  assert(indexedAppArtifact?.reviewStatus === "reviewed", "manual app card artifacts default to reviewed");
-  const artifactReviewTask = await createWorkspaceTask(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    threadId: newThread.id,
-    title: `Review ${indexedAppArtifact?.title ?? "artifact"}`,
-    scope: indexedAppArtifact ? "App" : "Artifact",
-    progress: "new",
-    sourceArtifactId: indexedAppArtifact?.id,
-    sourceRunId: "unit_review_source_run",
-  });
-  assert(artifactReviewTask.sourceArtifactId === indexedAppArtifact?.id, "artifact review task keeps source artifact id");
-  assert(artifactReviewTask.sourceRunId === "unit_review_source_run", "artifact review task keeps source run id");
-  const viewWithArtifactReviewTask = await getWorkspaceView(null, createdWorkspace.workspace.id);
-  const persistedArtifactReviewTask = viewWithArtifactReviewTask.tasks.find((entry) => entry.id === artifactReviewTask.id);
-  assert(persistedArtifactReviewTask?.sourceArtifactId === indexedAppArtifact?.id, "workspace view preserves artifact review task provenance");
-  assert(persistedArtifactReviewTask?.sourceRunId === "unit_review_source_run", "workspace view preserves review task source run provenance");
-  const snapshotAppMessage = await createWorkspaceMessage(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    threadId: newThread.id,
-    content: "workspace unit app snapshot",
-    senderName: "Test User",
-    artifact: {
-      type: "app",
-      appId: "unit_snapshot_app",
-      version: 1,
-      title: "Unit Snapshot App",
-      description: "test app snapshot",
-      primaryAction: "Open app",
-      secondaryAction: "Create task",
-      template: { type: "html", source: "<section><h1>Unit snapshot app</h1></section>" },
-    },
-  });
-  assert(snapshotAppMessage.artifact?.type === "app", "created app snapshot artifact message");
-  assert(
-    snapshotAppMessage.artifact?.type === "app" && snapshotAppMessage.artifact.template?.type === "html",
-    "created app snapshot artifact keeps template",
-  );
-
   const task = await createWorkspaceTask(null, {
     workspaceId: createdWorkspace.workspace.id,
     threadId: newThread.id,
@@ -1718,94 +1651,6 @@ async function main() {
   assert(approvedUpdate.events.some((event) => event.label === "approval_tool_executed"), "approved update tool records execution event");
   assert(approvedUpdate.events.some((event) => event.type === "tool_start" && event.label === "update_workspace_task"), "approved update tool records tool_start");
   assert(approvedUpdate.events.some((event) => event.type === "tool_end" && event.label === "update_workspace_task"), "approved update tool records tool_end");
-
-  const approvedAppMention = await createWorkspaceMessage(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    threadId: newThread.id,
-    content: "@Unit Learning Guide share an approved app",
-    senderName: "Test User",
-  });
-  const approvedAppTurn = await runWorkspaceAgentTurn(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    threadId: newThread.id,
-    message: approvedAppMention,
-    runner: async () => ({
-      content: "",
-      status: "waiting_for_approval",
-      events: [
-        {
-          type: "approval_request",
-          label: "share_learning_app",
-          payload: {
-            input: {
-              appId: "approved_app",
-              version: 3,
-              title: "Approved App",
-              description: "Approved app card.",
-              primaryAction: "Open app",
-              secondaryAction: "Create task",
-            },
-          },
-        },
-      ],
-    }),
-  });
-  const approvedApp = await decideWorkspaceAgentApproval(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    approvalId: approvedAppTurn.approvals?.[0]?.id ?? "",
-    decision: "approved",
-    decidedBy: "Unit Owner",
-  });
-  assert(approvedApp.message?.artifact?.type === "app", "approved share app tool creates app artifact message");
-  assert(approvedApp.message?.artifact?.type === "app" && approvedApp.message.artifact.appId === "approved_app", "approved share app tool preserves app id");
-  assert(approvedApp.run.status === "completed", "approved share app tool completes waiting run");
-  assert(approvedApp.run.outputMessageId === approvedApp.message?.id, "approved share app tool links run to final message");
-  assert(approvedApp.events.some((event) => event.type === "artifact" && event.label === "share_learning_app"), "approved share app tool records artifact event");
-
-  const approvedWidgetMention = await createWorkspaceMessage(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    threadId: newThread.id,
-    content: "@Unit Learning Guide render an approved widget",
-    senderName: "Test User",
-  });
-  const approvedWidgetTurn = await runWorkspaceAgentTurn(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    threadId: newThread.id,
-    message: approvedWidgetMention,
-    runner: async () => ({
-      content: "",
-      status: "waiting_for_approval",
-      events: [
-        {
-          type: "approval_request",
-          label: "render_interactive_widget",
-          payload: {
-            input: {
-              appId: "approved_widget",
-              version: 1,
-              title: "Approved Widget",
-              description: "Interactive derivative intuition widget.",
-              html: "<section><h1>Derivative widget</h1></section>",
-              primaryAction: "Open widget",
-            },
-          },
-        },
-      ],
-    }),
-  });
-  const approvedWidget = await decideWorkspaceAgentApproval(null, {
-    workspaceId: createdWorkspace.workspace.id,
-    approvalId: approvedWidgetTurn.approvals?.[0]?.id ?? "",
-    decision: "approved",
-    decidedBy: "Unit Owner",
-  });
-  assert(approvedWidget.message?.artifact?.type === "app", "approved render widget tool creates app artifact message");
-  assert(approvedWidget.message?.artifact?.type === "app" && approvedWidget.message.artifact.appId === "approved_widget", "approved render widget preserves app id");
-  assert(approvedWidget.message?.artifact?.type === "app" && approvedWidget.message.artifact.template?.type === "html", "approved render widget stores html template snapshot");
-  assert(approvedWidget.message?.artifact?.type === "app" && approvedWidget.message.artifact.primaryAction === "Open widget", "approved render widget preserves primary action");
-  assert(approvedWidget.run.status === "completed", "approved render widget completes waiting run");
-  assert(approvedWidget.run.outputMessageId === approvedWidget.message?.id, "approved render widget links run to final message");
-  assert(approvedWidget.events.some((event) => event.type === "artifact" && event.label === "render_interactive_widget"), "approved render widget records artifact event");
 
   const approvedCourseMention = await createWorkspaceMessage(null, {
     workspaceId: createdWorkspace.workspace.id,
@@ -2002,8 +1847,6 @@ async function main() {
     nextView.messages.some((entry) => entry.id === message.id && entry.content === message.content),
     "created message appears in workspace view",
   );
-  assert(nextView.messages.some((entry) => entry.id === appMessage.id && entry.artifact?.type === "app"), "created app card appears in workspace view");
-  assert(nextView.artifacts.some((entry) => entry.sourceMessageId === appMessage.id && entry.kind === "app"), "created app appears in first-class artifacts view");
   assert(nextView.artifacts.some((entry) => entry.sourceRunId === approvedCourse.run.id && entry.kind === "course"), "approved course appears as first-class course artifact");
   assert(nextView.artifacts.some((entry) => entry.sourceRunId === agentTaskRun.runs[0].id && entry.kind === "task_result"), "agent task output appears as first-class task result artifact");
   assert(nextView.artifacts.some((entry) => entry.sourceRunId === approvedArtifact.run.id && entry.title === "Approved Artifact" && entry.kind === "saved_artifact"), "approved artifact appears in first-class artifacts view");
@@ -2072,10 +1915,6 @@ async function main() {
   assert(nextView.messages.some((entry) => entry.id === directAgentMessage.id), "direct agent chat human message appears in workspace view");
   assert(nextView.messages.some((entry) => entry.id === directAgentTurn.messages[0].id), "direct agent chat response appears in workspace view");
   assert(nextView.messages.some((entry) => entry.id === agentTaskRun.messages[0].id), "agent task response appears in workspace view");
-  assert(
-    nextView.messages.some((entry) => entry.id === snapshotAppMessage.id && entry.artifact?.type === "app" && entry.artifact.template?.type === "html"),
-    "created app snapshot appears in workspace view",
-  );
   assert(
     nextView.tasks.some((entry) => entry.id === task.id && entry.status === "done" && entry.assigneeName === "Unit Agent" && entry.resultSummary),
     "updated assigned task appears in workspace view",

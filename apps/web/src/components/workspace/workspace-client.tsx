@@ -1,9 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { WorkspaceComposer, type LibraryAppOption } from "@/components/workspace/workspace-composer";
+import { WorkspaceComposer } from "@/components/workspace/workspace-composer";
 import {
   agentCount,
   bumpThreadsForMessages,
@@ -25,7 +24,6 @@ import {
   removeMessageById,
   writeLastReadState,
 } from "@/components/workspace/workspace-client-state";
-import type { LearningApp, LearningAppTemplate } from "@/lib/capability-library/types";
 import type {
   WorkspaceArtifact,
   WorkspaceMember,
@@ -46,7 +44,6 @@ import type {
 } from "@/lib/workspaces/types";
 import { AGENT_BEHAVIOR_MAX_LENGTH, AGENT_PURPOSE_MAX_LENGTH } from "@/lib/workspaces/agent-profile-guardrails";
 
-type SharedAppArtifact = Extract<WorkspaceMessageArtifact, { type: "app" }>;
 type WorkspaceAgentSkillOption = { source: "workspace" | "user"; name: string; slug: string; path: string; description?: string; instructions?: string; version: number };
 type WorkspaceAgentSkillVersion = WorkspaceAgentSkillOption & { skillFile?: string };
 const MESSAGE_PAGE_SIZE = 50;
@@ -60,27 +57,6 @@ const AGENT_SKILL_OPTIONS = [
   { path: "/skills/source-grounded-research", label: "Source-grounded research" },
   { path: "/skills/artifact-review", label: "Artifact review" },
 ] as const;
-
-type AppPreviewState = {
-  artifact: SharedAppArtifact;
-  app?: LearningApp;
-  template?: LearningAppTemplate;
-  loading: boolean;
-  error?: string;
-};
-
-const WorkspaceWidgetRenderer = dynamic(
-  () => import("@/components/generative-ui/widget-renderer").then((module) => module.WidgetRenderer),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="workspace-preview-state" role="status">
-        <span className="tool-spinner" aria-hidden="true" />
-        <strong>Loading preview...</strong>
-      </div>
-    ),
-  },
-);
 
 type CachedThreadActivity = {
   messages: WorkspaceMessage[];
@@ -237,12 +213,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [newThreadName, setNewThreadName] = useState("");
   const [newThreadDescription, setNewThreadDescription] = useState("");
   const [newThreadParticipantId, setNewThreadParticipantId] = useState("");
-  const [attachmentOpen, setAttachmentOpen] = useState(false);
-  const [attachmentTitle, setAttachmentTitle] = useState("");
-  const [attachmentDescription, setAttachmentDescription] = useState("");
-  const [libraryApps, setLibraryApps] = useState<LibraryAppOption[]>([]);
-  const [selectedAppId, setSelectedAppId] = useState("");
-  const [loadingApps, setLoadingApps] = useState(false);
+
   const [memberPickerOpen, setMemberPickerOpen] = useState(false);
   const [memberPickerQuery, setMemberPickerQuery] = useState("");
   const [memberName, setMemberName] = useState("");
@@ -263,10 +234,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [agentCanCreateTasks, setAgentCanCreateTasks] = useState(false);
   const [agentCreateTaskApproval, setAgentCreateTaskApproval] = useState<"on_risk" | "always">("on_risk");
   const [agentCanUpdateTasks, setAgentCanUpdateTasks] = useState(false);
-  const [agentCanShareApps, setAgentCanShareApps] = useState(false);
   const [agentCanCreateQuiz, setAgentCanCreateQuiz] = useState(false);
   const [agentCanGenerateCourse, setAgentCanGenerateCourse] = useState(false);
-  const [agentCanRenderWidget, setAgentCanRenderWidget] = useState(false);
   const [agentCanSaveArtifact, setAgentCanSaveArtifact] = useState(false);
   const [agentCanSaveMemory, setAgentCanSaveMemory] = useState(false);
   const [agentSkillPaths, setAgentSkillPaths] = useState<string[]>(["/skills/socratic-questioning"]);
@@ -289,10 +258,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [agentEditCanCreateTasks, setAgentEditCanCreateTasks] = useState(false);
   const [agentEditCreateTaskApproval, setAgentEditCreateTaskApproval] = useState<"on_risk" | "always">("on_risk");
   const [agentEditCanUpdateTasks, setAgentEditCanUpdateTasks] = useState(false);
-  const [agentEditCanShareApps, setAgentEditCanShareApps] = useState(false);
   const [agentEditCanCreateQuiz, setAgentEditCanCreateQuiz] = useState(false);
   const [agentEditCanGenerateCourse, setAgentEditCanGenerateCourse] = useState(false);
-  const [agentEditCanRenderWidget, setAgentEditCanRenderWidget] = useState(false);
   const [agentEditCanSaveArtifact, setAgentEditCanSaveArtifact] = useState(false);
   const [agentEditCanSaveMemory, setAgentEditCanSaveMemory] = useState(false);
   const [agentEditSkillPaths, setAgentEditSkillPaths] = useState<string[]>([]);
@@ -330,7 +297,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const [retryingRunIds, setRetryingRunIds] = useState<Record<string, boolean>>({});
   const [archivingMemoryIds, setArchivingMemoryIds] = useState<Record<string, boolean>>({});
   const [expandedAgentRunIds, setExpandedAgentRunIds] = useState<Record<string, boolean>>({});
-  const [appPreview, setAppPreview] = useState<AppPreviewState | null>(null);
   const [loadingEarlier, setLoadingEarlier] = useState(false);
   const [exhaustedThreadIds, setExhaustedThreadIds] = useState<Record<string, boolean>>({});
   const [loadedThreadActivityIds, setLoadedThreadActivityIds] = useState<Record<string, boolean>>(() =>
@@ -390,7 +356,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
   const loadingThreadActivityIdsRef = useRef<Set<string>>(new Set());
   const tasks = activeThread ? view.tasks.filter((task) => task.threadId === activeThread.id) : view.tasks;
   const activeTaskCount = tasks.filter((task) => task.status !== "done").length;
-  const selectedApp = libraryApps.find((app) => app.id === selectedAppId);
+
   const chatCount = view.threads.length;
   const roomCount = view.threads.filter((thread) => thread.type === "room").length;
   const directCount = view.threads.filter((thread) => thread.type === "direct").length;
@@ -660,27 +626,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     return () => controller.abort();
   }, [activeThread, loadedThreadActivityIds, view.workspace.id, workspaceReady]);
 
-  useEffect(() => {
-    if (!attachmentOpen || libraryApps.length > 0) return;
-    const controller = new AbortController();
-    async function loadApps() {
-      setLoadingApps(true);
-      try {
-        const response = await fetch("/api/apps", { cache: "no-store", signal: controller.signal });
-        if (!response.ok) return;
-        const data = (await response.json()) as { apps?: LibraryAppOption[] };
-        setLibraryApps(Array.isArray(data.apps) ? data.apps : []);
-      } catch {
-        if (!controller.signal.aborted) setLibraryApps([]);
-      } finally {
-        if (!controller.signal.aborted) setLoadingApps(false);
-      }
-    }
-    void loadApps();
-    return () => {
-      controller.abort();
-    };
-  }, [attachmentOpen, libraryApps.length]);
+
 
   useEffect(() => {
     if (!workspaceReady) return;
@@ -746,15 +692,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     void loadWorkspaceAgentSkills(controller.signal);
     return () => controller.abort();
   }, [memberPickerOpen, memberRole, view.workspace.id]);
-
-  useEffect(() => {
-    if (!appPreview) return;
-    function closePreview(event: KeyboardEvent) {
-      if (event.key === "Escape") setAppPreview(null);
-    }
-    window.addEventListener("keydown", closePreview);
-    return () => window.removeEventListener("keydown", closePreview);
-  }, [appPreview]);
 
   function selectThread(thread: WorkspaceThread) {
     markThreadRead(view.workspace.id, activeThread?.id, view.messages);
@@ -1198,10 +1135,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
           canCreateTasks: agentCanCreateTasks,
           createTaskApproval: agentCreateTaskApproval,
           canUpdateTasks: agentCanUpdateTasks,
-          canShareApps: agentCanShareApps,
           canCreateQuiz: agentCanCreateQuiz,
           canGenerateCourse: agentCanGenerateCourse,
-          canRenderWidget: agentCanRenderWidget,
           canSaveArtifact: agentCanSaveArtifact,
           canSaveMemory: agentCanSaveMemory,
           selectedSkillPaths: agentSkillPaths,
@@ -1271,10 +1206,9 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         setAgentCanCreateTasks(false);
         setAgentCreateTaskApproval("on_risk");
         setAgentCanUpdateTasks(false);
-        setAgentCanShareApps(false);
+
         setAgentCanCreateQuiz(false);
         setAgentCanGenerateCourse(false);
-        setAgentCanRenderWidget(false);
         setAgentCanSaveArtifact(false);
         setAgentCanSaveMemory(false);
         setAgentSkillPaths(["/skills/socratic-questioning"]);
@@ -1414,105 +1348,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       setError(submitError instanceof Error ? submitError.message : "Task result could not be submitted.");
     }
   }
-
-  async function shareAppCard(event?: React.FormEvent<HTMLFormElement>) {
-    event?.preventDefault();
-    if (!activeThread) return;
-    const title = selectedApp?.displayName?.trim() || attachmentTitle.trim();
-    const description = selectedApp?.description?.trim() || attachmentDescription.trim();
-    if (!title || !description) {
-      setError("Select an app or add a title and short description first.");
-      return;
-    }
-    setSending(true);
-    setError(null);
-    try {
-      const response = await fetch(`/api/workspaces/${view.workspace.id}/messages`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          threadId: activeThread.id,
-          content: `Shared ${title}.`,
-          artifact: {
-            type: "app",
-            appId: selectedApp?.id,
-            version: selectedApp?.version,
-            title,
-            description,
-            primaryAction: "Open app",
-            secondaryAction: "Create task",
-          },
-        }),
-      });
-      if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Application card could not be shared."));
-      const data = (await response.json()) as {
-        message: WorkspaceMessage;
-        agentMessages?: WorkspaceMessage[];
-        agentRuns?: WorkspaceAgentRun[];
-        agentRunEvents?: WorkspaceAgentRunEvent[];
-        agentApprovals?: WorkspaceAgentApproval[];
-        agentMemories?: WorkspaceAgentMemory[];
-        artifact?: WorkspaceArtifact;
-        agentArtifacts?: WorkspaceArtifact[];
-      };
-      const nextMessages = [data.message, ...(data.agentMessages ?? [])];
-      const nextArtifacts = [data.artifact, ...(data.agentArtifacts ?? [])].filter(Boolean) as WorkspaceArtifact[];
-      setView((current) => ({
-        ...current,
-        messages: mergeMessages(current.messages, nextMessages),
-        agentRuns: mergeAgentRuns(current.agentRuns, data.agentRuns ?? []),
-        agentRunEvents: mergeAgentRunEvents(current.agentRunEvents, data.agentRunEvents ?? []),
-        agentApprovals: mergeAgentApprovals(current.agentApprovals, data.agentApprovals ?? []),
-        agentMemories: mergeAgentMemories(current.agentMemories, data.agentMemories ?? []),
-        artifacts: mergeArtifacts(current.artifacts, nextArtifacts),
-        threads: bumpThreadsForMessages(current.threads, nextMessages),
-        workspace: { ...current.workspace, updatedAt: latestWorkspaceTimestamp(data.message.createdAt, data.agentMessages) },
-      }));
-      setAttachmentTitle("");
-      setAttachmentDescription("");
-      setSelectedAppId("");
-      setAttachmentOpen(false);
-    } catch (shareError) {
-      setError(shareError instanceof Error ? shareError.message : "Application card could not be shared.");
-    } finally {
-      setSending(false);
-    }
-  }
-
-  async function openAppArtifact(artifact: SharedAppArtifact) {
-    if (artifact.template) {
-      setAppPreview({ artifact, template: artifact.template, loading: false });
-      return;
-    }
-
-    if (!artifact.appId) {
-      setDraft(`Open ${artifact.title} and summarize the review focus.`);
-      return;
-    }
-
-    setAppPreview({ artifact, loading: true });
-    setError(null);
-    try {
-      const response = await fetch(`/api/apps/${encodeURIComponent(artifact.appId)}`, { cache: "no-store" });
-      if (!response.ok) throw new Error(await readWorkspaceApiError(response, "Application could not be opened."));
-      const data = (await response.json()) as { app?: LearningApp };
-      if (!data.app) throw new Error("Application could not be opened.");
-      setAppPreview({ artifact, app: data.app, loading: false });
-    } catch (previewError) {
-      setAppPreview({
-        artifact,
-        loading: false,
-        error: previewError instanceof Error ? previewError.message : "Application could not be opened.",
-      });
-    }
-  }
-
-  function createTaskFromArtifact(artifact: SharedAppArtifact) {
-    setTaskTitle(`Review ${artifact.title}`);
-    setTaskScope(activeThread?.type === "direct" ? "Private" : "Shared");
-    setDetailsOpen(true);
-  }
-
   async function loadEarlierMessages() {
     if (!activeThread || !messages.length || loadingEarlier) return;
     setLoadingEarlier(true);
@@ -1636,10 +1471,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
     setAgentEditCanCreateTasks(toolState.canCreateTasks);
     setAgentEditCreateTaskApproval(toolState.createTaskApproval);
     setAgentEditCanUpdateTasks(toolState.canUpdateTasks);
-    setAgentEditCanShareApps(toolState.canShareApps);
     setAgentEditCanCreateQuiz(toolState.canCreateQuiz);
     setAgentEditCanGenerateCourse(toolState.canGenerateCourse);
-    setAgentEditCanRenderWidget(toolState.canRenderWidget);
     setAgentEditCanSaveArtifact(toolState.canSaveArtifact);
     setAgentEditCanSaveMemory(toolState.canSaveMemory);
     setAgentEditSkillPaths(readAgentSkillPaths(profile.capabilities));
@@ -1657,10 +1490,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
       canCreateTasks: agentEditCanCreateTasks,
       createTaskApproval: agentEditCreateTaskApproval,
       canUpdateTasks: agentEditCanUpdateTasks,
-      canShareApps: agentEditCanShareApps,
       canCreateQuiz: agentEditCanCreateQuiz,
       canGenerateCourse: agentEditCanGenerateCourse,
-      canRenderWidget: agentEditCanRenderWidget,
       canSaveArtifact: agentEditCanSaveArtifact,
       canSaveMemory: agentEditCanSaveMemory,
       existingCapabilities: profile.capabilities,
@@ -2124,12 +1955,7 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                   ) : null}
                   <p>{message.content}</p>
                   {message.artifact ? (
-                    <MessageArtifact
-                      artifact={message.artifact}
-                      sourceArtifact={artifactsBySourceMessageId.get(message.id)}
-                      onOpenApp={(artifact) => void openAppArtifact(artifact)}
-                      onCreateTask={createTaskFromArtifact}
-                    />
+                    <MessageArtifact artifact={message.artifact} sourceArtifact={artifactsBySourceMessageId.get(message.id)} />
                   ) : null}
                 </div>
               </article>
@@ -2139,35 +1965,17 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
 
         <WorkspaceComposer
           activeThread={activeThread}
-          attachmentDescription={attachmentDescription}
-          attachmentOpen={attachmentOpen}
-          attachmentTitle={attachmentTitle}
           composerInputRef={composerInputRef}
           draft={draft}
           error={error}
-          libraryApps={libraryApps}
-          loadingApps={loadingApps}
           mentionCandidates={mentionCandidates}
           mentionIndex={mentionIndex}
           mentionPickerOpen={mentionPickerOpen}
-          selectedAppId={selectedAppId}
           sending={sending}
-          onAttachmentDescriptionChange={setAttachmentDescription}
-          onAttachmentTitleChange={setAttachmentTitle}
           onDraftChange={setDraft}
           onInsertMention={insertComposerMention}
           onKeyDown={handleComposerKeyDown}
-          onSelectApp={(appId) => {
-            const app = libraryApps.find((entry) => entry.id === appId);
-            setSelectedAppId(appId);
-            if (app) {
-              setAttachmentTitle(app.displayName);
-              setAttachmentDescription(app.description ?? "");
-            }
-          }}
-          onShareAppCard={() => void shareAppCard()}
           onSubmit={sendMessage}
-          onToggleAttachment={() => setAttachmentOpen((open) => !open)}
         />
       </section>
 
@@ -2274,10 +2082,8 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                               setAgentCanCreateTasks(toolState.canCreateTasks);
                               setAgentCreateTaskApproval(toolState.createTaskApproval);
                               setAgentCanUpdateTasks(toolState.canUpdateTasks);
-                              setAgentCanShareApps(toolState.canShareApps);
                               setAgentCanCreateQuiz(toolState.canCreateQuiz);
                               setAgentCanGenerateCourse(toolState.canGenerateCourse);
-                              setAgentCanRenderWidget(toolState.canRenderWidget);
                               setAgentCanSaveArtifact(toolState.canSaveArtifact);
                               setAgentCanSaveMemory(toolState.canSaveMemory);
                               setAgentSkillPaths(readAgentSkillPaths(template.capabilities));
@@ -2411,14 +2217,10 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                           onCreateTaskApprovalChange={setAgentCreateTaskApproval}
                           canUpdateTasks={agentCanUpdateTasks}
                           onUpdateTasksChange={setAgentCanUpdateTasks}
-                          canShareApps={agentCanShareApps}
-                          onShareAppsChange={setAgentCanShareApps}
                           canCreateQuiz={agentCanCreateQuiz}
                           onCreateQuizChange={setAgentCanCreateQuiz}
                           canGenerateCourse={agentCanGenerateCourse}
                           onGenerateCourseChange={setAgentCanGenerateCourse}
-                          canRenderWidget={agentCanRenderWidget}
-                          onRenderWidgetChange={setAgentCanRenderWidget}
                           canSaveArtifact={agentCanSaveArtifact}
                           onSaveArtifactChange={setAgentCanSaveArtifact}
                           canSaveMemory={agentCanSaveMemory}
@@ -2603,14 +2405,10 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
                           onCreateTaskApprovalChange={setAgentEditCreateTaskApproval}
                           canUpdateTasks={agentEditCanUpdateTasks}
                           onUpdateTasksChange={setAgentEditCanUpdateTasks}
-                          canShareApps={agentEditCanShareApps}
-                          onShareAppsChange={setAgentEditCanShareApps}
                           canCreateQuiz={agentEditCanCreateQuiz}
                           onCreateQuizChange={setAgentEditCanCreateQuiz}
                           canGenerateCourse={agentEditCanGenerateCourse}
                           onGenerateCourseChange={setAgentEditCanGenerateCourse}
-                          canRenderWidget={agentEditCanRenderWidget}
-                          onRenderWidgetChange={setAgentEditCanRenderWidget}
                           canSaveArtifact={agentEditCanSaveArtifact}
                           onSaveArtifactChange={setAgentEditCanSaveArtifact}
                           canSaveMemory={agentEditCanSaveMemory}
@@ -2631,20 +2429,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
         </aside>
       </details>
 
-      {appPreview ? (
-        <AppPreviewDialog
-          preview={appPreview}
-          onClose={() => setAppPreview(null)}
-          onSendPrompt={(prompt) => {
-            setDraft(prompt);
-            setAppPreview(null);
-          }}
-          onCreateTask={(artifact) => {
-            createTaskFromArtifact(artifact);
-            setAppPreview(null);
-          }}
-        />
-      ) : null}
     </section>
   );
 }
@@ -2815,56 +2599,25 @@ function ActiveChatLoadingState({ thread }: { thread: WorkspaceThread }) {
 function MessageArtifact({
   artifact,
   sourceArtifact,
-  onOpenApp,
-  onCreateTask,
 }: {
   artifact: WorkspaceMessageArtifact;
   sourceArtifact?: WorkspaceArtifact;
-  onOpenApp: (artifact: SharedAppArtifact) => void;
-  onCreateTask: (artifact: SharedAppArtifact) => void;
 }) {
   const display = readWorkspaceArtifactDisplay(artifact, sourceArtifact);
   const displayPayload = display.payload;
   const displayTitle = sourceArtifact?.title ?? artifact.title;
   const displayDescription = sourceArtifact?.description ?? artifact.description;
-  if (displayPayload.type === "task") {
-    const kind = display.kind ?? workspaceMessageArtifactKind(displayPayload);
-    return (
-      <article className={`workspace-assignment-card workspace-artifact-message-card ${kind} inline`}>
-        <div>
-          <span className="course-block-tag">{workspaceMessageArtifactLabel(kind)}</span>
-          {display.source === "record" ? <span className="workspace-artifact-record-source">Artifact record</span> : null}
-          <h2>{displayTitle}</h2>
-          <p>{displayDescription}</p>
-        </div>
-        <div className="workspace-assignment-groups">
-          {displayPayload.groups.map((group) => <span key={group}>{group}</span>)}
-        </div>
-      </article>
-    );
-  }
+  const kind = display.kind ?? workspaceMessageArtifactKind(displayPayload);
   return (
-    <article className="workspace-app-card inline">
-      <div className="workspace-app-preview" aria-hidden="true">
-        <span />
-        <i />
-        <b />
-      </div>
+    <article className={`workspace-assignment-card workspace-artifact-message-card ${kind} inline`}>
       <div>
-        <span className="course-block-tag">{displayPayload.appId ? `Library app v${displayPayload.version ?? 1}` : "Shared application"}</span>
+        <span className="course-block-tag">{workspaceMessageArtifactLabel(kind)}</span>
         {display.source === "record" ? <span className="workspace-artifact-record-source">Artifact record</span> : null}
         <h2>{displayTitle}</h2>
         <p>{displayDescription}</p>
-        <div className="workspace-card-actions">
-          <button type="button" onClick={() => onOpenApp(displayPayload)}>
-            {displayPayload.primaryAction}
-          </button>
-          {displayPayload.secondaryAction ? (
-            <button type="button" onClick={() => onCreateTask(displayPayload)}>
-              {displayPayload.secondaryAction}
-            </button>
-          ) : null}
-        </div>
+      </div>
+      <div className="workspace-assignment-groups">
+        {displayPayload.groups.map((group) => <span key={group}>{group}</span>)}
       </div>
     </article>
   );
@@ -2874,157 +2627,23 @@ function readWorkspaceArtifactDisplay(artifact: WorkspaceMessageArtifact, source
   return {
     source: sourceArtifact ? "record" as const : "legacy" as const,
     payload: sourceArtifact?.payload ?? artifact,
-    kind: sourceArtifact && sourceArtifact.kind !== "app" ? sourceArtifact.kind : undefined,
+    kind: sourceArtifact?.kind,
   };
 }
-
-function AppPreviewDialog({
-  preview,
-  onClose,
-  onSendPrompt,
-  onCreateTask,
-}: {
-  preview: AppPreviewState;
-  onClose: () => void;
-  onSendPrompt: (prompt: string) => void;
-  onCreateTask: (artifact: SharedAppArtifact) => void;
-}) {
-  const appTitle = preview.app?.displayName ?? preview.artifact.title;
-  const description = preview.app?.description ?? preview.artifact.description;
-  const template = preview.app?.template ?? preview.template ?? preview.artifact.template;
-  const dialogRef = useRef<HTMLElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const dialog = dialogRef.current;
-    window.setTimeout(() => {
-      const firstControl = dialog?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
-      firstControl?.focus();
-    }, 0);
-    return () => {
-      previousFocusRef.current?.focus();
-    };
-  }, []);
-
-  function handleDialogKeyDown(event: React.KeyboardEvent<HTMLElement>) {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      onClose();
-      return;
-    }
-
-    if (event.key !== "Tab") return;
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    const focusable = Array.from(dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
-      (element) => !element.hasAttribute("disabled") && element.tabIndex !== -1,
-    );
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  }
-
-  return (
-    <div className="workspace-preview-layer" role="presentation">
-      <button className="workspace-preview-backdrop" type="button" aria-label="Close app preview" onClick={onClose} />
-      <section
-        ref={dialogRef}
-        className="workspace-preview-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="workspace-preview-title"
-        onKeyDown={handleDialogKeyDown}
-      >
-        <header className="workspace-preview-header">
-          <div>
-            <span className="course-block-tag">{preview.app ? `Library app v${preview.app.version}` : "Shared application"}</span>
-            <h2 id="workspace-preview-title">{appTitle}</h2>
-            <p>{description}</p>
-          </div>
-          <button type="button" aria-label="Close app preview" onClick={onClose}>Close</button>
-        </header>
-
-        <div className="workspace-preview-body">
-          {preview.loading ? (
-            <div className="workspace-preview-state" role="status">
-              <span className="tool-spinner" aria-hidden="true" />
-              <strong>Opening app...</strong>
-            </div>
-          ) : null}
-
-          {preview.error ? (
-            <div className="workspace-preview-state" role="alert">
-              <strong>{preview.error}</strong>
-              <p>The card is still available in chat. You can ask the workspace to recover or replace this app.</p>
-              <button type="button" onClick={() => onSendPrompt(`Recover or replace ${preview.artifact.title} for this workspace.`)}>
-                Draft recovery prompt
-              </button>
-            </div>
-          ) : null}
-
-          {!preview.loading && !preview.error && template?.type === "html" ? (
-            <WorkspaceWidgetRenderer
-              title={appTitle}
-              description={description}
-              html={template.source}
-              onSendPrompt={onSendPrompt}
-            />
-          ) : null}
-
-          {!preview.loading && !preview.error && template?.type === "generator" ? (
-            <div className="workspace-preview-state generator">
-              <strong>Generator app</strong>
-              <p>{template.prompt}</p>
-              <button type="button" onClick={() => onSendPrompt(template.prompt)}>
-                Use prompt
-              </button>
-            </div>
-          ) : null}
-        </div>
-
-        <footer className="workspace-preview-actions">
-          <button type="button" onClick={() => onCreateTask(preview.artifact)}>
-            Create task
-          </button>
-          <button type="button" onClick={() => onSendPrompt(`Summarize how ${appTitle} should be used in this workspace.`)}>
-            Ask workspace
-          </button>
-        </footer>
-      </section>
-    </div>
-  );
-}
-
-const FOCUSABLE_SELECTOR = [
-  "a[href]",
-  "button:not([disabled])",
-  "input:not([disabled])",
-  "select:not([disabled])",
-  "textarea:not([disabled])",
-  "[tabindex]:not([tabindex='-1'])",
-].join(",");
 
 function formatTime(timestamp: number) {
   return new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" }).format(new Date(timestamp));
 }
 
-function workspaceMessageArtifactKind(artifact: Extract<WorkspaceMessageArtifact, { type: "task" }>): Exclude<WorkspaceArtifact["kind"], "app"> {
+function workspaceMessageArtifactKind(artifact: WorkspaceMessageArtifact): WorkspaceArtifact["kind"] {
   const groups = new Set(artifact.groups.map((group) => group.trim().toLowerCase()).filter(Boolean));
   if (groups.has("course")) return "course";
   if (groups.has("task result")) return "task_result";
   return "saved_artifact";
 }
 
-function workspaceMessageArtifactLabel(kind: Exclude<WorkspaceArtifact["kind"], "app">) {
-  const labels: Record<Exclude<WorkspaceArtifact["kind"], "app">, string> = {
+function workspaceMessageArtifactLabel(kind: WorkspaceArtifact["kind"]) {
+  const labels: Record<WorkspaceArtifact["kind"], string> = {
     course: "Course artifact",
     saved_artifact: "Saved artifact",
     task_result: "Task result",
@@ -3115,14 +2734,10 @@ function AgentActionControls({
   onCreateTaskApprovalChange,
   canUpdateTasks,
   onUpdateTasksChange,
-  canShareApps,
-  onShareAppsChange,
   canCreateQuiz,
   onCreateQuizChange,
   canGenerateCourse,
   onGenerateCourseChange,
-  canRenderWidget,
-  onRenderWidgetChange,
   canSaveArtifact,
   onSaveArtifactChange,
   canSaveMemory,
@@ -3138,14 +2753,10 @@ function AgentActionControls({
   onCreateTaskApprovalChange: (value: "on_risk" | "always") => void;
   canUpdateTasks: boolean;
   onUpdateTasksChange: (value: boolean) => void;
-  canShareApps: boolean;
-  onShareAppsChange: (value: boolean) => void;
   canCreateQuiz: boolean;
   onCreateQuizChange: (value: boolean) => void;
   canGenerateCourse: boolean;
   onGenerateCourseChange: (value: boolean) => void;
-  canRenderWidget: boolean;
-  onRenderWidgetChange: (value: boolean) => void;
   canSaveArtifact: boolean;
   onSaveArtifactChange: (value: boolean) => void;
   canSaveMemory: boolean;
@@ -3175,10 +2786,8 @@ function AgentActionControls({
       </div>
       <div className="workspace-agent-action-group">
         <strong>Learning artifact actions</strong>
-        <AgentActionToggle checked={canShareApps} onChange={onShareAppsChange} label="Can share learning apps" />
         <AgentActionToggle checked={canCreateQuiz} onChange={onCreateQuizChange} label="Can create practice quizzes" />
         <AgentActionToggle checked={canGenerateCourse} onChange={onGenerateCourseChange} label="Can generate course drafts" />
-        <AgentActionToggle checked={canRenderWidget} onChange={onRenderWidgetChange} label="Can render interactive widgets" />
         <AgentActionToggle checked={canSaveArtifact} onChange={onSaveArtifactChange} label="Can save learning artifacts" />
       </div>
       <div className="workspace-agent-action-group">
@@ -3864,7 +3473,6 @@ function readWorkspaceApprovalDisplay(approval: WorkspaceAgentApproval) {
     readString(input?.title) ??
     readString(input?.topic) ??
     readString(input?.learningGoal) ??
-    readString(input?.appId) ??
     readString(input?.taskId);
   return {
     title,
@@ -3917,10 +3525,8 @@ function readAgentToolState(capabilities: Array<WorkspaceAgentCapability | Works
   const summarize = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "summarize_thread");
   const createTask = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "create_workspace_task");
   const updateTask = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "update_workspace_task");
-  const shareApp = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "share_learning_app");
   const createQuiz = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "create_quiz");
   const generateCourse = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "generate_course");
-  const renderWidget = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "render_interactive_widget");
   const saveArtifact = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "save_learning_artifact");
   const saveMemory = capabilities.find((capability) => capability.kind === "internal_tool" && capability.toolName === "save_agent_memory");
   return {
@@ -3928,10 +3534,8 @@ function readAgentToolState(capabilities: Array<WorkspaceAgentCapability | Works
     canSummarize: Boolean(summarize?.enabled),
     canCreateTasks: Boolean(createTask?.enabled),
     canUpdateTasks: Boolean(updateTask?.enabled),
-    canShareApps: Boolean(shareApp?.enabled),
     canCreateQuiz: Boolean(createQuiz?.enabled),
     canGenerateCourse: Boolean(generateCourse?.enabled),
-    canRenderWidget: Boolean(renderWidget?.enabled),
     canSaveArtifact: Boolean(saveArtifact?.enabled),
     canSaveMemory: Boolean(saveMemory?.enabled),
     createTaskApproval:
@@ -3993,10 +3597,8 @@ function buildAgentCapabilityInputs(input: {
   canCreateTasks: boolean;
   createTaskApproval: "on_risk" | "always";
   canUpdateTasks: boolean;
-  canShareApps: boolean;
   canCreateQuiz: boolean;
   canGenerateCourse: boolean;
-  canRenderWidget: boolean;
   canSaveArtifact: boolean;
   canSaveMemory: boolean;
   existingCapabilities?: WorkspaceAgentCapability[];
@@ -4056,17 +3658,12 @@ function buildAgentCapabilityInputs(input: {
   if (input.canUpdateTasks) {
     capabilities.push({ kind: "internal_tool", toolName: "update_workspace_task", approval: "on_risk", enabled: true });
   }
-  if (input.canShareApps) {
-    capabilities.push({ kind: "internal_tool", toolName: "share_learning_app", approval: "on_risk", enabled: true });
-  }
+
   if (input.canCreateQuiz) {
     capabilities.push({ kind: "internal_tool", toolName: "create_quiz", approval: "never", enabled: true });
   }
   if (input.canGenerateCourse) {
     capabilities.push({ kind: "internal_tool", toolName: "generate_course", approval: "always", enabled: true });
-  }
-  if (input.canRenderWidget) {
-    capabilities.push({ kind: "internal_tool", toolName: "render_interactive_widget", approval: "always", enabled: true });
   }
   if (input.canSaveArtifact) {
     capabilities.push({ kind: "internal_tool", toolName: "save_learning_artifact", approval: "always", enabled: true });
