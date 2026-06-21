@@ -278,7 +278,6 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
     default: C_EDGE, amber: "#c8881a", sage: "#4a7a5a", lavender: "#7c6ad0",
   };
 
-  const isDragging = !!dragRef.current;
 
   return (
     <div className="message-row tool">
