@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { WorkspaceComposer } from "@/components/workspace/workspace-composer";
 import {
@@ -2012,7 +2011,6 @@ export function WorkspaceClient({ initialView }: { initialView: WorkspaceView })
               <strong>Members</strong>
               <div className="workspace-panel-header-actions">
                 <span>{visibleMembers.length}</span>
-                <Link href="/workspace/agents">Agents</Link>
                 <button
                   type="button"
                   aria-label="Add member"
