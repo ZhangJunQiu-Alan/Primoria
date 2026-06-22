@@ -19,13 +19,6 @@ export default async function LibraryPage() {
     <main className="app-shell">
       <TutorNavRail initialAuthState={{ authEnabled, user }} />
       <section className="workspace library-workspace">
-        <header className="library-header">
-          <h1>Library</h1>
-          <p>
-            Courses Primoria has built up for you. Your workspace is saved to Postgres and only appears when you are signed in.
-          </p>
-        </header>
-
         {shouldGate ? (
           <div className="library-empty library-auth-empty">
             <span className="course-block-tag">Private workspace</span>

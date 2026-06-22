@@ -25,8 +25,13 @@ async function main() {
   assert(libraryGrid.includes("library-card-generating"), "library renders generating placeholders");
   assert(libraryGrid.includes("library-card-failed"), "library renders failed placeholders");
   assert(libraryGrid.includes("window.setInterval"), "library keeps polling while jobs are active");
+  assert(libraryGrid.includes("Filter by Status"), "library exposes a status filter menu");
+  assert(libraryGrid.includes("SortHeaderButton"), "library exposes sortable table headers");
+  assert(libraryGrid.includes("sortEntries"), "library sorts course rows client-side");
   assert(styles.includes(".library-card-generating"), "generating placeholders have dedicated styling");
   assert(styles.includes(".library-card-failed"), "failed placeholders have dedicated styling");
+  assert(styles.includes(".library-filter-menu"), "status filter menu has dedicated styling");
+  assert(styles.includes(".library-sort-button"), "sortable headers have dedicated styling");
 
   for (const blockType of ["quiz", "mind_map", "slide", "worksheet"]) {
     assert(generativeUi.includes(`"${blockType}"`), `course card parser accepts ${blockType} outline items`);
