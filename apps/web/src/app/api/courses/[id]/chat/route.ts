@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 import type { CourseBlock } from "@/lib/courses/types";
+import { courseBlocks } from "@/lib/courses/types";
 import { createTutorModel, generateCourse } from "@/lib/agent-os/ai";
 import { AttachmentsSchema, buildAttachmentContext, buildCourseUserContent, processAttachments } from "@/lib/agent-os";
 import {
@@ -95,8 +96,9 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     if (!course) return NextResponse.json({ error: "Course not found" }, { status: 404 });
     const user = await getCurrentUser();
 
+    const blocks = courseBlocks(course);
     const selectedBlock = body.selectedBlockId
-      ? course.blocks.find((block) => block.id === body.selectedBlockId) ?? null
+      ? blocks.find((block) => block.id === body.selectedBlockId) ?? null
       : null;
 
     if (wantsFollowUpCourse(body.message)) {
@@ -120,7 +122,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       host: process.env.MEM0_HOST,
       provider: process.env.MEMORY_PROVIDER === "mem0" ? "mem0" : "disabled",
     });
-    const outline = course.blocks
+    const outline = blocks
       .map((block, index) => `${index + 1}. [${block.type}] ${block.title ?? block.type}`)
       .join("\n");
     const selected = selectedBlock ? blockToPrompt(selectedBlock) : "No selected block; answer from the whole course.";

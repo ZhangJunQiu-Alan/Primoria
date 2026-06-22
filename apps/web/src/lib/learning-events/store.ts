@@ -16,6 +16,7 @@ export type LearningEvent =
       ownerId: string;
       id?: string;
       courseId: string;
+      lessonId?: string | null;
       blockId: string;
       conceptId?: string | null;
       questionId: string;
@@ -50,6 +51,7 @@ type LearningEventRow = {
   ownerId: string;
   type: string;
   courseId: string | null;
+  lessonId: string | null;
   blockId: string | null;
   graphId: string | null;
   conceptId: string | null;
@@ -66,6 +68,7 @@ function toRow(event: LearningEvent): LearningEventRow {
     ownerId: event.ownerId,
     type: event.type,
     courseId: null,
+    lessonId: null,
     blockId: null,
     graphId: null,
     conceptId: null,
@@ -79,6 +82,7 @@ function toRow(event: LearningEvent): LearningEventRow {
       return {
         ...base,
         courseId: event.courseId,
+        lessonId: event.lessonId ?? null,
         blockId: event.blockId,
         conceptId: event.conceptId ?? null,
         payload: {

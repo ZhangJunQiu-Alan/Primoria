@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { saveCourse } from "@/lib/courses/store";
+import { getCourse, getCourseByGraph, saveCourse } from "@/lib/courses/store";
+import { getTopic, getTopicGraph } from "@/lib/knowledge-graph/topic-graph";
 import { getCurrentUser } from "@/lib/auth/session";
 import { recordLearningEvent } from "@/lib/learning-events/store";
-import type { BlockType, Course, CourseBlock } from "@/lib/courses/types";
-import { summarizeCourse } from "@/lib/courses/types";
+import type { BlockType, Course, CourseBlock, Lesson } from "@/lib/courses/types";
+import { courseBlocks, summarizeCourse } from "@/lib/courses/types";
 import type { CourseSummary } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { createTutorModel, resolveProviderSettings } from "./model";
@@ -263,8 +264,201 @@ export async function generateCourse(
   settings: TutorProviderSettings = {},
 ): Promise<GenerateCourseResult> {
   const providerSettings = resolveProviderSettings(settings);
-  const model = createTutorModel(settings);
+  const ownerId = await resolveEventOwnerId(input.ownerId);
+  const graphId = input.kgContext?.graphId ?? null;
+  const targetTopicId = input.kgContext?.startTopic?.topicId ?? null;
 
+  // C: reuse the user's existing Course for this subject KG; otherwise build a
+  // fresh outline of planned (lazy) lessons spanning the remaining topics.
+  let course = ownerId && graphId ? await getCourseByGraph(ownerId, graphId) : undefined;
+  const isNewCourse = !course;
+  if (!course) course = buildOutlineCourse(input, graphId);
+
+  // B: materialize only the requested entry topic's lesson now; the rest stay
+  // planned for LazyGeneration. Idempotent if the lesson is already generated.
+  course = await materializeTargetLesson(course, input, targetTopicId, providerSettings, settings);
+
+  await saveCourse(course, ownerId ?? undefined);
+
+  if (isNewCourse && ownerId) {
+    await recordLearningEvent({
+      type: "course.generated",
+      ownerId,
+      courseId: course.id,
+      graphId,
+      conceptId: input.kgContext?.targetConceptId ?? null,
+      topic: input.topic,
+      source: input.source ?? "cold_start",
+    });
+  }
+
+  return { course, summary: summarizeCourse(course) };
+}
+
+export type MaterializeLessonInput = {
+  courseId: string;
+  lessonId?: string;
+  topicId?: string;
+  ownerId?: string;
+  contextHint?: string;
+};
+
+// Lazy entry point: fill in a planned outline lesson on demand (e.g. when the
+// learner advances to the next topic). Builds a single-topic KG context from the
+// lesson's topicId so the content stays anchored to that topic's concepts.
+export async function materializeLesson(
+  input: MaterializeLessonInput,
+  settings: TutorProviderSettings = {},
+): Promise<GenerateCourseResult> {
+  const ownerId = await resolveEventOwnerId(input.ownerId);
+  const course = await getCourse(input.courseId, ownerId ?? undefined);
+  if (!course) throw new Error("Course not found");
+  const target = input.lessonId
+    ? course.lessons.find((lesson) => lesson.id === input.lessonId)
+    : course.lessons.find((lesson) => lesson.topicId === input.topicId);
+  if (!target) throw new Error("Lesson not found");
+  if (target.status === "generated") return { course, summary: summarizeCourse(course) };
+
+  const kgContext = buildTopicKgContext(course.graphId ?? null, target.topicId ?? null);
+  const updated = await fillLesson(
+    course,
+    target,
+    { topic: target.title, contextHint: input.contextHint, kgContext: kgContext ?? undefined },
+    resolveProviderSettings(settings),
+    settings,
+  );
+  await saveCourse(updated, ownerId ?? undefined);
+  return { course: updated, summary: summarizeCourse(updated) };
+}
+
+// All KG topics from the entry topic onward, by Topic Order (default_order).
+// Falls back to a single node when the graph/topic is unknown (free-form topics).
+function outlineTopicsFrom(
+  graphId: string,
+  startTopicId: string | null,
+  fallbackName: string,
+): { topicId: string | null; name: string; order: number }[] {
+  let graph;
+  try {
+    graph = getTopicGraph(graphId);
+  } catch {
+    return [{ topicId: startTopicId, name: fallbackName, order: 1 }];
+  }
+  const start = startTopicId ? graph.topics.find((t) => t.topicId === startTopicId) : undefined;
+  const startOrder = start?.defaultOrder ?? 0;
+  const remaining = graph.topics
+    .filter((t) => t.defaultOrder >= startOrder)
+    .sort((a, b) => a.defaultOrder - b.defaultOrder)
+    .map((t) => ({ topicId: t.topicId as string | null, name: t.name, order: t.defaultOrder }));
+  return remaining.length > 0 ? remaining : [{ topicId: startTopicId, name: fallbackName, order: 1 }];
+}
+
+function plannedLesson(topicId: string | null, title: string, order: number, now: number): Lesson {
+  return {
+    id: randomId("lsn"),
+    title,
+    role: "new",
+    progress: "not_started",
+    status: "planned",
+    sortKey: order,
+    topicId: topicId ?? null,
+    triggeredFrom: null,
+    blocks: null,
+    estimatedMinutes: null,
+    version: 1,
+    createdAt: now,
+    updatedAt: now,
+  };
+}
+
+function subjectFor(graphId: string | null, fallback: string): string {
+  if (!graphId) return fallback;
+  try {
+    return getTopicGraph(graphId).subject;
+  } catch {
+    return fallback;
+  }
+}
+
+// A fresh Course: subject-level metadata + an outline of planned lessons (one per
+// remaining KG topic, or a single node for free-form topics with no KG).
+function buildOutlineCourse(input: GenerateCourseInput, graphId: string | null): Course {
+  const now = Date.now();
+  const startTopic = input.kgContext?.startTopic ?? null;
+  const subject = subjectFor(graphId, input.topic);
+  const outline = graphId
+    ? outlineTopicsFrom(graphId, startTopic?.topicId ?? null, startTopic?.name ?? input.topic)
+    : [{ topicId: null as string | null, name: input.topic, order: 1 }];
+  return {
+    id: input.courseId ?? randomId("crs"),
+    title: subject,
+    topic: subject,
+    summary: graphId ? `${subject}的个性化学习路径` : input.topic,
+    estimatedMinutes: 0,
+    anchorConceptId: input.kgContext?.targetConceptId ?? null,
+    graphId,
+    lessons: outline.map((t) => plannedLesson(t.topicId, t.name, t.order, now)),
+    archivedAt: null,
+    version: 1,
+    createdAt: now,
+    updatedAt: now,
+  };
+}
+
+// Resolve the planned lesson for the requested topic (or the sole lesson for
+// free-form courses) and fill it with generated blocks.
+async function materializeTargetLesson(
+  course: Course,
+  input: GenerateCourseInput,
+  targetTopicId: string | null,
+  providerSettings: ReturnType<typeof resolveProviderSettings>,
+  settings: TutorProviderSettings,
+): Promise<Course> {
+  const target = targetTopicId
+    ? course.lessons.find((lesson) => lesson.topicId === targetTopicId)
+    : course.lessons[0];
+  if (!target) return course;
+  return fillLesson(course, target, input, providerSettings, settings);
+}
+
+// Generate one lesson's content via the LLM and splice it into the course.
+// Idempotent: an already-generated lesson is returned unchanged (course reuse).
+async function fillLesson(
+  course: Course,
+  target: Lesson,
+  input: GenerateCourseInput,
+  providerSettings: ReturnType<typeof resolveProviderSettings>,
+  settings: TutorProviderSettings,
+): Promise<Course> {
+  if (target.status === "generated") return course;
+  const draft = await generateLessonDraft(input, providerSettings, settings);
+  const now = Date.now();
+  const blocks: CourseBlock[] = draft.blocks.map((block) => ({ id: randomId("blk"), ...block }));
+  const materialized: Lesson = {
+    ...target,
+    title: draft.title,
+    status: "generated",
+    blocks,
+    estimatedMinutes: draft.estimatedMinutes,
+    version: target.version + 1,
+    updatedAt: now,
+  };
+  const lessons = course.lessons.map((lesson) => (lesson.id === target.id ? materialized : lesson));
+  return {
+    ...course,
+    lessons,
+    estimatedMinutes: course.estimatedMinutes || draft.estimatedMinutes,
+    updatedAt: now,
+  };
+}
+
+// The LLM call producing one lesson's content (title/summary/minutes/blocks).
+async function generateLessonDraft(
+  input: GenerateCourseInput,
+  providerSettings: ReturnType<typeof resolveProviderSettings>,
+  settings: TutorProviderSettings,
+) {
+  const model = createTutorModel(settings);
   const userPrompt = [
     `Topic: ${input.topic}`,
     input.contextHint ? `Prior context from chat: ${input.contextHint}` : "",
@@ -274,45 +468,22 @@ export async function generateCourse(
   ]
     .filter(Boolean)
     .join("\n");
-
   const raw = await invokeCourseJson(model, userPrompt, input.topic, providerSettings);
-  const draft = normalizeCourseDraft(raw, input.topic);
+  return normalizeCourseDraft(raw, input.topic);
+}
 
-  const now = Date.now();
-  const blocks: CourseBlock[] = draft.blocks.map((block) => ({
-    id: randomId("blk"),
-    ...block,
-  }));
-
-  const course: Course = {
-    id: input.courseId ?? randomId("crs"),
-    title: draft.title,
-    topic: input.topic,
-    summary: draft.summary,
-    estimatedMinutes: draft.estimatedMinutes,
-    blocks,
-    archivedAt: null,
-    version: 1,
-    createdAt: now,
-    updatedAt: now,
+// Minimal single-topic KG context for lazy materialization of an outline node.
+function buildTopicKgContext(graphId: string | null, topicId: string | null): CourseContext | null {
+  if (!graphId || !topicId) return null;
+  const topic = getTopic(graphId, topicId);
+  if (!topic) return null;
+  return {
+    learningPathType: "linear",
+    graphId,
+    startTopic: { topicId: topic.topicId, name: topic.name, concepts: topic.conceptIds },
+    targetConceptId: null,
+    nextTopic: null,
   };
-
-  await saveCourse(course);
-
-  const eventOwnerId = await resolveEventOwnerId(input.ownerId);
-  if (eventOwnerId) {
-    await recordLearningEvent({
-      type: "course.generated",
-      ownerId: eventOwnerId,
-      courseId: course.id,
-      graphId: input.kgContext?.graphId ?? null,
-      conceptId: input.kgContext?.targetConceptId ?? null,
-      topic: input.topic,
-      source: input.source ?? "cold_start",
-    });
-  }
-
-  return { course, summary: summarizeCourse(course) };
 }
 
 const BLOCK_SCHEMAS = {
@@ -355,7 +526,7 @@ You are now generating EXACTLY ONE block of type "${input.targetType}" for an ex
 }
 
 function buildSingleBlockPrompt(input: GenerateBlockInput): string {
-  const outline = input.course.blocks
+  const outline = courseBlocks(input.course)
     .map((block, i) => `${i + 1}. [${block.type}] ${block.title ?? block.type}`)
     .join("\n");
   const lines = [

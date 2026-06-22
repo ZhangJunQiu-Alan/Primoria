@@ -56,12 +56,21 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Resolve the lesson owning this quiz block so the attempt and per-question
+    // events can be aggregated per lesson during distillation.
+    const course = await getCourse(courseId, user.id);
+    const lesson = course?.lessons.find((l) => l.blocks?.some((b) => b.id === body.blockId));
+    const lessonId = lesson?.id ?? null;
+    const block = lesson?.blocks?.find((b) => b.id === body.blockId);
+    const questions = block && block.type === "quiz" ? block.questions : [];
+
     const db = getDb();
     const attemptId = randomId();
     await db.insert(quizAttempts).values({
       id: attemptId,
       ownerId: user.id,
       courseId,
+      lessonId,
       blockId: body.blockId,
       answers: body.answers,
       score: body.score,
@@ -70,9 +79,6 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
 
     // One learning_event per question so each row's concept attribution stays
     // clean (concept_id left null until quiz questions carry concept tags).
-    const course = await getCourse(courseId, user.id);
-    const block = course?.blocks.find((b) => b.id === body.blockId);
-    const questions = block && block.type === "quiz" ? block.questions : [];
     for (const answer of body.answers) {
       const question = questions.find((q) => q.id === answer.questionId);
       if (!question) continue;
@@ -82,6 +88,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         ownerId: user.id,
         id: `${attemptId}__${answer.questionId}`,
         courseId,
+        lessonId,
         blockId: body.blockId,
         questionId: answer.questionId,
         selected,
