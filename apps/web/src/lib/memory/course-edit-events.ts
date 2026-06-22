@@ -8,6 +8,7 @@ import type { CourseBlock } from "../courses/types";
 export type CourseEditEventInput = {
   ownerId?: string | null;
   courseId: string;
+  lessonId?: string | null;
   blockId: string;
   instruction: string;
   // For structural edits one side may be absent (add has no before, remove has no
@@ -21,6 +22,7 @@ export type CourseEditEvent = {
   id: string;
   ownerId: string;
   courseId: string;
+  lessonId: string | null;
   blockId: string;
   instruction: string;
   beforeBlock: CourseBlock;
@@ -43,6 +45,7 @@ export async function recordCourseEditEvent(input: CourseEditEventInput): Promis
     id,
     ownerId,
     courseId: input.courseId,
+    lessonId: input.lessonId ?? null,
     blockId: input.blockId,
     instruction: input.instruction,
     beforeBlock,
@@ -55,6 +58,7 @@ export async function recordCourseEditEvent(input: CourseEditEventInput): Promis
     id,
     ownerId,
     courseId: input.courseId,
+    lessonId: input.lessonId ?? null,
     blockId: input.blockId,
     instruction: input.instruction,
     beforeBlock,
@@ -76,6 +80,7 @@ export async function listCourseEditEvents(courseId: string, ownerId?: string | 
       id: row.id,
       ownerId: row.ownerId,
       courseId: row.courseId,
+      lessonId: row.lessonId ?? null,
       blockId: row.blockId,
       instruction: row.instruction,
       beforeBlock: row.beforeBlock as CourseBlock,

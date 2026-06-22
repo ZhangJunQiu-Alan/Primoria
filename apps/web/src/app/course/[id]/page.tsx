@@ -5,6 +5,7 @@ import { CopilotKitProvider } from "@/components/copilot-provider";
 import { CourseDetailClient } from "@/components/course/course-detail-client";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
+import { courseBlocks } from "@/lib/courses/types";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
             <h1>{course.title}</h1>
             <p className="course-summary-text">{course.summary}</p>
             <span className="course-meta-line">
-              {course.blocks.length} blocks · ~{course.estimatedMinutes} min
+              {courseBlocks(course).length} blocks · ~{course.estimatedMinutes} min
             </span>
           </div>
         </header>

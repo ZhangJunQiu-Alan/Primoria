@@ -2,6 +2,7 @@ import { z } from "zod";
 import { getCourse, insertBlock, moveBlock, removeBlock, updateBlock } from "@/lib/courses/store";
 import { recordCourseEditEvent } from "@/lib/memory/course-edit-events";
 import type { BlockType, Course, CourseBlock, Slide, VisualBlock, WorksheetItem } from "@/lib/courses/types";
+import { courseBlocks } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { createTutorModel } from "./model";
 import { generateBlock } from "./course-generator";
@@ -147,7 +148,7 @@ export async function editBlock(
 ): Promise<EditBlockResult> {
   const course = await getCourse(input.courseId);
   if (!course) throw new Error("Course not found");
-  const block = course.blocks.find((b) => b.id === input.blockId);
+  const block = courseBlocks(course).find((b) => b.id === input.blockId);
   if (!block) throw new Error("Block not found");
 
   const model = createTutorModel(settings);
@@ -160,6 +161,7 @@ export async function editBlock(
   if (!updatedCourse) throw new Error("Update failed");
   await recordCourseEditEvent({
     courseId: input.courseId,
+    lessonId: lessonIdForBlock(updatedCourse, input.blockId),
     blockId: input.blockId,
     instruction: input.comment,
     beforeBlock: block,
@@ -196,6 +198,7 @@ export async function addBlock(
 
   await recordCourseEditEvent({
     courseId: input.courseId,
+    lessonId: lessonIdForBlock(updatedCourse, block.id),
     blockId: block.id,
     instruction: input.instruction,
     beforeBlock: null,
@@ -218,7 +221,7 @@ export async function transformBlock(
 ): Promise<EditBlockResult> {
   const course = await getCourse(input.courseId);
   if (!course) throw new Error("Course not found");
-  const previous = course.blocks.find((b) => b.id === input.blockId);
+  const previous = courseBlocks(course).find((b) => b.id === input.blockId);
   if (!previous) throw new Error("Block not found");
   if (previous.type === input.targetType) {
     throw new Error("Block is already this type. Use the block editor to rewrite it.");
@@ -235,6 +238,7 @@ export async function transformBlock(
 
   await recordCourseEditEvent({
     courseId: input.courseId,
+    lessonId: lessonIdForBlock(updatedCourse, input.blockId),
     blockId: input.blockId,
     instruction: input.instruction,
     beforeBlock: previous,
@@ -249,15 +253,17 @@ export async function removeCourseBlock(
 ): Promise<{ course: Course }> {
   const course = await getCourse(input.courseId);
   if (!course) throw new Error("Course not found");
-  if (course.blocks.length <= 1) throw new Error("A course must keep at least one block.");
-  const previous = course.blocks.find((b) => b.id === input.blockId);
+  if (courseBlocks(course).length <= 1) throw new Error("A course must keep at least one block.");
+  const previous = courseBlocks(course).find((b) => b.id === input.blockId);
   if (!previous) throw new Error("Block not found");
+  const lessonId = lessonIdForBlock(course, input.blockId);
 
   const updatedCourse = await removeBlock(input.courseId, input.blockId);
   if (!updatedCourse) throw new Error("Remove failed");
 
   await recordCourseEditEvent({
     courseId: input.courseId,
+    lessonId,
     blockId: input.blockId,
     instruction: input.instruction ?? "remove block",
     beforeBlock: previous,
@@ -272,15 +278,17 @@ export async function moveCourseBlock(
 ): Promise<{ course: Course }> {
   const course = await getCourse(input.courseId);
   if (!course) throw new Error("Course not found");
-  const fromIndex = course.blocks.findIndex((b) => b.id === input.blockId);
+  const flatBlocks = courseBlocks(course);
+  const fromIndex = flatBlocks.findIndex((b) => b.id === input.blockId);
   if (fromIndex === -1) throw new Error("Block not found");
-  const block = course.blocks[fromIndex];
+  const block = flatBlocks[fromIndex];
 
   const updatedCourse = await moveBlock(input.courseId, input.blockId, input.toIndex);
   if (!updatedCourse) throw new Error("Move failed");
 
   await recordCourseEditEvent({
     courseId: input.courseId,
+    lessonId: lessonIdForBlock(updatedCourse, input.blockId),
     blockId: input.blockId,
     instruction: input.instruction ?? "reorder block",
     beforeBlock: block,
@@ -292,8 +300,12 @@ export async function moveCourseBlock(
 
 function resolveInsertIndex(course: Course, afterBlockId?: string): number | undefined {
   if (!afterBlockId) return undefined; // append
-  const idx = course.blocks.findIndex((b) => b.id === afterBlockId);
+  const idx = courseBlocks(course).findIndex((b) => b.id === afterBlockId);
   return idx === -1 ? undefined : idx + 1;
+}
+
+function lessonIdForBlock(course: Course, blockId: string): string | null {
+  return course.lessons.find((lesson) => lesson.blocks?.some((block) => block.id === blockId))?.id ?? null;
 }
 
 function buildEditPrompt(course: Course, block: CourseBlock, comment: string, selectedText?: string) {

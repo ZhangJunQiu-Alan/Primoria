@@ -7,6 +7,7 @@ import { BlockRenderer } from "./block-renderer";
 import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surface";
 import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
 import type { Course, CourseBlock } from "@/lib/courses/types";
+import { courseBlocks } from "@/lib/courses/types";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
@@ -79,7 +80,7 @@ function buildCourseContext(
       topic: course.topic,
       summary: course.summary,
       estimatedMinutes: course.estimatedMinutes,
-      blocks: course.blocks.map((block, index) => ({
+      blocks: courseBlocks(course).map((block, index) => ({
         index: index + 1,
         id: block.id,
         type: block.type,
@@ -558,6 +559,7 @@ function CourseAIAssistantPanel({
 
 export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialCourse: Course; copilotEnabled: boolean }) {
   const [course, setCourse] = useState<Course>(initialCourse);
+  const blocks = useMemo(() => courseBlocks(course), [course]);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [selectedTextContext, setSelectedTextContext] = useState<SelectedTextContext | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -583,7 +585,7 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
     workspace.style.setProperty("--course-sidebar-width", `${sidebarCollapsed ? 56 : sidebarWidth}px`);
   }, [sidebarCollapsed, sidebarWidth]);
 
-  const selectedBlock = course.blocks.find((b) => b.id === selectedBlockId) ?? null;
+  const selectedBlock = blocks.find((b) => b.id === selectedBlockId) ?? null;
 
   function selectBlock(block: CourseBlock) {
     setSelectedBlockId(block.id);
@@ -619,7 +621,7 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
         if (!anchorBlock || !focusBlock || anchorBlock !== focusBlock) return;
 
         const blockId = anchorBlock.dataset.blockId;
-        const block = course.blocks.find((candidate) => candidate.id === blockId);
+        const block = blocks.find((candidate) => candidate.id === blockId);
         if (!block) return;
 
         setSelectedBlockId(block.id);
@@ -644,7 +646,7 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
       window.removeEventListener("mouseup", syncSelectionContext);
       window.removeEventListener("keyup", syncSelectionContext);
     };
-  }, [course.blocks]);
+  }, [blocks]);
 
   return (
     <div
@@ -653,7 +655,7 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
     >
       <div className="course-detail-main">
         <div className="course-blocks-column">
-          {course.blocks.map((block) => (
+          {blocks.map((block) => (
             <div
               key={block.id}
               role="button"
@@ -693,11 +695,12 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
         selectedTextContext={selectedTextContext}
         onCourseUpdated={(nextCourse) => {
           setCourse(nextCourse);
-          if (selectedBlockId && !nextCourse.blocks.some((block) => block.id === selectedBlockId)) {
+          const nextBlocks = courseBlocks(nextCourse);
+          if (selectedBlockId && !nextBlocks.some((block) => block.id === selectedBlockId)) {
             setSelectedBlockId(null);
             setSelectedTextContext(null);
           }
-          if (selectedTextContext && !nextCourse.blocks.some((block) => block.id === selectedTextContext.blockId)) {
+          if (selectedTextContext && !nextBlocks.some((block) => block.id === selectedTextContext.blockId)) {
             setSelectedTextContext(null);
           }
         }}

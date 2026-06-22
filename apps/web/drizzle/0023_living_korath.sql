@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "courses_owner_graph_uidx" ON "courses" USING btree ("owner_id","graph_id");

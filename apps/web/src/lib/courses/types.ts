@@ -142,18 +142,51 @@ export type WorksheetBlock = BlockBase & {
 
 export type CourseBlock = TextBlock | AnalogyBlock | TransferBlock | VisualBlock | CodeBlock | QuizBlock | MindMapBlock | SlideBlock | WorksheetBlock;
 
+export type LessonRole = "new" | "review" | "remediation";
+export type LessonProgress = "not_started" | "in_progress" | "completed";
+/** Materialization axis (orthogonal to role/progress). A planned node is an
+ * outline placeholder with no blocks yet; generated means blocks are present. */
+export type LessonStatus = "planned" | "generating" | "generated";
+
+export type Lesson = {
+  id: string;
+  title: string;
+  role: LessonRole;
+  progress: LessonProgress;
+  status: LessonStatus;
+  sortKey: number;
+  topicId?: string | null;
+  triggeredFrom?: string | null;
+  /** Null while the lesson is a planned outline node (LazyGeneration). */
+  blocks: CourseBlock[] | null;
+  estimatedMinutes: number | null;
+  version: number;
+  createdAt: number;
+  updatedAt: number;
+};
+
 export type Course = {
   id: string;
   title: string;
   topic: string;
   summary: string;
   estimatedMinutes: number;
-  blocks: CourseBlock[];
+  anchorConceptId?: string | null;
+  graphId?: string | null;
+  lessons: Lesson[];
   archivedAt?: number | null;
   version: number;
   createdAt: number;
   updatedAt: number;
 };
+
+/** Flatten every materialized lesson's blocks into one ordered list (by sortKey).
+ * Planned (ungenerated) lessons contribute nothing. */
+export function courseBlocks(course: Course): CourseBlock[] {
+  return [...course.lessons]
+    .sort((a, b) => a.sortKey - b.sortKey)
+    .flatMap((lesson) => lesson.blocks ?? []);
+}
 
 export type CourseOutlineItem = {
   type: BlockType;
@@ -167,23 +200,69 @@ export type CourseSummary = {
   summary: string;
   estimatedMinutes: number;
   outline: CourseOutlineItem[];
+  lessons: CourseSummaryLesson[];
+  lessonCount: number;
+  generatedLessonCount: number;
+  plannedLessonCount: number;
+  completedLessonCount: number;
+  currentLesson: CourseSummaryLesson | null;
   archivedAt?: number | null;
   version: number;
   createdAt: number;
   updatedAt: number;
 };
 
+export type CourseSummaryLesson = {
+  id: string;
+  title: string;
+  role: LessonRole;
+  progress: LessonProgress;
+  status: LessonStatus;
+  sortKey: number;
+  topicId?: string | null;
+  estimatedMinutes: number | null;
+  updatedAt: number;
+};
+
 export function summarizeCourse(course: Course): CourseSummary {
+  const sortedLessons = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
+  const lessons = sortedLessons.map((lesson): CourseSummaryLesson => ({
+    id: lesson.id,
+    title: lesson.title,
+    role: lesson.role,
+    progress: lesson.progress,
+    status: lesson.status,
+    sortKey: lesson.sortKey,
+    topicId: lesson.topicId ?? null,
+    estimatedMinutes: lesson.estimatedMinutes,
+    updatedAt: lesson.updatedAt,
+  }));
+  const generatedLessonCount = lessons.filter((lesson) => lesson.status === "generated").length;
+  const plannedLessonCount = lessons.filter((lesson) => lesson.status === "planned").length;
+  const completedLessonCount = lessons.filter((lesson) => lesson.progress === "completed").length;
+  const currentLesson =
+    lessons.find((lesson) => lesson.progress === "in_progress")
+    ?? lessons.find((lesson) => lesson.progress !== "completed")
+    ?? lessons[lessons.length - 1]
+    ?? null;
+  const generatedMinutes = sortedLessons.reduce((total, lesson) => total + (lesson.estimatedMinutes ?? 0), 0);
+
   return {
     id: course.id,
     title: course.title,
     topic: course.topic,
     summary: course.summary,
-    estimatedMinutes: course.estimatedMinutes,
-    outline: course.blocks.map((block) => ({
+    estimatedMinutes: generatedMinutes || course.estimatedMinutes,
+    outline: courseBlocks(course).map((block) => ({
       type: block.type,
       title: block.title ?? defaultTitleFor(block),
     })),
+    lessons,
+    lessonCount: lessons.length,
+    generatedLessonCount,
+    plannedLessonCount,
+    completedLessonCount,
+    currentLesson,
     archivedAt: course.archivedAt ?? null,
     version: course.version ?? 1,
     createdAt: course.createdAt,

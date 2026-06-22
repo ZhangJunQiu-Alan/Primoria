@@ -1,4 +1,4 @@
-import { boolean, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { boolean, doublePrecision, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -74,7 +74,8 @@ export const courses = pgTable(
     topic: text("topic").notNull(),
     summary: text("summary").notNull(),
     estimatedMinutes: integer("estimated_minutes").notNull(),
-    blocks: jsonb("blocks").notNull(),
+    anchorConceptId: text("anchor_concept_id"),
+    graphId: text("graph_id"),
     archivedAt: timestamp("archived_at", { withTimezone: true }),
     version: integer("version").notNull().default(1),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
@@ -83,6 +84,37 @@ export const courses = pgTable(
   (table) => ({
     ownerUpdatedIdx: index("courses_owner_updated_idx").on(table.ownerId, table.updatedAt),
     ownerArchivedUpdatedIdx: index("courses_owner_archived_updated_idx").on(table.ownerId, table.archivedAt, table.updatedAt),
+    // At most one Course instance per user per subject KG. graph_id NULL (free-form
+    // courses with no KG) is exempt — Postgres treats NULLs as distinct.
+    ownerGraphUnique: uniqueIndex("courses_owner_graph_uidx").on(table.ownerId, table.graphId),
+  }),
+);
+
+export const lessons = pgTable(
+  "lessons",
+  {
+    id: text("id").primaryKey(),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    topicId: text("topic_id"),
+    title: text("title").notNull(),
+    role: text("role").notNull().default("new"),
+    progress: text("progress").notNull().default("not_started"),
+    // Materialization axis, orthogonal to role/progress: a planned outline node
+    // carries no blocks yet (LazyGeneration); "generating" guards against double
+    // materialization; "generated" means blocks are present.
+    status: text("status").notNull().default("planned"),
+    sortKey: doublePrecision("sort_key").notNull(),
+    triggeredFrom: text("triggered_from"),
+    blocks: jsonb("blocks"),
+    estimatedMinutes: integer("estimated_minutes"),
+    version: integer("version").notNull().default(1),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
+  },
+  (table) => ({
+    courseSortIdx: index("lessons_course_sort_idx").on(table.courseId, table.sortKey),
+    ownerIdx: index("lessons_owner_idx").on(table.ownerId),
   }),
 );
 
@@ -116,6 +148,7 @@ export const courseEditEvents = pgTable(
     id: text("id").primaryKey(),
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id"),
     blockId: text("block_id").notNull(),
     instruction: text("instruction").notNull(),
     beforeBlock: jsonb("before_block").notNull(),
@@ -524,6 +557,7 @@ export const quizAttempts = pgTable(
     id: text("id").primaryKey(),
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id"),
     blockId: text("block_id").notNull(),
     answers: jsonb("answers").notNull(),
     score: integer("score").notNull(),
@@ -543,6 +577,7 @@ export const learningEvents = pgTable(
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     type: text("type").notNull(),
     courseId: text("course_id"),
+    lessonId: text("lesson_id"),
     blockId: text("block_id"),
     graphId: text("graph_id"),
     conceptId: text("concept_id"),
