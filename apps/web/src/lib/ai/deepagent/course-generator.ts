@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getCourse, getCourseByGraph, saveCourse } from "@/lib/courses/store";
+import { claimLessonForGeneration, getCourse, getCourseByGraph, releaseLessonClaim, saveCourse, saveGeneratedLesson } from "@/lib/courses/store";
 import { getTopic, getTopicGraph } from "@/lib/knowledge-graph/topic-graph";
 import { getCurrentUser } from "@/lib/auth/session";
 import { recordLearningEvent } from "@/lib/learning-events/store";
@@ -10,6 +10,7 @@ import type { TutorProviderSettings } from "../types";
 import { createTutorModel, resolveProviderSettings } from "./model";
 import { buildKgContextPrompt, type CourseContext, type CourseContextTopic } from "./course-kg-context";
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
+import { generateLessonFromKg, hasUsableKgConcepts } from "../course-generation/lesson-assembler";
 
 const TextBlockSchema = z.object({
   type: z.literal("text"),
@@ -89,68 +90,6 @@ const QuizBlockSchema = z.object({
     .max(6),
 });
 
-type MindMapNodeRaw = { id: string; topic: string; children?: MindMapNodeRaw[] };
-const MindMapNodeSchema: z.ZodType<MindMapNodeRaw> = z.lazy(() =>
-  z.object({
-    id: z.string(),
-    topic: z.string(),
-    children: z.array(MindMapNodeSchema).optional(),
-  }),
-);
-
-const MindMapBlockSchema = z.object({
-  type: z.literal("mind_map"),
-  title: z.string(),
-  root: MindMapNodeSchema,
-});
-
-const SlideSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  layout: z.enum(["title", "bullets", "quote", "image-text"]),
-  bullets: z.array(z.string()).optional(),
-  markdown: z.string().optional(),
-  note: z.string().optional(),
-});
-
-const SlideBlockSchema = z.object({
-  type: z.literal("slide"),
-  title: z.string(),
-  slides: z.array(SlideSchema).min(2).max(10),
-});
-
-const ShortAnswerItemSchema = z.object({
-  kind: z.literal("short_answer"),
-  id: z.string(),
-  prompt: z.string(),
-  hint: z.string().optional(),
-  sampleAnswer: z.string().optional(),
-});
-
-const FillBlankItemSchema = z.object({
-  kind: z.literal("fill_blank"),
-  id: z.string(),
-  prompt: z.string(),
-  hint: z.string().optional(),
-  blanks: z.array(z.string()).min(1),
-});
-
-const ProblemItemSchema = z.object({
-  kind: z.literal("problem"),
-  id: z.string(),
-  prompt: z.string(),
-  hint: z.string().optional(),
-  sampleAnswer: z.string().optional(),
-});
-
-const WorksheetBlockSchema = z.object({
-  type: z.literal("worksheet"),
-  title: z.string(),
-  items: z.array(
-    z.discriminatedUnion("kind", [ShortAnswerItemSchema, FillBlankItemSchema, ProblemItemSchema]),
-  ).min(1).max(8),
-});
-
 const CourseSchema = z.object({
   title: z.string(),
   summary: z.string(),
@@ -164,16 +103,13 @@ const CourseSchema = z.object({
         VisualBlockSchema,
         CodeBlockSchema,
         QuizBlockSchema,
-        MindMapBlockSchema,
-        SlideBlockSchema,
-        WorksheetBlockSchema,
       ]),
     )
-    .min(3)
-    .max(15),
+    .min(12)
+    .max(20),
 });
 
-const COURSE_SYSTEM_PROMPT = `You are Primoria's Course Generator sub-agent. You design a compact course on a topic, broken into exactly 3 ordered blocks for the current iteration.
+const COURSE_SYSTEM_PROMPT = `You are Primoria's Lesson Generator sub-agent. You design one complete lesson for the current knowledge-graph topic. A normal topic contains 4-5 ordered concepts.
 
 Block types (use the right type for each idea, do NOT just use text):
 - text: prose in markdown. Use for concept explanations (2-4 paragraphs), OR a "Further reading" section with 2-3 markdown links to real resources, OR a "Discussion" section with 2-3 open-ended reflection questions.
@@ -181,19 +117,18 @@ Block types (use the right type for each idea, do NOT just use text):
 - transfer: show how a principle from one domain applies in another. Fields: fromDomain, toDomain, explanation, example.
 - visual: a self-contained interactive HTML/CSS/JS fragment that visualizes a key intuition.
 - code: a small code snippet with a plain-language explanation.
-- quiz: a set of 2-4 questions to check understanding. Each question has a "kind": "single" (one correct answer), "multi" (multiple correct answers), or "truefalse" (true/false). All questions must have an "id" (short unique string like "q1"), a "question" string, and an optional "explanation" shown after submission. For "single" and "multi", include a "choices" array of {id, text} objects. For "single" set "correctId" to the correct choice id. For "multi" set "correctIds" to an array of correct choice ids. For "truefalse" set "correct" to true or false.
-- mind_map: an interactive, editable mind map. Use when the topic has a taxonomic/hierarchical breakdown.
-- slide: a mini slide deck (2-6 slides). Use for step-by-step walkthroughs, processes, timelines, or comparisons. Each slide has "id", "title", "layout" ("title"|"bullets"|"quote"|"image-text"), and optionally "bullets", "markdown", "note".
-- worksheet: a practice worksheet with 2-5 items. Each item has "kind": "short_answer" (open question + sampleAnswer), "fill_blank" (sentence with ___ placeholders + blanks array of answers in order), or "problem" (multi-step problem + sampleAnswer).
+- quiz: a set of 4-6 questions to check understanding. Each question has a "kind": "single" (one correct answer), "multi" (multiple correct answers), or "truefalse" (true/false). All questions must have an "id" (short unique string like "q1"), a "question" string, and an optional "explanation" shown after submission. For "single" and "multi", include a "choices" array of {id, text} objects. For "single" set "correctId" to the correct choice id. For "multi" set "correctIds" to an array of correct choice ids. For "truefalse" set "correct" to true or false.
 
 COURSE STRUCTURE RULES:
-- 4-7 blocks total. Order them as a learning arc: hook → core idea → one analogy → one visual or code → transfer to a different domain → quiz → wrap-up.
+- Produce 15-18 blocks for a normal 4-5 concept lesson. The hard valid range is 12-20 blocks; never add repetitive filler merely to reach a number.
+- Activation and positioning: exactly 2 text blocks — a concrete hook, then learning goals and prerequisite recall.
+- Concept core teaching: exactly 2 blocks per concept, following knowledge-graph default order — one text explanation plus one example/application using text, code, or visual.
+- Focused deepening: 2-3 blocks total using analogy, visual, or a text block about a common misconception. Concentrate these on the hardest 1-2 concepts.
+- Integrated transfer: exactly 1 transfer block after the concept teaching arc.
+- Integrated assessment: exactly 1 quiz block near the end with 4-6 questions. Include at least one question per concept and, when space permits, one cross-concept application question.
+- Closure: exactly 1 final text block connecting the concepts, summarizing the lesson, and previewing the next lesson.
 - Include AT MOST ONE visual block per course. Keep its HTML compact (<300 lines).
-- Include at least one analogy block and one transfer block.
-- Include AT MOST ONE quiz block per course, placed near the end as a comprehension check.
-- Include AT MOST ONE mind_map block per course. Use it to show a concept overview or taxonomy, typically early in the course.
-- Include AT MOST ONE slide block per course. Use it for a process walkthrough or step-by-step overview.
-- Include AT MOST ONE worksheet block per course. Place it after the core content as a practice exercise.
+- Include at least one analogy block.
 - Every block needs a short, specific title (no generic "Introduction").
 - Write in the same language as the user's topic prompt.
 
@@ -213,17 +148,17 @@ Your provider may not support native structured output. You must still return ON
 {
   "title": "string",
   "summary": "string",
-  "estimatedMinutes": 12,
+  "estimatedMinutes": 42,
   "blocks": [
     { "type": "text", "title": "string", "markdown": "string" },
     { "type": "analogy", "title": "string", "source": "string", "target": "string", "mapping": "string" },
     { "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" },
     { "type": "visual", "title": "string", "description": "string", "engine": "echarts|mermaid|physics|html", "echartsOption": {}, "mermaidDefinition": "string", "html": "string" },
     { "type": "code", "title": "string", "language": "string", "code": "string", "explanation": "string" },
-    { "type": "slide", "title": "string", "slides": [{ "id": "s1", "title": "string", "layout": "bullets", "bullets": ["point 1"] }] },
-    { "type": "worksheet", "title": "string", "items": [{ "kind": "fill_blank", "id": "w1", "prompt": "The ___ is used to ___", "blanks": ["term", "purpose"] }, { "kind": "short_answer", "id": "w2", "prompt": "Explain X in your own words.", "sampleAnswer": "..." }] }
+    { "type": "quiz", "title": "string", "questions": [{ "kind": "single", "id": "q1", "question": "string", "choices": [{ "id": "a", "text": "string" }, { "id": "b", "text": "string" }], "correctId": "a", "explanation": "string" }] }
   ]
 }
+The array above demonstrates the allowed block shapes only. The actual blocks array must contain 15-18 blocks for a normal 4-5 concept lesson and follow every structure rule.
 No markdown fences. No prose outside JSON.`;
 
 export { buildKgContextPrompt };
@@ -319,16 +254,27 @@ export async function materializeLesson(
   if (!target) throw new Error("Lesson not found");
   if (target.status === "generated") return { course, summary: summarizeCourse(course) };
 
-  const kgContext = buildTopicKgContext(course.graphId ?? null, target.topicId ?? null);
-  const updated = await fillLesson(
-    course,
-    target,
-    { topic: target.title, contextHint: input.contextHint, kgContext: kgContext ?? undefined },
-    resolveProviderSettings(settings),
-    settings,
-  );
-  await saveCourse(updated, ownerId ?? undefined);
-  return { course: updated, summary: summarizeCourse(updated) };
+  // Atomically claim the planned lesson so concurrent requests cannot generate
+  // it twice. A lost race means another worker owns it — return the current view.
+  const claimed = await claimLessonForGeneration(course.id, target.id, ownerId ?? undefined);
+  if (!claimed) return { course, summary: summarizeCourse(course) };
+
+  try {
+    const kgContext = buildTopicKgContext(course.graphId ?? null, target.topicId ?? null);
+    const updated = await fillLesson(
+      course,
+      target,
+      { topic: target.title, contextHint: input.contextHint, kgContext: kgContext ?? undefined },
+      resolveProviderSettings(settings),
+      settings,
+    );
+    const materialized = updated.lessons.find((lesson) => lesson.id === target.id);
+    if (materialized) await saveGeneratedLesson(updated, materialized, ownerId ?? undefined);
+    return { course: updated, summary: summarizeCourse(updated) };
+  } catch (error) {
+    await releaseLessonClaim(course.id, target.id, ownerId ?? undefined);
+    throw error;
+  }
 }
 
 // All KG topics from the entry topic onward, by Topic Order (default_order).
@@ -431,14 +377,13 @@ async function fillLesson(
   settings: TutorProviderSettings,
 ): Promise<Course> {
   if (target.status === "generated") return course;
-  const draft = await generateLessonDraft(input, providerSettings, settings);
+  const draft = await generateLessonContent(input, target.id, providerSettings, settings);
   const now = Date.now();
-  const blocks: CourseBlock[] = draft.blocks.map((block) => ({ id: randomId("blk"), ...block }));
   const materialized: Lesson = {
     ...target,
     title: draft.title,
     status: "generated",
-    blocks,
+    blocks: draft.blocks,
     estimatedMinutes: draft.estimatedMinutes,
     version: target.version + 1,
     updatedAt: now,
@@ -449,6 +394,34 @@ async function fillLesson(
     lessons,
     estimatedMinutes: course.estimatedMinutes || draft.estimatedMinutes,
     updatedAt: now,
+  };
+}
+
+type LessonContent = { title: string; estimatedMinutes: number; blocks: CourseBlock[] };
+
+// Produce one lesson's blocks. KG-anchored topics use the IR + deterministic
+// compiler pipeline (planner → compile → block writers → compile → validate);
+// free-form topics with no KG concepts fall back to the legacy single-call
+// generator. Both return blocks carrying stable ids.
+async function generateLessonContent(
+  input: GenerateCourseInput,
+  lessonId: string,
+  providerSettings: ReturnType<typeof resolveProviderSettings>,
+  settings: TutorProviderSettings,
+): Promise<LessonContent> {
+  if (hasUsableKgConcepts(input.kgContext)) {
+    const assembled = await generateLessonFromKg(input.kgContext, lessonId, {
+      contextHint: input.contextHint,
+      settings,
+    });
+    return { title: assembled.title, estimatedMinutes: assembled.estimatedMinutes, blocks: assembled.blocks };
+  }
+
+  const draft = await generateLessonDraft(input, providerSettings, settings);
+  return {
+    title: draft.title,
+    estimatedMinutes: draft.estimatedMinutes,
+    blocks: draft.blocks.map((block) => ({ id: randomId("blk"), ...block })),
   };
 }
 
@@ -469,7 +442,7 @@ async function generateLessonDraft(
     .filter(Boolean)
     .join("\n");
   const raw = await invokeCourseJson(model, userPrompt, input.topic, providerSettings);
-  return normalizeCourseDraft(raw, input.topic);
+  return normalizeCourseDraft(raw, input.topic, input.kgContext?.startTopic.concepts.length);
 }
 
 // Minimal single-topic KG context for lazy materialization of an outline node.
@@ -493,14 +466,13 @@ const BLOCK_SCHEMAS = {
   visual: VisualBlockSchema,
   code: CodeBlockSchema,
   quiz: QuizBlockSchema,
-  mind_map: MindMapBlockSchema,
-  slide: SlideBlockSchema,
-  worksheet: WorksheetBlockSchema,
-} as const satisfies Record<BlockType, z.ZodTypeAny>;
+} as const;
+
+export type GeneratableBlockType = Exclude<BlockType, "mind_map" | "slide" | "worksheet">;
 
 export type GenerateBlockInput = {
   course: Course;
-  targetType: BlockType;
+  targetType: GeneratableBlockType;
   instruction: string;
   sourceBlock?: CourseBlock;
 };
@@ -557,7 +529,7 @@ async function invokeSingleBlock(
   schema: z.ZodTypeAny,
   systemPrompt: string,
   userPrompt: string,
-  targetType: BlockType,
+  targetType: GeneratableBlockType,
 ) {
   try {
     const structured = model.withStructuredOutput(schema, { name: "course_block" });
@@ -824,14 +796,13 @@ function repairLikelyJson(text: string) {
     .replace(/}\s*{/g, "},{");
 }
 
-export function normalizeCourseDraft(raw: unknown, topic: string): z.infer<typeof CourseSchema> {
+export function normalizeCourseDraft(raw: unknown, topic: string, conceptCount?: number): z.infer<typeof CourseSchema> {
   const candidate = raw && typeof raw === "object" && "course" in raw ? (raw as { course: unknown }).course : raw;
   const obj = candidate && typeof candidate === "object" ? (candidate as Record<string, unknown>) : {};
   const rawBlocks = Array.isArray(obj.blocks) ? obj.blocks : [];
   const blocks = rawBlocks
     .map((block) => normalizeBlock(block, topic))
-    .filter((block): block is z.infer<typeof CourseSchema>["blocks"][number] => Boolean(block))
-    .slice(0, 8);
+    .filter((block): block is z.infer<typeof CourseSchema>["blocks"][number] => Boolean(block));
 
   const draft = {
     title: cleanText(obj.title, `${topic}课程`).slice(0, 80),
@@ -841,7 +812,7 @@ export function normalizeCourseDraft(raw: unknown, topic: string): z.infer<typeo
   };
 
   const parsed = CourseSchema.safeParse(draft);
-  if (!parsed.success || !isUsableCourseDraft(parsed.data)) {
+  if (!parsed.success || !isUsableCourseDraft(parsed.data, conceptCount)) {
     throw new Error(`Course generator returned unusable course data: ${parsed.success ? "unsafe content" : parsed.error.message}`);
   }
   return parsed.data;
@@ -915,30 +886,6 @@ function normalizeBlock(block: unknown, topic: string): z.infer<typeof CourseSch
     return { type: "quiz", title, questions };
   }
 
-  if (type === "mind_map") {
-    const root = normalizeMindMapNode(obj.root ?? obj.nodeData, topic);
-    if (!root) return null;
-    return { type: "mind_map", title, root };
-  }
-
-  if (type === "slide") {
-    const rawSlides = Array.isArray(obj.slides) ? obj.slides : [];
-    const slides = rawSlides
-      .map((s: unknown, i: number) => normalizeSlide(s, i))
-      .filter((s): s is z.infer<typeof SlideSchema> => s !== null);
-    if (slides.length === 0) return null;
-    return { type: "slide", title, slides };
-  }
-
-  if (type === "worksheet") {
-    const rawItems = Array.isArray(obj.items) ? obj.items : [];
-    const items = rawItems
-      .map((item: unknown, i: number) => normalizeWorksheetItem(item, i))
-      .filter((item): item is z.infer<typeof WorksheetBlockSchema>["items"][number] => item !== null);
-    if (items.length === 0) return null;
-    return { type: "worksheet", title, items };
-  }
-
   return {
     type: "text",
     title,
@@ -987,69 +934,6 @@ function normalizeQuizQuestion(q: unknown): z.infer<typeof SingleQuestionSchema>
   return { kind: "single", id, question, choices, correctId, explanation };
 }
 
-function normalizeWorksheetItem(item: unknown, index: number): z.infer<typeof WorksheetBlockSchema>["items"][number] | null {
-  if (!item || typeof item !== "object") return null;
-  const obj = item as Record<string, unknown>;
-  const kind = typeof obj.kind === "string" ? obj.kind : "short_answer";
-  const id = cleanText(obj.id, `w${index + 1}`);
-  const prompt = cleanText(obj.prompt ?? obj.question ?? obj.text, "").slice(0, 600);
-  if (!prompt) return null;
-  const hint = typeof obj.hint === "string" && obj.hint.trim() ? obj.hint.trim() : undefined;
-
-  if (kind === "fill_blank") {
-    const blanksInPrompt = (prompt.match(/___/g) ?? []).length;
-    const rawBlanks = Array.isArray(obj.blanks)
-      ? obj.blanks.filter((b): b is string => typeof b === "string" && b.trim().length > 0)
-      : [];
-    const blanks = blanksInPrompt > 0
-      ? rawBlanks.slice(0, blanksInPrompt).concat(
-          Array(Math.max(0, blanksInPrompt - rawBlanks.length)).fill("…"),
-        )
-      : rawBlanks;
-    if (blanks.length === 0) return null;
-    return { kind: "fill_blank", id, prompt, ...(hint ? { hint } : {}), blanks };
-  }
-
-  const sampleAnswer = typeof obj.sampleAnswer === "string" && obj.sampleAnswer.trim()
-    ? obj.sampleAnswer.trim()
-    : typeof obj.answer === "string" && obj.answer.trim()
-    ? obj.answer.trim()
-    : undefined;
-
-  if (kind === "problem") {
-    return { kind: "problem", id, prompt, ...(hint ? { hint } : {}), ...(sampleAnswer ? { sampleAnswer } : {}) };
-  }
-  return { kind: "short_answer", id, prompt, ...(hint ? { hint } : {}), ...(sampleAnswer ? { sampleAnswer } : {}) };
-}
-
-function normalizeSlide(s: unknown, index: number): z.infer<typeof SlideSchema> | null {
-  if (!s || typeof s !== "object") return null;
-  const obj = s as Record<string, unknown>;
-  const id = cleanText(obj.id, `s${index + 1}`);
-  const title = cleanText(obj.title, `Slide ${index + 1}`).slice(0, 80);
-  const validLayouts = ["title", "bullets", "quote", "image-text"] as const;
-  const layout: (typeof validLayouts)[number] =
-    validLayouts.includes(obj.layout as (typeof validLayouts)[number]) ? (obj.layout as (typeof validLayouts)[number]) : "bullets";
-  const bullets = Array.isArray(obj.bullets)
-    ? obj.bullets.filter((b): b is string => typeof b === "string" && b.trim().length > 0).slice(0, 8)
-    : undefined;
-  const markdown = typeof obj.markdown === "string" && obj.markdown.trim() ? obj.markdown.trim() : undefined;
-  const note = typeof obj.note === "string" && obj.note.trim() ? obj.note.trim() : undefined;
-  return { id, title, layout, ...(bullets && bullets.length > 0 ? { bullets } : {}), ...(markdown ? { markdown } : {}), ...(note ? { note } : {}) };
-}
-
-function normalizeMindMapNode(node: unknown, topicFallback: string): MindMapNodeRaw | null {
-  if (!node || typeof node !== "object") return null;
-  const obj = node as Record<string, unknown>;
-  const topic = cleanText(obj.topic ?? obj.name ?? obj.label, topicFallback).slice(0, 80);
-  const id = cleanText(obj.id, `n${Math.random().toString(36).slice(2, 8)}`);
-  const rawChildren = Array.isArray(obj.children) ? obj.children : [];
-  const children = rawChildren
-    .map((c: unknown) => normalizeMindMapNode(c, ""))
-    .filter((c): c is MindMapNodeRaw => c !== null);
-  return { id, topic, ...(children.length > 0 ? { children } : {}) };
-}
-
 function cleanText(value: unknown, fallback: string): string {
   const text = String(value ?? "").trim();
   return text || fallback;
@@ -1067,12 +951,6 @@ function defaultBlockTitle(type: string, topic: string): string {
       return "代码中的函数";
     case "quiz":
       return "知识检测";
-    case "mind_map":
-      return `${topic}概念图`;
-    case "slide":
-      return `${topic}要点`;
-    case "worksheet":
-      return `${topic}练习`;
     default:
       return `理解${topic}`;
   }
@@ -1081,7 +959,7 @@ function defaultBlockTitle(type: string, topic: string): string {
 function normalizeMinutes(value: unknown, blockCount: number): number {
   const n = Number(value);
   if (Number.isFinite(n)) return Math.max(3, Math.min(60, Math.round(n)));
-  return Math.max(8, Math.min(24, (blockCount || 4) * 3));
+  return Math.max(12, Math.min(60, (blockCount || 4) * 3));
 }
 
 function normalizeHtml(value: unknown, topic: string): string {
@@ -1127,7 +1005,7 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char] ?? char);
 }
 
-function isUsableCourseDraft(course: z.infer<typeof CourseSchema>): boolean {
+function isUsableCourseDraft(course: z.infer<typeof CourseSchema>, conceptCount?: number): boolean {
   const suspicious = [
     /error/i,
     /schema/i,
@@ -1151,9 +1029,31 @@ function isUsableCourseDraft(course: z.infer<typeof CourseSchema>): boolean {
     ),
   ];
 
+  if (!hasRequiredLessonComposition(course, conceptCount)) return false;
+
   return fields.every((value) => {
     const text = String(value);
     if (text.length > 2200) return false;
     return !suspicious.some((pattern) => pattern.test(text));
   });
+}
+
+function hasRequiredLessonComposition(course: z.infer<typeof CourseSchema>, conceptCount?: number): boolean {
+  const count = (type: z.infer<typeof CourseSchema>["blocks"][number]["type"]) =>
+    course.blocks.filter((block) => block.type === type).length;
+  const normalConceptCount = conceptCount === 4 || conceptCount === 5 ? conceptCount : null;
+  const expectedRange = normalConceptCount === 4
+    ? { min: 15, max: 16 }
+    : normalConceptCount === 5
+      ? { min: 17, max: 18 }
+      : { min: 12, max: 20 };
+  const minimumTextBlocks = normalConceptCount ? normalConceptCount + 3 : 4;
+
+  return course.blocks.length >= expectedRange.min
+    && course.blocks.length <= expectedRange.max
+    && count("text") >= minimumTextBlocks
+    && count("analogy") >= 1
+    && count("transfer") === 1
+    && count("quiz") === 1
+    && count("visual") <= 1;
 }

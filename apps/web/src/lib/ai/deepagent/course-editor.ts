@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { getCourse, insertBlock, moveBlock, removeBlock, updateBlock } from "@/lib/courses/store";
 import { recordCourseEditEvent } from "@/lib/memory/course-edit-events";
-import type { BlockType, Course, CourseBlock, Slide, VisualBlock, WorksheetItem } from "@/lib/courses/types";
+import type { Course, CourseBlock, Slide, VisualBlock, WorksheetItem } from "@/lib/courses/types";
 import { courseBlocks } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { createTutorModel } from "./model";
-import { generateBlock } from "./course-generator";
+import { generateBlock, type GeneratableBlockType } from "./course-generator";
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 
 const TextEdit = z.object({
@@ -176,7 +176,7 @@ export async function editBlock(
 
 export type AddBlockInput = {
   courseId: string;
-  targetType: BlockType;
+  targetType: GeneratableBlockType;
   instruction: string;
   afterBlockId?: string; // insert right after this block; default appends to the end
 };
@@ -211,7 +211,7 @@ export async function addBlock(
 export type TransformBlockInput = {
   courseId: string;
   blockId: string;
-  targetType: BlockType;
+  targetType: GeneratableBlockType;
   instruction: string;
 };
 
@@ -232,7 +232,14 @@ export async function transformBlock(
     settings,
   );
   // Keep the original block id so position and references are preserved.
-  const next = { ...generated, id: previous.id };
+  // Carry teaching metadata across the representation change: the concept being
+  // taught and its pedagogical role are unchanged when only the block type flips.
+  const next = {
+    ...generated,
+    id: previous.id,
+    ...(previous.conceptIds ? { conceptIds: previous.conceptIds } : {}),
+    ...(previous.pedagogicalRole ? { pedagogicalRole: previous.pedagogicalRole } : {}),
+  };
   const updatedCourse = await updateBlock(input.courseId, input.blockId, next);
   if (!updatedCourse) throw new Error("Update failed");
 

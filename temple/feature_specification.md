@@ -32,7 +32,9 @@
 ### 迭代二
 
   1. ✅ 根据MIT的课程，创建多学科KG，共计20个学科（微积分，线性代数，数值分析，软件工程，Python,数据结构和算法，计算机架构，离散数学和概率论，计算机系统，计算机导论，信息论，人工智能，机器学习，深度学习，Web开发，计算机网络，A Level数学，A Level生物，A Level物理，A Level化学），做好质量审查，然后导入数据库，测试定位正常
-  2. 用户表增加用户描述/学习画像字段，实现用户描述/画像字段从事件中自动沉淀。
+
+         
+  3. 用户表增加用户描述/学习画像字段，实现用户描述/画像字段从事件中自动沉淀。
      ✅ 首先定义用户的什么交互行为会作为用户画像：
       1. AI 导师对话交互（提炼用户学习偏好、认知卡点和心理状态）
         - 主动提问+追问
@@ -80,7 +82,7 @@
     还需要决定的点 TODO:
       - 用户画像字段的存储格式，有哪几种存储格式，有什么缺点和优点: ④ 事实卡片列表
       - 画像沉淀触发时机，TODO: 如果检测到关键偏好时沉淀这个怎么实现
-  3. 完成如下行为：
+  4. 完成如下行为：
      1. 如果用户描述/学习画像字段为空走冷启动
         用户输入后应该有的行为：
         - 具体目标（召回结果里很多都属于同一个 topic）：系统首先在KG中定位该Topic,并基于当前Topic所属KG中的Topic Order规划处一个大纲路径(包含从该KG中从当前Topic开始剩余的所有Topic),UI界面为线性学习.若当前Topic已经是末端,则进包含当前这一个Topic.然后,系统立刻生成大纲中第一个Topic对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
@@ -89,7 +91,7 @@
         - 暂时不考虑太模糊或者库里没有的情况，只做提醒： 请重新输入更具体的学习目标，或者联系我们添加相关Course内容。）
       2. 如果用户描述/学习画像字段不为空走如下流程
          - example：用户说“我想学牛顿力学”→ 定位到 physics KG 的 topic -> 查询目前是否已经有了关于这个KG的大纲信息, 如果已经有了则在旧大纲路径下产出当前请求的Lesson. 如果没有则继续→ 获取Physic KG中从定位 topic 往后的所有Topic中的Concept → 读取用户对这些 Concept 的 mastery状态,决定哪些跳过、哪些快速复习、哪些补救（可以为空）-> 然后根据前面信息产出一个大纲路径(包含从该KG中从当前Topic开始剩余的所有Topic)系统立刻生成大纲中第一个Topic对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
-  4. 实现用户专属的分层记忆，
+  5. 实现用户专属的分层记忆，
     - 核心层第一点中搞得用户描述/学习画像字段
     - 第二层概念掌握状态，结构化存储：这里不要放聊天总结，只放 concept 级别状态：untested / weak / learning / mastered、score、最后更新时间、证据来源。它决定“跳过、快速复习、补救”
     - AI 记忆 / episodic memory，向量存储（这里放“语义上有检索价值”的片段，不是所有频繁数据。比如：用户反复问“为什么链式法则要乘内层导数”，用户在某类题上连续犯错，某个解释让用户终于理解了，用户偏好“先图像直觉，再公式”，某次lesson中的关键问答摘要）
@@ -154,3 +156,20 @@ PLUS:
 5. 慢任务阻塞用户请求，做job
 6. TODO: 定义一个lesson包含的Block规范
 7. 看看Course edit event
+
+## 重构建课Agent
+
+  1. 背景信息了解
+    1. 什么是Zod Schema? 用来做什么:
+      Zod Schema 是 TypeScript/JavaScript 生态中非常流行的一个数据模式（Schema）声明与验证库 Zod 的核心概念.Zod Schema 为数据定义的“规则说明书”或“结构模板”。不仅定义了数据的类型（如数字、字符串、对象、数组），还定义了具体的约束条件（如字符串长度、数字范围、是否必填等）
+  2. 最先处理的结构问题
+    Prompt 同时写了“exactly 3 blocks”和“4–7 blocks”，Zod 又允许 3–15 个，约束互相冲突。
+
+[course-kg-context.ts (line 39)](/Users/zhangjunqiu/Desktop/primoria/apps/web/src/lib/ai/deepagent/course-kg-context.ts:39) 仍要求一次生成 TWO lessons，但现在 fillLesson() 的职责已经是一轮只物化一个 Lesson。
+
+LessonStatus 有 generating，实际生成过程却没有使用它，无法防止并发重复生成。
+主入口 [`/api/learning/course` (line 58)](/Users/zhangjunqiu/Desktop/primoria/apps/web/src/app/api/learning/course/route.ts:58) 没有传画像或 source，所以事件默认始终是 cold_start。
+
+宽泛菜单点击后只是用 Topic 名称重新定位，没有保留 selected_topic_id + source_query。
+
+仓库还存在旧版 [apps/agent/src/course-generator.mjs (line 349)](/Users/zhangjunqiu/Desktop/primoria/apps/agent/src/course-generator.mjs:349)，它仍按 course.blocks 顶层结构保存，与当前 Course → lessons → blocks 数据模型不兼容，但旧 generate_course 工具仍被注册

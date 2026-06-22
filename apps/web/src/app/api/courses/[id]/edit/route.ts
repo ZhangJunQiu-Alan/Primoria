@@ -18,16 +18,13 @@ const SettingsSchema = z
   })
   .optional();
 
-const BlockTypeSchema = z.enum([
+const GeneratableBlockTypeSchema = z.enum([
   "text",
   "analogy",
   "transfer",
   "visual",
   "code",
   "quiz",
-  "mind_map",
-  "slide",
-  "worksheet",
 ]);
 
 const RequestSchema = z.discriminatedUnion("action", [
@@ -40,7 +37,7 @@ const RequestSchema = z.discriminatedUnion("action", [
   }),
   z.object({
     action: z.literal("add"),
-    targetType: BlockTypeSchema,
+    targetType: GeneratableBlockTypeSchema,
     instruction: z.string().min(1),
     afterBlockId: z.string().optional(),
     settings: SettingsSchema,
@@ -48,7 +45,7 @@ const RequestSchema = z.discriminatedUnion("action", [
   z.object({
     action: z.literal("transform"),
     blockId: z.string(),
-    targetType: BlockTypeSchema,
+    targetType: GeneratableBlockTypeSchema,
     instruction: z.string().min(1),
     settings: SettingsSchema,
   }),

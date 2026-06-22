@@ -8,7 +8,6 @@ import { z } from "zod";
 import { readFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
-import { enqueueCourseGenerationJob, ensureCourseGenerationWorker } from "./course-generation-jobs.mjs";
 import { getCourse } from "./course-store.mjs";
 import { summarizeCourse } from "./course-types.mjs";
 
@@ -395,18 +394,6 @@ const positionLearningGoalTool = tool(
   },
 );
 
-function normalizeCourseTopic(topic) {
-  return topic
-    .replace(/^(生成|创建|做|帮我|请|please|make|create|build)\s*/i, "")
-    .replace(/^(一个|一门|一节|a|an)\s*/i, "")
-    .replace(/^(课程|教程|微课|lesson|course)\s*(关于|on|about)?\s*/i, "")
-    .replace(/^(教我|学习|学一下|讲讲|讲解|系统讲|系统学|teach me|i want to learn|learn about|study)\s*/i, "")
-    .replace(/\s*(的)?(课程|教程|微课|lesson|course|curriculum)$/i, "")
-    .replace(/[。.!！?？]+$/g, "")
-    .replace(/\s+/g, " ")
-    .trim() || topic.trim();
-}
-
 /**
  * @param {unknown} runtime
  */
@@ -503,8 +490,8 @@ Selected block: ${selected ? `${selected.title ?? selected.type} (${selected.typ
 Available blocks: ${(course.blocks ?? []).map((/** @type {any} */ block) => `${block.index}. ${block.title} [${block.type}, id=${block.id}]`).join("; ")}
 
 Behavior in COURSE DETAIL MODE:
-- For summarize/explain/practice questions about this course, answer directly from this context. Do NOT call generate_course just because the message contains words like 课程, 学习路径, course, or lesson.
-- Only call generate_course if the learner explicitly asks to create a NEW/different course.
+- For summarize/explain/practice questions about this course, answer directly from this context.
+- Course creation and learning-path building happen through the learning-goal flow on the web app, not from this chat. If the learner explicitly asks to create a new course, call position_learning_goal to anchor their goal in the knowledge graph.
 - If the learner asks to modify/rewrite/simplify/expand/fix the selected block, call revise_selected_course_block.
 - If the learner asks for a quiz / test / practice / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测, call add_course_block with targetType "quiz" (use "worksheet" only if they explicitly want open-ended practice). Do NOT build a widget or a new course for this. The quiz becomes a graded block in THIS course.
 - If no block is selected and the learner asks to modify a block, ask them to select a block first.
@@ -531,39 +518,6 @@ const primoriaContextMiddleware = createMiddleware({
   contextSchema: PrimoriaContextSchema,
   stateSchema: PrimoriaStateAnnotation,
 });
-
-const generateCourseTool = tool(
-  async ({ topic, context_hint }, runtime) => {
-    const normalizedTopic = normalizeCourseTopic(topic);
-    const ownerId = getRuntimeOwnerId(runtime);
-    ensureCourseGenerationWorker(() => createModel({ streaming: false }));
-    const job = await enqueueCourseGenerationJob({
-      ownerId,
-      topic: normalizedTopic,
-      contextHint: context_hint,
-    });
-    return serializeCourseCard(
-      {
-        id: job.courseId,
-        title: `Generating: ${normalizedTopic}`,
-        topic: normalizedTopic,
-        summary: "Primoria is composing this course in the background. It will appear in Library when it is ready.",
-        estimatedMinutes: 0,
-        outline: [],
-      },
-      "generating",
-    );
-  },
-  {
-    name: "generate_course",
-    description: "Generate a new course path on the requested topic.",
-    schema: z.object({
-      topic: z.string(),
-      context_hint: z.string().optional(),
-    }),
-    returnDirect: true,
-  },
-);
 
 const renderChartTool = tool(
   async ({ title, description, option, height }) => {
@@ -1155,8 +1109,6 @@ function createModel(options = {}) {
   });
 }
 
-ensureCourseGenerationWorker(() => createModel({ streaming: false }));
-
 const checkpointer = new MemorySaver();
 
 export const graph = createDeepAgent({
@@ -1165,7 +1117,6 @@ export const graph = createDeepAgent({
   tools: [
     planVisualizationTool,
     widgetRendererTool,
-    generateCourseTool,
     getCourseCardTool,
     renderChartTool,
     renderDiagramTool,

@@ -21,7 +21,7 @@ const nextTopic = {
 };
 
 function main() {
-  // Two-lesson linear path when nextTopic is present.
+  // The next topic is preview context; generation still produces one lesson.
   const twoLessons: CourseContext = {
     learningPathType: "linear",
     graphId: "g1",
@@ -30,11 +30,12 @@ function main() {
     nextTopic,
   };
   const p1 = buildKgContextPrompt(twoLessons);
-  assert(/TWO lessons/.test(p1), "two-lesson path instructs TWO lessons");
+  assert(/exactly ONE lesson/.test(p1), "next-topic path still instructs one lesson");
   assert(p1.includes("导数") && p1.includes("微分中值定理"), "both topics named");
   assert(p1.includes("导数定义") && p1.includes("罗尔定理"), "concepts from both topics listed");
   assert(p1.includes("1. 导数定义"), "default order is surfaced");
   assert(p1.includes("c1"), "target concept id surfaced");
+  assert(/preview context only/.test(p1), "next topic is explicitly preview-only");
 
   // Single lesson when leaf topic (no nextTopic).
   const oneLesson: CourseContext = {
@@ -45,8 +46,7 @@ function main() {
     nextTopic: null,
   };
   const p2 = buildKgContextPrompt(oneLesson);
-  assert(/ONE lesson/.test(p2), "leaf path instructs ONE lesson");
-  assert(!/TWO lessons/.test(p2), "leaf path does not ask for two lessons");
+  assert(/exactly ONE lesson/.test(p2), "leaf path instructs one lesson");
 
   // Empty when no context.
   assert(buildKgContextPrompt(undefined) === "", "no context -> empty hint");
