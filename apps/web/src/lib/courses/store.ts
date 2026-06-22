@@ -11,6 +11,74 @@ export async function saveCourse(course: Course, ownerId?: string | null): Promi
   return course;
 }
 
+/** Atomically claim a planned lesson for generation (planned → generating).
+ * Returns true only for the caller that wins the race; concurrent callers see
+ * false because the conditional UPDATE matches zero rows (doc §11.3). */
+export async function claimLessonForGeneration(
+  courseId: string,
+  lessonId: string,
+  ownerId?: string | null,
+): Promise<boolean> {
+  const resolvedOwnerId = await requireOwnerId(ownerId, "generate a lesson");
+  const claimed = await getDb()
+    .update(lessonsTable)
+    .set({ status: "generating", updatedAt: new Date() })
+    .where(
+      and(
+        eq(lessonsTable.id, lessonId),
+        eq(lessonsTable.courseId, courseId),
+        eq(lessonsTable.ownerId, resolvedOwnerId),
+        eq(lessonsTable.status, "planned"),
+      ),
+    )
+    .returning({ id: lessonsTable.id });
+  return claimed.length > 0;
+}
+
+/** Release a claim back to planned (generating → planned) after a failed run so
+ * the lesson can be retried. */
+export async function releaseLessonClaim(
+  courseId: string,
+  lessonId: string,
+  ownerId?: string | null,
+): Promise<void> {
+  const resolvedOwnerId = await requireOwnerId(ownerId, "generate a lesson");
+  await getDb()
+    .update(lessonsTable)
+    .set({ status: "planned", updatedAt: new Date() })
+    .where(
+      and(
+        eq(lessonsTable.id, lessonId),
+        eq(lessonsTable.courseId, courseId),
+        eq(lessonsTable.ownerId, resolvedOwnerId),
+        eq(lessonsTable.status, "generating"),
+      ),
+    );
+}
+
+/** Persist a single generated lesson without rewriting the whole lesson set,
+ * avoiding the last-write-wins clobber of saveCourse's wholesale replace. */
+export async function saveGeneratedLesson(course: Course, lesson: Lesson, ownerId?: string | null): Promise<void> {
+  const resolvedOwnerId = await requireOwnerId(ownerId, "save a lesson");
+  await getDb().transaction(async (tx) => {
+    await tx
+      .update(lessonsTable)
+      .set({
+        title: lesson.title,
+        status: lesson.status,
+        blocks: lesson.blocks ?? null,
+        estimatedMinutes: lesson.estimatedMinutes ?? null,
+        version: lesson.version ?? 1,
+        updatedAt: new Date(lesson.updatedAt),
+      })
+      .where(and(eq(lessonsTable.id, lesson.id), eq(lessonsTable.ownerId, resolvedOwnerId)));
+    await tx
+      .update(coursesTable)
+      .set({ estimatedMinutes: course.estimatedMinutes, updatedAt: new Date(course.updatedAt) })
+      .where(and(eq(coursesTable.id, course.id), eq(coursesTable.ownerId, resolvedOwnerId)));
+  });
+}
+
 export async function getCourse(id: string, ownerId?: string | null): Promise<Course | undefined> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
   if (!resolvedOwnerId) return undefined;

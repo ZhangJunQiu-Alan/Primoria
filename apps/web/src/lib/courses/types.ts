@@ -2,10 +2,29 @@ import type { PhysicsScene } from "@/lib/agent-os";
 
 export type BlockType = "text" | "analogy" | "transfer" | "visual" | "code" | "quiz" | "mind_map" | "slide" | "worksheet";
 
+/** Teaching role a block plays within a lesson's pedagogical arc (doc §4.3).
+ * Optional on persisted blocks: historical blocks predate this metadata. */
+export type PedagogicalRole =
+  | "hook"
+  | "roadmap"
+  | "explanation"
+  | "example"
+  | "deepening"
+  | "misconception"
+  | "transfer"
+  | "assessment"
+  | "summary";
+
 type BlockBase = {
   id: string;
   type: BlockType;
   title?: string;
+  /** KG concept ids this block teaches. Many-to-many: one block may cover
+   * several concepts and one concept may span several blocks. Absent on
+   * historical blocks generated before IR/compiler. */
+  conceptIds?: string[];
+  /** Stage in the lesson's teaching arc. Absent on historical blocks. */
+  pedagogicalRole?: PedagogicalRole;
 };
 
 export type TextBlock = BlockBase & {

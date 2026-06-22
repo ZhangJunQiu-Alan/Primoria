@@ -6,7 +6,7 @@ import { z } from "zod";
 import { BlockRenderer } from "./block-renderer";
 import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surface";
 import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
-import type { Course, CourseBlock } from "@/lib/courses/types";
+import type { Course, CourseBlock, Lesson } from "@/lib/courses/types";
 import { courseBlocks } from "@/lib/courses/types";
 
 const MIN_SIDEBAR_WIDTH = 320;
@@ -188,9 +188,6 @@ const BLOCK_TYPE_ENUM = z.enum([
   "visual",
   "code",
   "quiz",
-  "mind_map",
-  "slide",
-  "worksheet",
 ]);
 
 function ActionStatus({ name, status, result }: { name: string; status: string; result: unknown }) {
@@ -237,7 +234,7 @@ function CourseStructureActions({
     {
       name: "add_course_block",
       description:
-        "Add a NEW block to the open Primoria course. Use when the learner asks to add a quiz, worksheet, mind map, slides, example, analogy, visual, etc. Pick the block type that best fits the request.",
+        "Add a NEW block to the open Primoria course. Use when the learner asks to add an explanation, example, analogy, transfer, visual, code sample, or quiz. Pick the block type that best fits the request.",
       parameters: z.object({
         targetType: BLOCK_TYPE_ENUM.describe("The block type to create."),
         instruction: z.string().describe("What the new block should cover, in the learner's terms."),
@@ -260,7 +257,7 @@ function CourseStructureActions({
     {
       name: "transform_selected_course_block",
       description:
-        "Convert the currently selected course block into a DIFFERENT block type (e.g. turn a text block into a mind map, or a section into a quiz). Use only when a block is selected and the learner asks to change its format.",
+        "Convert the currently selected course block into a DIFFERENT supported block type (for example, turn a text block into a visual or quiz). Use only when a block is selected and the learner asks to change its format.",
       parameters: z.object({
         targetType: BLOCK_TYPE_ENUM.describe("The block type to convert into."),
         instruction: z.string().describe("Any guidance for the conversion."),
@@ -557,6 +554,70 @@ function CourseAIAssistantPanel({
   );
 }
 
+type LessonGenerationState = "generating" | { error: string };
+
+// Lazy-generation outline: planned/generating lessons with a Generate (or Retry)
+// affordance. The server atomically claims the lesson, so an in-flight click and
+// a concurrent request cannot both generate it.
+function LessonOutline({ course, onCourseUpdated }: { course: Course; onCourseUpdated: (next: Course) => void }) {
+  const upcoming = useMemo(
+    () => [...course.lessons].sort((a, b) => a.sortKey - b.sortKey).filter((lesson) => lesson.status !== "generated"),
+    [course.lessons],
+  );
+  const [pending, setPending] = useState<Record<string, LessonGenerationState>>({});
+
+  async function generate(lesson: Lesson) {
+    if (pending[lesson.id] === "generating") return;
+    setPending((prev) => ({ ...prev, [lesson.id]: "generating" }));
+    try {
+      const response = await fetch(`/api/courses/${course.id}/lessons/${lesson.id}/generate`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ settings: readSettings() }),
+      });
+      const data = (await response.json()) as { course?: Course; error?: string };
+      if (!response.ok || !data.course) throw new Error(data.error ?? "Lesson generation failed");
+      setPending((prev) => {
+        const next = { ...prev };
+        delete next[lesson.id];
+        return next;
+      });
+      onCourseUpdated(data.course);
+    } catch (error) {
+      setPending((prev) => ({ ...prev, [lesson.id]: { error: error instanceof Error ? error.message : "Lesson generation failed" } }));
+    }
+  }
+
+  if (upcoming.length === 0) return null;
+
+  return (
+    <div className="course-lesson-outline">
+      <h2 className="course-lesson-outline-title">Upcoming lessons</h2>
+      <ul className="course-lesson-outline-list">
+        {upcoming.map((lesson) => {
+          const state = pending[lesson.id];
+          const generating = state === "generating" || lesson.status === "generating";
+          const error = typeof state === "object" ? state.error : null;
+          return (
+            <li key={lesson.id} className="course-lesson-outline-item">
+              <span className="course-lesson-outline-name">{lesson.title}</span>
+              <button
+                type="button"
+                className="course-lesson-generate"
+                disabled={generating}
+                onClick={() => generate(lesson)}
+              >
+                {generating ? "Generating…" : error ? "Retry" : "Generate"}
+              </button>
+              {error ? <span className="course-lesson-outline-error">{error}</span> : null}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialCourse: Course; copilotEnabled: boolean }) {
   const [course, setCourse] = useState<Course>(initialCourse);
   const blocks = useMemo(() => courseBlocks(course), [course]);
@@ -682,6 +743,7 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
               <BlockRenderer block={block} courseId={course.id} />
             </div>
           ))}
+          <LessonOutline course={course} onCourseUpdated={setCourse} />
         </div>
       </div>
       <CourseAIAssistantPanel

@@ -16,10 +16,10 @@ export type CourseContext = {
   nextTopic: CourseContextTopic | null;
 };
 
-// Compact knowledge-graph hint appended to the course prompt: the start topic's
+// Compact knowledge-graph hint appended to the lesson prompt: the start topic's
 // concepts (with default order), an optional target concept to emphasize, and
-// whether to produce a two-lesson linear path (next topic) or a single lesson
-// (leaf topic).
+// the next topic only as preview context. Each generation call produces exactly
+// one lesson for the start topic; later topics remain lazy outline nodes.
 export function buildKgContextPrompt(kg?: CourseContext): string {
   if (!kg?.startTopic) return "";
   const fmtTopic = (t: CourseContextTopic) => {
@@ -39,10 +39,10 @@ export function buildKgContextPrompt(kg?: CourseContext): string {
   if (kg.nextTopic) {
     lines.push(`Next topic: ${fmtTopic(kg.nextTopic)}`);
     lines.push(
-      'Produce TWO lessons in linear order: lesson 1 teaches the start topic\'s concepts, lesson 2 teaches the next topic\'s concepts. Make the two-lesson structure explicit in the block titles (e.g. "第一课 / 第二课").',
+      "Generate exactly ONE lesson for the start topic. The next topic is preview context only: do not teach its concepts now, and mention it only in the final closure block.",
     );
   } else {
-    lines.push("This is a leaf topic — produce ONE lesson covering the start topic's concepts. Do not invent a second lesson.");
+    lines.push("This is a leaf topic — generate exactly ONE lesson covering the start topic's concepts.");
   }
   return lines.join("\n");
 }
