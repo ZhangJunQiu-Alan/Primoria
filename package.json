@@ -3,10 +3,11 @@
   "private": true,
   "packageManager": "pnpm@10.28.1",
   "scripts": {
-    "dev": "pnpm run --parallel \"/^dev:/\"",
+    "dev": "pnpm -w run --parallel \"/^dev:/\"",
     "dev:agent": "pnpm --filter @primoria/agent dev",
     "dev:web": "pnpm --filter @primoria/web dev",
     "dev:worker": "pnpm --filter @primoria/web worker:lesson-generation",
+    "dev:progress": "pnpm --filter @primoria/web worker:learning-progress",
     "build": "pnpm --filter @primoria/web build",
     "lint": "pnpm --filter @primoria/web lint",
     "typecheck": "pnpm --filter @primoria/web typecheck",
