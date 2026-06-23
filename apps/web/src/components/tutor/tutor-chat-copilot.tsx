@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
-import { getCurrentThreadId, hydrateThreadHistoryFromServer, resetCopilotThreads, startFreshCurrentThread, THREAD_EVENT_NAME } from "@/lib/copilot-thread-history";
+import { RestoredLessonGenerationCards, usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
+import { getCurrentThreadId, hydrateThreadHistoryFromServer, resetCopilotThreads, THREAD_EVENT_NAME } from "@/lib/copilot-thread-history";
 import { CopilotRestorePanel, PRIMORIA_MAIN_SUGGESTIONS, PrimoriaCopilotChatSurface } from "./copilot-chat-surface";
 
 function useCurrentCopilotThreadId() {
@@ -13,7 +13,7 @@ function useCurrentCopilotThreadId() {
     let cancelled = false;
     const timer = window.setTimeout(() => {
       if (cancelled) return;
-      setThreadId(startFreshCurrentThread());
+      setThreadId(getCurrentThreadId());
       setIsReady(true);
       void hydrateThreadHistoryFromServer();
     }, 0);
@@ -51,13 +51,16 @@ export function TutorChatCopilot() {
   return (
     <div className="copilot-chat-shell" aria-busy={!isReady}>
       {isReady ? (
-        <PrimoriaCopilotChatSurface
-          key={`restore-${threadId}`}
-          threadId={threadId}
-          className="main-copilot-surface"
-          welcomeScreen
-          suggestions={PRIMORIA_MAIN_SUGGESTIONS}
-        />
+        <>
+          <RestoredLessonGenerationCards />
+          <PrimoriaCopilotChatSurface
+            key={`restore-${threadId}`}
+            threadId={threadId}
+            className="main-copilot-surface"
+            welcomeScreen
+            suggestions={PRIMORIA_MAIN_SUGGESTIONS}
+          />
+        </>
       ) : (
         <CopilotRestorePanel />
       )}
