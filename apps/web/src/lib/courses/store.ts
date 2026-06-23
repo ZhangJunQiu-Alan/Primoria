@@ -165,6 +165,46 @@ async function requireOwnerId(ownerId: string | null | undefined, action: string
   return resolvedOwnerId;
 }
 
+/** Insert a single planned (unmaterialized) lesson — used by the learning-progress
+ * confirm flow to add a remediation lesson without re-saving the whole course. The
+ * id is deterministic so a double-accept is a no-op; the existing row is returned. */
+export async function insertPlannedLesson(input: {
+  id: string;
+  courseId: string;
+  ownerId: string;
+  topicId: string | null;
+  title: string;
+  role: LessonRole;
+  sortKey: number;
+  triggeredFrom?: string | null;
+}): Promise<Lesson> {
+  const now = new Date();
+  const db = getDb();
+  const rows = await db
+    .insert(lessonsTable)
+    .values({
+      id: input.id,
+      courseId: input.courseId,
+      ownerId: input.ownerId,
+      topicId: input.topicId ?? null,
+      title: input.title,
+      role: input.role,
+      progress: "not_started",
+      status: "planned",
+      sortKey: input.sortKey,
+      triggeredFrom: input.triggeredFrom ?? null,
+      blocks: null,
+      estimatedMinutes: null,
+      version: 1,
+      createdAt: now,
+      updatedAt: now,
+    })
+    .onConflictDoNothing({ target: lessonsTable.id })
+    .returning();
+  const row = rows[0] ?? (await db.select().from(lessonsTable).where(eq(lessonsTable.id, input.id)).limit(1))[0];
+  return rowToLesson(row);
+}
+
 async function saveCourseToDb(course: Course, ownerId: string) {
   const courseRow = courseToRow(course, ownerId);
   const lessonRows = course.lessons.map((lesson) => lessonToRow(lesson, course.id, ownerId));

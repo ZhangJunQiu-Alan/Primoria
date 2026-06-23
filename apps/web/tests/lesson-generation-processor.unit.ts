@@ -74,12 +74,13 @@ function contentFor(j: { order: number; type: string }, titleOverride?: string):
       return {
         order,
         title,
-        questions: CONCEPTS.map((_, i) => ({
+        questions: CONCEPTS.map((conceptId, i) => ({
           kind: "single",
           id: `q${i + 1}`,
           question: `q${i + 1}?`,
           choices: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
           correctId: "a",
+          conceptId,
         })),
       };
     default:

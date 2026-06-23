@@ -11,6 +11,8 @@ import { courseBlocks } from "@/lib/courses/types";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
+import { useLearningProgressRecommendation } from "@/hooks/use-learning-progress-recommendation";
+import { learningDecisionAcceptLabel, learningDecisionHeadline } from "@/lib/courses/learning-progress-labels";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
@@ -658,6 +660,95 @@ function LessonOutline({
   );
 }
 
+// Post-lesson recommendation popup (feature_specification.md §Note4). After a
+// lesson is completed, the learning-progress worker records a next-step decision;
+// here the learner confirms it before any lesson is generated. On accept that
+// enqueues a lesson job, the parent refetches so the new/next lesson appears in
+// the outline and starts polling.
+function LearningProgressPopup({ courseId, onAccepted }: { courseId: string; onAccepted: () => Promise<void> | void }) {
+  const { pending, resolving, resolve } = useLearningProgressRecommendation(courseId);
+  const decision = pending?.decision ?? null;
+  if (!pending || !decision) return null;
+
+  async function act(action: "accept" | "dismiss") {
+    if (!pending) return;
+    const result = await resolve(pending.id, action);
+    if (action === "accept" && result && (result.kind === "next" || result.kind === "remediation")) {
+      await onAccepted();
+    }
+  }
+
+  return (
+    <div
+      className="learning-progress-popup-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Learning recommendation"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 60,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(28, 22, 14, 0.32)",
+        padding: 16,
+      }}
+    >
+      <div
+        className="learning-progress-popup-card"
+        style={{
+          width: "min(440px, 100%)",
+          background: "#fffefb",
+          borderRadius: 16,
+          border: "1px solid rgba(200, 136, 26, 0.22)",
+          boxShadow: "0 18px 48px rgba(57, 42, 25, 0.22)",
+          padding: 24,
+        }}
+      >
+        <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>
+          {learningDecisionHeadline(decision)}
+        </strong>
+        <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>{decision.reason}</p>
+        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 22 }}>
+          <button
+            type="button"
+            onClick={() => void act("dismiss")}
+            disabled={resolving}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 999,
+              border: "1px solid rgba(90, 71, 39, 0.2)",
+              background: "transparent",
+              color: "#5a4727",
+              fontWeight: 700,
+              cursor: resolving ? "default" : "pointer",
+            }}
+          >
+            暂不
+          </button>
+          <button
+            type="button"
+            onClick={() => void act("accept")}
+            disabled={resolving}
+            style={{
+              padding: "8px 18px",
+              borderRadius: 999,
+              border: "none",
+              background: "#c8881a",
+              color: "#fffaf2",
+              fontWeight: 800,
+              cursor: resolving ? "default" : "pointer",
+            }}
+          >
+            {resolving ? "处理中…" : learningDecisionAcceptLabel(decision)}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function CourseDetailClient({
   initialCourse,
   initialLessonJobs = [],
@@ -668,6 +759,8 @@ export function CourseDetailClient({
   copilotEnabled: boolean;
 }) {
   const [course, setCourse] = useState<Course>(initialCourse);
+  const [lessonJobs, setLessonJobs] = useState<LessonGenerationJobSummary[]>(initialLessonJobs);
+  const [outlineKey, setOutlineKey] = useState(0);
   const blocks = useMemo(() => courseBlocks(course), [course]);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [selectedTextContext, setSelectedTextContext] = useState<SelectedTextContext | null>(null);
@@ -695,6 +788,29 @@ export function CourseDetailClient({
   }, [sidebarCollapsed, sidebarWidth]);
 
   const selectedBlock = blocks.find((b) => b.id === selectedBlockId) ?? null;
+
+  // After a recommendation is accepted (a lesson job was enqueued), refetch the
+  // course (the new/next lesson now exists) and its lesson jobs, then remount the
+  // outline so it re-seeds with the active job and starts polling.
+  async function refreshAfterRecommendation() {
+    try {
+      const [courseRes, jobsRes] = await Promise.all([
+        fetch(`/api/courses/${course.id}`, { cache: "no-store" }),
+        fetch(`/api/courses/${course.id}/lesson-generation-jobs`, { cache: "no-store" }),
+      ]);
+      if (courseRes.ok) {
+        const data = (await courseRes.json()) as { course?: Course };
+        if (data.course) setCourse(data.course);
+      }
+      if (jobsRes.ok) {
+        const data = (await jobsRes.json()) as { jobs?: LessonGenerationJobSummary[] };
+        if (Array.isArray(data.jobs)) setLessonJobs(data.jobs);
+      }
+      setOutlineKey((key) => key + 1);
+    } catch {
+      // Best-effort — a manual reload still surfaces the new lesson.
+    }
+  }
 
   function selectBlock(block: CourseBlock) {
     setSelectedBlockId(block.id);
@@ -791,9 +907,10 @@ export function CourseDetailClient({
               <BlockRenderer block={block} courseId={course.id} />
             </div>
           ))}
-          <LessonOutline course={course} initialJobs={initialLessonJobs} onCourseUpdated={setCourse} />
+          <LessonOutline key={outlineKey} course={course} initialJobs={lessonJobs} onCourseUpdated={setCourse} />
         </div>
       </div>
+      <LearningProgressPopup courseId={course.id} onAccepted={refreshAfterRecommendation} />
       <CourseAIAssistantPanel
         course={course}
         selectedBlock={selectedBlock}

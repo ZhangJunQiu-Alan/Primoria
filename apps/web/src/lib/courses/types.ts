@@ -72,6 +72,10 @@ export type SingleQuestion = {
   choices: { id: string; text: string }[];
   correctId: string;
   explanation?: string;
+  // Concept this question checks (∈ the lesson topic's concepts). Drives
+  // concept-level mastery attribution. Optional at the persisted-data boundary;
+  // the current Block Writer/compiler requires it for every generated question.
+  conceptId?: string;
 };
 
 export type MultiQuestion = {
@@ -81,6 +85,7 @@ export type MultiQuestion = {
   choices: { id: string; text: string }[];
   correctIds: string[];
   explanation?: string;
+  conceptId?: string;
 };
 
 export type TrueFalseQuestion = {
@@ -89,6 +94,7 @@ export type TrueFalseQuestion = {
   question: string;
   correct: boolean;
   explanation?: string;
+  conceptId?: string;
 };
 
 export type QuizQuestion = SingleQuestion | MultiQuestion | TrueFalseQuestion;

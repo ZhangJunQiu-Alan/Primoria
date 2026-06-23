@@ -71,7 +71,7 @@ function contentFor(j: { order: number; type: string }) {
       return {
         order,
         title,
-        questions: CONCEPTS.map((_, i) => ({ kind: "single", id: `q${i + 1}`, question: `q${i + 1}?`, choices: [{ id: "a", text: "A" }, { id: "b", text: "B" }], correctId: "a" })),
+        questions: CONCEPTS.map((conceptId, i) => ({ kind: "single", id: `q${i + 1}`, question: `q${i + 1}?`, choices: [{ id: "a", text: "A" }, { id: "b", text: "B" }], correctId: "a", conceptId })),
       };
     default:
       return { order, title, markdown: `body ${order}` };

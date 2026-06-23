@@ -50,11 +50,18 @@ function startHeartbeat(claim: LessonGenerationClaim) {
   const tick = async () => {
     if (stopped) return;
     let ok = false;
+    let queryFailed = false;
     try {
       ok = await renewLessonGenerationLease(claim.job.id, claim.workerId, claim.leaseToken);
     } catch (error) {
       log("warn", "heartbeat renewal threw", { jobId: claim.job.id, error: String(error) });
-      ok = false;
+      queryFailed = true;
+    }
+    if (queryFailed) {
+      // Query failed (network glitch). Do not stop the heartbeat or mark it lost yet;
+      // try again in the next interval since our lease token might still be valid.
+      if (!stopped) timer = setTimeout(tick, HEARTBEAT_INTERVAL_MS);
+      return;
     }
     if (!ok) {
       lost = true;

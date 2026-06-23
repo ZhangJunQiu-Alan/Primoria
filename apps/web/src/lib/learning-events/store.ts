@@ -25,6 +25,14 @@ export type LearningEvent =
       distractorTag?: string | null;
     }
   | {
+      type: "lesson.completed";
+      ownerId: string;
+      id?: string;
+      courseId: string;
+      lessonId: string;
+      graphId?: string | null;
+    }
+  | {
       type: "course.generated";
       ownerId: string;
       id?: string;
@@ -91,6 +99,14 @@ function toRow(event: LearningEvent): LearningEventRow {
           is_correct: event.isCorrect,
           ...(event.distractorTag ? { distractor_tag: event.distractorTag } : {}),
         },
+      };
+    case "lesson.completed":
+      return {
+        ...base,
+        courseId: event.courseId,
+        lessonId: event.lessonId,
+        graphId: event.graphId ?? null,
+        payload: {},
       };
     case "course.generated":
       return {
