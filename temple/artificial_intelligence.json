@@ -17,9 +17,9 @@
   },
   "nodes": [
     {
-      "id": "ai_search",
+      "id": "ai_search_part1",
       "kind": "topic",
-      "name": "Search",
+      "name": "Search (Part 1)",
       "topic": null,
       "default_order": 1
     },
@@ -27,7 +27,7 @@
       "id": "ai_search_problem",
       "kind": "concept",
       "name": "Search Problem Formulation",
-      "topic": "ai_search",
+      "topic": "ai_search_part1",
       "description": "Formulating a problem for search as states, actions, a transition model, a goal test, and path costs, enabling systematic solution finding.",
       "default_order": 1
     },
@@ -35,7 +35,7 @@
       "id": "ai_uninformed",
       "kind": "concept",
       "name": "Uninformed Search",
-      "topic": "ai_search",
+      "topic": "ai_search_part1",
       "description": "Search strategies using no domain knowledge, including breadth-first, depth-first, and uniform-cost search, differing in completeness, optimality, and complexity.",
       "default_order": 2
     },
@@ -43,40 +43,47 @@
       "id": "ai_heuristics",
       "kind": "concept",
       "name": "Heuristics and Admissibility",
-      "topic": "ai_search",
+      "topic": "ai_search_part1",
       "description": "Heuristic functions estimating the cost to reach the goal, where admissibility (never overestimating) and consistency guarantee optimal informed search.",
       "default_order": 3
+    },
+    {
+      "id": "ai_search_part2",
+      "kind": "topic",
+      "name": "Search (Part 2)",
+      "topic": null,
+      "default_order": 2
     },
     {
       "id": "ai_informed",
       "kind": "concept",
       "name": "Informed Search (A*)",
-      "topic": "ai_search",
+      "topic": "ai_search_part2",
       "description": "Informed search using heuristics to guide exploration, including greedy best-first and A*, which expands nodes by estimated total path cost.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "ai_minimax",
       "kind": "concept",
       "name": "Adversarial Search (Minimax)",
-      "topic": "ai_search",
+      "topic": "ai_search_part2",
       "description": "Adversarial search computing optimal play in zero-sum games by recursively assuming each player maximises its own outcome against an optimal opponent.",
-      "default_order": 5
+      "default_order": 2
     },
     {
       "id": "ai_alphabeta",
       "kind": "concept",
       "name": "Alpha-Beta Pruning",
-      "topic": "ai_search",
+      "topic": "ai_search_part2",
       "description": "An optimisation of minimax that prunes branches which cannot affect the final decision, allowing deeper search within the same time budget.",
-      "default_order": 6
+      "default_order": 3
     },
     {
       "id": "ai_csp",
       "kind": "topic",
       "name": "Constraint Satisfaction",
       "topic": null,
-      "default_order": 2
+      "default_order": 3
     },
     {
       "id": "ai_csp_def",
@@ -115,7 +122,7 @@
       "kind": "topic",
       "name": "Markov Decision Processes",
       "topic": null,
-      "default_order": 3
+      "default_order": 4
     },
     {
       "id": "ai_mdp_def",
@@ -154,7 +161,7 @@
       "kind": "topic",
       "name": "Reinforcement Learning",
       "topic": null,
-      "default_order": 4
+      "default_order": 5
     },
     {
       "id": "ai_rl_framework",
@@ -201,7 +208,7 @@
       "kind": "topic",
       "name": "Probability and Bayes Nets",
       "topic": null,
-      "default_order": 5
+      "default_order": 6
     },
     {
       "id": "ai_prob",
@@ -240,7 +247,7 @@
       "kind": "topic",
       "name": "Markov Models and HMMs",
       "topic": null,
-      "default_order": 6
+      "default_order": 7
     },
     {
       "id": "ai_markov_chain",
@@ -267,35 +274,42 @@
       "default_order": 3
     },
     {
+      "id": "ai_markov_models__ai_ml",
+      "kind": "topic",
+      "name": "Probabilistic Inference and Naive Bayes",
+      "topic": null,
+      "default_order": 8
+    },
+    {
       "id": "ai_viterbi",
       "kind": "concept",
       "name": "Viterbi Algorithm",
-      "topic": "ai_markov_models",
+      "topic": "ai_markov_models__ai_ml",
       "description": "The Viterbi algorithm using dynamic programming to find the single most likely sequence of hidden states given an observation sequence.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "ai_particle",
       "kind": "concept",
       "name": "Particle Filtering",
-      "topic": "ai_markov_models",
+      "topic": "ai_markov_models__ai_ml",
       "description": "Particle filtering approximating the belief over states with weighted samples, propagated and resampled to track distributions in large state spaces.",
-      "default_order": 5
+      "default_order": 2
+    },
+    {
+      "id": "ai_naive_bayes",
+      "kind": "concept",
+      "name": "Naive Bayes",
+      "topic": "ai_markov_models__ai_ml",
+      "description": "A simple probabilistic classifier applying Bayes' rule under the assumption that features are conditionally independent given the class label.",
+      "default_order": 3
     },
     {
       "id": "ai_ml",
       "kind": "topic",
       "name": "Machine Learning",
       "topic": null,
-      "default_order": 7
-    },
-    {
-      "id": "ai_naive_bayes",
-      "kind": "concept",
-      "name": "Naive Bayes",
-      "topic": "ai_ml",
-      "description": "A simple probabilistic classifier applying Bayes' rule under the assumption that features are conditionally independent given the class label.",
-      "default_order": 1
+      "default_order": 9
     },
     {
       "id": "ai_perceptron",
@@ -303,7 +317,7 @@
       "name": "Perceptron",
       "topic": "ai_ml",
       "description": "A linear classifier that learns a separating hyperplane by updating weights on misclassified examples via the perceptron learning rule.",
-      "default_order": 2
+      "default_order": 1
     },
     {
       "id": "ai_neural_nets",
@@ -311,7 +325,7 @@
       "name": "Neural Networks",
       "topic": "ai_ml",
       "description": "Multilayer neural networks composing linear transformations with nonlinear activations to learn complex, nonlinear decision functions from data.",
-      "default_order": 3
+      "default_order": 2
     },
     {
       "id": "ai_generalization",
@@ -319,7 +333,7 @@
       "name": "Generalization and Overfitting",
       "topic": "ai_ml",
       "description": "Generalisation describing how well a model performs on unseen data, with overfitting and model capacity governing the gap between training and test error.",
-      "default_order": 4
+      "default_order": 3
     }
   ],
   "edges": [

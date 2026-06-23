@@ -2,8 +2,8 @@
   "graphId": "a_level_chemistry",
   "subject": "A-Level Chemistry (CIE 9701)",
   "generatedFrom": "temple/a_level_chemistry.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "che_atomic",
@@ -33,11 +33,11 @@
       ],
       "successors": [
         {
-          "topicId": "che_bonding",
+          "topicId": "che_bonding_part1",
           "hard": true
         },
         {
-          "topicId": "che_periodicity",
+          "topicId": "che_thermodynamics__che_periodicity",
           "hard": true
         },
         {
@@ -76,15 +76,15 @@
       ],
       "successors": [
         {
-          "topicId": "che_energetics",
+          "topicId": "che_states__che_energetics",
           "hard": false
         },
         {
-          "topicId": "che_equilibrium",
+          "topicId": "che_equilibrium__che_acids",
           "hard": false
         },
         {
-          "topicId": "che_analysis",
+          "topicId": "che_arenes__che_analysis",
           "hard": false
         }
       ],
@@ -92,8 +92,8 @@
       "isRoot": true
     },
     {
-      "topicId": "che_bonding",
-      "name": "Chemical Bonding",
+      "topicId": "che_bonding_part1",
+      "name": "Chemical Bonding (Part 1)",
       "defaultOrder": 3,
       "conceptIds": [
         {
@@ -110,30 +110,19 @@
           "conceptId": "che_metallic",
           "name": "Metallic Bonding",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "che_vsepr",
-          "name": "Shapes of Molecules (VSEPR)",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "che_electronegativity",
-          "name": "Electronegativity and Polarity",
-          "defaultOrder": 5
-        },
-        {
-          "conceptId": "che_imf",
-          "name": "Intermolecular Forces",
-          "defaultOrder": 6
         }
       ],
       "successors": [
         {
-          "topicId": "che_states",
+          "topicId": "che_bonding_part2",
           "hard": true
         },
         {
-          "topicId": "che_thermodynamics",
+          "topicId": "che_states__che_energetics",
+          "hard": true
+        },
+        {
+          "topicId": "che_redox__che_thermodynamics",
           "hard": true
         },
         {
@@ -141,7 +130,7 @@
           "hard": true
         },
         {
-          "topicId": "che_arenes",
+          "topicId": "che_arenes__che_analysis",
           "hard": true
         }
       ],
@@ -151,9 +140,36 @@
       "isRoot": false
     },
     {
-      "topicId": "che_states",
-      "name": "States of Matter",
+      "topicId": "che_bonding_part2",
+      "name": "Chemical Bonding (Part 2)",
       "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "che_vsepr",
+          "name": "Shapes of Molecules (VSEPR)",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "che_electronegativity",
+          "name": "Electronegativity and Polarity",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "che_imf",
+          "name": "Intermolecular Forces",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "che_bonding_part1"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "che_states__che_energetics",
+      "name": "States of Matter and Enthalpy",
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "che_gas_laws",
@@ -164,55 +180,65 @@
           "conceptId": "che_solids",
           "name": "Solid Structures",
           "defaultOrder": 2
+        },
+        {
+          "conceptId": "che_enthalpy",
+          "name": "Enthalpy Changes",
+          "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "che_energetics",
+          "hard": true
+        },
+        {
+          "topicId": "che_thermodynamics__che_periodicity",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
-        "che_bonding"
+        "che_stoichiometry",
+        "che_bonding_part1"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_energetics",
       "name": "Chemical Energetics",
-      "defaultOrder": 5,
+      "defaultOrder": 6,
       "conceptIds": [
-        {
-          "conceptId": "che_enthalpy",
-          "name": "Enthalpy Changes",
-          "defaultOrder": 1
-        },
         {
           "conceptId": "che_hess",
           "name": "Hess's Law",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "che_bond_enthalpy",
           "name": "Bond Enthalpy",
-          "defaultOrder": 3
+          "defaultOrder": 2
         },
         {
           "conceptId": "che_calorimetry",
           "name": "Calorimetry",
-          "defaultOrder": 4
+          "defaultOrder": 3
         }
       ],
       "successors": [
         {
-          "topicId": "che_thermodynamics",
+          "topicId": "che_redox__che_thermodynamics",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "che_stoichiometry"
+        "che_states__che_energetics"
       ],
       "isRoot": false
     },
     {
-      "topicId": "che_kinetics",
-      "name": "Reaction Kinetics",
-      "defaultOrder": 6,
+      "topicId": "che_kinetics_part1",
+      "name": "Reaction Kinetics (Part 1)",
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "che_rate",
@@ -228,31 +254,48 @@
           "conceptId": "che_boltzmann",
           "name": "Maxwell-Boltzmann Distribution",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "che_catalysis",
-          "name": "Catalysis",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "che_rate_equation",
-          "name": "Rate Equations and Orders",
-          "defaultOrder": 5
-        },
-        {
-          "conceptId": "che_rds",
-          "name": "Rate-Determining Step",
-          "defaultOrder": 6
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "che_kinetics_part2",
+          "hard": true
+        }
+      ],
       "prereqTopics": [],
       "isRoot": true
     },
     {
-      "topicId": "che_equilibrium",
-      "name": "Chemical Equilibria",
-      "defaultOrder": 7,
+      "topicId": "che_kinetics_part2",
+      "name": "Reaction Kinetics (Part 2)",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "che_catalysis",
+          "name": "Catalysis",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "che_rate_equation",
+          "name": "Rate Equations and Orders",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "che_rds",
+          "name": "Rate-Determining Step",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "che_kinetics_part1"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "che_equilibrium__che_acids",
+      "name": "Equilibria and Acid-Base Foundations",
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "che_dynamic_eq",
@@ -268,6 +311,11 @@
           "conceptId": "che_kc_kp",
           "name": "Equilibrium Constants Kc and Kp",
           "defaultOrder": 3
+        },
+        {
+          "conceptId": "che_bronsted",
+          "name": "Brønsted-Lowry Theory",
+          "defaultOrder": 4
         }
       ],
       "successors": [
@@ -284,44 +332,39 @@
     {
       "topicId": "che_acids",
       "name": "Acids, Bases and Buffers",
-      "defaultOrder": 8,
+      "defaultOrder": 10,
       "conceptIds": [
-        {
-          "conceptId": "che_bronsted",
-          "name": "Brønsted-Lowry Theory",
-          "defaultOrder": 1
-        },
         {
           "conceptId": "che_strong_weak",
           "name": "Strong and Weak Acids",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "che_ph_ka",
           "name": "pH and Acid Dissociation Constant",
-          "defaultOrder": 3
+          "defaultOrder": 2
         },
         {
           "conceptId": "che_buffers",
           "name": "Buffers",
-          "defaultOrder": 4
+          "defaultOrder": 3
         },
         {
           "conceptId": "che_ksp",
           "name": "Solubility Product",
-          "defaultOrder": 5
+          "defaultOrder": 4
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "che_equilibrium"
+        "che_equilibrium__che_acids"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_redox",
       "name": "Redox and Electrochemistry",
-      "defaultOrder": 9,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "che_oxidation_number",
@@ -337,19 +380,13 @@
           "conceptId": "che_electrode_potential",
           "name": "Electrode Potentials",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "che_cells",
-          "name": "Electrochemical Cells",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "che_electrolysis",
-          "name": "Electrolysis",
-          "defaultOrder": 5
         }
       ],
       "successors": [
+        {
+          "topicId": "che_redox__che_thermodynamics",
+          "hard": true
+        },
         {
           "topicId": "che_groups",
           "hard": false
@@ -359,47 +396,63 @@
       "isRoot": true
     },
     {
-      "topicId": "che_thermodynamics",
-      "name": "Lattice Energy and Thermodynamics",
-      "defaultOrder": 10,
+      "topicId": "che_redox__che_thermodynamics",
+      "name": "Electrochemistry and Thermodynamic Cycles",
+      "defaultOrder": 12,
       "conceptIds": [
+        {
+          "conceptId": "che_cells",
+          "name": "Electrochemical Cells",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "che_electrolysis",
+          "name": "Electrolysis",
+          "defaultOrder": 2
+        },
         {
           "conceptId": "che_born_haber",
           "name": "Lattice Energy and Born-Haber Cycles",
-          "defaultOrder": 1
+          "defaultOrder": 3
         },
         {
           "conceptId": "che_entropy",
           "name": "Entropy",
-          "defaultOrder": 2
-        },
-        {
-          "conceptId": "che_gibbs",
-          "name": "Gibbs Free Energy",
-          "defaultOrder": 3
+          "defaultOrder": 4
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "che_thermodynamics__che_periodicity",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
-        "che_bonding",
-        "che_energetics"
+        "che_bonding_part1",
+        "che_energetics",
+        "che_redox"
       ],
       "isRoot": false
     },
     {
-      "topicId": "che_periodicity",
-      "name": "Periodicity",
-      "defaultOrder": 11,
+      "topicId": "che_thermodynamics__che_periodicity",
+      "name": "Free Energy and Periodicity",
+      "defaultOrder": 13,
       "conceptIds": [
+        {
+          "conceptId": "che_gibbs",
+          "name": "Gibbs Free Energy",
+          "defaultOrder": 1
+        },
         {
           "conceptId": "che_periodic_trends",
           "name": "Periodic Trends",
-          "defaultOrder": 1
+          "defaultOrder": 2
         },
         {
           "conceptId": "che_period3",
           "name": "Period 3 Elements and Oxides",
-          "defaultOrder": 2
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -409,14 +462,16 @@
         }
       ],
       "prereqTopics": [
-        "che_atomic"
+        "che_atomic",
+        "che_states__che_energetics",
+        "che_redox__che_thermodynamics"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_groups",
       "name": "Inorganic Group Chemistry",
-      "defaultOrder": 12,
+      "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "che_group2",
@@ -437,14 +492,14 @@
       "successors": [],
       "prereqTopics": [
         "che_redox",
-        "che_periodicity"
+        "che_thermodynamics__che_periodicity"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_transition",
       "name": "Transition Elements",
-      "defaultOrder": 13,
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "che_transition_props",
@@ -471,7 +526,7 @@
     {
       "topicId": "che_organic_basics",
       "name": "Introduction to Organic Chemistry",
-      "defaultOrder": 14,
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "che_nomenclature",
@@ -500,7 +555,7 @@
           "hard": true
         },
         {
-          "topicId": "che_arenes",
+          "topicId": "che_arenes__che_analysis",
           "hard": false
         },
         {
@@ -509,14 +564,14 @@
         }
       ],
       "prereqTopics": [
-        "che_bonding"
+        "che_bonding_part1"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_hydrocarbons",
       "name": "Hydrocarbons",
-      "defaultOrder": 15,
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "che_alkanes",
@@ -536,7 +591,7 @@
       ],
       "successors": [
         {
-          "topicId": "che_halogenoalkanes",
+          "topicId": "che_halogenoalkanes__che_alcohols",
           "hard": false
         }
       ],
@@ -546,9 +601,9 @@
       "isRoot": false
     },
     {
-      "topicId": "che_halogenoalkanes",
-      "name": "Halogen Compounds",
-      "defaultOrder": 16,
+      "topicId": "che_halogenoalkanes__che_alcohols",
+      "name": "Halogenoalkanes and Alcohols",
+      "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "che_nucleophilic_sub",
@@ -559,11 +614,21 @@
           "conceptId": "che_elimination",
           "name": "Elimination Reactions",
           "defaultOrder": 2
+        },
+        {
+          "conceptId": "che_alcohol_reactions",
+          "name": "Alcohols and Their Reactions",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "che_alcohol_oxidation",
+          "name": "Oxidation of Alcohols",
+          "defaultOrder": 4
         }
       ],
       "successors": [
         {
-          "topicId": "che_alcohols",
+          "topicId": "che_carbonyls",
           "hard": true
         },
         {
@@ -577,36 +642,9 @@
       "isRoot": false
     },
     {
-      "topicId": "che_alcohols",
-      "name": "Hydroxy Compounds",
-      "defaultOrder": 17,
-      "conceptIds": [
-        {
-          "conceptId": "che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions",
-          "defaultOrder": 1
-        },
-        {
-          "conceptId": "che_alcohol_oxidation",
-          "name": "Oxidation of Alcohols",
-          "defaultOrder": 2
-        }
-      ],
-      "successors": [
-        {
-          "topicId": "che_carbonyls",
-          "hard": true
-        }
-      ],
-      "prereqTopics": [
-        "che_halogenoalkanes"
-      ],
-      "isRoot": false
-    },
-    {
       "topicId": "che_carbonyls",
       "name": "Carbonyl and Carboxylic Compounds",
-      "defaultOrder": 18,
+      "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "che_aldehydes_ketones",
@@ -631,14 +669,14 @@
         }
       ],
       "prereqTopics": [
-        "che_alcohols"
+        "che_halogenoalkanes__che_alcohols"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_nitrogen_org",
       "name": "Nitrogen Compounds and Polymers",
-      "defaultOrder": 19,
+      "defaultOrder": 20,
       "conceptIds": [
         {
           "conceptId": "che_amines",
@@ -658,15 +696,15 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "che_halogenoalkanes",
+        "che_halogenoalkanes__che_alcohols",
         "che_carbonyls"
       ],
       "isRoot": false
     },
     {
-      "topicId": "che_arenes",
-      "name": "Arenes",
-      "defaultOrder": 20,
+      "topicId": "che_arenes__che_analysis",
+      "name": "Arenes and Mass Spectrometry",
+      "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "che_benzene",
@@ -677,11 +715,22 @@
           "conceptId": "che_electrophilic_sub",
           "name": "Electrophilic Substitution",
           "defaultOrder": 2
+        },
+        {
+          "conceptId": "che_mass_spec",
+          "name": "Mass Spectrometry",
+          "defaultOrder": 3
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "che_analysis",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
-        "che_bonding",
+        "che_stoichiometry",
+        "che_bonding_part1",
         "che_organic_basics"
       ],
       "isRoot": false
@@ -689,33 +738,28 @@
     {
       "topicId": "che_analysis",
       "name": "Analytical Techniques",
-      "defaultOrder": 21,
+      "defaultOrder": 22,
       "conceptIds": [
-        {
-          "conceptId": "che_mass_spec",
-          "name": "Mass Spectrometry",
-          "defaultOrder": 1
-        },
         {
           "conceptId": "che_ir",
           "name": "Infrared Spectroscopy",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "che_nmr",
           "name": "NMR Spectroscopy",
-          "defaultOrder": 3
+          "defaultOrder": 2
         },
         {
           "conceptId": "che_chromatography",
           "name": "Chromatography",
-          "defaultOrder": 4
+          "defaultOrder": 3
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "che_stoichiometry",
-        "che_organic_basics"
+        "che_organic_basics",
+        "che_arenes__che_analysis"
       ],
       "isRoot": false
     }

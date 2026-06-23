@@ -2,8 +2,8 @@
   "graphId": "mit_calculus",
   "subject": "Calculus",
   "generatedFrom": "temple/mit_calculus.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_1801_differentiation",
@@ -24,19 +24,13 @@
           "conceptId": "c_1801_deriv_rules",
           "name": "Differentiation Rules",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_1801_chain_rule",
-          "name": "Chain Rule",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "c_1801_implicit_diff",
-          "name": "Implicit Differentiation",
-          "defaultOrder": 5
         }
       ],
       "successors": [
+        {
+          "topicId": "t_1801_differentiation__t_1801_apps_diff",
+          "hard": true
+        },
         {
           "topicId": "t_1801_apps_diff",
           "hard": true
@@ -47,6 +41,10 @@
         },
         {
           "topicId": "t_1801_tech_int",
+          "hard": true
+        },
+        {
+          "topicId": "t_1801_tech_int__t_1801_apps_int",
           "hard": true
         },
         {
@@ -66,29 +64,60 @@
       "isRoot": true
     },
     {
-      "topicId": "t_1801_apps_diff",
-      "name": "Applications of Differentiation",
+      "topicId": "t_1801_differentiation__t_1801_apps_diff",
+      "name": "Differentiation Techniques and Related Rates",
       "defaultOrder": 2,
       "conceptIds": [
         {
-          "conceptId": "c_1801_related_rates",
-          "name": "Related Rates",
+          "conceptId": "c_1801_chain_rule",
+          "name": "Chain Rule",
           "defaultOrder": 1
         },
         {
+          "conceptId": "c_1801_implicit_diff",
+          "name": "Implicit Differentiation",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_1801_related_rates",
+          "name": "Related Rates",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_1801_integration",
+          "hard": true
+        },
+        {
+          "topicId": "t_1802_partial_diff",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_1801_differentiation"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_1801_apps_diff",
+      "name": "Applications of Differentiation",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
           "conceptId": "c_1801_linear_approx",
           "name": "Linear Approximation",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_curve_sketching",
           "name": "Curve Sketching",
-          "defaultOrder": 3
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_mvt",
           "name": "Mean Value Theorem",
-          "defaultOrder": 4
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -105,7 +134,7 @@
     {
       "topicId": "t_1801_integration",
       "name": "Integration",
-      "defaultOrder": 3,
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_1801_riemann_sums",
@@ -134,6 +163,10 @@
           "hard": true
         },
         {
+          "topicId": "t_1801_tech_int__t_1801_apps_int",
+          "hard": true
+        },
+        {
           "topicId": "t_1801_apps_int",
           "hard": true
         },
@@ -148,6 +181,7 @@
       ],
       "prereqTopics": [
         "t_1801_differentiation",
+        "t_1801_differentiation__t_1801_apps_diff",
         "t_1801_apps_diff"
       ],
       "isRoot": false
@@ -155,7 +189,7 @@
     {
       "topicId": "t_1801_tech_int",
       "name": "Techniques of Integration",
-      "defaultOrder": 4,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c_1801_parts",
@@ -171,19 +205,41 @@
           "conceptId": "c_1801_trig_sub",
           "name": "Trigonometric Substitution",
           "defaultOrder": 3
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_1801_differentiation",
+        "t_1801_integration"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_1801_tech_int__t_1801_apps_int",
+      "name": "Integration Techniques and Area",
+      "defaultOrder": 6,
+      "conceptIds": [
         {
           "conceptId": "c_1801_partial_fractions",
           "name": "Partial Fractions",
-          "defaultOrder": 4
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_improper_int",
           "name": "Improper Integrals",
-          "defaultOrder": 5
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_1801_area_curves",
+          "name": "Area Between Curves",
+          "defaultOrder": 3
         }
       ],
       "successors": [
+        {
+          "topicId": "t_1801_apps_int",
+          "hard": true
+        },
         {
           "topicId": "t_1801_series",
           "hard": false
@@ -198,39 +254,35 @@
     {
       "topicId": "t_1801_apps_int",
       "name": "Applications of Integration",
-      "defaultOrder": 5,
+      "defaultOrder": 7,
       "conceptIds": [
-        {
-          "conceptId": "c_1801_area_curves",
-          "name": "Area Between Curves",
-          "defaultOrder": 1
-        },
         {
           "conceptId": "c_1801_volume",
           "name": "Volumes of Solids",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_arc_length",
           "name": "Arc Length",
-          "defaultOrder": 3
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_work",
           "name": "Work",
-          "defaultOrder": 4
+          "defaultOrder": 3
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "t_1801_integration"
+        "t_1801_integration",
+        "t_1801_tech_int__t_1801_apps_int"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_1801_series",
       "name": "Infinite Series",
-      "defaultOrder": 6,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "c_1801_sequences",
@@ -256,14 +308,14 @@
       "successors": [],
       "prereqTopics": [
         "t_1801_differentiation",
-        "t_1801_tech_int"
+        "t_1801_tech_int__t_1801_apps_int"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_1802_vectors",
       "name": "Vectors and Matrices",
-      "defaultOrder": 7,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "c_1802_dot_product",
@@ -292,7 +344,7 @@
           "hard": true
         },
         {
-          "topicId": "t_1802_vector_calc",
+          "topicId": "t_1802_multiple_int__t_1802_vector_calc",
           "hard": true
         },
         {
@@ -308,7 +360,7 @@
     {
       "topicId": "t_1802_partial_diff",
       "name": "Partial Derivatives",
-      "defaultOrder": 8,
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "c_1802_multivar_functions",
@@ -338,6 +390,10 @@
         },
         {
           "topicId": "t_1802_multiple_int",
+          "hard": false
+        },
+        {
+          "topicId": "t_1802_multiple_int__t_1802_vector_calc",
           "hard": true
         },
         {
@@ -347,6 +403,7 @@
       ],
       "prereqTopics": [
         "t_1801_differentiation",
+        "t_1801_differentiation__t_1801_apps_diff",
         "t_1802_vectors"
       ],
       "isRoot": false
@@ -354,7 +411,7 @@
     {
       "topicId": "t_1802_apps_partial",
       "name": "Applications of Partial Derivatives",
-      "defaultOrder": 9,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "c_1802_tangent_planes",
@@ -386,7 +443,7 @@
     {
       "topicId": "t_1802_multiple_int",
       "name": "Multiple Integrals",
-      "defaultOrder": 10,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "c_1802_double_integrals",
@@ -402,19 +459,13 @@
           "conceptId": "c_1802_triple_integrals",
           "name": "Triple Integrals",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_1802_cyl_spherical",
-          "name": "Cylindrical and Spherical Coordinates",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "c_1802_jacobians",
-          "name": "Change of Variables",
-          "defaultOrder": 5
         }
       ],
       "successors": [
+        {
+          "topicId": "t_1802_multiple_int__t_1802_vector_calc",
+          "hard": true
+        },
         {
           "topicId": "t_1802_vector_calc",
           "hard": true
@@ -431,29 +482,58 @@
       "isRoot": false
     },
     {
-      "topicId": "t_1802_vector_calc",
-      "name": "Vector Calculus",
-      "defaultOrder": 11,
+      "topicId": "t_1802_multiple_int__t_1802_vector_calc",
+      "name": "Coordinate Changes and Vector Fields",
+      "defaultOrder": 13,
       "conceptIds": [
         {
-          "conceptId": "c_1802_vector_fields",
-          "name": "Vector Fields",
+          "conceptId": "c_1802_cyl_spherical",
+          "name": "Cylindrical and Spherical Coordinates",
           "defaultOrder": 1
         },
         {
+          "conceptId": "c_1802_jacobians",
+          "name": "Change of Variables",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_1802_vector_fields",
+          "name": "Vector Fields",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_1802_vector_calc",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_1802_vectors",
+        "t_1802_partial_diff",
+        "t_1802_multiple_int"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_1802_vector_calc",
+      "name": "Vector Calculus",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
           "conceptId": "c_1802_fundamental_line",
           "name": "Fundamental Theorem for Line Integrals",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_1802_greens_theorem",
           "name": "Green's Theorem",
-          "defaultOrder": 3
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_1802_curl_div",
           "name": "Curl and Divergence",
-          "defaultOrder": 4
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -464,16 +544,16 @@
       ],
       "prereqTopics": [
         "t_1801_integration",
-        "t_1802_vectors",
         "t_1802_partial_diff",
-        "t_1802_multiple_int"
+        "t_1802_multiple_int",
+        "t_1802_multiple_int__t_1802_vector_calc"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_1802_surface_int",
       "name": "Surface Integrals and Theorems",
-      "defaultOrder": 12,
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "c_1802_parametric_surfaces",

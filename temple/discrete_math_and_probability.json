@@ -13,8 +13,8 @@
   "nodes": [
     {
       "id": "topic_logic",
-      "name": "Logic and Proofs",
       "kind": "topic",
+      "name": "Logic and Proofs",
       "topic": null,
       "default_order": 1
     },
@@ -52,8 +52,8 @@
     },
     {
       "id": "topic_induction",
-      "name": "Induction",
       "kind": "topic",
+      "name": "Induction",
       "topic": null,
       "default_order": 2
     },
@@ -91,8 +91,8 @@
     },
     {
       "id": "topic_matching",
-      "name": "Stable Matching",
       "kind": "topic",
+      "name": "Stable Matching",
       "topic": null,
       "default_order": 3
     },
@@ -130,8 +130,8 @@
     },
     {
       "id": "topic_graphs",
-      "name": "Graph Theory",
       "kind": "topic",
+      "name": "Graph Theory",
       "topic": null,
       "default_order": 4
     },
@@ -177,8 +177,8 @@
     },
     {
       "id": "topic_modular_arithmetic",
-      "name": "Modular Arithmetic",
       "kind": "topic",
+      "name": "Modular Arithmetic",
       "topic": null,
       "default_order": 5
     },
@@ -216,8 +216,8 @@
     },
     {
       "id": "topic_crypto",
-      "name": "Cryptography",
       "kind": "topic",
+      "name": "Cryptography",
       "topic": null,
       "default_order": 6
     },
@@ -255,8 +255,8 @@
     },
     {
       "id": "topic_polynomials",
-      "name": "Polynomials",
       "kind": "topic",
+      "name": "Polynomials",
       "topic": null,
       "default_order": 7
     },
@@ -294,8 +294,8 @@
     },
     {
       "id": "topic_countability_computability",
-      "name": "Countability and Computability",
       "kind": "topic",
+      "name": "Countability and Computability",
       "topic": null,
       "default_order": 8
     },
@@ -324,50 +324,57 @@
       "description": "The proof, via diagonalization, that the real numbers cannot be put in bijection with the naturals and are therefore uncountable."
     },
     {
-      "id": "the_halting_problem",
-      "topic": "topic_countability_computability",
-      "name": "The Halting Problem",
-      "kind": "concept",
-      "default_order": 4,
-      "description": "The halting problem, the undecidable task of determining whether an arbitrary program halts on a given input, proved by diagonalization."
-    },
-    {
-      "id": "undecidability",
-      "topic": "topic_countability_computability",
-      "name": "Undecidability",
-      "kind": "concept",
-      "default_order": 5,
-      "description": "The existence of well-defined problems that no algorithm can solve for all inputs, established by reduction from the halting problem."
-    },
-    {
-      "id": "topic_counting",
-      "name": "Counting",
+      "id": "topic_countability_computability__topic_counting",
       "kind": "topic",
+      "name": "Computability and Counting Foundations",
       "topic": null,
       "default_order": 9
     },
     {
-      "id": "basic_counting_rules",
-      "topic": "topic_counting",
-      "name": "Basic Counting Rules",
+      "id": "the_halting_problem",
+      "topic": "topic_countability_computability__topic_counting",
+      "name": "The Halting Problem",
       "kind": "concept",
       "default_order": 1,
+      "description": "The halting problem, the undecidable task of determining whether an arbitrary program halts on a given input, proved by diagonalization."
+    },
+    {
+      "id": "undecidability",
+      "topic": "topic_countability_computability__topic_counting",
+      "name": "Undecidability",
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The existence of well-defined problems that no algorithm can solve for all inputs, established by reduction from the halting problem."
+    },
+    {
+      "id": "basic_counting_rules",
+      "topic": "topic_countability_computability__topic_counting",
+      "name": "Basic Counting Rules",
+      "kind": "concept",
+      "default_order": 3,
       "description": "The fundamental sum and product rules counting the outcomes of disjoint choices and of sequences of independent choices."
     },
     {
       "id": "combinations_permutations",
-      "topic": "topic_counting",
+      "topic": "topic_countability_computability__topic_counting",
       "name": "Combinations and Permutations",
       "kind": "concept",
-      "default_order": 2,
+      "default_order": 4,
       "description": "Counting ordered selections (permutations) and unordered selections (combinations) of items from a set, with their factorial formulas."
+    },
+    {
+      "id": "topic_counting",
+      "kind": "topic",
+      "name": "Counting",
+      "topic": null,
+      "default_order": 10
     },
     {
       "id": "combinatorial_proofs",
       "topic": "topic_counting",
       "name": "Combinatorial Proofs",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Proving identities by counting the same quantity in two different ways, showing that the two expressions must be equal."
     },
     {
@@ -375,7 +382,7 @@
       "topic": "topic_counting",
       "name": "Stars and Bars",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "The stars-and-bars technique counting the nonnegative integer solutions of an equation, equivalently distributions of identical items into bins."
     },
     {
@@ -383,15 +390,15 @@
       "topic": "topic_counting",
       "name": "Inclusion-Exclusion",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 3,
       "description": "The inclusion-exclusion principle counting the size of a union by alternately adding and subtracting the sizes of intersections."
     },
     {
       "id": "topic_discrete_prob",
-      "name": "Discrete Probability",
       "kind": "topic",
+      "name": "Discrete Probability",
       "topic": null,
-      "default_order": 10
+      "default_order": 11
     },
     {
       "id": "probability_spaces",
@@ -427,10 +434,10 @@
     },
     {
       "id": "topic_random_vars",
-      "name": "Random Variables and Expectation",
       "kind": "topic",
+      "name": "Random Variables and Expectation",
       "topic": null,
-      "default_order": 11
+      "default_order": 12
     },
     {
       "id": "discrete_random_variables",
@@ -466,10 +473,10 @@
     },
     {
       "id": "topic_discrete_dists",
-      "name": "Discrete Distributions",
       "kind": "topic",
+      "name": "Discrete Distributions",
       "topic": null,
-      "default_order": 12
+      "default_order": 13
     },
     {
       "id": "bernoulli_binomial_distributions",
@@ -505,10 +512,10 @@
     },
     {
       "id": "topic_continuous_prob",
-      "name": "Continuous Probability",
       "kind": "topic",
+      "name": "Continuous Probability",
       "topic": null,
-      "default_order": 13
+      "default_order": 14
     },
     {
       "id": "continuous_random_variables",
@@ -535,50 +542,57 @@
       "description": "The cumulative distribution function giving the probability that a random variable is at most a given value, defined for any distribution."
     },
     {
+      "id": "topic_continuous_prob__topic_concentration",
+      "kind": "topic",
+      "name": "Continuous Probability and Concentration Bounds",
+      "topic": null,
+      "default_order": 15
+    },
+    {
       "id": "uniform_exponential_distributions",
-      "topic": "topic_continuous_prob",
+      "topic": "topic_continuous_prob__topic_concentration",
       "name": "Uniform and Exponential Distributions",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 1,
       "description": "The uniform distribution spreading probability evenly over an interval and the memoryless exponential distribution modelling waiting times."
     },
     {
       "id": "normal_distribution",
-      "topic": "topic_continuous_prob",
+      "topic": "topic_continuous_prob__topic_concentration",
       "name": "Normal Distribution",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 2,
       "description": "The normal (Gaussian) distribution, a symmetric bell-shaped law parametrised by mean and variance, central to statistics and the central limit theorem."
     },
     {
-      "id": "topic_concentration",
-      "name": "Concentration Inequalities",
-      "kind": "topic",
-      "topic": null,
-      "default_order": 14
-    },
-    {
       "id": "markovs_inequality",
-      "topic": "topic_concentration",
+      "topic": "topic_continuous_prob__topic_concentration",
       "name": "Markov's Inequality",
       "kind": "concept",
-      "default_order": 1,
+      "default_order": 3,
       "description": "Markov's inequality bounding the probability that a nonnegative random variable exceeds a value using only its mean."
     },
     {
       "id": "chebyshevs_inequality",
-      "topic": "topic_concentration",
+      "topic": "topic_continuous_prob__topic_concentration",
       "name": "Chebyshev's Inequality",
       "kind": "concept",
-      "default_order": 2,
+      "default_order": 4,
       "description": "Chebyshev's inequality bounding the probability that a variable deviates far from its mean using its variance."
+    },
+    {
+      "id": "topic_concentration",
+      "kind": "topic",
+      "name": "Concentration Inequalities",
+      "topic": null,
+      "default_order": 16
     },
     {
       "id": "chernoff_bounds",
       "topic": "topic_concentration",
       "name": "Chernoff Bounds",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Chernoff bounds giving exponentially decaying tail bounds for sums of independent random variables via the moment-generating function."
     },
     {
@@ -586,7 +600,7 @@
       "topic": "topic_concentration",
       "name": "Weak Law of Large Numbers",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "The weak law of large numbers stating the sample mean of independent identically distributed variables converges in probability to the true mean."
     },
     {
@@ -594,15 +608,15 @@
       "topic": "topic_concentration",
       "name": "Central Limit Theorem",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 3,
       "description": "The central limit theorem stating that the normalised sum of many independent variables converges in distribution to a normal distribution."
     },
     {
       "id": "topic_markov",
-      "name": "Markov Chains",
       "kind": "topic",
+      "name": "Markov Chains",
       "topic": null,
-      "default_order": 15
+      "default_order": 17
     },
     {
       "id": "markov_chains_basics",
@@ -638,96 +652,6 @@
     }
   ],
   "edges": [
-    {
-      "type": "prereq",
-      "from": "topic_logic",
-      "to": "topic_induction",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_logic",
-      "to": "topic_matching",
-      "strength": "soft"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_induction",
-      "to": "topic_graphs",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_induction",
-      "to": "topic_modular_arithmetic",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_modular_arithmetic",
-      "to": "topic_crypto",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_modular_arithmetic",
-      "to": "topic_polynomials",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_induction",
-      "to": "topic_countability_computability",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_induction",
-      "to": "topic_counting",
-      "strength": "soft"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_counting",
-      "to": "topic_discrete_prob",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_discrete_prob",
-      "to": "topic_random_vars",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_random_vars",
-      "to": "topic_discrete_dists",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_random_vars",
-      "to": "topic_continuous_prob",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_random_vars",
-      "to": "topic_concentration",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_continuous_prob",
-      "to": "topic_concentration",
-      "strength": "soft"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_discrete_prob",
-      "to": "topic_markov",
-      "strength": "hard"
-    },
     {
       "type": "prereq",
       "from": "propositional_logic",

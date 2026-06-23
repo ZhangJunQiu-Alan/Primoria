@@ -2,8 +2,8 @@
   "graphId": "web_applications",
   "subject": "Web Applications (Stanford CS142)",
   "generatedFrom": "temple/web_applications.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "web_foundations",
@@ -36,8 +36,8 @@
       "isRoot": true
     },
     {
-      "topicId": "web_frontend",
-      "name": "Frontend Technologies",
+      "topicId": "web_frontend_part1",
+      "name": "Frontend Technologies (Part 1)",
       "defaultOrder": 2,
       "conceptIds": [
         {
@@ -54,30 +54,15 @@
           "conceptId": "web_javascript",
           "name": "JavaScript",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "web_dom",
-          "name": "DOM Manipulation",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "web_react",
-          "name": "React Components",
-          "defaultOrder": 5
-        },
-        {
-          "conceptId": "web_state_props",
-          "name": "State and Props",
-          "defaultOrder": 6
         }
       ],
       "successors": [
         {
-          "topicId": "web_backend",
+          "topicId": "web_frontend_part2",
           "hard": true
         },
         {
-          "topicId": "web_security",
+          "topicId": "web_backend",
           "hard": true
         }
       ],
@@ -85,9 +70,41 @@
       "isRoot": true
     },
     {
+      "topicId": "web_frontend_part2",
+      "name": "Frontend Technologies (Part 2)",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "web_dom",
+          "name": "DOM Manipulation",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "web_react",
+          "name": "React Components",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "web_state_props",
+          "name": "State and Props",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "web_security",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "web_frontend_part1"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "web_backend",
       "name": "Backend Technologies",
-      "defaultOrder": 3,
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "web_node",
@@ -122,14 +139,14 @@
       ],
       "prereqTopics": [
         "web_foundations",
-        "web_frontend"
+        "web_frontend_part1"
       ],
       "isRoot": false
     },
     {
       "topicId": "web_data",
       "name": "Databases",
-      "defaultOrder": 4,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "web_relational",
@@ -161,7 +178,7 @@
     {
       "topicId": "web_security",
       "name": "Web Security",
-      "defaultOrder": 5,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "web_xss",
@@ -181,7 +198,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "web_frontend",
+        "web_frontend_part2",
         "web_backend",
         "web_data"
       ],

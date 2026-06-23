@@ -47,35 +47,42 @@
       "default_order": 3
     },
     {
+      "id": "t_infotheory_basics__t_infotheory_source_coding",
+      "kind": "topic",
+      "name": "Information Measures and Typicality",
+      "topic": null,
+      "default_order": 2
+    },
+    {
       "id": "c_infotheory_kl_divergence",
       "kind": "concept",
       "name": "Kullback-Leibler Divergence",
-      "topic": "t_infotheory_basics",
+      "topic": "t_infotheory_basics__t_infotheory_source_coding",
       "description": "Kullback-Leibler divergence, the relative entropy measuring the inefficiency of assuming one distribution when another is true; non-negative and asymmetric.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "c_infotheory_data_processing",
       "kind": "concept",
       "name": "Data Processing Inequality",
-      "topic": "t_infotheory_basics",
+      "topic": "t_infotheory_basics__t_infotheory_source_coding",
       "description": "The data-processing inequality stating that processing a signal cannot increase the mutual information it carries about a source.",
-      "default_order": 5
-    },
-    {
-      "id": "t_infotheory_source_coding",
-      "kind": "topic",
-      "name": "Source Coding",
-      "topic": null,
       "default_order": 2
     },
     {
       "id": "c_infotheory_aep",
       "kind": "concept",
       "name": "Asymptotic Equipartition Property",
-      "topic": "t_infotheory_source_coding",
+      "topic": "t_infotheory_basics__t_infotheory_source_coding",
       "description": "The asymptotic equipartition property, showing long sequences fall into a typical set of nearly equal probability, underpinning the coding theorems.",
-      "default_order": 1
+      "default_order": 3
+    },
+    {
+      "id": "t_infotheory_source_coding",
+      "kind": "topic",
+      "name": "Source Coding",
+      "topic": null,
+      "default_order": 3
     },
     {
       "id": "c_infotheory_kraft",
@@ -83,7 +90,7 @@
       "name": "Kraft Inequality",
       "topic": "t_infotheory_source_coding",
       "description": "The Kraft inequality giving the necessary and sufficient condition on codeword lengths for a uniquely decodable prefix code to exist.",
-      "default_order": 2
+      "default_order": 1
     },
     {
       "id": "c_infotheory_shannon_coding",
@@ -91,7 +98,7 @@
       "name": "Shannon Source Coding Theorem",
       "topic": "t_infotheory_source_coding",
       "description": "Shannon's source coding theorem establishing entropy as the fundamental limit on the average rate of lossless data compression.",
-      "default_order": 3
+      "default_order": 2
     },
     {
       "id": "c_infotheory_huffman",
@@ -99,14 +106,14 @@
       "name": "Huffman Coding",
       "topic": "t_infotheory_source_coding",
       "description": "Huffman coding, a greedy algorithm building optimal prefix-free codes that minimise expected codeword length for known symbol probabilities.",
-      "default_order": 4
+      "default_order": 3
     },
     {
       "id": "t_infotheory_channel_capacity",
       "kind": "topic",
       "name": "Channel Capacity",
       "topic": null,
-      "default_order": 3
+      "default_order": 4
     },
     {
       "id": "c_infotheory_dmc",
@@ -137,7 +144,7 @@
       "kind": "topic",
       "name": "Continuous Channels",
       "topic": null,
-      "default_order": 4
+      "default_order": 5
     },
     {
       "id": "c_infotheory_differential_entropy",

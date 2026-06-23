@@ -17,9 +17,9 @@
   },
   "nodes": [
     {
-      "id": "mat_algebra",
+      "id": "mat_algebra_part1",
       "kind": "topic",
-      "name": "Algebra and Functions",
+      "name": "Algebra and Functions (Part 1)",
       "topic": null,
       "default_order": 1
     },
@@ -27,7 +27,7 @@
       "id": "mat_indices_surds",
       "kind": "concept",
       "name": "Indices and Surds",
-      "topic": "mat_algebra",
+      "topic": "mat_algebra_part1",
       "description": "Laws of indices for manipulating powers and the simplification and rationalisation of surds, expressing irrational roots in exact form.",
       "default_order": 1
     },
@@ -35,7 +35,7 @@
       "id": "mat_quadratics",
       "kind": "concept",
       "name": "Quadratic Functions",
-      "topic": "mat_algebra",
+      "topic": "mat_algebra_part1",
       "description": "Quadratic functions and their parabolic graphs, completing the square to find the vertex, line of symmetry, and maximum or minimum.",
       "default_order": 2
     },
@@ -43,7 +43,7 @@
       "id": "mat_solve_quadratics",
       "kind": "concept",
       "name": "Solving Quadratics and Discriminant",
-      "topic": "mat_algebra",
+      "topic": "mat_algebra_part1",
       "description": "Solving quadratic equations by factorising, completing the square, or the formula, with the discriminant determining the number of real roots.",
       "default_order": 3
     },
@@ -51,48 +51,55 @@
       "id": "mat_simultaneous",
       "kind": "concept",
       "name": "Simultaneous Equations",
-      "topic": "mat_algebra",
+      "topic": "mat_algebra_part1",
       "description": "Solving simultaneous equations, including one linear and one quadratic, by substitution or elimination to find common solutions.",
       "default_order": 4
+    },
+    {
+      "id": "mat_algebra_part2",
+      "kind": "topic",
+      "name": "Algebra and Functions (Part 2)",
+      "topic": null,
+      "default_order": 2
     },
     {
       "id": "mat_inequalities",
       "kind": "concept",
       "name": "Inequalities",
-      "topic": "mat_algebra",
+      "topic": "mat_algebra_part2",
       "description": "Solving linear and quadratic inequalities algebraically and graphically, and representing the solution sets on a number line.",
-      "default_order": 5
+      "default_order": 1
     },
     {
       "id": "mat_functions",
       "kind": "concept",
       "name": "Functions and Inverses",
-      "topic": "mat_algebra",
+      "topic": "mat_algebra_part2",
       "description": "Functions defined by their domain and range, the distinction between one-to-one and many-to-one mappings, and finding inverse functions.",
-      "default_order": 6
+      "default_order": 2
     },
     {
       "id": "mat_composite",
       "kind": "concept",
       "name": "Composite Functions",
-      "topic": "mat_algebra",
+      "topic": "mat_algebra_part2",
       "description": "Composite functions formed by applying one function to the result of another, with attention to domain and the order of composition.",
-      "default_order": 7
+      "default_order": 3
     },
     {
       "id": "mat_modulus",
       "kind": "concept",
       "name": "Modulus Function",
-      "topic": "mat_algebra",
+      "topic": "mat_algebra_part2",
       "description": "The modulus function giving absolute value, its graph, and solving equations and inequalities involving modulus expressions.",
-      "default_order": 8
+      "default_order": 4
     },
     {
       "id": "mat_polynomials",
       "kind": "topic",
       "name": "Polynomials and Partial Fractions",
       "topic": null,
-      "default_order": 2
+      "default_order": 3
     },
     {
       "id": "mat_poly_division",
@@ -123,7 +130,7 @@
       "kind": "topic",
       "name": "Coordinate Geometry",
       "topic": null,
-      "default_order": 3
+      "default_order": 4
     },
     {
       "id": "mat_straight_lines",
@@ -154,7 +161,7 @@
       "kind": "topic",
       "name": "Sequences and Series",
       "topic": null,
-      "default_order": 4
+      "default_order": 5
     },
     {
       "id": "mat_arithmetic",
@@ -189,17 +196,17 @@
       "default_order": 4
     },
     {
-      "id": "mat_trig",
+      "id": "mat_trig_part1",
       "kind": "topic",
-      "name": "Trigonometry",
+      "name": "Trigonometry (Part 1)",
       "topic": null,
-      "default_order": 5
+      "default_order": 6
     },
     {
       "id": "mat_trig_ratios",
       "kind": "concept",
       "name": "Trig Ratios and Graphs",
-      "topic": "mat_trig",
+      "topic": "mat_trig_part1",
       "description": "The trigonometric ratios sine, cosine, and tangent, their graphs, periodicity, and exact values for standard angles.",
       "default_order": 1
     },
@@ -207,7 +214,7 @@
       "id": "mat_radians",
       "kind": "concept",
       "name": "Radian Measure",
-      "topic": "mat_trig",
+      "topic": "mat_trig_part1",
       "description": "Radian measure of angles and its use in the arc length and sector area formulae for a circle.",
       "default_order": 2
     },
@@ -215,40 +222,47 @@
       "id": "mat_trig_identities",
       "kind": "concept",
       "name": "Trig Identities",
-      "topic": "mat_trig",
+      "topic": "mat_trig_part1",
       "description": "Fundamental trigonometric identities, including the Pythagorean identities, used to simplify expressions and prove relationships.",
       "default_order": 3
+    },
+    {
+      "id": "mat_trig_part2",
+      "kind": "topic",
+      "name": "Trigonometry (Part 2)",
+      "topic": null,
+      "default_order": 7
     },
     {
       "id": "mat_solve_trig",
       "kind": "concept",
       "name": "Solving Trig Equations",
-      "topic": "mat_trig",
+      "topic": "mat_trig_part2",
       "description": "Solving trigonometric equations within a given interval using identities, graphs, and the symmetry of trigonometric functions.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "mat_double_angle",
       "kind": "concept",
       "name": "Compound and Double Angle Formulae",
-      "topic": "mat_trig",
+      "topic": "mat_trig_part2",
       "description": "Compound-angle and double-angle formulae expanding trigonometric functions of the sum and of multiples of angles.",
-      "default_order": 5
+      "default_order": 2
     },
     {
       "id": "mat_rform",
       "kind": "concept",
       "name": "R-Formula",
-      "topic": "mat_trig",
+      "topic": "mat_trig_part2",
       "description": "Expressing a sin θ plus b cos θ in the form R sin(θ + α), used to solve equations and find maxima and minima.",
-      "default_order": 6
+      "default_order": 3
     },
     {
       "id": "mat_exp_log",
       "kind": "topic",
       "name": "Exponentials and Logarithms",
       "topic": null,
-      "default_order": 6
+      "default_order": 8
     },
     {
       "id": "mat_exp_func",
@@ -283,17 +297,17 @@
       "default_order": 4
     },
     {
-      "id": "mat_differentiation",
+      "id": "mat_differentiation_part1",
       "kind": "topic",
-      "name": "Differentiation (Basic)",
+      "name": "Differentiation (Basic) (Part 1)",
       "topic": null,
-      "default_order": 7
+      "default_order": 9
     },
     {
       "id": "mat_first_principles",
       "kind": "concept",
       "name": "Differentiation from First Principles",
-      "topic": "mat_differentiation",
+      "topic": "mat_differentiation_part1",
       "description": "The derivative defined as the limit of the gradient of a chord, used to differentiate simple functions from first principles.",
       "default_order": 1
     },
@@ -301,7 +315,7 @@
       "id": "mat_power_rule",
       "kind": "concept",
       "name": "Power Rule",
-      "topic": "mat_differentiation",
+      "topic": "mat_differentiation_part1",
       "description": "The power rule for differentiating powers of x, extended by linearity to differentiate sums of polynomial terms.",
       "default_order": 2
     },
@@ -309,40 +323,47 @@
       "id": "mat_chain_rule",
       "kind": "concept",
       "name": "Chain Rule",
-      "topic": "mat_differentiation",
+      "topic": "mat_differentiation_part1",
       "description": "The chain rule differentiating a composite function as the product of the derivatives of its outer and inner functions.",
       "default_order": 3
+    },
+    {
+      "id": "mat_differentiation_part2",
+      "kind": "topic",
+      "name": "Differentiation (Basic) (Part 2)",
+      "topic": null,
+      "default_order": 10
     },
     {
       "id": "mat_tangent_normal",
       "kind": "concept",
       "name": "Tangents and Normals",
-      "topic": "mat_differentiation",
+      "topic": "mat_differentiation_part2",
       "description": "Finding the equations of the tangent and normal to a curve at a point, using the derivative as the gradient.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "mat_stationary",
       "kind": "concept",
       "name": "Stationary Points",
-      "topic": "mat_differentiation",
+      "topic": "mat_differentiation_part2",
       "description": "Locating stationary points where the derivative is zero and classifying them as maxima, minima, or points of inflection.",
-      "default_order": 5
+      "default_order": 2
     },
     {
       "id": "mat_rates",
       "kind": "concept",
       "name": "Connected Rates of Change",
-      "topic": "mat_differentiation",
+      "topic": "mat_differentiation_part2",
       "description": "Connected rates of change linking the time derivatives of related quantities through the chain rule.",
-      "default_order": 6
+      "default_order": 3
     },
     {
       "id": "mat_differentiation_adv",
       "kind": "topic",
       "name": "Differentiation (Advanced)",
       "topic": null,
-      "default_order": 8
+      "default_order": 11
     },
     {
       "id": "mat_product_quotient",
@@ -377,17 +398,17 @@
       "default_order": 4
     },
     {
-      "id": "mat_integration",
+      "id": "mat_integration_part1",
       "kind": "topic",
-      "name": "Integration",
+      "name": "Integration (Part 1)",
       "topic": null,
-      "default_order": 9
+      "default_order": 12
     },
     {
       "id": "mat_indefinite",
       "kind": "concept",
       "name": "Indefinite Integration",
-      "topic": "mat_integration",
+      "topic": "mat_integration_part1",
       "description": "Indefinite integration as the reverse of differentiation, finding antiderivatives with an arbitrary constant of integration.",
       "default_order": 1
     },
@@ -395,7 +416,7 @@
       "id": "mat_definite_area",
       "kind": "concept",
       "name": "Definite Integration and Area",
-      "topic": "mat_integration",
+      "topic": "mat_integration_part1",
       "description": "Definite integration evaluating the area under a curve between limits using the fundamental theorem of calculus.",
       "default_order": 2
     },
@@ -403,7 +424,7 @@
       "id": "mat_standard_integrals",
       "kind": "concept",
       "name": "Integration of Standard Functions",
-      "topic": "mat_integration",
+      "topic": "mat_integration_part1",
       "description": "Integrating standard functions, including powers, exponentials, and trigonometric functions, from their known antiderivatives.",
       "default_order": 3
     },
@@ -411,46 +432,53 @@
       "id": "mat_substitution",
       "kind": "concept",
       "name": "Integration by Substitution",
-      "topic": "mat_integration",
+      "topic": "mat_integration_part1",
       "description": "Integration by substitution reversing the chain rule by changing the variable to simplify the integrand.",
       "default_order": 4
+    },
+    {
+      "id": "mat_integration_part2",
+      "kind": "topic",
+      "name": "Integration (Part 2)",
+      "topic": null,
+      "default_order": 13
     },
     {
       "id": "mat_by_parts",
       "kind": "concept",
       "name": "Integration by Parts",
-      "topic": "mat_integration",
+      "topic": "mat_integration_part2",
       "description": "Integration by parts reversing the product rule to integrate the product of two functions.",
-      "default_order": 5
+      "default_order": 1
     },
     {
       "id": "mat_int_partial",
       "kind": "concept",
       "name": "Integration using Partial Fractions",
-      "topic": "mat_integration",
+      "topic": "mat_integration_part2",
       "description": "Integrating rational functions by first decomposing them into partial fractions that can be integrated individually.",
-      "default_order": 6
+      "default_order": 2
     },
     {
       "id": "mat_volumes",
       "kind": "concept",
       "name": "Volumes of Revolution",
-      "topic": "mat_integration",
+      "topic": "mat_integration_part2",
       "description": "Volumes of revolution generated by rotating a region about an axis, computed by integrating the area of circular cross-sections.",
-      "default_order": 7
+      "default_order": 3
     },
     {
-      "id": "mat_numerical",
+      "id": "mat_numerical__mat_diff_eq",
       "kind": "topic",
-      "name": "Numerical Methods",
+      "name": "Numerical Methods for Equations",
       "topic": null,
-      "default_order": 10
+      "default_order": 14
     },
     {
       "id": "mat_locate_roots",
       "kind": "concept",
       "name": "Locating Roots",
-      "topic": "mat_numerical",
+      "topic": "mat_numerical__mat_diff_eq",
       "description": "Locating roots of an equation by a sign change over an interval, establishing the existence of a root before iteration.",
       "default_order": 1
     },
@@ -458,39 +486,32 @@
       "id": "mat_iteration",
       "kind": "concept",
       "name": "Iterative Methods",
-      "topic": "mat_numerical",
+      "topic": "mat_numerical__mat_diff_eq",
       "description": "Iterative methods finding successive approximations to a root using a rearranged iterative formula, and assessing convergence.",
       "default_order": 2
-    },
-    {
-      "id": "mat_diff_eq",
-      "kind": "topic",
-      "name": "Differential Equations",
-      "topic": null,
-      "default_order": 11
     },
     {
       "id": "mat_form_de",
       "kind": "concept",
       "name": "Forming Differential Equations",
-      "topic": "mat_diff_eq",
+      "topic": "mat_numerical__mat_diff_eq",
       "description": "Forming differential equations from descriptions of rates of change, translating a physical situation into an equation.",
-      "default_order": 1
+      "default_order": 3
     },
     {
       "id": "mat_separation",
       "kind": "concept",
       "name": "Separation of Variables",
-      "topic": "mat_diff_eq",
+      "topic": "mat_numerical__mat_diff_eq",
       "description": "Solving first-order differential equations by separating the variables and integrating each side.",
-      "default_order": 2
+      "default_order": 4
     },
     {
       "id": "mat_vectors",
       "kind": "topic",
       "name": "Vectors",
       "topic": null,
-      "default_order": 12
+      "default_order": 15
     },
     {
       "id": "mat_vector_basics",
@@ -529,7 +550,7 @@
       "kind": "topic",
       "name": "Complex Numbers",
       "topic": null,
-      "default_order": 13
+      "default_order": 16
     },
     {
       "id": "mat_complex_arith",
@@ -568,7 +589,7 @@
       "kind": "topic",
       "name": "Mechanics: Kinematics",
       "topic": null,
-      "default_order": 14
+      "default_order": 17
     },
     {
       "id": "mat_kin_constant",
@@ -599,7 +620,7 @@
       "kind": "topic",
       "name": "Mechanics: Forces and Newton's Laws",
       "topic": null,
-      "default_order": 15
+      "default_order": 18
     },
     {
       "id": "mat_forces_equilibrium",
@@ -626,48 +647,48 @@
       "default_order": 3
     },
     {
+      "id": "mat_mech_forces__mat_mech_energy",
+      "kind": "topic",
+      "name": "Mechanics: Connected Particles, Energy and Momentum",
+      "topic": null,
+      "default_order": 19
+    },
+    {
       "id": "mat_connected_particles",
       "kind": "concept",
       "name": "Connected Particles",
-      "topic": "mat_mech_forces",
+      "topic": "mat_mech_forces__mat_mech_energy",
       "description": "Analysing connected particles, such as those joined by a string over a pulley, by applying Newton's laws to each.",
-      "default_order": 4
-    },
-    {
-      "id": "mat_mech_energy",
-      "kind": "topic",
-      "name": "Mechanics: Energy and Momentum",
-      "topic": null,
-      "default_order": 16
+      "default_order": 1
     },
     {
       "id": "mat_work_energy_power",
       "kind": "concept",
       "name": "Work, Energy and Power",
-      "topic": "mat_mech_energy",
+      "topic": "mat_mech_forces__mat_mech_energy",
       "description": "Work done by a force, kinetic and potential energy, the work-energy principle, and power as the rate of doing work.",
-      "default_order": 1
+      "default_order": 2
     },
     {
       "id": "mat_momentum_impulse",
       "kind": "concept",
       "name": "Momentum and Impulse",
-      "topic": "mat_mech_energy",
+      "topic": "mat_mech_forces__mat_mech_energy",
       "description": "Linear momentum and impulse, and the conservation of momentum applied to collisions between particles.",
-      "default_order": 2
+      "default_order": 3
     },
     {
-      "id": "mat_stats_data",
+      "id": "mat_stats_data__mat_probability",
       "kind": "topic",
-      "name": "Statistics: Data",
+      "name": "Data, Counting and Probability",
       "topic": null,
-      "default_order": 17
+      "default_order": 20
     },
     {
       "id": "mat_data_rep",
       "kind": "concept",
       "name": "Representation of Data",
-      "topic": "mat_stats_data",
+      "topic": "mat_stats_data__mat_probability",
       "description": "Representing data using histograms, box-and-whisker plots, and cumulative frequency graphs to display its distribution.",
       "default_order": 1
     },
@@ -675,39 +696,47 @@
       "id": "mat_central_spread",
       "kind": "concept",
       "name": "Central Tendency and Spread",
-      "topic": "mat_stats_data",
+      "topic": "mat_stats_data__mat_probability",
       "description": "Measures of central tendency and spread, including the mean, median, variance, standard deviation, and quartiles.",
       "default_order": 2
-    },
-    {
-      "id": "mat_probability",
-      "kind": "topic",
-      "name": "Probability",
-      "topic": null,
-      "default_order": 18
     },
     {
       "id": "mat_perm_comb",
       "kind": "concept",
       "name": "Permutations and Combinations",
-      "topic": "mat_probability",
+      "topic": "mat_stats_data__mat_probability",
       "description": "Permutations and combinations counting ordered arrangements and unordered selections of objects.",
-      "default_order": 1
+      "default_order": 3
+    },
+    {
+      "id": "mat_probability__mat_random_vars",
+      "kind": "topic",
+      "name": "Probability and Discrete Random Variables",
+      "topic": null,
+      "default_order": 21
     },
     {
       "id": "mat_prob_rules",
       "kind": "concept",
       "name": "Probability Rules",
-      "topic": "mat_probability",
+      "topic": "mat_probability__mat_random_vars",
       "description": "The rules of probability, including the addition and multiplication rules for combined, mutually exclusive, and independent events.",
-      "default_order": 2
+      "default_order": 1
     },
     {
       "id": "mat_conditional",
       "kind": "concept",
       "name": "Conditional Probability",
-      "topic": "mat_probability",
+      "topic": "mat_probability__mat_random_vars",
       "description": "Conditional probability of an event given another, and the use of tree diagrams with the multiplication rule.",
+      "default_order": 2
+    },
+    {
+      "id": "mat_discrete_rv",
+      "kind": "concept",
+      "name": "Discrete Random Variables",
+      "topic": "mat_probability__mat_random_vars",
+      "description": "Discrete random variables with a probability distribution, and the calculation of their expectation and variance.",
       "default_order": 3
     },
     {
@@ -715,15 +744,7 @@
       "kind": "topic",
       "name": "Random Variables and Distributions",
       "topic": null,
-      "default_order": 19
-    },
-    {
-      "id": "mat_discrete_rv",
-      "kind": "concept",
-      "name": "Discrete Random Variables",
-      "topic": "mat_random_vars",
-      "description": "Discrete random variables with a probability distribution, and the calculation of their expectation and variance.",
-      "default_order": 1
+      "default_order": 22
     },
     {
       "id": "mat_binomial_dist",
@@ -731,7 +752,7 @@
       "name": "Binomial Distribution",
       "topic": "mat_random_vars",
       "description": "The binomial distribution modelling the number of successes in a fixed number of independent trials with constant probability.",
-      "default_order": 2
+      "default_order": 1
     },
     {
       "id": "mat_geometric_dist",
@@ -739,7 +760,7 @@
       "name": "Geometric Distribution",
       "topic": "mat_random_vars",
       "description": "The geometric distribution modelling the number of independent trials up to and including the first success.",
-      "default_order": 3
+      "default_order": 2
     },
     {
       "id": "mat_poisson",
@@ -747,20 +768,20 @@
       "name": "Poisson Distribution",
       "topic": "mat_random_vars",
       "description": "The Poisson distribution modelling the number of random events occurring at a constant average rate in a fixed interval.",
-      "default_order": 4
+      "default_order": 3
     },
     {
-      "id": "mat_normal",
+      "id": "mat_normal__mat_inference",
       "kind": "topic",
-      "name": "Normal Distribution",
+      "name": "Normal Distribution and Statistical Inference",
       "topic": null,
-      "default_order": 20
+      "default_order": 23
     },
     {
       "id": "mat_normal_dist",
       "kind": "concept",
       "name": "Normal Distribution",
-      "topic": "mat_normal",
+      "topic": "mat_normal__mat_inference",
       "description": "The normal distribution, a continuous bell-shaped distribution defined by its mean and variance, standardised using the z-score.",
       "default_order": 1
     },
@@ -768,32 +789,25 @@
       "id": "mat_normal_approx",
       "kind": "concept",
       "name": "Normal Approximations",
-      "topic": "mat_normal",
+      "topic": "mat_normal__mat_inference",
       "description": "Using the normal distribution to approximate the binomial or Poisson distribution under suitable conditions, with continuity correction.",
       "default_order": 2
-    },
-    {
-      "id": "mat_inference",
-      "kind": "topic",
-      "name": "Sampling and Hypothesis Testing",
-      "topic": null,
-      "default_order": 21
     },
     {
       "id": "mat_sampling",
       "kind": "concept",
       "name": "Sampling",
-      "topic": "mat_inference",
+      "topic": "mat_normal__mat_inference",
       "description": "Sampling concepts including populations, samples, and the sampling distribution of the mean used for statistical inference.",
-      "default_order": 1
+      "default_order": 3
     },
     {
       "id": "mat_hypothesis",
       "kind": "concept",
       "name": "Hypothesis Testing",
-      "topic": "mat_inference",
+      "topic": "mat_normal__mat_inference",
       "description": "Hypothesis testing using a test statistic and a significance level to decide between a null and an alternative hypothesis.",
-      "default_order": 2
+      "default_order": 4
     }
   ],
   "edges": [

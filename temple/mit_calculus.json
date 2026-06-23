@@ -47,35 +47,42 @@
       "default_order": 3
     },
     {
+      "id": "t_1801_differentiation__t_1801_apps_diff",
+      "kind": "topic",
+      "name": "Differentiation Techniques and Related Rates",
+      "topic": null,
+      "default_order": 2
+    },
+    {
       "id": "c_1801_chain_rule",
       "kind": "concept",
       "name": "Chain Rule",
-      "topic": "t_1801_differentiation",
+      "topic": "t_1801_differentiation__t_1801_apps_diff",
       "description": "The chain rule differentiating a composite function as the derivative of the outer function times the derivative of the inner function.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "c_1801_implicit_diff",
       "kind": "concept",
       "name": "Implicit Differentiation",
-      "topic": "t_1801_differentiation",
+      "topic": "t_1801_differentiation__t_1801_apps_diff",
       "description": "Implicit differentiation finding derivatives of relations not solved for one variable by differentiating both sides and solving for the derivative.",
-      "default_order": 5
-    },
-    {
-      "id": "t_1801_apps_diff",
-      "kind": "topic",
-      "name": "Applications of Differentiation",
-      "topic": null,
       "default_order": 2
     },
     {
       "id": "c_1801_related_rates",
       "kind": "concept",
       "name": "Related Rates",
-      "topic": "t_1801_apps_diff",
+      "topic": "t_1801_differentiation__t_1801_apps_diff",
       "description": "Related-rates problems linking the time derivatives of related quantities through an equation, solving for one unknown rate given the others.",
-      "default_order": 1
+      "default_order": 3
+    },
+    {
+      "id": "t_1801_apps_diff",
+      "kind": "topic",
+      "name": "Applications of Differentiation",
+      "topic": null,
+      "default_order": 3
     },
     {
       "id": "c_1801_linear_approx",
@@ -83,7 +90,7 @@
       "name": "Linear Approximation",
       "topic": "t_1801_apps_diff",
       "description": "Linear approximation using the tangent line to estimate function values near a point, the basis of differentials and Newton's method.",
-      "default_order": 2
+      "default_order": 1
     },
     {
       "id": "c_1801_curve_sketching",
@@ -91,7 +98,7 @@
       "name": "Curve Sketching",
       "topic": "t_1801_apps_diff",
       "description": "Using first and second derivatives to locate extrema, intervals of increase and decrease, concavity, and inflection points to sketch a curve.",
-      "default_order": 3
+      "default_order": 2
     },
     {
       "id": "c_1801_mvt",
@@ -99,14 +106,14 @@
       "name": "Mean Value Theorem",
       "topic": "t_1801_apps_diff",
       "description": "The mean value theorem guaranteeing a point where the instantaneous rate of change equals the average rate over an interval, with key consequences.",
-      "default_order": 4
+      "default_order": 3
     },
     {
       "id": "t_1801_integration",
       "kind": "topic",
       "name": "Integration",
       "topic": null,
-      "default_order": 3
+      "default_order": 4
     },
     {
       "id": "c_1801_riemann_sums",
@@ -145,7 +152,7 @@
       "kind": "topic",
       "name": "Techniques of Integration",
       "topic": null,
-      "default_order": 4
+      "default_order": 5
     },
     {
       "id": "c_1801_parts",
@@ -172,35 +179,42 @@
       "default_order": 3
     },
     {
+      "id": "t_1801_tech_int__t_1801_apps_int",
+      "kind": "topic",
+      "name": "Integration Techniques and Area",
+      "topic": null,
+      "default_order": 6
+    },
+    {
       "id": "c_1801_partial_fractions",
       "kind": "concept",
       "name": "Partial Fractions",
-      "topic": "t_1801_tech_int",
+      "topic": "t_1801_tech_int__t_1801_apps_int",
       "description": "Partial-fraction decomposition rewriting a rational function as a sum of simpler fractions that can be integrated term by term.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "c_1801_improper_int",
       "kind": "concept",
       "name": "Improper Integrals",
-      "topic": "t_1801_tech_int",
+      "topic": "t_1801_tech_int__t_1801_apps_int",
       "description": "Improper integrals defined by limits, evaluating integrals over infinite intervals or with unbounded integrands and testing for convergence.",
-      "default_order": 5
+      "default_order": 2
+    },
+    {
+      "id": "c_1801_area_curves",
+      "kind": "concept",
+      "name": "Area Between Curves",
+      "topic": "t_1801_tech_int__t_1801_apps_int",
+      "description": "Computing the area between two curves by integrating the difference of their functions over the interval where they bound a region.",
+      "default_order": 3
     },
     {
       "id": "t_1801_apps_int",
       "kind": "topic",
       "name": "Applications of Integration",
       "topic": null,
-      "default_order": 5
-    },
-    {
-      "id": "c_1801_area_curves",
-      "kind": "concept",
-      "name": "Area Between Curves",
-      "topic": "t_1801_apps_int",
-      "description": "Computing the area between two curves by integrating the difference of their functions over the interval where they bound a region.",
-      "default_order": 1
+      "default_order": 7
     },
     {
       "id": "c_1801_volume",
@@ -208,7 +222,7 @@
       "name": "Volumes of Solids",
       "topic": "t_1801_apps_int",
       "description": "Computing volumes of solids of revolution and general solids using slicing, disk, washer, and cylindrical-shell integration methods.",
-      "default_order": 2
+      "default_order": 1
     },
     {
       "id": "c_1801_arc_length",
@@ -216,7 +230,7 @@
       "name": "Arc Length",
       "topic": "t_1801_apps_int",
       "description": "Computing the length of a plane curve by integrating the arc-length element derived from the Pythagorean relationship of differentials.",
-      "default_order": 3
+      "default_order": 2
     },
     {
       "id": "c_1801_work",
@@ -224,14 +238,14 @@
       "name": "Work",
       "topic": "t_1801_apps_int",
       "description": "Computing physical work done by a variable force by integrating force over displacement, applied to springs, pumping, and lifting problems.",
-      "default_order": 4
+      "default_order": 3
     },
     {
       "id": "t_1801_series",
       "kind": "topic",
       "name": "Infinite Series",
       "topic": null,
-      "default_order": 6
+      "default_order": 8
     },
     {
       "id": "c_1801_sequences",
@@ -270,7 +284,7 @@
       "kind": "topic",
       "name": "Vectors and Matrices",
       "topic": null,
-      "default_order": 7
+      "default_order": 9
     },
     {
       "id": "c_1802_dot_product",
@@ -309,7 +323,7 @@
       "kind": "topic",
       "name": "Partial Derivatives",
       "topic": null,
-      "default_order": 8
+      "default_order": 10
     },
     {
       "id": "c_1802_multivar_functions",
@@ -348,7 +362,7 @@
       "kind": "topic",
       "name": "Applications of Partial Derivatives",
       "topic": null,
-      "default_order": 9
+      "default_order": 11
     },
     {
       "id": "c_1802_tangent_planes",
@@ -387,7 +401,7 @@
       "kind": "topic",
       "name": "Multiple Integrals",
       "topic": null,
-      "default_order": 10
+      "default_order": 12
     },
     {
       "id": "c_1802_double_integrals",
@@ -414,35 +428,42 @@
       "default_order": 3
     },
     {
+      "id": "t_1802_multiple_int__t_1802_vector_calc",
+      "kind": "topic",
+      "name": "Coordinate Changes and Vector Fields",
+      "topic": null,
+      "default_order": 13
+    },
+    {
       "id": "c_1802_cyl_spherical",
       "kind": "concept",
       "name": "Cylindrical and Spherical Coordinates",
-      "topic": "t_1802_multiple_int",
+      "topic": "t_1802_multiple_int__t_1802_vector_calc",
       "description": "Triple integration in cylindrical and spherical coordinates, with appropriate volume elements simplifying problems with axial or spherical symmetry.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "c_1802_jacobians",
       "kind": "concept",
       "name": "Change of Variables",
-      "topic": "t_1802_multiple_int",
+      "topic": "t_1802_multiple_int__t_1802_vector_calc",
       "description": "Change of variables in multiple integrals using the Jacobian determinant to account for how the transformation scales area or volume.",
-      "default_order": 5
+      "default_order": 2
+    },
+    {
+      "id": "c_1802_vector_fields",
+      "kind": "concept",
+      "name": "Vector Fields",
+      "topic": "t_1802_multiple_int__t_1802_vector_calc",
+      "description": "Vector fields assigning a vector to each point, and line integrals accumulating a field's effect along a curve, modelling work and flow.",
+      "default_order": 3
     },
     {
       "id": "t_1802_vector_calc",
       "kind": "topic",
       "name": "Vector Calculus",
       "topic": null,
-      "default_order": 11
-    },
-    {
-      "id": "c_1802_vector_fields",
-      "kind": "concept",
-      "name": "Vector Fields",
-      "topic": "t_1802_vector_calc",
-      "description": "Vector fields assigning a vector to each point, and line integrals accumulating a field's effect along a curve, modelling work and flow.",
-      "default_order": 1
+      "default_order": 14
     },
     {
       "id": "c_1802_fundamental_line",
@@ -450,7 +471,7 @@
       "name": "Fundamental Theorem for Line Integrals",
       "topic": "t_1802_vector_calc",
       "description": "The fundamental theorem for line integrals showing conservative fields have path-independent integrals computed from a potential function.",
-      "default_order": 2
+      "default_order": 1
     },
     {
       "id": "c_1802_greens_theorem",
@@ -458,7 +479,7 @@
       "name": "Green's Theorem",
       "topic": "t_1802_vector_calc",
       "description": "Green's theorem relating a line integral around a closed plane curve to a double integral of curl over the enclosed region.",
-      "default_order": 3
+      "default_order": 2
     },
     {
       "id": "c_1802_curl_div",
@@ -466,14 +487,14 @@
       "name": "Curl and Divergence",
       "topic": "t_1802_vector_calc",
       "description": "Curl measuring a vector field's local rotation and divergence measuring its net outward flux per unit volume, fundamental differential operators.",
-      "default_order": 4
+      "default_order": 3
     },
     {
       "id": "t_1802_surface_int",
       "kind": "topic",
       "name": "Surface Integrals and Theorems",
       "topic": null,
-      "default_order": 12
+      "default_order": 15
     },
     {
       "id": "c_1802_parametric_surfaces",

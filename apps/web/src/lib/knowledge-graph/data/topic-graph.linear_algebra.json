@@ -2,8 +2,8 @@
   "graphId": "linear_algebra",
   "subject": "Linear Algebra",
   "generatedFrom": "temple/linear_algebra.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_mit1806_linear_equations",
@@ -37,7 +37,7 @@
           "hard": true
         },
         {
-          "topicId": "t_mit1806_determinants",
+          "topicId": "t_mit1806_determinants__t_mit1806_eigenvalues",
           "hard": true
         },
         {
@@ -56,22 +56,22 @@
         {
           "conceptId": "c_mit1806_spaces_subspaces",
           "name": "Vector Spaces and Subspaces",
-          "defaultOrder": 5
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_mit1806_null_column_space",
           "name": "Null Space and Column Space",
-          "defaultOrder": 6
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_mit1806_independence_basis",
           "name": "Linear Independence, Basis, and Dimension",
-          "defaultOrder": 7
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_mit1806_four_subspaces",
           "name": "The Four Fundamental Subspaces",
-          "defaultOrder": 8
+          "defaultOrder": 4
         }
       ],
       "successors": [
@@ -93,22 +93,22 @@
         {
           "conceptId": "c_mit1806_orthogonality",
           "name": "Orthogonal Vectors and Subspaces",
-          "defaultOrder": 9
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_mit1806_projections",
           "name": "Projections onto Subspaces",
-          "defaultOrder": 10
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_mit1806_least_squares",
           "name": "Least Squares Approximations",
-          "defaultOrder": 11
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_mit1806_gram_schmidt",
           "name": "Orthogonal Bases and Gram-Schmidt",
-          "defaultOrder": 12
+          "defaultOrder": 4
         }
       ],
       "successors": [],
@@ -118,24 +118,29 @@
       "isRoot": false
     },
     {
-      "topicId": "t_mit1806_determinants",
-      "name": "Determinants",
+      "topicId": "t_mit1806_determinants__t_mit1806_eigenvalues",
+      "name": "Determinants and Eigenvalue Foundations",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_mit1806_det_properties",
           "name": "Properties of Determinants",
-          "defaultOrder": 13
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_mit1806_det_formulas",
           "name": "Formulas and Cofactors",
-          "defaultOrder": 14
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_mit1806_cramers_rule",
           "name": "Cramer's Rule and Volumes",
-          "defaultOrder": 15
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_mit1806_eigen",
+          "name": "Eigenvalues and Eigenvectors",
+          "defaultOrder": 4
         }
       ],
       "successors": [
@@ -155,29 +160,24 @@
       "defaultOrder": 5,
       "conceptIds": [
         {
-          "conceptId": "c_mit1806_eigen",
-          "name": "Eigenvalues and Eigenvectors",
-          "defaultOrder": 16
-        },
-        {
           "conceptId": "c_mit1806_diagonalization",
           "name": "Diagonalization",
-          "defaultOrder": 17
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_mit1806_diff_eq",
           "name": "Systems of Differential Equations",
-          "defaultOrder": 18
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_mit1806_symmetric_matrices",
           "name": "Symmetric Matrices",
-          "defaultOrder": 19
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_mit1806_positive_definite",
           "name": "Positive Definite Matrices",
-          "defaultOrder": 20
+          "defaultOrder": 4
         }
       ],
       "successors": [
@@ -187,7 +187,7 @@
         }
       ],
       "prereqTopics": [
-        "t_mit1806_determinants"
+        "t_mit1806_determinants__t_mit1806_eigenvalues"
       ],
       "isRoot": false
     },
@@ -199,17 +199,17 @@
         {
           "conceptId": "c_mit1806_svd",
           "name": "Singular Value Decomposition (SVD)",
-          "defaultOrder": 21
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_mit1806_linear_transformations",
           "name": "Linear Transformations",
-          "defaultOrder": 22
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_mit1806_matrix_transform",
           "name": "The Matrix of a Linear Transformation",
-          "defaultOrder": 23
+          "defaultOrder": 3
         }
       ],
       "successors": [],

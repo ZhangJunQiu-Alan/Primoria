@@ -2,8 +2,8 @@
   "graphId": "data_structures_and_algorithms",
   "subject": "Data Structures and Algorithms",
   "generatedFrom": "temple/data_structures_and_algorithms.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_ucb61b_java_intro",
@@ -51,22 +51,22 @@
         {
           "conceptId": "c_ucb61b_sllist",
           "name": "Singly Linked Lists (SLList)",
-          "defaultOrder": 4
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_dllist",
           "name": "Doubly Linked Lists with Sentinels",
-          "defaultOrder": 5
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_arrays",
           "name": "Fixed-Size Arrays",
-          "defaultOrder": 6
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_ucb61b_alist",
           "name": "Resizing Arrays (ArrayList)",
-          "defaultOrder": 7
+          "defaultOrder": 4
         }
       ],
       "successors": [
@@ -112,27 +112,27 @@
         {
           "conceptId": "c_ucb61b_testing",
           "name": "Unit Testing with JUnit",
-          "defaultOrder": 8
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_interfaces",
           "name": "Interfaces and Overriding",
-          "defaultOrder": 9
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_inheritance",
           "name": "Implementation Inheritance (Extends)",
-          "defaultOrder": 10
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_ucb61b_polymorphism",
           "name": "Subtype Polymorphism and Dynamic Dispatch",
-          "defaultOrder": 11
+          "defaultOrder": 4
         },
         {
           "conceptId": "c_ucb61b_iterators",
           "name": "Iterators and Iterables",
-          "defaultOrder": 12
+          "defaultOrder": 5
         }
       ],
       "successors": [
@@ -155,22 +155,22 @@
         {
           "conceptId": "c_ucb61b_quick_find",
           "name": "Quick Find",
-          "defaultOrder": 13
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_quick_union",
           "name": "Quick Union",
-          "defaultOrder": 14
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_wqu",
           "name": "Weighted Quick Union",
-          "defaultOrder": 15
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_ucb61b_path_compression",
           "name": "Path Compression",
-          "defaultOrder": 16
+          "defaultOrder": 4
         }
       ],
       "successors": [
@@ -192,17 +192,17 @@
         {
           "conceptId": "c_ucb61b_big_theta",
           "name": "Big-Theta, Big-O, Big-Omega",
-          "defaultOrder": 17
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_loop_analysis",
           "name": "Loop and Summation Analysis",
-          "defaultOrder": 18
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_recursion_analysis",
           "name": "Recursive Runtime Analysis",
-          "defaultOrder": 19
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -222,17 +222,17 @@
         {
           "conceptId": "c_ucb61b_trees_intro",
           "name": "Tree Definitions and Traversals",
-          "defaultOrder": 20
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_bst_property",
           "name": "Binary Search Tree Invariant",
-          "defaultOrder": 21
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_bst_operations",
           "name": "BST Search, Insert, and Delete",
-          "defaultOrder": 22
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -249,11 +249,7 @@
           "hard": false
         },
         {
-          "topicId": "t_ucb61b_spatial",
-          "hard": true
-        },
-        {
-          "topicId": "t_ucb61b_tries",
+          "topicId": "t_ucb61b_spatial__t_ucb61b_tries",
           "hard": true
         }
       ],
@@ -270,17 +266,17 @@
         {
           "conceptId": "c_ucb61b_tree_rotation",
           "name": "Tree Rotation",
-          "defaultOrder": 23
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_b_trees",
           "name": "B-Trees (2-3 Trees)",
-          "defaultOrder": 24
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_llrb",
           "name": "Left-Leaning Red-Black Trees",
-          "defaultOrder": 25
+          "defaultOrder": 3
         }
       ],
       "successors": [],
@@ -297,22 +293,22 @@
         {
           "conceptId": "c_ucb61b_hash_code",
           "name": "Hash Functions and Object.hashCode()",
-          "defaultOrder": 26
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_separate_chaining",
           "name": "Separate Chaining",
-          "defaultOrder": 27
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_linear_probing",
           "name": "Linear Probing",
-          "defaultOrder": 28
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_ucb61b_load_factor",
           "name": "Load Factor and Resizing",
-          "defaultOrder": 29
+          "defaultOrder": 4
         }
       ],
       "successors": [],
@@ -329,22 +325,22 @@
         {
           "conceptId": "c_ucb61b_pq_interface",
           "name": "Priority Queue ADT",
-          "defaultOrder": 30
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_binary_heap",
           "name": "Binary Min/Max Heaps",
-          "defaultOrder": 31
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_heap_operations",
           "name": "Swim, Sink, and Insert/Delete",
-          "defaultOrder": 32
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_ucb61b_array_heap",
           "name": "Array Representation of Heaps",
-          "defaultOrder": 33
+          "defaultOrder": 4
         }
       ],
       "successors": [
@@ -368,22 +364,22 @@
         {
           "conceptId": "c_ucb61b_graph_api",
           "name": "Graph API and Adjacency Lists",
-          "defaultOrder": 34
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_dfs",
           "name": "Depth-First Search (DFS)",
-          "defaultOrder": 35
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_bfs",
           "name": "Breadth-First Search (BFS)",
-          "defaultOrder": 36
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_ucb61b_topological_sort",
           "name": "Topological Sort",
-          "defaultOrder": 37
+          "defaultOrder": 4
         }
       ],
       "successors": [
@@ -409,17 +405,17 @@
         {
           "conceptId": "c_ucb61b_edge_relaxation",
           "name": "Edge Relaxation",
-          "defaultOrder": 38
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_dijkstra",
           "name": "Dijkstra's Algorithm",
-          "defaultOrder": 39
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_a_star",
           "name": "A* Search Algorithm",
-          "defaultOrder": 40
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -442,17 +438,17 @@
         {
           "conceptId": "c_ucb61b_mst_property",
           "name": "Cut Property",
-          "defaultOrder": 41
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_prim",
           "name": "Prim's Algorithm",
-          "defaultOrder": 42
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_kruskal",
           "name": "Kruskal's Algorithm",
-          "defaultOrder": 43
+          "defaultOrder": 3
         }
       ],
       "successors": [],
@@ -465,19 +461,29 @@
       "isRoot": false
     },
     {
-      "topicId": "t_ucb61b_spatial",
-      "name": "Spatial Data Structures",
+      "topicId": "t_ucb61b_spatial__t_ucb61b_tries",
+      "name": "Spatial and String Indexes",
       "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_1d_range_search",
           "name": "1D Range Searching",
-          "defaultOrder": 44
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_kd_trees",
           "name": "K-D Trees",
-          "defaultOrder": 45
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_ucb61b_trie_basics",
+          "name": "Trie Structure",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_ucb61b_trie_string_ops",
+          "name": "Trie String Operations",
+          "defaultOrder": 4
         }
       ],
       "successors": [],
@@ -494,22 +500,22 @@
         {
           "conceptId": "c_ucb61b_selection_insertion_sort",
           "name": "Selection and Insertion Sort",
-          "defaultOrder": 46
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_merge_sort",
           "name": "Merge Sort",
-          "defaultOrder": 47
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_quick_sort",
           "name": "Quicksort",
-          "defaultOrder": 48
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_ucb61b_sort_bounds",
           "name": "Lower Bounds of Comparison Sorting",
-          "defaultOrder": 49
+          "defaultOrder": 4
         }
       ],
       "successors": [],
@@ -527,44 +533,22 @@
         {
           "conceptId": "c_ucb61b_counting_sort",
           "name": "Counting Sort",
-          "defaultOrder": 50
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_lsd_radix",
           "name": "LSD Radix Sort",
-          "defaultOrder": 51
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_ucb61b_msd_radix",
           "name": "MSD Radix Sort",
-          "defaultOrder": 52
+          "defaultOrder": 3
         }
       ],
       "successors": [],
       "prereqTopics": [
         "t_ucb61b_lists_arrays"
-      ],
-      "isRoot": false
-    },
-    {
-      "topicId": "t_ucb61b_tries",
-      "name": "Tries and String Operations",
-      "defaultOrder": 16,
-      "conceptIds": [
-        {
-          "conceptId": "c_ucb61b_trie_basics",
-          "name": "Trie Structure",
-          "defaultOrder": 53
-        },
-        {
-          "conceptId": "c_ucb61b_trie_string_ops",
-          "name": "Trie String Operations",
-          "defaultOrder": 54
-        }
-      ],
-      "successors": [],
-      "prereqTopics": [
-        "t_ucb61b_bst"
       ],
       "isRoot": false
     }

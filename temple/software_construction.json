@@ -16,9 +16,9 @@
   },
   "nodes": [
     {
-      "id": "t_mit6031_fundamentals",
+      "id": "t_mit6031_fundamentals__t_mit6031_specifications",
       "kind": "topic",
-      "name": "Software Construction Fundamentals",
+      "name": "Software Construction Foundations and Specifications",
       "topic": null,
       "default_order": 1
     },
@@ -26,7 +26,7 @@
       "id": "c_mit6031_static_checking",
       "kind": "concept",
       "name": "Static Checking",
-      "topic": "t_mit6031_fundamentals",
+      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Catching errors before run time through static type checking, contrasted with dynamic checking, to make bugs visible early and cheaply.",
       "default_order": 1
     },
@@ -34,47 +34,40 @@
       "id": "c_mit6031_immutability",
       "kind": "concept",
       "name": "Immutability",
-      "topic": "t_mit6031_fundamentals",
+      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Designing types whose values cannot change after construction, eliminating aliasing bugs and making code easier to reason about and share safely.",
-      "default_order": 2
-    },
-    {
-      "id": "t_mit6031_specifications",
-      "kind": "topic",
-      "name": "Specifications and Testing",
-      "topic": null,
       "default_order": 2
     },
     {
       "id": "c_mit6031_specs",
       "kind": "concept",
       "name": "Specifications",
-      "topic": "t_mit6031_specifications",
+      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Contracts defining a method's behaviour through preconditions that clients must satisfy and postconditions the implementation guarantees in return.",
-      "default_order": 1
+      "default_order": 3
     },
     {
       "id": "c_mit6031_testing",
       "kind": "concept",
       "name": "Testing Strategies",
-      "topic": "t_mit6031_specifications",
+      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Designing test suites systematically by partitioning the input space into equivalence classes and probing boundary values to expose defects.",
-      "default_order": 2
+      "default_order": 4
     },
     {
       "id": "c_mit6031_exceptions",
       "kind": "concept",
       "name": "Exceptions",
-      "topic": "t_mit6031_specifications",
+      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs.",
-      "default_order": 3
+      "default_order": 5
     },
     {
       "id": "t_mit6031_adt",
       "kind": "topic",
       "name": "Abstract Data Types",
       "topic": null,
-      "default_order": 3
+      "default_order": 2
     },
     {
       "id": "c_mit6031_adt_basics",
@@ -113,7 +106,7 @@
       "kind": "topic",
       "name": "Object-Oriented Programming",
       "topic": null,
-      "default_order": 4
+      "default_order": 3
     },
     {
       "id": "c_mit6031_interfaces",
@@ -144,7 +137,7 @@
       "kind": "topic",
       "name": "Concurrency",
       "topic": null,
-      "default_order": 5
+      "default_order": 4
     },
     {
       "id": "c_mit6031_concurrency_intro",

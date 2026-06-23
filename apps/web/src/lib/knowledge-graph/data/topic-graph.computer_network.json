@@ -2,8 +2,8 @@
   "graphId": "computer_network",
   "subject": "Computer Networking (Stanford CS144)",
   "generatedFrom": "temple/computer_network.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "net_arch",
@@ -103,7 +103,7 @@
       ],
       "successors": [
         {
-          "topicId": "net_transport",
+          "topicId": "net_transport_part1",
           "hard": true
         }
       ],
@@ -114,8 +114,8 @@
       "isRoot": false
     },
     {
-      "topicId": "net_transport",
-      "name": "Transport Layer",
+      "topicId": "net_transport_part1",
+      "name": "Transport Layer (Part 1)",
       "defaultOrder": 4,
       "conceptIds": [
         {
@@ -132,24 +132,13 @@
           "conceptId": "net_tcp",
           "name": "TCP",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "net_rdt",
-          "name": "Reliable Data Transfer",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "net_flow_control",
-          "name": "Flow Control",
-          "defaultOrder": 5
-        },
-        {
-          "conceptId": "net_congestion",
-          "name": "Congestion Control",
-          "defaultOrder": 6
         }
       ],
       "successors": [
+        {
+          "topicId": "net_transport_part2",
+          "hard": true
+        },
         {
           "topicId": "net_application",
           "hard": true
@@ -161,9 +150,36 @@
       "isRoot": false
     },
     {
+      "topicId": "net_transport_part2",
+      "name": "Transport Layer (Part 2)",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "net_rdt",
+          "name": "Reliable Data Transfer",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "net_flow_control",
+          "name": "Flow Control",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "net_congestion",
+          "name": "Congestion Control",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "net_transport_part1"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "net_application",
       "name": "Application Layer",
-      "defaultOrder": 5,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "net_http",
@@ -183,7 +199,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "net_transport"
+        "net_transport_part1"
       ],
       "isRoot": false
     }

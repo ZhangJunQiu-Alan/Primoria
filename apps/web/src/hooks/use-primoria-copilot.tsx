@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/react-core/v2";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import { StemRenderer, StemRendererProps } from "@/components/generative-ui/stem-renderer";
@@ -232,12 +232,17 @@ function courseArtifactFromSummary(summary: unknown): CourseCardArtifact | null 
   return parsed.success ? parsed.data : null;
 }
 
-type MenuItem = { topicId: string; name: string };
+type MenuItem = { graphId: string; topicId: string; name: string };
+type CourseTopicAnchor = {
+  graphId: string;
+  startTopicId: string;
+  targetConceptId: string | null;
+};
 type LearningPhase = "positioning" | "building" | "ready" | "broad" | "fallback" | "error";
 
 // Web-as-brain course card. The agent tool only surfaces the learner's goal; this
 // browser component runs KG positioning (/api/knowledge-graph/position) and, for a
-// specific match, the synchronous build (/api/learning/course). Both fetches carry
+// specific match, the asynchronous build (/api/learning/course). Both fetches carry
 // the user's session natively, so the course persists to app_courses under the
 // signed-in owner. specific -> course card, broad -> menu, fallback -> message.
 function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string }) {
@@ -255,6 +260,40 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
   // its generation stage and flip to Ready when published (engineering doc §13.3).
   const { jobsByLessonId } = useLessonGenerationJobs(builtCourseId, firstJob ? [firstJob] : []);
   const liveFirstJob = firstJob ? jobsByLessonId.get(firstJob.lessonId) ?? firstJob : null;
+
+  const startCourseBuild = useCallback(async (anchor: CourseTopicAnchor) => {
+    const requestSeq = ++requestSeqRef.current;
+    const isCurrentRequest = () => requestSeqRef.current === requestSeq;
+    setPhase("building");
+    setMenu([]);
+    setMessage("");
+
+    try {
+      const buildRes = await fetch("/api/learning/course", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(anchor),
+      });
+      const buildData = await buildRes.json();
+      if (!buildRes.ok) throw new Error(buildData?.error || "build failed");
+      if (!isCurrentRequest()) return;
+
+      const built = courseArtifactFromSummary(buildData.summary);
+      if (!built) throw new Error("course summary was unusable");
+      setBuiltCourseId(typeof buildData.courseId === "string" ? buildData.courseId : null);
+      setFirstJob((buildData.job as LessonGenerationJobSummary | null | undefined) ?? null);
+      setArtifact(built);
+      setPhase("ready");
+    } catch (error) {
+      if (!isCurrentRequest()) return;
+      setMessage(error instanceof Error ? error.message : "Something went wrong.");
+      setPhase("error");
+    }
+  }, []);
+
+  useEffect(() => () => {
+    requestSeqRef.current += 1;
+  }, []);
 
   if (query !== prevQuery) {
     setPrevQuery(query);
@@ -285,7 +324,13 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
 
         const plan = posData?.plan;
         if (plan?.branch === "broad") {
-          setMenu((plan.menu ?? []).map((m: { topicId: string; name: string }) => ({ topicId: m.topicId, name: m.name })));
+          const resolvedGraphId = typeof posData?.graphId === "string" ? posData.graphId : graphId;
+          if (!resolvedGraphId) throw new Error("positioning result did not include a knowledge graph");
+          setMenu((plan.menu ?? []).map((m: { topicId: string; name: string }) => ({
+            graphId: resolvedGraphId,
+            topicId: m.topicId,
+            name: m.name,
+          })));
           setPhase("broad");
           return;
         }
@@ -295,22 +340,19 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
           return;
         }
 
-        setPhase("building");
-        const buildRes = await fetch("/api/learning/course", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ courseContext: plan.courseContext }),
+        const courseContext = plan.courseContext as {
+          graphId?: unknown;
+          startTopic?: { topicId?: unknown };
+          targetConceptId?: unknown;
+        };
+        if (typeof courseContext.graphId !== "string" || typeof courseContext.startTopic?.topicId !== "string") {
+          throw new Error("positioning result did not include a valid topic anchor");
+        }
+        void startCourseBuild({
+          graphId: courseContext.graphId,
+          startTopicId: courseContext.startTopic.topicId,
+          targetConceptId: typeof courseContext.targetConceptId === "string" ? courseContext.targetConceptId : null,
         });
-        const buildData = await buildRes.json();
-        if (!buildRes.ok) throw new Error(buildData?.error || "build failed");
-        if (!isCurrentRequest()) return;
-
-        const built = courseArtifactFromSummary(buildData.summary);
-        if (!built) throw new Error("course summary was unusable");
-        setBuiltCourseId(typeof buildData.courseId === "string" ? buildData.courseId : null);
-        setFirstJob((buildData.job as LessonGenerationJobSummary | null | undefined) ?? null);
-        setArtifact(built);
-        setPhase("ready");
       } catch (error) {
         if (!isCurrentRequest()) return;
         setMessage(error instanceof Error ? error.message : "Something went wrong.");
@@ -321,7 +363,7 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
     return () => {
       if (requestSeqRef.current === requestSeq) requestSeqRef.current += 1;
     };
-  }, [activeQuery, graphId]);
+  }, [activeQuery, graphId, startCourseBuild]);
 
   if (phase === "ready" && artifact) {
     const firstLessonStatus = liveFirstJob
@@ -361,7 +403,11 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
               {menu.map((item) => (
                 <li
                   key={item.topicId}
-                  onClick={() => setActiveQuery(item.name)}
+                  onClick={() => void startCourseBuild({
+                    graphId: item.graphId,
+                    startTopicId: item.topicId,
+                    targetConceptId: null,
+                  })}
                   style={{
                     cursor: "pointer",
                     padding: "8px 12px",

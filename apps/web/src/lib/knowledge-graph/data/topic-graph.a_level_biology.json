@@ -2,8 +2,8 @@
   "graphId": "a_level_biology",
   "subject": "A-Level Biology (CIE 9700)",
   "generatedFrom": "temple/a_level_biology.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "bio_cell_structure",
@@ -33,7 +33,7 @@
       ],
       "successors": [
         {
-          "topicId": "bio_cell_cycle",
+          "topicId": "bio_cell_cycle__bio_nucleic_acids",
           "hard": true
         }
       ],
@@ -81,11 +81,11 @@
           "hard": true
         },
         {
-          "topicId": "bio_nucleic_acids",
+          "topicId": "bio_cell_cycle__bio_nucleic_acids",
           "hard": false
         },
         {
-          "topicId": "bio_transport_mammals",
+          "topicId": "bio_transport_mammals__bio_gas_exchange",
           "hard": true
         },
         {
@@ -155,7 +155,7 @@
           "hard": true
         },
         {
-          "topicId": "bio_gas_exchange",
+          "topicId": "bio_transport_mammals__bio_gas_exchange",
           "hard": true
         },
         {
@@ -173,8 +173,8 @@
       "isRoot": false
     },
     {
-      "topicId": "bio_cell_cycle",
-      "name": "The Mitotic Cell Cycle",
+      "topicId": "bio_cell_cycle__bio_nucleic_acids",
+      "name": "Chromosomes and DNA Replication",
       "defaultOrder": 5,
       "conceptIds": [
         {
@@ -186,16 +186,35 @@
           "conceptId": "bio_mitosis",
           "name": "Mitosis",
           "defaultOrder": 2
+        },
+        {
+          "conceptId": "bio_dna_structure",
+          "name": "DNA Structure",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "bio_dna_replication",
+          "name": "DNA Replication",
+          "defaultOrder": 4
         }
       ],
       "successors": [
         {
+          "topicId": "bio_nucleic_acids",
+          "hard": true
+        },
+        {
           "topicId": "bio_inheritance",
+          "hard": true
+        },
+        {
+          "topicId": "bio_genetic_tech",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "bio_cell_structure"
+        "bio_cell_structure",
+        "bio_molecules"
       ],
       "isRoot": false
     },
@@ -205,29 +224,19 @@
       "defaultOrder": 6,
       "conceptIds": [
         {
-          "conceptId": "bio_dna_structure",
-          "name": "DNA Structure",
-          "defaultOrder": 1
-        },
-        {
-          "conceptId": "bio_dna_replication",
-          "name": "DNA Replication",
-          "defaultOrder": 2
-        },
-        {
           "conceptId": "bio_transcription",
           "name": "Transcription",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "bio_translation",
           "name": "Translation",
-          "defaultOrder": 4
+          "defaultOrder": 2
         },
         {
           "conceptId": "bio_mutation",
           "name": "Gene Mutation",
-          "defaultOrder": 5
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -238,14 +247,10 @@
         {
           "topicId": "bio_evolution",
           "hard": true
-        },
-        {
-          "topicId": "bio_genetic_tech",
-          "hard": true
         }
       ],
       "prereqTopics": [
-        "bio_molecules"
+        "bio_cell_cycle__bio_nucleic_acids"
       ],
       "isRoot": false
     },
@@ -277,8 +282,8 @@
       "isRoot": false
     },
     {
-      "topicId": "bio_transport_mammals",
-      "name": "Transport in Mammals",
+      "topicId": "bio_transport_mammals__bio_gas_exchange",
+      "name": "Circulation and Gas Exchange",
       "defaultOrder": 8,
       "conceptIds": [
         {
@@ -295,27 +300,16 @@
           "conceptId": "bio_haemoglobin",
           "name": "Haemoglobin and Oxygen Transport",
           "defaultOrder": 3
-        }
-      ],
-      "successors": [],
-      "prereqTopics": [
-        "bio_molecules"
-      ],
-      "isRoot": false
-    },
-    {
-      "topicId": "bio_gas_exchange",
-      "name": "Gas Exchange",
-      "defaultOrder": 9,
-      "conceptIds": [
+        },
         {
           "conceptId": "bio_lungs",
           "name": "Gas Exchange in the Lungs",
-          "defaultOrder": 1
+          "defaultOrder": 4
         }
       ],
       "successors": [],
       "prereqTopics": [
+        "bio_molecules",
         "bio_membranes"
       ],
       "isRoot": false
@@ -323,7 +317,7 @@
     {
       "topicId": "bio_disease",
       "name": "Infectious Disease and Immunity",
-      "defaultOrder": 10,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "bio_infectious",
@@ -350,7 +344,7 @@
     {
       "topicId": "bio_respiration",
       "name": "Energy and Respiration",
-      "defaultOrder": 11,
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "bio_glycolysis",
@@ -388,7 +382,7 @@
     {
       "topicId": "bio_photosynthesis",
       "name": "Photosynthesis",
-      "defaultOrder": 12,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "bio_light_dependent",
@@ -415,7 +409,7 @@
     {
       "topicId": "bio_homeostasis",
       "name": "Homeostasis",
-      "defaultOrder": 13,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "bio_homeostasis_principles",
@@ -445,7 +439,7 @@
     {
       "topicId": "bio_coordination",
       "name": "Control and Coordination",
-      "defaultOrder": 14,
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "bio_nervous",
@@ -478,7 +472,7 @@
     {
       "topicId": "bio_inheritance",
       "name": "Inheritance",
-      "defaultOrder": 15,
+      "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "bio_meiosis",
@@ -508,7 +502,7 @@
         }
       ],
       "prereqTopics": [
-        "bio_cell_cycle",
+        "bio_cell_cycle__bio_nucleic_acids",
         "bio_nucleic_acids"
       ],
       "isRoot": false
@@ -516,7 +510,7 @@
     {
       "topicId": "bio_evolution",
       "name": "Selection and Evolution",
-      "defaultOrder": 16,
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "bio_variation",
@@ -549,7 +543,7 @@
     {
       "topicId": "bio_biodiversity",
       "name": "Biodiversity and Conservation",
-      "defaultOrder": 17,
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "bio_classification",
@@ -576,7 +570,7 @@
     {
       "topicId": "bio_genetic_tech",
       "name": "Genetic Technology",
-      "defaultOrder": 18,
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "bio_gene_tech",
@@ -596,7 +590,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "bio_nucleic_acids"
+        "bio_cell_cycle__bio_nucleic_acids"
       ],
       "isRoot": false
     }

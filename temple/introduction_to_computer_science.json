@@ -12,8 +12,8 @@
   "nodes": [
     {
       "id": "topic_week0",
-      "name": "Week 0: Scratch",
       "kind": "topic",
+      "name": "Week 0: Scratch",
       "topic": null,
       "default_order": 1
     },
@@ -42,42 +42,49 @@
       "description": "Conditional statements that execute different code branches depending on whether a boolean expression evaluates to true or false."
     },
     {
+      "id": "topic_week0__topic_week1",
+      "kind": "topic",
+      "name": "Control Flow and C Foundations",
+      "topic": null,
+      "default_order": 2
+    },
+    {
       "id": "c_loops",
       "name": "Loops",
-      "topic": "topic_week0",
+      "topic": "topic_week0__topic_week1",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 1,
       "description": "Control structures that repeat a block of code, either a fixed number of times or while a condition holds, to automate repetition."
     },
     {
       "id": "c_abstraction",
       "name": "Abstraction",
-      "topic": "topic_week0",
+      "topic": "topic_week0__topic_week1",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 2,
       "description": "Hiding implementation detail behind simpler interfaces so complex systems can be built and reasoned about in manageable layers."
-    },
-    {
-      "id": "topic_week1",
-      "name": "Week 1: C",
-      "kind": "topic",
-      "topic": null,
-      "default_order": 2
     },
     {
       "id": "c_c_syntax",
       "name": "C Syntax",
-      "topic": "topic_week1",
+      "topic": "topic_week0__topic_week1",
       "kind": "concept",
-      "default_order": 1,
+      "default_order": 3,
       "description": "The grammatical rules of the C language governing how statements, expressions, and declarations are written so the compiler can interpret them."
+    },
+    {
+      "id": "topic_week1",
+      "kind": "topic",
+      "name": "Week 1: C",
+      "topic": null,
+      "default_order": 3
     },
     {
       "id": "c_data_types",
       "name": "Data Types",
       "topic": "topic_week1",
       "kind": "concept",
-      "default_order": 2,
+      "default_order": 1,
       "description": "Categories such as int, char, float, and double specifying how values are stored, their size in memory, and the operations allowed on them."
     },
     {
@@ -85,7 +92,7 @@
       "name": "Operators",
       "topic": "topic_week1",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 2,
       "description": "Symbols performing computations on values, including arithmetic, relational, logical, and assignment operators, combined to form expressions."
     },
     {
@@ -93,15 +100,15 @@
       "name": "Compilation Process",
       "topic": "topic_week1",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 3,
       "description": "The process translating C source code into an executable through preprocessing, compiling, assembling, and linking stages."
     },
     {
       "id": "topic_week2",
-      "name": "Week 2: Arrays",
       "kind": "topic",
+      "name": "Week 2: Arrays",
       "topic": null,
-      "default_order": 3
+      "default_order": 4
     },
     {
       "id": "c_debugging",
@@ -137,10 +144,10 @@
     },
     {
       "id": "topic_week3",
-      "name": "Week 3: Algorithms",
       "kind": "topic",
+      "name": "Week 3: Algorithms",
       "topic": null,
-      "default_order": 4
+      "default_order": 5
     },
     {
       "id": "c_linear_search",
@@ -167,42 +174,49 @@
       "description": "Algorithms arranging elements into order, such as bubble, selection, and merge sort, differing in strategy and time complexity."
     },
     {
+      "id": "topic_week3__topic_week4",
+      "kind": "topic",
+      "name": "Algorithmic Complexity and Memory",
+      "topic": null,
+      "default_order": 6
+    },
+    {
       "id": "c_recursion",
       "name": "Recursion",
-      "topic": "topic_week3",
+      "topic": "topic_week3__topic_week4",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 1,
       "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate."
     },
     {
       "id": "c_big_o",
       "name": "Big O Notation",
-      "topic": "topic_week3",
+      "topic": "topic_week3__topic_week4",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 2,
       "description": "Big O notation describing how an algorithm's running time or space grows with input size, characterising worst-case asymptotic efficiency."
-    },
-    {
-      "id": "topic_week4",
-      "name": "Week 4: Memory",
-      "kind": "topic",
-      "topic": null,
-      "default_order": 5
     },
     {
       "id": "c_pointers",
       "name": "Pointers",
-      "topic": "topic_week4",
+      "topic": "topic_week3__topic_week4",
       "kind": "concept",
-      "default_order": 1,
+      "default_order": 3,
       "description": "Variables storing memory addresses, enabling indirect access, dynamic data structures, and efficient passing of data by reference in C."
+    },
+    {
+      "id": "topic_week4",
+      "kind": "topic",
+      "name": "Week 4: Memory",
+      "topic": null,
+      "default_order": 7
     },
     {
       "id": "c_malloc",
       "name": "Dynamic Memory Allocation",
       "topic": "topic_week4",
       "kind": "concept",
-      "default_order": 2,
+      "default_order": 1,
       "description": "Dynamic memory allocation requesting heap memory at run time with malloc and releasing it with free, enabling data sized during execution."
     },
     {
@@ -210,7 +224,7 @@
       "name": "Call Stack",
       "topic": "topic_week4",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 2,
       "description": "The region of memory tracking active function calls, storing each call's local variables, parameters, and return address in stack frames."
     },
     {
@@ -218,15 +232,15 @@
       "name": "File I/O",
       "topic": "topic_week4",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 3,
       "description": "Reading from and writing to files using library functions, enabling programs to persist and retrieve data beyond their execution."
     },
     {
       "id": "topic_week5",
-      "name": "Week 5: Data Structures",
       "kind": "topic",
+      "name": "Week 5: Data Structures",
       "topic": null,
-      "default_order": 6
+      "default_order": 8
     },
     {
       "id": "c_linked_lists",
@@ -253,42 +267,49 @@
       "description": "Hierarchical data structures of nodes linked from a root, such as binary search trees, enabling efficient ordered storage and lookup."
     },
     {
+      "id": "topic_week5__topic_week6",
+      "kind": "topic",
+      "name": "Advanced Data Structures and Python",
+      "topic": null,
+      "default_order": 9
+    },
+    {
       "id": "c_tries",
       "name": "Tries",
-      "topic": "topic_week5",
+      "topic": "topic_week5__topic_week6",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 1,
       "description": "Tree structures indexing strings by their characters along paths, enabling fast prefix-based search and autocomplete at the cost of memory."
     },
     {
       "id": "c_queues_stacks",
       "name": "Queues and Stacks",
-      "topic": "topic_week5",
+      "topic": "topic_week5__topic_week6",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 2,
       "description": "Two abstract data types: stacks following last-in-first-out order and queues following first-in-first-out order, for managing ordered access."
-    },
-    {
-      "id": "topic_week6",
-      "name": "Week 6: Python",
-      "kind": "topic",
-      "topic": null,
-      "default_order": 7
     },
     {
       "id": "c_python_syntax",
       "name": "Python Syntax",
-      "topic": "topic_week6",
+      "topic": "topic_week5__topic_week6",
       "kind": "concept",
-      "default_order": 1,
+      "default_order": 3,
       "description": "The readable, indentation-based syntax of Python, a high-level interpreted language emphasising concise expression of common programming constructs."
+    },
+    {
+      "id": "topic_week6",
+      "kind": "topic",
+      "name": "Week 6: Python",
+      "topic": null,
+      "default_order": 10
     },
     {
       "id": "c_lists_dicts",
       "name": "Lists and Dictionaries",
       "topic": "topic_week6",
       "kind": "concept",
-      "default_order": 2,
+      "default_order": 1,
       "description": "Python's core collections: ordered, mutable lists and dictionaries mapping keys to values, supporting flexible data manipulation."
     },
     {
@@ -296,7 +317,7 @@
       "name": "Object-Oriented Programming",
       "topic": "topic_week6",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 2,
       "description": "Object-oriented programming in Python organising code into classes that bundle data and methods, supporting encapsulation, inheritance, and reuse."
     },
     {
@@ -304,15 +325,15 @@
       "name": "Exceptions",
       "topic": "topic_week6",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 3,
       "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic."
     },
     {
       "id": "topic_week7",
-      "name": "Week 7: SQL",
       "kind": "topic",
+      "name": "Week 7: SQL",
       "topic": null,
-      "default_order": 8
+      "default_order": 11
     },
     {
       "id": "c_relational_db",
@@ -348,10 +369,10 @@
     },
     {
       "id": "topic_week8",
-      "name": "Week 8: HTML, CSS, JavaScript",
       "kind": "topic",
+      "name": "Week 8: HTML, CSS, JavaScript",
       "topic": null,
-      "default_order": 9
+      "default_order": 12
     },
     {
       "id": "c_html",
@@ -387,10 +408,10 @@
     },
     {
       "id": "topic_week9",
-      "name": "Week 9: Flask",
       "kind": "topic",
+      "name": "Week 9: Flask",
       "topic": null,
-      "default_order": 10
+      "default_order": 13
     },
     {
       "id": "c_http",
@@ -417,42 +438,49 @@
       "description": "The Model-View-Controller pattern separating data, presentation, and control logic to organise web application code cleanly."
     },
     {
+      "id": "topic_week9__topic_week10",
+      "kind": "topic",
+      "name": "Web State, APIs and Security",
+      "topic": null,
+      "default_order": 14
+    },
+    {
       "id": "c_sessions",
       "name": "Sessions and Cookies",
-      "topic": "topic_week9",
+      "topic": "topic_week9__topic_week10",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 1,
       "description": "Sessions and cookies maintaining state across stateless HTTP requests, identifying users and remembering data between page visits."
     },
     {
       "id": "c_apis",
       "name": "APIs",
-      "topic": "topic_week9",
+      "topic": "topic_week9__topic_week10",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 2,
       "description": "Application programming interfaces exposing functionality and data over the web, commonly returning JSON for other programs to consume."
-    },
-    {
-      "id": "topic_week10",
-      "name": "Week 10: Cybersecurity",
-      "kind": "topic",
-      "topic": null,
-      "default_order": 11
     },
     {
       "id": "c_cybersecurity",
       "name": "Cybersecurity Basics",
-      "topic": "topic_week10",
+      "topic": "topic_week9__topic_week10",
       "kind": "concept",
-      "default_order": 1,
+      "default_order": 3,
       "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information."
+    },
+    {
+      "id": "topic_week10",
+      "kind": "topic",
+      "name": "Week 10: Cybersecurity",
+      "topic": null,
+      "default_order": 15
     },
     {
       "id": "c_encryption",
       "name": "Encryption",
       "topic": "topic_week10",
       "kind": "concept",
-      "default_order": 2,
+      "default_order": 1,
       "description": "Transforming data into ciphertext using algorithms and keys so that only authorised parties can read it, underpinning secure communication."
     },
     {
@@ -460,7 +488,7 @@
       "name": "Authentication",
       "topic": "topic_week10",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 2,
       "description": "Verifying the identity of a user or system, typically through passwords, tokens, or biometrics, before granting access to resources."
     },
     {
@@ -468,71 +496,11 @@
       "name": "Vulnerabilities",
       "topic": "topic_week10",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 3,
       "description": "Weaknesses in software or systems that attackers can exploit, such as injection or buffer overflows, requiring mitigation and patching."
     }
   ],
   "edges": [
-    {
-      "type": "prereq",
-      "from": "topic_week0",
-      "to": "topic_week1",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_week1",
-      "to": "topic_week2",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_week2",
-      "to": "topic_week3",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_week3",
-      "to": "topic_week4",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_week4",
-      "to": "topic_week5",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_week5",
-      "to": "topic_week6",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_week6",
-      "to": "topic_week7",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_week7",
-      "to": "topic_week8",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_week8",
-      "to": "topic_week9",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "from": "topic_week9",
-      "to": "topic_week10",
-      "strength": "hard"
-    },
     {
       "type": "prereq",
       "from": "c_functions",

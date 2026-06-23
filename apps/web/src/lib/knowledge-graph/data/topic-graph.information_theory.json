@@ -2,8 +2,8 @@
   "graphId": "information_theory",
   "subject": "Information Theory and Entropy",
   "generatedFrom": "temple/information_theory.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_infotheory_basics",
@@ -24,21 +24,11 @@
           "conceptId": "c_infotheory_mutual_info",
           "name": "Mutual Information",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_infotheory_kl_divergence",
-          "name": "Kullback-Leibler Divergence",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "c_infotheory_data_processing",
-          "name": "Data Processing Inequality",
-          "defaultOrder": 5
         }
       ],
       "successors": [
         {
-          "topicId": "t_infotheory_source_coding",
+          "topicId": "t_infotheory_basics__t_infotheory_source_coding",
           "hard": true
         },
         {
@@ -54,32 +44,31 @@
       "isRoot": true
     },
     {
-      "topicId": "t_infotheory_source_coding",
-      "name": "Source Coding",
+      "topicId": "t_infotheory_basics__t_infotheory_source_coding",
+      "name": "Information Measures and Typicality",
       "defaultOrder": 2,
       "conceptIds": [
         {
-          "conceptId": "c_infotheory_aep",
-          "name": "Asymptotic Equipartition Property",
+          "conceptId": "c_infotheory_kl_divergence",
+          "name": "Kullback-Leibler Divergence",
           "defaultOrder": 1
         },
         {
-          "conceptId": "c_infotheory_kraft",
-          "name": "Kraft Inequality",
+          "conceptId": "c_infotheory_data_processing",
+          "name": "Data Processing Inequality",
           "defaultOrder": 2
         },
         {
-          "conceptId": "c_infotheory_shannon_coding",
-          "name": "Shannon Source Coding Theorem",
+          "conceptId": "c_infotheory_aep",
+          "name": "Asymptotic Equipartition Property",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_infotheory_huffman",
-          "name": "Huffman Coding",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "t_infotheory_source_coding",
+          "hard": true
+        },
         {
           "topicId": "t_infotheory_channel_capacity",
           "hard": true
@@ -91,9 +80,36 @@
       "isRoot": false
     },
     {
+      "topicId": "t_infotheory_source_coding",
+      "name": "Source Coding",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "c_infotheory_kraft",
+          "name": "Kraft Inequality",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_infotheory_shannon_coding",
+          "name": "Shannon Source Coding Theorem",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_infotheory_huffman",
+          "name": "Huffman Coding",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_infotheory_basics__t_infotheory_source_coding"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "t_infotheory_channel_capacity",
       "name": "Channel Capacity",
-      "defaultOrder": 3,
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_infotheory_dmc",
@@ -114,14 +130,14 @@
       "successors": [],
       "prereqTopics": [
         "t_infotheory_basics",
-        "t_infotheory_source_coding"
+        "t_infotheory_basics__t_infotheory_source_coding"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_infotheory_continuous",
       "name": "Continuous Channels",
-      "defaultOrder": 4,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c_infotheory_differential_entropy",

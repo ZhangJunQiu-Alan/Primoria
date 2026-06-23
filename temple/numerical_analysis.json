@@ -140,9 +140,9 @@
       "default_order": 3
     },
     {
-      "id": "t_mit18330_integration",
+      "id": "t_mit18330_integration__t_mit18330_odes",
       "kind": "topic",
-      "name": "Numerical Integration",
+      "name": "Numerical Integration and Differential Equations",
       "topic": null,
       "default_order": 5
     },
@@ -150,7 +150,7 @@
       "id": "c_mit18330_newton_cotes",
       "kind": "concept",
       "name": "Newton-Cotes Formulas",
-      "topic": "t_mit18330_integration",
+      "topic": "t_mit18330_integration__t_mit18330_odes",
       "description": "Numerical integration rules such as the trapezoidal and Simpson's rules that approximate integrals using equally spaced sample points.",
       "default_order": 1
     },
@@ -158,40 +158,33 @@
       "id": "c_mit18330_gaussian_quad",
       "kind": "concept",
       "name": "Gaussian Quadrature",
-      "topic": "t_mit18330_integration",
+      "topic": "t_mit18330_integration__t_mit18330_odes",
       "description": "Numerical integration choosing optimal nodes and weights to integrate polynomials of the highest possible degree exactly.",
       "default_order": 2
-    },
-    {
-      "id": "t_mit18330_odes",
-      "kind": "topic",
-      "name": "Ordinary Differential Equations",
-      "topic": null,
-      "default_order": 6
     },
     {
       "id": "c_mit18330_euler",
       "kind": "concept",
       "name": "Euler's Method",
-      "topic": "t_mit18330_odes",
+      "topic": "t_mit18330_integration__t_mit18330_odes",
       "description": "The simplest numerical method for ODEs, stepping forward (explicit) or backward (implicit) using the slope to advance the solution.",
-      "default_order": 1
+      "default_order": 3
     },
     {
       "id": "c_mit18330_runge_kutta",
       "kind": "concept",
       "name": "Runge-Kutta Methods",
-      "topic": "t_mit18330_odes",
+      "topic": "t_mit18330_integration__t_mit18330_odes",
       "description": "A family of higher-order explicit ODE methods, notably RK4, combining several slope evaluations per step for greater accuracy.",
-      "default_order": 2
+      "default_order": 4
     },
     {
       "id": "c_mit18330_ode_stability",
       "kind": "concept",
       "name": "Stability of ODE Methods",
-      "topic": "t_mit18330_odes",
+      "topic": "t_mit18330_integration__t_mit18330_odes",
       "description": "Stability of ODE solvers, including A-stability and the difficulty stiff equations pose, which constrains the usable step size.",
-      "default_order": 3
+      "default_order": 5
     }
   ],
   "edges": [

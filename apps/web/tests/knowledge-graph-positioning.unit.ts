@@ -28,22 +28,22 @@ function concept(nodeId: string, topicId: string, similarity: number): Knowledge
 }
 
 function main() {
-  // next_topic: min default_order hard successor; leaf -> null.
-  assert(nextTopic(GRAPH_ID, "t_1801_differentiation")?.topicId === "t_1801_apps_diff", "next_topic picks first hard successor");
-  assert(nextTopic(GRAPH_ID, "t_1801_apps_int") === null, "leaf topic has no next topic");
+  // next_topic follows the same default_order sequence as the Course outline.
+  assert(nextTopic(GRAPH_ID, "t_1801_differentiation__t_1801_apps_diff")?.topicId === "t_1801_apps_diff", "next_topic follows curriculum order");
+  assert(nextTopic(GRAPH_ID, "t_1802_surface_int") === null, "last curriculum topic has no next topic");
 
   // Specific: mass concentrated in one topic -> 2-lesson linear path.
   const specific = classifyEntry({
     graphId: GRAPH_ID,
     results: [
-      concept("c_1801_chain_rule", "t_1801_differentiation", 0.61),
-      concept("c_1801_deriv_rules", "t_1801_differentiation", 0.58),
-      concept("c_1801_deriv_def", "t_1801_differentiation", 0.55),
+      concept("c_1801_chain_rule", "t_1801_differentiation__t_1801_apps_diff", 0.61),
+      concept("c_1801_implicit_diff", "t_1801_differentiation__t_1801_apps_diff", 0.58),
+      concept("c_1801_related_rates", "t_1801_differentiation__t_1801_apps_diff", 0.55),
       concept("c_1801_riemann_sums", "t_1801_integration", 0.34),
     ],
   });
   assert(specific.branch === "specific", `expected specific, got ${specific.branch}`);
-  assert(specific.startTopicId === "t_1801_differentiation", "specific start topic = dominant topic");
+  assert(specific.startTopicId === "t_1801_differentiation__t_1801_apps_diff", "specific start topic = dominant topic");
   assert(specific.linear === true && specific.path?.length === 2, "specific builds 2-lesson linear path");
   assert(specific.path?.[1].topicId === "t_1801_apps_diff", "second lesson = next_topic");
 

@@ -5,31 +5,19 @@ import { initializeCourseOutline } from "@/lib/ai/deepagent/course-generator";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { requireAuth } from "@/lib/auth/guard";
 import { getCurrentUser } from "@/lib/auth/session";
+import {
+  InvalidCourseTopicAnchorError,
+  resolveCourseContextFromTopicAnchor,
+} from "@/lib/knowledge-graph/course-context";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const ConceptSchema = z.object({
-  conceptId: z.string(),
-  name: z.string(),
-  defaultOrder: z.number(),
-});
-
-const TopicSchema = z.object({
-  topicId: z.string(),
-  name: z.string(),
-  concepts: z.array(ConceptSchema),
-});
-
 const RequestSchema = z.object({
-  courseContext: z.object({
-    learningPathType: z.literal("linear"),
-    graphId: z.string(),
-    startTopic: TopicSchema,
-    targetConceptId: z.string().nullable(),
-    nextTopic: TopicSchema.nullable(),
-  }),
-});
+  graphId: z.string().min(1),
+  startTopicId: z.string().min(1),
+  targetConceptId: z.string().min(1).nullable().optional(),
+}).strict();
 
 function userFacingError(error: unknown) {
   const message = error instanceof Error ? error.message : String(error);
@@ -37,10 +25,10 @@ function userFacingError(error: unknown) {
   return "Course creation failed. Please retry.";
 }
 
-// Web-as-brain build entry (engineering doc §12.1). Initializes/reuses the Course
-// outline WITHOUT generating lesson content, enqueues the first Lesson Job, and
-// returns 202. A long-running worker generates the lesson; closing the page does
-// not stop it. No BYOK: model settings are never accepted here.
+// Web-as-brain build entry (engineering doc §12.1). The client supplies only the
+// graph/topic anchor; the server resolves the authoritative CourseContext before
+// initializing/reusing the Course outline and enqueueing its first Lesson Job.
+// A long-running worker generates the lesson; closing the page does not stop it.
 export async function POST(request: Request) {
   try {
     const denied = await requireAuth();
@@ -48,7 +36,8 @@ export async function POST(request: Request) {
     const ownerId = (await getCurrentUser())?.id;
     if (!ownerId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { courseContext } = RequestSchema.parse(await request.json());
+    const anchor = RequestSchema.parse(await request.json());
+    const courseContext = resolveCourseContextFromTopicAnchor(anchor);
 
     const { course, firstLesson, summary } = await initializeCourseOutline({
       ownerId,
@@ -63,6 +52,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ courseId: course.id, lessonId: firstLesson.id, job, summary }, { status: 202 });
   } catch (error) {
     console.error("[learning/course]", error);
+    if (error instanceof z.ZodError || error instanceof InvalidCourseTopicAnchorError) {
+      return NextResponse.json({ error: "The selected knowledge-graph topic is invalid." }, { status: 400 });
+    }
     return NextResponse.json({ error: userFacingError(error) }, { status: 503 });
   }
 }

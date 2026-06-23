@@ -134,9 +134,9 @@
       "default_order": 4
     },
     {
-      "id": "net_transport",
+      "id": "net_transport_part1",
       "kind": "topic",
-      "name": "Transport Layer",
+      "name": "Transport Layer (Part 1)",
       "topic": null,
       "default_order": 4
     },
@@ -144,7 +144,7 @@
       "id": "net_transport_services",
       "kind": "concept",
       "name": "Transport Layer Services",
-      "topic": "net_transport",
+      "topic": "net_transport_part1",
       "description": "End-to-end transport services running on hosts, multiplexing data to applications via ports and providing delivery semantics atop the network layer.",
       "default_order": 1
     },
@@ -152,7 +152,7 @@
       "id": "net_udp",
       "kind": "concept",
       "name": "UDP",
-      "topic": "net_transport",
+      "topic": "net_transport_part1",
       "description": "A connectionless transport protocol offering minimal, unreliable, unordered datagram delivery with low overhead, suited to latency-sensitive applications.",
       "default_order": 2
     },
@@ -160,40 +160,47 @@
       "id": "net_tcp",
       "kind": "concept",
       "name": "TCP",
-      "topic": "net_transport",
+      "topic": "net_transport_part1",
       "description": "A connection-oriented transport protocol providing reliable, ordered byte-stream delivery using handshakes, sequence numbers, acknowledgements, and retransmission.",
       "default_order": 3
+    },
+    {
+      "id": "net_transport_part2",
+      "kind": "topic",
+      "name": "Transport Layer (Part 2)",
+      "topic": null,
+      "default_order": 5
     },
     {
       "id": "net_rdt",
       "kind": "concept",
       "name": "Reliable Data Transfer",
-      "topic": "net_transport",
+      "topic": "net_transport_part2",
       "description": "Principles of reliable data transfer over unreliable channels using sequence numbers, acknowledgements, timeouts, and automatic repeat request (ARQ) protocols.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "net_flow_control",
       "kind": "concept",
       "name": "Flow Control",
-      "topic": "net_transport",
+      "topic": "net_transport_part2",
       "description": "A receiver-driven mechanism using a sliding advertised window to prevent a fast sender from overwhelming a slow receiver's buffer.",
-      "default_order": 5
+      "default_order": 2
     },
     {
       "id": "net_congestion",
       "kind": "concept",
       "name": "Congestion Control",
-      "topic": "net_transport",
+      "topic": "net_transport_part2",
       "description": "Sender-side algorithms that infer congestion from loss or delay and adjust the sending rate to share capacity fairly and avoid collapse.",
-      "default_order": 6
+      "default_order": 3
     },
     {
       "id": "net_application",
       "kind": "topic",
       "name": "Application Layer",
       "topic": null,
-      "default_order": 5
+      "default_order": 6
     },
     {
       "id": "net_http",
