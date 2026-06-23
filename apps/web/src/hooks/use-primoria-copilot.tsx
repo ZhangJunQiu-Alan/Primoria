@@ -240,6 +240,12 @@ type LearningPhase = "positioning" | "building" | "ready" | "broad" | "fallback"
 function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string }) {
   const [activeQuery, setActiveQuery] = useState<string | undefined>(query);
   const [prevQuery, setPrevQuery] = useState<string | undefined>(query);
+  const [phase, setPhase] = useState<LearningPhase>("positioning");
+  const [artifact, setArtifact] = useState<CourseCardArtifact | null>(null);
+  const [menu, setMenu] = useState<MenuItem[]>([]);
+  const [message, setMessage] = useState<string>("");
+  const requestSeqRef = useRef(0);
+
   if (query !== prevQuery) {
     setPrevQuery(query);
     setActiveQuery(query);
@@ -248,11 +254,6 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
     setMenu([]);
     setMessage("");
   }
-  const [phase, setPhase] = useState<LearningPhase>("positioning");
-  const [artifact, setArtifact] = useState<CourseCardArtifact | null>(null);
-  const [menu, setMenu] = useState<MenuItem[]>([]);
-  const [message, setMessage] = useState<string>("");
-  const requestSeqRef = useRef(0);
 
   useEffect(() => {
     if (!activeQuery) return;
