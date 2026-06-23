@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { generateCourse } from "@/lib/ai/deepagent/course-generator";
+import { initializeCourseOutline } from "@/lib/ai/deepagent/course-generator";
+import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { requireAuth } from "@/lib/auth/guard";
+import { getCurrentUser } from "@/lib/auth/session";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,47 +29,38 @@ const RequestSchema = z.object({
     targetConceptId: z.string().nullable(),
     nextTopic: TopicSchema.nullable(),
   }),
-  settings: z
-    .object({
-      provider: z.enum(["openai-compatible", "anthropic-compatible"]).optional(),
-      baseUrl: z.string().optional(),
-      apiKey: z.string().optional(),
-      model: z.string().optional(),
-    })
-    .optional(),
 });
 
 function userFacingError(error: unknown) {
   const message = error instanceof Error ? error.message : String(error);
-  if (/Missing OPENAI|Missing ANTHROPIC/i.test(message)) {
-    return "Course model provider settings are missing. Configure a provider in Settings.";
-  }
-  if (/insufficient.*balance|quota|credit/i.test(message)) {
-    return "The model provider reports insufficient balance or credits.";
-  }
-  if (/fetch failed|socket|closed|timeout|network/i.test(message)) {
-    return "The model provider connection was interrupted. Please retry.";
-  }
-  return "Course generation failed. Please retry.";
+  if (/sign in/i.test(message)) return "You must sign in to create a course.";
+  return "Course creation failed. Please retry.";
 }
 
-// Web-as-brain build entry: the browser calls this with the KG course context
-// (resolved by /api/knowledge-graph/position). Generation + persistence run here
-// so the signed-in user's session is available and the course lands in
-// app_courses (saveCourse, inside generateCourse). Synchronous for 迭代一.
+// Web-as-brain build entry (engineering doc §12.1). Initializes/reuses the Course
+// outline WITHOUT generating lesson content, enqueues the first Lesson Job, and
+// returns 202. A long-running worker generates the lesson; closing the page does
+// not stop it. No BYOK: model settings are never accepted here.
 export async function POST(request: Request) {
   try {
     const denied = await requireAuth();
     if (denied) return denied;
-    const body = RequestSchema.parse(await request.json());
-    const { courseContext } = body;
+    const ownerId = (await getCurrentUser())?.id;
+    if (!ownerId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { course, summary } = await generateCourse(
-      { topic: courseContext.startTopic.name, kgContext: courseContext },
-      body.settings ?? {},
-    );
+    const { courseContext } = RequestSchema.parse(await request.json());
 
-    return NextResponse.json({ courseId: course.id, summary });
+    const { course, firstLesson, summary } = await initializeCourseOutline({
+      ownerId,
+      topic: courseContext.startTopic.name,
+      kgContext: courseContext,
+      source: "cold_start",
+    });
+
+    const enqueued = await enqueueLessonGenerationJob({ ownerId, courseId: course.id, lessonId: firstLesson.id });
+    const job = enqueued.job ? toLessonGenerationJobSummary(enqueued.job) : null;
+
+    return NextResponse.json({ courseId: course.id, lessonId: firstLesson.id, job, summary }, { status: 202 });
   } catch (error) {
     console.error("[learning/course]", error);
     return NextResponse.json({ error: userFacingError(error) }, { status: 503 });

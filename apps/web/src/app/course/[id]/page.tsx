@@ -5,6 +5,7 @@ import { CopilotKitProvider } from "@/components/copilot-provider";
 import { CourseDetailClient } from "@/components/course/course-detail-client";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
+import { listLessonGenerationJobsByCourse } from "@/lib/courses/lesson-generation-jobs";
 import { courseBlocks } from "@/lib/courses/types";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +16,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
   const course = await getCourse(id, user?.id ?? null);
   if (!course) notFound();
   const copilotEnabled = !isAuthEnabled() || Boolean(user);
+  const lessonJobs = await listLessonGenerationJobsByCourse(id, user?.id ?? null);
 
   return (
     <main className="app-shell">
@@ -31,7 +33,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
           </div>
         </header>
         <CopilotKitProvider enabled={copilotEnabled}>
-          <CourseDetailClient initialCourse={course} copilotEnabled={copilotEnabled} />
+          <CourseDetailClient initialCourse={course} initialLessonJobs={lessonJobs} copilotEnabled={copilotEnabled} />
         </CopilotKitProvider>
       </section>
     </main>

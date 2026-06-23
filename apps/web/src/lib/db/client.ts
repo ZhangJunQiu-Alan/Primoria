@@ -46,3 +46,15 @@ export function getDb() {
   globalAny[globalKey] = { client, db };
   return db;
 }
+
+export async function closeDb(): Promise<void> {
+  const existing = globalAny[globalKey];
+
+  // Clear the cached handles before closing so a later getDb() call cannot
+  // reuse a client that is already shutting down.
+  delete globalAny[globalKey];
+
+  if (existing?.client) {
+    await existing.client.end({ timeout: 5 });
+  }
+}

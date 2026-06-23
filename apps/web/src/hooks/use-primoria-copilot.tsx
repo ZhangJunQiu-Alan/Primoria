@@ -11,6 +11,9 @@ import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
 import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
 import { setTodos } from "@/lib/todos-store";
 import type { CourseCardArtifact, TutorArtifact } from "@/lib/agent-os";
+import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
+import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
+import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 
 const WriteTodosParams = z.object({
   todos: z.array(
@@ -244,7 +247,14 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
   const [artifact, setArtifact] = useState<CourseCardArtifact | null>(null);
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [message, setMessage] = useState<string>("");
+  const [builtCourseId, setBuiltCourseId] = useState<string | null>(null);
+  const [firstJob, setFirstJob] = useState<LessonGenerationJobSummary | null>(null);
   const requestSeqRef = useRef(0);
+
+  // Poll the first lesson's job after the course is created so the card can show
+  // its generation stage and flip to Ready when published (engineering doc §13.3).
+  const { jobsByLessonId } = useLessonGenerationJobs(builtCourseId, firstJob ? [firstJob] : []);
+  const liveFirstJob = firstJob ? jobsByLessonId.get(firstJob.lessonId) ?? firstJob : null;
 
   if (query !== prevQuery) {
     setPrevQuery(query);
@@ -253,6 +263,8 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
     setArtifact(null);
     setMenu([]);
     setMessage("");
+    setBuiltCourseId(null);
+    setFirstJob(null);
   }
 
   useEffect(() => {
@@ -295,6 +307,8 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
 
         const built = courseArtifactFromSummary(buildData.summary);
         if (!built) throw new Error("course summary was unusable");
+        setBuiltCourseId(typeof buildData.courseId === "string" ? buildData.courseId : null);
+        setFirstJob((buildData.job as LessonGenerationJobSummary | null | undefined) ?? null);
         setArtifact(built);
         setPhase("ready");
       } catch (error) {
@@ -309,7 +323,30 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
     };
   }, [activeQuery, graphId]);
 
-  if (phase === "ready" && artifact) return <ToolCard artifact={artifact} />;
+  if (phase === "ready" && artifact) {
+    const firstLessonStatus = liveFirstJob
+      ? liveFirstJob.status === "failed"
+        ? "第一节课生成失败，可在课程页重试。"
+        : isLessonGenerationActive(liveFirstJob)
+          ? `第一节课 · ${lessonGenerationStageLabel(liveFirstJob)}`
+          : null
+      : null;
+    return (
+      <>
+        <ToolCard artifact={artifact} />
+        {firstLessonStatus ? (
+          <div className="message-row tool">
+            <div className="tool-card status-card">
+              <div className="tool-title">
+                {liveFirstJob && isLessonGenerationActive(liveFirstJob) ? <span className="tool-spinner" /> : null}
+                <span>{firstLessonStatus}</span>
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </>
+    );
+  }
 
   if (phase === "broad") {
     return (

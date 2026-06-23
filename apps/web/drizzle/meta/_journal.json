@@ -169,6 +169,20 @@
       "when": 1782104698100,
       "tag": "0023_living_korath",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1782190080043,
+      "tag": "0024_abnormal_prodigy",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1782201926739,
+      "tag": "0025_long_romulus",
+      "breakpoints": true
     }
   ]
 }

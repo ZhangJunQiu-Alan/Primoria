@@ -1,41 +1,30 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
-import { materializeLesson } from "@/lib/ai/deepagent/course-generator";
+import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { requireAuth } from "@/lib/auth/guard";
+import { getCurrentUser } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
-const SettingsSchema = z
-  .object({
-    provider: z.enum(["openai-compatible", "anthropic-compatible"]).optional(),
-    baseUrl: z.string().optional(),
-    apiKey: z.string().optional(),
-    model: z.string().optional(),
-  })
-  .optional();
-
-const RequestSchema = z
-  .object({
-    contextHint: z.string().optional(),
-    settings: SettingsSchema,
-  })
-  .optional();
-
-// Lazy materialization of a planned outline lesson (doc §3.3 step 3). The
-// generator atomically claims planned → generating, so concurrent requests for
-// the same lesson cannot double-generate.
-export async function POST(request: Request, context: { params: Promise<{ id: string; lessonId: string }> }) {
+// Lazy lesson enqueue / manual retry (engineering doc §12.2). Idempotent: returns
+// the existing queued/running job, manually retries a failed job, or reports an
+// already-generated lesson. The model never runs in this route; no settings.
+export async function POST(_request: Request, context: { params: Promise<{ id: string; lessonId: string }> }) {
   try {
     const denied = await requireAuth();
     if (denied) return denied;
-    const { id, lessonId } = await context.params;
-    const body = RequestSchema.parse(await request.json().catch(() => ({})));
+    const ownerId = (await getCurrentUser())?.id;
+    if (!ownerId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const result = await materializeLesson(
-      { courseId: id, lessonId, contextHint: body?.contextHint },
-      body?.settings,
-    );
-    return NextResponse.json({ course: result.course, summary: result.summary });
+    const { id, lessonId } = await context.params;
+    const result = await enqueueLessonGenerationJob({ ownerId, courseId: id, lessonId });
+
+    if (result.kind === "already_generated") {
+      return NextResponse.json(
+        { status: "completed", job: result.job ? toLessonGenerationJobSummary(result.job) : null },
+        { status: 200 },
+      );
+    }
+    return NextResponse.json({ status: result.kind, job: toLessonGenerationJobSummary(result.job) }, { status: 202 });
   } catch (error) {
     console.error("[course/lesson/generate]", error);
     const message = error instanceof Error ? error.message : "Lesson generation failed";

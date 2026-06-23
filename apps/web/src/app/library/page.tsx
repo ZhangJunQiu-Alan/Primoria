@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { listCourses } from "@/lib/courses/store";
-import { listCourseGenerationJobs } from "@/lib/courses/generation-jobs";
+import { listActiveLessonGenerationJobsByOwner } from "@/lib/courses/lesson-generation-jobs";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { CourseLibraryGrid } from "@/components/library/course-library-grid";
@@ -11,9 +11,9 @@ export default async function LibraryPage() {
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUser();
   const shouldGate = authEnabled && !user;
-  const [courses, courseGenerationJobs] = shouldGate
+  const [courses, lessonJobs] = shouldGate
     ? [[], []]
-    : await Promise.all([listCourses(user?.id), listCourseGenerationJobs(user?.id)]);
+    : await Promise.all([listCourses(user?.id), listActiveLessonGenerationJobsByOwner(user?.id)]);
 
   return (
     <main className="app-shell">
@@ -30,7 +30,7 @@ export default async function LibraryPage() {
             </div>
           </div>
         ) : (
-          <CourseLibraryGrid initialCourses={courses} initialJobs={courseGenerationJobs} />
+          <CourseLibraryGrid initialCourses={courses} initialLessonJobs={lessonJobs} />
         )}
       </section>
     </main>

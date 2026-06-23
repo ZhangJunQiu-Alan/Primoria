@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray, isNull } from "drizzle-orm";
+import { and, desc, eq, inArray, isNull, notInArray } from "drizzle-orm";
 import type { Course, CourseBlock, CourseSummary, Lesson, LessonProgress, LessonRole, LessonStatus } from "./types";
 import { summarizeCourse } from "./types";
 import { getCurrentUser } from "../auth/session";
@@ -9,74 +9,6 @@ export async function saveCourse(course: Course, ownerId?: string | null): Promi
   const resolvedOwnerId = await requireOwnerId(ownerId, "save course");
   await saveCourseToDb(course, resolvedOwnerId);
   return course;
-}
-
-/** Atomically claim a planned lesson for generation (planned → generating).
- * Returns true only for the caller that wins the race; concurrent callers see
- * false because the conditional UPDATE matches zero rows (doc §11.3). */
-export async function claimLessonForGeneration(
-  courseId: string,
-  lessonId: string,
-  ownerId?: string | null,
-): Promise<boolean> {
-  const resolvedOwnerId = await requireOwnerId(ownerId, "generate a lesson");
-  const claimed = await getDb()
-    .update(lessonsTable)
-    .set({ status: "generating", updatedAt: new Date() })
-    .where(
-      and(
-        eq(lessonsTable.id, lessonId),
-        eq(lessonsTable.courseId, courseId),
-        eq(lessonsTable.ownerId, resolvedOwnerId),
-        eq(lessonsTable.status, "planned"),
-      ),
-    )
-    .returning({ id: lessonsTable.id });
-  return claimed.length > 0;
-}
-
-/** Release a claim back to planned (generating → planned) after a failed run so
- * the lesson can be retried. */
-export async function releaseLessonClaim(
-  courseId: string,
-  lessonId: string,
-  ownerId?: string | null,
-): Promise<void> {
-  const resolvedOwnerId = await requireOwnerId(ownerId, "generate a lesson");
-  await getDb()
-    .update(lessonsTable)
-    .set({ status: "planned", updatedAt: new Date() })
-    .where(
-      and(
-        eq(lessonsTable.id, lessonId),
-        eq(lessonsTable.courseId, courseId),
-        eq(lessonsTable.ownerId, resolvedOwnerId),
-        eq(lessonsTable.status, "generating"),
-      ),
-    );
-}
-
-/** Persist a single generated lesson without rewriting the whole lesson set,
- * avoiding the last-write-wins clobber of saveCourse's wholesale replace. */
-export async function saveGeneratedLesson(course: Course, lesson: Lesson, ownerId?: string | null): Promise<void> {
-  const resolvedOwnerId = await requireOwnerId(ownerId, "save a lesson");
-  await getDb().transaction(async (tx) => {
-    await tx
-      .update(lessonsTable)
-      .set({
-        title: lesson.title,
-        status: lesson.status,
-        blocks: lesson.blocks ?? null,
-        estimatedMinutes: lesson.estimatedMinutes ?? null,
-        version: lesson.version ?? 1,
-        updatedAt: new Date(lesson.updatedAt),
-      })
-      .where(and(eq(lessonsTable.id, lesson.id), eq(lessonsTable.ownerId, resolvedOwnerId)));
-    await tx
-      .update(coursesTable)
-      .set({ estimatedMinutes: course.estimatedMinutes, updatedAt: new Date(course.updatedAt) })
-      .where(and(eq(coursesTable.id, course.id), eq(coursesTable.ownerId, resolvedOwnerId)));
-  });
 }
 
 export async function getCourse(id: string, ownerId?: string | null): Promise<Course | undefined> {
@@ -255,11 +187,41 @@ async function saveCourseToDb(course: Course, ownerId: string) {
           updatedAt: courseRow.updatedAt,
         },
       });
-    // Lessons are fully owned by the course; replace the set wholesale.
-    await tx.delete(lessonsTable).where(eq(lessonsTable.courseId, course.id));
-    if (lessonRows.length > 0) {
-      await tx.insert(lessonsTable).values(lessonRows);
+    // Lessons are owned by the course, but a lesson row has FK children (lesson
+    // generation jobs/checkpoints, ON DELETE CASCADE). Upsert surviving lessons
+    // instead of delete-all+insert so those children are not cascade-deleted; then
+    // remove only lessons no longer in the set.
+    const keepIds = lessonRows.map((row) => row.id);
+    for (const row of lessonRows) {
+      await tx
+        .insert(lessonsTable)
+        .values(row)
+        .onConflictDoUpdate({
+          target: lessonsTable.id,
+          set: {
+            courseId: row.courseId,
+            ownerId: row.ownerId,
+            topicId: row.topicId,
+            title: row.title,
+            role: row.role,
+            progress: row.progress,
+            status: row.status,
+            sortKey: row.sortKey,
+            triggeredFrom: row.triggeredFrom,
+            blocks: row.blocks,
+            estimatedMinutes: row.estimatedMinutes,
+            version: row.version,
+            updatedAt: row.updatedAt,
+          },
+        });
     }
+    await tx
+      .delete(lessonsTable)
+      .where(
+        keepIds.length > 0
+          ? and(eq(lessonsTable.courseId, course.id), notInArray(lessonsTable.id, keepIds))
+          : eq(lessonsTable.courseId, course.id),
+      );
   });
 }
 

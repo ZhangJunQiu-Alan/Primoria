@@ -1,0 +1,1 @@
+DROP TABLE "course_generation_jobs" CASCADE;
