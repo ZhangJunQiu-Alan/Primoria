@@ -152,7 +152,7 @@ Prob：1. 如果用户输出用户过于模糊，或者用别名怎么确保好�
 3. 知识图谱（Knowledge Graph）： 由有概念节点（concept node）和关系边（relation edge）组成的图结构。知识图谱可以用来指导课程内容的生成和调整。部分的知识图谱可以划分为不同的topic。针对多个学科KG，允许跨图先修边。KG应该是全局，保持稳定，不会被用户数据所影响。
 4. KG和Course的关系: 一个学科的KG等于一个Course,比如微积分的KG就是微积分的Course.Agent建Lesson的时候会基于KG中的topic信息来建立.
 5. Relation edge代表concept之间的关系（目前只有先修关系，之后可以拓展推导，类比，应用关系）。
-6. concept node= 一个能独立出 quiz 题检验的最小概念。4-5个concept node构成一个topic子图.
+6. concept node= 一个能独立出 quiz 题检验的最小概念。通常由 3–4 个 concept node 构成一个 topic 子图；极少数不可合理拆分的完整教学单元允许包含 5 个.
 7. mastery状态：迭代一为最简单版本：untested / weak / learning / mastered,规则更新(连对 N 题升级、错题降级、先修节点出错连带标疑)
 8. default_order: 每个topic子图有一个default_order，代表这个topic在整个学科图谱中的先后顺序,用来指引学习路径。建Course系统在生成lesson时会优先选择default_order较小的topic。
 
@@ -168,7 +168,7 @@ PLUS:
 ## Todo
 
 1. mastery,推荐下一lesson，复习笔记
-2. 前后端：topic 选择菜单组件 + 用户选择后继续建lesson”的完整链路。这个需要一个新的 tool result/UI card。
+2. [已实现] 前后端：topic 选择菜单组件 + 用户选择后继续建 lesson 的完整链路。菜单项必须保留 `graphId + topicId`；点击后直接以 ID 进入服务端建课，禁止把 topic 名称重新送入向量定位。服务端根据 ID 重新解析 Topic、Concept 与下一 Topic，不信任客户端传入的完整 CourseContext。
 3. Course UI，UX设计
 4. 建lesson Prompt加上用户的mastery状态
 5. 慢任务阻塞用户请求，做job
