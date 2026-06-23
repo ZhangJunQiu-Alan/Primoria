@@ -165,11 +165,14 @@ PLUS:
   2. 最先处理的结构问题
     Prompt 同时写了“exactly 3 blocks”和“4–7 blocks”，Zod 又允许 3–15 个，约束互相冲突。
 
-[course-kg-context.ts (line 39)](/Users/zhangjunqiu/Desktop/primoria/apps/web/src/lib/ai/deepagent/course-kg-context.ts:39) 仍要求一次生成 TWO lessons，但现在 fillLesson() 的职责已经是一轮只物化一个 Lesson。
-
 LessonStatus 有 generating，实际生成过程却没有使用它，无法防止并发重复生成。
 主入口 [`/api/learning/course` (line 58)](/Users/zhangjunqiu/Desktop/primoria/apps/web/src/app/api/learning/course/route.ts:58) 没有传画像或 source，所以事件默认始终是 cold_start。
 
 宽泛菜单点击后只是用 Topic 名称重新定位，没有保留 selected_topic_id + source_query。
 
-仓库还存在旧版 [apps/agent/src/course-generator.mjs (line 349)](/Users/zhangjunqiu/Desktop/primoria/apps/agent/src/course-generator.mjs:349)，它仍按 course.blocks 顶层结构保存，与当前 Course → lessons → blocks 数据模型不兼容，但旧 generate_course 工具仍被注册
+### 建课测试Prompt
+
+1. 讲讲二分查找,我要会自己写代码
+2. 带我入门光合作用的光反应和暗反应
+3. 我对算法感兴趣,从头教我
+4. 我就想弄明白冒泡排序
