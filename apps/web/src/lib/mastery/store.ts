@@ -6,7 +6,7 @@ import { createClient, getUser } from "@/lib/supabase/server";
 // resolved internally from the request session; no-ops/empty when auth is not
 // configured or there is no signed-in user.
 
-export type MasteryStatus = "untested" | "learning" | "mastered";
+export type MasteryStatus = "untested" | "weak" | "learning" | "mastered";
 
 export type ConceptMastery = {
   graphId: string;

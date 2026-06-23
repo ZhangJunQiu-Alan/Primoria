@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { and, eq } from "drizzle-orm";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getDb, hasDatabaseUrl } from "@/lib/db/client";
 import { quizAttempts } from "@/lib/db/schema";
 import { getCourse } from "@/lib/courses/store";
+import { enqueueLearningProgressJob } from "@/lib/courses/learning-progress-jobs";
 import type { QuizQuestion } from "@/lib/courses/types";
 import { recordLearningEvent, type QuizSelected } from "@/lib/learning-events/store";
 
@@ -90,10 +92,44 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         courseId,
         lessonId,
         blockId: body.blockId,
+        conceptId: question.conceptId ?? null,
         questionId: answer.questionId,
         selected,
         isCorrect,
       });
+    }
+
+    // Implicit lesson completion: once every end-of-lesson quiz block has an
+    // attempt, record lesson.completed (deduped by deterministic id) and enqueue
+    // the learning-progress orchestration job (idempotent on lessonId).
+    if (lessonId && lesson) {
+      const quizBlockIds = (lesson.blocks ?? []).filter((b) => b.type === "quiz").map((b) => b.id);
+      if (quizBlockIds.length > 0) {
+        const attempted = await db
+          .selectDistinct({ blockId: quizAttempts.blockId })
+          .from(quizAttempts)
+          .where(and(eq(quizAttempts.ownerId, user.id), eq(quizAttempts.lessonId, lessonId)));
+        const answered = new Set(attempted.map((row) => row.blockId));
+        const complete = quizBlockIds.every((blockId) => answered.has(blockId));
+        if (complete) {
+          await recordLearningEvent({
+            type: "lesson.completed",
+            ownerId: user.id,
+            id: `lesson_completed_${lessonId}`,
+            courseId,
+            lessonId,
+            graphId: course?.graphId ?? null,
+          });
+          await enqueueLearningProgressJob({
+            ownerId: user.id,
+            courseId,
+            lessonId,
+            graphId: course?.graphId ?? null,
+          }).catch((error) => {
+            console.error("[courses/quiz] failed to enqueue progress job", error);
+          });
+        }
+      }
     }
 
     return NextResponse.json({ ok: true, persisted: true });

@@ -57,6 +57,9 @@ const VisualContentSchema = z
     { message: "visual block is missing the payload for its engine" },
   );
 
+// `conceptId` tags which concept the question checks (∈ the quiz block's
+// planner-owned conceptIds); it drives concept-level mastery attribution.
+// New generated quizzes require it on every question.
 const SingleQuestionSchema = z.object({
   kind: z.literal("single"),
   id: nonEmpty,
@@ -64,6 +67,7 @@ const SingleQuestionSchema = z.object({
   choices: z.array(z.object({ id: nonEmpty, text: nonEmpty })).min(2).max(6),
   correctId: nonEmpty,
   explanation: z.string().optional(),
+  conceptId: nonEmpty,
 });
 const MultiQuestionSchema = z.object({
   kind: z.literal("multi"),
@@ -72,6 +76,7 @@ const MultiQuestionSchema = z.object({
   choices: z.array(z.object({ id: nonEmpty, text: nonEmpty })).min(2).max(6),
   correctIds: z.array(nonEmpty).min(1),
   explanation: z.string().optional(),
+  conceptId: nonEmpty,
 });
 const TrueFalseQuestionSchema = z.object({
   kind: z.literal("truefalse"),
@@ -79,6 +84,7 @@ const TrueFalseQuestionSchema = z.object({
   question: nonEmpty,
   correct: z.boolean(),
   explanation: z.string().optional(),
+  conceptId: nonEmpty,
 });
 
 const QuizContentSchema = z.object({
@@ -114,6 +120,24 @@ export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown
       `block ${job.order} (${job.type}) content invalid: ${parsed.error.message}`,
       { jobId: job.jobId, issues: parsed.error.flatten() },
     );
+  }
+
+  if (job.type === "quiz") {
+    const questions = (parsed.data as z.infer<typeof QuizContentSchema>).questions;
+    const allowed = new Set(job.conceptIds);
+    const emitted = new Set(questions.map((question) => question.conceptId));
+    const illegal = [...emitted].filter((conceptId) => !allowed.has(conceptId));
+    const missing = job.conceptIds.filter((conceptId) => !emitted.has(conceptId));
+
+    if (illegal.length > 0 || missing.length > 0) {
+      throw new BlockCompileError(
+        `block ${job.order} (quiz) concept attribution invalid: `
+          + `${illegal.length ? `unknown conceptIds [${illegal.join(", ")}]` : ""}`
+          + `${illegal.length && missing.length ? "; " : ""}`
+          + `${missing.length ? `missing conceptIds [${missing.join(", ")}]` : ""}`,
+        { jobId: job.jobId, issues: { illegalConceptIds: illegal, missingConceptIds: missing } },
+      );
+    }
   }
 
   const base = {

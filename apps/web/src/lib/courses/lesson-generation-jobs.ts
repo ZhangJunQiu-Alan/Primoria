@@ -192,6 +192,38 @@ export async function enqueueLessonGenerationJob(
  * Eligible: queued, or running with an expired lease and remaining attempts. */
 export async function claimNextLessonGenerationJob({ workerId }: { workerId: string }): Promise<LessonGenerationClaim | undefined> {
   requireDatabase();
+
+  // Fail any expired jobs that have exhausted their retry budget.
+  await getDb().execute(sql`
+    with expired as (
+      select id, lesson_id
+      from lesson_generation_jobs
+      where status = 'running'
+        and lease_expires_at is not null
+        and lease_expires_at < now()
+        and attempts >= max_attempts
+      for update
+    ),
+    failed_jobs as (
+      update lesson_generation_jobs
+      set
+        status = 'failed',
+        stage = 'failed',
+        last_error = 'Lease expired and attempts exhausted.',
+        error_category = 'lease_lost',
+        lease_owner = null,
+        lease_token = null,
+        lease_expires_at = null,
+        completed_at = now(),
+        updated_at = now()
+      where id in (select id from expired)
+    )
+    update lessons
+    set status = 'planned', updated_at = now()
+    where id in (select lesson_id from expired)
+      and status = 'generating'
+  `);
+
   const leaseToken = newLeaseToken();
   const result = await getDb().execute(sql`
     with candidate as (
@@ -482,10 +514,23 @@ export async function publishLessonAndCompleteJob(
       })
       .where(eq(lessonsTable.id, job.lessonId));
 
+    const sumResult = await tx
+      .select({
+        total: sql<number>`coalesce(sum(${lessonsTable.estimatedMinutes}), 0)`,
+      })
+      .from(lessonsTable)
+      .where(
+        and(
+          eq(lessonsTable.courseId, job.courseId),
+          eq(lessonsTable.status, "generated"),
+        )
+      );
+    const totalMinutes = Number(sumResult[0]?.total || 0);
+
     await tx
       .update(coursesTable)
       .set({
-        estimatedMinutes: sql`greatest(${coursesTable.estimatedMinutes}, ${lesson.estimatedMinutes})`,
+        estimatedMinutes: totalMinutes,
         updatedAt: now,
       })
       .where(eq(coursesTable.id, job.courseId));

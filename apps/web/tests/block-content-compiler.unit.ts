@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 
 import { compileBlockContent, blockIdFor } from "../src/lib/ai/course-generation/block-content-compiler.ts";
-import { batchBlockJobs, writeLessonBlocks } from "../src/lib/ai/course-generation/block-writer.ts";
+import { batchBlockJobs, buildBatchPrompt, writeLessonBlocks } from "../src/lib/ai/course-generation/block-writer.ts";
 import { compileLessonPlanIr } from "../src/lib/ai/course-generation/lesson-plan-compiler.ts";
 import { BlockCompileError, WriterError } from "../src/lib/ai/course-generation/generation-errors.ts";
 import type { BlockGenerationJob } from "../src/lib/ai/course-generation/lesson-plan-compiler.ts";
@@ -87,9 +87,14 @@ function contentFor(j: BlockGenerationJob): Record<string, unknown> {
       return {
         order,
         title: `q${order}`,
-        questions: [
-          { kind: "single", id: "q1", question: "q?", choices: [{ id: "a", text: "A" }, { id: "b", text: "B" }], correctId: "a" },
-        ],
+        questions: j.conceptIds.map((conceptId, index) => ({
+          kind: "single",
+          id: `q${index + 1}`,
+          question: `q${index + 1}?`,
+          choices: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
+          correctId: "a",
+          conceptId,
+        })),
       };
   }
 }
@@ -125,6 +130,53 @@ async function main() {
   assert(batches.filter((b) => b.kind === "quiz").length === 1, "quiz is its own task");
   assert(batches.filter((b) => b.kind === "summary").length === 1, "summary is its own task");
   assert(batches.every((b) => b.jobs.length <= 3), "no batch exceeds 3 blocks");
+
+  const quizBatch = batches.find((batch) => batch.kind === "quiz")!;
+  const quizPrompt = buildBatchPrompt(quizBatch, plan, kg);
+  assert(quizPrompt.system.includes("Every question MUST include exactly one \"conceptId\""), "quiz prompt requires per-question concept attribution");
+  assert(quizPrompt.user.includes("c1 [id=c1]") && quizPrompt.user.includes("c4 [id=c4]"), "quiz prompt lists exact allowed concept ids");
+
+  // Quiz attribution is a compiler-enforced contract, not prompt-only advice.
+  const quizJob = quizBatch.jobs[0];
+  await assertRejects(
+    async () => compileBlockContent(quizJob, {
+      order: quizJob.order,
+      title: "quiz",
+      questions: [{ kind: "truefalse", id: "q1", question: "q?", correct: true }],
+    }, "L1"),
+    BlockCompileError,
+    "quiz question missing conceptId rejected",
+  );
+  await assertRejects(
+    async () => compileBlockContent(quizJob, {
+      order: quizJob.order,
+      title: "quiz",
+      questions: quizJob.conceptIds.map((conceptId, index) => ({
+        kind: "truefalse",
+        id: `q${index + 1}`,
+        question: "q?",
+        correct: true,
+        conceptId: index === 0 ? "invented-concept" : conceptId,
+      })),
+    }, "L1"),
+    BlockCompileError,
+    "quiz question with unknown conceptId rejected",
+  );
+  await assertRejects(
+    async () => compileBlockContent(quizJob, {
+      order: quizJob.order,
+      title: "quiz",
+      questions: quizJob.conceptIds.slice(0, -1).map((conceptId, index) => ({
+        kind: "truefalse",
+        id: `q${index + 1}`,
+        question: "q?",
+        correct: true,
+        conceptId,
+      })),
+    }, "L1"),
+    BlockCompileError,
+    "quiz missing coverage for a planned concept rejected",
+  );
 
   // Full write via mocked invoke
   const blocks = await writeLessonBlocks({

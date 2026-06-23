@@ -183,6 +183,13 @@
       "when": 1782201926739,
       "tag": "0025_long_romulus",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1782214832933,
+      "tag": "0026_normal_ultimo",
+      "breakpoints": true
     }
   ]
 }

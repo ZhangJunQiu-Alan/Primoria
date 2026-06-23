@@ -70,12 +70,15 @@ const FIELD_HINTS: Record<GeneratableBlockType, string> = {
   transfer: `"title","fromDomain","toDomain","explanation","example"`,
   visual: `"title","description","engine":"echarts|mermaid|physics|html", plus the payload for that engine: echarts->"echartsOption" object; mermaid->"mermaidDefinition" string; physics->"physicsScene"; html->"html" self-contained fragment with an interactive control`,
   code: `"title","language","code","explanation"`,
-  quiz: `"title","questions":[{"kind":"single|multi|truefalse","id","question","choices":[{"id","text"}],"correctId"|"correctIds"|"correct","explanation"}] (4-6 questions, at least one per concept)`,
+  quiz: `"title","questions":[{"kind":"single|multi|truefalse","id","question","choices":[{"id","text"}],"correctId"|"correctIds"|"correct","explanation","conceptId"}] (4-6 questions; conceptId is required on every question)`,
 };
 
 function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
-  const conceptNames = job.conceptIds
-    .map((id) => kg.startTopic.concepts?.find((c) => c.conceptId === id)?.name ?? id)
+  const concepts = job.conceptIds
+    .map((id) => {
+      const name = kg.startTopic.concepts?.find((concept) => concept.conceptId === id)?.name ?? id;
+      return `${name} [id=${id}]`;
+    })
     .join(", ");
   const neighbors = [
     job.neighborGoals.prev ? `prev goal: ${job.neighborGoals.prev}` : "",
@@ -83,11 +86,20 @@ function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
   ]
     .filter(Boolean)
     .join("; ");
-  return `- order ${job.order}: ${job.type} (role ${job.pedagogicalRole}), concepts: ${conceptNames}. Goal: ${job.goal}. Fields: ${FIELD_HINTS[job.type]}.${neighbors ? ` Avoid overlap — ${neighbors}.` : ""}`;
+  return `- order ${job.order}: ${job.type} (role ${job.pedagogicalRole}), concepts: ${concepts}. Goal: ${job.goal}. Fields: ${FIELD_HINTS[job.type]}.${neighbors ? ` Avoid overlap — ${neighbors}.` : ""}`;
 }
 
 export function buildBatchPrompt(batch: BlockBatch, plan: CompiledLessonPlan, kg: CourseContext): { system: string; user: string } {
-  const system = `You are Primoria's Block Writer for the lesson "${plan.title}" on topic "${kg.startTopic.name}". Write the content for the blocks listed below. Do NOT repeat type/order/conceptIds — those are fixed. Keep blocks distinct from their neighbors. Write in the topic's language.
+  const quizContract = batch.kind === "quiz"
+    ? `
+
+QUIZ CONCEPT ATTRIBUTION CONTRACT:
+- Every question MUST include exactly one "conceptId" copied verbatim from the allowed [id=...] values listed for the quiz block.
+- Every allowed conceptId MUST appear on at least one question.
+- Never invent, translate, shorten, or infer a different conceptId.
+- Tag a cross-concept question with the single conceptId that is primarily being assessed.`
+    : "";
+  const system = `You are Primoria's Block Writer for the lesson "${plan.title}" on topic "${kg.startTopic.name}". Write the content for the blocks listed below. Planner-owned block metadata is fixed: do not emit block-level "type" or "conceptIds". You MUST emit "order" so each result can be matched to its block. Keep blocks distinct from their neighbors. Write in the topic's language.${quizContract}
 
 OUTPUT a single compact JSON array, one object per block, each including its "order" and the listed fields. No prose, no code fences.`;
   const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}`;

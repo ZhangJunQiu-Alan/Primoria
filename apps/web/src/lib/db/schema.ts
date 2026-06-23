@@ -631,6 +631,72 @@ export const learningEvents = pgTable(
   }),
 );
 
+// Recoverable post-lesson learning-progress orchestration jobs. One row per
+// completed lesson (unique lesson_id), reused on re-run. Mirrors the lease/
+// fencing model of lesson_generation_jobs: every worker mutation is fenced by
+// the active (status=running, lease_owner, lease_token, unexpired-lease) tuple.
+// The job runs two stages — mastery update, then diagnosis — and records its
+// outcome in `decision` for the user to confirm before any lesson is generated.
+export const learningProgressJobs = pgTable(
+  "learning_progress_jobs",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => lessons.id, { onDelete: "cascade" }),
+    graphId: text("graph_id"),
+    // queued | running | completed | failed
+    status: text("status").notNull().default("queued"),
+    // queued | mastery | deciding | completed | failed
+    stage: text("stage").notNull().default("queued"),
+    attempts: integer("attempts").notNull().default(0),
+    maxAttempts: integer("max_attempts").notNull().default(2),
+    // The orchestration outcome (kind/reason/target) once deciding completes.
+    decision: jsonb("decision"),
+    // none | pending | accepted | dismissed
+    decisionStatus: text("decision_status").notNull().default("none"),
+    leaseOwner: text("lease_owner"),
+    leaseToken: text("lease_token"),
+    leaseExpiresAt: timestamp("lease_expires_at", { withTimezone: true }),
+    heartbeatAt: timestamp("heartbeat_at", { withTimezone: true }),
+    lastError: text("last_error"),
+    errorCategory: text("error_category"),
+    startedAt: timestamp("started_at", { withTimezone: true }),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    lessonIdUnique: uniqueIndex("learning_progress_jobs_lesson_id_uidx").on(table.lessonId),
+    leaseTokenUnique: uniqueIndex("learning_progress_jobs_lease_token_uidx").on(table.leaseToken),
+    ownerStatusUpdatedIdx: index("learning_progress_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
+    statusLeaseIdx: index("learning_progress_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
+    courseDecisionIdx: index("learning_progress_jobs_course_decision_idx").on(table.courseId, table.decisionStatus),
+  }),
+);
+
+// Per-user concept mastery (feature_specification.md §156). Second memory layer:
+// concept-level state only, no chat summaries. Drives skip / quick-review /
+// remediation decisions. Written owner-scoped from the learning-progress worker
+// (no request session). NOTE: this table predates Drizzle (it exists in Supabase
+// with RLS); the migration creates it idempotently (IF NOT EXISTS).
+export const userConceptMastery = pgTable(
+  "user_concept_mastery",
+  {
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    graphId: text("graph_id").notNull(),
+    conceptId: text("concept_id").notNull(),
+    // untested | weak | learning | mastered
+    status: text("status").notNull().default("untested"),
+    score: doublePrecision("score"),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    pk: uniqueIndex("user_concept_mastery_owner_graph_concept_uidx").on(table.ownerId, table.graphId, table.conceptId),
+    ownerGraphIdx: index("user_concept_mastery_owner_graph_idx").on(table.ownerId, table.graphId),
+  }),
+);
+
 export type UserRow = typeof users.$inferSelect;
 export type IdentityRow = typeof identities.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;
