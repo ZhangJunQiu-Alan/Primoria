@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import type { MoleculeArtifact } from "@/lib/agent-os";
 
 type Repr = "ball_stick" | "stick" | "sphere";
