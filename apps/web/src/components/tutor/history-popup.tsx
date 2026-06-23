@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  createNewThread,
   getCurrentThreadId,
   readThreadHistory,
   setCurrentThreadId,
@@ -21,16 +20,15 @@ function readSessions() {
 export function ChatHistoryPopup({
   open,
   onClose,
-  onNewChat,
   onSelectChat,
 }: {
   open: boolean;
   onClose: () => void;
-  onNewChat: () => void;
   onSelectChat?: (threadId: string) => void;
 }) {
   const [currentThreadId, setCurrentThread] = useState(getCurrentThreadId());
   const [sessions, setSessions] = useState<CopilotThreadSummary[]>([]);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -43,10 +41,18 @@ export function ChatHistoryPopup({
     function onKey(event: KeyboardEvent) {
       if (event.key === "Escape") onClose();
     }
+    function onPointerDown(event: PointerEvent) {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (target instanceof Element && target.closest("[data-history-trigger]")) return;
+      if (!panelRef.current?.contains(target)) onClose();
+    }
     window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointerDown);
     window.addEventListener(THREAD_EVENT_NAME, refresh);
     return () => {
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener(THREAD_EVENT_NAME, refresh);
     };
   }, [open, onClose]);
@@ -56,64 +62,42 @@ export function ChatHistoryPopup({
   const hasSession = sessions.length > 0;
 
   return (
-    <div className="history-overlay" role="dialog" aria-modal="true" aria-label="Chat history">
-      <button type="button" className="history-backdrop" aria-label="Close history" onClick={onClose} />
-      <div className="history-panel">
+    <div className="history-dropdown" role="dialog" aria-label="Recent chat history">
+      <div className="history-panel" ref={panelRef}>
         <header className="history-head">
-          <strong>Chat history</strong>
+          <strong>Recent</strong>
           <button type="button" className="history-close" onClick={onClose} aria-label="Close">
             ×
           </button>
         </header>
 
-        <button
-          type="button"
-          className="history-new"
-          onClick={() => {
-            const threadId = createNewThread();
-            onSelectChat?.(threadId);
-            onNewChat();
-            onClose();
-          }}
-        >
-          <span className="history-new-plus" aria-hidden="true">+</span>
-          Start a new tutor chat
-        </button>
-
         {hasSession ? (
-          <>
-            <div className="history-section-title">Recent</div>
-            <ul className="history-list">
-              {sessions.map((session) => {
-                const active = session.id === currentThreadId;
-                return (
-                  <li key={session.id}>
-                    <button
-                      type="button"
-                      className={`history-item${active ? " active" : ""}`}
-                      onClick={() => {
-                        setCurrentThreadId(session.id);
-                        onSelectChat?.(session.id);
-                        onClose();
-                      }}
-                    >
-                      <strong>{session.title || "Tutor chat"}</strong>
-                      <span>{session.messageCount} messages · {active ? "live" : new Date(session.updatedAt).toLocaleDateString()}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </>
+          <ul className="history-list">
+            {sessions.map((session) => {
+              const active = session.id === currentThreadId;
+              return (
+                <li key={session.id}>
+                  <button
+                    type="button"
+                    className={`history-item${active ? " active" : ""}`}
+                    onClick={() => {
+                      setCurrentThreadId(session.id);
+                      onSelectChat?.(session.id);
+                      onClose();
+                    }}
+                  >
+                    <strong>{session.title || "Tutor chat"}</strong>
+                    <span>{session.messageCount} messages · {active ? "live" : new Date(session.updatedAt).toLocaleDateString()}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         ) : (
           <p className="history-empty">
-            No conversations yet. Send your first message to start one.
+            No recent conversations yet.
           </p>
         )}
-
-        <p className="history-hint">
-          Sessions sync to your account and restore on this browser after sign-in.
-        </p>
       </div>
     </div>
   );
