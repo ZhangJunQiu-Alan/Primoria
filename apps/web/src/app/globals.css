@@ -964,82 +964,6 @@ button {
   font-size: 20px;
 }
 
-.settings-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: rgba(23, 19, 15, 0.18);
-  backdrop-filter: blur(12px);
-}
-
-.settings-panel {
-  width: min(100%, 520px);
-  display: grid;
-  gap: 16px;
-  border-radius: 26px;
-  padding: 22px;
-  background: rgba(255, 253, 248, 0.96);
-  border: 1px solid rgba(23, 19, 15, 0.1);
-  box-shadow: 0 28px 90px rgba(57, 42, 25, 0.2);
-}
-
-.settings-panel h2 {
-  margin: 6px 0 6px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 30px;
-  line-height: 1.05;
-}
-
-.settings-panel p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.45;
-}
-
-.settings-panel code {
-  padding: 2px 6px;
-  border-radius: 7px;
-  background: #fff6df;
-  border: 1px solid #ead5a1;
-}
-
-.settings-panel label {
-  display: grid;
-  gap: 7px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.settings-panel input,
-.settings-panel select {
-  width: 100%;
-  min-height: 44px;
-  padding: 0 13px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: white;
-  color: var(--ink);
-  outline: none;
-}
-
-.settings-panel input:focus,
-.settings-panel select:focus {
-  border-color: #d7b979;
-  box-shadow: 0 0 0 4px rgba(255, 229, 143, 0.38);
-}
-
-.settings-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding-top: 6px;
-}
-
 .widget-frame {
   display: block;
   width: 100%;
@@ -1325,38 +1249,27 @@ button {
   display: none;
 }
 
-/* ---------------- History popup ---------------- */
+/* ---------------- History dropdown ---------------- */
 
-.history-overlay {
+.history-dropdown {
   position: fixed;
-  inset: 0;
   z-index: 50;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-}
-
-.history-backdrop {
-  position: absolute;
-  inset: 0;
-  border: 0;
-  background: rgba(23, 19, 15, 0.32);
-  backdrop-filter: blur(4px);
-  cursor: pointer;
+  top: 76px;
+  right: 34px;
+  width: min(360px, calc(100vw - 32px));
 }
 
 .history-panel {
-  position: relative;
-  width: min(480px, 100%);
-  max-height: 70vh;
+  width: 100%;
+  max-height: min(420px, calc(100vh - 96px));
   background: #fffdf8;
   border: 1px solid rgba(23, 19, 15, 0.1);
-  border-radius: 22px;
-  box-shadow: 0 24px 60px rgba(23, 19, 15, 0.18);
-  padding: 20px 20px 18px;
+  border-radius: 16px;
+  box-shadow: 0 20px 46px rgba(23, 19, 15, 0.16);
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   overflow: hidden;
 }
 
@@ -1367,7 +1280,11 @@ button {
 }
 
 .history-head strong {
-  font-size: 17px;
+  font-size: 13px;
+  color: var(--quiet);
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .history-close {
@@ -1387,49 +1304,6 @@ button {
   color: var(--ink);
 }
 
-.history-new {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  border: 1px dashed rgba(23, 19, 15, 0.2);
-  border-radius: 14px;
-  padding: 12px 14px;
-  background: #fffaf2;
-  color: var(--ink);
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  text-align: left;
-}
-
-.history-new:hover {
-  background: #fff5e3;
-  border-color: rgba(23, 19, 15, 0.32);
-}
-
-.history-new-plus {
-  display: inline-grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #fff;
-  border: 1px solid rgba(23, 19, 15, 0.18);
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 1;
-}
-
-.history-section-title {
-  color: var(--quiet);
-  font-size: 11px;
-  font-weight: 850;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-top: 4px;
-}
-
 .history-list {
   list-style: none;
   margin: 0;
@@ -1445,9 +1319,9 @@ button {
   width: 100%;
   text-align: left;
   border: 1px solid transparent;
-  border-radius: 14px;
+  border-radius: 12px;
   background: transparent;
-  padding: 11px 14px;
+  padding: 10px 11px;
   cursor: pointer;
   color: var(--ink);
 }
@@ -1473,13 +1347,6 @@ button {
   font-size: 12px;
 }
 
-.history-hint {
-  margin: 8px 0 0;
-  font-size: 12px;
-  color: var(--quiet);
-  line-height: 1.5;
-}
-
 .history-empty {
   margin: 6px 0 0;
   padding: 14px 16px;
@@ -1489,6 +1356,15 @@ button {
   color: var(--quiet);
   text-align: center;
   line-height: 1.5;
+}
+
+@media (max-width: 680px) {
+  .history-dropdown {
+    top: 118px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+  }
 }
 
 /* ---------------- Topbar icon pill ---------------- */
@@ -1695,6 +1571,28 @@ button {
   flex-direction: column;
   min-height: 0;
   height: 100%;
+}
+
+.restored-course-jobs {
+  flex: 0 0 auto;
+  width: min(100%, 980px);
+  margin: 0 auto;
+  padding: 18px 28px 0;
+  display: grid;
+  gap: 12px;
+}
+
+.restored-course-job {
+  display: grid;
+  gap: 10px;
+}
+
+.restored-course-job .message-row {
+  margin: 0;
+}
+
+.restored-course-job-status .visualizer {
+  gap: 10px;
 }
 
 .main-copilot-surface,
@@ -2191,6 +2089,10 @@ cpk-web-inspector {
   }
 
   .primoria-copilot-thread {
+    padding-inline: 16px;
+  }
+
+  .restored-course-jobs {
     padding-inline: 16px;
   }
 

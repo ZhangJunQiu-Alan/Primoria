@@ -3,14 +3,11 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { AuthUser } from "@/lib/auth/types";
-import type { TutorProviderSettings } from "@/lib/agent-os";
+import { createNewThread } from "@/lib/copilot-thread-history";
 import { ChatHistoryPopup } from "./history-popup";
 import { TutorNavRail } from "./nav-rail";
-import { SettingsModal } from "./settings-modal";
 import { TutorChatCopilot } from "./tutor-chat-copilot";
 import { TutorTopbar } from "./topbar";
-
-const STORAGE_KEY = "primoria:tutor-provider-settings";
 
 type AuthState = {
   authEnabled: boolean;
@@ -18,21 +15,7 @@ type AuthState = {
   loaded: boolean;
 };
 
-async function loadProviderSettingsFromServer() {
-  try {
-    const response = await fetch("/api/settings/provider", { cache: "no-store" });
-    if (!response.ok) return null;
-    const data = (await response.json()) as { authEnabled?: boolean; settings?: TutorProviderSettings };
-    if (!data.authEnabled) return null;
-    return data.settings ?? {};
-  } catch {
-    return null;
-  }
-}
-
 export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: AuthState }) {
-  const [settings, setSettings] = useState<TutorProviderSettings>({});
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [authState, setAuthState] = useState<AuthState>(initialAuthState);
 
@@ -53,52 +36,6 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
     };
   }, []);
 
-  useEffect(() => {
-    let cancelled = false;
-    async function loadSettings() {
-      if (!authState.loaded) return;
-      if (authState.authEnabled && !authState.user) {
-        setSettings({});
-        window.localStorage.removeItem(STORAGE_KEY);
-        return;
-      }
-      const serverSettings = await loadProviderSettingsFromServer();
-      if (cancelled) return;
-      if (serverSettings) {
-        setSettings(serverSettings);
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(serverSettings));
-        return;
-      }
-      if (authState.authEnabled) return;
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
-      try {
-        setSettings(JSON.parse(raw) as TutorProviderSettings);
-      } catch {
-        window.localStorage.removeItem(STORAGE_KEY);
-      }
-    }
-    void loadSettings();
-    return () => {
-      cancelled = true;
-    };
-  }, [authState.authEnabled, authState.loaded, authState.user]);
-
-  async function saveSettings(next: TutorProviderSettings) {
-    if (authState.authEnabled && !authState.user) return;
-    setSettings(next);
-    if (!authState.authEnabled) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    try {
-      await fetch("/api/settings/provider", {
-        method: "PUT",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(next),
-      });
-    } catch {
-      if (!authState.authEnabled) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    }
-  }
-
   const authRequired = authState.loaded && authState.authEnabled && !authState.user;
 
   return (
@@ -106,8 +43,11 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
       <TutorNavRail initialAuthState={{ authEnabled: authState.authEnabled, user: authState.user }} />
       <section className="workspace">
         <TutorTopbar
-          onOpenSettings={() => setSettingsOpen(true)}
-          onOpenHistory={() => setHistoryOpen(true)}
+          onOpenHistory={() => setHistoryOpen((open) => !open)}
+          onNewChat={() => {
+            createNewThread();
+            setHistoryOpen(false);
+          }}
         />
         {!authState.loaded ? (
           <AuthLoadingPanel />
@@ -116,18 +56,9 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
         ) : (
           <TutorChatCopilot />
         )}
-        <SettingsModal
-          open={settingsOpen}
-          settings={settings}
-          onClose={() => setSettingsOpen(false)}
-          onSave={(next) => {
-            void saveSettings(next);
-          }}
-        />
         <ChatHistoryPopup
           open={historyOpen && !authRequired}
           onClose={() => setHistoryOpen(false)}
-          onNewChat={() => {}}
           onSelectChat={() => {}}
         />
       </section>
