@@ -2,8 +2,8 @@
   "graphId": "Python",
   "subject": "Structure and Interpretation of Computer Programs",
   "generatedFrom": "temple/Python.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "topic_intro",
@@ -37,7 +37,7 @@
           "hard": true
         },
         {
-          "topicId": "topic_data",
+          "topicId": "topic_hof__topic_data",
           "hard": true
         },
         {
@@ -79,19 +79,13 @@
           "conceptId": "lambda",
           "name": "Lambda Expressions",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "currying",
-          "name": "Currying",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "decorators",
-          "name": "Decorators",
-          "defaultOrder": 5
         }
       ],
       "successors": [
+        {
+          "topicId": "topic_hof__topic_data",
+          "hard": true
+        },
         {
           "topicId": "topic_recursion",
           "hard": false
@@ -103,34 +97,62 @@
       "isRoot": false
     },
     {
-      "topicId": "topic_data",
-      "name": "Data Abstraction and Sequences",
+      "topicId": "topic_hof__topic_data",
+      "name": "Functional Transformation and Data Processing",
       "defaultOrder": 3,
       "conceptIds": [
         {
+          "conceptId": "currying",
+          "name": "Currying",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "decorators",
+          "name": "Decorators",
+          "defaultOrder": 2
+        },
+        {
           "conceptId": "seq",
           "name": "Sequences and Slicing",
-          "defaultOrder": 1
+          "defaultOrder": 3
         },
         {
           "conceptId": "list_comp",
           "name": "List Comprehensions",
-          "defaultOrder": 2
-        },
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_data",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_intro",
+        "topic_hof"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_data",
+      "name": "Data Abstraction and Sequences",
+      "defaultOrder": 4,
+      "conceptIds": [
         {
           "conceptId": "data_abs",
           "name": "Data Abstraction",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "dict",
           "name": "Dictionaries",
-          "defaultOrder": 4
+          "defaultOrder": 2
         },
         {
           "conceptId": "box_pointer",
           "name": "Box-and-Pointer Diagrams",
-          "defaultOrder": 5
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -144,14 +166,14 @@
         }
       ],
       "prereqTopics": [
-        "topic_intro"
+        "topic_hof__topic_data"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_recursion",
       "name": "Recursion and Trees",
-      "defaultOrder": 4,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "recursion",
@@ -202,7 +224,7 @@
     {
       "topicId": "topic_mut_oop",
       "name": "Mutable Data and OOP",
-      "defaultOrder": 5,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "mutability",
@@ -244,7 +266,7 @@
     {
       "topicId": "topic_adv_data",
       "name": "Advanced Data Structures",
-      "defaultOrder": 6,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "linked_lists",
@@ -283,7 +305,7 @@
     {
       "topicId": "topic_scheme",
       "name": "Scheme and Functional Programming",
-      "defaultOrder": 7,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "scheme_syntax",
@@ -322,7 +344,7 @@
     {
       "topicId": "topic_interp",
       "name": "Interpreters",
-      "defaultOrder": 8,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "parsing",
@@ -355,7 +377,7 @@
     {
       "topicId": "topic_declarative",
       "name": "Declarative Programming",
-      "defaultOrder": 9,
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "regex",

@@ -2,8 +2,8 @@
   "graphId": "discrete_math_and_probability",
   "subject": "Discrete Math and Probability Theory",
   "generatedFrom": "temple/discrete_math_and_probability.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "topic_logic",
@@ -41,7 +41,7 @@
           "hard": false
         },
         {
-          "topicId": "topic_countability_computability",
+          "topicId": "topic_countability_computability__topic_counting",
           "hard": true
         }
       ],
@@ -286,69 +286,86 @@
           "conceptId": "uncountability_of_reals",
           "name": "Uncountability of Reals",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "the_halting_problem",
-          "name": "The Halting Problem",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "undecidability",
-          "name": "Undecidability",
-          "defaultOrder": 5
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_logic",
         "topic_induction"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_countability_computability__topic_counting",
+      "name": "Computability and Counting Foundations",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "the_halting_problem",
+          "name": "The Halting Problem",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "undecidability",
+          "name": "Undecidability",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "basic_counting_rules",
+          "name": "Basic Counting Rules",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "combinations_permutations",
+          "name": "Combinations and Permutations",
+          "defaultOrder": 4
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_counting",
+          "hard": true
+        },
+        {
+          "topicId": "topic_discrete_prob",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_logic"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_counting",
       "name": "Counting",
-      "defaultOrder": 9,
+      "defaultOrder": 10,
       "conceptIds": [
-        {
-          "conceptId": "basic_counting_rules",
-          "name": "Basic Counting Rules",
-          "defaultOrder": 1
-        },
-        {
-          "conceptId": "combinations_permutations",
-          "name": "Combinations and Permutations",
-          "defaultOrder": 2
-        },
         {
           "conceptId": "combinatorial_proofs",
           "name": "Combinatorial Proofs",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "stars_and_bars",
           "name": "Stars and Bars",
-          "defaultOrder": 4
+          "defaultOrder": 2
         },
         {
           "conceptId": "inclusion_exclusion",
           "name": "Inclusion-Exclusion",
-          "defaultOrder": 5
+          "defaultOrder": 3
         }
       ],
-      "successors": [
-        {
-          "topicId": "topic_discrete_prob",
-          "hard": true
-        }
+      "successors": [],
+      "prereqTopics": [
+        "topic_countability_computability__topic_counting"
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "isRoot": false
     },
     {
       "topicId": "topic_discrete_prob",
       "name": "Discrete Probability",
-      "defaultOrder": 10,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "probability_spaces",
@@ -382,14 +399,14 @@
         }
       ],
       "prereqTopics": [
-        "topic_counting"
+        "topic_countability_computability__topic_counting"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_random_vars",
       "name": "Random Variables and Expectation",
-      "defaultOrder": 11,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "discrete_random_variables",
@@ -422,7 +439,7 @@
           "hard": true
         },
         {
-          "topicId": "topic_concentration",
+          "topicId": "topic_continuous_prob__topic_concentration",
           "hard": true
         },
         {
@@ -438,7 +455,7 @@
     {
       "topicId": "topic_discrete_dists",
       "name": "Discrete Distributions",
-      "defaultOrder": 12,
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "bernoulli_binomial_distributions",
@@ -470,7 +487,7 @@
     {
       "topicId": "topic_continuous_prob",
       "name": "Continuous Probability",
-      "defaultOrder": 13,
+      "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "continuous_random_variables",
@@ -486,21 +503,11 @@
           "conceptId": "cumulative_distribution_function",
           "name": "Cumulative Distribution Function",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "uniform_exponential_distributions",
-          "name": "Uniform and Exponential Distributions",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "normal_distribution",
-          "name": "Normal Distribution",
-          "defaultOrder": 5
         }
       ],
       "successors": [
         {
-          "topicId": "topic_concentration",
+          "topicId": "topic_continuous_prob__topic_concentration",
           "hard": true
         }
       ],
@@ -510,37 +517,37 @@
       "isRoot": false
     },
     {
-      "topicId": "topic_concentration",
-      "name": "Concentration Inequalities",
-      "defaultOrder": 14,
+      "topicId": "topic_continuous_prob__topic_concentration",
+      "name": "Continuous Probability and Concentration Bounds",
+      "defaultOrder": 15,
       "conceptIds": [
+        {
+          "conceptId": "uniform_exponential_distributions",
+          "name": "Uniform and Exponential Distributions",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "normal_distribution",
+          "name": "Normal Distribution",
+          "defaultOrder": 2
+        },
         {
           "conceptId": "markovs_inequality",
           "name": "Markov's Inequality",
-          "defaultOrder": 1
+          "defaultOrder": 3
         },
         {
           "conceptId": "chebyshevs_inequality",
           "name": "Chebyshev's Inequality",
-          "defaultOrder": 2
-        },
-        {
-          "conceptId": "chernoff_bounds",
-          "name": "Chernoff Bounds",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "weak_law_of_large_numbers",
-          "name": "Weak Law of Large Numbers",
           "defaultOrder": 4
-        },
-        {
-          "conceptId": "central_limit_theorem",
-          "name": "Central Limit Theorem",
-          "defaultOrder": 5
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "topic_concentration",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
         "topic_random_vars",
         "topic_continuous_prob"
@@ -548,9 +555,36 @@
       "isRoot": false
     },
     {
+      "topicId": "topic_concentration",
+      "name": "Concentration Inequalities",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "chernoff_bounds",
+          "name": "Chernoff Bounds",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "weak_law_of_large_numbers",
+          "name": "Weak Law of Large Numbers",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "central_limit_theorem",
+          "name": "Central Limit Theorem",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_continuous_prob__topic_concentration"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_markov",
       "name": "Markov Chains",
-      "defaultOrder": 15,
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "markov_chains_basics",

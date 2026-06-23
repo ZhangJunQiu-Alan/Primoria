@@ -165,9 +165,9 @@
       "default_order": 3
     },
     {
-      "id": "bio_cell_cycle",
+      "id": "bio_cell_cycle__bio_nucleic_acids",
       "kind": "topic",
-      "name": "The Mitotic Cell Cycle",
+      "name": "Chromosomes and DNA Replication",
       "topic": null,
       "default_order": 5
     },
@@ -175,7 +175,7 @@
       "id": "bio_chromosomes",
       "kind": "concept",
       "name": "Chromosome Behaviour",
-      "topic": "bio_cell_cycle",
+      "topic": "bio_cell_cycle__bio_nucleic_acids",
       "description": "The structure of chromosomes as DNA wound around histone proteins, and their replication and condensation in preparation for nuclear division.",
       "default_order": 1
     },
@@ -183,9 +183,25 @@
       "id": "bio_mitosis",
       "kind": "concept",
       "name": "Mitosis",
-      "topic": "bio_cell_cycle",
+      "topic": "bio_cell_cycle__bio_nucleic_acids",
       "description": "Nuclear division producing two genetically identical daughter cells through prophase, metaphase, anaphase, and telophase, underlying growth and repair.",
       "default_order": 2
+    },
+    {
+      "id": "bio_dna_structure",
+      "kind": "concept",
+      "name": "DNA Structure",
+      "topic": "bio_cell_cycle__bio_nucleic_acids",
+      "description": "DNA as a double helix of two antiparallel nucleotide strands held together by complementary base pairing between adenine-thymine and guanine-cytosine.",
+      "default_order": 3
+    },
+    {
+      "id": "bio_dna_replication",
+      "kind": "concept",
+      "name": "DNA Replication",
+      "topic": "bio_cell_cycle__bio_nucleic_acids",
+      "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
+      "default_order": 4
     },
     {
       "id": "bio_nucleic_acids",
@@ -195,28 +211,12 @@
       "default_order": 6
     },
     {
-      "id": "bio_dna_structure",
-      "kind": "concept",
-      "name": "DNA Structure",
-      "topic": "bio_nucleic_acids",
-      "description": "DNA as a double helix of two antiparallel nucleotide strands held together by complementary base pairing between adenine-thymine and guanine-cytosine.",
-      "default_order": 1
-    },
-    {
-      "id": "bio_dna_replication",
-      "kind": "concept",
-      "name": "DNA Replication",
-      "topic": "bio_nucleic_acids",
-      "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
-      "default_order": 2
-    },
-    {
       "id": "bio_transcription",
       "kind": "concept",
       "name": "Transcription",
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a messenger RNA copy of a gene by RNA polymerase, using one DNA strand as a template in the nucleus.",
-      "default_order": 3
+      "default_order": 1
     },
     {
       "id": "bio_translation",
@@ -224,7 +224,7 @@
       "name": "Translation",
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a polypeptide at the ribosome, where transfer RNA matches anticodons to mRNA codons to assemble amino acids in sequence.",
-      "default_order": 4
+      "default_order": 2
     },
     {
       "id": "bio_mutation",
@@ -232,7 +232,7 @@
       "name": "Gene Mutation",
       "topic": "bio_nucleic_acids",
       "description": "Changes to the DNA base sequence, such as substitutions, insertions, and deletions, which may alter the resulting protein and the phenotype.",
-      "default_order": 5
+      "default_order": 3
     },
     {
       "id": "bio_transport_plants",
@@ -266,9 +266,9 @@
       "default_order": 3
     },
     {
-      "id": "bio_transport_mammals",
+      "id": "bio_transport_mammals__bio_gas_exchange",
       "kind": "topic",
-      "name": "Transport in Mammals",
+      "name": "Circulation and Gas Exchange",
       "topic": null,
       "default_order": 8
     },
@@ -276,7 +276,7 @@
       "id": "bio_heart",
       "kind": "concept",
       "name": "The Heart",
-      "topic": "bio_transport_mammals",
+      "topic": "bio_transport_mammals__bio_gas_exchange",
       "description": "The structure of the mammalian heart and the cardiac cycle of atrial and ventricular systole and diastole, coordinated to pump blood.",
       "default_order": 1
     },
@@ -284,7 +284,7 @@
       "id": "bio_blood_vessels",
       "kind": "concept",
       "name": "Blood Vessels",
-      "topic": "bio_transport_mammals",
+      "topic": "bio_transport_mammals__bio_gas_exchange",
       "description": "The structure and function of arteries, veins, and capillaries, whose walls suit carrying blood at different pressures and exchanging materials.",
       "default_order": 2
     },
@@ -292,31 +292,24 @@
       "id": "bio_haemoglobin",
       "kind": "concept",
       "name": "Haemoglobin and Oxygen Transport",
-      "topic": "bio_transport_mammals",
+      "topic": "bio_transport_mammals__bio_gas_exchange",
       "description": "Haemoglobin's reversible binding of oxygen described by the sigmoid dissociation curve, and the Bohr effect that shifts it with carbon dioxide.",
       "default_order": 3
-    },
-    {
-      "id": "bio_gas_exchange",
-      "kind": "topic",
-      "name": "Gas Exchange",
-      "topic": null,
-      "default_order": 9
     },
     {
       "id": "bio_lungs",
       "kind": "concept",
       "name": "Gas Exchange in the Lungs",
-      "topic": "bio_gas_exchange",
+      "topic": "bio_transport_mammals__bio_gas_exchange",
       "description": "Gas exchange in the alveoli, whose large, thin, moist surface and rich blood supply maximise diffusion of oxygen and carbon dioxide.",
-      "default_order": 1
+      "default_order": 4
     },
     {
       "id": "bio_disease",
       "kind": "topic",
       "name": "Infectious Disease and Immunity",
       "topic": null,
-      "default_order": 10
+      "default_order": 9
     },
     {
       "id": "bio_infectious",
@@ -347,7 +340,7 @@
       "kind": "topic",
       "name": "Energy and Respiration",
       "topic": null,
-      "default_order": 11
+      "default_order": 10
     },
     {
       "id": "bio_glycolysis",
@@ -386,7 +379,7 @@
       "kind": "topic",
       "name": "Photosynthesis",
       "topic": null,
-      "default_order": 12
+      "default_order": 11
     },
     {
       "id": "bio_light_dependent",
@@ -417,7 +410,7 @@
       "kind": "topic",
       "name": "Homeostasis",
       "topic": null,
-      "default_order": 13
+      "default_order": 12
     },
     {
       "id": "bio_homeostasis_principles",
@@ -448,7 +441,7 @@
       "kind": "topic",
       "name": "Control and Coordination",
       "topic": null,
-      "default_order": 14
+      "default_order": 13
     },
     {
       "id": "bio_nervous",
@@ -487,7 +480,7 @@
       "kind": "topic",
       "name": "Inheritance",
       "topic": null,
-      "default_order": 15
+      "default_order": 14
     },
     {
       "id": "bio_meiosis",
@@ -526,7 +519,7 @@
       "kind": "topic",
       "name": "Selection and Evolution",
       "topic": null,
-      "default_order": 16
+      "default_order": 15
     },
     {
       "id": "bio_variation",
@@ -557,7 +550,7 @@
       "kind": "topic",
       "name": "Biodiversity and Conservation",
       "topic": null,
-      "default_order": 17
+      "default_order": 16
     },
     {
       "id": "bio_classification",
@@ -588,7 +581,7 @@
       "kind": "topic",
       "name": "Genetic Technology",
       "topic": null,
-      "default_order": 18
+      "default_order": 17
     },
     {
       "id": "bio_gene_tech",

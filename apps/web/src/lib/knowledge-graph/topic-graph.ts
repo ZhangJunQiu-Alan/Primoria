@@ -43,19 +43,19 @@ export function getTopic(graphId: string, topicId: string): TopicNode | undefine
   return getTopicGraph(graphId).topics.find((t) => t.topicId === topicId);
 }
 
+/** The topic that owns a concept (used to place a remediation lesson). */
+export function findTopicByConcept(graphId: string, conceptId: string): TopicNode | undefined {
+  return getTopicGraph(graphId).topics.find((t) => t.conceptIds.some((c) => c.conceptId === conceptId));
+}
+
 /**
- * Next topic for the linear two-lesson path: among topic-DAG successors, prefer
- * those reachable by a hard prereq edge, then pick the smallest default_order
- * (default_order is the curriculum's recommended learning order). Returns null
- * when the start topic is a leaf — the path is then a single lesson.
+ * Next topic in the curriculum outline. The Course outline is built from
+ * default_order, so post-lesson progression must use the same ordering instead
+ * of selecting an arbitrary prerequisite-DAG branch.
  */
 export function nextTopic(graphId: string, topicId: string): TopicNode | null {
-  const topic = getTopic(graphId, topicId);
-  if (!topic || topic.successors.length === 0) return null;
-
-  const hard = topic.successors.filter((s) => s.hard);
-  const pool = hard.length > 0 ? hard : topic.successors;
-  // successors are already default_order-sorted in the artifact.
-  const next = getTopic(graphId, pool[0].topicId);
-  return next ?? null;
+  const graph = getTopicGraph(graphId);
+  const topic = graph.topics.find((candidate) => candidate.topicId === topicId);
+  if (!topic) return null;
+  return graph.topics.find((candidate) => candidate.defaultOrder > topic.defaultOrder) ?? null;
 }

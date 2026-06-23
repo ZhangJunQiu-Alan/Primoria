@@ -1,6 +1,8 @@
 import { classifyEntry, pickDominantGraph, type BroadMenuItem, type PositioningParams, type PositioningResult } from "./positioning";
 import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse } from "./search";
-import type { TopicConcept } from "./topic-graph";
+import type { CourseContext, CourseContextTopic } from "./course-context";
+
+export type { CourseContext, CourseContextTopic } from "./course-context";
 
 // Shared "position a learning goal in the KG" core, reused by both the Next route
 // handler (/api/knowledge-graph/position) and — over HTTP — the LangGraph agent's
@@ -19,20 +21,6 @@ export type PositionLearningGoalInput = {
 export type PositionLearningGoalResult = {
   result: PositioningResult;
   search: KnowledgeGraphSearchResponse;
-};
-
-export type CourseContextTopic = {
-  topicId: string;
-  name: string;
-  concepts: TopicConcept[];
-};
-
-export type CourseContext = {
-  learningPathType: "linear";
-  graphId: string;
-  startTopic: CourseContextTopic;
-  targetConceptId: string | null;
-  nextTopic: CourseContextTopic | null;
 };
 
 export type PositioningPlan =

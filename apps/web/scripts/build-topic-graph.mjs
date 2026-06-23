@@ -3,8 +3,8 @@
 // Source of truth: temple/<graphId>.json (committed).
 // Output: src/lib/knowledge-graph/data/topic-graph.<graphId>.json
 //
-// The topic DAG powers entry classification (broad menu ordering) and the
-// two-lesson linear path (next_topic = min default_order successor).
+// The topic DAG powers prerequisite/remediation lookups. Curriculum progression
+// follows the immediate next default_order topic in topic-graph.ts.
 //
 // Usage: node build-topic-graph.mjs [<graphId> | all]
 
@@ -78,7 +78,7 @@ function buildOne(graphId) {
     subject: graph.subject,
     generatedFrom: `temple/${graphId}.json`,
     generatedAt: new Date().toISOString().slice(0, 10),
-    note: "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+    note: "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
     topics: ordered,
   };
 

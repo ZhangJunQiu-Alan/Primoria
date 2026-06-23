@@ -2,8 +2,8 @@
   "graphId": "introduction_to_computer_science",
   "subject": "Introduction to Computer Science",
   "generatedFrom": "temple/introduction_to_computer_science.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "topic_week0",
@@ -24,16 +24,40 @@
           "conceptId": "c_conditions",
           "name": "Conditionals",
           "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_week0__topic_week1",
+          "hard": true
         },
+        {
+          "topicId": "topic_week3__topic_week4",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_week0__topic_week1",
+      "name": "Control Flow and C Foundations",
+      "defaultOrder": 2,
+      "conceptIds": [
         {
           "conceptId": "c_loops",
           "name": "Loops",
-          "defaultOrder": 4
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_abstraction",
           "name": "Abstraction",
-          "defaultOrder": 5
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_c_syntax",
+          "name": "C Syntax",
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -42,50 +66,11 @@
           "hard": true
         },
         {
-          "topicId": "topic_week3",
-          "hard": true
-        }
-      ],
-      "prereqTopics": [],
-      "isRoot": true
-    },
-    {
-      "topicId": "topic_week1",
-      "name": "Week 1: C",
-      "defaultOrder": 2,
-      "conceptIds": [
-        {
-          "conceptId": "c_c_syntax",
-          "name": "C Syntax",
-          "defaultOrder": 1
-        },
-        {
-          "conceptId": "c_data_types",
-          "name": "Data Types",
-          "defaultOrder": 2
-        },
-        {
-          "conceptId": "c_operators",
-          "name": "Operators",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_compilation",
-          "name": "Compilation Process",
-          "defaultOrder": 4
-        }
-      ],
-      "successors": [
-        {
           "topicId": "topic_week2",
           "hard": true
         },
         {
-          "topicId": "topic_week4",
-          "hard": true
-        },
-        {
-          "topicId": "topic_week6",
+          "topicId": "topic_week5__topic_week6",
           "hard": true
         }
       ],
@@ -95,9 +80,45 @@
       "isRoot": false
     },
     {
+      "topicId": "topic_week1",
+      "name": "Week 1: C",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "c_data_types",
+          "name": "Data Types",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_operators",
+          "name": "Operators",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_compilation",
+          "name": "Compilation Process",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_week2",
+          "hard": true
+        },
+        {
+          "topicId": "topic_week3__topic_week4",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_week0__topic_week1"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_week2",
       "name": "Week 2: Arrays",
-      "defaultOrder": 3,
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_debugging",
@@ -130,11 +151,16 @@
           "hard": true
         },
         {
+          "topicId": "topic_week5__topic_week6",
+          "hard": true
+        },
+        {
           "topicId": "topic_week6",
           "hard": true
         }
       ],
       "prereqTopics": [
+        "topic_week0__topic_week1",
         "topic_week1"
       ],
       "isRoot": false
@@ -142,7 +168,7 @@
     {
       "topicId": "topic_week3",
       "name": "Week 3: Algorithms",
-      "defaultOrder": 4,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c_linear_search",
@@ -158,54 +184,76 @@
           "conceptId": "c_sorting",
           "name": "Sorting Algorithms",
           "defaultOrder": 3
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_week3__topic_week4",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_week2"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_week3__topic_week4",
+      "name": "Algorithmic Complexity and Memory",
+      "defaultOrder": 6,
+      "conceptIds": [
         {
           "conceptId": "c_recursion",
           "name": "Recursion",
-          "defaultOrder": 4
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_big_o",
           "name": "Big O Notation",
-          "defaultOrder": 5
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_pointers",
+          "name": "Pointers",
+          "defaultOrder": 3
         }
       ],
       "successors": [
         {
           "topicId": "topic_week4",
           "hard": true
+        },
+        {
+          "topicId": "topic_week5",
+          "hard": true
         }
       ],
       "prereqTopics": [
         "topic_week0",
-        "topic_week2"
+        "topic_week1",
+        "topic_week3"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_week4",
       "name": "Week 4: Memory",
-      "defaultOrder": 5,
+      "defaultOrder": 7,
       "conceptIds": [
-        {
-          "conceptId": "c_pointers",
-          "name": "Pointers",
-          "defaultOrder": 1
-        },
         {
           "conceptId": "c_malloc",
           "name": "Dynamic Memory Allocation",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_call_stack",
           "name": "Call Stack",
-          "defaultOrder": 3
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_file_io",
           "name": "File I/O",
-          "defaultOrder": 4
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -215,15 +263,14 @@
         }
       ],
       "prereqTopics": [
-        "topic_week1",
-        "topic_week3"
+        "topic_week3__topic_week4"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_week5",
       "name": "Week 5: Data Structures",
-      "defaultOrder": 6,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "c_linked_lists",
@@ -239,19 +286,13 @@
           "conceptId": "c_trees",
           "name": "Trees",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_tries",
-          "name": "Tries",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "c_queues_stacks",
-          "name": "Queues and Stacks",
-          "defaultOrder": 5
         }
       ],
       "successors": [
+        {
+          "topicId": "topic_week5__topic_week6",
+          "hard": true
+        },
         {
           "topicId": "topic_week6",
           "hard": true
@@ -259,39 +300,35 @@
       ],
       "prereqTopics": [
         "topic_week2",
+        "topic_week3__topic_week4",
         "topic_week4"
       ],
       "isRoot": false
     },
     {
-      "topicId": "topic_week6",
-      "name": "Week 6: Python",
-      "defaultOrder": 7,
+      "topicId": "topic_week5__topic_week6",
+      "name": "Advanced Data Structures and Python",
+      "defaultOrder": 9,
       "conceptIds": [
         {
-          "conceptId": "c_python_syntax",
-          "name": "Python Syntax",
+          "conceptId": "c_tries",
+          "name": "Tries",
           "defaultOrder": 1
         },
         {
-          "conceptId": "c_lists_dicts",
-          "name": "Lists and Dictionaries",
+          "conceptId": "c_queues_stacks",
+          "name": "Queues and Stacks",
           "defaultOrder": 2
         },
         {
-          "conceptId": "c_oop",
-          "name": "Object-Oriented Programming",
+          "conceptId": "c_python_syntax",
+          "name": "Python Syntax",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_exceptions",
-          "name": "Exceptions",
-          "defaultOrder": 4
         }
       ],
       "successors": [
         {
-          "topicId": "topic_week7",
+          "topicId": "topic_week6",
           "hard": true
         },
         {
@@ -304,16 +341,50 @@
         }
       ],
       "prereqTopics": [
-        "topic_week1",
+        "topic_week0__topic_week1",
         "topic_week2",
         "topic_week5"
       ],
       "isRoot": false
     },
     {
+      "topicId": "topic_week6",
+      "name": "Week 6: Python",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "c_lists_dicts",
+          "name": "Lists and Dictionaries",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_oop",
+          "name": "Object-Oriented Programming",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_exceptions",
+          "name": "Exceptions",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_week7",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_week2",
+        "topic_week5",
+        "topic_week5__topic_week6"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_week7",
       "name": "Week 7: SQL",
-      "defaultOrder": 8,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "c_relational_db",
@@ -345,7 +416,7 @@
     {
       "topicId": "topic_week8",
       "name": "Week 8: HTML, CSS, JavaScript",
-      "defaultOrder": 9,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "c_html",
@@ -375,14 +446,14 @@
         }
       ],
       "prereqTopics": [
-        "topic_week6"
+        "topic_week5__topic_week6"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_week9",
       "name": "Week 9: Flask",
-      "defaultOrder": 10,
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "c_http",
@@ -398,16 +469,39 @@
           "conceptId": "c_mvc",
           "name": "MVC Architecture",
           "defaultOrder": 3
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_week9__topic_week10",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_week5__topic_week6",
+        "topic_week8"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_week9__topic_week10",
+      "name": "Web State, APIs and Security",
+      "defaultOrder": 14,
+      "conceptIds": [
         {
           "conceptId": "c_sessions",
           "name": "Sessions and Cookies",
-          "defaultOrder": 4
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_apis",
           "name": "APIs",
-          "defaultOrder": 5
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_cybersecurity",
+          "name": "Cybersecurity Basics",
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -417,40 +511,34 @@
         }
       ],
       "prereqTopics": [
-        "topic_week6",
-        "topic_week8"
+        "topic_week9"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_week10",
       "name": "Week 10: Cybersecurity",
-      "defaultOrder": 11,
+      "defaultOrder": 15,
       "conceptIds": [
-        {
-          "conceptId": "c_cybersecurity",
-          "name": "Cybersecurity Basics",
-          "defaultOrder": 1
-        },
         {
           "conceptId": "c_encryption",
           "name": "Encryption",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_authentication",
           "name": "Authentication",
-          "defaultOrder": 3
+          "defaultOrder": 2
         },
         {
           "conceptId": "c_vulnerabilities",
           "name": "Vulnerabilities",
-          "defaultOrder": 4
+          "defaultOrder": 3
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_week9"
+        "topic_week9__topic_week10"
       ],
       "isRoot": false
     }

@@ -2,12 +2,12 @@
   "graphId": "artificial_intelligence",
   "subject": "Introduction to Artificial Intelligence (UCB CS188)",
   "generatedFrom": "temple/artificial_intelligence.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
-      "topicId": "ai_search",
-      "name": "Search",
+      "topicId": "ai_search_part1",
+      "name": "Search (Part 1)",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -24,24 +24,13 @@
           "conceptId": "ai_heuristics",
           "name": "Heuristics and Admissibility",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "ai_informed",
-          "name": "Informed Search (A*)",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "ai_minimax",
-          "name": "Adversarial Search (Minimax)",
-          "defaultOrder": 5
-        },
-        {
-          "conceptId": "ai_alphabeta",
-          "name": "Alpha-Beta Pruning",
-          "defaultOrder": 6
         }
       ],
       "successors": [
+        {
+          "topicId": "ai_search_part2",
+          "hard": true
+        },
         {
           "topicId": "ai_csp",
           "hard": false
@@ -51,9 +40,36 @@
       "isRoot": true
     },
     {
+      "topicId": "ai_search_part2",
+      "name": "Search (Part 2)",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "ai_informed",
+          "name": "Informed Search (A*)",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "ai_minimax",
+          "name": "Adversarial Search (Minimax)",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "ai_alphabeta",
+          "name": "Alpha-Beta Pruning",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "ai_search_part1"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "ai_csp",
       "name": "Constraint Satisfaction",
-      "defaultOrder": 2,
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "ai_csp_def",
@@ -78,14 +94,14 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "ai_search"
+        "ai_search_part1"
       ],
       "isRoot": false
     },
     {
       "topicId": "ai_mdp",
       "name": "Markov Decision Processes",
-      "defaultOrder": 3,
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "ai_mdp_def",
@@ -120,7 +136,7 @@
     {
       "topicId": "ai_rl",
       "name": "Reinforcement Learning",
-      "defaultOrder": 4,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "ai_rl_framework",
@@ -157,7 +173,7 @@
     {
       "topicId": "ai_probability",
       "name": "Probability and Bayes Nets",
-      "defaultOrder": 5,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "ai_prob",
@@ -186,7 +202,7 @@
           "hard": true
         },
         {
-          "topicId": "ai_ml",
+          "topicId": "ai_markov_models__ai_ml",
           "hard": true
         }
       ],
@@ -196,7 +212,7 @@
     {
       "topicId": "ai_markov_models",
       "name": "Markov Models and HMMs",
-      "defaultOrder": 6,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "ai_markov_chain",
@@ -212,53 +228,76 @@
           "conceptId": "ai_forward",
           "name": "Forward Algorithm",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "ai_viterbi",
-          "name": "Viterbi Algorithm",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "ai_particle",
-          "name": "Particle Filtering",
-          "defaultOrder": 5
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "ai_markov_models__ai_ml",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
         "ai_probability"
       ],
       "isRoot": false
     },
     {
-      "topicId": "ai_ml",
-      "name": "Machine Learning",
-      "defaultOrder": 7,
+      "topicId": "ai_markov_models__ai_ml",
+      "name": "Probabilistic Inference and Naive Bayes",
+      "defaultOrder": 8,
       "conceptIds": [
         {
-          "conceptId": "ai_naive_bayes",
-          "name": "Naive Bayes",
+          "conceptId": "ai_viterbi",
+          "name": "Viterbi Algorithm",
           "defaultOrder": 1
         },
         {
+          "conceptId": "ai_particle",
+          "name": "Particle Filtering",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "ai_naive_bayes",
+          "name": "Naive Bayes",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "ai_ml",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "ai_probability",
+        "ai_markov_models"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "ai_ml",
+      "name": "Machine Learning",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
           "conceptId": "ai_perceptron",
           "name": "Perceptron",
-          "defaultOrder": 2
+          "defaultOrder": 1
         },
         {
           "conceptId": "ai_neural_nets",
           "name": "Neural Networks",
-          "defaultOrder": 3
+          "defaultOrder": 2
         },
         {
           "conceptId": "ai_generalization",
           "name": "Generalization and Overfitting",
-          "defaultOrder": 4
+          "defaultOrder": 3
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "ai_probability"
+        "ai_markov_models__ai_ml"
       ],
       "isRoot": false
     }

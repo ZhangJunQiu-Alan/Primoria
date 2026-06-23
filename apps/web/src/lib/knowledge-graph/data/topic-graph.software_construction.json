@@ -2,12 +2,12 @@
   "graphId": "software_construction",
   "subject": "Software Construction",
   "generatedFrom": "temple/software_construction.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
-      "topicId": "t_mit6031_fundamentals",
-      "name": "Software Construction Fundamentals",
+      "topicId": "t_mit6031_fundamentals__t_mit6031_specifications",
+      "name": "Software Construction Foundations and Specifications",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -19,13 +19,24 @@
           "conceptId": "c_mit6031_immutability",
           "name": "Immutability",
           "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_mit6031_specs",
+          "name": "Specifications",
+          "defaultOrder": 3
+        },
+        {
+          "conceptId": "c_mit6031_testing",
+          "name": "Testing Strategies",
+          "defaultOrder": 4
+        },
+        {
+          "conceptId": "c_mit6031_exceptions",
+          "name": "Exceptions",
+          "defaultOrder": 5
         }
       ],
       "successors": [
-        {
-          "topicId": "t_mit6031_specifications",
-          "hard": true
-        },
         {
           "topicId": "t_mit6031_adt",
           "hard": true
@@ -35,41 +46,9 @@
       "isRoot": true
     },
     {
-      "topicId": "t_mit6031_specifications",
-      "name": "Specifications and Testing",
-      "defaultOrder": 2,
-      "conceptIds": [
-        {
-          "conceptId": "c_mit6031_specs",
-          "name": "Specifications",
-          "defaultOrder": 1
-        },
-        {
-          "conceptId": "c_mit6031_testing",
-          "name": "Testing Strategies",
-          "defaultOrder": 2
-        },
-        {
-          "conceptId": "c_mit6031_exceptions",
-          "name": "Exceptions",
-          "defaultOrder": 3
-        }
-      ],
-      "successors": [
-        {
-          "topicId": "t_mit6031_adt",
-          "hard": true
-        }
-      ],
-      "prereqTopics": [
-        "t_mit6031_fundamentals"
-      ],
-      "isRoot": false
-    },
-    {
       "topicId": "t_mit6031_adt",
       "name": "Abstract Data Types",
-      "defaultOrder": 3,
+      "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_adt_basics",
@@ -103,15 +82,14 @@
         }
       ],
       "prereqTopics": [
-        "t_mit6031_fundamentals",
-        "t_mit6031_specifications"
+        "t_mit6031_fundamentals__t_mit6031_specifications"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_mit6031_oop",
       "name": "Object-Oriented Programming",
-      "defaultOrder": 4,
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_interfaces",
@@ -138,7 +116,7 @@
     {
       "topicId": "t_mit6031_concurrency",
       "name": "Concurrency",
-      "defaultOrder": 5,
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_concurrency_intro",

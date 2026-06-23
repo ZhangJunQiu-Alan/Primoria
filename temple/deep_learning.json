@@ -17,9 +17,9 @@
   },
   "nodes": [
     {
-      "id": "dl_foundations",
+      "id": "dl_foundations_part1",
       "kind": "topic",
-      "name": "Neural Network Foundations",
+      "name": "Neural Network Foundations (Part 1)",
       "topic": null,
       "default_order": 1
     },
@@ -27,7 +27,7 @@
       "id": "dl_perceptron",
       "kind": "concept",
       "name": "Perceptron",
-      "topic": "dl_foundations",
+      "topic": "dl_foundations_part1",
       "description": "The perceptron, a single linear threshold unit computing a weighted sum passed through a step function, the historical building block of neural networks.",
       "default_order": 1
     },
@@ -35,7 +35,7 @@
       "id": "dl_mlp",
       "kind": "concept",
       "name": "Multilayer Perceptron",
-      "topic": "dl_foundations",
+      "topic": "dl_foundations_part1",
       "description": "A multilayer perceptron stacking fully connected layers with nonlinear activations, a universal approximator able to represent complex input-output mappings.",
       "default_order": 2
     },
@@ -43,40 +43,47 @@
       "id": "dl_activation",
       "kind": "concept",
       "name": "Activation Functions",
-      "topic": "dl_foundations",
+      "topic": "dl_foundations_part1",
       "description": "Activation functions such as ReLU, sigmoid, and tanh introducing nonlinearity between layers, enabling networks to represent non-linear functions.",
       "default_order": 3
+    },
+    {
+      "id": "dl_foundations_part2",
+      "kind": "topic",
+      "name": "Neural Network Foundations (Part 2)",
+      "topic": null,
+      "default_order": 2
     },
     {
       "id": "dl_forward",
       "kind": "concept",
       "name": "Forward Propagation",
-      "topic": "dl_foundations",
+      "topic": "dl_foundations_part2",
       "description": "Forward propagation computing a network's output by passing inputs through successive layers, applying weights, biases, and activations stage by stage.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "dl_computational_graph",
       "kind": "concept",
       "name": "Computational Graphs",
-      "topic": "dl_foundations",
+      "topic": "dl_foundations_part2",
       "description": "A computational graph representing a computation as nodes and edges, enabling automatic differentiation by systematically propagating derivatives.",
-      "default_order": 5
+      "default_order": 2
     },
     {
       "id": "dl_backprop",
       "kind": "concept",
       "name": "Backpropagation",
-      "topic": "dl_foundations",
+      "topic": "dl_foundations_part2",
       "description": "Backpropagation computing loss gradients with respect to every parameter by applying the chain rule in reverse through the computational graph.",
-      "default_order": 6
+      "default_order": 3
     },
     {
       "id": "dl_optim",
       "kind": "topic",
       "name": "Optimization",
       "topic": null,
-      "default_order": 2
+      "default_order": 3
     },
     {
       "id": "dl_loss",
@@ -103,43 +110,50 @@
       "default_order": 3
     },
     {
+      "id": "dl_optim__dl_training",
+      "kind": "topic",
+      "name": "Optimization Stability",
+      "topic": null,
+      "default_order": 4
+    },
+    {
       "id": "dl_optimizers",
       "kind": "concept",
       "name": "Adaptive Optimizers",
-      "topic": "dl_optim",
+      "topic": "dl_optim__dl_training",
       "description": "Adaptive optimisers like Adam and RMSProp scaling per-parameter learning rates from gradient statistics, often speeding and stabilising training.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "dl_lr_schedule",
       "kind": "concept",
       "name": "Learning Rate Schedules",
-      "topic": "dl_optim",
+      "topic": "dl_optim__dl_training",
       "description": "Learning-rate schedules varying the step size during training, such as warmup and decay, to improve convergence speed and final performance.",
-      "default_order": 5
+      "default_order": 2
+    },
+    {
+      "id": "dl_vanishing_grad",
+      "kind": "concept",
+      "name": "Vanishing/Exploding Gradients",
+      "topic": "dl_optim__dl_training",
+      "description": "The vanishing and exploding gradient problem, where gradients shrink or grow across many layers, hampering the training of deep networks.",
+      "default_order": 3
+    },
+    {
+      "id": "dl_weight_init",
+      "kind": "concept",
+      "name": "Weight Initialization",
+      "topic": "dl_optim__dl_training",
+      "description": "Weight initialisation schemes such as Xavier and He setting initial parameter scales to preserve signal variance and ease optimisation.",
+      "default_order": 4
     },
     {
       "id": "dl_training",
       "kind": "topic",
       "name": "Regularization and Stabilization",
       "topic": null,
-      "default_order": 3
-    },
-    {
-      "id": "dl_vanishing_grad",
-      "kind": "concept",
-      "name": "Vanishing/Exploding Gradients",
-      "topic": "dl_training",
-      "description": "The vanishing and exploding gradient problem, where gradients shrink or grow across many layers, hampering the training of deep networks.",
-      "default_order": 1
-    },
-    {
-      "id": "dl_weight_init",
-      "kind": "concept",
-      "name": "Weight Initialization",
-      "topic": "dl_training",
-      "description": "Weight initialisation schemes such as Xavier and He setting initial parameter scales to preserve signal variance and ease optimisation.",
-      "default_order": 2
+      "default_order": 5
     },
     {
       "id": "dl_batchnorm",
@@ -147,7 +161,7 @@
       "name": "Batch Normalization",
       "topic": "dl_training",
       "description": "Batch normalisation standardising layer activations per mini-batch with learnable scale and shift, accelerating and stabilising deep-network training.",
-      "default_order": 3
+      "default_order": 1
     },
     {
       "id": "dl_regularization",
@@ -155,7 +169,7 @@
       "name": "Regularization",
       "topic": "dl_training",
       "description": "Regularisation techniques like weight decay and early stopping that constrain model complexity to reduce overfitting and improve generalisation.",
-      "default_order": 4
+      "default_order": 2
     },
     {
       "id": "dl_dropout",
@@ -163,14 +177,14 @@
       "name": "Dropout",
       "topic": "dl_training",
       "description": "Dropout randomly deactivating units during training, preventing co-adaptation and acting as an implicit ensemble to improve generalisation.",
-      "default_order": 5
+      "default_order": 3
     },
     {
       "id": "dl_cnn",
       "kind": "topic",
       "name": "Convolutional Neural Networks",
       "topic": null,
-      "default_order": 4
+      "default_order": 6
     },
     {
       "id": "dl_convolution",
@@ -197,43 +211,50 @@
       "default_order": 3
     },
     {
+      "id": "dl_cnn__dl_rnn_seq",
+      "kind": "topic",
+      "name": "Deep Learning Architectures and Transfer",
+      "topic": null,
+      "default_order": 7
+    },
+    {
       "id": "dl_cnn_arch",
       "kind": "concept",
       "name": "CNN Architectures",
-      "topic": "dl_cnn",
+      "topic": "dl_cnn__dl_rnn_seq",
       "description": "Classic convolutional architectures such as LeNet, AlexNet, and VGG, stacking convolution, activation, and pooling blocks for image recognition.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "dl_resnet",
       "kind": "concept",
       "name": "Residual Networks",
-      "topic": "dl_cnn",
+      "topic": "dl_cnn__dl_rnn_seq",
       "description": "Residual networks adding skip connections that let layers learn residual functions, enabling stable training of very deep networks.",
-      "default_order": 5
+      "default_order": 2
     },
     {
       "id": "dl_transfer_learning",
       "kind": "concept",
       "name": "Transfer Learning",
-      "topic": "dl_cnn",
+      "topic": "dl_cnn__dl_rnn_seq",
       "description": "Transfer learning reusing features from a network pretrained on a large dataset, fine-tuning them for a related task with limited data.",
-      "default_order": 6
+      "default_order": 3
+    },
+    {
+      "id": "dl_rnn",
+      "kind": "concept",
+      "name": "Recurrent Neural Networks",
+      "topic": "dl_cnn__dl_rnn_seq",
+      "description": "Recurrent neural networks processing sequences by maintaining a hidden state updated at each step and sharing parameters across time.",
+      "default_order": 4
     },
     {
       "id": "dl_rnn_seq",
       "kind": "topic",
       "name": "Recurrent Neural Networks",
       "topic": null,
-      "default_order": 5
-    },
-    {
-      "id": "dl_rnn",
-      "kind": "concept",
-      "name": "Recurrent Neural Networks",
-      "topic": "dl_rnn_seq",
-      "description": "Recurrent neural networks processing sequences by maintaining a hidden state updated at each step and sharing parameters across time.",
-      "default_order": 1
+      "default_order": 8
     },
     {
       "id": "dl_bptt",
@@ -241,7 +262,7 @@
       "name": "Backpropagation Through Time",
       "topic": "dl_rnn_seq",
       "description": "Backpropagation through time unrolling a recurrent network over the sequence and applying backpropagation to compute gradients across time steps.",
-      "default_order": 2
+      "default_order": 1
     },
     {
       "id": "dl_seq_vanishing",
@@ -249,7 +270,7 @@
       "name": "Long-Range Dependencies",
       "topic": "dl_rnn_seq",
       "description": "The difficulty recurrent networks face learning long-range dependencies, because gradients vanish or explode when propagated over many time steps.",
-      "default_order": 3
+      "default_order": 2
     },
     {
       "id": "dl_lstm",
@@ -257,7 +278,7 @@
       "name": "LSTM",
       "topic": "dl_rnn_seq",
       "description": "Long short-term memory units using input, forget, and output gates with a cell state to preserve information over long sequences.",
-      "default_order": 4
+      "default_order": 3
     },
     {
       "id": "dl_gru",
@@ -265,20 +286,20 @@
       "name": "GRU",
       "topic": "dl_rnn_seq",
       "description": "Gated recurrent units, a streamlined gating mechanism with fewer parameters than LSTMs, mitigating vanishing gradients in recurrent models.",
-      "default_order": 5
+      "default_order": 4
     },
     {
-      "id": "dl_attn",
+      "id": "dl_attn_part1",
       "kind": "topic",
-      "name": "Attention and Transformers",
+      "name": "Attention and Transformers (Part 1)",
       "topic": null,
-      "default_order": 6
+      "default_order": 9
     },
     {
       "id": "dl_attention",
       "kind": "concept",
       "name": "Attention Mechanism",
-      "topic": "dl_attn",
+      "topic": "dl_attn_part1",
       "description": "Attention mechanisms computing a weighted combination of values, where the weights reflect the relevance of each input to the current query.",
       "default_order": 1
     },
@@ -286,7 +307,7 @@
       "id": "dl_self_attention",
       "kind": "concept",
       "name": "Self-Attention",
-      "topic": "dl_attn",
+      "topic": "dl_attn_part1",
       "description": "Self-attention relating all positions in a single sequence to one another, letting each element aggregate context from the whole sequence.",
       "default_order": 2
     },
@@ -294,46 +315,53 @@
       "id": "dl_multihead",
       "kind": "concept",
       "name": "Multi-Head Attention",
-      "topic": "dl_attn",
+      "topic": "dl_attn_part1",
       "description": "Multi-head attention running several attention operations in parallel subspaces, letting the model jointly attend to different representation aspects.",
       "default_order": 3
+    },
+    {
+      "id": "dl_attn_part2",
+      "kind": "topic",
+      "name": "Attention and Transformers (Part 2)",
+      "topic": null,
+      "default_order": 10
     },
     {
       "id": "dl_positional",
       "kind": "concept",
       "name": "Positional Encoding",
-      "topic": "dl_attn",
+      "topic": "dl_attn_part2",
       "description": "Positional encoding injecting token-order information into otherwise permutation-invariant attention through fixed or learned position representations.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "dl_transformer",
       "kind": "concept",
       "name": "Transformer Architecture",
-      "topic": "dl_attn",
+      "topic": "dl_attn_part2",
       "description": "The Transformer, an attention-only encoder-decoder architecture that processes sequences in parallel, underpinning modern language and vision models.",
-      "default_order": 5
+      "default_order": 2
     },
     {
       "id": "dl_pretraining",
       "kind": "concept",
       "name": "Pretraining & Fine-tuning",
-      "topic": "dl_attn",
+      "topic": "dl_attn_part2",
       "description": "Pretraining on large unlabelled corpora with self-supervised objectives, then fine-tuning on downstream tasks, the dominant paradigm for transformers.",
-      "default_order": 6
+      "default_order": 3
     },
     {
-      "id": "dl_generative",
+      "id": "dl_generative_part1",
       "kind": "topic",
-      "name": "Generative Models",
+      "name": "Generative Models (Part 1)",
       "topic": null,
-      "default_order": 7
+      "default_order": 11
     },
     {
       "id": "dl_autoencoder",
       "kind": "concept",
       "name": "Autoencoders",
-      "topic": "dl_generative",
+      "topic": "dl_generative_part1",
       "description": "Autoencoders learning compressed representations by training a network to reconstruct its input through a low-dimensional bottleneck.",
       "default_order": 1
     },
@@ -341,7 +369,7 @@
       "id": "dl_vae",
       "kind": "concept",
       "name": "Variational Autoencoders",
-      "topic": "dl_generative",
+      "topic": "dl_generative_part1",
       "description": "Variational autoencoders, probabilistic generative models learning a latent distribution via a variational objective to generate new samples.",
       "default_order": 2
     },
@@ -349,33 +377,40 @@
       "id": "dl_gan",
       "kind": "concept",
       "name": "Generative Adversarial Networks",
-      "topic": "dl_generative",
+      "topic": "dl_generative_part1",
       "description": "Generative adversarial networks pitting a generator against a discriminator in a minimax game, learning to synthesise realistic data.",
       "default_order": 3
+    },
+    {
+      "id": "dl_generative_part2",
+      "kind": "topic",
+      "name": "Generative Models (Part 2)",
+      "topic": null,
+      "default_order": 12
     },
     {
       "id": "dl_gan_training",
       "kind": "concept",
       "name": "GAN Training Dynamics",
-      "topic": "dl_generative",
+      "topic": "dl_generative_part2",
       "description": "The dynamics and difficulties of training GANs, including instability and mode collapse, addressed by careful loss design and training techniques.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "dl_diffusion",
       "kind": "concept",
       "name": "Diffusion Models",
-      "topic": "dl_generative",
+      "topic": "dl_generative_part2",
       "description": "Diffusion models generating data by learning to reverse a gradual noising process, denoising random noise into samples step by step.",
-      "default_order": 5
+      "default_order": 2
     },
     {
       "id": "dl_flow",
       "kind": "concept",
       "name": "Normalizing Flows",
-      "topic": "dl_generative",
+      "topic": "dl_generative_part2",
       "description": "Normalizing flows transforming a simple base distribution through invertible mappings, enabling exact likelihood evaluation and sampling.",
-      "default_order": 6
+      "default_order": 3
     }
   ],
   "edges": [

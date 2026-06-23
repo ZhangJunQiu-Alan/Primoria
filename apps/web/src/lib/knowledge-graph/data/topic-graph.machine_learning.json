@@ -2,12 +2,12 @@
   "graphId": "machine_learning",
   "subject": "Machine Learning (Stanford CS229)",
   "generatedFrom": "temple/machine_learning.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
-      "topicId": "ml_linear",
-      "name": "Linear Regression",
+      "topicId": "ml_linear_part1",
+      "name": "Linear Regression (Part 1)",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -24,26 +24,15 @@
           "conceptId": "ml_gradient_descent",
           "name": "Batch Gradient Descent",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "ml_sgd",
-          "name": "Stochastic & Mini-batch GD",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "ml_normal_eq",
-          "name": "Normal Equations",
-          "defaultOrder": 5
-        },
-        {
-          "conceptId": "ml_feature_scaling",
-          "name": "Feature Scaling & Learning Rate",
-          "defaultOrder": 6
         }
       ],
       "successors": [
         {
-          "topicId": "ml_classification",
+          "topicId": "ml_linear_part2",
+          "hard": true
+        },
+        {
+          "topicId": "ml_classification_part1",
           "hard": true
         },
         {
@@ -51,7 +40,7 @@
           "hard": true
         },
         {
-          "topicId": "ml_deep",
+          "topicId": "ml_theory__ml_deep",
           "hard": true
         }
       ],
@@ -59,9 +48,36 @@
       "isRoot": true
     },
     {
-      "topicId": "ml_classification",
-      "name": "Classification and GLMs",
+      "topicId": "ml_linear_part2",
+      "name": "Linear Regression (Part 2)",
       "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "ml_sgd",
+          "name": "Stochastic & Mini-batch GD",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "ml_normal_eq",
+          "name": "Normal Equations",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "ml_feature_scaling",
+          "name": "Feature Scaling & Learning Rate",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "ml_linear_part1"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "ml_classification_part1",
+      "name": "Classification and GLMs (Part 1)",
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "ml_logistic_reg",
@@ -82,42 +98,58 @@
           "conceptId": "ml_newton_method",
           "name": "Newton's Method",
           "defaultOrder": 4
-        },
-        {
-          "conceptId": "ml_softmax",
-          "name": "Softmax Regression",
-          "defaultOrder": 5
-        },
-        {
-          "conceptId": "ml_exp_family",
-          "name": "Exponential Family",
-          "defaultOrder": 6
-        },
-        {
-          "conceptId": "ml_glm",
-          "name": "Generalized Linear Models",
-          "defaultOrder": 7
         }
       ],
       "successors": [
+        {
+          "topicId": "ml_classification_part2",
+          "hard": true
+        },
         {
           "topicId": "ml_generative",
           "hard": false
         },
         {
-          "topicId": "ml_deep",
+          "topicId": "ml_theory__ml_deep",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "ml_linear"
+        "ml_linear_part1"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "ml_classification_part2",
+      "name": "Classification and GLMs (Part 2)",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "ml_softmax",
+          "name": "Softmax Regression",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "ml_exp_family",
+          "name": "Exponential Family",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "ml_glm",
+          "name": "Generalized Linear Models",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "ml_classification_part1"
       ],
       "isRoot": false
     },
     {
       "topicId": "ml_generative",
       "name": "Generative Learning",
-      "defaultOrder": 3,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "ml_generative_vs_disc",
@@ -142,14 +174,14 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "ml_classification"
+        "ml_classification_part1"
       ],
       "isRoot": false
     },
     {
       "topicId": "ml_svm_margin",
       "name": "SVM: Margins and Duality",
-      "defaultOrder": 4,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "ml_margins",
@@ -184,7 +216,7 @@
     {
       "topicId": "ml_svm_kernel",
       "name": "SVM: Kernels and Optimization",
-      "defaultOrder": 5,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "ml_kernels",
@@ -216,7 +248,7 @@
     {
       "topicId": "ml_theory",
       "name": "Learning Theory",
-      "defaultOrder": 6,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "ml_bias_variance",
@@ -232,51 +264,57 @@
           "conceptId": "ml_cross_val",
           "name": "Cross-Validation",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "ml_vc_dimension",
-          "name": "VC Dimension & Bounds",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "ml_model_selection",
-          "name": "Model & Feature Selection",
-          "defaultOrder": 5
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "ml_theory__ml_deep",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
-        "ml_linear"
+        "ml_linear_part1"
       ],
       "isRoot": false
     },
     {
-      "topicId": "ml_deep",
-      "name": "Neural Networks",
-      "defaultOrder": 7,
+      "topicId": "ml_theory__ml_deep",
+      "name": "Generalization Bounds and Neural Networks",
+      "defaultOrder": 9,
       "conceptIds": [
+        {
+          "conceptId": "ml_vc_dimension",
+          "name": "VC Dimension & Bounds",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "ml_model_selection",
+          "name": "Model & Feature Selection",
+          "defaultOrder": 2
+        },
         {
           "conceptId": "ml_neural_nets",
           "name": "Neural Networks",
-          "defaultOrder": 1
+          "defaultOrder": 3
         },
         {
           "conceptId": "ml_backprop",
           "name": "Backpropagation",
-          "defaultOrder": 2
+          "defaultOrder": 4
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "ml_linear",
-        "ml_classification"
+        "ml_linear_part1",
+        "ml_classification_part1",
+        "ml_theory"
       ],
       "isRoot": false
     },
     {
       "topicId": "ml_unsupervised",
       "name": "Unsupervised Learning",
-      "defaultOrder": 8,
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "ml_kmeans",
@@ -311,7 +349,7 @@
     {
       "topicId": "ml_rl",
       "name": "Reinforcement Learning",
-      "defaultOrder": 9,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "ml_mdp",

@@ -207,8 +207,13 @@ export default function PipelineDebugPage() {
           return;
         }
 
-        patch("build", { prompt: buildKgContextPrompt(plan.courseContext as CourseContext) });
-        const build = await call("build", "POST", "/api/learning/course", { courseContext: plan.courseContext });
+        const courseContext = plan.courseContext as CourseContext;
+        patch("build", { prompt: buildKgContextPrompt(courseContext) });
+        const build = await call("build", "POST", "/api/learning/course", {
+          graphId: courseContext.graphId,
+          startTopicId: courseContext.startTopic.topicId,
+          targetConceptId: courseContext.targetConceptId,
+        });
         const courseId = build.courseId as string | undefined;
         if (!courseId) {
           patch("course", { status: "skipped", note: "build 未返回 courseId" });

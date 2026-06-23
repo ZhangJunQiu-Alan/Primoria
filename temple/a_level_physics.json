@@ -48,43 +48,50 @@
       "default_order": 3
     },
     {
+      "id": "phy_measurement__phy_kinematics",
+      "kind": "topic",
+      "name": "Measurement Uncertainty and Motion",
+      "topic": null,
+      "default_order": 2
+    },
+    {
       "id": "phy_uncertainty",
       "kind": "concept",
       "name": "Errors and Uncertainties",
-      "topic": "phy_measurement",
+      "topic": "phy_measurement__phy_kinematics",
       "description": "Systematic and random errors in measurement, and expressing the uncertainty of a reading as an absolute, fractional, or percentage uncertainty.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "phy_combine_uncertainty",
       "kind": "concept",
       "name": "Combining Uncertainties",
-      "topic": "phy_measurement",
+      "topic": "phy_measurement__phy_kinematics",
       "description": "Combining uncertainties through calculations by adding absolute uncertainties for sums and fractional uncertainties for products and powers.",
-      "default_order": 5
-    },
-    {
-      "id": "phy_kinematics",
-      "kind": "topic",
-      "name": "Kinematics",
-      "topic": null,
       "default_order": 2
     },
     {
       "id": "phy_motion_quantities",
       "kind": "concept",
       "name": "Displacement Velocity Acceleration",
-      "topic": "phy_kinematics",
+      "topic": "phy_measurement__phy_kinematics",
       "description": "Displacement, velocity, and acceleration as related vector quantities describing motion, defined through rates of change of position.",
-      "default_order": 1
+      "default_order": 3
     },
     {
       "id": "phy_suvat",
       "kind": "concept",
       "name": "Equations of Motion",
-      "topic": "phy_kinematics",
+      "topic": "phy_measurement__phy_kinematics",
       "description": "The equations of motion for uniform acceleration relating displacement, initial and final velocity, acceleration, and time.",
-      "default_order": 2
+      "default_order": 4
+    },
+    {
+      "id": "phy_kinematics",
+      "kind": "topic",
+      "name": "Kinematics",
+      "topic": null,
+      "default_order": 3
     },
     {
       "id": "phy_motion_graphs",
@@ -92,7 +99,7 @@
       "name": "Motion Graphs",
       "topic": "phy_kinematics",
       "description": "Interpreting displacement-time and velocity-time graphs, where gradients give velocity and acceleration and areas give displacement.",
-      "default_order": 3
+      "default_order": 1
     },
     {
       "id": "phy_free_fall",
@@ -100,7 +107,7 @@
       "name": "Free Fall",
       "topic": "phy_kinematics",
       "description": "Motion under gravity alone with constant acceleration g, including the experimental determination of the acceleration of free fall.",
-      "default_order": 4
+      "default_order": 2
     },
     {
       "id": "phy_projectile",
@@ -108,14 +115,14 @@
       "name": "Projectile Motion",
       "topic": "phy_kinematics",
       "description": "Projectile motion analysed by treating the horizontal and vertical components independently under constant gravitational acceleration.",
-      "default_order": 5
+      "default_order": 3
     },
     {
       "id": "phy_dynamics",
       "kind": "topic",
       "name": "Dynamics",
       "topic": null,
-      "default_order": 3
+      "default_order": 4
     },
     {
       "id": "phy_newton_laws",
@@ -142,43 +149,50 @@
       "default_order": 3
     },
     {
+      "id": "phy_dynamics__phy_forces",
+      "kind": "topic",
+      "name": "Momentum and Forces",
+      "topic": null,
+      "default_order": 5
+    },
+    {
       "id": "phy_momentum_conservation",
       "kind": "concept",
       "name": "Conservation of Momentum",
-      "topic": "phy_dynamics",
+      "topic": "phy_dynamics__phy_forces",
       "description": "The principle of conservation of momentum, where total momentum is conserved in a closed system with no external resultant force.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "phy_impulse",
       "kind": "concept",
       "name": "Impulse and Collisions",
-      "topic": "phy_dynamics",
+      "topic": "phy_dynamics__phy_forces",
       "description": "Impulse as the product of force and time, equal to the change in momentum, applied to analyse elastic and inelastic collisions.",
-      "default_order": 5
+      "default_order": 2
+    },
+    {
+      "id": "phy_force_types",
+      "kind": "concept",
+      "name": "Types of Force",
+      "topic": "phy_dynamics__phy_forces",
+      "description": "The types of force acting on bodies, including gravitational, normal contact, friction, tension, and upthrust forces.",
+      "default_order": 3
+    },
+    {
+      "id": "phy_moments",
+      "kind": "concept",
+      "name": "Moments and Couples",
+      "topic": "phy_dynamics__phy_forces",
+      "description": "The moment of a force as force times perpendicular distance, and couples producing rotation, with the principle of moments for equilibrium.",
+      "default_order": 4
     },
     {
       "id": "phy_forces",
       "kind": "topic",
       "name": "Forces, Density and Pressure",
       "topic": null,
-      "default_order": 4
-    },
-    {
-      "id": "phy_force_types",
-      "kind": "concept",
-      "name": "Types of Force",
-      "topic": "phy_forces",
-      "description": "The types of force acting on bodies, including gravitational, normal contact, friction, tension, and upthrust forces.",
-      "default_order": 1
-    },
-    {
-      "id": "phy_moments",
-      "kind": "concept",
-      "name": "Moments and Couples",
-      "topic": "phy_forces",
-      "description": "The moment of a force as force times perpendicular distance, and couples producing rotation, with the principle of moments for equilibrium.",
-      "default_order": 2
+      "default_order": 6
     },
     {
       "id": "phy_equilibrium",
@@ -186,7 +200,7 @@
       "name": "Equilibrium of Forces",
       "topic": "phy_forces",
       "description": "The conditions for equilibrium, where both the resultant force and the resultant moment acting on a body are zero.",
-      "default_order": 3
+      "default_order": 1
     },
     {
       "id": "phy_density_pressure",
@@ -194,7 +208,7 @@
       "name": "Density and Pressure",
       "topic": "phy_forces",
       "description": "Density as mass per unit volume and pressure as force per unit area, including the variation of pressure with depth in a fluid.",
-      "default_order": 4
+      "default_order": 2
     },
     {
       "id": "phy_upthrust",
@@ -202,14 +216,14 @@
       "name": "Upthrust and Archimedes",
       "topic": "phy_forces",
       "description": "Upthrust as the buoyant force on a body in a fluid, equal by Archimedes' principle to the weight of fluid displaced.",
-      "default_order": 5
+      "default_order": 3
     },
     {
       "id": "phy_work_energy",
       "kind": "topic",
       "name": "Work, Energy and Power",
       "topic": null,
-      "default_order": 5
+      "default_order": 7
     },
     {
       "id": "phy_work",
@@ -248,7 +262,7 @@
       "kind": "topic",
       "name": "Deformation of Solids",
       "topic": null,
-      "default_order": 6
+      "default_order": 8
     },
     {
       "id": "phy_hookes_law",
@@ -287,7 +301,7 @@
       "kind": "topic",
       "name": "Waves",
       "topic": null,
-      "default_order": 7
+      "default_order": 9
     },
     {
       "id": "phy_progressive_waves",
@@ -314,43 +328,50 @@
       "default_order": 3
     },
     {
+      "id": "phy_waves__phy_superposition",
+      "kind": "topic",
+      "name": "Wave Phenomena and Superposition",
+      "topic": null,
+      "default_order": 10
+    },
+    {
       "id": "phy_em_spectrum",
       "kind": "concept",
       "name": "Electromagnetic Spectrum",
-      "topic": "phy_waves",
+      "topic": "phy_waves__phy_superposition",
       "description": "The electromagnetic spectrum of transverse waves travelling at the speed of light, ranging from radio waves to gamma rays.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "phy_doppler",
       "kind": "concept",
       "name": "Doppler Effect",
-      "topic": "phy_waves",
+      "topic": "phy_waves__phy_superposition",
       "description": "The Doppler effect, the change in observed frequency when a wave source and observer move relative to one another.",
-      "default_order": 5
+      "default_order": 2
+    },
+    {
+      "id": "phy_superposition_principle",
+      "kind": "concept",
+      "name": "Principle of Superposition",
+      "topic": "phy_waves__phy_superposition",
+      "description": "The principle of superposition stating that when waves meet, the resultant displacement is the vector sum of the individual displacements.",
+      "default_order": 3
+    },
+    {
+      "id": "phy_interference",
+      "kind": "concept",
+      "name": "Two-Source Interference",
+      "topic": "phy_waves__phy_superposition",
+      "description": "Two-source interference producing constructive and destructive fringes where coherent waves meet in phase and out of phase.",
+      "default_order": 4
     },
     {
       "id": "phy_superposition",
       "kind": "topic",
       "name": "Superposition",
       "topic": null,
-      "default_order": 8
-    },
-    {
-      "id": "phy_superposition_principle",
-      "kind": "concept",
-      "name": "Principle of Superposition",
-      "topic": "phy_superposition",
-      "description": "The principle of superposition stating that when waves meet, the resultant displacement is the vector sum of the individual displacements.",
-      "default_order": 1
-    },
-    {
-      "id": "phy_interference",
-      "kind": "concept",
-      "name": "Two-Source Interference",
-      "topic": "phy_superposition",
-      "description": "Two-source interference producing constructive and destructive fringes where coherent waves meet in phase and out of phase.",
-      "default_order": 2
+      "default_order": 11
     },
     {
       "id": "phy_diffraction",
@@ -358,7 +379,7 @@
       "name": "Diffraction",
       "topic": "phy_superposition",
       "description": "The spreading of waves passing through a gap or around an obstacle, most pronounced when the gap is comparable to the wavelength.",
-      "default_order": 3
+      "default_order": 1
     },
     {
       "id": "phy_diffraction_grating",
@@ -366,7 +387,7 @@
       "name": "Diffraction Grating",
       "topic": "phy_superposition",
       "description": "A diffraction grating producing sharp maxima at angles given by the grating equation, used to measure wavelength accurately.",
-      "default_order": 4
+      "default_order": 2
     },
     {
       "id": "phy_stationary_waves",
@@ -374,14 +395,14 @@
       "name": "Stationary Waves",
       "topic": "phy_superposition",
       "description": "Stationary waves formed by superposition of two opposite progressive waves, with fixed nodes and antinodes and no net energy transfer.",
-      "default_order": 5
+      "default_order": 3
     },
     {
       "id": "phy_electricity",
       "kind": "topic",
       "name": "Current of Electricity",
       "topic": null,
-      "default_order": 9
+      "default_order": 12
     },
     {
       "id": "phy_current_charge",
@@ -408,35 +429,42 @@
       "default_order": 3
     },
     {
+      "id": "phy_electricity__phy_dc_circuits",
+      "kind": "topic",
+      "name": "Electrical Characteristics and Kirchhoff's Laws",
+      "topic": null,
+      "default_order": 13
+    },
+    {
       "id": "phy_resistivity",
       "kind": "concept",
       "name": "Resistivity",
-      "topic": "phy_electricity",
+      "topic": "phy_electricity__phy_dc_circuits",
       "description": "Resistivity as a material property relating a conductor's resistance to its length and cross-sectional area.",
-      "default_order": 4
+      "default_order": 1
     },
     {
       "id": "phy_iv_characteristics",
       "kind": "concept",
       "name": "I-V Characteristics",
-      "topic": "phy_electricity",
+      "topic": "phy_electricity__phy_dc_circuits",
       "description": "Current-voltage characteristics of components such as resistors, filament lamps, and diodes, revealing their electrical behaviour.",
-      "default_order": 5
+      "default_order": 2
+    },
+    {
+      "id": "phy_kirchhoff",
+      "kind": "concept",
+      "name": "Kirchhoff's Laws",
+      "topic": "phy_electricity__phy_dc_circuits",
+      "description": "Kirchhoff's first and second laws expressing the conservation of charge at junctions and of energy around circuit loops.",
+      "default_order": 3
     },
     {
       "id": "phy_dc_circuits",
       "kind": "topic",
       "name": "DC Circuits",
       "topic": null,
-      "default_order": 10
-    },
-    {
-      "id": "phy_kirchhoff",
-      "kind": "concept",
-      "name": "Kirchhoff's Laws",
-      "topic": "phy_dc_circuits",
-      "description": "Kirchhoff's first and second laws expressing the conservation of charge at junctions and of energy around circuit loops.",
-      "default_order": 1
+      "default_order": 14
     },
     {
       "id": "phy_series_parallel",
@@ -444,7 +472,7 @@
       "name": "Series and Parallel Resistors",
       "topic": "phy_dc_circuits",
       "description": "Combining resistors in series and parallel using the total-resistance rules derived from Kirchhoff's laws.",
-      "default_order": 2
+      "default_order": 1
     },
     {
       "id": "phy_potential_divider",
@@ -452,7 +480,7 @@
       "name": "Potential Dividers",
       "topic": "phy_dc_circuits",
       "description": "A potential divider using resistors in series to produce a desired fraction of the supply voltage, including with sensors.",
-      "default_order": 3
+      "default_order": 2
     },
     {
       "id": "phy_internal_resistance",
@@ -460,14 +488,14 @@
       "name": "Internal Resistance",
       "topic": "phy_dc_circuits",
       "description": "The internal resistance of a source causing the terminal potential difference to fall below the EMF when current flows.",
-      "default_order": 4
+      "default_order": 3
     },
     {
       "id": "phy_circular",
       "kind": "topic",
       "name": "Motion in a Circle",
       "topic": null,
-      "default_order": 11
+      "default_order": 15
     },
     {
       "id": "phy_angular_speed",
@@ -498,7 +526,7 @@
       "kind": "topic",
       "name": "Gravitational Fields",
       "topic": null,
-      "default_order": 12
+      "default_order": 16
     },
     {
       "id": "phy_newton_gravitation",
@@ -537,7 +565,7 @@
       "kind": "topic",
       "name": "Oscillations",
       "topic": null,
-      "default_order": 13
+      "default_order": 17
     },
     {
       "id": "phy_shm",
@@ -576,7 +604,7 @@
       "kind": "topic",
       "name": "Thermal Physics and Ideal Gases",
       "topic": null,
-      "default_order": 14
+      "default_order": 18
     },
     {
       "id": "phy_temperature",
@@ -623,7 +651,7 @@
       "kind": "topic",
       "name": "Electric Fields",
       "topic": null,
-      "default_order": 15
+      "default_order": 19
     },
     {
       "id": "phy_coulomb",
@@ -662,7 +690,7 @@
       "kind": "topic",
       "name": "Capacitance",
       "topic": null,
-      "default_order": 16
+      "default_order": 20
     },
     {
       "id": "phy_capacitance_def",
@@ -701,7 +729,7 @@
       "kind": "topic",
       "name": "Magnetic Fields",
       "topic": null,
-      "default_order": 17
+      "default_order": 21
     },
     {
       "id": "phy_flux_density",
@@ -740,7 +768,7 @@
       "kind": "topic",
       "name": "Electromagnetic Induction",
       "topic": null,
-      "default_order": 18
+      "default_order": 22
     },
     {
       "id": "phy_flux_linkage",
@@ -771,7 +799,7 @@
       "kind": "topic",
       "name": "Alternating Currents",
       "topic": null,
-      "default_order": 19
+      "default_order": 23
     },
     {
       "id": "phy_ac_rms",
@@ -802,7 +830,7 @@
       "kind": "topic",
       "name": "Quantum Physics",
       "topic": null,
-      "default_order": 20
+      "default_order": 24
     },
     {
       "id": "phy_photon",
@@ -841,7 +869,7 @@
       "kind": "topic",
       "name": "Nuclear Physics",
       "topic": null,
-      "default_order": 21
+      "default_order": 25
     },
     {
       "id": "phy_nuclear_structure",
@@ -888,7 +916,7 @@
       "kind": "topic",
       "name": "Astronomy and Cosmology",
       "topic": null,
-      "default_order": 22
+      "default_order": 26
     },
     {
       "id": "phy_luminosity",

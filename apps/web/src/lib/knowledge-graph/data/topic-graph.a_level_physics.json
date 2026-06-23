@@ -2,8 +2,8 @@
   "graphId": "a_level_physics",
   "subject": "A-Level Physics (CIE 9702)",
   "generatedFrom": "temple/a_level_physics.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "phy_measurement",
@@ -24,21 +24,11 @@
           "conceptId": "phy_scalars_vectors",
           "name": "Scalars and Vectors",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_uncertainty",
-          "name": "Errors and Uncertainties",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "phy_combine_uncertainty",
-          "name": "Combining Uncertainties",
-          "defaultOrder": 5
         }
       ],
       "successors": [
         {
-          "topicId": "phy_kinematics",
+          "topicId": "phy_measurement__phy_kinematics",
           "hard": true
         }
       ],
@@ -46,37 +36,36 @@
       "isRoot": true
     },
     {
-      "topicId": "phy_kinematics",
-      "name": "Kinematics",
+      "topicId": "phy_measurement__phy_kinematics",
+      "name": "Measurement Uncertainty and Motion",
       "defaultOrder": 2,
       "conceptIds": [
         {
+          "conceptId": "phy_uncertainty",
+          "name": "Errors and Uncertainties",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_combine_uncertainty",
+          "name": "Combining Uncertainties",
+          "defaultOrder": 2
+        },
+        {
           "conceptId": "phy_motion_quantities",
           "name": "Displacement Velocity Acceleration",
-          "defaultOrder": 1
+          "defaultOrder": 3
         },
         {
           "conceptId": "phy_suvat",
           "name": "Equations of Motion",
-          "defaultOrder": 2
-        },
-        {
-          "conceptId": "phy_motion_graphs",
-          "name": "Motion Graphs",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_free_fall",
-          "name": "Free Fall",
           "defaultOrder": 4
-        },
-        {
-          "conceptId": "phy_projectile",
-          "name": "Projectile Motion",
-          "defaultOrder": 5
         }
       ],
       "successors": [
+        {
+          "topicId": "phy_kinematics",
+          "hard": true
+        },
         {
           "topicId": "phy_dynamics",
           "hard": true
@@ -92,9 +81,36 @@
       "isRoot": false
     },
     {
+      "topicId": "phy_kinematics",
+      "name": "Kinematics",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "phy_motion_graphs",
+          "name": "Motion Graphs",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_free_fall",
+          "name": "Free Fall",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_projectile",
+          "name": "Projectile Motion",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_measurement__phy_kinematics"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "phy_dynamics",
       "name": "Dynamics",
-      "defaultOrder": 3,
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "phy_newton_laws",
@@ -110,21 +126,11 @@
           "conceptId": "phy_momentum",
           "name": "Linear Momentum",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_momentum_conservation",
-          "name": "Conservation of Momentum",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "phy_impulse",
-          "name": "Impulse and Collisions",
-          "defaultOrder": 5
         }
       ],
       "successors": [
         {
-          "topicId": "phy_forces",
+          "topicId": "phy_dynamics__phy_forces",
           "hard": true
         },
         {
@@ -134,52 +140,51 @@
         {
           "topicId": "phy_circular",
           "hard": true
-        },
-        {
-          "topicId": "phy_thermal",
-          "hard": false
         }
       ],
       "prereqTopics": [
-        "phy_kinematics"
+        "phy_measurement__phy_kinematics"
       ],
       "isRoot": false
     },
     {
-      "topicId": "phy_forces",
-      "name": "Forces, Density and Pressure",
-      "defaultOrder": 4,
+      "topicId": "phy_dynamics__phy_forces",
+      "name": "Momentum and Forces",
+      "defaultOrder": 5,
       "conceptIds": [
+        {
+          "conceptId": "phy_momentum_conservation",
+          "name": "Conservation of Momentum",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_impulse",
+          "name": "Impulse and Collisions",
+          "defaultOrder": 2
+        },
         {
           "conceptId": "phy_force_types",
           "name": "Types of Force",
-          "defaultOrder": 1
+          "defaultOrder": 3
         },
         {
           "conceptId": "phy_moments",
           "name": "Moments and Couples",
-          "defaultOrder": 2
-        },
-        {
-          "conceptId": "phy_equilibrium",
-          "name": "Equilibrium of Forces",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_density_pressure",
-          "name": "Density and Pressure",
           "defaultOrder": 4
-        },
-        {
-          "conceptId": "phy_upthrust",
-          "name": "Upthrust and Archimedes",
-          "defaultOrder": 5
         }
       ],
       "successors": [
         {
+          "topicId": "phy_forces",
+          "hard": true
+        },
+        {
           "topicId": "phy_deformation",
           "hard": true
+        },
+        {
+          "topicId": "phy_thermal",
+          "hard": false
         }
       ],
       "prereqTopics": [
@@ -188,9 +193,36 @@
       "isRoot": false
     },
     {
+      "topicId": "phy_forces",
+      "name": "Forces, Density and Pressure",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "phy_equilibrium",
+          "name": "Equilibrium of Forces",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_density_pressure",
+          "name": "Density and Pressure",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_upthrust",
+          "name": "Upthrust and Archimedes",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_dynamics__phy_forces"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "phy_work_energy",
       "name": "Work, Energy and Power",
-      "defaultOrder": 5,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "phy_work",
@@ -231,7 +263,7 @@
     {
       "topicId": "phy_deformation",
       "name": "Deformation of Solids",
-      "defaultOrder": 6,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "phy_hookes_law",
@@ -256,7 +288,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_forces",
+        "phy_dynamics__phy_forces",
         "phy_work_energy"
       ],
       "isRoot": false
@@ -264,7 +296,7 @@
     {
       "topicId": "phy_waves",
       "name": "Waves",
-      "defaultOrder": 7,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "phy_progressive_waves",
@@ -280,25 +312,11 @@
           "conceptId": "phy_intensity",
           "name": "Wave Intensity",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_em_spectrum",
-          "name": "Electromagnetic Spectrum",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "phy_doppler",
-          "name": "Doppler Effect",
-          "defaultOrder": 5
         }
       ],
       "successors": [
         {
-          "topicId": "phy_superposition",
-          "hard": true
-        },
-        {
-          "topicId": "phy_quantum",
+          "topicId": "phy_waves__phy_superposition",
           "hard": true
         },
         {
@@ -310,46 +328,77 @@
       "isRoot": true
     },
     {
-      "topicId": "phy_superposition",
-      "name": "Superposition",
-      "defaultOrder": 8,
+      "topicId": "phy_waves__phy_superposition",
+      "name": "Wave Phenomena and Superposition",
+      "defaultOrder": 10,
       "conceptIds": [
+        {
+          "conceptId": "phy_em_spectrum",
+          "name": "Electromagnetic Spectrum",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_doppler",
+          "name": "Doppler Effect",
+          "defaultOrder": 2
+        },
         {
           "conceptId": "phy_superposition_principle",
           "name": "Principle of Superposition",
-          "defaultOrder": 1
+          "defaultOrder": 3
         },
         {
           "conceptId": "phy_interference",
           "name": "Two-Source Interference",
-          "defaultOrder": 2
-        },
-        {
-          "conceptId": "phy_diffraction",
-          "name": "Diffraction",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_diffraction_grating",
-          "name": "Diffraction Grating",
           "defaultOrder": 4
-        },
-        {
-          "conceptId": "phy_stationary_waves",
-          "name": "Stationary Waves",
-          "defaultOrder": 5
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "phy_superposition",
+          "hard": false
+        },
+        {
+          "topicId": "phy_quantum",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
         "phy_waves"
       ],
       "isRoot": false
     },
     {
+      "topicId": "phy_superposition",
+      "name": "Superposition",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "phy_diffraction",
+          "name": "Diffraction",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_diffraction_grating",
+          "name": "Diffraction Grating",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_stationary_waves",
+          "name": "Stationary Waves",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_waves__phy_superposition"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "phy_electricity",
       "name": "Current of Electricity",
-      "defaultOrder": 9,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "phy_current_charge",
@@ -365,21 +414,11 @@
           "conceptId": "phy_resistance_ohm",
           "name": "Resistance and Ohm's Law",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_resistivity",
-          "name": "Resistivity",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "phy_iv_characteristics",
-          "name": "I-V Characteristics",
-          "defaultOrder": 5
         }
       ],
       "successors": [
         {
-          "topicId": "phy_dc_circuits",
+          "topicId": "phy_electricity__phy_dc_circuits",
           "hard": true
         },
         {
@@ -395,41 +434,68 @@
       "isRoot": true
     },
     {
-      "topicId": "phy_dc_circuits",
-      "name": "DC Circuits",
-      "defaultOrder": 10,
+      "topicId": "phy_electricity__phy_dc_circuits",
+      "name": "Electrical Characteristics and Kirchhoff's Laws",
+      "defaultOrder": 13,
       "conceptIds": [
         {
-          "conceptId": "phy_kirchhoff",
-          "name": "Kirchhoff's Laws",
+          "conceptId": "phy_resistivity",
+          "name": "Resistivity",
           "defaultOrder": 1
         },
         {
-          "conceptId": "phy_series_parallel",
-          "name": "Series and Parallel Resistors",
+          "conceptId": "phy_iv_characteristics",
+          "name": "I-V Characteristics",
           "defaultOrder": 2
         },
         {
-          "conceptId": "phy_potential_divider",
-          "name": "Potential Dividers",
+          "conceptId": "phy_kirchhoff",
+          "name": "Kirchhoff's Laws",
           "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_internal_resistance",
-          "name": "Internal Resistance",
-          "defaultOrder": 4
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "phy_dc_circuits",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "phy_electricity"
       ],
       "isRoot": false
     },
     {
+      "topicId": "phy_dc_circuits",
+      "name": "DC Circuits",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "phy_series_parallel",
+          "name": "Series and Parallel Resistors",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_potential_divider",
+          "name": "Potential Dividers",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_internal_resistance",
+          "name": "Internal Resistance",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_electricity__phy_dc_circuits"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "phy_circular",
       "name": "Motion in a Circle",
-      "defaultOrder": 11,
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "phy_angular_speed",
@@ -458,7 +524,7 @@
         }
       ],
       "prereqTopics": [
-        "phy_kinematics",
+        "phy_measurement__phy_kinematics",
         "phy_dynamics"
       ],
       "isRoot": false
@@ -466,7 +532,7 @@
     {
       "topicId": "phy_gravitation",
       "name": "Gravitational Fields",
-      "defaultOrder": 12,
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "phy_newton_gravitation",
@@ -503,7 +569,7 @@
     {
       "topicId": "phy_oscillations",
       "name": "Oscillations",
-      "defaultOrder": 13,
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "phy_shm",
@@ -536,7 +602,7 @@
     {
       "topicId": "phy_thermal",
       "name": "Thermal Physics and Ideal Gases",
-      "defaultOrder": 14,
+      "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "phy_temperature",
@@ -566,14 +632,14 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_dynamics"
+        "phy_dynamics__phy_forces"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_electric_fields",
       "name": "Electric Fields",
-      "defaultOrder": 15,
+      "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "phy_coulomb",
@@ -611,7 +677,7 @@
     {
       "topicId": "phy_capacitance",
       "name": "Capacitance",
-      "defaultOrder": 16,
+      "defaultOrder": 20,
       "conceptIds": [
         {
           "conceptId": "phy_capacitance_def",
@@ -643,7 +709,7 @@
     {
       "topicId": "phy_magnetic_fields",
       "name": "Magnetic Fields",
-      "defaultOrder": 17,
+      "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "phy_flux_density",
@@ -680,7 +746,7 @@
     {
       "topicId": "phy_induction",
       "name": "Electromagnetic Induction",
-      "defaultOrder": 18,
+      "defaultOrder": 22,
       "conceptIds": [
         {
           "conceptId": "phy_flux_linkage",
@@ -712,7 +778,7 @@
     {
       "topicId": "phy_ac",
       "name": "Alternating Currents",
-      "defaultOrder": 19,
+      "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "phy_ac_rms",
@@ -739,7 +805,7 @@
     {
       "topicId": "phy_quantum",
       "name": "Quantum Physics",
-      "defaultOrder": 20,
+      "defaultOrder": 24,
       "conceptIds": [
         {
           "conceptId": "phy_photon",
@@ -769,14 +835,14 @@
         }
       ],
       "prereqTopics": [
-        "phy_waves"
+        "phy_waves__phy_superposition"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_nuclear",
       "name": "Nuclear Physics",
-      "defaultOrder": 21,
+      "defaultOrder": 25,
       "conceptIds": [
         {
           "conceptId": "phy_nuclear_structure",
@@ -811,7 +877,7 @@
     {
       "topicId": "phy_astro",
       "name": "Astronomy and Cosmology",
-      "defaultOrder": 22,
+      "defaultOrder": 26,
       "conceptIds": [
         {
           "conceptId": "phy_luminosity",

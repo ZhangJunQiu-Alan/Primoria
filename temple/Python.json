@@ -12,8 +12,8 @@
   "nodes": [
     {
       "id": "topic_intro",
-      "name": "Functions and Control",
       "kind": "topic",
+      "name": "Functions and Control",
       "topic": null,
       "default_order": 1
     },
@@ -51,8 +51,8 @@
     },
     {
       "id": "topic_hof",
-      "name": "Higher-Order Functions",
       "kind": "topic",
+      "name": "Higher-Order Functions",
       "topic": null,
       "default_order": 2
     },
@@ -81,27 +81,81 @@
       "description": "Anonymous function expressions created with lambda, producing function values inline without binding them to a name."
     },
     {
+      "id": "topic_hof__topic_data",
+      "kind": "topic",
+      "name": "Functional Transformation and Data Processing",
+      "topic": null,
+      "default_order": 3
+    },
+    {
       "id": "currying",
-      "topic": "topic_hof",
+      "topic": "topic_hof__topic_data",
       "name": "Currying",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 1,
       "description": "Transforming a multi-argument function into a chain of single-argument functions, each returning another function until all arguments are supplied."
     },
     {
       "id": "decorators",
-      "topic": "topic_hof",
+      "topic": "topic_hof__topic_data",
       "name": "Decorators",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 2,
       "description": "Higher-order functions applied with @ syntax that wrap another function to extend or modify its behaviour without changing its source."
     },
     {
-      "id": "topic_recursion",
-      "name": "Recursion and Trees",
+      "id": "seq",
+      "topic": "topic_hof__topic_data",
+      "name": "Sequences and Slicing",
+      "kind": "concept",
+      "default_order": 3,
+      "description": "Ordered collections such as lists and strings supporting indexing and slicing to extract individual elements and subsequences by position."
+    },
+    {
+      "id": "list_comp",
+      "topic": "topic_hof__topic_data",
+      "name": "List Comprehensions",
+      "kind": "concept",
+      "default_order": 4,
+      "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable."
+    },
+    {
+      "id": "topic_data",
       "kind": "topic",
+      "name": "Data Abstraction and Sequences",
       "topic": null,
       "default_order": 4
+    },
+    {
+      "id": "data_abs",
+      "topic": "topic_data",
+      "name": "Data Abstraction",
+      "kind": "concept",
+      "default_order": 1,
+      "description": "Separating how data is used from how it is represented by defining constructors and selectors, isolating clients from representation changes."
+    },
+    {
+      "id": "dict",
+      "topic": "topic_data",
+      "name": "Dictionaries",
+      "kind": "concept",
+      "default_order": 2,
+      "description": "A mutable mapping from unique keys to values supporting efficient lookup, insertion, and deletion by key rather than by position."
+    },
+    {
+      "id": "box_pointer",
+      "topic": "topic_data",
+      "name": "Box-and-Pointer Diagrams",
+      "kind": "concept",
+      "default_order": 3,
+      "description": "A diagram depicting lists and pairs as boxes containing pointers, visualising the structure, sharing, and mutation of compound data."
+    },
+    {
+      "id": "topic_recursion",
+      "kind": "topic",
+      "name": "Recursion and Trees",
+      "topic": null,
+      "default_order": 5
     },
     {
       "id": "recursion",
@@ -136,58 +190,11 @@
       "description": "Systematically visiting every node of a tree, typically via recursion, to process or aggregate the data the tree contains."
     },
     {
-      "id": "topic_data",
-      "name": "Data Abstraction and Sequences",
-      "kind": "topic",
-      "topic": null,
-      "default_order": 3
-    },
-    {
-      "id": "seq",
-      "topic": "topic_data",
-      "name": "Sequences and Slicing",
-      "kind": "concept",
-      "default_order": 1,
-      "description": "Ordered collections such as lists and strings supporting indexing and slicing to extract individual elements and subsequences by position."
-    },
-    {
-      "id": "list_comp",
-      "topic": "topic_data",
-      "name": "List Comprehensions",
-      "kind": "concept",
-      "default_order": 2,
-      "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable."
-    },
-    {
-      "id": "data_abs",
-      "topic": "topic_data",
-      "name": "Data Abstraction",
-      "kind": "concept",
-      "default_order": 3,
-      "description": "Separating how data is used from how it is represented by defining constructors and selectors, isolating clients from representation changes."
-    },
-    {
-      "id": "dict",
-      "topic": "topic_data",
-      "name": "Dictionaries",
-      "kind": "concept",
-      "default_order": 4,
-      "description": "A mutable mapping from unique keys to values supporting efficient lookup, insertion, and deletion by key rather than by position."
-    },
-    {
-      "id": "box_pointer",
-      "topic": "topic_data",
-      "name": "Box-and-Pointer Diagrams",
-      "kind": "concept",
-      "default_order": 5,
-      "description": "A diagram depicting lists and pairs as boxes containing pointers, visualising the structure, sharing, and mutation of compound data."
-    },
-    {
       "id": "topic_mut_oop",
-      "name": "Mutable Data and OOP",
       "kind": "topic",
+      "name": "Mutable Data and OOP",
       "topic": null,
-      "default_order": 5
+      "default_order": 6
     },
     {
       "id": "mutability",
@@ -231,10 +238,10 @@
     },
     {
       "id": "topic_adv_data",
-      "name": "Advanced Data Structures",
       "kind": "topic",
+      "name": "Advanced Data Structures",
       "topic": null,
-      "default_order": 6
+      "default_order": 7
     },
     {
       "id": "linked_lists",
@@ -270,10 +277,10 @@
     },
     {
       "id": "topic_scheme",
-      "name": "Scheme and Functional Programming",
       "kind": "topic",
+      "name": "Scheme and Functional Programming",
       "topic": null,
-      "default_order": 7
+      "default_order": 8
     },
     {
       "id": "scheme_syntax",
@@ -309,10 +316,10 @@
     },
     {
       "id": "topic_interp",
-      "name": "Interpreters",
       "kind": "topic",
+      "name": "Interpreters",
       "topic": null,
-      "default_order": 8
+      "default_order": 9
     },
     {
       "id": "parsing",
@@ -348,10 +355,10 @@
     },
     {
       "id": "topic_declarative",
-      "name": "Declarative Programming",
       "kind": "topic",
+      "name": "Declarative Programming",
       "topic": null,
-      "default_order": 9
+      "default_order": 10
     },
     {
       "id": "regex",
@@ -656,60 +663,6 @@
       "strength": "hard",
       "from": "sql_queries",
       "to": "sql_joins"
-    },
-    {
-      "type": "prereq",
-      "strength": "hard",
-      "from": "topic_intro",
-      "to": "topic_hof"
-    },
-    {
-      "type": "prereq",
-      "strength": "hard",
-      "from": "topic_intro",
-      "to": "topic_recursion"
-    },
-    {
-      "type": "prereq",
-      "strength": "hard",
-      "from": "topic_intro",
-      "to": "topic_data"
-    },
-    {
-      "type": "prereq",
-      "strength": "hard",
-      "from": "topic_recursion",
-      "to": "topic_mut_oop"
-    },
-    {
-      "type": "prereq",
-      "strength": "hard",
-      "from": "topic_data",
-      "to": "topic_mut_oop"
-    },
-    {
-      "type": "prereq",
-      "strength": "hard",
-      "from": "topic_mut_oop",
-      "to": "topic_adv_data"
-    },
-    {
-      "type": "prereq",
-      "strength": "hard",
-      "from": "topic_recursion",
-      "to": "topic_scheme"
-    },
-    {
-      "type": "prereq",
-      "strength": "hard",
-      "from": "topic_adv_data",
-      "to": "topic_interp"
-    },
-    {
-      "type": "prereq",
-      "strength": "hard",
-      "from": "topic_scheme",
-      "to": "topic_interp"
     }
   ]
 }

@@ -2,8 +2,8 @@
   "graphId": "numerical_analysis",
   "subject": "Introduction to Numerical Analysis",
   "generatedFrom": "temple/numerical_analysis.json",
-  "generatedAt": "2026-06-17",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors sorted by defaultOrder; next_topic = first hard successor (fallback: first successor).",
+  "generatedAt": "2026-06-23",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_mit18330_errors",
@@ -40,7 +40,7 @@
           "hard": true
         },
         {
-          "topicId": "t_mit18330_odes",
+          "topicId": "t_mit18330_integration__t_mit18330_odes",
           "hard": true
         }
       ],
@@ -129,7 +129,7 @@
       ],
       "successors": [
         {
-          "topicId": "t_mit18330_integration",
+          "topicId": "t_mit18330_integration__t_mit18330_odes",
           "hard": true
         }
       ],
@@ -140,8 +140,8 @@
       "isRoot": false
     },
     {
-      "topicId": "t_mit18330_integration",
-      "name": "Numerical Integration",
+      "topicId": "t_mit18330_integration__t_mit18330_odes",
+      "name": "Numerical Integration and Differential Equations",
       "defaultOrder": 5,
       "conceptIds": [
         {
@@ -153,38 +153,27 @@
           "conceptId": "c_mit18330_gaussian_quad",
           "name": "Gaussian Quadrature",
           "defaultOrder": 2
-        }
-      ],
-      "successors": [],
-      "prereqTopics": [
-        "t_mit18330_interpolation"
-      ],
-      "isRoot": false
-    },
-    {
-      "topicId": "t_mit18330_odes",
-      "name": "Ordinary Differential Equations",
-      "defaultOrder": 6,
-      "conceptIds": [
+        },
         {
           "conceptId": "c_mit18330_euler",
           "name": "Euler's Method",
-          "defaultOrder": 1
+          "defaultOrder": 3
         },
         {
           "conceptId": "c_mit18330_runge_kutta",
           "name": "Runge-Kutta Methods",
-          "defaultOrder": 2
+          "defaultOrder": 4
         },
         {
           "conceptId": "c_mit18330_ode_stability",
           "name": "Stability of ODE Methods",
-          "defaultOrder": 3
+          "defaultOrder": 5
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "t_mit18330_errors"
+        "t_mit18330_errors",
+        "t_mit18330_interpolation"
       ],
       "isRoot": false
     }

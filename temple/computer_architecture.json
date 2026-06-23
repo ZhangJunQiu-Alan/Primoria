@@ -12,8 +12,8 @@
   "nodes": [
     {
       "id": "topic_data_rep",
-      "name": "Data Representation",
       "kind": "topic",
+      "name": "Data Representation",
       "topic": null,
       "default_order": 1
     },
@@ -51,8 +51,8 @@
     },
     {
       "id": "topic_c_prog",
-      "name": "C Programming",
       "kind": "topic",
+      "name": "C Programming",
       "topic": null,
       "default_order": 2
     },
@@ -90,8 +90,8 @@
     },
     {
       "id": "topic_riscv",
-      "name": "RISC-V Assembly",
       "kind": "topic",
+      "name": "RISC-V Assembly",
       "topic": null,
       "default_order": 3
     },
@@ -120,50 +120,57 @@
       "description": "The RISC-V calling convention governing argument passing, return values, and caller- and callee-saved registers, using the stack for nested calls."
     },
     {
-      "id": "concept_riscv_formats",
-      "topic": "topic_riscv",
-      "name": "Instruction Formats",
-      "kind": "concept",
-      "default_order": 4,
-      "description": "The fixed-width RISC-V instruction encoding formats specifying how opcodes, registers, and immediate values are packed into instruction bits."
-    },
-    {
-      "id": "concept_call_pipeline",
-      "topic": "topic_riscv",
-      "name": "Compiler, Assembler, Linker, Loader",
-      "kind": "concept",
-      "default_order": 5,
-      "description": "The toolchain transforming source into a running program: compiler to assembly, assembler to object code, linker to executable, loader into memory."
-    },
-    {
-      "id": "topic_sds",
-      "name": "Synchronous Digital Systems",
+      "id": "topic_riscv__topic_sds",
       "kind": "topic",
+      "name": "From RISC-V Instructions to Digital Logic",
       "topic": null,
       "default_order": 4
     },
     {
-      "id": "concept_boolean_algebra",
-      "topic": "topic_sds",
-      "name": "Boolean Algebra & Logic Gates",
+      "id": "concept_riscv_formats",
+      "topic": "topic_riscv__topic_sds",
+      "name": "Instruction Formats",
       "kind": "concept",
       "default_order": 1,
+      "description": "The fixed-width RISC-V instruction encoding formats specifying how opcodes, registers, and immediate values are packed into instruction bits."
+    },
+    {
+      "id": "concept_call_pipeline",
+      "topic": "topic_riscv__topic_sds",
+      "name": "Compiler, Assembler, Linker, Loader",
+      "kind": "concept",
+      "default_order": 2,
+      "description": "The toolchain transforming source into a running program: compiler to assembly, assembler to object code, linker to executable, loader into memory."
+    },
+    {
+      "id": "concept_boolean_algebra",
+      "topic": "topic_riscv__topic_sds",
+      "name": "Boolean Algebra & Logic Gates",
+      "kind": "concept",
+      "default_order": 3,
       "description": "The algebra of binary values with AND, OR, and NOT operations, realised physically as logic gates that form digital circuits."
     },
     {
       "id": "concept_combinational_logic",
-      "topic": "topic_sds",
+      "topic": "topic_riscv__topic_sds",
       "name": "Combinational Logic Blocks",
       "kind": "concept",
-      "default_order": 2,
+      "default_order": 4,
       "description": "Logic circuits whose outputs depend only on current inputs, built from gates to implement functions like adders, multiplexers, and decoders."
+    },
+    {
+      "id": "topic_sds",
+      "kind": "topic",
+      "name": "Synchronous Digital Systems",
+      "topic": null,
+      "default_order": 5
     },
     {
       "id": "concept_state_elements",
       "topic": "topic_sds",
       "name": "State Elements (Flip-Flops)",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Memory elements such as flip-flops and registers that store bits and update synchronously with the clock, holding circuit state between cycles."
     },
     {
@@ -171,7 +178,7 @@
       "topic": "topic_sds",
       "name": "Sequential Logic & Timing",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Circuits whose outputs depend on input history through stored state, governed by clock timing constraints such as setup and hold times."
     },
     {
@@ -179,15 +186,15 @@
       "topic": "topic_sds",
       "name": "Finite State Machines",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 3,
       "description": "Finite state machines modelling sequential behaviour as states and transitions, implemented with state registers and combinational next-state logic."
     },
     {
       "id": "topic_cpu",
-      "name": "CPU Architecture & Datapath",
       "kind": "topic",
+      "name": "CPU Architecture & Datapath",
       "topic": null,
-      "default_order": 5
+      "default_order": 6
     },
     {
       "id": "concept_single_cycle",
@@ -214,50 +221,57 @@
       "description": "Dividing instruction execution into stages so multiple instructions overlap, increasing throughput by ideally finishing one instruction each clock cycle."
     },
     {
+      "id": "topic_cpu__topic_memory",
+      "kind": "topic",
+      "name": "Pipelines and Cache Architecture",
+      "topic": null,
+      "default_order": 7
+    },
+    {
       "id": "concept_pipeline_hazards",
-      "topic": "topic_cpu",
+      "topic": "topic_cpu__topic_memory",
       "name": "Pipeline Hazards & Forwarding",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 1,
       "description": "Structural, data, and control hazards that disrupt pipelined execution, mitigated by forwarding, stalling, and careful instruction scheduling."
     },
     {
       "id": "concept_branch_prediction",
-      "topic": "topic_cpu",
+      "topic": "topic_cpu__topic_memory",
       "name": "Branch Prediction",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 2,
       "description": "Guessing the outcome and target of branches to keep the pipeline full, with mispredictions costing flushed instructions and recovery."
     },
     {
-      "id": "topic_memory",
-      "name": "Memory Hierarchy",
-      "kind": "topic",
-      "topic": null,
-      "default_order": 6
-    },
-    {
       "id": "concept_cache_basics",
-      "topic": "topic_memory",
+      "topic": "topic_cpu__topic_memory",
       "name": "Cache Basics & Direct Mapped",
       "kind": "concept",
-      "default_order": 1,
+      "default_order": 3,
       "description": "Direct-mapped caches storing recently used blocks indexed by address bits, exploiting locality to reduce average memory access latency."
     },
     {
       "id": "concept_associative_caches",
-      "topic": "topic_memory",
+      "topic": "topic_cpu__topic_memory",
       "name": "Associative Caches",
       "kind": "concept",
-      "default_order": 2,
+      "default_order": 4,
       "description": "Set-associative and fully associative caches giving blocks multiple placement options, reducing conflict misses at the cost of more comparison hardware."
+    },
+    {
+      "id": "topic_memory",
+      "kind": "topic",
+      "name": "Memory Hierarchy",
+      "topic": null,
+      "default_order": 8
     },
     {
       "id": "concept_cache_performance",
       "topic": "topic_memory",
       "name": "AMAT & Cache Misses",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Analysing cache effectiveness via average memory access time and the classification of compulsory, conflict, and capacity misses."
     },
     {
@@ -265,7 +279,7 @@
       "topic": "topic_memory",
       "name": "Virtual Memory & Page Tables",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Giving each process a large private address space mapped to physical memory through page tables, providing isolation and demand paging."
     },
     {
@@ -273,15 +287,15 @@
       "topic": "topic_memory",
       "name": "Translation Lookaside Buffer (TLB)",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 3,
       "description": "A hardware cache of recent page-table translations that speeds virtual-to-physical address mapping by avoiding full page-table walks."
     },
     {
       "id": "topic_parallelism",
-      "name": "Parallel Computing",
       "kind": "topic",
+      "name": "Parallel Computing",
       "topic": null,
-      "default_order": 7
+      "default_order": 9
     },
     {
       "id": "concept_amdahls_law",
@@ -308,50 +322,57 @@
       "description": "Thread-level parallelism running multiple threads across cores, often expressed with OpenMP directives to share work over shared memory."
     },
     {
+      "id": "topic_parallelism__topic_io_dep",
+      "kind": "topic",
+      "name": "Parallel Systems and I/O",
+      "topic": null,
+      "default_order": 10
+    },
+    {
       "id": "concept_cache_coherence",
-      "topic": "topic_parallelism",
+      "topic": "topic_parallelism__topic_io_dep",
       "name": "Cache Coherence & False Sharing",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 1,
       "description": "Keeping per-core cached copies of shared data consistent, and false sharing where unrelated variables on one line cause coherence traffic."
     },
     {
       "id": "concept_warehouse_scale",
-      "topic": "topic_parallelism",
+      "topic": "topic_parallelism__topic_io_dep",
       "name": "Warehouse-Scale Computing",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 2,
       "description": "Datacenter-scale computing treating thousands of servers as one machine, emphasising parallelism, energy efficiency, and dependability at scale."
     },
     {
-      "id": "topic_io_dep",
-      "name": "I/O and Dependability",
-      "kind": "topic",
-      "topic": null,
-      "default_order": 8
-    },
-    {
       "id": "concept_memory_mapped_io",
-      "topic": "topic_io_dep",
+      "topic": "topic_parallelism__topic_io_dep",
       "name": "Memory-Mapped I/O",
       "kind": "concept",
-      "default_order": 1,
+      "default_order": 3,
       "description": "Accessing device registers through ordinary load and store instructions by mapping them into the processor's physical address space."
     },
     {
       "id": "concept_polling_interrupts",
-      "topic": "topic_io_dep",
+      "topic": "topic_parallelism__topic_io_dep",
       "name": "Polling and Interrupts",
       "kind": "concept",
-      "default_order": 2,
+      "default_order": 4,
       "description": "Two ways software learns of device events: polling repeatedly checks status, while interrupts let devices asynchronously signal the processor."
+    },
+    {
+      "id": "topic_io_dep",
+      "kind": "topic",
+      "name": "I/O and Dependability",
+      "topic": null,
+      "default_order": 11
     },
     {
       "id": "concept_dma",
       "topic": "topic_io_dep",
       "name": "Direct Memory Access (DMA)",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Direct memory access letting devices transfer data to and from memory without processor involvement, freeing the CPU during bulk transfers."
     },
     {
@@ -359,7 +380,7 @@
       "topic": "topic_io_dep",
       "name": "Error Correction Codes",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Error-detecting and error-correcting codes adding redundant bits so hardware can detect, and sometimes correct, corrupted stored or transmitted data."
     },
     {
@@ -367,60 +388,11 @@
       "topic": "topic_io_dep",
       "name": "RAID and Dependability",
       "kind": "concept",
-      "default_order": 5,
+      "default_order": 3,
       "description": "Redundant arrays of independent disks combining drives for performance and fault tolerance through striping, mirroring, and parity schemes."
     }
   ],
   "edges": [
-    {
-      "type": "prereq",
-      "weight": "soft",
-      "from": "topic_data_rep",
-      "to": "topic_c_prog",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "weight": "hard",
-      "from": "topic_c_prog",
-      "to": "topic_riscv",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "weight": "hard",
-      "from": "topic_riscv",
-      "to": "topic_cpu",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "weight": "hard",
-      "from": "topic_sds",
-      "to": "topic_cpu",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "weight": "hard",
-      "from": "topic_cpu",
-      "to": "topic_memory",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "weight": "soft",
-      "from": "topic_memory",
-      "to": "topic_parallelism",
-      "strength": "hard"
-    },
-    {
-      "type": "prereq",
-      "weight": "soft",
-      "from": "topic_memory",
-      "to": "topic_io_dep",
-      "strength": "hard"
-    },
     {
       "type": "prereq",
       "weight": "hard",
