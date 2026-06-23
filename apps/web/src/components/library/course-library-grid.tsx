@@ -7,7 +7,9 @@ import type { CourseSummary } from "@/lib/courses/types";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 
-type LibraryEntry = { kind: "course"; id: string; updatedAt: number; course: CourseSummary };
+type LibraryEntry =
+  | { kind: "course"; id: string; updatedAt: number; course: CourseSummary }
+  | { kind: "job"; id: string; updatedAt: number; job: LessonGenerationJobSummary };
 
 type ViewMode = "table" | "cards";
 type StatusFilterValue = "no_lessons" | "not_started" | "in_progress" | "reviewing" | "done";
@@ -23,6 +25,7 @@ const STATUS_FILTERS: { value: StatusFilterValue; label: string }[] = [
 ];
 
 const PAGE_SIZE = 10;
+const INITIAL_REFRESH_WINDOW_MS = 45_000;
 
 export function CourseLibraryGrid({
   initialCourses,
@@ -39,8 +42,9 @@ export function CourseLibraryGrid({
   const [statusFilterOpen, setStatusFilterOpen] = useState(false);
   const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({ key: "updated", direction: "desc" });
   const [page, setPage] = useState(1);
+  const [initialRefreshOpen, setInitialRefreshOpen] = useState(true);
   const deferredQuery = useDeferredValue(query);
-  const shouldPoll = lessonJobs.some(isLessonGenerationActive);
+  const shouldPoll = initialRefreshOpen || lessonJobs.some(isLessonGenerationActive);
 
   // Map each course to its outstanding lesson job (first/lazy generation), preferring
   // an active job over a failed one (engineering doc §13.5).
@@ -52,6 +56,11 @@ export function CourseLibraryGrid({
     }
     return map;
   }, [lessonJobs]);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setInitialRefreshOpen(false), INITIAL_REFRESH_WINDOW_MS);
+    return () => window.clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     if (!shouldPoll) return;
@@ -89,11 +98,16 @@ export function CourseLibraryGrid({
   }, [shouldPoll]);
 
   const entries = useMemo(
-    () =>
-      courses
-        .map((course): LibraryEntry => ({ kind: "course", id: course.id, updatedAt: course.updatedAt, course }))
-        .sort((a, b) => b.updatedAt - a.updatedAt),
-    [courses],
+    () => {
+      const courseIds = new Set(courses.map((course) => course.id));
+      return [
+        ...courses.map((course): LibraryEntry => ({ kind: "course", id: course.id, updatedAt: course.updatedAt, course })),
+        ...lessonJobs
+          .filter((job) => !courseIds.has(job.courseId))
+          .map((job): LibraryEntry => ({ kind: "job", id: job.id, updatedAt: job.updatedAt, job })),
+      ].sort((a, b) => b.updatedAt - a.updatedAt);
+    },
+    [courses, lessonJobs],
   );
 
   const normalizedQuery = deferredQuery.trim().toLowerCase();
@@ -137,7 +151,7 @@ export function CourseLibraryGrid({
   if (entries.length === 0) {
     return (
       <div className="library-empty">
-        <p>No courses yet.</p>
+        <p>{initialRefreshOpen ? "Checking for course builds…" : "No courses yet."}</p>
         <Link href="/" className="library-empty-action">Create your first course from the tutor</Link>
       </div>
     );
@@ -332,9 +346,13 @@ function CourseTable({
           </tr>
         </thead>
         <tbody>
-          {entries.map((entry) => (
-            <CourseRow key={`course-${entry.id}`} course={entry.course} lessonJob={lessonJobByCourse.get(entry.id)} />
-          ))}
+          {entries.map((entry) =>
+            entry.kind === "course" ? (
+              <CourseRow key={`course-${entry.id}`} course={entry.course} lessonJob={lessonJobByCourse.get(entry.id)} />
+            ) : (
+              <JobRow key={`job-${entry.id}`} job={entry.job} />
+            ),
+          )}
         </tbody>
       </table>
     </div>
@@ -376,11 +394,17 @@ function CourseCards({
 }) {
   return (
     <ul className="library-card-list">
-      {entries.map((entry) => (
-        <li key={`course-${entry.id}`}>
-          <CourseCard course={entry.course} lessonJob={lessonJobByCourse.get(entry.id)} />
-        </li>
-      ))}
+      {entries.map((entry) =>
+        entry.kind === "course" ? (
+          <li key={`course-${entry.id}`}>
+            <CourseCard course={entry.course} lessonJob={lessonJobByCourse.get(entry.id)} />
+          </li>
+        ) : (
+          <li key={`job-${entry.id}`}>
+            <JobCard job={entry.job} />
+          </li>
+        ),
+      )}
     </ul>
   );
 }
@@ -444,6 +468,47 @@ function CourseRow({ course, lessonJob }: { course: CourseSummary; lessonJob?: L
   );
 }
 
+function JobRow({ job }: { job: LessonGenerationJobSummary }) {
+  const jobActive = isLessonGenerationActive(job);
+  const jobFailed = job.status === "failed";
+  const statusLabel = jobActive ? lessonGenerationStageLabel(job) : jobFailed ? "Lesson failed" : "Syncing";
+  return (
+    <tr className={jobActive ? "library-row-generating" : jobFailed ? "library-row-failed" : undefined}>
+      <td>
+        <div className="library-course-name">
+          <CourseThumb title="Building course" pending={jobActive} />
+          <div>
+            <Link href={`/course/${job.courseId}`} className="library-course-title">Building course</Link>
+            <p>The course is being prepared and will fill in here as soon as the outline syncs.</p>
+            <span>{shortId(job.courseId)} · first lesson job {shortId(job.id)}</span>
+          </div>
+        </div>
+      </td>
+      <td>
+        <StatusPill tone={jobFailed ? "danger" : "working"}>{statusLabel}</StatusPill>
+      </td>
+      <td>
+        <ProgressMeter completed={job.progressCompleted} total={Math.max(job.progressTotal, 1)} />
+      </td>
+      <td>
+        <div className="library-current-lesson">
+          <strong>First lesson</strong>
+          <span>{jobFailed ? job.lastError ?? "Generation failed" : statusLabel}</span>
+        </div>
+      </td>
+      <td className="library-number-cell">1</td>
+      <td className="library-date-cell">{formatDate(job.updatedAt)}</td>
+      <td>
+        <div className="library-row-actions">
+          <Link href={`/course/${job.courseId}`} className="library-row-action primary">
+            Open
+          </Link>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
 function CourseCard({ course, lessonJob }: { course: CourseSummary; lessonJob?: LessonGenerationJobSummary }) {
   const status = courseStatus(course);
   const progress = lessonProgress(course);
@@ -470,6 +535,27 @@ function CourseCard({ course, lessonJob }: { course: CourseSummary; lessonJob?: 
       <div className="library-course-card-meta">
         <span>{course.currentLesson?.title ?? "No lesson planned yet"}</span>
         <span>{course.lessonCount} lessons</span>
+      </div>
+    </article>
+  );
+}
+
+function JobCard({ job }: { job: LessonGenerationJobSummary }) {
+  const jobActive = isLessonGenerationActive(job);
+  const jobFailed = job.status === "failed";
+  const statusLabel = jobActive ? lessonGenerationStageLabel(job) : jobFailed ? "Lesson failed" : "Syncing";
+  return (
+    <article className={`library-course-card${jobActive ? " library-card-generating" : jobFailed ? " library-card-failed" : ""}`}>
+      <div className="library-course-card-head">
+        <CourseThumb title="Building course" pending={jobActive} />
+        <StatusPill tone={jobFailed ? "danger" : "working"}>{statusLabel}</StatusPill>
+      </div>
+      <Link href={`/course/${job.courseId}`} className="library-course-title">Building course</Link>
+      <p>The course is being prepared and will fill in here as soon as the outline syncs.</p>
+      <ProgressMeter completed={job.progressCompleted} total={Math.max(job.progressTotal, 1)} />
+      <div className="library-course-card-meta">
+        <span>First lesson</span>
+        <span>{shortId(job.courseId)}</span>
       </div>
     </article>
   );
@@ -534,11 +620,15 @@ function lessonStateText(course: CourseSummary) {
 }
 
 function searchableText(entry: LibraryEntry) {
+  if (entry.kind === "job") {
+    return `building course ${entry.job.courseId} ${entry.job.lessonId} ${entry.job.id} ${entry.job.stage} ${entry.job.status}`.toLowerCase();
+  }
   const lessonTitles = entry.course.lessons.map((lesson) => lesson.title).join(" ");
   return `${entry.course.title} ${entry.course.topic} ${entry.course.summary} ${entry.course.id} ${lessonTitles}`.toLowerCase();
 }
 
 function entryStatusFilterValue(entry: LibraryEntry): StatusFilterValue {
+  if (entry.kind === "job") return isLessonGenerationActive(entry.job) ? "in_progress" : "no_lessons";
   return courseStatusFilterValue(entry.course);
 }
 
@@ -566,9 +656,18 @@ function sortEntries(entries: LibraryEntry[], sort: { key: SortKey; direction: S
 
 function sortValue(entry: LibraryEntry, key: SortKey) {
   if (key === "updated") return entry.updatedAt;
+  if (entry.kind === "job") {
+    if (key === "lessons") return 1;
+    return jobProgressValue(entry.job);
+  }
   if (key === "lessons") return entry.course.lessonCount;
   const progress = lessonProgress(entry.course);
   return progress.total > 0 ? progress.completed / progress.total : 0;
+}
+
+function jobProgressValue(job: LessonGenerationJobSummary) {
+  const total = Math.max(job.progressTotal, 1);
+  return Math.min(1, job.progressCompleted / total);
 }
 
 function formatDate(value: number) {

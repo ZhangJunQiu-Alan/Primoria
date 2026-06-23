@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/react-core/v2";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import { StemRenderer, StemRendererProps } from "@/components/generative-ui/stem-renderer";
@@ -12,6 +12,7 @@ import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
 import { setTodos } from "@/lib/todos-store";
 import type { CourseCardArtifact, TutorArtifact } from "@/lib/agent-os";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
+import type { CourseSummary } from "@/lib/courses/types";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 
@@ -216,7 +217,7 @@ function GetCourseCardTool({
   );
 }
 
-function courseArtifactFromSummary(summary: unknown): CourseCardArtifact | null {
+function courseArtifactFromSummary(summary: unknown, status: "generating" | "ready" = "ready"): CourseCardArtifact | null {
   if (!summary || typeof summary !== "object") return null;
   const s = summary as Record<string, unknown>;
   const parsed = CourseCardResult.safeParse({
@@ -227,7 +228,7 @@ function courseArtifactFromSummary(summary: unknown): CourseCardArtifact | null 
     summary: s.summary,
     estimatedMinutes: s.estimatedMinutes,
     outline: s.outline ?? [],
-    status: "ready",
+    status,
   });
   return parsed.success ? parsed.data : null;
 }
@@ -239,34 +240,129 @@ type CourseTopicAnchor = {
   targetConceptId: string | null;
 };
 type LearningPhase = "positioning" | "building" | "ready" | "broad" | "fallback" | "error";
+type LearningGoalSnapshot = {
+  phase: LearningPhase;
+  artifact: CourseCardArtifact | null;
+  menu: MenuItem[];
+  message: string;
+  builtCourseId: string | null;
+  firstJob: LessonGenerationJobSummary | null;
+};
 
-// Web-as-brain course card. The agent tool only surfaces the learner's goal; this
-// browser component runs KG positioning (/api/knowledge-graph/position) and, for a
-// specific match, the asynchronous build (/api/learning/course). Both fetches carry
-// the user's session natively, so the course persists to app_courses under the
-// signed-in owner. specific -> course card, broad -> menu, fallback -> message.
-function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string }) {
-  const [activeQuery, setActiveQuery] = useState<string | undefined>(query);
-  const [prevQuery, setPrevQuery] = useState<string | undefined>(query);
-  const [phase, setPhase] = useState<LearningPhase>("positioning");
-  const [artifact, setArtifact] = useState<CourseCardArtifact | null>(null);
-  const [menu, setMenu] = useState<MenuItem[]>([]);
-  const [message, setMessage] = useState<string>("");
-  const [builtCourseId, setBuiltCourseId] = useState<string | null>(null);
-  const [firstJob, setFirstJob] = useState<LessonGenerationJobSummary | null>(null);
-  const requestSeqRef = useRef(0);
+const learningGoalTasks = new Map<string, LearningGoalTask>();
 
-  // Poll the first lesson's job after the course is created so the card can show
-  // its generation stage and flip to Ready when published (engineering doc §13.3).
-  const { jobsByLessonId } = useLessonGenerationJobs(builtCourseId, firstJob ? [firstJob] : []);
-  const liveFirstJob = firstJob ? jobsByLessonId.get(firstJob.lessonId) ?? firstJob : null;
+function emptyLearningGoalSnapshot(): LearningGoalSnapshot {
+  return {
+    phase: "positioning",
+    artifact: null,
+    menu: [],
+    message: "",
+    builtCourseId: null,
+    firstJob: null,
+  };
+}
 
-  const startCourseBuild = useCallback(async (anchor: CourseTopicAnchor) => {
-    const requestSeq = ++requestSeqRef.current;
-    const isCurrentRequest = () => requestSeqRef.current === requestSeq;
-    setPhase("building");
-    setMenu([]);
-    setMessage("");
+function learningGoalTaskKey(query: string, graphId?: string) {
+  return `${graphId ?? ""}::${query.trim().toLowerCase()}`;
+}
+
+class LearningGoalTask {
+  private listeners = new Set<(snapshot: LearningGoalSnapshot) => void>();
+  private snapshot = emptyLearningGoalSnapshot();
+  private started = false;
+  private buildAnchorKey = "";
+
+  constructor(
+    readonly key: string,
+    private readonly query: string,
+    private readonly graphId?: string,
+  ) {}
+
+  getSnapshot() {
+    return this.snapshot;
+  }
+
+  subscribe(listener: (snapshot: LearningGoalSnapshot) => void) {
+    this.listeners.add(listener);
+    listener(this.snapshot);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  start() {
+    if (this.started) return;
+    this.started = true;
+    void this.positionLearningGoal();
+  }
+
+  startCourseBuild(anchor: CourseTopicAnchor) {
+    const anchorKey = `${anchor.graphId}:${anchor.startTopicId}:${anchor.targetConceptId ?? ""}`;
+    if (this.buildAnchorKey === anchorKey && (this.snapshot.phase === "building" || this.snapshot.phase === "ready")) return;
+    this.buildAnchorKey = anchorKey;
+    void this.buildCourse(anchor);
+  }
+
+  private update(patch: Partial<LearningGoalSnapshot>) {
+    this.snapshot = { ...this.snapshot, ...patch };
+    for (const listener of this.listeners) listener(this.snapshot);
+  }
+
+  private async positionLearningGoal() {
+    try {
+      const posRes = await fetch("/api/knowledge-graph/position", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ query: this.query, graphId: this.graphId }),
+      });
+      const posData = await posRes.json();
+      if (!posRes.ok) throw new Error(posData?.error || "positioning failed");
+
+      const plan = posData?.plan;
+      if (plan?.branch === "broad") {
+        const resolvedGraphId = typeof posData?.graphId === "string" ? posData.graphId : this.graphId;
+        if (!resolvedGraphId) throw new Error("positioning result did not include a knowledge graph");
+        this.update({
+          menu: (plan.menu ?? []).map((m: { topicId: string; name: string }) => ({
+            graphId: resolvedGraphId,
+            topicId: m.topicId,
+            name: m.name,
+          })),
+          phase: "broad",
+        });
+        return;
+      }
+      if (plan?.branch === "fallback" || plan?.branch !== "specific" || !plan.courseContext) {
+        this.update({
+          message: plan?.message || "无法定位这个学习目标，请重新输入更具体的内容。",
+          phase: "fallback",
+        });
+        return;
+      }
+
+      const courseContext = plan.courseContext as {
+        graphId?: unknown;
+        startTopic?: { topicId?: unknown };
+        targetConceptId?: unknown;
+      };
+      if (typeof courseContext.graphId !== "string" || typeof courseContext.startTopic?.topicId !== "string") {
+        throw new Error("positioning result did not include a valid topic anchor");
+      }
+      this.startCourseBuild({
+        graphId: courseContext.graphId,
+        startTopicId: courseContext.startTopic.topicId,
+        targetConceptId: typeof courseContext.targetConceptId === "string" ? courseContext.targetConceptId : null,
+      });
+    } catch (error) {
+      this.update({
+        message: error instanceof Error ? error.message : "Something went wrong.",
+        phase: "error",
+      });
+    }
+  }
+
+  private async buildCourse(anchor: CourseTopicAnchor) {
+    this.update({ phase: "building", menu: [], message: "" });
 
     try {
       const buildRes = await fetch("/api/learning/course", {
@@ -276,94 +372,180 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
       });
       const buildData = await buildRes.json();
       if (!buildRes.ok) throw new Error(buildData?.error || "build failed");
-      if (!isCurrentRequest()) return;
 
       const built = courseArtifactFromSummary(buildData.summary);
       if (!built) throw new Error("course summary was unusable");
-      setBuiltCourseId(typeof buildData.courseId === "string" ? buildData.courseId : null);
-      setFirstJob((buildData.job as LessonGenerationJobSummary | null | undefined) ?? null);
-      setArtifact(built);
-      setPhase("ready");
+      this.update({
+        builtCourseId: typeof buildData.courseId === "string" ? buildData.courseId : null,
+        firstJob: (buildData.job as LessonGenerationJobSummary | null | undefined) ?? null,
+        artifact: built,
+        phase: "ready",
+      });
     } catch (error) {
-      if (!isCurrentRequest()) return;
-      setMessage(error instanceof Error ? error.message : "Something went wrong.");
-      setPhase("error");
+      this.update({
+        message: error instanceof Error ? error.message : "Something went wrong.",
+        phase: "error",
+      });
     }
-  }, []);
-
-  useEffect(() => () => {
-    requestSeqRef.current += 1;
-  }, []);
-
-  if (query !== prevQuery) {
-    setPrevQuery(query);
-    setActiveQuery(query);
-    setPhase("positioning");
-    setArtifact(null);
-    setMenu([]);
-    setMessage("");
-    setBuiltCourseId(null);
-    setFirstJob(null);
   }
+}
+
+function getLearningGoalTask(query: string, graphId?: string) {
+  const key = learningGoalTaskKey(query, graphId);
+  const existing = learningGoalTasks.get(key);
+  if (existing) return existing;
+  const task = new LearningGoalTask(key, query, graphId);
+  learningGoalTasks.set(key, task);
+  return task;
+}
+
+function isJobRepresentedByLearningGoalTask(jobId: string) {
+  for (const task of learningGoalTasks.values()) {
+    if (task.getSnapshot().firstJob?.id === jobId) return true;
+  }
+  return false;
+}
+
+function selectRestorableLessonJobs(jobs: LessonGenerationJobSummary[]) {
+  const byCourse = new Map<string, LessonGenerationJobSummary>();
+  for (const job of jobs) {
+    const existing = byCourse.get(job.courseId);
+    if (!existing) {
+      byCourse.set(job.courseId, job);
+      continue;
+    }
+    const jobIsActive = isLessonGenerationActive(job);
+    const existingIsActive = isLessonGenerationActive(existing);
+    if (
+      (jobIsActive && !existingIsActive)
+      || (jobIsActive === existingIsActive && job.updatedAt > existing.updatedAt)
+    ) {
+      byCourse.set(job.courseId, job);
+    }
+  }
+  return [...byCourse.values()].sort((a, b) => b.updatedAt - a.updatedAt);
+}
+
+export function RestoredLessonGenerationCards() {
+  const [jobs, setJobs] = useState<LessonGenerationJobSummary[]>([]);
+  const [courses, setCourses] = useState<CourseSummary[]>([]);
 
   useEffect(() => {
-    if (!activeQuery) return;
-    const requestSeq = ++requestSeqRef.current;
-    const isCurrentRequest = () => requestSeqRef.current === requestSeq;
+    const controller = new AbortController();
+    let cancelled = false;
 
-    (async () => {
+    async function restoreActiveJobs() {
       try {
-        const posRes = await fetch("/api/knowledge-graph/position", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ query: activeQuery, graphId }),
-        });
-        const posData = await posRes.json();
-        if (!posRes.ok) throw new Error(posData?.error || "positioning failed");
-        if (!isCurrentRequest()) return;
+        const [jobsResponse, coursesResponse] = await Promise.all([
+          fetch("/api/lesson-generation-jobs", { cache: "no-store", signal: controller.signal }),
+          fetch("/api/courses", { cache: "no-store", signal: controller.signal }),
+        ]);
+        if (cancelled) return;
 
-        const plan = posData?.plan;
-        if (plan?.branch === "broad") {
-          const resolvedGraphId = typeof posData?.graphId === "string" ? posData.graphId : graphId;
-          if (!resolvedGraphId) throw new Error("positioning result did not include a knowledge graph");
-          setMenu((plan.menu ?? []).map((m: { topicId: string; name: string }) => ({
-            graphId: resolvedGraphId,
-            topicId: m.topicId,
-            name: m.name,
-          })));
-          setPhase("broad");
-          return;
-        }
-        if (plan?.branch === "fallback" || plan?.branch !== "specific" || !plan.courseContext) {
-          setMessage(plan?.message || "无法定位这个学习目标，请重新输入更具体的内容。");
-          setPhase("fallback");
-          return;
+        if (jobsResponse.ok) {
+          const data = (await jobsResponse.json()) as { jobs?: LessonGenerationJobSummary[] };
+          const restorableJobs = selectRestorableLessonJobs(Array.isArray(data.jobs) ? data.jobs : [])
+            .filter((job) => !isJobRepresentedByLearningGoalTask(job.id));
+          setJobs(restorableJobs);
         }
 
-        const courseContext = plan.courseContext as {
-          graphId?: unknown;
-          startTopic?: { topicId?: unknown };
-          targetConceptId?: unknown;
-        };
-        if (typeof courseContext.graphId !== "string" || typeof courseContext.startTopic?.topicId !== "string") {
-          throw new Error("positioning result did not include a valid topic anchor");
+        if (coursesResponse.ok) {
+          const data = (await coursesResponse.json()) as { courses?: CourseSummary[] };
+          setCourses(Array.isArray(data.courses) ? data.courses : []);
         }
-        void startCourseBuild({
-          graphId: courseContext.graphId,
-          startTopicId: courseContext.startTopic.topicId,
-          targetConceptId: typeof courseContext.targetConceptId === "string" ? courseContext.targetConceptId : null,
-        });
-      } catch (error) {
-        if (!isCurrentRequest()) return;
-        setMessage(error instanceof Error ? error.message : "Something went wrong.");
-        setPhase("error");
+      } catch {
+        // Keep the homepage quiet; Library still shows the server-backed state.
       }
-    })();
+    }
 
+    void restoreActiveJobs();
     return () => {
-      if (requestSeqRef.current === requestSeq) requestSeqRef.current += 1;
+      cancelled = true;
+      controller.abort();
     };
-  }, [activeQuery, graphId, startCourseBuild]);
+  }, []);
+
+  const courseById = useMemo(() => {
+    const map = new Map<string, CourseSummary>();
+    for (const course of courses) map.set(course.id, course);
+    return map;
+  }, [courses]);
+
+  if (jobs.length === 0) return null;
+
+  return (
+    <div className="restored-course-jobs" aria-live="polite">
+      {jobs.map((job) => (
+        <RestoredLessonGenerationCard key={job.id} initialJob={job} course={courseById.get(job.courseId) ?? null} />
+      ))}
+    </div>
+  );
+}
+
+function RestoredLessonGenerationCard({
+  initialJob,
+  course,
+}: {
+  initialJob: LessonGenerationJobSummary;
+  course: CourseSummary | null;
+}) {
+  const { jobsByLessonId } = useLessonGenerationJobs(initialJob.courseId, [initialJob]);
+  const liveJob = jobsByLessonId.get(initialJob.lessonId) ?? initialJob;
+  const active = isLessonGenerationActive(liveJob);
+  const artifact = course && liveJob.status !== "failed"
+    ? courseArtifactFromSummary(course, active ? "generating" : "ready")
+    : null;
+  const title = course?.title || "Course build";
+  const statusText = liveJob.status === "failed"
+    ? "第一节课生成失败，可在课程页重试。"
+    : active
+      ? `第一节课 · ${lessonGenerationStageLabel(liveJob)}`
+      : "第一节课 · Ready";
+  const courseHref = `/course/${encodeURIComponent(initialJob.courseId)}`;
+
+  return (
+    <div className="restored-course-job">
+      {artifact ? <ToolCard artifact={artifact} /> : null}
+      <div className="message-row tool restored-course-job-status">
+        <div className="tool-card status-card">
+          <div className="tool-title">
+            <span className={active ? "tool-spinner" : "tool-dot"} />
+            <span>{statusText}</span>
+          </div>
+          <div className="visualizer">
+            <span className="tool-note">{title}</span>
+            <div className="tool-actions">
+              <a className="ghost-btn" href={courseHref}>Open course</a>
+              <a className="soft-btn" href="/library">Open Library</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Web-as-brain course card. The agent tool only surfaces the learner's goal; this
+// browser component runs KG positioning (/api/knowledge-graph/position) and, for a
+// specific match, the asynchronous build (/api/learning/course). Both fetches carry
+// the user's session natively, so the course persists to app_courses under the
+// signed-in owner. specific -> course card, broad -> menu, fallback -> message.
+function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string }) {
+  const task = query?.trim() ? getLearningGoalTask(query, graphId) : null;
+  const [snapshot, setSnapshot] = useState<LearningGoalSnapshot>(() => task?.getSnapshot() ?? emptyLearningGoalSnapshot());
+  const renderSnapshot = task ? snapshot : emptyLearningGoalSnapshot();
+  const { phase, artifact, menu, message, builtCourseId, firstJob } = renderSnapshot;
+
+  // Poll the first lesson's job after the course is created so the card can show
+  // its generation stage and flip to Ready when published (engineering doc §13.3).
+  const { jobsByLessonId } = useLessonGenerationJobs(builtCourseId, firstJob ? [firstJob] : []);
+  const liveFirstJob = firstJob ? jobsByLessonId.get(firstJob.lessonId) ?? firstJob : null;
+
+  useEffect(() => {
+    if (!task) return;
+    task.start();
+    return task.subscribe(setSnapshot);
+  }, [task]);
 
   if (phase === "ready" && artifact) {
     const firstLessonStatus = liveFirstJob
@@ -403,7 +585,7 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
               {menu.map((item) => (
                 <li
                   key={item.topicId}
-                  onClick={() => void startCourseBuild({
+                  onClick={() => task?.startCourseBuild({
                     graphId: item.graphId,
                     startTopicId: item.topicId,
                     targetConceptId: null,
