@@ -8,6 +8,9 @@ import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surf
 import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
 import type { Course, CourseBlock, Lesson } from "@/lib/courses/types";
 import { courseBlocks } from "@/lib/courses/types";
+import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
+import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
+import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
@@ -554,37 +557,71 @@ function CourseAIAssistantPanel({
   );
 }
 
-type LessonGenerationState = "generating" | { error: string };
+function upsertJob(jobs: LessonGenerationJobSummary[], job: LessonGenerationJobSummary): LessonGenerationJobSummary[] {
+  const next = jobs.filter((entry) => entry.lessonId !== job.lessonId);
+  next.push(job);
+  return next;
+}
 
-// Lazy-generation outline: planned/generating lessons with a Generate (or Retry)
-// affordance. The server atomically claims the lesson, so an in-flight click and
-// a concurrent request cannot both generate it.
-function LessonOutline({ course, onCourseUpdated }: { course: Course; onCourseUpdated: (next: Course) => void }) {
+// Lazy-generation outline (engineering doc §13.4). Each ungenerated lesson shows
+// its job stage/progress while running, a Retry on failure, and Generate when no
+// job exists. Enqueue returns 202; a background worker generates the lesson and
+// the outline polls until the lesson is published, then refetches the course.
+function LessonOutline({
+  course,
+  initialJobs,
+  onCourseUpdated,
+}: {
+  course: Course;
+  initialJobs: LessonGenerationJobSummary[];
+  onCourseUpdated: (next: Course) => void;
+}) {
   const upcoming = useMemo(
     () => [...course.lessons].sort((a, b) => a.sortKey - b.sortKey).filter((lesson) => lesson.status !== "generated"),
     [course.lessons],
   );
-  const [pending, setPending] = useState<Record<string, LessonGenerationState>>({});
+  const { jobsByLessonId, setJobs, refresh } = useLessonGenerationJobs(course.id, initialJobs);
+  const [enqueueError, setEnqueueError] = useState<Record<string, string>>({});
+  const refreshedRef = useRef<Set<string>>(new Set());
+
+  // When a lesson's job completes, refetch the course once so the new blocks
+  // render and the lesson leaves the outline.
+  useEffect(() => {
+    const justCompleted = [...jobsByLessonId.values()].filter(
+      (job) => job.status === "completed" && !refreshedRef.current.has(job.lessonId),
+    );
+    if (justCompleted.length === 0) return;
+    for (const job of justCompleted) refreshedRef.current.add(job.lessonId);
+    (async () => {
+      try {
+        const res = await fetch(`/api/courses/${course.id}`, { cache: "no-store" });
+        if (!res.ok) return;
+        const data = (await res.json()) as { course?: Course };
+        if (data.course) onCourseUpdated(data.course);
+      } catch {
+        // Ignore — the lesson is published; a manual reload still shows it.
+      }
+    })();
+  }, [jobsByLessonId, course.id, onCourseUpdated]);
 
   async function generate(lesson: Lesson) {
-    if (pending[lesson.id] === "generating") return;
-    setPending((prev) => ({ ...prev, [lesson.id]: "generating" }));
+    setEnqueueError((prev) => {
+      const next = { ...prev };
+      delete next[lesson.id];
+      return next;
+    });
     try {
       const response = await fetch(`/api/courses/${course.id}/lessons/${lesson.id}/generate`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ settings: readSettings() }),
+        body: "{}",
       });
-      const data = (await response.json()) as { course?: Course; error?: string };
-      if (!response.ok || !data.course) throw new Error(data.error ?? "Lesson generation failed");
-      setPending((prev) => {
-        const next = { ...prev };
-        delete next[lesson.id];
-        return next;
-      });
-      onCourseUpdated(data.course);
+      const data = (await response.json()) as { job?: LessonGenerationJobSummary; status?: string; error?: string };
+      if (!response.ok) throw new Error(data.error ?? "Lesson generation failed");
+      if (data.job) setJobs((prev) => upsertJob(prev, data.job!));
+      else void refresh();
     } catch (error) {
-      setPending((prev) => ({ ...prev, [lesson.id]: { error: error instanceof Error ? error.message : "Lesson generation failed" } }));
+      setEnqueueError((prev) => ({ ...prev, [lesson.id]: error instanceof Error ? error.message : "Lesson generation failed" }));
     }
   }
 
@@ -595,19 +632,22 @@ function LessonOutline({ course, onCourseUpdated }: { course: Course; onCourseUp
       <h2 className="course-lesson-outline-title">Upcoming lessons</h2>
       <ul className="course-lesson-outline-list">
         {upcoming.map((lesson) => {
-          const state = pending[lesson.id];
-          const generating = state === "generating" || lesson.status === "generating";
-          const error = typeof state === "object" ? state.error : null;
+          const job = jobsByLessonId.get(lesson.id);
+          const active = job ? isLessonGenerationActive(job) : false;
+          const failed = job?.status === "failed";
+          const error = enqueueError[lesson.id] ?? (failed ? job?.lastError ?? "Generation failed" : null);
+          const label = active && job ? lessonGenerationStageLabel(job) : null;
           return (
             <li key={lesson.id} className="course-lesson-outline-item">
               <span className="course-lesson-outline-name">{lesson.title}</span>
+              {label ? <span className="course-lesson-outline-stage">{label}</span> : null}
               <button
                 type="button"
                 className="course-lesson-generate"
-                disabled={generating}
+                disabled={active}
                 onClick={() => generate(lesson)}
               >
-                {generating ? "Generating…" : error ? "Retry" : "Generate"}
+                {active ? "Generating…" : error ? "Retry" : "Generate"}
               </button>
               {error ? <span className="course-lesson-outline-error">{error}</span> : null}
             </li>
@@ -618,7 +658,15 @@ function LessonOutline({ course, onCourseUpdated }: { course: Course; onCourseUp
   );
 }
 
-export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialCourse: Course; copilotEnabled: boolean }) {
+export function CourseDetailClient({
+  initialCourse,
+  initialLessonJobs = [],
+  copilotEnabled,
+}: {
+  initialCourse: Course;
+  initialLessonJobs?: LessonGenerationJobSummary[];
+  copilotEnabled: boolean;
+}) {
   const [course, setCourse] = useState<Course>(initialCourse);
   const blocks = useMemo(() => courseBlocks(course), [course]);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
@@ -743,7 +791,7 @@ export function CourseDetailClient({ initialCourse, copilotEnabled }: { initialC
               <BlockRenderer block={block} courseId={course.id} />
             </div>
           ))}
-          <LessonOutline course={course} onCourseUpdated={setCourse} />
+          <LessonOutline course={course} initialJobs={initialLessonJobs} onCourseUpdated={setCourse} />
         </div>
       </div>
       <CourseAIAssistantPanel

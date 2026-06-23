@@ -118,27 +118,67 @@ export const lessons = pgTable(
   }),
 );
 
-export const courseGenerationJobs = pgTable(
-  "course_generation_jobs",
+// Recoverable per-lesson background generation jobs (engineering doc §4.1). One
+// row per lesson (unique lesson_id), reused for automatic and manual retry. The
+// lease_token is a fencing token: every worker mutation must match it so a stale
+// worker that lost its lease can never publish.
+export const lessonGenerationJobs = pgTable(
+  "lesson_generation_jobs",
   {
     id: text("id").primaryKey(),
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-    courseId: text("course_id").notNull(),
-    topic: text("topic").notNull(),
-    contextHint: text("context_hint"),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => lessons.id, { onDelete: "cascade" }),
+    // queued | running | completed | failed
     status: text("status").notNull().default("queued"),
+    // queued | planning | writing | validating | saving | completed | failed
+    stage: text("stage").notNull().default("queued"),
     attempts: integer("attempts").notNull().default(0),
-    lastError: text("last_error"),
+    maxAttempts: integer("max_attempts").notNull().default(2),
+    progressCompleted: integer("progress_completed").notNull().default(0),
+    progressTotal: integer("progress_total").notNull().default(0),
     leaseOwner: text("lease_owner"),
+    leaseToken: text("lease_token"),
     leaseExpiresAt: timestamp("lease_expires_at", { withTimezone: true }),
+    heartbeatAt: timestamp("heartbeat_at", { withTimezone: true }),
+    lastError: text("last_error"),
+    errorCategory: text("error_category"),
+    startedAt: timestamp("started_at", { withTimezone: true }),
     completedAt: timestamp("completed_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => ({
-    ownerStatusUpdatedIdx: index("course_generation_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
-    statusLeaseIdx: index("course_generation_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
-    courseIdUnique: uniqueIndex("course_generation_jobs_course_id_uidx").on(table.courseId),
+    lessonIdUnique: uniqueIndex("lesson_generation_jobs_lesson_id_uidx").on(table.lessonId),
+    leaseTokenUnique: uniqueIndex("lesson_generation_jobs_lease_token_uidx").on(table.leaseToken),
+    ownerStatusUpdatedIdx: index("lesson_generation_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
+    statusLeaseIdx: index("lesson_generation_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
+    courseStatusIdx: index("lesson_generation_jobs_course_status_idx").on(table.courseId, table.status),
+  }),
+);
+
+// Successful Planner and Block-Batch results, keyed by a stable deterministic
+// checkpoint key (engineering doc §4.2). A restarted worker reuses compatible
+// checkpoints (matching ir/prompt/compiler versions) and regenerates only the
+// missing batches.
+export const lessonGenerationCheckpoints = pgTable(
+  "lesson_generation_checkpoints",
+  {
+    id: text("id").primaryKey(),
+    jobId: text("job_id").notNull().references(() => lessonGenerationJobs.id, { onDelete: "cascade" }),
+    checkpointKey: text("checkpoint_key").notNull(),
+    // plan | batch
+    kind: text("kind").notNull(),
+    payload: jsonb("payload").notNull(),
+    irVersion: integer("ir_version").notNull(),
+    promptVersion: text("prompt_version").notNull(),
+    compilerVersion: text("compiler_version").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    jobCheckpointUnique: uniqueIndex("lesson_generation_checkpoints_job_key_uidx").on(table.jobId, table.checkpointKey),
+    jobKindIdx: index("lesson_generation_checkpoints_job_kind_idx").on(table.jobId, table.kind),
   }),
 );
 

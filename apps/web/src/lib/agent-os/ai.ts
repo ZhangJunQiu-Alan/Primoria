@@ -11,11 +11,6 @@ import {
   transformBlock as transformCourseBlockWithAi,
 } from "../ai/deepagent/course-editor";
 import {
-  generateCourse as generateCourseWithAi,
-  type GenerateCourseInput,
-  type GenerateCourseResult,
-} from "../ai/deepagent/course-generator";
-import {
   createTutorModel,
   resolveProviderSettings,
 } from "./model";
@@ -25,13 +20,6 @@ import type { TutorAgentResponse, TutorStreamEvent } from "@primoria/contracts/s
 
 export { createTutorModel, resolveProviderSettings };
 export type { TutorStreamEvent };
-
-export async function generateCourse(
-  input: GenerateCourseInput,
-  settings: TutorProviderSettings = {},
-): Promise<GenerateCourseResult> {
-  return generateCourseWithAi(input, settings);
-}
 
 export async function editCourseBlock(input: EditBlockInput, settings: TutorProviderSettings = {}) {
   return editCourseBlockWithAi(input, settings);

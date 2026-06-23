@@ -1,16 +1,13 @@
 import { z } from "zod";
-import { claimLessonForGeneration, getCourse, getCourseByGraph, releaseLessonClaim, saveCourse, saveGeneratedLesson } from "@/lib/courses/store";
-import { getTopic, getTopicGraph } from "@/lib/knowledge-graph/topic-graph";
-import { getCurrentUser } from "@/lib/auth/session";
-import { recordLearningEvent } from "@/lib/learning-events/store";
+import { getCourseByGraph, saveCourse } from "@/lib/courses/store";
+import { getTopicGraph } from "@/lib/knowledge-graph/topic-graph";
 import type { BlockType, Course, CourseBlock, Lesson } from "@/lib/courses/types";
 import { courseBlocks, summarizeCourse } from "@/lib/courses/types";
 import type { CourseSummary } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
-import { createTutorModel, resolveProviderSettings } from "./model";
+import { createTutorModel } from "./model";
 import { buildKgContextPrompt, type CourseContext, type CourseContextTopic } from "./course-kg-context";
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
-import { generateLessonFromKg, hasUsableKgConcepts } from "../course-generation/lesson-assembler";
 
 const TextBlockSchema = z.object({
   type: z.literal("text"),
@@ -142,25 +139,6 @@ Only include fields for the chosen engine. Do not include "html" when using echa
 OUTPUT:
 - Return valid JSON matching the schema. No prose outside JSON.`;
 
-const JSON_ONLY_COURSE_PROMPT = `${COURSE_SYSTEM_PROMPT}
-
-Your provider may not support native structured output. You must still return ONLY one JSON object with this shape:
-{
-  "title": "string",
-  "summary": "string",
-  "estimatedMinutes": 42,
-  "blocks": [
-    { "type": "text", "title": "string", "markdown": "string" },
-    { "type": "analogy", "title": "string", "source": "string", "target": "string", "mapping": "string" },
-    { "type": "transfer", "title": "string", "fromDomain": "string", "toDomain": "string", "explanation": "string", "example": "string" },
-    { "type": "visual", "title": "string", "description": "string", "engine": "echarts|mermaid|physics|html", "echartsOption": {}, "mermaidDefinition": "string", "html": "string" },
-    { "type": "code", "title": "string", "language": "string", "code": "string", "explanation": "string" },
-    { "type": "quiz", "title": "string", "questions": [{ "kind": "single", "id": "q1", "question": "string", "choices": [{ "id": "a", "text": "string" }, { "id": "b", "text": "string" }], "correctId": "a", "explanation": "string" }] }
-  ]
-}
-The array above demonstrates the allowed block shapes only. The actual blocks array must contain 15-18 blocks for a normal 4-5 concept lesson and follow every structure rule.
-No markdown fences. No prose outside JSON.`;
-
 export { buildKgContextPrompt };
 export type { CourseContext, CourseContextTopic };
 
@@ -173,108 +151,49 @@ export type GenerateCourseInput = {
   source?: "cold_start" | "profile";
 };
 
-export type GenerateCourseResult = {
-  course: Course;
-  summary: CourseSummary;
-};
-
 function randomId(prefix: string) {
   return `${prefix}_${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36)}`;
 }
 
-// Best-effort owner for the course.generated event. Falls back to the request
-// session; returns null in non-request contexts (e.g. background job worker)
-// rather than throwing, since event logging must never break generation.
-async function resolveEventOwnerId(explicit?: string): Promise<string | null> {
-  if (explicit) return explicit;
-  try {
-    return (await getCurrentUser())?.id ?? null;
-  } catch {
-    return null;
-  }
-}
+export type InitializeCourseOutlineInput = {
+  ownerId: string;
+  topic: string;
+  kgContext?: CourseContext;
+  source?: "cold_start" | "profile";
+};
 
-export async function generateCourse(
-  input: GenerateCourseInput,
-  settings: TutorProviderSettings = {},
-): Promise<GenerateCourseResult> {
-  const providerSettings = resolveProviderSettings(settings);
-  const ownerId = await resolveEventOwnerId(input.ownerId);
+export type InitializeCourseOutlineResult = {
+  course: Course;
+  firstLesson: Lesson;
+  summary: CourseSummary;
+  isNewCourse: boolean;
+};
+
+// Course-creation entry for the recoverable job path (engineering doc §12.1):
+// build/reuse the Course outline of planned lessons WITHOUT calling the model,
+// persist it, and return the first lesson to enqueue. No content is generated
+// here and no course.generated event is emitted — the worker emits that once,
+// after the first lesson is published (doc §14).
+export async function initializeCourseOutline(
+  input: InitializeCourseOutlineInput,
+): Promise<InitializeCourseOutlineResult> {
+  const { ownerId } = input;
+  if (!ownerId) throw new Error("You must sign in to create a course.");
   const graphId = input.kgContext?.graphId ?? null;
   const targetTopicId = input.kgContext?.startTopic?.topicId ?? null;
 
-  // C: reuse the user's existing Course for this subject KG; otherwise build a
+  // Reuse the learner's existing Course for this subject KG, otherwise build a
   // fresh outline of planned (lazy) lessons spanning the remaining topics.
-  let course = ownerId && graphId ? await getCourseByGraph(ownerId, graphId) : undefined;
+  let course = graphId ? await getCourseByGraph(ownerId, graphId) : undefined;
   const isNewCourse = !course;
-  if (!course) course = buildOutlineCourse(input, graphId);
+  if (!course) course = buildOutlineCourse({ topic: input.topic, kgContext: input.kgContext }, graphId);
 
-  // B: materialize only the requested entry topic's lesson now; the rest stay
-  // planned for LazyGeneration. Idempotent if the lesson is already generated.
-  course = await materializeTargetLesson(course, input, targetTopicId, providerSettings, settings);
+  const ordered = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
+  const firstLesson = (targetTopicId ? ordered.find((lesson) => lesson.topicId === targetTopicId) : undefined) ?? ordered[0];
+  if (!firstLesson) throw new Error("Course outline has no lessons to generate.");
 
-  await saveCourse(course, ownerId ?? undefined);
-
-  if (isNewCourse && ownerId) {
-    await recordLearningEvent({
-      type: "course.generated",
-      ownerId,
-      courseId: course.id,
-      graphId,
-      conceptId: input.kgContext?.targetConceptId ?? null,
-      topic: input.topic,
-      source: input.source ?? "cold_start",
-    });
-  }
-
-  return { course, summary: summarizeCourse(course) };
-}
-
-export type MaterializeLessonInput = {
-  courseId: string;
-  lessonId?: string;
-  topicId?: string;
-  ownerId?: string;
-  contextHint?: string;
-};
-
-// Lazy entry point: fill in a planned outline lesson on demand (e.g. when the
-// learner advances to the next topic). Builds a single-topic KG context from the
-// lesson's topicId so the content stays anchored to that topic's concepts.
-export async function materializeLesson(
-  input: MaterializeLessonInput,
-  settings: TutorProviderSettings = {},
-): Promise<GenerateCourseResult> {
-  const ownerId = await resolveEventOwnerId(input.ownerId);
-  const course = await getCourse(input.courseId, ownerId ?? undefined);
-  if (!course) throw new Error("Course not found");
-  const target = input.lessonId
-    ? course.lessons.find((lesson) => lesson.id === input.lessonId)
-    : course.lessons.find((lesson) => lesson.topicId === input.topicId);
-  if (!target) throw new Error("Lesson not found");
-  if (target.status === "generated") return { course, summary: summarizeCourse(course) };
-
-  // Atomically claim the planned lesson so concurrent requests cannot generate
-  // it twice. A lost race means another worker owns it — return the current view.
-  const claimed = await claimLessonForGeneration(course.id, target.id, ownerId ?? undefined);
-  if (!claimed) return { course, summary: summarizeCourse(course) };
-
-  try {
-    const kgContext = buildTopicKgContext(course.graphId ?? null, target.topicId ?? null);
-    const updated = await fillLesson(
-      course,
-      target,
-      { topic: target.title, contextHint: input.contextHint, kgContext: kgContext ?? undefined },
-      resolveProviderSettings(settings),
-      settings,
-    );
-    const materialized = updated.lessons.find((lesson) => lesson.id === target.id);
-    if (materialized) await saveGeneratedLesson(updated, materialized, ownerId ?? undefined);
-    return { course: updated, summary: summarizeCourse(updated) };
-  } catch (error) {
-    await releaseLessonClaim(course.id, target.id, ownerId ?? undefined);
-    throw error;
-  }
+  await saveCourse(course, ownerId);
+  return { course, firstLesson, summary: summarizeCourse(course), isNewCourse };
 }
 
 // All KG topics from the entry topic onward, by Topic Order (default_order).
@@ -348,114 +267,6 @@ function buildOutlineCourse(input: GenerateCourseInput, graphId: string | null):
     version: 1,
     createdAt: now,
     updatedAt: now,
-  };
-}
-
-// Resolve the planned lesson for the requested topic (or the sole lesson for
-// free-form courses) and fill it with generated blocks.
-async function materializeTargetLesson(
-  course: Course,
-  input: GenerateCourseInput,
-  targetTopicId: string | null,
-  providerSettings: ReturnType<typeof resolveProviderSettings>,
-  settings: TutorProviderSettings,
-): Promise<Course> {
-  const target = targetTopicId
-    ? course.lessons.find((lesson) => lesson.topicId === targetTopicId)
-    : course.lessons[0];
-  if (!target) return course;
-  return fillLesson(course, target, input, providerSettings, settings);
-}
-
-// Generate one lesson's content via the LLM and splice it into the course.
-// Idempotent: an already-generated lesson is returned unchanged (course reuse).
-async function fillLesson(
-  course: Course,
-  target: Lesson,
-  input: GenerateCourseInput,
-  providerSettings: ReturnType<typeof resolveProviderSettings>,
-  settings: TutorProviderSettings,
-): Promise<Course> {
-  if (target.status === "generated") return course;
-  const draft = await generateLessonContent(input, target.id, providerSettings, settings);
-  const now = Date.now();
-  const materialized: Lesson = {
-    ...target,
-    title: draft.title,
-    status: "generated",
-    blocks: draft.blocks,
-    estimatedMinutes: draft.estimatedMinutes,
-    version: target.version + 1,
-    updatedAt: now,
-  };
-  const lessons = course.lessons.map((lesson) => (lesson.id === target.id ? materialized : lesson));
-  return {
-    ...course,
-    lessons,
-    estimatedMinutes: course.estimatedMinutes || draft.estimatedMinutes,
-    updatedAt: now,
-  };
-}
-
-type LessonContent = { title: string; estimatedMinutes: number; blocks: CourseBlock[] };
-
-// Produce one lesson's blocks. KG-anchored topics use the IR + deterministic
-// compiler pipeline (planner → compile → block writers → compile → validate);
-// free-form topics with no KG concepts fall back to the legacy single-call
-// generator. Both return blocks carrying stable ids.
-async function generateLessonContent(
-  input: GenerateCourseInput,
-  lessonId: string,
-  providerSettings: ReturnType<typeof resolveProviderSettings>,
-  settings: TutorProviderSettings,
-): Promise<LessonContent> {
-  if (hasUsableKgConcepts(input.kgContext)) {
-    const assembled = await generateLessonFromKg(input.kgContext, lessonId, {
-      contextHint: input.contextHint,
-      settings,
-    });
-    return { title: assembled.title, estimatedMinutes: assembled.estimatedMinutes, blocks: assembled.blocks };
-  }
-
-  const draft = await generateLessonDraft(input, providerSettings, settings);
-  return {
-    title: draft.title,
-    estimatedMinutes: draft.estimatedMinutes,
-    blocks: draft.blocks.map((block) => ({ id: randomId("blk"), ...block })),
-  };
-}
-
-// The LLM call producing one lesson's content (title/summary/minutes/blocks).
-async function generateLessonDraft(
-  input: GenerateCourseInput,
-  providerSettings: ReturnType<typeof resolveProviderSettings>,
-  settings: TutorProviderSettings,
-) {
-  const model = createTutorModel(settings);
-  const userPrompt = [
-    `Topic: ${input.topic}`,
-    input.contextHint ? `Prior context from chat: ${input.contextHint}` : "",
-    buildKgContextPrompt(input.kgContext),
-    "",
-    "Generate the course as JSON. Make every block specific to this topic, not boilerplate.",
-  ]
-    .filter(Boolean)
-    .join("\n");
-  const raw = await invokeCourseJson(model, userPrompt, input.topic, providerSettings);
-  return normalizeCourseDraft(raw, input.topic, input.kgContext?.startTopic.concepts.length);
-}
-
-// Minimal single-topic KG context for lazy materialization of an outline node.
-function buildTopicKgContext(graphId: string | null, topicId: string | null): CourseContext | null {
-  if (!graphId || !topicId) return null;
-  const topic = getTopic(graphId, topicId);
-  if (!topic) return null;
-  return {
-    learningPathType: "linear",
-    graphId,
-    startTopic: { topicId: topic.topicId, name: topic.name, concepts: topic.conceptIds },
-    targetConceptId: null,
-    nextTopic: null,
   };
 }
 
@@ -558,136 +369,6 @@ Your provider may not support native structured output. Return ONLY one JSON obj
   );
 
   return parseJsonObject(messageContentToString(result.content));
-}
-
-async function invokeCourseJson(
-  model: ReturnType<typeof createTutorModel>,
-  userPrompt: string,
-  topic: string,
-  providerSettings?: ReturnType<typeof resolveProviderSettings>,
-) {
-  const settings = providerSettings ?? resolveProviderSettings({});
-
-  if (shouldUseRawAnthropicJson(settings)) {
-    const content = await createRawAnthropicJsonCompletion(settings, userPrompt);
-    return parseJsonObject(content);
-  }
-
-  if (!shouldSkipStructuredOutput(settings)) {
-    try {
-      const structured = model.withStructuredOutput(CourseSchema, { name: "course" });
-      return await withTimeout(
-        structured.invoke(
-          [
-            { role: "system", content: JSON_ONLY_COURSE_PROMPT },
-            { role: "user", content: userPrompt },
-          ],
-          { callbacks: [] },
-        ),
-        30_000,
-        "Course structured output timed out",
-      );
-    } catch (error) {
-      console.warn("[course-generator] structured output failed, falling back to JSON prompt", error);
-    }
-  }
-
-  const result = await withTimeout(
-    model.invoke(
-      [
-        {
-          role: "system",
-          content: JSON_ONLY_COURSE_PROMPT,
-        },
-        { role: "user", content: userPrompt },
-      ],
-      { callbacks: [] },
-    ),
-    120_000,
-    "Course JSON generation timed out",
-  );
-
-  try {
-    return parseJsonObject(messageContentToString(result.content));
-  } catch (error) {
-    console.warn("[course-generator] JSON compatibility mode failed", error);
-    throw new Error("Course generator returned invalid JSON. Please retry or use a model with better JSON support.");
-  }
-}
-
-function shouldSkipStructuredOutput(settings: ReturnType<typeof resolveProviderSettings>) {
-  return settings.provider === "anthropic-compatible" && /minimax/i.test(settings.model);
-}
-
-function shouldUseRawAnthropicJson(settings: ReturnType<typeof resolveProviderSettings>) {
-  return shouldSkipStructuredOutput(settings);
-}
-
-type AnthropicMessageResponse = {
-  content?: Array<
-    | { type: "text"; text?: string }
-    | { type: "thinking"; thinking?: string }
-    | Record<string, unknown>
-  >;
-  error?: { message?: string };
-};
-
-async function createRawAnthropicJsonCompletion(
-  settings: ReturnType<typeof resolveProviderSettings>,
-  userPrompt: string,
-) {
-  if (!settings.baseUrl) throw new Error("Missing ANTHROPIC_BASE_URL");
-  if (!settings.apiKey) throw new Error("Missing ANTHROPIC_API_KEY");
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 180_000);
-  try {
-    const response = await fetch(`${settings.baseUrl.replace(/\/$/, "")}/v1/messages`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": settings.apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: settings.model,
-        max_tokens: 16384,
-        temperature: 0.2,
-        system: JSON_ONLY_COURSE_PROMPT,
-        messages: [{ role: "user", content: userPrompt }],
-      }),
-    });
-
-    const json = (await response.json().catch(() => ({}))) as AnthropicMessageResponse;
-    if (!response.ok) {
-      throw new Error(json.error?.message ?? `Course model request failed: ${response.status}`);
-    }
-
-    const text = (json.content ?? [])
-      .filter((part): part is { type: "text"; text?: string } => part.type === "text")
-      .map((part) => part.text ?? "")
-      .join("\n")
-      .trim();
-    if (!text) throw new Error("Course model returned no text content.");
-    return text;
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
-  let timeout: ReturnType<typeof setTimeout> | undefined;
-  try {
-    return await Promise.race([
-      promise,
-      new Promise<T>((_, reject) => {
-        timeout = setTimeout(() => reject(new Error(message)), timeoutMs);
-      }),
-    ]);
-  } finally {
-    if (timeout) clearTimeout(timeout);
-  }
 }
 
 function messageContentToString(content: unknown): string {

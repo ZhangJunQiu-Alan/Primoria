@@ -4,11 +4,10 @@ import Link from "next/link";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import type { CourseSummary } from "@/lib/courses/types";
-import type { CourseGenerationJobSummary } from "@/lib/courses/generation-jobs";
+import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
+import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 
-type LibraryEntry =
-  | { kind: "course"; id: string; updatedAt: number; course: CourseSummary }
-  | { kind: "job"; id: string; updatedAt: number; job: CourseGenerationJobSummary };
+type LibraryEntry = { kind: "course"; id: string; updatedAt: number; course: CourseSummary };
 
 type ViewMode = "table" | "cards";
 type StatusFilterValue = "no_lessons" | "not_started" | "in_progress" | "reviewing" | "done";
@@ -27,13 +26,13 @@ const PAGE_SIZE = 10;
 
 export function CourseLibraryGrid({
   initialCourses,
-  initialJobs,
+  initialLessonJobs = [],
 }: {
   initialCourses: CourseSummary[];
-  initialJobs: CourseGenerationJobSummary[];
+  initialLessonJobs?: LessonGenerationJobSummary[];
 }) {
   const [courses, setCourses] = useState(initialCourses);
-  const [jobs, setJobs] = useState(initialJobs);
+  const [lessonJobs, setLessonJobs] = useState(initialLessonJobs);
   const [query, setQuery] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("table");
   const [statusFilters, setStatusFilters] = useState<StatusFilterValue[]>([]);
@@ -41,26 +40,37 @@ export function CourseLibraryGrid({
   const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({ key: "updated", direction: "desc" });
   const [page, setPage] = useState(1);
   const deferredQuery = useDeferredValue(query);
-  const hasRunningJobs = jobs.some((job) => job.status === "queued" || job.status === "running");
+  const shouldPoll = lessonJobs.some(isLessonGenerationActive);
+
+  // Map each course to its outstanding lesson job (first/lazy generation), preferring
+  // an active job over a failed one (engineering doc §13.5).
+  const lessonJobByCourse = useMemo(() => {
+    const map = new Map<string, LessonGenerationJobSummary>();
+    for (const job of lessonJobs) {
+      const existing = map.get(job.courseId);
+      if (!existing || (isLessonGenerationActive(job) && !isLessonGenerationActive(existing))) map.set(job.courseId, job);
+    }
+    return map;
+  }, [lessonJobs]);
 
   useEffect(() => {
-    if (!hasRunningJobs) return;
+    if (!shouldPoll) return;
     let cancelled = false;
 
     async function refresh() {
       try {
-        const [coursesResponse, jobsResponse] = await Promise.all([
+        const [coursesResponse, lessonJobsResponse] = await Promise.all([
           fetch("/api/courses", { cache: "no-store" }),
-          fetch("/api/course-generation-jobs", { cache: "no-store" }),
+          fetch("/api/lesson-generation-jobs", { cache: "no-store" }),
         ]);
         if (cancelled) return;
         if (coursesResponse.ok) {
           const data = (await coursesResponse.json()) as { courses?: CourseSummary[] };
           setCourses(Array.isArray(data.courses) ? data.courses : []);
         }
-        if (jobsResponse.ok) {
-          const data = (await jobsResponse.json()) as { jobs?: CourseGenerationJobSummary[] };
-          setJobs(Array.isArray(data.jobs) ? data.jobs : []);
+        if (lessonJobsResponse.ok) {
+          const data = (await lessonJobsResponse.json()) as { jobs?: LessonGenerationJobSummary[] };
+          setLessonJobs(Array.isArray(data.jobs) ? data.jobs : []);
         }
       } catch {
         // Keep the current library view; the next interval can recover.
@@ -76,16 +86,15 @@ export function CourseLibraryGrid({
       cancelled = true;
       window.clearInterval(interval);
     };
-  }, [hasRunningJobs]);
+  }, [shouldPoll]);
 
-  const entries = useMemo(() => {
-    const readyCourseIds = new Set(courses.map((course) => course.id));
-    const visibleJobs = jobs.filter((job) => !readyCourseIds.has(job.courseId));
-    return [
-      ...visibleJobs.map((job): LibraryEntry => ({ kind: "job", id: job.id, updatedAt: job.updatedAt, job })),
-      ...courses.map((course): LibraryEntry => ({ kind: "course", id: course.id, updatedAt: course.updatedAt, course })),
-    ].sort((a, b) => b.updatedAt - a.updatedAt);
-  }, [courses, jobs]);
+  const entries = useMemo(
+    () =>
+      courses
+        .map((course): LibraryEntry => ({ kind: "course", id: course.id, updatedAt: course.updatedAt, course }))
+        .sort((a, b) => b.updatedAt - a.updatedAt),
+    [courses],
+  );
 
   const normalizedQuery = deferredQuery.trim().toLowerCase();
   const filteredEntries = useMemo(() => {
@@ -102,7 +111,7 @@ export function CourseLibraryGrid({
   const currentPage = Math.min(page, pageCount);
   const visibleEntries = filteredEntries.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   const courseCount = courses.length;
-  const runningCount = jobs.filter((job) => job.status === "queued" || job.status === "running").length;
+  const runningCount = lessonJobs.filter(isLessonGenerationActive).length;
   const hasActiveFilters = statusFilters.length > 0;
 
   function toggleStatusFilter(value: StatusFilterValue) {
@@ -206,6 +215,7 @@ export function CourseLibraryGrid({
       ) : viewMode === "table" ? (
         <CourseTable
           entries={visibleEntries}
+          lessonJobByCourse={lessonJobByCourse}
           sort={sort}
           onSort={updateSort}
           statusFilters={statusFilters}
@@ -215,7 +225,7 @@ export function CourseLibraryGrid({
           onClearStatusFilters={clearStatusFilters}
         />
       ) : (
-        <CourseCards entries={visibleEntries} />
+        <CourseCards entries={visibleEntries} lessonJobByCourse={lessonJobByCourse} />
       )}
 
       {filteredEntries.length > 0 ? (
@@ -248,6 +258,7 @@ export function CourseLibraryGrid({
 
 function CourseTable({
   entries,
+  lessonJobByCourse,
   sort,
   onSort,
   statusFilters,
@@ -257,6 +268,7 @@ function CourseTable({
   onClearStatusFilters,
 }: {
   entries: LibraryEntry[];
+  lessonJobByCourse: Map<string, LessonGenerationJobSummary>;
   sort: { key: SortKey; direction: SortDirection };
   onSort: (key: SortKey) => void;
   statusFilters: StatusFilterValue[];
@@ -321,7 +333,7 @@ function CourseTable({
         </thead>
         <tbody>
           {entries.map((entry) => (
-            entry.kind === "course" ? <CourseRow key={`course-${entry.id}`} course={entry.course} /> : <CourseJobRow key={`job-${entry.id}`} job={entry.job} />
+            <CourseRow key={`course-${entry.id}`} course={entry.course} lessonJob={lessonJobByCourse.get(entry.id)} />
           ))}
         </tbody>
       </table>
@@ -355,27 +367,35 @@ function SortHeaderButton({
   );
 }
 
-function CourseCards({ entries }: { entries: LibraryEntry[] }) {
+function CourseCards({
+  entries,
+  lessonJobByCourse,
+}: {
+  entries: LibraryEntry[];
+  lessonJobByCourse: Map<string, LessonGenerationJobSummary>;
+}) {
   return (
     <ul className="library-card-list">
       {entries.map((entry) => (
-        <li key={`${entry.kind}-${entry.id}`}>
-          {entry.kind === "course" ? <CourseCard course={entry.course} /> : <CourseJobCard job={entry.job} />}
+        <li key={`course-${entry.id}`}>
+          <CourseCard course={entry.course} lessonJob={lessonJobByCourse.get(entry.id)} />
         </li>
       ))}
     </ul>
   );
 }
 
-function CourseRow({ course }: { course: CourseSummary }) {
+function CourseRow({ course, lessonJob }: { course: CourseSummary; lessonJob?: LessonGenerationJobSummary }) {
   const status = courseStatus(course);
   const progress = lessonProgress(course);
   const currentLesson = course.currentLesson?.title ?? "No lesson planned yet";
+  const jobActive = lessonJob ? isLessonGenerationActive(lessonJob) : false;
+  const jobFailed = lessonJob?.status === "failed";
   return (
-    <tr>
+    <tr className={jobActive ? "library-row-generating" : jobFailed ? "library-row-failed" : undefined}>
       <td>
         <div className="library-course-name">
-          <CourseThumb title={course.title} />
+          <CourseThumb title={course.title} pending={jobActive} />
           <div>
             <Link href={`/course/${course.id}`} className="library-course-title">{course.title}</Link>
             <p>{course.summary}</p>
@@ -384,15 +404,25 @@ function CourseRow({ course }: { course: CourseSummary }) {
         </div>
       </td>
       <td>
-        <StatusPill tone={status.tone}>{status.label}</StatusPill>
+        {jobActive && lessonJob ? (
+          <StatusPill tone="working">{lessonGenerationStageLabel(lessonJob)}</StatusPill>
+        ) : jobFailed ? (
+          <StatusPill tone="danger">Lesson failed</StatusPill>
+        ) : (
+          <StatusPill tone={status.tone}>{status.label}</StatusPill>
+        )}
       </td>
       <td>
-        <ProgressMeter completed={progress.completed} total={progress.total} />
+        {jobActive && lessonJob ? (
+          <ProgressMeter completed={lessonJob.progressCompleted} total={Math.max(lessonJob.progressTotal, 1)} />
+        ) : (
+          <ProgressMeter completed={progress.completed} total={progress.total} />
+        )}
       </td>
       <td>
         <div className="library-current-lesson">
           <strong>{currentLesson}</strong>
-          <span>{lessonStateText(course)}</span>
+          <span>{jobActive && lessonJob ? lessonGenerationStageLabel(lessonJob) : jobFailed ? lessonJob?.lastError ?? "Generation failed" : lessonStateText(course)}</span>
         </div>
       </td>
       <td className="library-number-cell">{course.lessonCount}</td>
@@ -414,85 +444,32 @@ function CourseRow({ course }: { course: CourseSummary }) {
   );
 }
 
-function CourseJobRow({ job }: { job: CourseGenerationJobSummary }) {
-  const isFailed = job.status === "failed";
-  return (
-    <tr className={isFailed ? "library-row-failed" : "library-row-generating"}>
-      <td>
-        <div className="library-course-name">
-          <CourseThumb title={job.topic} pending />
-          <div>
-            <strong className="library-course-title">{job.topic}</strong>
-            <p>{isFailed ? job.lastError || "Primoria could not finish this course." : "Primoria is planning the course path and first lesson."}</p>
-            <span>{shortId(job.courseId)} · course job</span>
-          </div>
-        </div>
-      </td>
-      <td>
-        <StatusPill tone={isFailed ? "danger" : "working"}>
-          {isFailed ? "Failed" : job.status === "queued" ? "Queued" : "Generating"}
-        </StatusPill>
-      </td>
-      <td>
-        <ProgressMeter completed={0} total={1} muted />
-      </td>
-      <td>
-        <div className="library-current-lesson">
-          <strong>{isFailed ? "Generation stopped" : "Preparing first lesson"}</strong>
-          <span>{isFailed ? "Not saved as a course" : `Attempt ${Math.max(job.attempts, 1)}`}</span>
-        </div>
-      </td>
-      <td className="library-number-cell">—</td>
-      <td className="library-date-cell">{formatDate(job.updatedAt)}</td>
-      <td>
-        <div className="library-row-actions">
-          <button type="button" className="library-row-action primary" disabled>
-            {isFailed ? "Retry soon" : "Building"}
-          </button>
-        </div>
-      </td>
-    </tr>
-  );
-}
-
-function CourseCard({ course }: { course: CourseSummary }) {
+function CourseCard({ course, lessonJob }: { course: CourseSummary; lessonJob?: LessonGenerationJobSummary }) {
   const status = courseStatus(course);
   const progress = lessonProgress(course);
+  const jobActive = lessonJob ? isLessonGenerationActive(lessonJob) : false;
+  const jobFailed = lessonJob?.status === "failed";
   return (
-    <article className="library-course-card">
+    <article className={`library-course-card${jobActive ? " library-card-generating" : jobFailed ? " library-card-failed" : ""}`}>
       <div className="library-course-card-head">
-        <CourseThumb title={course.title} />
-        <StatusPill tone={status.tone}>{status.label}</StatusPill>
+        <CourseThumb title={course.title} pending={jobActive} />
+        {jobActive && lessonJob ? (
+          <StatusPill tone="working">{lessonGenerationStageLabel(lessonJob)}</StatusPill>
+        ) : jobFailed ? (
+          <StatusPill tone="danger">Lesson failed</StatusPill>
+        ) : (
+          <StatusPill tone={status.tone}>{status.label}</StatusPill>
+        )}
       </div>
       <Link href={`/course/${course.id}`} className="library-course-title">{course.title}</Link>
       <p>{course.summary}</p>
-      <ProgressMeter completed={progress.completed} total={progress.total} />
+      <ProgressMeter
+        completed={jobActive && lessonJob ? lessonJob.progressCompleted : progress.completed}
+        total={jobActive && lessonJob ? Math.max(lessonJob.progressTotal, 1) : progress.total}
+      />
       <div className="library-course-card-meta">
         <span>{course.currentLesson?.title ?? "No lesson planned yet"}</span>
         <span>{course.lessonCount} lessons</span>
-      </div>
-    </article>
-  );
-}
-
-function CourseJobCard({ job }: { job: CourseGenerationJobSummary }) {
-  const isFailed = job.status === "failed";
-  return (
-    <article
-      className={`library-course-card library-card ${isFailed ? "library-card-failed" : "library-card-generating"}`}
-      aria-busy={isFailed ? undefined : true}
-    >
-      <div className="library-course-card-head">
-        <CourseThumb title={job.topic} pending />
-        <StatusPill tone={isFailed ? "danger" : "working"}>
-          {isFailed ? "Failed" : job.status === "queued" ? "Queued" : "Generating"}
-        </StatusPill>
-      </div>
-      <strong className="library-course-title">{job.topic}</strong>
-      <p>{isFailed ? job.lastError || "Primoria could not finish this course." : "Primoria is composing the first lesson."}</p>
-      <div className="library-course-card-meta">
-        <span>{isFailed ? "Not saved as a course" : `Attempt ${Math.max(job.attempts, 1)}`}</span>
-        <span>{shortId(job.courseId)}</span>
       </div>
     </article>
   );
@@ -557,17 +534,11 @@ function lessonStateText(course: CourseSummary) {
 }
 
 function searchableText(entry: LibraryEntry) {
-  if (entry.kind === "job") {
-    return `${entry.job.topic} ${entry.job.status} ${entry.job.courseId}`.toLowerCase();
-  }
   const lessonTitles = entry.course.lessons.map((lesson) => lesson.title).join(" ");
   return `${entry.course.title} ${entry.course.topic} ${entry.course.summary} ${entry.course.id} ${lessonTitles}`.toLowerCase();
 }
 
 function entryStatusFilterValue(entry: LibraryEntry): StatusFilterValue {
-  if (entry.kind === "job") {
-    return entry.job.status === "failed" ? "no_lessons" : "in_progress";
-  }
   return courseStatusFilterValue(entry.course);
 }
 
@@ -595,9 +566,6 @@ function sortEntries(entries: LibraryEntry[], sort: { key: SortKey; direction: S
 
 function sortValue(entry: LibraryEntry, key: SortKey) {
   if (key === "updated") return entry.updatedAt;
-  if (entry.kind === "job") {
-    return key === "progress" ? 0 : -1;
-  }
   if (key === "lessons") return entry.course.lessonCount;
   const progress = lessonProgress(entry.course);
   return progress.total > 0 ? progress.completed / progress.total : 0;

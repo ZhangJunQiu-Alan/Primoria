@@ -22,6 +22,19 @@ export type BlockBatchInvoke = (input: { batch: BlockBatch; system: string; user
 
 const isActivation = (j: BlockGenerationJob) => j.pedagogicalRole === "hook" || j.pedagogicalRole === "roadmap";
 
+/** Deterministic checkpoint key for one batch (engineering doc §4.2). Stable
+ * across worker restarts so a resumed worker reuses completed batch checkpoints
+ * and regenerates only the missing ones. The block orders are the authoritative
+ * identity within a kind; concept batches also pin the primary concept id. */
+export function batchCheckpointKey(batch: BlockBatch): string {
+  const orders = batch.jobs.map((job) => job.order).join("-");
+  if (batch.kind === "concept") {
+    const primaryConceptId = batch.jobs[0]?.conceptIds[0] ?? "_";
+    return `batch:concept:${primaryConceptId}:${orders}`;
+  }
+  return `batch:${batch.kind}:${orders}`;
+}
+
 export function batchBlockJobs(jobs: BlockGenerationJob[]): BlockBatch[] {
   const batches: BlockBatch[] = [];
 
@@ -126,6 +139,28 @@ async function generateBatch(
       throw secondError;
     }
   }
+}
+
+/** One compiled block with its plan order — the checkpointable unit so a resumed
+ * worker can reassemble blocks across batches in global order. */
+export type CompiledBatchBlock = { order: number; block: CourseBlock };
+
+/** Generate and compile exactly one batch (engineering doc §9.3). Used by the
+ * recoverable worker so each batch can be checkpointed independently; a single
+ * targeted repair is attempted before the batch (and the job attempt) fails.
+ * Returns compiled blocks with their plan order. */
+export async function generateBlockBatch(args: {
+  batch: BlockBatch;
+  plan: CompiledLessonPlan;
+  kg: CourseContext;
+  lessonId: string;
+  settings?: TutorProviderSettings;
+  invoke?: BlockBatchInvoke;
+}): Promise<CompiledBatchBlock[]> {
+  const { batch, plan, kg, lessonId } = args;
+  const invoke = args.invoke ?? defaultInvoke(args.settings);
+  const compiled = await generateBatch(batch, plan, kg, lessonId, invoke);
+  return compiled.sort((a, b) => a.order - b.order);
 }
 
 async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {

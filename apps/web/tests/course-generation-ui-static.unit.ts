@@ -19,8 +19,8 @@ async function main() {
   const styles = read("src/app/globals.css");
 
   assert(libraryPage.includes("CourseLibraryGrid"), "library delegates course grid to client component");
-  assert(libraryPage.includes("listCourseGenerationJobs"), "library fetches active course generation jobs");
-  assert(libraryGrid.includes("/api/course-generation-jobs"), "library course grid polls generation jobs");
+  assert(libraryPage.includes("listActiveLessonGenerationJobsByOwner"), "library fetches active lesson generation jobs");
+  assert(libraryGrid.includes("/api/lesson-generation-jobs"), "library course grid polls lesson generation jobs");
   assert(libraryGrid.includes("/api/courses"), "library course grid refreshes completed courses");
   assert(libraryGrid.includes("library-card-generating"), "library renders generating placeholders");
   assert(libraryGrid.includes("library-card-failed"), "library renders failed placeholders");

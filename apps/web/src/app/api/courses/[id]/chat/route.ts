@@ -4,7 +4,7 @@ import { getCurrentUser } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 import type { CourseBlock } from "@/lib/courses/types";
 import { courseBlocks } from "@/lib/courses/types";
-import { createTutorModel, generateCourse } from "@/lib/agent-os/ai";
+import { createTutorModel } from "@/lib/agent-os/ai";
 import { AttachmentsSchema, buildAttachmentContext, buildCourseUserContent, processAttachments } from "@/lib/agent-os";
 import {
   createMemoryProvider,
@@ -58,20 +58,6 @@ function blockToPrompt(block: CourseBlock) {
   return `Block ${title} (code/${block.language}):\nExplanation: ${block.explanation}\nCode:\n${block.code}`;
 }
 
-function wantsFollowUpCourse(message: string) {
-  return /(继续|再|另|新|创建|生成|做|create|make|build).{0,16}(课程|教程|微课|course|lesson)|进阶课程|相关的进阶/i.test(message);
-}
-
-function inferFollowUpTopic(message: string, courseTopic: string) {
-  const cleaned = message
-    .replace(/^(继续|再|另|新|帮我|请|please|create|make|build|生成|创建|做)\s*/i, "")
-    .replace(/(一门|一个|一节|a|an)?\s*(课程|教程|微课|course|lesson)$/i, "")
-    .replace(/[。.!！?？]+$/g, "")
-    .trim();
-  if (cleaned && cleaned.length >= 4 && !/^相关|^进阶/.test(cleaned)) return cleaned;
-  return `${courseTopic}的进阶应用`;
-}
-
 function messageContentToString(content: unknown): string {
   if (typeof content === "string") return content;
   if (Array.isArray(content)) {
@@ -101,21 +87,8 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       ? blocks.find((block) => block.id === body.selectedBlockId) ?? null
       : null;
 
-    if (wantsFollowUpCourse(body.message)) {
-      const topic = inferFollowUpTopic(body.message, course.topic);
-      const { summary } = await generateCourse(
-        {
-          topic,
-          contextHint: `Learner is currently studying "${course.title}" (${course.topic}). Current selected block: ${selectedBlock?.title ?? selectedBlock?.type ?? "none"}.`,
-        },
-        body.settings,
-      );
-      return NextResponse.json({
-        reply: `我已经基于「${course.topic}」创建了一门新的进阶课程：${summary.title}。`,
-        courseCard: summary,
-      });
-    }
-
+    // Course Copilot is Q&A + behavior collection only — it never creates courses.
+    // Course/lesson creation goes exclusively through the Lesson Job system.
     const model = createTutorModel(body.settings, { streaming: false });
     const memoryProvider = createMemoryProvider({
       apiKey: process.env.MEM0_API_KEY,
