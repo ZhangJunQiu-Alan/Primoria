@@ -71,6 +71,11 @@ const TABS: NavTab[] = [
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
+  if (href === "/library") {
+    return pathname === "/library"
+      || pathname.startsWith("/library/")
+      || (pathname.startsWith("/course/") && pathname.endsWith("/outline"));
+  }
   if (href === "/workspace") return pathname === "/workspace" || pathname.startsWith("/workspace/review");
   return pathname === href || pathname.startsWith(`${href}/`);
 }
