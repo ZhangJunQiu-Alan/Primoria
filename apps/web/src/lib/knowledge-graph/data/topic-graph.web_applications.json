@@ -1,6 +1,6 @@
 {
   "graphId": "web_applications",
-  "subject": "Web Applications (Stanford CS142)",
+  "subject": "Web Applications",
   "generatedFrom": "temple/web_applications.json",
   "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",

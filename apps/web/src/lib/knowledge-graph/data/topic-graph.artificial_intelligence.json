@@ -1,6 +1,6 @@
 {
   "graphId": "artificial_intelligence",
-  "subject": "Introduction to Artificial Intelligence (UCB CS188)",
+  "subject": "Introduction to Artificial Intelligence",
   "generatedFrom": "temple/artificial_intelligence.json",
   "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",

@@ -1,6 +1,6 @@
 {
   "graphId": "deep_learning",
-  "subject": "Introduction to Deep Learning (CMU 11-785)",
+  "subject": "Introduction to Deep Learning",
   "generatedFrom": "temple/deep_learning.json",
   "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",

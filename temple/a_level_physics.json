@@ -1,5 +1,5 @@
 {
-  "subject": "A-Level Physics (CIE 9702)",
+  "subject": "Physics",
   "schema": {
     "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
     "node_fields": {
@@ -982,6 +982,13 @@
       "name_zh": "核物理"
     },
     {
+      "id": "phy_radioactivity",
+      "kind": "topic",
+      "name": "Nuclear Reactions and Radioactivity",
+      "default_order": 26,
+      "name_zh": "核反应与放射性"
+    },
+    {
       "id": "phy_nuclear_structure",
       "kind": "concept",
       "name": "Atomic and Nuclear Structure",
@@ -1009,21 +1016,30 @@
       "name_zh": "质量亏损与结合能"
     },
     {
+      "id": "phy_fission_fusion",
+      "kind": "concept",
+      "name": "Nuclear Fission and Fusion",
+      "topic": "phy_radioactivity",
+      "description": "Nuclear fission of heavy nuclei and fusion of light nuclei both release energy by moving towards higher binding energy per nucleon; the basis of nuclear power, reactors, and stellar energy.",
+      "default_order": 1,
+      "name_zh": "核裂变与核聚变"
+    },
+    {
       "id": "phy_radioactive_decay",
       "kind": "concept",
       "name": "Radioactive Decay",
-      "topic": "phy_nuclear",
+      "topic": "phy_radioactivity",
       "description": "Spontaneous, random radioactive decay of unstable nuclei by alpha, beta, and gamma emission, modelled by the decay constant.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "放射性衰变"
     },
     {
       "id": "phy_half_life",
       "kind": "concept",
       "name": "Half-Life",
-      "topic": "phy_nuclear",
+      "topic": "phy_radioactivity",
       "description": "Half-life as the average time for half the nuclei in a sample to decay, related to the decay constant in exponential decay.",
-      "default_order": 5,
+      "default_order": 3,
       "name_zh": "半衰期"
     },
     {
@@ -1031,7 +1047,7 @@
       "kind": "topic",
       "name": "Astronomy and Cosmology",
       "topic": null,
-      "default_order": 26,
+      "default_order": 27,
       "name_zh": "天文学与宇宙学"
     },
     {
@@ -1683,6 +1699,12 @@
       "to": "phy_standard_candles",
       "type": "prereq",
       "strength": "soft"
+    },
+    {
+      "from": "phy_binding_energy",
+      "to": "phy_fission_fusion",
+      "type": "prereq",
+      "strength": "hard"
     }
   ]
 }

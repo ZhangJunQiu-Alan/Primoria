@@ -1130,6 +1130,8 @@
     "t_1801_tech_int__t_1801_apps_int": "积分技巧与面积",
     "t_1802_multiple_int__t_1802_vector_calc": "坐标变换与向量场",
     "t_mit18330_integration__t_mit18330_odes": "数值积分与微分方程",
-    "t_mit6031_fundamentals__t_mit6031_specifications": "软件构造基础与规约"
+    "t_mit6031_fundamentals__t_mit6031_specifications": "软件构造基础与规约",
+    "phy_fission_fusion": "核裂变与核聚变",
+    "phy_radioactivity": "核反应与放射性"
   }
 }

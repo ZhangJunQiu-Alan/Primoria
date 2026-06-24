@@ -1,5 +1,5 @@
 {
-  "subject": "Machine Learning (Stanford CS229)",
+  "subject": "Machine Learning",
   "schema": {
     "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
     "node_fields": {

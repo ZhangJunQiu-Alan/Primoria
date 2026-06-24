@@ -246,14 +246,17 @@ export function classifyEntry(
     return { branch: "specific", graphId, params, diagnostics, ...buildLinearPath(graphId, startTopicId, targetConceptId, language) };
   }
 
-  // Broad: menu of hit topics, ordered by default_order (recommended path), top N.
+  // Broad: menu of hit topics. Pick the most RELEVANT N first (hitTopicIds are in
+  // recall/similarity order), THEN display them in default_order (recommended
+  // learning order). Slicing before the relevance pick would drop a highly
+  // relevant but late-curriculum topic (e.g. Nuclear Physics) purely for its order.
   const graph = getTopicGraph(graphId);
   const hitTopicIds = [...new Set(results.map(resultTopicId).filter((t): t is string => Boolean(t)))];
   const menu: BroadMenuItem[] = hitTopicIds
     .map((tid) => graph.topics.find((t) => t.topicId === tid))
     .filter((t): t is NonNullable<typeof t> => Boolean(t))
-    .sort((a, b) => a.defaultOrder - b.defaultOrder)
     .slice(0, params.menuSize)
+    .sort((a, b) => a.defaultOrder - b.defaultOrder)
     .map((t) => ({
       topicId: t.topicId,
       name: resolveKgDisplayName(t, language),

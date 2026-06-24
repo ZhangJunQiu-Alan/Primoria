@@ -1,6 +1,6 @@
 {
   "graphId": "a_level_physics",
-  "subject": "A-Level Physics (CIE 9702)",
+  "subject": "Physics",
   "generatedFrom": "temple/a_level_physics.json",
   "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
@@ -971,29 +971,53 @@
           "name": "Mass Defect and Binding Energy",
           "nameZh": "质量亏损与结合能",
           "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_radioactivity",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "phy_radioactivity",
+      "name": "Nuclear Reactions and Radioactivity",
+      "nameZh": "核反应与放射性",
+      "defaultOrder": 26,
+      "conceptIds": [
+        {
+          "conceptId": "phy_fission_fusion",
+          "name": "Nuclear Fission and Fusion",
+          "nameZh": "核裂变与核聚变",
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_radioactive_decay",
           "name": "Radioactive Decay",
           "nameZh": "放射性衰变",
-          "defaultOrder": 4
+          "defaultOrder": 2
         },
         {
           "conceptId": "phy_half_life",
           "name": "Half-Life",
           "nameZh": "半衰期",
-          "defaultOrder": 5
+          "defaultOrder": 3
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "phy_nuclear"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "phy_astro",
       "name": "Astronomy and Cosmology",
       "nameZh": "天文学与宇宙学",
-      "defaultOrder": 26,
+      "defaultOrder": 27,
       "conceptIds": [
         {
           "conceptId": "phy_luminosity",
