@@ -17,6 +17,7 @@ const RequestSchema = z.object({
   graphId: z.string().min(1),
   startTopicId: z.string().min(1),
   targetConceptId: z.string().min(1).nullable().optional(),
+  language: z.string().min(1).optional(),
 }).strict();
 
 function userFacingError(error: unknown) {
@@ -44,6 +45,7 @@ export async function POST(request: Request) {
       topic: courseContext.startTopic.name,
       kgContext: courseContext,
       source: "cold_start",
+      language: anchor.language ?? null,
     });
 
     const enqueued = await enqueueLessonGenerationJob({ ownerId, courseId: course.id, lessonId: firstLesson.id });

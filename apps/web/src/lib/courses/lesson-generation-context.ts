@@ -49,6 +49,7 @@ export async function loadLessonGenerationContext(input: {
     startTopic: toContextTopic(topic.topicId, topic.name, topic.conceptIds),
     targetConceptId: null,
     nextTopic: next ? toContextTopic(next.topicId, next.name, next.conceptIds) : null,
+    language: course.language ?? null,
   };
 
   return { course, lesson, kg };

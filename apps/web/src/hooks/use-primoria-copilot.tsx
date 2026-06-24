@@ -14,6 +14,7 @@ import type { CourseCardArtifact, TutorArtifact } from "@/lib/agent-os";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import type { CourseSummary } from "@/lib/courses/types";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
+import { detectKgLanguage } from "@/lib/knowledge-graph/display-name";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 
 const WriteTodosParams = z.object({
@@ -313,7 +314,7 @@ class LearningGoalTask {
       const posRes = await fetch("/api/knowledge-graph/position", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ query: this.query, graphId: this.graphId }),
+        body: JSON.stringify({ query: this.query, graphId: this.graphId, language: detectKgLanguage(this.query) }),
       });
       const posData = await posRes.json();
       if (!posRes.ok) throw new Error(posData?.error || "positioning failed");
@@ -368,7 +369,7 @@ class LearningGoalTask {
       const buildRes = await fetch("/api/learning/course", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(anchor),
+        body: JSON.stringify({ ...anchor, language: detectKgLanguage(this.query) }),
       });
       const buildData = await buildRes.json();
       if (!buildRes.ok) throw new Error(buildData?.error || "build failed");

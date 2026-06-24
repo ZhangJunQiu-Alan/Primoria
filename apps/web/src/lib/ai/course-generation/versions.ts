@@ -12,7 +12,7 @@ import { IR_VERSION } from "./lesson-plan-ir";
 //    for the same IR + KG changes.
 
 export { IR_VERSION };
-export const PROMPT_VERSION = "2026-06-24";
+export const PROMPT_VERSION = "2026-06-24b";
 export const COMPILER_VERSION = "1";
 
 export type CheckpointVersions = {
