@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { TurnstileWidget } from "@/components/auth/turnstile";
 
@@ -10,6 +10,8 @@ const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 const isSupabaseActive = Boolean(
   process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
+const SIGN_IN_HREF = "/auth/sign-in";
+const SIGN_UP_HREF = "/auth/sign-up";
 
 function errorMessage(err: unknown, fallback: string) {
   return err instanceof Error && err.message ? err.message : fallback;
@@ -34,8 +36,22 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
   );
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaResetKey, setCaptchaResetKey] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
 
   const captchaEnabled = Boolean(TURNSTILE_SITE_KEY);
+  const passwordReady = password.length >= 8;
+  const passwordHint = isSignUp
+    ? password.length === 0
+      ? "Use at least 8 characters."
+      : passwordReady
+        ? "Password length looks good."
+        : `${8 - password.length} more character${8 - password.length === 1 ? "" : "s"} needed.`
+    : "Use the password for this workspace.";
+  const nextCopy = useMemo(() => {
+    if (!next || next === "/library") return "Library";
+    if (next === "/") return "Tutor";
+    return next.replace(/^\//, "");
+  }, [next]);
 
   function redirectTo() {
     if (typeof window === "undefined") return undefined;
@@ -163,13 +179,27 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
 
   const title = isSignUp ? "Create your workspace" : "Sign in to your workspace";
   const cta = isSignUp ? "Create account" : "Sign in";
+  const subtitle = isSignUp
+    ? "Start with a private learning record, saved courses, and workspace history."
+    : "Continue with your saved Library, active builds, and tutor history.";
+  const heroTitle = isSignUp ? "Build from a clean learning record" : "Welcome back";
+  const heroCopy = isSignUp
+    ? "Your courses, progress, chat history, and generated workspace artifacts stay attached to one account."
+    : "Pick up active courses, generated lessons, workspace agents, and chat context without rebuilding your setup.";
 
   return (
     <div className="auth-panel">
       <div className="auth-hero" aria-hidden="true">
-        <span>Postgres workspace</span>
-        <strong>{isSignUp ? "Start with saved memory" : "Welcome back"}</strong>
-        <p>Courses, CopilotKit threads, provider settings, and generated apps stay under your account.</p>
+        <div className="auth-hero-copy">
+          <span>Primoria workspace</span>
+          <strong>{heroTitle}</strong>
+          <p>{heroCopy}</p>
+          <ul className="auth-hero-list">
+            <li><span />Saved courses and lessons</li>
+            <li><span />Tutor chat continuity</li>
+            <li><span />Workspace artifacts and progress</li>
+          </ul>
+        </div>
         <div className="auth-hero-orbits">
           <i />
           <i />
@@ -179,77 +209,113 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
 
       <form className="auth-card" onSubmit={isSupabaseActive ? submitSupabase : submitCustomDb}>
         <div className="auth-heading">
-          <span className="course-block-tag">Primoria account</span>
           <h1>{title}</h1>
-          <p>
-            {isSignUp
-              ? "One account keeps every generated course and learning workspace cleanly separated."
-              : "Continue learning with your saved Library, chat history, and AI settings."}
-          </p>
+          <p>{subtitle}</p>
         </div>
 
         {isSupabaseActive && (
-          <button type="button" onClick={handleGoogle} disabled={pending} className="auth-submit" style={{ background: "#fff", color: "#111", border: "1px solid #eadfce", marginBottom: 12 }}>
-            Continue with Google
-          </button>
+          <>
+            <button type="button" onClick={handleGoogle} disabled={pending} className="auth-secondary-action">
+              <span className="auth-provider-mark" aria-hidden="true">G</span>
+              <span>Continue with Google</span>
+            </button>
+            <div className="auth-divider"><span>or use email</span></div>
+          </>
         )}
 
-        {isSignUp ? (
+        <div className="auth-fields">
+          {isSignUp ? (
+            <label className="auth-field">
+              <span>Display name</span>
+              <input
+                value={displayName}
+                onChange={(event) => setDisplayName(event.target.value)}
+                placeholder="Ada"
+                autoComplete="name"
+                disabled={pending}
+              />
+            </label>
+          ) : (
+            <div className="auth-field auth-field-spacer" aria-hidden="true" />
+          )}
+
           <label className="auth-field">
-            <span>Name</span>
-            <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} placeholder="Ada" disabled={pending} />
+            <span>Email</span>
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              autoComplete="email"
+              inputMode="email"
+              required
+              disabled={pending}
+              aria-invalid={Boolean(error)}
+            />
           </label>
-        ) : null}
 
-        <label className="auth-field">
-          <span>Email</span>
-          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" required disabled={pending} />
-        </label>
-
-        <label className="auth-field">
-          <span>Password</span>
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder={isSignUp ? "At least 8 characters" : "Your password"}
-            minLength={isSignUp ? 8 : undefined}
-            required
-            disabled={pending}
-          />
-        </label>
+          <div className="auth-field">
+            <div className="auth-label-row">
+              <label htmlFor="auth-password">Password</label>
+              {!isSignUp && isSupabaseActive ? <Link href="/forgot">Forgot password?</Link> : null}
+            </div>
+            <div className="auth-password-control">
+              <input
+                id="auth-password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder={isSignUp ? "At least 8 characters" : "Your password"}
+                minLength={isSignUp ? 8 : undefined}
+                autoComplete={isSignUp ? "new-password" : "current-password"}
+                required
+                disabled={pending}
+                aria-describedby="auth-password-hint"
+                aria-invalid={isSignUp && password.length > 0 && !passwordReady}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((current) => !current)}
+                disabled={pending || password.length === 0}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+            <p id="auth-password-hint" className={isSignUp && password.length > 0 && !passwordReady ? "auth-field-hint warning" : "auth-field-hint"}>
+              {passwordHint}
+            </p>
+          </div>
+        </div>
 
         {isSupabaseActive && captchaEnabled && TURNSTILE_SITE_KEY ? (
-          <div style={{ marginTop: 8 }}>
+          <div className="auth-captcha">
             <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setCaptchaToken} resetKey={captchaResetKey} />
           </div>
         ) : null}
 
-        {error ? <p className="auth-error">{error}</p> : null}
-        {status ? <p className="auth-error" style={{ color: "#27713a", borderColor: "#cce6d2" }}>{status}</p> : null}
+        {error ? <p className="auth-message error" role="alert">{error}</p> : null}
+        {status ? <p className="auth-message success" role="status">{status}</p> : null}
 
         <button className="auth-submit" type="submit" disabled={pending}>
-          {pending ? "Working…" : cta}
+          {pending ? (isSignUp ? "Creating account…" : "Signing in…") : cta}
         </button>
 
         {isSupabaseActive && (
-          <button type="button" onClick={handleMagicLink} disabled={pending} className="auth-submit" style={{ background: "transparent", color: "#6b6357", border: "1px solid transparent", fontSize: 13, marginTop: 4 }}>
+          <button type="button" onClick={handleMagicLink} disabled={pending || !email} className="auth-link-action">
             Send email magic link
           </button>
         )}
 
-        <p className="auth-switch">
-          {isSignUp ? "Already have an account?" : "New to Primoria?"} {" "}
-          <Link href={isSignUp ? (isSupabaseActive ? "/login" : "/auth/sign-up") : (isSupabaseActive ? "/signup" : "/auth/sign-in")}>
-            {isSignUp ? "Sign in" : "Create account"}
-          </Link>
-        </p>
-
-        {isSupabaseActive && !isSignUp ? (
-          <p className="auth-switch" style={{ marginTop: 8 }}>
-            <Link href="/forgot">Forgot password?</Link>
+        <div className="auth-footer">
+          <p>After success, you’ll continue to <strong>{nextCopy}</strong>.</p>
+          <p className="auth-switch">
+            {isSignUp ? "Already have an account?" : "New to Primoria?"}{" "}
+            <Link href={isSignUp ? SIGN_IN_HREF : SIGN_UP_HREF}>
+              {isSignUp ? "Sign in" : "Create account"}
+            </Link>
           </p>
-        ) : null}
+        </div>
       </form>
     </div>
   );
