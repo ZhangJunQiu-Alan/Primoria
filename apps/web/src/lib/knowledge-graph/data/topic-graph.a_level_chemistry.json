@@ -42,7 +42,7 @@
           "hard": true
         },
         {
-          "topicId": "che_thermodynamics__che_periodicity",
+          "topicId": "che_free_energy_periodicity",
           "hard": true
         },
         {
@@ -86,15 +86,15 @@
       ],
       "successors": [
         {
-          "topicId": "che_states__che_energetics",
+          "topicId": "che_states_enthalpy",
           "hard": false
         },
         {
-          "topicId": "che_equilibrium__che_acids",
+          "topicId": "che_equilibria_acidbase",
           "hard": false
         },
         {
-          "topicId": "che_arenes__che_analysis",
+          "topicId": "che_arenes_mass_spec",
           "hard": false
         }
       ],
@@ -103,8 +103,8 @@
     },
     {
       "topicId": "che_bonding_part1",
-      "name": "Chemical Bonding (Part 1)",
-      "nameZh": "化学键 (第一部分)",
+      "name": "Chemical Bonding: Types of Bonds",
+      "nameZh": "化学键：成键类型",
       "defaultOrder": 3,
       "conceptIds": [
         {
@@ -132,11 +132,11 @@
           "hard": true
         },
         {
-          "topicId": "che_states__che_energetics",
+          "topicId": "che_states_enthalpy",
           "hard": true
         },
         {
-          "topicId": "che_redox__che_thermodynamics",
+          "topicId": "che_electrochem_thermo",
           "hard": true
         },
         {
@@ -144,7 +144,7 @@
           "hard": true
         },
         {
-          "topicId": "che_arenes__che_analysis",
+          "topicId": "che_arenes_mass_spec",
           "hard": true
         }
       ],
@@ -155,8 +155,8 @@
     },
     {
       "topicId": "che_bonding_part2",
-      "name": "Chemical Bonding (Part 2)",
-      "nameZh": "化学键 (第二部分)",
+      "name": "Chemical Bonding: Shapes and Intermolecular Forces",
+      "nameZh": "化学键：分子形状与分子间作用力",
       "defaultOrder": 4,
       "conceptIds": [
         {
@@ -185,7 +185,7 @@
       "isRoot": false
     },
     {
-      "topicId": "che_states__che_energetics",
+      "topicId": "che_states_enthalpy",
       "name": "States of Matter and Enthalpy",
       "nameZh": "物态与焓变",
       "defaultOrder": 5,
@@ -215,7 +215,7 @@
           "hard": true
         },
         {
-          "topicId": "che_thermodynamics__che_periodicity",
+          "topicId": "che_free_energy_periodicity",
           "hard": true
         }
       ],
@@ -252,19 +252,19 @@
       ],
       "successors": [
         {
-          "topicId": "che_redox__che_thermodynamics",
+          "topicId": "che_electrochem_thermo",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "che_states__che_energetics"
+        "che_states_enthalpy"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_kinetics_part1",
-      "name": "Reaction Kinetics (Part 1)",
-      "nameZh": "反应动力学 (第一部分)",
+      "name": "Reaction Kinetics: Rates and Collision Theory",
+      "nameZh": "反应动力学：速率与碰撞理论",
       "defaultOrder": 7,
       "conceptIds": [
         {
@@ -297,8 +297,8 @@
     },
     {
       "topicId": "che_kinetics_part2",
-      "name": "Reaction Kinetics (Part 2)",
-      "nameZh": "反应动力学 (第二部分)",
+      "name": "Reaction Kinetics: Rate Equations and Catalysis",
+      "nameZh": "反应动力学：速率方程与催化",
       "defaultOrder": 8,
       "conceptIds": [
         {
@@ -327,7 +327,7 @@
       "isRoot": false
     },
     {
-      "topicId": "che_equilibrium__che_acids",
+      "topicId": "che_equilibria_acidbase",
       "name": "Equilibria and Acid-Base Foundations",
       "nameZh": "化学平衡与酸碱基础",
       "defaultOrder": 9,
@@ -401,7 +401,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "che_equilibrium__che_acids"
+        "che_equilibria_acidbase"
       ],
       "isRoot": false
     },
@@ -432,7 +432,7 @@
       ],
       "successors": [
         {
-          "topicId": "che_redox__che_thermodynamics",
+          "topicId": "che_electrochem_thermo",
           "hard": true
         },
         {
@@ -444,7 +444,7 @@
       "isRoot": true
     },
     {
-      "topicId": "che_redox__che_thermodynamics",
+      "topicId": "che_electrochem_thermo",
       "name": "Electrochemistry and Thermodynamic Cycles",
       "nameZh": "电化学与热力学循环",
       "defaultOrder": 12,
@@ -476,7 +476,7 @@
       ],
       "successors": [
         {
-          "topicId": "che_thermodynamics__che_periodicity",
+          "topicId": "che_free_energy_periodicity",
           "hard": true
         }
       ],
@@ -488,7 +488,7 @@
       "isRoot": false
     },
     {
-      "topicId": "che_thermodynamics__che_periodicity",
+      "topicId": "che_free_energy_periodicity",
       "name": "Free Energy and Periodicity",
       "nameZh": "自由能与周期性",
       "defaultOrder": 13,
@@ -520,8 +520,8 @@
       ],
       "prereqTopics": [
         "che_atomic",
-        "che_states__che_energetics",
-        "che_redox__che_thermodynamics"
+        "che_states_enthalpy",
+        "che_electrochem_thermo"
       ],
       "isRoot": false
     },
@@ -553,7 +553,7 @@
       "successors": [],
       "prereqTopics": [
         "che_redox",
-        "che_thermodynamics__che_periodicity"
+        "che_free_energy_periodicity"
       ],
       "isRoot": false
     },
@@ -625,7 +625,7 @@
           "hard": true
         },
         {
-          "topicId": "che_arenes__che_analysis",
+          "topicId": "che_arenes_mass_spec",
           "hard": false
         },
         {
@@ -665,7 +665,7 @@
       ],
       "successors": [
         {
-          "topicId": "che_halogenoalkanes__che_alcohols",
+          "topicId": "che_halogenoalkanes_alcohols",
           "hard": false
         }
       ],
@@ -675,7 +675,7 @@
       "isRoot": false
     },
     {
-      "topicId": "che_halogenoalkanes__che_alcohols",
+      "topicId": "che_halogenoalkanes_alcohols",
       "name": "Halogenoalkanes and Alcohols",
       "nameZh": "卤代烃与醇",
       "defaultOrder": 18,
@@ -752,7 +752,7 @@
         }
       ],
       "prereqTopics": [
-        "che_halogenoalkanes__che_alcohols"
+        "che_halogenoalkanes_alcohols"
       ],
       "isRoot": false
     },
@@ -783,13 +783,13 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "che_halogenoalkanes__che_alcohols",
+        "che_halogenoalkanes_alcohols",
         "che_carbonyls"
       ],
       "isRoot": false
     },
     {
-      "topicId": "che_arenes__che_analysis",
+      "topicId": "che_arenes_mass_spec",
       "name": "Arenes and Mass Spectrometry",
       "nameZh": "芳香烃与质谱分析",
       "defaultOrder": 21,
@@ -854,7 +854,7 @@
       "successors": [],
       "prereqTopics": [
         "che_organic_basics",
-        "che_arenes__che_analysis"
+        "che_arenes_mass_spec"
       ],
       "isRoot": false
     }

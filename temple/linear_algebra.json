@@ -152,7 +152,7 @@
       "name_zh": "正交基与 Gram-Schmidt"
     },
     {
-      "id": "t_mit1806_determinants__t_mit1806_eigenvalues",
+      "id": "t_mit1806_determinants_eigen",
       "kind": "topic",
       "name": "Determinants and Eigenvalue Foundations",
       "topic": null,
@@ -163,7 +163,7 @@
       "id": "c_mit1806_det_properties",
       "kind": "concept",
       "name": "Properties of Determinants",
-      "topic": "t_mit1806_determinants__t_mit1806_eigenvalues",
+      "topic": "t_mit1806_determinants_eigen",
       "description": "The fundamental properties that define the determinant of a square matrix.",
       "default_order": 1,
       "name_zh": "行列式的性质"
@@ -172,7 +172,7 @@
       "id": "c_mit1806_det_formulas",
       "kind": "concept",
       "name": "Formulas and Cofactors",
-      "topic": "t_mit1806_determinants__t_mit1806_eigenvalues",
+      "topic": "t_mit1806_determinants_eigen",
       "description": "Computing determinants using the permutation formula and cofactor expansions.",
       "default_order": 2,
       "name_zh": "行列式公式与余子式"
@@ -181,7 +181,7 @@
       "id": "c_mit1806_cramers_rule",
       "kind": "concept",
       "name": "Cramer's Rule and Volumes",
-      "topic": "t_mit1806_determinants__t_mit1806_eigenvalues",
+      "topic": "t_mit1806_determinants_eigen",
       "description": "Using determinants to find inverses, solving systems with Cramer's Rule, and volume interpretations.",
       "default_order": 3,
       "name_zh": "Cramer 法则与体积"
@@ -190,7 +190,7 @@
       "id": "c_mit1806_eigen",
       "kind": "concept",
       "name": "Eigenvalues and Eigenvectors",
-      "topic": "t_mit1806_determinants__t_mit1806_eigenvalues",
+      "topic": "t_mit1806_determinants_eigen",
       "description": "Definition of eigenvalues and eigenvectors, and finding them using characteristic equations.",
       "default_order": 4,
       "name_zh": "特征值与特征向量"

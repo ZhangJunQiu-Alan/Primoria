@@ -13,10 +13,10 @@
     {
       "id": "topic_week0",
       "kind": "topic",
-      "name": "Week 0: Scratch",
+      "name": "Scratch",
       "topic": null,
       "default_order": 1,
-      "name_zh": "第 0 周：Scratch"
+      "name_zh": "Scratch"
     },
     {
       "id": "c_functions",
@@ -46,7 +46,7 @@
       "name_zh": "条件语句"
     },
     {
-      "id": "topic_week0__topic_week1",
+      "id": "topic_control_flow_c",
       "kind": "topic",
       "name": "Control Flow and C Foundations",
       "topic": null,
@@ -56,7 +56,7 @@
     {
       "id": "c_loops",
       "name": "Loops",
-      "topic": "topic_week0__topic_week1",
+      "topic": "topic_control_flow_c",
       "kind": "concept",
       "default_order": 1,
       "description": "Control structures that repeat a block of code, either a fixed number of times or while a condition holds, to automate repetition.",
@@ -65,7 +65,7 @@
     {
       "id": "c_abstraction",
       "name": "Abstraction",
-      "topic": "topic_week0__topic_week1",
+      "topic": "topic_control_flow_c",
       "kind": "concept",
       "default_order": 2,
       "description": "Hiding implementation detail behind simpler interfaces so complex systems can be built and reasoned about in manageable layers.",
@@ -74,7 +74,7 @@
     {
       "id": "c_c_syntax",
       "name": "C Syntax",
-      "topic": "topic_week0__topic_week1",
+      "topic": "topic_control_flow_c",
       "kind": "concept",
       "default_order": 3,
       "description": "The grammatical rules of the C language governing how statements, expressions, and declarations are written so the compiler can interpret them.",
@@ -83,10 +83,10 @@
     {
       "id": "topic_week1",
       "kind": "topic",
-      "name": "Week 1: C",
+      "name": "C Programming",
       "topic": null,
       "default_order": 3,
-      "name_zh": "第1周：C"
+      "name_zh": "C 语言"
     },
     {
       "id": "c_data_types",
@@ -118,10 +118,10 @@
     {
       "id": "topic_week2",
       "kind": "topic",
-      "name": "Week 2: Arrays",
+      "name": "Arrays",
       "topic": null,
       "default_order": 4,
-      "name_zh": "第2周：数组"
+      "name_zh": "数组"
     },
     {
       "id": "c_debugging",
@@ -162,10 +162,10 @@
     {
       "id": "topic_week3",
       "kind": "topic",
-      "name": "Week 3: Algorithms",
+      "name": "Algorithms",
       "topic": null,
       "default_order": 5,
-      "name_zh": "第3周：算法"
+      "name_zh": "算法"
     },
     {
       "id": "c_linear_search",
@@ -195,7 +195,7 @@
       "name_zh": "排序算法"
     },
     {
-      "id": "topic_week3__topic_week4",
+      "id": "topic_complexity_memory",
       "kind": "topic",
       "name": "Algorithmic Complexity and Memory",
       "topic": null,
@@ -205,7 +205,7 @@
     {
       "id": "c_recursion",
       "name": "Recursion",
-      "topic": "topic_week3__topic_week4",
+      "topic": "topic_complexity_memory",
       "kind": "concept",
       "default_order": 1,
       "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate.",
@@ -214,7 +214,7 @@
     {
       "id": "c_big_o",
       "name": "Big O Notation",
-      "topic": "topic_week3__topic_week4",
+      "topic": "topic_complexity_memory",
       "kind": "concept",
       "default_order": 2,
       "description": "Big O notation describing how an algorithm's running time or space grows with input size, characterising worst-case asymptotic efficiency.",
@@ -223,7 +223,7 @@
     {
       "id": "c_pointers",
       "name": "Pointers",
-      "topic": "topic_week3__topic_week4",
+      "topic": "topic_complexity_memory",
       "kind": "concept",
       "default_order": 3,
       "description": "Variables storing memory addresses, enabling indirect access, dynamic data structures, and efficient passing of data by reference in C.",
@@ -232,10 +232,10 @@
     {
       "id": "topic_week4",
       "kind": "topic",
-      "name": "Week 4: Memory",
+      "name": "Memory",
       "topic": null,
       "default_order": 7,
-      "name_zh": "第4周：内存"
+      "name_zh": "内存"
     },
     {
       "id": "c_malloc",
@@ -267,10 +267,10 @@
     {
       "id": "topic_week5",
       "kind": "topic",
-      "name": "Week 5: Data Structures",
+      "name": "Data Structures",
       "topic": null,
       "default_order": 8,
-      "name_zh": "第5周：数据结构"
+      "name_zh": "数据结构"
     },
     {
       "id": "c_linked_lists",
@@ -300,7 +300,7 @@
       "name_zh": "树"
     },
     {
-      "id": "topic_week5__topic_week6",
+      "id": "topic_adv_data_python",
       "kind": "topic",
       "name": "Advanced Data Structures and Python",
       "topic": null,
@@ -310,7 +310,7 @@
     {
       "id": "c_tries",
       "name": "Tries",
-      "topic": "topic_week5__topic_week6",
+      "topic": "topic_adv_data_python",
       "kind": "concept",
       "default_order": 1,
       "description": "Tree structures indexing strings by their characters along paths, enabling fast prefix-based search and autocomplete at the cost of memory.",
@@ -319,7 +319,7 @@
     {
       "id": "c_queues_stacks",
       "name": "Queues and Stacks",
-      "topic": "topic_week5__topic_week6",
+      "topic": "topic_adv_data_python",
       "kind": "concept",
       "default_order": 2,
       "description": "Two abstract data types: stacks following last-in-first-out order and queues following first-in-first-out order, for managing ordered access.",
@@ -328,7 +328,7 @@
     {
       "id": "c_python_syntax",
       "name": "Python Syntax",
-      "topic": "topic_week5__topic_week6",
+      "topic": "topic_adv_data_python",
       "kind": "concept",
       "default_order": 3,
       "description": "The readable, indentation-based syntax of Python, a high-level interpreted language emphasising concise expression of common programming constructs.",
@@ -337,10 +337,10 @@
     {
       "id": "topic_week6",
       "kind": "topic",
-      "name": "Week 6: Python",
+      "name": "Python",
       "topic": null,
       "default_order": 10,
-      "name_zh": "第6周：Python"
+      "name_zh": "Python"
     },
     {
       "id": "c_lists_dicts",
@@ -372,10 +372,10 @@
     {
       "id": "topic_week7",
       "kind": "topic",
-      "name": "Week 7: SQL",
+      "name": "SQL",
       "topic": null,
       "default_order": 11,
-      "name_zh": "第7周：SQL"
+      "name_zh": "SQL"
     },
     {
       "id": "c_relational_db",
@@ -416,10 +416,10 @@
     {
       "id": "topic_week8",
       "kind": "topic",
-      "name": "Week 8: HTML, CSS, JavaScript",
+      "name": "HTML, CSS, JavaScript",
       "topic": null,
       "default_order": 12,
-      "name_zh": "第8周：HTML, CSS, JavaScript"
+      "name_zh": "HTML、CSS、JavaScript"
     },
     {
       "id": "c_html",
@@ -460,10 +460,10 @@
     {
       "id": "topic_week9",
       "kind": "topic",
-      "name": "Week 9: Flask",
+      "name": "Flask",
       "topic": null,
       "default_order": 13,
-      "name_zh": "第9周：Flask"
+      "name_zh": "Flask"
     },
     {
       "id": "c_http",
@@ -493,7 +493,7 @@
       "name_zh": "MVC 架构"
     },
     {
-      "id": "topic_week9__topic_week10",
+      "id": "topic_web_state_security",
       "kind": "topic",
       "name": "Web State, APIs and Security",
       "topic": null,
@@ -503,7 +503,7 @@
     {
       "id": "c_sessions",
       "name": "Sessions and Cookies",
-      "topic": "topic_week9__topic_week10",
+      "topic": "topic_web_state_security",
       "kind": "concept",
       "default_order": 1,
       "description": "Sessions and cookies maintaining state across stateless HTTP requests, identifying users and remembering data between page visits.",
@@ -512,7 +512,7 @@
     {
       "id": "c_apis",
       "name": "APIs",
-      "topic": "topic_week9__topic_week10",
+      "topic": "topic_web_state_security",
       "kind": "concept",
       "default_order": 2,
       "description": "Application programming interfaces exposing functionality and data over the web, commonly returning JSON for other programs to consume.",
@@ -521,7 +521,7 @@
     {
       "id": "c_cybersecurity",
       "name": "Cybersecurity Basics",
-      "topic": "topic_week9__topic_week10",
+      "topic": "topic_web_state_security",
       "kind": "concept",
       "default_order": 3,
       "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information.",
@@ -530,10 +530,10 @@
     {
       "id": "topic_week10",
       "kind": "topic",
-      "name": "Week 10: Cybersecurity",
+      "name": "Cybersecurity",
       "topic": null,
       "default_order": 15,
-      "name_zh": "第10周：网络安全"
+      "name_zh": "网络安全"
     },
     {
       "id": "c_encryption",

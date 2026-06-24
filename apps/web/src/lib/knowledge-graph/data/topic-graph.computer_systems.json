@@ -38,7 +38,7 @@
       ],
       "successors": [
         {
-          "topicId": "t1__t2",
+          "topicId": "t_float_machine_ops",
           "hard": true
         }
       ],
@@ -46,7 +46,7 @@
       "isRoot": true
     },
     {
-      "topicId": "t1__t2",
+      "topicId": "t_float_machine_ops",
       "name": "Floating-Point and Machine-Level Operations",
       "nameZh": "浮点数与机器级运算",
       "defaultOrder": 2,
@@ -78,7 +78,7 @@
       ],
       "successors": [
         {
-          "topicId": "t2__t3",
+          "topicId": "t_procedures_arch",
           "hard": true
         },
         {
@@ -86,7 +86,7 @@
           "hard": true
         },
         {
-          "topicId": "t4__t5",
+          "topicId": "t_optimization_locality",
           "hard": true
         }
       ],
@@ -96,7 +96,7 @@
       "isRoot": false
     },
     {
-      "topicId": "t2__t3",
+      "topicId": "t_procedures_arch",
       "name": "Procedures and Processor Architecture",
       "nameZh": "过程调用与处理器体系",
       "defaultOrder": 3,
@@ -137,7 +137,7 @@
         }
       ],
       "prereqTopics": [
-        "t1__t2"
+        "t_float_machine_ops"
       ],
       "isRoot": false
     },
@@ -172,12 +172,12 @@
           "hard": true
         },
         {
-          "topicId": "t6__t7",
+          "topicId": "t_linking_processes",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t2__t3"
+        "t_procedures_arch"
       ],
       "isRoot": false
     },
@@ -208,18 +208,18 @@
       ],
       "successors": [
         {
-          "topicId": "t4__t5",
+          "topicId": "t_optimization_locality",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t1__t2",
+        "t_float_machine_ops",
         "t3"
       ],
       "isRoot": false
     },
     {
-      "topicId": "t4__t5",
+      "topicId": "t_optimization_locality",
       "name": "Optimization and Memory Locality",
       "nameZh": "程序优化与内存局部性",
       "defaultOrder": 6,
@@ -256,7 +256,7 @@
         }
       ],
       "prereqTopics": [
-        "t1__t2",
+        "t_float_machine_ops",
         "t4"
       ],
       "isRoot": false
@@ -293,7 +293,7 @@
         }
       ],
       "prereqTopics": [
-        "t4__t5"
+        "t_optimization_locality"
       ],
       "isRoot": false
     },
@@ -324,17 +324,17 @@
       ],
       "successors": [
         {
-          "topicId": "t6__t7",
+          "topicId": "t_linking_processes",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t2__t3"
+        "t_procedures_arch"
       ],
       "isRoot": false
     },
     {
-      "topicId": "t6__t7",
+      "topicId": "t_linking_processes",
       "name": "Linking, Exceptions and Processes",
       "nameZh": "链接、异常与进程",
       "defaultOrder": 9,
@@ -370,7 +370,7 @@
           "hard": true
         },
         {
-          "topicId": "t10__t11",
+          "topicId": "t_network_concurrency",
           "hard": true
         }
       ],
@@ -407,12 +407,12 @@
       ],
       "successors": [
         {
-          "topicId": "t8__t9",
+          "topicId": "t_memmgmt_unixio",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t6__t7"
+        "t_linking_processes"
       ],
       "isRoot": false
     },
@@ -443,7 +443,7 @@
       ],
       "successors": [
         {
-          "topicId": "t8__t9",
+          "topicId": "t_memmgmt_unixio",
           "hard": true
         }
       ],
@@ -453,7 +453,7 @@
       "isRoot": false
     },
     {
-      "topicId": "t8__t9",
+      "topicId": "t_memmgmt_unixio",
       "name": "Memory Management and Unix I/O",
       "nameZh": "内存管理与 Unix 输入输出",
       "defaultOrder": 12,
@@ -526,7 +526,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "t8__t9"
+        "t_memmgmt_unixio"
       ],
       "isRoot": false
     },
@@ -557,17 +557,17 @@
       ],
       "successors": [
         {
-          "topicId": "t10__t11",
+          "topicId": "t_network_concurrency",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t8__t9"
+        "t_memmgmt_unixio"
       ],
       "isRoot": false
     },
     {
-      "topicId": "t10__t11",
+      "topicId": "t_network_concurrency",
       "name": "Network and Concurrent Programming",
       "nameZh": "网络与并发编程",
       "defaultOrder": 15,
@@ -604,7 +604,7 @@
         }
       ],
       "prereqTopics": [
-        "t6__t7",
+        "t_linking_processes",
         "t10"
       ],
       "isRoot": false
@@ -636,7 +636,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "t10__t11"
+        "t_network_concurrency"
       ],
       "isRoot": false
     }

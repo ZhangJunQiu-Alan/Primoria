@@ -54,10 +54,10 @@
     {
       "id": "web_frontend_part1",
       "kind": "topic",
-      "name": "Frontend Technologies (Part 1)",
+      "name": "Frontend: HTML, CSS, JavaScript",
       "topic": null,
       "default_order": 2,
-      "name_zh": "前端技术 (第一部分)"
+      "name_zh": "前端：HTML、CSS、JavaScript"
     },
     {
       "id": "web_html",
@@ -89,10 +89,10 @@
     {
       "id": "web_frontend_part2",
       "kind": "topic",
-      "name": "Frontend Technologies (Part 2)",
+      "name": "Frontend: DOM and React",
       "topic": null,
       "default_order": 3,
-      "name_zh": "前端技术 (第二部分)"
+      "name_zh": "前端：DOM 与 React"
     },
     {
       "id": "web_dom",

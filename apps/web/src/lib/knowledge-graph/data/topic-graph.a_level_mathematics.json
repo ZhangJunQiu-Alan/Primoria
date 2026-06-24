@@ -7,8 +7,8 @@
   "topics": [
     {
       "topicId": "mat_algebra_part1",
-      "name": "Algebra and Functions (Part 1)",
-      "nameZh": "代数与函数 (第一部分)",
+      "name": "Algebra: Quadratics and Equations",
+      "nameZh": "代数：二次函数与方程",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -50,7 +50,7 @@
           "hard": true
         },
         {
-          "topicId": "mat_numerical__mat_diff_eq",
+          "topicId": "mat_numerical_methods",
           "hard": false
         },
         {
@@ -63,8 +63,8 @@
     },
     {
       "topicId": "mat_algebra_part2",
-      "name": "Algebra and Functions (Part 2)",
-      "nameZh": "代数与函数 (第二部分)",
+      "name": "Algebra: Functions and Inequalities",
+      "nameZh": "代数：函数与不等式",
       "defaultOrder": 2,
       "conceptIds": [
         {
@@ -200,8 +200,8 @@
     },
     {
       "topicId": "mat_trig_part1",
-      "name": "Trigonometry (Part 1)",
-      "nameZh": "三角学 (第一部分)",
+      "name": "Trigonometry: Ratios and Identities",
+      "nameZh": "三角学：比值与恒等式",
       "defaultOrder": 6,
       "conceptIds": [
         {
@@ -234,8 +234,8 @@
     },
     {
       "topicId": "mat_trig_part2",
-      "name": "Trigonometry (Part 2)",
-      "nameZh": "三角学 (第二部分)",
+      "name": "Trigonometry: Equations and Formulae",
+      "nameZh": "三角学：方程与公式",
       "defaultOrder": 7,
       "conceptIds": [
         {
@@ -302,8 +302,8 @@
     },
     {
       "topicId": "mat_differentiation_part1",
-      "name": "Differentiation (Basic) (Part 1)",
-      "nameZh": "微分 (第一部分)",
+      "name": "Differentiation: Rules and Techniques",
+      "nameZh": "微分：法则与技巧",
       "defaultOrder": 9,
       "conceptIds": [
         {
@@ -344,8 +344,8 @@
     },
     {
       "topicId": "mat_differentiation_part2",
-      "name": "Differentiation (Basic) (Part 2)",
-      "nameZh": "微分 (第二部分)",
+      "name": "Differentiation: Applications",
+      "nameZh": "微分：应用",
       "defaultOrder": 10,
       "conceptIds": [
         {
@@ -425,8 +425,8 @@
     },
     {
       "topicId": "mat_integration_part1",
-      "name": "Integration (Part 1)",
-      "nameZh": "积分 (第一部分)",
+      "name": "Integration: Fundamentals and Substitution",
+      "nameZh": "积分：基础与换元",
       "defaultOrder": 12,
       "conceptIds": [
         {
@@ -460,7 +460,7 @@
           "hard": true
         },
         {
-          "topicId": "mat_numerical__mat_diff_eq",
+          "topicId": "mat_numerical_methods",
           "hard": true
         }
       ],
@@ -472,8 +472,8 @@
     },
     {
       "topicId": "mat_integration_part2",
-      "name": "Integration (Part 2)",
-      "nameZh": "积分 (第二部分)",
+      "name": "Integration: Advanced Techniques",
+      "nameZh": "积分：进阶技巧",
       "defaultOrder": 13,
       "conceptIds": [
         {
@@ -504,7 +504,7 @@
       "isRoot": false
     },
     {
-      "topicId": "mat_numerical__mat_diff_eq",
+      "topicId": "mat_numerical_methods",
       "name": "Numerical Methods for Equations",
       "nameZh": "方程的数值方法",
       "defaultOrder": 14,
@@ -671,7 +671,7 @@
       ],
       "successors": [
         {
-          "topicId": "mat_mech_forces__mat_mech_energy",
+          "topicId": "mat_mech_energy_momentum",
           "hard": true
         }
       ],
@@ -679,7 +679,7 @@
       "isRoot": true
     },
     {
-      "topicId": "mat_mech_forces__mat_mech_energy",
+      "topicId": "mat_mech_energy_momentum",
       "name": "Mechanics: Connected Particles, Energy and Momentum",
       "nameZh": "力学：连接体、能量与动量",
       "defaultOrder": 19,
@@ -710,7 +710,7 @@
       "isRoot": false
     },
     {
-      "topicId": "mat_stats_data__mat_probability",
+      "topicId": "mat_data_counting_prob",
       "name": "Data, Counting and Probability",
       "nameZh": "数据、计数与概率",
       "defaultOrder": 20,
@@ -736,7 +736,7 @@
       ],
       "successors": [
         {
-          "topicId": "mat_probability__mat_random_vars",
+          "topicId": "mat_prob_random_vars",
           "hard": false
         }
       ],
@@ -744,7 +744,7 @@
       "isRoot": true
     },
     {
-      "topicId": "mat_probability__mat_random_vars",
+      "topicId": "mat_prob_random_vars",
       "name": "Probability and Discrete Random Variables",
       "nameZh": "概率与离散随机变量",
       "defaultOrder": 21,
@@ -774,12 +774,12 @@
           "hard": true
         },
         {
-          "topicId": "mat_normal__mat_inference",
+          "topicId": "mat_normal_inference",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "mat_stats_data__mat_probability"
+        "mat_data_counting_prob"
       ],
       "isRoot": false
     },
@@ -810,17 +810,17 @@
       ],
       "successors": [
         {
-          "topicId": "mat_normal__mat_inference",
+          "topicId": "mat_normal_inference",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "mat_probability__mat_random_vars"
+        "mat_prob_random_vars"
       ],
       "isRoot": false
     },
     {
-      "topicId": "mat_normal__mat_inference",
+      "topicId": "mat_normal_inference",
       "name": "Normal Distribution and Statistical Inference",
       "nameZh": "正态分布与统计推断",
       "defaultOrder": 23,
@@ -852,7 +852,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "mat_probability__mat_random_vars",
+        "mat_prob_random_vars",
         "mat_random_vars"
       ],
       "isRoot": false

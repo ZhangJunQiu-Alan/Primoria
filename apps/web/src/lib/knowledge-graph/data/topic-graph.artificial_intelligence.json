@@ -7,8 +7,8 @@
   "topics": [
     {
       "topicId": "ai_search_part1",
-      "name": "Search (Part 1)",
-      "nameZh": "搜索 (第一部分)",
+      "name": "Search: Uninformed and Heuristics",
+      "nameZh": "搜索：无信息搜索与启发式",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -45,8 +45,8 @@
     },
     {
       "topicId": "ai_search_part2",
-      "name": "Search (Part 2)",
-      "nameZh": "搜索 (第二部分)",
+      "name": "Search: Informed and Adversarial",
+      "nameZh": "搜索：有信息与对抗搜索",
       "defaultOrder": 2,
       "conceptIds": [
         {
@@ -231,7 +231,7 @@
           "hard": true
         },
         {
-          "topicId": "ai_markov_models__ai_ml",
+          "topicId": "ai_inference_naive_bayes",
           "hard": true
         }
       ],
@@ -265,7 +265,7 @@
       ],
       "successors": [
         {
-          "topicId": "ai_markov_models__ai_ml",
+          "topicId": "ai_inference_naive_bayes",
           "hard": true
         }
       ],
@@ -275,7 +275,7 @@
       "isRoot": false
     },
     {
-      "topicId": "ai_markov_models__ai_ml",
+      "topicId": "ai_inference_naive_bayes",
       "name": "Probabilistic Inference and Naive Bayes",
       "nameZh": "概率推断与朴素贝叶斯",
       "defaultOrder": 8,
@@ -338,7 +338,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "ai_markov_models__ai_ml"
+        "ai_inference_naive_bayes"
       ],
       "isRoot": false
     }

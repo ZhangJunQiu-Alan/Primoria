@@ -19,10 +19,10 @@
     {
       "id": "dl_foundations_part1",
       "kind": "topic",
-      "name": "Neural Network Foundations (Part 1)",
+      "name": "Neural Network Foundations: Architecture",
       "topic": null,
       "default_order": 1,
-      "name_zh": "神经网络基础 (第一部分)"
+      "name_zh": "神经网络基础：网络结构"
     },
     {
       "id": "dl_perceptron",
@@ -54,10 +54,10 @@
     {
       "id": "dl_foundations_part2",
       "kind": "topic",
-      "name": "Neural Network Foundations (Part 2)",
+      "name": "Neural Network Foundations: Training",
       "topic": null,
       "default_order": 2,
-      "name_zh": "神经网络基础 (第二部分)"
+      "name_zh": "神经网络基础：训练与反向传播"
     },
     {
       "id": "dl_forward",
@@ -122,7 +122,7 @@
       "name_zh": "动量法"
     },
     {
-      "id": "dl_optim__dl_training",
+      "id": "dl_optim_stability",
       "kind": "topic",
       "name": "Optimization Stability",
       "topic": null,
@@ -133,7 +133,7 @@
       "id": "dl_optimizers",
       "kind": "concept",
       "name": "Adaptive Optimizers",
-      "topic": "dl_optim__dl_training",
+      "topic": "dl_optim_stability",
       "description": "Adaptive optimisers like Adam and RMSProp scaling per-parameter learning rates from gradient statistics, often speeding and stabilising training.",
       "default_order": 1,
       "name_zh": "高级优化器"
@@ -142,7 +142,7 @@
       "id": "dl_lr_schedule",
       "kind": "concept",
       "name": "Learning Rate Schedules",
-      "topic": "dl_optim__dl_training",
+      "topic": "dl_optim_stability",
       "description": "Learning-rate schedules varying the step size during training, such as warmup and decay, to improve convergence speed and final performance.",
       "default_order": 2,
       "name_zh": "学习率衰减策略"
@@ -151,7 +151,7 @@
       "id": "dl_vanishing_grad",
       "kind": "concept",
       "name": "Vanishing/Exploding Gradients",
-      "topic": "dl_optim__dl_training",
+      "topic": "dl_optim_stability",
       "description": "The vanishing and exploding gradient problem, where gradients shrink or grow across many layers, hampering the training of deep networks.",
       "default_order": 3,
       "name_zh": "梯度消失与梯度爆炸"
@@ -160,7 +160,7 @@
       "id": "dl_weight_init",
       "kind": "concept",
       "name": "Weight Initialization",
-      "topic": "dl_optim__dl_training",
+      "topic": "dl_optim_stability",
       "description": "Weight initialisation schemes such as Xavier and He setting initial parameter scales to preserve signal variance and ease optimisation.",
       "default_order": 4,
       "name_zh": "权重初始化"
@@ -236,7 +236,7 @@
       "name_zh": "池化"
     },
     {
-      "id": "dl_cnn__dl_rnn_seq",
+      "id": "dl_architectures_transfer",
       "kind": "topic",
       "name": "Deep Learning Architectures and Transfer",
       "topic": null,
@@ -247,7 +247,7 @@
       "id": "dl_cnn_arch",
       "kind": "concept",
       "name": "CNN Architectures",
-      "topic": "dl_cnn__dl_rnn_seq",
+      "topic": "dl_architectures_transfer",
       "description": "Classic convolutional architectures such as LeNet, AlexNet, and VGG, stacking convolution, activation, and pooling blocks for image recognition.",
       "default_order": 1,
       "name_zh": "CNN 架构"
@@ -256,7 +256,7 @@
       "id": "dl_resnet",
       "kind": "concept",
       "name": "Residual Networks",
-      "topic": "dl_cnn__dl_rnn_seq",
+      "topic": "dl_architectures_transfer",
       "description": "Residual networks adding skip connections that let layers learn residual functions, enabling stable training of very deep networks.",
       "default_order": 2,
       "name_zh": "残差网络 (ResNet)"
@@ -265,7 +265,7 @@
       "id": "dl_transfer_learning",
       "kind": "concept",
       "name": "Transfer Learning",
-      "topic": "dl_cnn__dl_rnn_seq",
+      "topic": "dl_architectures_transfer",
       "description": "Transfer learning reusing features from a network pretrained on a large dataset, fine-tuning them for a related task with limited data.",
       "default_order": 3,
       "name_zh": "迁移学习"
@@ -274,7 +274,7 @@
       "id": "dl_rnn",
       "kind": "concept",
       "name": "Recurrent Neural Networks",
-      "topic": "dl_cnn__dl_rnn_seq",
+      "topic": "dl_architectures_transfer",
       "description": "Recurrent neural networks processing sequences by maintaining a hidden state updated at each step and sharing parameters across time.",
       "default_order": 4,
       "name_zh": "循环神经网络"
@@ -326,10 +326,10 @@
     {
       "id": "dl_attn_part1",
       "kind": "topic",
-      "name": "Attention and Transformers (Part 1)",
+      "name": "Attention and Transformers: Mechanisms",
       "topic": null,
       "default_order": 9,
-      "name_zh": "注意力与Transformer (第一部分)"
+      "name_zh": "注意力与Transformer：注意力机制"
     },
     {
       "id": "dl_attention",
@@ -361,10 +361,10 @@
     {
       "id": "dl_attn_part2",
       "kind": "topic",
-      "name": "Attention and Transformers (Part 2)",
+      "name": "Attention and Transformers: Architecture and Pretraining",
       "topic": null,
       "default_order": 10,
-      "name_zh": "注意力与Transformer (第二部分)"
+      "name_zh": "注意力与Transformer：架构与预训练"
     },
     {
       "id": "dl_positional",
@@ -396,10 +396,10 @@
     {
       "id": "dl_generative_part1",
       "kind": "topic",
-      "name": "Generative Models (Part 1)",
+      "name": "Generative Models: Autoencoders and GANs",
       "topic": null,
       "default_order": 11,
-      "name_zh": "生成模型 (第一部分)"
+      "name_zh": "生成模型：自编码器与GAN"
     },
     {
       "id": "dl_autoencoder",
@@ -431,10 +431,10 @@
     {
       "id": "dl_generative_part2",
       "kind": "topic",
-      "name": "Generative Models (Part 2)",
+      "name": "Generative Models: Diffusion and Flows",
       "topic": null,
       "default_order": 12,
-      "name_zh": "生成模型 (第二部分)"
+      "name_zh": "生成模型：扩散模型与流模型"
     },
     {
       "id": "dl_gan_training",

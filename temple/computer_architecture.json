@@ -134,7 +134,7 @@
       "name_zh": "函数调用约定"
     },
     {
-      "id": "topic_riscv__topic_sds",
+      "id": "topic_riscv_logic",
       "kind": "topic",
       "name": "From RISC-V Instructions to Digital Logic",
       "topic": null,
@@ -143,7 +143,7 @@
     },
     {
       "id": "concept_riscv_formats",
-      "topic": "topic_riscv__topic_sds",
+      "topic": "topic_riscv_logic",
       "name": "Instruction Formats",
       "kind": "concept",
       "default_order": 1,
@@ -152,7 +152,7 @@
     },
     {
       "id": "concept_call_pipeline",
-      "topic": "topic_riscv__topic_sds",
+      "topic": "topic_riscv_logic",
       "name": "Compiler, Assembler, Linker, Loader",
       "kind": "concept",
       "default_order": 2,
@@ -161,7 +161,7 @@
     },
     {
       "id": "concept_boolean_algebra",
-      "topic": "topic_riscv__topic_sds",
+      "topic": "topic_riscv_logic",
       "name": "Boolean Algebra & Logic Gates",
       "kind": "concept",
       "default_order": 3,
@@ -170,7 +170,7 @@
     },
     {
       "id": "concept_combinational_logic",
-      "topic": "topic_riscv__topic_sds",
+      "topic": "topic_riscv_logic",
       "name": "Combinational Logic Blocks",
       "kind": "concept",
       "default_order": 4,
@@ -248,7 +248,7 @@
       "name_zh": "流水线原理"
     },
     {
-      "id": "topic_cpu__topic_memory",
+      "id": "topic_pipeline_cache",
       "kind": "topic",
       "name": "Pipelines and Cache Architecture",
       "topic": null,
@@ -257,7 +257,7 @@
     },
     {
       "id": "concept_pipeline_hazards",
-      "topic": "topic_cpu__topic_memory",
+      "topic": "topic_pipeline_cache",
       "name": "Pipeline Hazards & Forwarding",
       "kind": "concept",
       "default_order": 1,
@@ -266,7 +266,7 @@
     },
     {
       "id": "concept_branch_prediction",
-      "topic": "topic_cpu__topic_memory",
+      "topic": "topic_pipeline_cache",
       "name": "Branch Prediction",
       "kind": "concept",
       "default_order": 2,
@@ -275,7 +275,7 @@
     },
     {
       "id": "concept_cache_basics",
-      "topic": "topic_cpu__topic_memory",
+      "topic": "topic_pipeline_cache",
       "name": "Cache Basics & Direct Mapped",
       "kind": "concept",
       "default_order": 3,
@@ -284,7 +284,7 @@
     },
     {
       "id": "concept_associative_caches",
-      "topic": "topic_cpu__topic_memory",
+      "topic": "topic_pipeline_cache",
       "name": "Associative Caches",
       "kind": "concept",
       "default_order": 4,
@@ -362,7 +362,7 @@
       "name_zh": "线程级并行(OpenMP)"
     },
     {
-      "id": "topic_parallelism__topic_io_dep",
+      "id": "topic_parallel_io",
       "kind": "topic",
       "name": "Parallel Systems and I/O",
       "topic": null,
@@ -371,7 +371,7 @@
     },
     {
       "id": "concept_cache_coherence",
-      "topic": "topic_parallelism__topic_io_dep",
+      "topic": "topic_parallel_io",
       "name": "Cache Coherence & False Sharing",
       "kind": "concept",
       "default_order": 1,
@@ -380,7 +380,7 @@
     },
     {
       "id": "concept_warehouse_scale",
-      "topic": "topic_parallelism__topic_io_dep",
+      "topic": "topic_parallel_io",
       "name": "Warehouse-Scale Computing",
       "kind": "concept",
       "default_order": 2,
@@ -389,7 +389,7 @@
     },
     {
       "id": "concept_memory_mapped_io",
-      "topic": "topic_parallelism__topic_io_dep",
+      "topic": "topic_parallel_io",
       "name": "Memory-Mapped I/O",
       "kind": "concept",
       "default_order": 3,
@@ -398,7 +398,7 @@
     },
     {
       "id": "concept_polling_interrupts",
-      "topic": "topic_parallelism__topic_io_dep",
+      "topic": "topic_parallel_io",
       "name": "Polling and Interrupts",
       "kind": "concept",
       "default_order": 4,

@@ -130,8 +130,8 @@
     },
     {
       "topicId": "net_transport_part1",
-      "name": "Transport Layer (Part 1)",
-      "nameZh": "传输层 (第一部分)",
+      "name": "Transport Layer: UDP and TCP",
+      "nameZh": "传输层：UDP 与 TCP",
       "defaultOrder": 4,
       "conceptIds": [
         {
@@ -170,8 +170,8 @@
     },
     {
       "topicId": "net_transport_part2",
-      "name": "Transport Layer (Part 2)",
-      "nameZh": "传输层 (第二部分)",
+      "name": "Transport Layer: Reliability and Control",
+      "nameZh": "传输层：可靠传输与拥塞控制",
       "defaultOrder": 5,
       "conceptIds": [
         {

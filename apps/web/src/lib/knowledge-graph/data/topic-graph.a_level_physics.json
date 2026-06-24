@@ -32,7 +32,7 @@
       ],
       "successors": [
         {
-          "topicId": "phy_measurement__phy_kinematics",
+          "topicId": "phy_measurement_motion",
           "hard": true
         }
       ],
@@ -40,7 +40,7 @@
       "isRoot": true
     },
     {
-      "topicId": "phy_measurement__phy_kinematics",
+      "topicId": "phy_measurement_motion",
       "name": "Measurement Uncertainty and Motion",
       "nameZh": "测量不确定度与运动",
       "defaultOrder": 2,
@@ -116,7 +116,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_measurement__phy_kinematics"
+        "phy_measurement_motion"
       ],
       "isRoot": false
     },
@@ -147,7 +147,7 @@
       ],
       "successors": [
         {
-          "topicId": "phy_dynamics__phy_forces",
+          "topicId": "phy_momentum_forces",
           "hard": true
         },
         {
@@ -160,12 +160,12 @@
         }
       ],
       "prereqTopics": [
-        "phy_measurement__phy_kinematics"
+        "phy_measurement_motion"
       ],
       "isRoot": false
     },
     {
-      "topicId": "phy_dynamics__phy_forces",
+      "topicId": "phy_momentum_forces",
       "name": "Momentum and Forces",
       "nameZh": "动量与力",
       "defaultOrder": 5,
@@ -241,7 +241,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_dynamics__phy_forces"
+        "phy_momentum_forces"
       ],
       "isRoot": false
     },
@@ -324,7 +324,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_dynamics__phy_forces",
+        "phy_momentum_forces",
         "phy_work_energy"
       ],
       "isRoot": false
@@ -356,7 +356,7 @@
       ],
       "successors": [
         {
-          "topicId": "phy_waves__phy_superposition",
+          "topicId": "phy_waves_superposition",
           "hard": true
         },
         {
@@ -368,7 +368,7 @@
       "isRoot": true
     },
     {
-      "topicId": "phy_waves__phy_superposition",
+      "topicId": "phy_waves_superposition",
       "name": "Wave Phenomena and Superposition",
       "nameZh": "波现象与叠加",
       "defaultOrder": 10,
@@ -440,7 +440,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_waves__phy_superposition"
+        "phy_waves_superposition"
       ],
       "isRoot": false
     },
@@ -471,7 +471,7 @@
       ],
       "successors": [
         {
-          "topicId": "phy_electricity__phy_dc_circuits",
+          "topicId": "phy_circuits_kirchhoff",
           "hard": true
         },
         {
@@ -487,7 +487,7 @@
       "isRoot": true
     },
     {
-      "topicId": "phy_electricity__phy_dc_circuits",
+      "topicId": "phy_circuits_kirchhoff",
       "name": "Electrical Characteristics and Kirchhoff's Laws",
       "nameZh": "电学特性与基尔霍夫定律",
       "defaultOrder": 13,
@@ -549,7 +549,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_electricity__phy_dc_circuits"
+        "phy_circuits_kirchhoff"
       ],
       "isRoot": false
     },
@@ -589,7 +589,7 @@
         }
       ],
       "prereqTopics": [
-        "phy_measurement__phy_kinematics",
+        "phy_measurement_motion",
         "phy_dynamics"
       ],
       "isRoot": false
@@ -713,7 +713,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_dynamics__phy_forces"
+        "phy_momentum_forces"
       ],
       "isRoot": false
     },
@@ -944,7 +944,7 @@
         }
       ],
       "prereqTopics": [
-        "phy_waves__phy_superposition"
+        "phy_waves_superposition"
       ],
       "isRoot": false
     },

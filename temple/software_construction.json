@@ -16,7 +16,7 @@
   },
   "nodes": [
     {
-      "id": "t_mit6031_fundamentals__t_mit6031_specifications",
+      "id": "t_mit6031_foundations_specs",
       "kind": "topic",
       "name": "Software Construction Foundations and Specifications",
       "topic": null,
@@ -27,7 +27,7 @@
       "id": "c_mit6031_static_checking",
       "kind": "concept",
       "name": "Static Checking",
-      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
+      "topic": "t_mit6031_foundations_specs",
       "description": "Catching errors before run time through static type checking, contrasted with dynamic checking, to make bugs visible early and cheaply.",
       "default_order": 1,
       "name_zh": "静态检查"
@@ -36,7 +36,7 @@
       "id": "c_mit6031_immutability",
       "kind": "concept",
       "name": "Immutability",
-      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
+      "topic": "t_mit6031_foundations_specs",
       "description": "Designing types whose values cannot change after construction, eliminating aliasing bugs and making code easier to reason about and share safely.",
       "default_order": 2,
       "name_zh": "不可变性"
@@ -45,7 +45,7 @@
       "id": "c_mit6031_specs",
       "kind": "concept",
       "name": "Specifications",
-      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
+      "topic": "t_mit6031_foundations_specs",
       "description": "Contracts defining a method's behaviour through preconditions that clients must satisfy and postconditions the implementation guarantees in return.",
       "default_order": 3,
       "name_zh": "规格"
@@ -54,7 +54,7 @@
       "id": "c_mit6031_testing",
       "kind": "concept",
       "name": "Testing Strategies",
-      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
+      "topic": "t_mit6031_foundations_specs",
       "description": "Designing test suites systematically by partitioning the input space into equivalence classes and probing boundary values to expose defects.",
       "default_order": 4,
       "name_zh": "测试策略"
@@ -63,7 +63,7 @@
       "id": "c_mit6031_exceptions",
       "kind": "concept",
       "name": "Exceptions",
-      "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
+      "topic": "t_mit6031_foundations_specs",
       "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs.",
       "default_order": 5,
       "name_zh": "异常"

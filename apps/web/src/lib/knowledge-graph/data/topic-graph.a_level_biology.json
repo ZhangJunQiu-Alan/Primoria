@@ -38,7 +38,7 @@
       ],
       "successors": [
         {
-          "topicId": "bio_cell_cycle__bio_nucleic_acids",
+          "topicId": "bio_chromosomes_dna",
           "hard": true
         }
       ],
@@ -92,11 +92,11 @@
           "hard": true
         },
         {
-          "topicId": "bio_cell_cycle__bio_nucleic_acids",
+          "topicId": "bio_chromosomes_dna",
           "hard": false
         },
         {
-          "topicId": "bio_transport_mammals__bio_gas_exchange",
+          "topicId": "bio_circulation_gas_exchange",
           "hard": true
         },
         {
@@ -174,7 +174,7 @@
           "hard": true
         },
         {
-          "topicId": "bio_transport_mammals__bio_gas_exchange",
+          "topicId": "bio_circulation_gas_exchange",
           "hard": true
         },
         {
@@ -192,7 +192,7 @@
       "isRoot": false
     },
     {
-      "topicId": "bio_cell_cycle__bio_nucleic_acids",
+      "topicId": "bio_chromosomes_dna",
       "name": "Chromosomes and DNA Replication",
       "nameZh": "染色体与 DNA 复制",
       "defaultOrder": 5,
@@ -278,7 +278,7 @@
         }
       ],
       "prereqTopics": [
-        "bio_cell_cycle__bio_nucleic_acids"
+        "bio_chromosomes_dna"
       ],
       "isRoot": false
     },
@@ -314,7 +314,7 @@
       "isRoot": false
     },
     {
-      "topicId": "bio_transport_mammals__bio_gas_exchange",
+      "topicId": "bio_circulation_gas_exchange",
       "name": "Circulation and Gas Exchange",
       "nameZh": "循环运输与气体交换",
       "defaultOrder": 8,
@@ -566,7 +566,7 @@
         }
       ],
       "prereqTopics": [
-        "bio_cell_cycle__bio_nucleic_acids",
+        "bio_chromosomes_dna",
         "bio_nucleic_acids"
       ],
       "isRoot": false
@@ -666,7 +666,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "bio_cell_cycle__bio_nucleic_acids"
+        "bio_chromosomes_dna"
       ],
       "isRoot": false
     }

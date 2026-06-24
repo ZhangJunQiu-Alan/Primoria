@@ -52,7 +52,7 @@
       "name_zh": "标量与矢量"
     },
     {
-      "id": "phy_measurement__phy_kinematics",
+      "id": "phy_measurement_motion",
       "kind": "topic",
       "name": "Measurement Uncertainty and Motion",
       "topic": null,
@@ -63,7 +63,7 @@
       "id": "phy_uncertainty",
       "kind": "concept",
       "name": "Errors and Uncertainties",
-      "topic": "phy_measurement__phy_kinematics",
+      "topic": "phy_measurement_motion",
       "description": "Systematic and random errors in measurement, and expressing the uncertainty of a reading as an absolute, fractional, or percentage uncertainty.",
       "default_order": 1,
       "name_zh": "误差与不确定度"
@@ -72,7 +72,7 @@
       "id": "phy_combine_uncertainty",
       "kind": "concept",
       "name": "Combining Uncertainties",
-      "topic": "phy_measurement__phy_kinematics",
+      "topic": "phy_measurement_motion",
       "description": "Combining uncertainties through calculations by adding absolute uncertainties for sums and fractional uncertainties for products and powers.",
       "default_order": 2,
       "name_zh": "不确定度合成"
@@ -81,7 +81,7 @@
       "id": "phy_motion_quantities",
       "kind": "concept",
       "name": "Displacement Velocity Acceleration",
-      "topic": "phy_measurement__phy_kinematics",
+      "topic": "phy_measurement_motion",
       "description": "Displacement, velocity, and acceleration as related vector quantities describing motion, defined through rates of change of position.",
       "default_order": 3,
       "name_zh": "位移速度加速度"
@@ -90,7 +90,7 @@
       "id": "phy_suvat",
       "kind": "concept",
       "name": "Equations of Motion",
-      "topic": "phy_measurement__phy_kinematics",
+      "topic": "phy_measurement_motion",
       "description": "The equations of motion for uniform acceleration relating displacement, initial and final velocity, acceleration, and time.",
       "default_order": 4,
       "name_zh": "运动方程"
@@ -166,7 +166,7 @@
       "name_zh": "线性动量"
     },
     {
-      "id": "phy_dynamics__phy_forces",
+      "id": "phy_momentum_forces",
       "kind": "topic",
       "name": "Momentum and Forces",
       "topic": null,
@@ -177,7 +177,7 @@
       "id": "phy_momentum_conservation",
       "kind": "concept",
       "name": "Conservation of Momentum",
-      "topic": "phy_dynamics__phy_forces",
+      "topic": "phy_momentum_forces",
       "description": "The principle of conservation of momentum, where total momentum is conserved in a closed system with no external resultant force.",
       "default_order": 1,
       "name_zh": "动量守恒"
@@ -186,7 +186,7 @@
       "id": "phy_impulse",
       "kind": "concept",
       "name": "Impulse and Collisions",
-      "topic": "phy_dynamics__phy_forces",
+      "topic": "phy_momentum_forces",
       "description": "Impulse as the product of force and time, equal to the change in momentum, applied to analyse elastic and inelastic collisions.",
       "default_order": 2,
       "name_zh": "冲量与碰撞"
@@ -195,7 +195,7 @@
       "id": "phy_force_types",
       "kind": "concept",
       "name": "Types of Force",
-      "topic": "phy_dynamics__phy_forces",
+      "topic": "phy_momentum_forces",
       "description": "The types of force acting on bodies, including gravitational, normal contact, friction, tension, and upthrust forces.",
       "default_order": 3,
       "name_zh": "力的类型"
@@ -204,7 +204,7 @@
       "id": "phy_moments",
       "kind": "concept",
       "name": "Moments and Couples",
-      "topic": "phy_dynamics__phy_forces",
+      "topic": "phy_momentum_forces",
       "description": "The moment of a force as force times perpendicular distance, and couples producing rotation, with the principle of moments for equilibrium.",
       "default_order": 4,
       "name_zh": "力矩与力偶"
@@ -368,7 +368,7 @@
       "name_zh": "波强度"
     },
     {
-      "id": "phy_waves__phy_superposition",
+      "id": "phy_waves_superposition",
       "kind": "topic",
       "name": "Wave Phenomena and Superposition",
       "topic": null,
@@ -379,7 +379,7 @@
       "id": "phy_em_spectrum",
       "kind": "concept",
       "name": "Electromagnetic Spectrum",
-      "topic": "phy_waves__phy_superposition",
+      "topic": "phy_waves_superposition",
       "description": "The electromagnetic spectrum of transverse waves travelling at the speed of light, ranging from radio waves to gamma rays.",
       "default_order": 1,
       "name_zh": "电磁波谱"
@@ -388,7 +388,7 @@
       "id": "phy_doppler",
       "kind": "concept",
       "name": "Doppler Effect",
-      "topic": "phy_waves__phy_superposition",
+      "topic": "phy_waves_superposition",
       "description": "The Doppler effect, the change in observed frequency when a wave source and observer move relative to one another.",
       "default_order": 2,
       "name_zh": "多普勒效应"
@@ -397,7 +397,7 @@
       "id": "phy_superposition_principle",
       "kind": "concept",
       "name": "Principle of Superposition",
-      "topic": "phy_waves__phy_superposition",
+      "topic": "phy_waves_superposition",
       "description": "The principle of superposition stating that when waves meet, the resultant displacement is the vector sum of the individual displacements.",
       "default_order": 3,
       "name_zh": "叠加原理"
@@ -406,7 +406,7 @@
       "id": "phy_interference",
       "kind": "concept",
       "name": "Two-Source Interference",
-      "topic": "phy_waves__phy_superposition",
+      "topic": "phy_waves_superposition",
       "description": "Two-source interference producing constructive and destructive fringes where coherent waves meet in phase and out of phase.",
       "default_order": 4,
       "name_zh": "双源干涉"
@@ -482,7 +482,7 @@
       "name_zh": "电阻与欧姆定律"
     },
     {
-      "id": "phy_electricity__phy_dc_circuits",
+      "id": "phy_circuits_kirchhoff",
       "kind": "topic",
       "name": "Electrical Characteristics and Kirchhoff's Laws",
       "topic": null,
@@ -493,7 +493,7 @@
       "id": "phy_resistivity",
       "kind": "concept",
       "name": "Resistivity",
-      "topic": "phy_electricity__phy_dc_circuits",
+      "topic": "phy_circuits_kirchhoff",
       "description": "Resistivity as a material property relating a conductor's resistance to its length and cross-sectional area.",
       "default_order": 1,
       "name_zh": "电阻率"
@@ -502,7 +502,7 @@
       "id": "phy_iv_characteristics",
       "kind": "concept",
       "name": "I-V Characteristics",
-      "topic": "phy_electricity__phy_dc_circuits",
+      "topic": "phy_circuits_kirchhoff",
       "description": "Current-voltage characteristics of components such as resistors, filament lamps, and diodes, revealing their electrical behaviour.",
       "default_order": 2,
       "name_zh": "I-V特性"
@@ -511,7 +511,7 @@
       "id": "phy_kirchhoff",
       "kind": "concept",
       "name": "Kirchhoff's Laws",
-      "topic": "phy_electricity__phy_dc_circuits",
+      "topic": "phy_circuits_kirchhoff",
       "description": "Kirchhoff's first and second laws expressing the conservation of charge at junctions and of energy around circuit loops.",
       "default_order": 3,
       "name_zh": "基尔霍夫定律"

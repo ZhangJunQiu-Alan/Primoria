@@ -54,3 +54,40 @@ export function createTutorModel(settings: TutorProviderSettings = {}, options: 
     },
   });
 }
+
+// Lightweight, deterministic, non-streaming model for one-shot utility calls
+// (e.g. cold-start KG routing). Temperature 0 keeps decisions reproducible.
+export function createUtilityModel(
+  settings: TutorProviderSettings = {},
+  options: { temperature?: number; maxTokens?: number; timeoutMs?: number } = {},
+) {
+  const { provider, baseUrl, apiKey, model } = resolveProviderSettings(settings);
+  const temperature = options.temperature ?? 0;
+  const maxTokens = options.maxTokens ?? 512;
+  const timeout = options.timeoutMs ?? 12_000;
+  if (provider === "anthropic-compatible") {
+    return new ChatAnthropic({
+      model,
+      apiKey,
+      anthropicApiUrl: baseUrl?.replace(/\/$/, ""),
+      temperature,
+      maxTokens,
+      streaming: false,
+      maxRetries: 1,
+    });
+  }
+
+  if (!baseUrl) throw new Error("Missing OPENAI_BASE_URL");
+  return new ChatOpenAI({
+    model,
+    apiKey,
+    temperature,
+    maxTokens,
+    streaming: false,
+    maxRetries: 1,
+    timeout,
+    configuration: {
+      baseURL: baseUrl.replace(/\/$/, ""),
+    },
+  });
+}

@@ -1,5 +1,6 @@
 import { classifyEntry, pickDominantGraph, type BroadMenuItem, type PositioningParams, type PositioningResult } from "./positioning";
 import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse } from "./search";
+import { buildGraphCandidates, routeDominantGraph } from "./graph-router";
 import { detectKgLanguage } from "./display-name";
 import type { CourseContext, CourseContextTopic } from "./course-context";
 
@@ -42,9 +43,14 @@ export async function positionLearningGoal(
 
   // Cross-graph recall (no graphId): collapse to the dominant subject so the rest
   // of positioning runs within a single graph. A concrete graphId is unchanged.
+  // LLM routing picks the subject among the recalled candidates (handles aliases
+  // and cross-language goals); it falls back to deterministic pickDominantGraph
+  // whenever it is disabled, errors, or returns no valid choice.
   let search = rawSearch;
   if (rawSearch.graphId === ALL_KG_GRAPHS) {
-    const dominant = pickDominantGraph(rawSearch.results);
+    const candidates = buildGraphCandidates(rawSearch.results);
+    const routed = await routeDominantGraph(input.query, candidates);
+    const dominant = routed ?? pickDominantGraph(rawSearch.results);
     if (dominant) {
       search = {
         ...rawSearch,

@@ -51,7 +51,7 @@
       "name_zh": "微分法则"
     },
     {
-      "id": "t_1801_differentiation__t_1801_apps_diff",
+      "id": "t_1801_diff_techniques",
       "kind": "topic",
       "name": "Differentiation Techniques and Related Rates",
       "topic": null,
@@ -62,7 +62,7 @@
       "id": "c_1801_chain_rule",
       "kind": "concept",
       "name": "Chain Rule",
-      "topic": "t_1801_differentiation__t_1801_apps_diff",
+      "topic": "t_1801_diff_techniques",
       "description": "The chain rule differentiating a composite function as the derivative of the outer function times the derivative of the inner function.",
       "default_order": 1,
       "name_zh": "链式法则"
@@ -71,7 +71,7 @@
       "id": "c_1801_implicit_diff",
       "kind": "concept",
       "name": "Implicit Differentiation",
-      "topic": "t_1801_differentiation__t_1801_apps_diff",
+      "topic": "t_1801_diff_techniques",
       "description": "Implicit differentiation finding derivatives of relations not solved for one variable by differentiating both sides and solving for the derivative.",
       "default_order": 2,
       "name_zh": "隐函数微分"
@@ -80,7 +80,7 @@
       "id": "c_1801_related_rates",
       "kind": "concept",
       "name": "Related Rates",
-      "topic": "t_1801_differentiation__t_1801_apps_diff",
+      "topic": "t_1801_diff_techniques",
       "description": "Related-rates problems linking the time derivatives of related quantities through an equation, solving for one unknown rate given the others.",
       "default_order": 3,
       "name_zh": "相关变化率"
@@ -200,7 +200,7 @@
       "name_zh": "三角换元"
     },
     {
-      "id": "t_1801_tech_int__t_1801_apps_int",
+      "id": "t_1801_int_techniques_area",
       "kind": "topic",
       "name": "Integration Techniques and Area",
       "topic": null,
@@ -211,7 +211,7 @@
       "id": "c_1801_partial_fractions",
       "kind": "concept",
       "name": "Partial Fractions",
-      "topic": "t_1801_tech_int__t_1801_apps_int",
+      "topic": "t_1801_int_techniques_area",
       "description": "Partial-fraction decomposition rewriting a rational function as a sum of simpler fractions that can be integrated term by term.",
       "default_order": 1,
       "name_zh": "部分分式"
@@ -220,7 +220,7 @@
       "id": "c_1801_improper_int",
       "kind": "concept",
       "name": "Improper Integrals",
-      "topic": "t_1801_tech_int__t_1801_apps_int",
+      "topic": "t_1801_int_techniques_area",
       "description": "Improper integrals defined by limits, evaluating integrals over infinite intervals or with unbounded integrands and testing for convergence.",
       "default_order": 2,
       "name_zh": "广义积分"
@@ -229,7 +229,7 @@
       "id": "c_1801_area_curves",
       "kind": "concept",
       "name": "Area Between Curves",
-      "topic": "t_1801_tech_int__t_1801_apps_int",
+      "topic": "t_1801_int_techniques_area",
       "description": "Computing the area between two curves by integrating the difference of their functions over the interval where they bound a region.",
       "default_order": 3,
       "name_zh": "曲线间面积"
@@ -481,7 +481,7 @@
       "name_zh": "三重积分"
     },
     {
-      "id": "t_1802_multiple_int__t_1802_vector_calc",
+      "id": "t_1802_coord_vector_fields",
       "kind": "topic",
       "name": "Coordinate Changes and Vector Fields",
       "topic": null,
@@ -492,7 +492,7 @@
       "id": "c_1802_cyl_spherical",
       "kind": "concept",
       "name": "Cylindrical and Spherical Coordinates",
-      "topic": "t_1802_multiple_int__t_1802_vector_calc",
+      "topic": "t_1802_coord_vector_fields",
       "description": "Triple integration in cylindrical and spherical coordinates, with appropriate volume elements simplifying problems with axial or spherical symmetry.",
       "default_order": 1,
       "name_zh": "柱面与球坐标"
@@ -501,7 +501,7 @@
       "id": "c_1802_jacobians",
       "kind": "concept",
       "name": "Change of Variables",
-      "topic": "t_1802_multiple_int__t_1802_vector_calc",
+      "topic": "t_1802_coord_vector_fields",
       "description": "Change of variables in multiple integrals using the Jacobian determinant to account for how the transformation scales area or volume.",
       "default_order": 2,
       "name_zh": "变量变换"
@@ -510,7 +510,7 @@
       "id": "c_1802_vector_fields",
       "kind": "concept",
       "name": "Vector Fields",
-      "topic": "t_1802_multiple_int__t_1802_vector_calc",
+      "topic": "t_1802_coord_vector_fields",
       "description": "Vector fields assigning a vector to each point, and line integrals accumulating a field's effect along a curve, modelling work and flow.",
       "default_order": 3,
       "name_zh": "向量场"

@@ -42,7 +42,7 @@
           "hard": true
         },
         {
-          "topicId": "t_mit1806_determinants__t_mit1806_eigenvalues",
+          "topicId": "t_mit1806_determinants_eigen",
           "hard": true
         },
         {
@@ -133,7 +133,7 @@
       "isRoot": false
     },
     {
-      "topicId": "t_mit1806_determinants__t_mit1806_eigenvalues",
+      "topicId": "t_mit1806_determinants_eigen",
       "name": "Determinants and Eigenvalue Foundations",
       "nameZh": "行列式与特征值基础",
       "defaultOrder": 4,
@@ -212,7 +212,7 @@
         }
       ],
       "prereqTopics": [
-        "t_mit1806_determinants__t_mit1806_eigenvalues"
+        "t_mit1806_determinants_eigen"
       ],
       "isRoot": false
     },

@@ -14,6 +14,7 @@ const baseParams = {
   conceptHighFloor: 0.5,
   conceptMargin: 0.06,
   menuSize: 5,
+  menuSimilarityWindow: 0.1,
 };
 const baseDiagnostics = { maxSimilarity: 0, topicMass: [], topConcept: null };
 

@@ -7,8 +7,8 @@
   "topics": [
     {
       "topicId": "topic_week0",
-      "name": "Week 0: Scratch",
-      "nameZh": "第 0 周：Scratch",
+      "name": "Scratch",
+      "nameZh": "Scratch",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -32,11 +32,11 @@
       ],
       "successors": [
         {
-          "topicId": "topic_week0__topic_week1",
+          "topicId": "topic_control_flow_c",
           "hard": true
         },
         {
-          "topicId": "topic_week3__topic_week4",
+          "topicId": "topic_complexity_memory",
           "hard": true
         }
       ],
@@ -44,7 +44,7 @@
       "isRoot": true
     },
     {
-      "topicId": "topic_week0__topic_week1",
+      "topicId": "topic_control_flow_c",
       "name": "Control Flow and C Foundations",
       "nameZh": "控制流与 C 语言基础",
       "defaultOrder": 2,
@@ -78,7 +78,7 @@
           "hard": true
         },
         {
-          "topicId": "topic_week5__topic_week6",
+          "topicId": "topic_adv_data_python",
           "hard": true
         }
       ],
@@ -89,8 +89,8 @@
     },
     {
       "topicId": "topic_week1",
-      "name": "Week 1: C",
-      "nameZh": "第1周：C",
+      "name": "C Programming",
+      "nameZh": "C 语言",
       "defaultOrder": 3,
       "conceptIds": [
         {
@@ -118,19 +118,19 @@
           "hard": true
         },
         {
-          "topicId": "topic_week3__topic_week4",
+          "topicId": "topic_complexity_memory",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "topic_week0__topic_week1"
+        "topic_control_flow_c"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_week2",
-      "name": "Week 2: Arrays",
-      "nameZh": "第2周：数组",
+      "name": "Arrays",
+      "nameZh": "数组",
       "defaultOrder": 4,
       "conceptIds": [
         {
@@ -168,7 +168,7 @@
           "hard": true
         },
         {
-          "topicId": "topic_week5__topic_week6",
+          "topicId": "topic_adv_data_python",
           "hard": true
         },
         {
@@ -177,15 +177,15 @@
         }
       ],
       "prereqTopics": [
-        "topic_week0__topic_week1",
+        "topic_control_flow_c",
         "topic_week1"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_week3",
-      "name": "Week 3: Algorithms",
-      "nameZh": "第3周：算法",
+      "name": "Algorithms",
+      "nameZh": "算法",
       "defaultOrder": 5,
       "conceptIds": [
         {
@@ -209,7 +209,7 @@
       ],
       "successors": [
         {
-          "topicId": "topic_week3__topic_week4",
+          "topicId": "topic_complexity_memory",
           "hard": true
         }
       ],
@@ -219,7 +219,7 @@
       "isRoot": false
     },
     {
-      "topicId": "topic_week3__topic_week4",
+      "topicId": "topic_complexity_memory",
       "name": "Algorithmic Complexity and Memory",
       "nameZh": "算法复杂度与内存",
       "defaultOrder": 6,
@@ -262,8 +262,8 @@
     },
     {
       "topicId": "topic_week4",
-      "name": "Week 4: Memory",
-      "nameZh": "第4周：内存",
+      "name": "Memory",
+      "nameZh": "内存",
       "defaultOrder": 7,
       "conceptIds": [
         {
@@ -292,14 +292,14 @@
         }
       ],
       "prereqTopics": [
-        "topic_week3__topic_week4"
+        "topic_complexity_memory"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_week5",
-      "name": "Week 5: Data Structures",
-      "nameZh": "第5周：数据结构",
+      "name": "Data Structures",
+      "nameZh": "数据结构",
       "defaultOrder": 8,
       "conceptIds": [
         {
@@ -323,7 +323,7 @@
       ],
       "successors": [
         {
-          "topicId": "topic_week5__topic_week6",
+          "topicId": "topic_adv_data_python",
           "hard": true
         },
         {
@@ -333,13 +333,13 @@
       ],
       "prereqTopics": [
         "topic_week2",
-        "topic_week3__topic_week4",
+        "topic_complexity_memory",
         "topic_week4"
       ],
       "isRoot": false
     },
     {
-      "topicId": "topic_week5__topic_week6",
+      "topicId": "topic_adv_data_python",
       "name": "Advanced Data Structures and Python",
       "nameZh": "高级数据结构与 Python",
       "defaultOrder": 9,
@@ -378,7 +378,7 @@
         }
       ],
       "prereqTopics": [
-        "topic_week0__topic_week1",
+        "topic_control_flow_c",
         "topic_week2",
         "topic_week5"
       ],
@@ -386,8 +386,8 @@
     },
     {
       "topicId": "topic_week6",
-      "name": "Week 6: Python",
-      "nameZh": "第6周：Python",
+      "name": "Python",
+      "nameZh": "Python",
       "defaultOrder": 10,
       "conceptIds": [
         {
@@ -418,14 +418,14 @@
       "prereqTopics": [
         "topic_week2",
         "topic_week5",
-        "topic_week5__topic_week6"
+        "topic_adv_data_python"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_week7",
-      "name": "Week 7: SQL",
-      "nameZh": "第7周：SQL",
+      "name": "SQL",
+      "nameZh": "SQL",
       "defaultOrder": 11,
       "conceptIds": [
         {
@@ -461,8 +461,8 @@
     },
     {
       "topicId": "topic_week8",
-      "name": "Week 8: HTML, CSS, JavaScript",
-      "nameZh": "第8周：HTML, CSS, JavaScript",
+      "name": "HTML, CSS, JavaScript",
+      "nameZh": "HTML、CSS、JavaScript",
       "defaultOrder": 12,
       "conceptIds": [
         {
@@ -497,14 +497,14 @@
         }
       ],
       "prereqTopics": [
-        "topic_week5__topic_week6"
+        "topic_adv_data_python"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_week9",
-      "name": "Week 9: Flask",
-      "nameZh": "第9周：Flask",
+      "name": "Flask",
+      "nameZh": "Flask",
       "defaultOrder": 13,
       "conceptIds": [
         {
@@ -528,18 +528,18 @@
       ],
       "successors": [
         {
-          "topicId": "topic_week9__topic_week10",
+          "topicId": "topic_web_state_security",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "topic_week5__topic_week6",
+        "topic_adv_data_python",
         "topic_week8"
       ],
       "isRoot": false
     },
     {
-      "topicId": "topic_week9__topic_week10",
+      "topicId": "topic_web_state_security",
       "name": "Web State, APIs and Security",
       "nameZh": "Web 状态、API 与安全",
       "defaultOrder": 14,
@@ -576,8 +576,8 @@
     },
     {
       "topicId": "topic_week10",
-      "name": "Week 10: Cybersecurity",
-      "nameZh": "第10周：网络安全",
+      "name": "Cybersecurity",
+      "nameZh": "网络安全",
       "defaultOrder": 15,
       "conceptIds": [
         {
@@ -601,7 +601,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_week9__topic_week10"
+        "topic_web_state_security"
       ],
       "isRoot": false
     }
