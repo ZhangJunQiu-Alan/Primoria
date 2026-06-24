@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   CopilotChat,
   CopilotChatAssistantMessage,
@@ -49,6 +49,7 @@ const COPILOT_ACCEPTED_ATTACHMENTS = [
   ".docx",
 ].join(",");
 const MAX_COPILOT_ATTACHMENT_BYTES = 10 * 1024 * 1024;
+const PrimoriaComposerContext = createContext<React.ReactNode>(null);
 
 const PrimoriaUserMessage = Object.assign(
   function PrimoriaUserMessage({
@@ -242,10 +243,8 @@ const PrimoriaMessageView = Object.assign(
 );
 
 const PrimoriaChatView = Object.assign(
-  function PrimoriaChatView({
-    composerContext,
-    ...props
-  }: CopilotChatViewProps & { composerContext?: React.ReactNode }) {
+  function PrimoriaChatView(props: CopilotChatViewProps) {
+    const composerContext = useContext(PrimoriaComposerContext);
     return (
       <CopilotChatView
         {...props}
@@ -511,11 +510,9 @@ export function PrimoriaCopilotChatSurface({
   const [attachmentError, setAttachmentError] = useState("");
   const [restoration, setRestoration] = useState<{
     threadId: string;
-    agent: typeof agent;
     done: boolean;
   }>(() => ({
     threadId,
-    agent,
     done: false,
   }));
   const restoredThreadRef = useRef<string | null>(null);
@@ -526,11 +523,10 @@ export function PrimoriaCopilotChatSurface({
 
     async function restore() {
       if (restoredThreadRef.current === resolvedThreadId) {
-        setRestoration({ threadId: resolvedThreadId, agent, done: true });
         return;
       }
 
-      setRestoration({ threadId: resolvedThreadId, agent, done: false });
+      setRestoration({ threadId: resolvedThreadId, done: false });
       const stored = await hydrateThreadMessagesFromServer(resolvedThreadId);
       if (cancelled) return;
 
@@ -545,7 +541,7 @@ export function PrimoriaCopilotChatSurface({
       agent.setMessages(messages as any);
       (agent as any).setState?.({});
       restoredThreadRef.current = resolvedThreadId;
-      setRestoration({ threadId: resolvedThreadId, agent, done: true });
+      setRestoration({ threadId: resolvedThreadId, done: true });
     }
 
     void restore();
@@ -554,54 +550,54 @@ export function PrimoriaCopilotChatSurface({
     };
   }, [agent, threadId]);
 
-  const restoredForCurrentAgent = restoration.done && restoration.threadId === threadId && restoration.agent === agent;
+  const restoredForCurrentThread = restoration.done && restoration.threadId === threadId;
 
-  if (!restoredForCurrentAgent) return <CopilotRestorePanel />;
+  if (!restoredForCurrentThread) return <CopilotRestorePanel />;
 
   return (
     <div className={className}>
       <CopilotThreadHistoryRecorder key={`history-${threadId}`} threadId={threadId} title={title} />
       {attachmentError ? <p className="attachment-error copilot-attachment-error">{attachmentError}</p> : null}
-      <CopilotChat
-        key={`chat-${threadId}`}
-        threadId={threadId}
-        chatView={((props: CopilotChatViewProps) => (
-          <PrimoriaChatView {...props} composerContext={composerContext} />
-        )) as any}
-        attachments={{
-          enabled: true,
-          accept: COPILOT_ACCEPTED_ATTACHMENTS,
-          maxSize: MAX_COPILOT_ATTACHMENT_BYTES,
-          onUpload: async (file) => {
-            setAttachmentError("");
-            const value = await new Promise<string>((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onload = () => {
-                const result = String(reader.result ?? "");
-                resolve(result.includes(",") ? result.slice(result.indexOf(",") + 1) : result);
+      <PrimoriaComposerContext.Provider value={composerContext}>
+        <CopilotChat
+          key={`chat-${threadId}`}
+          threadId={threadId}
+          chatView={PrimoriaChatView}
+          attachments={{
+            enabled: true,
+            accept: COPILOT_ACCEPTED_ATTACHMENTS,
+            maxSize: MAX_COPILOT_ATTACHMENT_BYTES,
+            onUpload: async (file) => {
+              setAttachmentError("");
+              const value = await new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                  const result = String(reader.result ?? "");
+                  resolve(result.includes(",") ? result.slice(result.indexOf(",") + 1) : result);
+                };
+                reader.onerror = () => reject(reader.error ?? new Error("File read failed"));
+                reader.readAsDataURL(file);
+              });
+              return {
+                type: "data",
+                value,
+                mimeType: file.type,
               };
-              reader.onerror = () => reject(reader.error ?? new Error("File read failed"));
-              reader.readAsDataURL(file);
-            });
-            return {
-              type: "data",
-              value,
-              mimeType: file.type,
-            };
-          },
-          onUploadFailed: ({ message }) => setAttachmentError(message),
-        }}
-        onError={(event) => {
-          if ("error" in event) {
-            setAttachmentError(event.error instanceof Error ? event.error.message : String(event.error));
-          }
-        }}
-        welcomeScreen={welcomeScreen ? PrimoriaMainWelcomeScreen : false}
-        labels={{
-          chatInputPlaceholder: placeholder,
-          chatInputToolbarAddButtonLabel: "Attach files",
-        }}
-      />
+            },
+            onUploadFailed: ({ message }) => setAttachmentError(message),
+          }}
+          onError={(event) => {
+            if ("error" in event) {
+              setAttachmentError(event.error instanceof Error ? event.error.message : String(event.error));
+            }
+          }}
+          welcomeScreen={welcomeScreen ? PrimoriaMainWelcomeScreen : false}
+          labels={{
+            chatInputPlaceholder: placeholder,
+            chatInputToolbarAddButtonLabel: "Attach files",
+          }}
+        />
+      </PrimoriaComposerContext.Provider>
     </div>
   );
 }

@@ -1645,8 +1645,6 @@ button {
   width: 100%;
   color: var(--ink);
   background: transparent !important;
-  animation: primoria-message-enter 260ms var(--ease-out-quart, cubic-bezier(0.25, 1, 0.5, 1)) both;
-  transform-origin: center bottom;
 }
 
 .primoria-copilot-user-message {
@@ -2142,17 +2140,6 @@ cpk-web-inspector {
   }
 }
 
-@keyframes primoria-message-enter {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 @keyframes primoria-tool-enter {
   from {
     opacity: 0;
@@ -2173,25 +2160,8 @@ cpk-web-inspector {
     box-shadow 180ms var(--ease-out-quart, cubic-bezier(0.25, 1, 0.5, 1));
 }
 
-.primoria-copilot-user-message .primoria-copilot-bubble {
-  animation: primoria-user-pop 220ms var(--ease-out-quart, cubic-bezier(0.25, 1, 0.5, 1)) both;
-}
-
-@keyframes primoria-user-pop {
-  from {
-    opacity: 0;
-    transform: translateY(6px) scale(0.975);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .primoria-copilot-message,
-  .primoria-copilot-tool,
-  .primoria-copilot-user-message .primoria-copilot-bubble {
+  .primoria-copilot-tool {
     animation: none !important;
   }
 
