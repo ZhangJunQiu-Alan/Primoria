@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { archiveCourse, getCourse, unarchiveCourse } from "@/lib/courses/store";
+import { archiveCourse, deleteCourse, getCourse, unarchiveCourse } from "@/lib/courses/store";
 import { requireAuth } from "@/lib/auth/guard";
 
 const PatchSchema = z.object({
@@ -26,4 +26,13 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   const course = body.archived ? await archiveCourse(id) : await unarchiveCourse(id);
   if (!course) return NextResponse.json({ error: "Course not found" }, { status: 404 });
   return NextResponse.json({ course });
+}
+
+export async function DELETE(_request: Request, context: { params: Promise<{ id: string }> }) {
+  const denied = await requireAuth();
+  if (denied) return denied;
+  const { id } = await context.params;
+  const deleted = await deleteCourse(id);
+  if (!deleted) return NextResponse.json({ error: "Course not found" }, { status: 404 });
+  return NextResponse.json({ ok: true });
 }
