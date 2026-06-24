@@ -17,13 +17,8 @@
 1. 永远不支持BYOK,后台建课统一使用平台服务器模型配置.
 2. 用户相关数据目前都是测试数据。以后DB 测试请使用本地独立 Postgres，禁止再对 Supabase 正式数据库执行清空或重置操作；正式数据库只能运行必要的迁移和非破坏性验证。
 
-## 大致方向
-
-建课系统先生成少量lesson，然后根据用户不同的表现实时插入新的lesson，形成个性化的学习路径。产出的新的lesson根据用户的不同表现，决定lesson具体的内容
-
 ## 相关部分细节
 
-- 使用Treeindex 或者Pageindex 优化RAG
 - 在建课Agent生成Course大纲及第一个Lesson之后,由学习进度编排流程更新mastery并作出决策:
   - 没有明显薄弱点时,创建大纲中的下一个lesson
   - 发现知识缺口时,动态创建补足Lesson,插入当前lesson与原下一个Lesson之间并入队.所有的lesson内容均通过统一的Lesson Job体系生成
@@ -113,15 +108,8 @@ Prob：1. 如果用户输出用户过于模糊，或者用别名怎么确保好�
 
 ## Note
 
-1. 先搁置学习事件收集决策
-2. 寻找目前网络上有没有规范的建立知识图谱 / 课程路径，再确定怎么系统利用起来。
-    2.1 ThreeIndex：决定学什么、先后关系是什么、错因可能在哪里。
-    2.2 PageIndex：决定用哪些资料解释、引用什么内容、生成题目时依据哪里。
-3. 怎么构建更好的用户画像，持久化记忆，treeindex？
-4. 具体决策层什么时候触发新课程产出（弹窗：推荐并说明原因）
-5. ![alt text](image.png)
-6. 当前lesson里面追加补救block的设计，版本2再迭代
-7. 课程路径要不要做成星系布局（一个topic对应一个星系，点击后进入星系内的concepts，topic内的concept node对应行星，先修关系对应行星间的轨道），版本2再迭代
+1. 怎么构建更好的用户画像，持久化记忆，treeindex？
+2. 课程路径要不要做成星系布局（一个topic对应一个星系，点击后进入星系内的concepts，topic内的concept node对应行星，先修关系对应行星间的轨道），版本2再迭代
 8.
 
 第三层:完美笔记(issue 30 真正的卖点,≠ 存档)： 版本2再迭代
@@ -149,32 +137,15 @@ Prob：1. 如果用户输出用户过于模糊，或者用别名怎么确保好�
 1. 有一个评估Agent，他的行为是： 没有用户相关记录的时候会确认用户的背景知识来找到用户在知识图谱中的位置，之后根据用户的表现数据来调整，调整的时候不获取整个知识图谱信息，只获取当前所在上下文 = 当前 topic 子图+ 当前 topic 各节点的入边先修节点（含用户 mastery 状态）的信息
 PLUS:
 1. 评估Agent拆开，一个是mastery更新，一个是诊断+决策插课
-1. 对知识概念节点的状态标记，
-1. 课程/quiz 生成时把相关子树（带 ID）喂进 prompt，强制打标签 ？
-1. 建课Prompt给 topic name，topic 内 concept 列表及对应的order，targetConceptId（如果有），next topic 的 concept 列表
+2. 课程/quiz 生成时把相关子树（带 ID）喂进 prompt，强制打标签 ？
+3. 建课Prompt给 topic name，topic 内 concept 列表及对应的order，targetConceptId（如果有），next topic 的 concept 列表
 
 ## Todo
 
-1. mastery,推荐下一lesson，复习笔记
-2. [已实现] 前后端：topic 选择菜单组件 + 用户选择后继续建 lesson 的完整链路。菜单项必须保留 `graphId + topicId`；点击后直接以 ID 进入服务端建课，禁止把 topic 名称重新送入向量定位。服务端根据 ID 重新解析 Topic、Concept 与下一 Topic，不信任客户端传入的完整 CourseContext。
-3. Course UI，UX设计
-4. 建lesson Prompt加上用户的mastery状态
-5. 慢任务阻塞用户请求，做job
-6. TODO: 定义一个lesson包含的Block规范
-7. 看看Course edit event
-
-## 重构建课Agent
-
-  1. 背景信息了解
-    1. 什么是Zod Schema? 用来做什么:
-      Zod Schema 是 TypeScript/JavaScript 生态中非常流行的一个数据模式（Schema）声明与验证库 Zod 的核心概念.Zod Schema 为数据定义的“规则说明书”或“结构模板”。不仅定义了数据的类型（如数字、字符串、对象、数组），还定义了具体的约束条件（如字符串长度、数字范围、是否必填等）
-  2. 最先处理的结构问题
-    Prompt 同时写了“exactly 3 blocks”和“4–7 blocks”，Zod 又允许 3–15 个，约束互相冲突。
-
-LessonStatus 有 generating，实际生成过程却没有使用它，无法防止并发重复生成。
-主入口 [`/api/learning/course` (line 58)](/Users/zhangjunqiu/Desktop/primoria/apps/web/src/app/api/learning/course/route.ts:58) 没有传画像或 source，所以事件默认始终是 cold_start。
-
-宽泛菜单点击后只是用 Topic 名称重新定位，没有保留 selected_topic_id + source_query。
+1. Course UI，UX设计
+2. 建lesson Prompt加上用户的mastery状态
+3. 看看Course edit event
+4. 使用Treeindex 或者Pageindex 优化RAG
 
 ### 建课测试Prompt
 
