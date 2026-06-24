@@ -43,6 +43,10 @@ export function CourseLibraryGrid({
   const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({ key: "updated", direction: "desc" });
   const [page, setPage] = useState(1);
   const [initialRefreshOpen, setInitialRefreshOpen] = useState(true);
+  const [openCourseMenuId, setOpenCourseMenuId] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<CourseSummary | null>(null);
+  const [deletePending, setDeletePending] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const deferredQuery = useDeferredValue(query);
   const shouldPoll = initialRefreshOpen || lessonJobs.some(isLessonGenerationActive);
 
@@ -61,6 +65,24 @@ export function CourseLibraryGrid({
     const timeout = window.setTimeout(() => setInitialRefreshOpen(false), INITIAL_REFRESH_WINDOW_MS);
     return () => window.clearTimeout(timeout);
   }, []);
+
+  useEffect(() => {
+    if (!openCourseMenuId) return;
+    function closeMenu(event: MouseEvent) {
+      const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest(".library-row-actions")) return;
+      setOpenCourseMenuId(null);
+    }
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpenCourseMenuId(null);
+    }
+    document.addEventListener("click", closeMenu);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("click", closeMenu);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [openCourseMenuId]);
 
   useEffect(() => {
     if (!shouldPoll) return;
@@ -146,6 +168,30 @@ export function CourseLibraryGrid({
       direction: current.key === key && current.direction === "desc" ? "asc" : "desc",
     }));
     setPage(1);
+  }
+
+  function requestDeleteCourse(course: CourseSummary) {
+    setOpenCourseMenuId(null);
+    setDeleteError(null);
+    setDeleteTarget(course);
+  }
+
+  async function confirmDeleteCourse() {
+    if (!deleteTarget) return;
+    setDeletePending(true);
+    setDeleteError(null);
+    try {
+      const response = await fetch(`/api/courses/${deleteTarget.id}`, { method: "DELETE" });
+      const data = (await response.json().catch(() => ({}))) as { error?: string };
+      if (!response.ok) throw new Error(data.error ?? "Could not delete this course.");
+      setCourses((current) => current.filter((course) => course.id !== deleteTarget.id));
+      setLessonJobs((current) => current.filter((job) => job.courseId !== deleteTarget.id));
+      setDeleteTarget(null);
+    } catch (error) {
+      setDeleteError(error instanceof Error ? error.message : "Could not delete this course.");
+    } finally {
+      setDeletePending(false);
+    }
   }
 
   if (entries.length === 0) {
@@ -237,6 +283,9 @@ export function CourseLibraryGrid({
           onStatusFilterOpenChange={setStatusFilterOpen}
           onToggleStatusFilter={toggleStatusFilter}
           onClearStatusFilters={clearStatusFilters}
+          openCourseMenuId={openCourseMenuId}
+          onCourseMenuOpenChange={setOpenCourseMenuId}
+          onDeleteCourse={requestDeleteCourse}
         />
       ) : (
         <CourseCards entries={visibleEntries} lessonJobByCourse={lessonJobByCourse} />
@@ -266,6 +315,19 @@ export function CourseLibraryGrid({
           </div>
         </footer>
       ) : null}
+      {deleteTarget ? (
+        <DeleteCourseDialog
+          course={deleteTarget}
+          pending={deletePending}
+          error={deleteError}
+          onCancel={() => {
+            if (deletePending) return;
+            setDeleteTarget(null);
+            setDeleteError(null);
+          }}
+          onConfirm={confirmDeleteCourse}
+        />
+      ) : null}
     </section>
   );
 }
@@ -280,6 +342,9 @@ function CourseTable({
   onStatusFilterOpenChange,
   onToggleStatusFilter,
   onClearStatusFilters,
+  openCourseMenuId,
+  onCourseMenuOpenChange,
+  onDeleteCourse,
 }: {
   entries: LibraryEntry[];
   lessonJobByCourse: Map<string, LessonGenerationJobSummary>;
@@ -290,10 +355,22 @@ function CourseTable({
   onStatusFilterOpenChange: (open: boolean) => void;
   onToggleStatusFilter: (value: StatusFilterValue) => void;
   onClearStatusFilters: () => void;
+  openCourseMenuId: string | null;
+  onCourseMenuOpenChange: (courseId: string | null) => void;
+  onDeleteCourse: (course: CourseSummary) => void;
 }) {
   return (
     <div className="library-table-card">
       <table className="library-course-table">
+        <colgroup>
+          <col className="library-col-name" />
+          <col className="library-col-status" />
+          <col className="library-col-progress" />
+          <col className="library-col-current" />
+          <col className="library-col-lessons" />
+          <col className="library-col-updated" />
+          <col className="library-col-actions" />
+        </colgroup>
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -348,7 +425,14 @@ function CourseTable({
         <tbody>
           {entries.map((entry) =>
             entry.kind === "course" ? (
-              <CourseRow key={`course-${entry.id}`} course={entry.course} lessonJob={lessonJobByCourse.get(entry.id)} />
+              <CourseRow
+                key={`course-${entry.id}`}
+                course={entry.course}
+                lessonJob={lessonJobByCourse.get(entry.id)}
+                menuOpen={openCourseMenuId === entry.id}
+                onMenuOpenChange={onCourseMenuOpenChange}
+                onDeleteCourse={onDeleteCourse}
+              />
             ) : (
               <JobRow key={`job-${entry.id}`} job={entry.job} />
             ),
@@ -409,7 +493,19 @@ function CourseCards({
   );
 }
 
-function CourseRow({ course, lessonJob }: { course: CourseSummary; lessonJob?: LessonGenerationJobSummary }) {
+function CourseRow({
+  course,
+  lessonJob,
+  menuOpen,
+  onMenuOpenChange,
+  onDeleteCourse,
+}: {
+  course: CourseSummary;
+  lessonJob?: LessonGenerationJobSummary;
+  menuOpen: boolean;
+  onMenuOpenChange: (courseId: string | null) => void;
+  onDeleteCourse: (course: CourseSummary) => void;
+}) {
   const status = courseStatus(course);
   const progress = lessonProgress(course);
   const currentLesson = course.currentLesson?.title ?? "No lesson planned yet";
@@ -417,17 +513,15 @@ function CourseRow({ course, lessonJob }: { course: CourseSummary; lessonJob?: L
   const jobFailed = lessonJob?.status === "failed";
   return (
     <tr className={jobActive ? "library-row-generating" : jobFailed ? "library-row-failed" : undefined}>
-      <td>
+      <td data-label="Name">
         <div className="library-course-name">
           <CourseThumb title={course.title} pending={jobActive} />
-          <div>
+          <div className="library-course-copy">
             <Link href={`/course/${course.id}`} className="library-course-title">{course.title}</Link>
-            <p>{course.summary}</p>
-            <span>{shortId(course.id)} · {course.lessonCount} lessons</span>
           </div>
         </div>
       </td>
-      <td>
+      <td data-label="Status">
         {jobActive && lessonJob ? (
           <StatusPill tone="working">{lessonGenerationStageLabel(lessonJob)}</StatusPill>
         ) : jobFailed ? (
@@ -436,32 +530,50 @@ function CourseRow({ course, lessonJob }: { course: CourseSummary; lessonJob?: L
           <StatusPill tone={status.tone}>{status.label}</StatusPill>
         )}
       </td>
-      <td>
+      <td data-label="Progress">
         {jobActive && lessonJob ? (
           <ProgressMeter completed={lessonJob.progressCompleted} total={Math.max(lessonJob.progressTotal, 1)} />
         ) : (
           <ProgressMeter completed={progress.completed} total={progress.total} />
         )}
       </td>
-      <td>
+      <td data-label="Current Lesson">
         <div className="library-current-lesson">
           <strong>{currentLesson}</strong>
-          <span>{jobActive && lessonJob ? lessonGenerationStageLabel(lessonJob) : jobFailed ? lessonJob?.lastError ?? "Generation failed" : lessonStateText(course)}</span>
+          {jobActive && lessonJob ? <span>{lessonGenerationStageLabel(lessonJob)}</span> : null}
+          {jobFailed ? <span>{lessonJob?.lastError ?? "Generation failed"}</span> : null}
         </div>
       </td>
-      <td className="library-number-cell">{course.lessonCount}</td>
-      <td className="library-date-cell">{formatDate(course.updatedAt)}</td>
-      <td>
+      <td data-label="Lessons" className="library-number-cell">{course.lessonCount}</td>
+      <td data-label="Updated" className="library-date-cell">{formatDate(course.updatedAt)}</td>
+      <td data-label="Actions">
         <div className="library-row-actions">
           <Link href={`/course/${course.id}`} className="library-row-action primary">
             {progress.completed > 0 || course.generatedLessonCount > 0 ? "Continue" : "Open"}
           </Link>
-          <Link href={`/course/${course.id}`} className="library-row-action">
-            Review
-          </Link>
-          <span className="library-row-more" aria-hidden="true">
+          <button
+            type="button"
+            className={`library-row-more${menuOpen ? " active" : ""}`}
+            aria-label={`More actions for ${course.title}`}
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+            onClick={(event) => {
+              event.stopPropagation();
+              onMenuOpenChange(menuOpen ? null : course.id);
+            }}
+          >
             <MoreIcon />
-          </span>
+          </button>
+          {menuOpen ? (
+            <div className="library-row-menu" role="menu" aria-label={`${course.title} actions`}>
+              <Link href={`/course/${course.id}/outline`} role="menuitem">
+                View outline
+              </Link>
+              <button type="button" className="danger" role="menuitem" onClick={() => onDeleteCourse(course)}>
+                Delete
+              </button>
+            </div>
+          ) : null}
         </div>
       </td>
     </tr>
@@ -474,31 +586,29 @@ function JobRow({ job }: { job: LessonGenerationJobSummary }) {
   const statusLabel = jobActive ? lessonGenerationStageLabel(job) : jobFailed ? "Lesson failed" : "Syncing";
   return (
     <tr className={jobActive ? "library-row-generating" : jobFailed ? "library-row-failed" : undefined}>
-      <td>
+      <td data-label="Name">
         <div className="library-course-name">
           <CourseThumb title="Building course" pending={jobActive} />
-          <div>
+          <div className="library-course-copy">
             <Link href={`/course/${job.courseId}`} className="library-course-title">Building course</Link>
-            <p>The course is being prepared and will fill in here as soon as the outline syncs.</p>
-            <span>{shortId(job.courseId)} · first lesson job {shortId(job.id)}</span>
           </div>
         </div>
       </td>
-      <td>
+      <td data-label="Status">
         <StatusPill tone={jobFailed ? "danger" : "working"}>{statusLabel}</StatusPill>
       </td>
-      <td>
+      <td data-label="Progress">
         <ProgressMeter completed={job.progressCompleted} total={Math.max(job.progressTotal, 1)} />
       </td>
-      <td>
+      <td data-label="Current Lesson">
         <div className="library-current-lesson">
           <strong>First lesson</strong>
           <span>{jobFailed ? job.lastError ?? "Generation failed" : statusLabel}</span>
         </div>
       </td>
-      <td className="library-number-cell">1</td>
-      <td className="library-date-cell">{formatDate(job.updatedAt)}</td>
-      <td>
+      <td data-label="Lessons" className="library-number-cell">1</td>
+      <td data-label="Updated" className="library-date-cell">{formatDate(job.updatedAt)}</td>
+      <td data-label="Actions">
         <div className="library-row-actions">
           <Link href={`/course/${job.courseId}`} className="library-row-action primary">
             Open
@@ -527,7 +637,6 @@ function CourseCard({ course, lessonJob }: { course: CourseSummary; lessonJob?: 
         )}
       </div>
       <Link href={`/course/${course.id}`} className="library-course-title">{course.title}</Link>
-      <p>{course.summary}</p>
       <ProgressMeter
         completed={jobActive && lessonJob ? lessonJob.progressCompleted : progress.completed}
         total={jobActive && lessonJob ? Math.max(lessonJob.progressTotal, 1) : progress.total}
@@ -555,9 +664,44 @@ function JobCard({ job }: { job: LessonGenerationJobSummary }) {
       <ProgressMeter completed={job.progressCompleted} total={Math.max(job.progressTotal, 1)} />
       <div className="library-course-card-meta">
         <span>First lesson</span>
-        <span>{shortId(job.courseId)}</span>
+        <span>{statusLabel}</span>
       </div>
     </article>
+  );
+}
+
+function DeleteCourseDialog({
+  course,
+  pending,
+  error,
+  onCancel,
+  onConfirm,
+}: {
+  course: CourseSummary;
+  pending: boolean;
+  error: string | null;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  return (
+    <div className="library-confirm-backdrop" role="presentation">
+      <div className="library-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="delete-course-title">
+        <span className="course-block-tag">Delete course</span>
+        <h2 id="delete-course-title">Delete {course.title}?</h2>
+        <p>
+          This permanently removes the course, its lesson outline, generated lesson content, and background generation jobs.
+        </p>
+        {error ? <p className="library-confirm-error">{error}</p> : null}
+        <div className="library-confirm-actions">
+          <button type="button" onClick={onCancel} disabled={pending}>
+            Cancel
+          </button>
+          <button type="button" className="danger" onClick={onConfirm} disabled={pending}>
+            {pending ? "Deleting..." : "Delete permanently"}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -608,15 +752,6 @@ function lessonProgress(course: CourseSummary) {
     completed: course.completedLessonCount,
     total: course.lessonCount,
   };
-}
-
-function lessonStateText(course: CourseSummary) {
-  const lesson = course.currentLesson;
-  if (!lesson) return "Course outline is empty";
-  if (lesson.status === "planned") return "Lazy generation when opened";
-  if (lesson.status === "generating") return "Lesson is generating";
-  if (lesson.progress === "completed") return "Completed";
-  return "Generated lesson";
 }
 
 function searchableText(entry: LibraryEntry) {
@@ -672,10 +807,6 @@ function jobProgressValue(job: LessonGenerationJobSummary) {
 
 function formatDate(value: number) {
   return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(value));
-}
-
-function shortId(id: string) {
-  return id.includes("_") ? id.split("_").slice(0, 2).join("_") : id.slice(0, 8);
 }
 
 function initials(title: string) {

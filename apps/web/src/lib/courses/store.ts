@@ -96,6 +96,16 @@ export async function unarchiveCourse(id: string, ownerId?: string | null): Prom
   return saveCourse(unarchived, ownerId);
 }
 
+export async function deleteCourse(id: string, ownerId?: string | null): Promise<boolean> {
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) return false;
+  const rows = await getDb()
+    .delete(coursesTable)
+    .where(and(eq(coursesTable.id, id), eq(coursesTable.ownerId, resolvedOwnerId)))
+    .returning({ id: coursesTable.id });
+  return rows.length > 0;
+}
+
 /** Apply a transform to the lesson owning a block; returns the saved course or undefined if no lesson matched. */
 async function mutateBlocks(
   courseId: string,
