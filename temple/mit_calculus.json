@@ -20,7 +20,8 @@
       "kind": "topic",
       "name": "Differentiation",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "微分"
     },
     {
       "id": "c_1801_limits",
@@ -28,7 +29,8 @@
       "name": "Limits and Continuity",
       "topic": "t_1801_differentiation",
       "description": "The limit formalising the value a function approaches near a point, made rigorous by the epsilon-delta definition, with continuity meaning the limit equals the function value.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "极限与连续"
     },
     {
       "id": "c_1801_deriv_def",
@@ -36,7 +38,8 @@
       "name": "Definition of Derivative",
       "topic": "t_1801_differentiation",
       "description": "The derivative defined as the limit of difference quotients, giving the instantaneous rate of change and the slope of the tangent line to a curve.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "导数定义"
     },
     {
       "id": "c_1801_deriv_rules",
@@ -44,14 +47,16 @@
       "name": "Differentiation Rules",
       "topic": "t_1801_differentiation",
       "description": "Rules for differentiating combinations of functions, including the power, product, and quotient rules, enabling derivatives without returning to the limit definition.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "微分法则"
     },
     {
       "id": "t_1801_differentiation__t_1801_apps_diff",
       "kind": "topic",
       "name": "Differentiation Techniques and Related Rates",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "微分技巧与相关变化率"
     },
     {
       "id": "c_1801_chain_rule",
@@ -59,7 +64,8 @@
       "name": "Chain Rule",
       "topic": "t_1801_differentiation__t_1801_apps_diff",
       "description": "The chain rule differentiating a composite function as the derivative of the outer function times the derivative of the inner function.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "链式法则"
     },
     {
       "id": "c_1801_implicit_diff",
@@ -67,7 +73,8 @@
       "name": "Implicit Differentiation",
       "topic": "t_1801_differentiation__t_1801_apps_diff",
       "description": "Implicit differentiation finding derivatives of relations not solved for one variable by differentiating both sides and solving for the derivative.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "隐函数微分"
     },
     {
       "id": "c_1801_related_rates",
@@ -75,14 +82,16 @@
       "name": "Related Rates",
       "topic": "t_1801_differentiation__t_1801_apps_diff",
       "description": "Related-rates problems linking the time derivatives of related quantities through an equation, solving for one unknown rate given the others.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "相关变化率"
     },
     {
       "id": "t_1801_apps_diff",
       "kind": "topic",
       "name": "Applications of Differentiation",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "微分应用"
     },
     {
       "id": "c_1801_linear_approx",
@@ -90,7 +99,8 @@
       "name": "Linear Approximation",
       "topic": "t_1801_apps_diff",
       "description": "Linear approximation using the tangent line to estimate function values near a point, the basis of differentials and Newton's method.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "线性近似"
     },
     {
       "id": "c_1801_curve_sketching",
@@ -98,7 +108,8 @@
       "name": "Curve Sketching",
       "topic": "t_1801_apps_diff",
       "description": "Using first and second derivatives to locate extrema, intervals of increase and decrease, concavity, and inflection points to sketch a curve.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "曲线草图"
     },
     {
       "id": "c_1801_mvt",
@@ -106,14 +117,16 @@
       "name": "Mean Value Theorem",
       "topic": "t_1801_apps_diff",
       "description": "The mean value theorem guaranteeing a point where the instantaneous rate of change equals the average rate over an interval, with key consequences.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "中值定理"
     },
     {
       "id": "t_1801_integration",
       "kind": "topic",
       "name": "Integration",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "积分"
     },
     {
       "id": "c_1801_riemann_sums",
@@ -121,7 +134,8 @@
       "name": "Riemann Sums",
       "topic": "t_1801_integration",
       "description": "Riemann sums approximating the area under a curve by summing the areas of rectangles, whose limit defines the definite integral.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "黎曼和"
     },
     {
       "id": "c_1801_definite_integral",
@@ -129,7 +143,8 @@
       "name": "Definite Integrals",
       "topic": "t_1801_integration",
       "description": "The definite integral defined as the limit of Riemann sums, giving the signed area under a curve, with linearity and additivity properties.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "定积分"
     },
     {
       "id": "c_1801_ftc",
@@ -137,7 +152,8 @@
       "name": "Fundamental Theorem of Calculus",
       "topic": "t_1801_integration",
       "description": "The fundamental theorem of calculus linking differentiation and integration, evaluating definite integrals via antiderivatives and differentiating integral functions.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "微积分基本定理"
     },
     {
       "id": "c_1801_substitution",
@@ -145,14 +161,16 @@
       "name": "Integration by Substitution",
       "topic": "t_1801_integration",
       "description": "Integration by substitution reversing the chain rule by changing variables to transform an integral into a simpler, recognisable form.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "换元积分法"
     },
     {
       "id": "t_1801_tech_int",
       "kind": "topic",
       "name": "Techniques of Integration",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "积分技巧"
     },
     {
       "id": "c_1801_parts",
@@ -160,7 +178,8 @@
       "name": "Integration by Parts",
       "topic": "t_1801_tech_int",
       "description": "Integration by parts reversing the product rule to integrate products of functions, trading one integral for an often simpler one.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "分部积分法"
     },
     {
       "id": "c_1801_trig_integrals",
@@ -168,7 +187,8 @@
       "name": "Trigonometric Integrals",
       "topic": "t_1801_tech_int",
       "description": "Techniques for integrating products and powers of trigonometric functions using identities to reduce them to directly integrable forms.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "三角积分"
     },
     {
       "id": "c_1801_trig_sub",
@@ -176,14 +196,16 @@
       "name": "Trigonometric Substitution",
       "topic": "t_1801_tech_int",
       "description": "Trigonometric substitution evaluating integrals containing quadratic radicals by substituting trigonometric functions and applying identities.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "三角换元"
     },
     {
       "id": "t_1801_tech_int__t_1801_apps_int",
       "kind": "topic",
       "name": "Integration Techniques and Area",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "积分技巧与面积"
     },
     {
       "id": "c_1801_partial_fractions",
@@ -191,7 +213,8 @@
       "name": "Partial Fractions",
       "topic": "t_1801_tech_int__t_1801_apps_int",
       "description": "Partial-fraction decomposition rewriting a rational function as a sum of simpler fractions that can be integrated term by term.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "部分分式"
     },
     {
       "id": "c_1801_improper_int",
@@ -199,7 +222,8 @@
       "name": "Improper Integrals",
       "topic": "t_1801_tech_int__t_1801_apps_int",
       "description": "Improper integrals defined by limits, evaluating integrals over infinite intervals or with unbounded integrands and testing for convergence.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "广义积分"
     },
     {
       "id": "c_1801_area_curves",
@@ -207,14 +231,16 @@
       "name": "Area Between Curves",
       "topic": "t_1801_tech_int__t_1801_apps_int",
       "description": "Computing the area between two curves by integrating the difference of their functions over the interval where they bound a region.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "曲线间面积"
     },
     {
       "id": "t_1801_apps_int",
       "kind": "topic",
       "name": "Applications of Integration",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "积分应用"
     },
     {
       "id": "c_1801_volume",
@@ -222,7 +248,8 @@
       "name": "Volumes of Solids",
       "topic": "t_1801_apps_int",
       "description": "Computing volumes of solids of revolution and general solids using slicing, disk, washer, and cylindrical-shell integration methods.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "立体体积"
     },
     {
       "id": "c_1801_arc_length",
@@ -230,7 +257,8 @@
       "name": "Arc Length",
       "topic": "t_1801_apps_int",
       "description": "Computing the length of a plane curve by integrating the arc-length element derived from the Pythagorean relationship of differentials.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "弧长"
     },
     {
       "id": "c_1801_work",
@@ -238,14 +266,16 @@
       "name": "Work",
       "topic": "t_1801_apps_int",
       "description": "Computing physical work done by a variable force by integrating force over displacement, applied to springs, pumping, and lifting problems.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "功"
     },
     {
       "id": "t_1801_series",
       "kind": "topic",
       "name": "Infinite Series",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "无穷级数"
     },
     {
       "id": "c_1801_sequences",
@@ -253,7 +283,8 @@
       "name": "Sequences and Series",
       "topic": "t_1801_series",
       "description": "Sequences as ordered lists of numbers and series as their sums, with convergence describing whether they approach a finite limit.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "序列与级数"
     },
     {
       "id": "c_1801_conv_tests",
@@ -261,7 +292,8 @@
       "name": "Convergence Tests",
       "topic": "t_1801_series",
       "description": "Tests for series convergence, including the integral, comparison, ratio, and root tests, determining whether an infinite series sums to a finite value.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "收敛性检验"
     },
     {
       "id": "c_1801_power_series",
@@ -269,7 +301,8 @@
       "name": "Power Series",
       "topic": "t_1801_series",
       "description": "Power series representing functions as infinite polynomials, with a radius and interval of convergence determining where they converge.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "幂级数"
     },
     {
       "id": "c_1801_taylor_series",
@@ -277,14 +310,16 @@
       "name": "Taylor Series",
       "topic": "t_1801_series",
       "description": "Taylor and Maclaurin series expanding a function as a power series about a point using its derivatives, approximating functions locally.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "泰勒级数"
     },
     {
       "id": "t_1802_vectors",
       "kind": "topic",
       "name": "Vectors and Matrices",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "向量与矩阵"
     },
     {
       "id": "c_1802_dot_product",
@@ -292,7 +327,8 @@
       "name": "Dot Product",
       "topic": "t_1802_vectors",
       "description": "Vectors with magnitude and direction, and the dot product measuring projection and the angle between them, yielding a scalar from two vectors.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "点积"
     },
     {
       "id": "c_1802_cross_product",
@@ -300,7 +336,8 @@
       "name": "Cross Product",
       "topic": "t_1802_vectors",
       "description": "The cross product of two vectors producing a vector perpendicular to both, whose magnitude equals the area of the parallelogram they span.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "叉积"
     },
     {
       "id": "c_1802_lines_planes",
@@ -308,7 +345,8 @@
       "name": "Lines and Planes",
       "topic": "t_1802_vectors",
       "description": "Equations of lines and planes in three-dimensional space using points, direction vectors, and normal vectors in vector and scalar forms.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "直线与平面"
     },
     {
       "id": "c_1802_parametric_curves",
@@ -316,14 +354,16 @@
       "name": "Parametric Curves",
       "topic": "t_1802_vectors",
       "description": "Vector-valued functions tracing curves in space, whose derivatives give the velocity and acceleration along the parametrised path.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "参数曲线"
     },
     {
       "id": "t_1802_partial_diff",
       "kind": "topic",
       "name": "Partial Derivatives",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "偏导数"
     },
     {
       "id": "c_1802_multivar_functions",
@@ -331,7 +371,8 @@
       "name": "Multivariable Functions",
       "topic": "t_1802_partial_diff",
       "description": "Functions of several variables mapping points to values, visualised through level curves and surfaces, generalising single-variable functions.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "多元函数"
     },
     {
       "id": "c_1802_partial_derivs",
@@ -339,7 +380,8 @@
       "name": "Partial Derivatives",
       "topic": "t_1802_partial_diff",
       "description": "Partial derivatives measuring the rate of change of a multivariable function with respect to one variable while holding the others fixed.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "偏导数"
     },
     {
       "id": "c_1802_multivar_chain",
@@ -347,7 +389,8 @@
       "name": "Multivariable Chain Rule",
       "topic": "t_1802_partial_diff",
       "description": "The multivariable chain rule differentiating compositions of several-variable functions by summing contributions through each intermediate variable.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "多元链式法则"
     },
     {
       "id": "c_1802_gradient",
@@ -355,14 +398,16 @@
       "name": "Gradient and Directional Derivative",
       "topic": "t_1802_partial_diff",
       "description": "The gradient vector of partial derivatives pointing in the direction of steepest increase, with directional derivatives giving rates along any direction.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "梯度与方向导数"
     },
     {
       "id": "t_1802_apps_partial",
       "kind": "topic",
       "name": "Applications of Partial Derivatives",
       "topic": null,
-      "default_order": 11
+      "default_order": 11,
+      "name_zh": "偏导数应用"
     },
     {
       "id": "c_1802_tangent_planes",
@@ -370,7 +415,8 @@
       "name": "Tangent Planes",
       "topic": "t_1802_apps_partial",
       "description": "The tangent plane approximating a surface near a point, generalising the tangent line and providing linear approximation in several variables.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "切平面"
     },
     {
       "id": "c_1802_local_extrema",
@@ -378,7 +424,8 @@
       "name": "Local Extrema",
       "topic": "t_1802_apps_partial",
       "description": "Finding local maxima, minima, and saddle points of multivariable functions using critical points and the second-derivative (Hessian) test.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "局部极值"
     },
     {
       "id": "c_1802_lagrange",
@@ -386,7 +433,8 @@
       "name": "Lagrange Multipliers",
       "topic": "t_1802_apps_partial",
       "description": "Lagrange multipliers optimising a function subject to constraints by setting its gradient proportional to the constraint gradients.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "拉格朗日乘数"
     },
     {
       "id": "c_1802_differentials",
@@ -394,14 +442,16 @@
       "name": "Differentials",
       "topic": "t_1802_apps_partial",
       "description": "Differentials approximating small changes in a multivariable function from changes in its inputs, used for linear approximation and error estimation.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "微分"
     },
     {
       "id": "t_1802_multiple_int",
       "kind": "topic",
       "name": "Multiple Integrals",
       "topic": null,
-      "default_order": 12
+      "default_order": 12,
+      "name_zh": "多重积分"
     },
     {
       "id": "c_1802_double_integrals",
@@ -409,7 +459,8 @@
       "name": "Double Integrals",
       "topic": "t_1802_multiple_int",
       "description": "Double integrals computing volume and accumulated quantities over two-dimensional regions, evaluated as iterated single integrals.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "二重积分"
     },
     {
       "id": "c_1802_polar_integrals",
@@ -417,7 +468,8 @@
       "name": "Polar Integrals",
       "topic": "t_1802_multiple_int",
       "description": "Evaluating double integrals in polar coordinates, where the area element gains a factor of r, simplifying circular and radial regions.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "极坐标积分"
     },
     {
       "id": "c_1802_triple_integrals",
@@ -425,14 +477,16 @@
       "name": "Triple Integrals",
       "topic": "t_1802_multiple_int",
       "description": "Triple integrals computing volume and accumulated quantities over three-dimensional regions, evaluated as iterated single integrals.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "三重积分"
     },
     {
       "id": "t_1802_multiple_int__t_1802_vector_calc",
       "kind": "topic",
       "name": "Coordinate Changes and Vector Fields",
       "topic": null,
-      "default_order": 13
+      "default_order": 13,
+      "name_zh": "坐标变换与向量场"
     },
     {
       "id": "c_1802_cyl_spherical",
@@ -440,7 +494,8 @@
       "name": "Cylindrical and Spherical Coordinates",
       "topic": "t_1802_multiple_int__t_1802_vector_calc",
       "description": "Triple integration in cylindrical and spherical coordinates, with appropriate volume elements simplifying problems with axial or spherical symmetry.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "柱面与球坐标"
     },
     {
       "id": "c_1802_jacobians",
@@ -448,7 +503,8 @@
       "name": "Change of Variables",
       "topic": "t_1802_multiple_int__t_1802_vector_calc",
       "description": "Change of variables in multiple integrals using the Jacobian determinant to account for how the transformation scales area or volume.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "变量变换"
     },
     {
       "id": "c_1802_vector_fields",
@@ -456,14 +512,16 @@
       "name": "Vector Fields",
       "topic": "t_1802_multiple_int__t_1802_vector_calc",
       "description": "Vector fields assigning a vector to each point, and line integrals accumulating a field's effect along a curve, modelling work and flow.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "向量场"
     },
     {
       "id": "t_1802_vector_calc",
       "kind": "topic",
       "name": "Vector Calculus",
       "topic": null,
-      "default_order": 14
+      "default_order": 14,
+      "name_zh": "向量微积分"
     },
     {
       "id": "c_1802_fundamental_line",
@@ -471,7 +529,8 @@
       "name": "Fundamental Theorem for Line Integrals",
       "topic": "t_1802_vector_calc",
       "description": "The fundamental theorem for line integrals showing conservative fields have path-independent integrals computed from a potential function.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "线积分基本定理"
     },
     {
       "id": "c_1802_greens_theorem",
@@ -479,7 +538,8 @@
       "name": "Green's Theorem",
       "topic": "t_1802_vector_calc",
       "description": "Green's theorem relating a line integral around a closed plane curve to a double integral of curl over the enclosed region.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "格林定理"
     },
     {
       "id": "c_1802_curl_div",
@@ -487,14 +547,16 @@
       "name": "Curl and Divergence",
       "topic": "t_1802_vector_calc",
       "description": "Curl measuring a vector field's local rotation and divergence measuring its net outward flux per unit volume, fundamental differential operators.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "旋度与散度"
     },
     {
       "id": "t_1802_surface_int",
       "kind": "topic",
       "name": "Surface Integrals and Theorems",
       "topic": null,
-      "default_order": 15
+      "default_order": 15,
+      "name_zh": "面积分与定理"
     },
     {
       "id": "c_1802_parametric_surfaces",
@@ -502,7 +564,8 @@
       "name": "Parametric Surfaces",
       "topic": "t_1802_surface_int",
       "description": "Parametric representations of surfaces using two parameters, enabling computation of surface area through the cross product of partial derivatives.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "参数曲面"
     },
     {
       "id": "c_1802_surface_integrals",
@@ -510,7 +573,8 @@
       "name": "Surface Integrals",
       "topic": "t_1802_surface_int",
       "description": "Surface integrals accumulating a scalar field or the flux of a vector field across a surface, generalising double integrals to curved surfaces.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "面积分"
     },
     {
       "id": "c_1802_stokes_theorem",
@@ -518,7 +582,8 @@
       "name": "Stokes' Theorem",
       "topic": "t_1802_surface_int",
       "description": "Stokes' theorem relating the line integral of a field around a closed curve to the surface integral of its curl over a bounded surface.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "斯托克斯定理"
     },
     {
       "id": "c_1802_divergence_theorem",
@@ -526,7 +591,8 @@
       "name": "Divergence Theorem",
       "topic": "t_1802_surface_int",
       "description": "The divergence theorem relating the outward flux of a vector field through a closed surface to the triple integral of its divergence inside.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "散度定理"
     }
   ],
   "edges": [

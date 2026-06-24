@@ -21,7 +21,8 @@
       "kind": "topic",
       "name": "Algebra and Functions (Part 1)",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "代数与函数 (第一部分)"
     },
     {
       "id": "mat_indices_surds",
@@ -29,7 +30,8 @@
       "name": "Indices and Surds",
       "topic": "mat_algebra_part1",
       "description": "Laws of indices for manipulating powers and the simplification and rationalisation of surds, expressing irrational roots in exact form.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "指数与根式"
     },
     {
       "id": "mat_quadratics",
@@ -37,7 +39,8 @@
       "name": "Quadratic Functions",
       "topic": "mat_algebra_part1",
       "description": "Quadratic functions and their parabolic graphs, completing the square to find the vertex, line of symmetry, and maximum or minimum.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "二次函数"
     },
     {
       "id": "mat_solve_quadratics",
@@ -45,7 +48,8 @@
       "name": "Solving Quadratics and Discriminant",
       "topic": "mat_algebra_part1",
       "description": "Solving quadratic equations by factorising, completing the square, or the formula, with the discriminant determining the number of real roots.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "二次方程求解"
     },
     {
       "id": "mat_simultaneous",
@@ -53,14 +57,16 @@
       "name": "Simultaneous Equations",
       "topic": "mat_algebra_part1",
       "description": "Solving simultaneous equations, including one linear and one quadratic, by substitution or elimination to find common solutions.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "联立方程"
     },
     {
       "id": "mat_algebra_part2",
       "kind": "topic",
       "name": "Algebra and Functions (Part 2)",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "代数与函数 (第二部分)"
     },
     {
       "id": "mat_inequalities",
@@ -68,7 +74,8 @@
       "name": "Inequalities",
       "topic": "mat_algebra_part2",
       "description": "Solving linear and quadratic inequalities algebraically and graphically, and representing the solution sets on a number line.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "不等式"
     },
     {
       "id": "mat_functions",
@@ -76,7 +83,8 @@
       "name": "Functions and Inverses",
       "topic": "mat_algebra_part2",
       "description": "Functions defined by their domain and range, the distinction between one-to-one and many-to-one mappings, and finding inverse functions.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "函数与反函数"
     },
     {
       "id": "mat_composite",
@@ -84,7 +92,8 @@
       "name": "Composite Functions",
       "topic": "mat_algebra_part2",
       "description": "Composite functions formed by applying one function to the result of another, with attention to domain and the order of composition.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "复合函数"
     },
     {
       "id": "mat_modulus",
@@ -92,14 +101,16 @@
       "name": "Modulus Function",
       "topic": "mat_algebra_part2",
       "description": "The modulus function giving absolute value, its graph, and solving equations and inequalities involving modulus expressions.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "绝对值函数"
     },
     {
       "id": "mat_polynomials",
       "kind": "topic",
       "name": "Polynomials and Partial Fractions",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "多项式与部分分式"
     },
     {
       "id": "mat_poly_division",
@@ -107,7 +118,8 @@
       "name": "Polynomial Division",
       "topic": "mat_polynomials",
       "description": "Dividing polynomials by a linear or quadratic divisor using long division or inspection to obtain a quotient and remainder.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "多项式除法"
     },
     {
       "id": "mat_factor_theorem",
@@ -115,7 +127,8 @@
       "name": "Factor and Remainder Theorem",
       "topic": "mat_polynomials",
       "description": "The factor and remainder theorems relating the value of a polynomial at a point to its factors and to the remainder on division.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "因式与余式定理"
     },
     {
       "id": "mat_partial_fractions",
@@ -123,14 +136,16 @@
       "name": "Partial Fractions",
       "topic": "mat_polynomials",
       "description": "Decomposing a rational function into a sum of simpler partial fractions, handling linear, repeated, and quadratic factors.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "部分分式"
     },
     {
       "id": "mat_coord_geom",
       "kind": "topic",
       "name": "Coordinate Geometry",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "坐标几何"
     },
     {
       "id": "mat_straight_lines",
@@ -138,7 +153,8 @@
       "name": "Straight Lines",
       "topic": "mat_coord_geom",
       "description": "The equation of a straight line in various forms, with gradient and intercepts found from points or other given conditions.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "直线"
     },
     {
       "id": "mat_parallel_perp",
@@ -146,7 +162,8 @@
       "name": "Parallel and Perpendicular Lines",
       "topic": "mat_coord_geom",
       "description": "The gradient conditions for parallel and perpendicular lines, where perpendicular gradients multiply to give negative one.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "平行与垂直直线"
     },
     {
       "id": "mat_circles",
@@ -154,14 +171,16 @@
       "name": "Circles",
       "topic": "mat_coord_geom",
       "description": "The equation of a circle from its centre and radius, and finding intersections, tangents, and properties using coordinate geometry.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "圆"
     },
     {
       "id": "mat_sequences",
       "kind": "topic",
       "name": "Sequences and Series",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "数列与级数"
     },
     {
       "id": "mat_arithmetic",
@@ -169,7 +188,8 @@
       "name": "Arithmetic Series",
       "topic": "mat_sequences",
       "description": "Arithmetic progressions with a common difference, and the formulae for the nth term and the sum of the first n terms.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "等差级数"
     },
     {
       "id": "mat_geometric",
@@ -177,7 +197,8 @@
       "name": "Geometric Series",
       "topic": "mat_sequences",
       "description": "Geometric progressions with a common ratio, formulae for the nth term and sum, and the sum to infinity of a convergent series.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "等比级数"
     },
     {
       "id": "mat_binomial_pos",
@@ -185,7 +206,8 @@
       "name": "Binomial Expansion (positive integer)",
       "topic": "mat_sequences",
       "description": "The binomial expansion of an expression raised to a positive integer power using binomial coefficients and Pascal's triangle.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "二项展开（正整数）"
     },
     {
       "id": "mat_binomial_gen",
@@ -193,14 +215,16 @@
       "name": "Binomial Expansion (general index)",
       "topic": "mat_sequences",
       "description": "The binomial expansion for a general rational or negative index as an infinite series, valid within its range of convergence.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "二项展开（一般指数）"
     },
     {
       "id": "mat_trig_part1",
       "kind": "topic",
       "name": "Trigonometry (Part 1)",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "三角学 (第一部分)"
     },
     {
       "id": "mat_trig_ratios",
@@ -208,7 +232,8 @@
       "name": "Trig Ratios and Graphs",
       "topic": "mat_trig_part1",
       "description": "The trigonometric ratios sine, cosine, and tangent, their graphs, periodicity, and exact values for standard angles.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "三角函数与图像"
     },
     {
       "id": "mat_radians",
@@ -216,7 +241,8 @@
       "name": "Radian Measure",
       "topic": "mat_trig_part1",
       "description": "Radian measure of angles and its use in the arc length and sector area formulae for a circle.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "弧度制"
     },
     {
       "id": "mat_trig_identities",
@@ -224,14 +250,16 @@
       "name": "Trig Identities",
       "topic": "mat_trig_part1",
       "description": "Fundamental trigonometric identities, including the Pythagorean identities, used to simplify expressions and prove relationships.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "三角恒等式"
     },
     {
       "id": "mat_trig_part2",
       "kind": "topic",
       "name": "Trigonometry (Part 2)",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "三角学 (第二部分)"
     },
     {
       "id": "mat_solve_trig",
@@ -239,7 +267,8 @@
       "name": "Solving Trig Equations",
       "topic": "mat_trig_part2",
       "description": "Solving trigonometric equations within a given interval using identities, graphs, and the symmetry of trigonometric functions.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "解三角方程"
     },
     {
       "id": "mat_double_angle",
@@ -247,7 +276,8 @@
       "name": "Compound and Double Angle Formulae",
       "topic": "mat_trig_part2",
       "description": "Compound-angle and double-angle formulae expanding trigonometric functions of the sum and of multiples of angles.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "倍角与和差公式"
     },
     {
       "id": "mat_rform",
@@ -255,14 +285,16 @@
       "name": "R-Formula",
       "topic": "mat_trig_part2",
       "description": "Expressing a sin θ plus b cos θ in the form R sin(θ + α), used to solve equations and find maxima and minima.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "R 公式"
     },
     {
       "id": "mat_exp_log",
       "kind": "topic",
       "name": "Exponentials and Logarithms",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "指数与对数"
     },
     {
       "id": "mat_exp_func",
@@ -270,7 +302,8 @@
       "name": "Exponential Functions",
       "topic": "mat_exp_log",
       "description": "Exponential functions and the natural exponential e^x, modelling growth and decay, and the properties of their graphs.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "指数函数"
     },
     {
       "id": "mat_log_laws",
@@ -278,7 +311,8 @@
       "name": "Logarithms and Laws",
       "topic": "mat_exp_log",
       "description": "Logarithms as the inverse of exponentials, and the laws of logarithms for manipulating products, quotients, and powers.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "对数与法则"
     },
     {
       "id": "mat_solve_exp",
@@ -286,7 +320,8 @@
       "name": "Solving Exponential and Log Equations",
       "topic": "mat_exp_log",
       "description": "Solving exponential and logarithmic equations by applying logarithms and the laws of logarithms to isolate the unknown.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "解指数与对数方程"
     },
     {
       "id": "mat_linearise",
@@ -294,14 +329,16 @@
       "name": "Linearising with Logarithms",
       "topic": "mat_exp_log",
       "description": "Using logarithms to linearise power and exponential relationships, plotting transformed data to determine the model's constants.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "对数线性化"
     },
     {
       "id": "mat_differentiation_part1",
       "kind": "topic",
       "name": "Differentiation (Basic) (Part 1)",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "微分 (第一部分)"
     },
     {
       "id": "mat_first_principles",
@@ -309,7 +346,8 @@
       "name": "Differentiation from First Principles",
       "topic": "mat_differentiation_part1",
       "description": "The derivative defined as the limit of the gradient of a chord, used to differentiate simple functions from first principles.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "从原理求导"
     },
     {
       "id": "mat_power_rule",
@@ -317,7 +355,8 @@
       "name": "Power Rule",
       "topic": "mat_differentiation_part1",
       "description": "The power rule for differentiating powers of x, extended by linearity to differentiate sums of polynomial terms.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "幂法则"
     },
     {
       "id": "mat_chain_rule",
@@ -325,14 +364,16 @@
       "name": "Chain Rule",
       "topic": "mat_differentiation_part1",
       "description": "The chain rule differentiating a composite function as the product of the derivatives of its outer and inner functions.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "链式法则"
     },
     {
       "id": "mat_differentiation_part2",
       "kind": "topic",
       "name": "Differentiation (Basic) (Part 2)",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "微分 (第二部分)"
     },
     {
       "id": "mat_tangent_normal",
@@ -340,7 +381,8 @@
       "name": "Tangents and Normals",
       "topic": "mat_differentiation_part2",
       "description": "Finding the equations of the tangent and normal to a curve at a point, using the derivative as the gradient.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "切线与法线"
     },
     {
       "id": "mat_stationary",
@@ -348,7 +390,8 @@
       "name": "Stationary Points",
       "topic": "mat_differentiation_part2",
       "description": "Locating stationary points where the derivative is zero and classifying them as maxima, minima, or points of inflection.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "极值点"
     },
     {
       "id": "mat_rates",
@@ -356,14 +399,16 @@
       "name": "Connected Rates of Change",
       "topic": "mat_differentiation_part2",
       "description": "Connected rates of change linking the time derivatives of related quantities through the chain rule.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "相关变化率"
     },
     {
       "id": "mat_differentiation_adv",
       "kind": "topic",
       "name": "Differentiation (Advanced)",
       "topic": null,
-      "default_order": 11
+      "default_order": 11,
+      "name_zh": "进阶微分"
     },
     {
       "id": "mat_product_quotient",
@@ -371,7 +416,8 @@
       "name": "Product and Quotient Rules",
       "topic": "mat_differentiation_adv",
       "description": "The product and quotient rules for differentiating the product and the quotient of two functions.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "积商法则"
     },
     {
       "id": "mat_special_derivatives",
@@ -379,7 +425,8 @@
       "name": "Derivatives of Special Functions",
       "topic": "mat_differentiation_adv",
       "description": "Differentiating exponential, logarithmic, and trigonometric functions using their standard derivative results.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "特殊函数导数"
     },
     {
       "id": "mat_implicit",
@@ -387,7 +434,8 @@
       "name": "Implicit Differentiation",
       "topic": "mat_differentiation_adv",
       "description": "Implicit differentiation finding the derivative of a relation not solved explicitly for y by differentiating both sides.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "隐函数微分"
     },
     {
       "id": "mat_parametric",
@@ -395,14 +443,16 @@
       "name": "Parametric Differentiation",
       "topic": "mat_differentiation_adv",
       "description": "Parametric differentiation finding dy/dx for curves defined parametrically by applying the chain rule through the parameter.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "参数微分"
     },
     {
       "id": "mat_integration_part1",
       "kind": "topic",
       "name": "Integration (Part 1)",
       "topic": null,
-      "default_order": 12
+      "default_order": 12,
+      "name_zh": "积分 (第一部分)"
     },
     {
       "id": "mat_indefinite",
@@ -410,7 +460,8 @@
       "name": "Indefinite Integration",
       "topic": "mat_integration_part1",
       "description": "Indefinite integration as the reverse of differentiation, finding antiderivatives with an arbitrary constant of integration.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "不定积分"
     },
     {
       "id": "mat_definite_area",
@@ -418,7 +469,8 @@
       "name": "Definite Integration and Area",
       "topic": "mat_integration_part1",
       "description": "Definite integration evaluating the area under a curve between limits using the fundamental theorem of calculus.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "定积分与面积"
     },
     {
       "id": "mat_standard_integrals",
@@ -426,7 +478,8 @@
       "name": "Integration of Standard Functions",
       "topic": "mat_integration_part1",
       "description": "Integrating standard functions, including powers, exponentials, and trigonometric functions, from their known antiderivatives.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "标准函数积分"
     },
     {
       "id": "mat_substitution",
@@ -434,14 +487,16 @@
       "name": "Integration by Substitution",
       "topic": "mat_integration_part1",
       "description": "Integration by substitution reversing the chain rule by changing the variable to simplify the integrand.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "换元积分"
     },
     {
       "id": "mat_integration_part2",
       "kind": "topic",
       "name": "Integration (Part 2)",
       "topic": null,
-      "default_order": 13
+      "default_order": 13,
+      "name_zh": "积分 (第二部分)"
     },
     {
       "id": "mat_by_parts",
@@ -449,7 +504,8 @@
       "name": "Integration by Parts",
       "topic": "mat_integration_part2",
       "description": "Integration by parts reversing the product rule to integrate the product of two functions.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "分部积分"
     },
     {
       "id": "mat_int_partial",
@@ -457,7 +513,8 @@
       "name": "Integration using Partial Fractions",
       "topic": "mat_integration_part2",
       "description": "Integrating rational functions by first decomposing them into partial fractions that can be integrated individually.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "部分分式积分"
     },
     {
       "id": "mat_volumes",
@@ -465,14 +522,16 @@
       "name": "Volumes of Revolution",
       "topic": "mat_integration_part2",
       "description": "Volumes of revolution generated by rotating a region about an axis, computed by integrating the area of circular cross-sections.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "旋转体体积"
     },
     {
       "id": "mat_numerical__mat_diff_eq",
       "kind": "topic",
       "name": "Numerical Methods for Equations",
       "topic": null,
-      "default_order": 14
+      "default_order": 14,
+      "name_zh": "方程的数值方法"
     },
     {
       "id": "mat_locate_roots",
@@ -480,7 +539,8 @@
       "name": "Locating Roots",
       "topic": "mat_numerical__mat_diff_eq",
       "description": "Locating roots of an equation by a sign change over an interval, establishing the existence of a root before iteration.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "根的定位"
     },
     {
       "id": "mat_iteration",
@@ -488,7 +548,8 @@
       "name": "Iterative Methods",
       "topic": "mat_numerical__mat_diff_eq",
       "description": "Iterative methods finding successive approximations to a root using a rearranged iterative formula, and assessing convergence.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "迭代法"
     },
     {
       "id": "mat_form_de",
@@ -496,7 +557,8 @@
       "name": "Forming Differential Equations",
       "topic": "mat_numerical__mat_diff_eq",
       "description": "Forming differential equations from descriptions of rates of change, translating a physical situation into an equation.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "建立微分方程"
     },
     {
       "id": "mat_separation",
@@ -504,14 +566,16 @@
       "name": "Separation of Variables",
       "topic": "mat_numerical__mat_diff_eq",
       "description": "Solving first-order differential equations by separating the variables and integrating each side.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "分离变量"
     },
     {
       "id": "mat_vectors",
       "kind": "topic",
       "name": "Vectors",
       "topic": null,
-      "default_order": 15
+      "default_order": 15,
+      "name_zh": "向量"
     },
     {
       "id": "mat_vector_basics",
@@ -519,7 +583,8 @@
       "name": "Vectors in 2D and 3D",
       "topic": "mat_vectors",
       "description": "Vectors in two and three dimensions represented in component and unit-vector form, with addition and scalar multiplication.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "向量基础"
     },
     {
       "id": "mat_vector_magnitude",
@@ -527,7 +592,8 @@
       "name": "Magnitude and Direction",
       "topic": "mat_vectors",
       "description": "The magnitude of a vector from its components using Pythagoras, and finding its direction and corresponding unit vector.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "大小与方向"
     },
     {
       "id": "mat_scalar_product",
@@ -535,7 +601,8 @@
       "name": "Scalar Product",
       "topic": "mat_vectors",
       "description": "The scalar (dot) product of two vectors, used to find the angle between them and to test for perpendicularity.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "标量积"
     },
     {
       "id": "mat_vector_lines",
@@ -543,14 +610,16 @@
       "name": "Vector Equations of Lines",
       "topic": "mat_vectors",
       "description": "The vector equation of a line through a point with a given direction, and finding intersections and angles between lines.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "直线向量方程"
     },
     {
       "id": "mat_complex",
       "kind": "topic",
       "name": "Complex Numbers",
       "topic": null,
-      "default_order": 16
+      "default_order": 16,
+      "name_zh": "复数"
     },
     {
       "id": "mat_complex_arith",
@@ -558,7 +627,8 @@
       "name": "Complex Number Arithmetic",
       "topic": "mat_complex",
       "description": "Complex numbers in the form a + bi, with addition, subtraction, multiplication, division, and the complex conjugate.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "复数运算"
     },
     {
       "id": "mat_argand",
@@ -566,7 +636,8 @@
       "name": "Argand Diagram",
       "topic": "mat_complex",
       "description": "Representing complex numbers as points or vectors on an Argand diagram, illustrating their geometric interpretation.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "阿根图"
     },
     {
       "id": "mat_mod_arg",
@@ -574,7 +645,8 @@
       "name": "Modulus-Argument Form",
       "topic": "mat_complex",
       "description": "The modulus-argument (polar) form of a complex number, with multiplication and division combining moduli and arguments.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "模角形式"
     },
     {
       "id": "mat_complex_loci",
@@ -582,14 +654,16 @@
       "name": "Complex Roots and Loci",
       "topic": "mat_complex",
       "description": "Complex roots of polynomials occurring in conjugate pairs, and loci in the complex plane defined by modulus and argument conditions.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "复数根与轨迹"
     },
     {
       "id": "mat_mech_kinematics",
       "kind": "topic",
       "name": "Mechanics: Kinematics",
       "topic": null,
-      "default_order": 17
+      "default_order": 17,
+      "name_zh": "运动学"
     },
     {
       "id": "mat_kin_constant",
@@ -597,7 +671,8 @@
       "name": "Kinematics with Constant Acceleration",
       "topic": "mat_mech_kinematics",
       "description": "Kinematics of straight-line motion with constant acceleration, using the suvat equations to relate displacement, velocity, and time.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "匀加速运动"
     },
     {
       "id": "mat_kin_variable",
@@ -605,7 +680,8 @@
       "name": "Variable Acceleration",
       "topic": "mat_mech_kinematics",
       "description": "Kinematics with variable acceleration, using differentiation and integration to relate displacement, velocity, and acceleration over time.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "变加速运动"
     },
     {
       "id": "mat_projectiles",
@@ -613,14 +689,16 @@
       "name": "Projectiles",
       "topic": "mat_mech_kinematics",
       "description": "Projectile motion analysed by resolving into independent horizontal and vertical components of motion under gravity.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "抛体运动"
     },
     {
       "id": "mat_mech_forces",
       "kind": "topic",
       "name": "Mechanics: Forces and Newton's Laws",
       "topic": null,
-      "default_order": 18
+      "default_order": 18,
+      "name_zh": "力与牛顿定律"
     },
     {
       "id": "mat_forces_equilibrium",
@@ -628,7 +706,8 @@
       "name": "Forces and Equilibrium",
       "topic": "mat_mech_forces",
       "description": "Resolving forces into components and applying the conditions for the equilibrium of a particle under coplanar forces.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "力与平衡"
     },
     {
       "id": "mat_friction",
@@ -636,7 +715,8 @@
       "name": "Friction",
       "topic": "mat_mech_forces",
       "description": "The frictional force opposing motion, modelled by the coefficient of friction and limiting equilibrium on a rough surface.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "摩擦"
     },
     {
       "id": "mat_newton_laws",
@@ -644,14 +724,16 @@
       "name": "Newton's Laws of Motion",
       "topic": "mat_mech_forces",
       "description": "Newton's laws of motion relating the resultant force acting on a body to its mass and resulting acceleration.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "牛顿运动定律"
     },
     {
       "id": "mat_mech_forces__mat_mech_energy",
       "kind": "topic",
       "name": "Mechanics: Connected Particles, Energy and Momentum",
       "topic": null,
-      "default_order": 19
+      "default_order": 19,
+      "name_zh": "力学：连接体、能量与动量"
     },
     {
       "id": "mat_connected_particles",
@@ -659,7 +741,8 @@
       "name": "Connected Particles",
       "topic": "mat_mech_forces__mat_mech_energy",
       "description": "Analysing connected particles, such as those joined by a string over a pulley, by applying Newton's laws to each.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "连接质点"
     },
     {
       "id": "mat_work_energy_power",
@@ -667,7 +750,8 @@
       "name": "Work, Energy and Power",
       "topic": "mat_mech_forces__mat_mech_energy",
       "description": "Work done by a force, kinetic and potential energy, the work-energy principle, and power as the rate of doing work.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "功、能、功率"
     },
     {
       "id": "mat_momentum_impulse",
@@ -675,14 +759,16 @@
       "name": "Momentum and Impulse",
       "topic": "mat_mech_forces__mat_mech_energy",
       "description": "Linear momentum and impulse, and the conservation of momentum applied to collisions between particles.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "动量与冲量"
     },
     {
       "id": "mat_stats_data__mat_probability",
       "kind": "topic",
       "name": "Data, Counting and Probability",
       "topic": null,
-      "default_order": 20
+      "default_order": 20,
+      "name_zh": "数据、计数与概率"
     },
     {
       "id": "mat_data_rep",
@@ -690,7 +776,8 @@
       "name": "Representation of Data",
       "topic": "mat_stats_data__mat_probability",
       "description": "Representing data using histograms, box-and-whisker plots, and cumulative frequency graphs to display its distribution.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "数据表示"
     },
     {
       "id": "mat_central_spread",
@@ -698,7 +785,8 @@
       "name": "Central Tendency and Spread",
       "topic": "mat_stats_data__mat_probability",
       "description": "Measures of central tendency and spread, including the mean, median, variance, standard deviation, and quartiles.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "中心趋势与离散"
     },
     {
       "id": "mat_perm_comb",
@@ -706,14 +794,16 @@
       "name": "Permutations and Combinations",
       "topic": "mat_stats_data__mat_probability",
       "description": "Permutations and combinations counting ordered arrangements and unordered selections of objects.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "排列组合"
     },
     {
       "id": "mat_probability__mat_random_vars",
       "kind": "topic",
       "name": "Probability and Discrete Random Variables",
       "topic": null,
-      "default_order": 21
+      "default_order": 21,
+      "name_zh": "概率与离散随机变量"
     },
     {
       "id": "mat_prob_rules",
@@ -721,7 +811,8 @@
       "name": "Probability Rules",
       "topic": "mat_probability__mat_random_vars",
       "description": "The rules of probability, including the addition and multiplication rules for combined, mutually exclusive, and independent events.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "概率法则"
     },
     {
       "id": "mat_conditional",
@@ -729,7 +820,8 @@
       "name": "Conditional Probability",
       "topic": "mat_probability__mat_random_vars",
       "description": "Conditional probability of an event given another, and the use of tree diagrams with the multiplication rule.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "条件概率"
     },
     {
       "id": "mat_discrete_rv",
@@ -737,14 +829,16 @@
       "name": "Discrete Random Variables",
       "topic": "mat_probability__mat_random_vars",
       "description": "Discrete random variables with a probability distribution, and the calculation of their expectation and variance.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "离散随机变量"
     },
     {
       "id": "mat_random_vars",
       "kind": "topic",
       "name": "Random Variables and Distributions",
       "topic": null,
-      "default_order": 22
+      "default_order": 22,
+      "name_zh": "随机变量与分布"
     },
     {
       "id": "mat_binomial_dist",
@@ -752,7 +846,8 @@
       "name": "Binomial Distribution",
       "topic": "mat_random_vars",
       "description": "The binomial distribution modelling the number of successes in a fixed number of independent trials with constant probability.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "二项分布"
     },
     {
       "id": "mat_geometric_dist",
@@ -760,7 +855,8 @@
       "name": "Geometric Distribution",
       "topic": "mat_random_vars",
       "description": "The geometric distribution modelling the number of independent trials up to and including the first success.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "几何分布"
     },
     {
       "id": "mat_poisson",
@@ -768,14 +864,16 @@
       "name": "Poisson Distribution",
       "topic": "mat_random_vars",
       "description": "The Poisson distribution modelling the number of random events occurring at a constant average rate in a fixed interval.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "泊松分布"
     },
     {
       "id": "mat_normal__mat_inference",
       "kind": "topic",
       "name": "Normal Distribution and Statistical Inference",
       "topic": null,
-      "default_order": 23
+      "default_order": 23,
+      "name_zh": "正态分布与统计推断"
     },
     {
       "id": "mat_normal_dist",
@@ -783,7 +881,8 @@
       "name": "Normal Distribution",
       "topic": "mat_normal__mat_inference",
       "description": "The normal distribution, a continuous bell-shaped distribution defined by its mean and variance, standardised using the z-score.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "正态分布"
     },
     {
       "id": "mat_normal_approx",
@@ -791,7 +890,8 @@
       "name": "Normal Approximations",
       "topic": "mat_normal__mat_inference",
       "description": "Using the normal distribution to approximate the binomial or Poisson distribution under suitable conditions, with continuity correction.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "正态近似"
     },
     {
       "id": "mat_sampling",
@@ -799,7 +899,8 @@
       "name": "Sampling",
       "topic": "mat_normal__mat_inference",
       "description": "Sampling concepts including populations, samples, and the sampling distribution of the mean used for statistical inference.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "抽样"
     },
     {
       "id": "mat_hypothesis",
@@ -807,7 +908,8 @@
       "name": "Hypothesis Testing",
       "topic": "mat_normal__mat_inference",
       "description": "Hypothesis testing using a test statistic and a significance level to decide between a null and an alternative hypothesis.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "假设检验"
     }
   ],
   "edges": [

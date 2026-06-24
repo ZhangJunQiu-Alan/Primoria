@@ -1,5 +1,6 @@
 import { getTopic, getTopicGraph, nextTopic, type TopicConcept } from "./topic-graph";
 import type { KnowledgeGraphSearchResponse, KnowledgeGraphSearchResult } from "./search";
+import { type KgLanguage, localizeConcepts, resolveKgDisplayName } from "./display-name";
 
 // Cold-start entry positioning (route B, block 4).
 //
@@ -102,7 +103,12 @@ function resultTopicId(r: KnowledgeGraphSearchResult): string | null {
   return r.kind === "topic" ? r.nodeId : r.topicId;
 }
 
-function buildLinearPath(graphId: string, startTopicId: string, targetConceptId: string | null): {
+function buildLinearPath(
+  graphId: string,
+  startTopicId: string,
+  targetConceptId: string | null,
+  language: KgLanguage,
+): {
   startTopicId: string;
   targetConceptId: string | null;
   linear: boolean;
@@ -111,9 +117,21 @@ function buildLinearPath(graphId: string, startTopicId: string, targetConceptId:
   const start = getTopic(graphId, startTopicId);
   const path: LessonPlan[] = [];
   if (start) {
-    path.push({ order: 1, topicId: start.topicId, name: start.name, concepts: start.conceptIds });
+    path.push({
+      order: 1,
+      topicId: start.topicId,
+      name: resolveKgDisplayName(start, language),
+      concepts: localizeConcepts(start.conceptIds, language),
+    });
     const next = nextTopic(graphId, startTopicId);
-    if (next) path.push({ order: 2, topicId: next.topicId, name: next.name, concepts: next.conceptIds });
+    if (next) {
+      path.push({
+        order: 2,
+        topicId: next.topicId,
+        name: resolveKgDisplayName(next, language),
+        concepts: localizeConcepts(next.conceptIds, language),
+      });
+    }
   }
   return { startTopicId, targetConceptId, linear: path.length > 1, path };
 }
@@ -180,6 +198,7 @@ export function pickDominantGraph(results: KnowledgeGraphSearchResult[]): string
 export function classifyEntry(
   search: Pick<KnowledgeGraphSearchResponse, "graphId" | "results">,
   overrides: Partial<PositioningParams> = {},
+  language: KgLanguage = null,
 ): PositioningResult {
   const params = resolvePositioningParams(overrides);
   const graphId = search.graphId;
@@ -224,7 +243,7 @@ export function classifyEntry(
     const startTopicId = massConcentrated ? top.topicId : (topConcept?.topicId ?? top.topicId);
     const targetConceptId =
       topConcept && topConcept.topicId === startTopicId ? topConcept.nodeId : null;
-    return { branch: "specific", graphId, params, diagnostics, ...buildLinearPath(graphId, startTopicId, targetConceptId) };
+    return { branch: "specific", graphId, params, diagnostics, ...buildLinearPath(graphId, startTopicId, targetConceptId, language) };
   }
 
   // Broad: menu of hit topics, ordered by default_order (recommended path), top N.
@@ -235,7 +254,12 @@ export function classifyEntry(
     .filter((t): t is NonNullable<typeof t> => Boolean(t))
     .sort((a, b) => a.defaultOrder - b.defaultOrder)
     .slice(0, params.menuSize)
-    .map((t) => ({ topicId: t.topicId, name: t.name, defaultOrder: t.defaultOrder, concepts: t.conceptIds }));
+    .map((t) => ({
+      topicId: t.topicId,
+      name: resolveKgDisplayName(t, language),
+      defaultOrder: t.defaultOrder,
+      concepts: localizeConcepts(t.conceptIds, language),
+    }));
 
   return { branch: "broad", graphId, params, menu, diagnostics };
 }

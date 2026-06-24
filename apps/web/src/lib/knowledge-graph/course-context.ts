@@ -1,4 +1,5 @@
 import { getTopic, nextTopic, type TopicConcept } from "./topic-graph";
+import { type KgLanguage, localizeConcepts, resolveKgDisplayName } from "./display-name";
 
 export type CourseContextTopic = {
   topicId: string;
@@ -25,6 +26,7 @@ export function resolveCourseContextFromTopicAnchor(input: {
   graphId: string;
   startTopicId: string;
   targetConceptId?: string | null;
+  language?: KgLanguage;
 }): CourseContext {
   let start;
   try {
@@ -46,11 +48,22 @@ export function resolveCourseContextFromTopicAnchor(input: {
   }
 
   const next = nextTopic(input.graphId, input.startTopicId);
+  const language = input.language;
   return {
     learningPathType: "linear",
     graphId: input.graphId,
-    startTopic: { topicId: start.topicId, name: start.name, concepts: start.conceptIds },
+    startTopic: {
+      topicId: start.topicId,
+      name: resolveKgDisplayName(start, language),
+      concepts: localizeConcepts(start.conceptIds, language),
+    },
     targetConceptId,
-    nextTopic: next ? { topicId: next.topicId, name: next.name, concepts: next.conceptIds } : null,
+    nextTopic: next
+      ? {
+          topicId: next.topicId,
+          name: resolveKgDisplayName(next, language),
+          concepts: localizeConcepts(next.conceptIds, language),
+        }
+      : null,
   };
 }

@@ -38,6 +38,13 @@ function main() {
   assert(context.targetConceptId === targetConceptId, "valid target concept is preserved");
   assert(context.startTopic.concepts.length === selected.conceptIds.length, "concepts are resolved from the server graph");
 
+  // Chinese locale resolves nameZh into the course context (topic + concepts)
+  // so generated course/lesson titles match the localized menu.
+  const zhContext = resolveCourseContextFromTopicAnchor({ graphId, startTopicId: selectedTopicId, targetConceptId, language: "zh" });
+  assert(zhContext.startTopic.name === "微分 (第一部分)", "zh locale resolves topic nameZh into course context");
+  assert(zhContext.startTopic.concepts[0].name === "从原理求导", "zh locale resolves concept nameZh into course context");
+  assert(zhContext.startTopic.topicId === selectedTopicId, "localized context preserves the topic id");
+
   assertInvalidAnchor(
     () => resolveCourseContextFromTopicAnchor({ graphId, startTopicId: "mat_differentiation_adv_typo" }),
     "unknown topic is rejected",

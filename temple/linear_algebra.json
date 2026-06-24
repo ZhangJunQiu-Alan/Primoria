@@ -24,7 +24,8 @@
       "kind": "topic",
       "name": "Solving Linear Equations",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "求解线性方程组"
     },
     {
       "id": "c_mit1806_vectors",
@@ -32,7 +33,8 @@
       "name": "Vectors and Linear Combinations",
       "topic": "t_mit1806_linear_equations",
       "description": "Addition, scalar multiplication, dot products, and linear combinations of vectors.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "向量与线性组合"
     },
     {
       "id": "c_mit1806_elimination",
@@ -40,7 +42,8 @@
       "name": "Elimination with Matrices",
       "topic": "t_mit1806_linear_equations",
       "description": "Solving systems of linear equations using Gaussian elimination, pivot variables, and multipliers.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "矩阵消元"
     },
     {
       "id": "c_mit1806_matrix_ops",
@@ -48,7 +51,8 @@
       "name": "Matrix Operations and Inverses",
       "topic": "t_mit1806_linear_equations",
       "description": "Rules for matrix multiplication, properties of operations, and computing the inverse of a matrix.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "矩阵运算与逆矩阵"
     },
     {
       "id": "c_mit1806_lu_decomp",
@@ -56,14 +60,16 @@
       "name": "LU Factorization",
       "topic": "t_mit1806_linear_equations",
       "description": "Factoring a matrix into lower triangular (L) and upper triangular (U) components.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "LU 分解"
     },
     {
       "id": "t_mit1806_vector_spaces",
       "kind": "topic",
       "name": "Vector Spaces and Subspaces",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "向量空间与子空间"
     },
     {
       "id": "c_mit1806_spaces_subspaces",
@@ -71,7 +77,8 @@
       "name": "Vector Spaces and Subspaces",
       "topic": "t_mit1806_vector_spaces",
       "description": "Definition of vector spaces and subspaces, closure under addition and scalar multiplication.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "向量空间和子空间"
     },
     {
       "id": "c_mit1806_null_column_space",
@@ -79,7 +86,8 @@
       "name": "Null Space and Column Space",
       "topic": "t_mit1806_vector_spaces",
       "description": "Understanding the null space (solutions to Ax=0) and column space (combinations of columns).",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "零空间与列空间"
     },
     {
       "id": "c_mit1806_independence_basis",
@@ -87,7 +95,8 @@
       "name": "Linear Independence, Basis, and Dimension",
       "topic": "t_mit1806_vector_spaces",
       "description": "Linear independence of vectors, spanning sets, defining a basis, and the dimension of a vector space.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "线性无关、基与维数"
     },
     {
       "id": "c_mit1806_four_subspaces",
@@ -95,14 +104,16 @@
       "name": "The Four Fundamental Subspaces",
       "topic": "t_mit1806_vector_spaces",
       "description": "Column space, null space, row space, and left null space, and their dimensions.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "四个基本子空间"
     },
     {
       "id": "t_mit1806_orthogonality",
       "kind": "topic",
       "name": "Orthogonality",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "正交性"
     },
     {
       "id": "c_mit1806_orthogonality",
@@ -110,7 +121,8 @@
       "name": "Orthogonal Vectors and Subspaces",
       "topic": "t_mit1806_orthogonality",
       "description": "Orthogonality of the four fundamental subspaces, orthogonal complements.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "正交向量与子空间"
     },
     {
       "id": "c_mit1806_projections",
@@ -118,7 +130,8 @@
       "name": "Projections onto Subspaces",
       "topic": "t_mit1806_orthogonality",
       "description": "Projection matrices and projecting vectors onto lines or general subspaces.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "向子空间的投影"
     },
     {
       "id": "c_mit1806_least_squares",
@@ -126,7 +139,8 @@
       "name": "Least Squares Approximations",
       "topic": "t_mit1806_orthogonality",
       "description": "Solving overdetermined systems using normal equations and finding the best fit line.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "最小二乘近似"
     },
     {
       "id": "c_mit1806_gram_schmidt",
@@ -134,14 +148,16 @@
       "name": "Orthogonal Bases and Gram-Schmidt",
       "topic": "t_mit1806_orthogonality",
       "description": "Orthonormal vectors, orthogonal matrices, and the Gram-Schmidt orthogonalization process.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "正交基与 Gram-Schmidt"
     },
     {
       "id": "t_mit1806_determinants__t_mit1806_eigenvalues",
       "kind": "topic",
       "name": "Determinants and Eigenvalue Foundations",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "行列式与特征值基础"
     },
     {
       "id": "c_mit1806_det_properties",
@@ -149,7 +165,8 @@
       "name": "Properties of Determinants",
       "topic": "t_mit1806_determinants__t_mit1806_eigenvalues",
       "description": "The fundamental properties that define the determinant of a square matrix.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "行列式的性质"
     },
     {
       "id": "c_mit1806_det_formulas",
@@ -157,7 +174,8 @@
       "name": "Formulas and Cofactors",
       "topic": "t_mit1806_determinants__t_mit1806_eigenvalues",
       "description": "Computing determinants using the permutation formula and cofactor expansions.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "行列式公式与余子式"
     },
     {
       "id": "c_mit1806_cramers_rule",
@@ -165,7 +183,8 @@
       "name": "Cramer's Rule and Volumes",
       "topic": "t_mit1806_determinants__t_mit1806_eigenvalues",
       "description": "Using determinants to find inverses, solving systems with Cramer's Rule, and volume interpretations.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "Cramer 法则与体积"
     },
     {
       "id": "c_mit1806_eigen",
@@ -173,14 +192,16 @@
       "name": "Eigenvalues and Eigenvectors",
       "topic": "t_mit1806_determinants__t_mit1806_eigenvalues",
       "description": "Definition of eigenvalues and eigenvectors, and finding them using characteristic equations.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "特征值与特征向量"
     },
     {
       "id": "t_mit1806_eigenvalues",
       "kind": "topic",
       "name": "Eigenvalues and Eigenvectors",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "特征值与特征向量"
     },
     {
       "id": "c_mit1806_diagonalization",
@@ -188,7 +209,8 @@
       "name": "Diagonalization",
       "topic": "t_mit1806_eigenvalues",
       "description": "Diagonalizing a matrix using its eigenvectors, computing powers of matrices.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "对角化"
     },
     {
       "id": "c_mit1806_diff_eq",
@@ -196,7 +218,8 @@
       "name": "Systems of Differential Equations",
       "topic": "t_mit1806_eigenvalues",
       "description": "Solving linear systems of differential equations using eigenvalues and eigenvectors.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "微分方程组"
     },
     {
       "id": "c_mit1806_symmetric_matrices",
@@ -204,7 +227,8 @@
       "name": "Symmetric Matrices",
       "topic": "t_mit1806_eigenvalues",
       "description": "Properties of symmetric matrices, including real eigenvalues and orthogonal eigenvectors.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "对称矩阵"
     },
     {
       "id": "c_mit1806_positive_definite",
@@ -212,14 +236,16 @@
       "name": "Positive Definite Matrices",
       "topic": "t_mit1806_eigenvalues",
       "description": "Tests for positive definite matrices and their applications.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "正定矩阵"
     },
     {
       "id": "t_mit1806_applications",
       "kind": "topic",
       "name": "SVD and Linear Transformations",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "SVD 与线性变换"
     },
     {
       "id": "c_mit1806_svd",
@@ -227,7 +253,8 @@
       "name": "Singular Value Decomposition (SVD)",
       "topic": "t_mit1806_applications",
       "description": "Factoring any matrix into orthogonal and diagonal matrices.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "奇异值分解"
     },
     {
       "id": "c_mit1806_linear_transformations",
@@ -235,7 +262,8 @@
       "name": "Linear Transformations",
       "topic": "t_mit1806_applications",
       "description": "Maps between vector spaces that preserve addition and scalar multiplication, characterised by their action on a basis and represented by matrices.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "线性变换"
     },
     {
       "id": "c_mit1806_matrix_transform",
@@ -243,7 +271,8 @@
       "name": "The Matrix of a Linear Transformation",
       "topic": "t_mit1806_applications",
       "description": "Representing linear transformations with matrices and changing basis.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "线性变换的矩阵"
     }
   ],
   "edges": [

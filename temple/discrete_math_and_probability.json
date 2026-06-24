@@ -16,7 +16,8 @@
       "kind": "topic",
       "name": "Logic and Proofs",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "逻辑与证明"
     },
     {
       "id": "propositional_logic",
@@ -24,7 +25,8 @@
       "name": "Propositional Logic",
       "kind": "concept",
       "default_order": 1,
-      "description": "The study of propositions combined with logical connectives such as and, or, not, and implication, with truth tables defining their meaning."
+      "description": "The study of propositions combined with logical connectives such as and, or, not, and implication, with truth tables defining their meaning.",
+      "name_zh": "命题逻辑"
     },
     {
       "id": "direct_proofs",
@@ -32,7 +34,8 @@
       "name": "Direct Proofs",
       "kind": "concept",
       "default_order": 2,
-      "description": "A proof technique establishing an implication by assuming the hypothesis and deducing the conclusion through a chain of valid logical steps."
+      "description": "A proof technique establishing an implication by assuming the hypothesis and deducing the conclusion through a chain of valid logical steps.",
+      "name_zh": "直接证明"
     },
     {
       "id": "proof_by_contraposition",
@@ -40,7 +43,8 @@
       "name": "Proof by Contraposition",
       "kind": "concept",
       "default_order": 3,
-      "description": "Proving an implication 'p implies q' by instead proving its logically equivalent contrapositive, 'not q implies not p'."
+      "description": "Proving an implication 'p implies q' by instead proving its logically equivalent contrapositive, 'not q implies not p'.",
+      "name_zh": "逆否证明"
     },
     {
       "id": "proof_by_contradiction",
@@ -48,14 +52,16 @@
       "name": "Proof by Contradiction",
       "kind": "concept",
       "default_order": 4,
-      "description": "Proving a statement by assuming its negation and deriving a logical contradiction, forcing the original statement to be true."
+      "description": "Proving a statement by assuming its negation and deriving a logical contradiction, forcing the original statement to be true.",
+      "name_zh": "反证法"
     },
     {
       "id": "topic_induction",
       "kind": "topic",
       "name": "Induction",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "归纳"
     },
     {
       "id": "simple_induction",
@@ -63,7 +69,8 @@
       "name": "Simple Induction",
       "kind": "concept",
       "default_order": 1,
-      "description": "Mathematical induction proving a statement for all naturals by establishing a base case and an inductive step from n to n+1."
+      "description": "Mathematical induction proving a statement for all naturals by establishing a base case and an inductive step from n to n+1.",
+      "name_zh": "简单归纳"
     },
     {
       "id": "strong_induction",
@@ -71,7 +78,8 @@
       "name": "Strong Induction",
       "kind": "concept",
       "default_order": 2,
-      "description": "A variant of induction whose inductive step may assume the statement for all smaller values, not just the immediate predecessor."
+      "description": "A variant of induction whose inductive step may assume the statement for all smaller values, not just the immediate predecessor.",
+      "name_zh": "强归纳"
     },
     {
       "id": "well_ordering_principle",
@@ -79,7 +87,8 @@
       "name": "Well-Ordering Principle",
       "kind": "concept",
       "default_order": 3,
-      "description": "The principle that every nonempty set of natural numbers contains a least element, equivalent to and underpinning induction."
+      "description": "The principle that every nonempty set of natural numbers contains a least element, equivalent to and underpinning induction.",
+      "name_zh": "良序原理"
     },
     {
       "id": "structural_induction",
@@ -87,14 +96,16 @@
       "name": "Structural Induction",
       "kind": "concept",
       "default_order": 4,
-      "description": "Induction over recursively defined structures, proving a property holds for base cases and is preserved by the construction rules."
+      "description": "Induction over recursively defined structures, proving a property holds for base cases and is preserved by the construction rules.",
+      "name_zh": "结构归纳"
     },
     {
       "id": "topic_matching",
       "kind": "topic",
       "name": "Stable Matching",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "稳定匹配"
     },
     {
       "id": "stable_matching_problem",
@@ -102,7 +113,8 @@
       "name": "Stable Matching Problem",
       "kind": "concept",
       "default_order": 1,
-      "description": "The problem of pairing two sides given preferences so that no two unmatched participants both prefer each other over their assigned partners."
+      "description": "The problem of pairing two sides given preferences so that no two unmatched participants both prefer each other over their assigned partners.",
+      "name_zh": "稳定匹配问题"
     },
     {
       "id": "gale_shapley_algorithm",
@@ -110,7 +122,8 @@
       "name": "Gale-Shapley Algorithm",
       "kind": "concept",
       "default_order": 2,
-      "description": "The Gale-Shapley deferred-acceptance algorithm producing a stable matching through rounds of proposals and tentative acceptances."
+      "description": "The Gale-Shapley deferred-acceptance algorithm producing a stable matching through rounds of proposals and tentative acceptances.",
+      "name_zh": "Gale-Shapley算法"
     },
     {
       "id": "matching_optimality",
@@ -118,7 +131,8 @@
       "name": "Matching Optimality",
       "kind": "concept",
       "default_order": 3,
-      "description": "The result that Gale-Shapley yields the matching most preferred by every member of the proposing side among all stable matchings."
+      "description": "The result that Gale-Shapley yields the matching most preferred by every member of the proposing side among all stable matchings.",
+      "name_zh": "匹配最优性"
     },
     {
       "id": "matching_pessimality",
@@ -126,14 +140,16 @@
       "name": "Matching Pessimality",
       "kind": "concept",
       "default_order": 4,
-      "description": "The corresponding result that the proposing-side-optimal matching is simultaneously the worst stable matching for the receiving side."
+      "description": "The corresponding result that the proposing-side-optimal matching is simultaneously the worst stable matching for the receiving side.",
+      "name_zh": "匹配最差性"
     },
     {
       "id": "topic_graphs",
       "kind": "topic",
       "name": "Graph Theory",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "图论"
     },
     {
       "id": "graph_basics",
@@ -141,7 +157,8 @@
       "name": "Graph Basics",
       "kind": "concept",
       "default_order": 1,
-      "description": "Graphs as sets of vertices joined by edges, with the fundamental notions of degree, paths, connectivity, and cycles."
+      "description": "Graphs as sets of vertices joined by edges, with the fundamental notions of degree, paths, connectivity, and cycles.",
+      "name_zh": "图基础"
     },
     {
       "id": "eulerian_tours",
@@ -149,7 +166,8 @@
       "name": "Eulerian Tours",
       "kind": "concept",
       "default_order": 2,
-      "description": "Closed walks traversing every edge exactly once, existing precisely when a graph is connected with all vertices of even degree."
+      "description": "Closed walks traversing every edge exactly once, existing precisely when a graph is connected with all vertices of even degree.",
+      "name_zh": "欧拉回路"
     },
     {
       "id": "trees",
@@ -157,7 +175,8 @@
       "name": "Trees",
       "kind": "concept",
       "default_order": 3,
-      "description": "Connected acyclic graphs, equivalently graphs with a unique path between any two vertices, having exactly one fewer edge than vertices."
+      "description": "Connected acyclic graphs, equivalently graphs with a unique path between any two vertices, having exactly one fewer edge than vertices.",
+      "name_zh": "树"
     },
     {
       "id": "planar_graphs",
@@ -165,7 +184,8 @@
       "name": "Planar Graphs",
       "kind": "concept",
       "default_order": 4,
-      "description": "Graphs drawable in the plane without edge crossings, constrained by Euler's formula relating vertices, edges, and faces."
+      "description": "Graphs drawable in the plane without edge crossings, constrained by Euler's formula relating vertices, edges, and faces.",
+      "name_zh": "平面图"
     },
     {
       "id": "hypercubes",
@@ -173,14 +193,16 @@
       "name": "Hypercubes",
       "kind": "concept",
       "default_order": 5,
-      "description": "Recursively defined hypercube graphs whose vertices are binary strings, with edges joining strings that differ in a single bit."
+      "description": "Recursively defined hypercube graphs whose vertices are binary strings, with edges joining strings that differ in a single bit.",
+      "name_zh": "超立方体"
     },
     {
       "id": "topic_modular_arithmetic",
       "kind": "topic",
       "name": "Modular Arithmetic",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "模运算"
     },
     {
       "id": "euclids_algorithm",
@@ -188,7 +210,8 @@
       "name": "Euclid's Algorithm",
       "kind": "concept",
       "default_order": 1,
-      "description": "Euclid's algorithm computing the greatest common divisor of two integers by repeatedly replacing the larger with its remainder modulo the smaller."
+      "description": "Euclid's algorithm computing the greatest common divisor of two integers by repeatedly replacing the larger with its remainder modulo the smaller.",
+      "name_zh": "欧几里得算法"
     },
     {
       "id": "extended_euclid",
@@ -196,7 +219,8 @@
       "name": "Extended Euclid",
       "kind": "concept",
       "default_order": 2,
-      "description": "The extended Euclidean algorithm computing Bézout coefficients that express the gcd as an integer combination, yielding modular inverses."
+      "description": "The extended Euclidean algorithm computing Bézout coefficients that express the gcd as an integer combination, yielding modular inverses.",
+      "name_zh": "扩展欧几里得"
     },
     {
       "id": "chinese_remainder_theorem",
@@ -204,7 +228,8 @@
       "name": "Chinese Remainder Theorem",
       "kind": "concept",
       "default_order": 3,
-      "description": "The Chinese remainder theorem giving a unique solution modulo the product for a system of congruences with pairwise coprime moduli."
+      "description": "The Chinese remainder theorem giving a unique solution modulo the product for a system of congruences with pairwise coprime moduli.",
+      "name_zh": "中国剩余定理"
     },
     {
       "id": "fermats_little_theorem",
@@ -212,14 +237,16 @@
       "name": "Fermat's Little Theorem",
       "kind": "concept",
       "default_order": 4,
-      "description": "Fermat's little theorem stating that a raised to the power p minus one is congruent to one modulo a prime p not dividing a."
+      "description": "Fermat's little theorem stating that a raised to the power p minus one is congruent to one modulo a prime p not dividing a.",
+      "name_zh": "费马小定理"
     },
     {
       "id": "topic_crypto",
       "kind": "topic",
       "name": "Cryptography",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "密码学"
     },
     {
       "id": "symmetric_cryptography",
@@ -227,7 +254,8 @@
       "name": "Symmetric Cryptography",
       "kind": "concept",
       "default_order": 1,
-      "description": "Encryption schemes where sender and receiver share a single secret key used for both encryption and decryption of messages."
+      "description": "Encryption schemes where sender and receiver share a single secret key used for both encryption and decryption of messages.",
+      "name_zh": "对称密码"
     },
     {
       "id": "rsa_setup_and_encryption",
@@ -235,7 +263,8 @@
       "name": "RSA Setup and Encryption",
       "kind": "concept",
       "default_order": 2,
-      "description": "The RSA public-key scheme generating keys from two large primes and encrypting messages by modular exponentiation with the public exponent."
+      "description": "The RSA public-key scheme generating keys from two large primes and encrypting messages by modular exponentiation with the public exponent.",
+      "name_zh": "RSA设置与加密"
     },
     {
       "id": "rsa_decryption_proof",
@@ -243,7 +272,8 @@
       "name": "RSA Decryption Proof",
       "kind": "concept",
       "default_order": 3,
-      "description": "The proof that RSA decryption inverts encryption, relying on Euler's theorem and the relationship between the public and private exponents."
+      "description": "The proof that RSA decryption inverts encryption, relying on Euler's theorem and the relationship between the public and private exponents.",
+      "name_zh": "RSA解密证明"
     },
     {
       "id": "digital_signatures",
@@ -251,14 +281,16 @@
       "name": "Digital Signatures",
       "kind": "concept",
       "default_order": 4,
-      "description": "Cryptographic signatures authenticating a message by signing with a private key so that anyone can verify authenticity with the public key."
+      "description": "Cryptographic signatures authenticating a message by signing with a private key so that anyone can verify authenticity with the public key.",
+      "name_zh": "数字签名"
     },
     {
       "id": "topic_polynomials",
       "kind": "topic",
       "name": "Polynomials",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "多项式"
     },
     {
       "id": "polynomial_roots_and_degree",
@@ -266,7 +298,8 @@
       "name": "Polynomial Roots and Degree",
       "kind": "concept",
       "default_order": 1,
-      "description": "Properties of polynomials over a field, including that a nonzero degree-d polynomial has at most d roots, used throughout the course."
+      "description": "Properties of polynomials over a field, including that a nonzero degree-d polynomial has at most d roots, used throughout the course.",
+      "name_zh": "多项式根与次数"
     },
     {
       "id": "polynomial_interpolation",
@@ -274,7 +307,8 @@
       "name": "Polynomial Interpolation",
       "kind": "concept",
       "default_order": 2,
-      "description": "The fact that d+1 points uniquely determine a degree-d polynomial, recovered by Lagrange interpolation over a field."
+      "description": "The fact that d+1 points uniquely determine a degree-d polynomial, recovered by Lagrange interpolation over a field.",
+      "name_zh": "多项式插值"
     },
     {
       "id": "secret_sharing",
@@ -282,7 +316,8 @@
       "name": "Secret Sharing",
       "kind": "concept",
       "default_order": 3,
-      "description": "Shamir's secret sharing splitting a secret among parties as points on a polynomial so that any sufficient subset can reconstruct it."
+      "description": "Shamir's secret sharing splitting a secret among parties as points on a polynomial so that any sufficient subset can reconstruct it.",
+      "name_zh": "秘密分享"
     },
     {
       "id": "error_correcting_codes",
@@ -290,14 +325,16 @@
       "name": "Error Correcting Codes",
       "kind": "concept",
       "default_order": 4,
-      "description": "Polynomial-based codes such as Reed-Solomon adding redundancy so messages can be recovered despite a bounded number of errors or erasures."
+      "description": "Polynomial-based codes such as Reed-Solomon adding redundancy so messages can be recovered despite a bounded number of errors or erasures.",
+      "name_zh": "纠错码"
     },
     {
       "id": "topic_countability_computability",
       "kind": "topic",
       "name": "Countability and Computability",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "可数性与可计算性"
     },
     {
       "id": "bijections_and_cardinality",
@@ -305,7 +342,8 @@
       "name": "Bijections and Cardinality",
       "kind": "concept",
       "default_order": 1,
-      "description": "Comparing the sizes of sets using bijections, defining two sets as equinumerous when a one-to-one correspondence exists between them."
+      "description": "Comparing the sizes of sets using bijections, defining two sets as equinumerous when a one-to-one correspondence exists between them.",
+      "name_zh": "双射与基数"
     },
     {
       "id": "cantors_diagonalization",
@@ -313,7 +351,8 @@
       "name": "Cantor's Diagonalization",
       "kind": "concept",
       "default_order": 2,
-      "description": "Cantor's diagonal argument constructing an element differing from every member of a list, proving that certain sets are uncountable."
+      "description": "Cantor's diagonal argument constructing an element differing from every member of a list, proving that certain sets are uncountable.",
+      "name_zh": "康托尔对角线法"
     },
     {
       "id": "uncountability_of_reals",
@@ -321,14 +360,16 @@
       "name": "Uncountability of Reals",
       "kind": "concept",
       "default_order": 3,
-      "description": "The proof, via diagonalization, that the real numbers cannot be put in bijection with the naturals and are therefore uncountable."
+      "description": "The proof, via diagonalization, that the real numbers cannot be put in bijection with the naturals and are therefore uncountable.",
+      "name_zh": "实数不可数性"
     },
     {
       "id": "topic_countability_computability__topic_counting",
       "kind": "topic",
       "name": "Computability and Counting Foundations",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "可计算性与计数基础"
     },
     {
       "id": "the_halting_problem",
@@ -336,7 +377,8 @@
       "name": "The Halting Problem",
       "kind": "concept",
       "default_order": 1,
-      "description": "The halting problem, the undecidable task of determining whether an arbitrary program halts on a given input, proved by diagonalization."
+      "description": "The halting problem, the undecidable task of determining whether an arbitrary program halts on a given input, proved by diagonalization.",
+      "name_zh": "停机问题"
     },
     {
       "id": "undecidability",
@@ -344,7 +386,8 @@
       "name": "Undecidability",
       "kind": "concept",
       "default_order": 2,
-      "description": "The existence of well-defined problems that no algorithm can solve for all inputs, established by reduction from the halting problem."
+      "description": "The existence of well-defined problems that no algorithm can solve for all inputs, established by reduction from the halting problem.",
+      "name_zh": "不可判定性"
     },
     {
       "id": "basic_counting_rules",
@@ -352,7 +395,8 @@
       "name": "Basic Counting Rules",
       "kind": "concept",
       "default_order": 3,
-      "description": "The fundamental sum and product rules counting the outcomes of disjoint choices and of sequences of independent choices."
+      "description": "The fundamental sum and product rules counting the outcomes of disjoint choices and of sequences of independent choices.",
+      "name_zh": "基础计数规则"
     },
     {
       "id": "combinations_permutations",
@@ -360,14 +404,16 @@
       "name": "Combinations and Permutations",
       "kind": "concept",
       "default_order": 4,
-      "description": "Counting ordered selections (permutations) and unordered selections (combinations) of items from a set, with their factorial formulas."
+      "description": "Counting ordered selections (permutations) and unordered selections (combinations) of items from a set, with their factorial formulas.",
+      "name_zh": "组合与排列"
     },
     {
       "id": "topic_counting",
       "kind": "topic",
       "name": "Counting",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "计数"
     },
     {
       "id": "combinatorial_proofs",
@@ -375,7 +421,8 @@
       "name": "Combinatorial Proofs",
       "kind": "concept",
       "default_order": 1,
-      "description": "Proving identities by counting the same quantity in two different ways, showing that the two expressions must be equal."
+      "description": "Proving identities by counting the same quantity in two different ways, showing that the two expressions must be equal.",
+      "name_zh": "组合证明"
     },
     {
       "id": "stars_and_bars",
@@ -383,7 +430,8 @@
       "name": "Stars and Bars",
       "kind": "concept",
       "default_order": 2,
-      "description": "The stars-and-bars technique counting the nonnegative integer solutions of an equation, equivalently distributions of identical items into bins."
+      "description": "The stars-and-bars technique counting the nonnegative integer solutions of an equation, equivalently distributions of identical items into bins.",
+      "name_zh": "星号与条形法"
     },
     {
       "id": "inclusion_exclusion",
@@ -391,14 +439,16 @@
       "name": "Inclusion-Exclusion",
       "kind": "concept",
       "default_order": 3,
-      "description": "The inclusion-exclusion principle counting the size of a union by alternately adding and subtracting the sizes of intersections."
+      "description": "The inclusion-exclusion principle counting the size of a union by alternately adding and subtracting the sizes of intersections.",
+      "name_zh": "容斥原理"
     },
     {
       "id": "topic_discrete_prob",
       "kind": "topic",
       "name": "Discrete Probability",
       "topic": null,
-      "default_order": 11
+      "default_order": 11,
+      "name_zh": "离散概率"
     },
     {
       "id": "probability_spaces",
@@ -406,7 +456,8 @@
       "name": "Probability Spaces",
       "kind": "concept",
       "default_order": 1,
-      "description": "A probability space comprising a sample space of outcomes, events as subsets, and a probability measure satisfying Kolmogorov's axioms."
+      "description": "A probability space comprising a sample space of outcomes, events as subsets, and a probability measure satisfying Kolmogorov's axioms.",
+      "name_zh": "概率空间"
     },
     {
       "id": "conditional_probability",
@@ -414,7 +465,8 @@
       "name": "Conditional Probability",
       "kind": "concept",
       "default_order": 2,
-      "description": "The probability of an event given that another has occurred, defined by normalising their joint probability by the conditioning event's probability."
+      "description": "The probability of an event given that another has occurred, defined by normalising their joint probability by the conditioning event's probability.",
+      "name_zh": "条件概率"
     },
     {
       "id": "bayes_rule",
@@ -422,7 +474,8 @@
       "name": "Bayes' Rule",
       "kind": "concept",
       "default_order": 3,
-      "description": "Bayes' rule inverting conditional probabilities to update the probability of a hypothesis given evidence, combining priors and likelihoods."
+      "description": "Bayes' rule inverting conditional probabilities to update the probability of a hypothesis given evidence, combining priors and likelihoods.",
+      "name_zh": "贝叶斯法则"
     },
     {
       "id": "event_independence",
@@ -430,14 +483,16 @@
       "name": "Event Independence",
       "kind": "concept",
       "default_order": 4,
-      "description": "Two events are independent when the occurrence of one does not change the probability of the other, equivalently their joint equals the product."
+      "description": "Two events are independent when the occurrence of one does not change the probability of the other, equivalently their joint equals the product.",
+      "name_zh": "事件独立性"
     },
     {
       "id": "topic_random_vars",
       "kind": "topic",
       "name": "Random Variables and Expectation",
       "topic": null,
-      "default_order": 12
+      "default_order": 12,
+      "name_zh": "随机变量与期望"
     },
     {
       "id": "discrete_random_variables",
@@ -445,7 +500,8 @@
       "name": "Discrete Random Variables",
       "kind": "concept",
       "default_order": 1,
-      "description": "Random variables taking values in a discrete set, described by a probability mass function assigning probabilities to each possible value."
+      "description": "Random variables taking values in a discrete set, described by a probability mass function assigning probabilities to each possible value.",
+      "name_zh": "离散随机变量"
     },
     {
       "id": "expectation",
@@ -453,7 +509,8 @@
       "name": "Expectation",
       "kind": "concept",
       "default_order": 2,
-      "description": "The expectation of a random variable, its probability-weighted average value, summarising the centre of its distribution."
+      "description": "The expectation of a random variable, its probability-weighted average value, summarising the centre of its distribution.",
+      "name_zh": "期望"
     },
     {
       "id": "linearity_of_expectation",
@@ -461,7 +518,8 @@
       "name": "Linearity of Expectation",
       "kind": "concept",
       "default_order": 3,
-      "description": "The property that the expectation of a sum equals the sum of expectations, holding even when the variables are dependent."
+      "description": "The property that the expectation of a sum equals the sum of expectations, holding even when the variables are dependent.",
+      "name_zh": "期望的线性"
     },
     {
       "id": "variance_and_covariance",
@@ -469,14 +527,16 @@
       "name": "Variance and Covariance",
       "kind": "concept",
       "default_order": 4,
-      "description": "Variance measuring a variable's spread about its mean, and covariance measuring the degree to which two variables vary together."
+      "description": "Variance measuring a variable's spread about its mean, and covariance measuring the degree to which two variables vary together.",
+      "name_zh": "方差与协方差"
     },
     {
       "id": "topic_discrete_dists",
       "kind": "topic",
       "name": "Discrete Distributions",
       "topic": null,
-      "default_order": 13
+      "default_order": 13,
+      "name_zh": "离散分布"
     },
     {
       "id": "bernoulli_binomial_distributions",
@@ -484,7 +544,8 @@
       "name": "Bernoulli and Binomial Distributions",
       "kind": "concept",
       "default_order": 1,
-      "description": "The Bernoulli distribution modelling a single success/failure trial and the binomial modelling the number of successes in independent trials."
+      "description": "The Bernoulli distribution modelling a single success/failure trial and the binomial modelling the number of successes in independent trials.",
+      "name_zh": "伯努利与二项分布"
     },
     {
       "id": "geometric_distribution",
@@ -492,7 +553,8 @@
       "name": "Geometric Distribution",
       "kind": "concept",
       "default_order": 2,
-      "description": "The geometric distribution modelling the number of independent Bernoulli trials until the first success, with its memoryless property."
+      "description": "The geometric distribution modelling the number of independent Bernoulli trials until the first success, with its memoryless property.",
+      "name_zh": "几何分布"
     },
     {
       "id": "poisson_distribution",
@@ -500,7 +562,8 @@
       "name": "Poisson Distribution",
       "kind": "concept",
       "default_order": 3,
-      "description": "The Poisson distribution modelling counts of rare independent events in a fixed interval, the limit of the binomial for many trials."
+      "description": "The Poisson distribution modelling counts of rare independent events in a fixed interval, the limit of the binomial for many trials.",
+      "name_zh": "泊松分布"
     },
     {
       "id": "hypergeometric_distribution",
@@ -508,14 +571,16 @@
       "name": "Hypergeometric Distribution",
       "kind": "concept",
       "default_order": 4,
-      "description": "The hypergeometric distribution modelling the number of successes when sampling without replacement from a finite population."
+      "description": "The hypergeometric distribution modelling the number of successes when sampling without replacement from a finite population.",
+      "name_zh": "超几何分布"
     },
     {
       "id": "topic_continuous_prob",
       "kind": "topic",
       "name": "Continuous Probability",
       "topic": null,
-      "default_order": 14
+      "default_order": 14,
+      "name_zh": "连续概率"
     },
     {
       "id": "continuous_random_variables",
@@ -523,7 +588,8 @@
       "name": "Continuous Random Variables",
       "kind": "concept",
       "default_order": 1,
-      "description": "Random variables taking values over a continuum, described by a probability density rather than a probability mass function."
+      "description": "Random variables taking values over a continuum, described by a probability density rather than a probability mass function.",
+      "name_zh": "连续随机变量"
     },
     {
       "id": "probability_density_function",
@@ -531,7 +597,8 @@
       "name": "Probability Density Function",
       "kind": "concept",
       "default_order": 2,
-      "description": "A probability density function whose integral over an interval gives the probability that the continuous variable falls within that interval."
+      "description": "A probability density function whose integral over an interval gives the probability that the continuous variable falls within that interval.",
+      "name_zh": "概率密度函数"
     },
     {
       "id": "cumulative_distribution_function",
@@ -539,14 +606,16 @@
       "name": "Cumulative Distribution Function",
       "kind": "concept",
       "default_order": 3,
-      "description": "The cumulative distribution function giving the probability that a random variable is at most a given value, defined for any distribution."
+      "description": "The cumulative distribution function giving the probability that a random variable is at most a given value, defined for any distribution.",
+      "name_zh": "累积分布函数"
     },
     {
       "id": "topic_continuous_prob__topic_concentration",
       "kind": "topic",
       "name": "Continuous Probability and Concentration Bounds",
       "topic": null,
-      "default_order": 15
+      "default_order": 15,
+      "name_zh": "连续概率与集中界"
     },
     {
       "id": "uniform_exponential_distributions",
@@ -554,7 +623,8 @@
       "name": "Uniform and Exponential Distributions",
       "kind": "concept",
       "default_order": 1,
-      "description": "The uniform distribution spreading probability evenly over an interval and the memoryless exponential distribution modelling waiting times."
+      "description": "The uniform distribution spreading probability evenly over an interval and the memoryless exponential distribution modelling waiting times.",
+      "name_zh": "均匀与指数分布"
     },
     {
       "id": "normal_distribution",
@@ -562,7 +632,8 @@
       "name": "Normal Distribution",
       "kind": "concept",
       "default_order": 2,
-      "description": "The normal (Gaussian) distribution, a symmetric bell-shaped law parametrised by mean and variance, central to statistics and the central limit theorem."
+      "description": "The normal (Gaussian) distribution, a symmetric bell-shaped law parametrised by mean and variance, central to statistics and the central limit theorem.",
+      "name_zh": "正态分布"
     },
     {
       "id": "markovs_inequality",
@@ -570,7 +641,8 @@
       "name": "Markov's Inequality",
       "kind": "concept",
       "default_order": 3,
-      "description": "Markov's inequality bounding the probability that a nonnegative random variable exceeds a value using only its mean."
+      "description": "Markov's inequality bounding the probability that a nonnegative random variable exceeds a value using only its mean.",
+      "name_zh": "马尔可夫不等式"
     },
     {
       "id": "chebyshevs_inequality",
@@ -578,14 +650,16 @@
       "name": "Chebyshev's Inequality",
       "kind": "concept",
       "default_order": 4,
-      "description": "Chebyshev's inequality bounding the probability that a variable deviates far from its mean using its variance."
+      "description": "Chebyshev's inequality bounding the probability that a variable deviates far from its mean using its variance.",
+      "name_zh": "切比雪夫不等式"
     },
     {
       "id": "topic_concentration",
       "kind": "topic",
       "name": "Concentration Inequalities",
       "topic": null,
-      "default_order": 16
+      "default_order": 16,
+      "name_zh": "集中不等式"
     },
     {
       "id": "chernoff_bounds",
@@ -593,7 +667,8 @@
       "name": "Chernoff Bounds",
       "kind": "concept",
       "default_order": 1,
-      "description": "Chernoff bounds giving exponentially decaying tail bounds for sums of independent random variables via the moment-generating function."
+      "description": "Chernoff bounds giving exponentially decaying tail bounds for sums of independent random variables via the moment-generating function.",
+      "name_zh": "Chernoff 不等式"
     },
     {
       "id": "weak_law_of_large_numbers",
@@ -601,7 +676,8 @@
       "name": "Weak Law of Large Numbers",
       "kind": "concept",
       "default_order": 2,
-      "description": "The weak law of large numbers stating the sample mean of independent identically distributed variables converges in probability to the true mean."
+      "description": "The weak law of large numbers stating the sample mean of independent identically distributed variables converges in probability to the true mean.",
+      "name_zh": "弱大数定律"
     },
     {
       "id": "central_limit_theorem",
@@ -609,14 +685,16 @@
       "name": "Central Limit Theorem",
       "kind": "concept",
       "default_order": 3,
-      "description": "The central limit theorem stating that the normalised sum of many independent variables converges in distribution to a normal distribution."
+      "description": "The central limit theorem stating that the normalised sum of many independent variables converges in distribution to a normal distribution.",
+      "name_zh": "中心极限定理"
     },
     {
       "id": "topic_markov",
       "kind": "topic",
       "name": "Markov Chains",
       "topic": null,
-      "default_order": 17
+      "default_order": 17,
+      "name_zh": "马尔可夫链"
     },
     {
       "id": "markov_chains_basics",
@@ -624,7 +702,8 @@
       "name": "Markov Chains Basics",
       "kind": "concept",
       "default_order": 1,
-      "description": "Markov chains modelling random processes that transition between states with probabilities depending only on the current state."
+      "description": "Markov chains modelling random processes that transition between states with probabilities depending only on the current state.",
+      "name_zh": "马尔可夫链基础"
     },
     {
       "id": "hitting_times",
@@ -632,7 +711,8 @@
       "name": "Hitting Times",
       "kind": "concept",
       "default_order": 2,
-      "description": "Hitting times, the expected number of steps for a Markov chain to first reach a specified state from a given starting state."
+      "description": "Hitting times, the expected number of steps for a Markov chain to first reach a specified state from a given starting state.",
+      "name_zh": "首达时间"
     },
     {
       "id": "stationary_distributions",
@@ -640,7 +720,8 @@
       "name": "Stationary Distributions",
       "kind": "concept",
       "default_order": 3,
-      "description": "A stationary distribution unchanged by the chain's transitions, describing the long-run fraction of time spent in each state."
+      "description": "A stationary distribution unchanged by the chain's transitions, describing the long-run fraction of time spent in each state.",
+      "name_zh": "平稳分布"
     },
     {
       "id": "page_rank_algorithm",
@@ -648,7 +729,8 @@
       "name": "PageRank Algorithm",
       "kind": "concept",
       "default_order": 4,
-      "description": "PageRank ranking web pages by the stationary distribution of a random-surfer Markov chain over the hyperlink graph."
+      "description": "PageRank ranking web pages by the stationary distribution of a random-surfer Markov chain over the hyperlink graph.",
+      "name_zh": "PageRank 算法"
     }
   ],
   "edges": [

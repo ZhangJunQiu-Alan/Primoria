@@ -2,27 +2,31 @@
   "graphId": "artificial_intelligence",
   "subject": "Introduction to Artificial Intelligence (UCB CS188)",
   "generatedFrom": "temple/artificial_intelligence.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "ai_search_part1",
       "name": "Search (Part 1)",
+      "nameZh": "搜索 (第一部分)",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "ai_search_problem",
           "name": "Search Problem Formulation",
+          "nameZh": "搜索问题建模",
           "defaultOrder": 1
         },
         {
           "conceptId": "ai_uninformed",
           "name": "Uninformed Search",
+          "nameZh": "无信息搜索",
           "defaultOrder": 2
         },
         {
           "conceptId": "ai_heuristics",
           "name": "Heuristics and Admissibility",
+          "nameZh": "启发式与可容性",
           "defaultOrder": 3
         }
       ],
@@ -42,21 +46,25 @@
     {
       "topicId": "ai_search_part2",
       "name": "Search (Part 2)",
+      "nameZh": "搜索 (第二部分)",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "ai_informed",
           "name": "Informed Search (A*)",
+          "nameZh": "有信息搜索（A*）",
           "defaultOrder": 1
         },
         {
           "conceptId": "ai_minimax",
           "name": "Adversarial Search (Minimax)",
+          "nameZh": "对抗搜索（Minimax）",
           "defaultOrder": 2
         },
         {
           "conceptId": "ai_alphabeta",
           "name": "Alpha-Beta Pruning",
+          "nameZh": "Alpha-Beta剪枝",
           "defaultOrder": 3
         }
       ],
@@ -69,26 +77,31 @@
     {
       "topicId": "ai_csp",
       "name": "Constraint Satisfaction",
+      "nameZh": "约束满足",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "ai_csp_def",
           "name": "Constraint Satisfaction Problems",
+          "nameZh": "约束满足问题",
           "defaultOrder": 1
         },
         {
           "conceptId": "ai_backtracking",
           "name": "Backtracking Search",
+          "nameZh": "回溯搜索",
           "defaultOrder": 2
         },
         {
           "conceptId": "ai_arc_consistency",
           "name": "Constraint Propagation",
+          "nameZh": "约束传播",
           "defaultOrder": 3
         },
         {
           "conceptId": "ai_local_search",
           "name": "Local Search",
+          "nameZh": "局部搜索",
           "defaultOrder": 4
         }
       ],
@@ -101,26 +114,31 @@
     {
       "topicId": "ai_mdp",
       "name": "Markov Decision Processes",
+      "nameZh": "马尔可夫决策过程",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "ai_mdp_def",
           "name": "Markov Decision Processes",
+          "nameZh": "马尔可夫决策过程",
           "defaultOrder": 1
         },
         {
           "conceptId": "ai_bellman",
           "name": "Bellman Equations",
+          "nameZh": "Bellman方程",
           "defaultOrder": 2
         },
         {
           "conceptId": "ai_value_iteration",
           "name": "Value Iteration",
+          "nameZh": "价值迭代",
           "defaultOrder": 3
         },
         {
           "conceptId": "ai_policy_iteration",
           "name": "Policy Iteration",
+          "nameZh": "策略迭代",
           "defaultOrder": 4
         }
       ],
@@ -136,31 +154,37 @@
     {
       "topicId": "ai_rl",
       "name": "Reinforcement Learning",
+      "nameZh": "强化学习",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "ai_rl_framework",
           "name": "Reinforcement Learning Framework",
+          "nameZh": "强化学习框架",
           "defaultOrder": 1
         },
         {
           "conceptId": "ai_td",
           "name": "Temporal Difference Learning",
+          "nameZh": "时序差分学习",
           "defaultOrder": 2
         },
         {
           "conceptId": "ai_qlearning",
           "name": "Q-Learning",
+          "nameZh": "Q学习",
           "defaultOrder": 3
         },
         {
           "conceptId": "ai_exploration",
           "name": "Exploration vs Exploitation",
+          "nameZh": "探索与利用",
           "defaultOrder": 4
         },
         {
           "conceptId": "ai_approx_q",
           "name": "Approximate Q-Learning",
+          "nameZh": "近似Q学习",
           "defaultOrder": 5
         }
       ],
@@ -173,26 +197,31 @@
     {
       "topicId": "ai_probability",
       "name": "Probability and Bayes Nets",
+      "nameZh": "概率与贝叶斯网络",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "ai_prob",
           "name": "Probability Fundamentals",
+          "nameZh": "概率基础",
           "defaultOrder": 1
         },
         {
           "conceptId": "ai_bayes_rule",
           "name": "Bayes Rule",
+          "nameZh": "贝叶斯规则",
           "defaultOrder": 2
         },
         {
           "conceptId": "ai_bayes_nets",
           "name": "Bayesian Networks",
+          "nameZh": "贝叶斯网络",
           "defaultOrder": 3
         },
         {
           "conceptId": "ai_bn_inference",
           "name": "Inference in Bayes Nets",
+          "nameZh": "贝叶斯网络推理",
           "defaultOrder": 4
         }
       ],
@@ -212,21 +241,25 @@
     {
       "topicId": "ai_markov_models",
       "name": "Markov Models and HMMs",
+      "nameZh": "马尔可夫模型与HMM",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "ai_markov_chain",
           "name": "Markov Models",
+          "nameZh": "马尔可夫模型",
           "defaultOrder": 1
         },
         {
           "conceptId": "ai_hmm",
           "name": "Hidden Markov Models",
+          "nameZh": "隐马尔可夫模型",
           "defaultOrder": 2
         },
         {
           "conceptId": "ai_forward",
           "name": "Forward Algorithm",
+          "nameZh": "前向算法",
           "defaultOrder": 3
         }
       ],
@@ -244,21 +277,25 @@
     {
       "topicId": "ai_markov_models__ai_ml",
       "name": "Probabilistic Inference and Naive Bayes",
+      "nameZh": "概率推断与朴素贝叶斯",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "ai_viterbi",
           "name": "Viterbi Algorithm",
+          "nameZh": "维特比算法",
           "defaultOrder": 1
         },
         {
           "conceptId": "ai_particle",
           "name": "Particle Filtering",
+          "nameZh": "粒子滤波",
           "defaultOrder": 2
         },
         {
           "conceptId": "ai_naive_bayes",
           "name": "Naive Bayes",
+          "nameZh": "朴素贝叶斯",
           "defaultOrder": 3
         }
       ],
@@ -277,21 +314,25 @@
     {
       "topicId": "ai_ml",
       "name": "Machine Learning",
+      "nameZh": "机器学习",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "ai_perceptron",
           "name": "Perceptron",
+          "nameZh": "感知机",
           "defaultOrder": 1
         },
         {
           "conceptId": "ai_neural_nets",
           "name": "Neural Networks",
+          "nameZh": "神经网络",
           "defaultOrder": 2
         },
         {
           "conceptId": "ai_generalization",
           "name": "Generalization and Overfitting",
+          "nameZh": "泛化与过拟合",
           "defaultOrder": 3
         }
       ],

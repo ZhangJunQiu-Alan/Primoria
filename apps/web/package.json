@@ -11,6 +11,7 @@
     "test:widget": "tsx tests/widget-export.unit.ts && tsx tests/stem-code.unit.ts",
     "test:kg": "tsx tests/knowledge-graph-query.unit.ts && tsx tests/knowledge-graph-positioning.unit.ts && tsx tests/position-learning-goal.unit.ts && tsx tests/topic-selection-contract.unit.ts && tsx tests/course-branch-static.unit.ts && tsx tests/course-kg-context.unit.ts && tsx tests/course-lesson-composition.unit.ts && tsx tests/lesson-plan-compiler.unit.ts && tsx tests/lesson-planner.unit.ts && tsx tests/block-content-compiler.unit.ts && tsx tests/lesson-assembler.unit.ts",
     "build:topic-graph": "node scripts/build-topic-graph.mjs",
+    "validate:kg": "node scripts/validate-kg.mjs all",
     "calibrate:kg-floor": "node scripts/calibrate-kg-floor.mjs",
     "db:migrate:auth": "node scripts/migrate-auth.mjs",
     "db:migrate:courses": "node scripts/migrate-courses.mjs",

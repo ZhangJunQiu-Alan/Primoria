@@ -21,7 +21,8 @@
       "kind": "topic",
       "name": "Physical Quantities and Units",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "物理量与单位"
     },
     {
       "id": "phy_si_units",
@@ -29,7 +30,8 @@
       "name": "SI Base Units",
       "topic": "phy_measurement",
       "description": "The seven SI base units from which all other units are derived, used to express physical quantities consistently in measurement and calculation.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "SI基本单位"
     },
     {
       "id": "phy_homogeneity",
@@ -37,7 +39,8 @@
       "name": "Homogeneity of Equations",
       "topic": "phy_measurement",
       "description": "Checking the homogeneity of an equation by ensuring both sides have the same base units, a test of its dimensional consistency.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "方程齐次性"
     },
     {
       "id": "phy_scalars_vectors",
@@ -45,14 +48,16 @@
       "name": "Scalars and Vectors",
       "topic": "phy_measurement",
       "description": "The distinction between scalar quantities having only magnitude and vector quantities having both magnitude and direction, with vector addition and resolution.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "标量与矢量"
     },
     {
       "id": "phy_measurement__phy_kinematics",
       "kind": "topic",
       "name": "Measurement Uncertainty and Motion",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "测量不确定度与运动"
     },
     {
       "id": "phy_uncertainty",
@@ -60,7 +65,8 @@
       "name": "Errors and Uncertainties",
       "topic": "phy_measurement__phy_kinematics",
       "description": "Systematic and random errors in measurement, and expressing the uncertainty of a reading as an absolute, fractional, or percentage uncertainty.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "误差与不确定度"
     },
     {
       "id": "phy_combine_uncertainty",
@@ -68,7 +74,8 @@
       "name": "Combining Uncertainties",
       "topic": "phy_measurement__phy_kinematics",
       "description": "Combining uncertainties through calculations by adding absolute uncertainties for sums and fractional uncertainties for products and powers.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "不确定度合成"
     },
     {
       "id": "phy_motion_quantities",
@@ -76,7 +83,8 @@
       "name": "Displacement Velocity Acceleration",
       "topic": "phy_measurement__phy_kinematics",
       "description": "Displacement, velocity, and acceleration as related vector quantities describing motion, defined through rates of change of position.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "位移速度加速度"
     },
     {
       "id": "phy_suvat",
@@ -84,14 +92,16 @@
       "name": "Equations of Motion",
       "topic": "phy_measurement__phy_kinematics",
       "description": "The equations of motion for uniform acceleration relating displacement, initial and final velocity, acceleration, and time.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "运动方程"
     },
     {
       "id": "phy_kinematics",
       "kind": "topic",
       "name": "Kinematics",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "运动学"
     },
     {
       "id": "phy_motion_graphs",
@@ -99,7 +109,8 @@
       "name": "Motion Graphs",
       "topic": "phy_kinematics",
       "description": "Interpreting displacement-time and velocity-time graphs, where gradients give velocity and acceleration and areas give displacement.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "运动图像"
     },
     {
       "id": "phy_free_fall",
@@ -107,7 +118,8 @@
       "name": "Free Fall",
       "topic": "phy_kinematics",
       "description": "Motion under gravity alone with constant acceleration g, including the experimental determination of the acceleration of free fall.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "自由落体"
     },
     {
       "id": "phy_projectile",
@@ -115,14 +127,16 @@
       "name": "Projectile Motion",
       "topic": "phy_kinematics",
       "description": "Projectile motion analysed by treating the horizontal and vertical components independently under constant gravitational acceleration.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "抛体运动"
     },
     {
       "id": "phy_dynamics",
       "kind": "topic",
       "name": "Dynamics",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "动力学"
     },
     {
       "id": "phy_newton_laws",
@@ -130,7 +144,8 @@
       "name": "Newton's Laws of Motion",
       "topic": "phy_dynamics",
       "description": "Newton's three laws of motion relating force, mass, and acceleration and describing action-reaction force pairs.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "牛顿运动定律"
     },
     {
       "id": "phy_mass_weight",
@@ -138,7 +153,8 @@
       "name": "Mass and Weight",
       "topic": "phy_dynamics",
       "description": "The distinction between mass as the amount of matter and weight as the gravitational force on a mass, related by the field strength g.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "质量与重量"
     },
     {
       "id": "phy_momentum",
@@ -146,14 +162,16 @@
       "name": "Linear Momentum",
       "topic": "phy_dynamics",
       "description": "Linear momentum as the product of mass and velocity, a vector quantity central to analysing motion and collisions.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "线性动量"
     },
     {
       "id": "phy_dynamics__phy_forces",
       "kind": "topic",
       "name": "Momentum and Forces",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "动量与力"
     },
     {
       "id": "phy_momentum_conservation",
@@ -161,7 +179,8 @@
       "name": "Conservation of Momentum",
       "topic": "phy_dynamics__phy_forces",
       "description": "The principle of conservation of momentum, where total momentum is conserved in a closed system with no external resultant force.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "动量守恒"
     },
     {
       "id": "phy_impulse",
@@ -169,7 +188,8 @@
       "name": "Impulse and Collisions",
       "topic": "phy_dynamics__phy_forces",
       "description": "Impulse as the product of force and time, equal to the change in momentum, applied to analyse elastic and inelastic collisions.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "冲量与碰撞"
     },
     {
       "id": "phy_force_types",
@@ -177,7 +197,8 @@
       "name": "Types of Force",
       "topic": "phy_dynamics__phy_forces",
       "description": "The types of force acting on bodies, including gravitational, normal contact, friction, tension, and upthrust forces.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "力的类型"
     },
     {
       "id": "phy_moments",
@@ -185,14 +206,16 @@
       "name": "Moments and Couples",
       "topic": "phy_dynamics__phy_forces",
       "description": "The moment of a force as force times perpendicular distance, and couples producing rotation, with the principle of moments for equilibrium.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "力矩与力偶"
     },
     {
       "id": "phy_forces",
       "kind": "topic",
       "name": "Forces, Density and Pressure",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "力、密度与压强"
     },
     {
       "id": "phy_equilibrium",
@@ -200,7 +223,8 @@
       "name": "Equilibrium of Forces",
       "topic": "phy_forces",
       "description": "The conditions for equilibrium, where both the resultant force and the resultant moment acting on a body are zero.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "力的平衡"
     },
     {
       "id": "phy_density_pressure",
@@ -208,7 +232,8 @@
       "name": "Density and Pressure",
       "topic": "phy_forces",
       "description": "Density as mass per unit volume and pressure as force per unit area, including the variation of pressure with depth in a fluid.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "密度与压强"
     },
     {
       "id": "phy_upthrust",
@@ -216,14 +241,16 @@
       "name": "Upthrust and Archimedes",
       "topic": "phy_forces",
       "description": "Upthrust as the buoyant force on a body in a fluid, equal by Archimedes' principle to the weight of fluid displaced.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "浮力与阿基米德"
     },
     {
       "id": "phy_work_energy",
       "kind": "topic",
       "name": "Work, Energy and Power",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "功、能量与功率"
     },
     {
       "id": "phy_work",
@@ -231,7 +258,8 @@
       "name": "Work Done",
       "topic": "phy_work_energy",
       "description": "Work done as the product of force and displacement in the direction of the force, transferring energy to or from a system.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "做功"
     },
     {
       "id": "phy_ke_pe",
@@ -239,7 +267,8 @@
       "name": "Kinetic and Potential Energy",
       "topic": "phy_work_energy",
       "description": "Kinetic energy of a moving body and gravitational potential energy due to position, with their defining formulae.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "动能与势能"
     },
     {
       "id": "phy_energy_conservation",
@@ -247,7 +276,8 @@
       "name": "Conservation of Energy",
       "topic": "phy_work_energy",
       "description": "The principle of conservation of energy, where energy is transferred between forms but the total amount remains constant.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "能量守恒"
     },
     {
       "id": "phy_power_efficiency",
@@ -255,14 +285,16 @@
       "name": "Power and Efficiency",
       "topic": "phy_work_energy",
       "description": "Power as the rate of doing work or transferring energy, and efficiency as the ratio of useful output to total input energy.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "功率与效率"
     },
     {
       "id": "phy_deformation",
       "kind": "topic",
       "name": "Deformation of Solids",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "固体形变"
     },
     {
       "id": "phy_hookes_law",
@@ -270,7 +302,8 @@
       "name": "Hooke's Law",
       "topic": "phy_deformation",
       "description": "Hooke's law stating that the extension of a spring is proportional to the applied force up to the limit of proportionality.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "胡克定律"
     },
     {
       "id": "phy_stress_strain",
@@ -278,7 +311,8 @@
       "name": "Stress, Strain and Young Modulus",
       "topic": "phy_deformation",
       "description": "Tensile stress as force per unit area and strain as fractional extension, related by the Young modulus for an elastic material.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "应力、应变与杨氏模量"
     },
     {
       "id": "phy_elastic_plastic",
@@ -286,7 +320,8 @@
       "name": "Elastic and Plastic Behaviour",
       "topic": "phy_deformation",
       "description": "Elastic behaviour where a material returns to its original shape and plastic behaviour where deformation is permanent beyond the elastic limit.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "弹性与塑性行为"
     },
     {
       "id": "phy_strain_energy",
@@ -294,14 +329,16 @@
       "name": "Elastic Strain Energy",
       "topic": "phy_deformation",
       "description": "Elastic strain energy stored in a deformed material, equal to the area under its force-extension graph.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "弹性势能"
     },
     {
       "id": "phy_waves",
       "kind": "topic",
       "name": "Waves",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "波动"
     },
     {
       "id": "phy_progressive_waves",
@@ -309,7 +346,8 @@
       "name": "Progressive Waves",
       "topic": "phy_waves",
       "description": "Progressive waves transferring energy through a medium, described by displacement, amplitude, wavelength, frequency, and speed.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "行波"
     },
     {
       "id": "phy_wave_types",
@@ -317,7 +355,8 @@
       "name": "Transverse and Longitudinal Waves",
       "topic": "phy_waves",
       "description": "The distinction between transverse waves oscillating perpendicular to the direction of travel and longitudinal waves oscillating parallel to it.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "横波与纵波"
     },
     {
       "id": "phy_intensity",
@@ -325,14 +364,16 @@
       "name": "Wave Intensity",
       "topic": "phy_waves",
       "description": "Wave intensity as power per unit area, proportional to the square of the amplitude and decreasing with distance from the source.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "波强度"
     },
     {
       "id": "phy_waves__phy_superposition",
       "kind": "topic",
       "name": "Wave Phenomena and Superposition",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "波现象与叠加"
     },
     {
       "id": "phy_em_spectrum",
@@ -340,7 +381,8 @@
       "name": "Electromagnetic Spectrum",
       "topic": "phy_waves__phy_superposition",
       "description": "The electromagnetic spectrum of transverse waves travelling at the speed of light, ranging from radio waves to gamma rays.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "电磁波谱"
     },
     {
       "id": "phy_doppler",
@@ -348,7 +390,8 @@
       "name": "Doppler Effect",
       "topic": "phy_waves__phy_superposition",
       "description": "The Doppler effect, the change in observed frequency when a wave source and observer move relative to one another.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "多普勒效应"
     },
     {
       "id": "phy_superposition_principle",
@@ -356,7 +399,8 @@
       "name": "Principle of Superposition",
       "topic": "phy_waves__phy_superposition",
       "description": "The principle of superposition stating that when waves meet, the resultant displacement is the vector sum of the individual displacements.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "叠加原理"
     },
     {
       "id": "phy_interference",
@@ -364,14 +408,16 @@
       "name": "Two-Source Interference",
       "topic": "phy_waves__phy_superposition",
       "description": "Two-source interference producing constructive and destructive fringes where coherent waves meet in phase and out of phase.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "双源干涉"
     },
     {
       "id": "phy_superposition",
       "kind": "topic",
       "name": "Superposition",
       "topic": null,
-      "default_order": 11
+      "default_order": 11,
+      "name_zh": "波的叠加"
     },
     {
       "id": "phy_diffraction",
@@ -379,7 +425,8 @@
       "name": "Diffraction",
       "topic": "phy_superposition",
       "description": "The spreading of waves passing through a gap or around an obstacle, most pronounced when the gap is comparable to the wavelength.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "衍射"
     },
     {
       "id": "phy_diffraction_grating",
@@ -387,7 +434,8 @@
       "name": "Diffraction Grating",
       "topic": "phy_superposition",
       "description": "A diffraction grating producing sharp maxima at angles given by the grating equation, used to measure wavelength accurately.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "衍射光栅"
     },
     {
       "id": "phy_stationary_waves",
@@ -395,14 +443,16 @@
       "name": "Stationary Waves",
       "topic": "phy_superposition",
       "description": "Stationary waves formed by superposition of two opposite progressive waves, with fixed nodes and antinodes and no net energy transfer.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "驻波"
     },
     {
       "id": "phy_electricity",
       "kind": "topic",
       "name": "Current of Electricity",
       "topic": null,
-      "default_order": 12
+      "default_order": 12,
+      "name_zh": "电流"
     },
     {
       "id": "phy_current_charge",
@@ -410,7 +460,8 @@
       "name": "Electric Current and Charge",
       "topic": "phy_electricity",
       "description": "Electric current as the rate of flow of charge, with charge quantised in units of the elementary charge carried by electrons.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "电流与电荷"
     },
     {
       "id": "phy_pd_emf",
@@ -418,7 +469,8 @@
       "name": "Potential Difference and EMF",
       "topic": "phy_electricity",
       "description": "Potential difference as energy transferred per unit charge by a component and electromotive force as energy supplied per unit charge by a source.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "电势差与EMF"
     },
     {
       "id": "phy_resistance_ohm",
@@ -426,14 +478,16 @@
       "name": "Resistance and Ohm's Law",
       "topic": "phy_electricity",
       "description": "Resistance as the ratio of potential difference to current, with Ohm's law holding when resistance is constant at fixed temperature.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "电阻与欧姆定律"
     },
     {
       "id": "phy_electricity__phy_dc_circuits",
       "kind": "topic",
       "name": "Electrical Characteristics and Kirchhoff's Laws",
       "topic": null,
-      "default_order": 13
+      "default_order": 13,
+      "name_zh": "电学特性与基尔霍夫定律"
     },
     {
       "id": "phy_resistivity",
@@ -441,7 +495,8 @@
       "name": "Resistivity",
       "topic": "phy_electricity__phy_dc_circuits",
       "description": "Resistivity as a material property relating a conductor's resistance to its length and cross-sectional area.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "电阻率"
     },
     {
       "id": "phy_iv_characteristics",
@@ -449,7 +504,8 @@
       "name": "I-V Characteristics",
       "topic": "phy_electricity__phy_dc_circuits",
       "description": "Current-voltage characteristics of components such as resistors, filament lamps, and diodes, revealing their electrical behaviour.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "I-V特性"
     },
     {
       "id": "phy_kirchhoff",
@@ -457,14 +513,16 @@
       "name": "Kirchhoff's Laws",
       "topic": "phy_electricity__phy_dc_circuits",
       "description": "Kirchhoff's first and second laws expressing the conservation of charge at junctions and of energy around circuit loops.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "基尔霍夫定律"
     },
     {
       "id": "phy_dc_circuits",
       "kind": "topic",
       "name": "DC Circuits",
       "topic": null,
-      "default_order": 14
+      "default_order": 14,
+      "name_zh": "直流电路"
     },
     {
       "id": "phy_series_parallel",
@@ -472,7 +530,8 @@
       "name": "Series and Parallel Resistors",
       "topic": "phy_dc_circuits",
       "description": "Combining resistors in series and parallel using the total-resistance rules derived from Kirchhoff's laws.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "串并联电阻"
     },
     {
       "id": "phy_potential_divider",
@@ -480,7 +539,8 @@
       "name": "Potential Dividers",
       "topic": "phy_dc_circuits",
       "description": "A potential divider using resistors in series to produce a desired fraction of the supply voltage, including with sensors.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "分压器"
     },
     {
       "id": "phy_internal_resistance",
@@ -488,14 +548,16 @@
       "name": "Internal Resistance",
       "topic": "phy_dc_circuits",
       "description": "The internal resistance of a source causing the terminal potential difference to fall below the EMF when current flows.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "内阻"
     },
     {
       "id": "phy_circular",
       "kind": "topic",
       "name": "Motion in a Circle",
       "topic": null,
-      "default_order": 15
+      "default_order": 15,
+      "name_zh": "圆周运动"
     },
     {
       "id": "phy_angular_speed",
@@ -503,7 +565,8 @@
       "name": "Radian Measure and Angular Speed",
       "topic": "phy_circular",
       "description": "Angular displacement in radians and angular speed as the rate of change of angle, related to linear speed by the radius.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "弧度与角速度"
     },
     {
       "id": "phy_centripetal_accel",
@@ -511,7 +574,8 @@
       "name": "Centripetal Acceleration",
       "topic": "phy_circular",
       "description": "Centripetal acceleration directed toward the centre of a circular path, with magnitude expressed in terms of speed and radius.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "向心加速度"
     },
     {
       "id": "phy_centripetal_force",
@@ -519,14 +583,16 @@
       "name": "Centripetal Force",
       "topic": "phy_circular",
       "description": "The resultant centripetal force required for circular motion, directed toward the centre and provided by a real force.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "向心力"
     },
     {
       "id": "phy_gravitation",
       "kind": "topic",
       "name": "Gravitational Fields",
       "topic": null,
-      "default_order": 16
+      "default_order": 16,
+      "name_zh": "引力场"
     },
     {
       "id": "phy_newton_gravitation",
@@ -534,7 +600,8 @@
       "name": "Newton's Law of Gravitation",
       "topic": "phy_gravitation",
       "description": "Newton's law of gravitation stating the attractive force between two point masses is proportional to their product and inversely to distance squared.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "牛顿引力定律"
     },
     {
       "id": "phy_grav_field_strength",
@@ -542,7 +609,8 @@
       "name": "Gravitational Field Strength",
       "topic": "phy_gravitation",
       "description": "Gravitational field strength as the gravitational force per unit mass at a point, a vector directed toward the mass.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "引力场强度"
     },
     {
       "id": "phy_grav_potential",
@@ -550,7 +618,8 @@
       "name": "Gravitational Potential",
       "topic": "phy_gravitation",
       "description": "Gravitational potential as the work done per unit mass to bring a mass from infinity to a point, always negative.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "引力势"
     },
     {
       "id": "phy_orbits",
@@ -558,14 +627,16 @@
       "name": "Orbital Motion",
       "topic": "phy_gravitation",
       "description": "Orbital motion where gravitation provides the centripetal force, relating orbital speed, radius, and period as in Kepler's third law.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "轨道运动"
     },
     {
       "id": "phy_oscillations",
       "kind": "topic",
       "name": "Oscillations",
       "topic": null,
-      "default_order": 17
+      "default_order": 17,
+      "name_zh": "振动"
     },
     {
       "id": "phy_shm",
@@ -573,7 +644,8 @@
       "name": "Simple Harmonic Motion",
       "topic": "phy_oscillations",
       "description": "Simple harmonic motion where acceleration is proportional to displacement and directed toward equilibrium, producing sinusoidal motion.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "简谐运动"
     },
     {
       "id": "phy_shm_energy",
@@ -581,7 +653,8 @@
       "name": "SHM Energy",
       "topic": "phy_oscillations",
       "description": "The interchange between kinetic and potential energy in simple harmonic motion, with total energy constant in the absence of damping.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "SHM能量"
     },
     {
       "id": "phy_damping",
@@ -589,7 +662,8 @@
       "name": "Damping",
       "topic": "phy_oscillations",
       "description": "Damping reducing the amplitude of oscillations through energy loss, classified as light, critical, or heavy damping.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "阻尼"
     },
     {
       "id": "phy_resonance",
@@ -597,14 +671,16 @@
       "name": "Resonance",
       "topic": "phy_oscillations",
       "description": "Resonance where a system driven at its natural frequency oscillates with maximum amplitude, with damping reducing the peak.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "共振"
     },
     {
       "id": "phy_thermal",
       "kind": "topic",
       "name": "Thermal Physics and Ideal Gases",
       "topic": null,
-      "default_order": 18
+      "default_order": 18,
+      "name_zh": "热学与理想气体"
     },
     {
       "id": "phy_temperature",
@@ -612,7 +688,8 @@
       "name": "Temperature and Thermal Equilibrium",
       "topic": "phy_thermal",
       "description": "Temperature as a measure of the average kinetic energy of particles, with thermal equilibrium reached when no net heat flows.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "温度与热平衡"
     },
     {
       "id": "phy_heat_capacity",
@@ -620,7 +697,8 @@
       "name": "Specific Heat and Latent Heat",
       "topic": "phy_thermal",
       "description": "Specific heat capacity for raising temperature and specific latent heat for changes of state, relating energy to mass and temperature.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "比热与潜热"
     },
     {
       "id": "phy_kinetic_theory",
@@ -628,7 +706,8 @@
       "name": "Kinetic Theory of Gases",
       "topic": "phy_thermal",
       "description": "The kinetic theory modelling a gas as many small particles in random motion, relating pressure to their mean square speed.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "气体动理论"
     },
     {
       "id": "phy_ideal_gas",
@@ -636,7 +715,8 @@
       "name": "Ideal Gas Law",
       "topic": "phy_thermal",
       "description": "The ideal gas equation pV equals nRT relating the pressure, volume, temperature, and amount of an ideal gas.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "理想气体定律"
     },
     {
       "id": "phy_internal_energy",
@@ -644,14 +724,16 @@
       "name": "Internal Energy and First Law",
       "topic": "phy_thermal",
       "description": "Internal energy as the sum of the random kinetic and potential energies of particles, and the first law relating it to heat and work.",
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "内能与第一定律"
     },
     {
       "id": "phy_electric_fields",
       "kind": "topic",
       "name": "Electric Fields",
       "topic": null,
-      "default_order": 19
+      "default_order": 19,
+      "name_zh": "电场"
     },
     {
       "id": "phy_coulomb",
@@ -659,7 +741,8 @@
       "name": "Coulomb's Law",
       "topic": "phy_electric_fields",
       "description": "Coulomb's law giving the electrostatic force between two point charges as proportional to their product and inversely to distance squared.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "库仑定律"
     },
     {
       "id": "phy_e_field_strength",
@@ -667,7 +750,8 @@
       "name": "Electric Field Strength",
       "topic": "phy_electric_fields",
       "description": "Electric field strength as the force per unit positive charge at a point, a vector quantity directed along the field.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "电场强度"
     },
     {
       "id": "phy_e_potential",
@@ -675,7 +759,8 @@
       "name": "Electric Potential",
       "topic": "phy_electric_fields",
       "description": "Electric potential as the work done per unit positive charge to bring a charge from infinity to a point in the field.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "电势"
     },
     {
       "id": "phy_field_analogy",
@@ -683,14 +768,16 @@
       "name": "Gravitational and Electric Field Analogy",
       "topic": "phy_electric_fields",
       "description": "The analogy between gravitational and electric fields in their inverse-square laws, field strength, and potential, noting key differences.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "引力场与电场类比"
     },
     {
       "id": "phy_capacitance",
       "kind": "topic",
       "name": "Capacitance",
       "topic": null,
-      "default_order": 20
+      "default_order": 20,
+      "name_zh": "电容"
     },
     {
       "id": "phy_capacitance_def",
@@ -698,7 +785,8 @@
       "name": "Capacitance",
       "topic": "phy_capacitance",
       "description": "Capacitance as the charge stored per unit potential difference, a measure of a capacitor's ability to store charge.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "电容"
     },
     {
       "id": "phy_capacitor_networks",
@@ -706,7 +794,8 @@
       "name": "Capacitors in Series and Parallel",
       "topic": "phy_capacitance",
       "description": "Combining capacitors in series and parallel using the total-capacitance rules, which are opposite to those for resistors.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "串并联电容"
     },
     {
       "id": "phy_capacitor_energy",
@@ -714,7 +803,8 @@
       "name": "Energy Stored in a Capacitor",
       "topic": "phy_capacitance",
       "description": "The energy stored in a charged capacitor, equal to the area under its charge-voltage graph.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "电容储能"
     },
     {
       "id": "phy_capacitor_discharge",
@@ -722,14 +812,16 @@
       "name": "Charging and Discharging",
       "topic": "phy_capacitance",
       "description": "The exponential charging and discharging of a capacitor through a resistor, characterised by the time constant RC.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "充放电"
     },
     {
       "id": "phy_magnetic_fields",
       "kind": "topic",
       "name": "Magnetic Fields",
       "topic": null,
-      "default_order": 21
+      "default_order": 21,
+      "name_zh": "磁场"
     },
     {
       "id": "phy_flux_density",
@@ -737,7 +829,8 @@
       "name": "Magnetic Flux Density",
       "topic": "phy_magnetic_fields",
       "description": "Magnetic flux density as a measure of the strength of a magnetic field, defined through the force on a current-carrying conductor.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "磁通密度"
     },
     {
       "id": "phy_force_conductor",
@@ -745,7 +838,8 @@
       "name": "Force on a Current-Carrying Conductor",
       "topic": "phy_magnetic_fields",
       "description": "The force on a current-carrying conductor in a magnetic field, given by F equals BIL, with direction from Fleming's left-hand rule.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "载流导线受力"
     },
     {
       "id": "phy_force_charge",
@@ -753,7 +847,8 @@
       "name": "Force on a Moving Charge",
       "topic": "phy_magnetic_fields",
       "description": "The force on a charge moving through a magnetic field, given by F equals Bqv, causing charged particles to follow circular paths.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "运动电荷受力"
     },
     {
       "id": "phy_fields_currents",
@@ -761,14 +856,16 @@
       "name": "Magnetic Fields Due to Currents",
       "topic": "phy_magnetic_fields",
       "description": "The magnetic fields produced by currents in long straight wires, flat coils, and solenoids, with their characteristic field patterns.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "电流磁场"
     },
     {
       "id": "phy_induction",
       "kind": "topic",
       "name": "Electromagnetic Induction",
       "topic": null,
-      "default_order": 22
+      "default_order": 22,
+      "name_zh": "电磁感应"
     },
     {
       "id": "phy_flux_linkage",
@@ -776,7 +873,8 @@
       "name": "Magnetic Flux and Flux Linkage",
       "topic": "phy_induction",
       "description": "Magnetic flux through a coil and flux linkage as the product of flux and the number of turns, central to electromagnetic induction.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "磁通与磁链"
     },
     {
       "id": "phy_faraday",
@@ -784,7 +882,8 @@
       "name": "Faraday's Law",
       "topic": "phy_induction",
       "description": "Faraday's law stating that the induced EMF is proportional to the rate of change of magnetic flux linkage.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "法拉第定律"
     },
     {
       "id": "phy_lenz",
@@ -792,14 +891,16 @@
       "name": "Lenz's Law",
       "topic": "phy_induction",
       "description": "Lenz's law stating that an induced current opposes the change producing it, a consequence of the conservation of energy.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "楞次定律"
     },
     {
       "id": "phy_ac",
       "kind": "topic",
       "name": "Alternating Currents",
       "topic": null,
-      "default_order": 23
+      "default_order": 23,
+      "name_zh": "交流电"
     },
     {
       "id": "phy_ac_rms",
@@ -807,7 +908,8 @@
       "name": "AC and RMS Values",
       "topic": "phy_ac",
       "description": "Alternating current varying sinusoidally with time, and root-mean-square values giving the equivalent steady current for power.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "交流电与RMS值"
     },
     {
       "id": "phy_transformers",
@@ -815,7 +917,8 @@
       "name": "Transformers",
       "topic": "phy_ac",
       "description": "Transformers changing alternating voltage using the ratio of turns in the primary and secondary coils, ideally conserving power.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "变压器"
     },
     {
       "id": "phy_rectification",
@@ -823,14 +926,16 @@
       "name": "Rectification",
       "topic": "phy_ac",
       "description": "Rectification converting alternating current to direct current using diodes, in half-wave and full-wave bridge circuits.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "整流"
     },
     {
       "id": "phy_quantum",
       "kind": "topic",
       "name": "Quantum Physics",
       "topic": null,
-      "default_order": 24
+      "default_order": 24,
+      "name_zh": "量子物理"
     },
     {
       "id": "phy_photon",
@@ -838,7 +943,8 @@
       "name": "Photon Energy",
       "topic": "phy_quantum",
       "description": "The photon as a quantum of electromagnetic energy, with energy proportional to frequency given by E equals hf.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "光子能量"
     },
     {
       "id": "phy_photoelectric",
@@ -846,7 +952,8 @@
       "name": "Photoelectric Effect",
       "topic": "phy_quantum",
       "description": "The photoelectric effect, the emission of electrons from a metal by incident light above a threshold frequency, evidence for photons.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "光电效应"
     },
     {
       "id": "phy_wave_particle",
@@ -854,7 +961,8 @@
       "name": "Wave-Particle Duality",
       "topic": "phy_quantum",
       "description": "Wave-particle duality, where matter and radiation exhibit both wave and particle behaviour, with the de Broglie wavelength for particles.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "波粒二象性"
     },
     {
       "id": "phy_energy_levels",
@@ -862,14 +970,16 @@
       "name": "Energy Levels and Line Spectra",
       "topic": "phy_quantum",
       "description": "Discrete electron energy levels in atoms, with line spectra arising from photons emitted or absorbed during transitions between levels.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "能级与线光谱"
     },
     {
       "id": "phy_nuclear",
       "kind": "topic",
       "name": "Nuclear Physics",
       "topic": null,
-      "default_order": 25
+      "default_order": 25,
+      "name_zh": "核物理"
     },
     {
       "id": "phy_nuclear_structure",
@@ -877,7 +987,8 @@
       "name": "Atomic and Nuclear Structure",
       "topic": "phy_nuclear",
       "description": "The nuclear model of the atom with protons and neutrons in a small dense nucleus, described by proton and nucleon numbers.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "原子核结构"
     },
     {
       "id": "phy_fundamental_particles",
@@ -885,7 +996,8 @@
       "name": "Fundamental Particles and Quarks",
       "topic": "phy_nuclear",
       "description": "Fundamental particles classified as quarks and leptons, with hadrons such as protons and neutrons composed of quarks.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "基本粒子与夸克"
     },
     {
       "id": "phy_binding_energy",
@@ -893,7 +1005,8 @@
       "name": "Mass Defect and Binding Energy",
       "topic": "phy_nuclear",
       "description": "Mass defect as the difference between nucleon and nuclear mass, and binding energy as the equivalent energy holding the nucleus together.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "质量亏损与结合能"
     },
     {
       "id": "phy_radioactive_decay",
@@ -901,7 +1014,8 @@
       "name": "Radioactive Decay",
       "topic": "phy_nuclear",
       "description": "Spontaneous, random radioactive decay of unstable nuclei by alpha, beta, and gamma emission, modelled by the decay constant.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "放射性衰变"
     },
     {
       "id": "phy_half_life",
@@ -909,14 +1023,16 @@
       "name": "Half-Life",
       "topic": "phy_nuclear",
       "description": "Half-life as the average time for half the nuclei in a sample to decay, related to the decay constant in exponential decay.",
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "半衰期"
     },
     {
       "id": "phy_astro",
       "kind": "topic",
       "name": "Astronomy and Cosmology",
       "topic": null,
-      "default_order": 26
+      "default_order": 26,
+      "name_zh": "天文学与宇宙学"
     },
     {
       "id": "phy_luminosity",
@@ -924,7 +1040,8 @@
       "name": "Luminosity and Radiant Flux Intensity",
       "topic": "phy_astro",
       "description": "Luminosity as the total power radiated by a star and radiant flux intensity as the power received per unit area at a distance.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "亮度与辐射通量"
     },
     {
       "id": "phy_standard_candles",
@@ -932,7 +1049,8 @@
       "name": "Standard Candles",
       "topic": "phy_astro",
       "description": "Standard candles as objects of known luminosity used to determine astronomical distances from their observed brightness.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "标准烛光"
     },
     {
       "id": "phy_stellar_radii",
@@ -940,7 +1058,8 @@
       "name": "Stellar Radii",
       "topic": "phy_astro",
       "description": "Estimating stellar radii by combining luminosity with surface temperature using the Stefan-Boltzmann law and Wien's law.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "恒星半径"
     },
     {
       "id": "phy_hubble",
@@ -948,7 +1067,8 @@
       "name": "Hubble's Law and the Big Bang",
       "topic": "phy_astro",
       "description": "Hubble's law relating a galaxy's recession speed to its distance, providing evidence for an expanding universe and the Big Bang.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "哈勃定律与大爆炸"
     }
   ],
   "edges": [

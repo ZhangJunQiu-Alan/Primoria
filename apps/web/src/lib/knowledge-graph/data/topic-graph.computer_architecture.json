@@ -2,32 +2,37 @@
   "graphId": "computer_architecture",
   "subject": "Great Ideas in Computer Architecture",
   "generatedFrom": "temple/computer_architecture.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "topic_data_rep",
       "name": "Data Representation",
+      "nameZh": "数据表示",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "concept_binary_hex",
           "name": "Binary and Hexadecimal",
+          "nameZh": "二进制与十六进制",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_integer_rep",
           "name": "Two's Complement & Integer Rep",
+          "nameZh": "补码与整数表示",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_floating_point",
           "name": "IEEE 754 Floating Point",
+          "nameZh": "IEEE 754浮点数",
           "defaultOrder": 3
         },
         {
           "conceptId": "concept_endianness",
           "name": "Endianness and Memory Layout",
+          "nameZh": "字节序与内存布局",
           "defaultOrder": 4
         }
       ],
@@ -38,26 +43,31 @@
     {
       "topicId": "topic_c_prog",
       "name": "C Programming",
+      "nameZh": "C编程",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "concept_c_basics",
           "name": "C Basics & Control Flow",
+          "nameZh": "C基础与控制流",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_pointers_arrays",
           "name": "Pointers and Arrays",
+          "nameZh": "指针与数组",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_memory_management",
           "name": "Dynamic Memory Management",
+          "nameZh": "动态内存管理",
           "defaultOrder": 3
         },
         {
           "conceptId": "concept_structs_unions",
           "name": "Structs, Unions, and Typedefs",
+          "nameZh": "结构体、联合体与typedef",
           "defaultOrder": 4
         }
       ],
@@ -68,21 +78,25 @@
     {
       "topicId": "topic_riscv",
       "name": "RISC-V Assembly",
+      "nameZh": "RISC-V汇编",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "concept_riscv_basics",
           "name": "Registers & Basic Instructions",
+          "nameZh": "寄存器与基本指令",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_riscv_control",
           "name": "Control Flow & Branches",
+          "nameZh": "控制流与分支",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_riscv_functions",
           "name": "Function Calling Convention",
+          "nameZh": "函数调用约定",
           "defaultOrder": 3
         }
       ],
@@ -98,26 +112,31 @@
     {
       "topicId": "topic_riscv__topic_sds",
       "name": "From RISC-V Instructions to Digital Logic",
+      "nameZh": "从 RISC-V 指令到数字逻辑",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "concept_riscv_formats",
           "name": "Instruction Formats",
+          "nameZh": "指令格式",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_call_pipeline",
           "name": "Compiler, Assembler, Linker, Loader",
+          "nameZh": "编译器、汇编器、链接器、加载器",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_boolean_algebra",
           "name": "Boolean Algebra & Logic Gates",
+          "nameZh": "布尔代数与逻辑门",
           "defaultOrder": 3
         },
         {
           "conceptId": "concept_combinational_logic",
           "name": "Combinational Logic Blocks",
+          "nameZh": "组合逻辑块",
           "defaultOrder": 4
         }
       ],
@@ -135,21 +154,25 @@
     {
       "topicId": "topic_sds",
       "name": "Synchronous Digital Systems",
+      "nameZh": "同步数字系统",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "concept_state_elements",
           "name": "State Elements (Flip-Flops)",
+          "nameZh": "状态元件（触发器）",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_sequential_logic",
           "name": "Sequential Logic & Timing",
+          "nameZh": "时序逻辑与时序",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_fsm",
           "name": "Finite State Machines",
+          "nameZh": "有限状态机",
           "defaultOrder": 3
         }
       ],
@@ -162,21 +185,25 @@
     {
       "topicId": "topic_cpu",
       "name": "CPU Architecture & Datapath",
+      "nameZh": "CPU架构与数据通路",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "concept_single_cycle",
           "name": "Single-Cycle Datapath",
+          "nameZh": "单周期数据通路",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_cpu_control",
           "name": "CPU Control Logic",
+          "nameZh": "CPU控制逻辑",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_pipelining",
           "name": "Pipelining Principles",
+          "nameZh": "流水线原理",
           "defaultOrder": 3
         }
       ],
@@ -192,26 +219,31 @@
     {
       "topicId": "topic_cpu__topic_memory",
       "name": "Pipelines and Cache Architecture",
+      "nameZh": "流水线与缓存体系",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "concept_pipeline_hazards",
           "name": "Pipeline Hazards & Forwarding",
+          "nameZh": "流水线冒险与转发",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_branch_prediction",
           "name": "Branch Prediction",
+          "nameZh": "分支预测",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_cache_basics",
           "name": "Cache Basics & Direct Mapped",
+          "nameZh": "缓存基础与直接映射",
           "defaultOrder": 3
         },
         {
           "conceptId": "concept_associative_caches",
           "name": "Associative Caches",
+          "nameZh": "关联缓存",
           "defaultOrder": 4
         }
       ],
@@ -229,21 +261,25 @@
     {
       "topicId": "topic_memory",
       "name": "Memory Hierarchy",
+      "nameZh": "存储层次",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "concept_cache_performance",
           "name": "AMAT & Cache Misses",
+          "nameZh": "AMAT与缓存未命中",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_virtual_memory",
           "name": "Virtual Memory & Page Tables",
+          "nameZh": "虚拟内存与页表",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_tlb",
           "name": "Translation Lookaside Buffer (TLB)",
+          "nameZh": "地址转换后备缓冲器（TLB）",
           "defaultOrder": 3
         }
       ],
@@ -256,21 +292,25 @@
     {
       "topicId": "topic_parallelism",
       "name": "Parallel Computing",
+      "nameZh": "并行计算",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "concept_amdahls_law",
           "name": "Amdahl's Law",
+          "nameZh": "Amdahl定律",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_simd",
           "name": "Data-Level Parallelism (SIMD)",
+          "nameZh": "数据级并行(SIMD)",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_multithreading",
           "name": "Thread-Level Parallelism (OpenMP)",
+          "nameZh": "线程级并行(OpenMP)",
           "defaultOrder": 3
         }
       ],
@@ -286,26 +326,31 @@
     {
       "topicId": "topic_parallelism__topic_io_dep",
       "name": "Parallel Systems and I/O",
+      "nameZh": "并行系统与输入输出",
       "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "concept_cache_coherence",
           "name": "Cache Coherence & False Sharing",
+          "nameZh": "缓存一致性与伪共享",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_warehouse_scale",
           "name": "Warehouse-Scale Computing",
+          "nameZh": "仓库级计算",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_memory_mapped_io",
           "name": "Memory-Mapped I/O",
+          "nameZh": "内存映射I/O",
           "defaultOrder": 3
         },
         {
           "conceptId": "concept_polling_interrupts",
           "name": "Polling and Interrupts",
+          "nameZh": "轮询与中断",
           "defaultOrder": 4
         }
       ],
@@ -323,21 +368,25 @@
     {
       "topicId": "topic_io_dep",
       "name": "I/O and Dependability",
+      "nameZh": "I/O与可靠性",
       "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "concept_dma",
           "name": "Direct Memory Access (DMA)",
+          "nameZh": "直接内存访问（DMA）",
           "defaultOrder": 1
         },
         {
           "conceptId": "concept_ecc_parity",
           "name": "Error Correction Codes",
+          "nameZh": "纠错码",
           "defaultOrder": 2
         },
         {
           "conceptId": "concept_raid",
           "name": "RAID and Dependability",
+          "nameZh": "RAID与可靠性",
           "defaultOrder": 3
         }
       ],

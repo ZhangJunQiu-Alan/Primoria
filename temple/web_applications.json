@@ -21,7 +21,8 @@
       "kind": "topic",
       "name": "Web Foundations",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "Web 基础"
     },
     {
       "id": "web_http",
@@ -29,7 +30,8 @@
       "name": "HTTP Protocol",
       "topic": "web_foundations",
       "description": "The stateless application-layer protocol underlying the web, where clients issue requests with methods and headers and servers reply with status codes and bodies.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "HTTP 协议"
     },
     {
       "id": "web_url_dns",
@@ -37,7 +39,8 @@
       "name": "URLs and DNS",
       "topic": "web_foundations",
       "description": "How web resources are named by URLs and located by resolving the hostname through DNS into an IP address before connecting.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "URL 与 DNS"
     },
     {
       "id": "web_client_server",
@@ -45,14 +48,16 @@
       "name": "Client-Server Model",
       "topic": "web_foundations",
       "description": "The web's architecture where browser clients request resources and servers respond, dividing responsibilities between front-end presentation and back-end logic.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "客户端-服务器模型"
     },
     {
       "id": "web_frontend_part1",
       "kind": "topic",
       "name": "Frontend Technologies (Part 1)",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "前端技术 (第一部分)"
     },
     {
       "id": "web_html",
@@ -60,7 +65,8 @@
       "name": "HTML",
       "topic": "web_frontend_part1",
       "description": "HyperText Markup Language structuring web page content as a tree of nested elements with semantic tags that browsers parse and render.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "HTML"
     },
     {
       "id": "web_css",
@@ -68,7 +74,8 @@
       "name": "CSS",
       "topic": "web_frontend_part1",
       "description": "Cascading Style Sheets describing the presentation of HTML, controlling layout, colour, and typography through selectors, the box model, and cascading rules.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "CSS"
     },
     {
       "id": "web_javascript",
@@ -76,14 +83,16 @@
       "name": "JavaScript",
       "topic": "web_frontend_part1",
       "description": "The browser's scripting language adding interactivity to pages, manipulating content and responding to events with an event-driven, single-threaded model.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "JavaScript"
     },
     {
       "id": "web_frontend_part2",
       "kind": "topic",
       "name": "Frontend Technologies (Part 2)",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "前端技术 (第二部分)"
     },
     {
       "id": "web_dom",
@@ -91,7 +100,8 @@
       "name": "DOM Manipulation",
       "topic": "web_frontend_part2",
       "description": "The Document Object Model representing a page as a live tree of objects that scripts traverse and mutate to update content dynamically.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "DOM 操作"
     },
     {
       "id": "web_react",
@@ -99,7 +109,8 @@
       "name": "React Components",
       "topic": "web_frontend_part2",
       "description": "A component-based JavaScript library building user interfaces from reusable components that render declaratively from data, reconciled through a virtual DOM.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "React 组件"
     },
     {
       "id": "web_state_props",
@@ -107,14 +118,16 @@
       "name": "State and Props",
       "topic": "web_frontend_part2",
       "description": "React's data-flow model where props pass data down to child components and state holds local mutable data that triggers re-rendering when changed.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "状态与属性"
     },
     {
       "id": "web_backend",
       "kind": "topic",
       "name": "Backend Technologies",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "后端技术"
     },
     {
       "id": "web_node",
@@ -122,7 +135,8 @@
       "name": "Node.js",
       "topic": "web_backend",
       "description": "A server-side JavaScript runtime built on the V8 engine, using an event-driven, non-blocking I/O model to build scalable network applications.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "Node.js"
     },
     {
       "id": "web_express",
@@ -130,7 +144,8 @@
       "name": "Express and Routing",
       "topic": "web_backend",
       "description": "A minimal Node.js web framework providing routing and middleware to handle HTTP requests, compose request processing, and build server-side APIs.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "Express 与路由"
     },
     {
       "id": "web_rest",
@@ -138,7 +153,8 @@
       "name": "REST APIs",
       "topic": "web_backend",
       "description": "An architectural style for web APIs modelling functionality as resources addressed by URLs and manipulated through standard HTTP methods and status codes.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "REST API"
     },
     {
       "id": "web_auth",
@@ -146,14 +162,16 @@
       "name": "Authentication and Sessions",
       "topic": "web_backend",
       "description": "Mechanisms verifying user identity and maintaining logged-in state across stateless HTTP using sessions, cookies, and tokens such as JWTs.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "认证与会话"
     },
     {
       "id": "web_data",
       "kind": "topic",
       "name": "Databases",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "数据库"
     },
     {
       "id": "web_relational",
@@ -161,7 +179,8 @@
       "name": "Relational Databases",
       "topic": "web_data",
       "description": "Databases organising data into tables of rows and columns, with primary and foreign keys expressing relationships, queried using SQL.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "关系型数据库"
     },
     {
       "id": "web_sql",
@@ -169,7 +188,8 @@
       "name": "SQL",
       "topic": "web_data",
       "description": "Structured Query Language for defining and manipulating relational data, expressing selection, filtering, joining, and aggregation declaratively.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "SQL"
     },
     {
       "id": "web_nosql",
@@ -177,14 +197,16 @@
       "name": "NoSQL and MongoDB",
       "topic": "web_data",
       "description": "Non-relational document stores like MongoDB holding schema-flexible JSON-like documents, trading relational guarantees for scalability and flexibility.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "NoSQL 与 MongoDB"
     },
     {
       "id": "web_security",
       "kind": "topic",
       "name": "Web Security",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "Web 安全"
     },
     {
       "id": "web_xss",
@@ -192,7 +214,8 @@
       "name": "Cross-Site Scripting (XSS)",
       "topic": "web_security",
       "description": "Cross-site scripting, a vulnerability where attacker-supplied scripts execute in victims' browsers, mitigated by escaping output and content security policies.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "跨站脚本攻击（XSS）"
     },
     {
       "id": "web_csrf",
@@ -200,7 +223,8 @@
       "name": "Cross-Site Request Forgery (CSRF)",
       "topic": "web_security",
       "description": "Cross-site request forgery, an attack tricking an authenticated browser into sending unintended requests, defended with anti-CSRF tokens and SameSite cookies.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "跨站请求伪造（CSRF）"
     },
     {
       "id": "web_sql_injection",
@@ -208,7 +232,8 @@
       "name": "SQL Injection",
       "topic": "web_security",
       "description": "An attack inserting malicious SQL through unsanitised input to manipulate database queries, prevented with parameterised queries and input validation.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "SQL 注入"
     }
   ],
   "edges": [

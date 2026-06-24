@@ -38,7 +38,8 @@
       "kind": "topic",
       "name": "Data Representation",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "数据表示"
     },
     {
       "id": "c1_1",
@@ -46,7 +47,8 @@
       "topic": "t1",
       "kind": "concept",
       "default_order": 1,
-      "description": "Information encoded as bit patterns grouped into bytes, with hexadecimal notation used as a compact human-readable representation of the underlying binary machine state."
+      "description": "Information encoded as bit patterns grouped into bytes, with hexadecimal notation used as a compact human-readable representation of the underlying binary machine state.",
+      "name_zh": "比特与字节"
     },
     {
       "id": "c1_2",
@@ -54,7 +56,8 @@
       "topic": "t1",
       "kind": "concept",
       "default_order": 2,
-      "description": "How fixed-width integers are encoded in hardware, using unsigned binary for non-negative values and two's complement for signed values, determining the representable ranges."
+      "description": "How fixed-width integers are encoded in hardware, using unsigned binary for non-negative values and two's complement for signed values, determining the representable ranges.",
+      "name_zh": "整数表示"
     },
     {
       "id": "c1_3",
@@ -62,7 +65,8 @@
       "topic": "t1",
       "kind": "concept",
       "default_order": 3,
-      "description": "Addition, subtraction, and multiplication on fixed-width integers, including modular wraparound and overflow that follow from finite two's-complement and unsigned encodings."
+      "description": "Addition, subtraction, and multiplication on fixed-width integers, including modular wraparound and overflow that follow from finite two's-complement and unsigned encodings.",
+      "name_zh": "整数运算"
     },
     {
       "id": "c1_4",
@@ -70,14 +74,16 @@
       "topic": "t1",
       "kind": "concept",
       "default_order": 4,
-      "description": "The IEEE 754 standard encoding real numbers as sign, biased exponent, and fraction fields, supporting normalised, denormalised, infinity, and NaN values."
+      "description": "The IEEE 754 standard encoding real numbers as sign, biased exponent, and fraction fields, supporting normalised, denormalised, infinity, and NaN values.",
+      "name_zh": "浮点数表示"
     },
     {
       "id": "t1__t2",
       "kind": "topic",
       "name": "Floating-Point and Machine-Level Operations",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "浮点数与机器级运算"
     },
     {
       "id": "c1_5",
@@ -85,7 +91,8 @@
       "topic": "t1__t2",
       "kind": "concept",
       "default_order": 1,
-      "description": "Arithmetic on IEEE 754 values, where results are rounded to representable numbers, making operations non-associative and introducing rounding error and special-case behaviour."
+      "description": "Arithmetic on IEEE 754 values, where results are rounded to representable numbers, making operations non-associative and introducing rounding error and special-case behaviour.",
+      "name_zh": "浮点运算"
     },
     {
       "id": "c2_1",
@@ -93,7 +100,8 @@
       "topic": "t1__t2",
       "kind": "concept",
       "default_order": 2,
-      "description": "x86-64 instructions that move data between registers and memory, using addressing modes and operand sizes to load, store, and copy machine words."
+      "description": "x86-64 instructions that move data between registers and memory, using addressing modes and operand sizes to load, store, and copy machine words.",
+      "name_zh": "x86-64数据传输"
     },
     {
       "id": "c2_2",
@@ -101,7 +109,8 @@
       "topic": "t1__t2",
       "kind": "concept",
       "default_order": 3,
-      "description": "x86-64 instructions performing integer arithmetic, bitwise logic, and shifts on registers and memory, updating condition-code flags used by later conditional instructions."
+      "description": "x86-64 instructions performing integer arithmetic, bitwise logic, and shifts on registers and memory, updating condition-code flags used by later conditional instructions.",
+      "name_zh": "算术与逻辑运算"
     },
     {
       "id": "c2_3",
@@ -109,14 +118,16 @@
       "topic": "t1__t2",
       "kind": "concept",
       "default_order": 4,
-      "description": "Implementing conditionals and loops in assembly using condition-code flags, conditional jumps, and comparison instructions to direct the processor's instruction stream."
+      "description": "Implementing conditionals and loops in assembly using condition-code flags, conditional jumps, and comparison instructions to direct the processor's instruction stream.",
+      "name_zh": "控制流"
     },
     {
       "id": "t2__t3",
       "kind": "topic",
       "name": "Procedures and Processor Architecture",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "过程调用与处理器体系"
     },
     {
       "id": "c2_4",
@@ -124,7 +135,8 @@
       "topic": "t2__t3",
       "kind": "concept",
       "default_order": 1,
-      "description": "How procedures are called using the runtime stack to pass arguments, save return addresses, allocate local storage, and follow register-saving conventions."
+      "description": "How procedures are called using the runtime stack to pass arguments, save return addresses, allocate local storage, and follow register-saving conventions.",
+      "name_zh": "过程与调用栈"
     },
     {
       "id": "c2_5",
@@ -132,7 +144,8 @@
       "topic": "t2__t3",
       "kind": "concept",
       "default_order": 2,
-      "description": "The memory layout of arrays and structures, including element addressing arithmetic, field offsets, and alignment requirements imposed by the architecture."
+      "description": "The memory layout of arrays and structures, including element addressing arithmetic, field offsets, and alignment requirements imposed by the architecture.",
+      "name_zh": "数组与结构体"
     },
     {
       "id": "c3_1",
@@ -140,7 +153,8 @@
       "topic": "t2__t3",
       "kind": "concept",
       "default_order": 3,
-      "description": "The Y86-64 instruction set, a simplified teaching ISA defining registers, instruction encodings, and semantics used to study processor implementation."
+      "description": "The Y86-64 instruction set, a simplified teaching ISA defining registers, instruction encodings, and semantics used to study processor implementation.",
+      "name_zh": "指令集体系结构"
     },
     {
       "id": "c3_2",
@@ -148,14 +162,16 @@
       "topic": "t2__t3",
       "kind": "concept",
       "default_order": 4,
-      "description": "A sequential processor design executing each instruction through fetch, decode, execute, memory, and write-back stages within a single clock cycle."
+      "description": "A sequential processor design executing each instruction through fetch, decode, execute, memory, and write-back stages within a single clock cycle.",
+      "name_zh": "顺序CPU实现"
     },
     {
       "id": "t3",
       "kind": "topic",
       "name": "Processor Architecture",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "处理器体系结构"
     },
     {
       "id": "c3_3",
@@ -163,7 +179,8 @@
       "topic": "t3",
       "kind": "concept",
       "default_order": 1,
-      "description": "Overlapping the execution of multiple instructions across pipeline stages to increase instruction throughput, ideally completing one instruction per clock cycle."
+      "description": "Overlapping the execution of multiple instructions across pipeline stages to increase instruction throughput, ideally completing one instruction per clock cycle.",
+      "name_zh": "流水线原理"
     },
     {
       "id": "c3_4",
@@ -171,7 +188,8 @@
       "topic": "t3",
       "kind": "concept",
       "default_order": 2,
-      "description": "Data, control, and structural hazards that stall pipelines, and forwarding techniques that resolve data dependencies without waiting for write-back."
+      "description": "Data, control, and structural hazards that stall pipelines, and forwarding techniques that resolve data dependencies without waiting for write-back.",
+      "name_zh": "流水线冒险与转发"
     },
     {
       "id": "c3_5",
@@ -179,14 +197,16 @@
       "topic": "t3",
       "kind": "concept",
       "default_order": 3,
-      "description": "Handling exceptions in a pipelined processor, requiring precise state by detecting events in order and squashing partially executed younger instructions."
+      "description": "Handling exceptions in a pipelined processor, requiring precise state by detecting events in order and squashing partially executed younger instructions.",
+      "name_zh": "流水线异常"
     },
     {
       "id": "t4",
       "kind": "topic",
       "name": "Code Optimization",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "代码优化"
     },
     {
       "id": "c4_1",
@@ -194,7 +214,8 @@
       "topic": "t4",
       "kind": "concept",
       "default_order": 1,
-      "description": "Reasons compilers cannot fully optimise code, including memory aliasing, function side effects, and conservative assumptions that block otherwise valid transformations."
+      "description": "Reasons compilers cannot fully optimise code, including memory aliasing, function side effects, and conservative assumptions that block otherwise valid transformations.",
+      "name_zh": "编译器局限"
     },
     {
       "id": "c4_2",
@@ -202,7 +223,8 @@
       "topic": "t4",
       "kind": "concept",
       "default_order": 2,
-      "description": "An optimisation that replicates loop bodies to reduce loop-control overhead and expose more independent instructions for instruction-level parallelism."
+      "description": "An optimisation that replicates loop bodies to reduce loop-control overhead and expose more independent instructions for instruction-level parallelism.",
+      "name_zh": "循环展开"
     },
     {
       "id": "c4_3",
@@ -210,14 +232,16 @@
       "topic": "t4",
       "kind": "concept",
       "default_order": 3,
-      "description": "Executing independent instructions simultaneously on superscalar, pipelined hardware, limited by data dependencies and the processor's functional-unit latency and throughput."
+      "description": "Executing independent instructions simultaneously on superscalar, pipelined hardware, limited by data dependencies and the processor's functional-unit latency and throughput.",
+      "name_zh": "指令级并行"
     },
     {
       "id": "t4__t5",
       "kind": "topic",
       "name": "Optimization and Memory Locality",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "程序优化与内存局部性"
     },
     {
       "id": "c4_4",
@@ -225,7 +249,8 @@
       "topic": "t4__t5",
       "kind": "concept",
       "default_order": 1,
-      "description": "When two pointers may reference the same memory location, forcing the compiler to preserve memory accesses and preventing certain optimisations."
+      "description": "When two pointers may reference the same memory location, forcing the compiler to preserve memory accesses and preventing certain optimisations.",
+      "name_zh": "内存别名"
     },
     {
       "id": "c4_5",
@@ -233,7 +258,8 @@
       "topic": "t4__t5",
       "kind": "concept",
       "default_order": 2,
-      "description": "Tools that measure where a program spends time, identifying performance bottlenecks so optimisation effort targets the most costly code paths."
+      "description": "Tools that measure where a program spends time, identifying performance bottlenecks so optimisation effort targets the most costly code paths.",
+      "name_zh": "性能分析工具"
     },
     {
       "id": "c5_1",
@@ -241,7 +267,8 @@
       "topic": "t4__t5",
       "kind": "concept",
       "default_order": 3,
-      "description": "Characteristics and trends of storage technologies such as SRAM, DRAM, disks, and SSDs, differing in speed, capacity, volatility, and cost per byte."
+      "description": "Characteristics and trends of storage technologies such as SRAM, DRAM, disks, and SSDs, differing in speed, capacity, volatility, and cost per byte.",
+      "name_zh": "存储技术"
     },
     {
       "id": "c5_2",
@@ -249,14 +276,16 @@
       "topic": "t4__t5",
       "kind": "concept",
       "default_order": 4,
-      "description": "Programs tend to reuse recently accessed data (temporal locality) and nearby data (spatial locality), a behaviour that caching exploits to improve performance."
+      "description": "Programs tend to reuse recently accessed data (temporal locality) and nearby data (spatial locality), a behaviour that caching exploits to improve performance.",
+      "name_zh": "局部性原理"
     },
     {
       "id": "t5",
       "kind": "topic",
       "name": "Memory Hierarchy and Cache",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "存储层次与缓存"
     },
     {
       "id": "c5_3",
@@ -264,7 +293,8 @@
       "topic": "t5",
       "kind": "concept",
       "default_order": 1,
-      "description": "How caches are organised into sets, lines, and blocks with tags, governing the placement, lookup, and replacement of cached memory blocks."
+      "description": "How caches are organised into sets, lines, and blocks with tags, governing the placement, lookup, and replacement of cached memory blocks.",
+      "name_zh": "缓存组织"
     },
     {
       "id": "c5_4",
@@ -272,7 +302,8 @@
       "topic": "t5",
       "kind": "concept",
       "default_order": 2,
-      "description": "Metrics such as hit rate, miss rate, miss penalty, and average memory access time used to evaluate cache effectiveness."
+      "description": "Metrics such as hit rate, miss rate, miss penalty, and average memory access time used to evaluate cache effectiveness.",
+      "name_zh": "缓存性能指标"
     },
     {
       "id": "c5_5",
@@ -280,14 +311,16 @@
       "topic": "t5",
       "kind": "concept",
       "default_order": 3,
-      "description": "Structuring data access patterns to maximise temporal and spatial locality, improving cache hit rates and overall program performance."
+      "description": "Structuring data access patterns to maximise temporal and spatial locality, improving cache hit rates and overall program performance.",
+      "name_zh": "缓存友好代码"
     },
     {
       "id": "t6",
       "kind": "topic",
       "name": "Linking",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "链接"
     },
     {
       "id": "c6_1",
@@ -295,7 +328,8 @@
       "topic": "t6",
       "kind": "concept",
       "default_order": 1,
-      "description": "Combining relocatable object files at build time into a single executable by resolving symbols and merging sections into the final image."
+      "description": "Combining relocatable object files at build time into a single executable by resolving symbols and merging sections into the final image.",
+      "name_zh": "静态链接"
     },
     {
       "id": "c6_2",
@@ -303,7 +337,8 @@
       "topic": "t6",
       "kind": "concept",
       "default_order": 2,
-      "description": "The Executable and Linkable Format that structures object files into sections and symbol tables used by linkers and loaders."
+      "description": "The Executable and Linkable Format that structures object files into sections and symbol tables used by linkers and loaders.",
+      "name_zh": "目标文件(ELF)"
     },
     {
       "id": "c6_3",
@@ -311,14 +346,16 @@
       "topic": "t6",
       "kind": "concept",
       "default_order": 3,
-      "description": "The linker step associating each symbol reference with exactly one symbol definition across object files and libraries, detecting duplicates."
+      "description": "The linker step associating each symbol reference with exactly one symbol definition across object files and libraries, detecting duplicates.",
+      "name_zh": "符号解析"
     },
     {
       "id": "t6__t7",
       "kind": "topic",
       "name": "Linking, Exceptions and Processes",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "链接、异常与进程"
     },
     {
       "id": "c6_4",
@@ -326,7 +363,8 @@
       "topic": "t6__t7",
       "kind": "concept",
       "default_order": 1,
-      "description": "The linker step that assigns final run-time addresses to merged sections and patches symbol references to point at those addresses."
+      "description": "The linker step that assigns final run-time addresses to merged sections and patches symbol references to point at those addresses.",
+      "name_zh": "重定位"
     },
     {
       "id": "c6_5",
@@ -334,7 +372,8 @@
       "topic": "t6__t7",
       "kind": "concept",
       "default_order": 2,
-      "description": "Deferring symbol resolution to load or run time by linking against shared libraries, reducing executable size and enabling code sharing."
+      "description": "Deferring symbol resolution to load or run time by linking against shared libraries, reducing executable size and enabling code sharing.",
+      "name_zh": "动态链接"
     },
     {
       "id": "c7_1",
@@ -342,7 +381,8 @@
       "topic": "t6__t7",
       "kind": "concept",
       "default_order": 3,
-      "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel."
+      "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel.",
+      "name_zh": "异常"
     },
     {
       "id": "c7_2",
@@ -350,14 +390,16 @@
       "topic": "t6__t7",
       "kind": "concept",
       "default_order": 4,
-      "description": "The process abstraction giving each program a private address space and logical control flow, switched by the kernel saving and restoring context."
+      "description": "The process abstraction giving each program a private address space and logical control flow, switched by the kernel saving and restoring context.",
+      "name_zh": "进程与上下文切换"
     },
     {
       "id": "t7",
       "kind": "topic",
       "name": "Exceptional Control Flow",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "异常控制流"
     },
     {
       "id": "c7_3",
@@ -365,7 +407,8 @@
       "topic": "t7",
       "kind": "concept",
       "default_order": 1,
-      "description": "System calls that create processes with fork, load new programs with execve, and reap children with wait, managing the process lifecycle."
+      "description": "System calls that create processes with fork, load new programs with execve, and reap children with wait, managing the process lifecycle.",
+      "name_zh": "进程控制"
     },
     {
       "id": "c7_4",
@@ -373,7 +416,8 @@
       "topic": "t7",
       "kind": "concept",
       "default_order": 2,
-      "description": "A mechanism delivering asynchronous notifications to processes, with handlers that interrupt normal control flow to respond to events."
+      "description": "A mechanism delivering asynchronous notifications to processes, with handlers that interrupt normal control flow to respond to events.",
+      "name_zh": "信号与信号处理"
     },
     {
       "id": "c7_5",
@@ -381,14 +425,16 @@
       "topic": "t7",
       "kind": "concept",
       "default_order": 3,
-      "description": "Transferring control across function boundaries using setjmp and longjmp, bypassing the normal call-return discipline for error recovery."
+      "description": "Transferring control across function boundaries using setjmp and longjmp, bypassing the normal call-return discipline for error recovery.",
+      "name_zh": "非局部跳转"
     },
     {
       "id": "t8",
       "kind": "topic",
       "name": "Virtual Memory",
       "topic": null,
-      "default_order": 11
+      "default_order": 11,
+      "name_zh": "虚拟内存"
     },
     {
       "id": "c8_1",
@@ -396,7 +442,8 @@
       "topic": "t8",
       "kind": "concept",
       "default_order": 1,
-      "description": "Hardware mapping of virtual addresses to physical addresses via the MMU and page tables, giving each process its own address space."
+      "description": "Hardware mapping of virtual addresses to physical addresses via the MMU and page tables, giving each process its own address space.",
+      "name_zh": "地址转换"
     },
     {
       "id": "c8_2",
@@ -404,7 +451,8 @@
       "topic": "t8",
       "kind": "concept",
       "default_order": 2,
-      "description": "Multi-level data structures mapping virtual pages to physical frames, storing permission and presence bits used during address translation."
+      "description": "Multi-level data structures mapping virtual pages to physical frames, storing permission and presence bits used during address translation.",
+      "name_zh": "页表"
     },
     {
       "id": "c8_3",
@@ -412,14 +460,16 @@
       "topic": "t8",
       "kind": "concept",
       "default_order": 3,
-      "description": "A small hardware cache of recent virtual-to-physical translations that accelerates address translation by avoiding repeated page-table walks."
+      "description": "A small hardware cache of recent virtual-to-physical translations that accelerates address translation by avoiding repeated page-table walks.",
+      "name_zh": "地址转换后备缓冲器（TLB）"
     },
     {
       "id": "t8__t9",
       "kind": "topic",
       "name": "Memory Management and Unix I/O",
       "topic": null,
-      "default_order": 12
+      "default_order": 12,
+      "name_zh": "内存管理与 Unix 输入输出"
     },
     {
       "id": "c8_4",
@@ -427,7 +477,8 @@
       "topic": "t8__t9",
       "kind": "concept",
       "default_order": 1,
-      "description": "Managing heap memory at run time with allocators like malloc and free, balancing throughput, fragmentation, and memory utilisation."
+      "description": "Managing heap memory at run time with allocators like malloc and free, balancing throughput, fragmentation, and memory utilisation.",
+      "name_zh": "动态内存分配"
     },
     {
       "id": "c8_5",
@@ -435,7 +486,8 @@
       "topic": "t8__t9",
       "kind": "concept",
       "default_order": 2,
-      "description": "Automatic reclamation of unreachable heap memory by tracing or counting references, freeing the programmer from explicit deallocation."
+      "description": "Automatic reclamation of unreachable heap memory by tracing or counting references, freeing the programmer from explicit deallocation.",
+      "name_zh": "垃圾回收基础"
     },
     {
       "id": "c9_1",
@@ -443,7 +495,8 @@
       "topic": "t8__t9",
       "kind": "concept",
       "default_order": 3,
-      "description": "The Unix model treating files, devices, and sockets uniformly through descriptors and the open, read, write, and close system calls."
+      "description": "The Unix model treating files, devices, and sockets uniformly through descriptors and the open, read, write, and close system calls.",
+      "name_zh": "Unix 输入输出"
     },
     {
       "id": "c9_2",
@@ -451,14 +504,16 @@
       "topic": "t8__t9",
       "kind": "concept",
       "default_order": 4,
-      "description": "Information about a file stored separately from its contents, such as size, permissions, and timestamps, accessed via the stat system call."
+      "description": "Information about a file stored separately from its contents, such as size, permissions, and timestamps, accessed via the stat system call.",
+      "name_zh": "文件元数据"
     },
     {
       "id": "t9",
       "kind": "topic",
       "name": "System-Level I/O",
       "topic": null,
-      "default_order": 13
+      "default_order": 13,
+      "name_zh": "系统级I/O"
     },
     {
       "id": "c9_3",
@@ -466,7 +521,8 @@
       "topic": "t9",
       "kind": "concept",
       "default_order": 1,
-      "description": "A buffered, portable I/O library layered over Unix system calls that reduces system-call overhead through stream buffering."
+      "description": "A buffered, portable I/O library layered over Unix system calls that reduces system-call overhead through stream buffering.",
+      "name_zh": "标准I/O库"
     },
     {
       "id": "c9_4",
@@ -474,7 +530,8 @@
       "topic": "t9",
       "kind": "concept",
       "default_order": 2,
-      "description": "How descriptors, open-file table entries, and inodes interact so processes can share open files and offsets, especially after fork."
+      "description": "How descriptors, open-file table entries, and inodes interact so processes can share open files and offsets, especially after fork.",
+      "name_zh": "文件共享"
     },
     {
       "id": "c9_5",
@@ -482,14 +539,16 @@
       "topic": "t9",
       "kind": "concept",
       "default_order": 3,
-      "description": "Redirecting a process's standard input or output to files using dup2 to duplicate descriptors onto the standard descriptor numbers."
+      "description": "Redirecting a process's standard input or output to files using dup2 to duplicate descriptors onto the standard descriptor numbers.",
+      "name_zh": "I/O重定向"
     },
     {
       "id": "t10",
       "kind": "topic",
       "name": "Network Programming",
       "topic": null,
-      "default_order": 14
+      "default_order": 14,
+      "name_zh": "网络编程"
     },
     {
       "id": "c10_1",
@@ -497,7 +556,8 @@
       "topic": "t10",
       "kind": "concept",
       "default_order": 1,
-      "description": "A networking model where client processes request services and server processes provide them, communicating over a transport-layer connection."
+      "description": "A networking model where client processes request services and server processes provide them, communicating over a transport-layer connection.",
+      "name_zh": "客户端-服务器模型"
     },
     {
       "id": "c10_2",
@@ -505,7 +565,8 @@
       "topic": "t10",
       "kind": "concept",
       "default_order": 2,
-      "description": "The network-layer protocol providing best-effort, connectionless delivery of packets across interconnected networks using hierarchical IP addressing."
+      "description": "The network-layer protocol providing best-effort, connectionless delivery of packets across interconnected networks using hierarchical IP addressing.",
+      "name_zh": "IP协议"
     },
     {
       "id": "c10_3",
@@ -513,14 +574,16 @@
       "topic": "t10",
       "kind": "concept",
       "default_order": 3,
-      "description": "The transport protocol providing reliable, ordered, connection-oriented byte streams over IP using acknowledgements, retransmission, and flow control."
+      "description": "The transport protocol providing reliable, ordered, connection-oriented byte streams over IP using acknowledgements, retransmission, and flow control.",
+      "name_zh": "TCP协议"
     },
     {
       "id": "t10__t11",
       "kind": "topic",
       "name": "Network and Concurrent Programming",
       "topic": null,
-      "default_order": 15
+      "default_order": 15,
+      "name_zh": "网络与并发编程"
     },
     {
       "id": "c10_4",
@@ -528,7 +591,8 @@
       "topic": "t10__t11",
       "kind": "concept",
       "default_order": 1,
-      "description": "The API for network programming that abstracts connections as file descriptors, with calls such as socket, bind, listen, connect, and accept."
+      "description": "The API for network programming that abstracts connections as file descriptors, with calls such as socket, bind, listen, connect, and accept.",
+      "name_zh": "套接字接口"
     },
     {
       "id": "c10_5",
@@ -536,7 +600,8 @@
       "topic": "t10__t11",
       "kind": "concept",
       "default_order": 2,
-      "description": "The application-layer request-response protocol underlying the web, using methods, headers, and status codes to transfer resources over TCP."
+      "description": "The application-layer request-response protocol underlying the web, using methods, headers, and status codes to transfer resources over TCP.",
+      "name_zh": "HTTP协议基础"
     },
     {
       "id": "c11_1",
@@ -544,7 +609,8 @@
       "topic": "t10__t11",
       "kind": "concept",
       "default_order": 3,
-      "description": "Threads as independent logical flows sharing a process's address space, created and joined to achieve concurrency within a single process."
+      "description": "Threads as independent logical flows sharing a process's address space, created and joined to achieve concurrency within a single process.",
+      "name_zh": "线程基础"
     },
     {
       "id": "c11_2",
@@ -552,14 +618,16 @@
       "topic": "t10__t11",
       "kind": "concept",
       "default_order": 4,
-      "description": "How threads share global and heap variables, and the memory model determining when one thread's writes become visible to others."
+      "description": "How threads share global and heap variables, and the memory model determining when one thread's writes become visible to others.",
+      "name_zh": "共享变量"
     },
     {
       "id": "t11",
       "kind": "topic",
       "name": "Concurrent Programming",
       "topic": null,
-      "default_order": 16
+      "default_order": 16,
+      "name_zh": "并发编程"
     },
     {
       "id": "c11_3",
@@ -567,7 +635,8 @@
       "topic": "t11",
       "kind": "concept",
       "default_order": 1,
-      "description": "Coordinating threads using semaphores, counting primitives whose P and V operations enforce mutual exclusion and scheduling constraints."
+      "description": "Coordinating threads using semaphores, counting primitives whose P and V operations enforce mutual exclusion and scheduling constraints.",
+      "name_zh": "同步（信号量）"
     },
     {
       "id": "c11_4",
@@ -575,7 +644,8 @@
       "topic": "t11",
       "kind": "concept",
       "default_order": 2,
-      "description": "Properties making functions safe to call concurrently, including reentrancy and avoiding unsynchronised access to shared mutable state."
+      "description": "Properties making functions safe to call concurrently, including reentrancy and avoiding unsynchronised access to shared mutable state.",
+      "name_zh": "线程安全"
     },
     {
       "id": "c11_5",
@@ -583,7 +653,8 @@
       "topic": "t11",
       "kind": "concept",
       "default_order": 3,
-      "description": "A state where threads are permanently blocked, each waiting for resources held by others, arising when the four Coffman conditions hold."
+      "description": "A state where threads are permanently blocked, each waiting for resources held by others, arising when the four Coffman conditions hold.",
+      "name_zh": "死锁"
     }
   ],
   "edges": [

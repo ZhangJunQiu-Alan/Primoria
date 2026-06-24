@@ -2,32 +2,37 @@
   "graphId": "Python",
   "subject": "Structure and Interpretation of Computer Programs",
   "generatedFrom": "temple/Python.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "topic_intro",
       "name": "Functions and Control",
+      "nameZh": "函数与控制",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "expr_stmt",
           "name": "Expressions and Statements",
+          "nameZh": "表达式与语句",
           "defaultOrder": 1
         },
         {
           "conceptId": "control",
           "name": "Control Structures",
+          "nameZh": "控制结构",
           "defaultOrder": 2
         },
         {
           "conceptId": "pure_func",
           "name": "Pure vs Non-Pure Functions",
+          "nameZh": "纯函数与副作用函数",
           "defaultOrder": 3
         },
         {
           "conceptId": "env_diag",
           "name": "Environment Diagrams",
+          "nameZh": "环境图",
           "defaultOrder": 4
         }
       ],
@@ -63,21 +68,25 @@
     {
       "topicId": "topic_hof",
       "name": "Higher-Order Functions",
+      "nameZh": "高阶函数",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "func_arg",
           "name": "Functions as Arguments",
+          "nameZh": "函数作参数",
           "defaultOrder": 1
         },
         {
           "conceptId": "func_ret",
           "name": "Functions as Return Values",
+          "nameZh": "函数作返回值",
           "defaultOrder": 2
         },
         {
           "conceptId": "lambda",
           "name": "Lambda Expressions",
+          "nameZh": "Lambda 表达式",
           "defaultOrder": 3
         }
       ],
@@ -99,26 +108,31 @@
     {
       "topicId": "topic_hof__topic_data",
       "name": "Functional Transformation and Data Processing",
+      "nameZh": "函数变换与数据处理",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "currying",
           "name": "Currying",
+          "nameZh": "柯里化",
           "defaultOrder": 1
         },
         {
           "conceptId": "decorators",
           "name": "Decorators",
+          "nameZh": "装饰器",
           "defaultOrder": 2
         },
         {
           "conceptId": "seq",
           "name": "Sequences and Slicing",
+          "nameZh": "序列与切片",
           "defaultOrder": 3
         },
         {
           "conceptId": "list_comp",
           "name": "List Comprehensions",
+          "nameZh": "列表推导式",
           "defaultOrder": 4
         }
       ],
@@ -137,21 +151,25 @@
     {
       "topicId": "topic_data",
       "name": "Data Abstraction and Sequences",
+      "nameZh": "数据抽象与序列",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "data_abs",
           "name": "Data Abstraction",
+          "nameZh": "数据抽象",
           "defaultOrder": 1
         },
         {
           "conceptId": "dict",
           "name": "Dictionaries",
+          "nameZh": "字典",
           "defaultOrder": 2
         },
         {
           "conceptId": "box_pointer",
           "name": "Box-and-Pointer Diagrams",
+          "nameZh": "箱指针图",
           "defaultOrder": 3
         }
       ],
@@ -173,26 +191,31 @@
     {
       "topicId": "topic_recursion",
       "name": "Recursion and Trees",
+      "nameZh": "递归与树",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "recursion",
           "name": "Recursion",
+          "nameZh": "递归",
           "defaultOrder": 1
         },
         {
           "conceptId": "tree_recur",
           "name": "Tree Recursion",
+          "nameZh": "树递归",
           "defaultOrder": 2
         },
         {
           "conceptId": "tree_abs",
           "name": "Tree Data Abstraction",
+          "nameZh": "树数据抽象",
           "defaultOrder": 3
         },
         {
           "conceptId": "tree_trav",
           "name": "Tree Traversal",
+          "nameZh": "树遍历",
           "defaultOrder": 4
         }
       ],
@@ -224,31 +247,37 @@
     {
       "topicId": "topic_mut_oop",
       "name": "Mutable Data and OOP",
+      "nameZh": "可变数据与 OOP",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "mutability",
           "name": "Mutability",
+          "nameZh": "可变性",
           "defaultOrder": 1
         },
         {
           "conceptId": "oop",
           "name": "Object-Oriented Programming",
+          "nameZh": "面向对象编程",
           "defaultOrder": 2
         },
         {
           "conceptId": "inherit_comp",
           "name": "Inheritance and Composition",
+          "nameZh": "继承与组合",
           "defaultOrder": 3
         },
         {
           "conceptId": "class_attr",
           "name": "Class and Instance Attributes",
+          "nameZh": "类与实例属性",
           "defaultOrder": 4
         },
         {
           "conceptId": "string_rep",
           "name": "String Representation",
+          "nameZh": "字符串表示",
           "defaultOrder": 5
         }
       ],
@@ -266,26 +295,31 @@
     {
       "topicId": "topic_adv_data",
       "name": "Advanced Data Structures",
+      "nameZh": "高级数据结构",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "linked_lists",
           "name": "Linked Lists",
+          "nameZh": "链表",
           "defaultOrder": 1
         },
         {
           "conceptId": "mut_trees",
           "name": "Mutable Trees",
+          "nameZh": "可变树",
           "defaultOrder": 2
         },
         {
           "conceptId": "iterators",
           "name": "Iterators",
+          "nameZh": "迭代器",
           "defaultOrder": 3
         },
         {
           "conceptId": "generators",
           "name": "Generators",
+          "nameZh": "生成器",
           "defaultOrder": 4
         }
       ],
@@ -305,26 +339,31 @@
     {
       "topicId": "topic_scheme",
       "name": "Scheme and Functional Programming",
+      "nameZh": "Scheme 与函数式编程",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "scheme_syntax",
           "name": "Scheme Syntax",
+          "nameZh": "Scheme 语法",
           "defaultOrder": 1
         },
         {
           "conceptId": "scheme_lists",
           "name": "Scheme Lists and Pairs",
+          "nameZh": "Scheme 列表与序对",
           "defaultOrder": 2
         },
         {
           "conceptId": "tail_calls",
           "name": "Tail Calls and Optimization",
+          "nameZh": "尾调用与优化",
           "defaultOrder": 3
         },
         {
           "conceptId": "macros",
           "name": "Macros",
+          "nameZh": "宏",
           "defaultOrder": 4
         }
       ],
@@ -344,26 +383,31 @@
     {
       "topicId": "topic_interp",
       "name": "Interpreters",
+      "nameZh": "解释器",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "parsing",
           "name": "Lexical Analysis and Parsing",
+          "nameZh": "词法分析与解析",
           "defaultOrder": 1
         },
         {
           "conceptId": "eval",
           "name": "Evaluation Process",
+          "nameZh": "求值过程",
           "defaultOrder": 2
         },
         {
           "conceptId": "apply",
           "name": "Application Process",
+          "nameZh": "应用过程",
           "defaultOrder": 3
         },
         {
           "conceptId": "exceptions",
           "name": "Exceptions",
+          "nameZh": "异常",
           "defaultOrder": 4
         }
       ],
@@ -377,26 +421,31 @@
     {
       "topicId": "topic_declarative",
       "name": "Declarative Programming",
+      "nameZh": "声明式编程",
       "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "regex",
           "name": "Regular Expressions",
+          "nameZh": "正则表达式",
           "defaultOrder": 1
         },
         {
           "conceptId": "bnf",
           "name": "BNF Context-Free Grammars",
+          "nameZh": "BNF 上下文无关文法",
           "defaultOrder": 2
         },
         {
           "conceptId": "sql_queries",
           "name": "SQL Tables and Queries",
+          "nameZh": "SQL 表与查询",
           "defaultOrder": 3
         },
         {
           "conceptId": "sql_joins",
           "name": "SQL Joins and Aggregation",
+          "nameZh": "SQL 连接与聚合",
           "defaultOrder": 4
         }
       ],

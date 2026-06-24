@@ -2,27 +2,31 @@
   "graphId": "a_level_physics",
   "subject": "A-Level Physics (CIE 9702)",
   "generatedFrom": "temple/a_level_physics.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "phy_measurement",
       "name": "Physical Quantities and Units",
+      "nameZh": "物理量与单位",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "phy_si_units",
           "name": "SI Base Units",
+          "nameZh": "SI基本单位",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_homogeneity",
           "name": "Homogeneity of Equations",
+          "nameZh": "方程齐次性",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_scalars_vectors",
           "name": "Scalars and Vectors",
+          "nameZh": "标量与矢量",
           "defaultOrder": 3
         }
       ],
@@ -38,26 +42,31 @@
     {
       "topicId": "phy_measurement__phy_kinematics",
       "name": "Measurement Uncertainty and Motion",
+      "nameZh": "测量不确定度与运动",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "phy_uncertainty",
           "name": "Errors and Uncertainties",
+          "nameZh": "误差与不确定度",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_combine_uncertainty",
           "name": "Combining Uncertainties",
+          "nameZh": "不确定度合成",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_motion_quantities",
           "name": "Displacement Velocity Acceleration",
+          "nameZh": "位移速度加速度",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_suvat",
           "name": "Equations of Motion",
+          "nameZh": "运动方程",
           "defaultOrder": 4
         }
       ],
@@ -83,21 +92,25 @@
     {
       "topicId": "phy_kinematics",
       "name": "Kinematics",
+      "nameZh": "运动学",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "phy_motion_graphs",
           "name": "Motion Graphs",
+          "nameZh": "运动图像",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_free_fall",
           "name": "Free Fall",
+          "nameZh": "自由落体",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_projectile",
           "name": "Projectile Motion",
+          "nameZh": "抛体运动",
           "defaultOrder": 3
         }
       ],
@@ -110,21 +123,25 @@
     {
       "topicId": "phy_dynamics",
       "name": "Dynamics",
+      "nameZh": "动力学",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "phy_newton_laws",
           "name": "Newton's Laws of Motion",
+          "nameZh": "牛顿运动定律",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_mass_weight",
           "name": "Mass and Weight",
+          "nameZh": "质量与重量",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_momentum",
           "name": "Linear Momentum",
+          "nameZh": "线性动量",
           "defaultOrder": 3
         }
       ],
@@ -150,26 +167,31 @@
     {
       "topicId": "phy_dynamics__phy_forces",
       "name": "Momentum and Forces",
+      "nameZh": "动量与力",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "phy_momentum_conservation",
           "name": "Conservation of Momentum",
+          "nameZh": "动量守恒",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_impulse",
           "name": "Impulse and Collisions",
+          "nameZh": "冲量与碰撞",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_force_types",
           "name": "Types of Force",
+          "nameZh": "力的类型",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_moments",
           "name": "Moments and Couples",
+          "nameZh": "力矩与力偶",
           "defaultOrder": 4
         }
       ],
@@ -195,21 +217,25 @@
     {
       "topicId": "phy_forces",
       "name": "Forces, Density and Pressure",
+      "nameZh": "力、密度与压强",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "phy_equilibrium",
           "name": "Equilibrium of Forces",
+          "nameZh": "力的平衡",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_density_pressure",
           "name": "Density and Pressure",
+          "nameZh": "密度与压强",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_upthrust",
           "name": "Upthrust and Archimedes",
+          "nameZh": "浮力与阿基米德",
           "defaultOrder": 3
         }
       ],
@@ -222,26 +248,31 @@
     {
       "topicId": "phy_work_energy",
       "name": "Work, Energy and Power",
+      "nameZh": "功、能量与功率",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "phy_work",
           "name": "Work Done",
+          "nameZh": "做功",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_ke_pe",
           "name": "Kinetic and Potential Energy",
+          "nameZh": "动能与势能",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_energy_conservation",
           "name": "Conservation of Energy",
+          "nameZh": "能量守恒",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_power_efficiency",
           "name": "Power and Efficiency",
+          "nameZh": "功率与效率",
           "defaultOrder": 4
         }
       ],
@@ -263,26 +294,31 @@
     {
       "topicId": "phy_deformation",
       "name": "Deformation of Solids",
+      "nameZh": "固体形变",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "phy_hookes_law",
           "name": "Hooke's Law",
+          "nameZh": "胡克定律",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_stress_strain",
           "name": "Stress, Strain and Young Modulus",
+          "nameZh": "应力、应变与杨氏模量",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_elastic_plastic",
           "name": "Elastic and Plastic Behaviour",
+          "nameZh": "弹性与塑性行为",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_strain_energy",
           "name": "Elastic Strain Energy",
+          "nameZh": "弹性势能",
           "defaultOrder": 4
         }
       ],
@@ -296,21 +332,25 @@
     {
       "topicId": "phy_waves",
       "name": "Waves",
+      "nameZh": "波动",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "phy_progressive_waves",
           "name": "Progressive Waves",
+          "nameZh": "行波",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_wave_types",
           "name": "Transverse and Longitudinal Waves",
+          "nameZh": "横波与纵波",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_intensity",
           "name": "Wave Intensity",
+          "nameZh": "波强度",
           "defaultOrder": 3
         }
       ],
@@ -330,26 +370,31 @@
     {
       "topicId": "phy_waves__phy_superposition",
       "name": "Wave Phenomena and Superposition",
+      "nameZh": "波现象与叠加",
       "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "phy_em_spectrum",
           "name": "Electromagnetic Spectrum",
+          "nameZh": "电磁波谱",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_doppler",
           "name": "Doppler Effect",
+          "nameZh": "多普勒效应",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_superposition_principle",
           "name": "Principle of Superposition",
+          "nameZh": "叠加原理",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_interference",
           "name": "Two-Source Interference",
+          "nameZh": "双源干涉",
           "defaultOrder": 4
         }
       ],
@@ -371,21 +416,25 @@
     {
       "topicId": "phy_superposition",
       "name": "Superposition",
+      "nameZh": "波的叠加",
       "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "phy_diffraction",
           "name": "Diffraction",
+          "nameZh": "衍射",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_diffraction_grating",
           "name": "Diffraction Grating",
+          "nameZh": "衍射光栅",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_stationary_waves",
           "name": "Stationary Waves",
+          "nameZh": "驻波",
           "defaultOrder": 3
         }
       ],
@@ -398,21 +447,25 @@
     {
       "topicId": "phy_electricity",
       "name": "Current of Electricity",
+      "nameZh": "电流",
       "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "phy_current_charge",
           "name": "Electric Current and Charge",
+          "nameZh": "电流与电荷",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_pd_emf",
           "name": "Potential Difference and EMF",
+          "nameZh": "电势差与EMF",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_resistance_ohm",
           "name": "Resistance and Ohm's Law",
+          "nameZh": "电阻与欧姆定律",
           "defaultOrder": 3
         }
       ],
@@ -436,21 +489,25 @@
     {
       "topicId": "phy_electricity__phy_dc_circuits",
       "name": "Electrical Characteristics and Kirchhoff's Laws",
+      "nameZh": "电学特性与基尔霍夫定律",
       "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "phy_resistivity",
           "name": "Resistivity",
+          "nameZh": "电阻率",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_iv_characteristics",
           "name": "I-V Characteristics",
+          "nameZh": "I-V特性",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_kirchhoff",
           "name": "Kirchhoff's Laws",
+          "nameZh": "基尔霍夫定律",
           "defaultOrder": 3
         }
       ],
@@ -468,21 +525,25 @@
     {
       "topicId": "phy_dc_circuits",
       "name": "DC Circuits",
+      "nameZh": "直流电路",
       "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "phy_series_parallel",
           "name": "Series and Parallel Resistors",
+          "nameZh": "串并联电阻",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_potential_divider",
           "name": "Potential Dividers",
+          "nameZh": "分压器",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_internal_resistance",
           "name": "Internal Resistance",
+          "nameZh": "内阻",
           "defaultOrder": 3
         }
       ],
@@ -495,21 +556,25 @@
     {
       "topicId": "phy_circular",
       "name": "Motion in a Circle",
+      "nameZh": "圆周运动",
       "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "phy_angular_speed",
           "name": "Radian Measure and Angular Speed",
+          "nameZh": "弧度与角速度",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_centripetal_accel",
           "name": "Centripetal Acceleration",
+          "nameZh": "向心加速度",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_centripetal_force",
           "name": "Centripetal Force",
+          "nameZh": "向心力",
           "defaultOrder": 3
         }
       ],
@@ -532,26 +597,31 @@
     {
       "topicId": "phy_gravitation",
       "name": "Gravitational Fields",
+      "nameZh": "引力场",
       "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "phy_newton_gravitation",
           "name": "Newton's Law of Gravitation",
+          "nameZh": "牛顿引力定律",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_grav_field_strength",
           "name": "Gravitational Field Strength",
+          "nameZh": "引力场强度",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_grav_potential",
           "name": "Gravitational Potential",
+          "nameZh": "引力势",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_orbits",
           "name": "Orbital Motion",
+          "nameZh": "轨道运动",
           "defaultOrder": 4
         }
       ],
@@ -569,26 +639,31 @@
     {
       "topicId": "phy_oscillations",
       "name": "Oscillations",
+      "nameZh": "振动",
       "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "phy_shm",
           "name": "Simple Harmonic Motion",
+          "nameZh": "简谐运动",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_shm_energy",
           "name": "SHM Energy",
+          "nameZh": "SHM能量",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_damping",
           "name": "Damping",
+          "nameZh": "阻尼",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_resonance",
           "name": "Resonance",
+          "nameZh": "共振",
           "defaultOrder": 4
         }
       ],
@@ -602,31 +677,37 @@
     {
       "topicId": "phy_thermal",
       "name": "Thermal Physics and Ideal Gases",
+      "nameZh": "热学与理想气体",
       "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "phy_temperature",
           "name": "Temperature and Thermal Equilibrium",
+          "nameZh": "温度与热平衡",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_heat_capacity",
           "name": "Specific Heat and Latent Heat",
+          "nameZh": "比热与潜热",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_kinetic_theory",
           "name": "Kinetic Theory of Gases",
+          "nameZh": "气体动理论",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_ideal_gas",
           "name": "Ideal Gas Law",
+          "nameZh": "理想气体定律",
           "defaultOrder": 4
         },
         {
           "conceptId": "phy_internal_energy",
           "name": "Internal Energy and First Law",
+          "nameZh": "内能与第一定律",
           "defaultOrder": 5
         }
       ],
@@ -639,26 +720,31 @@
     {
       "topicId": "phy_electric_fields",
       "name": "Electric Fields",
+      "nameZh": "电场",
       "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "phy_coulomb",
           "name": "Coulomb's Law",
+          "nameZh": "库仑定律",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_e_field_strength",
           "name": "Electric Field Strength",
+          "nameZh": "电场强度",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_e_potential",
           "name": "Electric Potential",
+          "nameZh": "电势",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_field_analogy",
           "name": "Gravitational and Electric Field Analogy",
+          "nameZh": "引力场与电场类比",
           "defaultOrder": 4
         }
       ],
@@ -677,26 +763,31 @@
     {
       "topicId": "phy_capacitance",
       "name": "Capacitance",
+      "nameZh": "电容",
       "defaultOrder": 20,
       "conceptIds": [
         {
           "conceptId": "phy_capacitance_def",
           "name": "Capacitance",
+          "nameZh": "电容",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_capacitor_networks",
           "name": "Capacitors in Series and Parallel",
+          "nameZh": "串并联电容",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_capacitor_energy",
           "name": "Energy Stored in a Capacitor",
+          "nameZh": "电容储能",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_capacitor_discharge",
           "name": "Charging and Discharging",
+          "nameZh": "充放电",
           "defaultOrder": 4
         }
       ],
@@ -709,26 +800,31 @@
     {
       "topicId": "phy_magnetic_fields",
       "name": "Magnetic Fields",
+      "nameZh": "磁场",
       "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "phy_flux_density",
           "name": "Magnetic Flux Density",
+          "nameZh": "磁通密度",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_force_conductor",
           "name": "Force on a Current-Carrying Conductor",
+          "nameZh": "载流导线受力",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_force_charge",
           "name": "Force on a Moving Charge",
+          "nameZh": "运动电荷受力",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_fields_currents",
           "name": "Magnetic Fields Due to Currents",
+          "nameZh": "电流磁场",
           "defaultOrder": 4
         }
       ],
@@ -746,21 +842,25 @@
     {
       "topicId": "phy_induction",
       "name": "Electromagnetic Induction",
+      "nameZh": "电磁感应",
       "defaultOrder": 22,
       "conceptIds": [
         {
           "conceptId": "phy_flux_linkage",
           "name": "Magnetic Flux and Flux Linkage",
+          "nameZh": "磁通与磁链",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_faraday",
           "name": "Faraday's Law",
+          "nameZh": "法拉第定律",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_lenz",
           "name": "Lenz's Law",
+          "nameZh": "楞次定律",
           "defaultOrder": 3
         }
       ],
@@ -778,21 +878,25 @@
     {
       "topicId": "phy_ac",
       "name": "Alternating Currents",
+      "nameZh": "交流电",
       "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "phy_ac_rms",
           "name": "AC and RMS Values",
+          "nameZh": "交流电与RMS值",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_transformers",
           "name": "Transformers",
+          "nameZh": "变压器",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_rectification",
           "name": "Rectification",
+          "nameZh": "整流",
           "defaultOrder": 3
         }
       ],
@@ -805,26 +909,31 @@
     {
       "topicId": "phy_quantum",
       "name": "Quantum Physics",
+      "nameZh": "量子物理",
       "defaultOrder": 24,
       "conceptIds": [
         {
           "conceptId": "phy_photon",
           "name": "Photon Energy",
+          "nameZh": "光子能量",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_photoelectric",
           "name": "Photoelectric Effect",
+          "nameZh": "光电效应",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_wave_particle",
           "name": "Wave-Particle Duality",
+          "nameZh": "波粒二象性",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_energy_levels",
           "name": "Energy Levels and Line Spectra",
+          "nameZh": "能级与线光谱",
           "defaultOrder": 4
         }
       ],
@@ -842,31 +951,37 @@
     {
       "topicId": "phy_nuclear",
       "name": "Nuclear Physics",
+      "nameZh": "核物理",
       "defaultOrder": 25,
       "conceptIds": [
         {
           "conceptId": "phy_nuclear_structure",
           "name": "Atomic and Nuclear Structure",
+          "nameZh": "原子核结构",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_fundamental_particles",
           "name": "Fundamental Particles and Quarks",
+          "nameZh": "基本粒子与夸克",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_binding_energy",
           "name": "Mass Defect and Binding Energy",
+          "nameZh": "质量亏损与结合能",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_radioactive_decay",
           "name": "Radioactive Decay",
+          "nameZh": "放射性衰变",
           "defaultOrder": 4
         },
         {
           "conceptId": "phy_half_life",
           "name": "Half-Life",
+          "nameZh": "半衰期",
           "defaultOrder": 5
         }
       ],
@@ -877,26 +992,31 @@
     {
       "topicId": "phy_astro",
       "name": "Astronomy and Cosmology",
+      "nameZh": "天文学与宇宙学",
       "defaultOrder": 26,
       "conceptIds": [
         {
           "conceptId": "phy_luminosity",
           "name": "Luminosity and Radiant Flux Intensity",
+          "nameZh": "亮度与辐射通量",
           "defaultOrder": 1
         },
         {
           "conceptId": "phy_standard_candles",
           "name": "Standard Candles",
+          "nameZh": "标准烛光",
           "defaultOrder": 2
         },
         {
           "conceptId": "phy_stellar_radii",
           "name": "Stellar Radii",
+          "nameZh": "恒星半径",
           "defaultOrder": 3
         },
         {
           "conceptId": "phy_hubble",
           "name": "Hubble's Law and the Big Bang",
+          "nameZh": "哈勃定律与大爆炸",
           "defaultOrder": 4
         }
       ],

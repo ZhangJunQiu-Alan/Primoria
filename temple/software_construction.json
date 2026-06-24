@@ -20,7 +20,8 @@
       "kind": "topic",
       "name": "Software Construction Foundations and Specifications",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "软件构造基础与规约"
     },
     {
       "id": "c_mit6031_static_checking",
@@ -28,7 +29,8 @@
       "name": "Static Checking",
       "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Catching errors before run time through static type checking, contrasted with dynamic checking, to make bugs visible early and cheaply.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "静态检查"
     },
     {
       "id": "c_mit6031_immutability",
@@ -36,7 +38,8 @@
       "name": "Immutability",
       "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Designing types whose values cannot change after construction, eliminating aliasing bugs and making code easier to reason about and share safely.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "不可变性"
     },
     {
       "id": "c_mit6031_specs",
@@ -44,7 +47,8 @@
       "name": "Specifications",
       "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Contracts defining a method's behaviour through preconditions that clients must satisfy and postconditions the implementation guarantees in return.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "规格"
     },
     {
       "id": "c_mit6031_testing",
@@ -52,7 +56,8 @@
       "name": "Testing Strategies",
       "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Designing test suites systematically by partitioning the input space into equivalence classes and probing boundary values to expose defects.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "测试策略"
     },
     {
       "id": "c_mit6031_exceptions",
@@ -60,14 +65,16 @@
       "name": "Exceptions",
       "topic": "t_mit6031_fundamentals__t_mit6031_specifications",
       "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs.",
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "异常"
     },
     {
       "id": "t_mit6031_adt",
       "kind": "topic",
       "name": "Abstract Data Types",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "抽象数据类型"
     },
     {
       "id": "c_mit6031_adt_basics",
@@ -75,7 +82,8 @@
       "name": "ADT Concepts",
       "topic": "t_mit6031_adt",
       "description": "Abstract data types defined by their operations—creators, producers, observers, and mutators—rather than by their internal representation.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "ADT 概念"
     },
     {
       "id": "c_mit6031_rep_independence",
@@ -83,7 +91,8 @@
       "name": "Representation Independence",
       "topic": "t_mit6031_adt",
       "description": "Designing an ADT so clients depend only on its abstract specification, allowing the internal representation to change without breaking them.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "表示独立性"
     },
     {
       "id": "c_mit6031_rep_invariant",
@@ -91,7 +100,8 @@
       "name": "Rep Invariants",
       "topic": "t_mit6031_adt",
       "description": "A condition every valid object of a type must satisfy, checked to ensure the internal representation stays consistent.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "表示不变量"
     },
     {
       "id": "c_mit6031_abstraction_function",
@@ -99,14 +109,16 @@
       "name": "Abstraction Functions",
       "topic": "t_mit6031_adt",
       "description": "A mapping from an ADT's concrete representation to the abstract value it represents, defining the meaning of the implementation.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "抽象函数"
     },
     {
       "id": "t_mit6031_oop",
       "kind": "topic",
       "name": "Object-Oriented Programming",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "面向对象编程"
     },
     {
       "id": "c_mit6031_interfaces",
@@ -114,7 +126,8 @@
       "name": "Interfaces and Subtyping",
       "topic": "t_mit6031_oop",
       "description": "Interfaces specifying behaviour that multiple implementations provide, enabling subtype polymorphism where subtypes are substitutable for supertypes.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "接口与子类型"
     },
     {
       "id": "c_mit6031_equality",
@@ -122,7 +135,8 @@
       "name": "Equality",
       "topic": "t_mit6031_oop",
       "description": "Defining when two objects are equal, distinguishing observational equality of abstract values from reference identity, subject to consistency requirements.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "相等性"
     },
     {
       "id": "c_mit6031_recursive_data",
@@ -130,14 +144,16 @@
       "name": "Recursive Data Types",
       "topic": "t_mit6031_oop",
       "description": "Recursive data types defined in terms of themselves, such as immutable lists or trees, processed by recursion over their cases.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "递归数据类型"
     },
     {
       "id": "t_mit6031_concurrency",
       "kind": "topic",
       "name": "Concurrency",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "并发"
     },
     {
       "id": "c_mit6031_concurrency_intro",
@@ -145,7 +161,8 @@
       "name": "Concurrency Basics",
       "topic": "t_mit6031_concurrency",
       "description": "Concurrent execution via threads or processes, introducing interleaving, race conditions, and the central challenge of shared mutable state.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "并发基础"
     },
     {
       "id": "c_mit6031_thread_safety",
@@ -153,7 +170,8 @@
       "name": "Thread Safety",
       "topic": "t_mit6031_concurrency",
       "description": "Strategies ensuring correct behaviour under concurrent access, including confinement, immutability, and synchronisation of shared data.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "线程安全"
     },
     {
       "id": "c_mit6031_locks",
@@ -161,7 +179,8 @@
       "name": "Locks and Synchronization",
       "topic": "t_mit6031_concurrency",
       "description": "Coordinating threads with locks for mutual exclusion, and the risk of deadlock when threads acquire multiple locks in conflicting orders.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "锁与同步"
     },
     {
       "id": "c_mit6031_message_passing",
@@ -169,7 +188,8 @@
       "name": "Message Passing",
       "topic": "t_mit6031_concurrency",
       "description": "Concurrency where components communicate by sending messages through channels or queues instead of sharing mutable memory.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "消息传递"
     }
   ],
   "edges": [
