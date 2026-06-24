@@ -1,5 +1,6 @@
 import type { TutorProviderSettings } from "../types";
 import type { CourseContext, CourseContextTopic } from "../deepagent/course-kg-context";
+import { languageDirective } from "../deepagent/course-kg-context";
 import { invokeJson } from "./model-json";
 import { expectedBlockRange, IR_VERSION, PEDAGOGICAL_ROLES, TYPE_CODE_TO_BLOCK } from "./lesson-plan-ir";
 
@@ -25,6 +26,8 @@ export function buildPlannerPrompt(kg: CourseContext): string {
   const conceptIds = (kg.startTopic.concepts ?? []).map((c) => c.conceptId);
 
   return `You are Primoria's Lesson Planner. You design the STRUCTURE of one lesson for a knowledge-graph topic, as a compact tuple IR. You do NOT write block content — only a plan the compiler will expand.
+
+LANGUAGE: ${languageDirective(kg.language)}
 
 TOPIC: ${kg.startTopic.name} (${kg.startTopic.topicId})
 CONCEPTS (teach in this default order):
@@ -53,7 +56,7 @@ OUTPUT — a single compact JSON object, no indentation, no prose, no code fence
 Rules:
 - order is a strictly increasing integer starting at 1.
 - conceptIds must be drawn only from the VALID CONCEPT IDS above.
-- goal is a short phrase describing what the block teaches, in the topic's language.`;
+- goal is a short phrase describing what the block teaches, in the LANGUAGE specified above.`;
 }
 
 export type LessonPlannerInvoke = (args: { system: string; user: string }) => Promise<unknown>;

@@ -76,6 +76,10 @@ export const courses = pgTable(
     estimatedMinutes: integer("estimated_minutes").notNull(),
     anchorConceptId: text("anchor_concept_id"),
     graphId: text("graph_id"),
+    // Learner's content language (e.g. "zh", "en"), detected from their original
+    // topic prompt. Drives the language of generated lesson content; KG topic/
+    // concept names stay English for indexing.
+    language: text("language"),
     archivedAt: timestamp("archived_at", { withTimezone: true }),
     version: integer("version").notNull().default(1),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull(),

@@ -149,6 +149,7 @@ export type GenerateCourseInput = {
   courseId?: string;
   ownerId?: string;
   source?: "cold_start" | "profile";
+  language?: string | null;
 };
 
 function randomId(prefix: string) {
@@ -160,6 +161,7 @@ export type InitializeCourseOutlineInput = {
   topic: string;
   kgContext?: CourseContext;
   source?: "cold_start" | "profile";
+  language?: string | null;
 };
 
 export type InitializeCourseOutlineResult = {
@@ -186,7 +188,7 @@ export async function initializeCourseOutline(
   // fresh outline of planned (lazy) lessons spanning the remaining topics.
   let course = graphId ? await getCourseByGraph(ownerId, graphId) : undefined;
   const isNewCourse = !course;
-  if (!course) course = buildOutlineCourse({ topic: input.topic, kgContext: input.kgContext }, graphId);
+  if (!course) course = buildOutlineCourse({ topic: input.topic, kgContext: input.kgContext, language: input.language }, graphId);
 
   const ordered = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
   const firstLesson = (targetTopicId ? ordered.find((lesson) => lesson.topicId === targetTopicId) : undefined) ?? ordered[0];
@@ -262,6 +264,7 @@ function buildOutlineCourse(input: GenerateCourseInput, graphId: string | null):
     estimatedMinutes: 0,
     anchorConceptId: input.kgContext?.targetConceptId ?? null,
     graphId,
+    language: input.language ?? null,
     lessons: outline.map((t) => plannedLesson(t.topicId, t.name, t.order, now)),
     archivedAt: null,
     version: 1,

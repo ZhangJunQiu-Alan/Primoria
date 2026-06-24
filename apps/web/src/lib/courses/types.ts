@@ -198,6 +198,7 @@ export type Course = {
   estimatedMinutes: number;
   anchorConceptId?: string | null;
   graphId?: string | null;
+  language?: string | null;
   lessons: Lesson[];
   archivedAt?: number | null;
   version: number;

@@ -14,7 +14,21 @@ export type CourseContext = {
   startTopic: CourseContextTopic;
   targetConceptId: string | null;
   nextTopic: CourseContextTopic | null;
+  // Learner's content language (e.g. "zh", "en"), carried from the course so
+  // generated lesson prose matches the language of their original topic prompt.
+  language?: string | null;
 };
+
+// Explicit content-language directive for generation prompts. KG topic/concept
+// names are English for indexing, so prompts must NOT infer language from them —
+// they must follow the learner's detected language instead.
+export function languageDirective(language?: string | null): string {
+  const lang = (language ?? "").trim().toLowerCase();
+  if (/^zh\b|^zh[-_]|chinese|中文/.test(lang)) {
+    return "Write ALL learner-facing content (titles, prose, questions, explanations) in Simplified Chinese (简体中文). The topic and concept names below are in English for indexing only — do NOT let them dictate the output language. Keep code, symbols, and standard technical terms as-is.";
+  }
+  return "Write ALL learner-facing content in English.";
+}
 
 // Compact knowledge-graph hint appended to the lesson prompt: the start topic's
 // concepts (with default order), an optional target concept to emphasize, and
