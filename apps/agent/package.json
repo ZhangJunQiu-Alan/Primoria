@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "if [ -f .env ]; then set -a; . ./.env; set +a; fi; langgraphjs dev",
+    "dev": "if [ -f .env ]; then set -a; . ./.env; set +a; fi; langgraphjs dev --no-browser",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
