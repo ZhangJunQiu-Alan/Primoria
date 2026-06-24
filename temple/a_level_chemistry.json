@@ -107,10 +107,10 @@
     {
       "id": "che_bonding_part1",
       "kind": "topic",
-      "name": "Chemical Bonding (Part 1)",
+      "name": "Chemical Bonding: Types of Bonds",
       "topic": null,
       "default_order": 3,
-      "name_zh": "化学键 (第一部分)"
+      "name_zh": "化学键：成键类型"
     },
     {
       "id": "che_ionic",
@@ -142,10 +142,10 @@
     {
       "id": "che_bonding_part2",
       "kind": "topic",
-      "name": "Chemical Bonding (Part 2)",
+      "name": "Chemical Bonding: Shapes and Intermolecular Forces",
       "topic": null,
       "default_order": 4,
-      "name_zh": "化学键 (第二部分)"
+      "name_zh": "化学键：分子形状与分子间作用力"
     },
     {
       "id": "che_vsepr",
@@ -175,7 +175,7 @@
       "name_zh": "分子间作用力"
     },
     {
-      "id": "che_states__che_energetics",
+      "id": "che_states_enthalpy",
       "kind": "topic",
       "name": "States of Matter and Enthalpy",
       "topic": null,
@@ -186,7 +186,7 @@
       "id": "che_gas_laws",
       "kind": "concept",
       "name": "Ideal Gas Behaviour",
-      "topic": "che_states__che_energetics",
+      "topic": "che_states_enthalpy",
       "description": "The behaviour of ideal gases described by the equation pV equals nRT, relating pressure, volume, temperature, and amount of gas.",
       "default_order": 1,
       "name_zh": "理想气体"
@@ -195,7 +195,7 @@
       "id": "che_solids",
       "kind": "concept",
       "name": "Solid Structures",
-      "topic": "che_states__che_energetics",
+      "topic": "che_states_enthalpy",
       "description": "Giant ionic, giant covalent, simple molecular, and metallic solid structures, whose bonding and arrangement determine their physical properties.",
       "default_order": 2,
       "name_zh": "固体结构"
@@ -204,7 +204,7 @@
       "id": "che_enthalpy",
       "kind": "concept",
       "name": "Enthalpy Changes",
-      "topic": "che_states__che_energetics",
+      "topic": "che_states_enthalpy",
       "description": "Enthalpy changes of reactions measured at constant pressure, including standard enthalpies of formation, combustion, and reaction.",
       "default_order": 3,
       "name_zh": "焓变"
@@ -247,10 +247,10 @@
     {
       "id": "che_kinetics_part1",
       "kind": "topic",
-      "name": "Reaction Kinetics (Part 1)",
+      "name": "Reaction Kinetics: Rates and Collision Theory",
       "topic": null,
       "default_order": 7,
-      "name_zh": "反应动力学 (第一部分)"
+      "name_zh": "反应动力学：速率与碰撞理论"
     },
     {
       "id": "che_rate",
@@ -282,10 +282,10 @@
     {
       "id": "che_kinetics_part2",
       "kind": "topic",
-      "name": "Reaction Kinetics (Part 2)",
+      "name": "Reaction Kinetics: Rate Equations and Catalysis",
       "topic": null,
       "default_order": 8,
-      "name_zh": "反应动力学 (第二部分)"
+      "name_zh": "反应动力学：速率方程与催化"
     },
     {
       "id": "che_catalysis",
@@ -315,7 +315,7 @@
       "name_zh": "速控步"
     },
     {
-      "id": "che_equilibrium__che_acids",
+      "id": "che_equilibria_acidbase",
       "kind": "topic",
       "name": "Equilibria and Acid-Base Foundations",
       "topic": null,
@@ -326,7 +326,7 @@
       "id": "che_dynamic_eq",
       "kind": "concept",
       "name": "Dynamic Equilibrium",
-      "topic": "che_equilibrium__che_acids",
+      "topic": "che_equilibria_acidbase",
       "description": "Dynamic equilibrium in a closed system where the forward and reverse reactions proceed at equal rates and concentrations remain constant.",
       "default_order": 1,
       "name_zh": "动态平衡"
@@ -335,7 +335,7 @@
       "id": "che_le_chatelier",
       "kind": "concept",
       "name": "Le Chatelier's Principle",
-      "topic": "che_equilibrium__che_acids",
+      "topic": "che_equilibria_acidbase",
       "description": "Le Chatelier's principle predicting how an equilibrium position shifts to oppose changes in concentration, pressure, or temperature.",
       "default_order": 2,
       "name_zh": "勒夏特列原理"
@@ -344,7 +344,7 @@
       "id": "che_kc_kp",
       "kind": "concept",
       "name": "Equilibrium Constants Kc and Kp",
-      "topic": "che_equilibrium__che_acids",
+      "topic": "che_equilibria_acidbase",
       "description": "Equilibrium constants Kc and Kp expressing the position of equilibrium in terms of concentrations or partial pressures at a given temperature.",
       "default_order": 3,
       "name_zh": "平衡常数 Kc 与 Kp"
@@ -353,7 +353,7 @@
       "id": "che_bronsted",
       "kind": "concept",
       "name": "Brønsted-Lowry Theory",
-      "topic": "che_equilibrium__che_acids",
+      "topic": "che_equilibria_acidbase",
       "description": "The Brønsted-Lowry theory defining acids as proton donors and bases as proton acceptors, related through conjugate acid-base pairs.",
       "default_order": 4,
       "name_zh": "布朗斯特-洛瑞理论"
@@ -438,7 +438,7 @@
       "name_zh": "电极电势"
     },
     {
-      "id": "che_redox__che_thermodynamics",
+      "id": "che_electrochem_thermo",
       "kind": "topic",
       "name": "Electrochemistry and Thermodynamic Cycles",
       "topic": null,
@@ -449,7 +449,7 @@
       "id": "che_cells",
       "kind": "concept",
       "name": "Electrochemical Cells",
-      "topic": "che_redox__che_thermodynamics",
+      "topic": "che_electrochem_thermo",
       "description": "Electrochemical cells generating an EMF from two half-cells, with the cell potential calculated from standard electrode potentials.",
       "default_order": 1,
       "name_zh": "电化学电池"
@@ -458,7 +458,7 @@
       "id": "che_electrolysis",
       "kind": "concept",
       "name": "Electrolysis",
-      "topic": "che_redox__che_thermodynamics",
+      "topic": "che_electrochem_thermo",
       "description": "The decomposition of molten or aqueous compounds by passing electricity, with products predicted from electrode reactions and Faraday's laws.",
       "default_order": 2,
       "name_zh": "电解"
@@ -467,7 +467,7 @@
       "id": "che_born_haber",
       "kind": "concept",
       "name": "Lattice Energy and Born-Haber Cycles",
-      "topic": "che_redox__che_thermodynamics",
+      "topic": "che_electrochem_thermo",
       "description": "Born-Haber cycles applying Hess's law to determine lattice energy from enthalpies of formation, atomisation, ionisation, and electron affinity.",
       "default_order": 3,
       "name_zh": "晶格能与玻恩-哈伯循环"
@@ -476,13 +476,13 @@
       "id": "che_entropy",
       "kind": "concept",
       "name": "Entropy",
-      "topic": "che_redox__che_thermodynamics",
+      "topic": "che_electrochem_thermo",
       "description": "Entropy as a measure of the disorder of a system, with spontaneous change tending toward increased total entropy.",
       "default_order": 4,
       "name_zh": "熵"
     },
     {
-      "id": "che_thermodynamics__che_periodicity",
+      "id": "che_free_energy_periodicity",
       "kind": "topic",
       "name": "Free Energy and Periodicity",
       "topic": null,
@@ -493,7 +493,7 @@
       "id": "che_gibbs",
       "kind": "concept",
       "name": "Gibbs Free Energy",
-      "topic": "che_thermodynamics__che_periodicity",
+      "topic": "che_free_energy_periodicity",
       "description": "Gibbs free energy combining enthalpy and entropy, where a negative value of ΔG indicates a thermodynamically feasible reaction.",
       "default_order": 1,
       "name_zh": "吉布斯自由能"
@@ -502,7 +502,7 @@
       "id": "che_periodic_trends",
       "kind": "concept",
       "name": "Periodic Trends",
-      "topic": "che_thermodynamics__che_periodicity",
+      "topic": "che_free_energy_periodicity",
       "description": "Trends across periods and down groups in atomic radius, ionisation energy, and electronegativity, explained by nuclear charge and shielding.",
       "default_order": 2,
       "name_zh": "周期趋势"
@@ -511,7 +511,7 @@
       "id": "che_period3",
       "kind": "concept",
       "name": "Period 3 Elements and Oxides",
-      "topic": "che_thermodynamics__che_periodicity",
+      "topic": "che_free_energy_periodicity",
       "description": "The properties of Period 3 elements and their oxides and chlorides, showing the trend from metallic to covalent character.",
       "default_order": 3,
       "name_zh": "第3周期元素与氧化物"
@@ -666,7 +666,7 @@
       "name_zh": "加聚反应"
     },
     {
-      "id": "che_halogenoalkanes__che_alcohols",
+      "id": "che_halogenoalkanes_alcohols",
       "kind": "topic",
       "name": "Halogenoalkanes and Alcohols",
       "topic": null,
@@ -677,7 +677,7 @@
       "id": "che_nucleophilic_sub",
       "kind": "concept",
       "name": "Nucleophilic Substitution",
-      "topic": "che_halogenoalkanes__che_alcohols",
+      "topic": "che_halogenoalkanes_alcohols",
       "description": "Nucleophilic substitution of halogenoalkanes, proceeding by SN1 or SN2 mechanisms in which a nucleophile replaces the halogen.",
       "default_order": 1,
       "name_zh": "亲核取代"
@@ -686,7 +686,7 @@
       "id": "che_elimination",
       "kind": "concept",
       "name": "Elimination Reactions",
-      "topic": "che_halogenoalkanes__che_alcohols",
+      "topic": "che_halogenoalkanes_alcohols",
       "description": "Elimination reactions of halogenoalkanes removing a hydrogen halide to form an alkene, competing with nucleophilic substitution.",
       "default_order": 2,
       "name_zh": "消去反应"
@@ -695,7 +695,7 @@
       "id": "che_alcohol_reactions",
       "kind": "concept",
       "name": "Alcohols and Their Reactions",
-      "topic": "che_halogenoalkanes__che_alcohols",
+      "topic": "che_halogenoalkanes_alcohols",
       "description": "The reactions of alcohols, including combustion, substitution to halogenoalkanes, dehydration to alkenes, and esterification.",
       "default_order": 3,
       "name_zh": "醇的反应"
@@ -704,7 +704,7 @@
       "id": "che_alcohol_oxidation",
       "kind": "concept",
       "name": "Oxidation of Alcohols",
-      "topic": "che_halogenoalkanes__che_alcohols",
+      "topic": "che_halogenoalkanes_alcohols",
       "description": "The oxidation of primary alcohols to aldehydes and carboxylic acids and secondary alcohols to ketones, with tertiary alcohols resistant.",
       "default_order": 4,
       "name_zh": "醇的氧化"
@@ -780,7 +780,7 @@
       "name_zh": "缩聚反应"
     },
     {
-      "id": "che_arenes__che_analysis",
+      "id": "che_arenes_mass_spec",
       "kind": "topic",
       "name": "Arenes and Mass Spectrometry",
       "topic": null,
@@ -791,7 +791,7 @@
       "id": "che_benzene",
       "kind": "concept",
       "name": "Benzene Structure",
-      "topic": "che_arenes__che_analysis",
+      "topic": "che_arenes_mass_spec",
       "description": "The structure of benzene as a planar ring with delocalised pi electrons, explaining its stability and resistance to addition reactions.",
       "default_order": 1,
       "name_zh": "苯的结构"
@@ -800,7 +800,7 @@
       "id": "che_electrophilic_sub",
       "kind": "concept",
       "name": "Electrophilic Substitution",
-      "topic": "che_arenes__che_analysis",
+      "topic": "che_arenes_mass_spec",
       "description": "Electrophilic substitution of arenes, including nitration and halogenation, in which an electrophile replaces a ring hydrogen.",
       "default_order": 2,
       "name_zh": "亲电取代"
@@ -809,7 +809,7 @@
       "id": "che_mass_spec",
       "kind": "concept",
       "name": "Mass Spectrometry",
-      "topic": "che_arenes__che_analysis",
+      "topic": "che_arenes_mass_spec",
       "description": "Mass spectrometry determining relative molecular mass and structure from the mass-to-charge ratios of ionised molecular fragments.",
       "default_order": 3,
       "name_zh": "质谱分析"

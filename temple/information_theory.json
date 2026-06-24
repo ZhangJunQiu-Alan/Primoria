@@ -51,7 +51,7 @@
       "name_zh": "互信息"
     },
     {
-      "id": "t_infotheory_basics__t_infotheory_source_coding",
+      "id": "t_infotheory_measures_typicality",
       "kind": "topic",
       "name": "Information Measures and Typicality",
       "topic": null,
@@ -62,7 +62,7 @@
       "id": "c_infotheory_kl_divergence",
       "kind": "concept",
       "name": "Kullback-Leibler Divergence",
-      "topic": "t_infotheory_basics__t_infotheory_source_coding",
+      "topic": "t_infotheory_measures_typicality",
       "description": "Kullback-Leibler divergence, the relative entropy measuring the inefficiency of assuming one distribution when another is true; non-negative and asymmetric.",
       "default_order": 1,
       "name_zh": "KL 散度"
@@ -71,7 +71,7 @@
       "id": "c_infotheory_data_processing",
       "kind": "concept",
       "name": "Data Processing Inequality",
-      "topic": "t_infotheory_basics__t_infotheory_source_coding",
+      "topic": "t_infotheory_measures_typicality",
       "description": "The data-processing inequality stating that processing a signal cannot increase the mutual information it carries about a source.",
       "default_order": 2,
       "name_zh": "数据处理不等式"
@@ -80,7 +80,7 @@
       "id": "c_infotheory_aep",
       "kind": "concept",
       "name": "Asymptotic Equipartition Property",
-      "topic": "t_infotheory_basics__t_infotheory_source_coding",
+      "topic": "t_infotheory_measures_typicality",
       "description": "The asymptotic equipartition property, showing long sequences fall into a typical set of nearly equal probability, underpinning the coding theorems.",
       "default_order": 3,
       "name_zh": "渐近等分特性"

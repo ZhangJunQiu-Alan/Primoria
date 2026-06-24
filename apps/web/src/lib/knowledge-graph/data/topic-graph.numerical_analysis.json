@@ -44,7 +44,7 @@
           "hard": true
         },
         {
-          "topicId": "t_mit18330_integration__t_mit18330_odes",
+          "topicId": "t_mit18330_integration_odes",
           "hard": true
         }
       ],
@@ -145,7 +145,7 @@
       ],
       "successors": [
         {
-          "topicId": "t_mit18330_integration__t_mit18330_odes",
+          "topicId": "t_mit18330_integration_odes",
           "hard": true
         }
       ],
@@ -156,7 +156,7 @@
       "isRoot": false
     },
     {
-      "topicId": "t_mit18330_integration__t_mit18330_odes",
+      "topicId": "t_mit18330_integration_odes",
       "name": "Numerical Integration and Differential Equations",
       "nameZh": "数值积分与微分方程",
       "defaultOrder": 5,

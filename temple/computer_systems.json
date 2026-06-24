@@ -78,7 +78,7 @@
       "name_zh": "浮点数表示"
     },
     {
-      "id": "t1__t2",
+      "id": "t_float_machine_ops",
       "kind": "topic",
       "name": "Floating-Point and Machine-Level Operations",
       "topic": null,
@@ -88,7 +88,7 @@
     {
       "id": "c1_5",
       "name": "Floating Point Operations",
-      "topic": "t1__t2",
+      "topic": "t_float_machine_ops",
       "kind": "concept",
       "default_order": 1,
       "description": "Arithmetic on IEEE 754 values, where results are rounded to representable numbers, making operations non-associative and introducing rounding error and special-case behaviour.",
@@ -97,7 +97,7 @@
     {
       "id": "c2_1",
       "name": "x86-64 Data Movement",
-      "topic": "t1__t2",
+      "topic": "t_float_machine_ops",
       "kind": "concept",
       "default_order": 2,
       "description": "x86-64 instructions that move data between registers and memory, using addressing modes and operand sizes to load, store, and copy machine words.",
@@ -106,7 +106,7 @@
     {
       "id": "c2_2",
       "name": "Arithmetic and Logical Operations",
-      "topic": "t1__t2",
+      "topic": "t_float_machine_ops",
       "kind": "concept",
       "default_order": 3,
       "description": "x86-64 instructions performing integer arithmetic, bitwise logic, and shifts on registers and memory, updating condition-code flags used by later conditional instructions.",
@@ -115,14 +115,14 @@
     {
       "id": "c2_3",
       "name": "Control Flow (Conditionals and Loops)",
-      "topic": "t1__t2",
+      "topic": "t_float_machine_ops",
       "kind": "concept",
       "default_order": 4,
       "description": "Implementing conditionals and loops in assembly using condition-code flags, conditional jumps, and comparison instructions to direct the processor's instruction stream.",
       "name_zh": "控制流"
     },
     {
-      "id": "t2__t3",
+      "id": "t_procedures_arch",
       "kind": "topic",
       "name": "Procedures and Processor Architecture",
       "topic": null,
@@ -132,7 +132,7 @@
     {
       "id": "c2_4",
       "name": "Procedures and Call Stack",
-      "topic": "t2__t3",
+      "topic": "t_procedures_arch",
       "kind": "concept",
       "default_order": 1,
       "description": "How procedures are called using the runtime stack to pass arguments, save return addresses, allocate local storage, and follow register-saving conventions.",
@@ -141,7 +141,7 @@
     {
       "id": "c2_5",
       "name": "Arrays and Structs",
-      "topic": "t2__t3",
+      "topic": "t_procedures_arch",
       "kind": "concept",
       "default_order": 2,
       "description": "The memory layout of arrays and structures, including element addressing arithmetic, field offsets, and alignment requirements imposed by the architecture.",
@@ -150,7 +150,7 @@
     {
       "id": "c3_1",
       "name": "Instruction Set Architecture (Y86-64)",
-      "topic": "t2__t3",
+      "topic": "t_procedures_arch",
       "kind": "concept",
       "default_order": 3,
       "description": "The Y86-64 instruction set, a simplified teaching ISA defining registers, instruction encodings, and semantics used to study processor implementation.",
@@ -159,7 +159,7 @@
     {
       "id": "c3_2",
       "name": "Sequential CPU Implementation",
-      "topic": "t2__t3",
+      "topic": "t_procedures_arch",
       "kind": "concept",
       "default_order": 4,
       "description": "A sequential processor design executing each instruction through fetch, decode, execute, memory, and write-back stages within a single clock cycle.",
@@ -236,7 +236,7 @@
       "name_zh": "指令级并行"
     },
     {
-      "id": "t4__t5",
+      "id": "t_optimization_locality",
       "kind": "topic",
       "name": "Optimization and Memory Locality",
       "topic": null,
@@ -246,7 +246,7 @@
     {
       "id": "c4_4",
       "name": "Memory Aliasing",
-      "topic": "t4__t5",
+      "topic": "t_optimization_locality",
       "kind": "concept",
       "default_order": 1,
       "description": "When two pointers may reference the same memory location, forcing the compiler to preserve memory accesses and preventing certain optimisations.",
@@ -255,7 +255,7 @@
     {
       "id": "c4_5",
       "name": "Profiling Tools",
-      "topic": "t4__t5",
+      "topic": "t_optimization_locality",
       "kind": "concept",
       "default_order": 2,
       "description": "Tools that measure where a program spends time, identifying performance bottlenecks so optimisation effort targets the most costly code paths.",
@@ -264,7 +264,7 @@
     {
       "id": "c5_1",
       "name": "Storage Technologies",
-      "topic": "t4__t5",
+      "topic": "t_optimization_locality",
       "kind": "concept",
       "default_order": 3,
       "description": "Characteristics and trends of storage technologies such as SRAM, DRAM, disks, and SSDs, differing in speed, capacity, volatility, and cost per byte.",
@@ -273,7 +273,7 @@
     {
       "id": "c5_2",
       "name": "Principle of Locality",
-      "topic": "t4__t5",
+      "topic": "t_optimization_locality",
       "kind": "concept",
       "default_order": 4,
       "description": "Programs tend to reuse recently accessed data (temporal locality) and nearby data (spatial locality), a behaviour that caching exploits to improve performance.",
@@ -350,7 +350,7 @@
       "name_zh": "符号解析"
     },
     {
-      "id": "t6__t7",
+      "id": "t_linking_processes",
       "kind": "topic",
       "name": "Linking, Exceptions and Processes",
       "topic": null,
@@ -360,7 +360,7 @@
     {
       "id": "c6_4",
       "name": "Relocation",
-      "topic": "t6__t7",
+      "topic": "t_linking_processes",
       "kind": "concept",
       "default_order": 1,
       "description": "The linker step that assigns final run-time addresses to merged sections and patches symbol references to point at those addresses.",
@@ -369,7 +369,7 @@
     {
       "id": "c6_5",
       "name": "Dynamic Linking",
-      "topic": "t6__t7",
+      "topic": "t_linking_processes",
       "kind": "concept",
       "default_order": 2,
       "description": "Deferring symbol resolution to load or run time by linking against shared libraries, reducing executable size and enabling code sharing.",
@@ -378,7 +378,7 @@
     {
       "id": "c7_1",
       "name": "Exceptions (Traps, Interrupts, Faults)",
-      "topic": "t6__t7",
+      "topic": "t_linking_processes",
       "kind": "concept",
       "default_order": 3,
       "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel.",
@@ -387,7 +387,7 @@
     {
       "id": "c7_2",
       "name": "Processes and Context Switches",
-      "topic": "t6__t7",
+      "topic": "t_linking_processes",
       "kind": "concept",
       "default_order": 4,
       "description": "The process abstraction giving each program a private address space and logical control flow, switched by the kernel saving and restoring context.",
@@ -464,7 +464,7 @@
       "name_zh": "地址转换后备缓冲器（TLB）"
     },
     {
-      "id": "t8__t9",
+      "id": "t_memmgmt_unixio",
       "kind": "topic",
       "name": "Memory Management and Unix I/O",
       "topic": null,
@@ -474,7 +474,7 @@
     {
       "id": "c8_4",
       "name": "Dynamic Memory Allocation",
-      "topic": "t8__t9",
+      "topic": "t_memmgmt_unixio",
       "kind": "concept",
       "default_order": 1,
       "description": "Managing heap memory at run time with allocators like malloc and free, balancing throughput, fragmentation, and memory utilisation.",
@@ -483,7 +483,7 @@
     {
       "id": "c8_5",
       "name": "Garbage Collection Basics",
-      "topic": "t8__t9",
+      "topic": "t_memmgmt_unixio",
       "kind": "concept",
       "default_order": 2,
       "description": "Automatic reclamation of unreachable heap memory by tracing or counting references, freeing the programmer from explicit deallocation.",
@@ -492,7 +492,7 @@
     {
       "id": "c9_1",
       "name": "Unix I/O",
-      "topic": "t8__t9",
+      "topic": "t_memmgmt_unixio",
       "kind": "concept",
       "default_order": 3,
       "description": "The Unix model treating files, devices, and sockets uniformly through descriptors and the open, read, write, and close system calls.",
@@ -501,7 +501,7 @@
     {
       "id": "c9_2",
       "name": "File Metadata",
-      "topic": "t8__t9",
+      "topic": "t_memmgmt_unixio",
       "kind": "concept",
       "default_order": 4,
       "description": "Information about a file stored separately from its contents, such as size, permissions, and timestamps, accessed via the stat system call.",
@@ -578,7 +578,7 @@
       "name_zh": "TCP协议"
     },
     {
-      "id": "t10__t11",
+      "id": "t_network_concurrency",
       "kind": "topic",
       "name": "Network and Concurrent Programming",
       "topic": null,
@@ -588,7 +588,7 @@
     {
       "id": "c10_4",
       "name": "Sockets Interface",
-      "topic": "t10__t11",
+      "topic": "t_network_concurrency",
       "kind": "concept",
       "default_order": 1,
       "description": "The API for network programming that abstracts connections as file descriptors, with calls such as socket, bind, listen, connect, and accept.",
@@ -597,7 +597,7 @@
     {
       "id": "c10_5",
       "name": "HTTP Protocol Basics",
-      "topic": "t10__t11",
+      "topic": "t_network_concurrency",
       "kind": "concept",
       "default_order": 2,
       "description": "The application-layer request-response protocol underlying the web, using methods, headers, and status codes to transfer resources over TCP.",
@@ -606,7 +606,7 @@
     {
       "id": "c11_1",
       "name": "Thread Basics",
-      "topic": "t10__t11",
+      "topic": "t_network_concurrency",
       "kind": "concept",
       "default_order": 3,
       "description": "Threads as independent logical flows sharing a process's address space, created and joined to achieve concurrency within a single process.",
@@ -615,7 +615,7 @@
     {
       "id": "c11_2",
       "name": "Shared Variables",
-      "topic": "t10__t11",
+      "topic": "t_network_concurrency",
       "kind": "concept",
       "default_order": 4,
       "description": "How threads share global and heap variables, and the memory model determining when one thread's writes become visible to others.",

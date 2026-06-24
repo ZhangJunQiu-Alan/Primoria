@@ -499,7 +499,7 @@
       "name_zh": "Kruskal 算法"
     },
     {
-      "id": "t_ucb61b_spatial__t_ucb61b_tries",
+      "id": "t_ucb61b_spatial_string_indexes",
       "kind": "topic",
       "name": "Spatial and String Indexes",
       "topic": null,
@@ -510,7 +510,7 @@
       "id": "c_ucb61b_1d_range_search",
       "kind": "concept",
       "name": "1D Range Searching",
-      "topic": "t_ucb61b_spatial__t_ucb61b_tries",
+      "topic": "t_ucb61b_spatial_string_indexes",
       "description": "Finding all points within a 1-dimensional bounded range efficiently using a standard BST.",
       "default_order": 1,
       "name_zh": "一维范围查询"
@@ -519,7 +519,7 @@
       "id": "c_ucb61b_kd_trees",
       "kind": "concept",
       "name": "K-D Trees",
-      "topic": "t_ucb61b_spatial__t_ucb61b_tries",
+      "topic": "t_ucb61b_spatial_string_indexes",
       "description": "Multi-dimensional spatial partitioning trees where each level discriminates along an alternating spatial axis.",
       "default_order": 2,
       "name_zh": "K-D 树"
@@ -528,7 +528,7 @@
       "id": "c_ucb61b_trie_basics",
       "kind": "concept",
       "name": "Trie Structure",
-      "topic": "t_ucb61b_spatial__t_ucb61b_tries",
+      "topic": "t_ucb61b_spatial_string_indexes",
       "description": "A character-based prefix tree structure offering fast multi-way branches for string storage and retrieval.",
       "default_order": 3,
       "name_zh": "Trie 结构"
@@ -537,7 +537,7 @@
       "id": "c_ucb61b_trie_string_ops",
       "kind": "concept",
       "name": "Trie String Operations",
-      "topic": "t_ucb61b_spatial__t_ucb61b_tries",
+      "topic": "t_ucb61b_spatial_string_indexes",
       "description": "Algorithms traversing the trie for operations like longest prefix matching and auto-complete collection.",
       "default_order": 4,
       "name_zh": "Trie 字符串操作"

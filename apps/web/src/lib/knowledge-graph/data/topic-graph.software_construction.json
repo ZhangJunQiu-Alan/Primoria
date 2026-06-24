@@ -6,7 +6,7 @@
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
-      "topicId": "t_mit6031_fundamentals__t_mit6031_specifications",
+      "topicId": "t_mit6031_foundations_specs",
       "name": "Software Construction Foundations and Specifications",
       "nameZh": "软件构造基础与规约",
       "defaultOrder": 1,
@@ -93,7 +93,7 @@
         }
       ],
       "prereqTopics": [
-        "t_mit6031_fundamentals__t_mit6031_specifications"
+        "t_mit6031_foundations_specs"
       ],
       "isRoot": false
     },

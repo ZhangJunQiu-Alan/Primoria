@@ -19,10 +19,10 @@
     {
       "id": "ai_search_part1",
       "kind": "topic",
-      "name": "Search (Part 1)",
+      "name": "Search: Uninformed and Heuristics",
       "topic": null,
       "default_order": 1,
-      "name_zh": "搜索 (第一部分)"
+      "name_zh": "搜索：无信息搜索与启发式"
     },
     {
       "id": "ai_search_problem",
@@ -54,10 +54,10 @@
     {
       "id": "ai_search_part2",
       "kind": "topic",
-      "name": "Search (Part 2)",
+      "name": "Search: Informed and Adversarial",
       "topic": null,
       "default_order": 2,
-      "name_zh": "搜索 (第二部分)"
+      "name_zh": "搜索：有信息与对抗搜索"
     },
     {
       "id": "ai_informed",
@@ -307,7 +307,7 @@
       "name_zh": "前向算法"
     },
     {
-      "id": "ai_markov_models__ai_ml",
+      "id": "ai_inference_naive_bayes",
       "kind": "topic",
       "name": "Probabilistic Inference and Naive Bayes",
       "topic": null,
@@ -318,7 +318,7 @@
       "id": "ai_viterbi",
       "kind": "concept",
       "name": "Viterbi Algorithm",
-      "topic": "ai_markov_models__ai_ml",
+      "topic": "ai_inference_naive_bayes",
       "description": "The Viterbi algorithm using dynamic programming to find the single most likely sequence of hidden states given an observation sequence.",
       "default_order": 1,
       "name_zh": "维特比算法"
@@ -327,7 +327,7 @@
       "id": "ai_particle",
       "kind": "concept",
       "name": "Particle Filtering",
-      "topic": "ai_markov_models__ai_ml",
+      "topic": "ai_inference_naive_bayes",
       "description": "Particle filtering approximating the belief over states with weighted samples, propagated and resampled to track distributions in large state spaces.",
       "default_order": 2,
       "name_zh": "粒子滤波"
@@ -336,7 +336,7 @@
       "id": "ai_naive_bayes",
       "kind": "concept",
       "name": "Naive Bayes",
-      "topic": "ai_markov_models__ai_ml",
+      "topic": "ai_inference_naive_bayes",
       "description": "A simple probabilistic classifier applying Bayes' rule under the assumption that features are conditionally independent given the class label.",
       "default_order": 3,
       "name_zh": "朴素贝叶斯"

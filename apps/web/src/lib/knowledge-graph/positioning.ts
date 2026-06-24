@@ -9,8 +9,8 @@ import { type KgLanguage, localizeConcepts, resolveKgDisplayName } from "./displ
 // topic, and route to one of three behaviours:
 //   - specific: one topic holds most of the mass (or a single concept clearly
 //     dominates) -> build that topic + the next topic as a 2-lesson linear path.
-//   - broad: mass is spread across topics -> return a menu of hit topics ordered
-//     by default_order (the recommended learning order) for the user to pick.
+//   - broad: mass is spread across topics -> return a relevance-filtered menu of
+//     hit topics for the user to pick.
 //   - fallback: nothing is relevant enough -> ask for a more specific goal.
 //
 // Two intuitive tunables (TAU/FLOOR) drive the boundaries and are meant to be
@@ -23,6 +23,10 @@ export const DEFAULT_KG_POSITION_TEMPERATURE = 0.1;
 export const DEFAULT_KG_POSITION_CONCEPT_HIGH_FLOOR = 0.5; // a concept "clearly high"
 export const DEFAULT_KG_POSITION_CONCEPT_MARGIN = 0.06; // gap over 2nd concept
 export const DEFAULT_KG_BROAD_MENU_SIZE = 5;
+export const DEFAULT_KG_BROAD_MENU_SIMILARITY_WINDOW = 0.1;
+
+const DOMINANT_GRAPH_HIT_WEIGHTS = [1, 0.35, 0.15] as const;
+const A_LEVEL_TOP_HIT_TIE_MARGIN = 0.01;
 
 export type PositioningParams = {
   tau: number;
@@ -31,6 +35,7 @@ export type PositioningParams = {
   conceptHighFloor: number;
   conceptMargin: number;
   menuSize: number;
+  menuSimilarityWindow: number;
 };
 
 export type PositioningBranch = "specific" | "broad" | "fallback";
@@ -87,6 +92,9 @@ export function resolvePositioningParams(overrides: Partial<PositioningParams> =
     conceptHighFloor: overrides.conceptHighFloor ?? DEFAULT_KG_POSITION_CONCEPT_HIGH_FLOOR,
     conceptMargin: overrides.conceptMargin ?? DEFAULT_KG_POSITION_CONCEPT_MARGIN,
     menuSize: overrides.menuSize ?? DEFAULT_KG_BROAD_MENU_SIZE,
+    menuSimilarityWindow:
+      overrides.menuSimilarityWindow
+      ?? env("KG_BROAD_MENU_SIMILARITY_WINDOW", DEFAULT_KG_BROAD_MENU_SIMILARITY_WINDOW),
   };
 }
 
@@ -136,59 +144,51 @@ function buildLinearPath(
   return { startTopicId, targetConceptId, linear: path.length > 1, path };
 }
 
-// Cross-graph recall returns hits from every graph. Pick the dominant subject by
-// summing similarity per graph_id; the winning graph is then positioned in
-// isolation by classifyEntry. Returns null when there are no results.
+// Cross-graph recall returns hits from every graph. Score each subject from its
+// strongest three hits using a normalized decay-weighted average. Normalizing
+// prevents a graph with many mediocre hits from crowding out a graph with one or
+// two highly relevant hits.
 export function pickDominantGraph(results: KnowledgeGraphSearchResult[]): string | null {
   if (results.length === 0) return null;
 
-  // 1. Calculate mass with concept/topic weights (concept is 1.0, topic is 0.5)
-  const mass = new Map<string, number>();
-  for (const r of results) {
-    const weight = r.kind === "concept" ? 1.0 : 0.5;
-    const score = Math.max(r.similarity, 0) * weight;
-    mass.set(r.graphId, (mass.get(r.graphId) ?? 0) + score);
+  const hitsByGraph = new Map<string, KnowledgeGraphSearchResult[]>();
+  for (const result of results) {
+    const hits = hitsByGraph.get(result.graphId) ?? [];
+    hits.push(result);
+    hitsByGraph.set(result.graphId, hits);
   }
 
-  // 2. Identify top hits from different graphs to calculate margin
-  const top1 = results[0];
-  const top2 = results.find(r => r.graphId !== top1.graphId);
-
-  // Apply a dynamic bonus for the top-matching graph.
-  // If the absolute top hit is a concept and it significantly beats the next competitor
-  // in a different graph, we boost it to avoid "crowding out".
-  // If the difference is tiny, they are essentially a tie, so no large bonus is applied.
-  if (top1 && top1.similarity > 0) {
-    let bonus = 0;
-    const margin = top2 ? (top1.similarity - top2.similarity) : top1.similarity;
-    if (margin > 0.025) {
-      bonus = top1.similarity * 2.0;
-    } else {
-      bonus = top1.similarity * 0.1;
-    }
-    mass.set(top1.graphId, (mass.get(top1.graphId) ?? 0) + bonus);
+  const scores = new Map<string, number>();
+  for (const [graphId, hits] of hitsByGraph) {
+    const strongest = [...hits]
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, DOMINANT_GRAPH_HIT_WEIGHTS.length);
+    let weightedScore = 0;
+    let weightTotal = 0;
+    strongest.forEach((hit, index) => {
+      const weight = DOMINANT_GRAPH_HIT_WEIGHTS[index];
+      weightedScore += Math.max(hit.similarity, 0) * weight;
+      weightTotal += weight;
+    });
+    scores.set(graphId, weightTotal > 0 ? weightedScore / weightTotal : 0);
   }
 
-  // 3. Find the winning graph
   let best: string | null = null;
-  let bestMass = -Infinity;
-  for (const [graphId, m] of mass) {
-    if (m > bestMass) {
-      bestMass = m;
+  let bestScore = -Infinity;
+  for (const [graphId, score] of scores) {
+    if (score > bestScore) {
+      bestScore = score;
       best = graphId;
     }
   }
 
-  // 4. Resolve ties or near-ties with A-Level tie-breaker
-  if (best) {
-    const threshold = bestMass * 0.9;
-    for (const [graphId, m] of mass) {
-      if (graphId !== best && m >= threshold) {
-        if (graphId.startsWith("a_level_") && !best.startsWith("a_level_")) {
-          best = graphId;
-          bestMass = m;
-        }
-      }
+  // Preserve the A-Level preference only when the absolute best hit is itself
+  // from an A-Level graph and its normalized graph score is effectively tied.
+  const topHit = results.reduce((top, result) => result.similarity > top.similarity ? result : top);
+  if (best && topHit.graphId.startsWith("a_level_")) {
+    const topHitGraphScore = scores.get(topHit.graphId) ?? -Infinity;
+    if (bestScore - topHitGraphScore <= A_LEVEL_TOP_HIT_TIE_MARGIN) {
+      best = topHit.graphId;
     }
   }
 
@@ -246,22 +246,31 @@ export function classifyEntry(
     return { branch: "specific", graphId, params, diagnostics, ...buildLinearPath(graphId, startTopicId, targetConceptId, language) };
   }
 
-  // Broad: menu of hit topics. Pick the most RELEVANT N first (hitTopicIds are in
-  // recall/similarity order), THEN display them in default_order (recommended
-  // learning order). Slicing before the relevance pick would drop a highly
-  // relevant but late-curriculum topic (e.g. Nuclear Physics) purely for its order.
+  // Broad: keep only topics close to the best topic hit and preserve relevance
+  // order. default_order remains a deterministic tie-breaker and is still used
+  // after selection to build the course sequence.
   const graph = getTopicGraph(graphId);
-  const hitTopicIds = [...new Set(results.map(resultTopicId).filter((t): t is string => Boolean(t)))];
-  const menu: BroadMenuItem[] = hitTopicIds
-    .map((tid) => graph.topics.find((t) => t.topicId === tid))
-    .filter((t): t is NonNullable<typeof t> => Boolean(t))
+  const topicById = new Map(graph.topics.map((topic) => [topic.topicId, topic]));
+  const topicSimilarity = new Map<string, number>();
+  for (const result of results) {
+    const topicId = resultTopicId(result);
+    if (!topicId) continue;
+    topicSimilarity.set(topicId, Math.max(topicSimilarity.get(topicId) ?? -Infinity, result.similarity));
+  }
+  const bestTopicSimilarity = Math.max(...topicSimilarity.values());
+  const menuFloor = Math.max(params.floor, bestTopicSimilarity - params.menuSimilarityWindow);
+  const menu: BroadMenuItem[] = [...topicSimilarity.entries()]
+    .map(([topicId, similarity]) => ({ topic: topicById.get(topicId), similarity }))
+    .filter((entry): entry is { topic: NonNullable<typeof entry.topic>; similarity: number } =>
+      Boolean(entry.topic) && entry.similarity >= menuFloor,
+    )
+    .sort((a, b) => b.similarity - a.similarity || a.topic.defaultOrder - b.topic.defaultOrder)
     .slice(0, params.menuSize)
-    .sort((a, b) => a.defaultOrder - b.defaultOrder)
-    .map((t) => ({
-      topicId: t.topicId,
-      name: resolveKgDisplayName(t, language),
-      defaultOrder: t.defaultOrder,
-      concepts: localizeConcepts(t.conceptIds, language),
+    .map(({ topic }) => ({
+      topicId: topic.topicId,
+      name: resolveKgDisplayName(topic, language),
+      defaultOrder: topic.defaultOrder,
+      concepts: localizeConcepts(topic.conceptIds, language),
     }));
 
   return { branch: "broad", graphId, params, menu, diagnostics };

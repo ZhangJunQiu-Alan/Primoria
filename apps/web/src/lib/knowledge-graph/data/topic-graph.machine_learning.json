@@ -7,8 +7,8 @@
   "topics": [
     {
       "topicId": "ml_linear_part1",
-      "name": "Linear Regression (Part 1)",
-      "nameZh": "线性回归 (第一部分)",
+      "name": "Linear Regression: Model and Gradient Descent",
+      "nameZh": "线性回归：模型与梯度下降",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -44,7 +44,7 @@
           "hard": true
         },
         {
-          "topicId": "ml_theory__ml_deep",
+          "topicId": "ml_generalization_nn",
           "hard": true
         }
       ],
@@ -53,8 +53,8 @@
     },
     {
       "topicId": "ml_linear_part2",
-      "name": "Linear Regression (Part 2)",
-      "nameZh": "线性回归 (第二部分)",
+      "name": "Linear Regression: Optimization Methods",
+      "nameZh": "线性回归：优化方法",
       "defaultOrder": 2,
       "conceptIds": [
         {
@@ -84,8 +84,8 @@
     },
     {
       "topicId": "ml_classification_part1",
-      "name": "Classification and GLMs (Part 1)",
-      "nameZh": "分类与广义线性模型 (第一部分)",
+      "name": "Classification: Logistic Regression",
+      "nameZh": "分类：逻辑回归",
       "defaultOrder": 3,
       "conceptIds": [
         {
@@ -123,7 +123,7 @@
           "hard": false
         },
         {
-          "topicId": "ml_theory__ml_deep",
+          "topicId": "ml_generalization_nn",
           "hard": true
         }
       ],
@@ -134,8 +134,8 @@
     },
     {
       "topicId": "ml_classification_part2",
-      "name": "Classification and GLMs (Part 2)",
-      "nameZh": "分类与广义线性模型 (第二部分)",
+      "name": "Classification: Softmax and GLMs",
+      "nameZh": "分类：Softmax 与广义线性模型",
       "defaultOrder": 4,
       "conceptIds": [
         {
@@ -304,7 +304,7 @@
       ],
       "successors": [
         {
-          "topicId": "ml_theory__ml_deep",
+          "topicId": "ml_generalization_nn",
           "hard": false
         }
       ],
@@ -314,7 +314,7 @@
       "isRoot": false
     },
     {
-      "topicId": "ml_theory__ml_deep",
+      "topicId": "ml_generalization_nn",
       "name": "Generalization Bounds and Neural Networks",
       "nameZh": "泛化界与神经网络",
       "defaultOrder": 9,

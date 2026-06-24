@@ -277,7 +277,7 @@
           "hard": false
         },
         {
-          "topicId": "t_ucb61b_spatial__t_ucb61b_tries",
+          "topicId": "t_ucb61b_spatial_string_indexes",
           "hard": true
         }
       ],
@@ -516,7 +516,7 @@
       "isRoot": false
     },
     {
-      "topicId": "t_ucb61b_spatial__t_ucb61b_tries",
+      "topicId": "t_ucb61b_spatial_string_indexes",
       "name": "Spatial and String Indexes",
       "nameZh": "空间与字符串索引",
       "defaultOrder": 13,

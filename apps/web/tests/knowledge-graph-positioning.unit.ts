@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 
-import { classifyEntry } from "../src/lib/knowledge-graph/positioning.ts";
+import { classifyEntry, pickDominantGraph } from "../src/lib/knowledge-graph/positioning.ts";
 import { nextTopic } from "../src/lib/knowledge-graph/topic-graph.ts";
 import { suggestFloor } from "../src/lib/knowledge-graph/floor-calibration.ts";
 import type { KnowledgeGraphSearchResult } from "../src/lib/knowledge-graph/search.ts";
@@ -27,23 +27,39 @@ function concept(nodeId: string, topicId: string, similarity: number): Knowledge
   };
 }
 
+function topic(graphId: string, nodeId: string, similarity: number): KnowledgeGraphSearchResult {
+  return {
+    graphId,
+    kind: "topic",
+    nodeId,
+    name: nodeId,
+    description: null,
+    topicId: null,
+    topicName: null,
+    embedText: "",
+    modelVersion: "test",
+    distance: 1 - similarity,
+    similarity,
+  };
+}
+
 function main() {
   // next_topic follows the same default_order sequence as the Course outline.
-  assert(nextTopic(GRAPH_ID, "t_1801_differentiation__t_1801_apps_diff")?.topicId === "t_1801_apps_diff", "next_topic follows curriculum order");
+  assert(nextTopic(GRAPH_ID, "t_1801_diff_techniques")?.topicId === "t_1801_apps_diff", "next_topic follows curriculum order");
   assert(nextTopic(GRAPH_ID, "t_1802_surface_int") === null, "last curriculum topic has no next topic");
 
   // Specific: mass concentrated in one topic -> 2-lesson linear path.
   const specific = classifyEntry({
     graphId: GRAPH_ID,
     results: [
-      concept("c_1801_chain_rule", "t_1801_differentiation__t_1801_apps_diff", 0.61),
-      concept("c_1801_implicit_diff", "t_1801_differentiation__t_1801_apps_diff", 0.58),
-      concept("c_1801_related_rates", "t_1801_differentiation__t_1801_apps_diff", 0.55),
+      concept("c_1801_chain_rule", "t_1801_diff_techniques", 0.61),
+      concept("c_1801_implicit_diff", "t_1801_diff_techniques", 0.58),
+      concept("c_1801_related_rates", "t_1801_diff_techniques", 0.55),
       concept("c_1801_riemann_sums", "t_1801_integration", 0.34),
     ],
   });
   assert(specific.branch === "specific", `expected specific, got ${specific.branch}`);
-  assert(specific.startTopicId === "t_1801_differentiation__t_1801_apps_diff", "specific start topic = dominant topic");
+  assert(specific.startTopicId === "t_1801_diff_techniques", "specific start topic = dominant topic");
   assert(specific.linear === true && specific.path?.length === 2, "specific builds 2-lesson linear path");
   assert(specific.path?.[1].topicId === "t_1801_apps_diff", "second lesson = next_topic");
 
@@ -62,7 +78,7 @@ function main() {
   assert(conceptDominant.startTopicId === "t_1801_series", "concept-dominant start topic");
   assert(conceptDominant.targetConceptId === "c_1801_taylor_series", "concept-dominant pins target concept");
 
-  // Broad: mass spread across topics -> menu ordered by default_order.
+  // Broad: mass spread across topics -> menu ordered by relevance.
   const broad = classifyEntry({
     graphId: GRAPH_ID,
     results: [
@@ -74,16 +90,18 @@ function main() {
   });
   assert(broad.branch === "broad", `expected broad, got ${broad.branch}`);
   assert(Array.isArray(broad.menu) && broad.menu.length >= 2, "broad returns a menu");
-  const orders = broad.menu!.map((m) => m.defaultOrder);
   assert(
-    orders.every((o, i) => i === 0 || orders[i - 1] <= o),
-    "broad menu is ordered by default_order",
+    broad.menu!.map((item) => item.topicId).join(",") === [
+      "t_1801_differentiation",
+      "t_1801_integration",
+      "t_1802_vectors",
+      "t_1802_partial_diff",
+    ].join(","),
+    "broad menu preserves relevance order",
   );
-  assert(broad.menu![0].topicId === "t_1801_differentiation", "lowest default_order topic comes first");
 
-  // Broad with more hits than menuSize: the most RELEVANT topic must survive even
-  // when its default_order is late in the curriculum (regression: previously the
-  // menu sorted by default_order before slicing, dropping the top hit).
+  // Broad with more hits than menuSize: the most relevant topic remains first,
+  // even when its default_order is late in the curriculum.
   const broadLate = classifyEntry({
     graphId: GRAPH_ID,
     results: [
@@ -101,8 +119,47 @@ function main() {
     broadLate.menu!.some((m) => m.topicId === "t_1802_surface_int"),
     "most-relevant late-curriculum topic survives the menu cap",
   );
-  const lateOrders = broadLate.menu!.map((m) => m.defaultOrder);
-  assert(lateOrders.every((o, i) => i === 0 || lateOrders[i - 1] <= o), "capped menu still displayed in default_order");
+  assert(broadLate.menu![0].topicId === "t_1802_surface_int", "most-relevant topic is displayed first");
+
+  // Regression: a graph with many mediocre hits must not crowd out the graph
+  // containing the strongest, consistently relevant algorithm hits.
+  const algorithmGraph = pickDominantGraph([
+    topic("introduction_to_computer_science", "algorithmic_complexity", 0.5514),
+    topic("discrete_math_and_probability", "modular_arithmetic", 0.5505),
+    topic("discrete_math_and_probability", "computability_counting", 0.5426),
+    topic("introduction_to_computer_science", "algorithms", 0.5278),
+    topic("a_level_mathematics", "counting_probability", 0.5117),
+    topic("numerical_analysis", "computer_arithmetic", 0.5109),
+    topic("data_structures_and_algorithms", "asymptotics", 0.5022),
+    topic("discrete_math_and_probability", "countability", 0.4964),
+    topic("a_level_mathematics", "differentiation_2", 0.4948),
+    topic("mit_calculus", "integration_techniques", 0.4911),
+    topic("a_level_mathematics", "differentiation_1", 0.4893),
+    topic("discrete_math_and_probability", "induction", 0.4865),
+    topic("mit_calculus", "integration_area", 0.4853),
+    topic("discrete_math_and_probability", "logic", 0.4817),
+    topic("discrete_math_and_probability", "counting", 0.4803),
+  ]);
+  assert(
+    algorithmGraph === "introduction_to_computer_science",
+    `algorithm query should select computer science, got ${algorithmGraph}`,
+  );
+
+  // Broad menus omit topics that fall outside the relevance window instead of
+  // filling all five slots with weak curriculum entries.
+  const focusedBroad = classifyEntry({
+    graphId: GRAPH_ID,
+    results: [
+      concept("algorithmic_complexity", "t_1801_differentiation", 0.55),
+      concept("algorithms", "t_1801_integration", 0.53),
+      concept("unrelated_early_topic", "t_1802_vectors", 0.39),
+    ],
+  });
+  assert(focusedBroad.branch === "broad", "focused broad query remains broad");
+  assert(
+    focusedBroad.menu?.map((item) => item.topicId).join(",") === "t_1801_differentiation,t_1801_integration",
+    "broad menu removes weakly related topics outside the similarity window",
+  );
 
   // Fallback: everything below FLOOR.
   const fallback = classifyEntry({

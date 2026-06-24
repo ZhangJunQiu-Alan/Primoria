@@ -102,7 +102,7 @@
       ],
       "successors": [
         {
-          "topicId": "topic_riscv__topic_sds",
+          "topicId": "topic_riscv_logic",
           "hard": true
         }
       ],
@@ -110,7 +110,7 @@
       "isRoot": true
     },
     {
-      "topicId": "topic_riscv__topic_sds",
+      "topicId": "topic_riscv_logic",
       "name": "From RISC-V Instructions to Digital Logic",
       "nameZh": "从 RISC-V 指令到数字逻辑",
       "defaultOrder": 4,
@@ -178,7 +178,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_riscv__topic_sds"
+        "topic_riscv_logic"
       ],
       "isRoot": false
     },
@@ -209,7 +209,7 @@
       ],
       "successors": [
         {
-          "topicId": "topic_cpu__topic_memory",
+          "topicId": "topic_pipeline_cache",
           "hard": true
         }
       ],
@@ -217,7 +217,7 @@
       "isRoot": true
     },
     {
-      "topicId": "topic_cpu__topic_memory",
+      "topicId": "topic_pipeline_cache",
       "name": "Pipelines and Cache Architecture",
       "nameZh": "流水线与缓存体系",
       "defaultOrder": 7,
@@ -285,7 +285,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_cpu__topic_memory"
+        "topic_pipeline_cache"
       ],
       "isRoot": false
     },
@@ -316,7 +316,7 @@
       ],
       "successors": [
         {
-          "topicId": "topic_parallelism__topic_io_dep",
+          "topicId": "topic_parallel_io",
           "hard": true
         }
       ],
@@ -324,7 +324,7 @@
       "isRoot": true
     },
     {
-      "topicId": "topic_parallelism__topic_io_dep",
+      "topicId": "topic_parallel_io",
       "name": "Parallel Systems and I/O",
       "nameZh": "并行系统与输入输出",
       "defaultOrder": 10,
@@ -392,7 +392,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_parallelism__topic_io_dep"
+        "topic_parallel_io"
       ],
       "isRoot": false
     }

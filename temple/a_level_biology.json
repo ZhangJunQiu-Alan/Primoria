@@ -184,7 +184,7 @@
       "name_zh": "主动运输"
     },
     {
-      "id": "bio_cell_cycle__bio_nucleic_acids",
+      "id": "bio_chromosomes_dna",
       "kind": "topic",
       "name": "Chromosomes and DNA Replication",
       "topic": null,
@@ -195,7 +195,7 @@
       "id": "bio_chromosomes",
       "kind": "concept",
       "name": "Chromosome Behaviour",
-      "topic": "bio_cell_cycle__bio_nucleic_acids",
+      "topic": "bio_chromosomes_dna",
       "description": "The structure of chromosomes as DNA wound around histone proteins, and their replication and condensation in preparation for nuclear division.",
       "default_order": 1,
       "name_zh": "染色体行为"
@@ -204,7 +204,7 @@
       "id": "bio_mitosis",
       "kind": "concept",
       "name": "Mitosis",
-      "topic": "bio_cell_cycle__bio_nucleic_acids",
+      "topic": "bio_chromosomes_dna",
       "description": "Nuclear division producing two genetically identical daughter cells through prophase, metaphase, anaphase, and telophase, underlying growth and repair.",
       "default_order": 2,
       "name_zh": "有丝分裂"
@@ -213,7 +213,7 @@
       "id": "bio_dna_structure",
       "kind": "concept",
       "name": "DNA Structure",
-      "topic": "bio_cell_cycle__bio_nucleic_acids",
+      "topic": "bio_chromosomes_dna",
       "description": "DNA as a double helix of two antiparallel nucleotide strands held together by complementary base pairing between adenine-thymine and guanine-cytosine.",
       "default_order": 3,
       "name_zh": "DNA结构"
@@ -222,7 +222,7 @@
       "id": "bio_dna_replication",
       "kind": "concept",
       "name": "DNA Replication",
-      "topic": "bio_cell_cycle__bio_nucleic_acids",
+      "topic": "bio_chromosomes_dna",
       "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
       "default_order": 4,
       "name_zh": "DNA复制"
@@ -298,7 +298,7 @@
       "name_zh": "韧皮部与转运"
     },
     {
-      "id": "bio_transport_mammals__bio_gas_exchange",
+      "id": "bio_circulation_gas_exchange",
       "kind": "topic",
       "name": "Circulation and Gas Exchange",
       "topic": null,
@@ -309,7 +309,7 @@
       "id": "bio_heart",
       "kind": "concept",
       "name": "The Heart",
-      "topic": "bio_transport_mammals__bio_gas_exchange",
+      "topic": "bio_circulation_gas_exchange",
       "description": "The structure of the mammalian heart and the cardiac cycle of atrial and ventricular systole and diastole, coordinated to pump blood.",
       "default_order": 1,
       "name_zh": "心脏"
@@ -318,7 +318,7 @@
       "id": "bio_blood_vessels",
       "kind": "concept",
       "name": "Blood Vessels",
-      "topic": "bio_transport_mammals__bio_gas_exchange",
+      "topic": "bio_circulation_gas_exchange",
       "description": "The structure and function of arteries, veins, and capillaries, whose walls suit carrying blood at different pressures and exchanging materials.",
       "default_order": 2,
       "name_zh": "血管"
@@ -327,7 +327,7 @@
       "id": "bio_haemoglobin",
       "kind": "concept",
       "name": "Haemoglobin and Oxygen Transport",
-      "topic": "bio_transport_mammals__bio_gas_exchange",
+      "topic": "bio_circulation_gas_exchange",
       "description": "Haemoglobin's reversible binding of oxygen described by the sigmoid dissociation curve, and the Bohr effect that shifts it with carbon dioxide.",
       "default_order": 3,
       "name_zh": "血红蛋白与氧气运输"
@@ -336,7 +336,7 @@
       "id": "bio_lungs",
       "kind": "concept",
       "name": "Gas Exchange in the Lungs",
-      "topic": "bio_transport_mammals__bio_gas_exchange",
+      "topic": "bio_circulation_gas_exchange",
       "description": "Gas exchange in the alveoli, whose large, thin, moist surface and rich blood supply maximise diffusion of oxygen and carbon dioxide.",
       "default_order": 4,
       "name_zh": "肺部气体交换"

@@ -364,7 +364,7 @@
       "name_zh": "实数不可数性"
     },
     {
-      "id": "topic_countability_computability__topic_counting",
+      "id": "topic_computability_counting",
       "kind": "topic",
       "name": "Computability and Counting Foundations",
       "topic": null,
@@ -373,7 +373,7 @@
     },
     {
       "id": "the_halting_problem",
-      "topic": "topic_countability_computability__topic_counting",
+      "topic": "topic_computability_counting",
       "name": "The Halting Problem",
       "kind": "concept",
       "default_order": 1,
@@ -382,7 +382,7 @@
     },
     {
       "id": "undecidability",
-      "topic": "topic_countability_computability__topic_counting",
+      "topic": "topic_computability_counting",
       "name": "Undecidability",
       "kind": "concept",
       "default_order": 2,
@@ -391,7 +391,7 @@
     },
     {
       "id": "basic_counting_rules",
-      "topic": "topic_countability_computability__topic_counting",
+      "topic": "topic_computability_counting",
       "name": "Basic Counting Rules",
       "kind": "concept",
       "default_order": 3,
@@ -400,7 +400,7 @@
     },
     {
       "id": "combinations_permutations",
-      "topic": "topic_countability_computability__topic_counting",
+      "topic": "topic_computability_counting",
       "name": "Combinations and Permutations",
       "kind": "concept",
       "default_order": 4,
@@ -610,7 +610,7 @@
       "name_zh": "累积分布函数"
     },
     {
-      "id": "topic_continuous_prob__topic_concentration",
+      "id": "topic_continuous_concentration",
       "kind": "topic",
       "name": "Continuous Probability and Concentration Bounds",
       "topic": null,
@@ -619,7 +619,7 @@
     },
     {
       "id": "uniform_exponential_distributions",
-      "topic": "topic_continuous_prob__topic_concentration",
+      "topic": "topic_continuous_concentration",
       "name": "Uniform and Exponential Distributions",
       "kind": "concept",
       "default_order": 1,
@@ -628,7 +628,7 @@
     },
     {
       "id": "normal_distribution",
-      "topic": "topic_continuous_prob__topic_concentration",
+      "topic": "topic_continuous_concentration",
       "name": "Normal Distribution",
       "kind": "concept",
       "default_order": 2,
@@ -637,7 +637,7 @@
     },
     {
       "id": "markovs_inequality",
-      "topic": "topic_continuous_prob__topic_concentration",
+      "topic": "topic_continuous_concentration",
       "name": "Markov's Inequality",
       "kind": "concept",
       "default_order": 3,
@@ -646,7 +646,7 @@
     },
     {
       "id": "chebyshevs_inequality",
-      "topic": "topic_continuous_prob__topic_concentration",
+      "topic": "topic_continuous_concentration",
       "name": "Chebyshev's Inequality",
       "kind": "concept",
       "default_order": 4,

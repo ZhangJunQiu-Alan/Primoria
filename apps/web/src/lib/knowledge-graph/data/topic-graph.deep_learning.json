@@ -7,8 +7,8 @@
   "topics": [
     {
       "topicId": "dl_foundations_part1",
-      "name": "Neural Network Foundations (Part 1)",
-      "nameZh": "神经网络基础 (第一部分)",
+      "name": "Neural Network Foundations: Architecture",
+      "nameZh": "神经网络基础：网络结构",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -40,7 +40,7 @@
           "hard": true
         },
         {
-          "topicId": "dl_cnn__dl_rnn_seq",
+          "topicId": "dl_architectures_transfer",
           "hard": true
         },
         {
@@ -53,8 +53,8 @@
     },
     {
       "topicId": "dl_foundations_part2",
-      "name": "Neural Network Foundations (Part 2)",
-      "nameZh": "神经网络基础 (第二部分)",
+      "name": "Neural Network Foundations: Training",
+      "nameZh": "神经网络基础：训练与反向传播",
       "defaultOrder": 2,
       "conceptIds": [
         {
@@ -82,7 +82,7 @@
           "hard": false
         },
         {
-          "topicId": "dl_optim__dl_training",
+          "topicId": "dl_optim_stability",
           "hard": true
         }
       ],
@@ -118,7 +118,7 @@
       ],
       "successors": [
         {
-          "topicId": "dl_optim__dl_training",
+          "topicId": "dl_optim_stability",
           "hard": true
         },
         {
@@ -132,7 +132,7 @@
       "isRoot": false
     },
     {
-      "topicId": "dl_optim__dl_training",
+      "topicId": "dl_optim_stability",
       "name": "Optimization Stability",
       "nameZh": "优化稳定性",
       "defaultOrder": 4,
@@ -168,7 +168,7 @@
           "hard": true
         },
         {
-          "topicId": "dl_cnn__dl_rnn_seq",
+          "topicId": "dl_architectures_transfer",
           "hard": false
         }
       ],
@@ -206,7 +206,7 @@
       "successors": [],
       "prereqTopics": [
         "dl_optim",
-        "dl_optim__dl_training"
+        "dl_optim_stability"
       ],
       "isRoot": false
     },
@@ -237,7 +237,7 @@
       ],
       "successors": [
         {
-          "topicId": "dl_cnn__dl_rnn_seq",
+          "topicId": "dl_architectures_transfer",
           "hard": true
         }
       ],
@@ -247,7 +247,7 @@
       "isRoot": false
     },
     {
-      "topicId": "dl_cnn__dl_rnn_seq",
+      "topicId": "dl_architectures_transfer",
       "name": "Deep Learning Architectures and Transfer",
       "nameZh": "深度学习架构与迁移",
       "defaultOrder": 7,
@@ -289,7 +289,7 @@
       ],
       "prereqTopics": [
         "dl_foundations_part1",
-        "dl_optim__dl_training",
+        "dl_optim_stability",
         "dl_cnn"
       ],
       "isRoot": false
@@ -327,14 +327,14 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "dl_cnn__dl_rnn_seq"
+        "dl_architectures_transfer"
       ],
       "isRoot": false
     },
     {
       "topicId": "dl_attn_part1",
-      "name": "Attention and Transformers (Part 1)",
-      "nameZh": "注意力与Transformer (第一部分)",
+      "name": "Attention and Transformers: Mechanisms",
+      "nameZh": "注意力与Transformer：注意力机制",
       "defaultOrder": 9,
       "conceptIds": [
         {
@@ -363,14 +363,14 @@
         }
       ],
       "prereqTopics": [
-        "dl_cnn__dl_rnn_seq"
+        "dl_architectures_transfer"
       ],
       "isRoot": false
     },
     {
       "topicId": "dl_attn_part2",
-      "name": "Attention and Transformers (Part 2)",
-      "nameZh": "注意力与Transformer (第二部分)",
+      "name": "Attention and Transformers: Architecture and Pretraining",
+      "nameZh": "注意力与Transformer：架构与预训练",
       "defaultOrder": 10,
       "conceptIds": [
         {
@@ -400,8 +400,8 @@
     },
     {
       "topicId": "dl_generative_part1",
-      "name": "Generative Models (Part 1)",
-      "nameZh": "生成模型 (第一部分)",
+      "name": "Generative Models: Autoencoders and GANs",
+      "nameZh": "生成模型：自编码器与GAN",
       "defaultOrder": 11,
       "conceptIds": [
         {
@@ -436,8 +436,8 @@
     },
     {
       "topicId": "dl_generative_part2",
-      "name": "Generative Models (Part 2)",
-      "nameZh": "生成模型 (第二部分)",
+      "name": "Generative Models: Diffusion and Flows",
+      "nameZh": "生成模型：扩散模型与流模型",
       "defaultOrder": 12,
       "conceptIds": [
         {

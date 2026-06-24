@@ -42,7 +42,7 @@
           "hard": true
         },
         {
-          "topicId": "topic_hof__topic_data",
+          "topicId": "topic_func_data_processing",
           "hard": true
         },
         {
@@ -92,7 +92,7 @@
       ],
       "successors": [
         {
-          "topicId": "topic_hof__topic_data",
+          "topicId": "topic_func_data_processing",
           "hard": true
         },
         {
@@ -106,7 +106,7 @@
       "isRoot": false
     },
     {
-      "topicId": "topic_hof__topic_data",
+      "topicId": "topic_func_data_processing",
       "name": "Functional Transformation and Data Processing",
       "nameZh": "函数变换与数据处理",
       "defaultOrder": 3,
@@ -184,7 +184,7 @@
         }
       ],
       "prereqTopics": [
-        "topic_hof__topic_data"
+        "topic_func_data_processing"
       ],
       "isRoot": false
     },

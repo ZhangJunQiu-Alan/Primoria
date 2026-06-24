@@ -46,7 +46,7 @@
           "hard": false
         },
         {
-          "topicId": "topic_countability_computability__topic_counting",
+          "topicId": "topic_computability_counting",
           "hard": true
         }
       ],
@@ -335,7 +335,7 @@
       "isRoot": false
     },
     {
-      "topicId": "topic_countability_computability__topic_counting",
+      "topicId": "topic_computability_counting",
       "name": "Computability and Counting Foundations",
       "nameZh": "可计算性与计数基础",
       "defaultOrder": 9,
@@ -407,7 +407,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_countability_computability__topic_counting"
+        "topic_computability_counting"
       ],
       "isRoot": false
     },
@@ -453,7 +453,7 @@
         }
       ],
       "prereqTopics": [
-        "topic_countability_computability__topic_counting"
+        "topic_computability_counting"
       ],
       "isRoot": false
     },
@@ -498,7 +498,7 @@
           "hard": true
         },
         {
-          "topicId": "topic_continuous_prob__topic_concentration",
+          "topicId": "topic_continuous_concentration",
           "hard": true
         },
         {
@@ -575,7 +575,7 @@
       ],
       "successors": [
         {
-          "topicId": "topic_continuous_prob__topic_concentration",
+          "topicId": "topic_continuous_concentration",
           "hard": true
         }
       ],
@@ -585,7 +585,7 @@
       "isRoot": false
     },
     {
-      "topicId": "topic_continuous_prob__topic_concentration",
+      "topicId": "topic_continuous_concentration",
       "name": "Continuous Probability and Concentration Bounds",
       "nameZh": "连续概率与集中界",
       "defaultOrder": 15,
@@ -654,7 +654,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_continuous_prob__topic_concentration"
+        "topic_continuous_concentration"
       ],
       "isRoot": false
     },

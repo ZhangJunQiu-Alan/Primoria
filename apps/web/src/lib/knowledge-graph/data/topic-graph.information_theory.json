@@ -32,7 +32,7 @@
       ],
       "successors": [
         {
-          "topicId": "t_infotheory_basics__t_infotheory_source_coding",
+          "topicId": "t_infotheory_measures_typicality",
           "hard": true
         },
         {
@@ -48,7 +48,7 @@
       "isRoot": true
     },
     {
-      "topicId": "t_infotheory_basics__t_infotheory_source_coding",
+      "topicId": "t_infotheory_measures_typicality",
       "name": "Information Measures and Typicality",
       "nameZh": "信息测度与典型性",
       "defaultOrder": 2,
@@ -114,7 +114,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "t_infotheory_basics__t_infotheory_source_coding"
+        "t_infotheory_measures_typicality"
       ],
       "isRoot": false
     },
@@ -146,7 +146,7 @@
       "successors": [],
       "prereqTopics": [
         "t_infotheory_basics",
-        "t_infotheory_basics__t_infotheory_source_coding"
+        "t_infotheory_measures_typicality"
       ],
       "isRoot": false
     },

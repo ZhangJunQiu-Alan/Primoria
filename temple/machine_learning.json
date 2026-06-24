@@ -19,10 +19,10 @@
     {
       "id": "ml_linear_part1",
       "kind": "topic",
-      "name": "Linear Regression (Part 1)",
+      "name": "Linear Regression: Model and Gradient Descent",
       "topic": null,
       "default_order": 1,
-      "name_zh": "线性回归 (第一部分)"
+      "name_zh": "线性回归：模型与梯度下降"
     },
     {
       "id": "ml_linear_reg",
@@ -54,10 +54,10 @@
     {
       "id": "ml_linear_part2",
       "kind": "topic",
-      "name": "Linear Regression (Part 2)",
+      "name": "Linear Regression: Optimization Methods",
       "topic": null,
       "default_order": 2,
-      "name_zh": "线性回归 (第二部分)"
+      "name_zh": "线性回归：优化方法"
     },
     {
       "id": "ml_sgd",
@@ -89,10 +89,10 @@
     {
       "id": "ml_classification_part1",
       "kind": "topic",
-      "name": "Classification and GLMs (Part 1)",
+      "name": "Classification: Logistic Regression",
       "topic": null,
       "default_order": 3,
-      "name_zh": "分类与广义线性模型 (第一部分)"
+      "name_zh": "分类：逻辑回归"
     },
     {
       "id": "ml_logistic_reg",
@@ -133,10 +133,10 @@
     {
       "id": "ml_classification_part2",
       "kind": "topic",
-      "name": "Classification and GLMs (Part 2)",
+      "name": "Classification: Softmax and GLMs",
       "topic": null,
       "default_order": 4,
-      "name_zh": "分类与广义线性模型 (第二部分)"
+      "name_zh": "分类：Softmax 与广义线性模型"
     },
     {
       "id": "ml_softmax",
@@ -333,7 +333,7 @@
       "name_zh": "交叉验证"
     },
     {
-      "id": "ml_theory__ml_deep",
+      "id": "ml_generalization_nn",
       "kind": "topic",
       "name": "Generalization Bounds and Neural Networks",
       "topic": null,
@@ -344,7 +344,7 @@
       "id": "ml_vc_dimension",
       "kind": "concept",
       "name": "VC Dimension & Bounds",
-      "topic": "ml_theory__ml_deep",
+      "topic": "ml_generalization_nn",
       "description": "The VC dimension measuring a hypothesis class's capacity as the largest set it can shatter, bounding the gap between training and true error.",
       "default_order": 1,
       "name_zh": "VC 维与泛化误差界"
@@ -353,7 +353,7 @@
       "id": "ml_model_selection",
       "kind": "concept",
       "name": "Model & Feature Selection",
-      "topic": "ml_theory__ml_deep",
+      "topic": "ml_generalization_nn",
       "description": "Choosing among models and feature subsets to balance fit and complexity, using validation performance and selection procedures to avoid overfitting.",
       "default_order": 2,
       "name_zh": "模型与特征选择"
@@ -362,7 +362,7 @@
       "id": "ml_neural_nets",
       "kind": "concept",
       "name": "Neural Networks",
-      "topic": "ml_theory__ml_deep",
+      "topic": "ml_generalization_nn",
       "description": "Neural networks composing layers of weighted sums and nonlinear activations to learn flexible, nonlinear mappings from inputs to outputs.",
       "default_order": 3,
       "name_zh": "神经网络"
@@ -371,7 +371,7 @@
       "id": "ml_backprop",
       "kind": "concept",
       "name": "Backpropagation",
-      "topic": "ml_theory__ml_deep",
+      "topic": "ml_generalization_nn",
       "description": "Backpropagation efficiently computing gradients of the loss with respect to all weights by applying the chain rule backward through the network.",
       "default_order": 4,
       "name_zh": "反向传播"

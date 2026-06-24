@@ -32,7 +32,7 @@ function main() {
   const context = resolveCourseContextFromTopicAnchor({ graphId, startTopicId: selectedTopicId, targetConceptId });
 
   assert(context.startTopic.topicId === selectedTopicId, "selected Basic differentiation topicId is preserved exactly");
-  assert(context.startTopic.name === "Differentiation (Basic) (Part 1)", "selected Basic differentiation name is preserved");
+  assert(context.startTopic.name === "Differentiation: Rules and Techniques", "selected differentiation topic name is preserved");
   assert(context.startTopic.topicId !== "mat_differentiation_adv", "selection never drifts to Advanced differentiation");
   assert(context.nextTopic?.topicId === "mat_differentiation_part2", "next topic follows the curriculum after the selected topic");
   assert(context.targetConceptId === targetConceptId, "valid target concept is preserved");
@@ -41,7 +41,7 @@ function main() {
   // Chinese locale resolves nameZh into the course context (topic + concepts)
   // so generated course/lesson titles match the localized menu.
   const zhContext = resolveCourseContextFromTopicAnchor({ graphId, startTopicId: selectedTopicId, targetConceptId, language: "zh" });
-  assert(zhContext.startTopic.name === "微分 (第一部分)", "zh locale resolves topic nameZh into course context");
+  assert(zhContext.startTopic.name === "微分：法则与技巧", "zh locale resolves topic nameZh into course context");
   assert(zhContext.startTopic.concepts[0].name === "从原理求导", "zh locale resolves concept nameZh into course context");
   assert(zhContext.startTopic.topicId === selectedTopicId, "localized context preserves the topic id");
 

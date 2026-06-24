@@ -90,7 +90,7 @@
       "name_zh": "Lambda 表达式"
     },
     {
-      "id": "topic_hof__topic_data",
+      "id": "topic_func_data_processing",
       "kind": "topic",
       "name": "Functional Transformation and Data Processing",
       "topic": null,
@@ -99,7 +99,7 @@
     },
     {
       "id": "currying",
-      "topic": "topic_hof__topic_data",
+      "topic": "topic_func_data_processing",
       "name": "Currying",
       "kind": "concept",
       "default_order": 1,
@@ -108,7 +108,7 @@
     },
     {
       "id": "decorators",
-      "topic": "topic_hof__topic_data",
+      "topic": "topic_func_data_processing",
       "name": "Decorators",
       "kind": "concept",
       "default_order": 2,
@@ -117,7 +117,7 @@
     },
     {
       "id": "seq",
-      "topic": "topic_hof__topic_data",
+      "topic": "topic_func_data_processing",
       "name": "Sequences and Slicing",
       "kind": "concept",
       "default_order": 3,
@@ -126,7 +126,7 @@
     },
     {
       "id": "list_comp",
-      "topic": "topic_hof__topic_data",
+      "topic": "topic_func_data_processing",
       "name": "List Comprehensions",
       "kind": "concept",
       "default_order": 4,

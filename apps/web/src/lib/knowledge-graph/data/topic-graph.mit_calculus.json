@@ -32,7 +32,7 @@
       ],
       "successors": [
         {
-          "topicId": "t_1801_differentiation__t_1801_apps_diff",
+          "topicId": "t_1801_diff_techniques",
           "hard": true
         },
         {
@@ -48,7 +48,7 @@
           "hard": true
         },
         {
-          "topicId": "t_1801_tech_int__t_1801_apps_int",
+          "topicId": "t_1801_int_techniques_area",
           "hard": true
         },
         {
@@ -68,7 +68,7 @@
       "isRoot": true
     },
     {
-      "topicId": "t_1801_differentiation__t_1801_apps_diff",
+      "topicId": "t_1801_diff_techniques",
       "name": "Differentiation Techniques and Related Rates",
       "nameZh": "微分技巧与相关变化率",
       "defaultOrder": 2,
@@ -180,7 +180,7 @@
           "hard": true
         },
         {
-          "topicId": "t_1801_tech_int__t_1801_apps_int",
+          "topicId": "t_1801_int_techniques_area",
           "hard": true
         },
         {
@@ -198,7 +198,7 @@
       ],
       "prereqTopics": [
         "t_1801_differentiation",
-        "t_1801_differentiation__t_1801_apps_diff",
+        "t_1801_diff_techniques",
         "t_1801_apps_diff"
       ],
       "isRoot": false
@@ -236,7 +236,7 @@
       "isRoot": false
     },
     {
-      "topicId": "t_1801_tech_int__t_1801_apps_int",
+      "topicId": "t_1801_int_techniques_area",
       "name": "Integration Techniques and Area",
       "nameZh": "积分技巧与面积",
       "defaultOrder": 6,
@@ -304,7 +304,7 @@
       "successors": [],
       "prereqTopics": [
         "t_1801_integration",
-        "t_1801_tech_int__t_1801_apps_int"
+        "t_1801_int_techniques_area"
       ],
       "isRoot": false
     },
@@ -342,7 +342,7 @@
       "successors": [],
       "prereqTopics": [
         "t_1801_differentiation",
-        "t_1801_tech_int__t_1801_apps_int"
+        "t_1801_int_techniques_area"
       ],
       "isRoot": false
     },
@@ -383,7 +383,7 @@
           "hard": true
         },
         {
-          "topicId": "t_1802_multiple_int__t_1802_vector_calc",
+          "topicId": "t_1802_coord_vector_fields",
           "hard": true
         },
         {
@@ -437,7 +437,7 @@
           "hard": false
         },
         {
-          "topicId": "t_1802_multiple_int__t_1802_vector_calc",
+          "topicId": "t_1802_coord_vector_fields",
           "hard": true
         },
         {
@@ -447,7 +447,7 @@
       ],
       "prereqTopics": [
         "t_1801_differentiation",
-        "t_1801_differentiation__t_1801_apps_diff",
+        "t_1801_diff_techniques",
         "t_1802_vectors"
       ],
       "isRoot": false
@@ -516,7 +516,7 @@
       ],
       "successors": [
         {
-          "topicId": "t_1802_multiple_int__t_1802_vector_calc",
+          "topicId": "t_1802_coord_vector_fields",
           "hard": true
         },
         {
@@ -535,7 +535,7 @@
       "isRoot": false
     },
     {
-      "topicId": "t_1802_multiple_int__t_1802_vector_calc",
+      "topicId": "t_1802_coord_vector_fields",
       "name": "Coordinate Changes and Vector Fields",
       "nameZh": "坐标变换与向量场",
       "defaultOrder": 13,
@@ -607,7 +607,7 @@
         "t_1801_integration",
         "t_1802_partial_diff",
         "t_1802_multiple_int",
-        "t_1802_multiple_int__t_1802_vector_calc"
+        "t_1802_coord_vector_fields"
       ],
       "isRoot": false
     },
