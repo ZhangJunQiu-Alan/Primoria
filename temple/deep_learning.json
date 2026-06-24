@@ -1,5 +1,5 @@
 {
-  "subject": "Introduction to Deep Learning (CMU 11-785)",
+  "subject": "Introduction to Deep Learning",
   "schema": {
     "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
     "node_fields": {

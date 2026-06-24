@@ -1,5 +1,5 @@
 {
-  "subject": "A-Level Mathematics (CIE 9709)",
+  "subject": "Mathematics",
   "schema": {
     "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
     "node_fields": {

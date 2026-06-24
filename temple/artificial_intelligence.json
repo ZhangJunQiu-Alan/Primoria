@@ -1,5 +1,5 @@
 {
-  "subject": "Introduction to Artificial Intelligence (UCB CS188)",
+  "subject": "Introduction to Artificial Intelligence",
   "schema": {
     "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
     "node_fields": {

@@ -1,5 +1,5 @@
 {
-  "subject": "A-Level Chemistry (CIE 9701)",
+  "subject": "Chemistry",
   "schema": {
     "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
     "node_fields": {

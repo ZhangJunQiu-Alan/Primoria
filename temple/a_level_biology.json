@@ -1,5 +1,5 @@
 {
-  "subject": "A-Level Biology (CIE 9700)",
+  "subject": "Biology",
   "schema": {
     "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
     "node_fields": {

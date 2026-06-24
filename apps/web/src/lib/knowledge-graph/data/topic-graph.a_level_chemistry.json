@@ -1,6 +1,6 @@
 {
   "graphId": "a_level_chemistry",
-  "subject": "A-Level Chemistry (CIE 9701)",
+  "subject": "Chemistry",
   "generatedFrom": "temple/a_level_chemistry.json",
   "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",

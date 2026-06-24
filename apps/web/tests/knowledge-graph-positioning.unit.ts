@@ -81,6 +81,29 @@ function main() {
   );
   assert(broad.menu![0].topicId === "t_1801_differentiation", "lowest default_order topic comes first");
 
+  // Broad with more hits than menuSize: the most RELEVANT topic must survive even
+  // when its default_order is late in the curriculum (regression: previously the
+  // menu sorted by default_order before slicing, dropping the top hit).
+  const broadLate = classifyEntry({
+    graphId: GRAPH_ID,
+    results: [
+      concept("c_1802_parametric_surfaces", "t_1802_surface_int", 0.46), // order 15, top hit
+      concept("c_1801_limits", "t_1801_differentiation", 0.45), // order 1
+      concept("c_1801_linear_approx", "t_1801_apps_diff", 0.44), // order 3
+      concept("c_1801_riemann_sums", "t_1801_integration", 0.43), // order 4
+      concept("c_1801_sequences", "t_1801_series", 0.42), // order 8
+      concept("c_1802_dot_product", "t_1802_vectors", 0.41), // order 9, lowest hit
+    ],
+  });
+  assert(broadLate.branch === "broad", `expected broad, got ${broadLate.branch}`);
+  assert(broadLate.menu!.length === 5, "menu is capped at menuSize");
+  assert(
+    broadLate.menu!.some((m) => m.topicId === "t_1802_surface_int"),
+    "most-relevant late-curriculum topic survives the menu cap",
+  );
+  const lateOrders = broadLate.menu!.map((m) => m.defaultOrder);
+  assert(lateOrders.every((o, i) => i === 0 || lateOrders[i - 1] <= o), "capped menu still displayed in default_order");
+
   // Fallback: everything below FLOOR.
   const fallback = classifyEntry({
     graphId: GRAPH_ID,
