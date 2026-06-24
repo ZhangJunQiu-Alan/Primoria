@@ -88,7 +88,8 @@
         用户输入后应该有的行为：
         - 具体目标（召回结果里很多都属于同一个 topic）：系统首先在KG中定位该Topic,并基于当前Topic所属KG中的Topic Order规划处一个大纲路径(包含从该KG中从当前Topic开始剩余的所有Topic),UI界面为线性学习.若当前Topic已经是末端,则进包含当前这一个Topic.然后,系统立刻生成大纲中第一个Topic对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
         - 如果某个召回concept指数明显过高一样归类到行为1里面
-        - 宽泛目标（比如想学微积分）：提供一个返回菜单，列出部分相关topic（从命中的topic全集里按语义相似度指标排序取前 5），让用户选择从哪个topic开始，并基于选择的Topic所属KG中的Topic Order规划处一个大纲路径(包含从该KG中从当前Topic开始剩余的所有Topic),UI界面为线性学习.若当前Topic已经是末端,则进包含当前这一个Topic.然后,系统立刻生成大纲中第一个Topic(也就是选中的Topic)对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
+        - 宽泛目标（比如想学微积分）：提供一个返回菜单，列出部分相关topic（从命中的topic全集里按语义相似度降序取前 5，同时只保留与最佳命中相似度差值不超过阈值的topic，不为凑满5项添加低相关内容），让用户选择从哪个topic开始，并基于选择的Topic所属KG中的Topic Order规划处一个大纲路径(包含从该KG中从当前Topic开始剩余的所有Topic),UI界面为线性学习.若当前Topic已经是末端,则进包含当前这一个Topic.然后,系统立刻生成大纲中第一个Topic(也就是选中的Topic)对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
+        - 跨学科KG选择：按每个KG最强的3个命中做归一化衰减加权，避免某个KG因为返回了更多中等相关的节点，把实际拥有最强命中的KG挤掉。
         - 暂时不考虑太模糊或者库里没有的情况，只做提醒： 请重新输入更具体的学习目标，或者联系我们添加相关Course内容。）
       2. 如果用户描述/学习画像字段不为空走如下流程
          - example：用户说“我想学牛顿力学”→ 定位到 physics KG 的 topic -> 查询目前是否已经有了关于这个KG的大纲信息, 如果已经有了则在旧大纲路径下产出当前请求的Lesson. 如果没有则继续→ 获取Physic KG中从定位 topic 往后的所有Topic中的Concept → 读取用户对这些 Concept 的 mastery状态,决定哪些跳过、哪些快速复习、哪些补救（可以为空）-> 然后根据前面信息产出一个大纲路径(包含从该KG中从当前Topic开始剩余的所有Topic)系统立刻生成大纲中第一个Topic对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
