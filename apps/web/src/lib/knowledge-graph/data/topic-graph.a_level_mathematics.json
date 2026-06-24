@@ -2,32 +2,37 @@
   "graphId": "a_level_mathematics",
   "subject": "A-Level Mathematics (CIE 9709)",
   "generatedFrom": "temple/a_level_mathematics.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "mat_algebra_part1",
       "name": "Algebra and Functions (Part 1)",
+      "nameZh": "代数与函数 (第一部分)",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "mat_indices_surds",
           "name": "Indices and Surds",
+          "nameZh": "指数与根式",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_quadratics",
           "name": "Quadratic Functions",
+          "nameZh": "二次函数",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_solve_quadratics",
           "name": "Solving Quadratics and Discriminant",
+          "nameZh": "二次方程求解",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_simultaneous",
           "name": "Simultaneous Equations",
+          "nameZh": "联立方程",
           "defaultOrder": 4
         }
       ],
@@ -59,26 +64,31 @@
     {
       "topicId": "mat_algebra_part2",
       "name": "Algebra and Functions (Part 2)",
+      "nameZh": "代数与函数 (第二部分)",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "mat_inequalities",
           "name": "Inequalities",
+          "nameZh": "不等式",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_functions",
           "name": "Functions and Inverses",
+          "nameZh": "函数与反函数",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_composite",
           "name": "Composite Functions",
+          "nameZh": "复合函数",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_modulus",
           "name": "Modulus Function",
+          "nameZh": "绝对值函数",
           "defaultOrder": 4
         }
       ],
@@ -91,21 +101,25 @@
     {
       "topicId": "mat_polynomials",
       "name": "Polynomials and Partial Fractions",
+      "nameZh": "多项式与部分分式",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "mat_poly_division",
           "name": "Polynomial Division",
+          "nameZh": "多项式除法",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_factor_theorem",
           "name": "Factor and Remainder Theorem",
+          "nameZh": "因式与余式定理",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_partial_fractions",
           "name": "Partial Fractions",
+          "nameZh": "部分分式",
           "defaultOrder": 3
         }
       ],
@@ -121,21 +135,25 @@
     {
       "topicId": "mat_coord_geom",
       "name": "Coordinate Geometry",
+      "nameZh": "坐标几何",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "mat_straight_lines",
           "name": "Straight Lines",
+          "nameZh": "直线",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_parallel_perp",
           "name": "Parallel and Perpendicular Lines",
+          "nameZh": "平行与垂直直线",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_circles",
           "name": "Circles",
+          "nameZh": "圆",
           "defaultOrder": 3
         }
       ],
@@ -146,26 +164,31 @@
     {
       "topicId": "mat_sequences",
       "name": "Sequences and Series",
+      "nameZh": "数列与级数",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "mat_arithmetic",
           "name": "Arithmetic Series",
+          "nameZh": "等差级数",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_geometric",
           "name": "Geometric Series",
+          "nameZh": "等比级数",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_binomial_pos",
           "name": "Binomial Expansion (positive integer)",
+          "nameZh": "二项展开（正整数）",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_binomial_gen",
           "name": "Binomial Expansion (general index)",
+          "nameZh": "二项展开（一般指数）",
           "defaultOrder": 4
         }
       ],
@@ -178,21 +201,25 @@
     {
       "topicId": "mat_trig_part1",
       "name": "Trigonometry (Part 1)",
+      "nameZh": "三角学 (第一部分)",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "mat_trig_ratios",
           "name": "Trig Ratios and Graphs",
+          "nameZh": "三角函数与图像",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_radians",
           "name": "Radian Measure",
+          "nameZh": "弧度制",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_trig_identities",
           "name": "Trig Identities",
+          "nameZh": "三角恒等式",
           "defaultOrder": 3
         }
       ],
@@ -208,21 +235,25 @@
     {
       "topicId": "mat_trig_part2",
       "name": "Trigonometry (Part 2)",
+      "nameZh": "三角学 (第二部分)",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "mat_solve_trig",
           "name": "Solving Trig Equations",
+          "nameZh": "解三角方程",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_double_angle",
           "name": "Compound and Double Angle Formulae",
+          "nameZh": "倍角与和差公式",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_rform",
           "name": "R-Formula",
+          "nameZh": "R 公式",
           "defaultOrder": 3
         }
       ],
@@ -235,26 +266,31 @@
     {
       "topicId": "mat_exp_log",
       "name": "Exponentials and Logarithms",
+      "nameZh": "指数与对数",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "mat_exp_func",
           "name": "Exponential Functions",
+          "nameZh": "指数函数",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_log_laws",
           "name": "Logarithms and Laws",
+          "nameZh": "对数与法则",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_solve_exp",
           "name": "Solving Exponential and Log Equations",
+          "nameZh": "解指数与对数方程",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_linearise",
           "name": "Linearising with Logarithms",
+          "nameZh": "对数线性化",
           "defaultOrder": 4
         }
       ],
@@ -267,21 +303,25 @@
     {
       "topicId": "mat_differentiation_part1",
       "name": "Differentiation (Basic) (Part 1)",
+      "nameZh": "微分 (第一部分)",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "mat_first_principles",
           "name": "Differentiation from First Principles",
+          "nameZh": "从原理求导",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_power_rule",
           "name": "Power Rule",
+          "nameZh": "幂法则",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_chain_rule",
           "name": "Chain Rule",
+          "nameZh": "链式法则",
           "defaultOrder": 3
         }
       ],
@@ -305,21 +345,25 @@
     {
       "topicId": "mat_differentiation_part2",
       "name": "Differentiation (Basic) (Part 2)",
+      "nameZh": "微分 (第二部分)",
       "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "mat_tangent_normal",
           "name": "Tangents and Normals",
+          "nameZh": "切线与法线",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_stationary",
           "name": "Stationary Points",
+          "nameZh": "极值点",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_rates",
           "name": "Connected Rates of Change",
+          "nameZh": "相关变化率",
           "defaultOrder": 3
         }
       ],
@@ -332,26 +376,31 @@
     {
       "topicId": "mat_differentiation_adv",
       "name": "Differentiation (Advanced)",
+      "nameZh": "进阶微分",
       "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "mat_product_quotient",
           "name": "Product and Quotient Rules",
+          "nameZh": "积商法则",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_special_derivatives",
           "name": "Derivatives of Special Functions",
+          "nameZh": "特殊函数导数",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_implicit",
           "name": "Implicit Differentiation",
+          "nameZh": "隐函数微分",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_parametric",
           "name": "Parametric Differentiation",
+          "nameZh": "参数微分",
           "defaultOrder": 4
         }
       ],
@@ -377,26 +426,31 @@
     {
       "topicId": "mat_integration_part1",
       "name": "Integration (Part 1)",
+      "nameZh": "积分 (第一部分)",
       "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "mat_indefinite",
           "name": "Indefinite Integration",
+          "nameZh": "不定积分",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_definite_area",
           "name": "Definite Integration and Area",
+          "nameZh": "定积分与面积",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_standard_integrals",
           "name": "Integration of Standard Functions",
+          "nameZh": "标准函数积分",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_substitution",
           "name": "Integration by Substitution",
+          "nameZh": "换元积分",
           "defaultOrder": 4
         }
       ],
@@ -419,21 +473,25 @@
     {
       "topicId": "mat_integration_part2",
       "name": "Integration (Part 2)",
+      "nameZh": "积分 (第二部分)",
       "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "mat_by_parts",
           "name": "Integration by Parts",
+          "nameZh": "分部积分",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_int_partial",
           "name": "Integration using Partial Fractions",
+          "nameZh": "部分分式积分",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_volumes",
           "name": "Volumes of Revolution",
+          "nameZh": "旋转体体积",
           "defaultOrder": 3
         }
       ],
@@ -448,26 +506,31 @@
     {
       "topicId": "mat_numerical__mat_diff_eq",
       "name": "Numerical Methods for Equations",
+      "nameZh": "方程的数值方法",
       "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "mat_locate_roots",
           "name": "Locating Roots",
+          "nameZh": "根的定位",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_iteration",
           "name": "Iterative Methods",
+          "nameZh": "迭代法",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_form_de",
           "name": "Forming Differential Equations",
+          "nameZh": "建立微分方程",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_separation",
           "name": "Separation of Variables",
+          "nameZh": "分离变量",
           "defaultOrder": 4
         }
       ],
@@ -481,26 +544,31 @@
     {
       "topicId": "mat_vectors",
       "name": "Vectors",
+      "nameZh": "向量",
       "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "mat_vector_basics",
           "name": "Vectors in 2D and 3D",
+          "nameZh": "向量基础",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_vector_magnitude",
           "name": "Magnitude and Direction",
+          "nameZh": "大小与方向",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_scalar_product",
           "name": "Scalar Product",
+          "nameZh": "标量积",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_vector_lines",
           "name": "Vector Equations of Lines",
+          "nameZh": "直线向量方程",
           "defaultOrder": 4
         }
       ],
@@ -511,26 +579,31 @@
     {
       "topicId": "mat_complex",
       "name": "Complex Numbers",
+      "nameZh": "复数",
       "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "mat_complex_arith",
           "name": "Complex Number Arithmetic",
+          "nameZh": "复数运算",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_argand",
           "name": "Argand Diagram",
+          "nameZh": "阿根图",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_mod_arg",
           "name": "Modulus-Argument Form",
+          "nameZh": "模角形式",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_complex_loci",
           "name": "Complex Roots and Loci",
+          "nameZh": "复数根与轨迹",
           "defaultOrder": 4
         }
       ],
@@ -543,21 +616,25 @@
     {
       "topicId": "mat_mech_kinematics",
       "name": "Mechanics: Kinematics",
+      "nameZh": "运动学",
       "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "mat_kin_constant",
           "name": "Kinematics with Constant Acceleration",
+          "nameZh": "匀加速运动",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_kin_variable",
           "name": "Variable Acceleration",
+          "nameZh": "变加速运动",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_projectiles",
           "name": "Projectiles",
+          "nameZh": "抛体运动",
           "defaultOrder": 3
         }
       ],
@@ -570,21 +647,25 @@
     {
       "topicId": "mat_mech_forces",
       "name": "Mechanics: Forces and Newton's Laws",
+      "nameZh": "力与牛顿定律",
       "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "mat_forces_equilibrium",
           "name": "Forces and Equilibrium",
+          "nameZh": "力与平衡",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_friction",
           "name": "Friction",
+          "nameZh": "摩擦",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_newton_laws",
           "name": "Newton's Laws of Motion",
+          "nameZh": "牛顿运动定律",
           "defaultOrder": 3
         }
       ],
@@ -600,21 +681,25 @@
     {
       "topicId": "mat_mech_forces__mat_mech_energy",
       "name": "Mechanics: Connected Particles, Energy and Momentum",
+      "nameZh": "力学：连接体、能量与动量",
       "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "mat_connected_particles",
           "name": "Connected Particles",
+          "nameZh": "连接质点",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_work_energy_power",
           "name": "Work, Energy and Power",
+          "nameZh": "功、能、功率",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_momentum_impulse",
           "name": "Momentum and Impulse",
+          "nameZh": "动量与冲量",
           "defaultOrder": 3
         }
       ],
@@ -627,21 +712,25 @@
     {
       "topicId": "mat_stats_data__mat_probability",
       "name": "Data, Counting and Probability",
+      "nameZh": "数据、计数与概率",
       "defaultOrder": 20,
       "conceptIds": [
         {
           "conceptId": "mat_data_rep",
           "name": "Representation of Data",
+          "nameZh": "数据表示",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_central_spread",
           "name": "Central Tendency and Spread",
+          "nameZh": "中心趋势与离散",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_perm_comb",
           "name": "Permutations and Combinations",
+          "nameZh": "排列组合",
           "defaultOrder": 3
         }
       ],
@@ -657,21 +746,25 @@
     {
       "topicId": "mat_probability__mat_random_vars",
       "name": "Probability and Discrete Random Variables",
+      "nameZh": "概率与离散随机变量",
       "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "mat_prob_rules",
           "name": "Probability Rules",
+          "nameZh": "概率法则",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_conditional",
           "name": "Conditional Probability",
+          "nameZh": "条件概率",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_discrete_rv",
           "name": "Discrete Random Variables",
+          "nameZh": "离散随机变量",
           "defaultOrder": 3
         }
       ],
@@ -693,21 +786,25 @@
     {
       "topicId": "mat_random_vars",
       "name": "Random Variables and Distributions",
+      "nameZh": "随机变量与分布",
       "defaultOrder": 22,
       "conceptIds": [
         {
           "conceptId": "mat_binomial_dist",
           "name": "Binomial Distribution",
+          "nameZh": "二项分布",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_geometric_dist",
           "name": "Geometric Distribution",
+          "nameZh": "几何分布",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_poisson",
           "name": "Poisson Distribution",
+          "nameZh": "泊松分布",
           "defaultOrder": 3
         }
       ],
@@ -725,26 +822,31 @@
     {
       "topicId": "mat_normal__mat_inference",
       "name": "Normal Distribution and Statistical Inference",
+      "nameZh": "正态分布与统计推断",
       "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "mat_normal_dist",
           "name": "Normal Distribution",
+          "nameZh": "正态分布",
           "defaultOrder": 1
         },
         {
           "conceptId": "mat_normal_approx",
           "name": "Normal Approximations",
+          "nameZh": "正态近似",
           "defaultOrder": 2
         },
         {
           "conceptId": "mat_sampling",
           "name": "Sampling",
+          "nameZh": "抽样",
           "defaultOrder": 3
         },
         {
           "conceptId": "mat_hypothesis",
           "name": "Hypothesis Testing",
+          "nameZh": "假设检验",
           "defaultOrder": 4
         }
       ],

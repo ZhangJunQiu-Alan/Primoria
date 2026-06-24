@@ -2,32 +2,37 @@
   "graphId": "discrete_math_and_probability",
   "subject": "Discrete Math and Probability Theory",
   "generatedFrom": "temple/discrete_math_and_probability.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "topic_logic",
       "name": "Logic and Proofs",
+      "nameZh": "逻辑与证明",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "propositional_logic",
           "name": "Propositional Logic",
+          "nameZh": "命题逻辑",
           "defaultOrder": 1
         },
         {
           "conceptId": "direct_proofs",
           "name": "Direct Proofs",
+          "nameZh": "直接证明",
           "defaultOrder": 2
         },
         {
           "conceptId": "proof_by_contraposition",
           "name": "Proof by Contraposition",
+          "nameZh": "逆否证明",
           "defaultOrder": 3
         },
         {
           "conceptId": "proof_by_contradiction",
           "name": "Proof by Contradiction",
+          "nameZh": "反证法",
           "defaultOrder": 4
         }
       ],
@@ -51,26 +56,31 @@
     {
       "topicId": "topic_induction",
       "name": "Induction",
+      "nameZh": "归纳",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "simple_induction",
           "name": "Simple Induction",
+          "nameZh": "简单归纳",
           "defaultOrder": 1
         },
         {
           "conceptId": "strong_induction",
           "name": "Strong Induction",
+          "nameZh": "强归纳",
           "defaultOrder": 2
         },
         {
           "conceptId": "well_ordering_principle",
           "name": "Well-Ordering Principle",
+          "nameZh": "良序原理",
           "defaultOrder": 3
         },
         {
           "conceptId": "structural_induction",
           "name": "Structural Induction",
+          "nameZh": "结构归纳",
           "defaultOrder": 4
         }
       ],
@@ -96,26 +106,31 @@
     {
       "topicId": "topic_matching",
       "name": "Stable Matching",
+      "nameZh": "稳定匹配",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "stable_matching_problem",
           "name": "Stable Matching Problem",
+          "nameZh": "稳定匹配问题",
           "defaultOrder": 1
         },
         {
           "conceptId": "gale_shapley_algorithm",
           "name": "Gale-Shapley Algorithm",
+          "nameZh": "Gale-Shapley算法",
           "defaultOrder": 2
         },
         {
           "conceptId": "matching_optimality",
           "name": "Matching Optimality",
+          "nameZh": "匹配最优性",
           "defaultOrder": 3
         },
         {
           "conceptId": "matching_pessimality",
           "name": "Matching Pessimality",
+          "nameZh": "匹配最差性",
           "defaultOrder": 4
         }
       ],
@@ -128,31 +143,37 @@
     {
       "topicId": "topic_graphs",
       "name": "Graph Theory",
+      "nameZh": "图论",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "graph_basics",
           "name": "Graph Basics",
+          "nameZh": "图基础",
           "defaultOrder": 1
         },
         {
           "conceptId": "eulerian_tours",
           "name": "Eulerian Tours",
+          "nameZh": "欧拉回路",
           "defaultOrder": 2
         },
         {
           "conceptId": "trees",
           "name": "Trees",
+          "nameZh": "树",
           "defaultOrder": 3
         },
         {
           "conceptId": "planar_graphs",
           "name": "Planar Graphs",
+          "nameZh": "平面图",
           "defaultOrder": 4
         },
         {
           "conceptId": "hypercubes",
           "name": "Hypercubes",
+          "nameZh": "超立方体",
           "defaultOrder": 5
         }
       ],
@@ -165,26 +186,31 @@
     {
       "topicId": "topic_modular_arithmetic",
       "name": "Modular Arithmetic",
+      "nameZh": "模运算",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "euclids_algorithm",
           "name": "Euclid's Algorithm",
+          "nameZh": "欧几里得算法",
           "defaultOrder": 1
         },
         {
           "conceptId": "extended_euclid",
           "name": "Extended Euclid",
+          "nameZh": "扩展欧几里得",
           "defaultOrder": 2
         },
         {
           "conceptId": "chinese_remainder_theorem",
           "name": "Chinese Remainder Theorem",
+          "nameZh": "中国剩余定理",
           "defaultOrder": 3
         },
         {
           "conceptId": "fermats_little_theorem",
           "name": "Fermat's Little Theorem",
+          "nameZh": "费马小定理",
           "defaultOrder": 4
         }
       ],
@@ -206,26 +232,31 @@
     {
       "topicId": "topic_crypto",
       "name": "Cryptography",
+      "nameZh": "密码学",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "symmetric_cryptography",
           "name": "Symmetric Cryptography",
+          "nameZh": "对称密码",
           "defaultOrder": 1
         },
         {
           "conceptId": "rsa_setup_and_encryption",
           "name": "RSA Setup and Encryption",
+          "nameZh": "RSA设置与加密",
           "defaultOrder": 2
         },
         {
           "conceptId": "rsa_decryption_proof",
           "name": "RSA Decryption Proof",
+          "nameZh": "RSA解密证明",
           "defaultOrder": 3
         },
         {
           "conceptId": "digital_signatures",
           "name": "Digital Signatures",
+          "nameZh": "数字签名",
           "defaultOrder": 4
         }
       ],
@@ -238,26 +269,31 @@
     {
       "topicId": "topic_polynomials",
       "name": "Polynomials",
+      "nameZh": "多项式",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "polynomial_roots_and_degree",
           "name": "Polynomial Roots and Degree",
+          "nameZh": "多项式根与次数",
           "defaultOrder": 1
         },
         {
           "conceptId": "polynomial_interpolation",
           "name": "Polynomial Interpolation",
+          "nameZh": "多项式插值",
           "defaultOrder": 2
         },
         {
           "conceptId": "secret_sharing",
           "name": "Secret Sharing",
+          "nameZh": "秘密分享",
           "defaultOrder": 3
         },
         {
           "conceptId": "error_correcting_codes",
           "name": "Error Correcting Codes",
+          "nameZh": "纠错码",
           "defaultOrder": 4
         }
       ],
@@ -270,21 +306,25 @@
     {
       "topicId": "topic_countability_computability",
       "name": "Countability and Computability",
+      "nameZh": "可数性与可计算性",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "bijections_and_cardinality",
           "name": "Bijections and Cardinality",
+          "nameZh": "双射与基数",
           "defaultOrder": 1
         },
         {
           "conceptId": "cantors_diagonalization",
           "name": "Cantor's Diagonalization",
+          "nameZh": "康托尔对角线法",
           "defaultOrder": 2
         },
         {
           "conceptId": "uncountability_of_reals",
           "name": "Uncountability of Reals",
+          "nameZh": "实数不可数性",
           "defaultOrder": 3
         }
       ],
@@ -297,26 +337,31 @@
     {
       "topicId": "topic_countability_computability__topic_counting",
       "name": "Computability and Counting Foundations",
+      "nameZh": "可计算性与计数基础",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "the_halting_problem",
           "name": "The Halting Problem",
+          "nameZh": "停机问题",
           "defaultOrder": 1
         },
         {
           "conceptId": "undecidability",
           "name": "Undecidability",
+          "nameZh": "不可判定性",
           "defaultOrder": 2
         },
         {
           "conceptId": "basic_counting_rules",
           "name": "Basic Counting Rules",
+          "nameZh": "基础计数规则",
           "defaultOrder": 3
         },
         {
           "conceptId": "combinations_permutations",
           "name": "Combinations and Permutations",
+          "nameZh": "组合与排列",
           "defaultOrder": 4
         }
       ],
@@ -338,21 +383,25 @@
     {
       "topicId": "topic_counting",
       "name": "Counting",
+      "nameZh": "计数",
       "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "combinatorial_proofs",
           "name": "Combinatorial Proofs",
+          "nameZh": "组合证明",
           "defaultOrder": 1
         },
         {
           "conceptId": "stars_and_bars",
           "name": "Stars and Bars",
+          "nameZh": "星号与条形法",
           "defaultOrder": 2
         },
         {
           "conceptId": "inclusion_exclusion",
           "name": "Inclusion-Exclusion",
+          "nameZh": "容斥原理",
           "defaultOrder": 3
         }
       ],
@@ -365,26 +414,31 @@
     {
       "topicId": "topic_discrete_prob",
       "name": "Discrete Probability",
+      "nameZh": "离散概率",
       "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "probability_spaces",
           "name": "Probability Spaces",
+          "nameZh": "概率空间",
           "defaultOrder": 1
         },
         {
           "conceptId": "conditional_probability",
           "name": "Conditional Probability",
+          "nameZh": "条件概率",
           "defaultOrder": 2
         },
         {
           "conceptId": "bayes_rule",
           "name": "Bayes' Rule",
+          "nameZh": "贝叶斯法则",
           "defaultOrder": 3
         },
         {
           "conceptId": "event_independence",
           "name": "Event Independence",
+          "nameZh": "事件独立性",
           "defaultOrder": 4
         }
       ],
@@ -406,26 +460,31 @@
     {
       "topicId": "topic_random_vars",
       "name": "Random Variables and Expectation",
+      "nameZh": "随机变量与期望",
       "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "discrete_random_variables",
           "name": "Discrete Random Variables",
+          "nameZh": "离散随机变量",
           "defaultOrder": 1
         },
         {
           "conceptId": "expectation",
           "name": "Expectation",
+          "nameZh": "期望",
           "defaultOrder": 2
         },
         {
           "conceptId": "linearity_of_expectation",
           "name": "Linearity of Expectation",
+          "nameZh": "期望的线性",
           "defaultOrder": 3
         },
         {
           "conceptId": "variance_and_covariance",
           "name": "Variance and Covariance",
+          "nameZh": "方差与协方差",
           "defaultOrder": 4
         }
       ],
@@ -455,26 +514,31 @@
     {
       "topicId": "topic_discrete_dists",
       "name": "Discrete Distributions",
+      "nameZh": "离散分布",
       "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "bernoulli_binomial_distributions",
           "name": "Bernoulli and Binomial Distributions",
+          "nameZh": "伯努利与二项分布",
           "defaultOrder": 1
         },
         {
           "conceptId": "geometric_distribution",
           "name": "Geometric Distribution",
+          "nameZh": "几何分布",
           "defaultOrder": 2
         },
         {
           "conceptId": "poisson_distribution",
           "name": "Poisson Distribution",
+          "nameZh": "泊松分布",
           "defaultOrder": 3
         },
         {
           "conceptId": "hypergeometric_distribution",
           "name": "Hypergeometric Distribution",
+          "nameZh": "超几何分布",
           "defaultOrder": 4
         }
       ],
@@ -487,21 +551,25 @@
     {
       "topicId": "topic_continuous_prob",
       "name": "Continuous Probability",
+      "nameZh": "连续概率",
       "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "continuous_random_variables",
           "name": "Continuous Random Variables",
+          "nameZh": "连续随机变量",
           "defaultOrder": 1
         },
         {
           "conceptId": "probability_density_function",
           "name": "Probability Density Function",
+          "nameZh": "概率密度函数",
           "defaultOrder": 2
         },
         {
           "conceptId": "cumulative_distribution_function",
           "name": "Cumulative Distribution Function",
+          "nameZh": "累积分布函数",
           "defaultOrder": 3
         }
       ],
@@ -519,26 +587,31 @@
     {
       "topicId": "topic_continuous_prob__topic_concentration",
       "name": "Continuous Probability and Concentration Bounds",
+      "nameZh": "连续概率与集中界",
       "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "uniform_exponential_distributions",
           "name": "Uniform and Exponential Distributions",
+          "nameZh": "均匀与指数分布",
           "defaultOrder": 1
         },
         {
           "conceptId": "normal_distribution",
           "name": "Normal Distribution",
+          "nameZh": "正态分布",
           "defaultOrder": 2
         },
         {
           "conceptId": "markovs_inequality",
           "name": "Markov's Inequality",
+          "nameZh": "马尔可夫不等式",
           "defaultOrder": 3
         },
         {
           "conceptId": "chebyshevs_inequality",
           "name": "Chebyshev's Inequality",
+          "nameZh": "切比雪夫不等式",
           "defaultOrder": 4
         }
       ],
@@ -557,21 +630,25 @@
     {
       "topicId": "topic_concentration",
       "name": "Concentration Inequalities",
+      "nameZh": "集中不等式",
       "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "chernoff_bounds",
           "name": "Chernoff Bounds",
+          "nameZh": "Chernoff 不等式",
           "defaultOrder": 1
         },
         {
           "conceptId": "weak_law_of_large_numbers",
           "name": "Weak Law of Large Numbers",
+          "nameZh": "弱大数定律",
           "defaultOrder": 2
         },
         {
           "conceptId": "central_limit_theorem",
           "name": "Central Limit Theorem",
+          "nameZh": "中心极限定理",
           "defaultOrder": 3
         }
       ],
@@ -584,26 +661,31 @@
     {
       "topicId": "topic_markov",
       "name": "Markov Chains",
+      "nameZh": "马尔可夫链",
       "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "markov_chains_basics",
           "name": "Markov Chains Basics",
+          "nameZh": "马尔可夫链基础",
           "defaultOrder": 1
         },
         {
           "conceptId": "hitting_times",
           "name": "Hitting Times",
+          "nameZh": "首达时间",
           "defaultOrder": 2
         },
         {
           "conceptId": "stationary_distributions",
           "name": "Stationary Distributions",
+          "nameZh": "平稳分布",
           "defaultOrder": 3
         },
         {
           "conceptId": "page_rank_algorithm",
           "name": "PageRank Algorithm",
+          "nameZh": "PageRank 算法",
           "defaultOrder": 4
         }
       ],

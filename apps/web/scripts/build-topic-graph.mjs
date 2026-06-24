@@ -30,6 +30,7 @@ function buildOne(graphId) {
       topics.set(node.id, {
         topicId: node.id,
         name: node.name,
+        nameZh: node.name_zh ?? null,
         defaultOrder: node.default_order,
         conceptIds: [],
         successors: [], // {topicId, hard}
@@ -40,7 +41,7 @@ function buildOne(graphId) {
   for (const node of graph.nodes) {
     if (node.kind === "concept") {
       conceptTopic.set(node.id, node.topic);
-      topics.get(node.topic).conceptIds.push({ conceptId: node.id, name: node.name, defaultOrder: node.default_order });
+      topics.get(node.topic).conceptIds.push({ conceptId: node.id, name: node.name, nameZh: node.name_zh ?? null, defaultOrder: node.default_order });
     }
   }
 

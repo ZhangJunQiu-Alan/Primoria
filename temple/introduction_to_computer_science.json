@@ -15,7 +15,8 @@
       "kind": "topic",
       "name": "Week 0: Scratch",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "第 0 周：Scratch"
     },
     {
       "id": "c_functions",
@@ -23,7 +24,8 @@
       "topic": "topic_week0",
       "kind": "concept",
       "default_order": 1,
-      "description": "Reusable named blocks of code that take inputs and produce outputs, letting programs be organised into smaller, composable, repeatable pieces."
+      "description": "Reusable named blocks of code that take inputs and produce outputs, letting programs be organised into smaller, composable, repeatable pieces.",
+      "name_zh": "函数"
     },
     {
       "id": "c_events",
@@ -31,7 +33,8 @@
       "topic": "topic_week0",
       "kind": "concept",
       "default_order": 2,
-      "description": "Programming constructs that respond to occurrences such as user input or messages, central to event-driven environments like Scratch."
+      "description": "Programming constructs that respond to occurrences such as user input or messages, central to event-driven environments like Scratch.",
+      "name_zh": "事件"
     },
     {
       "id": "c_conditions",
@@ -39,14 +42,16 @@
       "topic": "topic_week0",
       "kind": "concept",
       "default_order": 3,
-      "description": "Conditional statements that execute different code branches depending on whether a boolean expression evaluates to true or false."
+      "description": "Conditional statements that execute different code branches depending on whether a boolean expression evaluates to true or false.",
+      "name_zh": "条件语句"
     },
     {
       "id": "topic_week0__topic_week1",
       "kind": "topic",
       "name": "Control Flow and C Foundations",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "控制流与 C 语言基础"
     },
     {
       "id": "c_loops",
@@ -54,7 +59,8 @@
       "topic": "topic_week0__topic_week1",
       "kind": "concept",
       "default_order": 1,
-      "description": "Control structures that repeat a block of code, either a fixed number of times or while a condition holds, to automate repetition."
+      "description": "Control structures that repeat a block of code, either a fixed number of times or while a condition holds, to automate repetition.",
+      "name_zh": "循环"
     },
     {
       "id": "c_abstraction",
@@ -62,7 +68,8 @@
       "topic": "topic_week0__topic_week1",
       "kind": "concept",
       "default_order": 2,
-      "description": "Hiding implementation detail behind simpler interfaces so complex systems can be built and reasoned about in manageable layers."
+      "description": "Hiding implementation detail behind simpler interfaces so complex systems can be built and reasoned about in manageable layers.",
+      "name_zh": "抽象"
     },
     {
       "id": "c_c_syntax",
@@ -70,14 +77,16 @@
       "topic": "topic_week0__topic_week1",
       "kind": "concept",
       "default_order": 3,
-      "description": "The grammatical rules of the C language governing how statements, expressions, and declarations are written so the compiler can interpret them."
+      "description": "The grammatical rules of the C language governing how statements, expressions, and declarations are written so the compiler can interpret them.",
+      "name_zh": "C 语法"
     },
     {
       "id": "topic_week1",
       "kind": "topic",
       "name": "Week 1: C",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "第1周：C"
     },
     {
       "id": "c_data_types",
@@ -85,7 +94,8 @@
       "topic": "topic_week1",
       "kind": "concept",
       "default_order": 1,
-      "description": "Categories such as int, char, float, and double specifying how values are stored, their size in memory, and the operations allowed on them."
+      "description": "Categories such as int, char, float, and double specifying how values are stored, their size in memory, and the operations allowed on them.",
+      "name_zh": "数据类型"
     },
     {
       "id": "c_operators",
@@ -93,7 +103,8 @@
       "topic": "topic_week1",
       "kind": "concept",
       "default_order": 2,
-      "description": "Symbols performing computations on values, including arithmetic, relational, logical, and assignment operators, combined to form expressions."
+      "description": "Symbols performing computations on values, including arithmetic, relational, logical, and assignment operators, combined to form expressions.",
+      "name_zh": "运算符"
     },
     {
       "id": "c_compilation",
@@ -101,14 +112,16 @@
       "topic": "topic_week1",
       "kind": "concept",
       "default_order": 3,
-      "description": "The process translating C source code into an executable through preprocessing, compiling, assembling, and linking stages."
+      "description": "The process translating C source code into an executable through preprocessing, compiling, assembling, and linking stages.",
+      "name_zh": "编译过程"
     },
     {
       "id": "topic_week2",
       "kind": "topic",
       "name": "Week 2: Arrays",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "第2周：数组"
     },
     {
       "id": "c_debugging",
@@ -116,7 +129,8 @@
       "topic": "topic_week2",
       "kind": "concept",
       "default_order": 1,
-      "description": "The systematic process of locating and fixing program defects using tools, print statements, and reasoning about expected versus actual behaviour."
+      "description": "The systematic process of locating and fixing program defects using tools, print statements, and reasoning about expected versus actual behaviour.",
+      "name_zh": "调试"
     },
     {
       "id": "c_arrays",
@@ -124,7 +138,8 @@
       "topic": "topic_week2",
       "kind": "concept",
       "default_order": 2,
-      "description": "Contiguous, fixed-size collections of same-typed elements accessed by integer index in constant time, the basis of many data structures."
+      "description": "Contiguous, fixed-size collections of same-typed elements accessed by integer index in constant time, the basis of many data structures.",
+      "name_zh": "数组"
     },
     {
       "id": "c_strings",
@@ -132,7 +147,8 @@
       "topic": "topic_week2",
       "kind": "concept",
       "default_order": 3,
-      "description": "Sequences of characters represented in C as null-terminated arrays of chars, manipulated through library functions and pointer operations."
+      "description": "Sequences of characters represented in C as null-terminated arrays of chars, manipulated through library functions and pointer operations.",
+      "name_zh": "字符串"
     },
     {
       "id": "c_cli_args",
@@ -140,14 +156,16 @@
       "topic": "topic_week2",
       "kind": "concept",
       "default_order": 4,
-      "description": "Arguments passed to a program at launch, received through argc and argv, letting users configure behaviour from the command line."
+      "description": "Arguments passed to a program at launch, received through argc and argv, letting users configure behaviour from the command line.",
+      "name_zh": "命令行参数"
     },
     {
       "id": "topic_week3",
       "kind": "topic",
       "name": "Week 3: Algorithms",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "第3周：算法"
     },
     {
       "id": "c_linear_search",
@@ -155,7 +173,8 @@
       "topic": "topic_week3",
       "kind": "concept",
       "default_order": 1,
-      "description": "A search algorithm scanning elements one by one until the target is found or the collection is exhausted, running in linear time."
+      "description": "A search algorithm scanning elements one by one until the target is found or the collection is exhausted, running in linear time.",
+      "name_zh": "线性搜索"
     },
     {
       "id": "c_binary_search",
@@ -163,7 +182,8 @@
       "topic": "topic_week3",
       "kind": "concept",
       "default_order": 2,
-      "description": "An efficient search on sorted data that repeatedly halves the search interval by comparing the target to the middle element, running in logarithmic time."
+      "description": "An efficient search on sorted data that repeatedly halves the search interval by comparing the target to the middle element, running in logarithmic time.",
+      "name_zh": "二分搜索"
     },
     {
       "id": "c_sorting",
@@ -171,14 +191,16 @@
       "topic": "topic_week3",
       "kind": "concept",
       "default_order": 3,
-      "description": "Algorithms arranging elements into order, such as bubble, selection, and merge sort, differing in strategy and time complexity."
+      "description": "Algorithms arranging elements into order, such as bubble, selection, and merge sort, differing in strategy and time complexity.",
+      "name_zh": "排序算法"
     },
     {
       "id": "topic_week3__topic_week4",
       "kind": "topic",
       "name": "Algorithmic Complexity and Memory",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "算法复杂度与内存"
     },
     {
       "id": "c_recursion",
@@ -186,7 +208,8 @@
       "topic": "topic_week3__topic_week4",
       "kind": "concept",
       "default_order": 1,
-      "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate."
+      "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate.",
+      "name_zh": "递归"
     },
     {
       "id": "c_big_o",
@@ -194,7 +217,8 @@
       "topic": "topic_week3__topic_week4",
       "kind": "concept",
       "default_order": 2,
-      "description": "Big O notation describing how an algorithm's running time or space grows with input size, characterising worst-case asymptotic efficiency."
+      "description": "Big O notation describing how an algorithm's running time or space grows with input size, characterising worst-case asymptotic efficiency.",
+      "name_zh": "大O表示法"
     },
     {
       "id": "c_pointers",
@@ -202,14 +226,16 @@
       "topic": "topic_week3__topic_week4",
       "kind": "concept",
       "default_order": 3,
-      "description": "Variables storing memory addresses, enabling indirect access, dynamic data structures, and efficient passing of data by reference in C."
+      "description": "Variables storing memory addresses, enabling indirect access, dynamic data structures, and efficient passing of data by reference in C.",
+      "name_zh": "指针"
     },
     {
       "id": "topic_week4",
       "kind": "topic",
       "name": "Week 4: Memory",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "第4周：内存"
     },
     {
       "id": "c_malloc",
@@ -217,7 +243,8 @@
       "topic": "topic_week4",
       "kind": "concept",
       "default_order": 1,
-      "description": "Dynamic memory allocation requesting heap memory at run time with malloc and releasing it with free, enabling data sized during execution."
+      "description": "Dynamic memory allocation requesting heap memory at run time with malloc and releasing it with free, enabling data sized during execution.",
+      "name_zh": "动态内存分配"
     },
     {
       "id": "c_call_stack",
@@ -225,7 +252,8 @@
       "topic": "topic_week4",
       "kind": "concept",
       "default_order": 2,
-      "description": "The region of memory tracking active function calls, storing each call's local variables, parameters, and return address in stack frames."
+      "description": "The region of memory tracking active function calls, storing each call's local variables, parameters, and return address in stack frames.",
+      "name_zh": "调用栈"
     },
     {
       "id": "c_file_io",
@@ -233,14 +261,16 @@
       "topic": "topic_week4",
       "kind": "concept",
       "default_order": 3,
-      "description": "Reading from and writing to files using library functions, enabling programs to persist and retrieve data beyond their execution."
+      "description": "Reading from and writing to files using library functions, enabling programs to persist and retrieve data beyond their execution.",
+      "name_zh": "文件I/O"
     },
     {
       "id": "topic_week5",
       "kind": "topic",
       "name": "Week 5: Data Structures",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "第5周：数据结构"
     },
     {
       "id": "c_linked_lists",
@@ -248,7 +278,8 @@
       "topic": "topic_week5",
       "kind": "concept",
       "default_order": 1,
-      "description": "A dynamic data structure of nodes each holding data and a pointer to the next, allowing efficient insertion and deletion without contiguous memory."
+      "description": "A dynamic data structure of nodes each holding data and a pointer to the next, allowing efficient insertion and deletion without contiguous memory.",
+      "name_zh": "链表"
     },
     {
       "id": "c_hash_tables",
@@ -256,7 +287,8 @@
       "topic": "topic_week5",
       "kind": "concept",
       "default_order": 2,
-      "description": "A structure mapping keys to values using a hash function to index into buckets, giving average constant-time insertion and lookup."
+      "description": "A structure mapping keys to values using a hash function to index into buckets, giving average constant-time insertion and lookup.",
+      "name_zh": "哈希表"
     },
     {
       "id": "c_trees",
@@ -264,14 +296,16 @@
       "topic": "topic_week5",
       "kind": "concept",
       "default_order": 3,
-      "description": "Hierarchical data structures of nodes linked from a root, such as binary search trees, enabling efficient ordered storage and lookup."
+      "description": "Hierarchical data structures of nodes linked from a root, such as binary search trees, enabling efficient ordered storage and lookup.",
+      "name_zh": "树"
     },
     {
       "id": "topic_week5__topic_week6",
       "kind": "topic",
       "name": "Advanced Data Structures and Python",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "高级数据结构与 Python"
     },
     {
       "id": "c_tries",
@@ -279,7 +313,8 @@
       "topic": "topic_week5__topic_week6",
       "kind": "concept",
       "default_order": 1,
-      "description": "Tree structures indexing strings by their characters along paths, enabling fast prefix-based search and autocomplete at the cost of memory."
+      "description": "Tree structures indexing strings by their characters along paths, enabling fast prefix-based search and autocomplete at the cost of memory.",
+      "name_zh": "字典树"
     },
     {
       "id": "c_queues_stacks",
@@ -287,7 +322,8 @@
       "topic": "topic_week5__topic_week6",
       "kind": "concept",
       "default_order": 2,
-      "description": "Two abstract data types: stacks following last-in-first-out order and queues following first-in-first-out order, for managing ordered access."
+      "description": "Two abstract data types: stacks following last-in-first-out order and queues following first-in-first-out order, for managing ordered access.",
+      "name_zh": "队列与栈"
     },
     {
       "id": "c_python_syntax",
@@ -295,14 +331,16 @@
       "topic": "topic_week5__topic_week6",
       "kind": "concept",
       "default_order": 3,
-      "description": "The readable, indentation-based syntax of Python, a high-level interpreted language emphasising concise expression of common programming constructs."
+      "description": "The readable, indentation-based syntax of Python, a high-level interpreted language emphasising concise expression of common programming constructs.",
+      "name_zh": "Python 语法"
     },
     {
       "id": "topic_week6",
       "kind": "topic",
       "name": "Week 6: Python",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "第6周：Python"
     },
     {
       "id": "c_lists_dicts",
@@ -310,7 +348,8 @@
       "topic": "topic_week6",
       "kind": "concept",
       "default_order": 1,
-      "description": "Python's core collections: ordered, mutable lists and dictionaries mapping keys to values, supporting flexible data manipulation."
+      "description": "Python's core collections: ordered, mutable lists and dictionaries mapping keys to values, supporting flexible data manipulation.",
+      "name_zh": "列表和字典"
     },
     {
       "id": "c_oop",
@@ -318,7 +357,8 @@
       "topic": "topic_week6",
       "kind": "concept",
       "default_order": 2,
-      "description": "Object-oriented programming in Python organising code into classes that bundle data and methods, supporting encapsulation, inheritance, and reuse."
+      "description": "Object-oriented programming in Python organising code into classes that bundle data and methods, supporting encapsulation, inheritance, and reuse.",
+      "name_zh": "OOP"
     },
     {
       "id": "c_exceptions",
@@ -326,14 +366,16 @@
       "topic": "topic_week6",
       "kind": "concept",
       "default_order": 3,
-      "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic."
+      "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic.",
+      "name_zh": "异常"
     },
     {
       "id": "topic_week7",
       "kind": "topic",
       "name": "Week 7: SQL",
       "topic": null,
-      "default_order": 11
+      "default_order": 11,
+      "name_zh": "第7周：SQL"
     },
     {
       "id": "c_relational_db",
@@ -341,7 +383,8 @@
       "topic": "topic_week7",
       "kind": "concept",
       "default_order": 1,
-      "description": "Databases storing data in related tables of rows and columns, with keys linking tables, managed through a relational database system."
+      "description": "Databases storing data in related tables of rows and columns, with keys linking tables, managed through a relational database system.",
+      "name_zh": "关系数据库"
     },
     {
       "id": "c_sql_queries",
@@ -349,7 +392,8 @@
       "topic": "topic_week7",
       "kind": "concept",
       "default_order": 2,
-      "description": "SQL statements that retrieve and modify data in relational tables, expressing selection, filtering, and ordering declaratively."
+      "description": "SQL statements that retrieve and modify data in relational tables, expressing selection, filtering, and ordering declaratively.",
+      "name_zh": "SQL查询"
     },
     {
       "id": "c_joins",
@@ -357,7 +401,8 @@
       "topic": "topic_week7",
       "kind": "concept",
       "default_order": 3,
-      "description": "SQL joins combining rows from multiple tables based on related columns, enabling queries that span relationships between tables."
+      "description": "SQL joins combining rows from multiple tables based on related columns, enabling queries that span relationships between tables.",
+      "name_zh": "SQL连接"
     },
     {
       "id": "c_indexes",
@@ -365,14 +410,16 @@
       "topic": "topic_week7",
       "kind": "concept",
       "default_order": 4,
-      "description": "Database indexes, auxiliary structures that speed up lookups on chosen columns at the cost of extra storage and slower writes."
+      "description": "Database indexes, auxiliary structures that speed up lookups on chosen columns at the cost of extra storage and slower writes.",
+      "name_zh": "SQL索引"
     },
     {
       "id": "topic_week8",
       "kind": "topic",
       "name": "Week 8: HTML, CSS, JavaScript",
       "topic": null,
-      "default_order": 12
+      "default_order": 12,
+      "name_zh": "第8周：HTML, CSS, JavaScript"
     },
     {
       "id": "c_html",
@@ -380,7 +427,8 @@
       "topic": "topic_week8",
       "kind": "concept",
       "default_order": 1,
-      "description": "HyperText Markup Language defining the structure and content of web pages through nested, semantic tags rendered by browsers."
+      "description": "HyperText Markup Language defining the structure and content of web pages through nested, semantic tags rendered by browsers.",
+      "name_zh": "HTML"
     },
     {
       "id": "c_css",
@@ -388,7 +436,8 @@
       "topic": "topic_week8",
       "kind": "concept",
       "default_order": 2,
-      "description": "Cascading Style Sheets controlling the visual presentation of HTML, including layout, colours, fonts, and responsive design via rules."
+      "description": "Cascading Style Sheets controlling the visual presentation of HTML, including layout, colours, fonts, and responsive design via rules.",
+      "name_zh": "CSS"
     },
     {
       "id": "c_js",
@@ -396,7 +445,8 @@
       "topic": "topic_week8",
       "kind": "concept",
       "default_order": 3,
-      "description": "JavaScript, the browser's programming language adding interactivity and dynamic behaviour to web pages through an event-driven model."
+      "description": "JavaScript, the browser's programming language adding interactivity and dynamic behaviour to web pages through an event-driven model.",
+      "name_zh": "JavaScript"
     },
     {
       "id": "c_dom",
@@ -404,14 +454,16 @@
       "topic": "topic_week8",
       "kind": "concept",
       "default_order": 4,
-      "description": "The Document Object Model, a tree representation of a web page that JavaScript can read and modify to update content dynamically."
+      "description": "The Document Object Model, a tree representation of a web page that JavaScript can read and modify to update content dynamically.",
+      "name_zh": "DOM 操作"
     },
     {
       "id": "topic_week9",
       "kind": "topic",
       "name": "Week 9: Flask",
       "topic": null,
-      "default_order": 13
+      "default_order": 13,
+      "name_zh": "第9周：Flask"
     },
     {
       "id": "c_http",
@@ -419,7 +471,8 @@
       "topic": "topic_week9",
       "kind": "concept",
       "default_order": 1,
-      "description": "The HyperText Transfer Protocol governing request-response communication between web clients and servers using methods and status codes."
+      "description": "The HyperText Transfer Protocol governing request-response communication between web clients and servers using methods and status codes.",
+      "name_zh": "HTTP 协议"
     },
     {
       "id": "c_flask",
@@ -427,7 +480,8 @@
       "topic": "topic_week9",
       "kind": "concept",
       "default_order": 2,
-      "description": "Flask, a lightweight Python web framework for building web applications and APIs by mapping URL routes to handler functions."
+      "description": "Flask, a lightweight Python web framework for building web applications and APIs by mapping URL routes to handler functions.",
+      "name_zh": "Flask 框架"
     },
     {
       "id": "c_mvc",
@@ -435,14 +489,16 @@
       "topic": "topic_week9",
       "kind": "concept",
       "default_order": 3,
-      "description": "The Model-View-Controller pattern separating data, presentation, and control logic to organise web application code cleanly."
+      "description": "The Model-View-Controller pattern separating data, presentation, and control logic to organise web application code cleanly.",
+      "name_zh": "MVC 架构"
     },
     {
       "id": "topic_week9__topic_week10",
       "kind": "topic",
       "name": "Web State, APIs and Security",
       "topic": null,
-      "default_order": 14
+      "default_order": 14,
+      "name_zh": "Web 状态、API 与安全"
     },
     {
       "id": "c_sessions",
@@ -450,7 +506,8 @@
       "topic": "topic_week9__topic_week10",
       "kind": "concept",
       "default_order": 1,
-      "description": "Sessions and cookies maintaining state across stateless HTTP requests, identifying users and remembering data between page visits."
+      "description": "Sessions and cookies maintaining state across stateless HTTP requests, identifying users and remembering data between page visits.",
+      "name_zh": "会话与 Cookie"
     },
     {
       "id": "c_apis",
@@ -458,7 +515,8 @@
       "topic": "topic_week9__topic_week10",
       "kind": "concept",
       "default_order": 2,
-      "description": "Application programming interfaces exposing functionality and data over the web, commonly returning JSON for other programs to consume."
+      "description": "Application programming interfaces exposing functionality and data over the web, commonly returning JSON for other programs to consume.",
+      "name_zh": "API"
     },
     {
       "id": "c_cybersecurity",
@@ -466,14 +524,16 @@
       "topic": "topic_week9__topic_week10",
       "kind": "concept",
       "default_order": 3,
-      "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information."
+      "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information.",
+      "name_zh": "网络安全基础"
     },
     {
       "id": "topic_week10",
       "kind": "topic",
       "name": "Week 10: Cybersecurity",
       "topic": null,
-      "default_order": 15
+      "default_order": 15,
+      "name_zh": "第10周：网络安全"
     },
     {
       "id": "c_encryption",
@@ -481,7 +541,8 @@
       "topic": "topic_week10",
       "kind": "concept",
       "default_order": 1,
-      "description": "Transforming data into ciphertext using algorithms and keys so that only authorised parties can read it, underpinning secure communication."
+      "description": "Transforming data into ciphertext using algorithms and keys so that only authorised parties can read it, underpinning secure communication.",
+      "name_zh": "加密"
     },
     {
       "id": "c_authentication",
@@ -489,7 +550,8 @@
       "topic": "topic_week10",
       "kind": "concept",
       "default_order": 2,
-      "description": "Verifying the identity of a user or system, typically through passwords, tokens, or biometrics, before granting access to resources."
+      "description": "Verifying the identity of a user or system, typically through passwords, tokens, or biometrics, before granting access to resources.",
+      "name_zh": "身份认证"
     },
     {
       "id": "c_vulnerabilities",
@@ -497,7 +559,8 @@
       "topic": "topic_week10",
       "kind": "concept",
       "default_order": 3,
-      "description": "Weaknesses in software or systems that attackers can exploit, such as injection or buffer overflows, requiring mitigation and patching."
+      "description": "Weaknesses in software or systems that attackers can exploit, such as injection or buffer overflows, requiring mitigation and patching.",
+      "name_zh": "安全漏洞"
     }
   ],
   "edges": [

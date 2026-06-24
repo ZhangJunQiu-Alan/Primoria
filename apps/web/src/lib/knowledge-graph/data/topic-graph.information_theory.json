@@ -2,27 +2,31 @@
   "graphId": "information_theory",
   "subject": "Information Theory and Entropy",
   "generatedFrom": "temple/information_theory.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_infotheory_basics",
       "name": "Entropy and Information Measures",
+      "nameZh": "熵与信息测度",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "c_infotheory_entropy",
           "name": "Shannon Entropy",
+          "nameZh": "香农熵",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_infotheory_joint_entropy",
           "name": "Joint and Conditional Entropy",
+          "nameZh": "联合与条件熵",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_infotheory_mutual_info",
           "name": "Mutual Information",
+          "nameZh": "互信息",
           "defaultOrder": 3
         }
       ],
@@ -46,21 +50,25 @@
     {
       "topicId": "t_infotheory_basics__t_infotheory_source_coding",
       "name": "Information Measures and Typicality",
+      "nameZh": "信息测度与典型性",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "c_infotheory_kl_divergence",
           "name": "Kullback-Leibler Divergence",
+          "nameZh": "KL 散度",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_infotheory_data_processing",
           "name": "Data Processing Inequality",
+          "nameZh": "数据处理不等式",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_infotheory_aep",
           "name": "Asymptotic Equipartition Property",
+          "nameZh": "渐近等分特性",
           "defaultOrder": 3
         }
       ],
@@ -82,21 +90,25 @@
     {
       "topicId": "t_infotheory_source_coding",
       "name": "Source Coding",
+      "nameZh": "信源编码",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "c_infotheory_kraft",
           "name": "Kraft Inequality",
+          "nameZh": "Kraft 不等式",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_infotheory_shannon_coding",
           "name": "Shannon Source Coding Theorem",
+          "nameZh": "香农信源编码定理",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_infotheory_huffman",
           "name": "Huffman Coding",
+          "nameZh": "Huffman 编码",
           "defaultOrder": 3
         }
       ],
@@ -109,21 +121,25 @@
     {
       "topicId": "t_infotheory_channel_capacity",
       "name": "Channel Capacity",
+      "nameZh": "信道容量",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_infotheory_dmc",
           "name": "Discrete Memoryless Channels",
+          "nameZh": "离散无记忆信道",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_infotheory_channel_capacity_def",
           "name": "Channel Capacity",
+          "nameZh": "信道容量定义",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_infotheory_shannon_channel",
           "name": "Shannon Channel Coding Theorem",
+          "nameZh": "香农信道编码定理",
           "defaultOrder": 3
         }
       ],
@@ -137,21 +153,25 @@
     {
       "topicId": "t_infotheory_continuous",
       "name": "Continuous Channels",
+      "nameZh": "连续信道",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c_infotheory_differential_entropy",
           "name": "Differential Entropy",
+          "nameZh": "微分熵",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_infotheory_awgn",
           "name": "AWGN Channel",
+          "nameZh": "AWGN 信道",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_infotheory_shannon_hartley",
           "name": "Shannon-Hartley Theorem",
+          "nameZh": "香农-哈特利定理",
           "defaultOrder": 3
         }
       ],

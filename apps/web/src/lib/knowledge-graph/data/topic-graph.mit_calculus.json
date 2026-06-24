@@ -2,27 +2,31 @@
   "graphId": "mit_calculus",
   "subject": "Calculus",
   "generatedFrom": "temple/mit_calculus.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_1801_differentiation",
       "name": "Differentiation",
+      "nameZh": "微分",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "c_1801_limits",
           "name": "Limits and Continuity",
+          "nameZh": "极限与连续",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_deriv_def",
           "name": "Definition of Derivative",
+          "nameZh": "导数定义",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_deriv_rules",
           "name": "Differentiation Rules",
+          "nameZh": "微分法则",
           "defaultOrder": 3
         }
       ],
@@ -66,21 +70,25 @@
     {
       "topicId": "t_1801_differentiation__t_1801_apps_diff",
       "name": "Differentiation Techniques and Related Rates",
+      "nameZh": "微分技巧与相关变化率",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "c_1801_chain_rule",
           "name": "Chain Rule",
+          "nameZh": "链式法则",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_implicit_diff",
           "name": "Implicit Differentiation",
+          "nameZh": "隐函数微分",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_related_rates",
           "name": "Related Rates",
+          "nameZh": "相关变化率",
           "defaultOrder": 3
         }
       ],
@@ -102,21 +110,25 @@
     {
       "topicId": "t_1801_apps_diff",
       "name": "Applications of Differentiation",
+      "nameZh": "微分应用",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "c_1801_linear_approx",
           "name": "Linear Approximation",
+          "nameZh": "线性近似",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_curve_sketching",
           "name": "Curve Sketching",
+          "nameZh": "曲线草图",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_mvt",
           "name": "Mean Value Theorem",
+          "nameZh": "中值定理",
           "defaultOrder": 3
         }
       ],
@@ -134,26 +146,31 @@
     {
       "topicId": "t_1801_integration",
       "name": "Integration",
+      "nameZh": "积分",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_1801_riemann_sums",
           "name": "Riemann Sums",
+          "nameZh": "黎曼和",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_definite_integral",
           "name": "Definite Integrals",
+          "nameZh": "定积分",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_ftc",
           "name": "Fundamental Theorem of Calculus",
+          "nameZh": "微积分基本定理",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_1801_substitution",
           "name": "Integration by Substitution",
+          "nameZh": "换元积分法",
           "defaultOrder": 4
         }
       ],
@@ -189,21 +206,25 @@
     {
       "topicId": "t_1801_tech_int",
       "name": "Techniques of Integration",
+      "nameZh": "积分技巧",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c_1801_parts",
           "name": "Integration by Parts",
+          "nameZh": "分部积分法",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_trig_integrals",
           "name": "Trigonometric Integrals",
+          "nameZh": "三角积分",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_trig_sub",
           "name": "Trigonometric Substitution",
+          "nameZh": "三角换元",
           "defaultOrder": 3
         }
       ],
@@ -217,21 +238,25 @@
     {
       "topicId": "t_1801_tech_int__t_1801_apps_int",
       "name": "Integration Techniques and Area",
+      "nameZh": "积分技巧与面积",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "c_1801_partial_fractions",
           "name": "Partial Fractions",
+          "nameZh": "部分分式",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_improper_int",
           "name": "Improper Integrals",
+          "nameZh": "广义积分",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_area_curves",
           "name": "Area Between Curves",
+          "nameZh": "曲线间面积",
           "defaultOrder": 3
         }
       ],
@@ -254,21 +279,25 @@
     {
       "topicId": "t_1801_apps_int",
       "name": "Applications of Integration",
+      "nameZh": "积分应用",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "c_1801_volume",
           "name": "Volumes of Solids",
+          "nameZh": "立体体积",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_arc_length",
           "name": "Arc Length",
+          "nameZh": "弧长",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_work",
           "name": "Work",
+          "nameZh": "功",
           "defaultOrder": 3
         }
       ],
@@ -282,26 +311,31 @@
     {
       "topicId": "t_1801_series",
       "name": "Infinite Series",
+      "nameZh": "无穷级数",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "c_1801_sequences",
           "name": "Sequences and Series",
+          "nameZh": "序列与级数",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1801_conv_tests",
           "name": "Convergence Tests",
+          "nameZh": "收敛性检验",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1801_power_series",
           "name": "Power Series",
+          "nameZh": "幂级数",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_1801_taylor_series",
           "name": "Taylor Series",
+          "nameZh": "泰勒级数",
           "defaultOrder": 4
         }
       ],
@@ -315,26 +349,31 @@
     {
       "topicId": "t_1802_vectors",
       "name": "Vectors and Matrices",
+      "nameZh": "向量与矩阵",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "c_1802_dot_product",
           "name": "Dot Product",
+          "nameZh": "点积",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1802_cross_product",
           "name": "Cross Product",
+          "nameZh": "叉积",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1802_lines_planes",
           "name": "Lines and Planes",
+          "nameZh": "直线与平面",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_1802_parametric_curves",
           "name": "Parametric Curves",
+          "nameZh": "参数曲线",
           "defaultOrder": 4
         }
       ],
@@ -360,26 +399,31 @@
     {
       "topicId": "t_1802_partial_diff",
       "name": "Partial Derivatives",
+      "nameZh": "偏导数",
       "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "c_1802_multivar_functions",
           "name": "Multivariable Functions",
+          "nameZh": "多元函数",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1802_partial_derivs",
           "name": "Partial Derivatives",
+          "nameZh": "偏导数",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1802_multivar_chain",
           "name": "Multivariable Chain Rule",
+          "nameZh": "多元链式法则",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_1802_gradient",
           "name": "Gradient and Directional Derivative",
+          "nameZh": "梯度与方向导数",
           "defaultOrder": 4
         }
       ],
@@ -411,26 +455,31 @@
     {
       "topicId": "t_1802_apps_partial",
       "name": "Applications of Partial Derivatives",
+      "nameZh": "偏导数应用",
       "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "c_1802_tangent_planes",
           "name": "Tangent Planes",
+          "nameZh": "切平面",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1802_local_extrema",
           "name": "Local Extrema",
+          "nameZh": "局部极值",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1802_lagrange",
           "name": "Lagrange Multipliers",
+          "nameZh": "拉格朗日乘数",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_1802_differentials",
           "name": "Differentials",
+          "nameZh": "微分",
           "defaultOrder": 4
         }
       ],
@@ -443,21 +492,25 @@
     {
       "topicId": "t_1802_multiple_int",
       "name": "Multiple Integrals",
+      "nameZh": "多重积分",
       "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "c_1802_double_integrals",
           "name": "Double Integrals",
+          "nameZh": "二重积分",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1802_polar_integrals",
           "name": "Polar Integrals",
+          "nameZh": "极坐标积分",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1802_triple_integrals",
           "name": "Triple Integrals",
+          "nameZh": "三重积分",
           "defaultOrder": 3
         }
       ],
@@ -484,21 +537,25 @@
     {
       "topicId": "t_1802_multiple_int__t_1802_vector_calc",
       "name": "Coordinate Changes and Vector Fields",
+      "nameZh": "坐标变换与向量场",
       "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "c_1802_cyl_spherical",
           "name": "Cylindrical and Spherical Coordinates",
+          "nameZh": "柱面与球坐标",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1802_jacobians",
           "name": "Change of Variables",
+          "nameZh": "变量变换",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1802_vector_fields",
           "name": "Vector Fields",
+          "nameZh": "向量场",
           "defaultOrder": 3
         }
       ],
@@ -518,21 +575,25 @@
     {
       "topicId": "t_1802_vector_calc",
       "name": "Vector Calculus",
+      "nameZh": "向量微积分",
       "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "c_1802_fundamental_line",
           "name": "Fundamental Theorem for Line Integrals",
+          "nameZh": "线积分基本定理",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1802_greens_theorem",
           "name": "Green's Theorem",
+          "nameZh": "格林定理",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1802_curl_div",
           "name": "Curl and Divergence",
+          "nameZh": "旋度与散度",
           "defaultOrder": 3
         }
       ],
@@ -553,26 +614,31 @@
     {
       "topicId": "t_1802_surface_int",
       "name": "Surface Integrals and Theorems",
+      "nameZh": "面积分与定理",
       "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "c_1802_parametric_surfaces",
           "name": "Parametric Surfaces",
+          "nameZh": "参数曲面",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_1802_surface_integrals",
           "name": "Surface Integrals",
+          "nameZh": "面积分",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_1802_stokes_theorem",
           "name": "Stokes' Theorem",
+          "nameZh": "斯托克斯定理",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_1802_divergence_theorem",
           "name": "Divergence Theorem",
+          "nameZh": "散度定理",
           "defaultOrder": 4
         }
       ],

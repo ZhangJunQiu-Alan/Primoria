@@ -3,6 +3,7 @@ import { DEFAULT_TOPIC_GRAPH_ID, TOPIC_GRAPHS } from "./data/topic-graphs.genera
 export type TopicConcept = {
   conceptId: string;
   name: string;
+  nameZh?: string | null;
   defaultOrder: number;
 };
 
@@ -14,6 +15,7 @@ export type TopicSuccessor = {
 export type TopicNode = {
   topicId: string;
   name: string;
+  nameZh?: string | null;
   defaultOrder: number;
   conceptIds: TopicConcept[];
   successors: TopicSuccessor[];

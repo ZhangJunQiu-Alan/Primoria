@@ -17,6 +17,7 @@ const RequestSchema = z.object({
   modelVersion: z.string().min(1).optional(),
   tau: z.number().min(0).max(1).optional(),
   floor: z.number().min(0).max(1).optional(),
+  language: z.string().min(1).optional(),
 });
 
 function userFacingError(error: unknown) {

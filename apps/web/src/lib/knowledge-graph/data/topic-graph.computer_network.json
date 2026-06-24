@@ -2,32 +2,37 @@
   "graphId": "computer_network",
   "subject": "Computer Networking (Stanford CS144)",
   "generatedFrom": "temple/computer_network.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "net_arch",
       "name": "Network Architecture",
+      "nameZh": "网络体系结构",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "net_layering",
           "name": "Network Layering",
+          "nameZh": "网络分层",
           "defaultOrder": 1
         },
         {
           "conceptId": "net_osi",
           "name": "OSI Model",
+          "nameZh": "OSI模型",
           "defaultOrder": 2
         },
         {
           "conceptId": "net_tcpip",
           "name": "TCP/IP Model",
+          "nameZh": "TCP/IP模型",
           "defaultOrder": 3
         },
         {
           "conceptId": "net_encapsulation",
           "name": "Encapsulation",
+          "nameZh": "封装",
           "defaultOrder": 4
         }
       ],
@@ -43,26 +48,31 @@
     {
       "topicId": "net_link",
       "name": "Link Layer",
+      "nameZh": "链路层",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "net_link_services",
           "name": "Link Layer Services",
+          "nameZh": "链路层服务",
           "defaultOrder": 1
         },
         {
           "conceptId": "net_mac",
           "name": "MAC Addressing",
+          "nameZh": "MAC地址",
           "defaultOrder": 2
         },
         {
           "conceptId": "net_ethernet",
           "name": "Ethernet",
+          "nameZh": "以太网",
           "defaultOrder": 3
         },
         {
           "conceptId": "net_switching",
           "name": "Switching",
+          "nameZh": "交换",
           "defaultOrder": 4
         }
       ],
@@ -78,26 +88,31 @@
     {
       "topicId": "net_network",
       "name": "Network Layer",
+      "nameZh": "网络层",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "net_ip_addressing",
           "name": "IP Addressing",
+          "nameZh": "IP寻址",
           "defaultOrder": 1
         },
         {
           "conceptId": "net_ipv4_ipv6",
           "name": "IPv4 and IPv6",
+          "nameZh": "IPv4与IPv6",
           "defaultOrder": 2
         },
         {
           "conceptId": "net_forwarding",
           "name": "Forwarding and Routers",
+          "nameZh": "转发与路由器",
           "defaultOrder": 3
         },
         {
           "conceptId": "net_routing",
           "name": "Routing Algorithms",
+          "nameZh": "路由算法",
           "defaultOrder": 4
         }
       ],
@@ -116,21 +131,25 @@
     {
       "topicId": "net_transport_part1",
       "name": "Transport Layer (Part 1)",
+      "nameZh": "传输层 (第一部分)",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "net_transport_services",
           "name": "Transport Layer Services",
+          "nameZh": "传输层服务",
           "defaultOrder": 1
         },
         {
           "conceptId": "net_udp",
           "name": "UDP",
+          "nameZh": "UDP",
           "defaultOrder": 2
         },
         {
           "conceptId": "net_tcp",
           "name": "TCP",
+          "nameZh": "TCP",
           "defaultOrder": 3
         }
       ],
@@ -152,21 +171,25 @@
     {
       "topicId": "net_transport_part2",
       "name": "Transport Layer (Part 2)",
+      "nameZh": "传输层 (第二部分)",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "net_rdt",
           "name": "Reliable Data Transfer",
+          "nameZh": "可靠数据传输",
           "defaultOrder": 1
         },
         {
           "conceptId": "net_flow_control",
           "name": "Flow Control",
+          "nameZh": "流量控制",
           "defaultOrder": 2
         },
         {
           "conceptId": "net_congestion",
           "name": "Congestion Control",
+          "nameZh": "拥塞控制",
           "defaultOrder": 3
         }
       ],
@@ -179,21 +202,25 @@
     {
       "topicId": "net_application",
       "name": "Application Layer",
+      "nameZh": "应用层",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "net_http",
           "name": "HTTP",
+          "nameZh": "HTTP",
           "defaultOrder": 1
         },
         {
           "conceptId": "net_dns",
           "name": "DNS",
+          "nameZh": "DNS",
           "defaultOrder": 2
         },
         {
           "conceptId": "net_app_protocols",
           "name": "Other Application Protocols",
+          "nameZh": "其他应用层协议",
           "defaultOrder": 3
         }
       ],

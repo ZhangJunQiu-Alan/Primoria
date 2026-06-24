@@ -20,7 +20,8 @@
       "kind": "topic",
       "name": "Java Basics and Syntax",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "Java基础与语法"
     },
     {
       "id": "c_ucb61b_java_basics",
@@ -28,7 +29,8 @@
       "name": "Types, Control Flow, and Functions",
       "topic": "t_ucb61b_java_intro",
       "description": "Basic syntax of Java including static typing, loops, conditionals, and defining static methods.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "类型、控制流与函数"
     },
     {
       "id": "c_ucb61b_classes_objects",
@@ -36,7 +38,8 @@
       "name": "Classes and Object Instantiation",
       "topic": "t_ucb61b_java_intro",
       "description": "Creating classes, instance variables, constructors, and instantiating objects using the 'new' keyword.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "类与对象实例化"
     },
     {
       "id": "c_ucb61b_references",
@@ -44,14 +47,16 @@
       "name": "Reference Types vs Primitive Types",
       "topic": "t_ucb61b_java_intro",
       "description": "Understanding how primitive types store values directly while reference types store memory addresses (pointers).",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "引用类型与基本类型"
     },
     {
       "id": "t_ucb61b_lists_arrays",
       "kind": "topic",
       "name": "Lists and Arrays",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "列表与数组"
     },
     {
       "id": "c_ucb61b_sllist",
@@ -59,7 +64,8 @@
       "name": "Singly Linked Lists (SLList)",
       "topic": "t_ucb61b_lists_arrays",
       "description": "Building chains of nodes connected by forward pointers, hiding raw recursive list nodes via a wrapper class.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "单向链表 (SLList)"
     },
     {
       "id": "c_ucb61b_dllist",
@@ -67,7 +73,8 @@
       "name": "Doubly Linked Lists with Sentinels",
       "topic": "t_ucb61b_lists_arrays",
       "description": "Improving list operations with backward pointers and a sentinel node to avoid null pointer edge cases.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "带头哨兵的双向链表"
     },
     {
       "id": "c_ucb61b_arrays",
@@ -75,7 +82,8 @@
       "name": "Fixed-Size Arrays",
       "topic": "t_ucb61b_lists_arrays",
       "description": "Contiguous memory structures with constant time indexing and fixed capacity.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "定长数组"
     },
     {
       "id": "c_ucb61b_alist",
@@ -83,14 +91,16 @@
       "name": "Resizing Arrays (ArrayList)",
       "topic": "t_ucb61b_lists_arrays",
       "description": "Dynamically resizing arrays through geometric expansion to achieve amortized constant time appends.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "动态数组 (ArrayList)"
     },
     {
       "id": "t_ucb61b_oop",
       "kind": "topic",
       "name": "Object-Oriented Programming",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "OOP"
     },
     {
       "id": "c_ucb61b_testing",
@@ -98,7 +108,8 @@
       "name": "Unit Testing with JUnit",
       "topic": "t_ucb61b_oop",
       "description": "Writing automated tests using JUnit assertions to verify component behaviors in isolation.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "JUnit 单元测试"
     },
     {
       "id": "c_ucb61b_interfaces",
@@ -106,7 +117,8 @@
       "name": "Interfaces and Overriding",
       "topic": "t_ucb61b_oop",
       "description": "Defining strict behavioral contracts (APIs) and implementing them via method overriding.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "接口与重写"
     },
     {
       "id": "c_ucb61b_inheritance",
@@ -114,7 +126,8 @@
       "name": "Implementation Inheritance (Extends)",
       "topic": "t_ucb61b_oop",
       "description": "Reusing code by inheriting fields and methods from a superclass using the 'extends' keyword.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "实现继承 (Extends)"
     },
     {
       "id": "c_ucb61b_polymorphism",
@@ -122,7 +135,8 @@
       "name": "Subtype Polymorphism and Dynamic Dispatch",
       "topic": "t_ucb61b_oop",
       "description": "Using supertype variables to hold subtype objects, relying on dynamic method selection at runtime.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "子类型多态与动态分派"
     },
     {
       "id": "c_ucb61b_iterators",
@@ -130,14 +144,16 @@
       "name": "Iterators and Iterables",
       "topic": "t_ucb61b_oop",
       "description": "Implementing the Iterable and Iterator interfaces to allow standard 'for-each' loop functionality.",
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "迭代器与可迭代"
     },
     {
       "id": "t_ucb61b_disjoint_sets",
       "kind": "topic",
       "name": "Disjoint Sets",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "不相交集合"
     },
     {
       "id": "c_ucb61b_quick_find",
@@ -145,7 +161,8 @@
       "name": "Quick Find",
       "topic": "t_ucb61b_disjoint_sets",
       "description": "An array-based approach to the Union-Find problem optimizing for constant-time connectivity checks.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "快速查找"
     },
     {
       "id": "c_ucb61b_quick_union",
@@ -153,7 +170,8 @@
       "name": "Quick Union",
       "topic": "t_ucb61b_disjoint_sets",
       "description": "Using a parent-link forest representation to optimize connection speeds at the cost of find times.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "快速合并"
     },
     {
       "id": "c_ucb61b_wqu",
@@ -161,7 +179,8 @@
       "name": "Weighted Quick Union",
       "topic": "t_ucb61b_disjoint_sets",
       "description": "Preventing tall trees by always linking the root of the smaller tree to the root of the larger tree.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "加权快速合并"
     },
     {
       "id": "c_ucb61b_path_compression",
@@ -169,14 +188,16 @@
       "name": "Path Compression",
       "topic": "t_ucb61b_disjoint_sets",
       "description": "Flattening the tree dynamically during find operations to achieve practically constant time operations.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "路径压缩"
     },
     {
       "id": "t_ucb61b_asymptotics",
       "kind": "topic",
       "name": "Asymptotics and Algorithmic Analysis",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "渐近分析与算法分析"
     },
     {
       "id": "c_ucb61b_big_theta",
@@ -184,7 +205,8 @@
       "name": "Big-Theta, Big-O, Big-Omega",
       "topic": "t_ucb61b_asymptotics",
       "description": "Formalizing runtime bounding: upper bounds (O), lower bounds (Omega), and tight bounds (Theta).",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "大Θ、大O、大Ω"
     },
     {
       "id": "c_ucb61b_loop_analysis",
@@ -192,7 +214,8 @@
       "name": "Loop and Summation Analysis",
       "topic": "t_ucb61b_asymptotics",
       "description": "Analyzing nested loops by translating them into mathematical summations and resolving bounds.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "循环与求和分析"
     },
     {
       "id": "c_ucb61b_recursion_analysis",
@@ -200,14 +223,16 @@
       "name": "Recursive Runtime Analysis",
       "topic": "t_ucb61b_asymptotics",
       "description": "Determining the time complexity of recursive functions through recurrence trees and geometric series.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "递归时间复杂度分析"
     },
     {
       "id": "t_ucb61b_bst",
       "kind": "topic",
       "name": "Trees and Binary Search Trees",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "树与二叉搜索树"
     },
     {
       "id": "c_ucb61b_trees_intro",
@@ -215,7 +240,8 @@
       "name": "Tree Definitions and Traversals",
       "topic": "t_ucb61b_bst",
       "description": "Understanding rooted trees, depths, heights, and Pre-order, In-order, Post-order traversals.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "树的定义与遍历"
     },
     {
       "id": "c_ucb61b_bst_property",
@@ -223,7 +249,8 @@
       "name": "Binary Search Tree Invariant",
       "topic": "t_ucb61b_bst",
       "description": "The rule that all left descendants are strictly less than the node, and all right descendants are strictly greater.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "二叉搜索树不变量"
     },
     {
       "id": "c_ucb61b_bst_operations",
@@ -231,14 +258,16 @@
       "name": "BST Search, Insert, and Delete",
       "topic": "t_ucb61b_bst",
       "description": "Implementing search, insertion, and Hibbard deletion within a BST structure.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "BST 查找、插入与删除"
     },
     {
       "id": "t_ucb61b_balanced_trees",
       "kind": "topic",
       "name": "Balanced Search Trees",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "平衡搜索树"
     },
     {
       "id": "c_ucb61b_tree_rotation",
@@ -246,7 +275,8 @@
       "name": "Tree Rotation",
       "topic": "t_ucb61b_balanced_trees",
       "description": "Local structural transformations (rotateLeft, rotateRight) that preserve BST invariants while modifying height.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "树旋转"
     },
     {
       "id": "c_ucb61b_b_trees",
@@ -254,7 +284,8 @@
       "name": "B-Trees (2-3 Trees)",
       "topic": "t_ucb61b_balanced_trees",
       "description": "Perfectly balanced search trees with overstuffed nodes and splitting mechanics to maintain O(log N) heights.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "B树 (2-3树)"
     },
     {
       "id": "c_ucb61b_llrb",
@@ -262,14 +293,16 @@
       "name": "Left-Leaning Red-Black Trees",
       "topic": "t_ucb61b_balanced_trees",
       "description": "BST isomers of 2-3 trees that enforce balance through color invariants and local rotations.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "左倾红黑树"
     },
     {
       "id": "t_ucb61b_hashing",
       "kind": "topic",
       "name": "Hashing",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "哈希"
     },
     {
       "id": "c_ucb61b_hash_code",
@@ -277,7 +310,8 @@
       "name": "Hash Functions and Object.hashCode()",
       "topic": "t_ucb61b_hashing",
       "description": "Mapping arbitrary data types to integers deterministically while minimizing collisions.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "哈希函数与Object.hashCode()"
     },
     {
       "id": "c_ucb61b_separate_chaining",
@@ -285,7 +319,8 @@
       "name": "Separate Chaining",
       "topic": "t_ucb61b_hashing",
       "description": "Resolving hash collisions by storing multiple key-value pairs in buckets (usually linked lists) at each array index.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "分离链接"
     },
     {
       "id": "c_ucb61b_linear_probing",
@@ -293,7 +328,8 @@
       "name": "Linear Probing",
       "topic": "t_ucb61b_hashing",
       "description": "Resolving collisions via open addressing, scanning sequentially forward in the array for an empty slot.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "线性探测"
     },
     {
       "id": "c_ucb61b_load_factor",
@@ -301,14 +337,16 @@
       "name": "Load Factor and Resizing",
       "topic": "t_ucb61b_hashing",
       "description": "Monitoring the items-to-buckets ratio and dynamically doubling array size when it crosses a threshold.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "负载因子与扩容"
     },
     {
       "id": "t_ucb61b_priority_queues",
       "kind": "topic",
       "name": "Priority Queues and Heaps",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "优先队列与堆"
     },
     {
       "id": "c_ucb61b_pq_interface",
@@ -316,7 +354,8 @@
       "name": "Priority Queue ADT",
       "topic": "t_ucb61b_priority_queues",
       "description": "An Abstract Data Type enabling efficient insertion and removal of the 'smallest' or 'largest' elements.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "优先队列 ADT"
     },
     {
       "id": "c_ucb61b_binary_heap",
@@ -324,7 +363,8 @@
       "name": "Binary Min/Max Heaps",
       "topic": "t_ucb61b_priority_queues",
       "description": "Complete binary trees fulfilling the heap property (parents always smaller than children in min-heaps).",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "二叉最小/最大堆"
     },
     {
       "id": "c_ucb61b_heap_operations",
@@ -332,7 +372,8 @@
       "name": "Swim, Sink, and Insert/Delete",
       "topic": "t_ucb61b_priority_queues",
       "description": "Promoting or demoting nodes to restore heap invariants after insertion or deletion of the root.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "上浮、下沉、插入/删除"
     },
     {
       "id": "c_ucb61b_array_heap",
@@ -340,14 +381,16 @@
       "name": "Array Representation of Heaps",
       "topic": "t_ucb61b_priority_queues",
       "description": "Flattening a complete binary tree into an array via arithmetic index relations (e.g. leftChild = 2k).",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "堆的数组表示"
     },
     {
       "id": "t_ucb61b_graphs",
       "kind": "topic",
       "name": "Graph Traversals and Representations",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "图遍历与表示"
     },
     {
       "id": "c_ucb61b_graph_api",
@@ -355,7 +398,8 @@
       "name": "Graph API and Adjacency Lists",
       "topic": "t_ucb61b_graphs",
       "description": "Modeling networks using vertices and edges, predominantly mapped in memory using Adjacency Lists.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "图 API 与邻接表"
     },
     {
       "id": "c_ucb61b_dfs",
@@ -363,7 +407,8 @@
       "name": "Depth-First Search (DFS)",
       "topic": "t_ucb61b_graphs",
       "description": "Exploring graphs deeply by following paths to their ends before backtracking, inherently recursive.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "深度优先搜索 (DFS)"
     },
     {
       "id": "c_ucb61b_bfs",
@@ -371,7 +416,8 @@
       "name": "Breadth-First Search (BFS)",
       "topic": "t_ucb61b_graphs",
       "description": "Exploring graphs broadly layer-by-layer using a queue, implicitly computing unweighted shortest paths.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "广度优先搜索 (BFS)"
     },
     {
       "id": "c_ucb61b_topological_sort",
@@ -379,14 +425,16 @@
       "name": "Topological Sort",
       "topic": "t_ucb61b_graphs",
       "description": "Linearizing a Directed Acyclic Graph (DAG) using post-order DFS to process dependencies sequentially.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "拓扑排序"
     },
     {
       "id": "t_ucb61b_shortest_paths",
       "kind": "topic",
       "name": "Shortest Paths",
       "topic": null,
-      "default_order": 11
+      "default_order": 11,
+      "name_zh": "最短路径"
     },
     {
       "id": "c_ucb61b_edge_relaxation",
@@ -394,7 +442,8 @@
       "name": "Edge Relaxation",
       "topic": "t_ucb61b_shortest_paths",
       "description": "Updating the shortest known distance to a vertex if passing through an intermediate vertex yields a better path.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "边松弛"
     },
     {
       "id": "c_ucb61b_dijkstra",
@@ -402,7 +451,8 @@
       "name": "Dijkstra's Algorithm",
       "topic": "t_ucb61b_shortest_paths",
       "description": "A greedy shortest-path algorithm for non-negative edge weights utilizing a priority queue of distances.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "Dijkstra 算法"
     },
     {
       "id": "c_ucb61b_a_star",
@@ -410,14 +460,16 @@
       "name": "A* Search Algorithm",
       "topic": "t_ucb61b_shortest_paths",
       "description": "An optimized variant of Dijkstra's algorithm that biases search directions using a heuristic estimate.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "A* 搜索算法"
     },
     {
       "id": "t_ucb61b_mst",
       "kind": "topic",
       "name": "Minimum Spanning Trees",
       "topic": null,
-      "default_order": 12
+      "default_order": 12,
+      "name_zh": "最小生成树"
     },
     {
       "id": "c_ucb61b_mst_property",
@@ -425,7 +477,8 @@
       "name": "Cut Property",
       "topic": "t_ucb61b_mst",
       "description": "The foundational theorem proving that the minimum weight crossing edge in any cut belongs to the MST.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "割性质"
     },
     {
       "id": "c_ucb61b_prim",
@@ -433,7 +486,8 @@
       "name": "Prim's Algorithm",
       "topic": "t_ucb61b_mst",
       "description": "Growing an MST incrementally outward from a starting vertex, highly similar to Dijkstra's algorithm.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "Prim 算法"
     },
     {
       "id": "c_ucb61b_kruskal",
@@ -441,14 +495,16 @@
       "name": "Kruskal's Algorithm",
       "topic": "t_ucb61b_mst",
       "description": "Building an MST by sorting edges globally and adding them unless they create cycles (checked via Disjoint Sets).",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "Kruskal 算法"
     },
     {
       "id": "t_ucb61b_spatial__t_ucb61b_tries",
       "kind": "topic",
       "name": "Spatial and String Indexes",
       "topic": null,
-      "default_order": 13
+      "default_order": 13,
+      "name_zh": "空间与字符串索引"
     },
     {
       "id": "c_ucb61b_1d_range_search",
@@ -456,7 +512,8 @@
       "name": "1D Range Searching",
       "topic": "t_ucb61b_spatial__t_ucb61b_tries",
       "description": "Finding all points within a 1-dimensional bounded range efficiently using a standard BST.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "一维范围查询"
     },
     {
       "id": "c_ucb61b_kd_trees",
@@ -464,7 +521,8 @@
       "name": "K-D Trees",
       "topic": "t_ucb61b_spatial__t_ucb61b_tries",
       "description": "Multi-dimensional spatial partitioning trees where each level discriminates along an alternating spatial axis.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "K-D 树"
     },
     {
       "id": "c_ucb61b_trie_basics",
@@ -472,7 +530,8 @@
       "name": "Trie Structure",
       "topic": "t_ucb61b_spatial__t_ucb61b_tries",
       "description": "A character-based prefix tree structure offering fast multi-way branches for string storage and retrieval.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "Trie 结构"
     },
     {
       "id": "c_ucb61b_trie_string_ops",
@@ -480,14 +539,16 @@
       "name": "Trie String Operations",
       "topic": "t_ucb61b_spatial__t_ucb61b_tries",
       "description": "Algorithms traversing the trie for operations like longest prefix matching and auto-complete collection.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "Trie 字符串操作"
     },
     {
       "id": "t_ucb61b_sorting",
       "kind": "topic",
       "name": "Comparison Sorting Algorithms",
       "topic": null,
-      "default_order": 14
+      "default_order": 14,
+      "name_zh": "比较排序算法"
     },
     {
       "id": "c_ucb61b_selection_insertion_sort",
@@ -495,7 +556,8 @@
       "name": "Selection and Insertion Sort",
       "topic": "t_ucb61b_sorting",
       "description": "Basic O(N^2) sorting algorithms; Insertion sort is particularly efficient on nearly sorted arrays.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "选择与插入排序"
     },
     {
       "id": "c_ucb61b_merge_sort",
@@ -503,7 +565,8 @@
       "name": "Merge Sort",
       "topic": "t_ucb61b_sorting",
       "description": "A stable O(N log N) divide-and-conquer sort that recursively merges sorted sub-arrays.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "归并排序"
     },
     {
       "id": "c_ucb61b_quick_sort",
@@ -511,7 +574,8 @@
       "name": "Quicksort",
       "topic": "t_ucb61b_sorting",
       "description": "An in-place divide-and-conquer sort utilizing a pivot to partition elements, operating fast in practice.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "快速排序"
     },
     {
       "id": "c_ucb61b_sort_bounds",
@@ -519,14 +583,16 @@
       "name": "Lower Bounds of Comparison Sorting",
       "topic": "t_ucb61b_sorting",
       "description": "Mathematical proof establishing that comparison-based sorting algorithms cannot be faster than Omega(N log N).",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "排序下界"
     },
     {
       "id": "t_ucb61b_radix_sorting",
       "kind": "topic",
       "name": "Radix Sorting",
       "topic": null,
-      "default_order": 15
+      "default_order": 15,
+      "name_zh": "基数排序"
     },
     {
       "id": "c_ucb61b_counting_sort",
@@ -534,7 +600,8 @@
       "name": "Counting Sort",
       "topic": "t_ucb61b_radix_sorting",
       "description": "An O(N+R) non-comparison sort that tallies occurrences of discrete integer values in a frequency array.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "计数排序"
     },
     {
       "id": "c_ucb61b_lsd_radix",
@@ -542,7 +609,8 @@
       "name": "LSD Radix Sort",
       "topic": "t_ucb61b_radix_sorting",
       "description": "Sorting values digit-by-digit moving from the Least Significant Digit upwards, using stable counting sort.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "LSD 基数排序"
     },
     {
       "id": "c_ucb61b_msd_radix",
@@ -550,7 +618,8 @@
       "name": "MSD Radix Sort",
       "topic": "t_ucb61b_radix_sorting",
       "description": "Sorting by Most Significant Digit first, recursively subdividing inputs into buckets like a Trie.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "MSD 基数排序"
     }
   ],
   "edges": [

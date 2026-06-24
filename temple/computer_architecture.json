@@ -15,7 +15,8 @@
       "kind": "topic",
       "name": "Data Representation",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "数据表示"
     },
     {
       "id": "concept_binary_hex",
@@ -23,7 +24,8 @@
       "name": "Binary and Hexadecimal",
       "kind": "concept",
       "default_order": 1,
-      "description": "Representing numbers in base-2 binary and base-16 hexadecimal and converting among them and decimal, as the basis for digital data encoding."
+      "description": "Representing numbers in base-2 binary and base-16 hexadecimal and converting among them and decimal, as the basis for digital data encoding.",
+      "name_zh": "二进制与十六进制"
     },
     {
       "id": "concept_integer_rep",
@@ -31,7 +33,8 @@
       "name": "Two's Complement & Integer Rep",
       "kind": "concept",
       "default_order": 2,
-      "description": "Encoding signed integers in two's complement, representing negatives by complementing and adding one, giving a single zero and simple hardware arithmetic."
+      "description": "Encoding signed integers in two's complement, representing negatives by complementing and adding one, giving a single zero and simple hardware arithmetic.",
+      "name_zh": "补码与整数表示"
     },
     {
       "id": "concept_floating_point",
@@ -39,7 +42,8 @@
       "name": "IEEE 754 Floating Point",
       "kind": "concept",
       "default_order": 3,
-      "description": "The IEEE 754 standard representing reals with sign, biased exponent, and mantissa fields, trading precision for range across many orders of magnitude."
+      "description": "The IEEE 754 standard representing reals with sign, biased exponent, and mantissa fields, trading precision for range across many orders of magnitude.",
+      "name_zh": "IEEE 754浮点数"
     },
     {
       "id": "concept_endianness",
@@ -47,14 +51,16 @@
       "name": "Endianness and Memory Layout",
       "kind": "concept",
       "default_order": 4,
-      "description": "The byte-ordering convention, big-endian or little-endian, determining how multi-byte values are laid out across consecutive memory addresses."
+      "description": "The byte-ordering convention, big-endian or little-endian, determining how multi-byte values are laid out across consecutive memory addresses.",
+      "name_zh": "字节序与内存布局"
     },
     {
       "id": "topic_c_prog",
       "kind": "topic",
       "name": "C Programming",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "C编程"
     },
     {
       "id": "concept_c_basics",
@@ -62,7 +68,8 @@
       "name": "C Basics & Control Flow",
       "kind": "concept",
       "default_order": 1,
-      "description": "C language fundamentals including variables, types, operators, and control-flow constructs such as conditionals and loops for writing imperative programs."
+      "description": "C language fundamentals including variables, types, operators, and control-flow constructs such as conditionals and loops for writing imperative programs.",
+      "name_zh": "C基础与控制流"
     },
     {
       "id": "concept_pointers_arrays",
@@ -70,7 +77,8 @@
       "name": "Pointers and Arrays",
       "kind": "concept",
       "default_order": 2,
-      "description": "Pointers holding memory addresses and their close relationship to arrays, where array indexing is defined through pointer arithmetic."
+      "description": "Pointers holding memory addresses and their close relationship to arrays, where array indexing is defined through pointer arithmetic.",
+      "name_zh": "指针与数组"
     },
     {
       "id": "concept_memory_management",
@@ -78,7 +86,8 @@
       "name": "Dynamic Memory Management",
       "kind": "concept",
       "default_order": 3,
-      "description": "Manual heap management in C with malloc and free, requiring the programmer to allocate and release memory and avoid leaks and dangling pointers."
+      "description": "Manual heap management in C with malloc and free, requiring the programmer to allocate and release memory and avoid leaks and dangling pointers.",
+      "name_zh": "动态内存管理"
     },
     {
       "id": "concept_structs_unions",
@@ -86,14 +95,16 @@
       "name": "Structs, Unions, and Typedefs",
       "kind": "concept",
       "default_order": 4,
-      "description": "Aggregating data with structs that group named fields, unions that overlay fields in shared storage, and typedefs that name types."
+      "description": "Aggregating data with structs that group named fields, unions that overlay fields in shared storage, and typedefs that name types.",
+      "name_zh": "结构体、联合体与typedef"
     },
     {
       "id": "topic_riscv",
       "kind": "topic",
       "name": "RISC-V Assembly",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "RISC-V汇编"
     },
     {
       "id": "concept_riscv_basics",
@@ -101,7 +112,8 @@
       "name": "Registers & Basic Instructions",
       "kind": "concept",
       "default_order": 1,
-      "description": "The RISC-V register file and basic instructions for arithmetic, logic, and memory access in a load-store reduced instruction set architecture."
+      "description": "The RISC-V register file and basic instructions for arithmetic, logic, and memory access in a load-store reduced instruction set architecture.",
+      "name_zh": "寄存器与基本指令"
     },
     {
       "id": "concept_riscv_control",
@@ -109,7 +121,8 @@
       "name": "Control Flow & Branches",
       "kind": "concept",
       "default_order": 2,
-      "description": "RISC-V branch and jump instructions that implement conditionals and loops by comparing registers and altering the program counter."
+      "description": "RISC-V branch and jump instructions that implement conditionals and loops by comparing registers and altering the program counter.",
+      "name_zh": "控制流与分支"
     },
     {
       "id": "concept_riscv_functions",
@@ -117,14 +130,16 @@
       "name": "Function Calling Convention",
       "kind": "concept",
       "default_order": 3,
-      "description": "The RISC-V calling convention governing argument passing, return values, and caller- and callee-saved registers, using the stack for nested calls."
+      "description": "The RISC-V calling convention governing argument passing, return values, and caller- and callee-saved registers, using the stack for nested calls.",
+      "name_zh": "函数调用约定"
     },
     {
       "id": "topic_riscv__topic_sds",
       "kind": "topic",
       "name": "From RISC-V Instructions to Digital Logic",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "从 RISC-V 指令到数字逻辑"
     },
     {
       "id": "concept_riscv_formats",
@@ -132,7 +147,8 @@
       "name": "Instruction Formats",
       "kind": "concept",
       "default_order": 1,
-      "description": "The fixed-width RISC-V instruction encoding formats specifying how opcodes, registers, and immediate values are packed into instruction bits."
+      "description": "The fixed-width RISC-V instruction encoding formats specifying how opcodes, registers, and immediate values are packed into instruction bits.",
+      "name_zh": "指令格式"
     },
     {
       "id": "concept_call_pipeline",
@@ -140,7 +156,8 @@
       "name": "Compiler, Assembler, Linker, Loader",
       "kind": "concept",
       "default_order": 2,
-      "description": "The toolchain transforming source into a running program: compiler to assembly, assembler to object code, linker to executable, loader into memory."
+      "description": "The toolchain transforming source into a running program: compiler to assembly, assembler to object code, linker to executable, loader into memory.",
+      "name_zh": "编译器、汇编器、链接器、加载器"
     },
     {
       "id": "concept_boolean_algebra",
@@ -148,7 +165,8 @@
       "name": "Boolean Algebra & Logic Gates",
       "kind": "concept",
       "default_order": 3,
-      "description": "The algebra of binary values with AND, OR, and NOT operations, realised physically as logic gates that form digital circuits."
+      "description": "The algebra of binary values with AND, OR, and NOT operations, realised physically as logic gates that form digital circuits.",
+      "name_zh": "布尔代数与逻辑门"
     },
     {
       "id": "concept_combinational_logic",
@@ -156,14 +174,16 @@
       "name": "Combinational Logic Blocks",
       "kind": "concept",
       "default_order": 4,
-      "description": "Logic circuits whose outputs depend only on current inputs, built from gates to implement functions like adders, multiplexers, and decoders."
+      "description": "Logic circuits whose outputs depend only on current inputs, built from gates to implement functions like adders, multiplexers, and decoders.",
+      "name_zh": "组合逻辑块"
     },
     {
       "id": "topic_sds",
       "kind": "topic",
       "name": "Synchronous Digital Systems",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "同步数字系统"
     },
     {
       "id": "concept_state_elements",
@@ -171,7 +191,8 @@
       "name": "State Elements (Flip-Flops)",
       "kind": "concept",
       "default_order": 1,
-      "description": "Memory elements such as flip-flops and registers that store bits and update synchronously with the clock, holding circuit state between cycles."
+      "description": "Memory elements such as flip-flops and registers that store bits and update synchronously with the clock, holding circuit state between cycles.",
+      "name_zh": "状态元件（触发器）"
     },
     {
       "id": "concept_sequential_logic",
@@ -179,7 +200,8 @@
       "name": "Sequential Logic & Timing",
       "kind": "concept",
       "default_order": 2,
-      "description": "Circuits whose outputs depend on input history through stored state, governed by clock timing constraints such as setup and hold times."
+      "description": "Circuits whose outputs depend on input history through stored state, governed by clock timing constraints such as setup and hold times.",
+      "name_zh": "时序逻辑与时序"
     },
     {
       "id": "concept_fsm",
@@ -187,14 +209,16 @@
       "name": "Finite State Machines",
       "kind": "concept",
       "default_order": 3,
-      "description": "Finite state machines modelling sequential behaviour as states and transitions, implemented with state registers and combinational next-state logic."
+      "description": "Finite state machines modelling sequential behaviour as states and transitions, implemented with state registers and combinational next-state logic.",
+      "name_zh": "有限状态机"
     },
     {
       "id": "topic_cpu",
       "kind": "topic",
       "name": "CPU Architecture & Datapath",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "CPU架构与数据通路"
     },
     {
       "id": "concept_single_cycle",
@@ -202,7 +226,8 @@
       "name": "Single-Cycle Datapath",
       "kind": "concept",
       "default_order": 1,
-      "description": "A datapath executing each instruction completely in one clock cycle, connecting register file, ALU, and memory through controlled multiplexers."
+      "description": "A datapath executing each instruction completely in one clock cycle, connecting register file, ALU, and memory through controlled multiplexers.",
+      "name_zh": "单周期数据通路"
     },
     {
       "id": "concept_cpu_control",
@@ -210,7 +235,8 @@
       "name": "CPU Control Logic",
       "kind": "concept",
       "default_order": 2,
-      "description": "The control unit generating signals from the instruction opcode to steer the datapath's multiplexers, ALU operations, and register and memory writes."
+      "description": "The control unit generating signals from the instruction opcode to steer the datapath's multiplexers, ALU operations, and register and memory writes.",
+      "name_zh": "CPU控制逻辑"
     },
     {
       "id": "concept_pipelining",
@@ -218,14 +244,16 @@
       "name": "Pipelining Principles",
       "kind": "concept",
       "default_order": 3,
-      "description": "Dividing instruction execution into stages so multiple instructions overlap, increasing throughput by ideally finishing one instruction each clock cycle."
+      "description": "Dividing instruction execution into stages so multiple instructions overlap, increasing throughput by ideally finishing one instruction each clock cycle.",
+      "name_zh": "流水线原理"
     },
     {
       "id": "topic_cpu__topic_memory",
       "kind": "topic",
       "name": "Pipelines and Cache Architecture",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "流水线与缓存体系"
     },
     {
       "id": "concept_pipeline_hazards",
@@ -233,7 +261,8 @@
       "name": "Pipeline Hazards & Forwarding",
       "kind": "concept",
       "default_order": 1,
-      "description": "Structural, data, and control hazards that disrupt pipelined execution, mitigated by forwarding, stalling, and careful instruction scheduling."
+      "description": "Structural, data, and control hazards that disrupt pipelined execution, mitigated by forwarding, stalling, and careful instruction scheduling.",
+      "name_zh": "流水线冒险与转发"
     },
     {
       "id": "concept_branch_prediction",
@@ -241,7 +270,8 @@
       "name": "Branch Prediction",
       "kind": "concept",
       "default_order": 2,
-      "description": "Guessing the outcome and target of branches to keep the pipeline full, with mispredictions costing flushed instructions and recovery."
+      "description": "Guessing the outcome and target of branches to keep the pipeline full, with mispredictions costing flushed instructions and recovery.",
+      "name_zh": "分支预测"
     },
     {
       "id": "concept_cache_basics",
@@ -249,7 +279,8 @@
       "name": "Cache Basics & Direct Mapped",
       "kind": "concept",
       "default_order": 3,
-      "description": "Direct-mapped caches storing recently used blocks indexed by address bits, exploiting locality to reduce average memory access latency."
+      "description": "Direct-mapped caches storing recently used blocks indexed by address bits, exploiting locality to reduce average memory access latency.",
+      "name_zh": "缓存基础与直接映射"
     },
     {
       "id": "concept_associative_caches",
@@ -257,14 +288,16 @@
       "name": "Associative Caches",
       "kind": "concept",
       "default_order": 4,
-      "description": "Set-associative and fully associative caches giving blocks multiple placement options, reducing conflict misses at the cost of more comparison hardware."
+      "description": "Set-associative and fully associative caches giving blocks multiple placement options, reducing conflict misses at the cost of more comparison hardware.",
+      "name_zh": "关联缓存"
     },
     {
       "id": "topic_memory",
       "kind": "topic",
       "name": "Memory Hierarchy",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "存储层次"
     },
     {
       "id": "concept_cache_performance",
@@ -272,7 +305,8 @@
       "name": "AMAT & Cache Misses",
       "kind": "concept",
       "default_order": 1,
-      "description": "Analysing cache effectiveness via average memory access time and the classification of compulsory, conflict, and capacity misses."
+      "description": "Analysing cache effectiveness via average memory access time and the classification of compulsory, conflict, and capacity misses.",
+      "name_zh": "AMAT与缓存未命中"
     },
     {
       "id": "concept_virtual_memory",
@@ -280,7 +314,8 @@
       "name": "Virtual Memory & Page Tables",
       "kind": "concept",
       "default_order": 2,
-      "description": "Giving each process a large private address space mapped to physical memory through page tables, providing isolation and demand paging."
+      "description": "Giving each process a large private address space mapped to physical memory through page tables, providing isolation and demand paging.",
+      "name_zh": "虚拟内存与页表"
     },
     {
       "id": "concept_tlb",
@@ -288,14 +323,16 @@
       "name": "Translation Lookaside Buffer (TLB)",
       "kind": "concept",
       "default_order": 3,
-      "description": "A hardware cache of recent page-table translations that speeds virtual-to-physical address mapping by avoiding full page-table walks."
+      "description": "A hardware cache of recent page-table translations that speeds virtual-to-physical address mapping by avoiding full page-table walks.",
+      "name_zh": "地址转换后备缓冲器（TLB）"
     },
     {
       "id": "topic_parallelism",
       "kind": "topic",
       "name": "Parallel Computing",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "并行计算"
     },
     {
       "id": "concept_amdahls_law",
@@ -303,7 +340,8 @@
       "name": "Amdahl's Law",
       "kind": "concept",
       "default_order": 1,
-      "description": "A formula bounding overall speedup from optimising part of a program, showing that the unimproved fraction limits achievable performance gains."
+      "description": "A formula bounding overall speedup from optimising part of a program, showing that the unimproved fraction limits achievable performance gains.",
+      "name_zh": "Amdahl定律"
     },
     {
       "id": "concept_simd",
@@ -311,7 +349,8 @@
       "name": "Data-Level Parallelism (SIMD)",
       "kind": "concept",
       "default_order": 2,
-      "description": "Single-instruction, multiple-data parallelism applying one operation across vectors of data elements simultaneously for data-parallel workloads."
+      "description": "Single-instruction, multiple-data parallelism applying one operation across vectors of data elements simultaneously for data-parallel workloads.",
+      "name_zh": "数据级并行(SIMD)"
     },
     {
       "id": "concept_multithreading",
@@ -319,14 +358,16 @@
       "name": "Thread-Level Parallelism (OpenMP)",
       "kind": "concept",
       "default_order": 3,
-      "description": "Thread-level parallelism running multiple threads across cores, often expressed with OpenMP directives to share work over shared memory."
+      "description": "Thread-level parallelism running multiple threads across cores, often expressed with OpenMP directives to share work over shared memory.",
+      "name_zh": "线程级并行(OpenMP)"
     },
     {
       "id": "topic_parallelism__topic_io_dep",
       "kind": "topic",
       "name": "Parallel Systems and I/O",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "并行系统与输入输出"
     },
     {
       "id": "concept_cache_coherence",
@@ -334,7 +375,8 @@
       "name": "Cache Coherence & False Sharing",
       "kind": "concept",
       "default_order": 1,
-      "description": "Keeping per-core cached copies of shared data consistent, and false sharing where unrelated variables on one line cause coherence traffic."
+      "description": "Keeping per-core cached copies of shared data consistent, and false sharing where unrelated variables on one line cause coherence traffic.",
+      "name_zh": "缓存一致性与伪共享"
     },
     {
       "id": "concept_warehouse_scale",
@@ -342,7 +384,8 @@
       "name": "Warehouse-Scale Computing",
       "kind": "concept",
       "default_order": 2,
-      "description": "Datacenter-scale computing treating thousands of servers as one machine, emphasising parallelism, energy efficiency, and dependability at scale."
+      "description": "Datacenter-scale computing treating thousands of servers as one machine, emphasising parallelism, energy efficiency, and dependability at scale.",
+      "name_zh": "仓库级计算"
     },
     {
       "id": "concept_memory_mapped_io",
@@ -350,7 +393,8 @@
       "name": "Memory-Mapped I/O",
       "kind": "concept",
       "default_order": 3,
-      "description": "Accessing device registers through ordinary load and store instructions by mapping them into the processor's physical address space."
+      "description": "Accessing device registers through ordinary load and store instructions by mapping them into the processor's physical address space.",
+      "name_zh": "内存映射I/O"
     },
     {
       "id": "concept_polling_interrupts",
@@ -358,14 +402,16 @@
       "name": "Polling and Interrupts",
       "kind": "concept",
       "default_order": 4,
-      "description": "Two ways software learns of device events: polling repeatedly checks status, while interrupts let devices asynchronously signal the processor."
+      "description": "Two ways software learns of device events: polling repeatedly checks status, while interrupts let devices asynchronously signal the processor.",
+      "name_zh": "轮询与中断"
     },
     {
       "id": "topic_io_dep",
       "kind": "topic",
       "name": "I/O and Dependability",
       "topic": null,
-      "default_order": 11
+      "default_order": 11,
+      "name_zh": "I/O与可靠性"
     },
     {
       "id": "concept_dma",
@@ -373,7 +419,8 @@
       "name": "Direct Memory Access (DMA)",
       "kind": "concept",
       "default_order": 1,
-      "description": "Direct memory access letting devices transfer data to and from memory without processor involvement, freeing the CPU during bulk transfers."
+      "description": "Direct memory access letting devices transfer data to and from memory without processor involvement, freeing the CPU during bulk transfers.",
+      "name_zh": "直接内存访问（DMA）"
     },
     {
       "id": "concept_ecc_parity",
@@ -381,7 +428,8 @@
       "name": "Error Correction Codes",
       "kind": "concept",
       "default_order": 2,
-      "description": "Error-detecting and error-correcting codes adding redundant bits so hardware can detect, and sometimes correct, corrupted stored or transmitted data."
+      "description": "Error-detecting and error-correcting codes adding redundant bits so hardware can detect, and sometimes correct, corrupted stored or transmitted data.",
+      "name_zh": "纠错码"
     },
     {
       "id": "concept_raid",
@@ -389,7 +437,8 @@
       "name": "RAID and Dependability",
       "kind": "concept",
       "default_order": 3,
-      "description": "Redundant arrays of independent disks combining drives for performance and fault tolerance through striping, mirroring, and parity schemes."
+      "description": "Redundant arrays of independent disks combining drives for performance and fault tolerance through striping, mirroring, and parity schemes.",
+      "name_zh": "RAID与可靠性"
     }
   ],
   "edges": [

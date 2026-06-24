@@ -2,32 +2,37 @@
   "graphId": "computer_systems",
   "subject": "Computer Systems",
   "generatedFrom": "temple/computer_systems.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t1",
       "name": "Data Representation",
+      "nameZh": "数据表示",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "c1_1",
           "name": "Bits and Bytes",
+          "nameZh": "比特与字节",
           "defaultOrder": 1
         },
         {
           "conceptId": "c1_2",
           "name": "Integer Representation",
+          "nameZh": "整数表示",
           "defaultOrder": 2
         },
         {
           "conceptId": "c1_3",
           "name": "Integer Arithmetic",
+          "nameZh": "整数运算",
           "defaultOrder": 3
         },
         {
           "conceptId": "c1_4",
           "name": "Floating Point Representation",
+          "nameZh": "浮点数表示",
           "defaultOrder": 4
         }
       ],
@@ -43,26 +48,31 @@
     {
       "topicId": "t1__t2",
       "name": "Floating-Point and Machine-Level Operations",
+      "nameZh": "浮点数与机器级运算",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "c1_5",
           "name": "Floating Point Operations",
+          "nameZh": "浮点运算",
           "defaultOrder": 1
         },
         {
           "conceptId": "c2_1",
           "name": "x86-64 Data Movement",
+          "nameZh": "x86-64数据传输",
           "defaultOrder": 2
         },
         {
           "conceptId": "c2_2",
           "name": "Arithmetic and Logical Operations",
+          "nameZh": "算术与逻辑运算",
           "defaultOrder": 3
         },
         {
           "conceptId": "c2_3",
           "name": "Control Flow (Conditionals and Loops)",
+          "nameZh": "控制流",
           "defaultOrder": 4
         }
       ],
@@ -88,26 +98,31 @@
     {
       "topicId": "t2__t3",
       "name": "Procedures and Processor Architecture",
+      "nameZh": "过程调用与处理器体系",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "c2_4",
           "name": "Procedures and Call Stack",
+          "nameZh": "过程与调用栈",
           "defaultOrder": 1
         },
         {
           "conceptId": "c2_5",
           "name": "Arrays and Structs",
+          "nameZh": "数组与结构体",
           "defaultOrder": 2
         },
         {
           "conceptId": "c3_1",
           "name": "Instruction Set Architecture (Y86-64)",
+          "nameZh": "指令集体系结构",
           "defaultOrder": 3
         },
         {
           "conceptId": "c3_2",
           "name": "Sequential CPU Implementation",
+          "nameZh": "顺序CPU实现",
           "defaultOrder": 4
         }
       ],
@@ -129,21 +144,25 @@
     {
       "topicId": "t3",
       "name": "Processor Architecture",
+      "nameZh": "处理器体系结构",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c3_3",
           "name": "Pipelining Principles",
+          "nameZh": "流水线原理",
           "defaultOrder": 1
         },
         {
           "conceptId": "c3_4",
           "name": "Pipeline Hazards and Forwarding",
+          "nameZh": "流水线冒险与转发",
           "defaultOrder": 2
         },
         {
           "conceptId": "c3_5",
           "name": "Exceptions in Pipelines",
+          "nameZh": "流水线异常",
           "defaultOrder": 3
         }
       ],
@@ -165,21 +184,25 @@
     {
       "topicId": "t4",
       "name": "Code Optimization",
+      "nameZh": "代码优化",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c4_1",
           "name": "Compiler Limitations",
+          "nameZh": "编译器局限",
           "defaultOrder": 1
         },
         {
           "conceptId": "c4_2",
           "name": "Loop Unrolling",
+          "nameZh": "循环展开",
           "defaultOrder": 2
         },
         {
           "conceptId": "c4_3",
           "name": "Instruction-Level Parallelism",
+          "nameZh": "指令级并行",
           "defaultOrder": 3
         }
       ],
@@ -198,26 +221,31 @@
     {
       "topicId": "t4__t5",
       "name": "Optimization and Memory Locality",
+      "nameZh": "程序优化与内存局部性",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "c4_4",
           "name": "Memory Aliasing",
+          "nameZh": "内存别名",
           "defaultOrder": 1
         },
         {
           "conceptId": "c4_5",
           "name": "Profiling Tools",
+          "nameZh": "性能分析工具",
           "defaultOrder": 2
         },
         {
           "conceptId": "c5_1",
           "name": "Storage Technologies",
+          "nameZh": "存储技术",
           "defaultOrder": 3
         },
         {
           "conceptId": "c5_2",
           "name": "Principle of Locality",
+          "nameZh": "局部性原理",
           "defaultOrder": 4
         }
       ],
@@ -236,21 +264,25 @@
     {
       "topicId": "t5",
       "name": "Memory Hierarchy and Cache",
+      "nameZh": "存储层次与缓存",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "c5_3",
           "name": "Cache Memory Organization",
+          "nameZh": "缓存组织",
           "defaultOrder": 1
         },
         {
           "conceptId": "c5_4",
           "name": "Cache Performance Metrics",
+          "nameZh": "缓存性能指标",
           "defaultOrder": 2
         },
         {
           "conceptId": "c5_5",
           "name": "Writing Cache-Friendly Code",
+          "nameZh": "缓存友好代码",
           "defaultOrder": 3
         }
       ],
@@ -268,21 +300,25 @@
     {
       "topicId": "t6",
       "name": "Linking",
+      "nameZh": "链接",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "c6_1",
           "name": "Static Linking",
+          "nameZh": "静态链接",
           "defaultOrder": 1
         },
         {
           "conceptId": "c6_2",
           "name": "Object Files (ELF)",
+          "nameZh": "目标文件(ELF)",
           "defaultOrder": 2
         },
         {
           "conceptId": "c6_3",
           "name": "Symbol Resolution",
+          "nameZh": "符号解析",
           "defaultOrder": 3
         }
       ],
@@ -300,26 +336,31 @@
     {
       "topicId": "t6__t7",
       "name": "Linking, Exceptions and Processes",
+      "nameZh": "链接、异常与进程",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "c6_4",
           "name": "Relocation",
+          "nameZh": "重定位",
           "defaultOrder": 1
         },
         {
           "conceptId": "c6_5",
           "name": "Dynamic Linking",
+          "nameZh": "动态链接",
           "defaultOrder": 2
         },
         {
           "conceptId": "c7_1",
           "name": "Exceptions (Traps, Interrupts, Faults)",
+          "nameZh": "异常",
           "defaultOrder": 3
         },
         {
           "conceptId": "c7_2",
           "name": "Processes and Context Switches",
+          "nameZh": "进程与上下文切换",
           "defaultOrder": 4
         }
       ],
@@ -342,21 +383,25 @@
     {
       "topicId": "t7",
       "name": "Exceptional Control Flow",
+      "nameZh": "异常控制流",
       "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "c7_3",
           "name": "Process Control (fork, execve)",
+          "nameZh": "进程控制",
           "defaultOrder": 1
         },
         {
           "conceptId": "c7_4",
           "name": "Signals and Signal Handling",
+          "nameZh": "信号与信号处理",
           "defaultOrder": 2
         },
         {
           "conceptId": "c7_5",
           "name": "Non-local Jumps",
+          "nameZh": "非局部跳转",
           "defaultOrder": 3
         }
       ],
@@ -374,21 +419,25 @@
     {
       "topicId": "t8",
       "name": "Virtual Memory",
+      "nameZh": "虚拟内存",
       "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "c8_1",
           "name": "Address Translation",
+          "nameZh": "地址转换",
           "defaultOrder": 1
         },
         {
           "conceptId": "c8_2",
           "name": "Page Tables",
+          "nameZh": "页表",
           "defaultOrder": 2
         },
         {
           "conceptId": "c8_3",
           "name": "Translation Lookaside Buffer (TLB)",
+          "nameZh": "地址转换后备缓冲器（TLB）",
           "defaultOrder": 3
         }
       ],
@@ -406,26 +455,31 @@
     {
       "topicId": "t8__t9",
       "name": "Memory Management and Unix I/O",
+      "nameZh": "内存管理与 Unix 输入输出",
       "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "c8_4",
           "name": "Dynamic Memory Allocation",
+          "nameZh": "动态内存分配",
           "defaultOrder": 1
         },
         {
           "conceptId": "c8_5",
           "name": "Garbage Collection Basics",
+          "nameZh": "垃圾回收基础",
           "defaultOrder": 2
         },
         {
           "conceptId": "c9_1",
           "name": "Unix I/O",
+          "nameZh": "Unix 输入输出",
           "defaultOrder": 3
         },
         {
           "conceptId": "c9_2",
           "name": "File Metadata",
+          "nameZh": "文件元数据",
           "defaultOrder": 4
         }
       ],
@@ -448,21 +502,25 @@
     {
       "topicId": "t9",
       "name": "System-Level I/O",
+      "nameZh": "系统级I/O",
       "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "c9_3",
           "name": "Standard I/O Library",
+          "nameZh": "标准I/O库",
           "defaultOrder": 1
         },
         {
           "conceptId": "c9_4",
           "name": "File Sharing",
+          "nameZh": "文件共享",
           "defaultOrder": 2
         },
         {
           "conceptId": "c9_5",
           "name": "I/O Redirection",
+          "nameZh": "I/O重定向",
           "defaultOrder": 3
         }
       ],
@@ -475,21 +533,25 @@
     {
       "topicId": "t10",
       "name": "Network Programming",
+      "nameZh": "网络编程",
       "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "c10_1",
           "name": "Client-Server Model",
+          "nameZh": "客户端-服务器模型",
           "defaultOrder": 1
         },
         {
           "conceptId": "c10_2",
           "name": "Internet Protocol (IP)",
+          "nameZh": "IP协议",
           "defaultOrder": 2
         },
         {
           "conceptId": "c10_3",
           "name": "Transmission Control Protocol (TCP)",
+          "nameZh": "TCP协议",
           "defaultOrder": 3
         }
       ],
@@ -507,26 +569,31 @@
     {
       "topicId": "t10__t11",
       "name": "Network and Concurrent Programming",
+      "nameZh": "网络与并发编程",
       "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "c10_4",
           "name": "Sockets Interface",
+          "nameZh": "套接字接口",
           "defaultOrder": 1
         },
         {
           "conceptId": "c10_5",
           "name": "HTTP Protocol Basics",
+          "nameZh": "HTTP协议基础",
           "defaultOrder": 2
         },
         {
           "conceptId": "c11_1",
           "name": "Thread Basics",
+          "nameZh": "线程基础",
           "defaultOrder": 3
         },
         {
           "conceptId": "c11_2",
           "name": "Shared Variables",
+          "nameZh": "共享变量",
           "defaultOrder": 4
         }
       ],
@@ -545,21 +612,25 @@
     {
       "topicId": "t11",
       "name": "Concurrent Programming",
+      "nameZh": "并发编程",
       "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "c11_3",
           "name": "Synchronization (Semaphores)",
+          "nameZh": "同步（信号量）",
           "defaultOrder": 1
         },
         {
           "conceptId": "c11_4",
           "name": "Thread Safety",
+          "nameZh": "线程安全",
           "defaultOrder": 2
         },
         {
           "conceptId": "c11_5",
           "name": "Deadlocks",
+          "nameZh": "死锁",
           "defaultOrder": 3
         }
       ],

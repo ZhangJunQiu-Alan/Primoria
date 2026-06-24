@@ -2,27 +2,31 @@
   "graphId": "web_applications",
   "subject": "Web Applications (Stanford CS142)",
   "generatedFrom": "temple/web_applications.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "web_foundations",
       "name": "Web Foundations",
+      "nameZh": "Web 基础",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "web_http",
           "name": "HTTP Protocol",
+          "nameZh": "HTTP 协议",
           "defaultOrder": 1
         },
         {
           "conceptId": "web_url_dns",
           "name": "URLs and DNS",
+          "nameZh": "URL 与 DNS",
           "defaultOrder": 2
         },
         {
           "conceptId": "web_client_server",
           "name": "Client-Server Model",
+          "nameZh": "客户端-服务器模型",
           "defaultOrder": 3
         }
       ],
@@ -38,21 +42,25 @@
     {
       "topicId": "web_frontend_part1",
       "name": "Frontend Technologies (Part 1)",
+      "nameZh": "前端技术 (第一部分)",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "web_html",
           "name": "HTML",
+          "nameZh": "HTML",
           "defaultOrder": 1
         },
         {
           "conceptId": "web_css",
           "name": "CSS",
+          "nameZh": "CSS",
           "defaultOrder": 2
         },
         {
           "conceptId": "web_javascript",
           "name": "JavaScript",
+          "nameZh": "JavaScript",
           "defaultOrder": 3
         }
       ],
@@ -72,21 +80,25 @@
     {
       "topicId": "web_frontend_part2",
       "name": "Frontend Technologies (Part 2)",
+      "nameZh": "前端技术 (第二部分)",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "web_dom",
           "name": "DOM Manipulation",
+          "nameZh": "DOM 操作",
           "defaultOrder": 1
         },
         {
           "conceptId": "web_react",
           "name": "React Components",
+          "nameZh": "React 组件",
           "defaultOrder": 2
         },
         {
           "conceptId": "web_state_props",
           "name": "State and Props",
+          "nameZh": "状态与属性",
           "defaultOrder": 3
         }
       ],
@@ -104,26 +116,31 @@
     {
       "topicId": "web_backend",
       "name": "Backend Technologies",
+      "nameZh": "后端技术",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "web_node",
           "name": "Node.js",
+          "nameZh": "Node.js",
           "defaultOrder": 1
         },
         {
           "conceptId": "web_express",
           "name": "Express and Routing",
+          "nameZh": "Express 与路由",
           "defaultOrder": 2
         },
         {
           "conceptId": "web_rest",
           "name": "REST APIs",
+          "nameZh": "REST API",
           "defaultOrder": 3
         },
         {
           "conceptId": "web_auth",
           "name": "Authentication and Sessions",
+          "nameZh": "认证与会话",
           "defaultOrder": 4
         }
       ],
@@ -146,21 +163,25 @@
     {
       "topicId": "web_data",
       "name": "Databases",
+      "nameZh": "数据库",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "web_relational",
           "name": "Relational Databases",
+          "nameZh": "关系型数据库",
           "defaultOrder": 1
         },
         {
           "conceptId": "web_sql",
           "name": "SQL",
+          "nameZh": "SQL",
           "defaultOrder": 2
         },
         {
           "conceptId": "web_nosql",
           "name": "NoSQL and MongoDB",
+          "nameZh": "NoSQL 与 MongoDB",
           "defaultOrder": 3
         }
       ],
@@ -178,21 +199,25 @@
     {
       "topicId": "web_security",
       "name": "Web Security",
+      "nameZh": "Web 安全",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "web_xss",
           "name": "Cross-Site Scripting (XSS)",
+          "nameZh": "跨站脚本攻击（XSS）",
           "defaultOrder": 1
         },
         {
           "conceptId": "web_csrf",
           "name": "Cross-Site Request Forgery (CSRF)",
+          "nameZh": "跨站请求伪造（CSRF）",
           "defaultOrder": 2
         },
         {
           "conceptId": "web_sql_injection",
           "name": "SQL Injection",
+          "nameZh": "SQL 注入",
           "defaultOrder": 3
         }
       ],

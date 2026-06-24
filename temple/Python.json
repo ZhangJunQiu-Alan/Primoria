@@ -15,7 +15,8 @@
       "kind": "topic",
       "name": "Functions and Control",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "函数与控制"
     },
     {
       "id": "expr_stmt",
@@ -23,7 +24,8 @@
       "name": "Expressions and Statements",
       "kind": "concept",
       "default_order": 1,
-      "description": "The distinction between expressions that evaluate to values and statements that perform actions, including assignment that binds names to values in a frame."
+      "description": "The distinction between expressions that evaluate to values and statements that perform actions, including assignment that binds names to values in a frame.",
+      "name_zh": "表达式与语句"
     },
     {
       "id": "control",
@@ -31,7 +33,8 @@
       "name": "Control Structures",
       "kind": "concept",
       "default_order": 2,
-      "description": "Conditional statements and loops that direct which code executes and how often, controlling a program's flow based on boolean tests."
+      "description": "Conditional statements and loops that direct which code executes and how often, controlling a program's flow based on boolean tests.",
+      "name_zh": "控制结构"
     },
     {
       "id": "pure_func",
@@ -39,7 +42,8 @@
       "name": "Pure vs Non-Pure Functions",
       "kind": "concept",
       "default_order": 3,
-      "description": "Pure functions that depend only on their arguments and return values without side effects, contrasted with non-pure functions that alter state or perform I/O."
+      "description": "Pure functions that depend only on their arguments and return values without side effects, contrasted with non-pure functions that alter state or perform I/O.",
+      "name_zh": "纯函数与副作用函数"
     },
     {
       "id": "env_diag",
@@ -47,14 +51,16 @@
       "name": "Environment Diagrams",
       "kind": "concept",
       "default_order": 4,
-      "description": "A model of execution tracking frames, bindings, and parent environments to explain how names resolve and how functions create local scopes."
+      "description": "A model of execution tracking frames, bindings, and parent environments to explain how names resolve and how functions create local scopes.",
+      "name_zh": "环境图"
     },
     {
       "id": "topic_hof",
       "kind": "topic",
       "name": "Higher-Order Functions",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "高阶函数"
     },
     {
       "id": "func_arg",
@@ -62,7 +68,8 @@
       "name": "Functions as Arguments",
       "kind": "concept",
       "default_order": 1,
-      "description": "Treating functions as first-class values by passing them as arguments, enabling higher-order functions that abstract over computational patterns."
+      "description": "Treating functions as first-class values by passing them as arguments, enabling higher-order functions that abstract over computational patterns.",
+      "name_zh": "函数作参数"
     },
     {
       "id": "func_ret",
@@ -70,7 +77,8 @@
       "name": "Functions as Return Values",
       "kind": "concept",
       "default_order": 2,
-      "description": "Returning functions from other functions, creating closures that capture enclosing variables to build configurable, stateful behaviour."
+      "description": "Returning functions from other functions, creating closures that capture enclosing variables to build configurable, stateful behaviour.",
+      "name_zh": "函数作返回值"
     },
     {
       "id": "lambda",
@@ -78,14 +86,16 @@
       "name": "Lambda Expressions",
       "kind": "concept",
       "default_order": 3,
-      "description": "Anonymous function expressions created with lambda, producing function values inline without binding them to a name."
+      "description": "Anonymous function expressions created with lambda, producing function values inline without binding them to a name.",
+      "name_zh": "Lambda 表达式"
     },
     {
       "id": "topic_hof__topic_data",
       "kind": "topic",
       "name": "Functional Transformation and Data Processing",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "函数变换与数据处理"
     },
     {
       "id": "currying",
@@ -93,7 +103,8 @@
       "name": "Currying",
       "kind": "concept",
       "default_order": 1,
-      "description": "Transforming a multi-argument function into a chain of single-argument functions, each returning another function until all arguments are supplied."
+      "description": "Transforming a multi-argument function into a chain of single-argument functions, each returning another function until all arguments are supplied.",
+      "name_zh": "柯里化"
     },
     {
       "id": "decorators",
@@ -101,7 +112,8 @@
       "name": "Decorators",
       "kind": "concept",
       "default_order": 2,
-      "description": "Higher-order functions applied with @ syntax that wrap another function to extend or modify its behaviour without changing its source."
+      "description": "Higher-order functions applied with @ syntax that wrap another function to extend or modify its behaviour without changing its source.",
+      "name_zh": "装饰器"
     },
     {
       "id": "seq",
@@ -109,7 +121,8 @@
       "name": "Sequences and Slicing",
       "kind": "concept",
       "default_order": 3,
-      "description": "Ordered collections such as lists and strings supporting indexing and slicing to extract individual elements and subsequences by position."
+      "description": "Ordered collections such as lists and strings supporting indexing and slicing to extract individual elements and subsequences by position.",
+      "name_zh": "序列与切片"
     },
     {
       "id": "list_comp",
@@ -117,14 +130,16 @@
       "name": "List Comprehensions",
       "kind": "concept",
       "default_order": 4,
-      "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable."
+      "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable.",
+      "name_zh": "列表推导式"
     },
     {
       "id": "topic_data",
       "kind": "topic",
       "name": "Data Abstraction and Sequences",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "数据抽象与序列"
     },
     {
       "id": "data_abs",
@@ -132,7 +147,8 @@
       "name": "Data Abstraction",
       "kind": "concept",
       "default_order": 1,
-      "description": "Separating how data is used from how it is represented by defining constructors and selectors, isolating clients from representation changes."
+      "description": "Separating how data is used from how it is represented by defining constructors and selectors, isolating clients from representation changes.",
+      "name_zh": "数据抽象"
     },
     {
       "id": "dict",
@@ -140,7 +156,8 @@
       "name": "Dictionaries",
       "kind": "concept",
       "default_order": 2,
-      "description": "A mutable mapping from unique keys to values supporting efficient lookup, insertion, and deletion by key rather than by position."
+      "description": "A mutable mapping from unique keys to values supporting efficient lookup, insertion, and deletion by key rather than by position.",
+      "name_zh": "字典"
     },
     {
       "id": "box_pointer",
@@ -148,14 +165,16 @@
       "name": "Box-and-Pointer Diagrams",
       "kind": "concept",
       "default_order": 3,
-      "description": "A diagram depicting lists and pairs as boxes containing pointers, visualising the structure, sharing, and mutation of compound data."
+      "description": "A diagram depicting lists and pairs as boxes containing pointers, visualising the structure, sharing, and mutation of compound data.",
+      "name_zh": "箱指针图"
     },
     {
       "id": "topic_recursion",
       "kind": "topic",
       "name": "Recursion and Trees",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "递归与树"
     },
     {
       "id": "recursion",
@@ -163,7 +182,8 @@
       "name": "Recursion",
       "kind": "concept",
       "default_order": 1,
-      "description": "A technique where a function calls itself on smaller subproblems, combining base cases and recursive cases so the computation terminates correctly."
+      "description": "A technique where a function calls itself on smaller subproblems, combining base cases and recursive cases so the computation terminates correctly.",
+      "name_zh": "递归"
     },
     {
       "id": "tree_recur",
@@ -171,7 +191,8 @@
       "name": "Tree Recursion",
       "kind": "concept",
       "default_order": 2,
-      "description": "Recursion making multiple recursive calls per invocation, branching like a tree, as in computing Fibonacci numbers or counting partitions."
+      "description": "Recursion making multiple recursive calls per invocation, branching like a tree, as in computing Fibonacci numbers or counting partitions.",
+      "name_zh": "树递归"
     },
     {
       "id": "tree_abs",
@@ -179,7 +200,8 @@
       "name": "Tree Data Abstraction",
       "kind": "concept",
       "default_order": 3,
-      "description": "Representing tree structures using constructor and selector functions, hiding the underlying representation behind a data abstraction."
+      "description": "Representing tree structures using constructor and selector functions, hiding the underlying representation behind a data abstraction.",
+      "name_zh": "树数据抽象"
     },
     {
       "id": "tree_trav",
@@ -187,14 +209,16 @@
       "name": "Tree Traversal",
       "kind": "concept",
       "default_order": 4,
-      "description": "Systematically visiting every node of a tree, typically via recursion, to process or aggregate the data the tree contains."
+      "description": "Systematically visiting every node of a tree, typically via recursion, to process or aggregate the data the tree contains.",
+      "name_zh": "树遍历"
     },
     {
       "id": "topic_mut_oop",
       "kind": "topic",
       "name": "Mutable Data and OOP",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "可变数据与 OOP"
     },
     {
       "id": "mutability",
@@ -202,7 +226,8 @@
       "name": "Mutability",
       "kind": "concept",
       "default_order": 1,
-      "description": "The property of objects whose state can change after creation, introducing aliasing where multiple names refer to the same mutable object."
+      "description": "The property of objects whose state can change after creation, introducing aliasing where multiple names refer to the same mutable object.",
+      "name_zh": "可变性"
     },
     {
       "id": "oop",
@@ -210,7 +235,8 @@
       "name": "Object-Oriented Programming",
       "kind": "concept",
       "default_order": 2,
-      "description": "A paradigm organising programs around objects that bundle state and behaviour, defined by classes with attributes and methods."
+      "description": "A paradigm organising programs around objects that bundle state and behaviour, defined by classes with attributes and methods.",
+      "name_zh": "面向对象编程"
     },
     {
       "id": "inherit_comp",
@@ -218,7 +244,8 @@
       "name": "Inheritance and Composition",
       "kind": "concept",
       "default_order": 3,
-      "description": "Two reuse mechanisms: inheritance deriving subclasses that specialise a base class, and composition assembling objects from other objects."
+      "description": "Two reuse mechanisms: inheritance deriving subclasses that specialise a base class, and composition assembling objects from other objects.",
+      "name_zh": "继承与组合"
     },
     {
       "id": "class_attr",
@@ -226,7 +253,8 @@
       "name": "Class and Instance Attributes",
       "kind": "concept",
       "default_order": 4,
-      "description": "The difference between class attributes shared by all instances of a class and instance attributes stored separately on each object."
+      "description": "The difference between class attributes shared by all instances of a class and instance attributes stored separately on each object.",
+      "name_zh": "类与实例属性"
     },
     {
       "id": "string_rep",
@@ -234,14 +262,16 @@
       "name": "String Representation",
       "kind": "concept",
       "default_order": 5,
-      "description": "Defining how objects display through __str__ for readable output and __repr__ for unambiguous, often reconstructable representations."
+      "description": "Defining how objects display through __str__ for readable output and __repr__ for unambiguous, often reconstructable representations.",
+      "name_zh": "字符串表示"
     },
     {
       "id": "topic_adv_data",
       "kind": "topic",
       "name": "Advanced Data Structures",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "高级数据结构"
     },
     {
       "id": "linked_lists",
@@ -249,7 +279,8 @@
       "name": "Linked Lists",
       "kind": "concept",
       "default_order": 1,
-      "description": "A recursive structure of nodes each holding a value and a reference to the next, supporting sequential access and structural sharing."
+      "description": "A recursive structure of nodes each holding a value and a reference to the next, supporting sequential access and structural sharing.",
+      "name_zh": "链表"
     },
     {
       "id": "mut_trees",
@@ -257,7 +288,8 @@
       "name": "Mutable Trees",
       "kind": "concept",
       "default_order": 2,
-      "description": "Tree structures whose nodes can be modified in place, allowing branches and values to change after the tree is constructed."
+      "description": "Tree structures whose nodes can be modified in place, allowing branches and values to change after the tree is constructed.",
+      "name_zh": "可变树"
     },
     {
       "id": "iterators",
@@ -265,7 +297,8 @@
       "name": "Iterators",
       "kind": "concept",
       "default_order": 3,
-      "description": "Objects implementing the iterator protocol with __iter__ and __next__, producing elements one at a time and raising StopIteration when exhausted."
+      "description": "Objects implementing the iterator protocol with __iter__ and __next__, producing elements one at a time and raising StopIteration when exhausted.",
+      "name_zh": "迭代器"
     },
     {
       "id": "generators",
@@ -273,14 +306,16 @@
       "name": "Generators",
       "kind": "concept",
       "default_order": 4,
-      "description": "Functions using yield to lazily produce a sequence of values on demand, suspending and resuming their state between successive calls."
+      "description": "Functions using yield to lazily produce a sequence of values on demand, suspending and resuming their state between successive calls.",
+      "name_zh": "生成器"
     },
     {
       "id": "topic_scheme",
       "kind": "topic",
       "name": "Scheme and Functional Programming",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "Scheme 与函数式编程"
     },
     {
       "id": "scheme_syntax",
@@ -288,7 +323,8 @@
       "name": "Scheme Syntax",
       "kind": "concept",
       "default_order": 1,
-      "description": "Scheme's parenthesised prefix notation, where every expression is an atom or a list whose first element names the operator or special form."
+      "description": "Scheme's parenthesised prefix notation, where every expression is an atom or a list whose first element names the operator or special form.",
+      "name_zh": "Scheme 语法"
     },
     {
       "id": "scheme_lists",
@@ -296,7 +332,8 @@
       "name": "Scheme Lists and Pairs",
       "kind": "concept",
       "default_order": 2,
-      "description": "Scheme's fundamental pairs built with cons and accessed by car and cdr, composed to form lists and other recursive structures."
+      "description": "Scheme's fundamental pairs built with cons and accessed by car and cdr, composed to form lists and other recursive structures.",
+      "name_zh": "Scheme 列表与序对"
     },
     {
       "id": "tail_calls",
@@ -304,7 +341,8 @@
       "name": "Tail Calls and Optimization",
       "kind": "concept",
       "default_order": 3,
-      "description": "Calls in tail position whose results are returned directly, letting interpreters reuse stack frames so recursion runs in constant space."
+      "description": "Calls in tail position whose results are returned directly, letting interpreters reuse stack frames so recursion runs in constant space.",
+      "name_zh": "尾调用与优化"
     },
     {
       "id": "macros",
@@ -312,14 +350,16 @@
       "name": "Macros",
       "kind": "concept",
       "default_order": 4,
-      "description": "Scheme macros that transform unevaluated source expressions into new code before evaluation, extending the language with new syntactic forms."
+      "description": "Scheme macros that transform unevaluated source expressions into new code before evaluation, extending the language with new syntactic forms.",
+      "name_zh": "宏"
     },
     {
       "id": "topic_interp",
       "kind": "topic",
       "name": "Interpreters",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "解释器"
     },
     {
       "id": "parsing",
@@ -327,7 +367,8 @@
       "name": "Lexical Analysis and Parsing",
       "kind": "concept",
       "default_order": 1,
-      "description": "Converting program text into structured form by lexical analysis into tokens followed by parsing into an abstract syntax tree."
+      "description": "Converting program text into structured form by lexical analysis into tokens followed by parsing into an abstract syntax tree.",
+      "name_zh": "词法分析与解析"
     },
     {
       "id": "eval",
@@ -335,7 +376,8 @@
       "name": "Evaluation Process",
       "kind": "concept",
       "default_order": 2,
-      "description": "The interpreter step that evaluates an expression in an environment, recursively reducing it to a value according to evaluation rules."
+      "description": "The interpreter step that evaluates an expression in an environment, recursively reducing it to a value according to evaluation rules.",
+      "name_zh": "求值过程"
     },
     {
       "id": "apply",
@@ -343,7 +385,8 @@
       "name": "Application Process",
       "kind": "concept",
       "default_order": 3,
-      "description": "The interpreter step that applies a procedure to evaluated arguments by binding parameters in a new frame and evaluating the body."
+      "description": "The interpreter step that applies a procedure to evaluated arguments by binding parameters in a new frame and evaluating the body.",
+      "name_zh": "应用过程"
     },
     {
       "id": "exceptions",
@@ -351,14 +394,16 @@
       "name": "Exceptions",
       "kind": "concept",
       "default_order": 4,
-      "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler."
+      "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler.",
+      "name_zh": "异常"
     },
     {
       "id": "topic_declarative",
       "kind": "topic",
       "name": "Declarative Programming",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "声明式编程"
     },
     {
       "id": "regex",
@@ -366,7 +411,8 @@
       "name": "Regular Expressions",
       "kind": "concept",
       "default_order": 1,
-      "description": "A notation describing text patterns used to search, match, and extract substrings using character classes, quantifiers, and grouping."
+      "description": "A notation describing text patterns used to search, match, and extract substrings using character classes, quantifiers, and grouping.",
+      "name_zh": "正则表达式"
     },
     {
       "id": "bnf",
@@ -374,7 +420,8 @@
       "name": "BNF Context-Free Grammars",
       "kind": "concept",
       "default_order": 2,
-      "description": "Backus-Naur Form, a notation for context-free grammars that specifies a language's syntax through production rules over terminals and non-terminals."
+      "description": "Backus-Naur Form, a notation for context-free grammars that specifies a language's syntax through production rules over terminals and non-terminals.",
+      "name_zh": "BNF 上下文无关文法"
     },
     {
       "id": "sql_queries",
@@ -382,7 +429,8 @@
       "name": "SQL Tables and Queries",
       "kind": "concept",
       "default_order": 3,
-      "description": "Declarative SQL queries that select, filter, and order rows from tables to retrieve data without specifying procedural steps."
+      "description": "Declarative SQL queries that select, filter, and order rows from tables to retrieve data without specifying procedural steps.",
+      "name_zh": "SQL 表与查询"
     },
     {
       "id": "sql_joins",
@@ -390,7 +438,8 @@
       "name": "SQL Joins and Aggregation",
       "kind": "concept",
       "default_order": 4,
-      "description": "Combining rows from multiple tables on related columns and summarising groups with aggregate functions such as count, sum, and average."
+      "description": "Combining rows from multiple tables on related columns and summarising groups with aggregate functions such as count, sum, and average.",
+      "name_zh": "SQL 连接与聚合"
     }
   ],
   "edges": [

@@ -2,37 +2,43 @@
   "graphId": "software_construction",
   "subject": "Software Construction",
   "generatedFrom": "temple/software_construction.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_mit6031_fundamentals__t_mit6031_specifications",
       "name": "Software Construction Foundations and Specifications",
+      "nameZh": "软件构造基础与规约",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_static_checking",
           "name": "Static Checking",
+          "nameZh": "静态检查",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_mit6031_immutability",
           "name": "Immutability",
+          "nameZh": "不可变性",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_mit6031_specs",
           "name": "Specifications",
+          "nameZh": "规格",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_mit6031_testing",
           "name": "Testing Strategies",
+          "nameZh": "测试策略",
           "defaultOrder": 4
         },
         {
           "conceptId": "c_mit6031_exceptions",
           "name": "Exceptions",
+          "nameZh": "异常",
           "defaultOrder": 5
         }
       ],
@@ -48,26 +54,31 @@
     {
       "topicId": "t_mit6031_adt",
       "name": "Abstract Data Types",
+      "nameZh": "抽象数据类型",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_adt_basics",
           "name": "ADT Concepts",
+          "nameZh": "ADT 概念",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_mit6031_rep_independence",
           "name": "Representation Independence",
+          "nameZh": "表示独立性",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_mit6031_rep_invariant",
           "name": "Rep Invariants",
+          "nameZh": "表示不变量",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_mit6031_abstraction_function",
           "name": "Abstraction Functions",
+          "nameZh": "抽象函数",
           "defaultOrder": 4
         }
       ],
@@ -89,21 +100,25 @@
     {
       "topicId": "t_mit6031_oop",
       "name": "Object-Oriented Programming",
+      "nameZh": "面向对象编程",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_interfaces",
           "name": "Interfaces and Subtyping",
+          "nameZh": "接口与子类型",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_mit6031_equality",
           "name": "Equality",
+          "nameZh": "相等性",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_mit6031_recursive_data",
           "name": "Recursive Data Types",
+          "nameZh": "递归数据类型",
           "defaultOrder": 3
         }
       ],
@@ -116,26 +131,31 @@
     {
       "topicId": "t_mit6031_concurrency",
       "name": "Concurrency",
+      "nameZh": "并发",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_concurrency_intro",
           "name": "Concurrency Basics",
+          "nameZh": "并发基础",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_mit6031_thread_safety",
           "name": "Thread Safety",
+          "nameZh": "线程安全",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_mit6031_locks",
           "name": "Locks and Synchronization",
+          "nameZh": "锁与同步",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_mit6031_message_passing",
           "name": "Message Passing",
+          "nameZh": "消息传递",
           "defaultOrder": 4
         }
       ],

@@ -2,27 +2,31 @@
   "graphId": "introduction_to_computer_science",
   "subject": "Introduction to Computer Science",
   "generatedFrom": "temple/introduction_to_computer_science.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "topic_week0",
       "name": "Week 0: Scratch",
+      "nameZh": "第 0 周：Scratch",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "c_functions",
           "name": "Functions",
+          "nameZh": "函数",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_events",
           "name": "Events",
+          "nameZh": "事件",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_conditions",
           "name": "Conditionals",
+          "nameZh": "条件语句",
           "defaultOrder": 3
         }
       ],
@@ -42,21 +46,25 @@
     {
       "topicId": "topic_week0__topic_week1",
       "name": "Control Flow and C Foundations",
+      "nameZh": "控制流与 C 语言基础",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "c_loops",
           "name": "Loops",
+          "nameZh": "循环",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_abstraction",
           "name": "Abstraction",
+          "nameZh": "抽象",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_c_syntax",
           "name": "C Syntax",
+          "nameZh": "C 语法",
           "defaultOrder": 3
         }
       ],
@@ -82,21 +90,25 @@
     {
       "topicId": "topic_week1",
       "name": "Week 1: C",
+      "nameZh": "第1周：C",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "c_data_types",
           "name": "Data Types",
+          "nameZh": "数据类型",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_operators",
           "name": "Operators",
+          "nameZh": "运算符",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_compilation",
           "name": "Compilation Process",
+          "nameZh": "编译过程",
           "defaultOrder": 3
         }
       ],
@@ -118,26 +130,31 @@
     {
       "topicId": "topic_week2",
       "name": "Week 2: Arrays",
+      "nameZh": "第2周：数组",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_debugging",
           "name": "Debugging",
+          "nameZh": "调试",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_arrays",
           "name": "Arrays",
+          "nameZh": "数组",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_strings",
           "name": "Strings",
+          "nameZh": "字符串",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_cli_args",
           "name": "Command-line Arguments",
+          "nameZh": "命令行参数",
           "defaultOrder": 4
         }
       ],
@@ -168,21 +185,25 @@
     {
       "topicId": "topic_week3",
       "name": "Week 3: Algorithms",
+      "nameZh": "第3周：算法",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c_linear_search",
           "name": "Linear Search",
+          "nameZh": "线性搜索",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_binary_search",
           "name": "Binary Search",
+          "nameZh": "二分搜索",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_sorting",
           "name": "Sorting Algorithms",
+          "nameZh": "排序算法",
           "defaultOrder": 3
         }
       ],
@@ -200,21 +221,25 @@
     {
       "topicId": "topic_week3__topic_week4",
       "name": "Algorithmic Complexity and Memory",
+      "nameZh": "算法复杂度与内存",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "c_recursion",
           "name": "Recursion",
+          "nameZh": "递归",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_big_o",
           "name": "Big O Notation",
+          "nameZh": "大O表示法",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_pointers",
           "name": "Pointers",
+          "nameZh": "指针",
           "defaultOrder": 3
         }
       ],
@@ -238,21 +263,25 @@
     {
       "topicId": "topic_week4",
       "name": "Week 4: Memory",
+      "nameZh": "第4周：内存",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "c_malloc",
           "name": "Dynamic Memory Allocation",
+          "nameZh": "动态内存分配",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_call_stack",
           "name": "Call Stack",
+          "nameZh": "调用栈",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_file_io",
           "name": "File I/O",
+          "nameZh": "文件I/O",
           "defaultOrder": 3
         }
       ],
@@ -270,21 +299,25 @@
     {
       "topicId": "topic_week5",
       "name": "Week 5: Data Structures",
+      "nameZh": "第5周：数据结构",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "c_linked_lists",
           "name": "Linked Lists",
+          "nameZh": "链表",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_hash_tables",
           "name": "Hash Tables",
+          "nameZh": "哈希表",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_trees",
           "name": "Trees",
+          "nameZh": "树",
           "defaultOrder": 3
         }
       ],
@@ -308,21 +341,25 @@
     {
       "topicId": "topic_week5__topic_week6",
       "name": "Advanced Data Structures and Python",
+      "nameZh": "高级数据结构与 Python",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "c_tries",
           "name": "Tries",
+          "nameZh": "字典树",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_queues_stacks",
           "name": "Queues and Stacks",
+          "nameZh": "队列与栈",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_python_syntax",
           "name": "Python Syntax",
+          "nameZh": "Python 语法",
           "defaultOrder": 3
         }
       ],
@@ -350,21 +387,25 @@
     {
       "topicId": "topic_week6",
       "name": "Week 6: Python",
+      "nameZh": "第6周：Python",
       "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "c_lists_dicts",
           "name": "Lists and Dictionaries",
+          "nameZh": "列表和字典",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_oop",
           "name": "Object-Oriented Programming",
+          "nameZh": "OOP",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_exceptions",
           "name": "Exceptions",
+          "nameZh": "异常",
           "defaultOrder": 3
         }
       ],
@@ -384,26 +425,31 @@
     {
       "topicId": "topic_week7",
       "name": "Week 7: SQL",
+      "nameZh": "第7周：SQL",
       "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "c_relational_db",
           "name": "Relational Databases",
+          "nameZh": "关系数据库",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_sql_queries",
           "name": "SQL Queries",
+          "nameZh": "SQL查询",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_joins",
           "name": "SQL Joins",
+          "nameZh": "SQL连接",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_indexes",
           "name": "SQL Indexes",
+          "nameZh": "SQL索引",
           "defaultOrder": 4
         }
       ],
@@ -416,26 +462,31 @@
     {
       "topicId": "topic_week8",
       "name": "Week 8: HTML, CSS, JavaScript",
+      "nameZh": "第8周：HTML, CSS, JavaScript",
       "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "c_html",
           "name": "HTML",
+          "nameZh": "HTML",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_css",
           "name": "CSS",
+          "nameZh": "CSS",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_js",
           "name": "JavaScript",
+          "nameZh": "JavaScript",
           "defaultOrder": 3
         },
         {
           "conceptId": "c_dom",
           "name": "DOM Manipulation",
+          "nameZh": "DOM 操作",
           "defaultOrder": 4
         }
       ],
@@ -453,21 +504,25 @@
     {
       "topicId": "topic_week9",
       "name": "Week 9: Flask",
+      "nameZh": "第9周：Flask",
       "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "c_http",
           "name": "HTTP Protocol",
+          "nameZh": "HTTP 协议",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_flask",
           "name": "Flask Framework",
+          "nameZh": "Flask 框架",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_mvc",
           "name": "MVC Architecture",
+          "nameZh": "MVC 架构",
           "defaultOrder": 3
         }
       ],
@@ -486,21 +541,25 @@
     {
       "topicId": "topic_week9__topic_week10",
       "name": "Web State, APIs and Security",
+      "nameZh": "Web 状态、API 与安全",
       "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "c_sessions",
           "name": "Sessions and Cookies",
+          "nameZh": "会话与 Cookie",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_apis",
           "name": "APIs",
+          "nameZh": "API",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_cybersecurity",
           "name": "Cybersecurity Basics",
+          "nameZh": "网络安全基础",
           "defaultOrder": 3
         }
       ],
@@ -518,21 +577,25 @@
     {
       "topicId": "topic_week10",
       "name": "Week 10: Cybersecurity",
+      "nameZh": "第10周：网络安全",
       "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "c_encryption",
           "name": "Encryption",
+          "nameZh": "加密",
           "defaultOrder": 1
         },
         {
           "conceptId": "c_authentication",
           "name": "Authentication",
+          "nameZh": "身份认证",
           "defaultOrder": 2
         },
         {
           "conceptId": "c_vulnerabilities",
           "name": "Vulnerabilities",
+          "nameZh": "安全漏洞",
           "defaultOrder": 3
         }
       ],

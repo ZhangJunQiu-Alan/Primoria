@@ -2,27 +2,31 @@
   "graphId": "machine_learning",
   "subject": "Machine Learning (Stanford CS229)",
   "generatedFrom": "temple/machine_learning.json",
-  "generatedAt": "2026-06-23",
+  "generatedAt": "2026-06-24",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "ml_linear_part1",
       "name": "Linear Regression (Part 1)",
+      "nameZh": "线性回归 (第一部分)",
       "defaultOrder": 1,
       "conceptIds": [
         {
           "conceptId": "ml_linear_reg",
           "name": "Linear Regression Model",
+          "nameZh": "线性回归",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_cost_mse",
           "name": "Mean Squared Error Cost",
+          "nameZh": "均方误差代价函数",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_gradient_descent",
           "name": "Batch Gradient Descent",
+          "nameZh": "梯度下降",
           "defaultOrder": 3
         }
       ],
@@ -50,21 +54,25 @@
     {
       "topicId": "ml_linear_part2",
       "name": "Linear Regression (Part 2)",
+      "nameZh": "线性回归 (第二部分)",
       "defaultOrder": 2,
       "conceptIds": [
         {
           "conceptId": "ml_sgd",
           "name": "Stochastic & Mini-batch GD",
+          "nameZh": "随机与小批量梯度下降",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_normal_eq",
           "name": "Normal Equations",
+          "nameZh": "正规方程",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_feature_scaling",
           "name": "Feature Scaling & Learning Rate",
+          "nameZh": "特征缩放与学习率",
           "defaultOrder": 3
         }
       ],
@@ -77,26 +85,31 @@
     {
       "topicId": "ml_classification_part1",
       "name": "Classification and GLMs (Part 1)",
+      "nameZh": "分类与广义线性模型 (第一部分)",
       "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "ml_logistic_reg",
           "name": "Logistic Regression",
+          "nameZh": "逻辑回归",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_sigmoid",
           "name": "Sigmoid & Decision Boundary",
+          "nameZh": "Sigmoid 与决策边界",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_logistic_mle",
           "name": "Logistic MLE & Gradient",
+          "nameZh": "逻辑回归极大似然估计与梯度",
           "defaultOrder": 3
         },
         {
           "conceptId": "ml_newton_method",
           "name": "Newton's Method",
+          "nameZh": "牛顿法",
           "defaultOrder": 4
         }
       ],
@@ -122,21 +135,25 @@
     {
       "topicId": "ml_classification_part2",
       "name": "Classification and GLMs (Part 2)",
+      "nameZh": "分类与广义线性模型 (第二部分)",
       "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "ml_softmax",
           "name": "Softmax Regression",
+          "nameZh": "Softmax 回归",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_exp_family",
           "name": "Exponential Family",
+          "nameZh": "指数族分布",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_glm",
           "name": "Generalized Linear Models",
+          "nameZh": "广义线性模型",
           "defaultOrder": 3
         }
       ],
@@ -149,26 +166,31 @@
     {
       "topicId": "ml_generative",
       "name": "Generative Learning",
+      "nameZh": "生成模型",
       "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "ml_generative_vs_disc",
           "name": "Generative vs Discriminative",
+          "nameZh": "生成模型与判别模型",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_gda",
           "name": "Gaussian Discriminant Analysis",
+          "nameZh": "高斯判别分析",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_naive_bayes",
           "name": "Naive Bayes",
+          "nameZh": "朴素贝叶斯",
           "defaultOrder": 3
         },
         {
           "conceptId": "ml_laplace",
           "name": "Laplace Smoothing",
+          "nameZh": "拉普拉斯平滑",
           "defaultOrder": 4
         }
       ],
@@ -181,26 +203,31 @@
     {
       "topicId": "ml_svm_margin",
       "name": "SVM: Margins and Duality",
+      "nameZh": "支持向量机：间隔与对偶性",
       "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "ml_margins",
           "name": "Functional & Geometric Margins",
+          "nameZh": "间隔与SVM",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_optimal_margin",
           "name": "Optimal Margin Classifier",
+          "nameZh": "最优间隔分类器",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_lagrange_duality",
           "name": "Lagrange Duality & KKT",
+          "nameZh": "拉格朗日对偶性与 KKT 条件",
           "defaultOrder": 3
         },
         {
           "conceptId": "ml_svm_dual",
           "name": "SVM Dual Problem",
+          "nameZh": "支持向量机对偶问题",
           "defaultOrder": 4
         }
       ],
@@ -216,26 +243,31 @@
     {
       "topicId": "ml_svm_kernel",
       "name": "SVM: Kernels and Optimization",
+      "nameZh": "支持向量机：核函数与优化",
       "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "ml_kernels",
           "name": "Kernel Trick",
+          "nameZh": "核方法",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_mercer",
           "name": "Valid Kernels (Mercer)",
+          "nameZh": "有效核函数（Mercer 定理）",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_soft_margin",
           "name": "Soft Margin & Slack",
+          "nameZh": "软间隔与松弛变量",
           "defaultOrder": 3
         },
         {
           "conceptId": "ml_smo",
           "name": "SMO Algorithm",
+          "nameZh": "SMO 算法",
           "defaultOrder": 4
         }
       ],
@@ -248,21 +280,25 @@
     {
       "topicId": "ml_theory",
       "name": "Learning Theory",
+      "nameZh": "学习理论",
       "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "ml_bias_variance",
           "name": "Bias-Variance Tradeoff",
+          "nameZh": "偏差-方差权衡",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_regularization",
           "name": "Regularization (L1/L2)",
+          "nameZh": "正则化",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_cross_val",
           "name": "Cross-Validation",
+          "nameZh": "交叉验证",
           "defaultOrder": 3
         }
       ],
@@ -280,26 +316,31 @@
     {
       "topicId": "ml_theory__ml_deep",
       "name": "Generalization Bounds and Neural Networks",
+      "nameZh": "泛化界与神经网络",
       "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "ml_vc_dimension",
           "name": "VC Dimension & Bounds",
+          "nameZh": "VC 维与泛化误差界",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_model_selection",
           "name": "Model & Feature Selection",
+          "nameZh": "模型与特征选择",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_neural_nets",
           "name": "Neural Networks",
+          "nameZh": "神经网络",
           "defaultOrder": 3
         },
         {
           "conceptId": "ml_backprop",
           "name": "Backpropagation",
+          "nameZh": "反向传播",
           "defaultOrder": 4
         }
       ],
@@ -314,31 +355,37 @@
     {
       "topicId": "ml_unsupervised",
       "name": "Unsupervised Learning",
+      "nameZh": "无监督学习",
       "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "ml_kmeans",
           "name": "K-Means Clustering",
+          "nameZh": "K均值聚类",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_em_algorithm",
           "name": "EM Algorithm",
+          "nameZh": "EM 算法 (期望最大化)",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_gmm_em",
           "name": "Gaussian Mixtures via EM",
+          "nameZh": "高斯混合与EM",
           "defaultOrder": 3
         },
         {
           "conceptId": "ml_pca",
           "name": "Principal Component Analysis",
+          "nameZh": "主成分分析",
           "defaultOrder": 4
         },
         {
           "conceptId": "ml_ica",
           "name": "Independent Component Analysis",
+          "nameZh": "独立成分分析",
           "defaultOrder": 5
         }
       ],
@@ -349,26 +396,31 @@
     {
       "topicId": "ml_rl",
       "name": "Reinforcement Learning",
+      "nameZh": "强化学习",
       "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "ml_mdp",
           "name": "Markov Decision Processes",
+          "nameZh": "马尔可夫决策过程",
           "defaultOrder": 1
         },
         {
           "conceptId": "ml_value_policy",
           "name": "Value & Policy Iteration",
+          "nameZh": "价值与策略迭代",
           "defaultOrder": 2
         },
         {
           "conceptId": "ml_q_learning",
           "name": "Q-Learning",
+          "nameZh": "Q-学习",
           "defaultOrder": 3
         },
         {
           "conceptId": "ml_value_approx",
           "name": "Value Function Approximation",
+          "nameZh": "价值函数逼近",
           "defaultOrder": 4
         }
       ],

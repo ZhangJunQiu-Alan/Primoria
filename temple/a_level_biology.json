@@ -21,7 +21,8 @@
       "kind": "topic",
       "name": "Cell Structure",
       "topic": null,
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "细胞结构"
     },
     {
       "id": "bio_microscopy",
@@ -29,7 +30,8 @@
       "name": "Microscopy",
       "topic": "bio_cell_structure",
       "description": "The use of light and electron microscopes to view cells, where resolution—the ability to distinguish two close points—and magnification determine the detail observable.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "显微镜"
     },
     {
       "id": "bio_organelles",
@@ -37,7 +39,8 @@
       "name": "Eukaryotic Organelles",
       "topic": "bio_cell_structure",
       "description": "Membrane-bound and non-membrane structures within eukaryotic cells, such as the nucleus, mitochondria, and endoplasmic reticulum, each performing specialised functions.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "真核细胞器"
     },
     {
       "id": "bio_prokaryotes",
@@ -45,7 +48,8 @@
       "name": "Prokaryotic Cells",
       "topic": "bio_cell_structure",
       "description": "Bacterial cells lacking a nucleus and membrane-bound organelles, with circular DNA, smaller ribosomes, and a cell wall, contrasted with eukaryotic cells.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "原核细胞"
     },
     {
       "id": "bio_cell_size",
@@ -53,14 +57,16 @@
       "name": "Cell Size and Magnification",
       "topic": "bio_cell_structure",
       "description": "Calculating actual cell size, magnification, and image size using the relationship that magnification equals image size divided by actual size, with consistent units.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "细胞大小与放大"
     },
     {
       "id": "bio_molecules",
       "kind": "topic",
       "name": "Biological Molecules",
       "topic": null,
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "生物分子"
     },
     {
       "id": "bio_water",
@@ -68,7 +74,8 @@
       "name": "Water",
       "topic": "bio_molecules",
       "description": "The properties of water arising from its polarity and hydrogen bonding, including its role as a solvent, high specific heat capacity, and cohesion important to life.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "水"
     },
     {
       "id": "bio_carbohydrates",
@@ -76,7 +83,8 @@
       "name": "Carbohydrates",
       "topic": "bio_molecules",
       "description": "Sugars and polysaccharides built from monosaccharides via glycosidic bonds, including glucose, starch, glycogen, and cellulose, serving energy and structural roles.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "碳水化合物"
     },
     {
       "id": "bio_lipids",
@@ -84,7 +92,8 @@
       "name": "Lipids",
       "topic": "bio_molecules",
       "description": "Hydrophobic molecules including triglycerides for energy storage and phospholipids whose amphipathic structure forms the bilayer of cell membranes.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "脂质"
     },
     {
       "id": "bio_proteins",
@@ -92,7 +101,8 @@
       "name": "Proteins",
       "topic": "bio_molecules",
       "description": "Polymers of amino acids joined by peptide bonds, folding through primary, secondary, tertiary, and quaternary structure that determines their biological function.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "蛋白质"
     },
     {
       "id": "bio_tests",
@@ -100,14 +110,16 @@
       "name": "Biochemical Tests",
       "topic": "bio_molecules",
       "description": "Qualitative biochemical tests identifying biological molecules, such as Benedict's for reducing sugars, iodine for starch, biuret for protein, and the emulsion test for lipids.",
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "生化检测"
     },
     {
       "id": "bio_enzymes",
       "kind": "topic",
       "name": "Enzymes",
       "topic": null,
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "酶"
     },
     {
       "id": "bio_enzyme_action",
@@ -115,7 +127,8 @@
       "name": "Enzyme Action",
       "topic": "bio_enzymes",
       "description": "Enzymes as biological catalysts lowering activation energy, binding substrates at their active site according to the induced-fit model to form products.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "酶作用"
     },
     {
       "id": "bio_enzyme_factors",
@@ -123,7 +136,8 @@
       "name": "Factors Affecting Enzyme Activity",
       "topic": "bio_enzymes",
       "description": "How temperature, pH, substrate concentration, and enzyme concentration affect the rate of enzyme-catalysed reactions, including denaturation at extremes.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "影响酶活性的因素"
     },
     {
       "id": "bio_enzyme_inhibition",
@@ -131,14 +145,16 @@
       "name": "Enzyme Inhibition",
       "topic": "bio_enzymes",
       "description": "Reduction of enzyme activity by inhibitors, with competitive inhibitors binding the active site and non-competitive inhibitors binding elsewhere to alter it.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "酶抑制"
     },
     {
       "id": "bio_membranes",
       "kind": "topic",
       "name": "Cell Membranes and Transport",
       "topic": null,
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "细胞膜与运输"
     },
     {
       "id": "bio_membrane_structure",
@@ -146,7 +162,8 @@
       "name": "Membrane Structure",
       "topic": "bio_membranes",
       "description": "The fluid mosaic model describing the cell membrane as a phospholipid bilayer with embedded proteins, cholesterol, and glycoproteins controlling exchange.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "膜结构"
     },
     {
       "id": "bio_passive_transport",
@@ -154,7 +171,8 @@
       "name": "Diffusion and Osmosis",
       "topic": "bio_membranes",
       "description": "Movement of substances down a concentration gradient without energy, by diffusion and facilitated diffusion, and the osmosis of water across membranes.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "扩散与渗透"
     },
     {
       "id": "bio_active_transport",
@@ -162,14 +180,16 @@
       "name": "Active Transport",
       "topic": "bio_membranes",
       "description": "Movement of substances against a concentration gradient using ATP and carrier proteins, including bulk transport by endocytosis and exocytosis.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "主动运输"
     },
     {
       "id": "bio_cell_cycle__bio_nucleic_acids",
       "kind": "topic",
       "name": "Chromosomes and DNA Replication",
       "topic": null,
-      "default_order": 5
+      "default_order": 5,
+      "name_zh": "染色体与 DNA 复制"
     },
     {
       "id": "bio_chromosomes",
@@ -177,7 +197,8 @@
       "name": "Chromosome Behaviour",
       "topic": "bio_cell_cycle__bio_nucleic_acids",
       "description": "The structure of chromosomes as DNA wound around histone proteins, and their replication and condensation in preparation for nuclear division.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "染色体行为"
     },
     {
       "id": "bio_mitosis",
@@ -185,7 +206,8 @@
       "name": "Mitosis",
       "topic": "bio_cell_cycle__bio_nucleic_acids",
       "description": "Nuclear division producing two genetically identical daughter cells through prophase, metaphase, anaphase, and telophase, underlying growth and repair.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "有丝分裂"
     },
     {
       "id": "bio_dna_structure",
@@ -193,7 +215,8 @@
       "name": "DNA Structure",
       "topic": "bio_cell_cycle__bio_nucleic_acids",
       "description": "DNA as a double helix of two antiparallel nucleotide strands held together by complementary base pairing between adenine-thymine and guanine-cytosine.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "DNA结构"
     },
     {
       "id": "bio_dna_replication",
@@ -201,14 +224,16 @@
       "name": "DNA Replication",
       "topic": "bio_cell_cycle__bio_nucleic_acids",
       "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "DNA复制"
     },
     {
       "id": "bio_nucleic_acids",
       "kind": "topic",
       "name": "Nucleic Acids and Protein Synthesis",
       "topic": null,
-      "default_order": 6
+      "default_order": 6,
+      "name_zh": "核酸与蛋白质合成"
     },
     {
       "id": "bio_transcription",
@@ -216,7 +241,8 @@
       "name": "Transcription",
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a messenger RNA copy of a gene by RNA polymerase, using one DNA strand as a template in the nucleus.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "转录"
     },
     {
       "id": "bio_translation",
@@ -224,7 +250,8 @@
       "name": "Translation",
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a polypeptide at the ribosome, where transfer RNA matches anticodons to mRNA codons to assemble amino acids in sequence.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "翻译"
     },
     {
       "id": "bio_mutation",
@@ -232,14 +259,16 @@
       "name": "Gene Mutation",
       "topic": "bio_nucleic_acids",
       "description": "Changes to the DNA base sequence, such as substitutions, insertions, and deletions, which may alter the resulting protein and the phenotype.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "基因突变"
     },
     {
       "id": "bio_transport_plants",
       "kind": "topic",
       "name": "Transport in Plants",
       "topic": null,
-      "default_order": 7
+      "default_order": 7,
+      "name_zh": "植物运输"
     },
     {
       "id": "bio_xylem",
@@ -247,7 +276,8 @@
       "name": "Xylem and Water Transport",
       "topic": "bio_transport_plants",
       "description": "The transport of water and mineral ions upward through dead, lignified xylem vessels, driven by transpiration pull via the cohesion-tension mechanism.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "木质部与水分运输"
     },
     {
       "id": "bio_transpiration",
@@ -255,7 +285,8 @@
       "name": "Transpiration",
       "topic": "bio_transport_plants",
       "description": "The loss of water vapour from leaves through stomata, and the effect of light, temperature, humidity, and air movement on its rate.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "蒸腾作用"
     },
     {
       "id": "bio_phloem",
@@ -263,14 +294,16 @@
       "name": "Phloem and Translocation",
       "topic": "bio_transport_plants",
       "description": "The translocation of sucrose and other assimilates through living phloem sieve tubes from sources to sinks by pressure flow.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "韧皮部与转运"
     },
     {
       "id": "bio_transport_mammals__bio_gas_exchange",
       "kind": "topic",
       "name": "Circulation and Gas Exchange",
       "topic": null,
-      "default_order": 8
+      "default_order": 8,
+      "name_zh": "循环运输与气体交换"
     },
     {
       "id": "bio_heart",
@@ -278,7 +311,8 @@
       "name": "The Heart",
       "topic": "bio_transport_mammals__bio_gas_exchange",
       "description": "The structure of the mammalian heart and the cardiac cycle of atrial and ventricular systole and diastole, coordinated to pump blood.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "心脏"
     },
     {
       "id": "bio_blood_vessels",
@@ -286,7 +320,8 @@
       "name": "Blood Vessels",
       "topic": "bio_transport_mammals__bio_gas_exchange",
       "description": "The structure and function of arteries, veins, and capillaries, whose walls suit carrying blood at different pressures and exchanging materials.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "血管"
     },
     {
       "id": "bio_haemoglobin",
@@ -294,7 +329,8 @@
       "name": "Haemoglobin and Oxygen Transport",
       "topic": "bio_transport_mammals__bio_gas_exchange",
       "description": "Haemoglobin's reversible binding of oxygen described by the sigmoid dissociation curve, and the Bohr effect that shifts it with carbon dioxide.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "血红蛋白与氧气运输"
     },
     {
       "id": "bio_lungs",
@@ -302,14 +338,16 @@
       "name": "Gas Exchange in the Lungs",
       "topic": "bio_transport_mammals__bio_gas_exchange",
       "description": "Gas exchange in the alveoli, whose large, thin, moist surface and rich blood supply maximise diffusion of oxygen and carbon dioxide.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "肺部气体交换"
     },
     {
       "id": "bio_disease",
       "kind": "topic",
       "name": "Infectious Disease and Immunity",
       "topic": null,
-      "default_order": 9
+      "default_order": 9,
+      "name_zh": "传染病与免疫"
     },
     {
       "id": "bio_infectious",
@@ -317,7 +355,8 @@
       "name": "Infectious Disease",
       "topic": "bio_disease",
       "description": "Diseases caused by pathogens such as bacteria, viruses, fungi, and protoctists, and the ways they are transmitted between hosts.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "传染病"
     },
     {
       "id": "bio_immune_response",
@@ -325,7 +364,8 @@
       "name": "Immune Response",
       "topic": "bio_disease",
       "description": "The body's defence against pathogens through phagocytes engulfing invaders and lymphocytes mounting specific cell-mediated and humoral responses.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "免疫应答"
     },
     {
       "id": "bio_antibodies",
@@ -333,14 +373,16 @@
       "name": "Antibodies and Vaccination",
       "topic": "bio_disease",
       "description": "Antibodies as proteins binding specific antigens to neutralise pathogens, and vaccination conferring active immunity through memory cells.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "抗体与疫苗接种"
     },
     {
       "id": "bio_respiration",
       "kind": "topic",
       "name": "Energy and Respiration",
       "topic": null,
-      "default_order": 10
+      "default_order": 10,
+      "name_zh": "能量与呼吸作用"
     },
     {
       "id": "bio_glycolysis",
@@ -348,7 +390,8 @@
       "name": "Glycolysis",
       "topic": "bio_respiration",
       "description": "The cytoplasmic breakdown of glucose into pyruvate, producing a small net yield of ATP and reduced NAD without requiring oxygen.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "糖酵解"
     },
     {
       "id": "bio_krebs",
@@ -356,7 +399,8 @@
       "name": "Link Reaction and Krebs Cycle",
       "topic": "bio_respiration",
       "description": "The link reaction converting pyruvate to acetyl coenzyme A, and the Krebs cycle oxidising it to release carbon dioxide and reduced coenzymes.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "连接反应与Krebs循环"
     },
     {
       "id": "bio_oxidative",
@@ -364,7 +408,8 @@
       "name": "Oxidative Phosphorylation",
       "topic": "bio_respiration",
       "description": "Oxidative phosphorylation using the electron transport chain and chemiosmosis across the inner mitochondrial membrane to synthesise most ATP.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "氧化磷酸化"
     },
     {
       "id": "bio_anaerobic",
@@ -372,14 +417,16 @@
       "name": "Anaerobic Respiration",
       "topic": "bio_respiration",
       "description": "Respiration without oxygen, regenerating NAD through lactate fermentation in animals or ethanol fermentation in yeast and plants, yielding little ATP.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "无氧呼吸"
     },
     {
       "id": "bio_photosynthesis",
       "kind": "topic",
       "name": "Photosynthesis",
       "topic": null,
-      "default_order": 11
+      "default_order": 11,
+      "name_zh": "光合作用"
     },
     {
       "id": "bio_light_dependent",
@@ -387,7 +434,8 @@
       "name": "Light-Dependent Reactions",
       "topic": "bio_photosynthesis",
       "description": "The light-dependent reactions in the thylakoids capturing light to produce ATP and reduced NADP while splitting water to release oxygen.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "光依赖反应"
     },
     {
       "id": "bio_calvin",
@@ -395,7 +443,8 @@
       "name": "Calvin Cycle",
       "topic": "bio_photosynthesis",
       "description": "The Calvin cycle in the stroma fixing carbon dioxide using ATP and reduced NADP to synthesise carbohydrate via the enzyme RuBisCO.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "Calvin循环"
     },
     {
       "id": "bio_limiting_factors",
@@ -403,14 +452,16 @@
       "name": "Limiting Factors",
       "topic": "bio_photosynthesis",
       "description": "Environmental factors such as light intensity, carbon dioxide concentration, and temperature that limit the overall rate of photosynthesis.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "限制因素"
     },
     {
       "id": "bio_homeostasis",
       "kind": "topic",
       "name": "Homeostasis",
       "topic": null,
-      "default_order": 12
+      "default_order": 12,
+      "name_zh": "体内平衡"
     },
     {
       "id": "bio_homeostasis_principles",
@@ -418,7 +469,8 @@
       "name": "Homeostasis Principles",
       "topic": "bio_homeostasis",
       "description": "The maintenance of a stable internal environment through negative feedback, where deviations from set points trigger corrective responses.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "体内平衡原理"
     },
     {
       "id": "bio_kidney",
@@ -426,7 +478,8 @@
       "name": "The Kidney and Osmoregulation",
       "topic": "bio_homeostasis",
       "description": "Ultrafiltration and selective reabsorption in the nephron forming urine, and the osmoregulation of water balance through the action of ADH.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "肾脏与渗透压调节"
     },
     {
       "id": "bio_glucose_control",
@@ -434,14 +487,16 @@
       "name": "Control of Blood Glucose",
       "topic": "bio_homeostasis",
       "description": "Regulation of blood glucose by insulin and glucagon from the pancreas, and the disruption of this control in diabetes mellitus.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "血糖控制"
     },
     {
       "id": "bio_coordination",
       "kind": "topic",
       "name": "Control and Coordination",
       "topic": null,
-      "default_order": 13
+      "default_order": 13,
+      "name_zh": "控制与协调"
     },
     {
       "id": "bio_nervous",
@@ -449,7 +504,8 @@
       "name": "Nervous Transmission",
       "topic": "bio_coordination",
       "description": "The transmission of nerve impulses as action potentials, generated by the movement of sodium and potassium ions across the neurone membrane.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "神经传导"
     },
     {
       "id": "bio_synapses",
@@ -457,7 +513,8 @@
       "name": "Synapses",
       "topic": "bio_coordination",
       "description": "Chemical transmission across synapses, where neurotransmitter released from the presynaptic neurone diffuses to receptors on the postsynaptic membrane.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "突触"
     },
     {
       "id": "bio_hormonal",
@@ -465,7 +522,8 @@
       "name": "Hormonal Control",
       "topic": "bio_coordination",
       "description": "Endocrine coordination in which hormones secreted by glands travel in the blood to target cells, producing slower, longer-lasting responses.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "激素控制"
     },
     {
       "id": "bio_plant_responses",
@@ -473,14 +531,16 @@
       "name": "Plant Responses",
       "topic": "bio_coordination",
       "description": "Plant responses to stimuli, including tropisms controlled by auxin and other growth regulators that direct growth toward or away from stimuli.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "植物响应"
     },
     {
       "id": "bio_inheritance",
       "kind": "topic",
       "name": "Inheritance",
       "topic": null,
-      "default_order": 14
+      "default_order": 14,
+      "name_zh": "遗传"
     },
     {
       "id": "bio_meiosis",
@@ -488,7 +548,8 @@
       "name": "Meiosis",
       "topic": "bio_inheritance",
       "description": "Reduction division producing four genetically varied haploid gametes, with crossing over and independent assortment generating genetic variation.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "减数分裂"
     },
     {
       "id": "bio_genetic_crosses",
@@ -496,7 +557,8 @@
       "name": "Genetic Crosses",
       "topic": "bio_inheritance",
       "description": "Predicting inheritance using monohybrid and dihybrid crosses, applying dominance, codominance, and the characteristic ratios of Mendelian genetics.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "遗传杂交"
     },
     {
       "id": "bio_linkage",
@@ -504,7 +566,8 @@
       "name": "Gene Linkage and Crossing Over",
       "topic": "bio_inheritance",
       "description": "Genes on the same chromosome inherited together as linked genes, with crossing over producing recombinants at a frequency reflecting their distance.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "基因连锁与交换"
     },
     {
       "id": "bio_gene_control",
@@ -512,14 +575,16 @@
       "name": "Control of Gene Expression",
       "topic": "bio_inheritance",
       "description": "The regulation of gene expression in eukaryotes, including transcriptional control and the role of regulatory proteins in switching genes on and off.",
-      "default_order": 4
+      "default_order": 4,
+      "name_zh": "基因表达控制"
     },
     {
       "id": "bio_evolution",
       "kind": "topic",
       "name": "Selection and Evolution",
       "topic": null,
-      "default_order": 15
+      "default_order": 15,
+      "name_zh": "选择与进化"
     },
     {
       "id": "bio_variation",
@@ -527,7 +592,8 @@
       "name": "Variation",
       "topic": "bio_evolution",
       "description": "Genetic and environmental variation among individuals, with continuous and discontinuous variation arising from genes, environment, and their interaction.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "变异"
     },
     {
       "id": "bio_natural_selection",
@@ -535,7 +601,8 @@
       "name": "Natural Selection",
       "topic": "bio_evolution",
       "description": "Differential survival and reproduction of individuals with advantageous alleles, changing allele frequencies in a population over generations.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "自然选择"
     },
     {
       "id": "bio_speciation",
@@ -543,14 +610,16 @@
       "name": "Speciation",
       "topic": "bio_evolution",
       "description": "The formation of new species when populations become reproductively isolated, allowing them to diverge through allopatric or sympatric mechanisms.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "物种形成"
     },
     {
       "id": "bio_biodiversity",
       "kind": "topic",
       "name": "Biodiversity and Conservation",
       "topic": null,
-      "default_order": 16
+      "default_order": 16,
+      "name_zh": "生物多样性与保护"
     },
     {
       "id": "bio_classification",
@@ -558,7 +627,8 @@
       "name": "Classification",
       "topic": "bio_biodiversity",
       "description": "The hierarchical classification of organisms into taxa and the three-domain system, reflecting their evolutionary relationships.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "分类"
     },
     {
       "id": "bio_biodiversity_sampling",
@@ -566,7 +636,8 @@
       "name": "Biodiversity and Sampling",
       "topic": "bio_biodiversity",
       "description": "Measuring biodiversity using random sampling and indices such as Simpson's index to quantify species richness and evenness in a habitat.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "生物多样性调查"
     },
     {
       "id": "bio_conservation",
@@ -574,14 +645,16 @@
       "name": "Conservation",
       "topic": "bio_biodiversity",
       "description": "Methods of maintaining biodiversity and ecosystems, balancing human activity with the protection of species and their habitats.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "保护"
     },
     {
       "id": "bio_genetic_tech",
       "kind": "topic",
       "name": "Genetic Technology",
       "topic": null,
-      "default_order": 17
+      "default_order": 17,
+      "name_zh": "遗传技术"
     },
     {
       "id": "bio_gene_tech",
@@ -589,7 +662,8 @@
       "name": "Gene Technology",
       "topic": "bio_genetic_tech",
       "description": "Recombinant DNA technology cutting and joining DNA with enzymes to insert genes into vectors, enabling gene cloning and expression.",
-      "default_order": 1
+      "default_order": 1,
+      "name_zh": "基因技术"
     },
     {
       "id": "bio_pcr_electrophoresis",
@@ -597,7 +671,8 @@
       "name": "PCR and Electrophoresis",
       "topic": "bio_genetic_tech",
       "description": "The polymerase chain reaction amplifying DNA in vitro, and gel electrophoresis separating DNA fragments by size for analysis.",
-      "default_order": 2
+      "default_order": 2,
+      "name_zh": "PCR与电泳"
     },
     {
       "id": "bio_gene_applications",
@@ -605,7 +680,8 @@
       "name": "Applications of Genetic Technology",
       "topic": "bio_genetic_tech",
       "description": "Applications of genetic technology in medicine and agriculture, including genetically modified organisms, gene therapy, and genetic screening.",
-      "default_order": 3
+      "default_order": 3,
+      "name_zh": "遗传技术应用"
     }
   ],
   "edges": [

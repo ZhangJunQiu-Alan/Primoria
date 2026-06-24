@@ -1,5 +1,6 @@
 import { classifyEntry, pickDominantGraph, type BroadMenuItem, type PositioningParams, type PositioningResult } from "./positioning";
 import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse } from "./search";
+import { detectKgLanguage } from "./display-name";
 import type { CourseContext, CourseContextTopic } from "./course-context";
 
 export type { CourseContext, CourseContextTopic } from "./course-context";
@@ -16,6 +17,9 @@ export type PositionLearningGoalInput = {
   modelVersion?: string;
   tau?: number;
   floor?: number;
+  // User-facing locale for topic/concept display names. When omitted it is
+  // inferred from the query text (CJK => "zh").
+  language?: string;
 };
 
 export type PositionLearningGoalResult = {
@@ -50,7 +54,8 @@ export async function positionLearningGoal(
     }
   }
 
-  const result = classifyEntry(search, overrides);
+  const language = input.language ?? detectKgLanguage(input.query);
+  const result = classifyEntry(search, overrides, language);
   return { result, search };
 }
 
