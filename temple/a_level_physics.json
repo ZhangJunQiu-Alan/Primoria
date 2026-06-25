@@ -985,6 +985,7 @@
       "id": "phy_radioactivity",
       "kind": "topic",
       "name": "Nuclear Reactions and Radioactivity",
+      "topic": null,
       "default_order": 26,
       "name_zh": "核反应与放射性"
     },
