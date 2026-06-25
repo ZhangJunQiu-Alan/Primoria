@@ -2,7 +2,7 @@
   "graphId": "a_level_biology",
   "subject": "Biology",
   "generatedFrom": "temple/a_level_biology.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -117,13 +117,17 @@
           "conceptId": "bio_enzyme_action",
           "name": "Enzyme Action",
           "nameZh": "酶作用",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Drag a substrate into the active site; show activation energy lowered on a reaction profile."
         },
         {
           "conceptId": "bio_enzyme_factors",
           "name": "Factors Affecting Enzyme Activity",
           "nameZh": "影响酶活性的因素",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot enzyme activity against temperature, pH, and substrate concentration."
         },
         {
           "conceptId": "bio_enzyme_inhibition",
@@ -153,13 +157,17 @@
           "conceptId": "bio_membrane_structure",
           "name": "Membrane Structure",
           "nameZh": "膜结构",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Labelled fluid-mosaic diagram of the phospholipid bilayer and membrane proteins."
         },
         {
           "conceptId": "bio_passive_transport",
           "name": "Diffusion and Osmosis",
           "nameZh": "扩散与渗透",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Animate particles diffusing down a concentration gradient across a membrane."
         },
         {
           "conceptId": "bio_active_transport",
@@ -207,19 +215,25 @@
           "conceptId": "bio_mitosis",
           "name": "Mitosis",
           "nameZh": "有丝分裂",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram the stages of mitosis."
         },
         {
           "conceptId": "bio_dna_structure",
           "name": "DNA Structure",
           "nameZh": "DNA结构",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Interactive double helix showing antiparallel strands and complementary base pairing."
         },
         {
           "conceptId": "bio_dna_replication",
           "name": "DNA Replication",
           "nameZh": "DNA复制",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram semi-conservative replication unwinding and templating each strand."
         }
       ],
       "successors": [
@@ -252,13 +266,17 @@
           "conceptId": "bio_transcription",
           "name": "Transcription",
           "nameZh": "转录",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram RNA polymerase synthesising mRNA from the template strand."
         },
         {
           "conceptId": "bio_translation",
           "name": "Translation",
           "nameZh": "翻译",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram the ribosome matching tRNA anticodons to mRNA codons to build a polypeptide."
         },
         {
           "conceptId": "bio_mutation",
@@ -323,7 +341,9 @@
           "conceptId": "bio_heart",
           "name": "The Heart",
           "nameZh": "心脏",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Labelled heart diagram showing the flow of the cardiac cycle."
         },
         {
           "conceptId": "bio_blood_vessels",
@@ -335,7 +355,9 @@
           "conceptId": "bio_haemoglobin",
           "name": "Haemoglobin and Oxygen Transport",
           "nameZh": "血红蛋白与氧气运输",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot the sigmoid oxygen dissociation curve and the Bohr shift."
         },
         {
           "conceptId": "bio_lungs",
@@ -392,19 +414,25 @@
           "conceptId": "bio_glycolysis",
           "name": "Glycolysis",
           "nameZh": "糖酵解",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Flow diagram of glycolysis from glucose to pyruvate."
         },
         {
           "conceptId": "bio_krebs",
           "name": "Link Reaction and Krebs Cycle",
           "nameZh": "连接反应与Krebs循环",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Cycle diagram of the link reaction and Krebs cycle."
         },
         {
           "conceptId": "bio_oxidative",
           "name": "Oxidative Phosphorylation",
           "nameZh": "氧化磷酸化",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram the electron transport chain and chemiosmosis."
         },
         {
           "conceptId": "bio_anaerobic",
@@ -435,13 +463,17 @@
           "conceptId": "bio_light_dependent",
           "name": "Light-Dependent Reactions",
           "nameZh": "光依赖反应",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram the light-dependent reactions in the thylakoid."
         },
         {
           "conceptId": "bio_calvin",
           "name": "Calvin Cycle",
           "nameZh": "Calvin循环",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Cycle diagram of the Calvin cycle fixing carbon dioxide."
         },
         {
           "conceptId": "bio_limiting_factors",
@@ -472,7 +504,9 @@
           "conceptId": "bio_kidney",
           "name": "The Kidney and Osmoregulation",
           "nameZh": "肾脏与渗透压调节",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Labelled nephron diagram showing ultrafiltration and reabsorption."
         },
         {
           "conceptId": "bio_glucose_control",
@@ -500,13 +534,17 @@
           "conceptId": "bio_nervous",
           "name": "Nervous Transmission",
           "nameZh": "神经传导",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot the action-potential membrane voltage over time."
         },
         {
           "conceptId": "bio_synapses",
           "name": "Synapses",
           "nameZh": "突触",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram neurotransmitter release and receptor binding at a synapse."
         },
         {
           "conceptId": "bio_hormonal",
@@ -538,13 +576,17 @@
           "conceptId": "bio_meiosis",
           "name": "Meiosis",
           "nameZh": "减数分裂",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram meiosis producing four haploid gametes, including crossing over."
         },
         {
           "conceptId": "bio_genetic_crosses",
           "name": "Genetic Crosses",
           "nameZh": "遗传杂交",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Punnett-square diagram predicting offspring genotype ratios."
         },
         {
           "conceptId": "bio_linkage",
@@ -618,7 +660,9 @@
           "conceptId": "bio_classification",
           "name": "Classification",
           "nameZh": "分类",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Hierarchical taxonomy tree of the classification taxa."
         },
         {
           "conceptId": "bio_biodiversity_sampling",

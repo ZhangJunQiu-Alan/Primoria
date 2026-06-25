@@ -8,7 +8,9 @@
       "name": "concept name",
       "topic": "owning topic id; null for topic nodes",
       "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic"
+      "default_order": "default teaching order within the topic",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "from must be learned before to; strength=hard|soft"
@@ -31,7 +33,9 @@
       "topic": "ml_linear_part1",
       "description": "A supervised model predicting a continuous target as a linear combination of input features, fitted by minimising the squared error between predictions and observations.",
       "default_order": 1,
-      "name_zh": "线性回归"
+      "name_zh": "线性回归",
+      "visual": "function",
+      "visual_hint": "Fit a regression line to scattered points; drag the line to see the error."
     },
     {
       "id": "ml_cost_mse",
@@ -49,7 +53,9 @@
       "topic": "ml_linear_part1",
       "description": "An iterative optimiser updating parameters along the negative gradient of the cost, using the entire training batch to compute each gradient step.",
       "default_order": 3,
-      "name_zh": "梯度下降"
+      "name_zh": "梯度下降",
+      "visual": "function",
+      "visual_hint": "Animate gradient descent stepping down a cost surface."
     },
     {
       "id": "ml_linear_part2",
@@ -101,7 +107,9 @@
       "topic": "ml_classification_part1",
       "description": "A probabilistic linear classifier modelling the probability of a binary class with the logistic function, fitted by maximising the likelihood of the labels.",
       "default_order": 1,
-      "name_zh": "逻辑回归"
+      "name_zh": "逻辑回归",
+      "visual": "function",
+      "visual_hint": "Plot the logistic decision boundary separating two classes."
     },
     {
       "id": "ml_sigmoid",
@@ -110,7 +118,9 @@
       "topic": "ml_classification_part1",
       "description": "The sigmoid function mapping real scores to probabilities in (0,1), inducing a linear decision boundary where the predicted probability equals one half.",
       "default_order": 2,
-      "name_zh": "Sigmoid 与决策边界"
+      "name_zh": "Sigmoid 与决策边界",
+      "visual": "function",
+      "visual_hint": "Plot the sigmoid mapping scores to probabilities and its decision boundary."
     },
     {
       "id": "ml_logistic_mle",
@@ -145,7 +155,9 @@
       "topic": "ml_classification_part2",
       "description": "Softmax regression generalising logistic regression to multiple classes by producing a normalised probability distribution over the class scores.",
       "default_order": 1,
-      "name_zh": "Softmax 回归"
+      "name_zh": "Softmax 回归",
+      "visual": "interactive",
+      "visual_hint": "Show softmax turning class scores into a probability distribution."
     },
     {
       "id": "ml_exp_family",
@@ -233,7 +245,9 @@
       "topic": "ml_svm_margin",
       "description": "The optimal margin classifier, a convex primal optimisation finding the hyperplane that maximises the geometric margin to the nearest training points.",
       "default_order": 2,
-      "name_zh": "最优间隔分类器"
+      "name_zh": "最优间隔分类器",
+      "visual": "interactive",
+      "visual_hint": "Drag points to show the max-margin hyperplane and its support vectors."
     },
     {
       "id": "ml_lagrange_duality",
@@ -268,7 +282,9 @@
       "topic": "ml_svm_kernel",
       "description": "The kernel trick computing inner products in a high-dimensional feature space implicitly, letting linear algorithms learn nonlinear decision boundaries.",
       "default_order": 1,
-      "name_zh": "核方法"
+      "name_zh": "核方法",
+      "visual": "interactive",
+      "visual_hint": "Lift non-separable points into a higher dimension where they separate."
     },
     {
       "id": "ml_mercer",
@@ -312,7 +328,9 @@
       "topic": "ml_theory",
       "description": "The bias-variance tradeoff decomposing generalisation error into bias from oversimplification and variance from sensitivity to the training sample.",
       "default_order": 1,
-      "name_zh": "偏差-方差权衡"
+      "name_zh": "偏差-方差权衡",
+      "visual": "function",
+      "visual_hint": "Plot training and validation error against model complexity."
     },
     {
       "id": "ml_regularization",
@@ -321,7 +339,9 @@
       "topic": "ml_theory",
       "description": "Adding an L1 or L2 penalty on parameters to the cost, discouraging large weights to reduce overfitting and, for L1, inducing sparse solutions.",
       "default_order": 2,
-      "name_zh": "正则化"
+      "name_zh": "正则化",
+      "visual": "function",
+      "visual_hint": "Show L1 and L2 penalties shrinking fitted coefficients."
     },
     {
       "id": "ml_cross_val",
@@ -365,7 +385,9 @@
       "topic": "ml_generalization_nn",
       "description": "Neural networks composing layers of weighted sums and nonlinear activations to learn flexible, nonlinear mappings from inputs to outputs.",
       "default_order": 3,
-      "name_zh": "神经网络"
+      "name_zh": "神经网络",
+      "visual": "diagram",
+      "visual_hint": "Diagram a layered network of weighted sums and activations."
     },
     {
       "id": "ml_backprop",
@@ -391,7 +413,9 @@
       "topic": "ml_unsupervised",
       "description": "K-means clustering partitioning data into K clusters by alternately assigning points to the nearest centroid and recomputing centroids to minimise inertia.",
       "default_order": 1,
-      "name_zh": "K均值聚类"
+      "name_zh": "K均值聚类",
+      "visual": "algorithm",
+      "visual_hint": "Animate K-means alternating assignment and centroid updates."
     },
     {
       "id": "ml_em_algorithm",
@@ -418,7 +442,9 @@
       "topic": "ml_unsupervised",
       "description": "Principal component analysis reducing dimensionality by projecting data onto orthogonal directions of greatest variance, the leading eigenvectors of the covariance.",
       "default_order": 4,
-      "name_zh": "主成分分析"
+      "name_zh": "主成分分析",
+      "visual": "interactive",
+      "visual_hint": "Project a 2-D cloud onto its principal component directions."
     },
     {
       "id": "ml_ica",
@@ -453,7 +479,9 @@
       "topic": "ml_rl",
       "description": "Value iteration and policy iteration, dynamic-programming algorithms computing optimal policies for a known MDP via the Bellman equations.",
       "default_order": 2,
-      "name_zh": "价值与策略迭代"
+      "name_zh": "价值与策略迭代",
+      "visual": "algorithm",
+      "visual_hint": "Iterate values and policy on an MDP gridworld until convergence."
     },
     {
       "id": "ml_q_learning",
@@ -462,7 +490,9 @@
       "topic": "ml_rl",
       "description": "Q-learning, a model-free, off-policy algorithm learning optimal action-value estimates from sampled transitions without knowing the environment's dynamics.",
       "default_order": 3,
-      "name_zh": "Q-学习"
+      "name_zh": "Q-学习",
+      "visual": "algorithm",
+      "visual_hint": "Update a Q-table as an agent explores a gridworld."
     },
     {
       "id": "ml_value_approx",

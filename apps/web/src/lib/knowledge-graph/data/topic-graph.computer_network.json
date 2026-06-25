@@ -2,7 +2,7 @@
   "graphId": "computer_network",
   "subject": "Computer Networking",
   "generatedFrom": "temple/computer_network.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -15,25 +15,33 @@
           "conceptId": "net_layering",
           "name": "Network Layering",
           "nameZh": "网络分层",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram the protocol-layer stack and how layers nest."
         },
         {
           "conceptId": "net_osi",
           "name": "OSI Model",
           "nameZh": "OSI模型",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram the seven OSI layers and their roles."
         },
         {
           "conceptId": "net_tcpip",
           "name": "TCP/IP Model",
           "nameZh": "TCP/IP模型",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram the four-layer TCP/IP stack."
         },
         {
           "conceptId": "net_encapsulation",
           "name": "Encapsulation",
           "nameZh": "封装",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram each layer wrapping the layer above with its header."
         }
       ],
       "successors": [
@@ -95,7 +103,9 @@
           "conceptId": "net_ip_addressing",
           "name": "IP Addressing",
           "nameZh": "IP寻址",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram an IP address split into network and host portions."
         },
         {
           "conceptId": "net_ipv4_ipv6",
@@ -113,7 +123,9 @@
           "conceptId": "net_routing",
           "name": "Routing Algorithms",
           "nameZh": "路由算法",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "algorithm",
+          "visualHint": "Animate link-state/distance-vector routing building forwarding tables."
         }
       ],
       "successors": [
@@ -150,7 +162,9 @@
           "conceptId": "net_tcp",
           "name": "TCP",
           "nameZh": "TCP",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Sequence diagram of the TCP three-way handshake."
         }
       ],
       "successors": [
@@ -178,7 +192,9 @@
           "conceptId": "net_rdt",
           "name": "Reliable Data Transfer",
           "nameZh": "可靠数据传输",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Sequence diagram of reliable transfer with sequence numbers and acks."
         },
         {
           "conceptId": "net_flow_control",
@@ -190,7 +206,9 @@
           "conceptId": "net_congestion",
           "name": "Congestion Control",
           "nameZh": "拥塞控制",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot the TCP congestion window growing and backing off over time."
         }
       ],
       "successors": [],
@@ -215,7 +233,9 @@
           "conceptId": "net_dns",
           "name": "DNS",
           "nameZh": "DNS",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram hierarchical DNS resolution of a hostname."
         },
         {
           "conceptId": "net_app_protocols",

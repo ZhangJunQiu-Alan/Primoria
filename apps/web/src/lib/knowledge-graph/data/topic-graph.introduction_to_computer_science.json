@@ -2,7 +2,7 @@
   "graphId": "introduction_to_computer_science",
   "subject": "Introduction to Computer Science",
   "generatedFrom": "temple/introduction_to_computer_science.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -192,19 +192,25 @@
           "conceptId": "c_linear_search",
           "name": "Linear Search",
           "nameZh": "线性搜索",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Scan an array element by element highlighting the comparison until found."
         },
         {
           "conceptId": "c_binary_search",
           "name": "Binary Search",
           "nameZh": "二分搜索",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Halve a sorted array each step, narrowing the search interval."
         },
         {
           "conceptId": "c_sorting",
           "name": "Sorting Algorithms",
           "nameZh": "排序算法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Animate bubble, selection, and merge sort rearranging an array."
         }
       ],
       "successors": [
@@ -228,19 +234,25 @@
           "conceptId": "c_recursion",
           "name": "Recursion",
           "nameZh": "递归",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Step recursive calls building up and unwinding on the call stack."
         },
         {
           "conceptId": "c_big_o",
           "name": "Big O Notation",
           "nameZh": "大O表示法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "chart",
+          "visualHint": "Plot growth of constant, log, linear, n-log-n, and quadratic complexity."
         },
         {
           "conceptId": "c_pointers",
           "name": "Pointers",
           "nameZh": "指针",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Box-and-pointer diagram of variables holding memory addresses."
         }
       ],
       "successors": [
@@ -276,7 +288,9 @@
           "conceptId": "c_call_stack",
           "name": "Call Stack",
           "nameZh": "调用栈",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram stack frames pushed and popped as functions are called."
         },
         {
           "conceptId": "c_file_io",
@@ -306,19 +320,25 @@
           "conceptId": "c_linked_lists",
           "name": "Linked Lists",
           "nameZh": "链表",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Box-and-pointer chain of nodes linked by next pointers."
         },
         {
           "conceptId": "c_hash_tables",
           "name": "Hash Tables",
           "nameZh": "哈希表",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Hash keys into buckets and resolve a collision."
         },
         {
           "conceptId": "c_trees",
           "name": "Trees",
           "nameZh": "树",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Insert and search nodes in a binary search tree."
         }
       ],
       "successors": [
@@ -354,7 +374,9 @@
           "conceptId": "c_queues_stacks",
           "name": "Queues and Stacks",
           "nameZh": "队列与栈",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Animate push/pop on a stack and enqueue/dequeue on a queue."
         },
         {
           "conceptId": "c_python_syntax",
@@ -487,7 +509,9 @@
           "conceptId": "c_dom",
           "name": "DOM Manipulation",
           "nameZh": "DOM 操作",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Tree diagram of the DOM nodes of a web page."
         }
       ],
       "successors": [

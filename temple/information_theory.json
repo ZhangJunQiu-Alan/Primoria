@@ -8,7 +8,9 @@
       "name": "node name",
       "topic": "parent topic id or null",
       "description": "concept description",
-      "default_order": "integer"
+      "default_order": "integer",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "hard or soft"
@@ -30,7 +32,9 @@
       "topic": "t_infotheory_basics",
       "description": "Shannon entropy, the average number of bits needed to describe a random variable's outcome, quantifying its inherent uncertainty.",
       "default_order": 1,
-      "name_zh": "香农熵"
+      "name_zh": "香农熵",
+      "visual": "function",
+      "visual_hint": "Plot binary entropy H(p) against the probability p."
     },
     {
       "id": "c_infotheory_joint_entropy",
@@ -48,7 +52,9 @@
       "topic": "t_infotheory_basics",
       "description": "Mutual information quantifying the reduction in uncertainty about one variable gained from observing another, the information they share.",
       "default_order": 3,
-      "name_zh": "互信息"
+      "name_zh": "互信息",
+      "visual": "diagram",
+      "visual_hint": "Venn-style diagram of entropies, joint entropy, and mutual information."
     },
     {
       "id": "t_infotheory_measures_typicality",
@@ -118,7 +124,9 @@
       "topic": "t_infotheory_source_coding",
       "description": "Huffman coding, a greedy algorithm building optimal prefix-free codes that minimise expected codeword length for known symbol probabilities.",
       "default_order": 3,
-      "name_zh": "Huffman 编码"
+      "name_zh": "Huffman 编码",
+      "visual": "algorithm",
+      "visual_hint": "Build a Huffman tree by merging the two lowest-frequency symbols."
     },
     {
       "id": "t_infotheory_channel_capacity",
@@ -188,7 +196,9 @@
       "topic": "t_infotheory_continuous",
       "description": "The Shannon-Hartley theorem giving the capacity of a bandlimited AWGN channel as a function of bandwidth and signal-to-noise ratio.",
       "default_order": 3,
-      "name_zh": "香农-哈特利定理"
+      "name_zh": "香农-哈特利定理",
+      "visual": "function",
+      "visual_hint": "Plot channel capacity against bandwidth and signal-to-noise ratio."
     }
   ],
   "edges": [

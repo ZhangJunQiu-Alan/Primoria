@@ -1,10 +1,24 @@
 import { DEFAULT_TOPIC_GRAPH_ID, TOPIC_GRAPHS } from "./data/topic-graphs.generated";
 
+/** Concept visualization affordance from the KG (temple/*.json `visual`). Maps to
+ * a course visual engine: interactive→html, simulation→physics,
+ * algorithm→algorithm_visualizer, function→math_explorer, chart→echarts,
+ * diagram→mermaid. Absent = no forced visual. */
+export type ConceptVisual =
+  | "interactive"
+  | "simulation"
+  | "algorithm"
+  | "function"
+  | "chart"
+  | "diagram";
+
 export type TopicConcept = {
   conceptId: string;
   name: string;
   nameZh?: string | null;
   defaultOrder: number;
+  visual?: ConceptVisual;
+  visualHint?: string;
 };
 
 export type TopicSuccessor = {

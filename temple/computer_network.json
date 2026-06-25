@@ -8,7 +8,9 @@
       "name": "concept name",
       "topic": "owning topic id; null for topic nodes",
       "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic"
+      "default_order": "default teaching order within the topic",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "from must be learned before to; strength=hard|soft"
@@ -31,7 +33,9 @@
       "topic": "net_arch",
       "description": "Decomposing network functionality into independent protocol layers, each providing services to the layer above and using the layer below, simplifying design and interoperability.",
       "default_order": 1,
-      "name_zh": "网络分层"
+      "name_zh": "网络分层",
+      "visual": "diagram",
+      "visual_hint": "Diagram the protocol-layer stack and how layers nest."
     },
     {
       "id": "net_osi",
@@ -40,7 +44,9 @@
       "topic": "net_arch",
       "description": "The seven-layer OSI reference model—physical, data link, network, transport, session, presentation, application—providing a conceptual framework for describing network protocol functions.",
       "default_order": 2,
-      "name_zh": "OSI模型"
+      "name_zh": "OSI模型",
+      "visual": "diagram",
+      "visual_hint": "Diagram the seven OSI layers and their roles."
     },
     {
       "id": "net_tcpip",
@@ -49,7 +55,9 @@
       "topic": "net_arch",
       "description": "The practical Internet protocol stack of link, internet, transport, and application layers, organising the protocols that actually run the global Internet.",
       "default_order": 3,
-      "name_zh": "TCP/IP模型"
+      "name_zh": "TCP/IP模型",
+      "visual": "diagram",
+      "visual_hint": "Diagram the four-layer TCP/IP stack."
     },
     {
       "id": "net_encapsulation",
@@ -58,7 +66,9 @@
       "topic": "net_arch",
       "description": "The process by which each layer wraps data from the layer above in its own header, building nested protocol data units for transmission.",
       "default_order": 4,
-      "name_zh": "封装"
+      "name_zh": "封装",
+      "visual": "diagram",
+      "visual_hint": "Diagram each layer wrapping the layer above with its header."
     },
     {
       "id": "net_link",
@@ -119,7 +129,9 @@
       "topic": "net_network",
       "description": "Hierarchical IP addressing dividing addresses into network and host portions, with subnetting and CIDR enabling flexible allocation and route aggregation.",
       "default_order": 1,
-      "name_zh": "IP寻址"
+      "name_zh": "IP寻址",
+      "visual": "diagram",
+      "visual_hint": "Diagram an IP address split into network and host portions."
     },
     {
       "id": "net_ipv4_ipv6",
@@ -146,7 +158,9 @@
       "topic": "net_network",
       "description": "Distributed routing algorithms—link-state and distance-vector—by which routers exchange information to compute the paths that populate their forwarding tables.",
       "default_order": 4,
-      "name_zh": "路由算法"
+      "name_zh": "路由算法",
+      "visual": "algorithm",
+      "visual_hint": "Animate link-state/distance-vector routing building forwarding tables."
     },
     {
       "id": "net_transport_part1",
@@ -181,7 +195,9 @@
       "topic": "net_transport_part1",
       "description": "A connection-oriented transport protocol providing reliable, ordered byte-stream delivery using handshakes, sequence numbers, acknowledgements, and retransmission.",
       "default_order": 3,
-      "name_zh": "TCP"
+      "name_zh": "TCP",
+      "visual": "diagram",
+      "visual_hint": "Sequence diagram of the TCP three-way handshake."
     },
     {
       "id": "net_transport_part2",
@@ -198,7 +214,9 @@
       "topic": "net_transport_part2",
       "description": "Principles of reliable data transfer over unreliable channels using sequence numbers, acknowledgements, timeouts, and automatic repeat request (ARQ) protocols.",
       "default_order": 1,
-      "name_zh": "可靠数据传输"
+      "name_zh": "可靠数据传输",
+      "visual": "diagram",
+      "visual_hint": "Sequence diagram of reliable transfer with sequence numbers and acks."
     },
     {
       "id": "net_flow_control",
@@ -216,7 +234,9 @@
       "topic": "net_transport_part2",
       "description": "Sender-side algorithms that infer congestion from loss or delay and adjust the sending rate to share capacity fairly and avoid collapse.",
       "default_order": 3,
-      "name_zh": "拥塞控制"
+      "name_zh": "拥塞控制",
+      "visual": "function",
+      "visual_hint": "Plot the TCP congestion window growing and backing off over time."
     },
     {
       "id": "net_application",
@@ -242,7 +262,9 @@
       "topic": "net_application",
       "description": "The Internet's distributed, hierarchical naming system that resolves human-readable hostnames into IP addresses through recursive and iterative queries.",
       "default_order": 2,
-      "name_zh": "DNS"
+      "name_zh": "DNS",
+      "visual": "diagram",
+      "visual_hint": "Diagram hierarchical DNS resolution of a hostname."
     },
     {
       "id": "net_app_protocols",

@@ -2,7 +2,7 @@
   "graphId": "software_construction",
   "subject": "Software Construction",
   "generatedFrom": "temple/software_construction.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -27,13 +27,17 @@
           "conceptId": "c_mit6031_specs",
           "name": "Specifications",
           "nameZh": "规格",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram preconditions and postconditions as a contract boundary."
         },
         {
           "conceptId": "c_mit6031_testing",
           "name": "Testing Strategies",
           "nameZh": "测试策略",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram partitioning the input space into equivalence classes."
         },
         {
           "conceptId": "c_mit6031_exceptions",
@@ -79,7 +83,9 @@
           "conceptId": "c_mit6031_abstraction_function",
           "name": "Abstraction Functions",
           "nameZh": "抽象函数",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram the abstraction function mapping representation to abstract value."
         }
       ],
       "successors": [
@@ -119,7 +125,9 @@
           "conceptId": "c_mit6031_recursive_data",
           "name": "Recursive Data Types",
           "nameZh": "递归数据类型",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram a recursive data type such as an immutable list."
         }
       ],
       "successors": [],
@@ -150,13 +158,17 @@
           "conceptId": "c_mit6031_locks",
           "name": "Locks and Synchronization",
           "nameZh": "锁与同步",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "State diagram of threads acquiring locks and a deadlock cycle."
         },
         {
           "conceptId": "c_mit6031_message_passing",
           "name": "Message Passing",
           "nameZh": "消息传递",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram components communicating by messages over channels."
         }
       ],
       "successors": [],

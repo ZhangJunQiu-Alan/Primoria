@@ -34,7 +34,9 @@
       "topic": "t_mit1806_linear_equations",
       "description": "Addition, scalar multiplication, dot products, and linear combinations of vectors.",
       "default_order": 1,
-      "name_zh": "向量与线性组合"
+      "name_zh": "向量与线性组合",
+      "visual": "interactive",
+      "visual_hint": "Drag vectors to show addition, scaling, and linear combinations."
     },
     {
       "id": "c_mit1806_elimination",
@@ -43,7 +45,9 @@
       "topic": "t_mit1806_linear_equations",
       "description": "Solving systems of linear equations using Gaussian elimination, pivot variables, and multipliers.",
       "default_order": 2,
-      "name_zh": "矩阵消元"
+      "name_zh": "矩阵消元",
+      "visual": "algorithm",
+      "visual_hint": "Step Gaussian elimination reducing a matrix to triangular form."
     },
     {
       "id": "c_mit1806_matrix_ops",
@@ -87,7 +91,9 @@
       "topic": "t_mit1806_vector_spaces",
       "description": "Understanding the null space (solutions to Ax=0) and column space (combinations of columns).",
       "default_order": 2,
-      "name_zh": "零空间与列空间"
+      "name_zh": "零空间与列空间",
+      "visual": "interactive",
+      "visual_hint": "Show the column space and null space as spans in space."
     },
     {
       "id": "c_mit1806_independence_basis",
@@ -96,7 +102,9 @@
       "topic": "t_mit1806_vector_spaces",
       "description": "Linear independence of vectors, spanning sets, defining a basis, and the dimension of a vector space.",
       "default_order": 3,
-      "name_zh": "线性无关、基与维数"
+      "name_zh": "线性无关、基与维数",
+      "visual": "interactive",
+      "visual_hint": "Drag vectors to test independence and span a subspace as a basis."
     },
     {
       "id": "c_mit1806_four_subspaces",
@@ -131,7 +139,9 @@
       "topic": "t_mit1806_orthogonality",
       "description": "Projection matrices and projecting vectors onto lines or general subspaces.",
       "default_order": 2,
-      "name_zh": "向子空间的投影"
+      "name_zh": "向子空间的投影",
+      "visual": "interactive",
+      "visual_hint": "Project a vector onto a line or plane and show the residual."
     },
     {
       "id": "c_mit1806_least_squares",
@@ -140,7 +150,9 @@
       "topic": "t_mit1806_orthogonality",
       "description": "Solving overdetermined systems using normal equations and finding the best fit line.",
       "default_order": 3,
-      "name_zh": "最小二乘近似"
+      "name_zh": "最小二乘近似",
+      "visual": "function",
+      "visual_hint": "Fit a least-squares line minimising the squared residuals to data."
     },
     {
       "id": "c_mit1806_gram_schmidt",
@@ -149,7 +161,9 @@
       "topic": "t_mit1806_orthogonality",
       "description": "Orthonormal vectors, orthogonal matrices, and the Gram-Schmidt orthogonalization process.",
       "default_order": 4,
-      "name_zh": "正交基与 Gram-Schmidt"
+      "name_zh": "正交基与 Gram-Schmidt",
+      "visual": "interactive",
+      "visual_hint": "Orthogonalise a set of vectors step by step (Gram-Schmidt)."
     },
     {
       "id": "t_mit1806_determinants_eigen",
@@ -166,7 +180,9 @@
       "topic": "t_mit1806_determinants_eigen",
       "description": "The fundamental properties that define the determinant of a square matrix.",
       "default_order": 1,
-      "name_zh": "行列式的性质"
+      "name_zh": "行列式的性质",
+      "visual": "interactive",
+      "visual_hint": "Show the determinant as the signed area/volume scaling of a transform."
     },
     {
       "id": "c_mit1806_det_formulas",
@@ -193,7 +209,9 @@
       "topic": "t_mit1806_determinants_eigen",
       "description": "Definition of eigenvalues and eigenvectors, and finding them using characteristic equations.",
       "default_order": 4,
-      "name_zh": "特征值与特征向量"
+      "name_zh": "特征值与特征向量",
+      "visual": "interactive",
+      "visual_hint": "Show eigenvectors as directions a transform only stretches, with eigenvalues."
     },
     {
       "id": "t_mit1806_eigenvalues",
@@ -210,7 +228,9 @@
       "topic": "t_mit1806_eigenvalues",
       "description": "Diagonalizing a matrix using its eigenvectors, computing powers of matrices.",
       "default_order": 1,
-      "name_zh": "对角化"
+      "name_zh": "对角化",
+      "visual": "interactive",
+      "visual_hint": "Decompose a transform along its eigenvector axes."
     },
     {
       "id": "c_mit1806_diff_eq",
@@ -254,7 +274,9 @@
       "topic": "t_mit1806_applications",
       "description": "Factoring any matrix into orthogonal and diagonal matrices.",
       "default_order": 1,
-      "name_zh": "奇异值分解"
+      "name_zh": "奇异值分解",
+      "visual": "interactive",
+      "visual_hint": "Show SVD as rotate, scale, rotate acting on the unit circle."
     },
     {
       "id": "c_mit1806_linear_transformations",
@@ -263,7 +285,9 @@
       "topic": "t_mit1806_applications",
       "description": "Maps between vector spaces that preserve addition and scalar multiplication, characterised by their action on a basis and represented by matrices.",
       "default_order": 2,
-      "name_zh": "线性变换"
+      "name_zh": "线性变换",
+      "visual": "interactive",
+      "visual_hint": "Apply a linear transformation to a grid and watch it deform."
     },
     {
       "id": "c_mit1806_matrix_transform",
@@ -272,7 +296,9 @@
       "topic": "t_mit1806_applications",
       "description": "Representing linear transformations with matrices and changing basis.",
       "default_order": 3,
-      "name_zh": "线性变换的矩阵"
+      "name_zh": "线性变换的矩阵",
+      "visual": "interactive",
+      "visual_hint": "Show how a matrix's columns are the images of the basis vectors."
     }
   ],
   "edges": [

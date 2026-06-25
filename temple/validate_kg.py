@@ -5,6 +5,12 @@ from collections import defaultdict, deque
 
 SKIP = set()  # 非 KG 的 json 可在此排除
 
+# concept 可视化亲和标注（可选；缺省 = none = 不强制 visual 块）。
+# 取值映射到 course visual 引擎：interactive→html, simulation→physics,
+# algorithm→algorithm_visualizer, function→math_explorer, chart→echarts,
+# diagram→mermaid, none→无。
+VISUAL_ENUM = {"interactive", "simulation", "algorithm", "function", "chart", "diagram", "none"}
+
 def load_graphs():
     graphs = {}
     for path in sorted(glob.glob(os.path.join(os.path.dirname(__file__), "*.json"))):
@@ -39,6 +45,8 @@ def check(name, g, all_ids_counter):
         edges = d.get("edges", [])
         node_ids = {n["id"] for n in nodes if "id" in n}
         res["g1_schema"] = (False, "topics 树：无 concept 节点 / 无 prereq 边 / 无 default_order")
+        res["g6_visual"] = (None, "N/A（分类树）")
+        res["visual_tagged"] = 0
         res["concepts"] = 0
         res["topics"] = len(nodes)
         res["edges"] = len(edges)
@@ -59,6 +67,24 @@ def check(name, g, all_ids_counter):
         if not prereq: problems.append("无 prereq 边")
         if missing_order: problems.append(f"{len(missing_order)} 个 concept 缺 default_order")
         res["g1_schema"] = (len(problems) == 0, "; ".join(problems) or "OK")
+
+        # 门禁6 visual 标注（可选字段，缺省=none）：取值合法 + visual≠none 时 hint 必填
+        visual_problems = []
+        tagged = 0
+        for c in concepts:
+            if "visual" not in c:
+                continue
+            v = c.get("visual")
+            if v not in VISUAL_ENUM:
+                visual_problems.append(f"{c['id']} visual={v!r} 非法")
+                continue
+            if v != "none":
+                tagged += 1
+                hint = c.get("visual_hint")
+                if not (isinstance(hint, str) and hint.strip()):
+                    visual_problems.append(f"{c['id']} visual={v} 缺 visual_hint")
+        res["g6_visual"] = (len(visual_problems) == 0, "; ".join(visual_problems[:5]) + (f" …(+{len(visual_problems)-5})" if len(visual_problems) > 5 else "") if visual_problems else "OK")
+        res["visual_tagged"] = tagged
 
     # 门禁2 id 全局唯一（局部重复 + 跨图重复都记）
     local_ids = [n["id"] for n in nodes if "id" in n]
@@ -120,7 +146,7 @@ def main():
     cross_dup = {i: gs for i, gs in all_ids.items() if len(set(gs)) > 1}
 
     print("\n===== 硬门禁通过表 =====\n")
-    hdr = f"{'图':<38}{'T/C/E':<14}{'G1schema':<9}{'G2id':<7}{'G3dag':<7}{'G4ref':<7}"
+    hdr = f"{'图':<38}{'T/C/E':<14}{'G1schema':<9}{'G2id':<7}{'G3dag':<7}{'G4ref':<7}{'G6vis':<7}"
     print(hdr); print("-" * len(hdr))
     def mark(v):
         if v is None: return "—"
@@ -129,13 +155,13 @@ def main():
         if r.get("fatal"):
             print(f"{r['name']:<38}FATAL: {r['fatal']}"); continue
         tce = f"{r['topics']}/{r['concepts']}/{r['edges']}"
-        print(f"{r['name']:<38}{tce:<14}{mark(r['g1_schema'][0]):<8}{mark(r['g2_id_local'][0]):<6}{mark(r['g3_dag'][0]):<6}{mark(r['g4_refs'][0]):<6}")
+        print(f"{r['name']:<38}{tce:<14}{mark(r['g1_schema'][0]):<8}{mark(r['g2_id_local'][0]):<6}{mark(r['g3_dag'][0]):<6}{mark(r['g4_refs'][0]):<6}{mark(r['g6_visual'][0]):<6}")
 
     print("\n===== 失败明细 =====")
     for r in results:
         if r.get("fatal"): continue
         fails = []
-        for k, label in [("g1_schema","G1 Schema"),("g2_id_local","G2 id唯一"),("g3_dag","G3 DAG"),("g4_refs","G4 引用")]:
+        for k, label in [("g1_schema","G1 Schema"),("g2_id_local","G2 id唯一"),("g3_dag","G3 DAG"),("g4_refs","G4 引用"),("g6_visual","G6 visual")]:
             ok, msg = r[k]
             if ok is False: fails.append(f"  [{label}] {msg}")
         if fails:
@@ -153,6 +179,13 @@ def main():
     for r in results:
         if r.get("fatal") or r.get("g5_roots",[None])[0] is None: continue
         print(f"  {r['name']:<38}{r['g5_roots'][1]}")
+
+    print("\n===== visual 标注覆盖（门禁6 参考） =====")
+    for r in results:
+        if r.get("fatal") or r.get("g6_visual",[None])[0] is None: continue
+        n = r.get("visual_tagged", 0)
+        total = r.get("concepts", 0)
+        print(f"  {r['name']:<38}{n}/{total} concept 已标注 visual≠none")
 
 if __name__ == "__main__":
     main()

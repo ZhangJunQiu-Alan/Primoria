@@ -52,7 +52,9 @@
       "kind": "concept",
       "default_order": 4,
       "description": "A model of execution tracking frames, bindings, and parent environments to explain how names resolve and how functions create local scopes.",
-      "name_zh": "环境图"
+      "name_zh": "环境图",
+      "visual": "diagram",
+      "visual_hint": "Diagram execution frames, variable bindings, and parent-environment links."
     },
     {
       "id": "topic_hof",
@@ -166,7 +168,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "A diagram depicting lists and pairs as boxes containing pointers, visualising the structure, sharing, and mutation of compound data.",
-      "name_zh": "箱指针图"
+      "name_zh": "箱指针图",
+      "visual": "diagram",
+      "visual_hint": "Box-and-pointer diagram of lists and pairs as boxes holding pointers."
     },
     {
       "id": "topic_recursion",
@@ -183,7 +187,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "A technique where a function calls itself on smaller subproblems, combining base cases and recursive cases so the computation terminates correctly.",
-      "name_zh": "递归"
+      "name_zh": "递归",
+      "visual": "algorithm",
+      "visual_hint": "Step through recursive calls accumulating and unwinding on the call stack."
     },
     {
       "id": "tree_recur",
@@ -192,7 +198,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "Recursion making multiple recursive calls per invocation, branching like a tree, as in computing Fibonacci numbers or counting partitions.",
-      "name_zh": "树递归"
+      "name_zh": "树递归",
+      "visual": "algorithm",
+      "visual_hint": "Draw the branching recursive calls as a recursion tree."
     },
     {
       "id": "tree_abs",
@@ -210,7 +218,9 @@
       "kind": "concept",
       "default_order": 4,
       "description": "Systematically visiting every node of a tree, typically via recursion, to process or aggregate the data the tree contains.",
-      "name_zh": "树遍历"
+      "name_zh": "树遍历",
+      "visual": "algorithm",
+      "visual_hint": "Animate visiting tree nodes in pre-order, in-order, and post-order."
     },
     {
       "id": "topic_mut_oop",
@@ -280,7 +290,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "A recursive structure of nodes each holding a value and a reference to the next, supporting sequential access and structural sharing.",
-      "name_zh": "链表"
+      "name_zh": "链表",
+      "visual": "diagram",
+      "visual_hint": "Box-and-pointer chain of nodes linked by next references."
     },
     {
       "id": "mut_trees",

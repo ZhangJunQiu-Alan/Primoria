@@ -2,7 +2,7 @@
   "graphId": "deep_learning",
   "subject": "Introduction to Deep Learning",
   "generatedFrom": "temple/deep_learning.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -27,7 +27,9 @@
           "conceptId": "dl_activation",
           "name": "Activation Functions",
           "nameZh": "激活函数",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot ReLU, sigmoid, and tanh activation functions."
         }
       ],
       "successors": [
@@ -67,13 +69,17 @@
           "conceptId": "dl_computational_graph",
           "name": "Computational Graphs",
           "nameZh": "计算图",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram a computation as a graph of nodes and edges for autodiff."
         },
         {
           "conceptId": "dl_backprop",
           "name": "Backpropagation",
           "nameZh": "反向传播",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram gradients flowing backward through the computational graph."
         }
       ],
       "successors": [
@@ -101,13 +107,17 @@
           "conceptId": "dl_loss",
           "name": "Loss Functions",
           "nameZh": "损失函数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot cross-entropy and squared-error loss against the prediction."
         },
         {
           "conceptId": "dl_optimization",
           "name": "Stochastic Gradient Descent",
           "nameZh": "梯度下降优化",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Animate gradient descent stepping down a loss surface."
         },
         {
           "conceptId": "dl_momentum",
@@ -153,7 +163,9 @@
           "conceptId": "dl_vanishing_grad",
           "name": "Vanishing/Exploding Gradients",
           "nameZh": "梯度消失与梯度爆炸",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot how gradients shrink or grow across many layers."
         },
         {
           "conceptId": "dl_weight_init",
@@ -220,7 +232,9 @@
           "conceptId": "dl_convolution",
           "name": "Convolution",
           "nameZh": "卷积",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Slide a filter across an image grid producing a feature map."
         },
         {
           "conceptId": "dl_padding_stride",
@@ -232,7 +246,9 @@
           "conceptId": "dl_pooling",
           "name": "Pooling",
           "nameZh": "池化",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Downsample a feature map with max and average pooling windows."
         }
       ],
       "successors": [
@@ -256,13 +272,17 @@
           "conceptId": "dl_cnn_arch",
           "name": "CNN Architectures",
           "nameZh": "CNN 架构",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram stacked convolution and pooling layers of a CNN."
         },
         {
           "conceptId": "dl_resnet",
           "name": "Residual Networks",
           "nameZh": "残差网络 (ResNet)",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram a residual block with its skip connection."
         },
         {
           "conceptId": "dl_transfer_learning",
@@ -274,7 +294,9 @@
           "conceptId": "dl_rnn",
           "name": "Recurrent Neural Networks",
           "nameZh": "循环神经网络",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram a recurrent cell unrolled over a sequence."
         }
       ],
       "successors": [
@@ -316,7 +338,9 @@
           "conceptId": "dl_lstm",
           "name": "LSTM",
           "nameZh": "LSTM/GRU 循环网络",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram the LSTM input, forget, and output gates and cell state."
         },
         {
           "conceptId": "dl_gru",
@@ -347,7 +371,9 @@
           "conceptId": "dl_self_attention",
           "name": "Self-Attention",
           "nameZh": "自注意力",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Visualise attention weights linking positions in a sequence."
         },
         {
           "conceptId": "dl_multihead",
@@ -383,7 +409,9 @@
           "conceptId": "dl_transformer",
           "name": "Transformer Architecture",
           "nameZh": "Transformer",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram the Transformer encoder-decoder with attention blocks."
         },
         {
           "conceptId": "dl_pretraining",

@@ -2,7 +2,7 @@
   "graphId": "mit_calculus",
   "subject": "Calculus",
   "generatedFrom": "temple/mit_calculus.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -15,13 +15,17 @@
           "conceptId": "c_1801_limits",
           "name": "Limits and Continuity",
           "nameZh": "极限与连续",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot f(x) with a draggable point approaching a; show the limit value as the point nears a from both sides."
         },
         {
           "conceptId": "c_1801_deriv_def",
           "name": "Definition of Derivative",
           "nameZh": "导数定义",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Slider for h: draw the secant through (x,f(x)) and (x+h,f(x+h)) collapsing to the tangent as h→0."
         },
         {
           "conceptId": "c_1801_deriv_rules",
@@ -83,7 +87,9 @@
           "conceptId": "c_1801_implicit_diff",
           "name": "Implicit Differentiation",
           "nameZh": "隐函数微分",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot an implicit relation (e.g. x²+y²=25) and show the tangent slope at a draggable point on the curve."
         },
         {
           "conceptId": "c_1801_related_rates",
@@ -117,19 +123,25 @@
           "conceptId": "c_1801_linear_approx",
           "name": "Linear Approximation",
           "nameZh": "线性近似",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot f(x) and its tangent line at a; slider for x comparing the true value against the linear approximation."
         },
         {
           "conceptId": "c_1801_curve_sketching",
           "name": "Curve Sketching",
           "nameZh": "曲线草图",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot f(x) with toggles for f′ and f″; mark extrema, inflection points, and increase/decrease intervals."
         },
         {
           "conceptId": "c_1801_mvt",
           "name": "Mean Value Theorem",
           "nameZh": "中值定理",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot f on [a,b] with the secant line and a draggable point c where the tangent is parallel to the secant."
         }
       ],
       "successors": [
@@ -153,19 +165,25 @@
           "conceptId": "c_1801_riemann_sums",
           "name": "Riemann Sums",
           "nameZh": "黎曼和",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Slider for rectangle count n; draw left/right/midpoint Riemann rectangles under f(x) and show the sum approaching the area."
         },
         {
           "conceptId": "c_1801_definite_integral",
           "name": "Definite Integrals",
           "nameZh": "定积分",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Shade signed area under f(x) between draggable bounds a,b; colour positive/negative regions and show the integral value."
         },
         {
           "conceptId": "c_1801_ftc",
           "name": "Fundamental Theorem of Calculus",
           "nameZh": "微积分基本定理",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Animate the accumulation function A(x)=∫ₐˣ f as x moves, showing A′(x)=f(x)."
         },
         {
           "conceptId": "c_1801_substitution",
@@ -251,13 +269,17 @@
           "conceptId": "c_1801_improper_int",
           "name": "Improper Integrals",
           "nameZh": "广义积分",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot f(x) with the upper bound b→∞; show the accumulating area and whether it converges to a finite value."
         },
         {
           "conceptId": "c_1801_area_curves",
           "name": "Area Between Curves",
           "nameZh": "曲线间面积",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Shade the region between two draggable curves over [a,b] and show the integral of their difference."
         }
       ],
       "successors": [
@@ -286,13 +308,17 @@
           "conceptId": "c_1801_volume",
           "name": "Volumes of Solids",
           "nameZh": "立体体积",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Rotate a region about an axis into a solid; slider sweeps a disk/washer cross-section and shows the volume integral."
         },
         {
           "conceptId": "c_1801_arc_length",
           "name": "Arc Length",
           "nameZh": "弧长",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Approximate a curve's length with a slider for the number of straight segments converging to the arc-length integral."
         },
         {
           "conceptId": "c_1801_work",
@@ -318,25 +344,33 @@
           "conceptId": "c_1801_sequences",
           "name": "Sequences and Series",
           "nameZh": "序列与级数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "chart",
+          "visualHint": "Plot sequence terms and their partial sums against n to show convergence or divergence."
         },
         {
           "conceptId": "c_1801_conv_tests",
           "name": "Convergence Tests",
           "nameZh": "收敛性检验",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Decision-tree diagram choosing a convergence test (integral / comparison / ratio / root) from the series' form."
         },
         {
           "conceptId": "c_1801_power_series",
           "name": "Power Series",
           "nameZh": "幂级数",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot a function against its power-series partial sums; slider for term count and shade the interval of convergence."
         },
         {
           "conceptId": "c_1801_taylor_series",
           "name": "Taylor Series",
           "nameZh": "泰勒级数",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Plot f(x) and its Taylor polynomial about a; slider for degree n to watch it hug the curve."
         }
       ],
       "successors": [],
@@ -356,25 +390,33 @@
           "conceptId": "c_1802_dot_product",
           "name": "Dot Product",
           "nameZh": "点积",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Drag two vectors; show the dot product, the projection of one onto the other, and the angle between them."
         },
         {
           "conceptId": "c_1802_cross_product",
           "name": "Cross Product",
           "nameZh": "叉积",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Drag two 3D vectors; show the perpendicular cross-product vector and the parallelogram area its magnitude measures."
         },
         {
           "conceptId": "c_1802_lines_planes",
           "name": "Lines and Planes",
           "nameZh": "直线与平面",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Show a line or plane in 3D from a point and a direction/normal; drag to watch its equation update."
         },
         {
           "conceptId": "c_1802_parametric_curves",
           "name": "Parametric Curves",
           "nameZh": "参数曲线",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Trace a parametric curve r(t) with a slider for t showing the position, velocity, and acceleration vectors."
         }
       ],
       "successors": [
@@ -406,25 +448,33 @@
           "conceptId": "c_1802_multivar_functions",
           "name": "Multivariable Functions",
           "nameZh": "多元函数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Show a surface z=f(x,y) with its level curves; drag to rotate and read heights off the contours."
         },
         {
           "conceptId": "c_1802_partial_derivs",
           "name": "Partial Derivatives",
           "nameZh": "偏导数",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Slice a surface z=f(x,y) along x and y at a point and show the two partial-derivative slopes."
         },
         {
           "conceptId": "c_1802_multivar_chain",
           "name": "Multivariable Chain Rule",
           "nameZh": "多元链式法则",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Dependency-tree diagram of the variables, showing each path's contribution in the multivariable chain rule."
         },
         {
           "conceptId": "c_1802_gradient",
           "name": "Gradient and Directional Derivative",
           "nameZh": "梯度与方向导数",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "interactive",
+          "visualHint": "On a contour plot show the gradient pointing to steepest increase; drag a direction to compare the directional derivative."
         }
       ],
       "successors": [
@@ -462,19 +512,25 @@
           "conceptId": "c_1802_tangent_planes",
           "name": "Tangent Planes",
           "nameZh": "切平面",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Show the tangent plane touching a surface z=f(x,y) at a draggable point."
         },
         {
           "conceptId": "c_1802_local_extrema",
           "name": "Local Extrema",
           "nameZh": "局部极值",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Surface with maxima, minima, and saddles marked; apply the second-derivative test at a draggable critical point."
         },
         {
           "conceptId": "c_1802_lagrange",
           "name": "Lagrange Multipliers",
           "nameZh": "拉格朗日乘数",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Contour plot with a constraint curve, showing where the objective and constraint gradients align at the optimum."
         },
         {
           "conceptId": "c_1802_differentials",
@@ -499,13 +555,17 @@
           "conceptId": "c_1802_double_integrals",
           "name": "Double Integrals",
           "nameZh": "二重积分",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Show a planar region and the volume under z=f(x,y); sweep the integration to build up the double integral."
         },
         {
           "conceptId": "c_1802_polar_integrals",
           "name": "Polar Integrals",
           "nameZh": "极坐标积分",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Show a polar region with the r·dr·dθ area element; sweep θ to build the polar double integral."
         },
         {
           "conceptId": "c_1802_triple_integrals",
@@ -556,7 +616,9 @@
           "conceptId": "c_1802_vector_fields",
           "name": "Vector Fields",
           "nameZh": "向量场",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Plot a 2D vector field; drop a particle to trace its path and accumulate a line integral along a curve."
         }
       ],
       "successors": [
@@ -582,19 +644,25 @@
           "conceptId": "c_1802_fundamental_line",
           "name": "Fundamental Theorem for Line Integrals",
           "nameZh": "线积分基本定理",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram contrasting path-dependent integrals with path-independent ones in a conservative field."
         },
         {
           "conceptId": "c_1802_greens_theorem",
           "name": "Green's Theorem",
           "nameZh": "格林定理",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Show a closed curve and its enclosed region, relating the circulation line integral to the double integral of curl."
         },
         {
           "conceptId": "c_1802_curl_div",
           "name": "Curl and Divergence",
           "nameZh": "旋度与散度",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Vector field with a paddlewheel (curl) and a source/sink box (divergence) at a draggable point."
         }
       ],
       "successors": [
@@ -633,13 +701,17 @@
           "conceptId": "c_1802_stokes_theorem",
           "name": "Stokes' Theorem",
           "nameZh": "斯托克斯定理",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram relating the boundary-curve line integral to the surface integral of curl (Stokes)."
         },
         {
           "conceptId": "c_1802_divergence_theorem",
           "name": "Divergence Theorem",
           "nameZh": "散度定理",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram relating outward flux through a closed surface to the volume integral of divergence."
         }
       ],
       "successors": [],
