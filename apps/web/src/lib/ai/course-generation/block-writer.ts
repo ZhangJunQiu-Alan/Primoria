@@ -80,7 +80,7 @@ const FIELD_HINTS: Record<GeneratableBlockType, string> = {
 const VISUAL_ENGINE_HINTS: Record<string, string> = {
   interactive: `"engine":"html" plus "html": a self-contained iframe fragment (no <html>/<head>/<body>, no 100vh) with at least one interactive control (slider/drag/button) that updates the visual live`,
   simulation: `"engine":"physics" plus "physicsScene": a Matter.js scene { render:{width,height}, bodies:[...], constraints?:[...], gravity?, walls? }`,
-  algorithm: `"engine":"algorithm" plus "algorithmViz": { "algorithm": name, "steps": [ { "description", "kind":"array|tree|graph|table", and the matching state object with role highlights } ] } (step through the algorithm)`,
+  algorithm: `"engine":"algorithm" plus "algorithmViz": { "algorithm": name, "steps": [ { "description", "kind":"array|tree|graph|table", and the matching state object. For "tree", each node object in the "nodes" array MUST include "id" (string), "value" (string/number), "parentId" (string or null for root), "left" (string or null), and "right" (string or null) to fully define the tree structure, or the visualization will fail. For "graph", define nodes with (x,y) and edges. } ] }`,
   function: `"engine":"math_explorer" plus "mathExplorer": { "mode":"cartesian|parametric", "functions":[{"expr"}] or "curves":[{"xExpr","yExpr"}], "parameters":[{"name","min","max","default"}] (sliders), optional ranges/labels }`,
   chart: `"engine":"echarts" plus "echartsOption": a complete ECharts option object`,
   diagram: `"engine":"mermaid" plus "mermaidDefinition": a Mermaid diagram string`,

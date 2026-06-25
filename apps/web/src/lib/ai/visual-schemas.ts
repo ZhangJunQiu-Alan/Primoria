@@ -128,6 +128,15 @@ export const AlgorithmStepZodSchema = z.object({
   tree: AlgorithmTreeStateSchema.optional(),
   graph: AlgorithmGraphStateSchema.optional(),
   table: AlgorithmTableStateSchema.optional(),
+}).refine(data => {
+  if (data.kind === "array" && !data.array) return false;
+  if (data.kind === "tree" && !data.tree) return false;
+  if (data.kind === "graph" && !data.graph) return false;
+  if (data.kind === "table" && !data.table) return false;
+  return true;
+}, {
+  message: "Matching state payload must be provided for the specified kind",
+  path: ["kind"]
 });
 
 export const AlgorithmVisualizationZodSchema = z.object({

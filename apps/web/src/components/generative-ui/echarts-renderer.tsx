@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { EChartsArtifact } from "@/lib/agent-os";
 
-export function EChartsRenderer({ artifact }: { artifact: EChartsArtifact }) {
+export function EChartsRenderer({ artifact, variant = "tool" }: { artifact: EChartsArtifact; variant?: "tool" | "course" }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<import("echarts").ECharts | null>(null);
 
@@ -39,6 +39,17 @@ export function EChartsRenderer({ artifact }: { artifact: EChartsArtifact }) {
 
   const height = artifact.height ?? 400;
 
+  const chart = (
+    <div
+      ref={containerRef}
+      className={variant === "course" ? "course-visual-canvas echarts-course-canvas" : undefined}
+      style={{ width: "100%", height }}
+      aria-label={artifact.title}
+    />
+  );
+
+  if (variant === "course") return chart;
+
   return (
     <div className="message-row tool">
       <div className="tool-card widget-card echarts-card">
@@ -46,11 +57,7 @@ export function EChartsRenderer({ artifact }: { artifact: EChartsArtifact }) {
           <span className="tool-dot" />
           <span>render_chart · {artifact.title}</span>
         </div>
-        <div
-          ref={containerRef}
-          style={{ width: "100%", height }}
-          aria-label={artifact.title}
-        />
+        {chart}
         {artifact.description && (
           <p className="tool-note" style={{ padding: "8px 12px 10px" }}>{artifact.description}</p>
         )}

@@ -1,5 +1,5 @@
 import { and, desc, eq, inArray, isNull, notInArray } from "drizzle-orm";
-import type { Course, CourseBlock, CourseSummary, Lesson, LessonProgress, LessonRole, LessonStatus } from "./types";
+import type { CodeBlock, Course, CourseBlock, CourseSummary, Lesson, LessonProgress, LessonRole, LessonStatus } from "./types";
 import { summarizeCourse } from "./types";
 import { getCurrentUser } from "../auth/session";
 import { getDb, hasDatabaseUrl } from "../db/client";
@@ -44,6 +44,33 @@ export async function updateBlock(courseId: string, blockId: string, next: Cours
     if (!lesson.blocks?.some((block) => block.id === blockId)) return null;
     return { ...lesson, blocks: lesson.blocks.map((block) => (block.id === blockId ? next : block)) };
   });
+}
+
+/** Overwrite a code block's source in one read (vs. updateBlock, which re-reads
+ * the course internally). Backfills originalCode with the AI-generated version on
+ * first save. Returns a reason so the API can map to 404 vs 400. */
+export async function saveCodeBlockSource(
+  courseId: string,
+  blockId: string,
+  code: string,
+  ownerId?: string | null,
+): Promise<{ ok: true; course: Course } | { ok: false; reason: "not_found" | "not_code" }> {
+  const course = await getCourse(courseId, ownerId);
+  if (!course) return { ok: false, reason: "not_found" };
+
+  const existing = course.lessons.flatMap((lesson) => lesson.blocks ?? []).find((block) => block.id === blockId);
+  if (!existing) return { ok: false, reason: "not_found" };
+  if (existing.type !== "code") return { ok: false, reason: "not_code" };
+
+  const prev = existing as CodeBlock;
+  const next: CodeBlock = { ...prev, code, originalCode: prev.originalCode ?? prev.code };
+  const lessons = course.lessons.map((lesson) =>
+    lesson.blocks?.some((block) => block.id === blockId)
+      ? bumpLesson({ ...lesson, blocks: lesson.blocks.map((block) => (block.id === blockId ? next : block)) })
+      : lesson,
+  );
+  const saved = await saveCourse(bumpCourse({ ...course, lessons }), ownerId);
+  return { ok: true, course: saved };
 }
 
 export async function insertBlock(courseId: string, block: CourseBlock, atIndex?: number, ownerId?: string | null): Promise<Course | undefined> {

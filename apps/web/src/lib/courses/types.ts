@@ -65,6 +65,9 @@ export type CodeBlock = BlockBase & {
   language: string;
   code: string;
   explanation: string;
+  /** AI-generated original code, retained when the user edits `code` so the
+   * editor can offer "restore original". Backfilled on first save. */
+  originalCode?: string;
 };
 
 export type SingleQuestion = {
