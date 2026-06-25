@@ -51,16 +51,23 @@ function main() {
   assert(blockRenderer.includes("course-transfer-example-label"), "transfer block renders a dedicated example label");
   assert(blockRenderer.includes('CourseMarkdown markdown={block.example} className="course-transfer-example-body"'), "transfer examples render as block markdown for lists and paragraphs");
   assert(!blockRenderer.includes("<em>Example.</em> <CourseInlineMarkdown markdown={block.example}"), "transfer examples are not rendered through inline markdown");
+  assert(blockRenderer.includes("CourseVisualFrame"), "visual blocks render inside a clean course visual shell");
+  assert(blockRenderer.includes('variant="course"'), "course visual renderers suppress their internal tool-card title bars");
 
   assert(styles.includes(".course-block-learning-actions"), "block action tray has dedicated styling");
   assert(styles.includes(".course-block-action-panel"), "expanded block actions use a bottom panel style");
   assert(styles.includes("flex-direction: column"), "block actions stack the trigger and bottom panel instead of rendering inline");
   assert(styles.includes(".course-block-action-tray"), "expanded block actions have dedicated styling");
   assert(styles.includes(".course-ai-context-strip.empty"), "Course Copilot empty context state has dedicated styling");
-  assert(styles.includes("margin-right: var(--course-content-gutter)"), "course detail content is aligned closer to the fixed Copilot panel");
+  assert(detail.includes("--course-content-margin-end"), "course detail switches content alignment when the Copilot panel is collapsed");
+  assert(detail.includes('sidebarCollapsed ? "auto" : "var(--course-content-gutter)"'), "collapsed Copilot sidebar recenters the lesson column");
+  assert(styles.includes("--course-content-margin-end: var(--course-content-gutter)"), "expanded course detail content stays aligned closer to the fixed Copilot panel");
+  assert(styles.includes("margin-right: var(--course-content-margin-end)"), "course detail header and blocks share the same responsive horizontal alignment");
   assert(styles.includes(".course-transfer-path"), "transfer block path has dedicated styling");
   assert(styles.includes(".course-transfer-example"), "transfer block example has dedicated styling");
   assert(styles.includes(".course-transfer-example-body ol"), "transfer block example lists keep readable indentation");
+  assert(styles.includes(".course-visual-frame"), "course visual shell has dedicated styling");
+  assert(styles.includes(".course-visual-canvas"), "course visual canvas has dedicated styling");
 
   process.stdout.write("[course-detail-lesson-ui-static.unit] ALL CHECKS PASSED\n");
 }

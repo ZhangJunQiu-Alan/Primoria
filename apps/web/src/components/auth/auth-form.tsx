@@ -17,6 +17,16 @@ function errorMessage(err: unknown, fallback: string) {
   return err instanceof Error && err.message ? err.message : fallback;
 }
 
+function PasswordVisibilityIcon({ visible }: { visible: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M2.8 12s3.3-5.6 9.2-5.6S21.2 12 21.2 12s-3.3 5.6-9.2 5.6S2.8 12 2.8 12Z" />
+      <circle cx="12" cy="12" r="2.8" />
+      {visible ? <path className="auth-eye-slash" d="M4.8 4.8 19.2 19.2" /> : null}
+    </svg>
+  );
+}
+
 export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "sign-up" }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -279,7 +289,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
                 disabled={pending || password.length === 0}
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? "Hide" : "Show"}
+                <PasswordVisibilityIcon visible={showPassword} />
               </button>
             </div>
             <p id="auth-password-hint" className={isSignUp && password.length > 0 && !passwordReady ? "auth-field-hint warning" : "auth-field-hint"}>

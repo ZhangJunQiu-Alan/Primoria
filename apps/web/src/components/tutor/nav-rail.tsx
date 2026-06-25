@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { AuthUser } from "@/lib/auth/types";
 import { clearCopilotThreadStorage } from "@/lib/copilot-thread-history";
 
@@ -92,6 +92,8 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   const router = useRouter();
   const [authEnabled, setAuthEnabled] = useState<boolean | null>(initialAuthState?.authEnabled ?? null);
   const [user, setUser] = useState<AuthUser | null>(initialAuthState?.user ?? null);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -108,14 +110,40 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
     };
   }, [pathname]);
 
+  useEffect(() => {
+    if (!accountOpen) return;
+    function closeOnOutsideInteraction(event: PointerEvent | KeyboardEvent) {
+      if (event instanceof KeyboardEvent) {
+        if (event.key === "Escape") setAccountOpen(false);
+        return;
+      }
+      const target = event.target;
+      if (target instanceof Node && !accountRootRef.current?.contains(target)) {
+        setAccountOpen(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", closeOnOutsideInteraction);
+    document.addEventListener("keydown", closeOnOutsideInteraction);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsideInteraction);
+      document.removeEventListener("keydown", closeOnOutsideInteraction);
+    };
+  }, [accountOpen]);
+
   async function signOut() {
     await fetch("/api/auth/sign-out", { method: "POST" });
     clearCopilotThreadStorage();
     window.localStorage.removeItem("primoria:tutor-provider-settings");
     setUser(null);
+    setAccountOpen(false);
     router.push("/");
     router.refresh();
   }
+
+  const accountInitial = (user?.displayName ?? user?.email ?? "U").slice(0, 1).toUpperCase();
+  const accountName = user?.displayName ?? "Learner";
+  const accountEmail = user?.email ?? "Signed in";
 
   return (
     <aside className="nav-rail" aria-label="Primoria sections">
@@ -150,7 +178,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
             );
           }
           return (
-            <Link key={tab.id} href={tab.href} className={className} title={tab.label}>
+            <Link key={tab.id} href={tab.href} className={className} title={tab.label} onClick={() => setAccountOpen(false)}>
               {inner}
             </Link>
           );
@@ -162,14 +190,32 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
         ) : !authEnabled ? (
           <span className="nav-account-hint">Local JSON mode</span>
         ) : user ? (
-          <>
-            <span className="nav-account-avatar" aria-hidden="true">{(user.displayName ?? user.email ?? "U").slice(0, 1).toUpperCase()}</span>
-            <span className="nav-account-copy">
-              <strong>{user.displayName ?? "Learner"}</strong>
-              <span>{user.email}</span>
-            </span>
-            <button type="button" onClick={signOut}>Sign out</button>
-          </>
+          <div className="nav-account-user" ref={accountRootRef}>
+            <button
+              type="button"
+              className="nav-account-trigger"
+              aria-label={`Account menu for ${accountName}`}
+              aria-expanded={accountOpen}
+              aria-controls="nav-account-menu"
+              onClick={() => setAccountOpen((current) => !current)}
+            >
+              <span className="nav-account-avatar" aria-hidden="true">{accountInitial}</span>
+            </button>
+            {accountOpen ? (
+              <div id="nav-account-menu" className="nav-account-menu" role="menu">
+                <div className="nav-account-menu-head">
+                  <span className="nav-account-avatar large" aria-hidden="true">{accountInitial}</span>
+                  <span className="nav-account-copy">
+                    <strong>{accountName}</strong>
+                    <span title={accountEmail}>{accountEmail}</span>
+                  </span>
+                </div>
+                <button type="button" className="nav-account-signout" onClick={signOut} role="menuitem">
+                  Sign out
+                </button>
+              </div>
+            ) : null}
+          </div>
         ) : (
           <>
             <Link className="nav-account-link" href="/auth/sign-in">Sign in</Link>

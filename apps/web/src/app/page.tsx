@@ -7,11 +7,10 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUser();
-  const copilotEnabled = !authEnabled || Boolean(user);
 
   return (
     <main className="app-shell">
-      <CopilotKitProvider enabled={copilotEnabled}>
+      <CopilotKitProvider>
         <TutorWorkspaceClient initialAuthState={{ authEnabled, user, loaded: true }} />
       </CopilotKitProvider>
     </main>
