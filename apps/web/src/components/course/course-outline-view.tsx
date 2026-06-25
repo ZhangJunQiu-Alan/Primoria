@@ -32,7 +32,7 @@ export function CourseOutlineView({
     [displayCourse.lessons],
   );
   const renderedLessons = useMemo(
-    () => visibleLessons === "upcoming" ? lessons.filter((lesson) => lesson.status !== "generated") : lessons,
+    () => selectVisibleLessons(lessons, visibleLessons),
     [lessons, visibleLessons],
   );
   const generatedCount = lessons.filter((lesson) => lesson.status === "generated").length;
@@ -147,6 +147,12 @@ export function CourseOutlineView({
       </section>
     </div>
   );
+}
+
+function selectVisibleLessons(lessons: Lesson[], visibleLessons: "all" | "upcoming") {
+  if (visibleLessons !== "upcoming") return lessons;
+  const nextLesson = lessons.find((lesson) => lesson.status !== "generated");
+  return nextLesson ? [nextLesson] : [];
 }
 
 function LessonOutlineRow({

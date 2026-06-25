@@ -47,6 +47,10 @@ function main() {
 
   assert(blockRenderer.includes("function BlockShell"), "BlockRenderer remains focused on rendering block content");
   assert(!blockRenderer.includes("CourseBlockActionTray"), "learning actions are not embedded in BlockRenderer");
+  assert(blockRenderer.includes("course-transfer-path"), "transfer block renders source and target as a structured path");
+  assert(blockRenderer.includes("course-transfer-example-label"), "transfer block renders a dedicated example label");
+  assert(blockRenderer.includes('CourseMarkdown markdown={block.example} className="course-transfer-example-body"'), "transfer examples render as block markdown for lists and paragraphs");
+  assert(!blockRenderer.includes("<em>Example.</em> <CourseInlineMarkdown markdown={block.example}"), "transfer examples are not rendered through inline markdown");
 
   assert(styles.includes(".course-block-learning-actions"), "block action tray has dedicated styling");
   assert(styles.includes(".course-block-action-panel"), "expanded block actions use a bottom panel style");
@@ -54,6 +58,9 @@ function main() {
   assert(styles.includes(".course-block-action-tray"), "expanded block actions have dedicated styling");
   assert(styles.includes(".course-ai-context-strip.empty"), "Course Copilot empty context state has dedicated styling");
   assert(styles.includes("margin-right: var(--course-content-gutter)"), "course detail content is aligned closer to the fixed Copilot panel");
+  assert(styles.includes(".course-transfer-path"), "transfer block path has dedicated styling");
+  assert(styles.includes(".course-transfer-example"), "transfer block example has dedicated styling");
+  assert(styles.includes(".course-transfer-example-body ol"), "transfer block example lists keep readable indentation");
 
   process.stdout.write("[course-detail-lesson-ui-static.unit] ALL CHECKS PASSED\n");
 }
