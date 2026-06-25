@@ -529,23 +529,34 @@ export function PrimoriaCopilotChatSurface({
       }
 
       setRestoration({ threadId: resolvedThreadId, done: false });
-      const stored = await hydrateThreadMessagesFromServer(resolvedThreadId);
-      if (cancelled) return;
+      setAttachmentError("");
 
-      const messages = stored
-        .filter((message) => message.role === "user" || message.role === "assistant")
-        .map((message) => ({
-          id: message.id,
-          role: message.role as "user" | "assistant",
-          content: message.role === "assistant"
-            ? sanitizeCopilotAssistantText(stripInjectedCourseContext(message.content))
-            : stripInjectedCourseContext(message.content),
-        }));
+      try {
+        const stored = await hydrateThreadMessagesFromServer(resolvedThreadId);
+        if (cancelled) return;
 
-      agent.setMessages(messages as any);
-      (agent as any).setState?.({});
-      restoredThreadRef.current = resolvedThreadId;
-      setRestoration({ threadId: resolvedThreadId, done: true });
+        const messages = stored
+          .filter((message) => message.role === "user" || message.role === "assistant")
+          .map((message) => ({
+            id: message.id,
+            role: message.role as "user" | "assistant",
+            content: message.role === "assistant"
+              ? sanitizeCopilotAssistantText(stripInjectedCourseContext(message.content))
+              : stripInjectedCourseContext(message.content),
+          }));
+
+        agent.setMessages(messages as any);
+        (agent as any).setState?.({});
+      } catch (error) {
+        if (!cancelled) {
+          setAttachmentError(error instanceof Error ? error.message : "Could not restore the previous conversation. Starting a fresh chat.");
+        }
+      } finally {
+        if (!cancelled) {
+          restoredThreadRef.current = resolvedThreadId;
+          setRestoration({ threadId: resolvedThreadId, done: true });
+        }
+      }
     }
 
     void restore();

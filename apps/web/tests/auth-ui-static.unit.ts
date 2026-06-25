@@ -13,6 +13,8 @@ function read(path: string) {
 
 async function main() {
   const authForm = read("src/components/auth/auth-form.tsx");
+  const signInPage = read("src/app/auth/sign-in/page.tsx");
+  const signUpPage = read("src/app/auth/sign-up/page.tsx");
   const styles = read("src/app/globals.css");
 
   assert(authForm.includes('const SIGN_IN_HREF = "/auth/sign-in"'), "auth switch has stable sign-in route");
@@ -21,6 +23,8 @@ async function main() {
   assert(!authForm.includes('isSupabaseActive ? "/login" : "/auth/sign-up"'), "sign-in link no longer loops to sign-up");
 
   assert(authForm.includes("showPassword"), "password visibility state is available");
+  assert(authForm.includes("PasswordVisibilityIcon"), "password visibility uses an icon component");
+  assert(!authForm.includes('{showPassword ? "Hide" : "Show"}'), "password visibility control does not render the old text pill");
   assert(authForm.includes("aria-describedby=\"auth-password-hint\""), "password input is described by guidance text");
   assert(authForm.includes("role=\"alert\""), "error message is announced");
   assert(authForm.includes("role=\"status\""), "success message is announced");
@@ -32,7 +36,13 @@ async function main() {
   assert(authForm.includes("autoComplete=\"email\""), "email input supports browser autofill");
   assert(authForm.includes("autoComplete={isSignUp ? \"new-password\" : \"current-password\"}"), "password autofill mode matches flow");
 
+  assert(signInPage.includes('className="app-shell auth-shell"'), "sign-in page uses the focused auth shell");
+  assert(!signInPage.includes("TutorNavRail"), "sign-in page does not render the disabled nav rail");
+  assert(signUpPage.includes('className="app-shell auth-shell"'), "sign-up page uses the focused auth shell");
+  assert(!signUpPage.includes("TutorNavRail"), "sign-up page does not render the disabled nav rail");
+
   assert(styles.includes(".auth-fields"), "auth field group has dedicated layout styling");
+  assert(styles.includes(".app-shell.auth-shell"), "auth pages have a nav-free app shell");
   assert(styles.includes("grid-template-rows: repeat(3, minmax(76px, auto))"), "auth field group keeps matching desktop rows");
   assert(styles.includes("place-items: center"), "auth workspace centers the fixed auth panel");
   assert(styles.includes("height: min(720px, calc(100dvh - 68px))"), "auth panel has a fixed desktop height");
@@ -40,6 +50,7 @@ async function main() {
   assert(styles.includes(".auth-hero-copy"), "hero content has dedicated stable layout styling");
   assert(styles.includes(".auth-secondary-action"), "secondary provider action has dedicated styling");
   assert(styles.includes(".auth-password-control"), "password control has dedicated styling");
+  assert(styles.includes(".auth-password-control button svg"), "password visibility icon has dedicated styling");
   assert(styles.includes(".auth-message.success"), "success state has dedicated styling");
   assert(styles.includes(".auth-message.error"), "error state has dedicated styling");
   assert(styles.includes(":focus-visible"), "auth controls expose visible keyboard focus");

@@ -34,7 +34,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
             </div>
           </div>
         </header>
-        <CopilotKitProvider enabled={copilotEnabled}>
+        <CopilotKitProvider>
           <CourseDetailClient initialCourse={course} initialLessonJobs={lessonJobs} copilotEnabled={copilotEnabled} />
         </CopilotKitProvider>
       </section>
