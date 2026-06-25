@@ -1,1 +1,0 @@
-1. block 15 (quiz) content invalid: [ { "code": "invalid_type", "expected": "boolean", "received": "undefined", "path": [ "questions", 0, "correct" ], "message": "Required" } ]

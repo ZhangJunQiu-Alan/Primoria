@@ -22,6 +22,9 @@
 - 在建课Agent生成Course大纲及第一个Lesson之后,由学习进度编排流程更新mastery并作出决策:
   - 没有明显薄弱点时,创建大纲中的下一个lesson
   - 发现知识缺口时,动态创建补足Lesson,插入当前lesson与原下一个Lesson之间并入队.所有的lesson内容均通过统一的Lesson Job体系生成
+- Blocks
+  - Visualization Block,项目核心卖点,能支持可交互式可视化的地方都要支持
+  - Code Block支持编辑,运行,保存
 
 ## 软件工程问题
 
@@ -80,9 +83,6 @@
           - position.menu_select（宽泛菜单选 topic）payload: { selected_topic_id, source_query }。source_query 不能省，否则不知道复用哪次定位去建课
           - 待功能（标灰，先不实现）TODO: quiz.hint payload: { question_id, count }（看提示交互未做，迭代三）；quiz.retry payload: { question_id, is_correct }（错题逻辑迭代三）；chat.code_run（运行功能未做，迭代三）
       - 异步蒸馏（Extractor Agent），当用户结束一个lesson的学习，触发一个后台任务。读取该期间的所有 learning_events，让 Extractor Agent 进行语义提炼（TODO: EXtractor Agent怎么实现）
-    还需要决定的点 TODO:
-      - 用户画像字段的存储格式，有哪几种存储格式，有什么缺点和优点: ④ 事实卡片列表
-      - 画像沉淀触发时机，TODO: 如果检测到关键偏好时沉淀这个怎么实现
   4. 完成如下行为：
      1. 如果用户描述/学习画像字段为空走冷启动
         用户输入后应该有的行为：
