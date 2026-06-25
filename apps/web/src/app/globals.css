@@ -5960,16 +5960,20 @@ cpk-web-inspector {
 /* ── course detail page ────────────────────────────────────────────── */
 .course-workspace {
   --course-sidebar-width: 410px;
+  --course-content-gutter: clamp(24px, 3vw, 56px);
   width: calc(100vw - 88px - var(--course-sidebar-width));
   height: 100vh;
   min-height: 0;
-  padding: 28px 40px;
+  padding: 28px clamp(24px, 4vw, 56px);
   display: flex;
   flex-direction: column;
   gap: 20px;
   overflow-y: auto;
 }
 .course-header {
+  width: min(960px, 100%);
+  margin-left: auto;
+  margin-right: var(--course-content-gutter);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -6000,6 +6004,38 @@ cpk-web-inspector {
   color: var(--quiet);
   font-size: 12px;
 }
+.course-status-row {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  color: var(--quiet);
+  font-size: 12px;
+}
+.course-status-row > span:not(.course-status-pill) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.course-status-row > span:not(.course-status-pill)::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(107, 99, 87, 0.45);
+}
+.course-status-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 9px;
+  border: 1px solid rgba(200, 136, 26, 0.22);
+  border-radius: 999px;
+  background: #fffaf2;
+  color: #8a5a14;
+  font-weight: 850;
+}
 .course-detail-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 340px;
@@ -6024,10 +6060,13 @@ cpk-web-inspector {
   border-radius: 18px;
   outline: 2px solid transparent;
   outline-offset: 4px;
-  transition: outline-color 0.15s ease;
+  transition: outline-color 0.15s ease, transform 0.15s ease;
 }
 .course-block-wrapper.selected {
   outline-color: #c8881a;
+}
+.course-block-wrapper:focus-visible {
+  outline-color: rgba(200, 136, 26, 0.58);
 }
 .course-block {
   background: var(--panel);
@@ -6037,6 +6076,7 @@ cpk-web-inspector {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-shadow: 0 12px 30px rgba(57, 42, 25, 0.04);
 }
 .course-block-meta {
   display: flex;
@@ -6062,6 +6102,91 @@ cpk-web-inspector {
 .course-block-body { font-size: 14px; line-height: 1.6; color: var(--ink); }
 .course-block-text p { margin: 0 0 10px; }
 .course-block-text p:last-child { margin-bottom: 0; }
+
+.course-block-learning-actions {
+  margin-top: 10px;
+  padding: 0 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+.course-block-learning-actions.expanded {
+  gap: 10px;
+}
+.course-block-action-tray button {
+  border: 1px solid rgba(23, 19, 15, 0.1);
+  border-radius: 999px;
+  background: #fffdf8;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1;
+  cursor: pointer;
+}
+.course-block-action-panel {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(200, 136, 26, 0.2);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fffdf8 0%, #fff8e8 100%);
+  box-shadow: 0 16px 34px rgba(57, 42, 25, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+.course-block-action-panel-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.course-block-action-panel-copy span {
+  color: var(--quiet);
+  font-size: 11px;
+  font-weight: 760;
+}
+.course-block-action-panel-copy strong {
+  color: var(--ink);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.course-block-action-tray {
+  min-width: max-content;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.course-block-action-tray button {
+  min-height: 30px;
+  padding: 7px 10px;
+}
+.course-block-action-tray button:hover {
+  border-color: rgba(74, 122, 90, 0.32);
+  background: #eef7f0;
+  color: #2f5a3d;
+}
+.course-block-action-tray button:focus-visible {
+  outline: 2px solid rgba(200, 136, 26, 0.58);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .course-block-action-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .course-block-action-tray {
+    min-width: 0;
+    justify-content: flex-start;
+  }
+}
 
 .course-markdown {
   color: var(--ink);
@@ -6636,13 +6761,14 @@ cpk-web-inspector {
 }
 
 .course-detail-main {
-  width: min(920px, 100%);
-  max-width: 920px;
+  width: min(960px, 100%);
+  max-width: 960px;
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-right: 0;
+  margin-left: auto;
+  margin-right: var(--course-content-gutter);
 }
 
 
@@ -6752,11 +6878,15 @@ cpk-web-inspector {
 
 .course-ai-context-strip {
   flex: 0 0 auto;
-  margin: 8px 12px 0;
-  padding: 8px 10px;
+  margin: 10px 12px 0;
+  padding: 10px 11px;
   border: 1px solid rgba(23, 19, 15, 0.08);
   border-radius: 12px;
   background: #fbf7f1;
+}
+.course-ai-context-strip.empty {
+  border-style: dashed;
+  background: #fffaf2;
 }
 
 .course-ai-context-strip > span {
@@ -6783,6 +6913,10 @@ cpk-web-inspector {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .course-ai-block-chips,
@@ -6881,7 +7015,7 @@ cpk-web-inspector {
 
 .course-ai-suggestions {
   flex: 0 0 auto;
-  margin: 8px 12px;
+  margin: 8px 12px 10px;
 }
 
 .course-ai-suggestions button {
@@ -6890,6 +7024,12 @@ cpk-web-inspector {
   text-overflow: ellipsis;
   white-space: nowrap;
   background: #fffdf8;
+  cursor: pointer;
+}
+.course-ai-suggestions button:hover {
+  border-color: rgba(200, 136, 26, 0.28);
+  background: #fff8e8;
+  color: #8a5a14;
 }
 
 .course-ai-chat {
@@ -6936,12 +7076,20 @@ cpk-web-inspector {
 @media (max-width: 1200px) {
   .course-workspace {
     width: auto;
+    --course-content-gutter: 0px;
+  }
+
+  .course-header {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .course-detail-main,
   .course-detail-layout.sidebar-collapsed .course-detail-main {
     width: 100%;
     max-width: none;
+    margin-left: 0;
     margin-right: 0;
   }
 
