@@ -118,7 +118,7 @@ const PrimoriaAssistantMessage = Object.assign(
     children: _children,
     ...props
   }: CopilotChatAssistantMessageProps) {
-      const safeContent = sanitizeCopilotAssistantText(message.content);
+    const safeContent = sanitizeCopilotAssistantText(stripInjectedCourseContext(message.content));
     const visibleContent = useProgressiveAssistantText(safeContent, Boolean(isRunning));
     const safeMessage = { ...message, content: safeContent };
     const hasText = visibleContent.trim().length > 0;
@@ -212,6 +212,8 @@ const PrimoriaMessageView = Object.assign(
       () => (props.messages ?? []).map((message) =>
         message.role === "user"
           ? { ...message, content: stripInjectedCourseContext(message.content) }
+          : message.role === "assistant"
+            ? { ...message, content: sanitizeCopilotAssistantText(stripInjectedCourseContext(message.content)) }
           : message,
       ),
       [props.messages],
@@ -418,9 +420,9 @@ function contentToText(content: unknown) {
   return String(content ?? "");
 }
 
-function messageText(message: { content?: unknown }) {
-  const content = message.content;
-  return stripInjectedCourseContext(content);
+function messageText(message: { content?: unknown; role?: unknown }) {
+  const text = stripInjectedCourseContext(message.content);
+  return message.role === "assistant" ? sanitizeCopilotAssistantText(text) : text;
 }
 
 function CopilotThreadHistoryRecorder({ threadId, title }: { threadId: string; title?: string }) {
@@ -535,7 +537,9 @@ export function PrimoriaCopilotChatSurface({
         .map((message) => ({
           id: message.id,
           role: message.role as "user" | "assistant",
-          content: stripInjectedCourseContext(message.content),
+          content: message.role === "assistant"
+            ? sanitizeCopilotAssistantText(stripInjectedCourseContext(message.content))
+            : stripInjectedCourseContext(message.content),
         }));
 
       agent.setMessages(messages as any);

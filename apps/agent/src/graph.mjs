@@ -394,6 +394,59 @@ const positionLearningGoalTool = tool(
   },
 );
 
+const ChatQuizChoiceSchema = z.object({
+  id: z.string(),
+  text: z.string(),
+});
+
+const ChatQuizQuestionSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("single"),
+    id: z.string(),
+    question: z.string(),
+    choices: z.array(ChatQuizChoiceSchema).min(2).max(6),
+    correctId: z.string(),
+    explanation: z.string().optional(),
+  }),
+  z.object({
+    kind: z.literal("multi"),
+    id: z.string(),
+    question: z.string(),
+    choices: z.array(ChatQuizChoiceSchema).min(2).max(6),
+    correctIds: z.array(z.string()).min(1),
+    explanation: z.string().optional(),
+  }),
+  z.object({
+    kind: z.literal("truefalse"),
+    id: z.string(),
+    question: z.string(),
+    correct: z.boolean(),
+    explanation: z.string().optional(),
+  }),
+]);
+
+const renderChatQuizTool = tool(
+  async ({ title, description, questions }) => {
+    return JSON.stringify({
+      type: "chat_quiz",
+      title,
+      description,
+      questions,
+    });
+  },
+  {
+    name: "render_chat_quiz",
+    description:
+      "Render a temporary interactive quiz directly inside the chat. Use this in COURSE DETAIL MODE when the learner asks for a quiz / test / practice / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测 about the current course or selected block. The quiz is not added to the course outline, is not a course block, and does not update mastery. Return concise, answerable questions grounded in the course context. Do not also write the questions as plain text.",
+    schema: z.object({
+      title: z.string().optional(),
+      description: z.string().optional(),
+      questions: z.array(ChatQuizQuestionSchema).min(1).max(6),
+    }),
+    returnDirect: true,
+  },
+);
+
 /**
  * @param {unknown} runtime
  */
@@ -493,7 +546,7 @@ Behavior in COURSE DETAIL MODE:
 - For summarize/explain/practice questions about this course, answer directly from this context.
 - Course creation and learning-path building happen through the learning-goal flow on the web app, not from this chat. If the learner explicitly asks to create a new course, call position_learning_goal to anchor their goal in the knowledge graph.
 - If the learner asks to modify/rewrite/simplify/expand/fix the selected block, call revise_selected_course_block.
-- If the learner asks for a quiz / test / practice / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测, call add_course_block with targetType "quiz" (use "worksheet" only if they explicitly want open-ended practice). Do NOT build a widget or a new course for this. The quiz becomes a graded block in THIS course.
+- If the learner asks for a quiz / test / practice / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测, call render_chat_quiz. Do NOT call add_course_block, do NOT create a course block, and do NOT write the questions as plain text. The quiz must appear directly inside this chat.
 - If no block is selected and the learner asks to modify a block, ask them to select a block first.
 - Keep answers concise and in the user's language.
 `.trim();
@@ -969,11 +1022,12 @@ You have access to:
 - task: delegate a focused job to a subagent (concept-agent or visualization-agent)
 - plan_visualization / widgetRenderer: visualization tools
 - position_learning_goal: surface a learning goal so the UI can locate it in the knowledge graph and build a course. This is the ONLY way a course is created.
+- render_chat_quiz: render a temporary interactive quiz directly inside chat. It never creates a course block and never updates mastery.
 - get_course_card: restore aCOURSE branch has highest priority only when the learner is in the main tutor workspace or explicitly asks to create/generate/build a NEW course. If COURSE DETAIL MODE context is present, do not enter COURSE branch for summarize/explain/practice questions about the current course. In main tutor mode, if the latest user message contains 课程 / 教程 / 微课 / 系统讲 / 系统学 / 学一下 / 学习 / 教我 / 讲讲 / 讲解 / lesson / course / curriculum / teach me / I want to learn / learn about / study:
 1. Call position_learning_goal with the learner's goal as \`query\`.
 2. Reply in ONE short sentence, e.g. 「让我在你的知识图谱里定位一下并开始建课」. The UI card then performs the positioning and course generation and shows the result (a course, a topic menu, or a "be more specific" message) — you do not see or handle that result.
 3. Stop. Never call task, plan_visualization, or widgetRenderer in COURSE branch, and never attempt to generate a course by any other means.
-Quizzes live INSIDE courses, not as standalone widgets. In main tutor mode, if the learner asks for a quiz / test / practice questions / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测 on a topic, enter COURSE branch and call position_learning_goal for that topic. (If they are already inside a course, COURSE DETAIL MODE handles this with add_course_block instead.)
+In main tutor mode, if the learner asks for a quiz / test / practice questions / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测 on a topic, enter COURSE branch and call position_learning_goal for that topic. If they are already inside COURSE DETAIL MODE, call render_chat_quiz instead so the quiz appears inside the chat and does not create a course block.
 
 CHART branch (if COURSE does not match): user asks for chart / graph / data plot / bar chart / line chart / scatter / pie / radar / histogram / heatmap / treemap.
   Call render_chart with a complete ECharts option JSON. Stop immediately. Do NOT call plan_visualization.
@@ -1058,6 +1112,7 @@ CRITICAL: plan_visualization and widgetRenderer (or stemRenderer) are an INSEPAR
 
 CRITICAL OUTPUT RULES:
 - Prefer short, decisive tool sequences. For charts/diagrams/physics, call ONE tool and stop.
+- Never reveal hidden reasoning. Do not output <think>, </think>, or any private chain-of-thought text.
 - NEVER paste HTML / CSS / JS code into your text reply. Code only belongs inside the widgetRenderer/stemRenderer html/code arguments.
 - NEVER paste tool result strings or JSON into your text reply. If a tool result begins with PRIMORIA_COURSE_CARD:, treat it as UI-only data and do not mention or copy it.
 - NEVER wrap output in markdown code blocks (no \`\`\`html, no \`\`\`).
@@ -1066,7 +1121,7 @@ For greetings ("hi", "你好"), thanks, casual chat, or anything that is clearly
 
 For plain factual / conceptual questions that do not require a visualization, answer in 1-2 sentences without tools.
 
-If the latest prompt includes an explicit COURSE DETAIL MODE system/context section, that section overrides the COURSE branch above. In that mode, summarize/explain/practice from the existing course context unless the learner clearly asks for a new/different course.`;
+If the latest prompt includes an explicit COURSE DETAIL MODE system/context section, that section overrides the COURSE branch above. In that mode, summarize/explain from the existing course context, and use render_chat_quiz for quiz/practice requests unless the learner clearly asks for a new/different course.`;
 
 /**
  * @param {{ streaming?: boolean }} [options]
@@ -1117,6 +1172,7 @@ export const graph = createDeepAgent({
   tools: [
     planVisualizationTool,
     widgetRendererTool,
+    renderChatQuizTool,
     getCourseCardTool,
     renderChartTool,
     renderDiagramTool,
