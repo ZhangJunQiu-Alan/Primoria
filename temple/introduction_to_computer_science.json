@@ -174,7 +174,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "A search algorithm scanning elements one by one until the target is found or the collection is exhausted, running in linear time.",
-      "name_zh": "线性搜索"
+      "name_zh": "线性搜索",
+      "visual": "algorithm",
+      "visual_hint": "Scan an array element by element highlighting the comparison until found."
     },
     {
       "id": "c_binary_search",
@@ -183,7 +185,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "An efficient search on sorted data that repeatedly halves the search interval by comparing the target to the middle element, running in logarithmic time.",
-      "name_zh": "二分搜索"
+      "name_zh": "二分搜索",
+      "visual": "algorithm",
+      "visual_hint": "Halve a sorted array each step, narrowing the search interval."
     },
     {
       "id": "c_sorting",
@@ -192,7 +196,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "Algorithms arranging elements into order, such as bubble, selection, and merge sort, differing in strategy and time complexity.",
-      "name_zh": "排序算法"
+      "name_zh": "排序算法",
+      "visual": "algorithm",
+      "visual_hint": "Animate bubble, selection, and merge sort rearranging an array."
     },
     {
       "id": "topic_complexity_memory",
@@ -209,7 +215,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate.",
-      "name_zh": "递归"
+      "name_zh": "递归",
+      "visual": "algorithm",
+      "visual_hint": "Step recursive calls building up and unwinding on the call stack."
     },
     {
       "id": "c_big_o",
@@ -218,7 +226,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "Big O notation describing how an algorithm's running time or space grows with input size, characterising worst-case asymptotic efficiency.",
-      "name_zh": "大O表示法"
+      "name_zh": "大O表示法",
+      "visual": "chart",
+      "visual_hint": "Plot growth of constant, log, linear, n-log-n, and quadratic complexity."
     },
     {
       "id": "c_pointers",
@@ -227,7 +237,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "Variables storing memory addresses, enabling indirect access, dynamic data structures, and efficient passing of data by reference in C.",
-      "name_zh": "指针"
+      "name_zh": "指针",
+      "visual": "diagram",
+      "visual_hint": "Box-and-pointer diagram of variables holding memory addresses."
     },
     {
       "id": "topic_week4",
@@ -253,7 +265,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "The region of memory tracking active function calls, storing each call's local variables, parameters, and return address in stack frames.",
-      "name_zh": "调用栈"
+      "name_zh": "调用栈",
+      "visual": "diagram",
+      "visual_hint": "Diagram stack frames pushed and popped as functions are called."
     },
     {
       "id": "c_file_io",
@@ -279,7 +293,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "A dynamic data structure of nodes each holding data and a pointer to the next, allowing efficient insertion and deletion without contiguous memory.",
-      "name_zh": "链表"
+      "name_zh": "链表",
+      "visual": "diagram",
+      "visual_hint": "Box-and-pointer chain of nodes linked by next pointers."
     },
     {
       "id": "c_hash_tables",
@@ -288,7 +304,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "A structure mapping keys to values using a hash function to index into buckets, giving average constant-time insertion and lookup.",
-      "name_zh": "哈希表"
+      "name_zh": "哈希表",
+      "visual": "algorithm",
+      "visual_hint": "Hash keys into buckets and resolve a collision."
     },
     {
       "id": "c_trees",
@@ -297,7 +315,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "Hierarchical data structures of nodes linked from a root, such as binary search trees, enabling efficient ordered storage and lookup.",
-      "name_zh": "树"
+      "name_zh": "树",
+      "visual": "algorithm",
+      "visual_hint": "Insert and search nodes in a binary search tree."
     },
     {
       "id": "topic_adv_data_python",
@@ -323,7 +343,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "Two abstract data types: stacks following last-in-first-out order and queues following first-in-first-out order, for managing ordered access.",
-      "name_zh": "队列与栈"
+      "name_zh": "队列与栈",
+      "visual": "algorithm",
+      "visual_hint": "Animate push/pop on a stack and enqueue/dequeue on a queue."
     },
     {
       "id": "c_python_syntax",
@@ -455,7 +477,9 @@
       "kind": "concept",
       "default_order": 4,
       "description": "The Document Object Model, a tree representation of a web page that JavaScript can read and modify to update content dynamically.",
-      "name_zh": "DOM 操作"
+      "name_zh": "DOM 操作",
+      "visual": "diagram",
+      "visual_hint": "Tree diagram of the DOM nodes of a web page."
     },
     {
       "id": "topic_week9",

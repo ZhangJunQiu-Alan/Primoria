@@ -8,7 +8,9 @@
       "name": "node name",
       "topic": "parent topic id or null",
       "description": "concept description",
-      "default_order": "integer"
+      "default_order": "integer",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "hard or soft"
@@ -48,7 +50,9 @@
       "topic": "t_mit6031_foundations_specs",
       "description": "Contracts defining a method's behaviour through preconditions that clients must satisfy and postconditions the implementation guarantees in return.",
       "default_order": 3,
-      "name_zh": "规格"
+      "name_zh": "规格",
+      "visual": "diagram",
+      "visual_hint": "Diagram preconditions and postconditions as a contract boundary."
     },
     {
       "id": "c_mit6031_testing",
@@ -57,7 +61,9 @@
       "topic": "t_mit6031_foundations_specs",
       "description": "Designing test suites systematically by partitioning the input space into equivalence classes and probing boundary values to expose defects.",
       "default_order": 4,
-      "name_zh": "测试策略"
+      "name_zh": "测试策略",
+      "visual": "diagram",
+      "visual_hint": "Diagram partitioning the input space into equivalence classes."
     },
     {
       "id": "c_mit6031_exceptions",
@@ -110,7 +116,9 @@
       "topic": "t_mit6031_adt",
       "description": "A mapping from an ADT's concrete representation to the abstract value it represents, defining the meaning of the implementation.",
       "default_order": 4,
-      "name_zh": "抽象函数"
+      "name_zh": "抽象函数",
+      "visual": "diagram",
+      "visual_hint": "Diagram the abstraction function mapping representation to abstract value."
     },
     {
       "id": "t_mit6031_oop",
@@ -145,7 +153,9 @@
       "topic": "t_mit6031_oop",
       "description": "Recursive data types defined in terms of themselves, such as immutable lists or trees, processed by recursion over their cases.",
       "default_order": 3,
-      "name_zh": "递归数据类型"
+      "name_zh": "递归数据类型",
+      "visual": "diagram",
+      "visual_hint": "Diagram a recursive data type such as an immutable list."
     },
     {
       "id": "t_mit6031_concurrency",
@@ -180,7 +190,9 @@
       "topic": "t_mit6031_concurrency",
       "description": "Coordinating threads with locks for mutual exclusion, and the risk of deadlock when threads acquire multiple locks in conflicting orders.",
       "default_order": 3,
-      "name_zh": "锁与同步"
+      "name_zh": "锁与同步",
+      "visual": "diagram",
+      "visual_hint": "State diagram of threads acquiring locks and a deadlock cycle."
     },
     {
       "id": "c_mit6031_message_passing",
@@ -189,7 +201,9 @@
       "topic": "t_mit6031_concurrency",
       "description": "Concurrency where components communicate by sending messages through channels or queues instead of sharing mutable memory.",
       "default_order": 4,
-      "name_zh": "消息传递"
+      "name_zh": "消息传递",
+      "visual": "diagram",
+      "visual_hint": "Diagram components communicating by messages over channels."
     }
   ],
   "edges": [

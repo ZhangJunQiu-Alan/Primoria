@@ -41,7 +41,13 @@ function buildOne(graphId) {
   for (const node of graph.nodes) {
     if (node.kind === "concept") {
       conceptTopic.set(node.id, node.topic);
-      topics.get(node.topic).conceptIds.push({ conceptId: node.id, name: node.name, nameZh: node.name_zh ?? null, defaultOrder: node.default_order });
+      const concept = { conceptId: node.id, name: node.name, nameZh: node.name_zh ?? null, defaultOrder: node.default_order };
+      // Optional visualization affordance (temple `visual`/`visual_hint`); absent = no forced visual.
+      if (node.visual) {
+        concept.visual = node.visual;
+        if (node.visual_hint) concept.visualHint = node.visual_hint;
+      }
+      topics.get(node.topic).conceptIds.push(concept);
     }
   }
 

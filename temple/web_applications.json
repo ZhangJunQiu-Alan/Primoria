@@ -8,7 +8,9 @@
       "name": "concept name",
       "topic": "owning topic id; null for topic nodes",
       "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic"
+      "default_order": "default teaching order within the topic",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "from must be learned before to; strength=hard|soft"
@@ -31,7 +33,9 @@
       "topic": "web_foundations",
       "description": "The stateless application-layer protocol underlying the web, where clients issue requests with methods and headers and servers reply with status codes and bodies.",
       "default_order": 1,
-      "name_zh": "HTTP 协议"
+      "name_zh": "HTTP 协议",
+      "visual": "diagram",
+      "visual_hint": "Sequence diagram of an HTTP request-response exchange."
     },
     {
       "id": "web_url_dns",
@@ -49,7 +53,9 @@
       "topic": "web_foundations",
       "description": "The web's architecture where browser clients request resources and servers respond, dividing responsibilities between front-end presentation and back-end logic.",
       "default_order": 3,
-      "name_zh": "客户端-服务器模型"
+      "name_zh": "客户端-服务器模型",
+      "visual": "diagram",
+      "visual_hint": "Diagram the browser-client and server request flow."
     },
     {
       "id": "web_frontend_part1",
@@ -101,7 +107,9 @@
       "topic": "web_frontend_part2",
       "description": "The Document Object Model representing a page as a live tree of objects that scripts traverse and mutate to update content dynamically.",
       "default_order": 1,
-      "name_zh": "DOM 操作"
+      "name_zh": "DOM 操作",
+      "visual": "diagram",
+      "visual_hint": "Tree diagram of the DOM nodes of a web page."
     },
     {
       "id": "web_react",
@@ -110,7 +118,9 @@
       "topic": "web_frontend_part2",
       "description": "A component-based JavaScript library building user interfaces from reusable components that render declaratively from data, reconciled through a virtual DOM.",
       "default_order": 2,
-      "name_zh": "React 组件"
+      "name_zh": "React 组件",
+      "visual": "diagram",
+      "visual_hint": "Component-tree diagram of nested React components."
     },
     {
       "id": "web_state_props",
@@ -119,7 +129,9 @@
       "topic": "web_frontend_part2",
       "description": "React's data-flow model where props pass data down to child components and state holds local mutable data that triggers re-rendering when changed.",
       "default_order": 3,
-      "name_zh": "状态与属性"
+      "name_zh": "状态与属性",
+      "visual": "diagram",
+      "visual_hint": "Diagram props flowing down and state updates re-rendering a component tree."
     },
     {
       "id": "web_backend",
@@ -145,7 +157,9 @@
       "topic": "web_backend",
       "description": "A minimal Node.js web framework providing routing and middleware to handle HTTP requests, compose request processing, and build server-side APIs.",
       "default_order": 2,
-      "name_zh": "Express 与路由"
+      "name_zh": "Express 与路由",
+      "visual": "diagram",
+      "visual_hint": "Diagram an Express request passing through routing and middleware."
     },
     {
       "id": "web_rest",
@@ -154,7 +168,9 @@
       "topic": "web_backend",
       "description": "An architectural style for web APIs modelling functionality as resources addressed by URLs and manipulated through standard HTTP methods and status codes.",
       "default_order": 3,
-      "name_zh": "REST API"
+      "name_zh": "REST API",
+      "visual": "diagram",
+      "visual_hint": "Diagram REST resources and their HTTP-method operations."
     },
     {
       "id": "web_auth",
@@ -163,7 +179,9 @@
       "topic": "web_backend",
       "description": "Mechanisms verifying user identity and maintaining logged-in state across stateless HTTP using sessions, cookies, and tokens such as JWTs.",
       "default_order": 4,
-      "name_zh": "认证与会话"
+      "name_zh": "认证与会话",
+      "visual": "diagram",
+      "visual_hint": "Sequence diagram of authentication establishing a session."
     },
     {
       "id": "web_data",

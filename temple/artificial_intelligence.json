@@ -8,7 +8,9 @@
       "name": "concept name",
       "topic": "owning topic id; null for topic nodes",
       "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic"
+      "default_order": "default teaching order within the topic",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "from must be learned before to; strength=hard|soft"
@@ -40,7 +42,9 @@
       "topic": "ai_search_part1",
       "description": "Search strategies using no domain knowledge, including breadth-first, depth-first, and uniform-cost search, differing in completeness, optimality, and complexity.",
       "default_order": 2,
-      "name_zh": "无信息搜索"
+      "name_zh": "无信息搜索",
+      "visual": "algorithm",
+      "visual_hint": "Animate BFS and DFS exploring a search tree/graph with the frontier."
     },
     {
       "id": "ai_heuristics",
@@ -66,7 +70,9 @@
       "topic": "ai_search_part2",
       "description": "Informed search using heuristics to guide exploration, including greedy best-first and A*, which expands nodes by estimated total path cost.",
       "default_order": 1,
-      "name_zh": "有信息搜索（A*）"
+      "name_zh": "有信息搜索（A*）",
+      "visual": "algorithm",
+      "visual_hint": "Animate A* expanding nodes by f = g + h on a grid."
     },
     {
       "id": "ai_minimax",
@@ -75,7 +81,9 @@
       "topic": "ai_search_part2",
       "description": "Adversarial search computing optimal play in zero-sum games by recursively assuming each player maximises its own outcome against an optimal opponent.",
       "default_order": 2,
-      "name_zh": "对抗搜索（Minimax）"
+      "name_zh": "对抗搜索（Minimax）",
+      "visual": "algorithm",
+      "visual_hint": "Step a minimax game tree backing up values from the leaves."
     },
     {
       "id": "ai_alphabeta",
@@ -84,7 +92,9 @@
       "topic": "ai_search_part2",
       "description": "An optimisation of minimax that prunes branches which cannot affect the final decision, allowing deeper search within the same time budget.",
       "default_order": 3,
-      "name_zh": "Alpha-Beta剪枝"
+      "name_zh": "Alpha-Beta剪枝",
+      "visual": "algorithm",
+      "visual_hint": "Step minimax with alpha-beta pruning, showing cut branches."
     },
     {
       "id": "ai_csp",
@@ -110,7 +120,9 @@
       "topic": "ai_csp",
       "description": "A depth-first search for CSPs that assigns variables one at a time and backtracks when a constraint is violated, pruning the search tree.",
       "default_order": 2,
-      "name_zh": "回溯搜索"
+      "name_zh": "回溯搜索",
+      "visual": "algorithm",
+      "visual_hint": "Animate backtracking search assigning CSP variables and backing up on failure."
     },
     {
       "id": "ai_arc_consistency",
@@ -163,7 +175,9 @@
       "topic": "ai_mdp",
       "description": "A dynamic-programming algorithm computing optimal MDP values by iteratively applying the Bellman update until the value function converges.",
       "default_order": 3,
-      "name_zh": "价值迭代"
+      "name_zh": "价值迭代",
+      "visual": "algorithm",
+      "visual_hint": "Iterate MDP state values on a grid until convergence."
     },
     {
       "id": "ai_policy_iteration",
@@ -207,7 +221,9 @@
       "topic": "ai_rl",
       "description": "A model-free, off-policy reinforcement-learning algorithm that learns optimal action values directly from experience, independent of the policy followed.",
       "default_order": 3,
-      "name_zh": "Q学习"
+      "name_zh": "Q学习",
+      "visual": "algorithm",
+      "visual_hint": "Update a Q-table as an agent moves through a gridworld."
     },
     {
       "id": "ai_exploration",
@@ -260,7 +276,9 @@
       "topic": "ai_probability",
       "description": "Bayesian networks compactly representing a joint distribution as a directed acyclic graph that encodes conditional independence among variables.",
       "default_order": 3,
-      "name_zh": "贝叶斯网络"
+      "name_zh": "贝叶斯网络",
+      "visual": "diagram",
+      "visual_hint": "Directed acyclic graph of a Bayesian network with conditional dependencies."
     },
     {
       "id": "ai_bn_inference",
@@ -295,7 +313,9 @@
       "topic": "ai_markov_models",
       "description": "Hidden Markov models pairing an unobserved Markov state sequence with observations, used to infer hidden states from noisy evidence.",
       "default_order": 2,
-      "name_zh": "隐马尔可夫模型"
+      "name_zh": "隐马尔可夫模型",
+      "visual": "diagram",
+      "visual_hint": "Trellis diagram of hidden states and observations over time."
     },
     {
       "id": "ai_forward",
@@ -321,7 +341,9 @@
       "topic": "ai_inference_naive_bayes",
       "description": "The Viterbi algorithm using dynamic programming to find the single most likely sequence of hidden states given an observation sequence.",
       "default_order": 1,
-      "name_zh": "维特比算法"
+      "name_zh": "维特比算法",
+      "visual": "algorithm",
+      "visual_hint": "Step the Viterbi trellis selecting the most likely hidden-state path."
     },
     {
       "id": "ai_particle",
@@ -356,7 +378,9 @@
       "topic": "ai_ml",
       "description": "A linear classifier that learns a separating hyperplane by updating weights on misclassified examples via the perceptron learning rule.",
       "default_order": 1,
-      "name_zh": "感知机"
+      "name_zh": "感知机",
+      "visual": "function",
+      "visual_hint": "Plot a linear decision boundary updating as the perceptron learns."
     },
     {
       "id": "ai_neural_nets",
@@ -365,7 +389,9 @@
       "topic": "ai_ml",
       "description": "Multilayer neural networks composing linear transformations with nonlinear activations to learn complex, nonlinear decision functions from data.",
       "default_order": 2,
-      "name_zh": "神经网络"
+      "name_zh": "神经网络",
+      "visual": "diagram",
+      "visual_hint": "Diagram a multilayer network of weighted connections and activations."
     },
     {
       "id": "ai_generalization",

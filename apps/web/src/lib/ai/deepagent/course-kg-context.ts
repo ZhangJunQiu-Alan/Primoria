@@ -2,10 +2,22 @@
 // safe to import from both the server course generator and client components
 // (e.g. the /debug/pipeline inspector).
 
+import type { ConceptVisual } from "../../knowledge-graph/topic-graph";
+
+export type CourseContextConcept = {
+  conceptId: string;
+  name: string;
+  defaultOrder: number;
+  // Optional KG visualization affordance + one-line hint; drives the lesson
+  // planner's per-concept visual requirement (absent = no forced visual).
+  visual?: ConceptVisual;
+  visualHint?: string;
+};
+
 export type CourseContextTopic = {
   topicId: string;
   name: string;
-  concepts: { conceptId: string; name: string; defaultOrder: number }[];
+  concepts: CourseContextConcept[];
 };
 
 export type CourseContext = {

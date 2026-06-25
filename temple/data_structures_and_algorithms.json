@@ -8,7 +8,9 @@
       "name": "node name",
       "topic": "parent topic id or null",
       "description": "brief explanation of the concept",
-      "default_order": 1
+      "default_order": 1,
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "hard or soft"
@@ -65,7 +67,9 @@
       "topic": "t_ucb61b_lists_arrays",
       "description": "Building chains of nodes connected by forward pointers, hiding raw recursive list nodes via a wrapper class.",
       "default_order": 1,
-      "name_zh": "单向链表 (SLList)"
+      "name_zh": "单向链表 (SLList)",
+      "visual": "diagram",
+      "visual_hint": "Box-and-pointer singly linked list of nodes with forward pointers."
     },
     {
       "id": "c_ucb61b_dllist",
@@ -74,7 +78,9 @@
       "topic": "t_ucb61b_lists_arrays",
       "description": "Improving list operations with backward pointers and a sentinel node to avoid null pointer edge cases.",
       "default_order": 2,
-      "name_zh": "带头哨兵的双向链表"
+      "name_zh": "带头哨兵的双向链表",
+      "visual": "diagram",
+      "visual_hint": "Doubly linked list with backward pointers and a sentinel node."
     },
     {
       "id": "c_ucb61b_arrays",
@@ -92,7 +98,9 @@
       "topic": "t_ucb61b_lists_arrays",
       "description": "Dynamically resizing arrays through geometric expansion to achieve amortized constant time appends.",
       "default_order": 4,
-      "name_zh": "动态数组 (ArrayList)"
+      "name_zh": "动态数组 (ArrayList)",
+      "visual": "algorithm",
+      "visual_hint": "Geometrically resize an array on overflow (amortised growth)."
     },
     {
       "id": "t_ucb61b_oop",
@@ -171,7 +179,9 @@
       "topic": "t_ucb61b_disjoint_sets",
       "description": "Using a parent-link forest representation to optimize connection speeds at the cost of find times.",
       "default_order": 2,
-      "name_zh": "快速合并"
+      "name_zh": "快速合并",
+      "visual": "algorithm",
+      "visual_hint": "Union-Find as a parent-link forest; union and find operations."
     },
     {
       "id": "c_ucb61b_wqu",
@@ -180,7 +190,9 @@
       "topic": "t_ucb61b_disjoint_sets",
       "description": "Preventing tall trees by always linking the root of the smaller tree to the root of the larger tree.",
       "default_order": 3,
-      "name_zh": "加权快速合并"
+      "name_zh": "加权快速合并",
+      "visual": "algorithm",
+      "visual_hint": "Weighted quick-union linking the smaller tree under the larger."
     },
     {
       "id": "c_ucb61b_path_compression",
@@ -189,7 +201,9 @@
       "topic": "t_ucb61b_disjoint_sets",
       "description": "Flattening the tree dynamically during find operations to achieve practically constant time operations.",
       "default_order": 4,
-      "name_zh": "路径压缩"
+      "name_zh": "路径压缩",
+      "visual": "algorithm",
+      "visual_hint": "Flatten the union-find tree during find via path compression."
     },
     {
       "id": "t_ucb61b_asymptotics",
@@ -206,7 +220,9 @@
       "topic": "t_ucb61b_asymptotics",
       "description": "Formalizing runtime bounding: upper bounds (O), lower bounds (Omega), and tight bounds (Theta).",
       "default_order": 1,
-      "name_zh": "大Θ、大O、大Ω"
+      "name_zh": "大Θ、大O、大Ω",
+      "visual": "chart",
+      "visual_hint": "Plot O, Omega, and Theta bounds sandwiching a running time."
     },
     {
       "id": "c_ucb61b_loop_analysis",
@@ -241,7 +257,9 @@
       "topic": "t_ucb61b_bst",
       "description": "Understanding rooted trees, depths, heights, and Pre-order, In-order, Post-order traversals.",
       "default_order": 1,
-      "name_zh": "树的定义与遍历"
+      "name_zh": "树的定义与遍历",
+      "visual": "algorithm",
+      "visual_hint": "Animate pre-order, in-order, and post-order tree traversals."
     },
     {
       "id": "c_ucb61b_bst_property",
@@ -259,7 +277,9 @@
       "topic": "t_ucb61b_bst",
       "description": "Implementing search, insertion, and Hibbard deletion within a BST structure.",
       "default_order": 3,
-      "name_zh": "BST 查找、插入与删除"
+      "name_zh": "BST 查找、插入与删除",
+      "visual": "algorithm",
+      "visual_hint": "Search, insert, and Hibbard-delete in a binary search tree."
     },
     {
       "id": "t_ucb61b_balanced_trees",
@@ -276,7 +296,9 @@
       "topic": "t_ucb61b_balanced_trees",
       "description": "Local structural transformations (rotateLeft, rotateRight) that preserve BST invariants while modifying height.",
       "default_order": 1,
-      "name_zh": "树旋转"
+      "name_zh": "树旋转",
+      "visual": "algorithm",
+      "visual_hint": "Rotate a BST node left and right preserving the search order."
     },
     {
       "id": "c_ucb61b_b_trees",
@@ -294,7 +316,9 @@
       "topic": "t_ucb61b_balanced_trees",
       "description": "BST isomers of 2-3 trees that enforce balance through color invariants and local rotations.",
       "default_order": 3,
-      "name_zh": "左倾红黑树"
+      "name_zh": "左倾红黑树",
+      "visual": "algorithm",
+      "visual_hint": "Insert into a left-leaning red-black tree with rotations and colour flips."
     },
     {
       "id": "t_ucb61b_hashing",
@@ -320,7 +344,9 @@
       "topic": "t_ucb61b_hashing",
       "description": "Resolving hash collisions by storing multiple key-value pairs in buckets (usually linked lists) at each array index.",
       "default_order": 2,
-      "name_zh": "分离链接"
+      "name_zh": "分离链接",
+      "visual": "algorithm",
+      "visual_hint": "Resolve hash collisions by chaining entries in buckets."
     },
     {
       "id": "c_ucb61b_linear_probing",
@@ -329,7 +355,9 @@
       "topic": "t_ucb61b_hashing",
       "description": "Resolving collisions via open addressing, scanning sequentially forward in the array for an empty slot.",
       "default_order": 3,
-      "name_zh": "线性探测"
+      "name_zh": "线性探测",
+      "visual": "algorithm",
+      "visual_hint": "Resolve collisions by linear probing to the next open slot."
     },
     {
       "id": "c_ucb61b_load_factor",
@@ -364,7 +392,9 @@
       "topic": "t_ucb61b_priority_queues",
       "description": "Complete binary trees fulfilling the heap property (parents always smaller than children in min-heaps).",
       "default_order": 2,
-      "name_zh": "二叉最小/最大堆"
+      "name_zh": "二叉最小/最大堆",
+      "visual": "algorithm",
+      "visual_hint": "Swim and sink nodes to maintain a binary heap."
     },
     {
       "id": "c_ucb61b_heap_operations",
@@ -382,7 +412,9 @@
       "topic": "t_ucb61b_priority_queues",
       "description": "Flattening a complete binary tree into an array via arithmetic index relations (e.g. leftChild = 2k).",
       "default_order": 4,
-      "name_zh": "堆的数组表示"
+      "name_zh": "堆的数组表示",
+      "visual": "diagram",
+      "visual_hint": "Map a complete binary heap onto an array by index arithmetic."
     },
     {
       "id": "t_ucb61b_graphs",
@@ -408,7 +440,9 @@
       "topic": "t_ucb61b_graphs",
       "description": "Exploring graphs deeply by following paths to their ends before backtracking, inherently recursive.",
       "default_order": 2,
-      "name_zh": "深度优先搜索 (DFS)"
+      "name_zh": "深度优先搜索 (DFS)",
+      "visual": "algorithm",
+      "visual_hint": "Animate depth-first search exploring a graph with backtracking."
     },
     {
       "id": "c_ucb61b_bfs",
@@ -417,7 +451,9 @@
       "topic": "t_ucb61b_graphs",
       "description": "Exploring graphs broadly layer-by-layer using a queue, implicitly computing unweighted shortest paths.",
       "default_order": 3,
-      "name_zh": "广度优先搜索 (BFS)"
+      "name_zh": "广度优先搜索 (BFS)",
+      "visual": "algorithm",
+      "visual_hint": "Animate breadth-first search exploring a graph layer by layer with a queue."
     },
     {
       "id": "c_ucb61b_topological_sort",
@@ -426,7 +462,9 @@
       "topic": "t_ucb61b_graphs",
       "description": "Linearizing a Directed Acyclic Graph (DAG) using post-order DFS to process dependencies sequentially.",
       "default_order": 4,
-      "name_zh": "拓扑排序"
+      "name_zh": "拓扑排序",
+      "visual": "algorithm",
+      "visual_hint": "Linearise a DAG by post-order DFS into a topological order."
     },
     {
       "id": "t_ucb61b_shortest_paths",
@@ -452,7 +490,9 @@
       "topic": "t_ucb61b_shortest_paths",
       "description": "A greedy shortest-path algorithm for non-negative edge weights utilizing a priority queue of distances.",
       "default_order": 2,
-      "name_zh": "Dijkstra 算法"
+      "name_zh": "Dijkstra 算法",
+      "visual": "algorithm",
+      "visual_hint": "Run Dijkstra's algorithm relaxing edges with a priority queue."
     },
     {
       "id": "c_ucb61b_a_star",
@@ -461,7 +501,9 @@
       "topic": "t_ucb61b_shortest_paths",
       "description": "An optimized variant of Dijkstra's algorithm that biases search directions using a heuristic estimate.",
       "default_order": 3,
-      "name_zh": "A* 搜索算法"
+      "name_zh": "A* 搜索算法",
+      "visual": "algorithm",
+      "visual_hint": "Run A* search biasing exploration with a heuristic on a grid."
     },
     {
       "id": "t_ucb61b_mst",
@@ -487,7 +529,9 @@
       "topic": "t_ucb61b_mst",
       "description": "Growing an MST incrementally outward from a starting vertex, highly similar to Dijkstra's algorithm.",
       "default_order": 2,
-      "name_zh": "Prim 算法"
+      "name_zh": "Prim 算法",
+      "visual": "algorithm",
+      "visual_hint": "Grow a minimum spanning tree outward with Prim's algorithm."
     },
     {
       "id": "c_ucb61b_kruskal",
@@ -496,7 +540,9 @@
       "topic": "t_ucb61b_mst",
       "description": "Building an MST by sorting edges globally and adding them unless they create cycles (checked via Disjoint Sets).",
       "default_order": 3,
-      "name_zh": "Kruskal 算法"
+      "name_zh": "Kruskal 算法",
+      "visual": "algorithm",
+      "visual_hint": "Build an MST by adding sorted edges that avoid cycles (Kruskal)."
     },
     {
       "id": "t_ucb61b_spatial_string_indexes",
@@ -522,7 +568,9 @@
       "topic": "t_ucb61b_spatial_string_indexes",
       "description": "Multi-dimensional spatial partitioning trees where each level discriminates along an alternating spatial axis.",
       "default_order": 2,
-      "name_zh": "K-D 树"
+      "name_zh": "K-D 树",
+      "visual": "diagram",
+      "visual_hint": "Partition the plane recursively with a 2-D tree."
     },
     {
       "id": "c_ucb61b_trie_basics",
@@ -531,7 +579,9 @@
       "topic": "t_ucb61b_spatial_string_indexes",
       "description": "A character-based prefix tree structure offering fast multi-way branches for string storage and retrieval.",
       "default_order": 3,
-      "name_zh": "Trie 结构"
+      "name_zh": "Trie 结构",
+      "visual": "diagram",
+      "visual_hint": "Prefix tree (trie) branching strings by character."
     },
     {
       "id": "c_ucb61b_trie_string_ops",
@@ -557,7 +607,9 @@
       "topic": "t_ucb61b_sorting",
       "description": "Basic O(N^2) sorting algorithms; Insertion sort is particularly efficient on nearly sorted arrays.",
       "default_order": 1,
-      "name_zh": "选择与插入排序"
+      "name_zh": "选择与插入排序",
+      "visual": "algorithm",
+      "visual_hint": "Animate selection and insertion sort rearranging an array."
     },
     {
       "id": "c_ucb61b_merge_sort",
@@ -566,7 +618,9 @@
       "topic": "t_ucb61b_sorting",
       "description": "A stable O(N log N) divide-and-conquer sort that recursively merges sorted sub-arrays.",
       "default_order": 2,
-      "name_zh": "归并排序"
+      "name_zh": "归并排序",
+      "visual": "algorithm",
+      "visual_hint": "Recursively split and merge an array (merge sort)."
     },
     {
       "id": "c_ucb61b_quick_sort",
@@ -575,7 +629,9 @@
       "topic": "t_ucb61b_sorting",
       "description": "An in-place divide-and-conquer sort utilizing a pivot to partition elements, operating fast in practice.",
       "default_order": 3,
-      "name_zh": "快速排序"
+      "name_zh": "快速排序",
+      "visual": "algorithm",
+      "visual_hint": "Partition around a pivot and recurse (quicksort)."
     },
     {
       "id": "c_ucb61b_sort_bounds",
@@ -601,7 +657,9 @@
       "topic": "t_ucb61b_radix_sorting",
       "description": "An O(N+R) non-comparison sort that tallies occurrences of discrete integer values in a frequency array.",
       "default_order": 1,
-      "name_zh": "计数排序"
+      "name_zh": "计数排序",
+      "visual": "algorithm",
+      "visual_hint": "Tally counts and place keys for counting sort."
     },
     {
       "id": "c_ucb61b_lsd_radix",
@@ -610,7 +668,9 @@
       "topic": "t_ucb61b_radix_sorting",
       "description": "Sorting values digit-by-digit moving from the Least Significant Digit upwards, using stable counting sort.",
       "default_order": 2,
-      "name_zh": "LSD 基数排序"
+      "name_zh": "LSD 基数排序",
+      "visual": "algorithm",
+      "visual_hint": "Sort keys digit by digit from the least significant digit."
     },
     {
       "id": "c_ucb61b_msd_radix",

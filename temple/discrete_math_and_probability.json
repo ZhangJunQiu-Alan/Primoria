@@ -70,7 +70,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "Mathematical induction proving a statement for all naturals by establishing a base case and an inductive step from n to n+1.",
-      "name_zh": "简单归纳"
+      "name_zh": "简单归纳",
+      "visual": "diagram",
+      "visual_hint": "Domino-chain diagram of the induction base case and inductive step."
     },
     {
       "id": "strong_induction",
@@ -123,7 +125,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "The Gale-Shapley deferred-acceptance algorithm producing a stable matching through rounds of proposals and tentative acceptances.",
-      "name_zh": "Gale-Shapley算法"
+      "name_zh": "Gale-Shapley算法",
+      "visual": "algorithm",
+      "visual_hint": "Step the Gale-Shapley deferred-acceptance proposals to a stable matching."
     },
     {
       "id": "matching_optimality",
@@ -158,7 +162,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "Graphs as sets of vertices joined by edges, with the fundamental notions of degree, paths, connectivity, and cycles.",
-      "name_zh": "图基础"
+      "name_zh": "图基础",
+      "visual": "diagram",
+      "visual_hint": "Diagram vertices and edges with degree and adjacency."
     },
     {
       "id": "eulerian_tours",
@@ -167,7 +173,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "Closed walks traversing every edge exactly once, existing precisely when a graph is connected with all vertices of even degree.",
-      "name_zh": "欧拉回路"
+      "name_zh": "欧拉回路",
+      "visual": "algorithm",
+      "visual_hint": "Trace an Eulerian tour visiting every edge once."
     },
     {
       "id": "trees",
@@ -176,7 +184,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "Connected acyclic graphs, equivalently graphs with a unique path between any two vertices, having exactly one fewer edge than vertices.",
-      "name_zh": "树"
+      "name_zh": "树",
+      "visual": "diagram",
+      "visual_hint": "Diagram a tree as a connected acyclic graph with a unique path between nodes."
     },
     {
       "id": "planar_graphs",
@@ -185,7 +195,9 @@
       "kind": "concept",
       "default_order": 4,
       "description": "Graphs drawable in the plane without edge crossings, constrained by Euler's formula relating vertices, edges, and faces.",
-      "name_zh": "平面图"
+      "name_zh": "平面图",
+      "visual": "diagram",
+      "visual_hint": "Draw a planar graph without edge crossings and check Euler's formula."
     },
     {
       "id": "hypercubes",
@@ -194,7 +206,9 @@
       "kind": "concept",
       "default_order": 5,
       "description": "Recursively defined hypercube graphs whose vertices are binary strings, with edges joining strings that differ in a single bit.",
-      "name_zh": "超立方体"
+      "name_zh": "超立方体",
+      "visual": "diagram",
+      "visual_hint": "Diagram the recursive construction of hypercube graphs."
     },
     {
       "id": "topic_modular_arithmetic",
@@ -211,7 +225,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "Euclid's algorithm computing the greatest common divisor of two integers by repeatedly replacing the larger with its remainder modulo the smaller.",
-      "name_zh": "欧几里得算法"
+      "name_zh": "欧几里得算法",
+      "visual": "algorithm",
+      "visual_hint": "Step Euclid's algorithm reducing the pair until the GCD remains."
     },
     {
       "id": "extended_euclid",
@@ -405,7 +421,9 @@
       "kind": "concept",
       "default_order": 4,
       "description": "Counting ordered selections (permutations) and unordered selections (combinations) of items from a set, with their factorial formulas.",
-      "name_zh": "组合与排列"
+      "name_zh": "组合与排列",
+      "visual": "diagram",
+      "visual_hint": "Decision-tree diagram of ordered and unordered selections."
     },
     {
       "id": "topic_counting",
@@ -440,7 +458,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "The inclusion-exclusion principle counting the size of a union by alternately adding and subtracting the sizes of intersections.",
-      "name_zh": "容斥原理"
+      "name_zh": "容斥原理",
+      "visual": "diagram",
+      "visual_hint": "Venn-style diagram of the alternating inclusion-exclusion sum."
     },
     {
       "id": "topic_discrete_prob",
@@ -475,7 +495,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "Bayes' rule inverting conditional probabilities to update the probability of a hypothesis given evidence, combining priors and likelihoods.",
-      "name_zh": "贝叶斯法则"
+      "name_zh": "贝叶斯法则",
+      "visual": "diagram",
+      "visual_hint": "Tree diagram inverting conditional probabilities with Bayes' rule."
     },
     {
       "id": "event_independence",
@@ -545,7 +567,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "The Bernoulli distribution modelling a single success/failure trial and the binomial modelling the number of successes in independent trials.",
-      "name_zh": "伯努利与二项分布"
+      "name_zh": "伯努利与二项分布",
+      "visual": "chart",
+      "visual_hint": "Bar chart of the binomial distribution with sliders for n and p."
     },
     {
       "id": "geometric_distribution",
@@ -554,7 +578,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "The geometric distribution modelling the number of independent Bernoulli trials until the first success, with its memoryless property.",
-      "name_zh": "几何分布"
+      "name_zh": "几何分布",
+      "visual": "chart",
+      "visual_hint": "Bar chart of the geometric distribution."
     },
     {
       "id": "poisson_distribution",
@@ -563,7 +589,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "The Poisson distribution modelling counts of rare independent events in a fixed interval, the limit of the binomial for many trials.",
-      "name_zh": "泊松分布"
+      "name_zh": "泊松分布",
+      "visual": "chart",
+      "visual_hint": "Bar chart of the Poisson distribution with a slider for lambda."
     },
     {
       "id": "hypergeometric_distribution",
@@ -633,7 +661,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "The normal (Gaussian) distribution, a symmetric bell-shaped law parametrised by mean and variance, central to statistics and the central limit theorem.",
-      "name_zh": "正态分布"
+      "name_zh": "正态分布",
+      "visual": "function",
+      "visual_hint": "Plot the normal bell curve with sliders for mean and standard deviation."
     },
     {
       "id": "markovs_inequality",
@@ -686,7 +716,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "The central limit theorem stating that the normalised sum of many independent variables converges in distribution to a normal distribution.",
-      "name_zh": "中心极限定理"
+      "name_zh": "中心极限定理",
+      "visual": "interactive",
+      "visual_hint": "Resample means and watch the sampling distribution approach a normal curve."
     },
     {
       "id": "topic_markov",
@@ -703,7 +735,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "Markov chains modelling random processes that transition between states with probabilities depending only on the current state.",
-      "name_zh": "马尔可夫链基础"
+      "name_zh": "马尔可夫链基础",
+      "visual": "diagram",
+      "visual_hint": "State-transition diagram of a Markov chain with edge probabilities."
     },
     {
       "id": "hitting_times",
@@ -730,7 +764,9 @@
       "kind": "concept",
       "default_order": 4,
       "description": "PageRank ranking web pages by the stationary distribution of a random-surfer Markov chain over the hyperlink graph.",
-      "name_zh": "PageRank 算法"
+      "name_zh": "PageRank 算法",
+      "visual": "algorithm",
+      "visual_hint": "Iterate PageRank over a small web graph until the ranks converge."
     }
   ],
   "edges": [

@@ -2,7 +2,7 @@
   "graphId": "Python",
   "subject": "Structure and Interpretation of Computer Programs",
   "generatedFrom": "temple/Python.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -33,7 +33,9 @@
           "conceptId": "env_diag",
           "name": "Environment Diagrams",
           "nameZh": "环境图",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram execution frames, variable bindings, and parent-environment links."
         }
       ],
       "successors": [
@@ -170,7 +172,9 @@
           "conceptId": "box_pointer",
           "name": "Box-and-Pointer Diagrams",
           "nameZh": "箱指针图",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Box-and-pointer diagram of lists and pairs as boxes holding pointers."
         }
       ],
       "successors": [
@@ -198,13 +202,17 @@
           "conceptId": "recursion",
           "name": "Recursion",
           "nameZh": "递归",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Step through recursive calls accumulating and unwinding on the call stack."
         },
         {
           "conceptId": "tree_recur",
           "name": "Tree Recursion",
           "nameZh": "树递归",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Draw the branching recursive calls as a recursion tree."
         },
         {
           "conceptId": "tree_abs",
@@ -216,7 +224,9 @@
           "conceptId": "tree_trav",
           "name": "Tree Traversal",
           "nameZh": "树遍历",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "algorithm",
+          "visualHint": "Animate visiting tree nodes in pre-order, in-order, and post-order."
         }
       ],
       "successors": [
@@ -302,7 +312,9 @@
           "conceptId": "linked_lists",
           "name": "Linked Lists",
           "nameZh": "链表",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Box-and-pointer chain of nodes linked by next references."
         },
         {
           "conceptId": "mut_trees",

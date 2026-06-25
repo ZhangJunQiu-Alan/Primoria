@@ -57,7 +57,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "How fixed-width integers are encoded in hardware, using unsigned binary for non-negative values and two's complement for signed values, determining the representable ranges.",
-      "name_zh": "整数表示"
+      "name_zh": "整数表示",
+      "visual": "diagram",
+      "visual_hint": "Diagram fixed-width integer encodings including two's complement."
     },
     {
       "id": "c1_3",
@@ -75,7 +77,9 @@
       "kind": "concept",
       "default_order": 4,
       "description": "The IEEE 754 standard encoding real numbers as sign, biased exponent, and fraction fields, supporting normalised, denormalised, infinity, and NaN values.",
-      "name_zh": "浮点数表示"
+      "name_zh": "浮点数表示",
+      "visual": "diagram",
+      "visual_hint": "Diagram the IEEE 754 sign, exponent, and fraction fields."
     },
     {
       "id": "t_float_machine_ops",
@@ -136,7 +140,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "How procedures are called using the runtime stack to pass arguments, save return addresses, allocate local storage, and follow register-saving conventions.",
-      "name_zh": "过程与调用栈"
+      "name_zh": "过程与调用栈",
+      "visual": "diagram",
+      "visual_hint": "Diagram the call stack passing arguments and saving the return address."
     },
     {
       "id": "c2_5",
@@ -145,7 +151,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "The memory layout of arrays and structures, including element addressing arithmetic, field offsets, and alignment requirements imposed by the architecture.",
-      "name_zh": "数组与结构体"
+      "name_zh": "数组与结构体",
+      "visual": "diagram",
+      "visual_hint": "Diagram array and struct memory layout and element addressing."
     },
     {
       "id": "c3_1",
@@ -180,7 +188,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "Overlapping the execution of multiple instructions across pipeline stages to increase instruction throughput, ideally completing one instruction per clock cycle.",
-      "name_zh": "流水线原理"
+      "name_zh": "流水线原理",
+      "visual": "diagram",
+      "visual_hint": "Pipeline stage diagram of overlapping instructions."
     },
     {
       "id": "c3_4",
@@ -189,7 +199,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "Data, control, and structural hazards that stall pipelines, and forwarding techniques that resolve data dependencies without waiting for write-back.",
-      "name_zh": "流水线冒险与转发"
+      "name_zh": "流水线冒险与转发",
+      "visual": "diagram",
+      "visual_hint": "Diagram a pipeline hazard resolved by forwarding."
     },
     {
       "id": "c3_5",
@@ -294,7 +306,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "How caches are organised into sets, lines, and blocks with tags, governing the placement, lookup, and replacement of cached memory blocks.",
-      "name_zh": "缓存组织"
+      "name_zh": "缓存组织",
+      "visual": "diagram",
+      "visual_hint": "Diagram cache organisation into sets, lines, and blocks with tags."
     },
     {
       "id": "c5_4",
@@ -391,7 +405,9 @@
       "kind": "concept",
       "default_order": 4,
       "description": "The process abstraction giving each program a private address space and logical control flow, switched by the kernel saving and restoring context.",
-      "name_zh": "进程与上下文切换"
+      "name_zh": "进程与上下文切换",
+      "visual": "diagram",
+      "visual_hint": "Diagram a context switch between processes."
     },
     {
       "id": "t7",
@@ -443,7 +459,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "Hardware mapping of virtual addresses to physical addresses via the MMU and page tables, giving each process its own address space.",
-      "name_zh": "地址转换"
+      "name_zh": "地址转换",
+      "visual": "diagram",
+      "visual_hint": "Diagram MMU address translation from virtual to physical."
     },
     {
       "id": "c8_2",
@@ -452,7 +470,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "Multi-level data structures mapping virtual pages to physical frames, storing permission and presence bits used during address translation.",
-      "name_zh": "页表"
+      "name_zh": "页表",
+      "visual": "diagram",
+      "visual_hint": "Diagram a multi-level page table mapping pages to frames."
     },
     {
       "id": "c8_3",
@@ -636,7 +656,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "Coordinating threads using semaphores, counting primitives whose P and V operations enforce mutual exclusion and scheduling constraints.",
-      "name_zh": "同步（信号量）"
+      "name_zh": "同步（信号量）",
+      "visual": "diagram",
+      "visual_hint": "Diagram two threads coordinating with a semaphore's P and V."
     },
     {
       "id": "c11_4",
@@ -654,7 +676,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "A state where threads are permanently blocked, each waiting for resources held by others, arising when the four Coffman conditions hold.",
-      "name_zh": "死锁"
+      "name_zh": "死锁",
+      "visual": "diagram",
+      "visual_hint": "Diagram a deadlock as a cycle of threads waiting on resources."
     }
   ],
   "edges": [

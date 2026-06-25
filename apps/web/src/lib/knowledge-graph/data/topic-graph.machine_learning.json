@@ -2,7 +2,7 @@
   "graphId": "machine_learning",
   "subject": "Machine Learning",
   "generatedFrom": "temple/machine_learning.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -15,7 +15,9 @@
           "conceptId": "ml_linear_reg",
           "name": "Linear Regression Model",
           "nameZh": "线性回归",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Fit a regression line to scattered points; drag the line to see the error."
         },
         {
           "conceptId": "ml_cost_mse",
@@ -27,7 +29,9 @@
           "conceptId": "ml_gradient_descent",
           "name": "Batch Gradient Descent",
           "nameZh": "梯度下降",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Animate gradient descent stepping down a cost surface."
         }
       ],
       "successors": [
@@ -92,13 +96,17 @@
           "conceptId": "ml_logistic_reg",
           "name": "Logistic Regression",
           "nameZh": "逻辑回归",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot the logistic decision boundary separating two classes."
         },
         {
           "conceptId": "ml_sigmoid",
           "name": "Sigmoid & Decision Boundary",
           "nameZh": "Sigmoid 与决策边界",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot the sigmoid mapping scores to probabilities and its decision boundary."
         },
         {
           "conceptId": "ml_logistic_mle",
@@ -142,7 +150,9 @@
           "conceptId": "ml_softmax",
           "name": "Softmax Regression",
           "nameZh": "Softmax 回归",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Show softmax turning class scores into a probability distribution."
         },
         {
           "conceptId": "ml_exp_family",
@@ -216,7 +226,9 @@
           "conceptId": "ml_optimal_margin",
           "name": "Optimal Margin Classifier",
           "nameZh": "最优间隔分类器",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Drag points to show the max-margin hyperplane and its support vectors."
         },
         {
           "conceptId": "ml_lagrange_duality",
@@ -250,7 +262,9 @@
           "conceptId": "ml_kernels",
           "name": "Kernel Trick",
           "nameZh": "核方法",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Lift non-separable points into a higher dimension where they separate."
         },
         {
           "conceptId": "ml_mercer",
@@ -287,13 +301,17 @@
           "conceptId": "ml_bias_variance",
           "name": "Bias-Variance Tradeoff",
           "nameZh": "偏差-方差权衡",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot training and validation error against model complexity."
         },
         {
           "conceptId": "ml_regularization",
           "name": "Regularization (L1/L2)",
           "nameZh": "正则化",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Show L1 and L2 penalties shrinking fitted coefficients."
         },
         {
           "conceptId": "ml_cross_val",
@@ -335,7 +353,9 @@
           "conceptId": "ml_neural_nets",
           "name": "Neural Networks",
           "nameZh": "神经网络",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram a layered network of weighted sums and activations."
         },
         {
           "conceptId": "ml_backprop",
@@ -362,7 +382,9 @@
           "conceptId": "ml_kmeans",
           "name": "K-Means Clustering",
           "nameZh": "K均值聚类",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Animate K-means alternating assignment and centroid updates."
         },
         {
           "conceptId": "ml_em_algorithm",
@@ -380,7 +402,9 @@
           "conceptId": "ml_pca",
           "name": "Principal Component Analysis",
           "nameZh": "主成分分析",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "interactive",
+          "visualHint": "Project a 2-D cloud onto its principal component directions."
         },
         {
           "conceptId": "ml_ica",
@@ -409,13 +433,17 @@
           "conceptId": "ml_value_policy",
           "name": "Value & Policy Iteration",
           "nameZh": "价值与策略迭代",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Iterate values and policy on an MDP gridworld until convergence."
         },
         {
           "conceptId": "ml_q_learning",
           "name": "Q-Learning",
           "nameZh": "Q-学习",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Update a Q-table as an agent explores a gridworld."
         },
         {
           "conceptId": "ml_value_approx",

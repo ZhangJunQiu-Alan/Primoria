@@ -2,7 +2,7 @@
   "graphId": "a_level_chemistry",
   "subject": "Chemistry",
   "generatedFrom": "temple/a_level_chemistry.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -27,13 +27,17 @@
           "conceptId": "che_electron_config",
           "name": "Electronic Configuration",
           "nameZh": "电子排布",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Orbital filling diagram across shells and subshells."
         },
         {
           "conceptId": "che_ionisation",
           "name": "Ionisation Energy",
           "nameZh": "电离能",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "chart",
+          "visualHint": "Plot successive ionisation energies revealing shell structure."
         }
       ],
       "successors": [
@@ -111,13 +115,17 @@
           "conceptId": "che_ionic",
           "name": "Ionic Bonding",
           "nameZh": "离子键",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Dot-and-cross diagram of electron transfer forming ions."
         },
         {
           "conceptId": "che_covalent",
           "name": "Covalent Bonding",
           "nameZh": "共价键",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Dot-and-cross diagram of shared electron pairs."
         },
         {
           "conceptId": "che_metallic",
@@ -163,7 +171,9 @@
           "conceptId": "che_vsepr",
           "name": "Shapes of Molecules (VSEPR)",
           "nameZh": "VSEPR 分子形状",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Rotate 3D molecular shapes showing bond angles for each electron-pair geometry."
         },
         {
           "conceptId": "che_electronegativity",
@@ -194,7 +204,9 @@
           "conceptId": "che_gas_laws",
           "name": "Ideal Gas Behaviour",
           "nameZh": "理想气体",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot pV = nRT relationships between pressure, volume, and temperature."
         },
         {
           "conceptId": "che_solids",
@@ -206,7 +218,9 @@
           "conceptId": "che_enthalpy",
           "name": "Enthalpy Changes",
           "nameZh": "焓变",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Energy-profile diagram of enthalpy change with activation energy."
         }
       ],
       "successors": [
@@ -235,7 +249,9 @@
           "conceptId": "che_hess",
           "name": "Hess's Law",
           "nameZh": "盖斯定律",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Hess-cycle diagram of alternative reaction routes."
         },
         {
           "conceptId": "che_bond_enthalpy",
@@ -283,7 +299,9 @@
           "conceptId": "che_boltzmann",
           "name": "Maxwell-Boltzmann Distribution",
           "nameZh": "Maxwell-Boltzmann分布",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot the Maxwell-Boltzmann energy distribution and the effect of temperature and catalyst."
         }
       ],
       "successors": [
@@ -311,7 +329,9 @@
           "conceptId": "che_rate_equation",
           "name": "Rate Equations and Orders",
           "nameZh": "速率方程与反应级数",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot reaction rate against concentration for zero, first, and second order."
         },
         {
           "conceptId": "che_rds",
@@ -342,7 +362,9 @@
           "conceptId": "che_le_chatelier",
           "name": "Le Chatelier's Principle",
           "nameZh": "勒夏特列原理",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Shift an equilibrium with sliders for concentration, pressure, and temperature."
         },
         {
           "conceptId": "che_kc_kp",
@@ -384,7 +406,9 @@
           "conceptId": "che_ph_ka",
           "name": "pH and Acid Dissociation Constant",
           "nameZh": "pH 与酸解离常数",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot a titration pH curve and locate the equivalence point."
         },
         {
           "conceptId": "che_buffers",
@@ -465,7 +489,9 @@
           "conceptId": "che_born_haber",
           "name": "Lattice Energy and Born-Haber Cycles",
           "nameZh": "晶格能与玻恩-哈伯循环",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Born-Haber cycle diagram of the lattice-energy enthalpy steps."
         },
         {
           "conceptId": "che_entropy",
@@ -503,7 +529,9 @@
           "conceptId": "che_periodic_trends",
           "name": "Periodic Trends",
           "nameZh": "周期趋势",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "chart",
+          "visualHint": "Plot periodic trends in atomic radius and ionisation energy across a period."
         },
         {
           "conceptId": "che_period3",
@@ -810,7 +838,9 @@
           "conceptId": "che_mass_spec",
           "name": "Mass Spectrometry",
           "nameZh": "质谱分析",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "chart",
+          "visualHint": "Plot a mass spectrum of m/z peaks."
         }
       ],
       "successors": [
@@ -842,7 +872,9 @@
           "conceptId": "che_nmr",
           "name": "NMR Spectroscopy",
           "nameZh": "NMR光谱",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "chart",
+          "visualHint": "Plot an NMR spectrum of chemical-shift peaks."
         },
         {
           "conceptId": "che_chromatography",

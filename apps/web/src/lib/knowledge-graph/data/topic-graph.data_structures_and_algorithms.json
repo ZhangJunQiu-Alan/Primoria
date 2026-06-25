@@ -2,7 +2,7 @@
   "graphId": "data_structures_and_algorithms",
   "subject": "Data Structures and Algorithms",
   "generatedFrom": "temple/data_structures_and_algorithms.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -57,13 +57,17 @@
           "conceptId": "c_ucb61b_sllist",
           "name": "Singly Linked Lists (SLList)",
           "nameZh": "单向链表 (SLList)",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Box-and-pointer singly linked list of nodes with forward pointers."
         },
         {
           "conceptId": "c_ucb61b_dllist",
           "name": "Doubly Linked Lists with Sentinels",
           "nameZh": "带头哨兵的双向链表",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Doubly linked list with backward pointers and a sentinel node."
         },
         {
           "conceptId": "c_ucb61b_arrays",
@@ -75,7 +79,9 @@
           "conceptId": "c_ucb61b_alist",
           "name": "Resizing Arrays (ArrayList)",
           "nameZh": "动态数组 (ArrayList)",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "algorithm",
+          "visualHint": "Geometrically resize an array on overflow (amortised growth)."
         }
       ],
       "successors": [
@@ -178,19 +184,25 @@
           "conceptId": "c_ucb61b_quick_union",
           "name": "Quick Union",
           "nameZh": "快速合并",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Union-Find as a parent-link forest; union and find operations."
         },
         {
           "conceptId": "c_ucb61b_wqu",
           "name": "Weighted Quick Union",
           "nameZh": "加权快速合并",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Weighted quick-union linking the smaller tree under the larger."
         },
         {
           "conceptId": "c_ucb61b_path_compression",
           "name": "Path Compression",
           "nameZh": "路径压缩",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "algorithm",
+          "visualHint": "Flatten the union-find tree during find via path compression."
         }
       ],
       "successors": [
@@ -214,7 +226,9 @@
           "conceptId": "c_ucb61b_big_theta",
           "name": "Big-Theta, Big-O, Big-Omega",
           "nameZh": "大Θ、大O、大Ω",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "chart",
+          "visualHint": "Plot O, Omega, and Theta bounds sandwiching a running time."
         },
         {
           "conceptId": "c_ucb61b_loop_analysis",
@@ -248,7 +262,9 @@
           "conceptId": "c_ucb61b_trees_intro",
           "name": "Tree Definitions and Traversals",
           "nameZh": "树的定义与遍历",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Animate pre-order, in-order, and post-order tree traversals."
         },
         {
           "conceptId": "c_ucb61b_bst_property",
@@ -260,7 +276,9 @@
           "conceptId": "c_ucb61b_bst_operations",
           "name": "BST Search, Insert, and Delete",
           "nameZh": "BST 查找、插入与删除",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Search, insert, and Hibbard-delete in a binary search tree."
         }
       ],
       "successors": [
@@ -296,7 +314,9 @@
           "conceptId": "c_ucb61b_tree_rotation",
           "name": "Tree Rotation",
           "nameZh": "树旋转",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Rotate a BST node left and right preserving the search order."
         },
         {
           "conceptId": "c_ucb61b_b_trees",
@@ -308,7 +328,9 @@
           "conceptId": "c_ucb61b_llrb",
           "name": "Left-Leaning Red-Black Trees",
           "nameZh": "左倾红黑树",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Insert into a left-leaning red-black tree with rotations and colour flips."
         }
       ],
       "successors": [],
@@ -333,13 +355,17 @@
           "conceptId": "c_ucb61b_separate_chaining",
           "name": "Separate Chaining",
           "nameZh": "分离链接",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Resolve hash collisions by chaining entries in buckets."
         },
         {
           "conceptId": "c_ucb61b_linear_probing",
           "name": "Linear Probing",
           "nameZh": "线性探测",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Resolve collisions by linear probing to the next open slot."
         },
         {
           "conceptId": "c_ucb61b_load_factor",
@@ -370,7 +396,9 @@
           "conceptId": "c_ucb61b_binary_heap",
           "name": "Binary Min/Max Heaps",
           "nameZh": "二叉最小/最大堆",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Swim and sink nodes to maintain a binary heap."
         },
         {
           "conceptId": "c_ucb61b_heap_operations",
@@ -382,7 +410,9 @@
           "conceptId": "c_ucb61b_array_heap",
           "name": "Array Representation of Heaps",
           "nameZh": "堆的数组表示",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Map a complete binary heap onto an array by index arithmetic."
         }
       ],
       "successors": [
@@ -414,19 +444,25 @@
           "conceptId": "c_ucb61b_dfs",
           "name": "Depth-First Search (DFS)",
           "nameZh": "深度优先搜索 (DFS)",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Animate depth-first search exploring a graph with backtracking."
         },
         {
           "conceptId": "c_ucb61b_bfs",
           "name": "Breadth-First Search (BFS)",
           "nameZh": "广度优先搜索 (BFS)",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Animate breadth-first search exploring a graph layer by layer with a queue."
         },
         {
           "conceptId": "c_ucb61b_topological_sort",
           "name": "Topological Sort",
           "nameZh": "拓扑排序",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "algorithm",
+          "visualHint": "Linearise a DAG by post-order DFS into a topological order."
         }
       ],
       "successors": [
@@ -460,13 +496,17 @@
           "conceptId": "c_ucb61b_dijkstra",
           "name": "Dijkstra's Algorithm",
           "nameZh": "Dijkstra 算法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Run Dijkstra's algorithm relaxing edges with a priority queue."
         },
         {
           "conceptId": "c_ucb61b_a_star",
           "name": "A* Search Algorithm",
           "nameZh": "A* 搜索算法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Run A* search biasing exploration with a heuristic on a grid."
         }
       ],
       "successors": [
@@ -497,13 +537,17 @@
           "conceptId": "c_ucb61b_prim",
           "name": "Prim's Algorithm",
           "nameZh": "Prim 算法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Grow a minimum spanning tree outward with Prim's algorithm."
         },
         {
           "conceptId": "c_ucb61b_kruskal",
           "name": "Kruskal's Algorithm",
           "nameZh": "Kruskal 算法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Build an MST by adding sorted edges that avoid cycles (Kruskal)."
         }
       ],
       "successors": [],
@@ -531,13 +575,17 @@
           "conceptId": "c_ucb61b_kd_trees",
           "name": "K-D Trees",
           "nameZh": "K-D 树",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Partition the plane recursively with a 2-D tree."
         },
         {
           "conceptId": "c_ucb61b_trie_basics",
           "name": "Trie Structure",
           "nameZh": "Trie 结构",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Prefix tree (trie) branching strings by character."
         },
         {
           "conceptId": "c_ucb61b_trie_string_ops",
@@ -562,19 +610,25 @@
           "conceptId": "c_ucb61b_selection_insertion_sort",
           "name": "Selection and Insertion Sort",
           "nameZh": "选择与插入排序",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Animate selection and insertion sort rearranging an array."
         },
         {
           "conceptId": "c_ucb61b_merge_sort",
           "name": "Merge Sort",
           "nameZh": "归并排序",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Recursively split and merge an array (merge sort)."
         },
         {
           "conceptId": "c_ucb61b_quick_sort",
           "name": "Quicksort",
           "nameZh": "快速排序",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Partition around a pivot and recurse (quicksort)."
         },
         {
           "conceptId": "c_ucb61b_sort_bounds",
@@ -600,13 +654,17 @@
           "conceptId": "c_ucb61b_counting_sort",
           "name": "Counting Sort",
           "nameZh": "计数排序",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Tally counts and place keys for counting sort."
         },
         {
           "conceptId": "c_ucb61b_lsd_radix",
           "name": "LSD Radix Sort",
           "nameZh": "LSD 基数排序",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Sort keys digit by digit from the least significant digit."
         },
         {
           "conceptId": "c_ucb61b_msd_radix",

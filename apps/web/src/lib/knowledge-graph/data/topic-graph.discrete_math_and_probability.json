@@ -2,7 +2,7 @@
   "graphId": "discrete_math_and_probability",
   "subject": "Discrete Math and Probability Theory",
   "generatedFrom": "temple/discrete_math_and_probability.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -63,7 +63,9 @@
           "conceptId": "simple_induction",
           "name": "Simple Induction",
           "nameZh": "简单归纳",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Domino-chain diagram of the induction base case and inductive step."
         },
         {
           "conceptId": "strong_induction",
@@ -119,7 +121,9 @@
           "conceptId": "gale_shapley_algorithm",
           "name": "Gale-Shapley Algorithm",
           "nameZh": "Gale-Shapley算法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Step the Gale-Shapley deferred-acceptance proposals to a stable matching."
         },
         {
           "conceptId": "matching_optimality",
@@ -150,31 +154,41 @@
           "conceptId": "graph_basics",
           "name": "Graph Basics",
           "nameZh": "图基础",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram vertices and edges with degree and adjacency."
         },
         {
           "conceptId": "eulerian_tours",
           "name": "Eulerian Tours",
           "nameZh": "欧拉回路",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Trace an Eulerian tour visiting every edge once."
         },
         {
           "conceptId": "trees",
           "name": "Trees",
           "nameZh": "树",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram a tree as a connected acyclic graph with a unique path between nodes."
         },
         {
           "conceptId": "planar_graphs",
           "name": "Planar Graphs",
           "nameZh": "平面图",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Draw a planar graph without edge crossings and check Euler's formula."
         },
         {
           "conceptId": "hypercubes",
           "name": "Hypercubes",
           "nameZh": "超立方体",
-          "defaultOrder": 5
+          "defaultOrder": 5,
+          "visual": "diagram",
+          "visualHint": "Diagram the recursive construction of hypercube graphs."
         }
       ],
       "successors": [],
@@ -193,7 +207,9 @@
           "conceptId": "euclids_algorithm",
           "name": "Euclid's Algorithm",
           "nameZh": "欧几里得算法",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Step Euclid's algorithm reducing the pair until the GCD remains."
         },
         {
           "conceptId": "extended_euclid",
@@ -362,7 +378,9 @@
           "conceptId": "combinations_permutations",
           "name": "Combinations and Permutations",
           "nameZh": "组合与排列",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Decision-tree diagram of ordered and unordered selections."
         }
       ],
       "successors": [
@@ -402,7 +420,9 @@
           "conceptId": "inclusion_exclusion",
           "name": "Inclusion-Exclusion",
           "nameZh": "容斥原理",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Venn-style diagram of the alternating inclusion-exclusion sum."
         }
       ],
       "successors": [],
@@ -433,7 +453,9 @@
           "conceptId": "bayes_rule",
           "name": "Bayes' Rule",
           "nameZh": "贝叶斯法则",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Tree diagram inverting conditional probabilities with Bayes' rule."
         },
         {
           "conceptId": "event_independence",
@@ -521,19 +543,25 @@
           "conceptId": "bernoulli_binomial_distributions",
           "name": "Bernoulli and Binomial Distributions",
           "nameZh": "伯努利与二项分布",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "chart",
+          "visualHint": "Bar chart of the binomial distribution with sliders for n and p."
         },
         {
           "conceptId": "geometric_distribution",
           "name": "Geometric Distribution",
           "nameZh": "几何分布",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "chart",
+          "visualHint": "Bar chart of the geometric distribution."
         },
         {
           "conceptId": "poisson_distribution",
           "name": "Poisson Distribution",
           "nameZh": "泊松分布",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "chart",
+          "visualHint": "Bar chart of the Poisson distribution with a slider for lambda."
         },
         {
           "conceptId": "hypergeometric_distribution",
@@ -600,7 +628,9 @@
           "conceptId": "normal_distribution",
           "name": "Normal Distribution",
           "nameZh": "正态分布",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot the normal bell curve with sliders for mean and standard deviation."
         },
         {
           "conceptId": "markovs_inequality",
@@ -649,7 +679,9 @@
           "conceptId": "central_limit_theorem",
           "name": "Central Limit Theorem",
           "nameZh": "中心极限定理",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Resample means and watch the sampling distribution approach a normal curve."
         }
       ],
       "successors": [],
@@ -668,7 +700,9 @@
           "conceptId": "markov_chains_basics",
           "name": "Markov Chains Basics",
           "nameZh": "马尔可夫链基础",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "State-transition diagram of a Markov chain with edge probabilities."
         },
         {
           "conceptId": "hitting_times",
@@ -686,7 +720,9 @@
           "conceptId": "page_rank_algorithm",
           "name": "PageRank Algorithm",
           "nameZh": "PageRank 算法",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "algorithm",
+          "visualHint": "Iterate PageRank over a small web graph until the ranks converge."
         }
       ],
       "successors": [],

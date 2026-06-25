@@ -2,7 +2,7 @@
   "graphId": "information_theory",
   "subject": "Information Theory and Entropy",
   "generatedFrom": "temple/information_theory.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -15,7 +15,9 @@
           "conceptId": "c_infotheory_entropy",
           "name": "Shannon Entropy",
           "nameZh": "香农熵",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot binary entropy H(p) against the probability p."
         },
         {
           "conceptId": "c_infotheory_joint_entropy",
@@ -27,7 +29,9 @@
           "conceptId": "c_infotheory_mutual_info",
           "name": "Mutual Information",
           "nameZh": "互信息",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Venn-style diagram of entropies, joint entropy, and mutual information."
         }
       ],
       "successors": [
@@ -109,7 +113,9 @@
           "conceptId": "c_infotheory_huffman",
           "name": "Huffman Coding",
           "nameZh": "Huffman 编码",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Build a Huffman tree by merging the two lowest-frequency symbols."
         }
       ],
       "successors": [],
@@ -172,7 +178,9 @@
           "conceptId": "c_infotheory_shannon_hartley",
           "name": "Shannon-Hartley Theorem",
           "nameZh": "香农-哈特利定理",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot channel capacity against bandwidth and signal-to-noise ratio."
         }
       ],
       "successors": [],

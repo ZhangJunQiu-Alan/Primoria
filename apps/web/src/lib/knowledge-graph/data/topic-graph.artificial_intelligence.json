@@ -2,7 +2,7 @@
   "graphId": "artificial_intelligence",
   "subject": "Introduction to Artificial Intelligence",
   "generatedFrom": "temple/artificial_intelligence.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -21,7 +21,9 @@
           "conceptId": "ai_uninformed",
           "name": "Uninformed Search",
           "nameZh": "无信息搜索",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Animate BFS and DFS exploring a search tree/graph with the frontier."
         },
         {
           "conceptId": "ai_heuristics",
@@ -53,19 +55,25 @@
           "conceptId": "ai_informed",
           "name": "Informed Search (A*)",
           "nameZh": "有信息搜索（A*）",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Animate A* expanding nodes by f = g + h on a grid."
         },
         {
           "conceptId": "ai_minimax",
           "name": "Adversarial Search (Minimax)",
           "nameZh": "对抗搜索（Minimax）",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Step a minimax game tree backing up values from the leaves."
         },
         {
           "conceptId": "ai_alphabeta",
           "name": "Alpha-Beta Pruning",
           "nameZh": "Alpha-Beta剪枝",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Step minimax with alpha-beta pruning, showing cut branches."
         }
       ],
       "successors": [],
@@ -90,7 +98,9 @@
           "conceptId": "ai_backtracking",
           "name": "Backtracking Search",
           "nameZh": "回溯搜索",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Animate backtracking search assigning CSP variables and backing up on failure."
         },
         {
           "conceptId": "ai_arc_consistency",
@@ -133,7 +143,9 @@
           "conceptId": "ai_value_iteration",
           "name": "Value Iteration",
           "nameZh": "价值迭代",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Iterate MDP state values on a grid until convergence."
         },
         {
           "conceptId": "ai_policy_iteration",
@@ -173,7 +185,9 @@
           "conceptId": "ai_qlearning",
           "name": "Q-Learning",
           "nameZh": "Q学习",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Update a Q-table as an agent moves through a gridworld."
         },
         {
           "conceptId": "ai_exploration",
@@ -216,7 +230,9 @@
           "conceptId": "ai_bayes_nets",
           "name": "Bayesian Networks",
           "nameZh": "贝叶斯网络",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Directed acyclic graph of a Bayesian network with conditional dependencies."
         },
         {
           "conceptId": "ai_bn_inference",
@@ -254,7 +270,9 @@
           "conceptId": "ai_hmm",
           "name": "Hidden Markov Models",
           "nameZh": "隐马尔可夫模型",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Trellis diagram of hidden states and observations over time."
         },
         {
           "conceptId": "ai_forward",
@@ -284,7 +302,9 @@
           "conceptId": "ai_viterbi",
           "name": "Viterbi Algorithm",
           "nameZh": "维特比算法",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Step the Viterbi trellis selecting the most likely hidden-state path."
         },
         {
           "conceptId": "ai_particle",
@@ -321,13 +341,17 @@
           "conceptId": "ai_perceptron",
           "name": "Perceptron",
           "nameZh": "感知机",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot a linear decision boundary updating as the perceptron learns."
         },
         {
           "conceptId": "ai_neural_nets",
           "name": "Neural Networks",
           "nameZh": "神经网络",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram a multilayer network of weighted connections and activations."
         },
         {
           "conceptId": "ai_generalization",

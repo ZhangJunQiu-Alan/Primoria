@@ -8,7 +8,9 @@
       "name": "concept name",
       "topic": "owning topic id; null for topic nodes",
       "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic"
+      "default_order": "default teaching order within the topic",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "from must be learned before to; strength=hard|soft"
@@ -40,7 +42,9 @@
       "topic": "mat_algebra_part1",
       "description": "Quadratic functions and their parabolic graphs, completing the square to find the vertex, line of symmetry, and maximum or minimum.",
       "default_order": 2,
-      "name_zh": "二次函数"
+      "name_zh": "二次函数",
+      "visual": "function",
+      "visual_hint": "Plot a parabola with sliders for the coefficients showing vertex and roots."
     },
     {
       "id": "mat_solve_quadratics",
@@ -75,7 +79,9 @@
       "topic": "mat_algebra_part2",
       "description": "Solving linear and quadratic inequalities algebraically and graphically, and representing the solution sets on a number line.",
       "default_order": 1,
-      "name_zh": "不等式"
+      "name_zh": "不等式",
+      "visual": "function",
+      "visual_hint": "Shade the regions satisfying linear and quadratic inequalities."
     },
     {
       "id": "mat_functions",
@@ -84,7 +90,9 @@
       "topic": "mat_algebra_part2",
       "description": "Functions defined by their domain and range, the distinction between one-to-one and many-to-one mappings, and finding inverse functions.",
       "default_order": 2,
-      "name_zh": "函数与反函数"
+      "name_zh": "函数与反函数",
+      "visual": "function",
+      "visual_hint": "Plot a function and its inverse as reflections in y = x."
     },
     {
       "id": "mat_composite",
@@ -102,7 +110,9 @@
       "topic": "mat_algebra_part2",
       "description": "The modulus function giving absolute value, its graph, and solving equations and inequalities involving modulus expressions.",
       "default_order": 4,
-      "name_zh": "绝对值函数"
+      "name_zh": "绝对值函数",
+      "visual": "function",
+      "visual_hint": "Plot the modulus function and solve |f(x)| = g(x) graphically."
     },
     {
       "id": "mat_polynomials",
@@ -154,7 +164,9 @@
       "topic": "mat_coord_geom",
       "description": "The equation of a straight line in various forms, with gradient and intercepts found from points or other given conditions.",
       "default_order": 1,
-      "name_zh": "直线"
+      "name_zh": "直线",
+      "visual": "function",
+      "visual_hint": "Plot a line with sliders for gradient and intercept."
     },
     {
       "id": "mat_parallel_perp",
@@ -172,7 +184,9 @@
       "topic": "mat_coord_geom",
       "description": "The equation of a circle from its centre and radius, and finding intersections, tangents, and properties using coordinate geometry.",
       "default_order": 3,
-      "name_zh": "圆"
+      "name_zh": "圆",
+      "visual": "function",
+      "visual_hint": "Plot a circle from centre and radius and find line intersections."
     },
     {
       "id": "mat_sequences",
@@ -198,7 +212,9 @@
       "topic": "mat_sequences",
       "description": "Geometric progressions with a common ratio, formulae for the nth term and sum, and the sum to infinity of a convergent series.",
       "default_order": 2,
-      "name_zh": "等比级数"
+      "name_zh": "等比级数",
+      "visual": "chart",
+      "visual_hint": "Plot geometric-progression terms and the convergence of the sum."
     },
     {
       "id": "mat_binomial_pos",
@@ -233,7 +249,9 @@
       "topic": "mat_trig_part1",
       "description": "The trigonometric ratios sine, cosine, and tangent, their graphs, periodicity, and exact values for standard angles.",
       "default_order": 1,
-      "name_zh": "三角函数与图像"
+      "name_zh": "三角函数与图像",
+      "visual": "function",
+      "visual_hint": "Plot sine, cosine, and tangent with adjustable amplitude and period."
     },
     {
       "id": "mat_radians",
@@ -242,7 +260,9 @@
       "topic": "mat_trig_part1",
       "description": "Radian measure of angles and its use in the arc length and sector area formulae for a circle.",
       "default_order": 2,
-      "name_zh": "弧度制"
+      "name_zh": "弧度制",
+      "visual": "interactive",
+      "visual_hint": "Unit circle linking an angle in radians to arc length and sector area."
     },
     {
       "id": "mat_trig_identities",
@@ -303,7 +323,9 @@
       "topic": "mat_exp_log",
       "description": "Exponential functions and the natural exponential e^x, modelling growth and decay, and the properties of their graphs.",
       "default_order": 1,
-      "name_zh": "指数函数"
+      "name_zh": "指数函数",
+      "visual": "function",
+      "visual_hint": "Plot exponential growth and decay with a slider for the rate."
     },
     {
       "id": "mat_log_laws",
@@ -312,7 +334,9 @@
       "topic": "mat_exp_log",
       "description": "Logarithms as the inverse of exponentials, and the laws of logarithms for manipulating products, quotients, and powers.",
       "default_order": 2,
-      "name_zh": "对数与法则"
+      "name_zh": "对数与法则",
+      "visual": "function",
+      "visual_hint": "Plot logarithm curves as inverses of exponentials."
     },
     {
       "id": "mat_solve_exp",
@@ -347,7 +371,9 @@
       "topic": "mat_differentiation_part1",
       "description": "The derivative defined as the limit of the gradient of a chord, used to differentiate simple functions from first principles.",
       "default_order": 1,
-      "name_zh": "从原理求导"
+      "name_zh": "从原理求导",
+      "visual": "function",
+      "visual_hint": "Slider for h: a secant collapsing to the tangent."
     },
     {
       "id": "mat_power_rule",
@@ -382,7 +408,9 @@
       "topic": "mat_differentiation_part2",
       "description": "Finding the equations of the tangent and normal to a curve at a point, using the derivative as the gradient.",
       "default_order": 1,
-      "name_zh": "切线与法线"
+      "name_zh": "切线与法线",
+      "visual": "function",
+      "visual_hint": "Plot a curve with its tangent and normal at a draggable point."
     },
     {
       "id": "mat_stationary",
@@ -391,7 +419,9 @@
       "topic": "mat_differentiation_part2",
       "description": "Locating stationary points where the derivative is zero and classifying them as maxima, minima, or points of inflection.",
       "default_order": 2,
-      "name_zh": "极值点"
+      "name_zh": "极值点",
+      "visual": "function",
+      "visual_hint": "Plot a curve, mark stationary points, and toggle the derivative."
     },
     {
       "id": "mat_rates",
@@ -435,7 +465,9 @@
       "topic": "mat_differentiation_adv",
       "description": "Implicit differentiation finding the derivative of a relation not solved explicitly for y by differentiating both sides.",
       "default_order": 3,
-      "name_zh": "隐函数微分"
+      "name_zh": "隐函数微分",
+      "visual": "function",
+      "visual_hint": "Plot an implicit relation and show its tangent slope at a point."
     },
     {
       "id": "mat_parametric",
@@ -444,7 +476,9 @@
       "topic": "mat_differentiation_adv",
       "description": "Parametric differentiation finding dy/dx for curves defined parametrically by applying the chain rule through the parameter.",
       "default_order": 4,
-      "name_zh": "参数微分"
+      "name_zh": "参数微分",
+      "visual": "function",
+      "visual_hint": "Trace a parametric curve r(t) with a slider for t."
     },
     {
       "id": "mat_integration_part1",
@@ -470,7 +504,9 @@
       "topic": "mat_integration_part1",
       "description": "Definite integration evaluating the area under a curve between limits using the fundamental theorem of calculus.",
       "default_order": 2,
-      "name_zh": "定积分与面积"
+      "name_zh": "定积分与面积",
+      "visual": "interactive",
+      "visual_hint": "Shade the area under a curve between draggable limits."
     },
     {
       "id": "mat_standard_integrals",
@@ -523,7 +559,9 @@
       "topic": "mat_integration_part2",
       "description": "Volumes of revolution generated by rotating a region about an axis, computed by integrating the area of circular cross-sections.",
       "default_order": 3,
-      "name_zh": "旋转体体积"
+      "name_zh": "旋转体体积",
+      "visual": "interactive",
+      "visual_hint": "Rotate a region about an axis to form a solid of revolution."
     },
     {
       "id": "mat_numerical_methods",
@@ -549,7 +587,9 @@
       "topic": "mat_numerical_methods",
       "description": "Iterative methods finding successive approximations to a root using a rearranged iterative formula, and assessing convergence.",
       "default_order": 2,
-      "name_zh": "迭代法"
+      "name_zh": "迭代法",
+      "visual": "function",
+      "visual_hint": "Cobweb diagram of an iterative root-finding sequence."
     },
     {
       "id": "mat_form_de",
@@ -567,7 +607,9 @@
       "topic": "mat_numerical_methods",
       "description": "Solving first-order differential equations by separating the variables and integrating each side.",
       "default_order": 4,
-      "name_zh": "分离变量"
+      "name_zh": "分离变量",
+      "visual": "function",
+      "visual_hint": "Plot a slope field and a solution curve of a first-order ODE."
     },
     {
       "id": "mat_vectors",
@@ -584,7 +626,9 @@
       "topic": "mat_vectors",
       "description": "Vectors in two and three dimensions represented in component and unit-vector form, with addition and scalar multiplication.",
       "default_order": 1,
-      "name_zh": "向量基础"
+      "name_zh": "向量基础",
+      "visual": "interactive",
+      "visual_hint": "Drag 2D/3D vectors and add them tip-to-tail."
     },
     {
       "id": "mat_vector_magnitude",
@@ -602,7 +646,9 @@
       "topic": "mat_vectors",
       "description": "The scalar (dot) product of two vectors, used to find the angle between them and to test for perpendicularity.",
       "default_order": 3,
-      "name_zh": "标量积"
+      "name_zh": "标量积",
+      "visual": "interactive",
+      "visual_hint": "Drag two vectors and show the dot product and the angle between them."
     },
     {
       "id": "mat_vector_lines",
@@ -637,7 +683,9 @@
       "topic": "mat_complex",
       "description": "Representing complex numbers as points or vectors on an Argand diagram, illustrating their geometric interpretation.",
       "default_order": 2,
-      "name_zh": "阿根图"
+      "name_zh": "阿根图",
+      "visual": "interactive",
+      "visual_hint": "Plot complex numbers as points and vectors on an Argand diagram."
     },
     {
       "id": "mat_mod_arg",
@@ -646,7 +694,9 @@
       "topic": "mat_complex",
       "description": "The modulus-argument (polar) form of a complex number, with multiplication and division combining moduli and arguments.",
       "default_order": 3,
-      "name_zh": "模角形式"
+      "name_zh": "模角形式",
+      "visual": "interactive",
+      "visual_hint": "Show modulus-argument form and multiplication as rotation and scaling on the Argand plane."
     },
     {
       "id": "mat_complex_loci",
@@ -672,7 +722,9 @@
       "topic": "mat_mech_kinematics",
       "description": "Kinematics of straight-line motion with constant acceleration, using the suvat equations to relate displacement, velocity, and time.",
       "default_order": 1,
-      "name_zh": "匀加速运动"
+      "name_zh": "匀加速运动",
+      "visual": "function",
+      "visual_hint": "Plot displacement-time and velocity-time graphs for constant acceleration."
     },
     {
       "id": "mat_kin_variable",
@@ -690,7 +742,9 @@
       "topic": "mat_mech_kinematics",
       "description": "Projectile motion analysed by resolving into independent horizontal and vertical components of motion under gravity.",
       "default_order": 3,
-      "name_zh": "抛体运动"
+      "name_zh": "抛体运动",
+      "visual": "simulation",
+      "visual_hint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
     },
     {
       "id": "mat_mech_forces",
@@ -707,7 +761,9 @@
       "topic": "mat_mech_forces",
       "description": "Resolving forces into components and applying the conditions for the equilibrium of a particle under coplanar forces.",
       "default_order": 1,
-      "name_zh": "力与平衡"
+      "name_zh": "力与平衡",
+      "visual": "interactive",
+      "visual_hint": "Resolve forces into components on a free-body diagram."
     },
     {
       "id": "mat_friction",
@@ -760,7 +816,9 @@
       "topic": "mat_mech_energy_momentum",
       "description": "Linear momentum and impulse, and the conservation of momentum applied to collisions between particles.",
       "default_order": 3,
-      "name_zh": "动量与冲量"
+      "name_zh": "动量与冲量",
+      "visual": "simulation",
+      "visual_hint": "Animate a collision conserving momentum."
     },
     {
       "id": "mat_data_counting_prob",
@@ -777,7 +835,9 @@
       "topic": "mat_data_counting_prob",
       "description": "Representing data using histograms, box-and-whisker plots, and cumulative frequency graphs to display its distribution.",
       "default_order": 1,
-      "name_zh": "数据表示"
+      "name_zh": "数据表示",
+      "visual": "chart",
+      "visual_hint": "Histogram, box plot, and cumulative-frequency chart of a data set."
     },
     {
       "id": "mat_central_spread",
@@ -847,7 +907,9 @@
       "topic": "mat_random_vars",
       "description": "The binomial distribution modelling the number of successes in a fixed number of independent trials with constant probability.",
       "default_order": 1,
-      "name_zh": "二项分布"
+      "name_zh": "二项分布",
+      "visual": "chart",
+      "visual_hint": "Bar chart of the binomial distribution with sliders for n and p."
     },
     {
       "id": "mat_geometric_dist",
@@ -865,7 +927,9 @@
       "topic": "mat_random_vars",
       "description": "The Poisson distribution modelling the number of random events occurring at a constant average rate in a fixed interval.",
       "default_order": 3,
-      "name_zh": "泊松分布"
+      "name_zh": "泊松分布",
+      "visual": "chart",
+      "visual_hint": "Bar chart of the Poisson distribution with a slider for lambda."
     },
     {
       "id": "mat_normal_inference",
@@ -882,7 +946,9 @@
       "topic": "mat_normal_inference",
       "description": "The normal distribution, a continuous bell-shaped distribution defined by its mean and variance, standardised using the z-score.",
       "default_order": 1,
-      "name_zh": "正态分布"
+      "name_zh": "正态分布",
+      "visual": "function",
+      "visual_hint": "Plot the normal bell curve with sliders for mean and standard deviation."
     },
     {
       "id": "mat_normal_approx",

@@ -2,7 +2,7 @@
   "graphId": "linear_algebra",
   "subject": "Linear Algebra",
   "generatedFrom": "temple/linear_algebra.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -15,13 +15,17 @@
           "conceptId": "c_mit1806_vectors",
           "name": "Vectors and Linear Combinations",
           "nameZh": "向量与线性组合",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Drag vectors to show addition, scaling, and linear combinations."
         },
         {
           "conceptId": "c_mit1806_elimination",
           "name": "Elimination with Matrices",
           "nameZh": "矩阵消元",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Step Gaussian elimination reducing a matrix to triangular form."
         },
         {
           "conceptId": "c_mit1806_matrix_ops",
@@ -69,13 +73,17 @@
           "conceptId": "c_mit1806_null_column_space",
           "name": "Null Space and Column Space",
           "nameZh": "零空间与列空间",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Show the column space and null space as spans in space."
         },
         {
           "conceptId": "c_mit1806_independence_basis",
           "name": "Linear Independence, Basis, and Dimension",
           "nameZh": "线性无关、基与维数",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Drag vectors to test independence and span a subspace as a basis."
         },
         {
           "conceptId": "c_mit1806_four_subspaces",
@@ -111,19 +119,25 @@
           "conceptId": "c_mit1806_projections",
           "name": "Projections onto Subspaces",
           "nameZh": "向子空间的投影",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Project a vector onto a line or plane and show the residual."
         },
         {
           "conceptId": "c_mit1806_least_squares",
           "name": "Least Squares Approximations",
           "nameZh": "最小二乘近似",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Fit a least-squares line minimising the squared residuals to data."
         },
         {
           "conceptId": "c_mit1806_gram_schmidt",
           "name": "Orthogonal Bases and Gram-Schmidt",
           "nameZh": "正交基与 Gram-Schmidt",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "interactive",
+          "visualHint": "Orthogonalise a set of vectors step by step (Gram-Schmidt)."
         }
       ],
       "successors": [],
@@ -142,7 +156,9 @@
           "conceptId": "c_mit1806_det_properties",
           "name": "Properties of Determinants",
           "nameZh": "行列式的性质",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Show the determinant as the signed area/volume scaling of a transform."
         },
         {
           "conceptId": "c_mit1806_det_formulas",
@@ -160,7 +176,9 @@
           "conceptId": "c_mit1806_eigen",
           "name": "Eigenvalues and Eigenvectors",
           "nameZh": "特征值与特征向量",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "interactive",
+          "visualHint": "Show eigenvectors as directions a transform only stretches, with eigenvalues."
         }
       ],
       "successors": [
@@ -184,7 +202,9 @@
           "conceptId": "c_mit1806_diagonalization",
           "name": "Diagonalization",
           "nameZh": "对角化",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Decompose a transform along its eigenvector axes."
         },
         {
           "conceptId": "c_mit1806_diff_eq",
@@ -226,19 +246,25 @@
           "conceptId": "c_mit1806_svd",
           "name": "Singular Value Decomposition (SVD)",
           "nameZh": "奇异值分解",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Show SVD as rotate, scale, rotate acting on the unit circle."
         },
         {
           "conceptId": "c_mit1806_linear_transformations",
           "name": "Linear Transformations",
           "nameZh": "线性变换",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Apply a linear transformation to a grid and watch it deform."
         },
         {
           "conceptId": "c_mit1806_matrix_transform",
           "name": "The Matrix of a Linear Transformation",
           "nameZh": "线性变换的矩阵",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Show how a matrix's columns are the images of the basis vectors."
         }
       ],
       "successors": [],

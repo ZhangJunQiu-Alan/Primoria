@@ -2,7 +2,7 @@
   "graphId": "a_level_mathematics",
   "subject": "Mathematics",
   "generatedFrom": "temple/a_level_mathematics.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -21,7 +21,9 @@
           "conceptId": "mat_quadratics",
           "name": "Quadratic Functions",
           "nameZh": "二次函数",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot a parabola with sliders for the coefficients showing vertex and roots."
         },
         {
           "conceptId": "mat_solve_quadratics",
@@ -71,13 +73,17 @@
           "conceptId": "mat_inequalities",
           "name": "Inequalities",
           "nameZh": "不等式",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Shade the regions satisfying linear and quadratic inequalities."
         },
         {
           "conceptId": "mat_functions",
           "name": "Functions and Inverses",
           "nameZh": "函数与反函数",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot a function and its inverse as reflections in y = x."
         },
         {
           "conceptId": "mat_composite",
@@ -89,7 +95,9 @@
           "conceptId": "mat_modulus",
           "name": "Modulus Function",
           "nameZh": "绝对值函数",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Plot the modulus function and solve |f(x)| = g(x) graphically."
         }
       ],
       "successors": [],
@@ -142,7 +150,9 @@
           "conceptId": "mat_straight_lines",
           "name": "Straight Lines",
           "nameZh": "直线",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot a line with sliders for gradient and intercept."
         },
         {
           "conceptId": "mat_parallel_perp",
@@ -154,7 +164,9 @@
           "conceptId": "mat_circles",
           "name": "Circles",
           "nameZh": "圆",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot a circle from centre and radius and find line intersections."
         }
       ],
       "successors": [],
@@ -177,7 +189,9 @@
           "conceptId": "mat_geometric",
           "name": "Geometric Series",
           "nameZh": "等比级数",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "chart",
+          "visualHint": "Plot geometric-progression terms and the convergence of the sum."
         },
         {
           "conceptId": "mat_binomial_pos",
@@ -208,13 +222,17 @@
           "conceptId": "mat_trig_ratios",
           "name": "Trig Ratios and Graphs",
           "nameZh": "三角函数与图像",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot sine, cosine, and tangent with adjustable amplitude and period."
         },
         {
           "conceptId": "mat_radians",
           "name": "Radian Measure",
           "nameZh": "弧度制",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Unit circle linking an angle in radians to arc length and sector area."
         },
         {
           "conceptId": "mat_trig_identities",
@@ -273,13 +291,17 @@
           "conceptId": "mat_exp_func",
           "name": "Exponential Functions",
           "nameZh": "指数函数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot exponential growth and decay with a slider for the rate."
         },
         {
           "conceptId": "mat_log_laws",
           "name": "Logarithms and Laws",
           "nameZh": "对数与法则",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot logarithm curves as inverses of exponentials."
         },
         {
           "conceptId": "mat_solve_exp",
@@ -310,7 +332,9 @@
           "conceptId": "mat_first_principles",
           "name": "Differentiation from First Principles",
           "nameZh": "从原理求导",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Slider for h: a secant collapsing to the tangent."
         },
         {
           "conceptId": "mat_power_rule",
@@ -352,13 +376,17 @@
           "conceptId": "mat_tangent_normal",
           "name": "Tangents and Normals",
           "nameZh": "切线与法线",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot a curve with its tangent and normal at a draggable point."
         },
         {
           "conceptId": "mat_stationary",
           "name": "Stationary Points",
           "nameZh": "极值点",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot a curve, mark stationary points, and toggle the derivative."
         },
         {
           "conceptId": "mat_rates",
@@ -395,13 +423,17 @@
           "conceptId": "mat_implicit",
           "name": "Implicit Differentiation",
           "nameZh": "隐函数微分",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot an implicit relation and show its tangent slope at a point."
         },
         {
           "conceptId": "mat_parametric",
           "name": "Parametric Differentiation",
           "nameZh": "参数微分",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Trace a parametric curve r(t) with a slider for t."
         }
       ],
       "successors": [
@@ -439,7 +471,9 @@
           "conceptId": "mat_definite_area",
           "name": "Definite Integration and Area",
           "nameZh": "定积分与面积",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Shade the area under a curve between draggable limits."
         },
         {
           "conceptId": "mat_standard_integrals",
@@ -492,7 +526,9 @@
           "conceptId": "mat_volumes",
           "name": "Volumes of Revolution",
           "nameZh": "旋转体体积",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Rotate a region about an axis to form a solid of revolution."
         }
       ],
       "successors": [],
@@ -519,7 +555,9 @@
           "conceptId": "mat_iteration",
           "name": "Iterative Methods",
           "nameZh": "迭代法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Cobweb diagram of an iterative root-finding sequence."
         },
         {
           "conceptId": "mat_form_de",
@@ -531,7 +569,9 @@
           "conceptId": "mat_separation",
           "name": "Separation of Variables",
           "nameZh": "分离变量",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Plot a slope field and a solution curve of a first-order ODE."
         }
       ],
       "successors": [],
@@ -551,7 +591,9 @@
           "conceptId": "mat_vector_basics",
           "name": "Vectors in 2D and 3D",
           "nameZh": "向量基础",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Drag 2D/3D vectors and add them tip-to-tail."
         },
         {
           "conceptId": "mat_vector_magnitude",
@@ -563,7 +605,9 @@
           "conceptId": "mat_scalar_product",
           "name": "Scalar Product",
           "nameZh": "标量积",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Drag two vectors and show the dot product and the angle between them."
         },
         {
           "conceptId": "mat_vector_lines",
@@ -592,13 +636,17 @@
           "conceptId": "mat_argand",
           "name": "Argand Diagram",
           "nameZh": "阿根图",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Plot complex numbers as points and vectors on an Argand diagram."
         },
         {
           "conceptId": "mat_mod_arg",
           "name": "Modulus-Argument Form",
           "nameZh": "模角形式",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Show modulus-argument form and multiplication as rotation and scaling on the Argand plane."
         },
         {
           "conceptId": "mat_complex_loci",
@@ -623,7 +671,9 @@
           "conceptId": "mat_kin_constant",
           "name": "Kinematics with Constant Acceleration",
           "nameZh": "匀加速运动",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot displacement-time and velocity-time graphs for constant acceleration."
         },
         {
           "conceptId": "mat_kin_variable",
@@ -635,7 +685,9 @@
           "conceptId": "mat_projectiles",
           "name": "Projectiles",
           "nameZh": "抛体运动",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "simulation",
+          "visualHint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
         }
       ],
       "successors": [],
@@ -654,7 +706,9 @@
           "conceptId": "mat_forces_equilibrium",
           "name": "Forces and Equilibrium",
           "nameZh": "力与平衡",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Resolve forces into components on a free-body diagram."
         },
         {
           "conceptId": "mat_friction",
@@ -700,7 +754,9 @@
           "conceptId": "mat_momentum_impulse",
           "name": "Momentum and Impulse",
           "nameZh": "动量与冲量",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "simulation",
+          "visualHint": "Animate a collision conserving momentum."
         }
       ],
       "successors": [],
@@ -719,7 +775,9 @@
           "conceptId": "mat_data_rep",
           "name": "Representation of Data",
           "nameZh": "数据表示",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "chart",
+          "visualHint": "Histogram, box plot, and cumulative-frequency chart of a data set."
         },
         {
           "conceptId": "mat_central_spread",
@@ -793,7 +851,9 @@
           "conceptId": "mat_binomial_dist",
           "name": "Binomial Distribution",
           "nameZh": "二项分布",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "chart",
+          "visualHint": "Bar chart of the binomial distribution with sliders for n and p."
         },
         {
           "conceptId": "mat_geometric_dist",
@@ -805,7 +865,9 @@
           "conceptId": "mat_poisson",
           "name": "Poisson Distribution",
           "nameZh": "泊松分布",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "chart",
+          "visualHint": "Bar chart of the Poisson distribution with a slider for lambda."
         }
       ],
       "successors": [
@@ -829,7 +891,9 @@
           "conceptId": "mat_normal_dist",
           "name": "Normal Distribution",
           "nameZh": "正态分布",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot the normal bell curve with sliders for mean and standard deviation."
         },
         {
           "conceptId": "mat_normal_approx",

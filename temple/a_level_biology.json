@@ -8,7 +8,9 @@
       "name": "concept name",
       "topic": "owning topic id; null for topic nodes",
       "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic"
+      "default_order": "default teaching order within the topic",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "from must be learned before to; strength=hard|soft"
@@ -128,7 +130,9 @@
       "topic": "bio_enzymes",
       "description": "Enzymes as biological catalysts lowering activation energy, binding substrates at their active site according to the induced-fit model to form products.",
       "default_order": 1,
-      "name_zh": "酶作用"
+      "name_zh": "酶作用",
+      "visual": "interactive",
+      "visual_hint": "Drag a substrate into the active site; show activation energy lowered on a reaction profile."
     },
     {
       "id": "bio_enzyme_factors",
@@ -137,7 +141,9 @@
       "topic": "bio_enzymes",
       "description": "How temperature, pH, substrate concentration, and enzyme concentration affect the rate of enzyme-catalysed reactions, including denaturation at extremes.",
       "default_order": 2,
-      "name_zh": "影响酶活性的因素"
+      "name_zh": "影响酶活性的因素",
+      "visual": "function",
+      "visual_hint": "Plot enzyme activity against temperature, pH, and substrate concentration."
     },
     {
       "id": "bio_enzyme_inhibition",
@@ -163,7 +169,9 @@
       "topic": "bio_membranes",
       "description": "The fluid mosaic model describing the cell membrane as a phospholipid bilayer with embedded proteins, cholesterol, and glycoproteins controlling exchange.",
       "default_order": 1,
-      "name_zh": "膜结构"
+      "name_zh": "膜结构",
+      "visual": "diagram",
+      "visual_hint": "Labelled fluid-mosaic diagram of the phospholipid bilayer and membrane proteins."
     },
     {
       "id": "bio_passive_transport",
@@ -172,7 +180,9 @@
       "topic": "bio_membranes",
       "description": "Movement of substances down a concentration gradient without energy, by diffusion and facilitated diffusion, and the osmosis of water across membranes.",
       "default_order": 2,
-      "name_zh": "扩散与渗透"
+      "name_zh": "扩散与渗透",
+      "visual": "interactive",
+      "visual_hint": "Animate particles diffusing down a concentration gradient across a membrane."
     },
     {
       "id": "bio_active_transport",
@@ -207,7 +217,9 @@
       "topic": "bio_chromosomes_dna",
       "description": "Nuclear division producing two genetically identical daughter cells through prophase, metaphase, anaphase, and telophase, underlying growth and repair.",
       "default_order": 2,
-      "name_zh": "有丝分裂"
+      "name_zh": "有丝分裂",
+      "visual": "diagram",
+      "visual_hint": "Diagram the stages of mitosis."
     },
     {
       "id": "bio_dna_structure",
@@ -216,7 +228,9 @@
       "topic": "bio_chromosomes_dna",
       "description": "DNA as a double helix of two antiparallel nucleotide strands held together by complementary base pairing between adenine-thymine and guanine-cytosine.",
       "default_order": 3,
-      "name_zh": "DNA结构"
+      "name_zh": "DNA结构",
+      "visual": "interactive",
+      "visual_hint": "Interactive double helix showing antiparallel strands and complementary base pairing."
     },
     {
       "id": "bio_dna_replication",
@@ -225,7 +239,9 @@
       "topic": "bio_chromosomes_dna",
       "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
       "default_order": 4,
-      "name_zh": "DNA复制"
+      "name_zh": "DNA复制",
+      "visual": "diagram",
+      "visual_hint": "Diagram semi-conservative replication unwinding and templating each strand."
     },
     {
       "id": "bio_nucleic_acids",
@@ -242,7 +258,9 @@
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a messenger RNA copy of a gene by RNA polymerase, using one DNA strand as a template in the nucleus.",
       "default_order": 1,
-      "name_zh": "转录"
+      "name_zh": "转录",
+      "visual": "diagram",
+      "visual_hint": "Diagram RNA polymerase synthesising mRNA from the template strand."
     },
     {
       "id": "bio_translation",
@@ -251,7 +269,9 @@
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a polypeptide at the ribosome, where transfer RNA matches anticodons to mRNA codons to assemble amino acids in sequence.",
       "default_order": 2,
-      "name_zh": "翻译"
+      "name_zh": "翻译",
+      "visual": "diagram",
+      "visual_hint": "Diagram the ribosome matching tRNA anticodons to mRNA codons to build a polypeptide."
     },
     {
       "id": "bio_mutation",
@@ -312,7 +332,9 @@
       "topic": "bio_circulation_gas_exchange",
       "description": "The structure of the mammalian heart and the cardiac cycle of atrial and ventricular systole and diastole, coordinated to pump blood.",
       "default_order": 1,
-      "name_zh": "心脏"
+      "name_zh": "心脏",
+      "visual": "diagram",
+      "visual_hint": "Labelled heart diagram showing the flow of the cardiac cycle."
     },
     {
       "id": "bio_blood_vessels",
@@ -330,7 +352,9 @@
       "topic": "bio_circulation_gas_exchange",
       "description": "Haemoglobin's reversible binding of oxygen described by the sigmoid dissociation curve, and the Bohr effect that shifts it with carbon dioxide.",
       "default_order": 3,
-      "name_zh": "血红蛋白与氧气运输"
+      "name_zh": "血红蛋白与氧气运输",
+      "visual": "function",
+      "visual_hint": "Plot the sigmoid oxygen dissociation curve and the Bohr shift."
     },
     {
       "id": "bio_lungs",
@@ -391,7 +415,9 @@
       "topic": "bio_respiration",
       "description": "The cytoplasmic breakdown of glucose into pyruvate, producing a small net yield of ATP and reduced NAD without requiring oxygen.",
       "default_order": 1,
-      "name_zh": "糖酵解"
+      "name_zh": "糖酵解",
+      "visual": "diagram",
+      "visual_hint": "Flow diagram of glycolysis from glucose to pyruvate."
     },
     {
       "id": "bio_krebs",
@@ -400,7 +426,9 @@
       "topic": "bio_respiration",
       "description": "The link reaction converting pyruvate to acetyl coenzyme A, and the Krebs cycle oxidising it to release carbon dioxide and reduced coenzymes.",
       "default_order": 2,
-      "name_zh": "连接反应与Krebs循环"
+      "name_zh": "连接反应与Krebs循环",
+      "visual": "diagram",
+      "visual_hint": "Cycle diagram of the link reaction and Krebs cycle."
     },
     {
       "id": "bio_oxidative",
@@ -409,7 +437,9 @@
       "topic": "bio_respiration",
       "description": "Oxidative phosphorylation using the electron transport chain and chemiosmosis across the inner mitochondrial membrane to synthesise most ATP.",
       "default_order": 3,
-      "name_zh": "氧化磷酸化"
+      "name_zh": "氧化磷酸化",
+      "visual": "diagram",
+      "visual_hint": "Diagram the electron transport chain and chemiosmosis."
     },
     {
       "id": "bio_anaerobic",
@@ -435,7 +465,9 @@
       "topic": "bio_photosynthesis",
       "description": "The light-dependent reactions in the thylakoids capturing light to produce ATP and reduced NADP while splitting water to release oxygen.",
       "default_order": 1,
-      "name_zh": "光依赖反应"
+      "name_zh": "光依赖反应",
+      "visual": "diagram",
+      "visual_hint": "Diagram the light-dependent reactions in the thylakoid."
     },
     {
       "id": "bio_calvin",
@@ -444,7 +476,9 @@
       "topic": "bio_photosynthesis",
       "description": "The Calvin cycle in the stroma fixing carbon dioxide using ATP and reduced NADP to synthesise carbohydrate via the enzyme RuBisCO.",
       "default_order": 2,
-      "name_zh": "Calvin循环"
+      "name_zh": "Calvin循环",
+      "visual": "diagram",
+      "visual_hint": "Cycle diagram of the Calvin cycle fixing carbon dioxide."
     },
     {
       "id": "bio_limiting_factors",
@@ -479,7 +513,9 @@
       "topic": "bio_homeostasis",
       "description": "Ultrafiltration and selective reabsorption in the nephron forming urine, and the osmoregulation of water balance through the action of ADH.",
       "default_order": 2,
-      "name_zh": "肾脏与渗透压调节"
+      "name_zh": "肾脏与渗透压调节",
+      "visual": "diagram",
+      "visual_hint": "Labelled nephron diagram showing ultrafiltration and reabsorption."
     },
     {
       "id": "bio_glucose_control",
@@ -505,7 +541,9 @@
       "topic": "bio_coordination",
       "description": "The transmission of nerve impulses as action potentials, generated by the movement of sodium and potassium ions across the neurone membrane.",
       "default_order": 1,
-      "name_zh": "神经传导"
+      "name_zh": "神经传导",
+      "visual": "function",
+      "visual_hint": "Plot the action-potential membrane voltage over time."
     },
     {
       "id": "bio_synapses",
@@ -514,7 +552,9 @@
       "topic": "bio_coordination",
       "description": "Chemical transmission across synapses, where neurotransmitter released from the presynaptic neurone diffuses to receptors on the postsynaptic membrane.",
       "default_order": 2,
-      "name_zh": "突触"
+      "name_zh": "突触",
+      "visual": "diagram",
+      "visual_hint": "Diagram neurotransmitter release and receptor binding at a synapse."
     },
     {
       "id": "bio_hormonal",
@@ -549,7 +589,9 @@
       "topic": "bio_inheritance",
       "description": "Reduction division producing four genetically varied haploid gametes, with crossing over and independent assortment generating genetic variation.",
       "default_order": 1,
-      "name_zh": "减数分裂"
+      "name_zh": "减数分裂",
+      "visual": "diagram",
+      "visual_hint": "Diagram meiosis producing four haploid gametes, including crossing over."
     },
     {
       "id": "bio_genetic_crosses",
@@ -558,7 +600,9 @@
       "topic": "bio_inheritance",
       "description": "Predicting inheritance using monohybrid and dihybrid crosses, applying dominance, codominance, and the characteristic ratios of Mendelian genetics.",
       "default_order": 2,
-      "name_zh": "遗传杂交"
+      "name_zh": "遗传杂交",
+      "visual": "diagram",
+      "visual_hint": "Punnett-square diagram predicting offspring genotype ratios."
     },
     {
       "id": "bio_linkage",
@@ -628,7 +672,9 @@
       "topic": "bio_biodiversity",
       "description": "The hierarchical classification of organisms into taxa and the three-domain system, reflecting their evolutionary relationships.",
       "default_order": 1,
-      "name_zh": "分类"
+      "name_zh": "分类",
+      "visual": "diagram",
+      "visual_hint": "Hierarchical taxonomy tree of the classification taxa."
     },
     {
       "id": "bio_biodiversity_sampling",

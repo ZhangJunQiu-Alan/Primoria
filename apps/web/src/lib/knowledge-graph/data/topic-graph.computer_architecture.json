@@ -2,7 +2,7 @@
   "graphId": "computer_architecture",
   "subject": "Great Ideas in Computer Architecture",
   "generatedFrom": "temple/computer_architecture.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -21,13 +21,17 @@
           "conceptId": "concept_integer_rep",
           "name": "Two's Complement & Integer Rep",
           "nameZh": "补码与整数表示",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram two's-complement encoding of signed integers."
         },
         {
           "conceptId": "concept_floating_point",
           "name": "IEEE 754 Floating Point",
           "nameZh": "IEEE 754浮点数",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram the IEEE 754 sign, exponent, and mantissa fields."
         },
         {
           "conceptId": "concept_endianness",
@@ -131,7 +135,9 @@
           "conceptId": "concept_boolean_algebra",
           "name": "Boolean Algebra & Logic Gates",
           "nameZh": "布尔代数与逻辑门",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Logic-gate diagram of AND, OR, and NOT circuits."
         },
         {
           "conceptId": "concept_combinational_logic",
@@ -173,7 +179,9 @@
           "conceptId": "concept_fsm",
           "name": "Finite State Machines",
           "nameZh": "有限状态机",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "State-transition diagram of a finite state machine."
         }
       ],
       "successors": [],
@@ -192,7 +200,9 @@
           "conceptId": "concept_single_cycle",
           "name": "Single-Cycle Datapath",
           "nameZh": "单周期数据通路",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Datapath diagram of a single-cycle processor."
         },
         {
           "conceptId": "concept_cpu_control",
@@ -204,7 +214,9 @@
           "conceptId": "concept_pipelining",
           "name": "Pipelining Principles",
           "nameZh": "流水线原理",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Pipeline stage diagram of overlapping instructions over cycles."
         }
       ],
       "successors": [
@@ -226,7 +238,9 @@
           "conceptId": "concept_pipeline_hazards",
           "name": "Pipeline Hazards & Forwarding",
           "nameZh": "流水线冒险与转发",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram a data hazard and forwarding in the pipeline."
         },
         {
           "conceptId": "concept_branch_prediction",
@@ -238,7 +252,9 @@
           "conceptId": "concept_cache_basics",
           "name": "Cache Basics & Direct Mapped",
           "nameZh": "缓存基础与直接映射",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram a direct-mapped cache indexing blocks by address bits."
         },
         {
           "conceptId": "concept_associative_caches",
@@ -274,7 +290,9 @@
           "conceptId": "concept_virtual_memory",
           "name": "Virtual Memory & Page Tables",
           "nameZh": "虚拟内存与页表",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram virtual-to-physical address translation through page tables."
         },
         {
           "conceptId": "concept_tlb",
@@ -299,7 +317,9 @@
           "conceptId": "concept_amdahls_law",
           "name": "Amdahl's Law",
           "nameZh": "Amdahl定律",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot Amdahl's-law speedup against the parallel fraction."
         },
         {
           "conceptId": "concept_simd",

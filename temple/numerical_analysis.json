@@ -8,7 +8,9 @@
       "name": "node name",
       "topic": "parent topic id or null",
       "description": "concept description",
-      "default_order": "integer"
+      "default_order": "integer",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "hard or soft"
@@ -65,7 +67,9 @@
       "topic": "t_mit18330_root_finding",
       "description": "A robust root-finding method repeatedly halving a bracketing interval where the function changes sign, converging linearly to a root.",
       "default_order": 1,
-      "name_zh": "二分法"
+      "name_zh": "二分法",
+      "visual": "function",
+      "visual_hint": "Halve a bracketing interval each step converging on a root."
     },
     {
       "id": "c_mit18330_newton",
@@ -74,7 +78,9 @@
       "topic": "t_mit18330_root_finding",
       "description": "An iterative root-finding method using the function and its derivative, converging quadratically near simple roots from a good initial guess.",
       "default_order": 2,
-      "name_zh": "牛顿法"
+      "name_zh": "牛顿法",
+      "visual": "function",
+      "visual_hint": "Step Newton's method following tangents to a root."
     },
     {
       "id": "c_mit18330_secant",
@@ -83,7 +89,9 @@
       "topic": "t_mit18330_root_finding",
       "description": "A derivative-free root-finding method approximating Newton's slope with a finite difference of recent iterates, converging superlinearly.",
       "default_order": 3,
-      "name_zh": "割线法"
+      "name_zh": "割线法",
+      "visual": "function",
+      "visual_hint": "Step the secant method using a chord to approach a root."
     },
     {
       "id": "t_mit18330_linear_systems",
@@ -135,7 +143,9 @@
       "topic": "t_mit18330_interpolation",
       "description": "Constructing a polynomial passing through given data points, expressed in Lagrange or Newton form, to approximate functions between samples.",
       "default_order": 1,
-      "name_zh": "多项式插值"
+      "name_zh": "多项式插值",
+      "visual": "function",
+      "visual_hint": "Fit an interpolating polynomial through given data points."
     },
     {
       "id": "c_mit18330_splines",
@@ -144,7 +154,9 @@
       "topic": "t_mit18330_interpolation",
       "description": "Piecewise low-degree polynomials joined smoothly at knots, avoiding the oscillation of high-degree interpolation while fitting data.",
       "default_order": 2,
-      "name_zh": "样条插值"
+      "name_zh": "样条插值",
+      "visual": "function",
+      "visual_hint": "Fit a smooth piecewise spline through knots without oscillation."
     },
     {
       "id": "c_mit18330_least_squares",
@@ -153,7 +165,9 @@
       "topic": "t_mit18330_interpolation",
       "description": "Fitting overdetermined systems by minimising squared residuals, solved through the normal equations or orthogonal factorisations.",
       "default_order": 3,
-      "name_zh": "最小二乘逼近"
+      "name_zh": "最小二乘逼近",
+      "visual": "function",
+      "visual_hint": "Fit a least-squares line minimising the squared residuals."
     },
     {
       "id": "t_mit18330_integration_odes",
@@ -170,7 +184,9 @@
       "topic": "t_mit18330_integration_odes",
       "description": "Numerical integration rules such as the trapezoidal and Simpson's rules that approximate integrals using equally spaced sample points.",
       "default_order": 1,
-      "name_zh": "Newton-Cotes 公式"
+      "name_zh": "Newton-Cotes 公式",
+      "visual": "function",
+      "visual_hint": "Approximate an integral with trapezoidal and Simpson's-rule strips."
     },
     {
       "id": "c_mit18330_gaussian_quad",
@@ -188,7 +204,9 @@
       "topic": "t_mit18330_integration_odes",
       "description": "The simplest numerical method for ODEs, stepping forward (explicit) or backward (implicit) using the slope to advance the solution.",
       "default_order": 3,
-      "name_zh": "欧拉法"
+      "name_zh": "欧拉法",
+      "visual": "function",
+      "visual_hint": "Step Euler's method along a slope field approximating an ODE solution."
     },
     {
       "id": "c_mit18330_runge_kutta",
@@ -197,7 +215,9 @@
       "topic": "t_mit18330_integration_odes",
       "description": "A family of higher-order explicit ODE methods, notably RK4, combining several slope evaluations per step for greater accuracy.",
       "default_order": 4,
-      "name_zh": "Runge-Kutta 法"
+      "name_zh": "Runge-Kutta 法",
+      "visual": "function",
+      "visual_hint": "Compare RK4 against Euler approximating an ODE solution."
     },
     {
       "id": "c_mit18330_ode_stability",

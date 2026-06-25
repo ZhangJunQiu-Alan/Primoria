@@ -8,7 +8,9 @@
       "name": "concept name",
       "topic": "owning topic id; null for topic nodes",
       "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic"
+      "default_order": "default teaching order within the topic",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "from must be learned before to; strength=hard|soft"
@@ -49,7 +51,9 @@
       "topic": "che_atomic",
       "description": "The arrangement of electrons in shells, subshells, and orbitals following the Aufbau principle, Hund's rule, and the Pauli exclusion principle.",
       "default_order": 3,
-      "name_zh": "电子排布"
+      "name_zh": "电子排布",
+      "visual": "diagram",
+      "visual_hint": "Orbital filling diagram across shells and subshells."
     },
     {
       "id": "che_ionisation",
@@ -58,7 +62,9 @@
       "topic": "che_atomic",
       "description": "The energy required to remove electrons from gaseous atoms, whose successive values and periodic trends provide evidence for electronic structure.",
       "default_order": 4,
-      "name_zh": "电离能"
+      "name_zh": "电离能",
+      "visual": "chart",
+      "visual_hint": "Plot successive ionisation energies revealing shell structure."
     },
     {
       "id": "che_stoichiometry",
@@ -119,7 +125,9 @@
       "topic": "che_bonding_part1",
       "description": "Bonding by electrostatic attraction between oppositely charged ions formed by electron transfer, producing giant ionic lattices with high melting points.",
       "default_order": 1,
-      "name_zh": "离子键"
+      "name_zh": "离子键",
+      "visual": "diagram",
+      "visual_hint": "Dot-and-cross diagram of electron transfer forming ions."
     },
     {
       "id": "che_covalent",
@@ -128,7 +136,9 @@
       "topic": "che_bonding_part1",
       "description": "Bonding by shared pairs of electrons between non-metal atoms, including single, double, triple, and dative (coordinate) covalent bonds.",
       "default_order": 2,
-      "name_zh": "共价键"
+      "name_zh": "共价键",
+      "visual": "diagram",
+      "visual_hint": "Dot-and-cross diagram of shared electron pairs."
     },
     {
       "id": "che_metallic",
@@ -154,7 +164,9 @@
       "topic": "che_bonding_part2",
       "description": "Predicting molecular shapes and bond angles using valence-shell electron-pair repulsion, where electron pairs arrange to minimise mutual repulsion.",
       "default_order": 1,
-      "name_zh": "VSEPR 分子形状"
+      "name_zh": "VSEPR 分子形状",
+      "visual": "interactive",
+      "visual_hint": "Rotate 3D molecular shapes showing bond angles for each electron-pair geometry."
     },
     {
       "id": "che_electronegativity",
@@ -189,7 +201,9 @@
       "topic": "che_states_enthalpy",
       "description": "The behaviour of ideal gases described by the equation pV equals nRT, relating pressure, volume, temperature, and amount of gas.",
       "default_order": 1,
-      "name_zh": "理想气体"
+      "name_zh": "理想气体",
+      "visual": "function",
+      "visual_hint": "Plot pV = nRT relationships between pressure, volume, and temperature."
     },
     {
       "id": "che_solids",
@@ -207,7 +221,9 @@
       "topic": "che_states_enthalpy",
       "description": "Enthalpy changes of reactions measured at constant pressure, including standard enthalpies of formation, combustion, and reaction.",
       "default_order": 3,
-      "name_zh": "焓变"
+      "name_zh": "焓变",
+      "visual": "diagram",
+      "visual_hint": "Energy-profile diagram of enthalpy change with activation energy."
     },
     {
       "id": "che_energetics",
@@ -224,7 +240,9 @@
       "topic": "che_energetics",
       "description": "Hess's law stating that the enthalpy change of a reaction is independent of the route taken, allowing indirect calculation via energy cycles.",
       "default_order": 1,
-      "name_zh": "盖斯定律"
+      "name_zh": "盖斯定律",
+      "visual": "diagram",
+      "visual_hint": "Hess-cycle diagram of alternative reaction routes."
     },
     {
       "id": "che_bond_enthalpy",
@@ -277,7 +295,9 @@
       "topic": "che_kinetics_part1",
       "description": "The Maxwell-Boltzmann distribution of molecular energies, used to explain the effect of temperature and catalysts on reaction rate.",
       "default_order": 3,
-      "name_zh": "Maxwell-Boltzmann分布"
+      "name_zh": "Maxwell-Boltzmann分布",
+      "visual": "function",
+      "visual_hint": "Plot the Maxwell-Boltzmann energy distribution and the effect of temperature and catalyst."
     },
     {
       "id": "che_kinetics_part2",
@@ -303,7 +323,9 @@
       "topic": "che_kinetics_part2",
       "description": "Rate equations relating rate to reactant concentrations raised to their orders, with the rate constant determined experimentally.",
       "default_order": 2,
-      "name_zh": "速率方程与反应级数"
+      "name_zh": "速率方程与反应级数",
+      "visual": "function",
+      "visual_hint": "Plot reaction rate against concentration for zero, first, and second order."
     },
     {
       "id": "che_rds",
@@ -338,7 +360,9 @@
       "topic": "che_equilibria_acidbase",
       "description": "Le Chatelier's principle predicting how an equilibrium position shifts to oppose changes in concentration, pressure, or temperature.",
       "default_order": 2,
-      "name_zh": "勒夏特列原理"
+      "name_zh": "勒夏特列原理",
+      "visual": "interactive",
+      "visual_hint": "Shift an equilibrium with sliders for concentration, pressure, and temperature."
     },
     {
       "id": "che_kc_kp",
@@ -382,7 +406,9 @@
       "topic": "che_acids",
       "description": "The pH scale measuring hydrogen-ion concentration and the acid dissociation constant Ka quantifying the strength of a weak acid.",
       "default_order": 2,
-      "name_zh": "pH 与酸解离常数"
+      "name_zh": "pH 与酸解离常数",
+      "visual": "function",
+      "visual_hint": "Plot a titration pH curve and locate the equivalence point."
     },
     {
       "id": "che_buffers",
@@ -470,7 +496,9 @@
       "topic": "che_electrochem_thermo",
       "description": "Born-Haber cycles applying Hess's law to determine lattice energy from enthalpies of formation, atomisation, ionisation, and electron affinity.",
       "default_order": 3,
-      "name_zh": "晶格能与玻恩-哈伯循环"
+      "name_zh": "晶格能与玻恩-哈伯循环",
+      "visual": "diagram",
+      "visual_hint": "Born-Haber cycle diagram of the lattice-energy enthalpy steps."
     },
     {
       "id": "che_entropy",
@@ -505,7 +533,9 @@
       "topic": "che_free_energy_periodicity",
       "description": "Trends across periods and down groups in atomic radius, ionisation energy, and electronegativity, explained by nuclear charge and shielding.",
       "default_order": 2,
-      "name_zh": "周期趋势"
+      "name_zh": "周期趋势",
+      "visual": "chart",
+      "visual_hint": "Plot periodic trends in atomic radius and ionisation energy across a period."
     },
     {
       "id": "che_period3",
@@ -812,7 +842,9 @@
       "topic": "che_arenes_mass_spec",
       "description": "Mass spectrometry determining relative molecular mass and structure from the mass-to-charge ratios of ionised molecular fragments.",
       "default_order": 3,
-      "name_zh": "质谱分析"
+      "name_zh": "质谱分析",
+      "visual": "chart",
+      "visual_hint": "Plot a mass spectrum of m/z peaks."
     },
     {
       "id": "che_analysis",
@@ -838,7 +870,9 @@
       "topic": "che_analysis",
       "description": "Nuclear magnetic resonance spectroscopy determining molecular structure from the chemical environments of hydrogen or carbon nuclei.",
       "default_order": 2,
-      "name_zh": "NMR光谱"
+      "name_zh": "NMR光谱",
+      "visual": "chart",
+      "visual_hint": "Plot an NMR spectrum of chemical-shift peaks."
     },
     {
       "id": "che_chromatography",

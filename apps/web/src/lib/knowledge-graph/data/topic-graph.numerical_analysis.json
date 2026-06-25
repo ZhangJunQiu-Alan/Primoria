@@ -2,7 +2,7 @@
   "graphId": "numerical_analysis",
   "subject": "Introduction to Numerical Analysis",
   "generatedFrom": "temple/numerical_analysis.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -61,19 +61,25 @@
           "conceptId": "c_mit18330_bisection",
           "name": "Bisection Method",
           "nameZh": "二分法",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Halve a bracketing interval each step converging on a root."
         },
         {
           "conceptId": "c_mit18330_newton",
           "name": "Newton's Method",
           "nameZh": "牛顿法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Step Newton's method following tangents to a root."
         },
         {
           "conceptId": "c_mit18330_secant",
           "name": "Secant Method",
           "nameZh": "割线法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Step the secant method using a chord to approach a root."
         }
       ],
       "successors": [],
@@ -128,19 +134,25 @@
           "conceptId": "c_mit18330_polynomial_interp",
           "name": "Polynomial Interpolation",
           "nameZh": "多项式插值",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Fit an interpolating polynomial through given data points."
         },
         {
           "conceptId": "c_mit18330_splines",
           "name": "Spline Interpolation",
           "nameZh": "样条插值",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Fit a smooth piecewise spline through knots without oscillation."
         },
         {
           "conceptId": "c_mit18330_least_squares",
           "name": "Least Squares Approximation",
           "nameZh": "最小二乘逼近",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Fit a least-squares line minimising the squared residuals."
         }
       ],
       "successors": [
@@ -165,7 +177,9 @@
           "conceptId": "c_mit18330_newton_cotes",
           "name": "Newton-Cotes Formulas",
           "nameZh": "Newton-Cotes 公式",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Approximate an integral with trapezoidal and Simpson's-rule strips."
         },
         {
           "conceptId": "c_mit18330_gaussian_quad",
@@ -177,13 +191,17 @@
           "conceptId": "c_mit18330_euler",
           "name": "Euler's Method",
           "nameZh": "欧拉法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Step Euler's method along a slope field approximating an ODE solution."
         },
         {
           "conceptId": "c_mit18330_runge_kutta",
           "name": "Runge-Kutta Methods",
           "nameZh": "Runge-Kutta 法",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Compare RK4 against Euler approximating an ODE solution."
         },
         {
           "conceptId": "c_mit18330_ode_stability",

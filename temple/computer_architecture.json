@@ -34,7 +34,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "Encoding signed integers in two's complement, representing negatives by complementing and adding one, giving a single zero and simple hardware arithmetic.",
-      "name_zh": "补码与整数表示"
+      "name_zh": "补码与整数表示",
+      "visual": "diagram",
+      "visual_hint": "Diagram two's-complement encoding of signed integers."
     },
     {
       "id": "concept_floating_point",
@@ -43,7 +45,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "The IEEE 754 standard representing reals with sign, biased exponent, and mantissa fields, trading precision for range across many orders of magnitude.",
-      "name_zh": "IEEE 754浮点数"
+      "name_zh": "IEEE 754浮点数",
+      "visual": "diagram",
+      "visual_hint": "Diagram the IEEE 754 sign, exponent, and mantissa fields."
     },
     {
       "id": "concept_endianness",
@@ -166,7 +170,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "The algebra of binary values with AND, OR, and NOT operations, realised physically as logic gates that form digital circuits.",
-      "name_zh": "布尔代数与逻辑门"
+      "name_zh": "布尔代数与逻辑门",
+      "visual": "diagram",
+      "visual_hint": "Logic-gate diagram of AND, OR, and NOT circuits."
     },
     {
       "id": "concept_combinational_logic",
@@ -210,7 +216,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "Finite state machines modelling sequential behaviour as states and transitions, implemented with state registers and combinational next-state logic.",
-      "name_zh": "有限状态机"
+      "name_zh": "有限状态机",
+      "visual": "diagram",
+      "visual_hint": "State-transition diagram of a finite state machine."
     },
     {
       "id": "topic_cpu",
@@ -227,7 +235,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "A datapath executing each instruction completely in one clock cycle, connecting register file, ALU, and memory through controlled multiplexers.",
-      "name_zh": "单周期数据通路"
+      "name_zh": "单周期数据通路",
+      "visual": "diagram",
+      "visual_hint": "Datapath diagram of a single-cycle processor."
     },
     {
       "id": "concept_cpu_control",
@@ -245,7 +255,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "Dividing instruction execution into stages so multiple instructions overlap, increasing throughput by ideally finishing one instruction each clock cycle.",
-      "name_zh": "流水线原理"
+      "name_zh": "流水线原理",
+      "visual": "diagram",
+      "visual_hint": "Pipeline stage diagram of overlapping instructions over cycles."
     },
     {
       "id": "topic_pipeline_cache",
@@ -262,7 +274,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "Structural, data, and control hazards that disrupt pipelined execution, mitigated by forwarding, stalling, and careful instruction scheduling.",
-      "name_zh": "流水线冒险与转发"
+      "name_zh": "流水线冒险与转发",
+      "visual": "diagram",
+      "visual_hint": "Diagram a data hazard and forwarding in the pipeline."
     },
     {
       "id": "concept_branch_prediction",
@@ -280,7 +294,9 @@
       "kind": "concept",
       "default_order": 3,
       "description": "Direct-mapped caches storing recently used blocks indexed by address bits, exploiting locality to reduce average memory access latency.",
-      "name_zh": "缓存基础与直接映射"
+      "name_zh": "缓存基础与直接映射",
+      "visual": "diagram",
+      "visual_hint": "Diagram a direct-mapped cache indexing blocks by address bits."
     },
     {
       "id": "concept_associative_caches",
@@ -315,7 +331,9 @@
       "kind": "concept",
       "default_order": 2,
       "description": "Giving each process a large private address space mapped to physical memory through page tables, providing isolation and demand paging.",
-      "name_zh": "虚拟内存与页表"
+      "name_zh": "虚拟内存与页表",
+      "visual": "diagram",
+      "visual_hint": "Diagram virtual-to-physical address translation through page tables."
     },
     {
       "id": "concept_tlb",
@@ -341,7 +359,9 @@
       "kind": "concept",
       "default_order": 1,
       "description": "A formula bounding overall speedup from optimising part of a program, showing that the unimproved fraction limits achievable performance gains.",
-      "name_zh": "Amdahl定律"
+      "name_zh": "Amdahl定律",
+      "visual": "function",
+      "visual_hint": "Plot Amdahl's-law speedup against the parallel fraction."
     },
     {
       "id": "concept_simd",

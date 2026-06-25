@@ -2,7 +2,7 @@
   "graphId": "computer_systems",
   "subject": "Computer Systems",
   "generatedFrom": "temple/computer_systems.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -21,7 +21,9 @@
           "conceptId": "c1_2",
           "name": "Integer Representation",
           "nameZh": "整数表示",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram fixed-width integer encodings including two's complement."
         },
         {
           "conceptId": "c1_3",
@@ -33,7 +35,9 @@
           "conceptId": "c1_4",
           "name": "Floating Point Representation",
           "nameZh": "浮点数表示",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram the IEEE 754 sign, exponent, and fraction fields."
         }
       ],
       "successors": [
@@ -105,13 +109,17 @@
           "conceptId": "c2_4",
           "name": "Procedures and Call Stack",
           "nameZh": "过程与调用栈",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram the call stack passing arguments and saving the return address."
         },
         {
           "conceptId": "c2_5",
           "name": "Arrays and Structs",
           "nameZh": "数组与结构体",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram array and struct memory layout and element addressing."
         },
         {
           "conceptId": "c3_1",
@@ -151,13 +159,17 @@
           "conceptId": "c3_3",
           "name": "Pipelining Principles",
           "nameZh": "流水线原理",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Pipeline stage diagram of overlapping instructions."
         },
         {
           "conceptId": "c3_4",
           "name": "Pipeline Hazards and Forwarding",
           "nameZh": "流水线冒险与转发",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram a pipeline hazard resolved by forwarding."
         },
         {
           "conceptId": "c3_5",
@@ -271,7 +283,9 @@
           "conceptId": "c5_3",
           "name": "Cache Memory Organization",
           "nameZh": "缓存组织",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram cache organisation into sets, lines, and blocks with tags."
         },
         {
           "conceptId": "c5_4",
@@ -361,7 +375,9 @@
           "conceptId": "c7_2",
           "name": "Processes and Context Switches",
           "nameZh": "进程与上下文切换",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Diagram a context switch between processes."
         }
       ],
       "successors": [
@@ -426,13 +442,17 @@
           "conceptId": "c8_1",
           "name": "Address Translation",
           "nameZh": "地址转换",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram MMU address translation from virtual to physical."
         },
         {
           "conceptId": "c8_2",
           "name": "Page Tables",
           "nameZh": "页表",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram a multi-level page table mapping pages to frames."
         },
         {
           "conceptId": "c8_3",
@@ -619,7 +639,9 @@
           "conceptId": "c11_3",
           "name": "Synchronization (Semaphores)",
           "nameZh": "同步（信号量）",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram two threads coordinating with a semaphore's P and V."
         },
         {
           "conceptId": "c11_4",
@@ -631,7 +653,9 @@
           "conceptId": "c11_5",
           "name": "Deadlocks",
           "nameZh": "死锁",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram a deadlock as a cycle of threads waiting on resources."
         }
       ],
       "successors": [],

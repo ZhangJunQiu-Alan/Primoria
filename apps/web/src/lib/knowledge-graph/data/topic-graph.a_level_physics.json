@@ -2,7 +2,7 @@
   "graphId": "a_level_physics",
   "subject": "Physics",
   "generatedFrom": "temple/a_level_physics.json",
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -67,7 +67,9 @@
           "conceptId": "phy_suvat",
           "name": "Equations of Motion",
           "nameZh": "运动方程",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "simulation",
+          "visualHint": "Animate uniform-acceleration motion with adjustable acceleration and initial velocity."
         }
       ],
       "successors": [
@@ -99,19 +101,25 @@
           "conceptId": "phy_motion_graphs",
           "name": "Motion Graphs",
           "nameZh": "运动图像",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot displacement-time and velocity-time graphs, relating gradients and areas."
         },
         {
           "conceptId": "phy_free_fall",
           "name": "Free Fall",
           "nameZh": "自由落体",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "simulation",
+          "visualHint": "Drop an object under gravity showing constant acceleration g."
         },
         {
           "conceptId": "phy_projectile",
           "name": "Projectile Motion",
           "nameZh": "抛体运动",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "simulation",
+          "visualHint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
         }
       ],
       "successors": [],
@@ -130,7 +138,9 @@
           "conceptId": "phy_newton_laws",
           "name": "Newton's Laws of Motion",
           "nameZh": "牛顿运动定律",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "simulation",
+          "visualHint": "Apply a force to a mass and watch the resulting acceleration."
         },
         {
           "conceptId": "phy_mass_weight",
@@ -174,7 +184,9 @@
           "conceptId": "phy_momentum_conservation",
           "name": "Conservation of Momentum",
           "nameZh": "动量守恒",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "simulation",
+          "visualHint": "Animate a collision conserving total momentum."
         },
         {
           "conceptId": "phy_impulse",
@@ -192,7 +204,9 @@
           "conceptId": "phy_moments",
           "name": "Moments and Couples",
           "nameZh": "力矩与力偶",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "interactive",
+          "visualHint": "Balance a beam by adjusting forces and distances (moments)."
         }
       ],
       "successors": [
@@ -236,7 +250,9 @@
           "conceptId": "phy_upthrust",
           "name": "Upthrust and Archimedes",
           "nameZh": "浮力与阿基米德",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "simulation",
+          "visualHint": "Float or sink an object showing upthrust versus weight."
         }
       ],
       "successors": [],
@@ -301,13 +317,17 @@
           "conceptId": "phy_hookes_law",
           "name": "Hooke's Law",
           "nameZh": "胡克定律",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot force against extension for a spring with a slider for stiffness."
         },
         {
           "conceptId": "phy_stress_strain",
           "name": "Stress, Strain and Young Modulus",
           "nameZh": "应力、应变与杨氏模量",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot a stress-strain curve up to fracture."
         },
         {
           "conceptId": "phy_elastic_plastic",
@@ -339,13 +359,17 @@
           "conceptId": "phy_progressive_waves",
           "name": "Progressive Waves",
           "nameZh": "行波",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Animate a progressive wave with sliders for amplitude, wavelength, and frequency."
         },
         {
           "conceptId": "phy_wave_types",
           "name": "Transverse and Longitudinal Waves",
           "nameZh": "横波与纵波",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Animate transverse versus longitudinal wave oscillation."
         },
         {
           "conceptId": "phy_intensity",
@@ -377,13 +401,17 @@
           "conceptId": "phy_em_spectrum",
           "name": "Electromagnetic Spectrum",
           "nameZh": "电磁波谱",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Labelled electromagnetic spectrum ordered by wavelength and frequency."
         },
         {
           "conceptId": "phy_doppler",
           "name": "Doppler Effect",
           "nameZh": "多普勒效应",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "simulation",
+          "visualHint": "Move a wave source and show the observed frequency shift (Doppler effect)."
         },
         {
           "conceptId": "phy_superposition_principle",
@@ -395,7 +423,9 @@
           "conceptId": "phy_interference",
           "name": "Two-Source Interference",
           "nameZh": "双源干涉",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Two-source interference producing constructive and destructive fringes."
         }
       ],
       "successors": [
@@ -435,7 +465,9 @@
           "conceptId": "phy_stationary_waves",
           "name": "Stationary Waves",
           "nameZh": "驻波",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Animate a standing wave with nodes and antinodes; slider for the harmonic."
         }
       ],
       "successors": [],
@@ -502,13 +534,17 @@
           "conceptId": "phy_iv_characteristics",
           "name": "I-V Characteristics",
           "nameZh": "I-V特性",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot I-V characteristics for a resistor, filament lamp, and diode."
         },
         {
           "conceptId": "phy_kirchhoff",
           "name": "Kirchhoff's Laws",
           "nameZh": "基尔霍夫定律",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Circuit diagram applying Kirchhoff's current and voltage laws."
         }
       ],
       "successors": [
@@ -532,13 +568,17 @@
           "conceptId": "phy_series_parallel",
           "name": "Series and Parallel Resistors",
           "nameZh": "串并联电阻",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Build series and parallel resistor networks and compute total resistance."
         },
         {
           "conceptId": "phy_potential_divider",
           "name": "Potential Dividers",
           "nameZh": "分压器",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Slider on a potential divider showing the output voltage."
         },
         {
           "conceptId": "phy_internal_resistance",
@@ -575,7 +615,9 @@
           "conceptId": "phy_centripetal_force",
           "name": "Centripetal Force",
           "nameZh": "向心力",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "simulation",
+          "visualHint": "Swing a mass in a circle, varying speed and radius for centripetal force."
         }
       ],
       "successors": [
@@ -610,7 +652,9 @@
           "conceptId": "phy_grav_field_strength",
           "name": "Gravitational Field Strength",
           "nameZh": "引力场强度",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot gravitational field strength against distance (inverse square)."
         },
         {
           "conceptId": "phy_grav_potential",
@@ -622,7 +666,9 @@
           "conceptId": "phy_orbits",
           "name": "Orbital Motion",
           "nameZh": "轨道运动",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "simulation",
+          "visualHint": "Orbit a satellite where gravity provides the centripetal force."
         }
       ],
       "successors": [
@@ -646,13 +692,17 @@
           "conceptId": "phy_shm",
           "name": "Simple Harmonic Motion",
           "nameZh": "简谐运动",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "simulation",
+          "visualHint": "Animate a pendulum or spring in simple harmonic motion and plot displacement."
         },
         {
           "conceptId": "phy_shm_energy",
           "name": "SHM Energy",
           "nameZh": "SHM能量",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot the kinetic and potential energy interchange in SHM."
         },
         {
           "conceptId": "phy_damping",
@@ -664,7 +714,9 @@
           "conceptId": "phy_resonance",
           "name": "Resonance",
           "nameZh": "共振",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Plot amplitude against driving frequency showing a resonance peak."
         }
       ],
       "successors": [],
@@ -696,13 +748,17 @@
           "conceptId": "phy_kinetic_theory",
           "name": "Kinetic Theory of Gases",
           "nameZh": "气体动理论",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "simulation",
+          "visualHint": "Animate gas particles in random motion inside a box."
         },
         {
           "conceptId": "phy_ideal_gas",
           "name": "Ideal Gas Law",
           "nameZh": "理想气体定律",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Plot pV = nRT relationships between pressure, volume, and temperature."
         },
         {
           "conceptId": "phy_internal_energy",
@@ -727,13 +783,17 @@
           "conceptId": "phy_coulomb",
           "name": "Coulomb's Law",
           "nameZh": "库仑定律",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot the Coulomb force against separation (inverse square)."
         },
         {
           "conceptId": "phy_e_field_strength",
           "name": "Electric Field Strength",
           "nameZh": "电场强度",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Show electric field lines around point charges."
         },
         {
           "conceptId": "phy_e_potential",
@@ -788,7 +848,9 @@
           "conceptId": "phy_capacitor_discharge",
           "name": "Charging and Discharging",
           "nameZh": "充放电",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Plot exponential capacitor charge and discharge against time."
         }
       ],
       "successors": [],
@@ -813,7 +875,9 @@
           "conceptId": "phy_force_conductor",
           "name": "Force on a Current-Carrying Conductor",
           "nameZh": "载流导线受力",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Show the motor-effect force on a current-carrying conductor (Fleming's left hand)."
         },
         {
           "conceptId": "phy_force_charge",
@@ -855,7 +919,9 @@
           "conceptId": "phy_faraday",
           "name": "Faraday's Law",
           "nameZh": "法拉第定律",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Move a magnet through a coil to induce an EMF (Faraday and Lenz)."
         },
         {
           "conceptId": "phy_lenz",
@@ -885,13 +951,17 @@
           "conceptId": "phy_ac_rms",
           "name": "AC and RMS Values",
           "nameZh": "交流电与RMS值",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot a sinusoidal AC waveform and its RMS value."
         },
         {
           "conceptId": "phy_transformers",
           "name": "Transformers",
           "nameZh": "变压器",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Transformer diagram relating the turns ratio to the voltage ratio."
         },
         {
           "conceptId": "phy_rectification",
@@ -922,7 +992,9 @@
           "conceptId": "phy_photoelectric",
           "name": "Photoelectric Effect",
           "nameZh": "光电效应",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot photoelectric stopping voltage against frequency."
         },
         {
           "conceptId": "phy_wave_particle",
@@ -934,7 +1006,9 @@
           "conceptId": "phy_energy_levels",
           "name": "Energy Levels and Line Spectra",
           "nameZh": "能级与线光谱",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "diagram",
+          "visualHint": "Energy-level diagram with photon emission producing line spectra."
         }
       ],
       "successors": [
@@ -970,7 +1044,9 @@
           "conceptId": "phy_binding_energy",
           "name": "Mass Defect and Binding Energy",
           "nameZh": "质量亏损与结合能",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Plot binding energy per nucleon against nucleon number."
         }
       ],
       "successors": [
@@ -998,7 +1074,9 @@
           "conceptId": "phy_radioactive_decay",
           "name": "Radioactive Decay",
           "nameZh": "放射性衰变",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Plot exponential radioactive decay with a slider for half-life."
         },
         {
           "conceptId": "phy_half_life",
@@ -1041,7 +1119,9 @@
           "conceptId": "phy_hubble",
           "name": "Hubble's Law and the Big Bang",
           "nameZh": "哈勃定律与大爆炸",
-          "defaultOrder": 4
+          "defaultOrder": 4,
+          "visual": "function",
+          "visualHint": "Plot recession speed against distance (Hubble's law)."
         }
       ],
       "successors": [],

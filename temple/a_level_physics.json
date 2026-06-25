@@ -8,7 +8,9 @@
       "name": "concept name",
       "topic": "owning topic id; null for topic nodes",
       "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic"
+      "default_order": "default teaching order within the topic",
+      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
+      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
     },
     "edge_types": {
       "prereq": "from must be learned before to; strength=hard|soft"
@@ -93,7 +95,9 @@
       "topic": "phy_measurement_motion",
       "description": "The equations of motion for uniform acceleration relating displacement, initial and final velocity, acceleration, and time.",
       "default_order": 4,
-      "name_zh": "运动方程"
+      "name_zh": "运动方程",
+      "visual": "simulation",
+      "visual_hint": "Animate uniform-acceleration motion with adjustable acceleration and initial velocity."
     },
     {
       "id": "phy_kinematics",
@@ -110,7 +114,9 @@
       "topic": "phy_kinematics",
       "description": "Interpreting displacement-time and velocity-time graphs, where gradients give velocity and acceleration and areas give displacement.",
       "default_order": 1,
-      "name_zh": "运动图像"
+      "name_zh": "运动图像",
+      "visual": "function",
+      "visual_hint": "Plot displacement-time and velocity-time graphs, relating gradients and areas."
     },
     {
       "id": "phy_free_fall",
@@ -119,7 +125,9 @@
       "topic": "phy_kinematics",
       "description": "Motion under gravity alone with constant acceleration g, including the experimental determination of the acceleration of free fall.",
       "default_order": 2,
-      "name_zh": "自由落体"
+      "name_zh": "自由落体",
+      "visual": "simulation",
+      "visual_hint": "Drop an object under gravity showing constant acceleration g."
     },
     {
       "id": "phy_projectile",
@@ -128,7 +136,9 @@
       "topic": "phy_kinematics",
       "description": "Projectile motion analysed by treating the horizontal and vertical components independently under constant gravitational acceleration.",
       "default_order": 3,
-      "name_zh": "抛体运动"
+      "name_zh": "抛体运动",
+      "visual": "simulation",
+      "visual_hint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
     },
     {
       "id": "phy_dynamics",
@@ -145,7 +155,9 @@
       "topic": "phy_dynamics",
       "description": "Newton's three laws of motion relating force, mass, and acceleration and describing action-reaction force pairs.",
       "default_order": 1,
-      "name_zh": "牛顿运动定律"
+      "name_zh": "牛顿运动定律",
+      "visual": "simulation",
+      "visual_hint": "Apply a force to a mass and watch the resulting acceleration."
     },
     {
       "id": "phy_mass_weight",
@@ -180,7 +192,9 @@
       "topic": "phy_momentum_forces",
       "description": "The principle of conservation of momentum, where total momentum is conserved in a closed system with no external resultant force.",
       "default_order": 1,
-      "name_zh": "动量守恒"
+      "name_zh": "动量守恒",
+      "visual": "simulation",
+      "visual_hint": "Animate a collision conserving total momentum."
     },
     {
       "id": "phy_impulse",
@@ -207,7 +221,9 @@
       "topic": "phy_momentum_forces",
       "description": "The moment of a force as force times perpendicular distance, and couples producing rotation, with the principle of moments for equilibrium.",
       "default_order": 4,
-      "name_zh": "力矩与力偶"
+      "name_zh": "力矩与力偶",
+      "visual": "interactive",
+      "visual_hint": "Balance a beam by adjusting forces and distances (moments)."
     },
     {
       "id": "phy_forces",
@@ -242,7 +258,9 @@
       "topic": "phy_forces",
       "description": "Upthrust as the buoyant force on a body in a fluid, equal by Archimedes' principle to the weight of fluid displaced.",
       "default_order": 3,
-      "name_zh": "浮力与阿基米德"
+      "name_zh": "浮力与阿基米德",
+      "visual": "simulation",
+      "visual_hint": "Float or sink an object showing upthrust versus weight."
     },
     {
       "id": "phy_work_energy",
@@ -303,7 +321,9 @@
       "topic": "phy_deformation",
       "description": "Hooke's law stating that the extension of a spring is proportional to the applied force up to the limit of proportionality.",
       "default_order": 1,
-      "name_zh": "胡克定律"
+      "name_zh": "胡克定律",
+      "visual": "function",
+      "visual_hint": "Plot force against extension for a spring with a slider for stiffness."
     },
     {
       "id": "phy_stress_strain",
@@ -312,7 +332,9 @@
       "topic": "phy_deformation",
       "description": "Tensile stress as force per unit area and strain as fractional extension, related by the Young modulus for an elastic material.",
       "default_order": 2,
-      "name_zh": "应力、应变与杨氏模量"
+      "name_zh": "应力、应变与杨氏模量",
+      "visual": "function",
+      "visual_hint": "Plot a stress-strain curve up to fracture."
     },
     {
       "id": "phy_elastic_plastic",
@@ -347,7 +369,9 @@
       "topic": "phy_waves",
       "description": "Progressive waves transferring energy through a medium, described by displacement, amplitude, wavelength, frequency, and speed.",
       "default_order": 1,
-      "name_zh": "行波"
+      "name_zh": "行波",
+      "visual": "function",
+      "visual_hint": "Animate a progressive wave with sliders for amplitude, wavelength, and frequency."
     },
     {
       "id": "phy_wave_types",
@@ -356,7 +380,9 @@
       "topic": "phy_waves",
       "description": "The distinction between transverse waves oscillating perpendicular to the direction of travel and longitudinal waves oscillating parallel to it.",
       "default_order": 2,
-      "name_zh": "横波与纵波"
+      "name_zh": "横波与纵波",
+      "visual": "interactive",
+      "visual_hint": "Animate transverse versus longitudinal wave oscillation."
     },
     {
       "id": "phy_intensity",
@@ -382,7 +408,9 @@
       "topic": "phy_waves_superposition",
       "description": "The electromagnetic spectrum of transverse waves travelling at the speed of light, ranging from radio waves to gamma rays.",
       "default_order": 1,
-      "name_zh": "电磁波谱"
+      "name_zh": "电磁波谱",
+      "visual": "diagram",
+      "visual_hint": "Labelled electromagnetic spectrum ordered by wavelength and frequency."
     },
     {
       "id": "phy_doppler",
@@ -391,7 +419,9 @@
       "topic": "phy_waves_superposition",
       "description": "The Doppler effect, the change in observed frequency when a wave source and observer move relative to one another.",
       "default_order": 2,
-      "name_zh": "多普勒效应"
+      "name_zh": "多普勒效应",
+      "visual": "simulation",
+      "visual_hint": "Move a wave source and show the observed frequency shift (Doppler effect)."
     },
     {
       "id": "phy_superposition_principle",
@@ -409,7 +439,9 @@
       "topic": "phy_waves_superposition",
       "description": "Two-source interference producing constructive and destructive fringes where coherent waves meet in phase and out of phase.",
       "default_order": 4,
-      "name_zh": "双源干涉"
+      "name_zh": "双源干涉",
+      "visual": "function",
+      "visual_hint": "Two-source interference producing constructive and destructive fringes."
     },
     {
       "id": "phy_superposition",
@@ -444,7 +476,9 @@
       "topic": "phy_superposition",
       "description": "Stationary waves formed by superposition of two opposite progressive waves, with fixed nodes and antinodes and no net energy transfer.",
       "default_order": 3,
-      "name_zh": "驻波"
+      "name_zh": "驻波",
+      "visual": "function",
+      "visual_hint": "Animate a standing wave with nodes and antinodes; slider for the harmonic."
     },
     {
       "id": "phy_electricity",
@@ -505,7 +539,9 @@
       "topic": "phy_circuits_kirchhoff",
       "description": "Current-voltage characteristics of components such as resistors, filament lamps, and diodes, revealing their electrical behaviour.",
       "default_order": 2,
-      "name_zh": "I-V特性"
+      "name_zh": "I-V特性",
+      "visual": "function",
+      "visual_hint": "Plot I-V characteristics for a resistor, filament lamp, and diode."
     },
     {
       "id": "phy_kirchhoff",
@@ -514,7 +550,9 @@
       "topic": "phy_circuits_kirchhoff",
       "description": "Kirchhoff's first and second laws expressing the conservation of charge at junctions and of energy around circuit loops.",
       "default_order": 3,
-      "name_zh": "基尔霍夫定律"
+      "name_zh": "基尔霍夫定律",
+      "visual": "diagram",
+      "visual_hint": "Circuit diagram applying Kirchhoff's current and voltage laws."
     },
     {
       "id": "phy_dc_circuits",
@@ -531,7 +569,9 @@
       "topic": "phy_dc_circuits",
       "description": "Combining resistors in series and parallel using the total-resistance rules derived from Kirchhoff's laws.",
       "default_order": 1,
-      "name_zh": "串并联电阻"
+      "name_zh": "串并联电阻",
+      "visual": "interactive",
+      "visual_hint": "Build series and parallel resistor networks and compute total resistance."
     },
     {
       "id": "phy_potential_divider",
@@ -540,7 +580,9 @@
       "topic": "phy_dc_circuits",
       "description": "A potential divider using resistors in series to produce a desired fraction of the supply voltage, including with sensors.",
       "default_order": 2,
-      "name_zh": "分压器"
+      "name_zh": "分压器",
+      "visual": "interactive",
+      "visual_hint": "Slider on a potential divider showing the output voltage."
     },
     {
       "id": "phy_internal_resistance",
@@ -584,7 +626,9 @@
       "topic": "phy_circular",
       "description": "The resultant centripetal force required for circular motion, directed toward the centre and provided by a real force.",
       "default_order": 3,
-      "name_zh": "向心力"
+      "name_zh": "向心力",
+      "visual": "simulation",
+      "visual_hint": "Swing a mass in a circle, varying speed and radius for centripetal force."
     },
     {
       "id": "phy_gravitation",
@@ -610,7 +654,9 @@
       "topic": "phy_gravitation",
       "description": "Gravitational field strength as the gravitational force per unit mass at a point, a vector directed toward the mass.",
       "default_order": 2,
-      "name_zh": "引力场强度"
+      "name_zh": "引力场强度",
+      "visual": "function",
+      "visual_hint": "Plot gravitational field strength against distance (inverse square)."
     },
     {
       "id": "phy_grav_potential",
@@ -628,7 +674,9 @@
       "topic": "phy_gravitation",
       "description": "Orbital motion where gravitation provides the centripetal force, relating orbital speed, radius, and period as in Kepler's third law.",
       "default_order": 4,
-      "name_zh": "轨道运动"
+      "name_zh": "轨道运动",
+      "visual": "simulation",
+      "visual_hint": "Orbit a satellite where gravity provides the centripetal force."
     },
     {
       "id": "phy_oscillations",
@@ -645,7 +693,9 @@
       "topic": "phy_oscillations",
       "description": "Simple harmonic motion where acceleration is proportional to displacement and directed toward equilibrium, producing sinusoidal motion.",
       "default_order": 1,
-      "name_zh": "简谐运动"
+      "name_zh": "简谐运动",
+      "visual": "simulation",
+      "visual_hint": "Animate a pendulum or spring in simple harmonic motion and plot displacement."
     },
     {
       "id": "phy_shm_energy",
@@ -654,7 +704,9 @@
       "topic": "phy_oscillations",
       "description": "The interchange between kinetic and potential energy in simple harmonic motion, with total energy constant in the absence of damping.",
       "default_order": 2,
-      "name_zh": "SHM能量"
+      "name_zh": "SHM能量",
+      "visual": "function",
+      "visual_hint": "Plot the kinetic and potential energy interchange in SHM."
     },
     {
       "id": "phy_damping",
@@ -672,7 +724,9 @@
       "topic": "phy_oscillations",
       "description": "Resonance where a system driven at its natural frequency oscillates with maximum amplitude, with damping reducing the peak.",
       "default_order": 4,
-      "name_zh": "共振"
+      "name_zh": "共振",
+      "visual": "function",
+      "visual_hint": "Plot amplitude against driving frequency showing a resonance peak."
     },
     {
       "id": "phy_thermal",
@@ -707,7 +761,9 @@
       "topic": "phy_thermal",
       "description": "The kinetic theory modelling a gas as many small particles in random motion, relating pressure to their mean square speed.",
       "default_order": 3,
-      "name_zh": "气体动理论"
+      "name_zh": "气体动理论",
+      "visual": "simulation",
+      "visual_hint": "Animate gas particles in random motion inside a box."
     },
     {
       "id": "phy_ideal_gas",
@@ -716,7 +772,9 @@
       "topic": "phy_thermal",
       "description": "The ideal gas equation pV equals nRT relating the pressure, volume, temperature, and amount of an ideal gas.",
       "default_order": 4,
-      "name_zh": "理想气体定律"
+      "name_zh": "理想气体定律",
+      "visual": "function",
+      "visual_hint": "Plot pV = nRT relationships between pressure, volume, and temperature."
     },
     {
       "id": "phy_internal_energy",
@@ -742,7 +800,9 @@
       "topic": "phy_electric_fields",
       "description": "Coulomb's law giving the electrostatic force between two point charges as proportional to their product and inversely to distance squared.",
       "default_order": 1,
-      "name_zh": "库仑定律"
+      "name_zh": "库仑定律",
+      "visual": "function",
+      "visual_hint": "Plot the Coulomb force against separation (inverse square)."
     },
     {
       "id": "phy_e_field_strength",
@@ -751,7 +811,9 @@
       "topic": "phy_electric_fields",
       "description": "Electric field strength as the force per unit positive charge at a point, a vector quantity directed along the field.",
       "default_order": 2,
-      "name_zh": "电场强度"
+      "name_zh": "电场强度",
+      "visual": "interactive",
+      "visual_hint": "Show electric field lines around point charges."
     },
     {
       "id": "phy_e_potential",
@@ -813,7 +875,9 @@
       "topic": "phy_capacitance",
       "description": "The exponential charging and discharging of a capacitor through a resistor, characterised by the time constant RC.",
       "default_order": 4,
-      "name_zh": "充放电"
+      "name_zh": "充放电",
+      "visual": "function",
+      "visual_hint": "Plot exponential capacitor charge and discharge against time."
     },
     {
       "id": "phy_magnetic_fields",
@@ -839,7 +903,9 @@
       "topic": "phy_magnetic_fields",
       "description": "The force on a current-carrying conductor in a magnetic field, given by F equals BIL, with direction from Fleming's left-hand rule.",
       "default_order": 2,
-      "name_zh": "载流导线受力"
+      "name_zh": "载流导线受力",
+      "visual": "interactive",
+      "visual_hint": "Show the motor-effect force on a current-carrying conductor (Fleming's left hand)."
     },
     {
       "id": "phy_force_charge",
@@ -883,7 +949,9 @@
       "topic": "phy_induction",
       "description": "Faraday's law stating that the induced EMF is proportional to the rate of change of magnetic flux linkage.",
       "default_order": 2,
-      "name_zh": "法拉第定律"
+      "name_zh": "法拉第定律",
+      "visual": "interactive",
+      "visual_hint": "Move a magnet through a coil to induce an EMF (Faraday and Lenz)."
     },
     {
       "id": "phy_lenz",
@@ -909,7 +977,9 @@
       "topic": "phy_ac",
       "description": "Alternating current varying sinusoidally with time, and root-mean-square values giving the equivalent steady current for power.",
       "default_order": 1,
-      "name_zh": "交流电与RMS值"
+      "name_zh": "交流电与RMS值",
+      "visual": "function",
+      "visual_hint": "Plot a sinusoidal AC waveform and its RMS value."
     },
     {
       "id": "phy_transformers",
@@ -918,7 +988,9 @@
       "topic": "phy_ac",
       "description": "Transformers changing alternating voltage using the ratio of turns in the primary and secondary coils, ideally conserving power.",
       "default_order": 2,
-      "name_zh": "变压器"
+      "name_zh": "变压器",
+      "visual": "diagram",
+      "visual_hint": "Transformer diagram relating the turns ratio to the voltage ratio."
     },
     {
       "id": "phy_rectification",
@@ -953,7 +1025,9 @@
       "topic": "phy_quantum",
       "description": "The photoelectric effect, the emission of electrons from a metal by incident light above a threshold frequency, evidence for photons.",
       "default_order": 2,
-      "name_zh": "光电效应"
+      "name_zh": "光电效应",
+      "visual": "function",
+      "visual_hint": "Plot photoelectric stopping voltage against frequency."
     },
     {
       "id": "phy_wave_particle",
@@ -971,7 +1045,9 @@
       "topic": "phy_quantum",
       "description": "Discrete electron energy levels in atoms, with line spectra arising from photons emitted or absorbed during transitions between levels.",
       "default_order": 4,
-      "name_zh": "能级与线光谱"
+      "name_zh": "能级与线光谱",
+      "visual": "diagram",
+      "visual_hint": "Energy-level diagram with photon emission producing line spectra."
     },
     {
       "id": "phy_nuclear",
@@ -1014,7 +1090,9 @@
       "topic": "phy_nuclear",
       "description": "Mass defect as the difference between nucleon and nuclear mass, and binding energy as the equivalent energy holding the nucleus together.",
       "default_order": 3,
-      "name_zh": "质量亏损与结合能"
+      "name_zh": "质量亏损与结合能",
+      "visual": "function",
+      "visual_hint": "Plot binding energy per nucleon against nucleon number."
     },
     {
       "id": "phy_fission_fusion",
@@ -1032,7 +1110,9 @@
       "topic": "phy_radioactivity",
       "description": "Spontaneous, random radioactive decay of unstable nuclei by alpha, beta, and gamma emission, modelled by the decay constant.",
       "default_order": 2,
-      "name_zh": "放射性衰变"
+      "name_zh": "放射性衰变",
+      "visual": "function",
+      "visual_hint": "Plot exponential radioactive decay with a slider for half-life."
     },
     {
       "id": "phy_half_life",
@@ -1085,7 +1165,9 @@
       "topic": "phy_astro",
       "description": "Hubble's law relating a galaxy's recession speed to its distance, providing evidence for an expanding universe and the Big Bang.",
       "default_order": 4,
-      "name_zh": "哈勃定律与大爆炸"
+      "name_zh": "哈勃定律与大爆炸",
+      "visual": "function",
+      "visual_hint": "Plot recession speed against distance (Hubble's law)."
     }
   ],
   "edges": [
