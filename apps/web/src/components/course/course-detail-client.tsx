@@ -4,13 +4,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useAgent, useCopilotKit, useFrontendTool, UseAgentUpdate } from "@copilotkit/react-core/v2";
 import { z } from "zod";
 import { BlockRenderer } from "./block-renderer";
+import { CourseOutlineView } from "./course-outline-view";
 import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surface";
 import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
-import type { Course, CourseBlock, Lesson } from "@/lib/courses/types";
+import type { Course, CourseBlock } from "@/lib/courses/types";
 import { courseBlocks } from "@/lib/courses/types";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
-import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
-import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import { useLearningProgressRecommendation } from "@/hooks/use-learning-progress-recommendation";
 import { learningDecisionAcceptLabel, learningDecisionHeadline } from "@/lib/courses/learning-progress-labels";
 
@@ -559,107 +558,6 @@ function CourseAIAssistantPanel({
   );
 }
 
-function upsertJob(jobs: LessonGenerationJobSummary[], job: LessonGenerationJobSummary): LessonGenerationJobSummary[] {
-  const next = jobs.filter((entry) => entry.lessonId !== job.lessonId);
-  next.push(job);
-  return next;
-}
-
-// Lazy-generation outline (engineering doc §13.4). Each ungenerated lesson shows
-// its job stage/progress while running, a Retry on failure, and Generate when no
-// job exists. Enqueue returns 202; a background worker generates the lesson and
-// the outline polls until the lesson is published, then refetches the course.
-function LessonOutline({
-  course,
-  initialJobs,
-  onCourseUpdated,
-}: {
-  course: Course;
-  initialJobs: LessonGenerationJobSummary[];
-  onCourseUpdated: (next: Course) => void;
-}) {
-  const upcoming = useMemo(
-    () => [...course.lessons].sort((a, b) => a.sortKey - b.sortKey).filter((lesson) => lesson.status !== "generated"),
-    [course.lessons],
-  );
-  const { jobsByLessonId, setJobs, refresh } = useLessonGenerationJobs(course.id, initialJobs);
-  const [enqueueError, setEnqueueError] = useState<Record<string, string>>({});
-  const refreshedRef = useRef<Set<string>>(new Set());
-
-  // When a lesson's job completes, refetch the course once so the new blocks
-  // render and the lesson leaves the outline.
-  useEffect(() => {
-    const justCompleted = [...jobsByLessonId.values()].filter(
-      (job) => job.status === "completed" && !refreshedRef.current.has(job.lessonId),
-    );
-    if (justCompleted.length === 0) return;
-    for (const job of justCompleted) refreshedRef.current.add(job.lessonId);
-    (async () => {
-      try {
-        const res = await fetch(`/api/courses/${course.id}`, { cache: "no-store" });
-        if (!res.ok) return;
-        const data = (await res.json()) as { course?: Course };
-        if (data.course) onCourseUpdated(data.course);
-      } catch {
-        // Ignore — the lesson is published; a manual reload still shows it.
-      }
-    })();
-  }, [jobsByLessonId, course.id, onCourseUpdated]);
-
-  async function generate(lesson: Lesson) {
-    setEnqueueError((prev) => {
-      const next = { ...prev };
-      delete next[lesson.id];
-      return next;
-    });
-    try {
-      const response = await fetch(`/api/courses/${course.id}/lessons/${lesson.id}/generate`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: "{}",
-      });
-      const data = (await response.json()) as { job?: LessonGenerationJobSummary; status?: string; error?: string };
-      if (!response.ok) throw new Error(data.error ?? "Lesson generation failed");
-      if (data.job) setJobs((prev) => upsertJob(prev, data.job!));
-      else void refresh();
-    } catch (error) {
-      setEnqueueError((prev) => ({ ...prev, [lesson.id]: error instanceof Error ? error.message : "Lesson generation failed" }));
-    }
-  }
-
-  if (upcoming.length === 0) return null;
-
-  return (
-    <div className="course-lesson-outline">
-      <h2 className="course-lesson-outline-title">Upcoming lessons</h2>
-      <ul className="course-lesson-outline-list">
-        {upcoming.map((lesson) => {
-          const job = jobsByLessonId.get(lesson.id);
-          const active = job ? isLessonGenerationActive(job) : false;
-          const failed = job?.status === "failed";
-          const error = enqueueError[lesson.id] ?? (failed ? job?.lastError ?? "Generation failed" : null);
-          const label = active && job ? lessonGenerationStageLabel(job) : null;
-          return (
-            <li key={lesson.id} className="course-lesson-outline-item">
-              <span className="course-lesson-outline-name">{lesson.title}</span>
-              {label ? <span className="course-lesson-outline-stage">{label}</span> : null}
-              <button
-                type="button"
-                className="course-lesson-generate"
-                disabled={active}
-                onClick={() => generate(lesson)}
-              >
-                {active ? "Generating…" : error ? "Retry" : "Generate"}
-              </button>
-              {error ? <span className="course-lesson-outline-error">{error}</span> : null}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
-
 // Post-lesson recommendation popup (feature_specification.md §Note4). After a
 // lesson is completed, the learning-progress worker records a next-step decision;
 // here the learner confirms it before any lesson is generated. On accept that
@@ -907,7 +805,14 @@ export function CourseDetailClient({
               <BlockRenderer block={block} courseId={course.id} />
             </div>
           ))}
-          <LessonOutline key={outlineKey} course={course} initialJobs={lessonJobs} onCourseUpdated={setCourse} />
+          <CourseOutlineView
+            key={outlineKey}
+            course={course}
+            initialJobs={lessonJobs}
+            variant="embedded"
+            visibleLessons="upcoming"
+            onCourseUpdated={setCourse}
+          />
         </div>
       </div>
       <LearningProgressPopup courseId={course.id} onAccepted={refreshAfterRecommendation} />

@@ -59,7 +59,7 @@ export function ToolCard({
   }
 
   if (artifact.type === "course_card") {
-    const courseHref = `/course/${encodeURIComponent(artifact.courseId)}`;
+    const courseHref = `/course/${encodeURIComponent(artifact.courseId)}/outline`;
     const isReady = artifact.status === "ready";
     const typeIcon: Record<string, string> = {
       text: "T",

@@ -502,7 +502,7 @@ function RestoredLessonGenerationCard({
     : active
       ? `第一节课 · ${lessonGenerationStageLabel(liveJob)}`
       : "第一节课 · Ready";
-  const courseHref = `/course/${encodeURIComponent(initialJob.courseId)}`;
+  const courseHref = `/course/${encodeURIComponent(initialJob.courseId)}/outline`;
 
   return (
     <div className="restored-course-job">
