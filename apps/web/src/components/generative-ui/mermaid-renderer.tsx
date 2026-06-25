@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef } from "react";
 import type { MermaidArtifact } from "@/lib/agent-os";
 
-export function MermaidRenderer({ artifact }: { artifact: MermaidArtifact }) {
+export function MermaidRenderer({ artifact, variant = "tool" }: { artifact: MermaidArtifact; variant?: "tool" | "course" }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const uid = useId().replace(/:/g, "");
   const renderId = `mermaid-${uid}`;
@@ -42,6 +42,17 @@ export function MermaidRenderer({ artifact }: { artifact: MermaidArtifact }) {
     });
   }, [artifact.definition, renderId]);
 
+  const diagram = (
+    <div
+      ref={containerRef}
+      className={variant === "course" ? "course-visual-canvas mermaid-course-canvas" : undefined}
+      style={{ padding: "16px", overflowX: "auto" }}
+      aria-label={artifact.title}
+    />
+  );
+
+  if (variant === "course") return diagram;
+
   return (
     <div className="message-row tool">
       <div className="tool-card widget-card mermaid-card">
@@ -49,11 +60,7 @@ export function MermaidRenderer({ artifact }: { artifact: MermaidArtifact }) {
           <span className="tool-dot" />
           <span>render_diagram · {artifact.title}</span>
         </div>
-        <div
-          ref={containerRef}
-          style={{ padding: "16px", overflowX: "auto" }}
-          aria-label={artifact.title}
-        />
+        {diagram}
       </div>
     </div>
   );

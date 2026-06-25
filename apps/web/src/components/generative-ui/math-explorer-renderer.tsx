@@ -39,7 +39,7 @@ function initParamValues(parameters: MathExplorerParameter[]): Record<string, nu
   return vals;
 }
 
-export function MathExplorerRenderer({ artifact }: { artifact: MathExplorerArtifact }) {
+export function MathExplorerRenderer({ artifact, variant = "tool" }: { artifact: MathExplorerArtifact; variant?: "tool" | "course" }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const mathRef = useRef<MathInstance | null>(null);
@@ -300,20 +300,18 @@ export function MathExplorerRenderer({ artifact }: { artifact: MathExplorerArtif
     return () => observer.disconnect();
   }, []);
 
-  return (
-    <div className="message-row tool">
-      <div className="tool-card">
-        <div className="tool-title">
-          <span className="tool-dot" />
-          <span>render_math_explorer · complete</span>
-        </div>
-        <div className="visualizer" style={{ padding: "12px 16px" }}>
+  const body = (
+    <div className={variant === "course" ? "course-visual-canvas math-explorer-canvas" : "visualizer"} style={{ padding: "12px 16px" }}>
+      {variant !== "course" && (
+        <>
           <strong style={{ display: "block", marginBottom: 4, color: "#3a352d", fontSize: 14 }}>
             {artifact.title}
           </strong>
           <p style={{ margin: "0 0 12px", color: "#6b6357", fontSize: 13, lineHeight: 1.4 }}>
             {artifact.description}
           </p>
+        </>
+      )}
           <div ref={containerRef} style={{ width: "100%" }}>
             {mathLoadError ? (
               <div style={{ padding: "24px", textAlign: "center", color: "#b56474", fontSize: 13, background: "#fde8eb", borderRadius: 10 }}>
@@ -359,7 +357,19 @@ export function MathExplorerRenderer({ artifact }: { artifact: MathExplorerArtif
               ))}
             </div>
           )}
+    </div>
+  );
+
+  if (variant === "course") return body;
+
+  return (
+    <div className="message-row tool">
+      <div className="tool-card">
+        <div className="tool-title">
+          <span className="tool-dot" />
+          <span>render_math_explorer · complete</span>
         </div>
+        {body}
       </div>
     </div>
   );

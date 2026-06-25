@@ -104,7 +104,7 @@ function buildWorld(Matter: MatterModule, scene: PhysicsScene) {
   return { engine, bodyMap, Events };
 }
 
-export function PhysicsSceneRenderer({ artifact }: { artifact: PhysicsSceneArtifact }) {
+export function PhysicsSceneRenderer({ artifact, variant = "tool" }: { artifact: PhysicsSceneArtifact; variant?: "tool" | "course" }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const runnerRef = useRef<Matter.Runner | null>(null);
   const renderRef = useRef<Matter.Render | null>(null);
@@ -204,19 +204,14 @@ export function PhysicsSceneRenderer({ artifact }: { artifact: PhysicsSceneArtif
     });
   }, [paused]);
 
-  return (
-    <div className="message-row tool">
-      <div className="tool-card widget-card physics-card">
-        <div className="tool-title">
-          <span className="tool-dot" />
-          <span>render_physics_scene · {artifact.title}</span>
-        </div>
-        <div style={{ position: "relative", lineHeight: 0 }}>
+  const body = (
+    <div className={variant === "course" ? "course-visual-canvas physics-course-canvas" : undefined}>
+      <div style={{ position: "relative", lineHeight: 0 }}>
           <canvas
             ref={canvasRef}
             width={width}
             height={height}
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0 0 8px 8px" }}
+            style={{ width: "100%", height: "auto", display: "block", borderRadius: variant === "course" ? 14 : "0 0 8px 8px" }}
             aria-label={artifact.title}
           />
           <button
@@ -236,7 +231,20 @@ export function PhysicsSceneRenderer({ artifact }: { artifact: PhysicsSceneArtif
           >
             {paused ? "▶ Resume" : "⏸ Pause"}
           </button>
+      </div>
+    </div>
+  );
+
+  if (variant === "course") return body;
+
+  return (
+    <div className="message-row tool">
+      <div className="tool-card widget-card physics-card">
+        <div className="tool-title">
+          <span className="tool-dot" />
+          <span>render_physics_scene · {artifact.title}</span>
         </div>
+        {body}
         {artifact.description && (
           <p className="tool-note" style={{ padding: "8px 12px 10px" }}>{artifact.description}</p>
         )}

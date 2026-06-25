@@ -23,6 +23,7 @@ import type {
   WorksheetItem,
 } from "@/lib/courses/types";
 import { MindMapBlockRenderer } from "@/components/course/mind-map-block-renderer";
+import { CodeBlockView as CodeBlockRunner } from "@/components/course/code-block-view";
 import { CourseInlineMarkdown, CourseMarkdown } from "@/components/course/course-markdown";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import { EChartsRenderer } from "@/components/generative-ui/echarts-renderer";
@@ -31,12 +32,20 @@ import { PhysicsSceneRenderer } from "@/components/generative-ui/physics-scene-r
 import { AlgorithmVisualizer } from "@/components/generative-ui/algorithm-visualizer";
 import { MathExplorerRenderer } from "@/components/generative-ui/math-explorer-renderer";
 
-export function BlockRenderer({ block, courseId }: { block: CourseBlock; courseId?: string }) {
+export function BlockRenderer({
+  block,
+  courseId,
+  onBlockUpdated,
+}: {
+  block: CourseBlock;
+  courseId?: string;
+  onBlockUpdated?: (block: CourseBlock) => void;
+}) {
   if (block.type === "text") return <TextBlockView block={block} />;
   if (block.type === "analogy") return <AnalogyBlockView block={block} />;
   if (block.type === "transfer") return <TransferBlockView block={block} />;
   if (block.type === "visual") return <VisualBlockView block={block} />;
-  if (block.type === "code") return <CodeBlockView block={block} />;
+  if (block.type === "code") return <CodeBlockView block={block} courseId={courseId} onBlockUpdated={onBlockUpdated} />;
   if (block.type === "quiz") return <QuizBlockView block={block} courseId={courseId} />;
   if (block.type === "mind_map") return <MindMapBlockView block={block} courseId={courseId} />;
   if (block.type === "slide") return <SlideBlockView block={block} />;
@@ -134,7 +143,9 @@ function VisualBlockView({ block }: { block: VisualBlock }) {
     return (
       <BlockShell kind="visual" title={block.title}>
         <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
-        <EChartsRenderer artifact={{ type: "echarts_widget", title: block.title ?? "Chart", description: block.description, option: block.echartsOption, height: block.echartsHeight }} />
+        <CourseVisualFrame>
+          <EChartsRenderer variant="course" artifact={{ type: "echarts_widget", title: block.title ?? "Chart", description: block.description, option: block.echartsOption, height: block.echartsHeight }} />
+        </CourseVisualFrame>
       </BlockShell>
     );
   }
@@ -142,7 +153,9 @@ function VisualBlockView({ block }: { block: VisualBlock }) {
     return (
       <BlockShell kind="visual" title={block.title}>
         <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
-        <MermaidRenderer artifact={{ type: "mermaid_diagram", title: block.title ?? "Diagram", definition: block.mermaidDefinition }} />
+        <CourseVisualFrame>
+          <MermaidRenderer variant="course" artifact={{ type: "mermaid_diagram", title: block.title ?? "Diagram", definition: block.mermaidDefinition }} />
+        </CourseVisualFrame>
       </BlockShell>
     );
   }
@@ -150,7 +163,9 @@ function VisualBlockView({ block }: { block: VisualBlock }) {
     return (
       <BlockShell kind="visual" title={block.title}>
         <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
-        <PhysicsSceneRenderer artifact={{ type: "physics_scene", title: block.title ?? "Simulation", description: block.description, scene: block.physicsScene }} />
+        <CourseVisualFrame>
+          <PhysicsSceneRenderer variant="course" artifact={{ type: "physics_scene", title: block.title ?? "Simulation", description: block.description, scene: block.physicsScene }} />
+        </CourseVisualFrame>
       </BlockShell>
     );
   }
@@ -158,7 +173,9 @@ function VisualBlockView({ block }: { block: VisualBlock }) {
     return (
       <BlockShell kind="visual" title={block.title}>
         <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
-        <AlgorithmVisualizer artifact={{ type: "algorithm_visualization", title: block.title ?? "Algorithm", description: block.description, algorithm: block.algorithmViz.algorithm, steps: block.algorithmViz.steps }} />
+        <CourseVisualFrame>
+          <AlgorithmVisualizer variant="course" artifact={{ type: "algorithm_visualization", title: block.title ?? "Algorithm", description: block.description, algorithm: block.algorithmViz.algorithm, steps: block.algorithmViz.steps }} />
+        </CourseVisualFrame>
       </BlockShell>
     );
   }
@@ -166,26 +183,38 @@ function VisualBlockView({ block }: { block: VisualBlock }) {
     return (
       <BlockShell kind="visual" title={block.title}>
         <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
-        <MathExplorerRenderer artifact={{ type: "math_explorer", title: block.title ?? "Explorer", description: block.description, ...block.mathExplorer }} />
+        <CourseVisualFrame>
+          <MathExplorerRenderer variant="course" artifact={{ type: "math_explorer", title: block.title ?? "Explorer", description: block.description, ...block.mathExplorer }} />
+        </CourseVisualFrame>
       </BlockShell>
     );
   }
   return (
     <BlockShell kind="visual" title={block.title}>
       <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
-      <WidgetRenderer title={block.title ?? "Visual"} description={block.description} html={block.html ?? ""} />
+      <CourseVisualFrame>
+        <WidgetRenderer title={block.title ?? "Visual"} description={block.description} html={block.html ?? ""} />
+      </CourseVisualFrame>
     </BlockShell>
   );
 }
 
-function CodeBlockView({ block }: { block: CodeBlock }) {
+function CourseVisualFrame({ children }: { children: React.ReactNode }) {
+  return <div className="course-visual-frame">{children}</div>;
+}
+
+function CodeBlockView({
+  block,
+  courseId,
+  onBlockUpdated,
+}: {
+  block: CodeBlock;
+  courseId?: string;
+  onBlockUpdated?: (block: CourseBlock) => void;
+}) {
   return (
     <BlockShell kind="code" title={block.title}>
-      <CourseMarkdown markdown={block.explanation} className="course-block-text" />
-      <pre className="code-card course-code">
-        <span className="course-code-lang">{block.language}</span>
-        <code>{block.code}</code>
-      </pre>
+      <CodeBlockRunner block={block} courseId={courseId} onSaved={onBlockUpdated} />
     </BlockShell>
   );
 }

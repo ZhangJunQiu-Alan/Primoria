@@ -773,6 +773,7 @@ export function CourseDetailClient({
     const workspace = document.querySelector<HTMLElement>(".course-workspace");
     if (!workspace) return;
     workspace.style.setProperty("--course-sidebar-width", `${sidebarCollapsed ? 56 : sidebarWidth}px`);
+    workspace.style.setProperty("--course-content-margin-end", sidebarCollapsed ? "auto" : "var(--course-content-gutter)");
   }, [sidebarCollapsed, sidebarWidth]);
 
   const selectedBlock = blocks.find((b) => b.id === selectedBlockId) ?? null;
@@ -803,6 +804,19 @@ export function CourseDetailClient({
   function selectBlock(block: CourseBlock) {
     setSelectedBlockId(block.id);
     setSelectedTextContext(null);
+  }
+
+  // Lift an in-place block edit (e.g. saved code) into the course state so the
+  // Copilot context and any remount read the new version, not the stale one.
+  function updateBlockInCourse(next: CourseBlock) {
+    setCourse((prev) => ({
+      ...prev,
+      lessons: prev.lessons.map((lesson) =>
+        lesson.blocks
+          ? { ...lesson, blocks: lesson.blocks.map((b) => (b.id === next.id ? next : b)) }
+          : lesson,
+      ),
+    }));
   }
 
   function toggleBlockActions(block: CourseBlock) {
@@ -909,7 +923,7 @@ export function CourseDetailClient({
                 }
               }}
             >
-              <BlockRenderer block={block} courseId={course.id} />
+              <BlockRenderer block={block} courseId={course.id} onBlockUpdated={updateBlockInCourse} />
               <CourseBlockActionTray
                 block={block}
                 expanded={expandedActionsBlockId === block.id}

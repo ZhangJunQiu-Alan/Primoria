@@ -93,13 +93,90 @@ function ArrayView({ step }: { step: AlgorithmStep }) {
 
 // ── Tree view ─────────────────────────────────────────────────────────────────
 
+interface RawTreeNode {
+  id: string;
+  value: string | number;
+  parentId?: string | null;
+  left?: string | null;
+  right?: string | null;
+}
+
+function reconstructTreeLinks(nodes: RawTreeNode[]): RawTreeNode[] {
+  if (nodes.length === 0) return [];
+  const numericValues = nodes.map(n => Number(n.value));
+  const isAllNumeric = numericValues.every(val => !isNaN(val));
+
+  if (isAllNumeric) {
+    const cloned: RawTreeNode[] = nodes.map(n => ({
+      ...n,
+      parentId: null,
+      left: null,
+      right: null,
+    }));
+    const nodeMap = new Map(cloned.map(n => [n.id, n]));
+
+    function insertBST(rootId: string, nodeId: string) {
+      const rootNode = nodeMap.get(rootId)!;
+      const node = nodeMap.get(nodeId)!;
+      const rootVal = Number(rootNode.value);
+      const nodeVal = Number(node.value);
+
+      if (nodeVal < rootVal) {
+        if (!rootNode.left) {
+          rootNode.left = nodeId;
+          node.parentId = rootId;
+        } else {
+          insertBST(rootNode.left, nodeId);
+        }
+      } else {
+        if (!rootNode.right) {
+          rootNode.right = nodeId;
+          node.parentId = rootId;
+        } else {
+          insertBST(rootNode.right, nodeId);
+        }
+      }
+    }
+
+    const rootId = cloned[0].id;
+    for (let i = 1; i < cloned.length; i++) {
+      insertBST(rootId, cloned[i].id);
+    }
+    return cloned;
+  } else {
+    const cloned: RawTreeNode[] = nodes.map(n => ({
+      ...n,
+      parentId: null,
+      left: null,
+      right: null,
+    }));
+    for (let i = 0; i < cloned.length; i++) {
+      const leftIdx = 2 * i + 1;
+      const rightIdx = 2 * i + 2;
+      if (leftIdx < cloned.length) {
+        cloned[i].left = cloned[leftIdx].id;
+        cloned[leftIdx].parentId = cloned[i].id;
+      }
+      if (rightIdx < cloned.length) {
+        cloned[i].right = cloned[rightIdx].id;
+        cloned[rightIdx].parentId = cloned[i].id;
+      }
+    }
+    return cloned;
+  }
+}
+
 function TreeView({ step }: { step: AlgorithmStep }) {
   const tree = step.tree;
   if (!tree || tree.nodes.length === 0) return null;
   const { nodes, highlights = [] } = tree;
+
+  const hasLinks = nodes.some(n => n.parentId != null || n.left != null || n.right != null);
+  const processedNodes = hasLinks ? nodes : reconstructTreeLinks(nodes);
+
   const hlMap = new Map(highlights.map(h => [h.id, h.role] as const));
-  const nodeMap = new Map(nodes.map(n => [n.id, n]));
-  const root = nodes.find(n => !n.parentId);
+  const nodeMap = new Map(processedNodes.map(n => [n.id, n]));
+  const root = processedNodes.find(n => !n.parentId);
   if (!root) return null;
 
   // BFS depths
@@ -145,7 +222,7 @@ function TreeView({ step }: { step: AlgorithmStep }) {
       viewBox={`0 0 ${Math.max(svgW, 100)} ${Math.max(svgH, 80)}`}
       style={{ width: "100%", display: "block" }}
     >
-      {nodes.map(n =>
+      {processedNodes.map(n =>
         n.parentId ? (
           <line
             key={`e-${n.id}`}
@@ -155,7 +232,7 @@ function TreeView({ step }: { step: AlgorithmStep }) {
           />
         ) : null
       )}
-      {nodes.map(n => {
+      {processedNodes.map(n => {
         const { fill, stroke, opacity } = rs(hlMap.get(n.id));
         return (
           <g key={n.id} opacity={opacity ?? 1}>
@@ -364,7 +441,7 @@ const BTN: CSSProperties = {
   lineHeight: "1.5",
 };
 
-export function AlgorithmVisualizer({ artifact }: { artifact: AlgorithmVisualizationArtifact }) {
+export function AlgorithmVisualizer({ artifact, variant = "tool" }: { artifact: AlgorithmVisualizationArtifact; variant?: "tool" | "course" }) {
   const { steps, title } = artifact;
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -392,14 +469,11 @@ export function AlgorithmVisualizer({ artifact }: { artifact: AlgorithmVisualiza
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [playing, speed, steps.length]);
 
-  return (
-    <div className="message-row tool">
-      <div className="tool-card">
-        <div className="tool-title">
-          <span className="tool-dot" />
-          <span>{title}</span>
-        </div>
-        <div className="visualizer" style={{ padding: "12px 16px", display: "flex", flexDirection: "column", gap: 12 }}>
+  const body = (
+    <div
+      className={variant === "course" ? "course-visual-canvas algorithm-visualizer-canvas" : "visualizer"}
+      style={{ padding: "12px 16px", display: "flex", flexDirection: "column", gap: 12 }}
+    >
           {/* Visualization area */}
           <div style={{ minHeight: 120 }}>
             {step.kind === "array" && <ArrayView step={step} />}
@@ -465,7 +539,19 @@ export function AlgorithmVisualizer({ artifact }: { artifact: AlgorithmVisualiza
               width: `${((idx + 1) / steps.length) * 100}%`,
             }} />
           </div>
+    </div>
+  );
+
+  if (variant === "course") return body;
+
+  return (
+    <div className="message-row tool">
+      <div className="tool-card">
+        <div className="tool-title">
+          <span className="tool-dot" />
+          <span>{title}</span>
         </div>
+        {body}
       </div>
     </div>
   );
