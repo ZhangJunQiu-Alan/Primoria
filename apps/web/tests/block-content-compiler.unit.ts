@@ -40,7 +40,13 @@ const kg: CourseContext = {
   startTopic: {
     topicId: "t1",
     name: "Topic",
-    concepts: CONCEPTS.map((conceptId, index) => ({ conceptId, name: conceptId, defaultOrder: index + 1 })),
+    concepts: CONCEPTS.map((conceptId, index) => ({
+      conceptId,
+      name: conceptId,
+      defaultOrder: index + 1,
+      // c2 is KG visual-worthy so the plan's V block on c2 is the mandated visual.
+      ...(conceptId === "c2" ? { visual: "diagram" as const, visualHint: "flow of c2" } : {}),
+    })),
   },
   targetConceptId: null,
   nextTopic: null,

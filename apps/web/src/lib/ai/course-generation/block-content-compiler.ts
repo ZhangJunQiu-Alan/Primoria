@@ -1,5 +1,11 @@
 import { z } from "zod";
-import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
+import {
+  AlgorithmStepZodSchema,
+  MathExplorerCurveSchema,
+  MathExplorerFunctionSchema,
+  MathExplorerParameterSchema,
+  PhysicsSceneZodSchema,
+} from "@/lib/ai/visual-schemas";
 import type { CourseBlock } from "@/lib/courses/types";
 import { BlockCompileError } from "./generation-errors";
 import type { GeneratableBlockType } from "./lesson-plan-ir";
@@ -36,23 +42,44 @@ const CodeContentSchema = z.object({
   explanation: nonEmpty,
 });
 
+const AlgorithmVizPayloadSchema = z.object({
+  algorithm: nonEmpty,
+  steps: z.array(AlgorithmStepZodSchema).min(1).max(60),
+});
+
+const MathExplorerPayloadSchema = z.object({
+  mode: z.enum(["cartesian", "parametric"]).optional(),
+  functions: z.array(MathExplorerFunctionSchema).optional(),
+  curves: z.array(MathExplorerCurveSchema).optional(),
+  parameters: z.array(MathExplorerParameterSchema).max(6),
+  xRange: z.tuple([z.number(), z.number()]).optional(),
+  yRange: z.tuple([z.number(), z.number()]).optional(),
+  tRange: z.tuple([z.number(), z.number()]).optional(),
+  xLabel: z.string().optional(),
+  yLabel: z.string().optional(),
+});
+
 // Decision 4: the visual writer emits a complete engine payload directly.
 const VisualContentSchema = z
   .object({
     title: nonEmpty,
     description: nonEmpty,
-    engine: z.enum(["html", "echarts", "mermaid", "physics"]).optional(),
+    engine: z.enum(["html", "echarts", "mermaid", "physics", "algorithm", "math_explorer"]).optional(),
     html: z.string().optional(),
     echartsOption: z.record(z.unknown()).optional(),
     echartsHeight: z.number().optional(),
     mermaidDefinition: z.string().optional(),
     physicsScene: PhysicsSceneZodSchema.optional(),
+    algorithmViz: AlgorithmVizPayloadSchema.optional(),
+    mathExplorer: MathExplorerPayloadSchema.optional(),
   })
   .refine(
     (v) =>
       (v.engine === "echarts" && v.echartsOption) ||
       (v.engine === "mermaid" && v.mermaidDefinition?.trim()) ||
       (v.engine === "physics" && v.physicsScene) ||
+      (v.engine === "algorithm" && v.algorithmViz) ||
+      (v.engine === "math_explorer" && v.mathExplorer) ||
       ((v.engine === "html" || !v.engine) && v.html?.trim()),
     { message: "visual block is missing the payload for its engine" },
   );

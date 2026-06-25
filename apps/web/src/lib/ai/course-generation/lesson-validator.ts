@@ -11,13 +11,14 @@ export type LessonValidationResult = { ok: true } | { ok: false; missing: string
 
 export function validateLessonBlocks(blocks: CourseBlock[], conceptIds: string[]): LessonValidationResult {
   const missing: string[] = [];
-  const { min, max } = expectedBlockRange(conceptIds.length);
+  const typeCount = (type: CourseBlock["type"]) => blocks.filter((b) => b.type === type).length;
+  const visualCount = typeCount("visual");
+  const { min, max } = expectedBlockRange(conceptIds.length, visualCount);
   if (blocks.length < min || blocks.length > max) missing.push(`count:${blocks.length}`);
 
-  const typeCount = (type: CourseBlock["type"]) => blocks.filter((b) => b.type === type).length;
   if (typeCount("transfer") !== 1) missing.push(`transfer:${typeCount("transfer")}`);
   if (typeCount("quiz") !== 1) missing.push(`quiz:${typeCount("quiz")}`);
-  if (typeCount("visual") > 1) missing.push(`visual:${typeCount("visual")}`);
+  if (visualCount > conceptIds.length) missing.push(`visual:${visualCount}`);
   if (!blocks.some((b) => b.pedagogicalRole === "summary")) missing.push("summary:0");
 
   const hasRole = (conceptId: string, role: string) =>

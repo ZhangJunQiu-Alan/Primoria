@@ -68,9 +68,22 @@ const FIELD_HINTS: Record<GeneratableBlockType, string> = {
   text: `"title","markdown" (2-4 paragraphs of markdown)`,
   analogy: `"title","source" (familiar thing),"target" (concept),"mapping"`,
   transfer: `"title","fromDomain","toDomain","explanation","example"`,
-  visual: `"title","description","engine":"echarts|mermaid|physics|html", plus the payload for that engine: echarts->"echartsOption" object; mermaid->"mermaidDefinition" string; physics->"physicsScene"; html->"html" self-contained fragment with an interactive control`,
+  visual: `"title","description","engine" plus the payload for that engine (see the engine directive on this block)`,
   code: `"title","language","code","explanation"`,
   quiz: `"title","questions":[{"kind":"single|multi|truefalse","id","question","choices":[{"id","text"}],"correctId"|"correctIds"|"correct","explanation","conceptId"}] (4-6 questions; conceptId is required on every question)`,
+};
+
+// Per-engine payload directive for a visual block. The engine is chosen by the
+// KG concept's `visual` affordance, not by the writer — interactive engines
+// (math_explorer/algorithm/physics/html) are the product's differentiator; static
+// chart/diagram engines are only for genuinely data- or structure-shaped concepts.
+const VISUAL_ENGINE_HINTS: Record<string, string> = {
+  interactive: `"engine":"html" plus "html": a self-contained iframe fragment (no <html>/<head>/<body>, no 100vh) with at least one interactive control (slider/drag/button) that updates the visual live`,
+  simulation: `"engine":"physics" plus "physicsScene": a Matter.js scene { render:{width,height}, bodies:[...], constraints?:[...], gravity?, walls? }`,
+  algorithm: `"engine":"algorithm" plus "algorithmViz": { "algorithm": name, "steps": [ { "description", "kind":"array|tree|graph|table", and the matching state object with role highlights } ] } (step through the algorithm)`,
+  function: `"engine":"math_explorer" plus "mathExplorer": { "mode":"cartesian|parametric", "functions":[{"expr"}] or "curves":[{"xExpr","yExpr"}], "parameters":[{"name","min","max","default"}] (sliders), optional ranges/labels }`,
+  chart: `"engine":"echarts" plus "echartsOption": a complete ECharts option object`,
+  diagram: `"engine":"mermaid" plus "mermaidDefinition": a Mermaid diagram string`,
 };
 
 function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
@@ -86,7 +99,18 @@ function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
   ]
     .filter(Boolean)
     .join("; ");
-  return `- order ${job.order}: ${job.type} (role ${job.pedagogicalRole}), concepts: ${concepts}. Goal: ${job.goal}. Fields: ${FIELD_HINTS[job.type]}.${neighbors ? ` Avoid overlap — ${neighbors}.` : ""}`;
+
+  let fields = FIELD_HINTS[job.type];
+  if (job.type === "visual") {
+    const concept = kg.startTopic.concepts?.find((c) => c.conceptId === job.conceptIds[0]);
+    const engineHint = concept?.visual ? VISUAL_ENGINE_HINTS[concept.visual] : undefined;
+    if (engineHint) {
+      fields = `"title","description",${engineHint}`;
+      if (concept?.visualHint) fields += `. Visualize specifically: ${concept.visualHint}`;
+    }
+  }
+
+  return `- order ${job.order}: ${job.type} (role ${job.pedagogicalRole}), concepts: ${concepts}. Goal: ${job.goal}. Fields: ${fields}.${neighbors ? ` Avoid overlap — ${neighbors}.` : ""}`;
 }
 
 export function buildBatchPrompt(batch: BlockBatch, plan: CompiledLessonPlan, kg: CourseContext): { system: string; user: string } {

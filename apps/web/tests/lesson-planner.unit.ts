@@ -16,7 +16,13 @@ const kg: CourseContext = {
   startTopic: {
     topicId: "t1",
     name: "导数",
-    concepts: CONCEPTS.map((conceptId, index) => ({ conceptId, name: `概念${index + 1}`, defaultOrder: index + 1 })),
+    concepts: CONCEPTS.map((conceptId, index) => ({
+      conceptId,
+      name: `概念${index + 1}`,
+      defaultOrder: index + 1,
+      // c2 is KG-marked visual-worthy, so a visual block is mandated for it.
+      ...(conceptId === "c2" ? { visual: "function" as const, visualHint: "plot f(x) with a slider" } : {}),
+    })),
   },
   targetConceptId: "c2",
   nextTopic: null,
@@ -47,10 +53,12 @@ const fixedIr = {
 
 async function main() {
   const prompt = buildPlannerPrompt(kg);
-  assert(prompt.includes("15-16"), "prompt states the 4-concept block range");
+  assert(prompt.includes("15-17"), "prompt states the block range widened by the one mandated visual");
   assert(prompt.includes("c2"), "prompt surfaces the target concept");
   assert(prompt.includes("T = text"), "prompt lists type codes");
-  assert(prompt.includes("at most ONE V=visual") || prompt.includes("At most ONE V=visual"), "prompt caps visuals");
+  assert(prompt.includes("VISUAL CONCEPTS"), "prompt lists the KG visual concepts section");
+  assert(prompt.includes("engine function"), "prompt names the per-concept visual engine");
+  assert(!prompt.includes("at most ONE V") && !prompt.includes("At most ONE V"), "prompt no longer caps visuals at one");
 
   // Planner output (mocked) flows through the deterministic compiler.
   const raw = await planLesson(kg, { invoke: async () => fixedIr });

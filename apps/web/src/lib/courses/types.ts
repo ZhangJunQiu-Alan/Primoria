@@ -1,4 +1,4 @@
-import type { PhysicsScene } from "@/lib/agent-os";
+import type { AlgorithmStep, MathExplorerArtifact, PhysicsScene } from "@/lib/agent-os";
 
 export type BlockType = "text" | "analogy" | "transfer" | "visual" | "code" | "quiz" | "mind_map" | "slide" | "worksheet";
 
@@ -50,12 +50,14 @@ export type TransferBlock = BlockBase & {
 export type VisualBlock = BlockBase & {
   type: "visual";
   description: string;
-  engine?: "html" | "echarts" | "mermaid" | "physics";
+  engine?: "html" | "echarts" | "mermaid" | "physics" | "algorithm" | "math_explorer";
   html?: string;
   echartsOption?: Record<string, unknown>;
   echartsHeight?: number;
   mermaidDefinition?: string;
   physicsScene?: PhysicsScene;
+  algorithmViz?: { algorithm: string; steps: AlgorithmStep[] };
+  mathExplorer?: Omit<MathExplorerArtifact, "type" | "title" | "description">;
 };
 
 export type CodeBlock = BlockBase & {
