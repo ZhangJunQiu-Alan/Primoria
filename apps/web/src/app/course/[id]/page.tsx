@@ -27,9 +27,11 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
             <Link href="/library" className="course-back">← Library</Link>
             <h1>{course.title}</h1>
             <p className="course-summary-text">{course.summary}</p>
-            <span className="course-meta-line">
-              {courseBlocks(course).length} blocks · ~{course.estimatedMinutes} min
-            </span>
+            <div className="course-status-row" aria-label="Course lesson status">
+              <span className="course-status-pill">当前课程</span>
+              <span>{courseBlocks(course).length} blocks</span>
+              <span>约 {course.estimatedMinutes} min</span>
+            </div>
           </div>
         </header>
         <CopilotKitProvider enabled={copilotEnabled}>

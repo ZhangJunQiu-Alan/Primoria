@@ -322,6 +322,77 @@ function sendCoursePrompt(threadId: string, prompt: string) {
   window.dispatchEvent(new CustomEvent(COURSE_COPILOT_PROMPT_EVENT, { detail: { threadId, prompt } }));
 }
 
+function courseThreadIdFor(courseId: string) {
+  return `course-v5-${courseId}`;
+}
+
+function blockDisplayTitle(block: CourseBlock) {
+  return block.title ?? block.type;
+}
+
+function blockActionPrompt(block: CourseBlock, action: "explain" | "example" | "practice" | "check") {
+  const title = blockDisplayTitle(block);
+  if (action === "explain") {
+    return `解释一下当前选中的「${title}」这一段，先讲核心想法，再指出我应该记住什么。`;
+  }
+  if (action === "example") {
+    return `用一个具体例子帮我理解当前选中的「${title}」。`;
+  }
+  if (action === "practice") {
+    return `围绕当前选中的「${title}」出 3 道练习题，并给每题一个简短提示。`;
+  }
+  return `检查我是否理解当前选中的「${title}」，请用 3 个问题问我，并等我回答。`;
+}
+
+function stopBlockActionEvent(event: React.SyntheticEvent) {
+  event.stopPropagation();
+}
+
+function CourseBlockActionTray({
+  block,
+  expanded,
+  onAction,
+}: {
+  block: CourseBlock;
+  expanded: boolean;
+  onAction: (block: CourseBlock, action: "explain" | "example" | "practice" | "check") => void;
+}) {
+  const controlsId = `course-block-actions-${block.id}`;
+  const title = blockDisplayTitle(block);
+  const actions = [
+    { key: "explain" as const, label: "解释这一段" },
+    { key: "example" as const, label: "给我一个例子" },
+    { key: "practice" as const, label: "出 3 道练习" },
+    { key: "check" as const, label: "检查我是否理解" },
+  ];
+
+  if (!expanded) return null;
+
+  return (
+    <div
+      className="course-block-learning-actions expanded"
+      onClick={stopBlockActionEvent}
+      onMouseUp={stopBlockActionEvent}
+      onKeyDown={stopBlockActionEvent}
+      onKeyUp={stopBlockActionEvent}
+    >
+      <div id={controlsId} className="course-block-action-panel" role="group" aria-label={`学习动作：${title}`}>
+        <div className="course-block-action-panel-copy">
+          <span>针对当前 block</span>
+          <strong>{title}</strong>
+        </div>
+        <div className="course-block-action-tray">
+          {actions.map((action) => (
+            <button key={action.key} type="button" onClick={() => onAction(block, action.key)}>
+              {action.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CourseSuggestionBridge({ threadId }: { threadId: string }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
   const { copilotkit } = useCopilotKit();
@@ -379,7 +450,7 @@ function CourseAIAssistantPanel({
 
   // Use a v5 namespace so old LangGraph/CopilotKit dev checkpoints and
   // context-injected course-chat history cannot leak into Course Copilot.
-  const courseThreadId = `course-v5-${course.id}`;
+  const courseThreadId = courseThreadIdFor(course.id);
   const courseContext = useMemo(
     () => buildCourseContext(course, selectedBlock, selectedTextContext),
     [course, selectedBlock, selectedTextContext],
@@ -414,14 +485,26 @@ function CourseAIAssistantPanel({
     document.body.classList.add("course-sidebar-resizing");
   }
 
-  const suggestedPrompts = [
-    selectedBlock ? `解释一下当前选中的「${selectedBlock.title ?? selectedBlock.type}」这一节` : `帮我总结《${course.title}》的学习路径`,
-    selectedBlock ? `围绕当前 block 出 3 道练习题` : `基于这门课生成 3 个课后练习`,
-    `继续创建一门和「${course.topic}」相关的进阶课程`,
-  ];
+  const selectedBlockTitle = selectedBlock ? blockDisplayTitle(selectedBlock) : "";
+  const suggestedPrompts = selectedBlock
+    ? [
+        `解释一下当前选中的「${selectedBlockTitle}」这一段`,
+        `用一个例子帮我理解「${selectedBlockTitle}」`,
+        `围绕当前 block 出 3 道练习题`,
+      ]
+    : [
+        `帮我总结《${course.title}》的学习路径`,
+        `基于这门课生成 3 个课后练习`,
+        `我应该先学哪一块？`,
+      ];
   const selectedTextPreview = selectedTextContext
     ? `${Array.from(selectedTextContext.text).slice(0, 5).join("")}${Array.from(selectedTextContext.text).length > 5 ? "..." : ""}`
     : "";
+  const contextDescription = selectedTextContext
+    ? `已附加选中文本：「${selectedTextContext.text}」`
+    : selectedBlock
+      ? `${selectedBlock.type} block · 点击下方建议或直接提问`
+      : "选择一个 block 后，Copilot 会优先围绕该段内容回答。";
   const composerContext = selectedTextContext ? (
     <div
       className="course-ai-composer-context"
@@ -523,6 +606,11 @@ function CourseAIAssistantPanel({
         <>
           {copilotEnabled ? (
             <>
+              <div className={`course-ai-context-strip${selectedBlock ? "" : " empty"}`}>
+                <span>当前上下文</span>
+                <strong>{selectedBlock ? selectedBlockTitle : "还没有选中的 block"}</strong>
+                <p>{contextDescription}</p>
+              </div>
               <div className="course-ai-suggestions" aria-label="Suggested prompts">
                 {suggestedPrompts.map((prompt) => (
                   <button
@@ -662,8 +750,10 @@ export function CourseDetailClient({
   const blocks = useMemo(() => courseBlocks(course), [course]);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [selectedTextContext, setSelectedTextContext] = useState<SelectedTextContext | null>(null);
+  const [expandedActionsBlockId, setExpandedActionsBlockId] = useState<string | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
+  const courseThreadId = courseThreadIdFor(course.id);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(SIDEBAR_WIDTH_KEY);
@@ -713,6 +803,20 @@ export function CourseDetailClient({
   function selectBlock(block: CourseBlock) {
     setSelectedBlockId(block.id);
     setSelectedTextContext(null);
+  }
+
+  function toggleBlockActions(block: CourseBlock) {
+    setSelectedBlockId(block.id);
+    setSelectedTextContext(null);
+    setExpandedActionsBlockId((current) => (current === block.id ? null : block.id));
+  }
+
+  function runBlockLearningAction(block: CourseBlock, action: "explain" | "example" | "practice" | "check") {
+    setSelectedBlockId(block.id);
+    setSelectedTextContext(null);
+    setSidebarCollapsed(false);
+    setExpandedActionsBlockId(null);
+    sendCoursePrompt(courseThreadId, blockActionPrompt(block, action));
   }
 
   function updateSelectedText(block: CourseBlock, element: HTMLElement) {
@@ -781,13 +885,16 @@ export function CourseDetailClient({
           {blocks.map((block) => (
             <div
               key={block.id}
-              role="button"
+              role="group"
               tabIndex={0}
               data-block-id={block.id}
+              data-actions-expanded={expandedActionsBlockId === block.id ? "true" : "false"}
+              aria-controls={`course-block-actions-${block.id}`}
+              aria-label={`Course block: ${blockDisplayTitle(block)}`}
               className={`course-block-wrapper${selectedBlockId === block.id ? " selected" : ""}`}
               onClick={(event) => {
                 if (selectionTextInside(event.currentTarget)) return;
-                selectBlock(block);
+                toggleBlockActions(block);
               }}
               onMouseUp={(event) => updateSelectedText(block, event.currentTarget)}
               onKeyUp={(event) => {
@@ -798,11 +905,16 @@ export function CourseDetailClient({
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
-                  selectBlock(block);
+                  toggleBlockActions(block);
                 }
               }}
             >
               <BlockRenderer block={block} courseId={course.id} />
+              <CourseBlockActionTray
+                block={block}
+                expanded={expandedActionsBlockId === block.id}
+                onAction={runBlockLearningAction}
+              />
             </div>
           ))}
           <CourseOutlineView
