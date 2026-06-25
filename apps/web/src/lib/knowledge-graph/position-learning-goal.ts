@@ -1,4 +1,4 @@
-import { classifyEntry, pickDominantGraph, type BroadMenuItem, type PositioningParams, type PositioningResult } from "./positioning";
+import { classifyEntry, resolvePositioningParams, FALLBACK_MESSAGE, type BroadMenuItem, type PositioningParams, type PositioningResult } from "./positioning";
 import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse } from "./search";
 import { buildGraphCandidates, routeDominantGraph } from "./graph-router";
 import { detectKgLanguage } from "./display-name";
@@ -41,23 +41,35 @@ export async function positionLearningGoal(
   if (input.tau !== undefined) overrides.tau = input.tau;
   if (input.floor !== undefined) overrides.floor = input.floor;
 
-  // Cross-graph recall (no graphId): collapse to the dominant subject so the rest
-  // of positioning runs within a single graph. A concrete graphId is unchanged.
-  // LLM routing picks the subject among the recalled candidates (handles aliases
-  // and cross-language goals); it falls back to deterministic pickDominantGraph
-  // whenever it is disabled, errors, or returns no valid choice.
+  // Cross-graph recall (no graphId): LLM routing picks the single subject among
+  // the recalled candidates (handles aliases and cross-language goals), then the
+  // rest of positioning runs within that one graph. If no subject can be picked,
+  // ask the user for a more specific goal. A concrete graphId is unchanged.
   let search = rawSearch;
   if (rawSearch.graphId === ALL_KG_GRAPHS) {
     const candidates = buildGraphCandidates(rawSearch.results);
     const routed = await routeDominantGraph(input.query, candidates);
-    const dominant = routed ?? pickDominantGraph(rawSearch.results);
-    if (dominant) {
-      search = {
-        ...rawSearch,
-        graphId: dominant,
-        results: rawSearch.results.filter((r) => r.graphId === dominant),
+    if (!routed) {
+      const params = resolvePositioningParams(overrides);
+      const maxSimilarity = rawSearch.results.length
+        ? Math.max(...rawSearch.results.map((r) => r.similarity))
+        : 0;
+      return {
+        result: {
+          branch: "fallback",
+          graphId: ALL_KG_GRAPHS,
+          params,
+          message: FALLBACK_MESSAGE,
+          diagnostics: { maxSimilarity, topicMass: [], topConcept: null },
+        },
+        search: rawSearch,
       };
     }
+    search = {
+      ...rawSearch,
+      graphId: routed,
+      results: rawSearch.results.filter((r) => r.graphId === routed),
+    };
   }
 
   const language = input.language ?? detectKgLanguage(input.query);

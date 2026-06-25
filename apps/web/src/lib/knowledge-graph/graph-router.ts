@@ -6,8 +6,9 @@ import type { KnowledgeGraphSearchResult } from "./search";
 // to. Cross-graph vector recall narrows the field to the graphs that actually
 // surfaced; the model only chooses among those candidates. This handles the
 // cases raw cosine cannot: aliases, cross-language queries, and near-miss
-// subjects (e.g. "数值分析" vs A-Level math). It is bounded by the candidate set
-// and always falls back to the deterministic pickDominantGraph on any failure.
+// subjects (e.g. "数值分析" vs A-Level math). It is bounded by the candidate set;
+// when it cannot pick a subject it returns null and the caller treats cold-start
+// as a fallback ("ask for a more specific goal").
 
 export const DEFAULT_KG_ROUTER_CANDIDATES = 6;
 const EVIDENCE_PER_GRAPH = 4;
@@ -54,11 +55,6 @@ export function buildGraphCandidates(
     .slice(0, limit);
 }
 
-function routerEnabled(): boolean {
-  if (process.env.KG_ROUTER_ENABLED === "0" || process.env.KG_ROUTER_ENABLED === "false") return false;
-  return Boolean(process.env.OPENAI_API_KEY || process.env.ANTHROPIC_API_KEY);
-}
-
 function buildPrompt(query: string, candidates: GraphCandidate[]): string {
   const lines = candidates.map(
     (c, i) =>
@@ -102,15 +98,26 @@ export async function routeDominantGraph(
 ): Promise<string | null> {
   if (candidates.length === 0) return null;
   if (candidates.length === 1) return candidates[0].graphId;
-  if (!routerEnabled()) return null;
 
-  const model = createUtilityModel(
-    process.env.KG_ROUTER_MODEL ? { model: process.env.KG_ROUTER_MODEL } : {},
-    { temperature: 0, maxTokens: 64 },
-  );
   const valid = new Set(candidates.map((c) => c.graphId));
 
   try {
+    const model = createUtilityModel(
+      {
+        // Pin routing to the OpenAI-compatible endpoint regardless of the tutor's
+        // AI_PROVIDER. The router is a cheap utility classifier, not the tutor;
+        // switching the tutor to an anthropic-compatible model must not break (or
+        // slow down) cold-start positioning. KG_ROUTER_MODEL selects a small
+        // model on that endpoint; it falls back to OPENAI_MODEL.
+        provider: "openai-compatible",
+        baseUrl: process.env.OPENAI_BASE_URL,
+        apiKey: process.env.OPENAI_API_KEY,
+        model: process.env.KG_ROUTER_MODEL || process.env.OPENAI_MODEL,
+      },
+      // Headroom for reasoning models: they spend ~120-160 tokens thinking
+      // before emitting the JSON. Too small a cap truncates before the answer.
+      { temperature: 0, maxTokens: 1024 },
+    );
     const response = await model.invoke([
       { role: "system", content: SYSTEM_PROMPT },
       { role: "user", content: buildPrompt(query, candidates) },

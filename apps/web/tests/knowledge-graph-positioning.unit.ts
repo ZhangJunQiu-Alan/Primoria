@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 
-import { classifyEntry, pickDominantGraph } from "../src/lib/knowledge-graph/positioning.ts";
+import { classifyEntry } from "../src/lib/knowledge-graph/positioning.ts";
 import { nextTopic } from "../src/lib/knowledge-graph/topic-graph.ts";
 import { suggestFloor } from "../src/lib/knowledge-graph/floor-calibration.ts";
 import type { KnowledgeGraphSearchResult } from "../src/lib/knowledge-graph/search.ts";
@@ -27,21 +27,6 @@ function concept(nodeId: string, topicId: string, similarity: number): Knowledge
   };
 }
 
-function topic(graphId: string, nodeId: string, similarity: number): KnowledgeGraphSearchResult {
-  return {
-    graphId,
-    kind: "topic",
-    nodeId,
-    name: nodeId,
-    description: null,
-    topicId: null,
-    topicName: null,
-    embedText: "",
-    modelVersion: "test",
-    distance: 1 - similarity,
-    similarity,
-  };
-}
 
 function main() {
   // next_topic follows the same default_order sequence as the Course outline.
@@ -120,30 +105,6 @@ function main() {
     "most-relevant late-curriculum topic survives the menu cap",
   );
   assert(broadLate.menu![0].topicId === "t_1802_surface_int", "most-relevant topic is displayed first");
-
-  // Regression: a graph with many mediocre hits must not crowd out the graph
-  // containing the strongest, consistently relevant algorithm hits.
-  const algorithmGraph = pickDominantGraph([
-    topic("introduction_to_computer_science", "algorithmic_complexity", 0.5514),
-    topic("discrete_math_and_probability", "modular_arithmetic", 0.5505),
-    topic("discrete_math_and_probability", "computability_counting", 0.5426),
-    topic("introduction_to_computer_science", "algorithms", 0.5278),
-    topic("a_level_mathematics", "counting_probability", 0.5117),
-    topic("numerical_analysis", "computer_arithmetic", 0.5109),
-    topic("data_structures_and_algorithms", "asymptotics", 0.5022),
-    topic("discrete_math_and_probability", "countability", 0.4964),
-    topic("a_level_mathematics", "differentiation_2", 0.4948),
-    topic("mit_calculus", "integration_techniques", 0.4911),
-    topic("a_level_mathematics", "differentiation_1", 0.4893),
-    topic("discrete_math_and_probability", "induction", 0.4865),
-    topic("mit_calculus", "integration_area", 0.4853),
-    topic("discrete_math_and_probability", "logic", 0.4817),
-    topic("discrete_math_and_probability", "counting", 0.4803),
-  ]);
-  assert(
-    algorithmGraph === "introduction_to_computer_science",
-    `algorithm query should select computer science, got ${algorithmGraph}`,
-  );
 
   // Broad menus omit topics that fall outside the relevance window instead of
   // filling all five slots with weak curriculum entries.

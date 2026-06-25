@@ -25,9 +25,6 @@ export const DEFAULT_KG_POSITION_CONCEPT_MARGIN = 0.06; // gap over 2nd concept
 export const DEFAULT_KG_BROAD_MENU_SIZE = 5;
 export const DEFAULT_KG_BROAD_MENU_SIMILARITY_WINDOW = 0.1;
 
-const DOMINANT_GRAPH_HIT_WEIGHTS = [1, 0.35, 0.15] as const;
-const A_LEVEL_TOP_HIT_TIE_MARGIN = 0.01;
-
 export type PositioningParams = {
   tau: number;
   floor: number;
@@ -142,57 +139,6 @@ function buildLinearPath(
     }
   }
   return { startTopicId, targetConceptId, linear: path.length > 1, path };
-}
-
-// Cross-graph recall returns hits from every graph. Score each subject from its
-// strongest three hits using a normalized decay-weighted average. Normalizing
-// prevents a graph with many mediocre hits from crowding out a graph with one or
-// two highly relevant hits.
-export function pickDominantGraph(results: KnowledgeGraphSearchResult[]): string | null {
-  if (results.length === 0) return null;
-
-  const hitsByGraph = new Map<string, KnowledgeGraphSearchResult[]>();
-  for (const result of results) {
-    const hits = hitsByGraph.get(result.graphId) ?? [];
-    hits.push(result);
-    hitsByGraph.set(result.graphId, hits);
-  }
-
-  const scores = new Map<string, number>();
-  for (const [graphId, hits] of hitsByGraph) {
-    const strongest = [...hits]
-      .sort((a, b) => b.similarity - a.similarity)
-      .slice(0, DOMINANT_GRAPH_HIT_WEIGHTS.length);
-    let weightedScore = 0;
-    let weightTotal = 0;
-    strongest.forEach((hit, index) => {
-      const weight = DOMINANT_GRAPH_HIT_WEIGHTS[index];
-      weightedScore += Math.max(hit.similarity, 0) * weight;
-      weightTotal += weight;
-    });
-    scores.set(graphId, weightTotal > 0 ? weightedScore / weightTotal : 0);
-  }
-
-  let best: string | null = null;
-  let bestScore = -Infinity;
-  for (const [graphId, score] of scores) {
-    if (score > bestScore) {
-      bestScore = score;
-      best = graphId;
-    }
-  }
-
-  // Preserve the A-Level preference only when the absolute best hit is itself
-  // from an A-Level graph and its normalized graph score is effectively tied.
-  const topHit = results.reduce((top, result) => result.similarity > top.similarity ? result : top);
-  if (best && topHit.graphId.startsWith("a_level_")) {
-    const topHitGraphScore = scores.get(topHit.graphId) ?? -Infinity;
-    if (bestScore - topHitGraphScore <= A_LEVEL_TOP_HIT_TIE_MARGIN) {
-      best = topHit.graphId;
-    }
-  }
-
-  return best;
 }
 
 export function classifyEntry(
