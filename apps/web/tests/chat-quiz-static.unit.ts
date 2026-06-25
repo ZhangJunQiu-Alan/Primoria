@@ -13,6 +13,8 @@ function read(path: string) {
 
 async function main() {
   const agentGraph = read("../agent/src/graph.mjs");
+  const agentCourseTypes = read("../agent/src/course-types.mjs");
+  const copilotRoute = read("src/app/api/copilotkit/route.ts");
   const generativeUi = read("src/hooks/use-primoria-copilot.tsx");
   const chatSurface = read("src/components/tutor/copilot-chat-surface.tsx");
   const styles = read("src/app/globals.css");
@@ -27,6 +29,10 @@ async function main() {
   assert(agentGraph.includes("Do NOT call add_course_block"), "course detail mode forbids creating course quiz blocks");
   assert(!agentGraph.includes('call add_course_block with targetType "quiz"'), "old course-block quiz instruction is removed");
   assert(agentGraph.includes("Do not output <think>"), "agent prompt forbids think-tag output");
+  assert(agentGraph.includes("formatAvailableBlocks(course)"), "agent course detail prompt formats flattened course blocks");
+  assert(agentCourseTypes.includes("export function courseBlocks"), "agent has a lessons-aware courseBlocks helper");
+  assert(copilotRoute.includes("function flattenCourseBlocks"), "copilot route flattens lesson blocks for agent context");
+  assert(copilotRoute.includes("formatAvailableBlocks(course)"), "copilot route sends flattened blocks to the agent");
 
   assert(generativeUi.includes("const ChatQuizParams"), "web UI defines chat quiz parameters");
   assert(generativeUi.includes('name: "render_chat_quiz"'), "web UI registers chat quiz renderer");

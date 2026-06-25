@@ -22,6 +22,20 @@ function settingsFromEnvironment() {
   } as const;
 }
 
+function flattenCourseBlocks(course: any) {
+  if (Array.isArray(course?.blocks)) return course.blocks;
+  if (!Array.isArray(course?.lessons)) return [];
+  return [...course.lessons]
+    .sort((a, b) => Number(a?.sortKey ?? 0) - Number(b?.sortKey ?? 0))
+    .flatMap((lesson) => (Array.isArray(lesson?.blocks) ? lesson.blocks : []));
+}
+
+function formatAvailableBlocks(course: any) {
+  return flattenCourseBlocks(course)
+    .map((block: any, index: number) => `${block.index ?? index + 1}. ${block.title ?? block.type} [${block.type}, id=${block.id}]`)
+    .join("; ");
+}
+
 function formatCourseDetailContextForAgent(context: unknown) {
   const items = Array.isArray(context) ? context : [];
   const item = items.find((entry: any) => entry?.description === "Primoria course detail mode");
@@ -41,7 +55,7 @@ function formatCourseDetailContextForAgent(context: unknown) {
       `Summary: ${course.summary ?? ""}`,
       `Selected block: ${selected ? `${selected.title ?? selected.type} (${selected.type}, id=${selected.id})` : "none; answer from the whole course"}`,
       `Selected text: ${selectedText?.text ? `"${String(selectedText.text)}" (block id=${selectedText.blockId}, ${selectedText.blockType ?? "block"})` : "none"}`,
-      `Available blocks: ${(course.blocks ?? []).map((block: any) => `${block.index}. ${block.title} [${block.type}, id=${block.id}]`).join("; ")}`,
+      `Available blocks: ${formatAvailableBlocks(course)}`,
       "If selected text is present, treat phrases like this, selected part, make this simpler, rewrite this, or explain this as referring to that exact selected text and its owning block.",
       "For summarize/explain/practice questions, answer from this current course context. Only call generate_course if the learner explicitly asks for a new or different course.",
       "If asked to revise the selected text or selected block, call revise_selected_course_block.",
@@ -204,6 +218,18 @@ export const POST = async (req: NextRequest) => {
 };
 
 async function requestWithNormalizedAttachments(req: NextRequest) {
+  let hasJson = false;
+  try {
+    await req.clone().json();
+    hasJson = true;
+  } catch {
+    // Request has no JSON body or is empty
+  }
+
+  if (!hasJson) {
+    return req;
+  }
+
   const body = await req.json();
   const messages = await normalizeCopilotMessagesWithAttachments(body?.messages, settingsFromEnvironment());
   const headers = new Headers(req.headers);

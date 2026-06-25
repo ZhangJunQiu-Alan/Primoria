@@ -9,7 +9,7 @@ import { readFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { getCourse } from "./course-store.mjs";
-import { summarizeCourse } from "./course-types.mjs";
+import { courseBlocks, summarizeCourse } from "./course-types.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -280,6 +280,9 @@ const WIDGET_DEPENDENCIES_BY_URL = new Map(
   Object.values(WIDGET_DEPENDENCY_ALLOWLIST).map((dep) => [dep.url, dep]),
 );
 
+/**
+ * @param {unknown} dependencies
+ */
 function normalizeWidgetDependencies(dependencies) {
   if (!Array.isArray(dependencies)) return [];
   const seen = new Set();
@@ -369,6 +372,15 @@ function serializeCourseCard(summary, status = "ready") {
     outline: summary.outline ?? [],
     status,
   })}`;
+}
+
+/**
+ * @param {any} course
+ */
+function formatAvailableBlocks(course) {
+  return courseBlocks(course)
+    .map((/** @type {any} */ block, /** @type {number} */ index) => `${block.index ?? index + 1}. ${block.title ?? block.type} [${block.type}, id=${block.id}]`)
+    .join("; ");
 }
 
 /**
@@ -540,7 +552,7 @@ Current course: ${course.title}
 Topic: ${course.topic ?? ""}
 Summary: ${course.summary ?? ""}
 Selected block: ${selected ? `${selected.title ?? selected.type} (${selected.type}, id=${selected.id})` : "none; answer from the whole course"}
-Available blocks: ${(course.blocks ?? []).map((/** @type {any} */ block) => `${block.index}. ${block.title} [${block.type}, id=${block.id}]`).join("; ")}
+Available blocks: ${formatAvailableBlocks(course)}
 
 Behavior in COURSE DETAIL MODE:
 - For summarize/explain/practice questions about this course, answer directly from this context.
