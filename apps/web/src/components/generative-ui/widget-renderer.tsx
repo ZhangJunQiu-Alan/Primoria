@@ -6,7 +6,7 @@ import { IDIOMORPH_JS } from "./idiomorph-inline";
 import { ExportOverlay } from "./export-overlay";
 import { assembleWidgetStandaloneHtml } from "./export-utils";
 import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
-import { normalizeWidgetDependencies } from "@/lib/ai/widget-dependencies";
+import { normalizeWidgetDependencies, type WidgetDependency as RuntimeWidgetDependency } from "@/lib/ai/widget-dependencies";
 
 export const WidgetDependency = z.object({
   url: z.string(),
@@ -26,6 +26,65 @@ export type WidgetRendererProps = z.infer<typeof WidgetRendererProps>;
 type WidgetRendererComponentProps = WidgetRendererProps & {
   onSendPrompt?: (prompt: string) => void;
 };
+
+const WIDGET_DEPENDENCY_PRELOAD_TIMEOUT_MS = 8000;
+
+type WidgetDependencyPreloadResult = {
+  url: string;
+  ok: boolean;
+  reason?: "error" | "timeout";
+};
+
+type WidgetDependencyPreloadState = {
+  status: "idle" | "loading" | "ready" | "error";
+  failed: string[];
+};
+
+type WidgetDependencyPreloadSnapshot = WidgetDependencyPreloadState & {
+  key: string;
+};
+
+const widgetDependencyPreloads = new Map<string, Promise<WidgetDependencyPreloadResult>>();
+
+function preloadWidgetDependency(dep: RuntimeWidgetDependency): Promise<WidgetDependencyPreloadResult> {
+  const key = `${dep.kind ?? "script"}:${dep.url}`;
+  const cached = widgetDependencyPreloads.get(key);
+  if (cached) return cached;
+
+  if (typeof document === "undefined") {
+    return Promise.resolve({ url: dep.url, ok: true });
+  }
+
+  const promise = new Promise<WidgetDependencyPreloadResult>((resolve) => {
+    let settled = false;
+    let timeout: number | null = null;
+
+    const finish = (result: WidgetDependencyPreloadResult) => {
+      if (settled) return;
+      settled = true;
+      if (timeout) window.clearTimeout(timeout);
+      if (!result.ok) widgetDependencyPreloads.delete(key);
+      resolve(result);
+    };
+
+    timeout = window.setTimeout(() => {
+      finish({ url: dep.url, ok: false, reason: "timeout" });
+    }, WIDGET_DEPENDENCY_PRELOAD_TIMEOUT_MS);
+
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = dep.kind === "style" ? "style" : "script";
+    link.href = dep.url;
+    link.crossOrigin = "anonymous";
+    link.setAttribute("data-primoria-widget-preload", key);
+    link.onload = () => finish({ url: dep.url, ok: true });
+    link.onerror = () => finish({ url: dep.url, ok: false, reason: "error" });
+    document.head.appendChild(link);
+  });
+
+  widgetDependencyPreloads.set(key, promise);
+  return promise;
+}
 
 export const THEME_CSS = `
 :root {
@@ -366,6 +425,7 @@ var ALLOWED_DEPENDENCY_URLS = Object.keys(COMMON_DEPENDENCIES).reduce(function(m
   map[COMMON_DEPENDENCIES[key].url] = true;
   return map;
 }, Object.create(null));
+var DEPENDENCY_LOAD_TIMEOUT_MS = 8000;
 
 function readGlobal(path) {
   if (!path) return undefined;
@@ -438,9 +498,30 @@ function loadDependency(dep, done) {
   }
   var key = dependencyKey(dep);
   var existing = document.querySelector('[data-primoria-dep="' + key.replace(/"/g, '') + '"]');
+  var settled = false;
+  var timeout = setTimeout(function() {
+    showWidgetError('Dependency timed out: ' + dep.url);
+    finish();
+  }, DEPENDENCY_LOAD_TIMEOUT_MS);
+  function finish() {
+    if (settled) return;
+    settled = true;
+    clearTimeout(timeout);
+    done();
+  }
   if (existing) {
-    existing.addEventListener('load', done, { once: true });
-    existing.addEventListener('error', done, { once: true });
+    if (existing.getAttribute('data-primoria-dep-loaded') === '1' || (dep.global && readGlobal(dep.global))) {
+      finish();
+      return;
+    }
+    existing.addEventListener('load', function() {
+      existing.setAttribute('data-primoria-dep-loaded', '1');
+      finish();
+    }, { once: true });
+    existing.addEventListener('error', function() {
+      showWidgetError('Dependency failed to load: ' + dep.url);
+      finish();
+    }, { once: true });
     return;
   }
 
@@ -449,10 +530,13 @@ function loadDependency(dep, done) {
     link.rel = 'stylesheet';
     link.href = dep.url;
     link.setAttribute('data-primoria-dep', key);
-    link.onload = done;
+    link.onload = function() {
+      link.setAttribute('data-primoria-dep-loaded', '1');
+      finish();
+    };
     link.onerror = function() {
       showWidgetError('Dependency failed to load: ' + dep.url);
-      done();
+      finish();
     };
     document.head.appendChild(link);
     return;
@@ -462,10 +546,13 @@ function loadDependency(dep, done) {
   script.setAttribute('data-primoria-dep', key);
   script.src = dep.url;
   if (dep.kind === 'module') script.type = 'module';
-  script.onload = done;
+  script.onload = function() {
+    script.setAttribute('data-primoria-dep-loaded', '1');
+    finish();
+  };
   script.onerror = function() {
     showWidgetError('Dependency failed to load: ' + dep.url);
-    done();
+    finish();
   };
   document.head.appendChild(script);
 }
@@ -511,8 +598,22 @@ function runScripts(content, scripts, index, dependencies) {
           return;
         }
         nextScript.src = info.src;
-        nextScript.onload = function() { runScripts(content, scripts, index + 1, dependencies); };
-        nextScript.onerror = function() { runScripts(content, scripts, index + 1, dependencies); };
+        var scriptSettled = false;
+        var scriptTimeout = setTimeout(function() {
+          showWidgetError('Script timed out: ' + String(info.src));
+          finishScriptSource();
+        }, DEPENDENCY_LOAD_TIMEOUT_MS);
+        function finishScriptSource() {
+          if (scriptSettled) return;
+          scriptSettled = true;
+          clearTimeout(scriptTimeout);
+          runScripts(content, scripts, index + 1, dependencies);
+        }
+        nextScript.onload = finishScriptSource;
+        nextScript.onerror = function() {
+          showWidgetError('Script failed to load: ' + String(info.src));
+          finishScriptSource();
+        };
         content.appendChild(nextScript);
       } else {
         nextScript.textContent =
@@ -695,9 +796,21 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }:
   const [loaded, setLoaded] = useState(false);
   const [settledHtml, setSettledHtml] = useState("");
   const [fadingOut, setFadingOut] = useState(false);
+  const [dependencyPreloadResult, setDependencyPreloadResult] = useState<WidgetDependencyPreloadSnapshot | null>(null);
   const settledTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const normalizedDependencies = useMemo(() => normalizeWidgetDependencies(dependencies), [dependencies]);
+  const dependencyPreloadKey = useMemo(
+    () => normalizedDependencies.map((dep) => `${dep.kind ?? "script"}:${dep.url}`).join("|"),
+    [normalizedDependencies],
+  );
+  const dependencyPreload = useMemo<WidgetDependencyPreloadState>(() => {
+    if (!dependencyPreloadKey) return { status: "idle", failed: [] };
+    if (dependencyPreloadResult?.key === dependencyPreloadKey) {
+      return { status: dependencyPreloadResult.status, failed: dependencyPreloadResult.failed };
+    }
+    return { status: "loading", failed: [] };
+  }, [dependencyPreloadKey, dependencyPreloadResult]);
   const scriptsComplete = hasCompleteScriptTags(safeHtml);
   const htmlPreviewSettled = safeHtml === settledHtml;
   const canExecuteHtml = htmlPreviewSettled;
@@ -735,6 +848,25 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }:
   useEffect(() => {
     executedHtmlRef.current = "";
   }, [safeHtml]);
+
+  useEffect(() => {
+    if (!dependencyPreloadKey) return;
+
+    let cancelled = false;
+    Promise.all(normalizedDependencies.map(preloadWidgetDependency)).then((results) => {
+      if (cancelled) return;
+      const failed = results.filter((result) => !result.ok).map((result) => result.url);
+      setDependencyPreloadResult(
+        failed.length
+          ? { key: dependencyPreloadKey, status: "error", failed }
+          : { key: dependencyPreloadKey, status: "ready", failed: [] },
+      );
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [dependencyPreloadKey, normalizedDependencies]);
 
   useEffect(() => {
     if (settledTimerRef.current) clearTimeout(settledTimerRef.current);
@@ -787,6 +919,7 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }:
   const isStreaming = Boolean(safeHtml) && !htmlPreviewSettled;
   const loadingPhrase = useLoadingPhrase(isStreaming);
   const showStreamingIndicator = isStreaming || fadingOut;
+  const showDependencyPreloadIndicator = showIframe && !showStreamingIndicator && dependencyPreload.status === "loading";
 
   return (
     <div className="widget-renderer-shell">
@@ -797,6 +930,17 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }:
         >
           <span className="tool-spinner widget-streaming-spinner" aria-hidden="true" />
           <span>{loadingPhrase}...</span>
+        </div>
+      ) : null}
+      {showDependencyPreloadIndicator ? (
+        <div className="widget-streaming-indicator" style={{ opacity: 1, maxHeight: 32 }}>
+          <span className="tool-spinner widget-streaming-spinner" aria-hidden="true" />
+          <span>Preparing visual resources...</span>
+        </div>
+      ) : null}
+      {dependencyPreload.status === "error" ? (
+        <div className="widget-renderer-error" role="alert">
+          Visual resources are taking longer than expected. The widget will keep trying inside the frame.
         </div>
       ) : null}
       {htmlPreviewSettled && !safeHtml.trim() ? (
