@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useComponent, useDefaultRenderTool, useRenderTool } from "@copilotkit/react-core/v2";
 import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import { StemRenderer, StemRendererProps } from "@/components/generative-ui/stem-renderer";
@@ -43,6 +43,43 @@ const RenderWidgetParams = z.object({
     global: z.string().optional(),
     kind: z.enum(["script", "module", "style"]).optional(),
   })).optional(),
+});
+
+const ChatQuizChoiceParams = z.object({
+  id: z.string(),
+  text: z.string(),
+});
+
+const ChatQuizQuestionParams = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("single"),
+    id: z.string(),
+    question: z.string(),
+    choices: z.array(ChatQuizChoiceParams).min(2).max(6),
+    correctId: z.string(),
+    explanation: z.string().optional(),
+  }),
+  z.object({
+    kind: z.literal("multi"),
+    id: z.string(),
+    question: z.string(),
+    choices: z.array(ChatQuizChoiceParams).min(2).max(6),
+    correctIds: z.array(z.string()).min(1),
+    explanation: z.string().optional(),
+  }),
+  z.object({
+    kind: z.literal("truefalse"),
+    id: z.string(),
+    question: z.string(),
+    correct: z.boolean(),
+    explanation: z.string().optional(),
+  }),
+]);
+
+const ChatQuizParams = z.object({
+  title: z.string().optional(),
+  description: z.string().optional().default(""),
+  questions: z.array(ChatQuizQuestionParams).min(1).max(6),
 });
 
 const GenerateCourseParams = z.object({
@@ -113,6 +150,203 @@ function WidgetCard({ title, description, html, dependencies }: z.infer<typeof R
       />
     </div>
   );
+}
+
+type ChatQuizQuestion = z.infer<typeof ChatQuizQuestionParams>;
+type ChatQuizSelection = string | string[] | boolean;
+type ChatQuizState =
+  | { phase: "answering"; selections: Record<string, ChatQuizSelection> }
+  | { phase: "submitted"; selections: Record<string, ChatQuizSelection>; score: number };
+
+function isChatQuizCorrect(question: ChatQuizQuestion, selection: ChatQuizSelection | undefined) {
+  if (selection === undefined) return false;
+  if (question.kind === "single") return selection === question.correctId;
+  if (question.kind === "multi") {
+    const selected = Array.isArray(selection) ? [...selection].sort() : [];
+    return JSON.stringify(selected) === JSON.stringify([...question.correctIds].sort());
+  }
+  return selection === question.correct;
+}
+
+function isChatQuizAnswered(question: ChatQuizQuestion, selection: ChatQuizSelection | undefined) {
+  if (question.kind === "multi") return Array.isArray(selection) && selection.length > 0;
+  if (question.kind === "truefalse") return typeof selection === "boolean";
+  return typeof selection === "string" && selection.length > 0;
+}
+
+function ChatQuizCard({
+  title,
+  description,
+  questions,
+}: z.infer<typeof ChatQuizParams>) {
+  const [state, setState] = useState<ChatQuizState>({ phase: "answering", selections: {} });
+
+  const setSelection = useCallback((questionId: string, value: ChatQuizSelection) => {
+    setState((previous) => {
+      if (previous.phase !== "answering") return previous;
+      return { ...previous, selections: { ...previous.selections, [questionId]: value } };
+    });
+  }, []);
+
+  const allAnswered = questions.every((question) => isChatQuizAnswered(question, state.selections[question.id]));
+
+  const submit = useCallback(() => {
+    setState((previous) => {
+      if (previous.phase !== "answering") return previous;
+      const score = questions.filter((question) => isChatQuizCorrect(question, previous.selections[question.id])).length;
+      return { phase: "submitted", selections: previous.selections, score };
+    });
+  }, [questions]);
+
+  return (
+    <div className="primoria-copilot-tool">
+      <div className="tool-card status-card">
+        <div className="tool-title">
+          <span className="tool-dot" />
+          <span>{title || "Practice quiz"}</span>
+        </div>
+        {description ? <p className="tool-note">{description}</p> : null}
+        <div className="course-quiz">
+          {questions.map((question, index) => (
+            <ChatQuizQuestionView
+              key={question.id}
+              index={index}
+              question={question}
+              selection={state.selections[question.id]}
+              submitted={state.phase === "submitted"}
+              onSelect={setSelection}
+            />
+          ))}
+          {state.phase === "answering" ? (
+            <button type="button" className="course-quiz-submit" disabled={!allAnswered} onClick={submit}>
+              提交答案
+            </button>
+          ) : (
+            <div className="course-quiz-score">
+              得分：{state.score} / {questions.length}
+              {state.score === questions.length ? " 全部正确" : ""}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ChatQuizQuestionView({
+  index,
+  question,
+  selection,
+  submitted,
+  onSelect,
+}: {
+  index: number;
+  question: ChatQuizQuestion;
+  selection: ChatQuizSelection | undefined;
+  submitted: boolean;
+  onSelect: (questionId: string, value: ChatQuizSelection) => void;
+}) {
+  const correct = submitted ? isChatQuizCorrect(question, selection) : null;
+
+  return (
+    <div className={`course-quiz-question ${submitted ? (correct ? "is-correct" : "is-wrong") : ""}`}>
+      <div className="course-quiz-q-header">
+        <span className="course-quiz-q-index">{index + 1}</span>
+        <span className="course-quiz-q-kind">
+          {question.kind === "single" ? "单选" : question.kind === "multi" ? "多选" : "判断"}
+        </span>
+        {submitted ? (
+          <span className={`course-quiz-q-result ${correct ? "correct" : "wrong"}`}>
+            {correct ? "✓ 正确" : "✗ 错误"}
+          </span>
+        ) : null}
+      </div>
+      <p className="course-quiz-q-text">{question.question}</p>
+      {question.kind === "single" ? (
+        <div className="course-quiz-choices">
+          {question.choices.map((choice) => {
+            const isSelected = selection === choice.id;
+            const isCorrectChoice = submitted && choice.id === question.correctId;
+            const isWrongSelection = submitted && isSelected && choice.id !== question.correctId;
+            return (
+              <button
+                key={choice.id}
+                type="button"
+                disabled={submitted}
+                className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
+                onClick={() => onSelect(question.id, choice.id)}
+              >
+                {choice.text}
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+      {question.kind === "multi" ? (
+        <div className="course-quiz-choices">
+          {question.choices.map((choice) => {
+            const selected = Array.isArray(selection) ? selection : [];
+            const isSelected = selected.includes(choice.id);
+            const isCorrectChoice = submitted && question.correctIds.includes(choice.id);
+            const isWrongSelection = submitted && isSelected && !question.correctIds.includes(choice.id);
+            const next = isSelected ? selected.filter((id) => id !== choice.id) : [...selected, choice.id];
+            return (
+              <button
+                key={choice.id}
+                type="button"
+                disabled={submitted}
+                className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
+                onClick={() => onSelect(question.id, next)}
+              >
+                <span className="course-quiz-choice-check">{isSelected ? "☑" : "☐"}</span>
+                {choice.text}
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+      {question.kind === "truefalse" ? (
+        <div className="course-quiz-choices course-quiz-truefalse">
+          {([true, false] as const).map((value) => {
+            const isSelected = selection === value;
+            const isCorrectChoice = submitted && value === question.correct;
+            const isWrongSelection = submitted && isSelected && value !== question.correct;
+            return (
+              <button
+                key={String(value)}
+                type="button"
+                disabled={submitted}
+                className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
+                onClick={() => onSelect(question.id, value)}
+              >
+                {value ? "正确 ✓" : "错误 ✗"}
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+      {submitted && question.explanation ? (
+        <div className="course-quiz-explanation">{question.explanation}</div>
+      ) : null}
+    </div>
+  );
+}
+
+function ChatQuizTool({ status, parameters }: { status: string; parameters?: Partial<z.infer<typeof ChatQuizParams>> }) {
+  const parsed = ChatQuizParams.safeParse(parameters);
+  if (!parsed.success) {
+    return (
+      <div className="primoria-copilot-tool">
+        <div className="tool-card status-card">
+          <div className="tool-title">
+            <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
+            <span>{status === "complete" ? "Quiz ready" : "Preparing quiz"}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return <ChatQuizCard {...parsed.data} />;
 }
 
 function VisualizationPlanTool({
@@ -671,6 +905,14 @@ export function usePrimoriaGenerativeUI() {
   });
 
   useRenderTool({
+    name: "render_chat_quiz",
+    parameters: ChatQuizParams,
+    render: ({ status, parameters }) => (
+      <ChatQuizTool status={status} parameters={parameters} />
+    ),
+  });
+
+  useRenderTool({
     name: "stemRenderer",
     parameters: StemRendererProps,
     render: ({ status, parameters }) => {
@@ -758,8 +1000,31 @@ function isTutorArtifact(value: unknown): value is TutorArtifact {
   return value !== null && typeof value === "object" && "type" in value && typeof (value as { type: unknown }).type === "string";
 }
 
-export function sanitizeCopilotAssistantText(content?: string) {
-  const text = (content ?? "").trim();
+function copilotContentToString(content: unknown) {
+  if (typeof content === "string") return content;
+  if (Array.isArray(content)) {
+    return content
+      .map((part) => {
+        if (typeof part === "string") return part;
+        if (part && typeof part === "object" && "text" in part) return String((part as { text?: unknown }).text ?? "");
+        return "";
+      })
+      .join("\n");
+  }
+  return String(content ?? "");
+}
+
+export function stripCopilotThinkTags(content: unknown) {
+  const text = copilotContentToString(content);
+  return text
+    .replace(/<think\b[^>]*>[\s\S]*?<\/think>/gi, "")
+    .replace(/<think\b[^>]*>[\s\S]*$/i, "")
+    .replace(/<\/?think\b[^>]*>/gi, "")
+    .trim();
+}
+
+export function sanitizeCopilotAssistantText(content?: unknown) {
+  const text = stripCopilotThinkTags(content);
   if (!text) return "";
   if (text.startsWith(COURSE_CARD_PREFIX)) return "";
 
@@ -768,7 +1033,14 @@ export function sanitizeCopilotAssistantText(content?: string) {
 
   try {
     const parsed = JSON.parse(withoutPrefixedCards);
-    if (parsed?.type === "course_card" || parsed?.course?.blocks || parsed?.blocks) return "";
+    if (
+      parsed?.type === "course_card" ||
+      parsed?.type === "chat_quiz" ||
+      parsed?.type === "html_widget" ||
+      parsed?.type === "stem_renderer" ||
+      parsed?.course?.blocks ||
+      parsed?.blocks
+    ) return "";
   } catch {
     // keep ordinary prose
   }
