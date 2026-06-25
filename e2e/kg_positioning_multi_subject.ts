@@ -1,39 +1,56 @@
-import { chromium } from 'playwright';
-import * as fs from 'fs';
 import * as path from 'path';
+import * as fs from 'fs';
+import { positionLearningGoal } from '../apps/web/src/lib/knowledge-graph/position-learning-goal';
+
+// Load environmental variables directly from apps/web/.env.local
+loadEnvFile(path.resolve(__dirname, '../apps/web/.env.local'));
+
+function loadEnvFile(filePath: string) {
+  if (!fs.existsSync(filePath)) return;
+  const lines = fs.readFileSync(filePath, 'utf8').split(/\r?\n/);
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const match = /^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/.exec(trimmed);
+    if (!match) continue;
+    const [, key, rawValue] = match;
+    if (process.env[key] !== undefined) continue;
+    process.env[key] = rawValue.trim().replace(/^(['"])(.*)\1$/, '$2');
+  }
+}
 
 // Define the 30 broad queries
 const queries = [
-  "我想学微积分",
-  "I want to learn calculus",
-  "微积分入门",
-  "Calculus",
-  "我想学线性代数",
-  "I want to learn linear algebra",
-  "线性代数",
-  "Linear Algebra basics",
-  "学习数值分析",
-  "Numerical Analysis",
-  "我想学软件工程",
-  "Software Engineering",
-  "零基础学Python",
-  "Python programming",
-  "Python",
-  "数据结构与算法怎么学",
-  "Data structures and algorithms",
-  "计算机架构",
-  "Computer Architecture",
-  "离散数学基础",
-  "Discrete Mathematics",
-  "想学计算机导论",
-  "Introduction to Computer Science",
-  "人工智能",
-  "Artificial Intelligence",
-  "机器学习",
-  "Machine Learning for beginners",
-  "我想学深度学习",
-  "Deep learning tutorial",
-  "Web开发"
+  "我想学导数和微积分",
+  "help me learn basic calculus",
+  "微积分极限定理怎么学",
+  "Advanced calculus topics",
+  "学一下矩阵和线性代数",
+  "Matrix algebra introduction",
+  "线性代数几何意义",
+  "Vector spaces and eigenvalues",
+  "数值计算方法",
+  "Error analysis in computing",
+  "软件开发工程怎么入门",
+  "Software design patterns and specifications",
+  "Python新手教程",
+  "Python scripting for beginners",
+  "用Python写写简单的程序",
+  "排序算法和链表怎么写",
+  "Algorithms and complex data structures",
+  "CPU是怎么工作的",
+  "RISC-V architecture and logic",
+  "集合论与离散数学",
+  "Discrete math tutorials",
+  "操作系统与计算机系统结构",
+  "Computer systems programming",
+  "计算机科学导论怎么学",
+  "CS50 introduction to computer science",
+  "AI人工智能从零开始",
+  "Artificial intelligence search algorithms",
+  "我想学机器学习的回归模型",
+  "Supervised and unsupervised learning basics",
+  "神经网络和深度学习"
 ];
 
 function detectKgLanguage(text: string): "zh" | "en" {
@@ -42,103 +59,65 @@ function detectKgLanguage(text: string): "zh" | "en" {
 }
 
 async function runTest() {
-  console.log("Starting Multilingual Cross-Subject Broad Positioning Test Simulation...");
-  const baseUrl = process.env.PRIMORIA_E2E_BASE_URL ?? "http://localhost:3000";
-  const email = process.env.PRIMORIA_E2E_EMAIL;
-  const password = process.env.PRIMORIA_E2E_PASSWORD;
-  if (!email || !password) {
-    throw new Error("Set PRIMORIA_E2E_EMAIL and PRIMORIA_E2E_PASSWORD before running this test.");
-  }
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext();
-  const page = await context.newPage();
+  console.log("Starting Multilingual Cross-Subject Broad Positioning Test Simulation (Direct Process Run)...");
 
-  page.on('console', msg => console.log(`[Browser Console] ${msg.type()}: ${msg.text()}`));
-  page.on('pageerror', error => console.error(`[Browser Error] ${error.message}`));
+  const results: string[] = [
+    "# 知识图谱定位测试结果 (30个宽泛目标)",
+    `测试时间: ${new Date().toISOString()}`,
+    `使用的提供商: ${process.env.AI_PROVIDER || 'openai-compatible'}`,
+    `使用的模型: ${process.env.AI_PROVIDER === 'anthropic-compatible' ? process.env.ANTHROPIC_MODEL : process.env.OPENAI_MODEL}`,
+    ""
+  ];
 
-  try {
-    console.log(`1. Navigating to ${baseUrl}/auth/sign-in`);
-    await page.goto(`${baseUrl}/auth/sign-in`);
+  for (let i = 0; i < queries.length; i++) {
+    const query = queries[i];
+    const lang = detectKgLanguage(query);
+    console.log(`   [${i + 1}/${queries.length}] Querying: "${query}" (lang: ${lang})...`);
 
-    console.log("   Logging in...");
-    await page.fill('input[type="email"]', email);
-    await page.fill('input[type="password"]', password);
-    await page.click('button[type="submit"]');
+    try {
+      const responseData = await positionLearningGoal({ query, language: lang });
+      const res = responseData.result;
 
-    console.log("   Waiting for session initialization...");
-    await page.waitForURL(/.*\/library/, { timeout: 15000 }).catch(() => console.log("   [Warning] Redirect to /library timed out, trying to proceed anyway."));
+      // Format result block
+      results.push(`## ${i + 1}. 输入: ${query}`);
+      results.push(`- 反馈的定位:`);
+      results.push(`  - 分支: ${res.branch}`);
+      results.push(`  - 知识图谱 ID: ${res.graphId || "N/A"}`);
 
-    console.log("2. Navigating to homepage...");
-    await page.goto(`${baseUrl}/`);
-    await page.waitForLoadState('networkidle');
-
-    console.log("3. Executing queries via authenticated browser fetch...");
-
-    const results: string[] = [
-      "# 知识图谱定位测试结果 (30个宽泛目标)",
-      `测试时间: ${new Date().toISOString()}`,
-      ""
-    ];
-
-    for (let i = 0; i < queries.length; i++) {
-      const query = queries[i];
-      const lang = detectKgLanguage(query);
-      console.log(`   [${i + 1}/${queries.length}] Querying: "${query}" (lang: ${lang})...`);
-
-      try {
-        const responseData = await page.evaluate(async (payload) => {
-          const res = await fetch("/api/knowledge-graph/position", {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-          if (!res.ok) {
-            const errText = await res.text();
-            throw new Error(`API returned ${res.status}: ${errText}`);
+      if (res.branch === "broad") {
+        results.push(`  - 推荐 Topic 列表:`);
+        if (res.menu && res.menu.length > 0) {
+          for (const item of res.menu) {
+            results.push(`    - ${item.name} (${item.topicId})`);
           }
-          return res.json();
-        }, { query, language: lang });
-
-        // Format result block
-        results.push(`## ${i + 1}. 输入: ${query}`);
-        results.push(`- 反馈的定位:`);
-        results.push(`  - 分支: ${responseData.branch}`);
-        results.push(`  - 知识图谱 ID: ${responseData.graphId || "N/A"}`);
-
-        if (responseData.branch === "broad") {
-          results.push(`  - 推荐 Topic 列表:`);
-          if (responseData.menu && responseData.menu.length > 0) {
-            for (const item of responseData.menu) {
-              results.push(`    - ${item.name} (${item.topicId})`);
-            }
-          } else {
-            results.push(`    - (空列表)`);
-          }
-        } else if (responseData.branch === "specific") {
-          results.push(`  - 起始 Topic ID: ${responseData.startTopicId || "N/A"}`);
-          results.push(`  - 目标 Concept ID: ${responseData.targetConceptId || "N/A"}`);
-        } else if (responseData.branch === "fallback") {
-          results.push(`  - 提示消息: ${responseData.message || "N/A"}`);
+        } else {
+          results.push(`    - (空列表)`);
         }
-        results.push("");
-
-      } catch (err: any) {
-        console.error(`   Failed to query "${query}":`, err.message);
-        results.push(`## ${i + 1}. 输入: ${query}`);
-        results.push(`- 反馈的定位:`);
-        results.push(`  - 错误: 接口请求失败 - ${err.message}`);
-        results.push("");
+      } else if (res.branch === "specific") {
+        results.push(`  - 起始 Topic ID: ${res.startTopicId || "N/A"}`);
+        results.push(`  - 目标 Concept ID: ${res.targetConceptId || "N/A"}`);
+      } else if (res.branch === "fallback") {
+        results.push(`  - 提示消息: ${res.message || "N/A"}`);
       }
+      results.push("");
+
+    } catch (err: any) {
+      console.error(`   Failed to query "${query}":`, err.message);
+      results.push(`## ${i + 1}. 输入: ${query}`);
+      results.push(`- 反馈的定位:`);
+      results.push(`  - 错误: 接口请求失败 - ${err.message}`);
+      results.push("");
     }
+  }
 
-    const testMdPath = path.resolve(process.cwd(), 'temple', 'test.md');
-    fs.writeFileSync(testMdPath, results.join("\n"));
-    console.log(`\nTest results written to ${testMdPath}`);
+  const testMdPath = path.resolve(__dirname, '../temple/test.md');
+  fs.writeFileSync(testMdPath, results.join("\n"));
+  console.log(`\nTest results written to ${testMdPath}`);
 
-  } catch (err) {
-    console.error("Test execution failed:", err);
-  } finally {
-    await browser.close();
+  // Close any database pool active in global state
+  const globalForKnowledgeGraph = globalThis as any;
+  if (globalForKnowledgeGraph.primoriaKnowledgeGraphPool) {
+    await globalForKnowledgeGraph.primoriaKnowledgeGraphPool.end();
   }
 }
 
