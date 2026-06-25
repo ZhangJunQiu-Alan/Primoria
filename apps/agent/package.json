@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "if [ -f .env ]; then set -a; . ./.env; set +a; fi; langgraphjs dev --host 127.0.0.1 --no-browser",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:course-store": "node tests/course-store-schema.unit.mjs"
   },
   "dependencies": {
     "@langchain/anthropic": "^1.4.0",
