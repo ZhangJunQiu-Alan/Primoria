@@ -106,10 +106,11 @@ export function decodeLessonPlanIr(raw: unknown): DecodedLessonPlan {
 }
 
 /** Deterministic block-count window for a topic (doc §4.2). A normal 4-concept
- * topic targets 15-16, a 5-concept topic 17-18; otherwise the hard range 12-20
- * applies. */
-export function expectedBlockRange(conceptCount?: number): { min: number; max: number } {
-  if (conceptCount === 4) return { min: 15, max: 16 };
-  if (conceptCount === 5) return { min: 17, max: 18 };
-  return { min: 12, max: 20 };
+ * topic targets 15-16, a 5-concept topic 17-18; otherwise the base range 12-20
+ * applies. Each KG-mandated visual (one extra deepening block per visual-worthy
+ * concept) raises the ceiling by one so the mandatory visuals fit without forcing
+ * filler — the per-concept visual floor is enforced separately by the compiler. */
+export function expectedBlockRange(conceptCount?: number, visualCount = 0): { min: number; max: number } {
+  const base = conceptCount === 4 ? { min: 15, max: 16 } : conceptCount === 5 ? { min: 17, max: 18 } : { min: 12, max: 20 };
+  return { min: base.min, max: base.max + Math.max(0, visualCount) };
 }

@@ -20,9 +20,24 @@ function fmtConcepts(topic: CourseContextTopic): string {
     .join("\n");
 }
 
+// KG-mandated visuals: every concept carrying a `visual` affordance must get one
+// V=visual deepening block on that concept, with the engine the KG specifies.
+function visualConcepts(topic: CourseContextTopic) {
+  return [...(topic.concepts ?? [])]
+    .filter((c) => !!c.visual)
+    .sort((a, b) => a.defaultOrder - b.defaultOrder);
+}
+
+function fmtVisualConcepts(topic: CourseContextTopic): string {
+  return visualConcepts(topic)
+    .map((c) => `  - ${c.name} (${c.conceptId}) → engine ${c.visual}${c.visualHint ? `: ${c.visualHint}` : ""}`)
+    .join("\n");
+}
+
 export function buildPlannerPrompt(kg: CourseContext): string {
   const conceptCount = kg.startTopic.concepts?.length ?? 0;
-  const { min, max } = expectedBlockRange(conceptCount);
+  const visuals = visualConcepts(kg.startTopic);
+  const { min, max } = expectedBlockRange(conceptCount, visuals.length);
   const conceptIds = (kg.startTopic.concepts ?? []).map((c) => c.conceptId);
 
   return `You are Primoria's Lesson Planner. You design the STRUCTURE of one lesson for a knowledge-graph topic, as a compact tuple IR. You do NOT write block content — only a plan the compiler will expand.
@@ -35,6 +50,9 @@ ${fmtConcepts(kg.startTopic)}
 ${kg.targetConceptId ? `TARGET CONCEPT (center the lesson on it): ${kg.targetConceptId}` : ""}
 VALID CONCEPT IDS: ${conceptIds.join(", ")}
 
+VISUAL CONCEPTS (each REQUIRES one V=visual block — these are the product's core differentiator):
+${visuals.length ? fmtVisualConcepts(kg.startTopic) : "  (none for this topic)"}
+
 BLOCK TYPE CODES (use only these six):
 ${TYPE_CODE_LINES}
 
@@ -43,12 +61,13 @@ PEDAGOGICAL ROLES (use only these): ${PEDAGOGICAL_ROLES.join(", ")}
 TEACHING STRUCTURE (doc §4.3):
 - 2 activation text blocks: one "hook", one "roadmap".
 - Per concept, in default order, at least one "explanation" block and one "example" block.
-- 2-3 "deepening"/"misconception" blocks concentrated on the hardest 1-2 concepts (use A=analogy or V=visual here).
+- For EACH concept listed under VISUAL CONCEPTS above, exactly one V=visual block with role "deepening" whose conceptIds is [that one concept]. This is mandatory — do not skip, merge, or move it onto a different concept.
+- Do NOT emit a V=visual block for any concept that is NOT listed under VISUAL CONCEPTS.
+- Optionally 1-2 A=analogy "deepening"/"misconception" blocks on the hardest concepts (use A=analogy here, never V).
 - Exactly 1 X=transfer block (role "transfer").
 - Exactly 1 Q=quiz block (role "assessment") whose conceptIds list EVERY concept.
 - Exactly 1 final text block with role "summary".
-- At most ONE V=visual block in the whole lesson.
-- Target ${min}-${max} blocks for ${conceptCount} concepts. Hard range 12-20. Never pad with filler.
+- Target ${min}-${max} blocks for ${conceptCount} concepts (${visuals.length} of them require a visual). Never pad with filler.
 
 OUTPUT — a single compact JSON object, no indentation, no prose, no code fences:
 {"v":${IR_VERSION},"lesson":["<lesson title>",<estimatedMinutes>],"blocks":[[<order:int starting 1, strictly increasing>,"<typeCode>","<role>",["<conceptId>",...],"<one-line goal>"], ...]}

@@ -20,14 +20,20 @@ function assertThrows(run: () => unknown, ErrorClass: new (...args: never[]) => 
 
 const CONCEPTS = ["c1", "c2", "c3", "c4"];
 
-function kg(conceptIds: string[] = CONCEPTS): CourseContext {
+function kg(conceptIds: string[] = CONCEPTS, visualIds: string[] = []): CourseContext {
+  const visualSet = new Set(visualIds);
   return {
     learningPathType: "linear",
     graphId: "g1",
     startTopic: {
       topicId: "t1",
       name: "Topic",
-      concepts: conceptIds.map((conceptId, index) => ({ conceptId, name: conceptId, defaultOrder: index + 1 })),
+      concepts: conceptIds.map((conceptId, index) => ({
+        conceptId,
+        name: conceptId,
+        defaultOrder: index + 1,
+        ...(visualSet.has(conceptId) ? { visual: "function" as const, visualHint: "plot it" } : {}),
+      })),
     },
     targetConceptId: null,
     nextTopic: null,
@@ -36,8 +42,9 @@ function kg(conceptIds: string[] = CONCEPTS): CourseContext {
 
 type Tuple = [number, string, string, string[], string];
 
-// A valid 15-block plan for 4 concepts: 2 activation, explanation+example per
-// concept, 2 deepening (one of them the single visual), transfer, quiz, summary.
+// A valid 15-block plan for 4 concepts with NO visual-worthy concept: 2
+// activation, explanation+example per concept, 2 analogy deepening, transfer,
+// quiz, summary. (Visual coverage is exercised separately below.)
 function validBlocks(): Tuple[] {
   return [
     [1, "T", "hook", ["c1"], "hook"],
@@ -51,7 +58,7 @@ function validBlocks(): Tuple[] {
     [9, "T", "explanation", ["c4"], "explain c4"],
     [10, "C", "example", ["c4"], "example c4"],
     [11, "A", "deepening", ["c1"], "analogy deepen"],
-    [12, "V", "deepening", ["c2"], "visual deepen"],
+    [12, "A", "deepening", ["c2"], "analogy deepen 2"],
     [13, "X", "transfer", CONCEPTS, "transfer"],
     [14, "Q", "assessment", CONCEPTS, "quiz"],
     [15, "T", "summary", CONCEPTS, "summary"],
@@ -140,10 +147,39 @@ function main() {
   noTransfer[12][1] = "T";
   assertThrows(() => compileLessonPlanIr(ir(noTransfer), kg()), CoverageError, "missing transfer rejected");
 
-  // Two visuals
-  const twoVisuals = validBlocks();
-  twoVisuals[7][1] = "V";
-  assertThrows(() => compileLessonPlanIr(ir(twoVisuals), kg()), CoverageError, "two visual blocks rejected");
+  // A stray visual on a concept the KG did not mark visual-worthy is rejected.
+  const strayVisual = validBlocks();
+  strayVisual[11][1] = "V"; // order 12, concept c2 — but base kg() has no visual concepts
+  assertThrows(() => compileLessonPlanIr(ir(strayVisual), kg()), CoverageError, "unwarranted visual block rejected");
+
+  // ── Per-concept visual coverage (KG marks c2 visual-worthy) ──────────────────
+  const kgV = kg(CONCEPTS, ["c2"]);
+
+  // 16-block plan that includes the mandated visual on c2 compiles.
+  function validBlocksV(): Tuple[] {
+    const blocks = validBlocks();
+    blocks.splice(12, 0, [12.5, "V", "deepening", ["c2"], "visual deepen c2"]);
+    blocks.forEach((b, i) => (b[0] = i + 1));
+    return blocks;
+  }
+  const compiledV = compileLessonPlanIr(ir(validBlocksV()), kgV);
+  assert(compiledV.jobs.length === 16, "visual-worthy topic accepts the mandated visual (16 blocks)");
+  assert(compiledV.jobs.some((j) => j.type === "visual" && j.conceptIds.includes("c2")), "mandated visual present on c2");
+
+  // Missing the mandated visual is rejected even though the block count is in range.
+  assertThrows(() => compileLessonPlanIr(ir(validBlocks()), kgV), CoverageError, "missing mandated visual rejected");
+
+  // A second visual on the same concept is rejected (exactly one).
+  const dupVisual = validBlocksV();
+  dupVisual[10][1] = "V"; // turn an analogy deepening (c1) ... point it at c2 too
+  dupVisual[10][3] = ["c2"];
+  assertThrows(() => compileLessonPlanIr(ir(dupVisual), kgV), CoverageError, "duplicate visual on a concept rejected");
+
+  // A visual on a non-worthy concept (c3) alongside the required c2 visual is rejected.
+  const wrongConcept = validBlocksV();
+  wrongConcept[10][1] = "V";
+  wrongConcept[10][3] = ["c3"];
+  assertThrows(() => compileLessonPlanIr(ir(wrongConcept), kgV), CoverageError, "visual on non-worthy concept rejected");
 
   process.stdout.write("[lesson-plan-compiler.unit] ALL CHECKS PASSED\n");
 }

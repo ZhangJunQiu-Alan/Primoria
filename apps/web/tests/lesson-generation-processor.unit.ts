@@ -29,7 +29,12 @@ const kg: CourseContext = {
   startTopic: {
     topicId: "t1",
     name: "导数",
-    concepts: CONCEPTS.map((conceptId, index) => ({ conceptId, name: `概念${index + 1}`, defaultOrder: index + 1 })),
+    concepts: CONCEPTS.map((conceptId, index) => ({
+      conceptId,
+      name: `概念${index + 1}`,
+      defaultOrder: index + 1,
+      ...(conceptId === "c2" ? { visual: "function" as const, visualHint: "plot it" } : {}),
+    })),
   },
   targetConceptId: "c1",
   nextTopic: null,

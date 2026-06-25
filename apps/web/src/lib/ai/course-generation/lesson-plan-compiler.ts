@@ -43,6 +43,14 @@ function orderedConceptIds(kg: CourseContext): string[] {
     .map((concept) => concept.conceptId);
 }
 
+/** Concept ids the KG marks as visual-worthy (carry a `visual` affordance). Each
+ * must receive exactly one visual block; concepts without an affordance must not. */
+function visualConceptIds(kg: CourseContext): Set<string> {
+  return new Set(
+    (kg.startTopic.concepts ?? []).filter((concept) => !!concept.visual).map((concept) => concept.conceptId),
+  );
+}
+
 function clampMinutes(value: number): number {
   if (!Number.isFinite(value)) return MIN_MINUTES;
   return Math.min(MAX_MINUTES, Math.max(MIN_MINUTES, Math.round(value)));
@@ -52,13 +60,15 @@ export function compileLessonPlanIr(rawIr: unknown, kg: CourseContext): Compiled
   const decoded = decodeLessonPlanIr(rawIr);
   const concepts = orderedConceptIds(kg);
   const conceptSet = new Set(concepts);
+  const visualConcepts = visualConceptIds(kg);
   const blocks = decoded.blocks;
 
-  validateQuantity(blocks, concepts.length);
+  validateQuantity(blocks, concepts.length, visualConcepts.size);
   validateOrdering(blocks);
   validateConceptLegality(blocks, conceptSet);
   validateLessonComposition(blocks);
   validateConceptCoverage(blocks, concepts);
+  validateVisualCoverage(blocks, visualConcepts);
   validateQuizCoverage(blocks, concepts);
 
   const jobs: BlockGenerationJob[] = blocks.map((block, index) => ({
@@ -83,11 +93,11 @@ export function compileLessonPlanIr(rawIr: unknown, kg: CourseContext): Compiled
   };
 }
 
-function validateQuantity(blocks: DecodedBlockPlan[], conceptCount: number): void {
-  const { min, max } = expectedBlockRange(conceptCount);
+function validateQuantity(blocks: DecodedBlockPlan[], conceptCount: number, visualCount: number): void {
+  const { min, max } = expectedBlockRange(conceptCount, visualCount);
   if (blocks.length < min || blocks.length > max) {
     throw new CoverageError(
-      `block count ${blocks.length} outside expected range ${min}-${max} for ${conceptCount} concepts`,
+      `block count ${blocks.length} outside expected range ${min}-${max} for ${conceptCount} concepts (${visualCount} visual)`,
       [`count:${blocks.length}`],
     );
   }
@@ -121,12 +131,42 @@ function validateLessonComposition(blocks: DecodedBlockPlan[]): void {
   const missing: string[] = [];
   if (typeCount("transfer") !== 1) missing.push(`transfer:${typeCount("transfer")}`);
   if (typeCount("quiz") !== 1) missing.push(`quiz:${typeCount("quiz")}`);
-  if (typeCount("visual") > 1) missing.push(`visual:${typeCount("visual")}`);
   if (roleCount("summary") < 1) missing.push("summary:0");
   if (missing.length > 0) {
     throw new CoverageError(
-      "lesson composition requires exactly one transfer, one quiz, at most one visual, and a summary",
+      "lesson composition requires exactly one transfer, one quiz, and a summary",
       missing,
+    );
+  }
+}
+
+/** Per-concept visual floor: every KG visual-worthy concept needs exactly one
+ * visual block on it, and no visual block may target a concept the KG did not
+ * mark visual-worthy. This makes visuals deterministic instead of a planner whim
+ * (the product's core differentiator). When the KG marks no concepts, no visual
+ * is required or rejected. */
+function validateVisualCoverage(blocks: DecodedBlockPlan[], visualConcepts: Set<string>): void {
+  const visualBlocks = blocks.filter((b) => b.type === "visual");
+  const problems: string[] = [];
+
+  // Floor: each visual-worthy concept is covered by exactly one visual block.
+  for (const conceptId of visualConcepts) {
+    const hits = visualBlocks.filter((b) => b.conceptIds.includes(conceptId)).length;
+    if (hits === 0) problems.push(`visual-missing:${conceptId}`);
+    else if (hits > 1) problems.push(`visual-duplicate:${conceptId}`);
+  }
+
+  // Ceiling: a visual block must target a visual-worthy concept (no stray visuals).
+  for (const block of visualBlocks) {
+    if (!block.conceptIds.some((conceptId) => visualConcepts.has(conceptId))) {
+      problems.push(`visual-unwarranted:order${block.order}`);
+    }
+  }
+
+  if (problems.length > 0) {
+    throw new CoverageError(
+      "each KG visual-worthy concept needs exactly one visual block, and visual blocks must target only those concepts",
+      problems,
     );
   }
 }
