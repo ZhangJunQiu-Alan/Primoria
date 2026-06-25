@@ -200,13 +200,9 @@ function ChatQuizCard({
 
   return (
     <div className="primoria-copilot-tool">
-      <div className="tool-card status-card">
-        <div className="tool-title">
-          <span className="tool-dot" />
-          <span>{title || "Practice quiz"}</span>
-        </div>
-        {description ? <p className="tool-note">{description}</p> : null}
-        <div className="course-quiz">
+      <section className="course-chat-quiz" aria-label={title || "自测"}>
+        {description ? <p className="course-chat-quiz-intro">{description}</p> : null}
+        <div className="course-chat-quiz-list course-quiz">
           {questions.map((question, index) => (
             <ChatQuizQuestionView
               key={question.id}
@@ -228,7 +224,7 @@ function ChatQuizCard({
             </div>
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

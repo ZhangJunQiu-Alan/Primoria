@@ -15,6 +15,11 @@ async function main() {
   const agentGraph = read("../agent/src/graph.mjs");
   const generativeUi = read("src/hooks/use-primoria-copilot.tsx");
   const chatSurface = read("src/components/tutor/copilot-chat-surface.tsx");
+  const styles = read("src/app/globals.css");
+  const chatQuizCardSource = generativeUi.slice(
+    generativeUi.indexOf("function ChatQuizCard"),
+    generativeUi.indexOf("function ChatQuizQuestionView"),
+  );
 
   assert(agentGraph.includes('name: "render_chat_quiz"'), "agent exposes render_chat_quiz tool");
   assert(agentGraph.includes("renderChatQuizTool"), "agent registers render_chat_quiz in the tool list");
@@ -27,6 +32,12 @@ async function main() {
   assert(generativeUi.includes('name: "render_chat_quiz"'), "web UI registers chat quiz renderer");
   assert(generativeUi.includes("function ChatQuizCard"), "web UI renders a controlled chat quiz card");
   assert(generativeUi.includes("course-quiz-submit"), "chat quiz reuses existing quiz submit styling");
+  assert(chatQuizCardSource.includes('className="course-chat-quiz"'), "chat quiz success state uses a dedicated light container");
+  assert(chatQuizCardSource.includes("course-chat-quiz-intro"), "chat quiz description renders without a title bar");
+  assert(!chatQuizCardSource.includes("tool-card status-card"), "chat quiz success state does not render the generic bordered tool card");
+  assert(!chatQuizCardSource.includes("tool-title"), "chat quiz success state does not render the generated quiz title header");
+  assert(styles.includes(".course-chat-quiz"), "chat quiz has dedicated styling");
+  assert(styles.includes(".course-chat-quiz .course-quiz-question"), "chat quiz questions have lighter scoped styling");
   assert(!generativeUi.includes("/api/courses/${courseId}/quiz"), "chat quiz renderer does not submit course quiz attempts");
   assert(generativeUi.includes("stripCopilotThinkTags"), "web UI exposes think-tag stripping");
   assert(generativeUi.includes("parsed?.type === \"chat_quiz\""), "assistant text sanitizer hides raw chat quiz tool JSON");

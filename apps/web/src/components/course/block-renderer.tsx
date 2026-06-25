@@ -28,6 +28,8 @@ import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
 import { EChartsRenderer } from "@/components/generative-ui/echarts-renderer";
 import { MermaidRenderer } from "@/components/generative-ui/mermaid-renderer";
 import { PhysicsSceneRenderer } from "@/components/generative-ui/physics-scene-renderer";
+import { AlgorithmVisualizer } from "@/components/generative-ui/algorithm-visualizer";
+import { MathExplorerRenderer } from "@/components/generative-ui/math-explorer-renderer";
 
 export function BlockRenderer({ block, courseId }: { block: CourseBlock; courseId?: string }) {
   if (block.type === "text") return <TextBlockView block={block} />;
@@ -106,14 +108,21 @@ function TransferBlockView({ block }: { block: TransferBlock }) {
   return (
     <BlockShell kind="transfer" title={block.title}>
       <div className="course-block-transfer">
-        <span className="course-transfer-line">
-          <CourseInlineMarkdown markdown={block.fromDomain} className="course-transfer-domain" />
-          <span>→</span>
-          <CourseInlineMarkdown markdown={block.toDomain} className="course-transfer-domain" />
-        </span>
-        <CourseMarkdown markdown={block.explanation} />
+        <div className="course-transfer-path" aria-label="迁移路径">
+          <span className="course-transfer-node">
+            <em>来源</em>
+            <CourseInlineMarkdown markdown={block.fromDomain} className="course-transfer-domain" />
+          </span>
+          <span className="course-transfer-arrow" aria-hidden="true">→</span>
+          <span className="course-transfer-node">
+            <em>迁移到</em>
+            <CourseInlineMarkdown markdown={block.toDomain} className="course-transfer-domain" />
+          </span>
+        </div>
+        <CourseMarkdown markdown={block.explanation} className="course-transfer-explanation" />
         <div className="course-transfer-example">
-          <em>Example.</em> <CourseInlineMarkdown markdown={block.example} />
+          <span className="course-transfer-example-label">示例</span>
+          <CourseMarkdown markdown={block.example} className="course-transfer-example-body" />
         </div>
       </div>
     </BlockShell>
@@ -142,6 +151,22 @@ function VisualBlockView({ block }: { block: VisualBlock }) {
       <BlockShell kind="visual" title={block.title}>
         <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
         <PhysicsSceneRenderer artifact={{ type: "physics_scene", title: block.title ?? "Simulation", description: block.description, scene: block.physicsScene }} />
+      </BlockShell>
+    );
+  }
+  if (block.engine === "algorithm" && block.algorithmViz) {
+    return (
+      <BlockShell kind="visual" title={block.title}>
+        <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
+        <AlgorithmVisualizer artifact={{ type: "algorithm_visualization", title: block.title ?? "Algorithm", description: block.description, algorithm: block.algorithmViz.algorithm, steps: block.algorithmViz.steps }} />
+      </BlockShell>
+    );
+  }
+  if (block.engine === "math_explorer" && block.mathExplorer) {
+    return (
+      <BlockShell kind="visual" title={block.title}>
+        <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
+        <MathExplorerRenderer artifact={{ type: "math_explorer", title: block.title ?? "Explorer", description: block.description, ...block.mathExplorer }} />
       </BlockShell>
     );
   }
