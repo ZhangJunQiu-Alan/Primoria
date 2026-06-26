@@ -1,0 +1,15 @@
+{
+  "//": "Root config exists only so `tsx` invoked from the repo root resolves the same path aliases as apps/web (the per-package tsconfig is used by Next/tsc builds). `include: []` keeps a stray `tsc` here from compiling the whole tree.",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["apps/web/src/*"],
+      "@primoria/contracts": ["packages/contracts/src/index.ts"],
+      "@primoria/contracts/*": ["packages/contracts/src/*"],
+      "@primoria/domain": ["packages/domain/src/index.ts"],
+      "@primoria/domain/*": ["packages/domain/src/*"],
+      "@primoria/memory": ["packages/memory/src/index.ts"]
+    }
+  },
+  "include": []
+}
