@@ -28,23 +28,23 @@ export function learningDecisionHeadline(decision: LearningDecision): string {
     case "remediation":
       return "建议先补一节";
     case "next":
-      return "准备好进入下一节";
-    case "goal_reached":
-      return "你达成了学习目标";
+      return "Good Job！";
+    case "course_complete":
+      return "恭喜，课程完成 🎉";
     default:
       return "学习建议";
   }
 }
 
-/** Confirm-button label for the recommendation popup, by decision kind. */
+/** Primary-button label for the recommendation popup, by decision kind. */
 export function learningDecisionAcceptLabel(decision: LearningDecision): string {
   switch (decision.kind) {
     case "remediation":
-      return "生成补救课";
+      return "是";
     case "next":
-      return "生成下一节";
-    case "goal_reached":
-      return "好的";
+      return decision.nextLessonTitle ? `开始学习「${decision.nextLessonTitle}」` : "开始下一节";
+    case "course_complete":
+      return "回首页";
     default:
       return "继续";
   }

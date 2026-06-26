@@ -242,6 +242,21 @@ export async function insertPlannedLesson(input: {
   return rowToLesson(row);
 }
 
+/** Owner-scoped lesson progress transition. Used when a lesson is implicitly
+ * completed (all its end-of-lesson quizzes attempted) so the course's resume
+ * pointer (first non-completed lesson by sortKey) advances to the next lesson. */
+export async function markLessonProgress(
+  courseId: string,
+  lessonId: string,
+  ownerId: string,
+  progress: LessonProgress,
+): Promise<void> {
+  await getDb()
+    .update(lessonsTable)
+    .set({ progress, updatedAt: new Date() })
+    .where(and(eq(lessonsTable.id, lessonId), eq(lessonsTable.courseId, courseId), eq(lessonsTable.ownerId, ownerId)));
+}
+
 async function saveCourseToDb(course: Course, ownerId: string) {
   const courseRow = courseToRow(course, ownerId);
   const lessonRows = course.lessons.map((lesson) => lessonToRow(lesson, course.id, ownerId));

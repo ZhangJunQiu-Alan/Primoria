@@ -31,7 +31,7 @@ function mastery(topicIds: string[], status: MasteryStatus): Map<string, Mastery
 function main() {
   assert(nonLeaf && leaf, "graph has a non-leaf and a leaf topic with concepts");
 
-  // 1) No weak point, not the anchor topic → advance to the next outline topic.
+  // 1) No weak point, has a next outline topic → advance to the next topic.
   {
     const decision = decideNextStep({
       graphId,
@@ -39,27 +39,13 @@ function main() {
       currentLessonSortKey: 1,
       nextLessonSortKey: null,
       masteryByConcept: mastery([nonLeaf.topicId], "mastered"),
-      anchorConceptId: null,
     });
     assert(decision.kind === "next", "all mastered → next");
     assert(decision.targetTopicId === nextTopic(graphId, nonLeaf.topicId)?.topicId, "next targets the next topic");
+    assert(decision.nextLessonTitle === nextTopic(graphId, nonLeaf.topicId)?.name, "next carries the next lesson title");
   }
 
-  // 2) No weak point + current topic owns the anchor → goal reached.
-  {
-    const anchor = nonLeaf.conceptIds[0].conceptId;
-    const decision = decideNextStep({
-      graphId,
-      currentTopicId: nonLeaf.topicId,
-      currentLessonSortKey: 1,
-      nextLessonSortKey: 2,
-      masteryByConcept: mastery([nonLeaf.topicId], "mastered"),
-      anchorConceptId: anchor,
-    });
-    assert(decision.kind === "goal_reached", "all mastered + anchor here → goal_reached");
-  }
-
-  // 3) A weak concept in the current topic → remediation between current and next.
+  // 2) A weak concept in the current topic → remediation between current and next.
   {
     const m = mastery([nonLeaf.topicId], "mastered");
     const weakConcept = nonLeaf.conceptIds[0].conceptId;
@@ -70,15 +56,15 @@ function main() {
       currentLessonSortKey: 1,
       nextLessonSortKey: 2,
       masteryByConcept: m,
-      anchorConceptId: null,
     });
     assert(decision.kind === "remediation", "weak concept → remediation");
     assert(decision.targetConceptId === weakConcept, "remediation targets the weak concept");
     assert(decision.targetTopicId === nonLeaf.topicId, "remediation lands in the concept's topic");
     assert(decision.proposedSortKey === 1.5, "remediation sortKey is the midpoint");
+    assert(decision.nextLessonTitle === nextTopic(graphId, nonLeaf.topicId)?.name, "remediation still reports the next lesson title");
   }
 
-  // 4) Root-cause retarget: a prereq topic concept is also weak → remediate the prereq.
+  // 3) Root-cause retarget: a prereq topic concept is also weak → remediate the prereq.
   {
     const prereqTopicId = withPrereq.prereqTopics[0];
     const prereqConcept = graph.topics.find((t) => t.topicId === prereqTopicId)!.conceptIds[0].conceptId;
@@ -91,14 +77,13 @@ function main() {
       currentLessonSortKey: 3,
       nextLessonSortKey: 4,
       masteryByConcept: m,
-      anchorConceptId: null,
     });
     assert(decision.kind === "remediation", "weak with weak prereq → remediation");
     assert(decision.targetConceptId === prereqConcept, "remediation retargets the prereq root cause");
     assert(decision.targetTopicId === prereqTopicId, "remediation lands in the prereq topic");
   }
 
-  // 5) Leaf topic, no weak point → end of outline → goal reached.
+  // 4) Leaf topic, no weak point → no next lesson → course complete.
   {
     const decision = decideNextStep({
       graphId,
@@ -106,12 +91,12 @@ function main() {
       currentLessonSortKey: 9,
       nextLessonSortKey: null,
       masteryByConcept: mastery([leaf.topicId], "mastered"),
-      anchorConceptId: null,
     });
-    assert(decision.kind === "goal_reached", "leaf + no weak → goal_reached (outline end)");
+    assert(decision.kind === "course_complete", "leaf + no weak → course_complete (outline end)");
+    assert(decision.nextLessonTitle === null, "course_complete has no next lesson title");
   }
 
-  // 6) Remediation at the end of the outline (no next lesson) → sortKey = current + 1.
+  // 5) Remediation at the end of the outline (no next lesson) → sortKey = current + 1.
   {
     const m = mastery([nonLeaf.topicId], "mastered");
     m.set(nonLeaf.conceptIds[0].conceptId, "weak");
@@ -121,7 +106,6 @@ function main() {
       currentLessonSortKey: 5,
       nextLessonSortKey: null,
       masteryByConcept: m,
-      anchorConceptId: null,
     });
     assert(decision.kind === "remediation" && decision.proposedSortKey === 6, "no next lesson → remediation sortKey = current + 1");
   }

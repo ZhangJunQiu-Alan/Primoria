@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAgent, useCopilotKit, useFrontendTool, UseAgentUpdate } from "@copilotkit/react-core/v2";
 import { z } from "zod";
 import { BlockRenderer } from "./block-renderer";
@@ -378,7 +379,6 @@ function CourseBlockActionTray({
     >
       <div id={controlsId} className="course-block-action-panel" role="group" aria-label={`学习动作：${title}`}>
         <div className="course-block-action-panel-copy">
-          <span>针对当前 block</span>
           <strong>{title}</strong>
         </div>
         <div className="course-block-action-tray">
@@ -646,23 +646,139 @@ function CourseAIAssistantPanel({
   );
 }
 
-// Post-lesson recommendation popup (feature_specification.md §Note4). After a
-// lesson is completed, the learning-progress worker records a next-step decision;
-// here the learner confirms it before any lesson is generated. On accept that
-// enqueues a lesson job, the parent refetches so the new/next lesson appears in
-// the outline and starts polling.
-function LearningProgressPopup({ courseId, onAccepted }: { courseId: string; onAccepted: () => Promise<void> | void }) {
+const POPUP_OVERLAY_STYLE: React.CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  zIndex: 60,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "rgba(28, 22, 14, 0.32)",
+  padding: 16,
+};
+const POPUP_CARD_STYLE: React.CSSProperties = {
+  width: "min(440px, 100%)",
+  background: "#fffefb",
+  borderRadius: 16,
+  border: "1px solid rgba(200, 136, 26, 0.22)",
+  boxShadow: "0 18px 48px rgba(57, 42, 25, 0.22)",
+  padding: 24,
+};
+const POPUP_SECONDARY_BTN: React.CSSProperties = {
+  padding: "8px 16px",
+  borderRadius: 999,
+  border: "1px solid rgba(90, 71, 39, 0.2)",
+  background: "transparent",
+  color: "#5a4727",
+  fontWeight: 700,
+  cursor: "pointer",
+};
+const POPUP_PRIMARY_BTN: React.CSSProperties = {
+  padding: "8px 18px",
+  borderRadius: 999,
+  border: "none",
+  background: "#c8881a",
+  color: "#fffaf2",
+  fontWeight: 800,
+  cursor: "pointer",
+};
+
+// Post-lesson recommendation popup (feature_specification.md §28–30). After a
+// lesson is completed, the learning-progress worker records a next-step decision.
+// The popup has three shapes by decision kind:
+//   • remediation — offer to generate a remediation lesson ("是", stays open and
+//     shows generation progress) or skip to the next lesson / home ("不需要").
+//   • next — "Good Job"; start the (preloaded) next lesson, or go home.
+//   • course_complete — congratulate and return home.
+// Closing the popup counts as declining remediation (dismiss). Every resolution
+// refreshes the course so the next/remediation lesson surfaces in the outline.
+function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onResolved: () => Promise<void> | void }) {
+  const router = useRouter();
   const { pending, resolving, resolve } = useLearningProgressRecommendation(courseId);
+  const [generatingLessonId, setGeneratingLessonId] = useState<string | null>(null);
+
+  // While a remediation lesson generates, keep the popup open and poll the course
+  // until that lesson materializes, then refresh so its blocks appear and close.
+  useEffect(() => {
+    if (!generatingLessonId) return;
+    let cancelled = false;
+    const tick = async () => {
+      try {
+        const res = await fetch(`/api/courses/${courseId}`, { cache: "no-store" });
+        if (!res.ok) return;
+        const data = (await res.json()) as { course?: { lessons?: { id: string; status: string }[] } };
+        const lesson = data.course?.lessons?.find((l) => l.id === generatingLessonId);
+        if (lesson?.status === "generated" && !cancelled) {
+          setGeneratingLessonId(null);
+          await onResolved();
+        }
+      } catch {
+        // Best-effort polling; a manual reload still surfaces the lesson.
+      }
+    };
+    const interval = window.setInterval(() => void tick(), 2500);
+    void tick();
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+    };
+  }, [generatingLessonId, courseId, onResolved]);
+
+  if (generatingLessonId) {
+    return (
+      <div className="learning-progress-popup-overlay" role="dialog" aria-modal="true" aria-label="Generating remediation" style={POPUP_OVERLAY_STYLE}>
+        <div className="learning-progress-popup-card" style={POPUP_CARD_STYLE}>
+          <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>正在生成补救课…</strong>
+          <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>请稍候，补救内容生成完成后会自动为你打开。</p>
+        </div>
+      </div>
+    );
+  }
+
   const decision = pending?.decision ?? null;
   if (!pending || !decision) return null;
+  const jobId = pending.id;
+  const goHome = () => router.push("/");
 
-  async function act(action: "accept" | "dismiss") {
-    if (!pending) return;
-    const result = await resolve(pending.id, action);
-    if (action === "accept" && result && (result.kind === "next" || result.kind === "remediation")) {
-      await onAccepted();
+  async function acceptPrimary() {
+    const result = await resolve(jobId, "accept");
+    if (decision!.kind === "remediation" && result?.lessonId) {
+      setGeneratingLessonId(result.lessonId);
+      return;
     }
+    if (decision!.kind === "course_complete") {
+      goHome();
+      return;
+    }
+    // next — the lesson is preloaded (or now enqueued); surface it in place.
+    await onResolved();
   }
+
+  // Secondary action by kind:
+  //   • remediation + has next → decline remediation and advance to the next lesson
+  //   • remediation, last lesson → decline and go home
+  //   • next ("Good Job") → "否", go home
+  async function declineSecondary() {
+    await resolve(jobId, "dismiss");
+    if (decision!.kind === "remediation" && decision!.nextLessonTitle) await onResolved();
+    else goHome();
+  }
+
+  // Closing the popup == declining remediation; reveal the preloaded next lesson.
+  async function closePopup() {
+    await resolve(jobId, "dismiss");
+    await onResolved();
+  }
+
+  const isRemediation = decision.kind === "remediation";
+  const isComplete = decision.kind === "course_complete";
+  const secondaryLabel = isComplete
+    ? null
+    : decision.kind === "next"
+      ? "否"
+      : decision.nextLessonTitle
+        ? `不需要，开始学习「${decision.nextLessonTitle}」`
+        : "不需要";
 
   return (
     <div
@@ -670,64 +786,34 @@ function LearningProgressPopup({ courseId, onAccepted }: { courseId: string; onA
       role="dialog"
       aria-modal="true"
       aria-label="Learning recommendation"
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 60,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "rgba(28, 22, 14, 0.32)",
-        padding: 16,
+      style={POPUP_OVERLAY_STYLE}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) void closePopup();
       }}
     >
-      <div
-        className="learning-progress-popup-card"
-        style={{
-          width: "min(440px, 100%)",
-          background: "#fffefb",
-          borderRadius: 16,
-          border: "1px solid rgba(200, 136, 26, 0.22)",
-          boxShadow: "0 18px 48px rgba(57, 42, 25, 0.22)",
-          padding: 24,
-        }}
-      >
+      <div className="learning-progress-popup-card" style={POPUP_CARD_STYLE}>
         <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>
           {learningDecisionHeadline(decision)}
         </strong>
         <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>{decision.reason}</p>
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 22 }}>
+          {secondaryLabel && (
+            <button
+              type="button"
+              onClick={() => void declineSecondary()}
+              disabled={resolving}
+              style={{ ...POPUP_SECONDARY_BTN, cursor: resolving ? "default" : "pointer" }}
+            >
+              {secondaryLabel}
+            </button>
+          )}
           <button
             type="button"
-            onClick={() => void act("dismiss")}
+            onClick={() => void acceptPrimary()}
             disabled={resolving}
-            style={{
-              padding: "8px 16px",
-              borderRadius: 999,
-              border: "1px solid rgba(90, 71, 39, 0.2)",
-              background: "transparent",
-              color: "#5a4727",
-              fontWeight: 700,
-              cursor: resolving ? "default" : "pointer",
-            }}
+            style={{ ...POPUP_PRIMARY_BTN, cursor: resolving ? "default" : "pointer" }}
           >
-            暂不
-          </button>
-          <button
-            type="button"
-            onClick={() => void act("accept")}
-            disabled={resolving}
-            style={{
-              padding: "8px 18px",
-              borderRadius: 999,
-              border: "none",
-              background: "#c8881a",
-              color: "#fffaf2",
-              fontWeight: 800,
-              cursor: resolving ? "default" : "pointer",
-            }}
-          >
-            {resolving ? "处理中…" : learningDecisionAcceptLabel(decision)}
+            {resolving ? "处理中…" : isRemediation ? "是" : learningDecisionAcceptLabel(decision)}
           </button>
         </div>
       </div>
@@ -776,6 +862,18 @@ export function CourseDetailClient({
     workspace.style.setProperty("--course-content-margin-end", sidebarCollapsed ? "auto" : "var(--course-content-gutter)");
   }, [sidebarCollapsed, sidebarWidth]);
 
+  // Preload the immediately-next outline lesson while the learner studies the
+  // current one (feature_specification.md §28). The "active" lesson is the first
+  // generated, not-yet-completed lesson by sortKey; we warm the next one once.
+  const prewarmedRef = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    const sorted = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
+    const active = sorted.find((lesson) => lesson.status === "generated" && lesson.progress !== "completed");
+    if (!active || prewarmedRef.current.has(active.id)) return;
+    prewarmedRef.current.add(active.id);
+    void fetch(`/api/courses/${course.id}/lessons/${active.id}/prewarm-next`, { method: "POST" }).catch(() => {});
+  }, [course]);
+
   const selectedBlock = blocks.find((b) => b.id === selectedBlockId) ?? null;
 
   // After a recommendation is accepted (a lesson job was enqueued), refetch the
@@ -819,17 +917,17 @@ export function CourseDetailClient({
     }));
   }
 
-  function toggleBlockActions(block: CourseBlock) {
+  function openBlockActions(block: CourseBlock) {
     setSelectedBlockId(block.id);
     setSelectedTextContext(null);
-    setExpandedActionsBlockId((current) => (current === block.id ? null : block.id));
+    setExpandedActionsBlockId(block.id);
   }
 
   function runBlockLearningAction(block: CourseBlock, action: "explain" | "example" | "practice" | "check") {
     setSelectedBlockId(block.id);
     setSelectedTextContext(null);
     setSidebarCollapsed(false);
-    setExpandedActionsBlockId(null);
+    setExpandedActionsBlockId(block.id);
     sendCoursePrompt(courseThreadId, blockActionPrompt(block, action));
   }
 
@@ -908,7 +1006,7 @@ export function CourseDetailClient({
               className={`course-block-wrapper${selectedBlockId === block.id ? " selected" : ""}`}
               onClick={(event) => {
                 if (selectionTextInside(event.currentTarget)) return;
-                toggleBlockActions(block);
+                openBlockActions(block);
               }}
               onMouseUp={(event) => updateSelectedText(block, event.currentTarget)}
               onKeyUp={(event) => {
@@ -919,7 +1017,7 @@ export function CourseDetailClient({
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
-                  toggleBlockActions(block);
+                  openBlockActions(block);
                 }
               }}
             >
@@ -941,7 +1039,7 @@ export function CourseDetailClient({
           />
         </div>
       </div>
-      <LearningProgressPopup courseId={course.id} onAccepted={refreshAfterRecommendation} />
+      <LearningProgressPopup courseId={course.id} onResolved={refreshAfterRecommendation} />
       <CourseAIAssistantPanel
         course={course}
         selectedBlock={selectedBlock}

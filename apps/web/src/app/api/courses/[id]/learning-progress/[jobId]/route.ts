@@ -37,14 +37,22 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const decision = resolved.decision;
     if (!decision) return NextResponse.json({ status: "accepted" }, { status: 200 });
 
-    if (decision.kind === "goal_reached") {
-      return NextResponse.json({ status: "accepted", kind: "goal_reached" }, { status: 200 });
+    if (decision.kind === "course_complete") {
+      return NextResponse.json({ status: "accepted", kind: "course_complete" }, { status: 200 });
     }
 
     if (decision.kind === "next") {
       const course = await getCourse(courseId, ownerId);
-      const target = course?.lessons.find((l) => l.topicId === decision.targetTopicId && l.status !== "generated");
+      // The next outline lesson may already be generated — preload warms it while
+      // the learner studies the current lesson — so match on topic regardless of
+      // status and treat an already-generated target as success (no re-enqueue).
+      const target = [...(course?.lessons ?? [])]
+        .sort((a, b) => a.sortKey - b.sortKey)
+        .find((l) => l.topicId === decision.targetTopicId);
       if (!target) return NextResponse.json({ error: "Next lesson not found in outline" }, { status: 404 });
+      if (target.status === "generated") {
+        return NextResponse.json({ status: "accepted", kind: "next", lessonId: target.id, job: null }, { status: 200 });
+      }
       const result = await enqueueLessonGenerationJob({ ownerId, courseId, lessonId: target.id });
       const job = "job" in result && result.job ? toLessonGenerationJobSummary(result.job) : null;
       return NextResponse.json({ status: "accepted", kind: "next", lessonId: target.id, job }, { status: 202 });

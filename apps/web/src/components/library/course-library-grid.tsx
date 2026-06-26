@@ -419,7 +419,9 @@ function CourseTable({
             <th scope="col">
               <SortHeaderButton label="Updated" sortKey="updated" activeSort={sort} onSort={onSort} />
             </th>
-            <th scope="col">Actions</th>
+            <th scope="col" className="library-actions-header">
+              <span className="library-actions-heading">Actions</span>
+            </th>
           </tr>
         </thead>
         <tbody>

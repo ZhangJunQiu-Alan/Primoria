@@ -4,7 +4,7 @@ import { and, eq } from "drizzle-orm";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getDb, hasDatabaseUrl } from "@/lib/db/client";
 import { quizAttempts } from "@/lib/db/schema";
-import { getCourse } from "@/lib/courses/store";
+import { getCourse, markLessonProgress } from "@/lib/courses/store";
 import { enqueueLearningProgressJob } from "@/lib/courses/learning-progress-jobs";
 import type { QuizQuestion } from "@/lib/courses/types";
 import { recordLearningEvent, type QuizSelected } from "@/lib/learning-events/store";
@@ -112,6 +112,9 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         const answered = new Set(attempted.map((row) => row.blockId));
         const complete = quizBlockIds.every((blockId) => answered.has(blockId));
         if (complete) {
+          // Advance the resume pointer: a completed lesson is no longer the
+          // course's first non-completed lesson, so Continue moves to the next.
+          await markLessonProgress(courseId, lessonId, user.id, "completed");
           await recordLearningEvent({
             type: "lesson.completed",
             ownerId: user.id,
