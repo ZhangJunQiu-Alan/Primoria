@@ -469,6 +469,55 @@ button {
   gap: 14px;
 }
 
+.kg-menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 2px 0;
+  display: grid;
+  gap: 8px;
+}
+
+.kg-menu-item {
+  width: 100%;
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: grid;
+  gap: 5px;
+  background: rgba(244, 244, 245, 0.82);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.kg-menu-item:hover,
+.kg-menu-item:focus-visible {
+  outline: none;
+  border-color: rgba(200, 136, 26, 0.24);
+  background: #fffaf2;
+  box-shadow: 0 10px 24px rgba(57, 42, 25, 0.08);
+  transform: translateY(-1px);
+}
+
+.kg-menu-title {
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+.kg-menu-reason {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .array-row {
   display: flex;
   flex-wrap: wrap;

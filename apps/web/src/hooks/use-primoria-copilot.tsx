@@ -464,7 +464,7 @@ function courseArtifactFromSummary(summary: unknown, status: "generating" | "rea
   return parsed.success ? parsed.data : null;
 }
 
-type MenuItem = { graphId: string; topicId: string; name: string };
+type MenuItem = { graphId: string; topicId: string; name: string; reason: string };
 type CourseTopicAnchor = {
   graphId: string;
   startTopicId: string;
@@ -554,10 +554,11 @@ class LearningGoalTask {
         const resolvedGraphId = typeof posData?.graphId === "string" ? posData.graphId : this.graphId;
         if (!resolvedGraphId) throw new Error("positioning result did not include a knowledge graph");
         this.update({
-          menu: (plan.menu ?? []).map((m: { topicId: string; name: string }) => ({
+          menu: (plan.menu ?? []).map((m: { topicId: string; name: string; reason?: string }) => ({
             graphId: resolvedGraphId,
             topicId: m.topicId,
             name: m.name,
+            reason: typeof m.reason === "string" ? m.reason.trim() : "",
           })),
           phase: "broad",
         });
@@ -812,27 +813,22 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
             <span>可能的学习入口</span>
           </div>
           <div className="visualizer">
-            <ul className="kg-menu-list" style={{ listStyleType: "none", padding: 0, margin: "8px 0" }}>
+            <ul className="kg-menu-list">
               {menu.map((item) => (
-                <li
-                  key={item.topicId}
-                  onClick={() => task?.startCourseBuild({
-                    graphId: item.graphId,
-                    startTopicId: item.topicId,
-                    targetConceptId: null,
-                  })}
-                  style={{
-                    cursor: "pointer",
-                    padding: "8px 12px",
-                    margin: "4px 0",
-                    background: "var(--background-secondary, #f4f4f5)",
-                    borderRadius: "6px",
-                    transition: "background 0.2s",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "var(--background-hover, #e4e4e7)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "var(--background-secondary, #f4f4f5)")}
-                >
-                  {item.name}
+                <li key={item.topicId}>
+                  <button
+                    type="button"
+                    className="kg-menu-item"
+                    aria-label={item.reason ? `${item.name}: ${item.reason}` : item.name}
+                    onClick={() => task?.startCourseBuild({
+                      graphId: item.graphId,
+                      startTopicId: item.topicId,
+                      targetConceptId: null,
+                    })}
+                  >
+                    <span className="kg-menu-title">{item.name}</span>
+                    {item.reason ? <span className="kg-menu-reason">{item.reason}</span> : null}
+                  </button>
                 </li>
               ))}
             </ul>
