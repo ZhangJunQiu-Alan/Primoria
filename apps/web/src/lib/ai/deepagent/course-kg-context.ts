@@ -3,6 +3,7 @@
 // (e.g. the /debug/pipeline inspector).
 
 import type { ConceptVisual } from "../../knowledge-graph/topic-graph";
+import type { MasteryStatus } from "../../mastery/store";
 
 export type CourseContextConcept = {
   conceptId: string;
@@ -12,6 +13,10 @@ export type CourseContextConcept = {
   // planner's per-concept visual requirement (absent = no forced visual).
   visual?: ConceptVisual;
   visualHint?: string;
+  // Learner's prior mastery of this concept (from user_concept_mastery). Absent
+  // = no record yet → treat as first-time learning. Shapes teaching DEPTH only;
+  // coverage and mandated visual/quiz blocks are unaffected.
+  mastery?: MasteryStatus;
 };
 
 export type CourseContextTopic = {

@@ -13,10 +13,14 @@ const TYPE_CODE_LINES = Object.entries(TYPE_CODE_TO_BLOCK)
   .map(([code, type]) => `  ${code} = ${type}`)
   .join("\n");
 
+function masteryTag(c: CourseContextTopic["concepts"][number]): string {
+  return `[${c.mastery ?? "untested"}]`;
+}
+
 function fmtConcepts(topic: CourseContextTopic): string {
   return [...(topic.concepts ?? [])]
     .sort((a, b) => a.defaultOrder - b.defaultOrder)
-    .map((c) => `  ${c.defaultOrder}. ${c.name} (${c.conceptId})`)
+    .map((c) => `  ${c.defaultOrder}. ${c.name} (${c.conceptId}) ${masteryTag(c)}`)
     .join("\n");
 }
 
@@ -45,10 +49,15 @@ export function buildPlannerPrompt(kg: CourseContext): string {
 LANGUAGE: ${languageDirective(kg.language)}
 
 TOPIC: ${kg.startTopic.name} (${kg.startTopic.topicId})
-CONCEPTS (teach in this default order):
+CONCEPTS (teach in this default order; [..] = learner's prior mastery):
 ${fmtConcepts(kg.startTopic)}
 ${kg.targetConceptId ? `TARGET CONCEPT (center the lesson on it): ${kg.targetConceptId}` : ""}
 VALID CONCEPT IDS: ${conceptIds.join(", ")}
+
+MASTERY ADAPTATION (the [..] tag after each concept; adjust teaching DEPTH only — still cover EVERY concept, and never drop the mandated visual/quiz/transfer blocks):
+- [mastered]: compress — a brief refresher explanation plus one short confirming example. Do not belabor it.
+- [learning]: light review — one focused explanation and one example.
+- [weak] / [untested]: teach fully as if new — a clear explanation plus extra worked examples. Spend your depth here.
 
 VISUAL CONCEPTS (each REQUIRES one V=visual block — these are the product's core differentiator):
 ${visuals.length ? fmtVisualConcepts(kg.startTopic) : "  (none for this topic)"}
