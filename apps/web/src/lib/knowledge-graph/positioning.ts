@@ -49,6 +49,7 @@ export type BroadMenuItem = {
   name: string;
   defaultOrder: number;
   concepts: TopicConcept[];
+  reason?: string;
 };
 
 export type PositioningDiagnostics = {

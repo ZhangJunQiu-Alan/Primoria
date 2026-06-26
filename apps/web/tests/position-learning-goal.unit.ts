@@ -60,12 +60,13 @@ function main() {
     graphId: "g1",
     params: baseParams,
     diagnostics: baseDiagnostics,
-    menu: [{ topicId: "t1", name: "Topic 1", defaultOrder: 1, concepts: [] }],
+    menu: [{ topicId: "t1", name: "Topic 1", defaultOrder: 1, concepts: [], reason: "Matches the current goal." }],
   };
   const p3 = planFromPositioning(broad);
   assert(p3.branch === "broad", "broad stays broad");
   if (p3.branch !== "broad") return;
   assert(p3.menu.length === 1 && p3.menu[0].topicId === "t1", "broad returns the menu");
+  assert(p3.menu[0].reason === "Matches the current goal.", "broad plan preserves generated relevance reason");
 
   // fallback -> message, never a course context
   const fallback: PositioningResult = {
