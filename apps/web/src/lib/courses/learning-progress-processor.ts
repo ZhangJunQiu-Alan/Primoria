@@ -85,7 +85,6 @@ export async function processLearningProgressJob(claim: LearningProgressClaim): 
     currentLessonSortKey: lesson.sortKey,
     nextLessonSortKey,
     masteryByConcept,
-    anchorConceptId: course.anchorConceptId ?? null,
   });
 
   const result = await completeLearningProgressJobWithDecision(fence, decision);

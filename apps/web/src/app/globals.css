@@ -2587,6 +2587,15 @@ cpk-web-inspector {
 .library-col-lessons { width: 7%; }
 .library-col-updated { width: 11%; }
 .library-col-actions { width: 11%; }
+.library-actions-header {
+  text-align: right;
+}
+.library-actions-heading {
+  display: inline-flex;
+  min-width: 72px;
+  justify-content: center;
+  margin-right: 41px;
+}
 .library-course-table th {
   position: relative;
   padding: 18px clamp(10px, 1.3vw, 22px);
@@ -6111,15 +6120,27 @@ cpk-web-inspector {
 .course-block-text p:last-child { margin-bottom: 0; }
 
 .course-block-learning-actions {
-  margin-top: 10px;
-  padding: 0 4px;
+  position: relative;
+  margin: 12px -6px -4px;
+  padding: 0 10px 8px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 8px;
+  overflow: visible;
 }
 .course-block-learning-actions.expanded {
-  gap: 10px;
+  animation: course-action-drawer-in 160ms ease-out both;
+}
+
+@keyframes course-action-drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .course-block-action-tray button {
   border: 1px solid rgba(23, 19, 15, 0.1);
@@ -6133,27 +6154,38 @@ cpk-web-inspector {
   cursor: pointer;
 }
 .course-block-action-panel {
+  position: relative;
+  isolation: isolate;
   width: 100%;
-  padding: 12px;
-  border: 1px solid rgba(200, 136, 26, 0.2);
-  border-radius: 16px;
-  background: linear-gradient(180deg, #fffdf8 0%, #fff8e8 100%);
-  box-shadow: 0 16px 34px rgba(57, 42, 25, 0.08);
+  padding: 12px 14px;
+  border: 1px solid rgba(23, 19, 15, 0.18);
+  border-radius: 18px;
+  background: #fffdf8;
+  box-shadow: 0 14px 28px rgba(57, 42, 25, 0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 14px;
 }
+
+.course-block-action-panel::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 14px;
+  right: 14px;
+  bottom: -9px;
+  height: 20px;
+  border: 1px solid rgba(23, 19, 15, 0.2);
+  border-top: 0;
+  border-radius: 0 0 18px 18px;
+  background: #fffdf8;
+}
+
 .course-block-action-panel-copy {
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.course-block-action-panel-copy span {
-  color: var(--quiet);
-  font-size: 11px;
-  font-weight: 760;
+  position: relative;
+  z-index: 1;
 }
 .course-block-action-panel-copy strong {
   color: var(--ink);
@@ -6164,6 +6196,8 @@ cpk-web-inspector {
 }
 .course-block-action-tray {
   min-width: max-content;
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
@@ -6184,6 +6218,11 @@ cpk-web-inspector {
 }
 
 @media (max-width: 720px) {
+  .course-block-learning-actions {
+    margin-left: -2px;
+    margin-right: -2px;
+  }
+
   .course-block-action-panel {
     align-items: stretch;
     flex-direction: column;
@@ -7434,8 +7473,17 @@ cpk-web-inspector {
 }
 
 .course-copilot-surface .primoria-copilot-composer {
-  padding: 14px 36px 18px;
-  gap: 10px;
+  align-content: end;
+  justify-items: stretch;
+  gap: 6px;
+  padding: 10px 14px 12px;
+  border-top: 1px solid rgba(23, 19, 15, 0.06);
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0), #fffdf8 26%);
+}
+
+.course-copilot-surface .primoria-copilot-input-slot {
+  width: 100%;
+  max-width: none;
 }
 
 .course-copilot-hidden {
@@ -8505,44 +8553,113 @@ cpk-web-inspector {
   max-width: 100%;
 }
 
+.course-copilot-surface .copilotKitInputContainer {
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.course-copilot-surface .copilotKitInput {
+  width: 100% !important;
+  min-height: 54px !important;
+  display: grid !important;
+  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  align-items: center !important;
+  column-gap: 8px;
+  margin: 0 !important;
+  padding: 8px 10px !important;
+  border: 1px solid rgba(23, 19, 15, 0.1) !important;
+  border-radius: 22px !important;
+  background: #fffaf2 !important;
+  box-shadow: 0 10px 24px rgba(57, 42, 25, 0.08) !important;
+}
+
 .course-copilot-surface [data-testid="copilot-chat-input"] {
   border: 1px solid rgba(23, 19, 15, 0.1);
-  border-radius: 18px !important;
+  border-radius: 22px !important;
   background: #fffaf2 !important;
-  box-shadow: 0 4px 14px rgba(57, 42, 25, 0.05) !important;
+  box-shadow: 0 10px 24px rgba(57, 42, 25, 0.08) !important;
 }
 
 .course-copilot-surface [data-testid="copilot-chat-input"] > div {
-  min-height: 42px;
-  padding: 6px 8px !important;
-  column-gap: 8px !important;
+  min-height: 54px !important;
+  padding: 8px 10px !important;
 }
 
 .course-copilot-surface [data-testid="copilot-chat-input"] [class*="min-h-\[50px\]"] {
   min-height: 34px !important;
 }
 
+.course-copilot-surface .copilotKitInput > textarea,
 .course-copilot-surface [data-testid="copilot-chat-textarea"] {
-  height: 30px !important;
-  min-height: 30px !important;
+  grid-column: 2;
+  grid-row: 1;
+  height: 34px !important;
+  min-height: 34px !important;
   max-height: 96px !important;
+  align-self: center !important;
+  padding: 6px 0 !important;
   font-size: 13px !important;
-  line-height: 1.4 !important;
+  line-height: 22px !important;
   color: var(--ink) !important;
+  overflow-y: auto !important;
 }
 
+.course-copilot-surface .copilotKitInput > textarea::placeholder,
 .course-copilot-surface [data-testid="copilot-chat-textarea"]::placeholder {
   color: rgba(107, 99, 87, 0.68) !important;
 }
 
+.course-copilot-surface .copilotKitInputControls {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: grid !important;
+  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  align-items: center !important;
+  gap: 8px !important;
+  pointer-events: none;
+}
+
+.course-copilot-surface .copilotKitInputControls > * {
+  pointer-events: none;
+}
+
+.course-copilot-surface .copilotKitInputControls > button {
+  pointer-events: auto;
+}
+
+.course-copilot-surface .copilotKitInputControls > button:first-child:not(:last-child) {
+  grid-column: 1;
+  color: rgba(23, 19, 15, 0.56) !important;
+}
+
+.course-copilot-surface .copilotKitInputControls > div {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.course-copilot-surface .copilotKitInputControls > button:last-child {
+  grid-column: 3;
+  background: #3a352d !important;
+  color: #fffaf2 !important;
+}
+
+.course-copilot-surface .copilotKitInputControls > button:last-child[disabled] {
+  background: rgba(23, 19, 15, 0.32) !important;
+  color: rgba(255, 253, 248, 0.86) !important;
+}
+
+.course-copilot-surface .copilotKitInputControlButton,
 .course-copilot-surface [data-testid="copilot-send-button"],
 .course-copilot-surface [data-testid="copilot-add-menu-button"],
 .course-copilot-surface [data-testid="copilot-start-transcribe-button"] {
-  width: 30px !important;
-  height: 30px !important;
-  min-width: 30px !important;
-  min-height: 30px !important;
-  border-radius: 11px !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  border-radius: 13px !important;
 }
 
 .course-copilot-surface [data-testid="copilot-send-button"] {

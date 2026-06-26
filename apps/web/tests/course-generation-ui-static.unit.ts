@@ -96,6 +96,8 @@ async function main() {
   assert(styles.includes("scrollbar-width: none"), "global UI hides scrollbar tracks");
   assert(styles.includes("table-layout: fixed"), "library table fits within its container without horizontal scrolling");
   assert(styles.includes(".library-col-actions"), "library reserves width for row actions");
+  assert(libraryGrid.includes("library-actions-header"), "library actions column has a dedicated aligned header");
+  assert(styles.includes(".library-actions-heading"), "library actions heading aligns with the primary row action");
   assert(!styles.includes(".library-table-card {\n  overflow-x: auto;"), "library table card no longer creates a horizontal scrollbar");
   assert(styles.includes(".library-row-menu"), "library row overflow menu has dedicated styling");
   assert(styles.includes(".library-confirm-dialog"), "course deletion confirmation has dedicated styling");

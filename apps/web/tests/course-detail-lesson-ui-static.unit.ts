@@ -21,13 +21,15 @@ function main() {
   assert(page.includes("当前课程"), "course header labels the current learning surface");
 
   assert(detail.includes("expandedActionsBlockId"), "course detail tracks the expanded block action tray");
-  assert(detail.includes("current === block.id ? null : block.id"), "only one block action window can be open at a time");
+  assert(detail.includes("setExpandedActionsBlockId(block.id)"), "clicking a block opens that block action drawer and keeps it open");
+  assert(!detail.includes("current === block.id ? null : block.id"), "clicking the same block no longer toggles the action drawer closed");
+  assert(!detail.includes("setExpandedActionsBlockId(null)"), "block action buttons do not close the open action drawer");
   assert(detail.includes("CourseBlockActionTray"), "course detail renders per-block learning actions outside BlockRenderer");
   assert(detail.includes('data-actions-expanded={expandedActionsBlockId === block.id ? "true" : "false"}'), "block itself tracks expanded state without a visible trigger");
   assert(detail.includes("aria-controls={`course-block-actions-${block.id}`}"), "block itself controls the hidden bottom action panel");
   assert(detail.includes("stopBlockActionEvent"), "block action tray stops events from selecting text or blocks accidentally");
   assert(detail.includes("course-block-action-panel"), "expanded actions render as a hidden-until-click bottom panel");
-  assert(detail.includes("针对当前 block"), "bottom action panel labels the current block context");
+  assert(!detail.includes("针对当前 block"), "bottom action panel no longer repeats the current-block label");
   assert(!detail.includes("学习动作</button>"), "course detail does not render a visible learning-action trigger button");
   assert(!detail.includes("course-block-action-toggle"), "course detail does not render the old visible action toggle");
   assert(detail.includes("解释这一段"), "block action tray includes explain action");
@@ -56,9 +58,15 @@ function main() {
 
   assert(styles.includes(".course-block-learning-actions"), "block action tray has dedicated styling");
   assert(styles.includes(".course-block-action-panel"), "expanded block actions use a bottom panel style");
+  assert(styles.includes(".course-block-action-panel::before"), "expanded block actions render the lower drawer lip");
   assert(styles.includes("flex-direction: column"), "block actions stack the trigger and bottom panel instead of rendering inline");
   assert(styles.includes(".course-block-action-tray"), "expanded block actions have dedicated styling");
   assert(styles.includes(".course-ai-context-strip.empty"), "Course Copilot empty context state has dedicated styling");
+  assert(styles.includes(".course-copilot-surface .copilotKitInputContainer"), "Course Copilot resets CopilotKit's input container chrome");
+  assert(styles.includes(".course-copilot-surface .copilotKitInput"), "Course Copilot directly overrides CopilotKit's default large input");
+  assert(styles.includes("min-height: 54px !important"), "Course Copilot input stays compact in the fixed sidebar");
+  assert(styles.includes("grid-template-columns: 32px minmax(0, 1fr) 32px"), "Course Copilot input aligns upload, textarea, and send controls");
+  assert(styles.includes(".course-copilot-surface .copilotKitInputControls"), "Course Copilot aligns CopilotKit input controls");
   assert(detail.includes("--course-content-margin-end"), "course detail switches content alignment when the Copilot panel is collapsed");
   assert(detail.includes('sidebarCollapsed ? "auto" : "var(--course-content-gutter)"'), "collapsed Copilot sidebar recenters the lesson column");
   assert(styles.includes("--course-content-margin-end: var(--course-content-gutter)"), "expanded course detail content stays aligned closer to the fixed Copilot panel");

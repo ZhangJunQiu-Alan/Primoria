@@ -1,14 +1,16 @@
 import { findTopicByConcept, getTopic, nextTopic } from "../knowledge-graph/topic-graph";
 import type { MasteryStatus } from "../mastery/store";
 
-// Pure post-lesson decision engine (feature_specification.md §40–41, §163). Given
-// updated concept mastery, decide what the learner should do next: advance to the
-// outline's next topic, insert a same-graph remediation lesson, or wrap up because
-// the goal anchor is reached. No I/O — topic-graph reads are in-memory generated
-// data — so every branch is unit-testable. The result is a *recommendation*; the
-// user confirms it before any lesson is generated.
+// Pure post-lesson decision engine (feature_specification.md §28–30). Given
+// updated concept mastery, decide what the learner should do next: insert a
+// same-graph remediation lesson when a concept is weak, otherwise advance to the
+// outline's next topic, or report the course complete when there is no next
+// lesson. Progression is driven purely by the outline + mastery — the goal anchor
+// is no longer consulted to decide when a learning line ends. No I/O — topic-graph
+// reads are in-memory generated data — so every branch is unit-testable. The
+// result is a *recommendation*; the user confirms it before any lesson is generated.
 
-export type LearningDecisionKind = "next" | "remediation" | "goal_reached";
+export type LearningDecisionKind = "next" | "remediation" | "course_complete";
 
 export type LearningDecision = {
   kind: LearningDecisionKind;
@@ -17,6 +19,10 @@ export type LearningDecision = {
   targetConceptId: string | null;
   proposedSortKey: number | null;
   proposedTitle: string | null;
+  /** Name of the next outline lesson, when one exists. Drives the "start the next
+   * lesson" button label and tells the UI whether a next lesson is available
+   * (null = current lesson is the last in the outline). */
+  nextLessonTitle: string | null;
 };
 
 export type DecideNextStepInput = {
@@ -28,7 +34,6 @@ export type DecideNextStepInput = {
   nextLessonSortKey: number | null;
   /** Graph-wide concept mastery after this lesson's update. */
   masteryByConcept: Map<string, MasteryStatus>;
-  anchorConceptId: string | null;
 };
 
 function midpointSortKey(current: number, next: number | null): number {
@@ -36,9 +41,11 @@ function midpointSortKey(current: number, next: number | null): number {
 }
 
 export function decideNextStep(input: DecideNextStepInput): LearningDecision {
-  const { graphId, currentTopicId, masteryByConcept, anchorConceptId } = input;
+  const { graphId, currentTopicId, masteryByConcept } = input;
   const topic = getTopic(graphId, currentTopicId);
   const concepts = topic?.conceptIds ?? [];
+  const next = nextTopic(graphId, currentTopicId);
+  const nextLessonTitle = next?.name ?? null;
 
   const isWeak = (conceptId: string) => masteryByConcept.get(conceptId) === "weak";
 
@@ -59,35 +66,24 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
       targetConceptId: target.conceptId,
       proposedSortKey: remediationSortKey,
       proposedTitle: `补救：${target.name}`,
+      nextLessonTitle,
     };
   }
 
-  // 2) No weak point. If the current topic owns the goal anchor, the learning
-  // line has reached its goal.
-  const ownsAnchor = anchorConceptId !== null && concepts.some((c) => c.conceptId === anchorConceptId);
-  if (ownsAnchor) {
-    return {
-      kind: "goal_reached",
-      reason: "你已掌握目标概念，达成了本条学习路径的目标。",
-      targetTopicId: currentTopicId,
-      targetConceptId: anchorConceptId,
-      proposedSortKey: null,
-      proposedTitle: null,
-    };
-  }
-
-  // 3) Otherwise advance to the next outline topic; a leaf topic ends the outline.
-  const next = nextTopic(graphId, currentTopicId);
+  // 2) No weak point and no next outline topic — the course is complete.
   if (!next) {
     return {
-      kind: "goal_reached",
-      reason: "你已完成本大纲的最后一节。",
+      kind: "course_complete",
+      reason: "你已完成本课程的全部内容，做得很好！",
       targetTopicId: currentTopicId,
       targetConceptId: null,
       proposedSortKey: null,
       proposedTitle: null,
+      nextLessonTitle: null,
     };
   }
+
+  // 3) Otherwise advance to the next outline topic.
   return {
     kind: "next",
     reason: `你已掌握本节内容，准备好进入下一节「${next.name}」。`,
@@ -95,6 +91,7 @@ export function decideNextStep(input: DecideNextStepInput): LearningDecision {
     targetConceptId: null,
     proposedSortKey: null,
     proposedTitle: null,
+    nextLessonTitle,
   };
 }
 
