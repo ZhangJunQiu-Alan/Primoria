@@ -128,15 +128,19 @@ export const AlgorithmStepZodSchema = z.object({
   tree: AlgorithmTreeStateSchema.optional(),
   graph: AlgorithmGraphStateSchema.optional(),
   table: AlgorithmTableStateSchema.optional(),
-}).refine(data => {
-  if (data.kind === "array" && !data.array) return false;
-  if (data.kind === "tree" && !data.tree) return false;
-  if (data.kind === "graph" && !data.graph) return false;
-  if (data.kind === "table" && !data.table) return false;
-  return true;
-}, {
-  message: "Matching state payload must be provided for the specified kind",
-  path: ["kind"]
+}).superRefine((data, ctx) => {
+  if (data.kind === "array" && !data.array) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["array"], message: `step with kind "array" must include an "array" object, e.g. "array":{"values":[...]}` });
+  }
+  if (data.kind === "tree" && !data.tree) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["tree"], message: `step with kind "tree" must include a "tree" object with a "nodes" array` });
+  }
+  if (data.kind === "graph" && !data.graph) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["graph"], message: `step with kind "graph" must include a "graph" object with "nodes" and "edges"` });
+  }
+  if (data.kind === "table" && !data.table) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["table"], message: `step with kind "table" must include a "table" object with a "data" 2D array` });
+  }
 });
 
 export const AlgorithmVisualizationZodSchema = z.object({
