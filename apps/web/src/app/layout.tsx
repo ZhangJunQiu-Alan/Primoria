@@ -4,8 +4,8 @@ import "mind-elixir/style.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Primoria AI Tutor",
-  description: "Chat-first AI tutor with generative learning widgets.",
+  title: "Primoria | Adaptive STEM Learning",
+  description: "Adaptive STEM learning paths with knowledge graphs, interactive visualization, code, quiz, and Course Copilot.",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

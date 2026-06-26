@@ -1,0 +1,55 @@
+#!/usr/bin/env tsx
+
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+function assert(condition: unknown, message: string): asserts condition {
+  if (!condition) throw new Error(`assertion failed: ${message}`);
+}
+
+function read(path: string) {
+  return readFileSync(join(process.cwd(), path), "utf8");
+}
+
+async function main() {
+  const homePage = read("src/app/page.tsx");
+  const landingPage = read("src/components/landing/landing-page.tsx");
+  const rootLayout = read("src/app/layout.tsx");
+  const styles = read("src/app/globals.css");
+
+  assert(homePage.includes('import { LandingPage } from "@/components/landing/landing-page"'), "home imports the public landing page");
+  assert(homePage.includes("if (authEnabled && !user) return <LandingPage />;"), "unauthenticated visitors see the public landing page");
+  assert(homePage.includes("<CopilotKitProvider>"), "authenticated visitors still enter the AI Tutor workspace");
+  assert(
+    homePage.indexOf("if (authEnabled && !user) return <LandingPage />;") < homePage.indexOf("<CopilotKitProvider>"),
+    "landing branch resolves before the CopilotKit tutor tree renders",
+  );
+
+  assert(!landingPage.includes("CopilotKitProvider"), "public landing component does not mount CopilotKit");
+  assert(landingPage.includes("学习更加智能、更加定制化、更加高效"), "landing hero uses the product positioning line");
+  assert(landingPage.includes("STEM"), "landing explains STEM coverage");
+  assert(landingPage.includes("Interactive Visualization"), "landing highlights interactive visualization");
+  assert(landingPage.includes("KG"), "landing names knowledge graph positioning");
+  assert(landingPage.includes("Course Copilot"), "landing explains the course copilot");
+  assert(landingPage.includes("mastery"), "landing explains adaptive learning mastery");
+  assert(landingPage.includes("Lazy Generation") || landingPage.includes("逐节"), "landing explains lesson-by-lesson generation");
+  assert(landingPage.includes('href="/auth/sign-up?next=/"'), "primary CTA points to sign-up with tutor return");
+  assert(landingPage.includes('href="/auth/sign-in?next=/"'), "secondary CTA points to sign-in with tutor return");
+
+  assert(rootLayout.includes("Adaptive STEM Learning"), "metadata title is suitable for a public landing page");
+  assert(rootLayout.includes("knowledge graphs, interactive visualization, code, quiz, and Course Copilot"), "metadata describes public product value");
+
+  assert(styles.includes(".landing-shell"), "landing has a dedicated shell style");
+  assert(styles.includes(".landing-hero-visual"), "landing has a product visual scene");
+  assert(styles.includes(".landing-subject-cloud"), "landing has dedicated STEM subject styling");
+  assert(styles.includes(".landing-workflow-grid"), "landing has dedicated workflow styling");
+  assert(styles.includes("@media (max-width: 720px)"), "landing has mobile responsive behavior");
+  assert(styles.includes("@media (prefers-reduced-motion: reduce)"), "landing respects reduced motion preferences");
+
+  process.stdout.write("[landing-page-static.unit] ALL CHECKS PASSED\n");
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
