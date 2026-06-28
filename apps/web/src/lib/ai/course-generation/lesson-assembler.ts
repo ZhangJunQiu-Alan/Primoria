@@ -41,7 +41,7 @@ export async function generateLessonFromKg(
     settings: options.settings,
     invoke: options.plannerInvoke,
   });
-  const plan = compileLessonPlanIr(rawIr, kg);
+  const plan = compileLessonPlanIr(rawIr, kg, { contextHint: options.contextHint });
 
   const blocks = await writeLessonBlocks({
     plan,

@@ -18,15 +18,15 @@ import type { CourseContext } from "../src/lib/ai/deepagent/course-kg-context";
 import type { LessonGenerationContext } from "../src/lib/courses/lesson-generation-context";
 
 const NAME = "lesson-generation-worker.db";
-const CONCEPTS = ["c1", "c2", "c3", "c4"];
-const TOTAL_BATCHES = 8; // activation + 4 concept groups + transfer + quiz + summary
+const CONCEPTS = ["c1", "c2", "c3"];
+const TOTAL_BATCHES = 9; // activation + 3 concept groups + transfer + 3 quizzes + summary
 
 const kg: CourseContext = {
   learningPathType: "linear",
-  graphId: "g1",
+  graphId: "biology",
   startTopic: {
     topicId: "t1",
-    name: "导数",
+    name: "Photosynthesis",
     concepts: CONCEPTS.map((conceptId, index) => ({ conceptId, name: `概念${index + 1}`, defaultOrder: index + 1 })),
   },
   targetConceptId: "c1",
@@ -35,27 +35,28 @@ const kg: CourseContext = {
 
 const fixedIr = {
   v: 1,
-  lesson: ["导数入门", 45],
+  lesson: ["光合作用入门", 45],
   blocks: [
     [1, "T", "hook", ["c1"], "hook"],
     [2, "T", "roadmap", CONCEPTS, "roadmap"],
     [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "C", "example", ["c1"], "example c1"],
-    [5, "T", "explanation", ["c2"], "explain c2"],
-    [6, "T", "example", ["c2"], "example c2"],
-    [7, "T", "explanation", ["c3"], "explain c3"],
-    [8, "C", "example", ["c3"], "example c3"],
-    [9, "T", "explanation", ["c4"], "explain c4"],
-    [10, "C", "example", ["c4"], "example c4"],
-    [11, "A", "deepening", ["c1"], "analogy"],
-    [12, "V", "deepening", ["c2"], "visual"],
-    [13, "X", "transfer", CONCEPTS, "transfer"],
-    [14, "Q", "assessment", CONCEPTS, "quiz"],
-    [15, "T", "summary", CONCEPTS, "summary"],
+    [4, "V", "example", ["c1"], "visual example c1"],
+    [5, "V", "deepening", ["c1"], "visual c1"],
+    [6, "Q", "assessment", ["c1"], "quiz c1"],
+    [7, "T", "explanation", ["c2"], "explain c2"],
+    [8, "T", "example", ["c2"], "example c2"],
+    [9, "V", "deepening", ["c2"], "visual c2"],
+    [10, "Q", "assessment", ["c2"], "quiz c2"],
+    [11, "T", "explanation", ["c3"], "explain c3"],
+    [12, "V", "example", ["c3"], "visual example c3"],
+    [13, "V", "deepening", ["c3"], "visual c3"],
+    [14, "Q", "assessment", ["c3"], "quiz c3"],
+    [15, "V", "transfer", CONCEPTS, "transfer simulation"],
+    [16, "T", "summary", CONCEPTS, "summary"],
   ],
 };
 
-function contentFor(j: { order: number; type: string }) {
+function contentFor(j: { order: number; type: string; conceptIds?: string[] }) {
   const order = j.order;
   const title = `${j.type}${order}`;
   switch (j.type) {
@@ -71,7 +72,7 @@ function contentFor(j: { order: number; type: string }) {
       return {
         order,
         title,
-        questions: CONCEPTS.map((conceptId, i) => ({ kind: "single", id: `q${i + 1}`, question: `q${i + 1}?`, choices: [{ id: "a", text: "A" }, { id: "b", text: "B" }], correctId: "a", conceptId })),
+        questions: (j.conceptIds ?? []).map((conceptId, i) => ({ kind: "single", id: `q${i + 1}`, question: `q${i + 1}?`, choices: [{ id: "a", text: "A" }, { id: "b", text: "B" }], correctId: "a", conceptId })),
       };
     default:
       return { order, title, markdown: `body ${order}` };
@@ -80,7 +81,7 @@ function contentFor(j: { order: number; type: string }) {
 
 function makeOptions(lessonId: string, onWriter?: () => void) {
   const ctx: LessonGenerationContext = {
-    course: { id: "_", topic: "导数", graphId: "g1" } as unknown as LessonGenerationContext["course"],
+    course: { id: "_", topic: "光合作用", graphId: "biology" } as unknown as LessonGenerationContext["course"],
     lesson: { id: lessonId, topicId: "t1" } as unknown as LessonGenerationContext["lesson"],
     kg,
   };
@@ -88,7 +89,7 @@ function makeOptions(lessonId: string, onWriter?: () => void) {
     loadContext: async () => ctx,
     settings: {},
     plannerInvoke: async () => fixedIr,
-    writerInvoke: async ({ batch }: { batch: { jobs: { order: number; type: string }[] } }) => {
+    writerInvoke: async ({ batch }: { batch: { jobs: { order: number; type: string; conceptIds?: string[] }[] } }) => {
       onWriter?.();
       return batch.jobs.map((j) => contentFor(j));
     },
@@ -127,8 +128,8 @@ async function main() {
       ok(writerCalls === TOTAL_BATCHES, "clean run invokes the writer once per batch");
       const lr = await sql`select status, jsonb_array_length(blocks) n, title from lessons where id=${lessonId}`;
       ok(lr[0].status === "generated", "lesson published as generated");
-      ok(lr[0].n === 15, "published 15 blocks");
-      ok(lr[0].title === "导数入门", "lesson title from plan");
+      ok(lr[0].n === 16, "published 16 blocks");
+      ok(lr[0].title === "光合作用入门", "lesson title from plan");
       const jr = await sql`select status, stage, progress_completed pc, progress_total pt from lesson_generation_jobs where id=${firstJobId}`;
       ok(jr[0].status === "completed" && jr[0].stage === "completed", "job completed");
       ok(jr[0].pc === jr[0].pt && jr[0].pt === TOTAL_BATCHES + 2, "progress completed = total = batches + 2");
@@ -155,7 +156,7 @@ async function main() {
       await processLessonGenerationJob(claim!, makeOptions(lessonId, () => (writerCalls += 1)));
       ok(writerCalls === TOTAL_BATCHES - 3, "resume regenerates only the missing batches");
       const lr = await sql`select status, jsonb_array_length(blocks) n from lessons where id=${lessonId}`;
-      ok(lr[0].status === "generated" && lr[0].n === 15, "resumed job still publishes a complete lesson");
+      ok(lr[0].status === "generated" && lr[0].n === 16, "resumed job still publishes a complete lesson");
     }
 
     // ── Stale worker cannot publish after its lease is reclaimed ───────────────

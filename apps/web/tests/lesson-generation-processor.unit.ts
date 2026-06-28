@@ -22,13 +22,13 @@ async function assertRejects(run: () => Promise<unknown>, ErrorClass: new (...a:
   assert(caught instanceof ErrorClass, `${message} (got ${caught?.constructor?.name ?? "no throw"})`);
 }
 
-const CONCEPTS = ["c1", "c2", "c3", "c4"];
+const CONCEPTS = ["c1", "c2", "c3"];
 const kg: CourseContext = {
   learningPathType: "linear",
-  graphId: "g1",
+  graphId: "biology",
   startTopic: {
     topicId: "t1",
-    name: "导数",
+    name: "Photosynthesis",
     concepts: CONCEPTS.map((conceptId, index) => ({
       conceptId,
       name: `概念${index + 1}`,
@@ -42,28 +42,29 @@ const kg: CourseContext = {
 
 const fixedIr = {
   v: 1,
-  lesson: ["导数入门", 45],
+  lesson: ["光合作用入门", 45],
   blocks: [
     [1, "T", "hook", ["c1"], "hook"],
     [2, "T", "roadmap", CONCEPTS, "roadmap"],
     [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "C", "example", ["c1"], "example c1"],
-    [5, "T", "explanation", ["c2"], "explain c2"],
-    [6, "T", "example", ["c2"], "example c2"],
-    [7, "T", "explanation", ["c3"], "explain c3"],
-    [8, "C", "example", ["c3"], "example c3"],
-    [9, "T", "explanation", ["c4"], "explain c4"],
-    [10, "C", "example", ["c4"], "example c4"],
-    [11, "A", "deepening", ["c1"], "analogy"],
-    [12, "V", "deepening", ["c2"], "visual"],
-    [13, "X", "transfer", CONCEPTS, "transfer"],
-    [14, "Q", "assessment", CONCEPTS, "quiz"],
-    [15, "T", "summary", CONCEPTS, "summary"],
+    [4, "V", "example", ["c1"], "visual example c1"],
+    [5, "V", "deepening", ["c1"], "visual c1"],
+    [6, "Q", "assessment", ["c1"], "quiz c1"],
+    [7, "T", "explanation", ["c2"], "explain c2"],
+    [8, "T", "example", ["c2"], "example c2"],
+    [9, "V", "deepening", ["c2"], "visual c2"],
+    [10, "Q", "assessment", ["c2"], "quiz c2"],
+    [11, "T", "explanation", ["c3"], "explain c3"],
+    [12, "V", "example", ["c3"], "visual example c3"],
+    [13, "V", "deepening", ["c3"], "visual c3"],
+    [14, "Q", "assessment", ["c3"], "quiz c3"],
+    [15, "V", "transfer", CONCEPTS, "transfer simulation"],
+    [16, "T", "summary", CONCEPTS, "summary"],
   ],
 };
 
 type Content = Record<string, unknown> & { order: number };
-function contentFor(j: { order: number; type: string }, titleOverride?: string): Content {
+function contentFor(j: { order: number; type: string; conceptIds?: string[] }, titleOverride?: string): Content {
   const order = j.order;
   const title = titleOverride ?? `${j.type}${order}`;
   switch (j.type) {
@@ -79,7 +80,7 @@ function contentFor(j: { order: number; type: string }, titleOverride?: string):
       return {
         order,
         title,
-        questions: CONCEPTS.map((conceptId, i) => ({
+        questions: (j.conceptIds ?? []).map((conceptId, i) => ({
           kind: "single",
           id: `q${i + 1}`,
           question: `q${i + 1}?`,
@@ -182,7 +183,7 @@ const claim: LessonGenerationClaim = {
 };
 
 const ctx: LessonGenerationContext = {
-  course: { id: "crs1", topic: "导数", graphId: "g1", lessons: [{ id: "lsn1" }] } as unknown as LessonGenerationContext["course"],
+  course: { id: "crs1", topic: "光合作用", graphId: "biology", lessons: [{ id: "lsn1" }] } as unknown as LessonGenerationContext["course"],
   lesson: { id: "lsn1", topicId: "t1" } as unknown as LessonGenerationContext["lesson"],
   kg,
 };
@@ -194,14 +195,14 @@ function options(store: LessonJobStore, onWriterCall?: () => void) {
     loadContext,
     settings: {},
     plannerInvoke: async () => fixedIr,
-    writerInvoke: async ({ batch }: { batch: { jobs: { order: number; type: string }[] } }) => {
+    writerInvoke: async ({ batch }: { batch: { jobs: { order: number; type: string; conceptIds?: string[] }[] } }) => {
       onWriterCall?.();
       return batch.jobs.map((j) => contentFor(j));
     },
   };
 }
 
-const TOTAL_BATCHES = 8; // activation + 4 concept groups + transfer + quiz + summary
+const TOTAL_BATCHES = 9; // activation + 3 concept groups + transfer + 3 quizzes + summary
 
 async function main() {
   // ── Full successful job ─────────────────────────────────────────────────────
@@ -210,15 +211,15 @@ async function main() {
     let writerCalls = 0;
     const outcome = await processLessonGenerationJob(claim, options(store, () => (writerCalls += 1)));
     assert(state.published !== null, "lesson was published");
-    assert(state.published?.blocks.length === 15, "published 15 blocks");
-    assert(state.published?.title === "导数入门", "published plan title");
+    assert(state.published?.blocks.length === 16, "published 16 blocks");
+    assert(state.published?.title === "光合作用入门", "published plan title");
     assert(state.published?.estimatedMinutes === 45, "published plan minutes");
     assert(state.progressTotal === TOTAL_BATCHES + 2, "progress total = batches + validate + save");
     assert(state.stage === "saving", "final non-publish stage was saving");
     assert(writerCalls === TOTAL_BATCHES, "writer invoked once per batch on a clean run");
     assert(state.checkpoints.filter((c) => c.kind === "batch").length === TOTAL_BATCHES, "all batches checkpointed");
     assert(state.checkpoints.some((c) => c.kind === "plan"), "plan checkpointed");
-    assert(outcome.courseId === "crs1" && outcome.topic === "导数", "outcome carries course identity");
+    assert(outcome.courseId === "crs1" && outcome.topic === "光合作用", "outcome carries course identity");
   }
 
   // ── Resume: reuse compatible plan + partial batch checkpoints (doc §9.3) ─────
@@ -233,7 +234,7 @@ async function main() {
     let writerCalls = 0;
     await processLessonGenerationJob(claim, options(store, () => (writerCalls += 1)));
     assert(writerCalls === TOTAL_BATCHES - 3, "only missing batches are regenerated on resume");
-    assert(state.published?.blocks.length === 15, "resume still publishes a complete lesson");
+    assert(state.published?.blocks.length === 16, "resume still publishes a complete lesson");
   }
 
   // ── Lost lease: every fenced write is a no-op, worker must abort (doc §7.2) ──
@@ -250,7 +251,7 @@ async function main() {
     const badOptions = {
       ...options(store),
       // duplicate titles on all text blocks -> validator rejects the lesson
-      writerInvoke: async ({ batch }: { batch: { jobs: { order: number; type: string }[] } }) =>
+      writerInvoke: async ({ batch }: { batch: { jobs: { order: number; type: string; conceptIds?: string[] }[] } }) =>
         batch.jobs.map((j) => contentFor(j, j.type === "text" ? "dup" : undefined)),
     };
     await assertRejects(() => processLessonGenerationJob(claim, badOptions), LessonValidationError, "validation failure rejects");

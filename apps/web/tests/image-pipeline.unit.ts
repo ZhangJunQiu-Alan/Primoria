@@ -25,7 +25,7 @@ function assertThrows(run: () => unknown, ErrorClass: new (...args: never[]) => 
   assert(caught instanceof ErrorClass, `${message} (got ${caught?.constructor?.name ?? "no throw"})`);
 }
 
-const CONCEPTS = ["c1", "c2", "c3"];
+const CONCEPTS = ["c1", "c2"];
 
 function kg(conceptIds: string[] = CONCEPTS): CourseContext {
   return {
@@ -48,21 +48,18 @@ function validBlocks(): Tuple[] {
     [1, "T", "hook", ["c1"], "hook"],
     [2, "T", "roadmap", CONCEPTS, "roadmap"],
     [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "C", "example", ["c1"], "example c1"],
-    [5, "T", "explanation", ["c2"], "explain c2"],
-    [6, "T", "example", ["c2"], "example c2"],
-    [7, "T", "explanation", ["c3"], "explain c3"],
-    [8, "C", "example", ["c3"], "example c3"],
-    [9, "A", "deepening", ["c1"], "analogy deepen"],
-    [10, "X", "transfer", CONCEPTS, "transfer"],
-    [11, "Q", "assessment", CONCEPTS, "quiz"],
-    [12, "T", "summary", CONCEPTS, "summary"],
+    [4, "I", "example", ["c1"], "image c1"],
+    [5, "T", "example", ["c1"], "example c1"],
+    [6, "V", "deepening", ["c1"], "visual c1"],
+    [7, "Q", "assessment", ["c1"], "quiz c1"],
+    [8, "T", "explanation", ["c2"], "explain c2"],
+    [9, "I", "example", ["c2"], "image c2"],
+    [10, "T", "example", ["c2"], "example c2"],
+    [11, "V", "deepening", ["c2"], "visual c2"],
+    [12, "Q", "assessment", ["c2"], "quiz c2"],
+    [13, "V", "transfer", CONCEPTS, "transfer simulation"],
+    [14, "T", "summary", CONCEPTS, "summary"],
   ];
-}
-
-function renumber(blocks: Tuple[]): Tuple[] {
-  blocks.forEach((b, i) => (b[0] = i + 1));
-  return blocks;
 }
 
 function ir(blocks: Tuple[], v = 1, minutes = 45) {
@@ -70,31 +67,27 @@ function ir(blocks: Tuple[], v = 1, minutes = 45) {
 }
 
 function testCompilerImageRules() {
-  // An image block (role deepening, bound to c1) is accepted and raises the ceiling.
+  // Image blocks (role example/deepening, bound to a concept) are accepted.
   const withImage = validBlocks();
-  withImage.splice(9, 0, [9.5, "I", "deepening", ["c1"], "a chloroplast picture"]);
-  renumber(withImage);
   const compiled = compileLessonPlanIr(ir(withImage), kg());
-  assert(compiled.jobs.length === 13, "image block raises the block ceiling (13 accepted)");
+  assert(compiled.jobs.length === 14, "image-bearing 2-concept plan accepted");
   assert(compiled.jobs.some((j) => j.type === "image" && j.conceptIds.includes("c1")), "image job compiled");
 
   // image does NOT need a KG visual affordance (kg() marks none) — accepted above.
 
   // image must bind to a concept.
   const noConcept = validBlocks();
-  noConcept.splice(9, 0, [9.5, "I", "deepening", [], "floating decoration"]);
-  renumber(noConcept);
+  noConcept[3] = [4, "I", "deepening", [], "floating decoration"];
   assertThrows(() => compileLessonPlanIr(ir(noConcept), kg()), CoverageError, "image with no concept rejected");
 
   // image role must be example/deepening, never assessment.
   const badRole = validBlocks();
-  badRole.splice(9, 0, [9.5, "I", "assessment", ["c1"], "quiz-as-image"]);
-  renumber(badRole);
+  badRole[3] = [4, "I", "assessment", ["c1"], "quiz-as-image"];
   assertThrows(() => compileLessonPlanIr(ir(badRole), kg()), CoverageError, "image with assessment role rejected");
 
   // image cannot stand in for a concept's required example (image excluded from coverage).
   const imageAsExample = validBlocks();
-  imageAsExample[5] = [6, "I", "example", ["c2"], "picture instead of example"];
+  imageAsExample[4] = [5, "I", "example", ["c1"], "picture instead of example"];
   assertThrows(() => compileLessonPlanIr(ir(imageAsExample), kg()), CoverageError, "image does not satisfy example coverage");
 }
 

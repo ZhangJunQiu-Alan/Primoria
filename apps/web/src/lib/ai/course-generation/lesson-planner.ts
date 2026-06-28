@@ -25,8 +25,9 @@ function fmtConcepts(topic: CourseContextTopic): string {
     .join("\n");
 }
 
-// KG-mandated visuals: every concept carrying a `visual` affordance must get one
-// V=visual deepening block on that concept, with the engine the KG specifies.
+// KG visual affordances are strong hints, not hard quotas. The planner decides
+// whether/how many V=visual blocks are useful, and the compiler validates media
+// density and concept binding instead of forcing exactly one visual per hint.
 function visualConcepts(topic: CourseContextTopic) {
   return [...(topic.concepts ?? [])]
     .filter((c) => !!c.visual)
@@ -42,7 +43,7 @@ function fmtVisualConcepts(topic: CourseContextTopic): string {
 export function buildPlannerPrompt(kg: CourseContext): string {
   const conceptCount = kg.startTopic.concepts?.length ?? 0;
   const visuals = visualConcepts(kg.startTopic);
-  const { min, max } = expectedBlockRange(conceptCount, visuals.length);
+  const { min, max } = expectedBlockRange(conceptCount);
   const conceptIds = (kg.startTopic.concepts ?? []).map((c) => c.conceptId);
 
   return `You are Primoria's Lesson Planner. You design the STRUCTURE of one lesson for a knowledge-graph topic, as a compact tuple IR. You do NOT write block content — only a plan the compiler will expand.
@@ -56,12 +57,12 @@ ${fmtConcepts(kg.startTopic)}
 ${kg.targetConceptId ? `TARGET CONCEPT (center the lesson on it): ${kg.targetConceptId}` : ""}
 VALID CONCEPT IDS: ${conceptIds.join(", ")}
 
-MASTERY ADAPTATION (the [..] tag after each concept; adjust teaching DEPTH only — still cover EVERY concept, and never drop the mandated visual/quiz/transfer blocks):
+MASTERY ADAPTATION (the [..] tag after each concept; adjust teaching DEPTH only — still cover EVERY concept, and never drop per-concept quiz or transfer blocks):
 - [mastered]: compress — a brief refresher explanation plus one short confirming example. Do not belabor it.
 - [learning]: light review — one focused explanation and one example.
 - [weak] / [untested]: teach fully as if new — a clear explanation plus extra worked examples. Spend your depth here.
 
-VISUAL CONCEPTS (each REQUIRES one V=visual block — these are the product's core differentiator):
+VISUAL AFFORDANCE HINTS (strong hints, not quotas; V=visual is the product's core differentiator when it teaches a mechanism):
 ${visuals.length ? fmtVisualConcepts(kg.startTopic) : "  (none for this topic)"}
 
 BLOCK TYPE CODES (use only these):
@@ -73,19 +74,25 @@ IMAGE vs VISUAL (I=image is a STATIC cognitive anchor; V=visual is an INTERACTIV
 - I=image is OPTIONAL and never decorative: only add one when a concrete/spatial/analogy picture materially helps recognition or memory. The same concept may have both an I and a V when they serve different goals.
 - Never use I=image for precise text, formulas, axes, labels, or chemical notation — those must be a V=visual (Mermaid/ECharts/Math Explorer).
 
+CODE ELIGIBILITY (C=code is opt-in, never template filler):
+- Default to T=text examples, I=image, V=visual, and A=analogy across biology, chemistry, physics, math, and general conceptual lessons.
+- Use C=code ONLY when the topic/user goal is about programming languages, algorithms/data structures, web/software engineering, numerical/scientific computing, machine-learning implementation, or explicitly asks to write/run code, use a programming language, code implementation, or implement an algorithm/function/API/interface.
+- Do NOT treat generic "implementation" / "实现" language as code intent by itself (e.g. "self-actualization" or "实现共同富裕" is not code-eligible).
+- Do not emit C=code just to satisfy an example slot. If code is not naturally the thing being learned, use T=text with role "example".
+
 PEDAGOGICAL ROLES (use only these): ${PEDAGOGICAL_ROLES.join(", ")}
 
 TEACHING STRUCTURE (doc §4.3):
 - 2 activation text blocks: one "hook", one "roadmap".
 - Per concept, in default order, at least one "explanation" block and one "example" block.
-- For EACH concept listed under VISUAL CONCEPTS above, exactly one V=visual block with role "deepening" whose conceptIds is [that one concept]. This is mandatory — do not skip, merge, or move it onto a different concept.
-- Do NOT emit a V=visual block for any concept that is NOT listed under VISUAL CONCEPTS.
+- For each concept, place exactly one Q=quiz block (role "assessment") at that concept loop's close. Its conceptIds MUST be exactly [that one concept], not all concepts.
+- Use I=image and V=visual when they materially teach recognition or mechanism. Combined I+V count should generally target 30%-45% of all blocks as a guideline (but you may adjust this between 15% and 60% based on the concept's actual pedagogical value; do not add decorative or filler media just to satisfy a number). Every media block must bind to conceptIds and have a distinct learning goal.
+- V=visual may target any concept when it has a clear mechanism/process/variable/state/comparison purpose; visual affordance hints above should bias the choice but do not create an exact-one quota.
 - Optionally 1-2 A=analogy "deepening"/"misconception" blocks on the hardest concepts (use A=analogy here, never V).
 - Optionally I=image "example"/"deepening" blocks for concrete/spatial/analogy concepts (see IMAGE vs VISUAL above). Each I=image MUST list exactly the one conceptId it anchors and have a clear goal. An image never replaces a concept's required explanation/example text block.
-- Exactly 1 X=transfer block (role "transfer").
-- Exactly 1 Q=quiz block (role "assessment") whose conceptIds list EVERY concept.
+- Exactly 1 transfer block with role "transfer"; use X=transfer for prose/application transfer, or V=visual with role "transfer" when an interactive transfer simulation materially helps.
 - Exactly 1 final text block with role "summary".
-- Target ${min}-${max} blocks for ${conceptCount} concepts (${visuals.length} of them require a visual); each optional I=image you add raises the ceiling by one. Never pad with filler.
+- Target ${min}-${max} blocks for ${conceptCount} concepts. Never pad with filler.
 
 OUTPUT — a single compact JSON object, no indentation, no prose, no code fences:
 {"v":${IR_VERSION},"lesson":["<lesson title>",<estimatedMinutes>],"blocks":[[<order:int starting 1, strictly increasing>,"<typeCode>","<role>",["<conceptId>",...],"<one-line goal>"], ...]}

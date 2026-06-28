@@ -107,12 +107,11 @@ export function decodeLessonPlanIr(raw: unknown): DecodedLessonPlan {
   };
 }
 
-/** Deterministic block-count window for a topic (doc §4.2). Topics are now
- * intentionally small: 2 concepts target 8-10 blocks and 3 concepts target 10-13.
- * Each media block (KG-mandated visual OR an image) raises the ceiling by one so
- * the mandatory visuals and any anchor images fit without forcing filler — the
- * per-concept visual floor is enforced separately by the compiler. */
-export function expectedBlockRange(conceptCount?: number, mediaCount = 0): { min: number; max: number } {
-  const base = conceptCount === 2 ? { min: 8, max: 10 } : conceptCount === 3 ? { min: 10, max: 13 } : { min: 8, max: 20 };
-  return { min: base.min, max: base.max + Math.max(0, mediaCount) };
+/** Deterministic block-count window for a topic (doc §4.2). Topics usually carry
+ * 2-3 concepts and should feel like compact Brilliant-style loops, with media
+ * density validated separately instead of expanding the range per media block. */
+export function expectedBlockRange(conceptCount?: number, _mediaCount = 0): { min: number; max: number } {
+  if (conceptCount === 2) return { min: 13, max: 15 };
+  if (conceptCount === 3) return { min: 16, max: 20 };
+  return { min: 8, max: 20 };
 }

@@ -9,7 +9,7 @@ import type { GeneratableBlockType } from "./lesson-plan-ir";
 import type { BlockGenerationJob, CompiledLessonPlan } from "./lesson-plan-compiler";
 
 // Block Writer: generates each block's core content, batched by concept (2-3
-// blocks) with quiz/transfer/summary as lesson-level tasks (Decision 3B). Each
+// blocks) with per-concept quiz plus transfer/summary tasks (Decision 3B). Each
 // batch gets one targeted repair on failure (Decision 5B). Visual writers emit
 // a full engine payload (Decision 4). Output is compiled by block-content-
 // compiler; no generic fallback is ever produced.
@@ -43,7 +43,7 @@ export function batchBlockJobs(jobs: BlockGenerationJob[]): BlockBatch[] {
   if (activation.length) batches.push({ kind: "activation", jobs: activation });
 
   const conceptJobs = jobs.filter(
-    (j) => !isActivation(j) && j.type !== "transfer" && j.type !== "quiz" && j.pedagogicalRole !== "summary",
+    (j) => !isActivation(j) && j.pedagogicalRole !== "transfer" && j.type !== "quiz" && j.pedagogicalRole !== "summary",
   );
   const groups = new Map<string, BlockGenerationJob[]>();
   for (const job of conceptJobs) {
@@ -58,7 +58,7 @@ export function batchBlockJobs(jobs: BlockGenerationJob[]): BlockBatch[] {
     }
   }
 
-  for (const job of jobs.filter((j) => j.type === "transfer")) batches.push({ kind: "transfer", jobs: [job] });
+  for (const job of jobs.filter((j) => j.pedagogicalRole === "transfer")) batches.push({ kind: "transfer", jobs: [job] });
   for (const job of jobs.filter((j) => j.type === "quiz")) batches.push({ kind: "quiz", jobs: [job] });
   for (const job of jobs.filter((j) => j.pedagogicalRole === "summary")) batches.push({ kind: "summary", jobs: [job] });
 
@@ -72,7 +72,7 @@ const FIELD_HINTS: Record<GeneratableBlockType, string> = {
   visual: `"title","description","engine" plus the payload for that engine (see the engine directive on this block)`,
   image: `"title","learningGoal","imageKind":"educational_illustration|structure_diagram|realistic_scene|analogy_illustration","prompt" (describe the scene/object/structure to draw — NO text, labels, numbers, axes, formulas, or chemical notation in the image),"alt","caption" (tell the learner what to notice),"negativePrompt"?,"aspectRatio"?:"1:1|4:3|16:9","resolution"?:"1K|2K|4K". You write a BRIEF; the image is generated later.`,
   code: `"title","language","code","explanation"`,
-  quiz: `"title","questions":[{"kind":"single|multi|truefalse","id","question","choices":[{"id","text"}],"correctId"|"correctIds"|"correct","explanation","conceptId"}] (4-6 questions; conceptId is required on every question)`,
+  quiz: `"title","questions":[{"kind":"single|multi|truefalse","id","question","choices":[{"id","text"}],"correctId"|"correctIds"|"correct","explanation","conceptId"}] (1-3 focused questions for this concept; conceptId is required on every question)`,
 };
 
 // Per-engine payload directive for a visual block. The engine is chosen by the
@@ -120,6 +120,7 @@ export function buildBatchPrompt(batch: BlockBatch, plan: CompiledLessonPlan, kg
     ? `
 
 QUIZ CONCEPT ATTRIBUTION CONTRACT:
+- This is a concept-closing quiz, not a whole-lesson assessment.
 - Every question MUST include exactly one "conceptId" copied verbatim from the allowed [id=...] values listed for the quiz block.
 - Every allowed conceptId MUST appear on at least one question.
 - Never invent, translate, shorten, or infer a different conceptId.
@@ -128,23 +129,47 @@ QUIZ CONCEPT ATTRIBUTION CONTRACT:
   const system = `You are Primoria's Block Writer for the lesson "${plan.title}" on topic "${kg.startTopic.name}". Write the content for the blocks listed below. Planner-owned block metadata is fixed: do not emit block-level "type" or "conceptIds". You MUST emit "order" so each result can be matched to its block. Keep blocks distinct from their neighbors. ${languageDirective(kg.language)}
 ${knowledgeBackgroundDirective(kg.knowledgeBackground)}${quizContract}
 
-OUTPUT a single compact JSON array, one object per block, each including its "order" and the listed fields. No prose, no code fences.`;
+OUTPUT a single compact JSON array, one object per block, each including its "order" as a JSON number and the listed fields. No prose, no code fences.`;
   const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}`;
   return { system, user };
 }
 
-function indexByOrder(raw: unknown): Map<number, unknown> {
+function normalizeWriterOrder(value: unknown): number | null {
+  if (typeof value === "number" && Number.isSafeInteger(value)) return value;
+  if (typeof value === "string" && /^\d+$/.test(value.trim())) {
+    const order = Number(value.trim());
+    return Number.isSafeInteger(order) ? order : null;
+  }
+  return null;
+}
+
+function indexByOrder(raw: unknown, expectedOrders: Iterable<number>): Map<number, unknown> {
   const list = Array.isArray(raw)
     ? raw
     : raw && typeof raw === "object" && Array.isArray((raw as { blocks?: unknown }).blocks)
       ? (raw as { blocks: unknown[] }).blocks
       : null;
   if (!list) throw new WriterError("block writer did not return a JSON array of block content");
+
+  const expected = new Set(expectedOrders);
   const map = new Map<number, unknown>();
   for (const item of list) {
-    if (item && typeof item === "object" && typeof (item as { order?: unknown }).order === "number") {
-      map.set((item as { order: number }).order, item);
+    if (!item || typeof item !== "object") {
+      throw new WriterError("block writer returned an item that is not an object");
     }
+
+    const rawOrder = (item as { order?: unknown }).order;
+    const order = normalizeWriterOrder(rawOrder);
+    if (order === null) {
+      throw new WriterError(`block writer returned invalid order ${JSON.stringify(rawOrder)}`);
+    }
+    if (!expected.has(order)) {
+      throw new WriterError(`block writer returned unexpected order ${order}`);
+    }
+    if (map.has(order)) {
+      throw new WriterError(`block writer returned duplicate order ${order}`);
+    }
+    map.set(order, item);
   }
   return map;
 }
@@ -160,7 +185,7 @@ async function generateBatch(
 
   const attempt = async (repairHint?: string) => {
     const raw = await invoke({ batch, system, user, repairHint });
-    const byOrder = indexByOrder(raw);
+    const byOrder = indexByOrder(raw, batch.jobs.map((job) => job.order));
     return batch.jobs.map((job) => {
       const content = byOrder.get(job.order);
       if (content === undefined) throw new WriterError(`block ${job.order} missing from writer output`);

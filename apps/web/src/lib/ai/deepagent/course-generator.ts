@@ -10,6 +10,7 @@ import { buildKgContextPrompt, type CourseContext, type CourseContextTopic } fro
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 import type { ImageBrief } from "@/lib/ai/media/image-brief";
 import { finalizeImageBlocks, makePendingImageBlock } from "@/lib/ai/media/image-builder";
+import { isCodeEligibleTopicOrGoal } from "@/lib/ai/course-generation/code-eligibility";
 
 const TextBlockSchema = z.object({
   type: z.literal("text"),
@@ -115,23 +116,25 @@ Block types (use the right type for each idea, do NOT just use text):
 - analogy: map an unfamiliar concept to a familiar one. Fields: source (familiar thing), target (concept being taught), mapping (what corresponds to what).
 - transfer: show how a principle from one domain applies in another. Fields: fromDomain, toDomain, explanation, example.
 - visual: a self-contained interactive HTML/CSS/JS fragment that visualizes a key intuition.
-- code: a small code snippet with a plain-language explanation.
-- quiz: a set of 4-6 questions to check understanding. Each question has a "kind": "single" (one correct answer), "multi" (multiple correct answers), or "truefalse" (true/false). All questions must have an "id" (short unique string like "q1"), a "question" string, and an optional "explanation" shown after submission. For "single" and "multi", include a "choices" array of {id, text} objects. For "single" set "correctId" to the correct choice id. For "multi" set "correctIds" to an array of correct choice ids. For "truefalse" set "correct" to true or false.
+- code: a small code snippet with a plain-language explanation. Code is opt-in: use it only for programming, algorithms, software/web engineering, numerical computing, ML implementation, or an explicit user request to write/run/implement code. Do NOT use code as a default example format for biology, chemistry, physics, math, or general conceptual lessons.
+- quiz: a short concept-closing check. Each concept needs its own quiz block placed after that concept's teaching loop. Each question has a "kind": "single" (one correct answer), "multi" (multiple correct answers), or "truefalse" (true/false). All questions must have an "id" (short unique string like "q1"), a "question" string, and an optional "explanation" shown after submission. For "single" and "multi", include a "choices" array of {id, text} objects. For "single" set "correctId" to the correct choice id. For "multi" set "correctIds" to an array of correct choice ids. For "truefalse" set "correct" to true or false.
 
 COURSE STRUCTURE RULES:
-- Produce 8-13 blocks for a normal 2-3 concept lesson. The hard valid range is 8-20 blocks; never add repetitive filler merely to reach a number.
+- Produce 13-15 blocks for a 2-concept lesson and 16-20 blocks for a 3-concept lesson. Never add repetitive filler merely to reach a number.
 - Activation and positioning: exactly 2 text blocks — a concrete hook, then learning goals and prerequisite recall.
-- Concept core teaching: exactly 2 blocks per concept, following knowledge-graph default order — one text explanation plus one example/application using text, code, or visual.
+- Concept core teaching: each concept needs one text explanation plus one example/application. Default examples are text; use visual when interaction teaches the mechanism; use code only when code is the thing being learned.
+- Media rhythm: visual blocks should be 30%-45% of the lesson in this legacy path. Each visual must have a concrete teaching purpose, not decoration.
 - Focused deepening: 2-3 blocks total using analogy, visual, or a text block about a common misconception. Concentrate these on the hardest 1-2 concepts.
 - Integrated transfer: exactly 1 transfer block after the concept teaching arc.
-- Integrated assessment: exactly 1 quiz block near the end with 4-6 questions. Include at least one question per concept and, when space permits, one cross-concept application question.
+- Concept assessment: exactly one quiz block per concept, placed at that concept's close. Do not put one combined quiz at the lesson end.
 - Closure: exactly 1 final text block connecting the concepts, summarizing the lesson, and previewing the next lesson.
-- Include AT MOST ONE visual block per course. Keep its HTML compact (<300 lines).
-- Include at least one analogy block.
+- Keep visual HTML compact (<300 lines).
+- Include analogy only when it materially helps an abstract or difficult concept.
 - Every block needs a short, specific title (no generic "Introduction").
 - Write in the same language as the user's topic prompt.
 
-VISUAL BLOCK RULES (include at most one per course):
+VISUAL BLOCK RULES:
+Use visual blocks only when interaction teaches the concept. Multiple visual blocks are allowed when each has a distinct teaching purpose and the lesson still stays within the 30%-45% media rhythm.
 Choose the engine that best fits the concept:
 - engine "echarts": charts, data plots, function curves, histograms. Set echartsOption to a complete ECharts option object. Use Primoria palette: amber #c8881a, sage #4a7a5a, lavender #7c6ad0. Always set a chart title inside the option.
 - engine "mermaid": flowcharts, sequence diagrams, ER diagrams, state machines, process flows. Set mermaidDefinition to a valid Mermaid DSL string.
@@ -592,7 +595,7 @@ export function normalizeCourseDraft(raw: unknown, topic: string, conceptCount?:
   };
 
   const parsed = CourseSchema.safeParse(draft);
-  if (!parsed.success || !isUsableCourseDraft(parsed.data, conceptCount)) {
+  if (!parsed.success || !isUsableCourseDraft(parsed.data, conceptCount, topic)) {
     throw new Error(`Course generator returned unusable course data: ${parsed.success ? "unsafe content" : parsed.error.message}`);
   }
   return parsed.data;
@@ -785,7 +788,7 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char] ?? char);
 }
 
-function isUsableCourseDraft(course: z.infer<typeof CourseSchema>, conceptCount?: number): boolean {
+function isUsableCourseDraft(course: z.infer<typeof CourseSchema>, conceptCount?: number, topic = course.title): boolean {
   const suspicious = [
     /error/i,
     /schema/i,
@@ -809,7 +812,7 @@ function isUsableCourseDraft(course: z.infer<typeof CourseSchema>, conceptCount?
     ),
   ];
 
-  if (!hasRequiredLessonComposition(course, conceptCount)) return false;
+  if (!hasRequiredLessonComposition(course, conceptCount, topic)) return false;
 
   return fields.every((value) => {
     const text = String(value);
@@ -818,23 +821,29 @@ function isUsableCourseDraft(course: z.infer<typeof CourseSchema>, conceptCount?
   });
 }
 
-function hasRequiredLessonComposition(course: z.infer<typeof CourseSchema>, conceptCount?: number): boolean {
+function hasRequiredLessonComposition(course: z.infer<typeof CourseSchema>, conceptCount?: number, topic = course.title): boolean {
   const count = (type: z.infer<typeof CourseSchema>["blocks"][number]["type"]) =>
     course.blocks.filter((block) => block.type === type).length;
   const normalConceptCount = conceptCount === 2 || conceptCount === 3 ? conceptCount : null;
   const baseRange = normalConceptCount === 2
-    ? { min: 8, max: 10 }
+    ? { min: 13, max: 15 }
     : normalConceptCount === 3
-      ? { min: 10, max: 13 }
+      ? { min: 16, max: 20 }
       : { min: 8, max: 20 };
-  const expectedRange = { min: baseRange.min, max: baseRange.max + count("visual") };
   const minimumTextBlocks = normalConceptCount ? normalConceptCount + 3 : 4;
+  const visualRatio = course.blocks.length ? count("visual") / course.blocks.length : 0;
+  const expectedQuizCount = normalConceptCount ?? 1;
 
-  return course.blocks.length >= expectedRange.min
-    && course.blocks.length <= expectedRange.max
+  return course.blocks.length >= baseRange.min
+    && course.blocks.length <= baseRange.max
     && count("text") >= minimumTextBlocks
-    && count("analogy") >= 1
     && count("transfer") === 1
-    && count("quiz") === 1
-    && count("visual") <= 1;
+    && count("quiz") === expectedQuizCount
+    && visualRatio >= 0.15
+    && visualRatio <= 0.60
+    && (count("code") === 0 || isLegacyCodeEligibleTopic(topic));
+}
+
+function isLegacyCodeEligibleTopic(topic: string): boolean {
+  return isCodeEligibleTopicOrGoal(topic);
 }

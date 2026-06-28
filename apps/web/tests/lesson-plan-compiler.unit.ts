@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 
-import { compileLessonPlanIr } from "../src/lib/ai/course-generation/lesson-plan-compiler.ts";
-import { IrParseError, CoverageError } from "../src/lib/ai/course-generation/generation-errors.ts";
+import { compileLessonPlanIr, isCodeEligibleLessonContext } from "../src/lib/ai/course-generation/lesson-plan-compiler.ts";
+import { CoverageError, IrParseError } from "../src/lib/ai/course-generation/generation-errors.ts";
 import type { CourseContext } from "../src/lib/ai/deepagent/course-kg-context.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -18,182 +18,229 @@ function assertThrows(run: () => unknown, ErrorClass: new (...args: never[]) => 
   assert(caught instanceof ErrorClass, `${message} (got ${caught?.constructor?.name ?? "no throw"})`);
 }
 
-const CONCEPTS = ["c1", "c2", "c3"];
+type Tuple = [number, string, string, string[], string];
 
-function kg(conceptIds: string[] = CONCEPTS, visualIds: string[] = []): CourseContext {
-  const visualSet = new Set(visualIds);
+const C2 = ["c1", "c2"];
+const C3 = ["c1", "c2", "c3"];
+
+function kg(conceptIds: string[] = C3, overrides: Partial<CourseContext> = {}): CourseContext {
   return {
     learningPathType: "linear",
-    graphId: "g1",
+    graphId: "biology",
     startTopic: {
       topicId: "t1",
-      name: "Topic",
+      name: "Photosynthesis",
       concepts: conceptIds.map((conceptId, index) => ({
         conceptId,
-        name: conceptId,
+        name: `Concept ${index + 1}`,
         defaultOrder: index + 1,
-        ...(visualSet.has(conceptId) ? { visual: "function" as const, visualHint: "plot it" } : {}),
+        ...(conceptId === "c2" ? { visual: "diagram" as const, visualHint: "show the mechanism" } : {}),
       })),
     },
     targetConceptId: null,
     nextTopic: null,
+    ...overrides,
   };
-}
-
-type Tuple = [number, string, string, string[], string];
-
-// A valid 12-block plan for 3 concepts with NO visual-worthy concept: 2
-// activation, explanation+example per concept, 1 analogy deepening, transfer,
-// quiz, summary. (Visual coverage is exercised separately below.)
-function validBlocks(): Tuple[] {
-  return [
-    [1, "T", "hook", ["c1"], "hook"],
-    [2, "T", "roadmap", CONCEPTS, "roadmap"],
-    [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "C", "example", ["c1"], "example c1"],
-    [5, "T", "explanation", ["c2"], "explain c2"],
-    [6, "T", "example", ["c2"], "example c2"],
-    [7, "T", "explanation", ["c3"], "explain c3"],
-    [8, "C", "example", ["c3"], "example c3"],
-    [9, "A", "deepening", ["c1"], "analogy deepen"],
-    [10, "X", "transfer", CONCEPTS, "transfer"],
-    [11, "Q", "assessment", CONCEPTS, "quiz"],
-    [12, "T", "summary", CONCEPTS, "summary"],
-  ];
-}
-
-function validTwoConceptBlocks(): Tuple[] {
-  return [
-    [1, "T", "hook", ["c1"], "hook"],
-    [2, "T", "roadmap", ["c1", "c2"], "roadmap"],
-    [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "C", "example", ["c1"], "example c1"],
-    [5, "T", "explanation", ["c2"], "explain c2"],
-    [6, "T", "example", ["c2"], "example c2"],
-    [7, "X", "transfer", ["c1", "c2"], "transfer"],
-    [8, "Q", "assessment", ["c1", "c2"], "quiz"],
-    [9, "T", "summary", ["c1", "c2"], "summary"],
-  ];
 }
 
 function ir(blocks: Tuple[], v = 1, minutes = 45) {
   return { v, lesson: ["Lesson", minutes], blocks };
 }
 
+function validTwoConceptBlocks(): Tuple[] {
+  return [
+    [1, "T", "hook", ["c1"], "hook"],
+    [2, "T", "roadmap", C2, "roadmap"],
+    [3, "T", "explanation", ["c1"], "explain c1"],
+    [4, "I", "example", ["c1"], "image c1"],
+    [5, "T", "example", ["c1"], "example c1"],
+    [6, "V", "deepening", ["c1"], "visual c1"],
+    [7, "Q", "assessment", ["c1"], "quiz c1"],
+    [8, "T", "explanation", ["c2"], "explain c2"],
+    [9, "I", "example", ["c2"], "image c2"],
+    [10, "T", "example", ["c2"], "example c2"],
+    [11, "V", "deepening", ["c2"], "visual c2"],
+    [12, "Q", "assessment", ["c2"], "quiz c2"],
+    [13, "V", "transfer", C2, "transfer simulation"],
+    [14, "T", "summary", C2, "summary"],
+  ];
+}
+
+function validThreeConceptBlocks(): Tuple[] {
+  return [
+    [1, "T", "hook", ["c1"], "hook"],
+    [2, "T", "roadmap", C3, "roadmap"],
+    [3, "T", "explanation", ["c1"], "explain c1"],
+    [4, "I", "example", ["c1"], "image c1"],
+    [5, "T", "example", ["c1"], "example c1"],
+    [6, "V", "deepening", ["c1"], "visual c1"],
+    [7, "Q", "assessment", ["c1"], "quiz c1"],
+    [8, "T", "explanation", ["c2"], "explain c2"],
+    [9, "I", "example", ["c2"], "image c2"],
+    [10, "T", "example", ["c2"], "example c2"],
+    [11, "V", "deepening", ["c2"], "visual c2"],
+    [12, "Q", "assessment", ["c2"], "quiz c2"],
+    [13, "T", "explanation", ["c3"], "explain c3"],
+    [14, "I", "example", ["c3"], "image c3"],
+    [15, "T", "example", ["c3"], "example c3"],
+    [16, "V", "deepening", ["c3"], "visual c3"],
+    [17, "Q", "assessment", ["c3"], "quiz c3"],
+    [18, "V", "transfer", C3, "transfer simulation"],
+    [19, "T", "summary", C3, "summary"],
+  ];
+}
+
 function main() {
-  // Happy path
-  const compiled = compileLessonPlanIr(ir(validBlocks()), kg());
-  assert(compiled.jobs.length === 12, "valid 3-concept plan compiles to 12 jobs");
+  const compiled = compileLessonPlanIr(ir(validThreeConceptBlocks()), kg());
+  assert(compiled.jobs.length === 19, "valid 3-concept plan compiles to 19 jobs");
   assert(compiled.jobs[0].jobId === "b1", "stable jobId derived from order");
   assert(compiled.jobs[0].neighborGoals.next === "roadmap", "neighbor goals wired");
   assert(compiled.jobs[2].pedagogicalRole === "explanation", "role decoded");
-  assert(compiled.jobs[3].type === "code", "type code C -> code");
+  assert(compiled.jobs[3].type === "image", "type code I -> image");
+  assert(compiled.jobs.filter((j) => j.type === "quiz").length === 3, "one quiz per concept");
+  assert(compiled.jobs.some((j) => j.type === "visual" && j.pedagogicalRole === "transfer"), "visual transfer accepted");
   assert(compiled.estimatedMinutes === 45, "minutes pass through");
-  assert(compileLessonPlanIr(ir(validBlocks(), 1, 9999), kg()).estimatedMinutes === 60, "minutes clamped to 60");
+  assert(compileLessonPlanIr(ir(validThreeConceptBlocks(), 1, 9999), kg()).estimatedMinutes === 60, "minutes clamped to 60");
 
-  const twoConceptCompiled = compileLessonPlanIr(ir(validTwoConceptBlocks()), kg(["c1", "c2"]));
-  assert(twoConceptCompiled.jobs.length === 9, "valid 2-concept plan compiles to 9 jobs");
+  const twoConceptCompiled = compileLessonPlanIr(ir(validTwoConceptBlocks()), kg(C2));
+  assert(twoConceptCompiled.jobs.length === 14, "valid 2-concept plan compiles to 14 jobs");
 
-  // 13 blocks still valid for 3 concepts
-  const thirteen = validBlocks();
-  thirteen.splice(9, 0, [9.5, "T", "deepening", ["c3"], "extra deepen"]);
-  thirteen.forEach((b, i) => (b[0] = i + 1));
-  assert(compileLessonPlanIr(ir(thirteen), kg()).jobs.length === 13, "three concepts accept 13 blocks");
+  const minThree: Tuple[] = [
+    [1, "T", "hook", ["c1"], "hook"],
+    [2, "T", "roadmap", C3, "roadmap"],
+    [3, "T", "explanation", ["c1"], "explain c1"],
+    [4, "V", "example", ["c1"], "visual example c1"],
+    [5, "I", "deepening", ["c1"], "image c1"],
+    [6, "Q", "assessment", ["c1"], "quiz c1"],
+    [7, "T", "explanation", ["c2"], "explain c2"],
+    [8, "T", "example", ["c2"], "example c2"],
+    [9, "V", "deepening", ["c2"], "visual c2"],
+    [10, "Q", "assessment", ["c2"], "quiz c2"],
+    [11, "T", "explanation", ["c3"], "explain c3"],
+    [12, "V", "example", ["c3"], "visual example c3"],
+    [13, "I", "deepening", ["c3"], "image c3"],
+    [14, "Q", "assessment", ["c3"], "quiz c3"],
+    [15, "V", "transfer", C3, "transfer simulation"],
+    [16, "T", "summary", C3, "summary"],
+  ];
+  assert(compileLessonPlanIr(ir(minThree), kg()).jobs.length === 16, "3-concept minimum 16 blocks accepted");
 
-  // Version
-  assertThrows(() => compileLessonPlanIr(ir(validBlocks(), 2), kg()), IrParseError, "unsupported IR version rejected");
-
-  // Malformed shape
+  assertThrows(() => compileLessonPlanIr(ir(validThreeConceptBlocks(), 2), kg()), IrParseError, "unsupported IR version rejected");
   assertThrows(() => compileLessonPlanIr({ v: 1, lesson: ["x"], blocks: [] }, kg()), IrParseError, "malformed IR rejected");
 
-  // Unknown type code
-  const badCode = validBlocks();
-  badCode[3][1] = "Z";
+  const badCode = validThreeConceptBlocks();
+  badCode[4][1] = "Z";
   assertThrows(() => compileLessonPlanIr(ir(badCode), kg()), IrParseError, "unknown type code rejected");
 
-  // Suspended type has no code (mind_map -> "M")
-  const suspended = validBlocks();
-  suspended[3][1] = "M";
-  assertThrows(() => compileLessonPlanIr(ir(suspended), kg()), IrParseError, "suspended block type rejected");
-
-  // Unknown role
-  const badRole = validBlocks();
-  badRole[3][2] = "frobnicate";
+  const badRole = validThreeConceptBlocks();
+  badRole[4][2] = "frobnicate";
   assertThrows(() => compileLessonPlanIr(ir(badRole), kg()), IrParseError, "unknown role rejected");
 
-  // Count too low (9)
-  const fewer = validBlocks().filter((_, i) => ![8, 9, 10].includes(i));
-  assertThrows(() => compileLessonPlanIr(ir(fewer), kg()), CoverageError, "9 blocks rejected for 3 concepts");
+  const tooFew = validThreeConceptBlocks().slice(0, 15);
+  assertThrows(() => compileLessonPlanIr(ir(tooFew), kg()), CoverageError, "15 blocks rejected for 3 concepts");
 
-  // Count too high (14)
-  const more = validBlocks();
-  more.splice(9, 0, [9.3, "T", "deepening", ["c1"], "d"], [9.6, "T", "deepening", ["c2"], "d"]);
-  more.forEach((b, i) => (b[0] = i + 1));
-  assertThrows(() => compileLessonPlanIr(ir(more), kg()), CoverageError, "14 blocks rejected for 3 concepts");
+  const tooMany = validThreeConceptBlocks();
+  tooMany.splice(17, 0, [17.2, "T", "deepening", ["c1"], "extra 1"], [17.4, "T", "deepening", ["c2"], "extra 2"]);
+  tooMany.forEach((block, index) => (block[0] = index + 1));
+  assertThrows(() => compileLessonPlanIr(ir(tooMany), kg()), CoverageError, "21 blocks rejected for 3 concepts");
 
-  // Order not strictly increasing
-  const badOrder = validBlocks();
+  const badOrder = validThreeConceptBlocks();
   badOrder[5][0] = 5;
   assertThrows(() => compileLessonPlanIr(ir(badOrder), kg()), CoverageError, "duplicate order rejected");
 
-  // Illegal concept id
-  const badConcept = validBlocks();
-  badConcept[3][3] = ["c9"];
+  const badConcept = validThreeConceptBlocks();
+  badConcept[4][3] = ["c9"];
   assertThrows(() => compileLessonPlanIr(ir(badConcept), kg()), CoverageError, "illegal concept id rejected");
 
-  // Concept missing explanation
-  const noExplain = validBlocks();
+  const noExplain = validThreeConceptBlocks();
   noExplain[2][2] = "deepening";
   assertThrows(() => compileLessonPlanIr(ir(noExplain), kg()), CoverageError, "missing explanation rejected");
 
-  // Concept missing example
-  const noExample = validBlocks();
-  noExample[3][2] = "deepening";
+  const noExample = validThreeConceptBlocks();
+  noExample[4][2] = "deepening";
   assertThrows(() => compileLessonPlanIr(ir(noExample), kg()), CoverageError, "missing example rejected");
 
-  // Quiz omits a concept
-  const quizGap = validBlocks();
-  quizGap[10][3] = ["c1", "c2"];
-  assertThrows(() => compileLessonPlanIr(ir(quizGap), kg()), CoverageError, "quiz omitting a concept rejected");
+  const oneWholeLessonQuiz = validThreeConceptBlocks().filter((block) => block[1] !== "Q");
+  oneWholeLessonQuiz.splice(16, 0, [16.5, "Q", "assessment", C3, "whole lesson quiz"]);
+  oneWholeLessonQuiz.forEach((block, index) => (block[0] = index + 1));
+  assertThrows(() => compileLessonPlanIr(ir(oneWholeLessonQuiz), kg()), CoverageError, "single combined quiz rejected");
 
-  // Missing transfer
-  const noTransfer = validBlocks();
-  noTransfer[9][1] = "T";
-  assertThrows(() => compileLessonPlanIr(ir(noTransfer), kg()), CoverageError, "missing transfer rejected");
+  const quizTooEarly = validTwoConceptBlocks();
+  quizTooEarly[6][0] = 4.5;
+  quizTooEarly.sort((a, b) => a[0] - b[0]).forEach((block, index) => (block[0] = index + 1));
+  assertThrows(() => compileLessonPlanIr(ir(quizTooEarly), kg(C2)), CoverageError, "quiz before concept loop close rejected");
 
-  // A stray visual on a concept the KG did not mark visual-worthy is rejected.
-  const strayVisual = validBlocks();
-  strayVisual[8][1] = "V"; // order 9, concept c1 — but base kg() has no visual concepts
-  assertThrows(() => compileLessonPlanIr(ir(strayVisual), kg()), CoverageError, "unwarranted visual block rejected");
+  const imageAsExplanation = validTwoConceptBlocks();
+  imageAsExplanation[3][2] = "explanation";
+  assertThrows(() => compileLessonPlanIr(ir(imageAsExplanation), kg(C2)), CoverageError, "image as explanation rejected");
 
-  // ── Per-concept visual coverage (KG marks c2 visual-worthy) ──────────────────
-  const kgV = kg(CONCEPTS, ["c2"]);
+  const lowMedia = validTwoConceptBlocks();
+  lowMedia[3][1] = "T";
+  lowMedia[5][1] = "A";
+  lowMedia[8][1] = "T";
+  lowMedia[10][1] = "A";
+  lowMedia[12][1] = "X";
+  assertThrows(() => compileLessonPlanIr(ir(lowMedia), kg(C2)), CoverageError, "media density below 15 percent rejected");
 
-  // 13-block plan that includes the mandated visual on c2 compiles.
-  function validBlocksV(): Tuple[] {
-    const blocks = validBlocks();
-    blocks.splice(9, 0, [9.5, "V", "deepening", ["c2"], "visual deepen c2"]);
-    blocks.forEach((b, i) => (b[0] = i + 1));
-    return blocks;
-  }
-  const compiledV = compileLessonPlanIr(ir(validBlocksV()), kgV);
-  assert(compiledV.jobs.length === 13, "visual-worthy topic accepts the mandated visual (13 blocks)");
-  assert(compiledV.jobs.some((j) => j.type === "visual" && j.conceptIds.includes("c2")), "mandated visual present on c2");
+  const highMedia = validTwoConceptBlocks();
+  highMedia[0][1] = "V";
+  highMedia[2][1] = "V";
+  highMedia[4][1] = "V";
+  highMedia[7][1] = "V";
+  highMedia[9][1] = "V";
+  assertThrows(() => compileLessonPlanIr(ir(highMedia), kg(C2)), CoverageError, "media density above 60 percent rejected");
 
-  // Missing the mandated visual is rejected even though the block count is in range.
-  assertThrows(() => compileLessonPlanIr(ir(validBlocks()), kgV), CoverageError, "missing mandated visual rejected");
+  const nonCode = validTwoConceptBlocks();
+  nonCode[4][1] = "C";
+  assertThrows(() => compileLessonPlanIr(ir(nonCode), kg(C2)), CoverageError, "code block rejected for non-code topic");
 
-  // A second visual on the same concept is rejected (exactly one).
-  const dupVisual = validBlocksV();
-  dupVisual[8][1] = "V"; // turn an analogy deepening (c1) ... point it at c2 too
-  dupVisual[8][3] = ["c2"];
-  assertThrows(() => compileLessonPlanIr(ir(dupVisual), kgV), CoverageError, "duplicate visual on a concept rejected");
+  const socialKg = kg(C2, {
+    graphId: "psychology",
+    startTopic: {
+      topicId: "self_actualization",
+      name: "自我价值与目标设定",
+      concepts: [
+        { conceptId: "c1", name: "自我实现", defaultOrder: 1 },
+        { conceptId: "c2", name: "目标内化", defaultOrder: 2 },
+      ],
+    },
+  });
+  assert(!isCodeEligibleLessonContext(socialKg, "如何实现自我价值"), "bare 实现 in self-actualization is not code intent");
+  assert(!isCodeEligibleLessonContext(socialKg, "实现共同富裕的社会机制"), "bare 实现 in social-science context is not code intent");
 
-  // A visual on a non-worthy concept (c3) alongside the required c2 visual is rejected.
-  const wrongConcept = validBlocksV();
-  wrongConcept[8][1] = "V";
-  wrongConcept[8][3] = ["c3"];
-  assertThrows(() => compileLessonPlanIr(ir(wrongConcept), kgV), CoverageError, "visual on non-worthy concept rejected");
+  const selfActualizationCode = validTwoConceptBlocks();
+  selfActualizationCode[4][1] = "C";
+  assertThrows(
+    () => compileLessonPlanIr(ir(selfActualizationCode), socialKg, { contextHint: "如何实现自我价值" }),
+    CoverageError,
+    "self-actualization context still rejects code block",
+  );
+
+  const codeEligible = validTwoConceptBlocks();
+  codeEligible[4][1] = "C";
+  const codeKg = kg(C2, { graphId: "data_structures_and_algorithms", startTopic: { ...kg(C2).startTopic, name: "Binary Search" } });
+  assert(compileLessonPlanIr(ir(codeEligible), codeKg).jobs.some((job) => job.type === "code"), "code topic accepts code block");
+
+  const userAskedForCode = validTwoConceptBlocks();
+  userAskedForCode[4][1] = "C";
+  assert(
+    compileLessonPlanIr(ir(userAskedForCode), kg(C2), { contextHint: "我要用 Python 实现二分查找" }).jobs.some((job) => job.type === "code"),
+    "explicit user programming-language goal accepts code block",
+  );
+
+  const userAskedForAlgorithmImplementation = validTwoConceptBlocks();
+  userAskedForAlgorithmImplementation[4][1] = "C";
+  assert(
+    compileLessonPlanIr(ir(userAskedForAlgorithmImplementation), kg(C2), { contextHint: "我要实现算法和函数" }).jobs.some((job) => job.type === "code"),
+    "explicit algorithm/function implementation goal accepts code block",
+  );
+
+  const extraVisualOnKgHint = validThreeConceptBlocks();
+  extraVisualOnKgHint[9][1] = "V";
+  assert(
+    compileLessonPlanIr(ir(extraVisualOnKgHint), kg()).jobs.filter((job) => job.type === "visual").length === 5,
+    "planner may use multiple visuals when media density stays valid",
+  );
 
   process.stdout.write("[lesson-plan-compiler.unit] ALL CHECKS PASSED\n");
 }

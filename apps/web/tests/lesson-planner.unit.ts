@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 
-import { buildPlannerPrompt, planLesson } from "../src/lib/ai/course-generation/lesson-planner.ts";
 import { compileLessonPlanIr } from "../src/lib/ai/course-generation/lesson-plan-compiler.ts";
+import { buildPlannerPrompt, planLesson } from "../src/lib/ai/course-generation/lesson-planner.ts";
 import type { CourseContext } from "../src/lib/ai/deepagent/course-kg-context.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -12,57 +12,66 @@ const CONCEPTS = ["c1", "c2", "c3"];
 
 const kg: CourseContext = {
   learningPathType: "linear",
-  graphId: "g1",
+  graphId: "biology",
   startTopic: {
     topicId: "t1",
-    name: "导数",
+    name: "Photosynthesis",
     concepts: CONCEPTS.map((conceptId, index) => ({
       conceptId,
       name: `概念${index + 1}`,
       defaultOrder: index + 1,
-      // c2 is KG-marked visual-worthy, so a visual block is mandated for it.
-      ...(conceptId === "c2" ? { visual: "function" as const, visualHint: "plot f(x) with a slider" } : {}),
+      ...(conceptId === "c2" ? { visual: "diagram" as const, visualHint: "show energy flow" } : {}),
     })),
   },
   targetConceptId: "c2",
   nextTopic: null,
 };
 
-// A fixed IR a well-behaved planner would emit for this 3-concept topic.
 const fixedIr = {
   v: 1,
-  lesson: ["导数入门", 45],
+  lesson: ["光合作用入门", 45],
   blocks: [
     [1, "T", "hook", ["c1"], "hook"],
     [2, "T", "roadmap", CONCEPTS, "roadmap"],
     [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "C", "example", ["c1"], "example c1"],
-    [5, "T", "explanation", ["c2"], "explain c2"],
-    [6, "T", "example", ["c2"], "example c2"],
-    [7, "T", "explanation", ["c3"], "explain c3"],
-    [8, "C", "example", ["c3"], "example c3"],
-    [9, "A", "deepening", ["c2"], "analogy"],
-    [10, "V", "deepening", ["c2"], "visual"],
-    [11, "X", "transfer", CONCEPTS, "transfer"],
-    [12, "Q", "assessment", CONCEPTS, "quiz"],
-    [13, "T", "summary", CONCEPTS, "summary"],
+    [4, "I", "example", ["c1"], "image c1"],
+    [5, "T", "example", ["c1"], "example c1"],
+    [6, "V", "deepening", ["c1"], "visual c1"],
+    [7, "Q", "assessment", ["c1"], "quiz c1"],
+    [8, "T", "explanation", ["c2"], "explain c2"],
+    [9, "I", "example", ["c2"], "image c2"],
+    [10, "T", "example", ["c2"], "example c2"],
+    [11, "V", "deepening", ["c2"], "visual c2"],
+    [12, "Q", "assessment", ["c2"], "quiz c2"],
+    [13, "T", "explanation", ["c3"], "explain c3"],
+    [14, "I", "example", ["c3"], "image c3"],
+    [15, "T", "example", ["c3"], "example c3"],
+    [16, "V", "deepening", ["c3"], "visual c3"],
+    [17, "Q", "assessment", ["c3"], "quiz c3"],
+    [18, "V", "transfer", CONCEPTS, "transfer simulation"],
+    [19, "T", "summary", CONCEPTS, "summary"],
   ],
 };
 
 async function main() {
   const prompt = buildPlannerPrompt(kg);
-  assert(prompt.includes("10-14"), "prompt states the 3-concept block range widened by the one mandated visual");
-  assert(prompt.includes("c2"), "prompt surfaces the target concept");
-  assert(prompt.includes("T = text"), "prompt lists type codes");
-  assert(prompt.includes("VISUAL CONCEPTS"), "prompt lists the KG visual concepts section");
-  assert(prompt.includes("engine function"), "prompt names the per-concept visual engine");
-  assert(!prompt.includes("at most ONE V") && !prompt.includes("At most ONE V"), "prompt no longer caps visuals at one");
+  assert(prompt.includes("16-20"), "prompt states the 3-concept block range");
+  assert(prompt.includes("CODE ELIGIBILITY"), "prompt includes code eligibility rules");
+  assert(prompt.includes("C=code is opt-in"), "prompt says code is opt-in");
+  assert(prompt.includes("generic \"implementation\" / \"实现\" language"), "prompt does not treat bare implementation language as code intent");
+  assert(prompt.includes("exactly one Q=quiz") || prompt.includes("exactly one Q=quiz block"), "prompt requires per-concept quiz");
+  assert(prompt.includes("conceptIds MUST be exactly [that one concept]"), "prompt forbids whole-lesson quiz conceptIds");
+  assert(prompt.includes("Combined I+V count should generally target 30%-45%"), "prompt states media density target");
+  assert(prompt.includes("VISUAL AFFORDANCE HINTS"), "prompt lists visual affordance hints");
+  assert(prompt.includes("engine diagram"), "prompt names the per-concept visual engine hint");
+  assert(!prompt.includes("each REQUIRES one V=visual"), "prompt no longer treats visual hints as exact quotas");
+  assert(!prompt.includes("Do NOT emit a V=visual block for any concept that is NOT listed"), "prompt allows planner-chosen visuals");
 
-  // Planner output (mocked) flows through the deterministic compiler.
   const raw = await planLesson(kg, { invoke: async () => fixedIr });
   const compiled = compileLessonPlanIr(raw, kg);
-  assert(compiled.jobs.length === 13, "mocked planner IR compiles to 13 jobs");
-  assert(compiled.title === "导数入门", "lesson title decoded");
+  assert(compiled.jobs.length === 19, "mocked planner IR compiles to 19 jobs");
+  assert(compiled.jobs.filter((job) => job.type === "quiz").length === CONCEPTS.length, "one quiz job per concept");
+  assert(compiled.title === "光合作用入门", "lesson title decoded");
 
   process.stdout.write("[lesson-planner.unit] ALL CHECKS PASSED\n");
 }
