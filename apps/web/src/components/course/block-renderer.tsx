@@ -6,6 +6,7 @@ import type {
   CodeBlock,
   CourseBlock,
   FillBlankItem,
+  ImageBlock,
   MindMapBlock,
   MultiQuestion,
   ProblemItem,
@@ -45,6 +46,7 @@ export function BlockRenderer({
   if (block.type === "analogy") return <AnalogyBlockView block={block} />;
   if (block.type === "transfer") return <TransferBlockView block={block} />;
   if (block.type === "visual") return <VisualBlockView block={block} />;
+  if (block.type === "image") return <ImageBlockView block={block} />;
   if (block.type === "code") return <CodeBlockView block={block} courseId={courseId} onBlockUpdated={onBlockUpdated} />;
   if (block.type === "quiz") return <QuizBlockView block={block} courseId={courseId} />;
   if (block.type === "mind_map") return <MindMapBlockView block={block} courseId={courseId} />;
@@ -200,7 +202,34 @@ function VisualBlockView({ block }: { block: VisualBlock }) {
 }
 
 function CourseVisualFrame({ children }: { children: React.ReactNode }) {
-  return <div className="course-visual-frame">{children}</div>;
+  return <div className="course-visual-frame" data-course-interactive="true">{children}</div>;
+}
+
+function ImageBlockView({ block }: { block: ImageBlock }) {
+  const failed = block.status === "error" || !block.imageUrl;
+  return (
+    <BlockShell kind="image" title={block.title}>
+      <figure className="course-image-block">
+        {failed ? (
+          <div className="course-image-error" role="img" aria-label={block.alt || "图片生成失败"}>
+            <span className="course-image-error-icon" aria-hidden="true">⚠</span>
+            <span className="course-image-error-text">
+              图片生成失败{block.errorMessage ? `：${block.errorMessage}` : ""}
+            </span>
+          </div>
+        ) : (
+          <img
+            className="course-image"
+            src={block.imageUrl}
+            alt={block.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+        {block.caption ? <figcaption className="course-image-caption">{block.caption}</figcaption> : null}
+      </figure>
+    </BlockShell>
+  );
 }
 
 function CodeBlockView({

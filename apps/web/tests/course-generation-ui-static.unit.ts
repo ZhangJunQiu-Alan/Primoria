@@ -57,10 +57,14 @@ async function main() {
   assert(courseOutlinePage.includes("CourseOutlineView"), "course outline route delegates to the shared outline view");
   assert(courseDetailClient.includes("CourseOutlineView"), "course detail page reuses the shared outline view for upcoming lessons");
   assert(courseDetailClient.includes('visibleLessons="upcoming"'), "course detail page requests the upcoming lesson view");
+  assert(courseDetailClient.includes("currentLessonBlocks(course, currentLessonId)"), "course detail renders only the active lesson's blocks");
+  assert(courseDetailClient.includes("visibleBlocks={blocks}"), "course detail gives Course Copilot only the visible lesson blocks");
+  assert(coursePage.includes("currentLessonBlocks(course, requestedLessonId)"), "course page header counts only the active lesson's blocks");
   assert(courseOutlineView.includes("selectVisibleLessons"), "shared course outline centralizes lesson visibility selection");
   assert(courseOutlineView.includes('visibleLessons !== "upcoming"'), "full course outline still shows all lessons");
-  assert(courseOutlineView.includes("lessons.find((lesson) => lesson.status !== \"generated\")"), "upcoming course detail view selects only the next ungenerated lesson");
+  assert(courseOutlineView.includes("lessons[currentIndex + 1]"), "upcoming course detail view selects the next outline lesson after the active lesson");
   assert(courseOutlineView.includes("return nextLesson ? [nextLesson] : [];"), "upcoming course detail view renders at most one follow-up lesson");
+  assert(courseOutlineView.includes("?lessonId=${encodeURIComponent(lesson.id)}"), "generated outline lessons open as an explicit lesson jump link");
   assert(courseOutlineView.includes("course-outline-summary"), "shared course outline renders a compact course summary header");
   assert(courseOutlineView.includes("course-outline-ready-count"), "shared course outline shows ready lesson count in the summary");
   assert(courseOutlineView.includes("course-outline-progress"), "shared course outline renders ready progress");

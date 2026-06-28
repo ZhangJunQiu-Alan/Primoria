@@ -63,10 +63,12 @@ export function compileLessonPlanIr(rawIr: unknown, kg: CourseContext): Compiled
   const visualConcepts = visualConceptIds(kg);
   const blocks = decoded.blocks;
 
-  validateQuantity(blocks, concepts.length, visualConcepts.size);
+  const imageCount = blocks.filter((b) => b.type === "image").length;
+  validateQuantity(blocks, concepts.length, visualConcepts.size + imageCount);
   validateOrdering(blocks);
   validateConceptLegality(blocks, conceptSet);
   validateLessonComposition(blocks);
+  validateImageRules(blocks);
   validateConceptCoverage(blocks, concepts);
   validateVisualCoverage(blocks, visualConcepts);
   validateQuizCoverage(blocks, concepts);
@@ -171,9 +173,30 @@ function validateVisualCoverage(blocks: DecodedBlockPlan[], visualConcepts: Set<
   }
 }
 
+/** Image blocks are static anchors, not teaching coverage. They must bind to at
+ * least one valid concept (legality checked separately) and play a supporting
+ * role (example/deepening) — never assessment, and never decorative filler with
+ * no concept. They do NOT need a KG visual affordance (unlike `visual`). */
+function validateImageRules(blocks: DecodedBlockPlan[]): void {
+  const allowedRoles = new Set<PedagogicalRole>(["example", "deepening"]);
+  const problems: string[] = [];
+  for (const block of blocks.filter((b) => b.type === "image")) {
+    if (block.conceptIds.length === 0) problems.push(`image-no-concept:order${block.order}`);
+    if (!allowedRoles.has(block.role)) problems.push(`image-bad-role:order${block.order}:${block.role}`);
+  }
+  if (problems.length > 0) {
+    throw new CoverageError(
+      "image blocks must bind to a concept and use the example or deepening role",
+      problems,
+    );
+  }
+}
+
 function validateConceptCoverage(blocks: DecodedBlockPlan[], concepts: string[]): void {
+  // Image blocks never satisfy explanation/example coverage — a real text/example
+  // block is still required even when an image shares the concept and role.
   const hasRole = (conceptId: string, role: PedagogicalRole) =>
-    blocks.some((b) => b.role === role && b.conceptIds.includes(conceptId));
+    blocks.some((b) => b.type !== "image" && b.role === role && b.conceptIds.includes(conceptId));
   const missing: string[] = [];
   for (const conceptId of concepts) {
     if (!hasRole(conceptId, "explanation")) missing.push(`explanation:${conceptId}`);

@@ -23,6 +23,7 @@ const GeneratableBlockTypeSchema = z.enum([
   "analogy",
   "transfer",
   "visual",
+  "image",
   "code",
   "quiz",
 ]);

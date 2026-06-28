@@ -9,7 +9,7 @@ import { CourseOutlineView } from "./course-outline-view";
 import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surface";
 import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
 import type { Course, CourseBlock } from "@/lib/courses/types";
-import { courseBlocks } from "@/lib/courses/types";
+import { currentCourseLesson, currentLessonBlocks } from "@/lib/courses/types";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { useLearningProgressRecommendation } from "@/hooks/use-learning-progress-recommendation";
 import { learningDecisionAcceptLabel, learningDecisionHeadline } from "@/lib/courses/learning-progress-labels";
@@ -62,6 +62,16 @@ function blockToContext(block: CourseBlock) {
       htmlSummary: (block.html ?? "").slice(0, 900),
     };
   }
+  if (block.type === "image") {
+    return {
+      id: block.id,
+      type: block.type,
+      title,
+      imageKind: block.imageKind,
+      alt: block.alt,
+      caption: block.caption,
+    };
+  }
   if (block.type !== "code") return { id: block.id, type: block.type, title };
   return {
     id: block.id,
@@ -75,6 +85,7 @@ function blockToContext(block: CourseBlock) {
 
 function buildCourseContext(
   course: Course,
+  visibleBlocks: CourseBlock[],
   selectedBlock: CourseBlock | null,
   selectedText: SelectedTextContext | null,
 ) {
@@ -85,7 +96,7 @@ function buildCourseContext(
       topic: course.topic,
       summary: course.summary,
       estimatedMinutes: course.estimatedMinutes,
-      blocks: courseBlocks(course).map((block, index) => ({
+      blocks: visibleBlocks.map((block, index) => ({
         index: index + 1,
         id: block.id,
         type: block.type,
@@ -112,6 +123,25 @@ function selectionTextInside(element: HTMLElement) {
 function nodeElement(node: Node | null) {
   if (!node) return null;
   return node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
+}
+
+function isCourseBlockInteractiveTarget(target: EventTarget | null, blockElement: HTMLElement) {
+  if (!(target instanceof Element)) return false;
+  const interactive = target.closest<HTMLElement>(
+    [
+      "button",
+      "a",
+      "input",
+      "textarea",
+      "select",
+      "summary",
+      "[role='button']",
+      "[role='slider']",
+      "[contenteditable='true']",
+      "[data-course-interactive='true']",
+    ].join(","),
+  );
+  return Boolean(interactive && blockElement.contains(interactive));
 }
 
 function CourseRevisionAction({
@@ -191,6 +221,7 @@ const BLOCK_TYPE_ENUM = z.enum([
   "analogy",
   "transfer",
   "visual",
+  "image",
   "code",
   "quiz",
 ]);
@@ -239,7 +270,7 @@ function CourseStructureActions({
     {
       name: "add_course_block",
       description:
-        "Add a NEW block to the open Primoria course. Use when the learner asks to add an explanation, example, analogy, transfer, visual, code sample, or quiz. Pick the block type that best fits the request.",
+        "Add a NEW block to the open Primoria course. Use when the learner asks to add an explanation, example, analogy, transfer, interactive visual, illustration/image, code sample, or quiz. Use \"image\" for a static illustration/picture/diagram the learner wants to SEE (an object, structure, scene, or analogy); use \"visual\" for an interactive widget. Pick the block type that best fits the request.",
       parameters: z.object({
         targetType: BLOCK_TYPE_ENUM.describe("The block type to create."),
         instruction: z.string().describe("What the new block should cover, in the learner's terms."),
@@ -425,6 +456,7 @@ function CourseGenerativeUI() {
 
 function CourseAIAssistantPanel({
   course,
+  visibleBlocks,
   selectedBlock,
   collapsed,
   width,
@@ -435,6 +467,7 @@ function CourseAIAssistantPanel({
   selectedTextContext,
 }: {
   course: Course;
+  visibleBlocks: CourseBlock[];
   selectedBlock: CourseBlock | null;
   collapsed: boolean;
   width: number;
@@ -452,8 +485,8 @@ function CourseAIAssistantPanel({
   // context-injected course-chat history cannot leak into Course Copilot.
   const courseThreadId = courseThreadIdFor(course.id);
   const courseContext = useMemo(
-    () => buildCourseContext(course, selectedBlock, selectedTextContext),
-    [course, selectedBlock, selectedTextContext],
+    () => buildCourseContext(course, visibleBlocks, selectedBlock, selectedTextContext),
+    [course, visibleBlocks, selectedBlock, selectedTextContext],
   );
 
   useEffect(() => {
@@ -709,8 +742,10 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
         const data = (await res.json()) as { course?: { lessons?: { id: string; status: string }[] } };
         const lesson = data.course?.lessons?.find((l) => l.id === generatingLessonId);
         if (lesson?.status === "generated" && !cancelled) {
+          const generatedLessonId = generatingLessonId;
           setGeneratingLessonId(null);
           await onResolved();
+          router.push(`/course/${courseId}?lessonId=${encodeURIComponent(generatedLessonId)}`);
         }
       } catch {
         // Best-effort polling; a manual reload still surfaces the lesson.
@@ -722,7 +757,7 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
       cancelled = true;
       window.clearInterval(interval);
     };
-  }, [generatingLessonId, courseId, onResolved]);
+  }, [generatingLessonId, courseId, onResolved, router]);
 
   if (generatingLessonId) {
     return (
@@ -752,6 +787,9 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
     }
     // next — the lesson is preloaded (or now enqueued); surface it in place.
     await onResolved();
+    if (result?.lessonId) {
+      router.push(`/course/${courseId}?lessonId=${encodeURIComponent(result.lessonId)}`);
+    }
   }
 
   // Secondary action by kind:
@@ -760,14 +798,17 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
   //   • next ("Good Job") → "否", go home
   async function declineSecondary() {
     await resolve(jobId, "dismiss");
-    if (decision!.kind === "remediation" && decision!.nextLessonTitle) await onResolved();
-    else goHome();
+    if (decision!.kind === "remediation" && decision!.nextLessonTitle) {
+      await onResolved();
+      router.push(`/course/${courseId}`);
+    } else goHome();
   }
 
   // Closing the popup == declining remediation; reveal the preloaded next lesson.
   async function closePopup() {
     await resolve(jobId, "dismiss");
     await onResolved();
+    router.push(`/course/${courseId}`);
   }
 
   const isRemediation = decision.kind === "remediation";
@@ -823,17 +864,21 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
 
 export function CourseDetailClient({
   initialCourse,
+  initialLessonId = null,
   initialLessonJobs = [],
   copilotEnabled,
 }: {
   initialCourse: Course;
+  initialLessonId?: string | null;
   initialLessonJobs?: LessonGenerationJobSummary[];
   copilotEnabled: boolean;
 }) {
   const [course, setCourse] = useState<Course>(initialCourse);
   const [lessonJobs, setLessonJobs] = useState<LessonGenerationJobSummary[]>(initialLessonJobs);
   const [outlineKey, setOutlineKey] = useState(0);
-  const blocks = useMemo(() => courseBlocks(course), [course]);
+  const currentLesson = useMemo(() => currentCourseLesson(course, initialLessonId), [course, initialLessonId]);
+  const currentLessonId = currentLesson?.id ?? null;
+  const blocks = useMemo(() => currentLessonBlocks(course, currentLessonId), [course, currentLessonId]);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [selectedTextContext, setSelectedTextContext] = useState<SelectedTextContext | null>(null);
   const [expandedActionsBlockId, setExpandedActionsBlockId] = useState<string | null>(null);
@@ -862,17 +907,22 @@ export function CourseDetailClient({
     workspace.style.setProperty("--course-content-margin-end", sidebarCollapsed ? "auto" : "var(--course-content-gutter)");
   }, [sidebarCollapsed, sidebarWidth]);
 
-  // Preload the immediately-next outline lesson while the learner studies the
-  // current one (feature_specification.md §28). The "active" lesson is the first
-  // generated, not-yet-completed lesson by sortKey; we warm the next one once.
+  useEffect(() => {
+    setSelectedBlockId((current) => (current && blocks.some((block) => block.id === current) ? current : null));
+    setSelectedTextContext((current) => (current && blocks.some((block) => block.id === current.blockId) ? current : null));
+    setExpandedActionsBlockId((current) => (current && blocks.some((block) => block.id === current) ? current : null));
+  }, [blocks]);
+
+  // Preload only the immediately-next outline lesson while this lesson is open
+  // (feature_specification.md §28). Preloading must not make the next lesson's
+  // blocks visible on the current lesson page.
   const prewarmedRef = useRef<Set<string>>(new Set());
   useEffect(() => {
-    const sorted = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
-    const active = sorted.find((lesson) => lesson.status === "generated" && lesson.progress !== "completed");
+    const active = currentLesson;
     if (!active || prewarmedRef.current.has(active.id)) return;
     prewarmedRef.current.add(active.id);
     void fetch(`/api/courses/${course.id}/lessons/${active.id}/prewarm-next`, { method: "POST" }).catch(() => {});
-  }, [course]);
+  }, [course.id, currentLesson]);
 
   const selectedBlock = blocks.find((b) => b.id === selectedBlockId) ?? null;
 
@@ -1005,16 +1055,21 @@ export function CourseDetailClient({
               aria-label={`Course block: ${blockDisplayTitle(block)}`}
               className={`course-block-wrapper${selectedBlockId === block.id ? " selected" : ""}`}
               onClick={(event) => {
+                if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
                 if (selectionTextInside(event.currentTarget)) return;
                 openBlockActions(block);
               }}
-              onMouseUp={(event) => updateSelectedText(block, event.currentTarget)}
+              onMouseUp={(event) => {
+                if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
+                updateSelectedText(block, event.currentTarget);
+              }}
               onKeyUp={(event) => {
                 if (event.key === "Shift" || event.key.startsWith("Arrow")) {
                   updateSelectedText(block, event.currentTarget);
                 }
               }}
               onKeyDown={(event) => {
+                if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
                 if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
                   openBlockActions(block);
@@ -1035,6 +1090,7 @@ export function CourseDetailClient({
             initialJobs={lessonJobs}
             variant="embedded"
             visibleLessons="upcoming"
+            currentLessonId={currentLessonId}
             onCourseUpdated={setCourse}
           />
         </div>
@@ -1042,6 +1098,7 @@ export function CourseDetailClient({
       <LearningProgressPopup courseId={course.id} onResolved={refreshAfterRecommendation} />
       <CourseAIAssistantPanel
         course={course}
+        visibleBlocks={blocks}
         selectedBlock={selectedBlock}
         collapsed={sidebarCollapsed}
         width={sidebarWidth}
@@ -1051,7 +1108,7 @@ export function CourseDetailClient({
         selectedTextContext={selectedTextContext}
         onCourseUpdated={(nextCourse) => {
           setCourse(nextCourse);
-          const nextBlocks = courseBlocks(nextCourse);
+          const nextBlocks = currentLessonBlocks(nextCourse, currentLessonId);
           if (selectedBlockId && !nextBlocks.some((block) => block.id === selectedBlockId)) {
             setSelectedBlockId(null);
             setSelectedTextContext(null);

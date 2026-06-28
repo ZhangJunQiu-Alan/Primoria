@@ -69,6 +69,7 @@ const FIELD_HINTS: Record<GeneratableBlockType, string> = {
   analogy: `"title","source" (familiar thing),"target" (concept),"mapping"`,
   transfer: `"title","fromDomain","toDomain","explanation","example"`,
   visual: `"title","description","engine" plus the payload for that engine (see the engine directive on this block)`,
+  image: `"title","learningGoal","imageKind":"educational_illustration|structure_diagram|realistic_scene|analogy_illustration","prompt" (describe the scene/object/structure to draw — NO text, labels, numbers, axes, formulas, or chemical notation in the image),"alt","caption" (tell the learner what to notice),"negativePrompt"?,"aspectRatio"?:"1:1|4:3|16:9","resolution"?:"1K|2K|4K". You write a BRIEF; the image is generated later.`,
   code: `"title","language","code","explanation"`,
   quiz: `"title","questions":[{"kind":"single|multi|truefalse","id","question","choices":[{"id","text"}],"correctId"|"correctIds"|"correct","explanation","conceptId"}] (4-6 questions; conceptId is required on every question)`,
 };

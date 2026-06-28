@@ -7,6 +7,8 @@ import {
   PhysicsSceneZodSchema,
 } from "@/lib/ai/visual-schemas";
 import type { CourseBlock } from "@/lib/courses/types";
+import type { ImageBrief } from "@/lib/ai/media/image-brief";
+import { makePendingImageBlock } from "@/lib/ai/media/image-builder";
 import { BlockCompileError } from "./generation-errors";
 import type { GeneratableBlockType } from "./lesson-plan-ir";
 import type { BlockGenerationJob } from "./lesson-plan-compiler";
@@ -40,6 +42,21 @@ const CodeContentSchema = z.object({
   language: nonEmpty,
   code: nonEmpty,
   explanation: nonEmpty,
+});
+
+// The image writer emits a BRIEF, not an asset — the imaging stage generates the
+// asset later. The prompt must not request embedded text/labels/formulas (AI
+// images can't render those reliably; use a `visual` block instead).
+const ImageContentSchema = z.object({
+  title: nonEmpty,
+  learningGoal: nonEmpty,
+  imageKind: z.enum(["educational_illustration", "structure_diagram", "realistic_scene", "analogy_illustration"]),
+  prompt: nonEmpty,
+  alt: nonEmpty,
+  caption: nonEmpty,
+  negativePrompt: z.string().optional(),
+  aspectRatio: z.enum(["1:1", "4:3", "16:9"]).optional(),
+  resolution: z.enum(["1K", "2K", "4K"]).optional(),
 });
 
 const AlgorithmVizPayloadSchema = z.object({
@@ -127,6 +144,7 @@ const CONTENT_SCHEMAS: Record<GeneratableBlockType, z.ZodTypeAny> = {
   analogy: AnalogyContentSchema,
   transfer: TransferContentSchema,
   visual: VisualContentSchema,
+  image: ImageContentSchema,
   code: CodeContentSchema,
   quiz: QuizContentSchema,
 };
@@ -147,6 +165,29 @@ export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown
       `block ${job.order} (${job.type}) content invalid: ${parsed.error.message}`,
       { jobId: job.jobId, issues: parsed.error.flatten() },
     );
+  }
+
+  if (job.type === "image") {
+    const content = parsed.data as z.infer<typeof ImageContentSchema>;
+    const brief: ImageBrief = {
+      conceptIds: job.conceptIds,
+      learningGoal: content.learningGoal,
+      imageKind: content.imageKind,
+      prompt: content.prompt,
+      alt: content.alt,
+      caption: content.caption,
+      negativePrompt: content.negativePrompt,
+      aspectRatio: content.aspectRatio,
+      resolution: content.resolution,
+    };
+    // Pending — the imaging stage resolves the asset and finalizes this block.
+    return makePendingImageBlock({
+      id: blockIdFor(job, lessonId),
+      title: content.title,
+      conceptIds: job.conceptIds,
+      pedagogicalRole: job.pedagogicalRole,
+      brief,
+    });
   }
 
   if (job.type === "quiz") {

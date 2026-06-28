@@ -17,6 +17,7 @@ export type LessonGenerationStage =
   | "queued"
   | "planning"
   | "writing"
+  | "imaging"
   | "validating"
   | "saving"
   | "completed"

@@ -12,6 +12,7 @@ type CourseOutlineViewProps = {
   initialJobs?: LessonGenerationJobSummary[];
   variant?: "page" | "embedded";
   visibleLessons?: "all" | "upcoming";
+  currentLessonId?: string | null;
   onCourseUpdated?: (course: Course) => void;
 };
 
@@ -20,6 +21,7 @@ export function CourseOutlineView({
   initialJobs = [],
   variant = "page",
   visibleLessons = "all",
+  currentLessonId = null,
   onCourseUpdated,
 }: CourseOutlineViewProps) {
   const [displayCourse, setDisplayCourse] = useState(course);
@@ -32,8 +34,8 @@ export function CourseOutlineView({
     [displayCourse.lessons],
   );
   const renderedLessons = useMemo(
-    () => selectVisibleLessons(lessons, visibleLessons),
-    [lessons, visibleLessons],
+    () => selectVisibleLessons(lessons, visibleLessons, currentLessonId),
+    [lessons, visibleLessons, currentLessonId],
   );
   const generatedCount = lessons.filter((lesson) => lesson.status === "generated").length;
   const lockedCount = lessons.filter((lesson) => lesson.status === "planned").length;
@@ -149,8 +151,15 @@ export function CourseOutlineView({
   );
 }
 
-function selectVisibleLessons(lessons: Lesson[], visibleLessons: "all" | "upcoming") {
+function selectVisibleLessons(lessons: Lesson[], visibleLessons: "all" | "upcoming", currentLessonId?: string | null) {
   if (visibleLessons !== "upcoming") return lessons;
+  const currentIndex = currentLessonId
+    ? lessons.findIndex((lesson) => lesson.id === currentLessonId)
+    : lessons.findIndex((lesson) => lesson.status === "generated" && lesson.progress !== "completed");
+  if (currentIndex >= 0) {
+    const nextLesson = lessons[currentIndex + 1] ?? null;
+    return nextLesson ? [nextLesson] : [];
+  }
   const nextLesson = lessons.find((lesson) => lesson.status !== "generated");
   return nextLesson ? [nextLesson] : [];
 }
@@ -195,7 +204,7 @@ function LessonOutlineRow({
       </div>
       <div className="course-outline-row-action">
         {lesson.status === "generated" ? (
-          <Link href={`/course/${courseId}`} aria-label={`Open ${lesson.title}`}>Open</Link>
+          <Link href={`/course/${courseId}?lessonId=${encodeURIComponent(lesson.id)}`} aria-label={`Open ${lesson.title}`}>Open</Link>
         ) : (
           <button
             type="button"

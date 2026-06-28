@@ -18,16 +18,20 @@ function main() {
   const styles = read("src/app/globals.css");
 
   assert(page.includes("course-status-row"), "course header exposes a clearer lesson status row");
-  assert(page.includes("当前课程"), "course header labels the current learning surface");
+  assert(page.includes("当前 lesson"), "course header labels the current lesson surface");
+  assert(page.includes("currentCourseLesson(course, requestedLessonId)"), "course page resolves the current lesson from progress or lessonId");
+  assert(page.includes("currentLessonBlocks(course, requestedLessonId)"), "course page counts only the current lesson blocks");
 
   assert(detail.includes("expandedActionsBlockId"), "course detail tracks the expanded block action tray");
   assert(detail.includes("setExpandedActionsBlockId(block.id)"), "clicking a block opens that block action drawer and keeps it open");
   assert(!detail.includes("current === block.id ? null : block.id"), "clicking the same block no longer toggles the action drawer closed");
-  assert(!detail.includes("setExpandedActionsBlockId(null)"), "block action buttons do not close the open action drawer");
+  assert(detail.includes("setExpandedActionsBlockId((current) =>"), "course detail clears stale action drawers only when the selected block leaves the visible lesson");
   assert(detail.includes("CourseBlockActionTray"), "course detail renders per-block learning actions outside BlockRenderer");
   assert(detail.includes('data-actions-expanded={expandedActionsBlockId === block.id ? "true" : "false"}'), "block itself tracks expanded state without a visible trigger");
   assert(detail.includes("aria-controls={`course-block-actions-${block.id}`}"), "block itself controls the hidden bottom action panel");
   assert(detail.includes("stopBlockActionEvent"), "block action tray stops events from selecting text or blocks accidentally");
+  assert(detail.includes("isCourseBlockInteractiveTarget"), "course block wrapper ignores internal interactive controls");
+  assert(detail.includes("[data-course-interactive='true']"), "course block wrapper treats visual canvases as internal interactive zones");
   assert(detail.includes("course-block-action-panel"), "expanded actions render as a hidden-until-click bottom panel");
   assert(!detail.includes("针对当前 block"), "bottom action panel no longer repeats the current-block label");
   assert(!detail.includes("学习动作</button>"), "course detail does not render a visible learning-action trigger button");
@@ -37,6 +41,9 @@ function main() {
   assert(detail.includes("出 3 道练习"), "block action tray includes practice action");
   assert(detail.includes("检查我是否理解"), "block action tray includes understanding-check action");
   assert(detail.includes("sendCoursePrompt(courseThreadId"), "block actions still route through the existing Course Copilot prompt bridge");
+  assert(detail.includes("currentLessonBlocks(course, currentLessonId)"), "course detail renders only blocks from the active lesson");
+  assert(detail.includes("visibleBlocks={blocks}"), "Course Copilot receives the same active-lesson block list as the page");
+  assert(detail.includes("currentLessonId={currentLessonId}"), "upcoming lesson view is anchored to the current lesson");
   assert(detail.includes("course-ai-context-strip"), "Course Copilot renders current block context");
   assert(detail.includes("还没有选中的 block"), "Course Copilot has a no-selection empty context state");
   assert(detail.includes("setSidebarCollapsed(false)"), "block actions reopen the Copilot sidebar before sending prompts");
@@ -54,11 +61,13 @@ function main() {
   assert(blockRenderer.includes('CourseMarkdown markdown={block.example} className="course-transfer-example-body"'), "transfer examples render as block markdown for lists and paragraphs");
   assert(!blockRenderer.includes("<em>Example.</em> <CourseInlineMarkdown markdown={block.example}"), "transfer examples are not rendered through inline markdown");
   assert(blockRenderer.includes("CourseVisualFrame"), "visual blocks render inside a clean course visual shell");
+  assert(blockRenderer.includes('data-course-interactive="true"'), "visual blocks mark their canvas as interactive");
   assert(blockRenderer.includes('variant="course"'), "course visual renderers suppress their internal tool-card title bars");
 
   assert(styles.includes(".course-block-learning-actions"), "block action tray has dedicated styling");
   assert(styles.includes(".course-block-action-panel"), "expanded block actions use a bottom panel style");
-  assert(styles.includes(".course-block-action-panel::before"), "expanded block actions render the lower drawer lip");
+  assert(!styles.includes(".course-block-action-panel::before"), "expanded block actions do not render an extra lower lip");
+  assert(styles.includes("border-top: 1px solid rgba(23, 19, 15, 0.08)"), "expanded block actions sit inside the block as a clean footer");
   assert(styles.includes("flex-direction: column"), "block actions stack the trigger and bottom panel instead of rendering inline");
   assert(styles.includes(".course-block-action-tray"), "expanded block actions have dedicated styling");
   assert(styles.includes(".course-ai-context-strip.empty"), "Course Copilot empty context state has dedicated styling");

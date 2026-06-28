@@ -62,8 +62,14 @@ MASTERY ADAPTATION (the [..] tag after each concept; adjust teaching DEPTH only 
 VISUAL CONCEPTS (each REQUIRES one V=visual block — these are the product's core differentiator):
 ${visuals.length ? fmtVisualConcepts(kg.startTopic) : "  (none for this topic)"}
 
-BLOCK TYPE CODES (use only these six):
+BLOCK TYPE CODES (use only these):
 ${TYPE_CODE_LINES}
+
+IMAGE vs VISUAL (I=image is a STATIC cognitive anchor; V=visual is an INTERACTIVE mechanism model):
+- Use I=image when the learner needs to SEE a concrete object, structure, scene, or analogy picture (e.g. a chloroplast cross-section, real lab apparatus, "a stack is like a pile of plates"). Static, look-once-to-recognize.
+- Use V=visual when the learner needs to OPERATE variables, watch a process, or understand a mechanism (sliders, sorting steps, gradient descent). Try-it-to-understand.
+- I=image is OPTIONAL and never decorative: only add one when a concrete/spatial/analogy picture materially helps recognition or memory. The same concept may have both an I and a V when they serve different goals.
+- Never use I=image for precise text, formulas, axes, labels, or chemical notation — those must be a V=visual (Mermaid/ECharts/Math Explorer).
 
 PEDAGOGICAL ROLES (use only these): ${PEDAGOGICAL_ROLES.join(", ")}
 
@@ -73,10 +79,11 @@ TEACHING STRUCTURE (doc §4.3):
 - For EACH concept listed under VISUAL CONCEPTS above, exactly one V=visual block with role "deepening" whose conceptIds is [that one concept]. This is mandatory — do not skip, merge, or move it onto a different concept.
 - Do NOT emit a V=visual block for any concept that is NOT listed under VISUAL CONCEPTS.
 - Optionally 1-2 A=analogy "deepening"/"misconception" blocks on the hardest concepts (use A=analogy here, never V).
+- Optionally I=image "example"/"deepening" blocks for concrete/spatial/analogy concepts (see IMAGE vs VISUAL above). Each I=image MUST list exactly the one conceptId it anchors and have a clear goal. An image never replaces a concept's required explanation/example text block.
 - Exactly 1 X=transfer block (role "transfer").
 - Exactly 1 Q=quiz block (role "assessment") whose conceptIds list EVERY concept.
 - Exactly 1 final text block with role "summary".
-- Target ${min}-${max} blocks for ${conceptCount} concepts (${visuals.length} of them require a visual). Never pad with filler.
+- Target ${min}-${max} blocks for ${conceptCount} concepts (${visuals.length} of them require a visual); each optional I=image you add raises the ceiling by one. Never pad with filler.
 
 OUTPUT — a single compact JSON object, no indentation, no prose, no code fences:
 {"v":${IR_VERSION},"lesson":["<lesson title>",<estimatedMinutes>],"blocks":[[<order:int starting 1, strictly increasing>,"<typeCode>","<role>",["<conceptId>",...],"<one-line goal>"], ...]}
