@@ -192,12 +192,49 @@ export async function initializeCourseOutline(
   const isNewCourse = !course;
   if (!course) course = buildOutlineCourse({ topic: input.topic, kgContext: input.kgContext, language: input.language }, graphId);
 
-  const ordered = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
-  const firstLesson = (targetTopicId ? ordered.find((lesson) => lesson.topicId === targetTopicId) : undefined) ?? ordered[0];
+  const firstLesson = firstLessonForTopic(course, targetTopicId);
   if (!firstLesson) throw new Error("Course outline has no lessons to generate.");
 
-  await saveCourse(course, ownerId);
+  try {
+    await saveCourse(course, ownerId);
+  } catch (error) {
+    if (!graphId || !isNewCourse || !isOwnerGraphUniqueViolation(error)) throw error;
+
+    // Concurrent cold-start requests can both miss getCourseByGraph(), build
+    // different random course ids, then race on courses_owner_graph_uidx. The
+    // winner already created the canonical owner+graph course; reuse it.
+    const existingCourse = await getCourseByGraph(ownerId, graphId);
+    if (!existingCourse) throw error;
+
+    const existingFirstLesson = firstLessonForTopic(existingCourse, targetTopicId);
+    if (!existingFirstLesson) throw new Error("Course outline has no lessons to generate.");
+    return {
+      course: existingCourse,
+      firstLesson: existingFirstLesson,
+      summary: summarizeCourse(existingCourse),
+      isNewCourse: false,
+    };
+  }
   return { course, firstLesson, summary: summarizeCourse(course), isNewCourse };
+}
+
+function firstLessonForTopic(course: Course, targetTopicId: string | null) {
+  const ordered = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
+  return (targetTopicId ? ordered.find((lesson) => lesson.topicId === targetTopicId) : undefined) ?? ordered[0];
+}
+
+function isOwnerGraphUniqueViolation(error: unknown) {
+  if (!error || typeof error !== "object") return false;
+  const record = error as Record<string, unknown>;
+  const message = error instanceof Error ? error.message : "";
+  const detail = typeof record.detail === "string" ? record.detail : "";
+  const constraint = typeof record.constraint === "string" ? record.constraint : "";
+  return (
+    record.code === "23505" &&
+    (constraint === "courses_owner_graph_uidx" ||
+      message.includes("courses_owner_graph_uidx") ||
+      detail.includes("courses_owner_graph_uidx"))
+  );
 }
 
 // All KG topics from the entry topic onward, by Topic Order (default_order).

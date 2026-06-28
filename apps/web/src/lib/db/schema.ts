@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { boolean, doublePrecision, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -111,9 +112,13 @@ export const courses = pgTable(
   (table) => ({
     ownerUpdatedIdx: index("courses_owner_updated_idx").on(table.ownerId, table.updatedAt),
     ownerArchivedUpdatedIdx: index("courses_owner_archived_updated_idx").on(table.ownerId, table.archivedAt, table.updatedAt),
-    // At most one Course instance per user per subject KG. graph_id NULL (free-form
-    // courses with no KG) is exempt — Postgres treats NULLs as distinct.
-    ownerGraphUnique: uniqueIndex("courses_owner_graph_uidx").on(table.ownerId, table.graphId),
+    // At most one active Course instance per user per subject KG. Archived
+    // courses are historical records and should not block a clean restart.
+    // graph_id NULL (free-form courses with no KG) is exempt because Postgres
+    // treats NULLs as distinct.
+    ownerGraphUnique: uniqueIndex("courses_owner_graph_uidx")
+      .on(table.ownerId, table.graphId)
+      .where(sql`${table.archivedAt} IS NULL`),
   }),
 );
 

@@ -17,15 +17,16 @@ export async function getCourse(id: string, ownerId?: string | null): Promise<Co
   return getCourseFromDb(id, resolvedOwnerId);
 }
 
-/** The user's single Course instance for a subject KG, if one exists (uniqueness
- * enforced by courses_owner_graph_uidx). Used to reuse/extend an existing outline. */
+/** The user's active Course instance for a subject KG, if one exists (uniqueness
+ * enforced by courses_owner_graph_uidx where archived_at is null). Archived
+ * courses are historical records and should not be reused for a clean restart. */
 export async function getCourseByGraph(ownerId: string | null | undefined, graphId: string): Promise<Course | undefined> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
   if (!resolvedOwnerId) return undefined;
   const rows = await getDb()
     .select()
     .from(coursesTable)
-    .where(and(eq(coursesTable.ownerId, resolvedOwnerId), eq(coursesTable.graphId, graphId)))
+    .where(and(eq(coursesTable.ownerId, resolvedOwnerId), eq(coursesTable.graphId, graphId), isNull(coursesTable.archivedAt)))
     .limit(1);
   const row = rows[0];
   if (!row) return undefined;
