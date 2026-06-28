@@ -27,6 +27,118 @@
       "name_zh": "神经网络基础：网络结构"
     },
     {
+      "id": "dl_foundations_part2",
+      "kind": "topic",
+      "name": "Neural Network Foundations: Training",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "神经网络基础：训练与反向传播"
+    },
+    {
+      "id": "dl_optim",
+      "kind": "topic",
+      "name": "Optimization",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "优化算法"
+    },
+    {
+      "id": "dl_optim_stability",
+      "kind": "topic",
+      "name": "Adaptive Optimizers and Learning Rate Schedules",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "高级优化器与学习率衰减策略"
+    },
+    {
+      "id": "dl_optim_stability_dl_vanishing_grad",
+      "kind": "topic",
+      "name": "Vanishing/Exploding Gradients and Weight Initialization",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "梯度消失与梯度爆炸与权重初始化"
+    },
+    {
+      "id": "dl_training",
+      "kind": "topic",
+      "name": "Regularization and Stabilization",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "深度网络训练"
+    },
+    {
+      "id": "dl_cnn",
+      "kind": "topic",
+      "name": "Convolutional Neural Networks",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "CNN"
+    },
+    {
+      "id": "dl_architectures_transfer",
+      "kind": "topic",
+      "name": "CNN Architectures and Residual Networks",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "CNN 架构与残差网络 (ResNet)"
+    },
+    {
+      "id": "dl_architectures_transfer_dl_transfer_learning",
+      "kind": "topic",
+      "name": "Transfer Learning and Recurrent Neural Networks",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "迁移学习与循环神经网络"
+    },
+    {
+      "id": "dl_rnn_seq",
+      "kind": "topic",
+      "name": "Backpropagation Through Time and Long-Range Dependencies",
+      "topic": null,
+      "default_order": 10,
+      "name_zh": "时间反向传播与长期依赖问题"
+    },
+    {
+      "id": "dl_rnn_seq_dl_lstm",
+      "kind": "topic",
+      "name": "LSTM and GRU",
+      "topic": null,
+      "default_order": 11,
+      "name_zh": "LSTM/GRU 循环网络与门控循环单元 (GRU)"
+    },
+    {
+      "id": "dl_attn_part1",
+      "kind": "topic",
+      "name": "Attention and Transformers: Mechanisms",
+      "topic": null,
+      "default_order": 12,
+      "name_zh": "注意力与Transformer：注意力机制"
+    },
+    {
+      "id": "dl_attn_part2",
+      "kind": "topic",
+      "name": "Attention and Transformers: Architecture and Pretraining",
+      "topic": null,
+      "default_order": 13,
+      "name_zh": "注意力与Transformer：架构与预训练"
+    },
+    {
+      "id": "dl_generative_part1",
+      "kind": "topic",
+      "name": "Generative Models: Autoencoders and GANs",
+      "topic": null,
+      "default_order": 14,
+      "name_zh": "生成模型：自编码器与GAN"
+    },
+    {
+      "id": "dl_generative_part2",
+      "kind": "topic",
+      "name": "Generative Models: Diffusion and Flows",
+      "topic": null,
+      "default_order": 15,
+      "name_zh": "生成模型：扩散模型与流模型"
+    },
+    {
       "id": "dl_perceptron",
       "kind": "concept",
       "name": "Perceptron",
@@ -54,14 +166,6 @@
       "name_zh": "激活函数",
       "visual": "function",
       "visual_hint": "Plot ReLU, sigmoid, and tanh activation functions."
-    },
-    {
-      "id": "dl_foundations_part2",
-      "kind": "topic",
-      "name": "Neural Network Foundations: Training",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "神经网络基础：训练与反向传播"
     },
     {
       "id": "dl_forward",
@@ -95,14 +199,6 @@
       "visual_hint": "Diagram gradients flowing backward through the computational graph."
     },
     {
-      "id": "dl_optim",
-      "kind": "topic",
-      "name": "Optimization",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "优化算法"
-    },
-    {
       "id": "dl_loss",
       "kind": "concept",
       "name": "Loss Functions",
@@ -134,14 +230,6 @@
       "name_zh": "动量法"
     },
     {
-      "id": "dl_optim_stability",
-      "kind": "topic",
-      "name": "Optimization Stability",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "优化稳定性"
-    },
-    {
       "id": "dl_optimizers",
       "kind": "concept",
       "name": "Adaptive Optimizers",
@@ -163,9 +251,9 @@
       "id": "dl_vanishing_grad",
       "kind": "concept",
       "name": "Vanishing/Exploding Gradients",
-      "topic": "dl_optim_stability",
+      "topic": "dl_optim_stability_dl_vanishing_grad",
       "description": "The vanishing and exploding gradient problem, where gradients shrink or grow across many layers, hampering the training of deep networks.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "梯度消失与梯度爆炸",
       "visual": "function",
       "visual_hint": "Plot how gradients shrink or grow across many layers."
@@ -174,18 +262,10 @@
       "id": "dl_weight_init",
       "kind": "concept",
       "name": "Weight Initialization",
-      "topic": "dl_optim_stability",
+      "topic": "dl_optim_stability_dl_vanishing_grad",
       "description": "Weight initialisation schemes such as Xavier and He setting initial parameter scales to preserve signal variance and ease optimisation.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "权重初始化"
-    },
-    {
-      "id": "dl_training",
-      "kind": "topic",
-      "name": "Regularization and Stabilization",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "深度网络训练"
     },
     {
       "id": "dl_batchnorm",
@@ -213,14 +293,6 @@
       "description": "Dropout randomly deactivating units during training, preventing co-adaptation and acting as an implicit ensemble to improve generalisation.",
       "default_order": 3,
       "name_zh": "暂退法 (Dropout)"
-    },
-    {
-      "id": "dl_cnn",
-      "kind": "topic",
-      "name": "Convolutional Neural Networks",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "CNN"
     },
     {
       "id": "dl_convolution",
@@ -254,14 +326,6 @@
       "visual_hint": "Downsample a feature map with max and average pooling windows."
     },
     {
-      "id": "dl_architectures_transfer",
-      "kind": "topic",
-      "name": "Deep Learning Architectures and Transfer",
-      "topic": null,
-      "default_order": 7,
-      "name_zh": "深度学习架构与迁移"
-    },
-    {
       "id": "dl_cnn_arch",
       "kind": "concept",
       "name": "CNN Architectures",
@@ -287,29 +351,21 @@
       "id": "dl_transfer_learning",
       "kind": "concept",
       "name": "Transfer Learning",
-      "topic": "dl_architectures_transfer",
+      "topic": "dl_architectures_transfer_dl_transfer_learning",
       "description": "Transfer learning reusing features from a network pretrained on a large dataset, fine-tuning them for a related task with limited data.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "迁移学习"
     },
     {
       "id": "dl_rnn",
       "kind": "concept",
       "name": "Recurrent Neural Networks",
-      "topic": "dl_architectures_transfer",
+      "topic": "dl_architectures_transfer_dl_transfer_learning",
       "description": "Recurrent neural networks processing sequences by maintaining a hidden state updated at each step and sharing parameters across time.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "循环神经网络",
       "visual": "diagram",
       "visual_hint": "Diagram a recurrent cell unrolled over a sequence."
-    },
-    {
-      "id": "dl_rnn_seq",
-      "kind": "topic",
-      "name": "Recurrent Neural Networks",
-      "topic": null,
-      "default_order": 8,
-      "name_zh": "RNN 序列"
     },
     {
       "id": "dl_bptt",
@@ -333,9 +389,9 @@
       "id": "dl_lstm",
       "kind": "concept",
       "name": "LSTM",
-      "topic": "dl_rnn_seq",
+      "topic": "dl_rnn_seq_dl_lstm",
       "description": "Long short-term memory units using input, forget, and output gates with a cell state to preserve information over long sequences.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "LSTM/GRU 循环网络",
       "visual": "diagram",
       "visual_hint": "Diagram the LSTM input, forget, and output gates and cell state."
@@ -344,18 +400,10 @@
       "id": "dl_gru",
       "kind": "concept",
       "name": "GRU",
-      "topic": "dl_rnn_seq",
+      "topic": "dl_rnn_seq_dl_lstm",
       "description": "Gated recurrent units, a streamlined gating mechanism with fewer parameters than LSTMs, mitigating vanishing gradients in recurrent models.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "门控循环单元 (GRU)"
-    },
-    {
-      "id": "dl_attn_part1",
-      "kind": "topic",
-      "name": "Attention and Transformers: Mechanisms",
-      "topic": null,
-      "default_order": 9,
-      "name_zh": "注意力与Transformer：注意力机制"
     },
     {
       "id": "dl_attention",
@@ -387,14 +435,6 @@
       "name_zh": "多头注意力机制"
     },
     {
-      "id": "dl_attn_part2",
-      "kind": "topic",
-      "name": "Attention and Transformers: Architecture and Pretraining",
-      "topic": null,
-      "default_order": 10,
-      "name_zh": "注意力与Transformer：架构与预训练"
-    },
-    {
       "id": "dl_positional",
       "kind": "concept",
       "name": "Positional Encoding",
@@ -424,14 +464,6 @@
       "name_zh": "预训练与微调"
     },
     {
-      "id": "dl_generative_part1",
-      "kind": "topic",
-      "name": "Generative Models: Autoencoders and GANs",
-      "topic": null,
-      "default_order": 11,
-      "name_zh": "生成模型：自编码器与GAN"
-    },
-    {
       "id": "dl_autoencoder",
       "kind": "concept",
       "name": "Autoencoders",
@@ -457,14 +489,6 @@
       "description": "Generative adversarial networks pitting a generator against a discriminator in a minimax game, learning to synthesise realistic data.",
       "default_order": 3,
       "name_zh": "生成对抗网络（GAN）"
-    },
-    {
-      "id": "dl_generative_part2",
-      "kind": "topic",
-      "name": "Generative Models: Diffusion and Flows",
-      "topic": null,
-      "default_order": 12,
-      "name_zh": "生成模型：扩散模型与流模型"
     },
     {
       "id": "dl_gan_training",

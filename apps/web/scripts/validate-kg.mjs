@@ -46,10 +46,22 @@ function validateGraph(graphId) {
   }
 
   // concept -> topic reference integrity
+  const conceptsByTopic = new Map();
   for (const node of graph.nodes) {
     if (node.kind !== "concept") continue;
     if (!topicIds.has(node.topic)) {
       errors.push(`concept ${node.id} references missing topic ${node.topic}`);
+    }
+    if (!conceptsByTopic.has(node.topic)) conceptsByTopic.set(node.topic, []);
+    conceptsByTopic.get(node.topic).push(node.id);
+  }
+
+  // Topic grain gate: each lesson-generating topic should stay small enough for
+  // focused lessons and future per-concept quizzes.
+  for (const topicId of topicIds) {
+    const count = conceptsByTopic.get(topicId)?.length ?? 0;
+    if (count < 2 || count > 3) {
+      errors.push(`topic ${topicId} must contain 2-3 concepts (found ${count})`);
     }
   }
 

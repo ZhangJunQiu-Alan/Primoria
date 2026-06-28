@@ -2,7 +2,7 @@
   "graphId": "data_structures_and_algorithms",
   "subject": "Data Structures and Algorithms",
   "generatedFrom": "temple/data_structures_and_algorithms.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -36,6 +36,10 @@
           "hard": true
         },
         {
+          "topicId": "t_ucb61b_lists_arrays_ucb61b_arrays",
+          "hard": true
+        },
+        {
           "topicId": "t_ucb61b_oop",
           "hard": true
         },
@@ -49,8 +53,8 @@
     },
     {
       "topicId": "t_ucb61b_lists_arrays",
-      "name": "Lists and Arrays",
-      "nameZh": "列表与数组",
+      "name": "Singly Linked Lists (SLList) and Doubly Linked Lists with Sentinels",
+      "nameZh": "单向链表 (SLList)与带头哨兵的双向链表",
       "defaultOrder": 2,
       "conceptIds": [
         {
@@ -68,25 +72,43 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Doubly linked list with backward pointers and a sentinel node."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_ucb61b_graphs",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "t_ucb61b_java_intro"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_ucb61b_lists_arrays_ucb61b_arrays",
+      "name": "Fixed-Size Arrays and Resizing Arrays (ArrayList)",
+      "nameZh": "定长数组与动态数组 (ArrayList)",
+      "defaultOrder": 3,
+      "conceptIds": [
         {
           "conceptId": "c_ucb61b_arrays",
           "name": "Fixed-Size Arrays",
           "nameZh": "定长数组",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_ucb61b_alist",
           "name": "Resizing Arrays (ArrayList)",
           "nameZh": "动态数组 (ArrayList)",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Geometrically resize an array on overflow (amortised growth)."
         }
       ],
       "successors": [
         {
-          "topicId": "t_ucb61b_oop",
+          "topicId": "t_ucb61b_oop_ucb61b_inheritance",
           "hard": false
         },
         {
@@ -98,7 +120,7 @@
           "hard": true
         },
         {
-          "topicId": "t_ucb61b_priority_queues",
+          "topicId": "t_ucb61b_priority_queues_ucb61b_heap_operations",
           "hard": true
         },
         {
@@ -121,9 +143,9 @@
     },
     {
       "topicId": "t_ucb61b_oop",
-      "name": "Object-Oriented Programming",
-      "nameZh": "OOP",
-      "defaultOrder": 3,
+      "name": "Unit Testing with JUnit and Interfaces and Overriding",
+      "nameZh": "JUnit 单元测试与接口与重写",
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_testing",
@@ -136,43 +158,60 @@
           "name": "Interfaces and Overriding",
           "nameZh": "接口与重写",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "c_ucb61b_inheritance",
-          "name": "Implementation Inheritance (Extends)",
-          "nameZh": "实现继承 (Extends)",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_ucb61b_polymorphism",
-          "name": "Subtype Polymorphism and Dynamic Dispatch",
-          "nameZh": "子类型多态与动态分派",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "c_ucb61b_iterators",
-          "name": "Iterators and Iterables",
-          "nameZh": "迭代器与可迭代",
-          "defaultOrder": 5
         }
       ],
       "successors": [
+        {
+          "topicId": "t_ucb61b_oop_ucb61b_inheritance",
+          "hard": true
+        },
         {
           "topicId": "t_ucb61b_priority_queues",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t_ucb61b_java_intro",
-        "t_ucb61b_lists_arrays"
+        "t_ucb61b_java_intro"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_ucb61b_oop_ucb61b_inheritance",
+      "name": "Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables",
+      "nameZh": "实现继承 (Extends)、子类型多态与动态分派与迭代器与可迭代",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "c_ucb61b_inheritance",
+          "name": "Implementation Inheritance (Extends)",
+          "nameZh": "实现继承 (Extends)",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_ucb61b_polymorphism",
+          "name": "Subtype Polymorphism and Dynamic Dispatch",
+          "nameZh": "子类型多态与动态分派",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "c_ucb61b_iterators",
+          "name": "Iterators and Iterables",
+          "nameZh": "迭代器与可迭代",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_ucb61b_lists_arrays_ucb61b_arrays",
+        "t_ucb61b_oop"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_ucb61b_disjoint_sets",
-      "name": "Disjoint Sets",
-      "nameZh": "不相交集合",
-      "defaultOrder": 4,
+      "name": "Quick Find and Quick Union",
+      "nameZh": "快速查找与快速合并",
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_quick_find",
@@ -187,12 +226,30 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Union-Find as a parent-link forest; union and find operations."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_ucb61b_disjoint_sets_ucb61b_wqu",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_ucb61b_lists_arrays_ucb61b_arrays"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_ucb61b_disjoint_sets_ucb61b_wqu",
+      "name": "Weighted Quick Union and Path Compression",
+      "nameZh": "加权快速合并与路径压缩",
+      "defaultOrder": 7,
+      "conceptIds": [
         {
           "conceptId": "c_ucb61b_wqu",
           "name": "Weighted Quick Union",
           "nameZh": "加权快速合并",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "algorithm",
           "visualHint": "Weighted quick-union linking the smaller tree under the larger."
         },
@@ -200,7 +257,7 @@
           "conceptId": "c_ucb61b_path_compression",
           "name": "Path Compression",
           "nameZh": "路径压缩",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Flatten the union-find tree during find via path compression."
         }
@@ -212,7 +269,7 @@
         }
       ],
       "prereqTopics": [
-        "t_ucb61b_lists_arrays"
+        "t_ucb61b_disjoint_sets"
       ],
       "isRoot": false
     },
@@ -220,7 +277,7 @@
       "topicId": "t_ucb61b_asymptotics",
       "name": "Asymptotics and Algorithmic Analysis",
       "nameZh": "渐近分析与算法分析",
-      "defaultOrder": 5,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_big_theta",
@@ -247,6 +304,10 @@
         {
           "topicId": "t_ucb61b_sorting",
           "hard": true
+        },
+        {
+          "topicId": "t_ucb61b_sorting_ucb61b_quick_sort",
+          "hard": true
         }
       ],
       "prereqTopics": [],
@@ -256,7 +317,7 @@
       "topicId": "t_ucb61b_bst",
       "name": "Trees and Binary Search Trees",
       "nameZh": "树与二叉搜索树",
-      "defaultOrder": 6,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_trees_intro",
@@ -297,6 +358,10 @@
         {
           "topicId": "t_ucb61b_spatial_string_indexes",
           "hard": true
+        },
+        {
+          "topicId": "t_ucb61b_spatial_string_indexes_ucb61b_trie_basics",
+          "hard": true
         }
       ],
       "prereqTopics": [
@@ -308,7 +373,7 @@
       "topicId": "t_ucb61b_balanced_trees",
       "name": "Balanced Search Trees",
       "nameZh": "平衡搜索树",
-      "defaultOrder": 7,
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_tree_rotation",
@@ -341,9 +406,9 @@
     },
     {
       "topicId": "t_ucb61b_hashing",
-      "name": "Hashing",
-      "nameZh": "哈希",
-      "defaultOrder": 8,
+      "name": "Hash Functions and Object.hashCode() and Separate Chaining",
+      "nameZh": "哈希函数与Object.hashCode()与分离链接",
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_hash_code",
@@ -358,12 +423,30 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Resolve hash collisions by chaining entries in buckets."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_ucb61b_hashing_ucb61b_linear_probing",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_ucb61b_lists_arrays_ucb61b_arrays"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_ucb61b_hashing_ucb61b_linear_probing",
+      "name": "Linear Probing and Load Factor and Resizing",
+      "nameZh": "线性探测与负载因子与扩容",
+      "defaultOrder": 12,
+      "conceptIds": [
         {
           "conceptId": "c_ucb61b_linear_probing",
           "name": "Linear Probing",
           "nameZh": "线性探测",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "algorithm",
           "visualHint": "Resolve collisions by linear probing to the next open slot."
         },
@@ -371,20 +454,20 @@
           "conceptId": "c_ucb61b_load_factor",
           "name": "Load Factor and Resizing",
           "nameZh": "负载因子与扩容",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "t_ucb61b_lists_arrays"
+        "t_ucb61b_hashing"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_ucb61b_priority_queues",
-      "name": "Priority Queues and Heaps",
-      "nameZh": "优先队列与堆",
-      "defaultOrder": 9,
+      "name": "Priority Queue ADT and Binary Min/Max Heaps",
+      "nameZh": "优先队列 ADT与二叉最小/最大堆",
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_pq_interface",
@@ -399,40 +482,57 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Swim and sink nodes to maintain a binary heap."
-        },
-        {
-          "conceptId": "c_ucb61b_heap_operations",
-          "name": "Swim, Sink, and Insert/Delete",
-          "nameZh": "上浮、下沉、插入/删除",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_ucb61b_array_heap",
-          "name": "Array Representation of Heaps",
-          "nameZh": "堆的数组表示",
-          "defaultOrder": 4,
-          "visual": "diagram",
-          "visualHint": "Map a complete binary heap onto an array by index arithmetic."
         }
       ],
       "successors": [
+        {
+          "topicId": "t_ucb61b_priority_queues_ucb61b_heap_operations",
+          "hard": true
+        },
         {
           "topicId": "t_ucb61b_shortest_paths",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t_ucb61b_lists_arrays",
         "t_ucb61b_oop",
         "t_ucb61b_bst"
       ],
       "isRoot": false
     },
     {
+      "topicId": "t_ucb61b_priority_queues_ucb61b_heap_operations",
+      "name": "Swim, Sink, and Insert/Delete and Array Representation of Heaps",
+      "nameZh": "上浮、下沉、插入/删除与堆的数组表示",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "c_ucb61b_heap_operations",
+          "name": "Swim, Sink, and Insert/Delete",
+          "nameZh": "上浮、下沉、插入/删除",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_ucb61b_array_heap",
+          "name": "Array Representation of Heaps",
+          "nameZh": "堆的数组表示",
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Map a complete binary heap onto an array by index arithmetic."
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_ucb61b_lists_arrays_ucb61b_arrays",
+        "t_ucb61b_priority_queues"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "t_ucb61b_graphs",
-      "name": "Graph Traversals and Representations",
-      "nameZh": "图遍历与表示",
-      "defaultOrder": 10,
+      "name": "Graph API and Adjacency Lists and Depth-First Search (DFS)",
+      "nameZh": "图 API 与邻接表与深度优先搜索 (DFS)",
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_graph_api",
@@ -447,12 +547,35 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Animate depth-first search exploring a graph with backtracking."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_ucb61b_graphs_ucb61b_bfs",
+          "hard": true
         },
+        {
+          "topicId": "t_ucb61b_mst",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_ucb61b_lists_arrays",
+        "t_ucb61b_lists_arrays_ucb61b_arrays"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_ucb61b_graphs_ucb61b_bfs",
+      "name": "Breadth-First Search (BFS) and Topological Sort",
+      "nameZh": "广度优先搜索 (BFS)与拓扑排序",
+      "defaultOrder": 16,
+      "conceptIds": [
         {
           "conceptId": "c_ucb61b_bfs",
           "name": "Breadth-First Search (BFS)",
           "nameZh": "广度优先搜索 (BFS)",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "algorithm",
           "visualHint": "Animate breadth-first search exploring a graph layer by layer with a queue."
         },
@@ -460,7 +583,7 @@
           "conceptId": "c_ucb61b_topological_sort",
           "name": "Topological Sort",
           "nameZh": "拓扑排序",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Linearise a DAG by post-order DFS into a topological order."
         }
@@ -469,14 +592,10 @@
         {
           "topicId": "t_ucb61b_shortest_paths",
           "hard": false
-        },
-        {
-          "topicId": "t_ucb61b_mst",
-          "hard": true
         }
       ],
       "prereqTopics": [
-        "t_ucb61b_lists_arrays"
+        "t_ucb61b_graphs"
       ],
       "isRoot": false
     },
@@ -484,7 +603,7 @@
       "topicId": "t_ucb61b_shortest_paths",
       "name": "Shortest Paths",
       "nameZh": "最短路径",
-      "defaultOrder": 11,
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_edge_relaxation",
@@ -517,7 +636,7 @@
       ],
       "prereqTopics": [
         "t_ucb61b_priority_queues",
-        "t_ucb61b_graphs"
+        "t_ucb61b_graphs_ucb61b_bfs"
       ],
       "isRoot": false
     },
@@ -525,7 +644,7 @@
       "topicId": "t_ucb61b_mst",
       "name": "Minimum Spanning Trees",
       "nameZh": "最小生成树",
-      "defaultOrder": 12,
+      "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_mst_property",
@@ -552,7 +671,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "t_ucb61b_disjoint_sets",
+        "t_ucb61b_disjoint_sets_ucb61b_wqu",
         "t_ucb61b_bst",
         "t_ucb61b_graphs",
         "t_ucb61b_shortest_paths"
@@ -561,9 +680,9 @@
     },
     {
       "topicId": "t_ucb61b_spatial_string_indexes",
-      "name": "Spatial and String Indexes",
-      "nameZh": "空间与字符串索引",
-      "defaultOrder": 13,
+      "name": "1D Range Searching and K-D Trees",
+      "nameZh": "一维范围查询与K-D 树",
+      "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_1d_range_search",
@@ -578,12 +697,25 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Partition the plane recursively with a 2-D tree."
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_ucb61b_bst"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_ucb61b_spatial_string_indexes_ucb61b_trie_basics",
+      "name": "Trie Structure and Trie String Operations",
+      "nameZh": "Trie 结构与Trie 字符串操作",
+      "defaultOrder": 20,
+      "conceptIds": [
         {
           "conceptId": "c_ucb61b_trie_basics",
           "name": "Trie Structure",
           "nameZh": "Trie 结构",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "Prefix tree (trie) branching strings by character."
         },
@@ -591,7 +723,7 @@
           "conceptId": "c_ucb61b_trie_string_ops",
           "name": "Trie String Operations",
           "nameZh": "Trie 字符串操作",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
@@ -602,9 +734,9 @@
     },
     {
       "topicId": "t_ucb61b_sorting",
-      "name": "Comparison Sorting Algorithms",
-      "nameZh": "比较排序算法",
-      "defaultOrder": 14,
+      "name": "Selection and Insertion Sort and Merge Sort",
+      "nameZh": "选择与插入排序与归并排序",
+      "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_selection_insertion_sort",
@@ -621,12 +753,31 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Recursively split and merge an array (merge sort)."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_ucb61b_sorting_ucb61b_quick_sort",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "t_ucb61b_lists_arrays_ucb61b_arrays",
+        "t_ucb61b_asymptotics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_ucb61b_sorting_ucb61b_quick_sort",
+      "name": "Quicksort and Lower Bounds of Comparison Sorting",
+      "nameZh": "快速排序与排序下界",
+      "defaultOrder": 22,
+      "conceptIds": [
         {
           "conceptId": "c_ucb61b_quick_sort",
           "name": "Quicksort",
           "nameZh": "快速排序",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "algorithm",
           "visualHint": "Partition around a pivot and recurse (quicksort)."
         },
@@ -634,13 +785,13 @@
           "conceptId": "c_ucb61b_sort_bounds",
           "name": "Lower Bounds of Comparison Sorting",
           "nameZh": "排序下界",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "t_ucb61b_lists_arrays",
-        "t_ucb61b_asymptotics"
+        "t_ucb61b_asymptotics",
+        "t_ucb61b_sorting"
       ],
       "isRoot": false
     },
@@ -648,7 +799,7 @@
       "topicId": "t_ucb61b_radix_sorting",
       "name": "Radix Sorting",
       "nameZh": "基数排序",
-      "defaultOrder": 15,
+      "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "c_ucb61b_counting_sort",
@@ -675,7 +826,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "t_ucb61b_lists_arrays"
+        "t_ucb61b_lists_arrays_ucb61b_arrays"
       ],
       "isRoot": false
     }

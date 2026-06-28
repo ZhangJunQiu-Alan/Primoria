@@ -27,6 +27,54 @@
       "name_zh": "Web 基础"
     },
     {
+      "id": "web_frontend_part1",
+      "kind": "topic",
+      "name": "Frontend: HTML, CSS, JavaScript",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "前端：HTML、CSS、JavaScript"
+    },
+    {
+      "id": "web_frontend_part2",
+      "kind": "topic",
+      "name": "Frontend: DOM and React",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "前端：DOM 与 React"
+    },
+    {
+      "id": "web_backend",
+      "kind": "topic",
+      "name": "Node.js and Express and Routing",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "Node.js与Express 与路由"
+    },
+    {
+      "id": "web_backend_web_rest",
+      "kind": "topic",
+      "name": "REST APIs and Authentication and Sessions",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "REST API与认证与会话"
+    },
+    {
+      "id": "web_data",
+      "kind": "topic",
+      "name": "Databases",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "数据库"
+    },
+    {
+      "id": "web_security",
+      "kind": "topic",
+      "name": "Web Security",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "Web 安全"
+    },
+    {
       "id": "web_http",
       "kind": "concept",
       "name": "HTTP Protocol",
@@ -58,14 +106,6 @@
       "visual_hint": "Diagram the browser-client and server request flow."
     },
     {
-      "id": "web_frontend_part1",
-      "kind": "topic",
-      "name": "Frontend: HTML, CSS, JavaScript",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "前端：HTML、CSS、JavaScript"
-    },
-    {
       "id": "web_html",
       "kind": "concept",
       "name": "HTML",
@@ -91,14 +131,6 @@
       "description": "The browser's scripting language adding interactivity to pages, manipulating content and responding to events with an event-driven, single-threaded model.",
       "default_order": 3,
       "name_zh": "JavaScript"
-    },
-    {
-      "id": "web_frontend_part2",
-      "kind": "topic",
-      "name": "Frontend: DOM and React",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "前端：DOM 与 React"
     },
     {
       "id": "web_dom",
@@ -134,14 +166,6 @@
       "visual_hint": "Diagram props flowing down and state updates re-rendering a component tree."
     },
     {
-      "id": "web_backend",
-      "kind": "topic",
-      "name": "Backend Technologies",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "后端技术"
-    },
-    {
       "id": "web_node",
       "kind": "concept",
       "name": "Node.js",
@@ -165,9 +189,9 @@
       "id": "web_rest",
       "kind": "concept",
       "name": "REST APIs",
-      "topic": "web_backend",
+      "topic": "web_backend_web_rest",
       "description": "An architectural style for web APIs modelling functionality as resources addressed by URLs and manipulated through standard HTTP methods and status codes.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "REST API",
       "visual": "diagram",
       "visual_hint": "Diagram REST resources and their HTTP-method operations."
@@ -176,20 +200,12 @@
       "id": "web_auth",
       "kind": "concept",
       "name": "Authentication and Sessions",
-      "topic": "web_backend",
+      "topic": "web_backend_web_rest",
       "description": "Mechanisms verifying user identity and maintaining logged-in state across stateless HTTP using sessions, cookies, and tokens such as JWTs.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "认证与会话",
       "visual": "diagram",
       "visual_hint": "Sequence diagram of authentication establishing a session."
-    },
-    {
-      "id": "web_data",
-      "kind": "topic",
-      "name": "Databases",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "数据库"
     },
     {
       "id": "web_relational",
@@ -217,14 +233,6 @@
       "description": "Non-relational document stores like MongoDB holding schema-flexible JSON-like documents, trading relational guarantees for scalability and flexibility.",
       "default_order": 3,
       "name_zh": "NoSQL 与 MongoDB"
-    },
-    {
-      "id": "web_security",
-      "kind": "topic",
-      "name": "Web Security",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "Web 安全"
     },
     {
       "id": "web_xss",

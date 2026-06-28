@@ -13,10 +13,130 @@
     {
       "id": "topic_data_rep",
       "kind": "topic",
-      "name": "Data Representation",
+      "name": "Binary and Hexadecimal and Two's Complement & Integer Rep",
       "topic": null,
       "default_order": 1,
-      "name_zh": "数据表示"
+      "name_zh": "二进制与十六进制与补码与整数表示"
+    },
+    {
+      "id": "topic_data_rep_floating_point",
+      "kind": "topic",
+      "name": "IEEE 754 Floating Point and Endianness and Memory Layout",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "IEEE 754浮点数与字节序与内存布局"
+    },
+    {
+      "id": "topic_c_prog",
+      "kind": "topic",
+      "name": "C Basics & Control Flow and Pointers and Arrays",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "C基础与控制流与指针与数组"
+    },
+    {
+      "id": "topic_c_prog_memory_management",
+      "kind": "topic",
+      "name": "Dynamic Memory Management and Structs, Unions, and Typedefs",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "动态内存管理与结构体、联合体与typedef"
+    },
+    {
+      "id": "topic_riscv",
+      "kind": "topic",
+      "name": "RISC-V Assembly",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "RISC-V汇编"
+    },
+    {
+      "id": "topic_riscv_logic",
+      "kind": "topic",
+      "name": "Instruction Formats and Compiler, Assembler, Linker, Loader",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "指令格式与编译器、汇编器、链接器、加载器"
+    },
+    {
+      "id": "topic_riscv_logic_boolean_algebra",
+      "kind": "topic",
+      "name": "Boolean Algebra & Logic Gates and Combinational Logic Blocks",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "布尔代数与逻辑门与组合逻辑块"
+    },
+    {
+      "id": "topic_sds",
+      "kind": "topic",
+      "name": "Synchronous Digital Systems",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "同步数字系统"
+    },
+    {
+      "id": "topic_cpu",
+      "kind": "topic",
+      "name": "CPU Architecture & Datapath",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "CPU架构与数据通路"
+    },
+    {
+      "id": "topic_pipeline_cache",
+      "kind": "topic",
+      "name": "Pipeline Hazards & Forwarding and Branch Prediction",
+      "topic": null,
+      "default_order": 10,
+      "name_zh": "流水线冒险与转发与分支预测"
+    },
+    {
+      "id": "topic_pipeline_cache_cache_basics",
+      "kind": "topic",
+      "name": "Cache Basics & Direct Mapped and Associative Caches",
+      "topic": null,
+      "default_order": 11,
+      "name_zh": "缓存基础与直接映射与关联缓存"
+    },
+    {
+      "id": "topic_memory",
+      "kind": "topic",
+      "name": "Memory Hierarchy",
+      "topic": null,
+      "default_order": 12,
+      "name_zh": "存储层次"
+    },
+    {
+      "id": "topic_parallelism",
+      "kind": "topic",
+      "name": "Parallel Computing",
+      "topic": null,
+      "default_order": 13,
+      "name_zh": "并行计算"
+    },
+    {
+      "id": "topic_parallel_io",
+      "kind": "topic",
+      "name": "Cache Coherence & False Sharing and Warehouse-Scale Computing",
+      "topic": null,
+      "default_order": 14,
+      "name_zh": "缓存一致性与伪共享与仓库级计算"
+    },
+    {
+      "id": "topic_parallel_io_memory_mapped_io",
+      "kind": "topic",
+      "name": "Memory-Mapped I/O and Polling and Interrupts",
+      "topic": null,
+      "default_order": 15,
+      "name_zh": "内存映射I/O与轮询与中断"
+    },
+    {
+      "id": "topic_io_dep",
+      "kind": "topic",
+      "name": "I/O and Dependability",
+      "topic": null,
+      "default_order": 16,
+      "name_zh": "I/O与可靠性"
     },
     {
       "id": "concept_binary_hex",
@@ -40,10 +160,10 @@
     },
     {
       "id": "concept_floating_point",
-      "topic": "topic_data_rep",
+      "topic": "topic_data_rep_floating_point",
       "name": "IEEE 754 Floating Point",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "The IEEE 754 standard representing reals with sign, biased exponent, and mantissa fields, trading precision for range across many orders of magnitude.",
       "name_zh": "IEEE 754浮点数",
       "visual": "diagram",
@@ -51,20 +171,12 @@
     },
     {
       "id": "concept_endianness",
-      "topic": "topic_data_rep",
+      "topic": "topic_data_rep_floating_point",
       "name": "Endianness and Memory Layout",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "The byte-ordering convention, big-endian or little-endian, determining how multi-byte values are laid out across consecutive memory addresses.",
       "name_zh": "字节序与内存布局"
-    },
-    {
-      "id": "topic_c_prog",
-      "kind": "topic",
-      "name": "C Programming",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "C编程"
     },
     {
       "id": "concept_c_basics",
@@ -86,29 +198,21 @@
     },
     {
       "id": "concept_memory_management",
-      "topic": "topic_c_prog",
+      "topic": "topic_c_prog_memory_management",
       "name": "Dynamic Memory Management",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Manual heap management in C with malloc and free, requiring the programmer to allocate and release memory and avoid leaks and dangling pointers.",
       "name_zh": "动态内存管理"
     },
     {
       "id": "concept_structs_unions",
-      "topic": "topic_c_prog",
+      "topic": "topic_c_prog_memory_management",
       "name": "Structs, Unions, and Typedefs",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Aggregating data with structs that group named fields, unions that overlay fields in shared storage, and typedefs that name types.",
       "name_zh": "结构体、联合体与typedef"
-    },
-    {
-      "id": "topic_riscv",
-      "kind": "topic",
-      "name": "RISC-V Assembly",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "RISC-V汇编"
     },
     {
       "id": "concept_riscv_basics",
@@ -138,14 +242,6 @@
       "name_zh": "函数调用约定"
     },
     {
-      "id": "topic_riscv_logic",
-      "kind": "topic",
-      "name": "From RISC-V Instructions to Digital Logic",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "从 RISC-V 指令到数字逻辑"
-    },
-    {
       "id": "concept_riscv_formats",
       "topic": "topic_riscv_logic",
       "name": "Instruction Formats",
@@ -165,10 +261,10 @@
     },
     {
       "id": "concept_boolean_algebra",
-      "topic": "topic_riscv_logic",
+      "topic": "topic_riscv_logic_boolean_algebra",
       "name": "Boolean Algebra & Logic Gates",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "The algebra of binary values with AND, OR, and NOT operations, realised physically as logic gates that form digital circuits.",
       "name_zh": "布尔代数与逻辑门",
       "visual": "diagram",
@@ -176,20 +272,12 @@
     },
     {
       "id": "concept_combinational_logic",
-      "topic": "topic_riscv_logic",
+      "topic": "topic_riscv_logic_boolean_algebra",
       "name": "Combinational Logic Blocks",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Logic circuits whose outputs depend only on current inputs, built from gates to implement functions like adders, multiplexers, and decoders.",
       "name_zh": "组合逻辑块"
-    },
-    {
-      "id": "topic_sds",
-      "kind": "topic",
-      "name": "Synchronous Digital Systems",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "同步数字系统"
     },
     {
       "id": "concept_state_elements",
@@ -219,14 +307,6 @@
       "name_zh": "有限状态机",
       "visual": "diagram",
       "visual_hint": "State-transition diagram of a finite state machine."
-    },
-    {
-      "id": "topic_cpu",
-      "kind": "topic",
-      "name": "CPU Architecture & Datapath",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "CPU架构与数据通路"
     },
     {
       "id": "concept_single_cycle",
@@ -260,14 +340,6 @@
       "visual_hint": "Pipeline stage diagram of overlapping instructions over cycles."
     },
     {
-      "id": "topic_pipeline_cache",
-      "kind": "topic",
-      "name": "Pipelines and Cache Architecture",
-      "topic": null,
-      "default_order": 7,
-      "name_zh": "流水线与缓存体系"
-    },
-    {
       "id": "concept_pipeline_hazards",
       "topic": "topic_pipeline_cache",
       "name": "Pipeline Hazards & Forwarding",
@@ -289,10 +361,10 @@
     },
     {
       "id": "concept_cache_basics",
-      "topic": "topic_pipeline_cache",
+      "topic": "topic_pipeline_cache_cache_basics",
       "name": "Cache Basics & Direct Mapped",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Direct-mapped caches storing recently used blocks indexed by address bits, exploiting locality to reduce average memory access latency.",
       "name_zh": "缓存基础与直接映射",
       "visual": "diagram",
@@ -300,20 +372,12 @@
     },
     {
       "id": "concept_associative_caches",
-      "topic": "topic_pipeline_cache",
+      "topic": "topic_pipeline_cache_cache_basics",
       "name": "Associative Caches",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Set-associative and fully associative caches giving blocks multiple placement options, reducing conflict misses at the cost of more comparison hardware.",
       "name_zh": "关联缓存"
-    },
-    {
-      "id": "topic_memory",
-      "kind": "topic",
-      "name": "Memory Hierarchy",
-      "topic": null,
-      "default_order": 8,
-      "name_zh": "存储层次"
     },
     {
       "id": "concept_cache_performance",
@@ -345,14 +409,6 @@
       "name_zh": "地址转换后备缓冲器（TLB）"
     },
     {
-      "id": "topic_parallelism",
-      "kind": "topic",
-      "name": "Parallel Computing",
-      "topic": null,
-      "default_order": 9,
-      "name_zh": "并行计算"
-    },
-    {
       "id": "concept_amdahls_law",
       "topic": "topic_parallelism",
       "name": "Amdahl's Law",
@@ -382,14 +438,6 @@
       "name_zh": "线程级并行(OpenMP)"
     },
     {
-      "id": "topic_parallel_io",
-      "kind": "topic",
-      "name": "Parallel Systems and I/O",
-      "topic": null,
-      "default_order": 10,
-      "name_zh": "并行系统与输入输出"
-    },
-    {
       "id": "concept_cache_coherence",
       "topic": "topic_parallel_io",
       "name": "Cache Coherence & False Sharing",
@@ -409,29 +457,21 @@
     },
     {
       "id": "concept_memory_mapped_io",
-      "topic": "topic_parallel_io",
+      "topic": "topic_parallel_io_memory_mapped_io",
       "name": "Memory-Mapped I/O",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Accessing device registers through ordinary load and store instructions by mapping them into the processor's physical address space.",
       "name_zh": "内存映射I/O"
     },
     {
       "id": "concept_polling_interrupts",
-      "topic": "topic_parallel_io",
+      "topic": "topic_parallel_io_memory_mapped_io",
       "name": "Polling and Interrupts",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Two ways software learns of device events: polling repeatedly checks status, while interrupts let devices asynchronously signal the processor.",
       "name_zh": "轮询与中断"
-    },
-    {
-      "id": "topic_io_dep",
-      "kind": "topic",
-      "name": "I/O and Dependability",
-      "topic": null,
-      "default_order": 11,
-      "name_zh": "I/O与可靠性"
     },
     {
       "id": "concept_dma",

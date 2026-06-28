@@ -2,13 +2,13 @@
   "graphId": "Python",
   "subject": "Structure and Interpretation of Computer Programs",
   "generatedFrom": "temple/Python.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "topic_intro",
-      "name": "Functions and Control",
-      "nameZh": "函数与控制",
+      "name": "Expressions and Statements and Control Structures",
+      "nameZh": "表达式与语句与控制结构",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -22,29 +22,11 @@
           "name": "Control Structures",
           "nameZh": "控制结构",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "pure_func",
-          "name": "Pure vs Non-Pure Functions",
-          "nameZh": "纯函数与副作用函数",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "env_diag",
-          "name": "Environment Diagrams",
-          "nameZh": "环境图",
-          "defaultOrder": 4,
-          "visual": "diagram",
-          "visualHint": "Diagram execution frames, variable bindings, and parent-environment links."
         }
       ],
       "successors": [
         {
-          "topicId": "topic_hof",
-          "hard": true
-        },
-        {
-          "topicId": "topic_func_data_processing",
+          "topicId": "topic_func_data_processing_seq",
           "hard": true
         },
         {
@@ -52,7 +34,7 @@
           "hard": true
         },
         {
-          "topicId": "topic_adv_data",
+          "topicId": "topic_adv_data_iterators",
           "hard": true
         },
         {
@@ -62,6 +44,40 @@
         {
           "topicId": "topic_declarative",
           "hard": false
+        },
+        {
+          "topicId": "topic_declarative_sql_queries",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_intro_pure_func",
+      "name": "Pure vs Non-Pure Functions and Environment Diagrams",
+      "nameZh": "纯函数与副作用函数与环境图",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "pure_func",
+          "name": "Pure vs Non-Pure Functions",
+          "nameZh": "纯函数与副作用函数",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "env_diag",
+          "name": "Environment Diagrams",
+          "nameZh": "环境图",
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram execution frames, variable bindings, and parent-environment links."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_hof",
+          "hard": true
         }
       ],
       "prereqTopics": [],
@@ -71,7 +87,7 @@
       "topicId": "topic_hof",
       "name": "Higher-Order Functions",
       "nameZh": "高阶函数",
-      "defaultOrder": 2,
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "func_arg",
@@ -103,15 +119,15 @@
         }
       ],
       "prereqTopics": [
-        "topic_intro"
+        "topic_intro_pure_func"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_func_data_processing",
-      "name": "Functional Transformation and Data Processing",
-      "nameZh": "函数变换与数据处理",
-      "defaultOrder": 3,
+      "name": "Currying and Decorators",
+      "nameZh": "柯里化与装饰器",
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "currying",
@@ -124,18 +140,31 @@
           "name": "Decorators",
           "nameZh": "装饰器",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_hof"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_func_data_processing_seq",
+      "name": "Sequences and Slicing and List Comprehensions",
+      "nameZh": "序列与切片与列表推导式",
+      "defaultOrder": 5,
+      "conceptIds": [
         {
           "conceptId": "seq",
           "name": "Sequences and Slicing",
           "nameZh": "序列与切片",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "list_comp",
           "name": "List Comprehensions",
           "nameZh": "列表推导式",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -145,8 +174,7 @@
         }
       ],
       "prereqTopics": [
-        "topic_intro",
-        "topic_hof"
+        "topic_intro"
       ],
       "isRoot": false
     },
@@ -154,7 +182,7 @@
       "topicId": "topic_data",
       "name": "Data Abstraction and Sequences",
       "nameZh": "数据抽象与序列",
-      "defaultOrder": 4,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "data_abs",
@@ -179,7 +207,7 @@
       ],
       "successors": [
         {
-          "topicId": "topic_recursion",
+          "topicId": "topic_recursion_tree_abs",
           "hard": true
         },
         {
@@ -188,15 +216,15 @@
         }
       ],
       "prereqTopics": [
-        "topic_func_data_processing"
+        "topic_func_data_processing_seq"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_recursion",
-      "name": "Recursion and Trees",
-      "nameZh": "递归与树",
-      "defaultOrder": 5,
+      "name": "Recursion and Tree Recursion",
+      "nameZh": "递归与树递归",
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "recursion",
@@ -213,18 +241,41 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Draw the branching recursive calls as a recursion tree."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_recursion_tree_abs",
+          "hard": true
         },
+        {
+          "topicId": "topic_scheme_tail_calls",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_intro",
+        "topic_hof"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_recursion_tree_abs",
+      "name": "Tree Data Abstraction and Tree Traversal",
+      "nameZh": "树数据抽象与树遍历",
+      "defaultOrder": 8,
+      "conceptIds": [
         {
           "conceptId": "tree_abs",
           "name": "Tree Data Abstraction",
           "nameZh": "树数据抽象",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "tree_trav",
           "name": "Tree Traversal",
           "nameZh": "树遍历",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Animate visiting tree nodes in pre-order, in-order, and post-order."
         }
@@ -232,10 +283,6 @@
       "successors": [
         {
           "topicId": "topic_adv_data",
-          "hard": true
-        },
-        {
-          "topicId": "topic_scheme",
           "hard": true
         },
         {
@@ -248,17 +295,16 @@
         }
       ],
       "prereqTopics": [
-        "topic_intro",
-        "topic_hof",
-        "topic_data"
+        "topic_data",
+        "topic_recursion"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_mut_oop",
-      "name": "Mutable Data and OOP",
-      "nameZh": "可变数据与 OOP",
-      "defaultOrder": 6,
+      "name": "Mutability and Object-Oriented Programming",
+      "nameZh": "可变性与面向对象编程",
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "mutability",
@@ -271,29 +317,19 @@
           "name": "Object-Oriented Programming",
           "nameZh": "面向对象编程",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "inherit_comp",
-          "name": "Inheritance and Composition",
-          "nameZh": "继承与组合",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "class_attr",
-          "name": "Class and Instance Attributes",
-          "nameZh": "类与实例属性",
-          "defaultOrder": 4
-        },
-        {
-          "conceptId": "string_rep",
-          "name": "String Representation",
-          "nameZh": "字符串表示",
-          "defaultOrder": 5
         }
       ],
       "successors": [
         {
+          "topicId": "topic_mut_oop_inherit_comp",
+          "hard": true
+        },
+        {
           "topicId": "topic_adv_data",
+          "hard": true
+        },
+        {
+          "topicId": "topic_adv_data_iterators",
           "hard": true
         }
       ],
@@ -303,10 +339,41 @@
       "isRoot": false
     },
     {
+      "topicId": "topic_mut_oop_inherit_comp",
+      "name": "Inheritance and Composition, Class and Instance Attributes, and String Representation",
+      "nameZh": "继承与组合、类与实例属性与字符串表示",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "inherit_comp",
+          "name": "Inheritance and Composition",
+          "nameZh": "继承与组合",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "class_attr",
+          "name": "Class and Instance Attributes",
+          "nameZh": "类与实例属性",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "string_rep",
+          "name": "String Representation",
+          "nameZh": "字符串表示",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_mut_oop"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_adv_data",
-      "name": "Advanced Data Structures",
-      "nameZh": "高级数据结构",
-      "defaultOrder": 7,
+      "name": "Linked Lists and Mutable Trees",
+      "nameZh": "链表与可变树",
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "linked_lists",
@@ -321,18 +388,6 @@
           "name": "Mutable Trees",
           "nameZh": "可变树",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "iterators",
-          "name": "Iterators",
-          "nameZh": "迭代器",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "generators",
-          "name": "Generators",
-          "nameZh": "生成器",
-          "defaultOrder": 4
         }
       ],
       "successors": [
@@ -342,17 +397,42 @@
         }
       ],
       "prereqTopics": [
+        "topic_recursion_tree_abs",
+        "topic_mut_oop"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_adv_data_iterators",
+      "name": "Iterators and Generators",
+      "nameZh": "迭代器与生成器",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "iterators",
+          "name": "Iterators",
+          "nameZh": "迭代器",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "generators",
+          "name": "Generators",
+          "nameZh": "生成器",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
         "topic_intro",
-        "topic_recursion",
         "topic_mut_oop"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_scheme",
-      "name": "Scheme and Functional Programming",
-      "nameZh": "Scheme 与函数式编程",
-      "defaultOrder": 8,
+      "name": "Scheme Syntax and Scheme Lists and Pairs",
+      "nameZh": "Scheme 语法与Scheme 列表与序对",
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "scheme_syntax",
@@ -365,21 +445,13 @@
           "name": "Scheme Lists and Pairs",
           "nameZh": "Scheme 列表与序对",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "tail_calls",
-          "name": "Tail Calls and Optimization",
-          "nameZh": "尾调用与优化",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "macros",
-          "name": "Macros",
-          "nameZh": "宏",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "topic_scheme_tail_calls",
+          "hard": true
+        },
         {
           "topicId": "topic_interp",
           "hard": true
@@ -387,16 +459,41 @@
       ],
       "prereqTopics": [
         "topic_intro",
-        "topic_recursion",
         "topic_adv_data"
       ],
       "isRoot": false
     },
     {
+      "topicId": "topic_scheme_tail_calls",
+      "name": "Tail Calls and Optimization and Macros",
+      "nameZh": "尾调用与优化与宏",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "tail_calls",
+          "name": "Tail Calls and Optimization",
+          "nameZh": "尾调用与优化",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "macros",
+          "name": "Macros",
+          "nameZh": "宏",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_recursion",
+        "topic_scheme"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_interp",
-      "name": "Interpreters",
-      "nameZh": "解释器",
-      "defaultOrder": 9,
+      "name": "Lexical Analysis and Parsing and Evaluation Process",
+      "nameZh": "词法分析与解析与求值过程",
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "parsing",
@@ -409,32 +506,50 @@
           "name": "Evaluation Process",
           "nameZh": "求值过程",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "apply",
-          "name": "Application Process",
-          "nameZh": "应用过程",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "exceptions",
-          "name": "Exceptions",
-          "nameZh": "异常",
-          "defaultOrder": 4
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "topic_interp_apply",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
-        "topic_recursion",
+        "topic_recursion_tree_abs",
         "topic_scheme"
       ],
       "isRoot": false
     },
     {
+      "topicId": "topic_interp_apply",
+      "name": "Application Process and Exceptions",
+      "nameZh": "应用过程与异常",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "apply",
+          "name": "Application Process",
+          "nameZh": "应用过程",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "exceptions",
+          "name": "Exceptions",
+          "nameZh": "异常",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_interp"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_declarative",
-      "name": "Declarative Programming",
-      "nameZh": "声明式编程",
-      "defaultOrder": 10,
+      "name": "Regular Expressions and BNF Context-Free Grammars",
+      "nameZh": "正则表达式与BNF 上下文无关文法",
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "regex",
@@ -447,24 +562,37 @@
           "name": "BNF Context-Free Grammars",
           "nameZh": "BNF 上下文无关文法",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "sql_queries",
-          "name": "SQL Tables and Queries",
-          "nameZh": "SQL 表与查询",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "sql_joins",
-          "name": "SQL Joins and Aggregation",
-          "nameZh": "SQL 连接与聚合",
-          "defaultOrder": 4
         }
       ],
       "successors": [],
       "prereqTopics": [
         "topic_intro",
-        "topic_recursion"
+        "topic_recursion_tree_abs"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_declarative_sql_queries",
+      "name": "SQL Tables and Queries and SQL Joins and Aggregation",
+      "nameZh": "SQL 表与查询与SQL 连接与聚合",
+      "defaultOrder": 18,
+      "conceptIds": [
+        {
+          "conceptId": "sql_queries",
+          "name": "SQL Tables and Queries",
+          "nameZh": "SQL 表与查询",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "sql_joins",
+          "name": "SQL Joins and Aggregation",
+          "nameZh": "SQL 连接与聚合",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_intro"
       ],
       "isRoot": false
     }

@@ -2,13 +2,13 @@
   "graphId": "a_level_mathematics",
   "subject": "Mathematics",
   "generatedFrom": "temple/a_level_mathematics.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "mat_algebra_part1",
-      "name": "Algebra: Quadratics and Equations",
-      "nameZh": "代数：二次函数与方程",
+      "name": "Indices and Surds and Quadratic Functions",
+      "nameZh": "指数与根式与二次函数",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -24,32 +24,52 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot a parabola with sliders for the coefficients showing vertex and roots."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_algebra_part1_mat_solve_quadratics",
+          "hard": true
         },
+        {
+          "topicId": "mat_algebra_part2",
+          "hard": false
+        },
+        {
+          "topicId": "mat_sequences_mat_binomial_pos",
+          "hard": false
+        },
+        {
+          "topicId": "mat_exp_log",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_algebra_part1_mat_solve_quadratics",
+      "name": "Solving Quadratics and Discriminant and Simultaneous Equations",
+      "nameZh": "二次方程求解与联立方程",
+      "defaultOrder": 2,
+      "conceptIds": [
         {
           "conceptId": "mat_solve_quadratics",
           "name": "Solving Quadratics and Discriminant",
           "nameZh": "二次方程求解",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "mat_simultaneous",
           "name": "Simultaneous Equations",
           "nameZh": "联立方程",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
         {
           "topicId": "mat_algebra_part2",
           "hard": false
-        },
-        {
-          "topicId": "mat_sequences",
-          "hard": false
-        },
-        {
-          "topicId": "mat_exp_log",
-          "hard": true
         },
         {
           "topicId": "mat_numerical_methods",
@@ -60,14 +80,16 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "mat_algebra_part1"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "mat_algebra_part2",
-      "name": "Algebra: Functions and Inequalities",
-      "nameZh": "代数：函数与不等式",
-      "defaultOrder": 2,
+      "name": "Inequalities and Functions and Inverses",
+      "nameZh": "不等式与函数与反函数",
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "mat_inequalities",
@@ -84,25 +106,44 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot a function and its inverse as reflections in y = x."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_algebra_part2_mat_composite",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "mat_algebra_part1",
+        "mat_algebra_part1_mat_solve_quadratics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_algebra_part2_mat_composite",
+      "name": "Composite Functions and Modulus Function",
+      "nameZh": "复合函数与绝对值函数",
+      "defaultOrder": 4,
+      "conceptIds": [
         {
           "conceptId": "mat_composite",
           "name": "Composite Functions",
           "nameZh": "复合函数",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "mat_modulus",
           "name": "Modulus Function",
           "nameZh": "绝对值函数",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot the modulus function and solve |f(x)| = g(x) graphically."
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "mat_algebra_part1"
+        "mat_algebra_part2"
       ],
       "isRoot": false
     },
@@ -110,7 +151,7 @@
       "topicId": "mat_polynomials",
       "name": "Polynomials and Partial Fractions",
       "nameZh": "多项式与部分分式",
-      "defaultOrder": 3,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "mat_poly_division",
@@ -144,7 +185,7 @@
       "topicId": "mat_coord_geom",
       "name": "Coordinate Geometry",
       "nameZh": "坐标几何",
-      "defaultOrder": 4,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "mat_straight_lines",
@@ -175,9 +216,9 @@
     },
     {
       "topicId": "mat_sequences",
-      "name": "Sequences and Series",
-      "nameZh": "数列与级数",
-      "defaultOrder": 5,
+      "name": "Arithmetic Series and Geometric Series",
+      "nameZh": "等差级数与等比级数",
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "mat_arithmetic",
@@ -192,23 +233,40 @@
           "defaultOrder": 2,
           "visual": "chart",
           "visualHint": "Plot geometric-progression terms and the convergence of the sum."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_sequences_mat_binomial_pos",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_sequences_mat_binomial_pos",
+      "name": "Binomial Expansion (positive integer) and Binomial Expansion (general index)",
+      "nameZh": "二项展开（正整数）与二项展开（一般指数）",
+      "defaultOrder": 8,
+      "conceptIds": [
         {
           "conceptId": "mat_binomial_pos",
           "name": "Binomial Expansion (positive integer)",
           "nameZh": "二项展开（正整数）",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "mat_binomial_gen",
           "name": "Binomial Expansion (general index)",
           "nameZh": "二项展开（一般指数）",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "mat_algebra_part1"
+        "mat_algebra_part1",
+        "mat_sequences"
       ],
       "isRoot": false
     },
@@ -216,7 +274,7 @@
       "topicId": "mat_trig_part1",
       "name": "Trigonometry: Ratios and Identities",
       "nameZh": "三角学：比值与恒等式",
-      "defaultOrder": 6,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "mat_trig_ratios",
@@ -254,7 +312,7 @@
       "topicId": "mat_trig_part2",
       "name": "Trigonometry: Equations and Formulae",
       "nameZh": "三角学：方程与公式",
-      "defaultOrder": 7,
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "mat_solve_trig",
@@ -283,9 +341,9 @@
     },
     {
       "topicId": "mat_exp_log",
-      "name": "Exponentials and Logarithms",
-      "nameZh": "指数与对数",
-      "defaultOrder": 8,
+      "name": "Exponential Functions and Logarithms and Laws",
+      "nameZh": "指数函数与对数与法则",
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "mat_exp_func",
@@ -302,23 +360,41 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot logarithm curves as inverses of exponentials."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_exp_log_mat_solve_exp",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "mat_algebra_part1"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_exp_log_mat_solve_exp",
+      "name": "Solving Exponential and Log Equations and Linearising with Logarithms",
+      "nameZh": "解指数与对数方程与对数线性化",
+      "defaultOrder": 12,
+      "conceptIds": [
         {
           "conceptId": "mat_solve_exp",
           "name": "Solving Exponential and Log Equations",
           "nameZh": "解指数与对数方程",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "mat_linearise",
           "name": "Linearising with Logarithms",
           "nameZh": "对数线性化",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "mat_algebra_part1"
+        "mat_exp_log"
       ],
       "isRoot": false
     },
@@ -326,7 +402,7 @@
       "topicId": "mat_differentiation_part1",
       "name": "Differentiation: Rules and Techniques",
       "nameZh": "微分：法则与技巧",
-      "defaultOrder": 9,
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "mat_first_principles",
@@ -356,10 +432,14 @@
         },
         {
           "topicId": "mat_differentiation_adv",
+          "hard": false
+        },
+        {
+          "topicId": "mat_differentiation_adv_mat_implicit",
           "hard": true
         },
         {
-          "topicId": "mat_integration_part1",
+          "topicId": "mat_integration_part1_mat_standard_integrals",
           "hard": true
         }
       ],
@@ -370,7 +450,7 @@
       "topicId": "mat_differentiation_part2",
       "name": "Differentiation: Applications",
       "nameZh": "微分：应用",
-      "defaultOrder": 10,
+      "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "mat_tangent_normal",
@@ -403,9 +483,9 @@
     },
     {
       "topicId": "mat_differentiation_adv",
-      "name": "Differentiation (Advanced)",
-      "nameZh": "进阶微分",
-      "defaultOrder": 11,
+      "name": "Product and Quotient Rules and Derivatives of Special Functions",
+      "nameZh": "积商法则与特殊函数导数",
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "mat_product_quotient",
@@ -418,27 +498,15 @@
           "name": "Derivatives of Special Functions",
           "nameZh": "特殊函数导数",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "mat_implicit",
-          "name": "Implicit Differentiation",
-          "nameZh": "隐函数微分",
-          "defaultOrder": 3,
-          "visual": "function",
-          "visualHint": "Plot an implicit relation and show its tangent slope at a point."
-        },
-        {
-          "conceptId": "mat_parametric",
-          "name": "Parametric Differentiation",
-          "nameZh": "参数微分",
-          "defaultOrder": 4,
-          "visual": "function",
-          "visualHint": "Trace a parametric curve r(t) with a slider for t."
         }
       ],
       "successors": [
         {
-          "topicId": "mat_integration_part1",
+          "topicId": "mat_differentiation_adv_mat_implicit",
+          "hard": false
+        },
+        {
+          "topicId": "mat_integration_part1_mat_standard_integrals",
           "hard": true
         },
         {
@@ -456,10 +524,40 @@
       "isRoot": false
     },
     {
+      "topicId": "mat_differentiation_adv_mat_implicit",
+      "name": "Implicit Differentiation and Parametric Differentiation",
+      "nameZh": "隐函数微分与参数微分",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "mat_implicit",
+          "name": "Implicit Differentiation",
+          "nameZh": "隐函数微分",
+          "defaultOrder": 1,
+          "visual": "function",
+          "visualHint": "Plot an implicit relation and show its tangent slope at a point."
+        },
+        {
+          "conceptId": "mat_parametric",
+          "name": "Parametric Differentiation",
+          "nameZh": "参数微分",
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Trace a parametric curve r(t) with a slider for t."
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_differentiation_part1",
+        "mat_differentiation_adv"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "mat_integration_part1",
-      "name": "Integration: Fundamentals and Substitution",
-      "nameZh": "积分：基础与换元",
-      "defaultOrder": 12,
+      "name": "Indefinite Integration and Definite Integration and Area",
+      "nameZh": "不定积分与定积分与面积",
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "mat_indefinite",
@@ -474,33 +572,54 @@
           "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Shade the area under a curve between draggable limits."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_integration_part1_mat_standard_integrals",
+          "hard": false
         },
+        {
+          "topicId": "mat_integration_part2",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_integration_part1_mat_standard_integrals",
+      "name": "Integration of Standard Functions and Integration by Substitution",
+      "nameZh": "标准函数积分与换元积分",
+      "defaultOrder": 18,
+      "conceptIds": [
         {
           "conceptId": "mat_standard_integrals",
           "name": "Integration of Standard Functions",
           "nameZh": "标准函数积分",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "mat_substitution",
           "name": "Integration by Substitution",
           "nameZh": "换元积分",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
         {
           "topicId": "mat_integration_part2",
-          "hard": true
+          "hard": false
         },
         {
-          "topicId": "mat_numerical_methods",
+          "topicId": "mat_numerical_methods_mat_form_de",
           "hard": true
         }
       ],
       "prereqTopics": [
         "mat_differentiation_part1",
-        "mat_differentiation_adv"
+        "mat_differentiation_adv",
+        "mat_integration_part1"
       ],
       "isRoot": false
     },
@@ -508,7 +627,7 @@
       "topicId": "mat_integration_part2",
       "name": "Integration: Advanced Techniques",
       "nameZh": "积分：进阶技巧",
-      "defaultOrder": 13,
+      "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "mat_by_parts",
@@ -535,15 +654,16 @@
       "prereqTopics": [
         "mat_polynomials",
         "mat_differentiation_adv",
-        "mat_integration_part1"
+        "mat_integration_part1",
+        "mat_integration_part1_mat_standard_integrals"
       ],
       "isRoot": false
     },
     {
       "topicId": "mat_numerical_methods",
-      "name": "Numerical Methods for Equations",
-      "nameZh": "方程的数值方法",
-      "defaultOrder": 14,
+      "name": "Locating Roots and Iterative Methods",
+      "nameZh": "根的定位与迭代法",
+      "defaultOrder": 20,
       "conceptIds": [
         {
           "conceptId": "mat_locate_roots",
@@ -558,34 +678,46 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Cobweb diagram of an iterative root-finding sequence."
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_algebra_part1_mat_solve_quadratics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_numerical_methods_mat_form_de",
+      "name": "Forming Differential Equations and Separation of Variables",
+      "nameZh": "建立微分方程与分离变量",
+      "defaultOrder": 21,
+      "conceptIds": [
         {
           "conceptId": "mat_form_de",
           "name": "Forming Differential Equations",
           "nameZh": "建立微分方程",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "mat_separation",
           "name": "Separation of Variables",
           "nameZh": "分离变量",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot a slope field and a solution curve of a first-order ODE."
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "mat_algebra_part1",
-        "mat_integration_part1"
+        "mat_integration_part1_mat_standard_integrals"
       ],
       "isRoot": false
     },
     {
       "topicId": "mat_vectors",
-      "name": "Vectors",
-      "nameZh": "向量",
-      "defaultOrder": 15,
+      "name": "Vectors in 2D and 3D and Magnitude and Direction",
+      "nameZh": "向量基础与大小与方向",
+      "defaultOrder": 22,
       "conceptIds": [
         {
           "conceptId": "mat_vector_basics",
@@ -600,12 +732,28 @@
           "name": "Magnitude and Direction",
           "nameZh": "大小与方向",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_vectors_mat_scalar_product",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_vectors_mat_scalar_product",
+      "name": "Scalar Product and Vector Equations of Lines",
+      "nameZh": "标量积与直线向量方程",
+      "defaultOrder": 23,
+      "conceptIds": [
         {
           "conceptId": "mat_scalar_product",
           "name": "Scalar Product",
           "nameZh": "标量积",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "interactive",
           "visualHint": "Drag two vectors and show the dot product and the angle between them."
         },
@@ -613,18 +761,20 @@
           "conceptId": "mat_vector_lines",
           "name": "Vector Equations of Lines",
           "nameZh": "直线向量方程",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "mat_vectors"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "mat_complex",
-      "name": "Complex Numbers",
-      "nameZh": "复数",
-      "defaultOrder": 16,
+      "name": "Complex Number Arithmetic and Argand Diagram",
+      "nameZh": "复数运算与阿根图",
+      "defaultOrder": 24,
       "conceptIds": [
         {
           "conceptId": "mat_complex_arith",
@@ -639,12 +789,30 @@
           "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Plot complex numbers as points and vectors on an Argand diagram."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_complex_mat_mod_arg",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "mat_algebra_part1_mat_solve_quadratics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_complex_mat_mod_arg",
+      "name": "Modulus-Argument Form and Complex Roots and Loci",
+      "nameZh": "模角形式与复数根与轨迹",
+      "defaultOrder": 25,
+      "conceptIds": [
         {
           "conceptId": "mat_mod_arg",
           "name": "Modulus-Argument Form",
           "nameZh": "模角形式",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "interactive",
           "visualHint": "Show modulus-argument form and multiplication as rotation and scaling on the Argand plane."
         },
@@ -652,12 +820,12 @@
           "conceptId": "mat_complex_loci",
           "name": "Complex Roots and Loci",
           "nameZh": "复数根与轨迹",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "mat_algebra_part1"
+        "mat_complex"
       ],
       "isRoot": false
     },
@@ -665,7 +833,7 @@
       "topicId": "mat_mech_kinematics",
       "name": "Mechanics: Kinematics",
       "nameZh": "运动学",
-      "defaultOrder": 17,
+      "defaultOrder": 26,
       "conceptIds": [
         {
           "conceptId": "mat_kin_constant",
@@ -700,7 +868,7 @@
       "topicId": "mat_mech_forces",
       "name": "Mechanics: Forces and Newton's Laws",
       "nameZh": "力与牛顿定律",
-      "defaultOrder": 18,
+      "defaultOrder": 27,
       "conceptIds": [
         {
           "conceptId": "mat_forces_equilibrium",
@@ -736,7 +904,7 @@
       "topicId": "mat_mech_energy_momentum",
       "name": "Mechanics: Connected Particles, Energy and Momentum",
       "nameZh": "力学：连接体、能量与动量",
-      "defaultOrder": 19,
+      "defaultOrder": 28,
       "conceptIds": [
         {
           "conceptId": "mat_connected_particles",
@@ -769,7 +937,7 @@
       "topicId": "mat_data_counting_prob",
       "name": "Data, Counting and Probability",
       "nameZh": "数据、计数与概率",
-      "defaultOrder": 20,
+      "defaultOrder": 29,
       "conceptIds": [
         {
           "conceptId": "mat_data_rep",
@@ -805,7 +973,7 @@
       "topicId": "mat_prob_random_vars",
       "name": "Probability and Discrete Random Variables",
       "nameZh": "概率与离散随机变量",
-      "defaultOrder": 21,
+      "defaultOrder": 30,
       "conceptIds": [
         {
           "conceptId": "mat_prob_rules",
@@ -845,7 +1013,7 @@
       "topicId": "mat_random_vars",
       "name": "Random Variables and Distributions",
       "nameZh": "随机变量与分布",
-      "defaultOrder": 22,
+      "defaultOrder": 31,
       "conceptIds": [
         {
           "conceptId": "mat_binomial_dist",
@@ -883,9 +1051,9 @@
     },
     {
       "topicId": "mat_normal_inference",
-      "name": "Normal Distribution and Statistical Inference",
-      "nameZh": "正态分布与统计推断",
-      "defaultOrder": 23,
+      "name": "Normal Distribution and Normal Approximations",
+      "nameZh": "正态分布与正态近似",
+      "defaultOrder": 32,
       "conceptIds": [
         {
           "conceptId": "mat_normal_dist",
@@ -900,24 +1068,42 @@
           "name": "Normal Approximations",
           "nameZh": "正态近似",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_normal_inference_mat_sampling",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "mat_prob_random_vars",
+        "mat_random_vars"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "mat_normal_inference_mat_sampling",
+      "name": "Sampling and Hypothesis Testing",
+      "nameZh": "抽样与假设检验",
+      "defaultOrder": 33,
+      "conceptIds": [
         {
           "conceptId": "mat_sampling",
           "name": "Sampling",
           "nameZh": "抽样",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "mat_hypothesis",
           "name": "Hypothesis Testing",
           "nameZh": "假设检验",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "mat_prob_random_vars",
-        "mat_random_vars"
+        "mat_normal_inference"
       ],
       "isRoot": false
     }

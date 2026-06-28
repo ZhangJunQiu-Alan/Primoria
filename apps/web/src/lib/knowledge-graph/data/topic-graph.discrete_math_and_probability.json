@@ -2,13 +2,13 @@
   "graphId": "discrete_math_and_probability",
   "subject": "Discrete Math and Probability Theory",
   "generatedFrom": "temple/discrete_math_and_probability.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "topic_logic",
-      "name": "Logic and Proofs",
-      "nameZh": "逻辑与证明",
+      "name": "Propositional Logic and Direct Proofs",
+      "nameZh": "命题逻辑与直接证明",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -22,25 +22,41 @@
           "name": "Direct Proofs",
           "nameZh": "直接证明",
           "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_logic_proof_by_contraposition",
+          "hard": true
         },
+        {
+          "topicId": "topic_induction",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_logic_proof_by_contraposition",
+      "name": "Proof by Contraposition and Proof by Contradiction",
+      "nameZh": "逆否证明与反证法",
+      "defaultOrder": 2,
+      "conceptIds": [
         {
           "conceptId": "proof_by_contraposition",
           "name": "Proof by Contraposition",
           "nameZh": "逆否证明",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "proof_by_contradiction",
           "name": "Proof by Contradiction",
           "nameZh": "反证法",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
-        {
-          "topicId": "topic_induction",
-          "hard": true
-        },
         {
           "topicId": "topic_matching",
           "hard": false
@@ -50,14 +66,16 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "topic_logic"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "topic_induction",
-      "name": "Induction",
-      "nameZh": "归纳",
-      "defaultOrder": 2,
+      "name": "Simple Induction and Strong Induction",
+      "nameZh": "简单归纳与强归纳",
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "simple_induction",
@@ -72,21 +90,13 @@
           "name": "Strong Induction",
           "nameZh": "强归纳",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "well_ordering_principle",
-          "name": "Well-Ordering Principle",
-          "nameZh": "良序原理",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "structural_induction",
-          "name": "Structural Induction",
-          "nameZh": "结构归纳",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "topic_induction_well_ordering_principle",
+          "hard": true
+        },
         {
           "topicId": "topic_graphs",
           "hard": true
@@ -106,10 +116,35 @@
       "isRoot": false
     },
     {
+      "topicId": "topic_induction_well_ordering_principle",
+      "name": "Well-Ordering Principle and Structural Induction",
+      "nameZh": "良序原理与结构归纳",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "well_ordering_principle",
+          "name": "Well-Ordering Principle",
+          "nameZh": "良序原理",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "structural_induction",
+          "name": "Structural Induction",
+          "nameZh": "结构归纳",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_induction"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_matching",
-      "name": "Stable Matching",
-      "nameZh": "稳定匹配",
-      "defaultOrder": 3,
+      "name": "Stable Matching Problem and Gale-Shapley Algorithm",
+      "nameZh": "稳定匹配问题与Gale-Shapley算法",
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "stable_matching_problem",
@@ -124,31 +159,49 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Step the Gale-Shapley deferred-acceptance proposals to a stable matching."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_matching_matching_optimality",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_logic_proof_by_contraposition"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_matching_matching_optimality",
+      "name": "Matching Optimality and Matching Pessimality",
+      "nameZh": "匹配最优性与匹配最差性",
+      "defaultOrder": 6,
+      "conceptIds": [
         {
           "conceptId": "matching_optimality",
           "name": "Matching Optimality",
           "nameZh": "匹配最优性",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "matching_pessimality",
           "name": "Matching Pessimality",
           "nameZh": "匹配最差性",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_logic"
+        "topic_matching"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_graphs",
-      "name": "Graph Theory",
-      "nameZh": "图论",
-      "defaultOrder": 4,
+      "name": "Graph Basics and Eulerian Tours",
+      "nameZh": "图基础与欧拉回路",
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "graph_basics",
@@ -165,12 +218,30 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Trace an Eulerian tour visiting every edge once."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_graphs_trees",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_induction"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_graphs_trees",
+      "name": "Trees, Planar Graphs, and Hypercubes",
+      "nameZh": "树、平面图与超立方体",
+      "defaultOrder": 8,
+      "conceptIds": [
         {
           "conceptId": "trees",
           "name": "Trees",
           "nameZh": "树",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "Diagram a tree as a connected acyclic graph with a unique path between nodes."
         },
@@ -178,7 +249,7 @@
           "conceptId": "planar_graphs",
           "name": "Planar Graphs",
           "nameZh": "平面图",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Draw a planar graph without edge crossings and check Euler's formula."
         },
@@ -186,22 +257,22 @@
           "conceptId": "hypercubes",
           "name": "Hypercubes",
           "nameZh": "超立方体",
-          "defaultOrder": 5,
+          "defaultOrder": 3,
           "visual": "diagram",
           "visualHint": "Diagram the recursive construction of hypercube graphs."
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_induction"
+        "topic_graphs"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_modular_arithmetic",
-      "name": "Modular Arithmetic",
-      "nameZh": "模运算",
-      "defaultOrder": 5,
+      "name": "Euclid's Algorithm and Extended Euclid",
+      "nameZh": "欧几里得算法与扩展欧几里得",
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "euclids_algorithm",
@@ -216,23 +287,11 @@
           "name": "Extended Euclid",
           "nameZh": "扩展欧几里得",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "chinese_remainder_theorem",
-          "name": "Chinese Remainder Theorem",
-          "nameZh": "中国剩余定理",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "fermats_little_theorem",
-          "name": "Fermat's Little Theorem",
-          "nameZh": "费马小定理",
-          "defaultOrder": 4
         }
       ],
       "successors": [
         {
-          "topicId": "topic_crypto",
+          "topicId": "topic_modular_arithmetic_chinese_remainder_theorem",
           "hard": true
         },
         {
@@ -246,10 +305,40 @@
       "isRoot": false
     },
     {
+      "topicId": "topic_modular_arithmetic_chinese_remainder_theorem",
+      "name": "Chinese Remainder Theorem and Fermat's Little Theorem",
+      "nameZh": "中国剩余定理与费马小定理",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "chinese_remainder_theorem",
+          "name": "Chinese Remainder Theorem",
+          "nameZh": "中国剩余定理",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "fermats_little_theorem",
+          "name": "Fermat's Little Theorem",
+          "nameZh": "费马小定理",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_crypto",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_modular_arithmetic"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_crypto",
-      "name": "Cryptography",
-      "nameZh": "密码学",
-      "defaultOrder": 6,
+      "name": "Symmetric Cryptography and RSA Setup and Encryption",
+      "nameZh": "对称密码与RSA设置与加密",
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "symmetric_cryptography",
@@ -262,31 +351,49 @@
           "name": "RSA Setup and Encryption",
           "nameZh": "RSA设置与加密",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_crypto_rsa_decryption_proof",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_modular_arithmetic_chinese_remainder_theorem"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_crypto_rsa_decryption_proof",
+      "name": "RSA Decryption Proof and Digital Signatures",
+      "nameZh": "RSA解密证明与数字签名",
+      "defaultOrder": 12,
+      "conceptIds": [
         {
           "conceptId": "rsa_decryption_proof",
           "name": "RSA Decryption Proof",
           "nameZh": "RSA解密证明",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "digital_signatures",
           "name": "Digital Signatures",
           "nameZh": "数字签名",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_modular_arithmetic"
+        "topic_crypto"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_polynomials",
-      "name": "Polynomials",
-      "nameZh": "多项式",
-      "defaultOrder": 7,
+      "name": "Polynomial Roots and Degree and Polynomial Interpolation",
+      "nameZh": "多项式根与次数与多项式插值",
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "polynomial_roots_and_degree",
@@ -299,23 +406,41 @@
           "name": "Polynomial Interpolation",
           "nameZh": "多项式插值",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_polynomials_secret_sharing",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_modular_arithmetic"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_polynomials_secret_sharing",
+      "name": "Secret Sharing and Error Correcting Codes",
+      "nameZh": "秘密分享与纠错码",
+      "defaultOrder": 14,
+      "conceptIds": [
         {
           "conceptId": "secret_sharing",
           "name": "Secret Sharing",
           "nameZh": "秘密分享",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "error_correcting_codes",
           "name": "Error Correcting Codes",
           "nameZh": "纠错码",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_modular_arithmetic"
+        "topic_polynomials"
       ],
       "isRoot": false
     },
@@ -323,7 +448,7 @@
       "topicId": "topic_countability_computability",
       "name": "Countability and Computability",
       "nameZh": "可数性与可计算性",
-      "defaultOrder": 8,
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "bijections_and_cardinality",
@@ -352,9 +477,9 @@
     },
     {
       "topicId": "topic_computability_counting",
-      "name": "Computability and Counting Foundations",
-      "nameZh": "可计算性与计数基础",
-      "defaultOrder": 9,
+      "name": "The Halting Problem and Undecidability",
+      "nameZh": "停机问题与不可判定性",
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "the_halting_problem",
@@ -367,18 +492,31 @@
           "name": "Undecidability",
           "nameZh": "不可判定性",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_logic_proof_by_contraposition"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_computability_counting_basic_counting_rules",
+      "name": "Basic Counting Rules and Combinations and Permutations",
+      "nameZh": "基础计数规则与组合与排列",
+      "defaultOrder": 17,
+      "conceptIds": [
         {
           "conceptId": "basic_counting_rules",
           "name": "Basic Counting Rules",
           "nameZh": "基础计数规则",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "combinations_permutations",
           "name": "Combinations and Permutations",
           "nameZh": "组合与排列",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Decision-tree diagram of ordered and unordered selections."
         }
@@ -393,16 +531,14 @@
           "hard": true
         }
       ],
-      "prereqTopics": [
-        "topic_logic"
-      ],
-      "isRoot": false
+      "prereqTopics": [],
+      "isRoot": true
     },
     {
       "topicId": "topic_counting",
       "name": "Counting",
       "nameZh": "计数",
-      "defaultOrder": 10,
+      "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "combinatorial_proofs",
@@ -427,15 +563,15 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_computability_counting"
+        "topic_computability_counting_basic_counting_rules"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_discrete_prob",
-      "name": "Discrete Probability",
-      "nameZh": "离散概率",
-      "defaultOrder": 11,
+      "name": "Probability Spaces and Conditional Probability",
+      "nameZh": "概率空间与条件概率",
+      "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "probability_spaces",
@@ -448,23 +584,13 @@
           "name": "Conditional Probability",
           "nameZh": "条件概率",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "bayes_rule",
-          "name": "Bayes' Rule",
-          "nameZh": "贝叶斯法则",
-          "defaultOrder": 3,
-          "visual": "diagram",
-          "visualHint": "Tree diagram inverting conditional probabilities with Bayes' rule."
-        },
-        {
-          "conceptId": "event_independence",
-          "name": "Event Independence",
-          "nameZh": "事件独立性",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "topic_discrete_prob_bayes_rule",
+          "hard": true
+        },
         {
           "topicId": "topic_random_vars",
           "hard": true
@@ -475,15 +601,42 @@
         }
       ],
       "prereqTopics": [
-        "topic_computability_counting"
+        "topic_computability_counting_basic_counting_rules"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_discrete_prob_bayes_rule",
+      "name": "Bayes' Rule and Event Independence",
+      "nameZh": "贝叶斯法则与事件独立性",
+      "defaultOrder": 20,
+      "conceptIds": [
+        {
+          "conceptId": "bayes_rule",
+          "name": "Bayes' Rule",
+          "nameZh": "贝叶斯法则",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Tree diagram inverting conditional probabilities with Bayes' rule."
+        },
+        {
+          "conceptId": "event_independence",
+          "name": "Event Independence",
+          "nameZh": "事件独立性",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_discrete_prob"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_random_vars",
-      "name": "Random Variables and Expectation",
-      "nameZh": "随机变量与期望",
-      "defaultOrder": 12,
+      "name": "Discrete Random Variables and Expectation",
+      "nameZh": "离散随机变量与期望",
+      "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "discrete_random_variables",
@@ -496,23 +649,19 @@
           "name": "Expectation",
           "nameZh": "期望",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "linearity_of_expectation",
-          "name": "Linearity of Expectation",
-          "nameZh": "期望的线性",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "variance_and_covariance",
-          "name": "Variance and Covariance",
-          "nameZh": "方差与协方差",
-          "defaultOrder": 4
         }
       ],
       "successors": [
         {
+          "topicId": "topic_random_vars_linearity_of_expectation",
+          "hard": true
+        },
+        {
           "topicId": "topic_discrete_dists",
+          "hard": true
+        },
+        {
+          "topicId": "topic_discrete_dists_poisson_distribution",
           "hard": true
         },
         {
@@ -520,7 +669,7 @@
           "hard": true
         },
         {
-          "topicId": "topic_continuous_concentration",
+          "topicId": "topic_continuous_concentration_markovs_inequality",
           "hard": true
         },
         {
@@ -534,10 +683,40 @@
       "isRoot": false
     },
     {
+      "topicId": "topic_random_vars_linearity_of_expectation",
+      "name": "Linearity of Expectation and Variance and Covariance",
+      "nameZh": "期望的线性与方差与协方差",
+      "defaultOrder": 22,
+      "conceptIds": [
+        {
+          "conceptId": "linearity_of_expectation",
+          "name": "Linearity of Expectation",
+          "nameZh": "期望的线性",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "variance_and_covariance",
+          "name": "Variance and Covariance",
+          "nameZh": "方差与协方差",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_continuous_concentration_markovs_inequality",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_random_vars"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_discrete_dists",
-      "name": "Discrete Distributions",
-      "nameZh": "离散分布",
-      "defaultOrder": 13,
+      "name": "Bernoulli and Binomial Distributions and Geometric Distribution",
+      "nameZh": "伯努利与二项分布与几何分布",
+      "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "bernoulli_binomial_distributions",
@@ -554,12 +733,25 @@
           "defaultOrder": 2,
           "visual": "chart",
           "visualHint": "Bar chart of the geometric distribution."
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_random_vars"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_discrete_dists_poisson_distribution",
+      "name": "Poisson Distribution and Hypergeometric Distribution",
+      "nameZh": "泊松分布与超几何分布",
+      "defaultOrder": 24,
+      "conceptIds": [
         {
           "conceptId": "poisson_distribution",
           "name": "Poisson Distribution",
           "nameZh": "泊松分布",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "chart",
           "visualHint": "Bar chart of the Poisson distribution with a slider for lambda."
         },
@@ -567,7 +759,7 @@
           "conceptId": "hypergeometric_distribution",
           "name": "Hypergeometric Distribution",
           "nameZh": "超几何分布",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
@@ -580,7 +772,7 @@
       "topicId": "topic_continuous_prob",
       "name": "Continuous Probability",
       "nameZh": "连续概率",
-      "defaultOrder": 14,
+      "defaultOrder": 25,
       "conceptIds": [
         {
           "conceptId": "continuous_random_variables",
@@ -614,9 +806,9 @@
     },
     {
       "topicId": "topic_continuous_concentration",
-      "name": "Continuous Probability and Concentration Bounds",
-      "nameZh": "连续概率与集中界",
-      "defaultOrder": 15,
+      "name": "Uniform and Exponential Distributions and Normal Distribution",
+      "nameZh": "均匀与指数分布与正态分布",
+      "defaultOrder": 26,
       "conceptIds": [
         {
           "conceptId": "uniform_exponential_distributions",
@@ -631,18 +823,36 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot the normal bell curve with sliders for mean and standard deviation."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_concentration",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_continuous_prob"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_continuous_concentration_markovs_inequality",
+      "name": "Markov's Inequality and Chebyshev's Inequality",
+      "nameZh": "马尔可夫不等式与切比雪夫不等式",
+      "defaultOrder": 27,
+      "conceptIds": [
         {
           "conceptId": "markovs_inequality",
           "name": "Markov's Inequality",
           "nameZh": "马尔可夫不等式",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "chebyshevs_inequality",
           "name": "Chebyshev's Inequality",
           "nameZh": "切比雪夫不等式",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -653,7 +863,7 @@
       ],
       "prereqTopics": [
         "topic_random_vars",
-        "topic_continuous_prob"
+        "topic_random_vars_linearity_of_expectation"
       ],
       "isRoot": false
     },
@@ -661,7 +871,7 @@
       "topicId": "topic_concentration",
       "name": "Concentration Inequalities",
       "nameZh": "集中不等式",
-      "defaultOrder": 16,
+      "defaultOrder": 28,
       "conceptIds": [
         {
           "conceptId": "chernoff_bounds",
@@ -686,15 +896,16 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_continuous_concentration"
+        "topic_continuous_concentration",
+        "topic_continuous_concentration_markovs_inequality"
       ],
       "isRoot": false
     },
     {
       "topicId": "topic_markov",
-      "name": "Markov Chains",
-      "nameZh": "马尔可夫链",
-      "defaultOrder": 17,
+      "name": "Markov Chains Basics and Hitting Times",
+      "nameZh": "马尔可夫链基础与首达时间",
+      "defaultOrder": 29,
       "conceptIds": [
         {
           "conceptId": "markov_chains_basics",
@@ -709,26 +920,44 @@
           "name": "Hitting Times",
           "nameZh": "首达时间",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "topic_markov_stationary_distributions",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "topic_discrete_prob",
+        "topic_random_vars"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "topic_markov_stationary_distributions",
+      "name": "Stationary Distributions and PageRank Algorithm",
+      "nameZh": "平稳分布与PageRank 算法",
+      "defaultOrder": 30,
+      "conceptIds": [
         {
           "conceptId": "stationary_distributions",
           "name": "Stationary Distributions",
           "nameZh": "平稳分布",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "page_rank_algorithm",
           "name": "PageRank Algorithm",
           "nameZh": "PageRank 算法",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Iterate PageRank over a small web graph until the ranks converge."
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "topic_discrete_prob",
-        "topic_random_vars"
+        "topic_markov"
       ],
       "isRoot": false
     }

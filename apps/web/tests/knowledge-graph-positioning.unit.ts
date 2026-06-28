@@ -31,7 +31,7 @@ function concept(nodeId: string, topicId: string, similarity: number): Knowledge
 function main() {
   // next_topic follows the same default_order sequence as the Course outline.
   assert(nextTopic(GRAPH_ID, "t_1801_diff_techniques")?.topicId === "t_1801_apps_diff", "next_topic follows curriculum order");
-  assert(nextTopic(GRAPH_ID, "t_1802_surface_int") === null, "last curriculum topic has no next topic");
+  assert(nextTopic(GRAPH_ID, "t_1802_surface_int_1802_stokes_theorem") === null, "last curriculum topic has no next topic");
 
   // Specific: mass concentrated in one topic -> 2-lesson linear path.
   const specific = classifyEntry({
@@ -53,14 +53,14 @@ function main() {
   const conceptDominant = classifyEntry({
     graphId: GRAPH_ID,
     results: [
-      concept("c_1801_taylor_series", "t_1801_series", 0.66),
+      concept("c_1801_taylor_series", "t_1801_series_1801_power_series", 0.66),
       concept("c_1802_local_extrema", "t_1802_apps_partial", 0.41),
-      concept("c_1801_area_curves", "t_1801_apps_int", 0.4),
+      concept("c_1801_area_curves", "t_1801_int_techniques_area", 0.4),
       concept("c_1801_volume", "t_1801_apps_int", 0.39),
     ],
   });
   assert(conceptDominant.branch === "specific", "clearly-high concept -> specific");
-  assert(conceptDominant.startTopicId === "t_1801_series", "concept-dominant start topic");
+  assert(conceptDominant.startTopicId === "t_1801_series_1801_power_series", "concept-dominant start topic");
   assert(conceptDominant.targetConceptId === "c_1801_taylor_series", "concept-dominant pins target concept");
 
   // Broad: mass spread across topics -> menu ordered by relevance.

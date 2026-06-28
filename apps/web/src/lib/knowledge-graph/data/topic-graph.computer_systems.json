@@ -2,13 +2,13 @@
   "graphId": "computer_systems",
   "subject": "Computer Systems",
   "generatedFrom": "temple/computer_systems.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t1",
-      "name": "Data Representation",
-      "nameZh": "数据表示",
+      "name": "Bits and Bytes and Integer Representation",
+      "nameZh": "比特与字节与整数表示",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -24,18 +24,34 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram fixed-width integer encodings including two's complement."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t1_c1_3",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "t1_c1_3",
+      "name": "Integer Arithmetic and Floating Point Representation",
+      "nameZh": "整数运算与浮点数表示",
+      "defaultOrder": 2,
+      "conceptIds": [
         {
           "conceptId": "c1_3",
           "name": "Integer Arithmetic",
           "nameZh": "整数运算",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c1_4",
           "name": "Floating Point Representation",
           "nameZh": "浮点数表示",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram the IEEE 754 sign, exponent, and fraction fields."
         }
@@ -46,14 +62,16 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "t1"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "t_float_machine_ops",
-      "name": "Floating-Point and Machine-Level Operations",
-      "nameZh": "浮点数与机器级运算",
-      "defaultOrder": 2,
+      "name": "Floating Point Operations and x86-64 Data Movement",
+      "nameZh": "浮点运算与x86-64数据传输",
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "c1_5",
@@ -66,18 +84,48 @@
           "name": "x86-64 Data Movement",
           "nameZh": "x86-64数据传输",
           "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_float_machine_ops_c2_2",
+          "hard": true
         },
+        {
+          "topicId": "t_procedures_arch",
+          "hard": true
+        },
+        {
+          "topicId": "t_procedures_arch_c3_1",
+          "hard": true
+        },
+        {
+          "topicId": "t_optimization_locality_c5_1",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t1_c1_3"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_float_machine_ops_c2_2",
+      "name": "Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)",
+      "nameZh": "算术与逻辑运算与控制流",
+      "defaultOrder": 4,
+      "conceptIds": [
         {
           "conceptId": "c2_2",
           "name": "Arithmetic and Logical Operations",
           "nameZh": "算术与逻辑运算",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c2_3",
           "name": "Control Flow (Conditionals and Loops)",
           "nameZh": "控制流",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -88,22 +136,18 @@
         {
           "topicId": "t4",
           "hard": true
-        },
-        {
-          "topicId": "t_optimization_locality",
-          "hard": true
         }
       ],
       "prereqTopics": [
-        "t1"
+        "t_float_machine_ops"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_procedures_arch",
-      "name": "Procedures and Processor Architecture",
-      "nameZh": "过程调用与处理器体系",
-      "defaultOrder": 3,
+      "name": "Procedures and Call Stack and Arrays and Structs",
+      "nameZh": "过程与调用栈与数组与结构体",
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c2_4",
@@ -120,27 +164,42 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram array and struct memory layout and element addressing."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t6",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_float_machine_ops",
+        "t_float_machine_ops_c2_2"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_procedures_arch_c3_1",
+      "name": "Instruction Set Architecture (Y86-64) and Sequential CPU Implementation",
+      "nameZh": "指令集体系结构与顺序CPU实现",
+      "defaultOrder": 6,
+      "conceptIds": [
         {
           "conceptId": "c3_1",
           "name": "Instruction Set Architecture (Y86-64)",
           "nameZh": "指令集体系结构",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c3_2",
           "name": "Sequential CPU Implementation",
           "nameZh": "顺序CPU实现",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
         {
           "topicId": "t3",
-          "hard": true
-        },
-        {
-          "topicId": "t6",
           "hard": true
         }
       ],
@@ -153,7 +212,7 @@
       "topicId": "t3",
       "name": "Processor Architecture",
       "nameZh": "处理器体系结构",
-      "defaultOrder": 4,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "c3_3",
@@ -184,12 +243,12 @@
           "hard": true
         },
         {
-          "topicId": "t_linking_processes",
+          "topicId": "t_linking_processes_c7_1",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t_procedures_arch"
+        "t_procedures_arch_c3_1"
       ],
       "isRoot": false
     },
@@ -197,7 +256,7 @@
       "topicId": "t4",
       "name": "Code Optimization",
       "nameZh": "代码优化",
-      "defaultOrder": 5,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "c4_1",
@@ -225,16 +284,16 @@
         }
       ],
       "prereqTopics": [
-        "t_float_machine_ops",
+        "t_float_machine_ops_c2_2",
         "t3"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_optimization_locality",
-      "name": "Optimization and Memory Locality",
-      "nameZh": "程序优化与内存局部性",
-      "defaultOrder": 6,
+      "name": "Memory Aliasing and Profiling Tools",
+      "nameZh": "内存别名与性能分析工具",
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "c4_4",
@@ -247,18 +306,36 @@
           "name": "Profiling Tools",
           "nameZh": "性能分析工具",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t5",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "t4"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_optimization_locality_c5_1",
+      "name": "Storage Technologies and Principle of Locality",
+      "nameZh": "存储技术与局部性原理",
+      "defaultOrder": 10,
+      "conceptIds": [
         {
           "conceptId": "c5_1",
           "name": "Storage Technologies",
           "nameZh": "存储技术",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c5_2",
           "name": "Principle of Locality",
           "nameZh": "局部性原理",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -268,8 +345,7 @@
         }
       ],
       "prereqTopics": [
-        "t_float_machine_ops",
-        "t4"
+        "t_float_machine_ops"
       ],
       "isRoot": false
     },
@@ -277,7 +353,7 @@
       "topicId": "t5",
       "name": "Memory Hierarchy and Cache",
       "nameZh": "存储层次与缓存",
-      "defaultOrder": 7,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "c5_3",
@@ -307,7 +383,8 @@
         }
       ],
       "prereqTopics": [
-        "t_optimization_locality"
+        "t_optimization_locality",
+        "t_optimization_locality_c5_1"
       ],
       "isRoot": false
     },
@@ -315,7 +392,7 @@
       "topicId": "t6",
       "name": "Linking",
       "nameZh": "链接",
-      "defaultOrder": 8,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "c6_1",
@@ -349,9 +426,9 @@
     },
     {
       "topicId": "t_linking_processes",
-      "name": "Linking, Exceptions and Processes",
-      "nameZh": "链接、异常与进程",
-      "defaultOrder": 9,
+      "name": "Relocation and Dynamic Linking",
+      "nameZh": "重定位与动态链接",
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "c6_4",
@@ -364,18 +441,31 @@
           "name": "Dynamic Linking",
           "nameZh": "动态链接",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t6"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_linking_processes_c7_1",
+      "name": "Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches",
+      "nameZh": "异常与进程与上下文切换",
+      "defaultOrder": 14,
+      "conceptIds": [
         {
           "conceptId": "c7_1",
           "name": "Exceptions (Traps, Interrupts, Faults)",
           "nameZh": "异常",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c7_2",
           "name": "Processes and Context Switches",
           "nameZh": "进程与上下文切换",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram a context switch between processes."
         }
@@ -386,13 +476,12 @@
           "hard": true
         },
         {
-          "topicId": "t_network_concurrency",
+          "topicId": "t_network_concurrency_c11_1",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t3",
-        "t6"
+        "t3"
       ],
       "isRoot": false
     },
@@ -400,7 +489,7 @@
       "topicId": "t7",
       "name": "Exceptional Control Flow",
       "nameZh": "异常控制流",
-      "defaultOrder": 10,
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "c7_3",
@@ -423,12 +512,12 @@
       ],
       "successors": [
         {
-          "topicId": "t_memmgmt_unixio",
+          "topicId": "t_memmgmt_unixio_c9_1",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "t_linking_processes"
+        "t_linking_processes_c7_1"
       ],
       "isRoot": false
     },
@@ -436,7 +525,7 @@
       "topicId": "t8",
       "name": "Virtual Memory",
       "nameZh": "虚拟内存",
-      "defaultOrder": 11,
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "c8_1",
@@ -474,9 +563,9 @@
     },
     {
       "topicId": "t_memmgmt_unixio",
-      "name": "Memory Management and Unix I/O",
-      "nameZh": "内存管理与 Unix 输入输出",
-      "defaultOrder": 12,
+      "name": "Dynamic Memory Allocation and Garbage Collection Basics",
+      "nameZh": "动态内存分配与垃圾回收基础",
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "c8_4",
@@ -489,18 +578,31 @@
           "name": "Garbage Collection Basics",
           "nameZh": "垃圾回收基础",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t8"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_memmgmt_unixio_c9_1",
+      "name": "Unix I/O and File Metadata",
+      "nameZh": "Unix 输入输出与文件元数据",
+      "defaultOrder": 18,
+      "conceptIds": [
         {
           "conceptId": "c9_1",
           "name": "Unix I/O",
           "nameZh": "Unix 输入输出",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c9_2",
           "name": "File Metadata",
           "nameZh": "文件元数据",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -514,8 +616,7 @@
         }
       ],
       "prereqTopics": [
-        "t7",
-        "t8"
+        "t7"
       ],
       "isRoot": false
     },
@@ -523,7 +624,7 @@
       "topicId": "t9",
       "name": "System-Level I/O",
       "nameZh": "系统级I/O",
-      "defaultOrder": 13,
+      "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "c9_3",
@@ -546,7 +647,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "t_memmgmt_unixio"
+        "t_memmgmt_unixio_c9_1"
       ],
       "isRoot": false
     },
@@ -554,7 +655,7 @@
       "topicId": "t10",
       "name": "Network Programming",
       "nameZh": "网络编程",
-      "defaultOrder": 14,
+      "defaultOrder": 20,
       "conceptIds": [
         {
           "conceptId": "c10_1",
@@ -582,15 +683,15 @@
         }
       ],
       "prereqTopics": [
-        "t_memmgmt_unixio"
+        "t_memmgmt_unixio_c9_1"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_network_concurrency",
-      "name": "Network and Concurrent Programming",
-      "nameZh": "网络与并发编程",
-      "defaultOrder": 15,
+      "name": "Sockets Interface and HTTP Protocol Basics",
+      "nameZh": "套接字接口与HTTP协议基础",
+      "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "c10_4",
@@ -603,18 +704,31 @@
           "name": "HTTP Protocol Basics",
           "nameZh": "HTTP协议基础",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t10"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_network_concurrency_c11_1",
+      "name": "Thread Basics and Shared Variables",
+      "nameZh": "线程基础与共享变量",
+      "defaultOrder": 22,
+      "conceptIds": [
         {
           "conceptId": "c11_1",
           "name": "Thread Basics",
           "nameZh": "线程基础",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c11_2",
           "name": "Shared Variables",
           "nameZh": "共享变量",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -624,8 +738,7 @@
         }
       ],
       "prereqTopics": [
-        "t_linking_processes",
-        "t10"
+        "t_linking_processes_c7_1"
       ],
       "isRoot": false
     },
@@ -633,7 +746,7 @@
       "topicId": "t11",
       "name": "Concurrent Programming",
       "nameZh": "并发编程",
-      "defaultOrder": 16,
+      "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "c11_3",
@@ -660,7 +773,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "t_network_concurrency"
+        "t_network_concurrency_c11_1"
       ],
       "isRoot": false
     }

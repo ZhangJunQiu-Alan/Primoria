@@ -27,6 +27,102 @@
       "name_zh": "搜索：无信息搜索与启发式"
     },
     {
+      "id": "ai_search_part2",
+      "kind": "topic",
+      "name": "Search: Informed and Adversarial",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "搜索：有信息与对抗搜索"
+    },
+    {
+      "id": "ai_csp",
+      "kind": "topic",
+      "name": "Constraint Satisfaction Problems and Backtracking Search",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "约束满足问题与回溯搜索"
+    },
+    {
+      "id": "ai_csp_ai_arc_consistency",
+      "kind": "topic",
+      "name": "Constraint Propagation and Local Search",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "约束传播与局部搜索"
+    },
+    {
+      "id": "ai_mdp",
+      "kind": "topic",
+      "name": "Markov Decision Processes and Bellman Equations",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "马尔可夫决策过程与Bellman方程"
+    },
+    {
+      "id": "ai_mdp_ai_value_iteration",
+      "kind": "topic",
+      "name": "Value Iteration and Policy Iteration",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "价值迭代与策略迭代"
+    },
+    {
+      "id": "ai_rl",
+      "kind": "topic",
+      "name": "Reinforcement Learning Framework and Temporal Difference Learning",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "强化学习框架与时序差分学习"
+    },
+    {
+      "id": "ai_rl_ai_qlearning",
+      "kind": "topic",
+      "name": "Q-Learning, Exploration vs Exploitation, and Approximate Q-Learning",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "Q学习、探索与利用与近似Q学习"
+    },
+    {
+      "id": "ai_probability",
+      "kind": "topic",
+      "name": "Probability Fundamentals and Bayes Rule",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "概率基础与贝叶斯规则"
+    },
+    {
+      "id": "ai_probability_ai_bayes_nets",
+      "kind": "topic",
+      "name": "Bayesian Networks and Inference in Bayes Nets",
+      "topic": null,
+      "default_order": 10,
+      "name_zh": "贝叶斯网络与贝叶斯网络推理"
+    },
+    {
+      "id": "ai_markov_models",
+      "kind": "topic",
+      "name": "Markov Models and HMMs",
+      "topic": null,
+      "default_order": 11,
+      "name_zh": "马尔可夫模型与HMM"
+    },
+    {
+      "id": "ai_inference_naive_bayes",
+      "kind": "topic",
+      "name": "Probabilistic Inference and Naive Bayes",
+      "topic": null,
+      "default_order": 12,
+      "name_zh": "概率推断与朴素贝叶斯"
+    },
+    {
+      "id": "ai_ml",
+      "kind": "topic",
+      "name": "Machine Learning",
+      "topic": null,
+      "default_order": 13,
+      "name_zh": "机器学习"
+    },
+    {
       "id": "ai_search_problem",
       "kind": "concept",
       "name": "Search Problem Formulation",
@@ -54,14 +150,6 @@
       "description": "Heuristic functions estimating the cost to reach the goal, where admissibility (never overestimating) and consistency guarantee optimal informed search.",
       "default_order": 3,
       "name_zh": "启发式与可容性"
-    },
-    {
-      "id": "ai_search_part2",
-      "kind": "topic",
-      "name": "Search: Informed and Adversarial",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "搜索：有信息与对抗搜索"
     },
     {
       "id": "ai_informed",
@@ -97,14 +185,6 @@
       "visual_hint": "Step minimax with alpha-beta pruning, showing cut branches."
     },
     {
-      "id": "ai_csp",
-      "kind": "topic",
-      "name": "Constraint Satisfaction",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "约束满足"
-    },
-    {
       "id": "ai_csp_def",
       "kind": "concept",
       "name": "Constraint Satisfaction Problems",
@@ -128,27 +208,19 @@
       "id": "ai_arc_consistency",
       "kind": "concept",
       "name": "Constraint Propagation",
-      "topic": "ai_csp",
+      "topic": "ai_csp_ai_arc_consistency",
       "description": "Constraint propagation that prunes domain values inconsistent with constraints, with arc consistency and forward checking reducing search effort.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "约束传播"
     },
     {
       "id": "ai_local_search",
       "kind": "concept",
       "name": "Local Search",
-      "topic": "ai_csp",
+      "topic": "ai_csp_ai_arc_consistency",
       "description": "Search that iteratively improves a complete assignment using local moves, such as hill climbing and min-conflicts, trading completeness for scalability.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "局部搜索"
-    },
-    {
-      "id": "ai_mdp",
-      "kind": "topic",
-      "name": "Markov Decision Processes",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "马尔可夫决策过程"
     },
     {
       "id": "ai_mdp_def",
@@ -172,9 +244,9 @@
       "id": "ai_value_iteration",
       "kind": "concept",
       "name": "Value Iteration",
-      "topic": "ai_mdp",
+      "topic": "ai_mdp_ai_value_iteration",
       "description": "A dynamic-programming algorithm computing optimal MDP values by iteratively applying the Bellman update until the value function converges.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "价值迭代",
       "visual": "algorithm",
       "visual_hint": "Iterate MDP state values on a grid until convergence."
@@ -183,18 +255,10 @@
       "id": "ai_policy_iteration",
       "kind": "concept",
       "name": "Policy Iteration",
-      "topic": "ai_mdp",
+      "topic": "ai_mdp_ai_value_iteration",
       "description": "An MDP algorithm alternating policy evaluation, computing a policy's values, with policy improvement, acting greedily, until the policy stabilises.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "策略迭代"
-    },
-    {
-      "id": "ai_rl",
-      "kind": "topic",
-      "name": "Reinforcement Learning",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "强化学习"
     },
     {
       "id": "ai_rl_framework",
@@ -218,9 +282,9 @@
       "id": "ai_qlearning",
       "kind": "concept",
       "name": "Q-Learning",
-      "topic": "ai_rl",
+      "topic": "ai_rl_ai_qlearning",
       "description": "A model-free, off-policy reinforcement-learning algorithm that learns optimal action values directly from experience, independent of the policy followed.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "Q学习",
       "visual": "algorithm",
       "visual_hint": "Update a Q-table as an agent moves through a gridworld."
@@ -229,27 +293,19 @@
       "id": "ai_exploration",
       "kind": "concept",
       "name": "Exploration vs Exploitation",
-      "topic": "ai_rl",
+      "topic": "ai_rl_ai_qlearning",
       "description": "The exploration-exploitation tradeoff balancing trying new actions to gain information against choosing currently best actions to maximise reward.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "探索与利用"
     },
     {
       "id": "ai_approx_q",
       "kind": "concept",
       "name": "Approximate Q-Learning",
-      "topic": "ai_rl",
+      "topic": "ai_rl_ai_qlearning",
       "description": "Approximate Q-learning representing the value function with features and weights, generalising across states too numerous to store in a table.",
-      "default_order": 5,
+      "default_order": 3,
       "name_zh": "近似Q学习"
-    },
-    {
-      "id": "ai_probability",
-      "kind": "topic",
-      "name": "Probability and Bayes Nets",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "概率与贝叶斯网络"
     },
     {
       "id": "ai_prob",
@@ -273,9 +329,9 @@
       "id": "ai_bayes_nets",
       "kind": "concept",
       "name": "Bayesian Networks",
-      "topic": "ai_probability",
+      "topic": "ai_probability_ai_bayes_nets",
       "description": "Bayesian networks compactly representing a joint distribution as a directed acyclic graph that encodes conditional independence among variables.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "贝叶斯网络",
       "visual": "diagram",
       "visual_hint": "Directed acyclic graph of a Bayesian network with conditional dependencies."
@@ -284,18 +340,10 @@
       "id": "ai_bn_inference",
       "kind": "concept",
       "name": "Inference in Bayes Nets",
-      "topic": "ai_probability",
+      "topic": "ai_probability_ai_bayes_nets",
       "description": "Inference in Bayesian networks computing posterior probabilities via exact methods like variable elimination or approximate sampling techniques.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "贝叶斯网络推理"
-    },
-    {
-      "id": "ai_markov_models",
-      "kind": "topic",
-      "name": "Markov Models and HMMs",
-      "topic": null,
-      "default_order": 7,
-      "name_zh": "马尔可夫模型与HMM"
     },
     {
       "id": "ai_markov_chain",
@@ -327,14 +375,6 @@
       "name_zh": "前向算法"
     },
     {
-      "id": "ai_inference_naive_bayes",
-      "kind": "topic",
-      "name": "Probabilistic Inference and Naive Bayes",
-      "topic": null,
-      "default_order": 8,
-      "name_zh": "概率推断与朴素贝叶斯"
-    },
-    {
       "id": "ai_viterbi",
       "kind": "concept",
       "name": "Viterbi Algorithm",
@@ -362,14 +402,6 @@
       "description": "A simple probabilistic classifier applying Bayes' rule under the assumption that features are conditionally independent given the class label.",
       "default_order": 3,
       "name_zh": "朴素贝叶斯"
-    },
-    {
-      "id": "ai_ml",
-      "kind": "topic",
-      "name": "Machine Learning",
-      "topic": null,
-      "default_order": 9,
-      "name_zh": "机器学习"
     },
     {
       "id": "ai_perceptron",

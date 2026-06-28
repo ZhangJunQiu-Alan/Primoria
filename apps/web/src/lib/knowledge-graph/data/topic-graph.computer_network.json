@@ -2,13 +2,13 @@
   "graphId": "computer_network",
   "subject": "Computer Networking",
   "generatedFrom": "temple/computer_network.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "net_arch",
-      "name": "Network Architecture",
-      "nameZh": "网络体系结构",
+      "name": "Network Layering and OSI Model",
+      "nameZh": "网络分层与OSI模型",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -26,12 +26,28 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram the seven OSI layers and their roles."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "net_arch_net_tcpip",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "net_arch_net_tcpip",
+      "name": "TCP/IP Model and Encapsulation",
+      "nameZh": "TCP/IP模型与封装",
+      "defaultOrder": 2,
+      "conceptIds": [
         {
           "conceptId": "net_tcpip",
           "name": "TCP/IP Model",
           "nameZh": "TCP/IP模型",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "Diagram the four-layer TCP/IP stack."
         },
@@ -39,7 +55,7 @@
           "conceptId": "net_encapsulation",
           "name": "Encapsulation",
           "nameZh": "封装",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram each layer wrapping the layer above with its header."
         }
@@ -50,14 +66,16 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "net_arch"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "net_link",
-      "name": "Link Layer",
-      "nameZh": "链路层",
-      "defaultOrder": 2,
+      "name": "Link Layer Services and MAC Addressing",
+      "nameZh": "链路层服务与MAC地址",
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "net_link_services",
@@ -70,21 +88,13 @@
           "name": "MAC Addressing",
           "nameZh": "MAC地址",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "net_ethernet",
-          "name": "Ethernet",
-          "nameZh": "以太网",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "net_switching",
-          "name": "Switching",
-          "nameZh": "交换",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "net_link_net_ethernet",
+          "hard": true
+        },
         {
           "topicId": "net_network",
           "hard": false
@@ -94,10 +104,35 @@
       "isRoot": true
     },
     {
+      "topicId": "net_link_net_ethernet",
+      "name": "Ethernet and Switching",
+      "nameZh": "以太网与交换",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "net_ethernet",
+          "name": "Ethernet",
+          "nameZh": "以太网",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "net_switching",
+          "name": "Switching",
+          "nameZh": "交换",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "net_link"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "net_network",
-      "name": "Network Layer",
-      "nameZh": "网络层",
-      "defaultOrder": 3,
+      "name": "IP Addressing and IPv4 and IPv6",
+      "nameZh": "IP寻址与IPv4与IPv6",
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "net_ip_addressing",
@@ -112,31 +147,48 @@
           "name": "IPv4 and IPv6",
           "nameZh": "IPv4与IPv6",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "net_forwarding",
-          "name": "Forwarding and Routers",
-          "nameZh": "转发与路由器",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "net_routing",
-          "name": "Routing Algorithms",
-          "nameZh": "路由算法",
-          "defaultOrder": 4,
-          "visual": "algorithm",
-          "visualHint": "Animate link-state/distance-vector routing building forwarding tables."
         }
       ],
       "successors": [
+        {
+          "topicId": "net_network_net_forwarding",
+          "hard": true
+        },
         {
           "topicId": "net_transport_part1",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "net_arch",
+        "net_arch_net_tcpip",
         "net_link"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "net_network_net_forwarding",
+      "name": "Forwarding and Routers and Routing Algorithms",
+      "nameZh": "转发与路由器与路由算法",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "net_forwarding",
+          "name": "Forwarding and Routers",
+          "nameZh": "转发与路由器",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "net_routing",
+          "name": "Routing Algorithms",
+          "nameZh": "路由算法",
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Animate link-state/distance-vector routing building forwarding tables."
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "net_network"
       ],
       "isRoot": false
     },
@@ -144,7 +196,7 @@
       "topicId": "net_transport_part1",
       "name": "Transport Layer: UDP and TCP",
       "nameZh": "传输层：UDP 与 TCP",
-      "defaultOrder": 4,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "net_transport_services",
@@ -186,7 +238,7 @@
       "topicId": "net_transport_part2",
       "name": "Transport Layer: Reliability and Control",
       "nameZh": "传输层：可靠传输与拥塞控制",
-      "defaultOrder": 5,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "net_rdt",
@@ -221,7 +273,7 @@
       "topicId": "net_application",
       "name": "Application Layer",
       "nameZh": "应用层",
-      "defaultOrder": 6,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "net_http",

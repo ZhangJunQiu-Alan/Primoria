@@ -2,7 +2,7 @@
   "graphId": "machine_learning",
   "subject": "Machine Learning",
   "generatedFrom": "temple/machine_learning.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -48,7 +48,7 @@
           "hard": true
         },
         {
-          "topicId": "ml_generalization_nn",
+          "topicId": "ml_generalization_nn_ml_neural_nets",
           "hard": true
         }
       ],
@@ -88,8 +88,8 @@
     },
     {
       "topicId": "ml_classification_part1",
-      "name": "Classification: Logistic Regression",
-      "nameZh": "分类：逻辑回归",
+      "name": "Logistic Regression and Sigmoid & Decision Boundary",
+      "nameZh": "逻辑回归与Sigmoid 与决策边界",
       "defaultOrder": 3,
       "conceptIds": [
         {
@@ -107,21 +107,13 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot the sigmoid mapping scores to probabilities and its decision boundary."
-        },
-        {
-          "conceptId": "ml_logistic_mle",
-          "name": "Logistic MLE & Gradient",
-          "nameZh": "逻辑回归极大似然估计与梯度",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "ml_newton_method",
-          "name": "Newton's Method",
-          "nameZh": "牛顿法",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "ml_classification_part1_ml_logistic_mle",
+          "hard": true
+        },
         {
           "topicId": "ml_classification_part2",
           "hard": true
@@ -131,7 +123,7 @@
           "hard": false
         },
         {
-          "topicId": "ml_generalization_nn",
+          "topicId": "ml_generalization_nn_ml_neural_nets",
           "hard": true
         }
       ],
@@ -141,10 +133,40 @@
       "isRoot": false
     },
     {
+      "topicId": "ml_classification_part1_ml_logistic_mle",
+      "name": "Logistic MLE & Gradient and Newton's Method",
+      "nameZh": "逻辑回归极大似然估计与梯度与牛顿法",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "ml_logistic_mle",
+          "name": "Logistic MLE & Gradient",
+          "nameZh": "逻辑回归极大似然估计与梯度",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "ml_newton_method",
+          "name": "Newton's Method",
+          "nameZh": "牛顿法",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "ml_classification_part2",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "ml_classification_part1"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "ml_classification_part2",
       "name": "Classification: Softmax and GLMs",
       "nameZh": "分类：Softmax 与广义线性模型",
-      "defaultOrder": 4,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "ml_softmax",
@@ -169,15 +191,16 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "ml_classification_part1"
+        "ml_classification_part1",
+        "ml_classification_part1_ml_logistic_mle"
       ],
       "isRoot": false
     },
     {
       "topicId": "ml_generative",
-      "name": "Generative Learning",
-      "nameZh": "生成模型",
-      "defaultOrder": 5,
+      "name": "Generative vs Discriminative and Gaussian Discriminant Analysis",
+      "nameZh": "生成模型与判别模型与高斯判别分析",
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "ml_generative_vs_disc",
@@ -190,31 +213,49 @@
           "name": "Gaussian Discriminant Analysis",
           "nameZh": "高斯判别分析",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "ml_naive_bayes",
-          "name": "Naive Bayes",
-          "nameZh": "朴素贝叶斯",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "ml_laplace",
-          "name": "Laplace Smoothing",
-          "nameZh": "拉普拉斯平滑",
-          "defaultOrder": 4
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "ml_generative_ml_naive_bayes",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "ml_classification_part1"
       ],
       "isRoot": false
     },
     {
+      "topicId": "ml_generative_ml_naive_bayes",
+      "name": "Naive Bayes and Laplace Smoothing",
+      "nameZh": "朴素贝叶斯与拉普拉斯平滑",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "ml_naive_bayes",
+          "name": "Naive Bayes",
+          "nameZh": "朴素贝叶斯",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "ml_laplace",
+          "name": "Laplace Smoothing",
+          "nameZh": "拉普拉斯平滑",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "ml_generative"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "ml_svm_margin",
-      "name": "SVM: Margins and Duality",
-      "nameZh": "支持向量机：间隔与对偶性",
-      "defaultOrder": 6,
+      "name": "Functional & Geometric Margins and Optimal Margin Classifier",
+      "nameZh": "间隔与SVM与最优间隔分类器",
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "ml_margins",
@@ -229,23 +270,11 @@
           "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Drag points to show the max-margin hyperplane and its support vectors."
-        },
-        {
-          "conceptId": "ml_lagrange_duality",
-          "name": "Lagrange Duality & KKT",
-          "nameZh": "拉格朗日对偶性与 KKT 条件",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "ml_svm_dual",
-          "name": "SVM Dual Problem",
-          "nameZh": "支持向量机对偶问题",
-          "defaultOrder": 4
         }
       ],
       "successors": [
         {
-          "topicId": "ml_svm_kernel",
+          "topicId": "ml_svm_margin_ml_lagrange_duality",
           "hard": true
         }
       ],
@@ -253,10 +282,44 @@
       "isRoot": true
     },
     {
+      "topicId": "ml_svm_margin_ml_lagrange_duality",
+      "name": "Lagrange Duality & KKT and SVM Dual Problem",
+      "nameZh": "拉格朗日对偶性与 KKT 条件与支持向量机对偶问题",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "ml_lagrange_duality",
+          "name": "Lagrange Duality & KKT",
+          "nameZh": "拉格朗日对偶性与 KKT 条件",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "ml_svm_dual",
+          "name": "SVM Dual Problem",
+          "nameZh": "支持向量机对偶问题",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "ml_svm_kernel",
+          "hard": true
+        },
+        {
+          "topicId": "ml_svm_kernel_ml_soft_margin",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "ml_svm_margin"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "ml_svm_kernel",
-      "name": "SVM: Kernels and Optimization",
-      "nameZh": "支持向量机：核函数与优化",
-      "defaultOrder": 7,
+      "name": "Kernel Trick and Valid Kernels (Mercer)",
+      "nameZh": "核方法与有效核函数（Mercer 定理）",
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "ml_kernels",
@@ -271,23 +334,42 @@
           "name": "Valid Kernels (Mercer)",
           "nameZh": "有效核函数（Mercer 定理）",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "ml_svm_kernel_ml_soft_margin",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "ml_svm_margin_ml_lagrange_duality"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "ml_svm_kernel_ml_soft_margin",
+      "name": "Soft Margin & Slack and SMO Algorithm",
+      "nameZh": "软间隔与松弛变量与SMO 算法",
+      "defaultOrder": 11,
+      "conceptIds": [
         {
           "conceptId": "ml_soft_margin",
           "name": "Soft Margin & Slack",
           "nameZh": "软间隔与松弛变量",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "ml_smo",
           "name": "SMO Algorithm",
           "nameZh": "SMO 算法",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "ml_svm_margin"
+        "ml_svm_margin_ml_lagrange_duality",
+        "ml_svm_kernel"
       ],
       "isRoot": false
     },
@@ -295,7 +377,7 @@
       "topicId": "ml_theory",
       "name": "Learning Theory",
       "nameZh": "学习理论",
-      "defaultOrder": 8,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "ml_bias_variance",
@@ -333,9 +415,9 @@
     },
     {
       "topicId": "ml_generalization_nn",
-      "name": "Generalization Bounds and Neural Networks",
-      "nameZh": "泛化界与神经网络",
-      "defaultOrder": 9,
+      "name": "VC Dimension & Bounds and Model & Feature Selection",
+      "nameZh": "VC 维与泛化误差界与模型与特征选择",
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "ml_vc_dimension",
@@ -348,12 +430,25 @@
           "name": "Model & Feature Selection",
           "nameZh": "模型与特征选择",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "ml_theory"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "ml_generalization_nn_ml_neural_nets",
+      "name": "Neural Networks and Backpropagation",
+      "nameZh": "神经网络与反向传播",
+      "defaultOrder": 14,
+      "conceptIds": [
         {
           "conceptId": "ml_neural_nets",
           "name": "Neural Networks",
           "nameZh": "神经网络",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "Diagram a layered network of weighted sums and activations."
         },
@@ -361,22 +456,21 @@
           "conceptId": "ml_backprop",
           "name": "Backpropagation",
           "nameZh": "反向传播",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
         "ml_linear_part1",
-        "ml_classification_part1",
-        "ml_theory"
+        "ml_classification_part1"
       ],
       "isRoot": false
     },
     {
       "topicId": "ml_unsupervised",
-      "name": "Unsupervised Learning",
-      "nameZh": "无监督学习",
-      "defaultOrder": 10,
+      "name": "K-Means Clustering and EM Algorithm",
+      "nameZh": "K均值聚类与EM 算法 (期望最大化)",
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "ml_kmeans",
@@ -391,18 +485,34 @@
           "name": "EM Algorithm",
           "nameZh": "EM 算法 (期望最大化)",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "ml_unsupervised_ml_gmm_em",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "ml_unsupervised_ml_gmm_em",
+      "name": "Gaussian Mixtures via EM, Principal Component Analysis, and Independent Component Analysis",
+      "nameZh": "高斯混合与EM、主成分分析与独立成分分析",
+      "defaultOrder": 16,
+      "conceptIds": [
         {
           "conceptId": "ml_gmm_em",
           "name": "Gaussian Mixtures via EM",
           "nameZh": "高斯混合与EM",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "ml_pca",
           "name": "Principal Component Analysis",
           "nameZh": "主成分分析",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Project a 2-D cloud onto its principal component directions."
         },
@@ -410,18 +520,20 @@
           "conceptId": "ml_ica",
           "name": "Independent Component Analysis",
           "nameZh": "独立成分分析",
-          "defaultOrder": 5
+          "defaultOrder": 3
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "ml_unsupervised"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "ml_rl",
-      "name": "Reinforcement Learning",
-      "nameZh": "强化学习",
-      "defaultOrder": 11,
+      "name": "Markov Decision Processes and Value & Policy Iteration",
+      "nameZh": "马尔可夫决策过程与价值与策略迭代",
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "ml_mdp",
@@ -436,12 +548,28 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Iterate values and policy on an MDP gridworld until convergence."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "ml_rl_ml_q_learning",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "ml_rl_ml_q_learning",
+      "name": "Q-Learning and Value Function Approximation",
+      "nameZh": "Q-学习与价值函数逼近",
+      "defaultOrder": 18,
+      "conceptIds": [
         {
           "conceptId": "ml_q_learning",
           "name": "Q-Learning",
           "nameZh": "Q-学习",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "algorithm",
           "visualHint": "Update a Q-table as an agent explores a gridworld."
         },
@@ -449,12 +577,14 @@
           "conceptId": "ml_value_approx",
           "name": "Value Function Approximation",
           "nameZh": "价值函数逼近",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "ml_rl"
+      ],
+      "isRoot": false
     }
   ]
 }

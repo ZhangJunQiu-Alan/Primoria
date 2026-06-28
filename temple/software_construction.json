@@ -20,10 +20,58 @@
     {
       "id": "t_mit6031_foundations_specs",
       "kind": "topic",
-      "name": "Software Construction Foundations and Specifications",
+      "name": "Static Checking and Immutability",
       "topic": null,
       "default_order": 1,
-      "name_zh": "软件构造基础与规约"
+      "name_zh": "静态检查与不可变性"
+    },
+    {
+      "id": "t_mit6031_foundations_specs_mit6031_specs",
+      "kind": "topic",
+      "name": "Specifications, Testing Strategies, and Exceptions",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "规格、测试策略与异常"
+    },
+    {
+      "id": "t_mit6031_adt",
+      "kind": "topic",
+      "name": "ADT Concepts and Representation Independence",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "ADT 概念与表示独立性"
+    },
+    {
+      "id": "t_mit6031_adt_mit6031_rep_invariant",
+      "kind": "topic",
+      "name": "Rep Invariants and Abstraction Functions",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "表示不变量与抽象函数"
+    },
+    {
+      "id": "t_mit6031_oop",
+      "kind": "topic",
+      "name": "Object-Oriented Programming",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "面向对象编程"
+    },
+    {
+      "id": "t_mit6031_concurrency",
+      "kind": "topic",
+      "name": "Concurrency Basics and Thread Safety",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "并发基础与线程安全"
+    },
+    {
+      "id": "t_mit6031_concurrency_mit6031_locks",
+      "kind": "topic",
+      "name": "Locks and Synchronization and Message Passing",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "锁与同步与消息传递"
     },
     {
       "id": "c_mit6031_static_checking",
@@ -47,9 +95,9 @@
       "id": "c_mit6031_specs",
       "kind": "concept",
       "name": "Specifications",
-      "topic": "t_mit6031_foundations_specs",
+      "topic": "t_mit6031_foundations_specs_mit6031_specs",
       "description": "Contracts defining a method's behaviour through preconditions that clients must satisfy and postconditions the implementation guarantees in return.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "规格",
       "visual": "diagram",
       "visual_hint": "Diagram preconditions and postconditions as a contract boundary."
@@ -58,9 +106,9 @@
       "id": "c_mit6031_testing",
       "kind": "concept",
       "name": "Testing Strategies",
-      "topic": "t_mit6031_foundations_specs",
+      "topic": "t_mit6031_foundations_specs_mit6031_specs",
       "description": "Designing test suites systematically by partitioning the input space into equivalence classes and probing boundary values to expose defects.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "测试策略",
       "visual": "diagram",
       "visual_hint": "Diagram partitioning the input space into equivalence classes."
@@ -69,18 +117,10 @@
       "id": "c_mit6031_exceptions",
       "kind": "concept",
       "name": "Exceptions",
-      "topic": "t_mit6031_foundations_specs",
+      "topic": "t_mit6031_foundations_specs_mit6031_specs",
       "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs.",
-      "default_order": 5,
+      "default_order": 3,
       "name_zh": "异常"
-    },
-    {
-      "id": "t_mit6031_adt",
-      "kind": "topic",
-      "name": "Abstract Data Types",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "抽象数据类型"
     },
     {
       "id": "c_mit6031_adt_basics",
@@ -104,29 +144,21 @@
       "id": "c_mit6031_rep_invariant",
       "kind": "concept",
       "name": "Rep Invariants",
-      "topic": "t_mit6031_adt",
+      "topic": "t_mit6031_adt_mit6031_rep_invariant",
       "description": "A condition every valid object of a type must satisfy, checked to ensure the internal representation stays consistent.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "表示不变量"
     },
     {
       "id": "c_mit6031_abstraction_function",
       "kind": "concept",
       "name": "Abstraction Functions",
-      "topic": "t_mit6031_adt",
+      "topic": "t_mit6031_adt_mit6031_rep_invariant",
       "description": "A mapping from an ADT's concrete representation to the abstract value it represents, defining the meaning of the implementation.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "抽象函数",
       "visual": "diagram",
       "visual_hint": "Diagram the abstraction function mapping representation to abstract value."
-    },
-    {
-      "id": "t_mit6031_oop",
-      "kind": "topic",
-      "name": "Object-Oriented Programming",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "面向对象编程"
     },
     {
       "id": "c_mit6031_interfaces",
@@ -158,14 +190,6 @@
       "visual_hint": "Diagram a recursive data type such as an immutable list."
     },
     {
-      "id": "t_mit6031_concurrency",
-      "kind": "topic",
-      "name": "Concurrency",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "并发"
-    },
-    {
       "id": "c_mit6031_concurrency_intro",
       "kind": "concept",
       "name": "Concurrency Basics",
@@ -187,9 +211,9 @@
       "id": "c_mit6031_locks",
       "kind": "concept",
       "name": "Locks and Synchronization",
-      "topic": "t_mit6031_concurrency",
+      "topic": "t_mit6031_concurrency_mit6031_locks",
       "description": "Coordinating threads with locks for mutual exclusion, and the risk of deadlock when threads acquire multiple locks in conflicting orders.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "锁与同步",
       "visual": "diagram",
       "visual_hint": "State diagram of threads acquiring locks and a deadlock cycle."
@@ -198,9 +222,9 @@
       "id": "c_mit6031_message_passing",
       "kind": "concept",
       "name": "Message Passing",
-      "topic": "t_mit6031_concurrency",
+      "topic": "t_mit6031_concurrency_mit6031_locks",
       "description": "Concurrency where components communicate by sending messages through channels or queues instead of sharing mutable memory.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "消息传递",
       "visual": "diagram",
       "visual_hint": "Diagram components communicating by messages over channels."

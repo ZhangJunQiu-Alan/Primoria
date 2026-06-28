@@ -2,13 +2,13 @@
   "graphId": "a_level_biology",
   "subject": "Biology",
   "generatedFrom": "temple/a_level_biology.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "bio_cell_structure",
-      "name": "Cell Structure",
-      "nameZh": "细胞结构",
+      "name": "Microscopy and Eukaryotic Organelles",
+      "nameZh": "显微镜与真核细胞器",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -22,21 +22,13 @@
           "name": "Eukaryotic Organelles",
           "nameZh": "真核细胞器",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "bio_prokaryotes",
-          "name": "Prokaryotic Cells",
-          "nameZh": "原核细胞",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "bio_cell_size",
-          "name": "Cell Size and Magnification",
-          "nameZh": "细胞大小与放大",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "bio_cell_structure_bio_prokaryotes",
+          "hard": false
+        },
         {
           "topicId": "bio_chromosomes_dna",
           "hard": true
@@ -46,10 +38,35 @@
       "isRoot": true
     },
     {
-      "topicId": "bio_molecules",
-      "name": "Biological Molecules",
-      "nameZh": "生物分子",
+      "topicId": "bio_cell_structure_bio_prokaryotes",
+      "name": "Prokaryotic Cells and Cell Size and Magnification",
+      "nameZh": "原核细胞与细胞大小与放大",
       "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "bio_prokaryotes",
+          "name": "Prokaryotic Cells",
+          "nameZh": "原核细胞",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "bio_cell_size",
+          "name": "Cell Size and Magnification",
+          "nameZh": "细胞大小与放大",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "bio_cell_structure"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "bio_molecules",
+      "name": "Water and Carbohydrates",
+      "nameZh": "水与碳水化合物",
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "bio_water",
@@ -62,24 +79,40 @@
           "name": "Carbohydrates",
           "nameZh": "碳水化合物",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "bio_molecules_bio_lipids",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "bio_molecules_bio_lipids",
+      "name": "Lipids, Proteins, and Biochemical Tests",
+      "nameZh": "脂质、蛋白质与生化检测",
+      "defaultOrder": 4,
+      "conceptIds": [
         {
           "conceptId": "bio_lipids",
           "name": "Lipids",
           "nameZh": "脂质",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "bio_proteins",
           "name": "Proteins",
           "nameZh": "蛋白质",
-          "defaultOrder": 4
+          "defaultOrder": 2
         },
         {
           "conceptId": "bio_tests",
           "name": "Biochemical Tests",
           "nameZh": "生化检测",
-          "defaultOrder": 5
+          "defaultOrder": 3
         }
       ],
       "successors": [
@@ -92,11 +125,11 @@
           "hard": true
         },
         {
-          "topicId": "bio_chromosomes_dna",
+          "topicId": "bio_chromosomes_dna_bio_dna_structure",
           "hard": false
         },
         {
-          "topicId": "bio_circulation_gas_exchange",
+          "topicId": "bio_circulation_gas_exchange_bio_haemoglobin",
           "hard": true
         },
         {
@@ -104,14 +137,16 @@
           "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "bio_molecules"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "bio_enzymes",
       "name": "Enzymes",
       "nameZh": "酶",
-      "defaultOrder": 3,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "bio_enzyme_action",
@@ -143,7 +178,7 @@
         }
       ],
       "prereqTopics": [
-        "bio_molecules"
+        "bio_molecules_bio_lipids"
       ],
       "isRoot": false
     },
@@ -151,7 +186,7 @@
       "topicId": "bio_membranes",
       "name": "Cell Membranes and Transport",
       "nameZh": "细胞膜与运输",
-      "defaultOrder": 4,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "bio_membrane_structure",
@@ -182,11 +217,11 @@
           "hard": true
         },
         {
-          "topicId": "bio_circulation_gas_exchange",
+          "topicId": "bio_circulation_gas_exchange_bio_haemoglobin",
           "hard": true
         },
         {
-          "topicId": "bio_respiration",
+          "topicId": "bio_respiration_bio_oxidative",
           "hard": true
         },
         {
@@ -195,15 +230,15 @@
         }
       ],
       "prereqTopics": [
-        "bio_molecules"
+        "bio_molecules_bio_lipids"
       ],
       "isRoot": false
     },
     {
       "topicId": "bio_chromosomes_dna",
-      "name": "Chromosomes and DNA Replication",
-      "nameZh": "染色体与 DNA 复制",
-      "defaultOrder": 5,
+      "name": "Chromosome Behaviour and Mitosis",
+      "nameZh": "染色体行为与有丝分裂",
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "bio_chromosomes",
@@ -218,12 +253,30 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram the stages of mitosis."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "bio_inheritance",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "bio_cell_structure"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "bio_chromosomes_dna_bio_dna_structure",
+      "name": "DNA Structure and DNA Replication",
+      "nameZh": "DNA结构与DNA复制",
+      "defaultOrder": 8,
+      "conceptIds": [
         {
           "conceptId": "bio_dna_structure",
           "name": "DNA Structure",
           "nameZh": "DNA结构",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "interactive",
           "visualHint": "Interactive double helix showing antiparallel strands and complementary base pairing."
         },
@@ -231,7 +284,7 @@
           "conceptId": "bio_dna_replication",
           "name": "DNA Replication",
           "nameZh": "DNA复制",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram semi-conservative replication unwinding and templating each strand."
         }
@@ -242,17 +295,12 @@
           "hard": true
         },
         {
-          "topicId": "bio_inheritance",
-          "hard": true
-        },
-        {
           "topicId": "bio_genetic_tech",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "bio_cell_structure",
-        "bio_molecules"
+        "bio_molecules_bio_lipids"
       ],
       "isRoot": false
     },
@@ -260,7 +308,7 @@
       "topicId": "bio_nucleic_acids",
       "name": "Nucleic Acids and Protein Synthesis",
       "nameZh": "核酸与蛋白质合成",
-      "defaultOrder": 6,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "bio_transcription",
@@ -287,7 +335,7 @@
       ],
       "successors": [
         {
-          "topicId": "bio_inheritance",
+          "topicId": "bio_inheritance_bio_linkage",
           "hard": true
         },
         {
@@ -296,7 +344,7 @@
         }
       ],
       "prereqTopics": [
-        "bio_chromosomes_dna"
+        "bio_chromosomes_dna_bio_dna_structure"
       ],
       "isRoot": false
     },
@@ -304,7 +352,7 @@
       "topicId": "bio_transport_plants",
       "name": "Transport in Plants",
       "nameZh": "植物运输",
-      "defaultOrder": 7,
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "bio_xylem",
@@ -333,9 +381,9 @@
     },
     {
       "topicId": "bio_circulation_gas_exchange",
-      "name": "Circulation and Gas Exchange",
-      "nameZh": "循环运输与气体交换",
-      "defaultOrder": 8,
+      "name": "The Heart and Blood Vessels",
+      "nameZh": "心脏与血管",
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "bio_heart",
@@ -350,12 +398,28 @@
           "name": "Blood Vessels",
           "nameZh": "血管",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "bio_circulation_gas_exchange_bio_haemoglobin",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "bio_circulation_gas_exchange_bio_haemoglobin",
+      "name": "Haemoglobin and Oxygen Transport and Gas Exchange in the Lungs",
+      "nameZh": "血红蛋白与氧气运输与肺部气体交换",
+      "defaultOrder": 12,
+      "conceptIds": [
         {
           "conceptId": "bio_haemoglobin",
           "name": "Haemoglobin and Oxygen Transport",
           "nameZh": "血红蛋白与氧气运输",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "function",
           "visualHint": "Plot the sigmoid oxygen dissociation curve and the Bohr shift."
         },
@@ -363,13 +427,14 @@
           "conceptId": "bio_lungs",
           "name": "Gas Exchange in the Lungs",
           "nameZh": "肺部气体交换",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "bio_molecules",
-        "bio_membranes"
+        "bio_molecules_bio_lipids",
+        "bio_membranes",
+        "bio_circulation_gas_exchange"
       ],
       "isRoot": false
     },
@@ -377,7 +442,7 @@
       "topicId": "bio_disease",
       "name": "Infectious Disease and Immunity",
       "nameZh": "传染病与免疫",
-      "defaultOrder": 9,
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "bio_infectious",
@@ -400,15 +465,15 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "bio_molecules"
+        "bio_molecules_bio_lipids"
       ],
       "isRoot": false
     },
     {
       "topicId": "bio_respiration",
-      "name": "Energy and Respiration",
-      "nameZh": "能量与呼吸作用",
-      "defaultOrder": 10,
+      "name": "Glycolysis and Link Reaction and Krebs Cycle",
+      "nameZh": "糖酵解与连接反应与Krebs循环",
+      "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "bio_glycolysis",
@@ -425,12 +490,30 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Cycle diagram of the link reaction and Krebs cycle."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "bio_respiration_bio_oxidative",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "bio_enzymes"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "bio_respiration_bio_oxidative",
+      "name": "Oxidative Phosphorylation and Anaerobic Respiration",
+      "nameZh": "氧化磷酸化与无氧呼吸",
+      "defaultOrder": 15,
+      "conceptIds": [
         {
           "conceptId": "bio_oxidative",
           "name": "Oxidative Phosphorylation",
           "nameZh": "氧化磷酸化",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "Diagram the electron transport chain and chemiosmosis."
         },
@@ -438,7 +521,7 @@
           "conceptId": "bio_anaerobic",
           "name": "Anaerobic Respiration",
           "nameZh": "无氧呼吸",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -448,8 +531,8 @@
         }
       ],
       "prereqTopics": [
-        "bio_enzymes",
-        "bio_membranes"
+        "bio_membranes",
+        "bio_respiration"
       ],
       "isRoot": false
     },
@@ -457,7 +540,7 @@
       "topicId": "bio_photosynthesis",
       "name": "Photosynthesis",
       "nameZh": "光合作用",
-      "defaultOrder": 11,
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "bio_light_dependent",
@@ -484,7 +567,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "bio_respiration"
+        "bio_respiration_bio_oxidative"
       ],
       "isRoot": false
     },
@@ -492,7 +575,7 @@
       "topicId": "bio_homeostasis",
       "name": "Homeostasis",
       "nameZh": "体内平衡",
-      "defaultOrder": 12,
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "bio_homeostasis_principles",
@@ -517,7 +600,7 @@
       ],
       "successors": [
         {
-          "topicId": "bio_coordination",
+          "topicId": "bio_coordination_bio_hormonal",
           "hard": false
         }
       ],
@@ -526,9 +609,9 @@
     },
     {
       "topicId": "bio_coordination",
-      "name": "Control and Coordination",
-      "nameZh": "控制与协调",
-      "defaultOrder": 13,
+      "name": "Nervous Transmission and Synapses",
+      "nameZh": "神经传导与突触",
+      "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "bio_nervous",
@@ -545,32 +628,50 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram neurotransmitter release and receptor binding at a synapse."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "bio_coordination_bio_hormonal",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "bio_membranes"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "bio_coordination_bio_hormonal",
+      "name": "Hormonal Control and Plant Responses",
+      "nameZh": "激素控制与植物响应",
+      "defaultOrder": 19,
+      "conceptIds": [
         {
           "conceptId": "bio_hormonal",
           "name": "Hormonal Control",
           "nameZh": "激素控制",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "bio_plant_responses",
           "name": "Plant Responses",
           "nameZh": "植物响应",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "bio_membranes",
-        "bio_homeostasis"
+        "bio_homeostasis",
+        "bio_coordination"
       ],
       "isRoot": false
     },
     {
       "topicId": "bio_inheritance",
-      "name": "Inheritance",
-      "nameZh": "遗传",
-      "defaultOrder": 14,
+      "name": "Meiosis and Genetic Crosses",
+      "nameZh": "减数分裂与遗传杂交",
+      "defaultOrder": 20,
       "conceptIds": [
         {
           "conceptId": "bio_meiosis",
@@ -587,29 +688,46 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Punnett-square diagram predicting offspring genotype ratios."
-        },
-        {
-          "conceptId": "bio_linkage",
-          "name": "Gene Linkage and Crossing Over",
-          "nameZh": "基因连锁与交换",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "bio_gene_control",
-          "name": "Control of Gene Expression",
-          "nameZh": "基因表达控制",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "bio_inheritance_bio_linkage",
+          "hard": true
+        },
         {
           "topicId": "bio_evolution",
           "hard": true
         }
       ],
       "prereqTopics": [
-        "bio_chromosomes_dna",
-        "bio_nucleic_acids"
+        "bio_chromosomes_dna"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "bio_inheritance_bio_linkage",
+      "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
+      "nameZh": "基因连锁与交换与基因表达控制",
+      "defaultOrder": 21,
+      "conceptIds": [
+        {
+          "conceptId": "bio_linkage",
+          "name": "Gene Linkage and Crossing Over",
+          "nameZh": "基因连锁与交换",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "bio_gene_control",
+          "name": "Control of Gene Expression",
+          "nameZh": "基因表达控制",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "bio_nucleic_acids",
+        "bio_inheritance"
       ],
       "isRoot": false
     },
@@ -617,7 +735,7 @@
       "topicId": "bio_evolution",
       "name": "Selection and Evolution",
       "nameZh": "选择与进化",
-      "defaultOrder": 15,
+      "defaultOrder": 22,
       "conceptIds": [
         {
           "conceptId": "bio_variation",
@@ -654,7 +772,7 @@
       "topicId": "bio_biodiversity",
       "name": "Biodiversity and Conservation",
       "nameZh": "生物多样性与保护",
-      "defaultOrder": 16,
+      "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "bio_classification",
@@ -687,7 +805,7 @@
       "topicId": "bio_genetic_tech",
       "name": "Genetic Technology",
       "nameZh": "遗传技术",
-      "defaultOrder": 17,
+      "defaultOrder": 24,
       "conceptIds": [
         {
           "conceptId": "bio_gene_tech",
@@ -710,7 +828,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "bio_chromosomes_dna"
+        "bio_chromosomes_dna_bio_dna_structure"
       ],
       "isRoot": false
     }
