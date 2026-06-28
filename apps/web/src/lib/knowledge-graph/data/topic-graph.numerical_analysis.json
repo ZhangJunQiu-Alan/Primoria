@@ -2,7 +2,7 @@
   "graphId": "numerical_analysis",
   "subject": "Introduction to Numerical Analysis",
   "generatedFrom": "temple/numerical_analysis.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -44,7 +44,7 @@
           "hard": true
         },
         {
-          "topicId": "t_mit18330_integration_odes",
+          "topicId": "t_mit18330_integration_odes_mit18330_euler",
           "hard": true
         }
       ],
@@ -169,8 +169,8 @@
     },
     {
       "topicId": "t_mit18330_integration_odes",
-      "name": "Numerical Integration and Differential Equations",
-      "nameZh": "数值积分与微分方程",
+      "name": "Newton-Cotes Formulas and Gaussian Quadrature",
+      "nameZh": "Newton-Cotes 公式与高斯求积",
       "defaultOrder": 5,
       "conceptIds": [
         {
@@ -186,12 +186,25 @@
           "name": "Gaussian Quadrature",
           "nameZh": "高斯求积",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit18330_interpolation"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit18330_integration_odes_mit18330_euler",
+      "name": "Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods",
+      "nameZh": "欧拉法、Runge-Kutta 法与ODE 稳定性",
+      "defaultOrder": 6,
+      "conceptIds": [
         {
           "conceptId": "c_mit18330_euler",
           "name": "Euler's Method",
           "nameZh": "欧拉法",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "function",
           "visualHint": "Step Euler's method along a slope field approximating an ODE solution."
         },
@@ -199,7 +212,7 @@
           "conceptId": "c_mit18330_runge_kutta",
           "name": "Runge-Kutta Methods",
           "nameZh": "Runge-Kutta 法",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Compare RK4 against Euler approximating an ODE solution."
         },
@@ -207,13 +220,12 @@
           "conceptId": "c_mit18330_ode_stability",
           "name": "Stability of ODE Methods",
           "nameZh": "ODE 稳定性",
-          "defaultOrder": 5
+          "defaultOrder": 3
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "t_mit18330_errors",
-        "t_mit18330_interpolation"
+        "t_mit18330_errors"
       ],
       "isRoot": false
     }

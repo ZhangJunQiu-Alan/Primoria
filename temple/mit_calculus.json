@@ -26,6 +26,166 @@
       "name_zh": "微分"
     },
     {
+      "id": "t_1801_diff_techniques",
+      "kind": "topic",
+      "name": "Differentiation Techniques and Related Rates",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "微分技巧与相关变化率"
+    },
+    {
+      "id": "t_1801_apps_diff",
+      "kind": "topic",
+      "name": "Applications of Differentiation",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "微分应用"
+    },
+    {
+      "id": "t_1801_integration",
+      "kind": "topic",
+      "name": "Riemann Sums and Definite Integrals",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "黎曼和与定积分"
+    },
+    {
+      "id": "t_1801_integration_1801_ftc",
+      "kind": "topic",
+      "name": "Fundamental Theorem of Calculus and Integration by Substitution",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "微积分基本定理与换元积分法"
+    },
+    {
+      "id": "t_1801_tech_int",
+      "kind": "topic",
+      "name": "Techniques of Integration",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "积分技巧"
+    },
+    {
+      "id": "t_1801_int_techniques_area",
+      "kind": "topic",
+      "name": "Integration Techniques and Area",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "积分技巧与面积"
+    },
+    {
+      "id": "t_1801_apps_int",
+      "kind": "topic",
+      "name": "Applications of Integration",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "积分应用"
+    },
+    {
+      "id": "t_1801_series",
+      "kind": "topic",
+      "name": "Sequences and Series and Convergence Tests",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "序列与级数与收敛性检验"
+    },
+    {
+      "id": "t_1801_series_1801_power_series",
+      "kind": "topic",
+      "name": "Power Series and Taylor Series",
+      "topic": null,
+      "default_order": 10,
+      "name_zh": "幂级数与泰勒级数"
+    },
+    {
+      "id": "t_1802_vectors",
+      "kind": "topic",
+      "name": "Dot Product and Cross Product",
+      "topic": null,
+      "default_order": 11,
+      "name_zh": "点积与叉积"
+    },
+    {
+      "id": "t_1802_vectors_1802_lines_planes",
+      "kind": "topic",
+      "name": "Lines and Planes and Parametric Curves",
+      "topic": null,
+      "default_order": 12,
+      "name_zh": "直线与平面与参数曲线"
+    },
+    {
+      "id": "t_1802_partial_diff",
+      "kind": "topic",
+      "name": "Multivariable Functions and Partial Derivatives",
+      "topic": null,
+      "default_order": 13,
+      "name_zh": "多元函数与偏导数"
+    },
+    {
+      "id": "t_1802_partial_diff_1802_multivar_chain",
+      "kind": "topic",
+      "name": "Multivariable Chain Rule and Gradient and Directional Derivative",
+      "topic": null,
+      "default_order": 14,
+      "name_zh": "多元链式法则与梯度与方向导数"
+    },
+    {
+      "id": "t_1802_apps_partial",
+      "kind": "topic",
+      "name": "Tangent Planes and Local Extrema",
+      "topic": null,
+      "default_order": 15,
+      "name_zh": "切平面与局部极值"
+    },
+    {
+      "id": "t_1802_apps_partial_1802_lagrange",
+      "kind": "topic",
+      "name": "Lagrange Multipliers and Differentials",
+      "topic": null,
+      "default_order": 16,
+      "name_zh": "拉格朗日乘数与微分"
+    },
+    {
+      "id": "t_1802_multiple_int",
+      "kind": "topic",
+      "name": "Multiple Integrals",
+      "topic": null,
+      "default_order": 17,
+      "name_zh": "多重积分"
+    },
+    {
+      "id": "t_1802_coord_vector_fields",
+      "kind": "topic",
+      "name": "Coordinate Changes and Vector Fields",
+      "topic": null,
+      "default_order": 18,
+      "name_zh": "坐标变换与向量场"
+    },
+    {
+      "id": "t_1802_vector_calc",
+      "kind": "topic",
+      "name": "Vector Calculus",
+      "topic": null,
+      "default_order": 19,
+      "name_zh": "向量微积分"
+    },
+    {
+      "id": "t_1802_surface_int",
+      "kind": "topic",
+      "name": "Parametric Surfaces and Surface Integrals",
+      "topic": null,
+      "default_order": 20,
+      "name_zh": "参数曲面与面积分"
+    },
+    {
+      "id": "t_1802_surface_int_1802_stokes_theorem",
+      "kind": "topic",
+      "name": "Stokes' Theorem and Divergence Theorem",
+      "topic": null,
+      "default_order": 21,
+      "name_zh": "斯托克斯定理与散度定理"
+    },
+    {
       "id": "c_1801_limits",
       "kind": "concept",
       "name": "Limits and Continuity",
@@ -57,14 +217,6 @@
       "name_zh": "微分法则"
     },
     {
-      "id": "t_1801_diff_techniques",
-      "kind": "topic",
-      "name": "Differentiation Techniques and Related Rates",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "微分技巧与相关变化率"
-    },
-    {
       "id": "c_1801_chain_rule",
       "kind": "concept",
       "name": "Chain Rule",
@@ -92,14 +244,6 @@
       "description": "Related-rates problems linking the time derivatives of related quantities through an equation, solving for one unknown rate given the others.",
       "default_order": 3,
       "name_zh": "相关变化率"
-    },
-    {
-      "id": "t_1801_apps_diff",
-      "kind": "topic",
-      "name": "Applications of Differentiation",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "微分应用"
     },
     {
       "id": "c_1801_linear_approx",
@@ -135,14 +279,6 @@
       "visual_hint": "Plot f on [a,b] with the secant line and a draggable point c where the tangent is parallel to the secant."
     },
     {
-      "id": "t_1801_integration",
-      "kind": "topic",
-      "name": "Integration",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "积分"
-    },
-    {
       "id": "c_1801_riemann_sums",
       "kind": "concept",
       "name": "Riemann Sums",
@@ -168,9 +304,9 @@
       "id": "c_1801_ftc",
       "kind": "concept",
       "name": "Fundamental Theorem of Calculus",
-      "topic": "t_1801_integration",
+      "topic": "t_1801_integration_1801_ftc",
       "description": "The fundamental theorem of calculus linking differentiation and integration, evaluating definite integrals via antiderivatives and differentiating integral functions.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "微积分基本定理",
       "visual": "interactive",
       "visual_hint": "Animate the accumulation function A(x)=∫ₐˣ f as x moves, showing A′(x)=f(x)."
@@ -179,18 +315,10 @@
       "id": "c_1801_substitution",
       "kind": "concept",
       "name": "Integration by Substitution",
-      "topic": "t_1801_integration",
+      "topic": "t_1801_integration_1801_ftc",
       "description": "Integration by substitution reversing the chain rule by changing variables to transform an integral into a simpler, recognisable form.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "换元积分法"
-    },
-    {
-      "id": "t_1801_tech_int",
-      "kind": "topic",
-      "name": "Techniques of Integration",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "积分技巧"
     },
     {
       "id": "c_1801_parts",
@@ -218,14 +346,6 @@
       "description": "Trigonometric substitution evaluating integrals containing quadratic radicals by substituting trigonometric functions and applying identities.",
       "default_order": 3,
       "name_zh": "三角换元"
-    },
-    {
-      "id": "t_1801_int_techniques_area",
-      "kind": "topic",
-      "name": "Integration Techniques and Area",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "积分技巧与面积"
     },
     {
       "id": "c_1801_partial_fractions",
@@ -259,14 +379,6 @@
       "visual_hint": "Shade the region between two draggable curves over [a,b] and show the integral of their difference."
     },
     {
-      "id": "t_1801_apps_int",
-      "kind": "topic",
-      "name": "Applications of Integration",
-      "topic": null,
-      "default_order": 7,
-      "name_zh": "积分应用"
-    },
-    {
       "id": "c_1801_volume",
       "kind": "concept",
       "name": "Volumes of Solids",
@@ -298,14 +410,6 @@
       "name_zh": "功"
     },
     {
-      "id": "t_1801_series",
-      "kind": "topic",
-      "name": "Infinite Series",
-      "topic": null,
-      "default_order": 8,
-      "name_zh": "无穷级数"
-    },
-    {
       "id": "c_1801_sequences",
       "kind": "concept",
       "name": "Sequences and Series",
@@ -331,9 +435,9 @@
       "id": "c_1801_power_series",
       "kind": "concept",
       "name": "Power Series",
-      "topic": "t_1801_series",
+      "topic": "t_1801_series_1801_power_series",
       "description": "Power series representing functions as infinite polynomials, with a radius and interval of convergence determining where they converge.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "幂级数",
       "visual": "function",
       "visual_hint": "Plot a function against its power-series partial sums; slider for term count and shade the interval of convergence."
@@ -342,20 +446,12 @@
       "id": "c_1801_taylor_series",
       "kind": "concept",
       "name": "Taylor Series",
-      "topic": "t_1801_series",
+      "topic": "t_1801_series_1801_power_series",
       "description": "Taylor and Maclaurin series expanding a function as a power series about a point using its derivatives, approximating functions locally.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "泰勒级数",
       "visual": "function",
       "visual_hint": "Plot f(x) and its Taylor polynomial about a; slider for degree n to watch it hug the curve."
-    },
-    {
-      "id": "t_1802_vectors",
-      "kind": "topic",
-      "name": "Vectors and Matrices",
-      "topic": null,
-      "default_order": 9,
-      "name_zh": "向量与矩阵"
     },
     {
       "id": "c_1802_dot_product",
@@ -383,9 +479,9 @@
       "id": "c_1802_lines_planes",
       "kind": "concept",
       "name": "Lines and Planes",
-      "topic": "t_1802_vectors",
+      "topic": "t_1802_vectors_1802_lines_planes",
       "description": "Equations of lines and planes in three-dimensional space using points, direction vectors, and normal vectors in vector and scalar forms.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "直线与平面",
       "visual": "interactive",
       "visual_hint": "Show a line or plane in 3D from a point and a direction/normal; drag to watch its equation update."
@@ -394,20 +490,12 @@
       "id": "c_1802_parametric_curves",
       "kind": "concept",
       "name": "Parametric Curves",
-      "topic": "t_1802_vectors",
+      "topic": "t_1802_vectors_1802_lines_planes",
       "description": "Vector-valued functions tracing curves in space, whose derivatives give the velocity and acceleration along the parametrised path.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "参数曲线",
       "visual": "function",
       "visual_hint": "Trace a parametric curve r(t) with a slider for t showing the position, velocity, and acceleration vectors."
-    },
-    {
-      "id": "t_1802_partial_diff",
-      "kind": "topic",
-      "name": "Partial Derivatives",
-      "topic": null,
-      "default_order": 10,
-      "name_zh": "偏导数"
     },
     {
       "id": "c_1802_multivar_functions",
@@ -435,9 +523,9 @@
       "id": "c_1802_multivar_chain",
       "kind": "concept",
       "name": "Multivariable Chain Rule",
-      "topic": "t_1802_partial_diff",
+      "topic": "t_1802_partial_diff_1802_multivar_chain",
       "description": "The multivariable chain rule differentiating compositions of several-variable functions by summing contributions through each intermediate variable.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "多元链式法则",
       "visual": "diagram",
       "visual_hint": "Dependency-tree diagram of the variables, showing each path's contribution in the multivariable chain rule."
@@ -446,20 +534,12 @@
       "id": "c_1802_gradient",
       "kind": "concept",
       "name": "Gradient and Directional Derivative",
-      "topic": "t_1802_partial_diff",
+      "topic": "t_1802_partial_diff_1802_multivar_chain",
       "description": "The gradient vector of partial derivatives pointing in the direction of steepest increase, with directional derivatives giving rates along any direction.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "梯度与方向导数",
       "visual": "interactive",
       "visual_hint": "On a contour plot show the gradient pointing to steepest increase; drag a direction to compare the directional derivative."
-    },
-    {
-      "id": "t_1802_apps_partial",
-      "kind": "topic",
-      "name": "Applications of Partial Derivatives",
-      "topic": null,
-      "default_order": 11,
-      "name_zh": "偏导数应用"
     },
     {
       "id": "c_1802_tangent_planes",
@@ -487,9 +567,9 @@
       "id": "c_1802_lagrange",
       "kind": "concept",
       "name": "Lagrange Multipliers",
-      "topic": "t_1802_apps_partial",
+      "topic": "t_1802_apps_partial_1802_lagrange",
       "description": "Lagrange multipliers optimising a function subject to constraints by setting its gradient proportional to the constraint gradients.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "拉格朗日乘数",
       "visual": "interactive",
       "visual_hint": "Contour plot with a constraint curve, showing where the objective and constraint gradients align at the optimum."
@@ -498,18 +578,10 @@
       "id": "c_1802_differentials",
       "kind": "concept",
       "name": "Differentials",
-      "topic": "t_1802_apps_partial",
+      "topic": "t_1802_apps_partial_1802_lagrange",
       "description": "Differentials approximating small changes in a multivariable function from changes in its inputs, used for linear approximation and error estimation.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "微分"
-    },
-    {
-      "id": "t_1802_multiple_int",
-      "kind": "topic",
-      "name": "Multiple Integrals",
-      "topic": null,
-      "default_order": 12,
-      "name_zh": "多重积分"
     },
     {
       "id": "c_1802_double_integrals",
@@ -543,14 +615,6 @@
       "name_zh": "三重积分"
     },
     {
-      "id": "t_1802_coord_vector_fields",
-      "kind": "topic",
-      "name": "Coordinate Changes and Vector Fields",
-      "topic": null,
-      "default_order": 13,
-      "name_zh": "坐标变换与向量场"
-    },
-    {
       "id": "c_1802_cyl_spherical",
       "kind": "concept",
       "name": "Cylindrical and Spherical Coordinates",
@@ -578,14 +642,6 @@
       "name_zh": "向量场",
       "visual": "interactive",
       "visual_hint": "Plot a 2D vector field; drop a particle to trace its path and accumulate a line integral along a curve."
-    },
-    {
-      "id": "t_1802_vector_calc",
-      "kind": "topic",
-      "name": "Vector Calculus",
-      "topic": null,
-      "default_order": 14,
-      "name_zh": "向量微积分"
     },
     {
       "id": "c_1802_fundamental_line",
@@ -621,14 +677,6 @@
       "visual_hint": "Vector field with a paddlewheel (curl) and a source/sink box (divergence) at a draggable point."
     },
     {
-      "id": "t_1802_surface_int",
-      "kind": "topic",
-      "name": "Surface Integrals and Theorems",
-      "topic": null,
-      "default_order": 15,
-      "name_zh": "面积分与定理"
-    },
-    {
       "id": "c_1802_parametric_surfaces",
       "kind": "concept",
       "name": "Parametric Surfaces",
@@ -650,9 +698,9 @@
       "id": "c_1802_stokes_theorem",
       "kind": "concept",
       "name": "Stokes' Theorem",
-      "topic": "t_1802_surface_int",
+      "topic": "t_1802_surface_int_1802_stokes_theorem",
       "description": "Stokes' theorem relating the line integral of a field around a closed curve to the surface integral of its curl over a bounded surface.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "斯托克斯定理",
       "visual": "diagram",
       "visual_hint": "Diagram relating the boundary-curve line integral to the surface integral of curl (Stokes)."
@@ -661,9 +709,9 @@
       "id": "c_1802_divergence_theorem",
       "kind": "concept",
       "name": "Divergence Theorem",
-      "topic": "t_1802_surface_int",
+      "topic": "t_1802_surface_int_1802_stokes_theorem",
       "description": "The divergence theorem relating the outward flux of a vector field through a closed surface to the triple integral of its divergence inside.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "散度定理",
       "visual": "diagram",
       "visual_hint": "Diagram relating outward flux through a closed surface to the volume integral of divergence."

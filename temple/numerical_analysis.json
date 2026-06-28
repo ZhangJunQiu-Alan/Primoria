@@ -26,6 +26,46 @@
       "name_zh": "误差与计算机运算"
     },
     {
+      "id": "t_mit18330_root_finding",
+      "kind": "topic",
+      "name": "Root Finding",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "求根"
+    },
+    {
+      "id": "t_mit18330_linear_systems",
+      "kind": "topic",
+      "name": "Linear Systems",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "线性方程组"
+    },
+    {
+      "id": "t_mit18330_interpolation",
+      "kind": "topic",
+      "name": "Interpolation and Approximation",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "插值与逼近"
+    },
+    {
+      "id": "t_mit18330_integration_odes",
+      "kind": "topic",
+      "name": "Newton-Cotes Formulas and Gaussian Quadrature",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "Newton-Cotes 公式与高斯求积"
+    },
+    {
+      "id": "t_mit18330_integration_odes_mit18330_euler",
+      "kind": "topic",
+      "name": "Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "欧拉法、Runge-Kutta 法与ODE 稳定性"
+    },
+    {
       "id": "c_mit18330_floating_point",
       "kind": "concept",
       "name": "Floating Point Representation",
@@ -51,14 +91,6 @@
       "description": "The condition number measuring how sensitively a problem's output responds to input perturbations, independent of the algorithm used.",
       "default_order": 3,
       "name_zh": "条件数"
-    },
-    {
-      "id": "t_mit18330_root_finding",
-      "kind": "topic",
-      "name": "Root Finding",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "求根"
     },
     {
       "id": "c_mit18330_bisection",
@@ -94,14 +126,6 @@
       "visual_hint": "Step the secant method using a chord to approach a root."
     },
     {
-      "id": "t_mit18330_linear_systems",
-      "kind": "topic",
-      "name": "Linear Systems",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "线性方程组"
-    },
-    {
       "id": "c_mit18330_lu",
       "kind": "concept",
       "name": "LU Factorization",
@@ -127,14 +151,6 @@
       "description": "Iterative solvers such as Jacobi and Gauss-Seidel that refine an approximate solution to a linear system, suited to large sparse matrices.",
       "default_order": 3,
       "name_zh": "迭代法"
-    },
-    {
-      "id": "t_mit18330_interpolation",
-      "kind": "topic",
-      "name": "Interpolation and Approximation",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "插值与逼近"
     },
     {
       "id": "c_mit18330_polynomial_interp",
@@ -170,14 +186,6 @@
       "visual_hint": "Fit a least-squares line minimising the squared residuals."
     },
     {
-      "id": "t_mit18330_integration_odes",
-      "kind": "topic",
-      "name": "Numerical Integration and Differential Equations",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "数值积分与微分方程"
-    },
-    {
       "id": "c_mit18330_newton_cotes",
       "kind": "concept",
       "name": "Newton-Cotes Formulas",
@@ -201,9 +209,9 @@
       "id": "c_mit18330_euler",
       "kind": "concept",
       "name": "Euler's Method",
-      "topic": "t_mit18330_integration_odes",
+      "topic": "t_mit18330_integration_odes_mit18330_euler",
       "description": "The simplest numerical method for ODEs, stepping forward (explicit) or backward (implicit) using the slope to advance the solution.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "欧拉法",
       "visual": "function",
       "visual_hint": "Step Euler's method along a slope field approximating an ODE solution."
@@ -212,9 +220,9 @@
       "id": "c_mit18330_runge_kutta",
       "kind": "concept",
       "name": "Runge-Kutta Methods",
-      "topic": "t_mit18330_integration_odes",
+      "topic": "t_mit18330_integration_odes_mit18330_euler",
       "description": "A family of higher-order explicit ODE methods, notably RK4, combining several slope evaluations per step for greater accuracy.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "Runge-Kutta 法",
       "visual": "function",
       "visual_hint": "Compare RK4 against Euler approximating an ODE solution."
@@ -223,9 +231,9 @@
       "id": "c_mit18330_ode_stability",
       "kind": "concept",
       "name": "Stability of ODE Methods",
-      "topic": "t_mit18330_integration_odes",
+      "topic": "t_mit18330_integration_odes_mit18330_euler",
       "description": "Stability of ODE solvers, including A-stability and the difficulty stiff equations pose, which constrains the usable step size.",
-      "default_order": 5,
+      "default_order": 3,
       "name_zh": "ODE 稳定性"
     }
   ],

@@ -2,13 +2,13 @@
   "graphId": "linear_algebra",
   "subject": "Linear Algebra",
   "generatedFrom": "temple/linear_algebra.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_mit1806_linear_equations",
-      "name": "Solving Linear Equations",
-      "nameZh": "求解线性方程组",
+      "name": "Vectors and Linear Combinations and Elimination with Matrices",
+      "nameZh": "向量与线性组合与矩阵消元",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -26,18 +26,38 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Step Gaussian elimination reducing a matrix to triangular form."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit1806_linear_equations_mit1806_matrix_ops",
+          "hard": true
         },
+        {
+          "topicId": "t_mit1806_determinants_eigen",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "t_mit1806_linear_equations_mit1806_matrix_ops",
+      "name": "Matrix Operations and Inverses and LU Factorization",
+      "nameZh": "矩阵运算与逆矩阵与LU 分解",
+      "defaultOrder": 2,
+      "conceptIds": [
         {
           "conceptId": "c_mit1806_matrix_ops",
           "name": "Matrix Operations and Inverses",
           "nameZh": "矩阵运算与逆矩阵",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_mit1806_lu_decomp",
           "name": "LU Factorization",
           "nameZh": "LU 分解",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -46,22 +66,20 @@
           "hard": true
         },
         {
-          "topicId": "t_mit1806_determinants_eigen",
-          "hard": true
-        },
-        {
           "topicId": "t_mit1806_applications",
           "hard": false
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "t_mit1806_linear_equations"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "t_mit1806_vector_spaces",
-      "name": "Vector Spaces and Subspaces",
-      "nameZh": "向量空间与子空间",
-      "defaultOrder": 2,
+      "name": "Vector Spaces and Subspaces and Null Space and Column Space",
+      "nameZh": "向量空间和子空间与零空间与列空间",
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "c_mit1806_spaces_subspaces",
@@ -76,12 +94,30 @@
           "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Show the column space and null space as spans in space."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit1806_vector_spaces_mit1806_independence_basis",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit1806_linear_equations_mit1806_matrix_ops"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit1806_vector_spaces_mit1806_independence_basis",
+      "name": "Linear Independence, Basis, and Dimension and The Four Fundamental Subspaces",
+      "nameZh": "线性无关、基与维数与四个基本子空间",
+      "defaultOrder": 4,
+      "conceptIds": [
         {
           "conceptId": "c_mit1806_independence_basis",
           "name": "Linear Independence, Basis, and Dimension",
           "nameZh": "线性无关、基与维数",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "interactive",
           "visualHint": "Drag vectors to test independence and span a subspace as a basis."
         },
@@ -89,7 +125,7 @@
           "conceptId": "c_mit1806_four_subspaces",
           "name": "The Four Fundamental Subspaces",
           "nameZh": "四个基本子空间",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -99,15 +135,15 @@
         }
       ],
       "prereqTopics": [
-        "t_mit1806_linear_equations"
+        "t_mit1806_vector_spaces"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_mit1806_orthogonality",
-      "name": "Orthogonality",
-      "nameZh": "正交性",
-      "defaultOrder": 3,
+      "name": "Orthogonal Vectors and Subspaces and Projections onto Subspaces",
+      "nameZh": "正交向量与子空间与向子空间的投影",
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c_mit1806_orthogonality",
@@ -122,12 +158,30 @@
           "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Project a vector onto a line or plane and show the residual."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit1806_orthogonality_mit1806_least_squares",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit1806_vector_spaces_mit1806_independence_basis"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit1806_orthogonality_mit1806_least_squares",
+      "name": "Least Squares Approximations and Orthogonal Bases and Gram-Schmidt",
+      "nameZh": "最小二乘近似与正交基与 Gram-Schmidt",
+      "defaultOrder": 6,
+      "conceptIds": [
         {
           "conceptId": "c_mit1806_least_squares",
           "name": "Least Squares Approximations",
           "nameZh": "最小二乘近似",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "function",
           "visualHint": "Fit a least-squares line minimising the squared residuals to data."
         },
@@ -135,22 +189,22 @@
           "conceptId": "c_mit1806_gram_schmidt",
           "name": "Orthogonal Bases and Gram-Schmidt",
           "nameZh": "正交基与 Gram-Schmidt",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Orthogonalise a set of vectors step by step (Gram-Schmidt)."
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "t_mit1806_vector_spaces"
+        "t_mit1806_orthogonality"
       ],
       "isRoot": false
     },
     {
       "topicId": "t_mit1806_determinants_eigen",
-      "name": "Determinants and Eigenvalue Foundations",
-      "nameZh": "行列式与特征值基础",
-      "defaultOrder": 4,
+      "name": "Properties of Determinants and Formulas and Cofactors",
+      "nameZh": "行列式的性质与行列式公式与余子式",
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "c_mit1806_det_properties",
@@ -165,25 +219,11 @@
           "name": "Formulas and Cofactors",
           "nameZh": "行列式公式与余子式",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "c_mit1806_cramers_rule",
-          "name": "Cramer's Rule and Volumes",
-          "nameZh": "Cramer 法则与体积",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_mit1806_eigen",
-          "name": "Eigenvalues and Eigenvectors",
-          "nameZh": "特征值与特征向量",
-          "defaultOrder": 4,
-          "visual": "interactive",
-          "visualHint": "Show eigenvectors as directions a transform only stretches, with eigenvalues."
         }
       ],
       "successors": [
         {
-          "topicId": "t_mit1806_eigenvalues",
+          "topicId": "t_mit1806_determinants_eigen_mit1806_cramers_rule",
           "hard": true
         }
       ],
@@ -193,10 +233,46 @@
       "isRoot": false
     },
     {
+      "topicId": "t_mit1806_determinants_eigen_mit1806_cramers_rule",
+      "name": "Cramer's Rule and Volumes and Eigenvalues and Eigenvectors",
+      "nameZh": "Cramer 法则与体积与特征值与特征向量",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit1806_cramers_rule",
+          "name": "Cramer's Rule and Volumes",
+          "nameZh": "Cramer 法则与体积",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit1806_eigen",
+          "name": "Eigenvalues and Eigenvectors",
+          "nameZh": "特征值与特征向量",
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Show eigenvectors as directions a transform only stretches, with eigenvalues."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit1806_eigenvalues",
+          "hard": true
+        },
+        {
+          "topicId": "t_mit1806_eigenvalues_mit1806_symmetric_matrices",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit1806_determinants_eigen"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "t_mit1806_eigenvalues",
-      "name": "Eigenvalues and Eigenvectors",
-      "nameZh": "特征值与特征向量",
-      "defaultOrder": 5,
+      "name": "Diagonalization and Systems of Differential Equations",
+      "nameZh": "对角化与微分方程组",
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "c_mit1806_diagonalization",
@@ -211,18 +287,31 @@
           "name": "Systems of Differential Equations",
           "nameZh": "微分方程组",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit1806_determinants_eigen_mit1806_cramers_rule"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit1806_eigenvalues_mit1806_symmetric_matrices",
+      "name": "Symmetric Matrices and Positive Definite Matrices",
+      "nameZh": "对称矩阵与正定矩阵",
+      "defaultOrder": 10,
+      "conceptIds": [
         {
           "conceptId": "c_mit1806_symmetric_matrices",
           "name": "Symmetric Matrices",
           "nameZh": "对称矩阵",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "c_mit1806_positive_definite",
           "name": "Positive Definite Matrices",
           "nameZh": "正定矩阵",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -232,7 +321,7 @@
         }
       ],
       "prereqTopics": [
-        "t_mit1806_determinants_eigen"
+        "t_mit1806_determinants_eigen_mit1806_cramers_rule"
       ],
       "isRoot": false
     },
@@ -240,7 +329,7 @@
       "topicId": "t_mit1806_applications",
       "name": "SVD and Linear Transformations",
       "nameZh": "SVD 与线性变换",
-      "defaultOrder": 6,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "c_mit1806_svd",
@@ -269,8 +358,8 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "t_mit1806_linear_equations",
-        "t_mit1806_eigenvalues"
+        "t_mit1806_linear_equations_mit1806_matrix_ops",
+        "t_mit1806_eigenvalues_mit1806_symmetric_matrices"
       ],
       "isRoot": false
     }

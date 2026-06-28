@@ -21,10 +21,194 @@
     {
       "id": "bio_cell_structure",
       "kind": "topic",
-      "name": "Cell Structure",
+      "name": "Microscopy and Eukaryotic Organelles",
       "topic": null,
       "default_order": 1,
-      "name_zh": "细胞结构"
+      "name_zh": "显微镜与真核细胞器"
+    },
+    {
+      "id": "bio_cell_structure_bio_prokaryotes",
+      "kind": "topic",
+      "name": "Prokaryotic Cells and Cell Size and Magnification",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "原核细胞与细胞大小与放大"
+    },
+    {
+      "id": "bio_molecules",
+      "kind": "topic",
+      "name": "Water and Carbohydrates",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "水与碳水化合物"
+    },
+    {
+      "id": "bio_molecules_bio_lipids",
+      "kind": "topic",
+      "name": "Lipids, Proteins, and Biochemical Tests",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "脂质、蛋白质与生化检测"
+    },
+    {
+      "id": "bio_enzymes",
+      "kind": "topic",
+      "name": "Enzymes",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "酶"
+    },
+    {
+      "id": "bio_membranes",
+      "kind": "topic",
+      "name": "Cell Membranes and Transport",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "细胞膜与运输"
+    },
+    {
+      "id": "bio_chromosomes_dna",
+      "kind": "topic",
+      "name": "Chromosome Behaviour and Mitosis",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "染色体行为与有丝分裂"
+    },
+    {
+      "id": "bio_chromosomes_dna_bio_dna_structure",
+      "kind": "topic",
+      "name": "DNA Structure and DNA Replication",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "DNA结构与DNA复制"
+    },
+    {
+      "id": "bio_nucleic_acids",
+      "kind": "topic",
+      "name": "Nucleic Acids and Protein Synthesis",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "核酸与蛋白质合成"
+    },
+    {
+      "id": "bio_transport_plants",
+      "kind": "topic",
+      "name": "Transport in Plants",
+      "topic": null,
+      "default_order": 10,
+      "name_zh": "植物运输"
+    },
+    {
+      "id": "bio_circulation_gas_exchange",
+      "kind": "topic",
+      "name": "The Heart and Blood Vessels",
+      "topic": null,
+      "default_order": 11,
+      "name_zh": "心脏与血管"
+    },
+    {
+      "id": "bio_circulation_gas_exchange_bio_haemoglobin",
+      "kind": "topic",
+      "name": "Haemoglobin and Oxygen Transport and Gas Exchange in the Lungs",
+      "topic": null,
+      "default_order": 12,
+      "name_zh": "血红蛋白与氧气运输与肺部气体交换"
+    },
+    {
+      "id": "bio_disease",
+      "kind": "topic",
+      "name": "Infectious Disease and Immunity",
+      "topic": null,
+      "default_order": 13,
+      "name_zh": "传染病与免疫"
+    },
+    {
+      "id": "bio_respiration",
+      "kind": "topic",
+      "name": "Glycolysis and Link Reaction and Krebs Cycle",
+      "topic": null,
+      "default_order": 14,
+      "name_zh": "糖酵解与连接反应与Krebs循环"
+    },
+    {
+      "id": "bio_respiration_bio_oxidative",
+      "kind": "topic",
+      "name": "Oxidative Phosphorylation and Anaerobic Respiration",
+      "topic": null,
+      "default_order": 15,
+      "name_zh": "氧化磷酸化与无氧呼吸"
+    },
+    {
+      "id": "bio_photosynthesis",
+      "kind": "topic",
+      "name": "Photosynthesis",
+      "topic": null,
+      "default_order": 16,
+      "name_zh": "光合作用"
+    },
+    {
+      "id": "bio_homeostasis",
+      "kind": "topic",
+      "name": "Homeostasis",
+      "topic": null,
+      "default_order": 17,
+      "name_zh": "体内平衡"
+    },
+    {
+      "id": "bio_coordination",
+      "kind": "topic",
+      "name": "Nervous Transmission and Synapses",
+      "topic": null,
+      "default_order": 18,
+      "name_zh": "神经传导与突触"
+    },
+    {
+      "id": "bio_coordination_bio_hormonal",
+      "kind": "topic",
+      "name": "Hormonal Control and Plant Responses",
+      "topic": null,
+      "default_order": 19,
+      "name_zh": "激素控制与植物响应"
+    },
+    {
+      "id": "bio_inheritance",
+      "kind": "topic",
+      "name": "Meiosis and Genetic Crosses",
+      "topic": null,
+      "default_order": 20,
+      "name_zh": "减数分裂与遗传杂交"
+    },
+    {
+      "id": "bio_inheritance_bio_linkage",
+      "kind": "topic",
+      "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
+      "topic": null,
+      "default_order": 21,
+      "name_zh": "基因连锁与交换与基因表达控制"
+    },
+    {
+      "id": "bio_evolution",
+      "kind": "topic",
+      "name": "Selection and Evolution",
+      "topic": null,
+      "default_order": 22,
+      "name_zh": "选择与进化"
+    },
+    {
+      "id": "bio_biodiversity",
+      "kind": "topic",
+      "name": "Biodiversity and Conservation",
+      "topic": null,
+      "default_order": 23,
+      "name_zh": "生物多样性与保护"
+    },
+    {
+      "id": "bio_genetic_tech",
+      "kind": "topic",
+      "name": "Genetic Technology",
+      "topic": null,
+      "default_order": 24,
+      "name_zh": "遗传技术"
     },
     {
       "id": "bio_microscopy",
@@ -48,27 +232,19 @@
       "id": "bio_prokaryotes",
       "kind": "concept",
       "name": "Prokaryotic Cells",
-      "topic": "bio_cell_structure",
+      "topic": "bio_cell_structure_bio_prokaryotes",
       "description": "Bacterial cells lacking a nucleus and membrane-bound organelles, with circular DNA, smaller ribosomes, and a cell wall, contrasted with eukaryotic cells.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "原核细胞"
     },
     {
       "id": "bio_cell_size",
       "kind": "concept",
       "name": "Cell Size and Magnification",
-      "topic": "bio_cell_structure",
+      "topic": "bio_cell_structure_bio_prokaryotes",
       "description": "Calculating actual cell size, magnification, and image size using the relationship that magnification equals image size divided by actual size, with consistent units.",
-      "default_order": 4,
-      "name_zh": "细胞大小与放大"
-    },
-    {
-      "id": "bio_molecules",
-      "kind": "topic",
-      "name": "Biological Molecules",
-      "topic": null,
       "default_order": 2,
-      "name_zh": "生物分子"
+      "name_zh": "细胞大小与放大"
     },
     {
       "id": "bio_water",
@@ -92,36 +268,28 @@
       "id": "bio_lipids",
       "kind": "concept",
       "name": "Lipids",
-      "topic": "bio_molecules",
+      "topic": "bio_molecules_bio_lipids",
       "description": "Hydrophobic molecules including triglycerides for energy storage and phospholipids whose amphipathic structure forms the bilayer of cell membranes.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "脂质"
     },
     {
       "id": "bio_proteins",
       "kind": "concept",
       "name": "Proteins",
-      "topic": "bio_molecules",
+      "topic": "bio_molecules_bio_lipids",
       "description": "Polymers of amino acids joined by peptide bonds, folding through primary, secondary, tertiary, and quaternary structure that determines their biological function.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "蛋白质"
     },
     {
       "id": "bio_tests",
       "kind": "concept",
       "name": "Biochemical Tests",
-      "topic": "bio_molecules",
+      "topic": "bio_molecules_bio_lipids",
       "description": "Qualitative biochemical tests identifying biological molecules, such as Benedict's for reducing sugars, iodine for starch, biuret for protein, and the emulsion test for lipids.",
-      "default_order": 5,
-      "name_zh": "生化检测"
-    },
-    {
-      "id": "bio_enzymes",
-      "kind": "topic",
-      "name": "Enzymes",
-      "topic": null,
       "default_order": 3,
-      "name_zh": "酶"
+      "name_zh": "生化检测"
     },
     {
       "id": "bio_enzyme_action",
@@ -155,14 +323,6 @@
       "name_zh": "酶抑制"
     },
     {
-      "id": "bio_membranes",
-      "kind": "topic",
-      "name": "Cell Membranes and Transport",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "细胞膜与运输"
-    },
-    {
       "id": "bio_membrane_structure",
       "kind": "concept",
       "name": "Membrane Structure",
@@ -194,14 +354,6 @@
       "name_zh": "主动运输"
     },
     {
-      "id": "bio_chromosomes_dna",
-      "kind": "topic",
-      "name": "Chromosomes and DNA Replication",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "染色体与 DNA 复制"
-    },
-    {
       "id": "bio_chromosomes",
       "kind": "concept",
       "name": "Chromosome Behaviour",
@@ -225,9 +377,9 @@
       "id": "bio_dna_structure",
       "kind": "concept",
       "name": "DNA Structure",
-      "topic": "bio_chromosomes_dna",
+      "topic": "bio_chromosomes_dna_bio_dna_structure",
       "description": "DNA as a double helix of two antiparallel nucleotide strands held together by complementary base pairing between adenine-thymine and guanine-cytosine.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "DNA结构",
       "visual": "interactive",
       "visual_hint": "Interactive double helix showing antiparallel strands and complementary base pairing."
@@ -236,20 +388,12 @@
       "id": "bio_dna_replication",
       "kind": "concept",
       "name": "DNA Replication",
-      "topic": "bio_chromosomes_dna",
+      "topic": "bio_chromosomes_dna_bio_dna_structure",
       "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "DNA复制",
       "visual": "diagram",
       "visual_hint": "Diagram semi-conservative replication unwinding and templating each strand."
-    },
-    {
-      "id": "bio_nucleic_acids",
-      "kind": "topic",
-      "name": "Nucleic Acids and Protein Synthesis",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "核酸与蛋白质合成"
     },
     {
       "id": "bio_transcription",
@@ -283,14 +427,6 @@
       "name_zh": "基因突变"
     },
     {
-      "id": "bio_transport_plants",
-      "kind": "topic",
-      "name": "Transport in Plants",
-      "topic": null,
-      "default_order": 7,
-      "name_zh": "植物运输"
-    },
-    {
       "id": "bio_xylem",
       "kind": "concept",
       "name": "Xylem and Water Transport",
@@ -318,14 +454,6 @@
       "name_zh": "韧皮部与转运"
     },
     {
-      "id": "bio_circulation_gas_exchange",
-      "kind": "topic",
-      "name": "Circulation and Gas Exchange",
-      "topic": null,
-      "default_order": 8,
-      "name_zh": "循环运输与气体交换"
-    },
-    {
       "id": "bio_heart",
       "kind": "concept",
       "name": "The Heart",
@@ -349,9 +477,9 @@
       "id": "bio_haemoglobin",
       "kind": "concept",
       "name": "Haemoglobin and Oxygen Transport",
-      "topic": "bio_circulation_gas_exchange",
+      "topic": "bio_circulation_gas_exchange_bio_haemoglobin",
       "description": "Haemoglobin's reversible binding of oxygen described by the sigmoid dissociation curve, and the Bohr effect that shifts it with carbon dioxide.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "血红蛋白与氧气运输",
       "visual": "function",
       "visual_hint": "Plot the sigmoid oxygen dissociation curve and the Bohr shift."
@@ -360,18 +488,10 @@
       "id": "bio_lungs",
       "kind": "concept",
       "name": "Gas Exchange in the Lungs",
-      "topic": "bio_circulation_gas_exchange",
+      "topic": "bio_circulation_gas_exchange_bio_haemoglobin",
       "description": "Gas exchange in the alveoli, whose large, thin, moist surface and rich blood supply maximise diffusion of oxygen and carbon dioxide.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "肺部气体交换"
-    },
-    {
-      "id": "bio_disease",
-      "kind": "topic",
-      "name": "Infectious Disease and Immunity",
-      "topic": null,
-      "default_order": 9,
-      "name_zh": "传染病与免疫"
     },
     {
       "id": "bio_infectious",
@@ -401,14 +521,6 @@
       "name_zh": "抗体与疫苗接种"
     },
     {
-      "id": "bio_respiration",
-      "kind": "topic",
-      "name": "Energy and Respiration",
-      "topic": null,
-      "default_order": 10,
-      "name_zh": "能量与呼吸作用"
-    },
-    {
       "id": "bio_glycolysis",
       "kind": "concept",
       "name": "Glycolysis",
@@ -434,9 +546,9 @@
       "id": "bio_oxidative",
       "kind": "concept",
       "name": "Oxidative Phosphorylation",
-      "topic": "bio_respiration",
+      "topic": "bio_respiration_bio_oxidative",
       "description": "Oxidative phosphorylation using the electron transport chain and chemiosmosis across the inner mitochondrial membrane to synthesise most ATP.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "氧化磷酸化",
       "visual": "diagram",
       "visual_hint": "Diagram the electron transport chain and chemiosmosis."
@@ -445,18 +557,10 @@
       "id": "bio_anaerobic",
       "kind": "concept",
       "name": "Anaerobic Respiration",
-      "topic": "bio_respiration",
+      "topic": "bio_respiration_bio_oxidative",
       "description": "Respiration without oxygen, regenerating NAD through lactate fermentation in animals or ethanol fermentation in yeast and plants, yielding little ATP.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "无氧呼吸"
-    },
-    {
-      "id": "bio_photosynthesis",
-      "kind": "topic",
-      "name": "Photosynthesis",
-      "topic": null,
-      "default_order": 11,
-      "name_zh": "光合作用"
     },
     {
       "id": "bio_light_dependent",
@@ -490,14 +594,6 @@
       "name_zh": "限制因素"
     },
     {
-      "id": "bio_homeostasis",
-      "kind": "topic",
-      "name": "Homeostasis",
-      "topic": null,
-      "default_order": 12,
-      "name_zh": "体内平衡"
-    },
-    {
       "id": "bio_homeostasis_principles",
       "kind": "concept",
       "name": "Homeostasis Principles",
@@ -527,14 +623,6 @@
       "name_zh": "血糖控制"
     },
     {
-      "id": "bio_coordination",
-      "kind": "topic",
-      "name": "Control and Coordination",
-      "topic": null,
-      "default_order": 13,
-      "name_zh": "控制与协调"
-    },
-    {
       "id": "bio_nervous",
       "kind": "concept",
       "name": "Nervous Transmission",
@@ -560,27 +648,19 @@
       "id": "bio_hormonal",
       "kind": "concept",
       "name": "Hormonal Control",
-      "topic": "bio_coordination",
+      "topic": "bio_coordination_bio_hormonal",
       "description": "Endocrine coordination in which hormones secreted by glands travel in the blood to target cells, producing slower, longer-lasting responses.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "激素控制"
     },
     {
       "id": "bio_plant_responses",
       "kind": "concept",
       "name": "Plant Responses",
-      "topic": "bio_coordination",
+      "topic": "bio_coordination_bio_hormonal",
       "description": "Plant responses to stimuli, including tropisms controlled by auxin and other growth regulators that direct growth toward or away from stimuli.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "植物响应"
-    },
-    {
-      "id": "bio_inheritance",
-      "kind": "topic",
-      "name": "Inheritance",
-      "topic": null,
-      "default_order": 14,
-      "name_zh": "遗传"
     },
     {
       "id": "bio_meiosis",
@@ -608,27 +688,19 @@
       "id": "bio_linkage",
       "kind": "concept",
       "name": "Gene Linkage and Crossing Over",
-      "topic": "bio_inheritance",
+      "topic": "bio_inheritance_bio_linkage",
       "description": "Genes on the same chromosome inherited together as linked genes, with crossing over producing recombinants at a frequency reflecting their distance.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "基因连锁与交换"
     },
     {
       "id": "bio_gene_control",
       "kind": "concept",
       "name": "Control of Gene Expression",
-      "topic": "bio_inheritance",
+      "topic": "bio_inheritance_bio_linkage",
       "description": "The regulation of gene expression in eukaryotes, including transcriptional control and the role of regulatory proteins in switching genes on and off.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "基因表达控制"
-    },
-    {
-      "id": "bio_evolution",
-      "kind": "topic",
-      "name": "Selection and Evolution",
-      "topic": null,
-      "default_order": 15,
-      "name_zh": "选择与进化"
     },
     {
       "id": "bio_variation",
@@ -658,14 +730,6 @@
       "name_zh": "物种形成"
     },
     {
-      "id": "bio_biodiversity",
-      "kind": "topic",
-      "name": "Biodiversity and Conservation",
-      "topic": null,
-      "default_order": 16,
-      "name_zh": "生物多样性与保护"
-    },
-    {
       "id": "bio_classification",
       "kind": "concept",
       "name": "Classification",
@@ -693,14 +757,6 @@
       "description": "Methods of maintaining biodiversity and ecosystems, balancing human activity with the protection of species and their habitats.",
       "default_order": 3,
       "name_zh": "保护"
-    },
-    {
-      "id": "bio_genetic_tech",
-      "kind": "topic",
-      "name": "Genetic Technology",
-      "topic": null,
-      "default_order": 17,
-      "name_zh": "遗传技术"
     },
     {
       "id": "bio_gene_tech",

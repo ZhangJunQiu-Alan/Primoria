@@ -2,13 +2,13 @@
   "graphId": "software_construction",
   "subject": "Software Construction",
   "generatedFrom": "temple/software_construction.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "t_mit6031_foundations_specs",
-      "name": "Software Construction Foundations and Specifications",
-      "nameZh": "软件构造基础与规约",
+      "name": "Static Checking and Immutability",
+      "nameZh": "静态检查与不可变性",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -22,31 +22,13 @@
           "name": "Immutability",
           "nameZh": "不可变性",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "c_mit6031_specs",
-          "name": "Specifications",
-          "nameZh": "规格",
-          "defaultOrder": 3,
-          "visual": "diagram",
-          "visualHint": "Diagram preconditions and postconditions as a contract boundary."
-        },
-        {
-          "conceptId": "c_mit6031_testing",
-          "name": "Testing Strategies",
-          "nameZh": "测试策略",
-          "defaultOrder": 4,
-          "visual": "diagram",
-          "visualHint": "Diagram partitioning the input space into equivalence classes."
-        },
-        {
-          "conceptId": "c_mit6031_exceptions",
-          "name": "Exceptions",
-          "nameZh": "异常",
-          "defaultOrder": 5
         }
       ],
       "successors": [
+        {
+          "topicId": "t_mit6031_foundations_specs_mit6031_specs",
+          "hard": true
+        },
         {
           "topicId": "t_mit6031_adt",
           "hard": true
@@ -56,10 +38,50 @@
       "isRoot": true
     },
     {
-      "topicId": "t_mit6031_adt",
-      "name": "Abstract Data Types",
-      "nameZh": "抽象数据类型",
+      "topicId": "t_mit6031_foundations_specs_mit6031_specs",
+      "name": "Specifications, Testing Strategies, and Exceptions",
+      "nameZh": "规格、测试策略与异常",
       "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit6031_specs",
+          "name": "Specifications",
+          "nameZh": "规格",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram preconditions and postconditions as a contract boundary."
+        },
+        {
+          "conceptId": "c_mit6031_testing",
+          "name": "Testing Strategies",
+          "nameZh": "测试策略",
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram partitioning the input space into equivalence classes."
+        },
+        {
+          "conceptId": "c_mit6031_exceptions",
+          "name": "Exceptions",
+          "nameZh": "异常",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit6031_adt",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit6031_foundations_specs"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit6031_adt",
+      "name": "ADT Concepts and Representation Independence",
+      "nameZh": "ADT 概念与表示独立性",
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_adt_basics",
@@ -72,23 +94,13 @@
           "name": "Representation Independence",
           "nameZh": "表示独立性",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "c_mit6031_rep_invariant",
-          "name": "Rep Invariants",
-          "nameZh": "表示不变量",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_mit6031_abstraction_function",
-          "name": "Abstraction Functions",
-          "nameZh": "抽象函数",
-          "defaultOrder": 4,
-          "visual": "diagram",
-          "visualHint": "Diagram the abstraction function mapping representation to abstract value."
         }
       ],
       "successors": [
+        {
+          "topicId": "t_mit6031_adt_mit6031_rep_invariant",
+          "hard": true
+        },
         {
           "topicId": "t_mit6031_oop",
           "hard": true
@@ -99,7 +111,35 @@
         }
       ],
       "prereqTopics": [
-        "t_mit6031_foundations_specs"
+        "t_mit6031_foundations_specs",
+        "t_mit6031_foundations_specs_mit6031_specs"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit6031_adt_mit6031_rep_invariant",
+      "name": "Rep Invariants and Abstraction Functions",
+      "nameZh": "表示不变量与抽象函数",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "c_mit6031_rep_invariant",
+          "name": "Rep Invariants",
+          "nameZh": "表示不变量",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_mit6031_abstraction_function",
+          "name": "Abstraction Functions",
+          "nameZh": "抽象函数",
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Diagram the abstraction function mapping representation to abstract value."
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "t_mit6031_adt"
       ],
       "isRoot": false
     },
@@ -107,7 +147,7 @@
       "topicId": "t_mit6031_oop",
       "name": "Object-Oriented Programming",
       "nameZh": "面向对象编程",
-      "defaultOrder": 3,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_interfaces",
@@ -138,9 +178,9 @@
     },
     {
       "topicId": "t_mit6031_concurrency",
-      "name": "Concurrency",
-      "nameZh": "并发",
-      "defaultOrder": 4,
+      "name": "Concurrency Basics and Thread Safety",
+      "nameZh": "并发基础与线程安全",
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "c_mit6031_concurrency_intro",
@@ -153,12 +193,30 @@
           "name": "Thread Safety",
           "nameZh": "线程安全",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "t_mit6031_concurrency_mit6031_locks",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "t_mit6031_adt"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "t_mit6031_concurrency_mit6031_locks",
+      "name": "Locks and Synchronization and Message Passing",
+      "nameZh": "锁与同步与消息传递",
+      "defaultOrder": 7,
+      "conceptIds": [
         {
           "conceptId": "c_mit6031_locks",
           "name": "Locks and Synchronization",
           "nameZh": "锁与同步",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "State diagram of threads acquiring locks and a deadlock cycle."
         },
@@ -166,14 +224,14 @@
           "conceptId": "c_mit6031_message_passing",
           "name": "Message Passing",
           "nameZh": "消息传递",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram components communicating by messages over channels."
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "t_mit6031_adt"
+        "t_mit6031_concurrency"
       ],
       "isRoot": false
     }

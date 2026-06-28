@@ -2,7 +2,7 @@
   "graphId": "introduction_to_computer_science",
   "subject": "Introduction to Computer Science",
   "generatedFrom": "temple/introduction_to_computer_science.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -129,8 +129,8 @@
     },
     {
       "topicId": "topic_week2",
-      "name": "Arrays",
-      "nameZh": "数组",
+      "name": "Debugging and Arrays",
+      "nameZh": "调试与数组",
       "defaultOrder": 4,
       "conceptIds": [
         {
@@ -144,21 +144,13 @@
           "name": "Arrays",
           "nameZh": "数组",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "c_strings",
-          "name": "Strings",
-          "nameZh": "字符串",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_cli_args",
-          "name": "Command-line Arguments",
-          "nameZh": "命令行参数",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "topic_week2_strings",
+          "hard": true
+        },
         {
           "topicId": "topic_week3",
           "hard": true
@@ -183,10 +175,35 @@
       "isRoot": false
     },
     {
+      "topicId": "topic_week2_strings",
+      "name": "Strings and Command-line Arguments",
+      "nameZh": "字符串与命令行参数",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "c_strings",
+          "name": "Strings",
+          "nameZh": "字符串",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_cli_args",
+          "name": "Command-line Arguments",
+          "nameZh": "命令行参数",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_week2"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_week3",
       "name": "Algorithms",
       "nameZh": "算法",
-      "defaultOrder": 5,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "c_linear_search",
@@ -228,7 +245,7 @@
       "topicId": "topic_complexity_memory",
       "name": "Algorithmic Complexity and Memory",
       "nameZh": "算法复杂度与内存",
-      "defaultOrder": 6,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "c_recursion",
@@ -276,7 +293,7 @@
       "topicId": "topic_week4",
       "name": "Memory",
       "nameZh": "内存",
-      "defaultOrder": 7,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "c_malloc",
@@ -314,7 +331,7 @@
       "topicId": "topic_week5",
       "name": "Data Structures",
       "nameZh": "数据结构",
-      "defaultOrder": 8,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "c_linked_lists",
@@ -362,7 +379,7 @@
       "topicId": "topic_adv_data_python",
       "name": "Advanced Data Structures and Python",
       "nameZh": "高级数据结构与 Python",
-      "defaultOrder": 9,
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "c_tries",
@@ -391,7 +408,7 @@
           "hard": true
         },
         {
-          "topicId": "topic_week8",
+          "topicId": "topic_week8_js",
           "hard": true
         },
         {
@@ -410,7 +427,7 @@
       "topicId": "topic_week6",
       "name": "Python",
       "nameZh": "Python",
-      "defaultOrder": 10,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "c_lists_dicts",
@@ -446,9 +463,9 @@
     },
     {
       "topicId": "topic_week7",
-      "name": "SQL",
-      "nameZh": "SQL",
-      "defaultOrder": 11,
+      "name": "Relational Databases and SQL Queries",
+      "nameZh": "关系数据库与SQL查询",
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "c_relational_db",
@@ -461,31 +478,49 @@
           "name": "SQL Queries",
           "nameZh": "SQL查询",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "c_joins",
-          "name": "SQL Joins",
-          "nameZh": "SQL连接",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_indexes",
-          "name": "SQL Indexes",
-          "nameZh": "SQL索引",
-          "defaultOrder": 4
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "topic_week7_joins",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
         "topic_week6"
       ],
       "isRoot": false
     },
     {
+      "topicId": "topic_week7_joins",
+      "name": "SQL Joins and SQL Indexes",
+      "nameZh": "SQL连接与SQL索引",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "c_joins",
+          "name": "SQL Joins",
+          "nameZh": "SQL连接",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_indexes",
+          "name": "SQL Indexes",
+          "nameZh": "SQL索引",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "topic_week7"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "topic_week8",
-      "name": "HTML, CSS, JavaScript",
-      "nameZh": "HTML、CSS、JavaScript",
-      "defaultOrder": 12,
+      "name": "HTML and CSS",
+      "nameZh": "HTML与CSS",
+      "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "c_html",
@@ -498,30 +533,46 @@
           "name": "CSS",
           "nameZh": "CSS",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "c_js",
-          "name": "JavaScript",
-          "nameZh": "JavaScript",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "c_dom",
-          "name": "DOM Manipulation",
-          "nameZh": "DOM 操作",
-          "defaultOrder": 4,
-          "visual": "diagram",
-          "visualHint": "Tree diagram of the DOM nodes of a web page."
         }
       ],
       "successors": [
+        {
+          "topicId": "topic_week8_js",
+          "hard": true
+        },
         {
           "topicId": "topic_week9",
           "hard": true
         }
       ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "topic_week8_js",
+      "name": "JavaScript and DOM Manipulation",
+      "nameZh": "JavaScript与DOM 操作",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "c_js",
+          "name": "JavaScript",
+          "nameZh": "JavaScript",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "c_dom",
+          "name": "DOM Manipulation",
+          "nameZh": "DOM 操作",
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Tree diagram of the DOM nodes of a web page."
+        }
+      ],
+      "successors": [],
       "prereqTopics": [
-        "topic_adv_data_python"
+        "topic_adv_data_python",
+        "topic_week8"
       ],
       "isRoot": false
     },
@@ -529,7 +580,7 @@
       "topicId": "topic_week9",
       "name": "Flask",
       "nameZh": "Flask",
-      "defaultOrder": 13,
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "c_http",
@@ -566,7 +617,7 @@
       "topicId": "topic_web_state_security",
       "name": "Web State, APIs and Security",
       "nameZh": "Web 状态、API 与安全",
-      "defaultOrder": 14,
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "c_sessions",
@@ -602,7 +653,7 @@
       "topicId": "topic_week10",
       "name": "Cybersecurity",
       "nameZh": "网络安全",
-      "defaultOrder": 15,
+      "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "c_encryption",

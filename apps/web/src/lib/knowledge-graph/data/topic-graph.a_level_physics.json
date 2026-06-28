@@ -2,7 +2,7 @@
   "graphId": "a_level_physics",
   "subject": "Physics",
   "generatedFrom": "temple/a_level_physics.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -33,6 +33,10 @@
       "successors": [
         {
           "topicId": "phy_measurement_motion",
+          "hard": false
+        },
+        {
+          "topicId": "phy_measurement_motion_phy_motion_quantities",
           "hard": true
         }
       ],
@@ -41,8 +45,8 @@
     },
     {
       "topicId": "phy_measurement_motion",
-      "name": "Measurement Uncertainty and Motion",
-      "nameZh": "测量不确定度与运动",
+      "name": "Errors and Uncertainties and Combining Uncertainties",
+      "nameZh": "误差与不确定度与不确定度合成",
       "defaultOrder": 2,
       "conceptIds": [
         {
@@ -56,18 +60,31 @@
           "name": "Combining Uncertainties",
           "nameZh": "不确定度合成",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_measurement"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_measurement_motion_phy_motion_quantities",
+      "name": "Displacement Velocity Acceleration and Equations of Motion",
+      "nameZh": "位移速度加速度与运动方程",
+      "defaultOrder": 3,
+      "conceptIds": [
         {
           "conceptId": "phy_motion_quantities",
           "name": "Displacement Velocity Acceleration",
           "nameZh": "位移速度加速度",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_suvat",
           "name": "Equations of Motion",
           "nameZh": "运动方程",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "simulation",
           "visualHint": "Animate uniform-acceleration motion with adjustable acceleration and initial velocity."
         }
@@ -95,7 +112,7 @@
       "topicId": "phy_kinematics",
       "name": "Kinematics",
       "nameZh": "运动学",
-      "defaultOrder": 3,
+      "defaultOrder": 4,
       "conceptIds": [
         {
           "conceptId": "phy_motion_graphs",
@@ -124,7 +141,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_measurement_motion"
+        "phy_measurement_motion_phy_motion_quantities"
       ],
       "isRoot": false
     },
@@ -132,7 +149,7 @@
       "topicId": "phy_dynamics",
       "name": "Dynamics",
       "nameZh": "动力学",
-      "defaultOrder": 4,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "phy_newton_laws",
@@ -158,6 +175,10 @@
       "successors": [
         {
           "topicId": "phy_momentum_forces",
+          "hard": false
+        },
+        {
+          "topicId": "phy_momentum_forces_phy_force_types",
           "hard": true
         },
         {
@@ -170,15 +191,15 @@
         }
       ],
       "prereqTopics": [
-        "phy_measurement_motion"
+        "phy_measurement_motion_phy_motion_quantities"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_momentum_forces",
-      "name": "Momentum and Forces",
-      "nameZh": "动量与力",
-      "defaultOrder": 5,
+      "name": "Conservation of Momentum and Impulse and Collisions",
+      "nameZh": "动量守恒与冲量与碰撞",
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "phy_momentum_conservation",
@@ -193,18 +214,36 @@
           "name": "Impulse and Collisions",
           "nameZh": "冲量与碰撞",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_thermal_phy_kinetic_theory",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_dynamics"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_momentum_forces_phy_force_types",
+      "name": "Types of Force and Moments and Couples",
+      "nameZh": "力的类型与力矩与力偶",
+      "defaultOrder": 7,
+      "conceptIds": [
         {
           "conceptId": "phy_force_types",
           "name": "Types of Force",
           "nameZh": "力的类型",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_moments",
           "name": "Moments and Couples",
           "nameZh": "力矩与力偶",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Balance a beam by adjusting forces and distances (moments)."
         }
@@ -217,10 +256,6 @@
         {
           "topicId": "phy_deformation",
           "hard": true
-        },
-        {
-          "topicId": "phy_thermal",
-          "hard": false
         }
       ],
       "prereqTopics": [
@@ -232,7 +267,7 @@
       "topicId": "phy_forces",
       "name": "Forces, Density and Pressure",
       "nameZh": "力、密度与压强",
-      "defaultOrder": 6,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "phy_equilibrium",
@@ -257,15 +292,15 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_momentum_forces"
+        "phy_momentum_forces_phy_force_types"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_work_energy",
-      "name": "Work, Energy and Power",
-      "nameZh": "功、能量与功率",
-      "defaultOrder": 7,
+      "name": "Work Done and Kinetic and Potential Energy",
+      "nameZh": "做功与动能与势能",
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "phy_work",
@@ -278,27 +313,15 @@
           "name": "Kinetic and Potential Energy",
           "nameZh": "动能与势能",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "phy_energy_conservation",
-          "name": "Conservation of Energy",
-          "nameZh": "能量守恒",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_power_efficiency",
-          "name": "Power and Efficiency",
-          "nameZh": "功率与效率",
-          "defaultOrder": 4
         }
       ],
       "successors": [
         {
-          "topicId": "phy_deformation",
+          "topicId": "phy_work_energy_phy_energy_conservation",
           "hard": false
         },
         {
-          "topicId": "phy_oscillations",
+          "topicId": "phy_deformation_phy_elastic_plastic",
           "hard": false
         }
       ],
@@ -308,10 +331,40 @@
       "isRoot": false
     },
     {
+      "topicId": "phy_work_energy_phy_energy_conservation",
+      "name": "Conservation of Energy and Power and Efficiency",
+      "nameZh": "能量守恒与功率与效率",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "phy_energy_conservation",
+          "name": "Conservation of Energy",
+          "nameZh": "能量守恒",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_power_efficiency",
+          "name": "Power and Efficiency",
+          "nameZh": "功率与效率",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_oscillations",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_work_energy"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "phy_deformation",
-      "name": "Deformation of Solids",
-      "nameZh": "固体形变",
-      "defaultOrder": 8,
+      "name": "Hooke's Law and Stress, Strain and Young Modulus",
+      "nameZh": "胡克定律与应力、应变与杨氏模量",
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "phy_hookes_law",
@@ -328,24 +381,42 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot a stress-strain curve up to fracture."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_deformation_phy_elastic_plastic",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_momentum_forces_phy_force_types"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_deformation_phy_elastic_plastic",
+      "name": "Elastic and Plastic Behaviour and Elastic Strain Energy",
+      "nameZh": "弹性与塑性行为与弹性势能",
+      "defaultOrder": 12,
+      "conceptIds": [
         {
           "conceptId": "phy_elastic_plastic",
           "name": "Elastic and Plastic Behaviour",
           "nameZh": "弹性与塑性行为",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_strain_energy",
           "name": "Elastic Strain Energy",
           "nameZh": "弹性势能",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_momentum_forces",
-        "phy_work_energy"
+        "phy_work_energy",
+        "phy_deformation"
       ],
       "isRoot": false
     },
@@ -353,7 +424,7 @@
       "topicId": "phy_waves",
       "name": "Waves",
       "nameZh": "波动",
-      "defaultOrder": 9,
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "phy_progressive_waves",
@@ -381,6 +452,10 @@
       "successors": [
         {
           "topicId": "phy_waves_superposition",
+          "hard": false
+        },
+        {
+          "topicId": "phy_waves_superposition_phy_superposition_principle",
           "hard": true
         },
         {
@@ -393,9 +468,9 @@
     },
     {
       "topicId": "phy_waves_superposition",
-      "name": "Wave Phenomena and Superposition",
-      "nameZh": "波现象与叠加",
-      "defaultOrder": 10,
+      "name": "Electromagnetic Spectrum and Doppler Effect",
+      "nameZh": "电磁波谱与多普勒效应",
+      "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "phy_em_spectrum",
@@ -412,27 +487,9 @@
           "defaultOrder": 2,
           "visual": "simulation",
           "visualHint": "Move a wave source and show the observed frequency shift (Doppler effect)."
-        },
-        {
-          "conceptId": "phy_superposition_principle",
-          "name": "Principle of Superposition",
-          "nameZh": "叠加原理",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_interference",
-          "name": "Two-Source Interference",
-          "nameZh": "双源干涉",
-          "defaultOrder": 4,
-          "visual": "function",
-          "visualHint": "Two-source interference producing constructive and destructive fringes."
         }
       ],
       "successors": [
-        {
-          "topicId": "phy_superposition",
-          "hard": false
-        },
         {
           "topicId": "phy_quantum",
           "hard": true
@@ -444,10 +501,42 @@
       "isRoot": false
     },
     {
+      "topicId": "phy_waves_superposition_phy_superposition_principle",
+      "name": "Principle of Superposition and Two-Source Interference",
+      "nameZh": "叠加原理与双源干涉",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "phy_superposition_principle",
+          "name": "Principle of Superposition",
+          "nameZh": "叠加原理",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_interference",
+          "name": "Two-Source Interference",
+          "nameZh": "双源干涉",
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Two-source interference producing constructive and destructive fringes."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_superposition",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_waves"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "phy_superposition",
       "name": "Superposition",
       "nameZh": "波的叠加",
-      "defaultOrder": 11,
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "phy_diffraction",
@@ -472,7 +561,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_waves_superposition"
+        "phy_waves_superposition_phy_superposition_principle"
       ],
       "isRoot": false
     },
@@ -480,7 +569,7 @@
       "topicId": "phy_electricity",
       "name": "Current of Electricity",
       "nameZh": "电流",
-      "defaultOrder": 12,
+      "defaultOrder": 17,
       "conceptIds": [
         {
           "conceptId": "phy_current_charge",
@@ -507,7 +596,7 @@
           "hard": true
         },
         {
-          "topicId": "phy_electric_fields",
+          "topicId": "phy_electric_fields_phy_e_potential",
           "hard": true
         },
         {
@@ -522,7 +611,7 @@
       "topicId": "phy_circuits_kirchhoff",
       "name": "Electrical Characteristics and Kirchhoff's Laws",
       "nameZh": "电学特性与基尔霍夫定律",
-      "defaultOrder": 13,
+      "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "phy_resistivity",
@@ -562,7 +651,7 @@
       "topicId": "phy_dc_circuits",
       "name": "DC Circuits",
       "nameZh": "直流电路",
-      "defaultOrder": 14,
+      "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "phy_series_parallel",
@@ -597,7 +686,7 @@
       "topicId": "phy_circular",
       "name": "Motion in a Circle",
       "nameZh": "圆周运动",
-      "defaultOrder": 15,
+      "defaultOrder": 20,
       "conceptIds": [
         {
           "conceptId": "phy_angular_speed",
@@ -622,7 +711,7 @@
       ],
       "successors": [
         {
-          "topicId": "phy_gravitation",
+          "topicId": "phy_gravitation_phy_grav_potential",
           "hard": true
         },
         {
@@ -631,16 +720,16 @@
         }
       ],
       "prereqTopics": [
-        "phy_measurement_motion",
+        "phy_measurement_motion_phy_motion_quantities",
         "phy_dynamics"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_gravitation",
-      "name": "Gravitational Fields",
-      "nameZh": "引力场",
-      "defaultOrder": 16,
+      "name": "Newton's Law of Gravitation and Gravitational Field Strength",
+      "nameZh": "牛顿引力定律与引力场强度",
+      "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "phy_newton_gravitation",
@@ -655,38 +744,54 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot gravitational field strength against distance (inverse square)."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_gravitation_phy_grav_potential",
+          "hard": false
         },
+        {
+          "topicId": "phy_electric_fields_phy_e_potential",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "phy_gravitation_phy_grav_potential",
+      "name": "Gravitational Potential and Orbital Motion",
+      "nameZh": "引力势与轨道运动",
+      "defaultOrder": 22,
+      "conceptIds": [
         {
           "conceptId": "phy_grav_potential",
           "name": "Gravitational Potential",
           "nameZh": "引力势",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_orbits",
           "name": "Orbital Motion",
           "nameZh": "轨道运动",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "simulation",
           "visualHint": "Orbit a satellite where gravity provides the centripetal force."
         }
       ],
-      "successors": [
-        {
-          "topicId": "phy_electric_fields",
-          "hard": true
-        }
-      ],
+      "successors": [],
       "prereqTopics": [
-        "phy_circular"
+        "phy_circular",
+        "phy_gravitation"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_oscillations",
-      "name": "Oscillations",
-      "nameZh": "振动",
-      "defaultOrder": 17,
+      "name": "Simple Harmonic Motion and SHM Energy",
+      "nameZh": "简谐运动与SHM能量",
+      "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "phy_shm",
@@ -703,34 +808,52 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot the kinetic and potential energy interchange in SHM."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_oscillations_phy_damping",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_work_energy_phy_energy_conservation",
+        "phy_circular"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_oscillations_phy_damping",
+      "name": "Damping and Resonance",
+      "nameZh": "阻尼与共振",
+      "defaultOrder": 24,
+      "conceptIds": [
         {
           "conceptId": "phy_damping",
           "name": "Damping",
           "nameZh": "阻尼",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_resonance",
           "name": "Resonance",
           "nameZh": "共振",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot amplitude against driving frequency showing a resonance peak."
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_work_energy",
-        "phy_circular"
+        "phy_oscillations"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_thermal",
-      "name": "Thermal Physics and Ideal Gases",
-      "nameZh": "热学与理想气体",
-      "defaultOrder": 18,
+      "name": "Temperature and Thermal Equilibrium and Specific Heat and Latent Heat",
+      "nameZh": "温度与热平衡与比热与潜热",
+      "defaultOrder": 25,
       "conceptIds": [
         {
           "conceptId": "phy_temperature",
@@ -743,12 +866,28 @@
           "name": "Specific Heat and Latent Heat",
           "nameZh": "比热与潜热",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_thermal_phy_kinetic_theory",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "phy_thermal_phy_kinetic_theory",
+      "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
+      "nameZh": "气体动理论、理想气体定律与内能与第一定律",
+      "defaultOrder": 26,
+      "conceptIds": [
         {
           "conceptId": "phy_kinetic_theory",
           "name": "Kinetic Theory of Gases",
           "nameZh": "气体动理论",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "simulation",
           "visualHint": "Animate gas particles in random motion inside a box."
         },
@@ -756,7 +895,7 @@
           "conceptId": "phy_ideal_gas",
           "name": "Ideal Gas Law",
           "nameZh": "理想气体定律",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot pV = nRT relationships between pressure, volume, and temperature."
         },
@@ -764,20 +903,21 @@
           "conceptId": "phy_internal_energy",
           "name": "Internal Energy and First Law",
           "nameZh": "内能与第一定律",
-          "defaultOrder": 5
+          "defaultOrder": 3
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_momentum_forces"
+        "phy_momentum_forces",
+        "phy_thermal"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_electric_fields",
-      "name": "Electric Fields",
-      "nameZh": "电场",
-      "defaultOrder": 19,
+      "name": "Coulomb's Law and Electric Field Strength",
+      "nameZh": "库仑定律与电场强度",
+      "defaultOrder": 27,
       "conceptIds": [
         {
           "conceptId": "phy_coulomb",
@@ -794,18 +934,34 @@
           "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Show electric field lines around point charges."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_electric_fields_phy_e_potential",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "phy_electric_fields_phy_e_potential",
+      "name": "Electric Potential and Gravitational and Electric Field Analogy",
+      "nameZh": "电势与引力场与电场类比",
+      "defaultOrder": 28,
+      "conceptIds": [
         {
           "conceptId": "phy_e_potential",
           "name": "Electric Potential",
           "nameZh": "电势",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_field_analogy",
           "name": "Gravitational and Electric Field Analogy",
           "nameZh": "引力场与电场类比",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -816,15 +972,16 @@
       ],
       "prereqTopics": [
         "phy_electricity",
-        "phy_gravitation"
+        "phy_gravitation",
+        "phy_electric_fields"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_capacitance",
-      "name": "Capacitance",
-      "nameZh": "电容",
-      "defaultOrder": 20,
+      "name": "Capacitance and Capacitors in Series and Parallel",
+      "nameZh": "电容与串并联电容",
+      "defaultOrder": 29,
       "conceptIds": [
         {
           "conceptId": "phy_capacitance_def",
@@ -837,33 +994,51 @@
           "name": "Capacitors in Series and Parallel",
           "nameZh": "串并联电容",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_capacitance_phy_capacitor_energy",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_electric_fields_phy_e_potential"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_capacitance_phy_capacitor_energy",
+      "name": "Energy Stored in a Capacitor and Charging and Discharging",
+      "nameZh": "电容储能与充放电",
+      "defaultOrder": 30,
+      "conceptIds": [
         {
           "conceptId": "phy_capacitor_energy",
           "name": "Energy Stored in a Capacitor",
           "nameZh": "电容储能",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_capacitor_discharge",
           "name": "Charging and Discharging",
           "nameZh": "充放电",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot exponential capacitor charge and discharge against time."
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_electric_fields"
+        "phy_capacitance"
       ],
       "isRoot": false
     },
     {
       "topicId": "phy_magnetic_fields",
-      "name": "Magnetic Fields",
-      "nameZh": "磁场",
-      "defaultOrder": 21,
+      "name": "Magnetic Flux Density and Force on a Current-Carrying Conductor",
+      "nameZh": "磁通密度与载流导线受力",
+      "defaultOrder": 31,
       "conceptIds": [
         {
           "conceptId": "phy_flux_density",
@@ -878,21 +1053,13 @@
           "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Show the motor-effect force on a current-carrying conductor (Fleming's left hand)."
-        },
-        {
-          "conceptId": "phy_force_charge",
-          "name": "Force on a Moving Charge",
-          "nameZh": "运动电荷受力",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "phy_fields_currents",
-          "name": "Magnetic Fields Due to Currents",
-          "nameZh": "电流磁场",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "phy_magnetic_fields_phy_force_charge",
+          "hard": false
+        },
         {
           "topicId": "phy_induction",
           "hard": true
@@ -904,10 +1071,35 @@
       "isRoot": false
     },
     {
+      "topicId": "phy_magnetic_fields_phy_force_charge",
+      "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
+      "nameZh": "运动电荷受力与电流磁场",
+      "defaultOrder": 32,
+      "conceptIds": [
+        {
+          "conceptId": "phy_force_charge",
+          "name": "Force on a Moving Charge",
+          "nameZh": "运动电荷受力",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_fields_currents",
+          "name": "Magnetic Fields Due to Currents",
+          "nameZh": "电流磁场",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_magnetic_fields"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "phy_induction",
       "name": "Electromagnetic Induction",
       "nameZh": "电磁感应",
-      "defaultOrder": 22,
+      "defaultOrder": 33,
       "conceptIds": [
         {
           "conceptId": "phy_flux_linkage",
@@ -945,7 +1137,7 @@
       "topicId": "phy_ac",
       "name": "Alternating Currents",
       "nameZh": "交流电",
-      "defaultOrder": 23,
+      "defaultOrder": 34,
       "conceptIds": [
         {
           "conceptId": "phy_ac_rms",
@@ -978,9 +1170,9 @@
     },
     {
       "topicId": "phy_quantum",
-      "name": "Quantum Physics",
-      "nameZh": "量子物理",
-      "defaultOrder": 24,
+      "name": "Photon Energy and Photoelectric Effect",
+      "nameZh": "光子能量与光电效应",
+      "defaultOrder": 35,
       "conceptIds": [
         {
           "conceptId": "phy_photon",
@@ -995,18 +1187,36 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot photoelectric stopping voltage against frequency."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_quantum_phy_wave_particle",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_waves_superposition"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_quantum_phy_wave_particle",
+      "name": "Wave-Particle Duality and Energy Levels and Line Spectra",
+      "nameZh": "波粒二象性与能级与线光谱",
+      "defaultOrder": 36,
+      "conceptIds": [
         {
           "conceptId": "phy_wave_particle",
           "name": "Wave-Particle Duality",
           "nameZh": "波粒二象性",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_energy_levels",
           "name": "Energy Levels and Line Spectra",
           "nameZh": "能级与线光谱",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Energy-level diagram with photon emission producing line spectra."
         }
@@ -1018,7 +1228,7 @@
         }
       ],
       "prereqTopics": [
-        "phy_waves_superposition"
+        "phy_quantum"
       ],
       "isRoot": false
     },
@@ -1026,7 +1236,7 @@
       "topicId": "phy_nuclear",
       "name": "Nuclear Physics",
       "nameZh": "核物理",
-      "defaultOrder": 25,
+      "defaultOrder": 37,
       "conceptIds": [
         {
           "conceptId": "phy_nuclear_structure",
@@ -1062,7 +1272,7 @@
       "topicId": "phy_radioactivity",
       "name": "Nuclear Reactions and Radioactivity",
       "nameZh": "核反应与放射性",
-      "defaultOrder": 26,
+      "defaultOrder": 38,
       "conceptIds": [
         {
           "conceptId": "phy_fission_fusion",
@@ -1093,9 +1303,9 @@
     },
     {
       "topicId": "phy_astro",
-      "name": "Astronomy and Cosmology",
-      "nameZh": "天文学与宇宙学",
-      "defaultOrder": 27,
+      "name": "Luminosity and Radiant Flux Intensity and Standard Candles",
+      "nameZh": "亮度与辐射通量与标准烛光",
+      "defaultOrder": 39,
       "conceptIds": [
         {
           "conceptId": "phy_luminosity",
@@ -1108,26 +1318,44 @@
           "name": "Standard Candles",
           "nameZh": "标准烛光",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_astro_phy_stellar_radii",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_waves",
+        "phy_quantum_phy_wave_particle"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_astro_phy_stellar_radii",
+      "name": "Stellar Radii and Hubble's Law and the Big Bang",
+      "nameZh": "恒星半径与哈勃定律与大爆炸",
+      "defaultOrder": 40,
+      "conceptIds": [
         {
           "conceptId": "phy_stellar_radii",
           "name": "Stellar Radii",
           "nameZh": "恒星半径",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "phy_hubble",
           "name": "Hubble's Law and the Big Bang",
           "nameZh": "哈勃定律与大爆炸",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot recession speed against distance (Hubble's law)."
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_waves",
-        "phy_quantum"
+        "phy_astro"
       ],
       "isRoot": false
     }

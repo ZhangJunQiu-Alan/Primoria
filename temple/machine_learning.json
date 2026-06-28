@@ -27,6 +27,142 @@
       "name_zh": "线性回归：模型与梯度下降"
     },
     {
+      "id": "ml_linear_part2",
+      "kind": "topic",
+      "name": "Linear Regression: Optimization Methods",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "线性回归：优化方法"
+    },
+    {
+      "id": "ml_classification_part1",
+      "kind": "topic",
+      "name": "Logistic Regression and Sigmoid & Decision Boundary",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "逻辑回归与Sigmoid 与决策边界"
+    },
+    {
+      "id": "ml_classification_part1_ml_logistic_mle",
+      "kind": "topic",
+      "name": "Logistic MLE & Gradient and Newton's Method",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "逻辑回归极大似然估计与梯度与牛顿法"
+    },
+    {
+      "id": "ml_classification_part2",
+      "kind": "topic",
+      "name": "Classification: Softmax and GLMs",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "分类：Softmax 与广义线性模型"
+    },
+    {
+      "id": "ml_generative",
+      "kind": "topic",
+      "name": "Generative vs Discriminative and Gaussian Discriminant Analysis",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "生成模型与判别模型与高斯判别分析"
+    },
+    {
+      "id": "ml_generative_ml_naive_bayes",
+      "kind": "topic",
+      "name": "Naive Bayes and Laplace Smoothing",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "朴素贝叶斯与拉普拉斯平滑"
+    },
+    {
+      "id": "ml_svm_margin",
+      "kind": "topic",
+      "name": "Functional & Geometric Margins and Optimal Margin Classifier",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "间隔与SVM与最优间隔分类器"
+    },
+    {
+      "id": "ml_svm_margin_ml_lagrange_duality",
+      "kind": "topic",
+      "name": "Lagrange Duality & KKT and SVM Dual Problem",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "拉格朗日对偶性与 KKT 条件与支持向量机对偶问题"
+    },
+    {
+      "id": "ml_svm_kernel",
+      "kind": "topic",
+      "name": "Kernel Trick and Valid Kernels (Mercer)",
+      "topic": null,
+      "default_order": 10,
+      "name_zh": "核方法与有效核函数（Mercer 定理）"
+    },
+    {
+      "id": "ml_svm_kernel_ml_soft_margin",
+      "kind": "topic",
+      "name": "Soft Margin & Slack and SMO Algorithm",
+      "topic": null,
+      "default_order": 11,
+      "name_zh": "软间隔与松弛变量与SMO 算法"
+    },
+    {
+      "id": "ml_theory",
+      "kind": "topic",
+      "name": "Learning Theory",
+      "topic": null,
+      "default_order": 12,
+      "name_zh": "学习理论"
+    },
+    {
+      "id": "ml_generalization_nn",
+      "kind": "topic",
+      "name": "VC Dimension & Bounds and Model & Feature Selection",
+      "topic": null,
+      "default_order": 13,
+      "name_zh": "VC 维与泛化误差界与模型与特征选择"
+    },
+    {
+      "id": "ml_generalization_nn_ml_neural_nets",
+      "kind": "topic",
+      "name": "Neural Networks and Backpropagation",
+      "topic": null,
+      "default_order": 14,
+      "name_zh": "神经网络与反向传播"
+    },
+    {
+      "id": "ml_unsupervised",
+      "kind": "topic",
+      "name": "K-Means Clustering and EM Algorithm",
+      "topic": null,
+      "default_order": 15,
+      "name_zh": "K均值聚类与EM 算法 (期望最大化)"
+    },
+    {
+      "id": "ml_unsupervised_ml_gmm_em",
+      "kind": "topic",
+      "name": "Gaussian Mixtures via EM, Principal Component Analysis, and Independent Component Analysis",
+      "topic": null,
+      "default_order": 16,
+      "name_zh": "高斯混合与EM、主成分分析与独立成分分析"
+    },
+    {
+      "id": "ml_rl",
+      "kind": "topic",
+      "name": "Markov Decision Processes and Value & Policy Iteration",
+      "topic": null,
+      "default_order": 17,
+      "name_zh": "马尔可夫决策过程与价值与策略迭代"
+    },
+    {
+      "id": "ml_rl_ml_q_learning",
+      "kind": "topic",
+      "name": "Q-Learning and Value Function Approximation",
+      "topic": null,
+      "default_order": 18,
+      "name_zh": "Q-学习与价值函数逼近"
+    },
+    {
       "id": "ml_linear_reg",
       "kind": "concept",
       "name": "Linear Regression Model",
@@ -58,14 +194,6 @@
       "visual_hint": "Animate gradient descent stepping down a cost surface."
     },
     {
-      "id": "ml_linear_part2",
-      "kind": "topic",
-      "name": "Linear Regression: Optimization Methods",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "线性回归：优化方法"
-    },
-    {
       "id": "ml_sgd",
       "kind": "concept",
       "name": "Stochastic & Mini-batch GD",
@@ -93,14 +221,6 @@
       "name_zh": "特征缩放与学习率"
     },
     {
-      "id": "ml_classification_part1",
-      "kind": "topic",
-      "name": "Classification: Logistic Regression",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "分类：逻辑回归"
-    },
-    {
       "id": "ml_logistic_reg",
       "kind": "concept",
       "name": "Logistic Regression",
@@ -126,27 +246,19 @@
       "id": "ml_logistic_mle",
       "kind": "concept",
       "name": "Logistic MLE & Gradient",
-      "topic": "ml_classification_part1",
+      "topic": "ml_classification_part1_ml_logistic_mle",
       "description": "Estimating logistic-regression parameters by maximising the log-likelihood of the labels, whose gradient drives the gradient-ascent or descent updates.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "逻辑回归极大似然估计与梯度"
     },
     {
       "id": "ml_newton_method",
       "kind": "concept",
       "name": "Newton's Method",
-      "topic": "ml_classification_part1",
+      "topic": "ml_classification_part1_ml_logistic_mle",
       "description": "A second-order optimisation method using the Hessian to take curvature-aware steps, converging in few iterations for logistic regression.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "牛顿法"
-    },
-    {
-      "id": "ml_classification_part2",
-      "kind": "topic",
-      "name": "Classification: Softmax and GLMs",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "分类：Softmax 与广义线性模型"
     },
     {
       "id": "ml_softmax",
@@ -178,14 +290,6 @@
       "name_zh": "广义线性模型"
     },
     {
-      "id": "ml_generative",
-      "kind": "topic",
-      "name": "Generative Learning",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "生成模型"
-    },
-    {
       "id": "ml_generative_vs_disc",
       "kind": "concept",
       "name": "Generative vs Discriminative",
@@ -207,27 +311,19 @@
       "id": "ml_naive_bayes",
       "kind": "concept",
       "name": "Naive Bayes",
-      "topic": "ml_generative",
+      "topic": "ml_generative_ml_naive_bayes",
       "description": "A generative classifier assuming features are conditionally independent given the class, enabling simple, scalable estimation popular for text classification.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "朴素贝叶斯"
     },
     {
       "id": "ml_laplace",
       "kind": "concept",
       "name": "Laplace Smoothing",
-      "topic": "ml_generative",
+      "topic": "ml_generative_ml_naive_bayes",
       "description": "Laplace (add-one) smoothing adding pseudocounts to probability estimates so that unseen feature-class combinations receive nonzero probability.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "拉普拉斯平滑"
-    },
-    {
-      "id": "ml_svm_margin",
-      "kind": "topic",
-      "name": "SVM: Margins and Duality",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "支持向量机：间隔与对偶性"
     },
     {
       "id": "ml_margins",
@@ -253,27 +349,19 @@
       "id": "ml_lagrange_duality",
       "kind": "concept",
       "name": "Lagrange Duality & KKT",
-      "topic": "ml_svm_margin",
+      "topic": "ml_svm_margin_ml_lagrange_duality",
       "description": "Lagrange duality reformulating a constrained optimisation via its dual, with the KKT conditions characterising optimal primal-dual solutions for SVMs.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "拉格朗日对偶性与 KKT 条件"
     },
     {
       "id": "ml_svm_dual",
       "kind": "concept",
       "name": "SVM Dual Problem",
-      "topic": "ml_svm_margin",
+      "topic": "ml_svm_margin_ml_lagrange_duality",
       "description": "The SVM dual problem expressing the optimisation in terms of inner products between examples, exposing support vectors and enabling kernels.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "支持向量机对偶问题"
-    },
-    {
-      "id": "ml_svm_kernel",
-      "kind": "topic",
-      "name": "SVM: Kernels and Optimization",
-      "topic": null,
-      "default_order": 7,
-      "name_zh": "支持向量机：核函数与优化"
     },
     {
       "id": "ml_kernels",
@@ -299,27 +387,19 @@
       "id": "ml_soft_margin",
       "kind": "concept",
       "name": "Soft Margin & Slack",
-      "topic": "ml_svm_kernel",
+      "topic": "ml_svm_kernel_ml_soft_margin",
       "description": "A soft-margin SVM introducing slack variables and a penalty parameter to tolerate misclassification, balancing margin width against training errors.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "软间隔与松弛变量"
     },
     {
       "id": "ml_smo",
       "kind": "concept",
       "name": "SMO Algorithm",
-      "topic": "ml_svm_kernel",
+      "topic": "ml_svm_kernel_ml_soft_margin",
       "description": "Sequential minimal optimisation, a coordinate-ascent algorithm solving the SVM dual by analytically optimising pairs of Lagrange multipliers at a time.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "SMO 算法"
-    },
-    {
-      "id": "ml_theory",
-      "kind": "topic",
-      "name": "Learning Theory",
-      "topic": null,
-      "default_order": 8,
-      "name_zh": "学习理论"
     },
     {
       "id": "ml_bias_variance",
@@ -353,14 +433,6 @@
       "name_zh": "交叉验证"
     },
     {
-      "id": "ml_generalization_nn",
-      "kind": "topic",
-      "name": "Generalization Bounds and Neural Networks",
-      "topic": null,
-      "default_order": 9,
-      "name_zh": "泛化界与神经网络"
-    },
-    {
       "id": "ml_vc_dimension",
       "kind": "concept",
       "name": "VC Dimension & Bounds",
@@ -382,9 +454,9 @@
       "id": "ml_neural_nets",
       "kind": "concept",
       "name": "Neural Networks",
-      "topic": "ml_generalization_nn",
+      "topic": "ml_generalization_nn_ml_neural_nets",
       "description": "Neural networks composing layers of weighted sums and nonlinear activations to learn flexible, nonlinear mappings from inputs to outputs.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "神经网络",
       "visual": "diagram",
       "visual_hint": "Diagram a layered network of weighted sums and activations."
@@ -393,18 +465,10 @@
       "id": "ml_backprop",
       "kind": "concept",
       "name": "Backpropagation",
-      "topic": "ml_generalization_nn",
+      "topic": "ml_generalization_nn_ml_neural_nets",
       "description": "Backpropagation efficiently computing gradients of the loss with respect to all weights by applying the chain rule backward through the network.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "反向传播"
-    },
-    {
-      "id": "ml_unsupervised",
-      "kind": "topic",
-      "name": "Unsupervised Learning",
-      "topic": null,
-      "default_order": 10,
-      "name_zh": "无监督学习"
     },
     {
       "id": "ml_kmeans",
@@ -430,18 +494,18 @@
       "id": "ml_gmm_em",
       "kind": "concept",
       "name": "Gaussian Mixtures via EM",
-      "topic": "ml_unsupervised",
+      "topic": "ml_unsupervised_ml_gmm_em",
       "description": "Gaussian mixture models representing data as a weighted mixture of Gaussians, fitted by expectation-maximisation to perform soft probabilistic clustering.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "高斯混合与EM"
     },
     {
       "id": "ml_pca",
       "kind": "concept",
       "name": "Principal Component Analysis",
-      "topic": "ml_unsupervised",
+      "topic": "ml_unsupervised_ml_gmm_em",
       "description": "Principal component analysis reducing dimensionality by projecting data onto orthogonal directions of greatest variance, the leading eigenvectors of the covariance.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "主成分分析",
       "visual": "interactive",
       "visual_hint": "Project a 2-D cloud onto its principal component directions."
@@ -450,18 +514,10 @@
       "id": "ml_ica",
       "kind": "concept",
       "name": "Independent Component Analysis",
-      "topic": "ml_unsupervised",
+      "topic": "ml_unsupervised_ml_gmm_em",
       "description": "Independent component analysis separating a multivariate signal into statistically independent, non-Gaussian source components, as in blind source separation.",
-      "default_order": 5,
+      "default_order": 3,
       "name_zh": "独立成分分析"
-    },
-    {
-      "id": "ml_rl",
-      "kind": "topic",
-      "name": "Reinforcement Learning",
-      "topic": null,
-      "default_order": 11,
-      "name_zh": "强化学习"
     },
     {
       "id": "ml_mdp",
@@ -487,9 +543,9 @@
       "id": "ml_q_learning",
       "kind": "concept",
       "name": "Q-Learning",
-      "topic": "ml_rl",
+      "topic": "ml_rl_ml_q_learning",
       "description": "Q-learning, a model-free, off-policy algorithm learning optimal action-value estimates from sampled transitions without knowing the environment's dynamics.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "Q-学习",
       "visual": "algorithm",
       "visual_hint": "Update a Q-table as an agent explores a gridworld."
@@ -498,9 +554,9 @@
       "id": "ml_value_approx",
       "kind": "concept",
       "name": "Value Function Approximation",
-      "topic": "ml_rl",
+      "topic": "ml_rl_ml_q_learning",
       "description": "Value function approximation generalising value estimates across large or continuous state spaces using parameterised functions like linear models or networks.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "价值函数逼近"
     }
   ],

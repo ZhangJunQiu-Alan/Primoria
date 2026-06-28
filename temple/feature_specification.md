@@ -134,7 +134,7 @@ Prob：1. 如果用户输出用户过于模糊，或者用别名怎么确保好�
 3. 知识图谱（Knowledge Graph）： 由有概念节点（concept node）和关系边（relation edge）组成的图结构。知识图谱可以用来指导课程内容的生成和调整。部分的知识图谱可以划分为不同的topic。针对多个学科KG，允许跨图先修边。KG应该是全局，保持稳定，不会被用户数据所影响。
 4. KG和Course的关系: 一个学科的KG等于一个Course,比如微积分的KG就是微积分的Course.Agent建Lesson的时候会基于KG中的topic信息来建立.
 5. Relation edge代表concept之间的关系（目前只有先修关系，之后可以拓展推导，类比，应用关系）。
-6. concept node= 一个能独立出 quiz 题检验的最小概念。通常由 3–4 个 concept node 构成一个 topic 子图；极少数不可合理拆分的完整教学单元允许包含 5 个.
+6. concept node= 一个能独立出 quiz 题检验的最小概念。通常由 2–3 个 concept node 构成一个 topic 子图，确保单节 lesson 足够聚焦，并为后续每个 concept 的专属 quiz 留出空间.
 7. mastery状态：迭代一为最简单版本：untested / weak / learning / mastered,规则更新(连对 N 题升级、错题降级、先修节点出错连带标疑)
 8. default_order: 每个topic子图有一个default_order，代表这个topic在整个学科图谱中的先后顺序,用来指引学习路径。建Course系统在生成lesson时会优先选择default_order较小的topic。
 
@@ -148,10 +148,8 @@ PLUS:
 
 ## Todo
 
-1. Course UI，UX设计
-2. 建lesson Prompt加上用户的mastery状态
-3. 看看Course edit event
-4. 使用Treeindex 或者Pageindex 优化RAG
+1. 看看Course edit event
+2. 使用Treeindex 或者Pageindex 优化RAG
 
 ### 建课测试Prompt
 
@@ -159,3 +157,46 @@ PLUS:
 2. 带我入门光合作用的光反应和暗反应
 3. 我对算法感兴趣,从头教我
 4. 我就想弄明白冒泡排序
+
+## Extractor Agent
+
+- 定义: Extractor Agent 是一个 lesson 完成后的语义蒸馏后台 Agent。
+它读取某个用户在某一节 lesson 学习期间产生的 learning_events，结合 lesson / course / KG context、当前 user_concept_mastery 和已有用户画像，提炼出两类长期可复用信息：
+  - 核心层用户画像更新: 用户偏好、知识背景、认知卡点、心理状态等稳定特征。
+  - 第三层 episodic memory: 有语义检索价值的具体学习片段，例如某个误解、某次有效解释、某类反复提问、某个 concept 下的关键问答摘要。
+
+- 边界(不做什么):
+  - Extractor 不更新 user_concept_mastery
+  - Extractor 不决定是否插入 remediation lesson
+  - Extractor 不生成下一节 lesson
+  - Extractor 不替代 KG 定位
+  - Extractor 不生成完美笔记
+  - Extractor 不把所有事件都变成记忆
+  - Extractor 不因为用户说“我懂了”就判断 mastered
+
+- 工作位置: 独立的 extractor_jobs + 独立 worker,而不是给 learning-progress 加第三个 stage
+- 画像更新流程:读当前画像 + 本次 lesson 窗口的新事件 → LLM 产出更新后的画像(增量 merge)
+- 架构
+  - 核心层: 用户画像(偏好/知识背景)
+    | 类别 | 具体存什么 | 用来影响什么 |
+    | --- | --- | --- |
+    | 学习背景 | 用户目前学习和学过的Course信息 | 冷启动、课程难度、术语密度 |
+    | AI Tutor的交互偏好 | 喜欢直接答案、引导式提问、先提示再答案、多练习 | AI tutor 对话策略 |
+    | 解释偏好 | 喜欢先直觉、先例子、先公式、先代码、先图像 | lesson prompt 的讲解顺序 |
+    | 节奏/深度偏好 | 喜欢慢慢讲、快速过、严谨推导、实用实现 | 每个 concept 的展开程度 |
+
+  - 第二层: Concept Mastery:
+      作用:
+      1. 第三层的信息很杂乱,目前使用concept id来精准召回
+      2. 帮助Extractor做attention routing,如果learning_processing 更新出某个concept是weak就会重点关注这个concept相关的事件.
+      3. 判断对concpet的掌握程度应该交给Quiz evidence+规则系统来做,不然Extractor看到用户说"我懂了",有可能会被误导
+      4. 以后生成Lesson的时候,应该组合 EX: mastery: chain_rule = weak, episodic memory: 用户卡在“为什么乘内层导数”，机器嵌套类比有效
+  - 第三层: Episodic Memory
+
+
+
+
+
+Weak的concept如何提升到mastered?
+
+Block的配比需要调整,

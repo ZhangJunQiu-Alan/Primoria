@@ -2,7 +2,7 @@
   "graphId": "deep_learning",
   "subject": "Introduction to Deep Learning",
   "generatedFrom": "temple/deep_learning.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -42,7 +42,7 @@
           "hard": true
         },
         {
-          "topicId": "dl_architectures_transfer",
+          "topicId": "dl_architectures_transfer_dl_transfer_learning",
           "hard": true
         },
         {
@@ -88,7 +88,7 @@
           "hard": false
         },
         {
-          "topicId": "dl_optim_stability",
+          "topicId": "dl_optim_stability_dl_vanishing_grad",
           "hard": true
         }
       ],
@@ -143,8 +143,8 @@
     },
     {
       "topicId": "dl_optim_stability",
-      "name": "Optimization Stability",
-      "nameZh": "优化稳定性",
+      "name": "Adaptive Optimizers and Learning Rate Schedules",
+      "nameZh": "高级优化器与学习率衰减策略",
       "defaultOrder": 4,
       "conceptIds": [
         {
@@ -158,12 +158,25 @@
           "name": "Learning Rate Schedules",
           "nameZh": "学习率衰减策略",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "dl_optim"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "dl_optim_stability_dl_vanishing_grad",
+      "name": "Vanishing/Exploding Gradients and Weight Initialization",
+      "nameZh": "梯度消失与梯度爆炸与权重初始化",
+      "defaultOrder": 5,
+      "conceptIds": [
         {
           "conceptId": "dl_vanishing_grad",
           "name": "Vanishing/Exploding Gradients",
           "nameZh": "梯度消失与梯度爆炸",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "function",
           "visualHint": "Plot how gradients shrink or grow across many layers."
         },
@@ -171,7 +184,7 @@
           "conceptId": "dl_weight_init",
           "name": "Weight Initialization",
           "nameZh": "权重初始化",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -185,8 +198,7 @@
         }
       ],
       "prereqTopics": [
-        "dl_foundations_part2",
-        "dl_optim"
+        "dl_foundations_part2"
       ],
       "isRoot": false
     },
@@ -194,7 +206,7 @@
       "topicId": "dl_training",
       "name": "Regularization and Stabilization",
       "nameZh": "深度网络训练",
-      "defaultOrder": 5,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "dl_batchnorm",
@@ -218,7 +230,7 @@
       "successors": [],
       "prereqTopics": [
         "dl_optim",
-        "dl_optim_stability"
+        "dl_optim_stability_dl_vanishing_grad"
       ],
       "isRoot": false
     },
@@ -226,7 +238,7 @@
       "topicId": "dl_cnn",
       "name": "Convolutional Neural Networks",
       "nameZh": "CNN",
-      "defaultOrder": 6,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "dl_convolution",
@@ -264,9 +276,9 @@
     },
     {
       "topicId": "dl_architectures_transfer",
-      "name": "Deep Learning Architectures and Transfer",
-      "nameZh": "深度学习架构与迁移",
-      "defaultOrder": 7,
+      "name": "CNN Architectures and Residual Networks",
+      "nameZh": "CNN 架构与残差网络 (ResNet)",
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "dl_cnn_arch",
@@ -283,18 +295,37 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram a residual block with its skip connection."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "dl_architectures_transfer_dl_transfer_learning",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "dl_optim_stability_dl_vanishing_grad",
+        "dl_cnn"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "dl_architectures_transfer_dl_transfer_learning",
+      "name": "Transfer Learning and Recurrent Neural Networks",
+      "nameZh": "迁移学习与循环神经网络",
+      "defaultOrder": 9,
+      "conceptIds": [
         {
           "conceptId": "dl_transfer_learning",
           "name": "Transfer Learning",
           "nameZh": "迁移学习",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "dl_rnn",
           "name": "Recurrent Neural Networks",
           "nameZh": "循环神经网络",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram a recurrent cell unrolled over a sequence."
         }
@@ -311,16 +342,15 @@
       ],
       "prereqTopics": [
         "dl_foundations_part1",
-        "dl_optim_stability",
-        "dl_cnn"
+        "dl_architectures_transfer"
       ],
       "isRoot": false
     },
     {
       "topicId": "dl_rnn_seq",
-      "name": "Recurrent Neural Networks",
-      "nameZh": "RNN 序列",
-      "defaultOrder": 8,
+      "name": "Backpropagation Through Time and Long-Range Dependencies",
+      "nameZh": "时间反向传播与长期依赖问题",
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "dl_bptt",
@@ -333,12 +363,30 @@
           "name": "Long-Range Dependencies",
           "nameZh": "长期依赖问题",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "dl_rnn_seq_dl_lstm",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "dl_architectures_transfer_dl_transfer_learning"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "dl_rnn_seq_dl_lstm",
+      "name": "LSTM and GRU",
+      "nameZh": "LSTM/GRU 循环网络与门控循环单元 (GRU)",
+      "defaultOrder": 11,
+      "conceptIds": [
         {
           "conceptId": "dl_lstm",
           "name": "LSTM",
           "nameZh": "LSTM/GRU 循环网络",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "Diagram the LSTM input, forget, and output gates and cell state."
         },
@@ -346,12 +394,12 @@
           "conceptId": "dl_gru",
           "name": "GRU",
           "nameZh": "门控循环单元 (GRU)",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "dl_architectures_transfer"
+        "dl_rnn_seq"
       ],
       "isRoot": false
     },
@@ -359,7 +407,7 @@
       "topicId": "dl_attn_part1",
       "name": "Attention and Transformers: Mechanisms",
       "nameZh": "注意力与Transformer：注意力机制",
-      "defaultOrder": 9,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "dl_attention",
@@ -389,7 +437,7 @@
         }
       ],
       "prereqTopics": [
-        "dl_architectures_transfer"
+        "dl_architectures_transfer_dl_transfer_learning"
       ],
       "isRoot": false
     },
@@ -397,7 +445,7 @@
       "topicId": "dl_attn_part2",
       "name": "Attention and Transformers: Architecture and Pretraining",
       "nameZh": "注意力与Transformer：架构与预训练",
-      "defaultOrder": 10,
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "dl_positional",
@@ -430,7 +478,7 @@
       "topicId": "dl_generative_part1",
       "name": "Generative Models: Autoencoders and GANs",
       "nameZh": "生成模型：自编码器与GAN",
-      "defaultOrder": 11,
+      "defaultOrder": 14,
       "conceptIds": [
         {
           "conceptId": "dl_autoencoder",
@@ -466,7 +514,7 @@
       "topicId": "dl_generative_part2",
       "name": "Generative Models: Diffusion and Flows",
       "nameZh": "生成模型：扩散模型与流模型",
-      "defaultOrder": 12,
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "dl_gan_training",

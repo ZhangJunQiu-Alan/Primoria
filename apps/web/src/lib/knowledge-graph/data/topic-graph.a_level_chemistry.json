@@ -2,13 +2,13 @@
   "graphId": "a_level_chemistry",
   "subject": "Chemistry",
   "generatedFrom": "temple/a_level_chemistry.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
       "topicId": "che_atomic",
-      "name": "Atomic Structure",
-      "nameZh": "原子结构",
+      "name": "Subatomic Particles and Isotopes",
+      "nameZh": "亚原子粒子与同位素",
       "defaultOrder": 1,
       "conceptIds": [
         {
@@ -22,12 +22,28 @@
           "name": "Isotopes",
           "nameZh": "同位素",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "che_atomic_che_electron_config",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "che_atomic_che_electron_config",
+      "name": "Electronic Configuration and Ionisation Energy",
+      "nameZh": "电子排布与电离能",
+      "defaultOrder": 2,
+      "conceptIds": [
         {
           "conceptId": "che_electron_config",
           "name": "Electronic Configuration",
           "nameZh": "电子排布",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "Orbital filling diagram across shells and subshells."
         },
@@ -35,7 +51,7 @@
           "conceptId": "che_ionisation",
           "name": "Ionisation Energy",
           "nameZh": "电离能",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "chart",
           "visualHint": "Plot successive ionisation energies revealing shell structure."
         }
@@ -54,14 +70,16 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "che_atomic"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "che_stoichiometry",
-      "name": "Atoms, Molecules and Stoichiometry",
-      "nameZh": "原子、分子与化学计量",
-      "defaultOrder": 2,
+      "name": "The Mole and Avogadro Constant and Empirical and Molecular Formulae",
+      "nameZh": "摩尔与阿伏伽德罗常数与实验式与分子式",
+      "defaultOrder": 3,
       "conceptIds": [
         {
           "conceptId": "che_mole",
@@ -74,28 +92,12 @@
           "name": "Empirical and Molecular Formulae",
           "nameZh": "实验式与分子式",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "che_reacting_masses",
-          "name": "Reacting Masses and Gas Volumes",
-          "nameZh": "反应质量与气体体积",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "che_titration",
-          "name": "Concentration and Titration",
-          "nameZh": "浓度与滴定",
-          "defaultOrder": 4
         }
       ],
       "successors": [
         {
-          "topicId": "che_states_enthalpy",
-          "hard": false
-        },
-        {
-          "topicId": "che_equilibria_acidbase",
-          "hard": false
+          "topicId": "che_stoichiometry_che_reacting_masses",
+          "hard": true
         },
         {
           "topicId": "che_arenes_mass_spec",
@@ -106,10 +108,44 @@
       "isRoot": true
     },
     {
+      "topicId": "che_stoichiometry_che_reacting_masses",
+      "name": "Reacting Masses and Gas Volumes and Concentration and Titration",
+      "nameZh": "反应质量与气体体积与浓度与滴定",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "che_reacting_masses",
+          "name": "Reacting Masses and Gas Volumes",
+          "nameZh": "反应质量与气体体积",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "che_titration",
+          "name": "Concentration and Titration",
+          "nameZh": "浓度与滴定",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "che_states_enthalpy",
+          "hard": false
+        },
+        {
+          "topicId": "che_equilibria_acidbase_che_kc_kp",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "che_stoichiometry"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "che_bonding_part1",
       "name": "Chemical Bonding: Types of Bonds",
       "nameZh": "化学键：成键类型",
-      "defaultOrder": 3,
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "che_ionic",
@@ -144,7 +180,7 @@
           "hard": true
         },
         {
-          "topicId": "che_electrochem_thermo",
+          "topicId": "che_electrochem_thermo_che_born_haber",
           "hard": true
         },
         {
@@ -157,7 +193,7 @@
         }
       ],
       "prereqTopics": [
-        "che_atomic"
+        "che_atomic_che_electron_config"
       ],
       "isRoot": false
     },
@@ -165,7 +201,7 @@
       "topicId": "che_bonding_part2",
       "name": "Chemical Bonding: Shapes and Intermolecular Forces",
       "nameZh": "化学键：分子形状与分子间作用力",
-      "defaultOrder": 4,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "che_vsepr",
@@ -198,7 +234,7 @@
       "topicId": "che_states_enthalpy",
       "name": "States of Matter and Enthalpy",
       "nameZh": "物态与焓变",
-      "defaultOrder": 5,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "che_gas_laws",
@@ -234,7 +270,7 @@
         }
       ],
       "prereqTopics": [
-        "che_stoichiometry",
+        "che_stoichiometry_che_reacting_masses",
         "che_bonding_part1"
       ],
       "isRoot": false
@@ -243,7 +279,7 @@
       "topicId": "che_energetics",
       "name": "Chemical Energetics",
       "nameZh": "化学能",
-      "defaultOrder": 6,
+      "defaultOrder": 8,
       "conceptIds": [
         {
           "conceptId": "che_hess",
@@ -268,7 +304,7 @@
       ],
       "successors": [
         {
-          "topicId": "che_electrochem_thermo",
+          "topicId": "che_electrochem_thermo_che_born_haber",
           "hard": true
         }
       ],
@@ -281,7 +317,7 @@
       "topicId": "che_kinetics_part1",
       "name": "Reaction Kinetics: Rates and Collision Theory",
       "nameZh": "反应动力学：速率与碰撞理论",
-      "defaultOrder": 7,
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "che_rate",
@@ -317,7 +353,7 @@
       "topicId": "che_kinetics_part2",
       "name": "Reaction Kinetics: Rate Equations and Catalysis",
       "nameZh": "反应动力学：速率方程与催化",
-      "defaultOrder": 8,
+      "defaultOrder": 10,
       "conceptIds": [
         {
           "conceptId": "che_catalysis",
@@ -348,9 +384,9 @@
     },
     {
       "topicId": "che_equilibria_acidbase",
-      "name": "Equilibria and Acid-Base Foundations",
-      "nameZh": "化学平衡与酸碱基础",
-      "defaultOrder": 9,
+      "name": "Dynamic Equilibrium and Le Chatelier's Principle",
+      "nameZh": "动态平衡与勒夏特列原理",
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "che_dynamic_eq",
@@ -365,36 +401,57 @@
           "defaultOrder": 2,
           "visual": "interactive",
           "visualHint": "Shift an equilibrium with sliders for concentration, pressure, and temperature."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "che_equilibria_acidbase_che_kc_kp",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "che_equilibria_acidbase_che_kc_kp",
+      "name": "Equilibrium Constants Kc and Kp and Brønsted-Lowry Theory",
+      "nameZh": "平衡常数 Kc 与 Kp与布朗斯特-洛瑞理论",
+      "defaultOrder": 12,
+      "conceptIds": [
         {
           "conceptId": "che_kc_kp",
           "name": "Equilibrium Constants Kc and Kp",
           "nameZh": "平衡常数 Kc 与 Kp",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "che_bronsted",
           "name": "Brønsted-Lowry Theory",
           "nameZh": "布朗斯特-洛瑞理论",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
         {
           "topicId": "che_acids",
           "hard": true
+        },
+        {
+          "topicId": "che_acids_che_buffers",
+          "hard": true
         }
       ],
       "prereqTopics": [
-        "che_stoichiometry"
+        "che_stoichiometry_che_reacting_masses",
+        "che_equilibria_acidbase"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_acids",
-      "name": "Acids, Bases and Buffers",
-      "nameZh": "酸碱缓冲",
-      "defaultOrder": 10,
+      "name": "Strong and Weak Acids and pH and Acid Dissociation Constant",
+      "nameZh": "强酸与弱酸与pH 与酸解离常数",
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "che_strong_weak",
@@ -409,23 +466,42 @@
           "defaultOrder": 2,
           "visual": "function",
           "visualHint": "Plot a titration pH curve and locate the equivalence point."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "che_acids_che_buffers",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "che_equilibria_acidbase_che_kc_kp"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "che_acids_che_buffers",
+      "name": "Buffers and Solubility Product",
+      "nameZh": "缓冲剂与溶度积",
+      "defaultOrder": 14,
+      "conceptIds": [
         {
           "conceptId": "che_buffers",
           "name": "Buffers",
           "nameZh": "缓冲剂",
-          "defaultOrder": 3
+          "defaultOrder": 1
         },
         {
           "conceptId": "che_ksp",
           "name": "Solubility Product",
           "nameZh": "溶度积",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "che_equilibria_acidbase"
+        "che_equilibria_acidbase_che_kc_kp",
+        "che_acids"
       ],
       "isRoot": false
     },
@@ -433,7 +509,7 @@
       "topicId": "che_redox",
       "name": "Redox and Electrochemistry",
       "nameZh": "氧化还原与电化学",
-      "defaultOrder": 11,
+      "defaultOrder": 15,
       "conceptIds": [
         {
           "conceptId": "che_oxidation_number",
@@ -469,9 +545,9 @@
     },
     {
       "topicId": "che_electrochem_thermo",
-      "name": "Electrochemistry and Thermodynamic Cycles",
-      "nameZh": "电化学与热力学循环",
-      "defaultOrder": 12,
+      "name": "Electrochemical Cells and Electrolysis",
+      "nameZh": "电化学电池与电解",
+      "defaultOrder": 16,
       "conceptIds": [
         {
           "conceptId": "che_cells",
@@ -484,12 +560,25 @@
           "name": "Electrolysis",
           "nameZh": "电解",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "che_redox"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "che_electrochem_thermo_che_born_haber",
+      "name": "Lattice Energy and Born-Haber Cycles and Entropy",
+      "nameZh": "晶格能与玻恩-哈伯循环与熵",
+      "defaultOrder": 17,
+      "conceptIds": [
         {
           "conceptId": "che_born_haber",
           "name": "Lattice Energy and Born-Haber Cycles",
           "nameZh": "晶格能与玻恩-哈伯循环",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "Born-Haber cycle diagram of the lattice-energy enthalpy steps."
         },
@@ -497,7 +586,7 @@
           "conceptId": "che_entropy",
           "name": "Entropy",
           "nameZh": "熵",
-          "defaultOrder": 4
+          "defaultOrder": 2
         }
       ],
       "successors": [
@@ -508,8 +597,7 @@
       ],
       "prereqTopics": [
         "che_bonding_part1",
-        "che_energetics",
-        "che_redox"
+        "che_energetics"
       ],
       "isRoot": false
     },
@@ -517,7 +605,7 @@
       "topicId": "che_free_energy_periodicity",
       "name": "Free Energy and Periodicity",
       "nameZh": "自由能与周期性",
-      "defaultOrder": 13,
+      "defaultOrder": 18,
       "conceptIds": [
         {
           "conceptId": "che_gibbs",
@@ -547,9 +635,9 @@
         }
       ],
       "prereqTopics": [
-        "che_atomic",
+        "che_atomic_che_electron_config",
         "che_states_enthalpy",
-        "che_electrochem_thermo"
+        "che_electrochem_thermo_che_born_haber"
       ],
       "isRoot": false
     },
@@ -557,7 +645,7 @@
       "topicId": "che_groups",
       "name": "Inorganic Group Chemistry",
       "nameZh": "无机元素族化学",
-      "defaultOrder": 14,
+      "defaultOrder": 19,
       "conceptIds": [
         {
           "conceptId": "che_group2",
@@ -589,7 +677,7 @@
       "topicId": "che_transition",
       "name": "Transition Elements",
       "nameZh": "过渡金属元素",
-      "defaultOrder": 15,
+      "defaultOrder": 20,
       "conceptIds": [
         {
           "conceptId": "che_transition_props",
@@ -612,15 +700,15 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "che_atomic"
+        "che_atomic_che_electron_config"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_organic_basics",
-      "name": "Introduction to Organic Chemistry",
-      "nameZh": "有机化学入门",
-      "defaultOrder": 16,
+      "name": "Nomenclature and Isomerism",
+      "nameZh": "命名法与同分异构",
+      "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "che_nomenclature",
@@ -633,28 +721,16 @@
           "name": "Isomerism",
           "nameZh": "同分异构",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "che_bond_fission",
-          "name": "Bond Fission and Reactive Species",
-          "nameZh": "键断裂与反应物种",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "che_mechanism_types",
-          "name": "Reaction Mechanism Types",
-          "nameZh": "反应机理类型",
-          "defaultOrder": 4
         }
       ],
       "successors": [
         {
-          "topicId": "che_hydrocarbons",
-          "hard": true
+          "topicId": "che_organic_basics_che_bond_fission",
+          "hard": false
         },
         {
-          "topicId": "che_arenes_mass_spec",
-          "hard": false
+          "topicId": "che_hydrocarbons",
+          "hard": true
         },
         {
           "topicId": "che_analysis",
@@ -667,10 +743,44 @@
       "isRoot": false
     },
     {
+      "topicId": "che_organic_basics_che_bond_fission",
+      "name": "Bond Fission and Reactive Species and Reaction Mechanism Types",
+      "nameZh": "键断裂与反应物种与反应机理类型",
+      "defaultOrder": 22,
+      "conceptIds": [
+        {
+          "conceptId": "che_bond_fission",
+          "name": "Bond Fission and Reactive Species",
+          "nameZh": "键断裂与反应物种",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "che_mechanism_types",
+          "name": "Reaction Mechanism Types",
+          "nameZh": "反应机理类型",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "che_hydrocarbons",
+          "hard": false
+        },
+        {
+          "topicId": "che_arenes_mass_spec",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "che_organic_basics"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "che_hydrocarbons",
       "name": "Hydrocarbons",
       "nameZh": "烃",
-      "defaultOrder": 17,
+      "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "che_alkanes",
@@ -698,15 +808,16 @@
         }
       ],
       "prereqTopics": [
-        "che_organic_basics"
+        "che_organic_basics",
+        "che_organic_basics_che_bond_fission"
       ],
       "isRoot": false
     },
     {
       "topicId": "che_halogenoalkanes_alcohols",
-      "name": "Halogenoalkanes and Alcohols",
-      "nameZh": "卤代烃与醇",
-      "defaultOrder": 18,
+      "name": "Nucleophilic Substitution and Elimination Reactions",
+      "nameZh": "亲核取代与消去反应",
+      "defaultOrder": 24,
       "conceptIds": [
         {
           "conceptId": "che_nucleophilic_sub",
@@ -719,23 +830,11 @@
           "name": "Elimination Reactions",
           "nameZh": "消去反应",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions",
-          "nameZh": "醇的反应",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "che_alcohol_oxidation",
-          "name": "Oxidation of Alcohols",
-          "nameZh": "醇的氧化",
-          "defaultOrder": 4
         }
       ],
       "successors": [
         {
-          "topicId": "che_carbonyls",
+          "topicId": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
           "hard": true
         },
         {
@@ -749,10 +848,40 @@
       "isRoot": false
     },
     {
+      "topicId": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
+      "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
+      "nameZh": "醇的反应与醇的氧化",
+      "defaultOrder": 25,
+      "conceptIds": [
+        {
+          "conceptId": "che_alcohol_reactions",
+          "name": "Alcohols and Their Reactions",
+          "nameZh": "醇的反应",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "che_alcohol_oxidation",
+          "name": "Oxidation of Alcohols",
+          "nameZh": "醇的氧化",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "che_carbonyls",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "che_halogenoalkanes_alcohols"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "che_carbonyls",
       "name": "Carbonyl and Carboxylic Compounds",
       "nameZh": "羰基化合物",
-      "defaultOrder": 19,
+      "defaultOrder": 26,
       "conceptIds": [
         {
           "conceptId": "che_aldehydes_ketones",
@@ -780,7 +909,7 @@
         }
       ],
       "prereqTopics": [
-        "che_halogenoalkanes_alcohols"
+        "che_halogenoalkanes_alcohols_che_alcohol_reactions"
       ],
       "isRoot": false
     },
@@ -788,7 +917,7 @@
       "topicId": "che_nitrogen_org",
       "name": "Nitrogen Compounds and Polymers",
       "nameZh": "含氮化合物",
-      "defaultOrder": 20,
+      "defaultOrder": 27,
       "conceptIds": [
         {
           "conceptId": "che_amines",
@@ -820,7 +949,7 @@
       "topicId": "che_arenes_mass_spec",
       "name": "Arenes and Mass Spectrometry",
       "nameZh": "芳香烃与质谱分析",
-      "defaultOrder": 21,
+      "defaultOrder": 28,
       "conceptIds": [
         {
           "conceptId": "che_benzene",
@@ -852,7 +981,7 @@
       "prereqTopics": [
         "che_stoichiometry",
         "che_bonding_part1",
-        "che_organic_basics"
+        "che_organic_basics_che_bond_fission"
       ],
       "isRoot": false
     },
@@ -860,7 +989,7 @@
       "topicId": "che_analysis",
       "name": "Analytical Techniques",
       "nameZh": "分析技术",
-      "defaultOrder": 22,
+      "defaultOrder": 29,
       "conceptIds": [
         {
           "conceptId": "che_ir",

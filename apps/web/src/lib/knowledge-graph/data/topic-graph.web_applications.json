@@ -2,7 +2,7 @@
   "graphId": "web_applications",
   "subject": "Web Applications",
   "generatedFrom": "temple/web_applications.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -36,7 +36,7 @@
       ],
       "successors": [
         {
-          "topicId": "web_backend",
+          "topicId": "web_backend_web_rest",
           "hard": true
         }
       ],
@@ -125,8 +125,8 @@
     },
     {
       "topicId": "web_backend",
-      "name": "Backend Technologies",
-      "nameZh": "后端技术",
+      "name": "Node.js and Express and Routing",
+      "nameZh": "Node.js与Express 与路由",
       "defaultOrder": 4,
       "conceptIds": [
         {
@@ -142,12 +142,30 @@
           "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Diagram an Express request passing through routing and middleware."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "web_backend_web_rest",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "web_frontend_part1"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "web_backend_web_rest",
+      "name": "REST APIs and Authentication and Sessions",
+      "nameZh": "REST API与认证与会话",
+      "defaultOrder": 5,
+      "conceptIds": [
         {
           "conceptId": "web_rest",
           "name": "REST APIs",
           "nameZh": "REST API",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "diagram",
           "visualHint": "Diagram REST resources and their HTTP-method operations."
         },
@@ -155,7 +173,7 @@
           "conceptId": "web_auth",
           "name": "Authentication and Sessions",
           "nameZh": "认证与会话",
-          "defaultOrder": 4,
+          "defaultOrder": 2,
           "visual": "diagram",
           "visualHint": "Sequence diagram of authentication establishing a session."
         }
@@ -172,7 +190,7 @@
       ],
       "prereqTopics": [
         "web_foundations",
-        "web_frontend_part1"
+        "web_backend"
       ],
       "isRoot": false
     },
@@ -180,7 +198,7 @@
       "topicId": "web_data",
       "name": "Databases",
       "nameZh": "数据库",
-      "defaultOrder": 5,
+      "defaultOrder": 6,
       "conceptIds": [
         {
           "conceptId": "web_relational",
@@ -208,7 +226,7 @@
         }
       ],
       "prereqTopics": [
-        "web_backend"
+        "web_backend_web_rest"
       ],
       "isRoot": false
     },
@@ -216,7 +234,7 @@
       "topicId": "web_security",
       "name": "Web Security",
       "nameZh": "Web 安全",
-      "defaultOrder": 6,
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "web_xss",
@@ -240,7 +258,7 @@
       "successors": [],
       "prereqTopics": [
         "web_frontend_part2",
-        "web_backend",
+        "web_backend_web_rest",
         "web_data"
       ],
       "isRoot": false

@@ -36,10 +36,186 @@
     {
       "id": "t1",
       "kind": "topic",
-      "name": "Data Representation",
+      "name": "Bits and Bytes and Integer Representation",
       "topic": null,
       "default_order": 1,
-      "name_zh": "数据表示"
+      "name_zh": "比特与字节与整数表示"
+    },
+    {
+      "id": "t1_c1_3",
+      "kind": "topic",
+      "name": "Integer Arithmetic and Floating Point Representation",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "整数运算与浮点数表示"
+    },
+    {
+      "id": "t_float_machine_ops",
+      "kind": "topic",
+      "name": "Floating Point Operations and x86-64 Data Movement",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "浮点运算与x86-64数据传输"
+    },
+    {
+      "id": "t_float_machine_ops_c2_2",
+      "kind": "topic",
+      "name": "Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "算术与逻辑运算与控制流"
+    },
+    {
+      "id": "t_procedures_arch",
+      "kind": "topic",
+      "name": "Procedures and Call Stack and Arrays and Structs",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "过程与调用栈与数组与结构体"
+    },
+    {
+      "id": "t_procedures_arch_c3_1",
+      "kind": "topic",
+      "name": "Instruction Set Architecture (Y86-64) and Sequential CPU Implementation",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "指令集体系结构与顺序CPU实现"
+    },
+    {
+      "id": "t3",
+      "kind": "topic",
+      "name": "Processor Architecture",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "处理器体系结构"
+    },
+    {
+      "id": "t4",
+      "kind": "topic",
+      "name": "Code Optimization",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "代码优化"
+    },
+    {
+      "id": "t_optimization_locality",
+      "kind": "topic",
+      "name": "Memory Aliasing and Profiling Tools",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "内存别名与性能分析工具"
+    },
+    {
+      "id": "t_optimization_locality_c5_1",
+      "kind": "topic",
+      "name": "Storage Technologies and Principle of Locality",
+      "topic": null,
+      "default_order": 10,
+      "name_zh": "存储技术与局部性原理"
+    },
+    {
+      "id": "t5",
+      "kind": "topic",
+      "name": "Memory Hierarchy and Cache",
+      "topic": null,
+      "default_order": 11,
+      "name_zh": "存储层次与缓存"
+    },
+    {
+      "id": "t6",
+      "kind": "topic",
+      "name": "Linking",
+      "topic": null,
+      "default_order": 12,
+      "name_zh": "链接"
+    },
+    {
+      "id": "t_linking_processes",
+      "kind": "topic",
+      "name": "Relocation and Dynamic Linking",
+      "topic": null,
+      "default_order": 13,
+      "name_zh": "重定位与动态链接"
+    },
+    {
+      "id": "t_linking_processes_c7_1",
+      "kind": "topic",
+      "name": "Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches",
+      "topic": null,
+      "default_order": 14,
+      "name_zh": "异常与进程与上下文切换"
+    },
+    {
+      "id": "t7",
+      "kind": "topic",
+      "name": "Exceptional Control Flow",
+      "topic": null,
+      "default_order": 15,
+      "name_zh": "异常控制流"
+    },
+    {
+      "id": "t8",
+      "kind": "topic",
+      "name": "Virtual Memory",
+      "topic": null,
+      "default_order": 16,
+      "name_zh": "虚拟内存"
+    },
+    {
+      "id": "t_memmgmt_unixio",
+      "kind": "topic",
+      "name": "Dynamic Memory Allocation and Garbage Collection Basics",
+      "topic": null,
+      "default_order": 17,
+      "name_zh": "动态内存分配与垃圾回收基础"
+    },
+    {
+      "id": "t_memmgmt_unixio_c9_1",
+      "kind": "topic",
+      "name": "Unix I/O and File Metadata",
+      "topic": null,
+      "default_order": 18,
+      "name_zh": "Unix 输入输出与文件元数据"
+    },
+    {
+      "id": "t9",
+      "kind": "topic",
+      "name": "System-Level I/O",
+      "topic": null,
+      "default_order": 19,
+      "name_zh": "系统级I/O"
+    },
+    {
+      "id": "t10",
+      "kind": "topic",
+      "name": "Network Programming",
+      "topic": null,
+      "default_order": 20,
+      "name_zh": "网络编程"
+    },
+    {
+      "id": "t_network_concurrency",
+      "kind": "topic",
+      "name": "Sockets Interface and HTTP Protocol Basics",
+      "topic": null,
+      "default_order": 21,
+      "name_zh": "套接字接口与HTTP协议基础"
+    },
+    {
+      "id": "t_network_concurrency_c11_1",
+      "kind": "topic",
+      "name": "Thread Basics and Shared Variables",
+      "topic": null,
+      "default_order": 22,
+      "name_zh": "线程基础与共享变量"
+    },
+    {
+      "id": "t11",
+      "kind": "topic",
+      "name": "Concurrent Programming",
+      "topic": null,
+      "default_order": 23,
+      "name_zh": "并发编程"
     },
     {
       "id": "c1_1",
@@ -64,30 +240,22 @@
     {
       "id": "c1_3",
       "name": "Integer Arithmetic",
-      "topic": "t1",
+      "topic": "t1_c1_3",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Addition, subtraction, and multiplication on fixed-width integers, including modular wraparound and overflow that follow from finite two's-complement and unsigned encodings.",
       "name_zh": "整数运算"
     },
     {
       "id": "c1_4",
       "name": "Floating Point Representation",
-      "topic": "t1",
+      "topic": "t1_c1_3",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "The IEEE 754 standard encoding real numbers as sign, biased exponent, and fraction fields, supporting normalised, denormalised, infinity, and NaN values.",
       "name_zh": "浮点数表示",
       "visual": "diagram",
       "visual_hint": "Diagram the IEEE 754 sign, exponent, and fraction fields."
-    },
-    {
-      "id": "t_float_machine_ops",
-      "kind": "topic",
-      "name": "Floating-Point and Machine-Level Operations",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "浮点数与机器级运算"
     },
     {
       "id": "c1_5",
@@ -110,28 +278,20 @@
     {
       "id": "c2_2",
       "name": "Arithmetic and Logical Operations",
-      "topic": "t_float_machine_ops",
+      "topic": "t_float_machine_ops_c2_2",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "x86-64 instructions performing integer arithmetic, bitwise logic, and shifts on registers and memory, updating condition-code flags used by later conditional instructions.",
       "name_zh": "算术与逻辑运算"
     },
     {
       "id": "c2_3",
       "name": "Control Flow (Conditionals and Loops)",
-      "topic": "t_float_machine_ops",
+      "topic": "t_float_machine_ops_c2_2",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Implementing conditionals and loops in assembly using condition-code flags, conditional jumps, and comparison instructions to direct the processor's instruction stream.",
       "name_zh": "控制流"
-    },
-    {
-      "id": "t_procedures_arch",
-      "kind": "topic",
-      "name": "Procedures and Processor Architecture",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "过程调用与处理器体系"
     },
     {
       "id": "c2_4",
@@ -158,28 +318,20 @@
     {
       "id": "c3_1",
       "name": "Instruction Set Architecture (Y86-64)",
-      "topic": "t_procedures_arch",
+      "topic": "t_procedures_arch_c3_1",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "The Y86-64 instruction set, a simplified teaching ISA defining registers, instruction encodings, and semantics used to study processor implementation.",
       "name_zh": "指令集体系结构"
     },
     {
       "id": "c3_2",
       "name": "Sequential CPU Implementation",
-      "topic": "t_procedures_arch",
+      "topic": "t_procedures_arch_c3_1",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "A sequential processor design executing each instruction through fetch, decode, execute, memory, and write-back stages within a single clock cycle.",
       "name_zh": "顺序CPU实现"
-    },
-    {
-      "id": "t3",
-      "kind": "topic",
-      "name": "Processor Architecture",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "处理器体系结构"
     },
     {
       "id": "c3_3",
@@ -213,14 +365,6 @@
       "name_zh": "流水线异常"
     },
     {
-      "id": "t4",
-      "kind": "topic",
-      "name": "Code Optimization",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "代码优化"
-    },
-    {
       "id": "c4_1",
       "name": "Compiler Limitations",
       "topic": "t4",
@@ -248,14 +392,6 @@
       "name_zh": "指令级并行"
     },
     {
-      "id": "t_optimization_locality",
-      "kind": "topic",
-      "name": "Optimization and Memory Locality",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "程序优化与内存局部性"
-    },
-    {
       "id": "c4_4",
       "name": "Memory Aliasing",
       "topic": "t_optimization_locality",
@@ -276,28 +412,20 @@
     {
       "id": "c5_1",
       "name": "Storage Technologies",
-      "topic": "t_optimization_locality",
+      "topic": "t_optimization_locality_c5_1",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Characteristics and trends of storage technologies such as SRAM, DRAM, disks, and SSDs, differing in speed, capacity, volatility, and cost per byte.",
       "name_zh": "存储技术"
     },
     {
       "id": "c5_2",
       "name": "Principle of Locality",
-      "topic": "t_optimization_locality",
+      "topic": "t_optimization_locality_c5_1",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Programs tend to reuse recently accessed data (temporal locality) and nearby data (spatial locality), a behaviour that caching exploits to improve performance.",
       "name_zh": "局部性原理"
-    },
-    {
-      "id": "t5",
-      "kind": "topic",
-      "name": "Memory Hierarchy and Cache",
-      "topic": null,
-      "default_order": 7,
-      "name_zh": "存储层次与缓存"
     },
     {
       "id": "c5_3",
@@ -329,14 +457,6 @@
       "name_zh": "缓存友好代码"
     },
     {
-      "id": "t6",
-      "kind": "topic",
-      "name": "Linking",
-      "topic": null,
-      "default_order": 8,
-      "name_zh": "链接"
-    },
-    {
       "id": "c6_1",
       "name": "Static Linking",
       "topic": "t6",
@@ -364,14 +484,6 @@
       "name_zh": "符号解析"
     },
     {
-      "id": "t_linking_processes",
-      "kind": "topic",
-      "name": "Linking, Exceptions and Processes",
-      "topic": null,
-      "default_order": 9,
-      "name_zh": "链接、异常与进程"
-    },
-    {
       "id": "c6_4",
       "name": "Relocation",
       "topic": "t_linking_processes",
@@ -392,30 +504,22 @@
     {
       "id": "c7_1",
       "name": "Exceptions (Traps, Interrupts, Faults)",
-      "topic": "t_linking_processes",
+      "topic": "t_linking_processes_c7_1",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel.",
       "name_zh": "异常"
     },
     {
       "id": "c7_2",
       "name": "Processes and Context Switches",
-      "topic": "t_linking_processes",
+      "topic": "t_linking_processes_c7_1",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "The process abstraction giving each program a private address space and logical control flow, switched by the kernel saving and restoring context.",
       "name_zh": "进程与上下文切换",
       "visual": "diagram",
       "visual_hint": "Diagram a context switch between processes."
-    },
-    {
-      "id": "t7",
-      "kind": "topic",
-      "name": "Exceptional Control Flow",
-      "topic": null,
-      "default_order": 10,
-      "name_zh": "异常控制流"
     },
     {
       "id": "c7_3",
@@ -443,14 +547,6 @@
       "default_order": 3,
       "description": "Transferring control across function boundaries using setjmp and longjmp, bypassing the normal call-return discipline for error recovery.",
       "name_zh": "非局部跳转"
-    },
-    {
-      "id": "t8",
-      "kind": "topic",
-      "name": "Virtual Memory",
-      "topic": null,
-      "default_order": 11,
-      "name_zh": "虚拟内存"
     },
     {
       "id": "c8_1",
@@ -484,14 +580,6 @@
       "name_zh": "地址转换后备缓冲器（TLB）"
     },
     {
-      "id": "t_memmgmt_unixio",
-      "kind": "topic",
-      "name": "Memory Management and Unix I/O",
-      "topic": null,
-      "default_order": 12,
-      "name_zh": "内存管理与 Unix 输入输出"
-    },
-    {
       "id": "c8_4",
       "name": "Dynamic Memory Allocation",
       "topic": "t_memmgmt_unixio",
@@ -512,28 +600,20 @@
     {
       "id": "c9_1",
       "name": "Unix I/O",
-      "topic": "t_memmgmt_unixio",
+      "topic": "t_memmgmt_unixio_c9_1",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "The Unix model treating files, devices, and sockets uniformly through descriptors and the open, read, write, and close system calls.",
       "name_zh": "Unix 输入输出"
     },
     {
       "id": "c9_2",
       "name": "File Metadata",
-      "topic": "t_memmgmt_unixio",
+      "topic": "t_memmgmt_unixio_c9_1",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Information about a file stored separately from its contents, such as size, permissions, and timestamps, accessed via the stat system call.",
       "name_zh": "文件元数据"
-    },
-    {
-      "id": "t9",
-      "kind": "topic",
-      "name": "System-Level I/O",
-      "topic": null,
-      "default_order": 13,
-      "name_zh": "系统级I/O"
     },
     {
       "id": "c9_3",
@@ -563,14 +643,6 @@
       "name_zh": "I/O重定向"
     },
     {
-      "id": "t10",
-      "kind": "topic",
-      "name": "Network Programming",
-      "topic": null,
-      "default_order": 14,
-      "name_zh": "网络编程"
-    },
-    {
       "id": "c10_1",
       "name": "Client-Server Model",
       "topic": "t10",
@@ -598,14 +670,6 @@
       "name_zh": "TCP协议"
     },
     {
-      "id": "t_network_concurrency",
-      "kind": "topic",
-      "name": "Network and Concurrent Programming",
-      "topic": null,
-      "default_order": 15,
-      "name_zh": "网络与并发编程"
-    },
-    {
       "id": "c10_4",
       "name": "Sockets Interface",
       "topic": "t_network_concurrency",
@@ -626,28 +690,20 @@
     {
       "id": "c11_1",
       "name": "Thread Basics",
-      "topic": "t_network_concurrency",
+      "topic": "t_network_concurrency_c11_1",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Threads as independent logical flows sharing a process's address space, created and joined to achieve concurrency within a single process.",
       "name_zh": "线程基础"
     },
     {
       "id": "c11_2",
       "name": "Shared Variables",
-      "topic": "t_network_concurrency",
+      "topic": "t_network_concurrency_c11_1",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "How threads share global and heap variables, and the memory model determining when one thread's writes become visible to others.",
       "name_zh": "共享变量"
-    },
-    {
-      "id": "t11",
-      "kind": "topic",
-      "name": "Concurrent Programming",
-      "topic": null,
-      "default_order": 16,
-      "name_zh": "并发编程"
     },
     {
       "id": "c11_3",

@@ -2,7 +2,7 @@
   "graphId": "information_theory",
   "subject": "Information Theory and Entropy",
   "generatedFrom": "temple/information_theory.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {

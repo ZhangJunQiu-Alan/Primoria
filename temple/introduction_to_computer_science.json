@@ -19,6 +19,142 @@
       "name_zh": "Scratch"
     },
     {
+      "id": "topic_control_flow_c",
+      "kind": "topic",
+      "name": "Control Flow and C Foundations",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "控制流与 C 语言基础"
+    },
+    {
+      "id": "topic_week1",
+      "kind": "topic",
+      "name": "C Programming",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "C 语言"
+    },
+    {
+      "id": "topic_week2",
+      "kind": "topic",
+      "name": "Debugging and Arrays",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "调试与数组"
+    },
+    {
+      "id": "topic_week2_strings",
+      "kind": "topic",
+      "name": "Strings and Command-line Arguments",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "字符串与命令行参数"
+    },
+    {
+      "id": "topic_week3",
+      "kind": "topic",
+      "name": "Algorithms",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "算法"
+    },
+    {
+      "id": "topic_complexity_memory",
+      "kind": "topic",
+      "name": "Algorithmic Complexity and Memory",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "算法复杂度与内存"
+    },
+    {
+      "id": "topic_week4",
+      "kind": "topic",
+      "name": "Memory",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "内存"
+    },
+    {
+      "id": "topic_week5",
+      "kind": "topic",
+      "name": "Data Structures",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "数据结构"
+    },
+    {
+      "id": "topic_adv_data_python",
+      "kind": "topic",
+      "name": "Advanced Data Structures and Python",
+      "topic": null,
+      "default_order": 10,
+      "name_zh": "高级数据结构与 Python"
+    },
+    {
+      "id": "topic_week6",
+      "kind": "topic",
+      "name": "Python",
+      "topic": null,
+      "default_order": 11,
+      "name_zh": "Python"
+    },
+    {
+      "id": "topic_week7",
+      "kind": "topic",
+      "name": "Relational Databases and SQL Queries",
+      "topic": null,
+      "default_order": 12,
+      "name_zh": "关系数据库与SQL查询"
+    },
+    {
+      "id": "topic_week7_joins",
+      "kind": "topic",
+      "name": "SQL Joins and SQL Indexes",
+      "topic": null,
+      "default_order": 13,
+      "name_zh": "SQL连接与SQL索引"
+    },
+    {
+      "id": "topic_week8",
+      "kind": "topic",
+      "name": "HTML and CSS",
+      "topic": null,
+      "default_order": 14,
+      "name_zh": "HTML与CSS"
+    },
+    {
+      "id": "topic_week8_js",
+      "kind": "topic",
+      "name": "JavaScript and DOM Manipulation",
+      "topic": null,
+      "default_order": 15,
+      "name_zh": "JavaScript与DOM 操作"
+    },
+    {
+      "id": "topic_week9",
+      "kind": "topic",
+      "name": "Flask",
+      "topic": null,
+      "default_order": 16,
+      "name_zh": "Flask"
+    },
+    {
+      "id": "topic_web_state_security",
+      "kind": "topic",
+      "name": "Web State, APIs and Security",
+      "topic": null,
+      "default_order": 17,
+      "name_zh": "Web 状态、API 与安全"
+    },
+    {
+      "id": "topic_week10",
+      "kind": "topic",
+      "name": "Cybersecurity",
+      "topic": null,
+      "default_order": 18,
+      "name_zh": "网络安全"
+    },
+    {
       "id": "c_functions",
       "name": "Functions",
       "topic": "topic_week0",
@@ -44,14 +180,6 @@
       "default_order": 3,
       "description": "Conditional statements that execute different code branches depending on whether a boolean expression evaluates to true or false.",
       "name_zh": "条件语句"
-    },
-    {
-      "id": "topic_control_flow_c",
-      "kind": "topic",
-      "name": "Control Flow and C Foundations",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "控制流与 C 语言基础"
     },
     {
       "id": "c_loops",
@@ -81,14 +209,6 @@
       "name_zh": "C 语法"
     },
     {
-      "id": "topic_week1",
-      "kind": "topic",
-      "name": "C Programming",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "C 语言"
-    },
-    {
       "id": "c_data_types",
       "name": "Data Types",
       "topic": "topic_week1",
@@ -116,14 +236,6 @@
       "name_zh": "编译过程"
     },
     {
-      "id": "topic_week2",
-      "kind": "topic",
-      "name": "Arrays",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "数组"
-    },
-    {
       "id": "c_debugging",
       "name": "Debugging",
       "topic": "topic_week2",
@@ -144,28 +256,20 @@
     {
       "id": "c_strings",
       "name": "Strings",
-      "topic": "topic_week2",
+      "topic": "topic_week2_strings",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "Sequences of characters represented in C as null-terminated arrays of chars, manipulated through library functions and pointer operations.",
       "name_zh": "字符串"
     },
     {
       "id": "c_cli_args",
       "name": "Command-line Arguments",
-      "topic": "topic_week2",
+      "topic": "topic_week2_strings",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Arguments passed to a program at launch, received through argc and argv, letting users configure behaviour from the command line.",
       "name_zh": "命令行参数"
-    },
-    {
-      "id": "topic_week3",
-      "kind": "topic",
-      "name": "Algorithms",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "算法"
     },
     {
       "id": "c_linear_search",
@@ -201,14 +305,6 @@
       "visual_hint": "Animate bubble, selection, and merge sort rearranging an array."
     },
     {
-      "id": "topic_complexity_memory",
-      "kind": "topic",
-      "name": "Algorithmic Complexity and Memory",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "算法复杂度与内存"
-    },
-    {
       "id": "c_recursion",
       "name": "Recursion",
       "topic": "topic_complexity_memory",
@@ -242,14 +338,6 @@
       "visual_hint": "Box-and-pointer diagram of variables holding memory addresses."
     },
     {
-      "id": "topic_week4",
-      "kind": "topic",
-      "name": "Memory",
-      "topic": null,
-      "default_order": 7,
-      "name_zh": "内存"
-    },
-    {
       "id": "c_malloc",
       "name": "Dynamic Memory Allocation",
       "topic": "topic_week4",
@@ -277,14 +365,6 @@
       "default_order": 3,
       "description": "Reading from and writing to files using library functions, enabling programs to persist and retrieve data beyond their execution.",
       "name_zh": "文件I/O"
-    },
-    {
-      "id": "topic_week5",
-      "kind": "topic",
-      "name": "Data Structures",
-      "topic": null,
-      "default_order": 8,
-      "name_zh": "数据结构"
     },
     {
       "id": "c_linked_lists",
@@ -320,14 +400,6 @@
       "visual_hint": "Insert and search nodes in a binary search tree."
     },
     {
-      "id": "topic_adv_data_python",
-      "kind": "topic",
-      "name": "Advanced Data Structures and Python",
-      "topic": null,
-      "default_order": 9,
-      "name_zh": "高级数据结构与 Python"
-    },
-    {
       "id": "c_tries",
       "name": "Tries",
       "topic": "topic_adv_data_python",
@@ -357,14 +429,6 @@
       "name_zh": "Python 语法"
     },
     {
-      "id": "topic_week6",
-      "kind": "topic",
-      "name": "Python",
-      "topic": null,
-      "default_order": 10,
-      "name_zh": "Python"
-    },
-    {
       "id": "c_lists_dicts",
       "name": "Lists and Dictionaries",
       "topic": "topic_week6",
@@ -392,14 +456,6 @@
       "name_zh": "异常"
     },
     {
-      "id": "topic_week7",
-      "kind": "topic",
-      "name": "SQL",
-      "topic": null,
-      "default_order": 11,
-      "name_zh": "SQL"
-    },
-    {
       "id": "c_relational_db",
       "name": "Relational Databases",
       "topic": "topic_week7",
@@ -420,28 +476,20 @@
     {
       "id": "c_joins",
       "name": "SQL Joins",
-      "topic": "topic_week7",
+      "topic": "topic_week7_joins",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "SQL joins combining rows from multiple tables based on related columns, enabling queries that span relationships between tables.",
       "name_zh": "SQL连接"
     },
     {
       "id": "c_indexes",
       "name": "SQL Indexes",
-      "topic": "topic_week7",
+      "topic": "topic_week7_joins",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "Database indexes, auxiliary structures that speed up lookups on chosen columns at the cost of extra storage and slower writes.",
       "name_zh": "SQL索引"
-    },
-    {
-      "id": "topic_week8",
-      "kind": "topic",
-      "name": "HTML, CSS, JavaScript",
-      "topic": null,
-      "default_order": 12,
-      "name_zh": "HTML、CSS、JavaScript"
     },
     {
       "id": "c_html",
@@ -464,30 +512,22 @@
     {
       "id": "c_js",
       "name": "JavaScript",
-      "topic": "topic_week8",
+      "topic": "topic_week8_js",
       "kind": "concept",
-      "default_order": 3,
+      "default_order": 1,
       "description": "JavaScript, the browser's programming language adding interactivity and dynamic behaviour to web pages through an event-driven model.",
       "name_zh": "JavaScript"
     },
     {
       "id": "c_dom",
       "name": "DOM Manipulation",
-      "topic": "topic_week8",
+      "topic": "topic_week8_js",
       "kind": "concept",
-      "default_order": 4,
+      "default_order": 2,
       "description": "The Document Object Model, a tree representation of a web page that JavaScript can read and modify to update content dynamically.",
       "name_zh": "DOM 操作",
       "visual": "diagram",
       "visual_hint": "Tree diagram of the DOM nodes of a web page."
-    },
-    {
-      "id": "topic_week9",
-      "kind": "topic",
-      "name": "Flask",
-      "topic": null,
-      "default_order": 13,
-      "name_zh": "Flask"
     },
     {
       "id": "c_http",
@@ -517,14 +557,6 @@
       "name_zh": "MVC 架构"
     },
     {
-      "id": "topic_web_state_security",
-      "kind": "topic",
-      "name": "Web State, APIs and Security",
-      "topic": null,
-      "default_order": 14,
-      "name_zh": "Web 状态、API 与安全"
-    },
-    {
       "id": "c_sessions",
       "name": "Sessions and Cookies",
       "topic": "topic_web_state_security",
@@ -550,14 +582,6 @@
       "default_order": 3,
       "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information.",
       "name_zh": "网络安全基础"
-    },
-    {
-      "id": "topic_week10",
-      "kind": "topic",
-      "name": "Cybersecurity",
-      "topic": null,
-      "default_order": 15,
-      "name_zh": "网络安全"
     },
     {
       "id": "c_encryption",

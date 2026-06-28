@@ -2,7 +2,7 @@
   "graphId": "artificial_intelligence",
   "subject": "Introduction to Artificial Intelligence",
   "generatedFrom": "temple/artificial_intelligence.json",
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-28",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {
@@ -84,8 +84,8 @@
     },
     {
       "topicId": "ai_csp",
-      "name": "Constraint Satisfaction",
-      "nameZh": "约束满足",
+      "name": "Constraint Satisfaction Problems and Backtracking Search",
+      "nameZh": "约束满足问题与回溯搜索",
       "defaultOrder": 3,
       "conceptIds": [
         {
@@ -101,31 +101,49 @@
           "defaultOrder": 2,
           "visual": "algorithm",
           "visualHint": "Animate backtracking search assigning CSP variables and backing up on failure."
-        },
-        {
-          "conceptId": "ai_arc_consistency",
-          "name": "Constraint Propagation",
-          "nameZh": "约束传播",
-          "defaultOrder": 3
-        },
-        {
-          "conceptId": "ai_local_search",
-          "name": "Local Search",
-          "nameZh": "局部搜索",
-          "defaultOrder": 4
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "ai_csp_ai_arc_consistency",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
         "ai_search_part1"
       ],
       "isRoot": false
     },
     {
-      "topicId": "ai_mdp",
-      "name": "Markov Decision Processes",
-      "nameZh": "马尔可夫决策过程",
+      "topicId": "ai_csp_ai_arc_consistency",
+      "name": "Constraint Propagation and Local Search",
+      "nameZh": "约束传播与局部搜索",
       "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "ai_arc_consistency",
+          "name": "Constraint Propagation",
+          "nameZh": "约束传播",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "ai_local_search",
+          "name": "Local Search",
+          "nameZh": "局部搜索",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "ai_csp"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "ai_mdp",
+      "name": "Markov Decision Processes and Bellman Equations",
+      "nameZh": "马尔可夫决策过程与Bellman方程",
+      "defaultOrder": 5,
       "conceptIds": [
         {
           "conceptId": "ai_mdp_def",
@@ -138,23 +156,13 @@
           "name": "Bellman Equations",
           "nameZh": "Bellman方程",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "ai_value_iteration",
-          "name": "Value Iteration",
-          "nameZh": "价值迭代",
-          "defaultOrder": 3,
-          "visual": "algorithm",
-          "visualHint": "Iterate MDP state values on a grid until convergence."
-        },
-        {
-          "conceptId": "ai_policy_iteration",
-          "name": "Policy Iteration",
-          "nameZh": "策略迭代",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "ai_mdp_ai_value_iteration",
+          "hard": true
+        },
         {
           "topicId": "ai_rl",
           "hard": true
@@ -164,10 +172,37 @@
       "isRoot": true
     },
     {
+      "topicId": "ai_mdp_ai_value_iteration",
+      "name": "Value Iteration and Policy Iteration",
+      "nameZh": "价值迭代与策略迭代",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "ai_value_iteration",
+          "name": "Value Iteration",
+          "nameZh": "价值迭代",
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Iterate MDP state values on a grid until convergence."
+        },
+        {
+          "conceptId": "ai_policy_iteration",
+          "name": "Policy Iteration",
+          "nameZh": "策略迭代",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "ai_mdp"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "ai_rl",
-      "name": "Reinforcement Learning",
-      "nameZh": "强化学习",
-      "defaultOrder": 5,
+      "name": "Reinforcement Learning Framework and Temporal Difference Learning",
+      "nameZh": "强化学习框架与时序差分学习",
+      "defaultOrder": 7,
       "conceptIds": [
         {
           "conceptId": "ai_rl_framework",
@@ -180,12 +215,30 @@
           "name": "Temporal Difference Learning",
           "nameZh": "时序差分学习",
           "defaultOrder": 2
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "ai_rl_ai_qlearning",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "ai_mdp"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "ai_rl_ai_qlearning",
+      "name": "Q-Learning, Exploration vs Exploitation, and Approximate Q-Learning",
+      "nameZh": "Q学习、探索与利用与近似Q学习",
+      "defaultOrder": 8,
+      "conceptIds": [
         {
           "conceptId": "ai_qlearning",
           "name": "Q-Learning",
           "nameZh": "Q学习",
-          "defaultOrder": 3,
+          "defaultOrder": 1,
           "visual": "algorithm",
           "visualHint": "Update a Q-table as an agent moves through a gridworld."
         },
@@ -193,26 +246,26 @@
           "conceptId": "ai_exploration",
           "name": "Exploration vs Exploitation",
           "nameZh": "探索与利用",
-          "defaultOrder": 4
+          "defaultOrder": 2
         },
         {
           "conceptId": "ai_approx_q",
           "name": "Approximate Q-Learning",
           "nameZh": "近似Q学习",
-          "defaultOrder": 5
+          "defaultOrder": 3
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "ai_mdp"
+        "ai_rl"
       ],
       "isRoot": false
     },
     {
       "topicId": "ai_probability",
-      "name": "Probability and Bayes Nets",
-      "nameZh": "概率与贝叶斯网络",
-      "defaultOrder": 6,
+      "name": "Probability Fundamentals and Bayes Rule",
+      "nameZh": "概率基础与贝叶斯规则",
+      "defaultOrder": 9,
       "conceptIds": [
         {
           "conceptId": "ai_prob",
@@ -225,23 +278,13 @@
           "name": "Bayes Rule",
           "nameZh": "贝叶斯规则",
           "defaultOrder": 2
-        },
-        {
-          "conceptId": "ai_bayes_nets",
-          "name": "Bayesian Networks",
-          "nameZh": "贝叶斯网络",
-          "defaultOrder": 3,
-          "visual": "diagram",
-          "visualHint": "Directed acyclic graph of a Bayesian network with conditional dependencies."
-        },
-        {
-          "conceptId": "ai_bn_inference",
-          "name": "Inference in Bayes Nets",
-          "nameZh": "贝叶斯网络推理",
-          "defaultOrder": 4
         }
       ],
       "successors": [
+        {
+          "topicId": "ai_probability_ai_bayes_nets",
+          "hard": true
+        },
         {
           "topicId": "ai_markov_models",
           "hard": true
@@ -255,10 +298,37 @@
       "isRoot": true
     },
     {
+      "topicId": "ai_probability_ai_bayes_nets",
+      "name": "Bayesian Networks and Inference in Bayes Nets",
+      "nameZh": "贝叶斯网络与贝叶斯网络推理",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "ai_bayes_nets",
+          "name": "Bayesian Networks",
+          "nameZh": "贝叶斯网络",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Directed acyclic graph of a Bayesian network with conditional dependencies."
+        },
+        {
+          "conceptId": "ai_bn_inference",
+          "name": "Inference in Bayes Nets",
+          "nameZh": "贝叶斯网络推理",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "ai_probability"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "ai_markov_models",
       "name": "Markov Models and HMMs",
       "nameZh": "马尔可夫模型与HMM",
-      "defaultOrder": 7,
+      "defaultOrder": 11,
       "conceptIds": [
         {
           "conceptId": "ai_markov_chain",
@@ -296,7 +366,7 @@
       "topicId": "ai_inference_naive_bayes",
       "name": "Probabilistic Inference and Naive Bayes",
       "nameZh": "概率推断与朴素贝叶斯",
-      "defaultOrder": 8,
+      "defaultOrder": 12,
       "conceptIds": [
         {
           "conceptId": "ai_viterbi",
@@ -335,7 +405,7 @@
       "topicId": "ai_ml",
       "name": "Machine Learning",
       "nameZh": "机器学习",
-      "defaultOrder": 9,
+      "defaultOrder": 13,
       "conceptIds": [
         {
           "conceptId": "ai_perceptron",

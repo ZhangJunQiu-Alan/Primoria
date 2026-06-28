@@ -21,10 +21,74 @@
     {
       "id": "net_arch",
       "kind": "topic",
-      "name": "Network Architecture",
+      "name": "Network Layering and OSI Model",
       "topic": null,
       "default_order": 1,
-      "name_zh": "网络体系结构"
+      "name_zh": "网络分层与OSI模型"
+    },
+    {
+      "id": "net_arch_net_tcpip",
+      "kind": "topic",
+      "name": "TCP/IP Model and Encapsulation",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "TCP/IP模型与封装"
+    },
+    {
+      "id": "net_link",
+      "kind": "topic",
+      "name": "Link Layer Services and MAC Addressing",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "链路层服务与MAC地址"
+    },
+    {
+      "id": "net_link_net_ethernet",
+      "kind": "topic",
+      "name": "Ethernet and Switching",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "以太网与交换"
+    },
+    {
+      "id": "net_network",
+      "kind": "topic",
+      "name": "IP Addressing and IPv4 and IPv6",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "IP寻址与IPv4与IPv6"
+    },
+    {
+      "id": "net_network_net_forwarding",
+      "kind": "topic",
+      "name": "Forwarding and Routers and Routing Algorithms",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "转发与路由器与路由算法"
+    },
+    {
+      "id": "net_transport_part1",
+      "kind": "topic",
+      "name": "Transport Layer: UDP and TCP",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "传输层：UDP 与 TCP"
+    },
+    {
+      "id": "net_transport_part2",
+      "kind": "topic",
+      "name": "Transport Layer: Reliability and Control",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "传输层：可靠传输与拥塞控制"
+    },
+    {
+      "id": "net_application",
+      "kind": "topic",
+      "name": "Application Layer",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "应用层"
     },
     {
       "id": "net_layering",
@@ -52,9 +116,9 @@
       "id": "net_tcpip",
       "kind": "concept",
       "name": "TCP/IP Model",
-      "topic": "net_arch",
+      "topic": "net_arch_net_tcpip",
       "description": "The practical Internet protocol stack of link, internet, transport, and application layers, organising the protocols that actually run the global Internet.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "TCP/IP模型",
       "visual": "diagram",
       "visual_hint": "Diagram the four-layer TCP/IP stack."
@@ -63,20 +127,12 @@
       "id": "net_encapsulation",
       "kind": "concept",
       "name": "Encapsulation",
-      "topic": "net_arch",
+      "topic": "net_arch_net_tcpip",
       "description": "The process by which each layer wraps data from the layer above in its own header, building nested protocol data units for transmission.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "封装",
       "visual": "diagram",
       "visual_hint": "Diagram each layer wrapping the layer above with its header."
-    },
-    {
-      "id": "net_link",
-      "kind": "topic",
-      "name": "Link Layer",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "链路层"
     },
     {
       "id": "net_link_services",
@@ -100,27 +156,19 @@
       "id": "net_ethernet",
       "kind": "concept",
       "name": "Ethernet",
-      "topic": "net_link",
+      "topic": "net_link_net_ethernet",
       "description": "The dominant wired LAN technology defining frame formats, MAC addressing, and historically CSMA/CD media access over switched links.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "以太网"
     },
     {
       "id": "net_switching",
       "kind": "concept",
       "name": "Switching",
-      "topic": "net_link",
+      "topic": "net_link_net_ethernet",
       "description": "Layer-2 switches forwarding frames within a LAN by learning MAC-address-to-port mappings and flooding unknown destinations, building forwarding tables dynamically.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "交换"
-    },
-    {
-      "id": "net_network",
-      "kind": "topic",
-      "name": "Network Layer",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "网络层"
     },
     {
       "id": "net_ip_addressing",
@@ -146,29 +194,21 @@
       "id": "net_forwarding",
       "kind": "concept",
       "name": "Forwarding and Routers",
-      "topic": "net_network",
+      "topic": "net_network_net_forwarding",
       "description": "How routers forward packets by consulting a forwarding table to select an output interface using the destination address's longest prefix match.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "转发与路由器"
     },
     {
       "id": "net_routing",
       "kind": "concept",
       "name": "Routing Algorithms",
-      "topic": "net_network",
+      "topic": "net_network_net_forwarding",
       "description": "Distributed routing algorithms—link-state and distance-vector—by which routers exchange information to compute the paths that populate their forwarding tables.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "路由算法",
       "visual": "algorithm",
       "visual_hint": "Animate link-state/distance-vector routing building forwarding tables."
-    },
-    {
-      "id": "net_transport_part1",
-      "kind": "topic",
-      "name": "Transport Layer: UDP and TCP",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "传输层：UDP 与 TCP"
     },
     {
       "id": "net_transport_services",
@@ -200,14 +240,6 @@
       "visual_hint": "Sequence diagram of the TCP three-way handshake."
     },
     {
-      "id": "net_transport_part2",
-      "kind": "topic",
-      "name": "Transport Layer: Reliability and Control",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "传输层：可靠传输与拥塞控制"
-    },
-    {
       "id": "net_rdt",
       "kind": "concept",
       "name": "Reliable Data Transfer",
@@ -237,14 +269,6 @@
       "name_zh": "拥塞控制",
       "visual": "function",
       "visual_hint": "Plot the TCP congestion window growing and backing off over time."
-    },
-    {
-      "id": "net_application",
-      "kind": "topic",
-      "name": "Application Layer",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "应用层"
     },
     {
       "id": "net_http",

@@ -26,6 +26,38 @@
       "name_zh": "熵与信息测度"
     },
     {
+      "id": "t_infotheory_measures_typicality",
+      "kind": "topic",
+      "name": "Information Measures and Typicality",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "信息测度与典型性"
+    },
+    {
+      "id": "t_infotheory_source_coding",
+      "kind": "topic",
+      "name": "Source Coding",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "信源编码"
+    },
+    {
+      "id": "t_infotheory_channel_capacity",
+      "kind": "topic",
+      "name": "Channel Capacity",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "信道容量"
+    },
+    {
+      "id": "t_infotheory_continuous",
+      "kind": "topic",
+      "name": "Continuous Channels",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "连续信道"
+    },
+    {
       "id": "c_infotheory_entropy",
       "kind": "concept",
       "name": "Shannon Entropy",
@@ -57,14 +89,6 @@
       "visual_hint": "Venn-style diagram of entropies, joint entropy, and mutual information."
     },
     {
-      "id": "t_infotheory_measures_typicality",
-      "kind": "topic",
-      "name": "Information Measures and Typicality",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "信息测度与典型性"
-    },
-    {
       "id": "c_infotheory_kl_divergence",
       "kind": "concept",
       "name": "Kullback-Leibler Divergence",
@@ -90,14 +114,6 @@
       "description": "The asymptotic equipartition property, showing long sequences fall into a typical set of nearly equal probability, underpinning the coding theorems.",
       "default_order": 3,
       "name_zh": "渐近等分特性"
-    },
-    {
-      "id": "t_infotheory_source_coding",
-      "kind": "topic",
-      "name": "Source Coding",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "信源编码"
     },
     {
       "id": "c_infotheory_kraft",
@@ -129,14 +145,6 @@
       "visual_hint": "Build a Huffman tree by merging the two lowest-frequency symbols."
     },
     {
-      "id": "t_infotheory_channel_capacity",
-      "kind": "topic",
-      "name": "Channel Capacity",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "信道容量"
-    },
-    {
       "id": "c_infotheory_dmc",
       "kind": "concept",
       "name": "Discrete Memoryless Channels",
@@ -162,14 +170,6 @@
       "description": "Shannon's channel coding theorem proving that reliable communication is achievable below capacity and impossible above it.",
       "default_order": 3,
       "name_zh": "香农信道编码定理"
-    },
-    {
-      "id": "t_infotheory_continuous",
-      "kind": "topic",
-      "name": "Continuous Channels",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "连续信道"
     },
     {
       "id": "c_infotheory_differential_entropy",

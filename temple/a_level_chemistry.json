@@ -21,10 +21,234 @@
     {
       "id": "che_atomic",
       "kind": "topic",
-      "name": "Atomic Structure",
+      "name": "Subatomic Particles and Isotopes",
       "topic": null,
       "default_order": 1,
-      "name_zh": "原子结构"
+      "name_zh": "亚原子粒子与同位素"
+    },
+    {
+      "id": "che_atomic_che_electron_config",
+      "kind": "topic",
+      "name": "Electronic Configuration and Ionisation Energy",
+      "topic": null,
+      "default_order": 2,
+      "name_zh": "电子排布与电离能"
+    },
+    {
+      "id": "che_stoichiometry",
+      "kind": "topic",
+      "name": "The Mole and Avogadro Constant and Empirical and Molecular Formulae",
+      "topic": null,
+      "default_order": 3,
+      "name_zh": "摩尔与阿伏伽德罗常数与实验式与分子式"
+    },
+    {
+      "id": "che_stoichiometry_che_reacting_masses",
+      "kind": "topic",
+      "name": "Reacting Masses and Gas Volumes and Concentration and Titration",
+      "topic": null,
+      "default_order": 4,
+      "name_zh": "反应质量与气体体积与浓度与滴定"
+    },
+    {
+      "id": "che_bonding_part1",
+      "kind": "topic",
+      "name": "Chemical Bonding: Types of Bonds",
+      "topic": null,
+      "default_order": 5,
+      "name_zh": "化学键：成键类型"
+    },
+    {
+      "id": "che_bonding_part2",
+      "kind": "topic",
+      "name": "Chemical Bonding: Shapes and Intermolecular Forces",
+      "topic": null,
+      "default_order": 6,
+      "name_zh": "化学键：分子形状与分子间作用力"
+    },
+    {
+      "id": "che_states_enthalpy",
+      "kind": "topic",
+      "name": "States of Matter and Enthalpy",
+      "topic": null,
+      "default_order": 7,
+      "name_zh": "物态与焓变"
+    },
+    {
+      "id": "che_energetics",
+      "kind": "topic",
+      "name": "Chemical Energetics",
+      "topic": null,
+      "default_order": 8,
+      "name_zh": "化学能"
+    },
+    {
+      "id": "che_kinetics_part1",
+      "kind": "topic",
+      "name": "Reaction Kinetics: Rates and Collision Theory",
+      "topic": null,
+      "default_order": 9,
+      "name_zh": "反应动力学：速率与碰撞理论"
+    },
+    {
+      "id": "che_kinetics_part2",
+      "kind": "topic",
+      "name": "Reaction Kinetics: Rate Equations and Catalysis",
+      "topic": null,
+      "default_order": 10,
+      "name_zh": "反应动力学：速率方程与催化"
+    },
+    {
+      "id": "che_equilibria_acidbase",
+      "kind": "topic",
+      "name": "Dynamic Equilibrium and Le Chatelier's Principle",
+      "topic": null,
+      "default_order": 11,
+      "name_zh": "动态平衡与勒夏特列原理"
+    },
+    {
+      "id": "che_equilibria_acidbase_che_kc_kp",
+      "kind": "topic",
+      "name": "Equilibrium Constants Kc and Kp and Brønsted-Lowry Theory",
+      "topic": null,
+      "default_order": 12,
+      "name_zh": "平衡常数 Kc 与 Kp与布朗斯特-洛瑞理论"
+    },
+    {
+      "id": "che_acids",
+      "kind": "topic",
+      "name": "Strong and Weak Acids and pH and Acid Dissociation Constant",
+      "topic": null,
+      "default_order": 13,
+      "name_zh": "强酸与弱酸与pH 与酸解离常数"
+    },
+    {
+      "id": "che_acids_che_buffers",
+      "kind": "topic",
+      "name": "Buffers and Solubility Product",
+      "topic": null,
+      "default_order": 14,
+      "name_zh": "缓冲剂与溶度积"
+    },
+    {
+      "id": "che_redox",
+      "kind": "topic",
+      "name": "Redox and Electrochemistry",
+      "topic": null,
+      "default_order": 15,
+      "name_zh": "氧化还原与电化学"
+    },
+    {
+      "id": "che_electrochem_thermo",
+      "kind": "topic",
+      "name": "Electrochemical Cells and Electrolysis",
+      "topic": null,
+      "default_order": 16,
+      "name_zh": "电化学电池与电解"
+    },
+    {
+      "id": "che_electrochem_thermo_che_born_haber",
+      "kind": "topic",
+      "name": "Lattice Energy and Born-Haber Cycles and Entropy",
+      "topic": null,
+      "default_order": 17,
+      "name_zh": "晶格能与玻恩-哈伯循环与熵"
+    },
+    {
+      "id": "che_free_energy_periodicity",
+      "kind": "topic",
+      "name": "Free Energy and Periodicity",
+      "topic": null,
+      "default_order": 18,
+      "name_zh": "自由能与周期性"
+    },
+    {
+      "id": "che_groups",
+      "kind": "topic",
+      "name": "Inorganic Group Chemistry",
+      "topic": null,
+      "default_order": 19,
+      "name_zh": "无机元素族化学"
+    },
+    {
+      "id": "che_transition",
+      "kind": "topic",
+      "name": "Transition Elements",
+      "topic": null,
+      "default_order": 20,
+      "name_zh": "过渡金属元素"
+    },
+    {
+      "id": "che_organic_basics",
+      "kind": "topic",
+      "name": "Nomenclature and Isomerism",
+      "topic": null,
+      "default_order": 21,
+      "name_zh": "命名法与同分异构"
+    },
+    {
+      "id": "che_organic_basics_che_bond_fission",
+      "kind": "topic",
+      "name": "Bond Fission and Reactive Species and Reaction Mechanism Types",
+      "topic": null,
+      "default_order": 22,
+      "name_zh": "键断裂与反应物种与反应机理类型"
+    },
+    {
+      "id": "che_hydrocarbons",
+      "kind": "topic",
+      "name": "Hydrocarbons",
+      "topic": null,
+      "default_order": 23,
+      "name_zh": "烃"
+    },
+    {
+      "id": "che_halogenoalkanes_alcohols",
+      "kind": "topic",
+      "name": "Nucleophilic Substitution and Elimination Reactions",
+      "topic": null,
+      "default_order": 24,
+      "name_zh": "亲核取代与消去反应"
+    },
+    {
+      "id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
+      "kind": "topic",
+      "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
+      "topic": null,
+      "default_order": 25,
+      "name_zh": "醇的反应与醇的氧化"
+    },
+    {
+      "id": "che_carbonyls",
+      "kind": "topic",
+      "name": "Carbonyl and Carboxylic Compounds",
+      "topic": null,
+      "default_order": 26,
+      "name_zh": "羰基化合物"
+    },
+    {
+      "id": "che_nitrogen_org",
+      "kind": "topic",
+      "name": "Nitrogen Compounds and Polymers",
+      "topic": null,
+      "default_order": 27,
+      "name_zh": "含氮化合物"
+    },
+    {
+      "id": "che_arenes_mass_spec",
+      "kind": "topic",
+      "name": "Arenes and Mass Spectrometry",
+      "topic": null,
+      "default_order": 28,
+      "name_zh": "芳香烃与质谱分析"
+    },
+    {
+      "id": "che_analysis",
+      "kind": "topic",
+      "name": "Analytical Techniques",
+      "topic": null,
+      "default_order": 29,
+      "name_zh": "分析技术"
     },
     {
       "id": "che_subatomic",
@@ -48,9 +272,9 @@
       "id": "che_electron_config",
       "kind": "concept",
       "name": "Electronic Configuration",
-      "topic": "che_atomic",
+      "topic": "che_atomic_che_electron_config",
       "description": "The arrangement of electrons in shells, subshells, and orbitals following the Aufbau principle, Hund's rule, and the Pauli exclusion principle.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "电子排布",
       "visual": "diagram",
       "visual_hint": "Orbital filling diagram across shells and subshells."
@@ -59,20 +283,12 @@
       "id": "che_ionisation",
       "kind": "concept",
       "name": "Ionisation Energy",
-      "topic": "che_atomic",
+      "topic": "che_atomic_che_electron_config",
       "description": "The energy required to remove electrons from gaseous atoms, whose successive values and periodic trends provide evidence for electronic structure.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "电离能",
       "visual": "chart",
       "visual_hint": "Plot successive ionisation energies revealing shell structure."
-    },
-    {
-      "id": "che_stoichiometry",
-      "kind": "topic",
-      "name": "Atoms, Molecules and Stoichiometry",
-      "topic": null,
-      "default_order": 2,
-      "name_zh": "原子、分子与化学计量"
     },
     {
       "id": "che_mole",
@@ -96,27 +312,19 @@
       "id": "che_reacting_masses",
       "kind": "concept",
       "name": "Reacting Masses and Gas Volumes",
-      "topic": "che_stoichiometry",
+      "topic": "che_stoichiometry_che_reacting_masses",
       "description": "Using balanced equations and the mole concept to calculate reacting masses, gas volumes, and theoretical yields in stoichiometric problems.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "反应质量与气体体积"
     },
     {
       "id": "che_titration",
       "kind": "concept",
       "name": "Concentration and Titration",
-      "topic": "che_stoichiometry",
+      "topic": "che_stoichiometry_che_reacting_masses",
       "description": "Determining unknown concentrations by titration, using the mole ratio in a balanced equation and an indicated end point to calculate the result.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "浓度与滴定"
-    },
-    {
-      "id": "che_bonding_part1",
-      "kind": "topic",
-      "name": "Chemical Bonding: Types of Bonds",
-      "topic": null,
-      "default_order": 3,
-      "name_zh": "化学键：成键类型"
     },
     {
       "id": "che_ionic",
@@ -150,14 +358,6 @@
       "name_zh": "金属键"
     },
     {
-      "id": "che_bonding_part2",
-      "kind": "topic",
-      "name": "Chemical Bonding: Shapes and Intermolecular Forces",
-      "topic": null,
-      "default_order": 4,
-      "name_zh": "化学键：分子形状与分子间作用力"
-    },
-    {
       "id": "che_vsepr",
       "kind": "concept",
       "name": "Shapes of Molecules (VSEPR)",
@@ -185,14 +385,6 @@
       "description": "Forces between molecules—van der Waals, permanent dipole-dipole, and hydrogen bonding—that determine physical properties such as boiling point.",
       "default_order": 3,
       "name_zh": "分子间作用力"
-    },
-    {
-      "id": "che_states_enthalpy",
-      "kind": "topic",
-      "name": "States of Matter and Enthalpy",
-      "topic": null,
-      "default_order": 5,
-      "name_zh": "物态与焓变"
     },
     {
       "id": "che_gas_laws",
@@ -226,14 +418,6 @@
       "visual_hint": "Energy-profile diagram of enthalpy change with activation energy."
     },
     {
-      "id": "che_energetics",
-      "kind": "topic",
-      "name": "Chemical Energetics",
-      "topic": null,
-      "default_order": 6,
-      "name_zh": "化学能"
-    },
-    {
       "id": "che_hess",
       "kind": "concept",
       "name": "Hess's Law",
@@ -261,14 +445,6 @@
       "description": "Measuring enthalpy changes experimentally from temperature changes using the relationship q equals mcΔT in a calorimeter.",
       "default_order": 3,
       "name_zh": "量热法"
-    },
-    {
-      "id": "che_kinetics_part1",
-      "kind": "topic",
-      "name": "Reaction Kinetics: Rates and Collision Theory",
-      "topic": null,
-      "default_order": 7,
-      "name_zh": "反应动力学：速率与碰撞理论"
     },
     {
       "id": "che_rate",
@@ -300,14 +476,6 @@
       "visual_hint": "Plot the Maxwell-Boltzmann energy distribution and the effect of temperature and catalyst."
     },
     {
-      "id": "che_kinetics_part2",
-      "kind": "topic",
-      "name": "Reaction Kinetics: Rate Equations and Catalysis",
-      "topic": null,
-      "default_order": 8,
-      "name_zh": "反应动力学：速率方程与催化"
-    },
-    {
       "id": "che_catalysis",
       "kind": "concept",
       "name": "Catalysis",
@@ -337,14 +505,6 @@
       "name_zh": "速控步"
     },
     {
-      "id": "che_equilibria_acidbase",
-      "kind": "topic",
-      "name": "Equilibria and Acid-Base Foundations",
-      "topic": null,
-      "default_order": 9,
-      "name_zh": "化学平衡与酸碱基础"
-    },
-    {
       "id": "che_dynamic_eq",
       "kind": "concept",
       "name": "Dynamic Equilibrium",
@@ -368,27 +528,19 @@
       "id": "che_kc_kp",
       "kind": "concept",
       "name": "Equilibrium Constants Kc and Kp",
-      "topic": "che_equilibria_acidbase",
+      "topic": "che_equilibria_acidbase_che_kc_kp",
       "description": "Equilibrium constants Kc and Kp expressing the position of equilibrium in terms of concentrations or partial pressures at a given temperature.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "平衡常数 Kc 与 Kp"
     },
     {
       "id": "che_bronsted",
       "kind": "concept",
       "name": "Brønsted-Lowry Theory",
-      "topic": "che_equilibria_acidbase",
+      "topic": "che_equilibria_acidbase_che_kc_kp",
       "description": "The Brønsted-Lowry theory defining acids as proton donors and bases as proton acceptors, related through conjugate acid-base pairs.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "布朗斯特-洛瑞理论"
-    },
-    {
-      "id": "che_acids",
-      "kind": "topic",
-      "name": "Acids, Bases and Buffers",
-      "topic": null,
-      "default_order": 10,
-      "name_zh": "酸碱缓冲"
     },
     {
       "id": "che_strong_weak",
@@ -414,27 +566,19 @@
       "id": "che_buffers",
       "kind": "concept",
       "name": "Buffers",
-      "topic": "che_acids",
+      "topic": "che_acids_che_buffers",
       "description": "Buffer solutions resisting pH change on adding small amounts of acid or base, formed from a weak acid and its conjugate base.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "缓冲剂"
     },
     {
       "id": "che_ksp",
       "kind": "concept",
       "name": "Solubility Product",
-      "topic": "che_acids",
+      "topic": "che_acids_che_buffers",
       "description": "The solubility product Ksp as the equilibrium constant for a sparingly soluble salt dissolving, predicting precipitation and the common-ion effect.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "溶度积"
-    },
-    {
-      "id": "che_redox",
-      "kind": "topic",
-      "name": "Redox and Electrochemistry",
-      "topic": null,
-      "default_order": 11,
-      "name_zh": "氧化还原与电化学"
     },
     {
       "id": "che_oxidation_number",
@@ -464,14 +608,6 @@
       "name_zh": "电极电势"
     },
     {
-      "id": "che_electrochem_thermo",
-      "kind": "topic",
-      "name": "Electrochemistry and Thermodynamic Cycles",
-      "topic": null,
-      "default_order": 12,
-      "name_zh": "电化学与热力学循环"
-    },
-    {
       "id": "che_cells",
       "kind": "concept",
       "name": "Electrochemical Cells",
@@ -493,9 +629,9 @@
       "id": "che_born_haber",
       "kind": "concept",
       "name": "Lattice Energy and Born-Haber Cycles",
-      "topic": "che_electrochem_thermo",
+      "topic": "che_electrochem_thermo_che_born_haber",
       "description": "Born-Haber cycles applying Hess's law to determine lattice energy from enthalpies of formation, atomisation, ionisation, and electron affinity.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "晶格能与玻恩-哈伯循环",
       "visual": "diagram",
       "visual_hint": "Born-Haber cycle diagram of the lattice-energy enthalpy steps."
@@ -504,18 +640,10 @@
       "id": "che_entropy",
       "kind": "concept",
       "name": "Entropy",
-      "topic": "che_electrochem_thermo",
+      "topic": "che_electrochem_thermo_che_born_haber",
       "description": "Entropy as a measure of the disorder of a system, with spontaneous change tending toward increased total entropy.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "熵"
-    },
-    {
-      "id": "che_free_energy_periodicity",
-      "kind": "topic",
-      "name": "Free Energy and Periodicity",
-      "topic": null,
-      "default_order": 13,
-      "name_zh": "自由能与周期性"
     },
     {
       "id": "che_gibbs",
@@ -547,14 +675,6 @@
       "name_zh": "第3周期元素与氧化物"
     },
     {
-      "id": "che_groups",
-      "kind": "topic",
-      "name": "Inorganic Group Chemistry",
-      "topic": null,
-      "default_order": 14,
-      "name_zh": "无机元素族化学"
-    },
-    {
       "id": "che_group2",
       "kind": "concept",
       "name": "Group 2 Chemistry",
@@ -580,14 +700,6 @@
       "description": "The chemistry of nitrogen and sulfur, including ammonia, the oxides of nitrogen and sulfur, and their environmental significance.",
       "default_order": 3,
       "name_zh": "氮和硫"
-    },
-    {
-      "id": "che_transition",
-      "kind": "topic",
-      "name": "Transition Elements",
-      "topic": null,
-      "default_order": 15,
-      "name_zh": "过渡金属元素"
     },
     {
       "id": "che_transition_props",
@@ -617,14 +729,6 @@
       "name_zh": "颜色与催化"
     },
     {
-      "id": "che_organic_basics",
-      "kind": "topic",
-      "name": "Introduction to Organic Chemistry",
-      "topic": null,
-      "default_order": 16,
-      "name_zh": "有机化学入门"
-    },
-    {
       "id": "che_nomenclature",
       "kind": "concept",
       "name": "Nomenclature",
@@ -646,27 +750,19 @@
       "id": "che_bond_fission",
       "kind": "concept",
       "name": "Bond Fission and Reactive Species",
-      "topic": "che_organic_basics",
+      "topic": "che_organic_basics_che_bond_fission",
       "description": "Homolytic and heterolytic bond fission producing free radicals or ions respectively, generating the reactive species in organic mechanisms.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "键断裂与反应物种"
     },
     {
       "id": "che_mechanism_types",
       "kind": "concept",
       "name": "Reaction Mechanism Types",
-      "topic": "che_organic_basics",
+      "topic": "che_organic_basics_che_bond_fission",
       "description": "Classifying organic reactions as substitution, addition, and elimination, with curly-arrow notation representing the movement of electron pairs.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "反应机理类型"
-    },
-    {
-      "id": "che_hydrocarbons",
-      "kind": "topic",
-      "name": "Hydrocarbons",
-      "topic": null,
-      "default_order": 17,
-      "name_zh": "烃"
     },
     {
       "id": "che_alkanes",
@@ -696,14 +792,6 @@
       "name_zh": "加聚反应"
     },
     {
-      "id": "che_halogenoalkanes_alcohols",
-      "kind": "topic",
-      "name": "Halogenoalkanes and Alcohols",
-      "topic": null,
-      "default_order": 18,
-      "name_zh": "卤代烃与醇"
-    },
-    {
       "id": "che_nucleophilic_sub",
       "kind": "concept",
       "name": "Nucleophilic Substitution",
@@ -725,27 +813,19 @@
       "id": "che_alcohol_reactions",
       "kind": "concept",
       "name": "Alcohols and Their Reactions",
-      "topic": "che_halogenoalkanes_alcohols",
+      "topic": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
       "description": "The reactions of alcohols, including combustion, substitution to halogenoalkanes, dehydration to alkenes, and esterification.",
-      "default_order": 3,
+      "default_order": 1,
       "name_zh": "醇的反应"
     },
     {
       "id": "che_alcohol_oxidation",
       "kind": "concept",
       "name": "Oxidation of Alcohols",
-      "topic": "che_halogenoalkanes_alcohols",
+      "topic": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
       "description": "The oxidation of primary alcohols to aldehydes and carboxylic acids and secondary alcohols to ketones, with tertiary alcohols resistant.",
-      "default_order": 4,
+      "default_order": 2,
       "name_zh": "醇的氧化"
-    },
-    {
-      "id": "che_carbonyls",
-      "kind": "topic",
-      "name": "Carbonyl and Carboxylic Compounds",
-      "topic": null,
-      "default_order": 19,
-      "name_zh": "羰基化合物"
     },
     {
       "id": "che_aldehydes_ketones",
@@ -775,14 +855,6 @@
       "name_zh": "酯和酰氯"
     },
     {
-      "id": "che_nitrogen_org",
-      "kind": "topic",
-      "name": "Nitrogen Compounds and Polymers",
-      "topic": null,
-      "default_order": 20,
-      "name_zh": "含氮化合物"
-    },
-    {
       "id": "che_amines",
       "kind": "concept",
       "name": "Amines",
@@ -808,14 +880,6 @@
       "description": "Condensation polymers such as polyesters and polyamides formed by joining monomers with loss of a small molecule like water.",
       "default_order": 3,
       "name_zh": "缩聚反应"
-    },
-    {
-      "id": "che_arenes_mass_spec",
-      "kind": "topic",
-      "name": "Arenes and Mass Spectrometry",
-      "topic": null,
-      "default_order": 21,
-      "name_zh": "芳香烃与质谱分析"
     },
     {
       "id": "che_benzene",
@@ -845,14 +909,6 @@
       "name_zh": "质谱分析",
       "visual": "chart",
       "visual_hint": "Plot a mass spectrum of m/z peaks."
-    },
-    {
-      "id": "che_analysis",
-      "kind": "topic",
-      "name": "Analytical Techniques",
-      "topic": null,
-      "default_order": 22,
-      "name_zh": "分析技术"
     },
     {
       "id": "che_ir",
