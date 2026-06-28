@@ -47,6 +47,29 @@ export const sessions = pgTable(
   }),
 );
 
+export const learnerProfiles = pgTable(
+  "learner_profiles",
+  {
+    ownerId: text("owner_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
+    learningGoal: text("learning_goal"),
+    goalGraphId: text("goal_graph_id"),
+    goalStartTopicId: text("goal_start_topic_id"),
+    goalTargetConceptId: text("goal_target_concept_id"),
+    goalSkippedAt: timestamp("goal_skipped_at", { withTimezone: true }),
+    knowledgeBackground: text("knowledge_background"),
+    knowledgeBackgroundSkippedAt: timestamp("knowledge_background_skipped_at", { withTimezone: true }),
+    tutorStyle: text("tutor_style"),
+    tutorStyleSkippedAt: timestamp("tutor_style_skipped_at", { withTimezone: true }),
+    onboardingCompletedAt: timestamp("onboarding_completed_at", { withTimezone: true }),
+    onboardingSkippedAt: timestamp("onboarding_skipped_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    completedIdx: index("learner_profiles_completed_idx").on(table.onboardingCompletedAt),
+  }),
+);
+
 export const otpCodes = pgTable(
   "otp_codes",
   {
@@ -135,7 +158,7 @@ export const lessonGenerationJobs = pgTable(
     lessonId: text("lesson_id").notNull().references(() => lessons.id, { onDelete: "cascade" }),
     // queued | running | completed | failed
     status: text("status").notNull().default("queued"),
-    // queued | planning | writing | validating | saving | completed | failed
+    // queued | planning | writing | imaging | validating | saving | completed | failed
     stage: text("stage").notNull().default("queued"),
     attempts: integer("attempts").notNull().default(0),
     maxAttempts: integer("max_attempts").notNull().default(2),
@@ -701,6 +724,43 @@ export const userConceptMastery = pgTable(
   }),
 );
 
+// Cached AI-generated media (lesson `image` blocks). The block JSONB only
+// references an asset by id/URL; the bytes live here. `cache_key` is the reuse
+// core — a hash over the image brief (model/concepts/goal/kind/style/etc) so an
+// identical brief returns the same asset without a second generation call.
+// `owner_id` NULL means a globally reusable/readable asset. Lesson images use
+// global assets because the cache key is global; owner-scoped assets would 404
+// for later users who reuse the same cached image. Bytes-in-DB is a deliberate
+// v1 shortcut; a later migration can move them to object storage behind the same
+// API by adding storage_url/storage_key.
+export const mediaAssets = pgTable(
+  "media_assets",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").references(() => users.id, { onDelete: "cascade" }),
+    cacheKey: text("cache_key").notNull(),
+    provider: text("provider").notNull().default("google"),
+    model: text("model").notNull(),
+    mimeType: text("mime_type").notNull(),
+    dataBase64: text("data_base64").notNull(),
+    prompt: text("prompt").notNull(),
+    brief: jsonb("brief").notNull(),
+    alt: text("alt").notNull(),
+    caption: text("caption").notNull(),
+    width: integer("width"),
+    height: integer("height"),
+    byteLength: integer("byte_length"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    cacheKeyUnique: uniqueIndex("media_assets_cache_key_uidx").on(table.cacheKey),
+    ownerCreatedIdx: index("media_assets_owner_created_idx").on(table.ownerId, table.createdAt),
+  }),
+);
+
 export type UserRow = typeof users.$inferSelect;
+export type MediaAssetRow = typeof mediaAssets.$inferSelect;
+export type LearnerProfileRow = typeof learnerProfiles.$inferSelect;
 export type IdentityRow = typeof identities.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;
