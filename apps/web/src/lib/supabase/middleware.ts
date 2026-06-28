@@ -8,6 +8,7 @@ const PUBLIC_PATTERNS = [
   /^\/signup(\/|$)/,
   /^\/forgot(\/|$)/,
   /^\/auth(\/|$)/,
+  /^\/dev\/onboarding(\/|$)/,
 ];
 
 function isPublicPath(pathname: string) {
