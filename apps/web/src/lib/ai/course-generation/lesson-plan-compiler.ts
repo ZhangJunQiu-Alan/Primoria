@@ -1,4 +1,5 @@
 import type { CourseContext } from "../deepagent/course-kg-context";
+import { isCodeEligibleLessonContext } from "./code-eligibility";
 import { CoverageError } from "./generation-errors";
 import {
   decodeLessonPlanIr,
@@ -7,6 +8,8 @@ import {
   type GeneratableBlockType,
 } from "./lesson-plan-ir";
 import type { PedagogicalRole } from "@/lib/courses/types";
+
+export { isCodeEligibleLessonContext };
 
 // Deterministic LessonPlan compiler. Pure: no LLM, no DB, no guessing. It takes
 // the planner's raw compact IR plus the KG context and either returns a fully
@@ -34,8 +37,15 @@ export type CompiledLessonPlan = {
   jobs: BlockGenerationJob[];
 };
 
+export type CompileLessonPlanOptions = {
+  /** Prior user/chat context; used only for code-block eligibility checks. */
+  contextHint?: string | null;
+};
+
 const MIN_MINUTES = 3;
 const MAX_MINUTES = 60;
+const MIN_MEDIA_RATIO = 0.15;
+const MAX_MEDIA_RATIO = 0.60;
 
 function orderedConceptIds(kg: CourseContext): string[] {
   return [...(kg.startTopic.concepts ?? [])]
@@ -43,34 +53,29 @@ function orderedConceptIds(kg: CourseContext): string[] {
     .map((concept) => concept.conceptId);
 }
 
-/** Concept ids the KG marks as visual-worthy (carry a `visual` affordance). Each
- * must receive exactly one visual block; concepts without an affordance must not. */
-function visualConceptIds(kg: CourseContext): Set<string> {
-  return new Set(
-    (kg.startTopic.concepts ?? []).filter((concept) => !!concept.visual).map((concept) => concept.conceptId),
-  );
-}
-
 function clampMinutes(value: number): number {
   if (!Number.isFinite(value)) return MIN_MINUTES;
   return Math.min(MAX_MINUTES, Math.max(MIN_MINUTES, Math.round(value)));
 }
 
-export function compileLessonPlanIr(rawIr: unknown, kg: CourseContext): CompiledLessonPlan {
+export function compileLessonPlanIr(
+  rawIr: unknown,
+  kg: CourseContext,
+  options: CompileLessonPlanOptions = {},
+): CompiledLessonPlan {
   const decoded = decodeLessonPlanIr(rawIr);
   const concepts = orderedConceptIds(kg);
   const conceptSet = new Set(concepts);
-  const visualConcepts = visualConceptIds(kg);
   const blocks = decoded.blocks;
 
-  const imageCount = blocks.filter((b) => b.type === "image").length;
-  validateQuantity(blocks, concepts.length, visualConcepts.size + imageCount);
+  validateQuantity(blocks, concepts.length);
   validateOrdering(blocks);
   validateConceptLegality(blocks, conceptSet);
-  validateLessonComposition(blocks);
+  validateLessonComposition(blocks, concepts);
+  validateMediaRules(blocks);
   validateImageRules(blocks);
+  validateCodeEligibility(blocks, kg, options.contextHint);
   validateConceptCoverage(blocks, concepts);
-  validateVisualCoverage(blocks, visualConcepts);
   validateQuizCoverage(blocks, concepts);
 
   const jobs: BlockGenerationJob[] = blocks.map((block, index) => ({
@@ -95,11 +100,11 @@ export function compileLessonPlanIr(rawIr: unknown, kg: CourseContext): Compiled
   };
 }
 
-function validateQuantity(blocks: DecodedBlockPlan[], conceptCount: number, visualCount: number): void {
-  const { min, max } = expectedBlockRange(conceptCount, visualCount);
+function validateQuantity(blocks: DecodedBlockPlan[], conceptCount: number): void {
+  const { min, max } = expectedBlockRange(conceptCount);
   if (blocks.length < min || blocks.length > max) {
     throw new CoverageError(
-      `block count ${blocks.length} outside expected range ${min}-${max} for ${conceptCount} concepts (${visualCount} visual)`,
+      `block count ${blocks.length} outside expected range ${min}-${max} for ${conceptCount} concepts`,
       [`count:${blocks.length}`],
     );
   }
@@ -127,50 +132,50 @@ function validateConceptLegality(blocks: DecodedBlockPlan[], conceptSet: Set<str
   }
 }
 
-function validateLessonComposition(blocks: DecodedBlockPlan[]): void {
+function validateLessonComposition(blocks: DecodedBlockPlan[], concepts: string[]): void {
   const typeCount = (type: GeneratableBlockType) => blocks.filter((b) => b.type === type).length;
   const roleCount = (role: PedagogicalRole) => blocks.filter((b) => b.role === role).length;
   const missing: string[] = [];
-  if (typeCount("transfer") !== 1) missing.push(`transfer:${typeCount("transfer")}`);
-  if (typeCount("quiz") !== 1) missing.push(`quiz:${typeCount("quiz")}`);
+  if (roleCount("transfer") !== 1) missing.push(`transfer:${roleCount("transfer")}`);
+  if (typeCount("quiz") !== concepts.length) missing.push(`quiz:${typeCount("quiz")}/${concepts.length}`);
   if (roleCount("summary") < 1) missing.push("summary:0");
   if (missing.length > 0) {
     throw new CoverageError(
-      "lesson composition requires exactly one transfer, one quiz, and a summary",
+      "lesson composition requires exactly one transfer, one quiz per concept, and a summary",
       missing,
     );
   }
 }
 
-/** Per-concept visual floor: every KG visual-worthy concept needs exactly one
- * visual block on it, and no visual block may target a concept the KG did not
- * mark visual-worthy. This makes visuals deterministic instead of a planner whim
- * (the product's core differentiator). When the KG marks no concepts, no visual
- * is required or rejected. */
-function validateVisualCoverage(blocks: DecodedBlockPlan[], visualConcepts: Set<string>): void {
-  const visualBlocks = blocks.filter((b) => b.type === "visual");
+function validateMediaRules(blocks: DecodedBlockPlan[]): void {
+  const mediaBlocks = blocks.filter((b) => b.type === "image" || b.type === "visual");
+  const ratio = blocks.length ? mediaBlocks.length / blocks.length : 0;
   const problems: string[] = [];
 
-  // Floor: each visual-worthy concept is covered by exactly one visual block.
-  for (const conceptId of visualConcepts) {
-    const hits = visualBlocks.filter((b) => b.conceptIds.includes(conceptId)).length;
-    if (hits === 0) problems.push(`visual-missing:${conceptId}`);
-    else if (hits > 1) problems.push(`visual-duplicate:${conceptId}`);
+  if (ratio < MIN_MEDIA_RATIO || ratio > MAX_MEDIA_RATIO) {
+    problems.push(`media-density:${mediaBlocks.length}/${blocks.length}`);
   }
 
-  // Ceiling: a visual block must target a visual-worthy concept (no stray visuals).
-  for (const block of visualBlocks) {
-    if (!block.conceptIds.some((conceptId) => visualConcepts.has(conceptId))) {
-      problems.push(`visual-unwarranted:order${block.order}`);
-    }
+  for (const block of mediaBlocks) {
+    if (block.conceptIds.length === 0) problems.push(`media-no-concept:order${block.order}`);
+    if (!block.goal.trim()) problems.push(`media-no-goal:order${block.order}`);
   }
 
   if (problems.length > 0) {
     throw new CoverageError(
-      "each KG visual-worthy concept needs exactly one visual block, and visual blocks must target only those concepts",
+      "lesson media blocks must be 30%-45% of the plan and carry concept-bound teaching goals",
       problems,
     );
   }
+}
+
+function validateCodeEligibility(blocks: DecodedBlockPlan[], kg: CourseContext, contextHint?: string | null): void {
+  const codeBlocks = blocks.filter((b) => b.type === "code");
+  if (codeBlocks.length === 0 || isCodeEligibleLessonContext(kg, contextHint)) return;
+  throw new CoverageError(
+    "code blocks are only allowed for programming, algorithm, software, numerical, ML, or explicit implementation goals",
+    codeBlocks.map((block) => `code-uneligible:order${block.order}`),
+  );
 }
 
 /** Image blocks are static anchors, not teaching coverage. They must bind to at
@@ -208,11 +213,51 @@ function validateConceptCoverage(blocks: DecodedBlockPlan[], concepts: string[])
 }
 
 function validateQuizCoverage(blocks: DecodedBlockPlan[], concepts: string[]): void {
-  const quiz = blocks.find((b) => b.type === "quiz");
-  if (!quiz) return; // composition check already guarantees exactly one
-  const covered = new Set(quiz.conceptIds);
-  const missing = concepts.filter((conceptId) => !covered.has(conceptId)).map((id) => `quiz-concept:${id}`);
-  if (missing.length > 0) {
-    throw new CoverageError("the quiz block must reference every concept in the topic", missing);
+  const quizBlocks = blocks.filter((b) => b.type === "quiz");
+  const transferOrder = Math.min(...blocks.filter((b) => b.role === "transfer").map((b) => b.order));
+  const hits = new Map<string, DecodedBlockPlan[]>();
+  const problems: string[] = [];
+
+  for (const quiz of quizBlocks) {
+    if (quiz.role !== "assessment") problems.push(`quiz-role:${quiz.order}:${quiz.role}`);
+    if (quiz.conceptIds.length !== 1) {
+      problems.push(`quiz-concept-shape:order${quiz.order}`);
+      continue;
+    }
+    const conceptId = quiz.conceptIds[0];
+    const list = hits.get(conceptId) ?? [];
+    list.push(quiz);
+    hits.set(conceptId, list);
+
+    if (quiz.order > transferOrder) problems.push(`quiz-after-transfer:${conceptId}`);
+    if (!blocks.some((b) => b.order < quiz.order && b.role === "explanation" && b.conceptIds.includes(conceptId))) {
+      problems.push(`quiz-before-explanation:${conceptId}`);
+    }
+    if (!blocks.some((b) => b.order < quiz.order && b.type !== "image" && b.role === "example" && b.conceptIds.includes(conceptId))) {
+      problems.push(`quiz-before-example:${conceptId}`);
+    }
+    if (
+      blocks.some(
+        (b) =>
+          b.order > quiz.order
+          && b.order < transferOrder
+          && b.type !== "quiz"
+          && b.type !== "transfer"
+          && b.role !== "summary"
+          && b.conceptIds.includes(conceptId),
+      )
+    ) {
+      problems.push(`quiz-not-concept-close:${conceptId}`);
+    }
+  }
+
+  for (const conceptId of concepts) {
+    const count = hits.get(conceptId)?.length ?? 0;
+    if (count === 0) problems.push(`quiz-missing:${conceptId}`);
+    if (count > 1) problems.push(`quiz-duplicate:${conceptId}`);
+  }
+
+  if (problems.length > 0) {
+    throw new CoverageError("each concept needs exactly one closing quiz block", problems);
   }
 }

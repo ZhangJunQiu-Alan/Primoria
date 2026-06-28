@@ -21,13 +21,13 @@ function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);
 }
 
-const CONCEPTS = ["c1", "c2", "c3", "c4"];
+const CONCEPTS = ["c1", "c2", "c3"];
 const kg: CourseContext = {
   learningPathType: "linear",
-  graphId: "g1",
+  graphId: "biology",
   startTopic: {
     topicId: "t1",
-    name: "导数",
+    name: "Photosynthesis",
     concepts: CONCEPTS.map((conceptId, index) => ({
       conceptId,
       name: `概念${index + 1}`,
@@ -41,23 +41,24 @@ const kg: CourseContext = {
 
 const fixedIr = {
   v: 1,
-  lesson: ["导数入门", 45],
+  lesson: ["光合作用入门", 45],
   blocks: [
     [1, "T", "hook", ["c1"], "hook"],
     [2, "T", "roadmap", CONCEPTS, "roadmap"],
     [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "C", "example", ["c1"], "example c1"],
-    [5, "T", "explanation", ["c2"], "explain c2"],
-    [6, "T", "example", ["c2"], "example c2"],
-    [7, "T", "explanation", ["c3"], "explain c3"],
-    [8, "C", "example", ["c3"], "example c3"],
-    [9, "T", "explanation", ["c4"], "explain c4"],
-    [10, "C", "example", ["c4"], "example c4"],
-    [11, "A", "deepening", ["c1"], "analogy"],
-    [12, "V", "deepening", ["c2"], "visual"],
-    [13, "X", "transfer", CONCEPTS, "transfer"],
-    [14, "Q", "assessment", CONCEPTS, "quiz"],
-    [15, "T", "summary", CONCEPTS, "summary"],
+    [4, "V", "example", ["c1"], "visual example c1"],
+    [5, "V", "deepening", ["c1"], "visual c1"],
+    [6, "Q", "assessment", ["c1"], "quiz c1"],
+    [7, "T", "explanation", ["c2"], "explain c2"],
+    [8, "T", "example", ["c2"], "example c2"],
+    [9, "V", "deepening", ["c2"], "visual c2"],
+    [10, "Q", "assessment", ["c2"], "quiz c2"],
+    [11, "T", "explanation", ["c3"], "explain c3"],
+    [12, "V", "example", ["c3"], "visual example c3"],
+    [13, "V", "deepening", ["c3"], "visual c3"],
+    [14, "Q", "assessment", ["c3"], "quiz c3"],
+    [15, "V", "transfer", CONCEPTS, "transfer simulation"],
+    [16, "T", "summary", CONCEPTS, "summary"],
   ],
 };
 
@@ -70,10 +71,12 @@ function main() {
   assert(keys.join(",") === keysAgain.join(","), "batch checkpoint keys are stable across recompilation");
 
   assert(keys.includes("batch:activation:1-2"), "activation batch key includes its orders");
-  assert(keys.includes("batch:concept:c1:3-4-11"), "concept batch key pins primary concept + orders");
-  assert(keys.includes("batch:transfer:13"), "transfer batch key");
-  assert(keys.includes("batch:quiz:14"), "quiz batch key");
-  assert(keys.includes("batch:summary:15"), "summary batch key");
+  assert(keys.includes("batch:concept:c1:3-4-5"), "concept batch key pins primary concept + orders");
+  assert(keys.includes("batch:transfer:15"), "transfer batch key");
+  assert(keys.includes("batch:quiz:6"), "first concept quiz batch key");
+  assert(keys.includes("batch:quiz:10"), "second concept quiz batch key");
+  assert(keys.includes("batch:quiz:14"), "third concept quiz batch key");
+  assert(keys.includes("batch:summary:16"), "summary batch key");
   assert(new Set(keys).size === keys.length, "all batch keys are unique");
 
   // ── Version compatibility (doc §9.2/§9.3) ──────────────────────────────────

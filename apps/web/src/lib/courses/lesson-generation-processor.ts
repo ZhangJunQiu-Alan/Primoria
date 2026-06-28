@@ -169,7 +169,7 @@ async function loadOrCreatePlan(
     try {
       const payload = planCp.payload as PlanCheckpointPayload;
       // Recompile from the stored raw IR so the running compiler is authoritative.
-      return compileLessonPlanIr(payload.rawIr, ctx.kg);
+      return compileLessonPlanIr(payload.rawIr, ctx.kg, { contextHint: ctx.course.topic });
     } catch {
       // Stored plan is incompatible with the current compiler — drop it and the
       // dependent batches, then plan fresh in this same attempt (doc §9.2).
@@ -178,8 +178,8 @@ async function loadOrCreatePlan(
   }
 
   try {
-    const rawIr = await planLesson(ctx.kg, { contextHint: undefined, settings, invoke: plannerInvoke });
-    const compiled = compileLessonPlanIr(rawIr, ctx.kg);
+    const rawIr = await planLesson(ctx.kg, { contextHint: ctx.course.topic, settings, invoke: plannerInvoke });
+    const compiled = compileLessonPlanIr(rawIr, ctx.kg, { contextHint: ctx.course.topic });
     const payload: PlanCheckpointPayload = { rawIr, compiledPlan: compiled };
     assertFenced(await store.upsertCheckpoint(fence, { checkpointKey: PLAN_KEY, kind: "plan", payload, versions: CURRENT_CHECKPOINT_VERSIONS }));
     return compiled;
