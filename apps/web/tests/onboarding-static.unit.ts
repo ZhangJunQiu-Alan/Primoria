@@ -85,6 +85,13 @@ function main() {
   assert(styleRoute.includes("saveTutorStyle"), "style route saves tutor style");
   assert(styleRoute.includes("skipTutorStyle"), "style route supports step skip");
 
+  const onboardingClient = src("components/onboarding/onboarding-client.tsx");
+  assert(onboardingClient.includes("normalizeTutorStyle"), "onboarding client normalizes tutor style");
+  assert(onboardingClient.includes("new window.Image()"), "onboarding client preloads tutor persona images");
+  assert(onboardingClient.includes("disabled={busy || !isTutorStyle(style)}"), "style submit blocks invalid tutor style");
+  assert(onboardingClient.includes("unoptimized"), "onboarding visuals use direct public assets for cached preloads");
+  assert(!onboardingClient.includes("key={visualImage.src}"), "onboarding visual image does not force remount on style change");
+
   const positioning = src("lib/learner-profile/onboarding-positioning.ts");
   assert(positioning.includes('branch: "subject_start"'), "broad onboarding goal starts from subject root");
   assert(positioning.includes("sort((a, b) => a.defaultOrder - b.defaultOrder)"), "subject root uses first default_order topic");
