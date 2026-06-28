@@ -23,11 +23,12 @@
   - 没有明显薄弱点时,创建大纲中的下一个lesson
   - 发现知识缺口时,动态创建补足Lesson,插入当前lesson与原下一个Lesson之间并入队.所有的lesson内容均通过统一的Lesson Job体系生成
 - Blocks
-  - Visualization Block,项目核心卖点,能支持可交互式可视化的地方都要支持
-  - Code Block支持编辑,运行,保存
+  - Visualization Block: 项目核心卖点,能支持可交互式可视化的地方都要支持
+  - Image Block：静态认知锚点，用于结构识别、场景直觉、类比图像；不能替代核心解释。
+  - Code Block: 支持编辑,运行,保存
 - Lesson相关
   - 用户在学习一门lesson的时候,根据大纲仅对下一个lesson做预加载.
-  - 交互行为: 用户学习完一门lesson(做完所有quiz)之后,系统会基于做的quiz情况(沿用目前的推荐机制)推荐是否要产出一个补救课程弹窗,包含补救课程原因. 如果需要产出补救课程,则会有两个选项按钮,一个是"是",另一个是"不需要,开始学习'下一个课程(使用lesson名字替换)'". 如果这个是大纲的最后一节课,没有下一个lesson,一个是"是",另一个是"不需要",然后跳转回首页. 如果不需要产出,则弹窗说Good Job,开始下一个lesson的学习吧,一个是"是":进入下一个lesson的页面,另一个是"否":跳转回首页.用户可以关闭弹窗,既闭就默认为拒绝产出补救lesson。然后在library界面点击continue的时候，这会进入第2个课程，而不是原来的。
+  - 交互行为: 用户学习完一门lesson(完成该 lesson 内所有 concept quiz)之后,系统会基于做的quiz情况(沿用目前的推荐机制)推荐是否要产出一个补救课程弹窗,包含补救课程原因. 如果需要产出补救课程,则会有两个选项按钮,一个是"是",另一个是"不需要,开始学习'下一个课程(使用lesson名字替换)'". 如果这个是大纲的最后一节课,没有下一个lesson,一个是"是",另一个是"不需要",然后跳转回首页. 如果不需要产出,则弹窗说Good Job,开始下一个lesson的学习吧,一个是"是":进入下一个lesson的页面,另一个是"否":跳转回首页.用户可以关闭弹窗,既闭就默认为拒绝产出补救lesson。然后在library界面点击continue的时候，这会进入第2个课程，而不是原来的。
   - 建Lesson Prompt 加上用户的mastery状态
     - 使用深浅自适应,mastered→一笔带过/可跳过解释、weak/untested→完整教学+更多 example。仍覆盖该 topic 全部 concept,只调节篇幅与深度。lesson 永不为空。
 
@@ -82,7 +83,7 @@
           - chat.question（用户提问）payload: { thread_id, message_id }。正文在 copilot_chat_messages 里，这里只存指针；concept_id 列留空（蒸馏时补）
           - chat.feedback（对 AI 回答的反馈）payload: { target_message_id, via: "thumb"|"text", signal: "positive"|"negative" }。必须知道冲哪条 AI 回答；「懂了/没懂」写入时就归一成 positive/negative
           - quiz.submit（提交答案，一题一条事件）payload: { question_id, selected, is_correct, distractor_tag? }。一题一条，concept_id 列正好挂这道题的概念，跨概念的 quiz 不糊在一起；distractor_tag可以为空,如果错选时,这个选项代表的是哪种知识的误解,数据来源于Quiz
-          - lesson.completed（完成一节，蒸馏触发器）payload: {}，完成lesson结尾中所有的quiz答题.
+          - lesson.completed（完成一节，蒸馏触发器）payload: {}，每个 concept 收尾都有 quiz,完成该 lesson 内所有 concept quiz 后触发.
           - course.generated（生成新课）payload: { topic, source: "cold_start"|"profile" }。定位落点进 concept_id / graph_id 列，不重复放 payload
           - position.computed（冷启动定位）payload: { raw_query, branch: "precise"|"broad"|"miss", top_topic_id, max_similarity }。形状复用 positioning-log.ts 的 PositioningLogRecord，把 console.log 改成写库
           - position.menu_select（宽泛菜单选 topic）payload: { selected_topic_id, source_query }。source_query 不能省，否则不知道复用哪次定位去建课
@@ -134,7 +135,7 @@ Prob：1. 如果用户输出用户过于模糊，或者用别名怎么确保好�
 3. 知识图谱（Knowledge Graph）： 由有概念节点（concept node）和关系边（relation edge）组成的图结构。知识图谱可以用来指导课程内容的生成和调整。部分的知识图谱可以划分为不同的topic。针对多个学科KG，允许跨图先修边。KG应该是全局，保持稳定，不会被用户数据所影响。
 4. KG和Course的关系: 一个学科的KG等于一个Course,比如微积分的KG就是微积分的Course.Agent建Lesson的时候会基于KG中的topic信息来建立.
 5. Relation edge代表concept之间的关系（目前只有先修关系，之后可以拓展推导，类比，应用关系）。
-6. concept node= 一个能独立出 quiz 题检验的最小概念。通常由 2–3 个 concept node 构成一个 topic 子图，确保单节 lesson 足够聚焦，并为后续每个 concept 的专属 quiz 留出空间.
+6. concept node= 一个能独立出 quiz 题检验的最小概念。通常由 2–3 个 concept node 构成一个 topic 子图，确保单节 lesson 足够聚焦，每个 concept 都应有自己的 quiz block，quiz 放在该 concept 教学小节收尾，而不是全部集中在 lesson 末尾.
 7. mastery状态：迭代一为最简单版本：untested / weak / learning / mastered,规则更新(连对 N 题升级、错题降级、先修节点出错连带标疑)
 8. default_order: 每个topic子图有一个default_order，代表这个topic在整个学科图谱中的先后顺序,用来指引学习路径。建Course系统在生成lesson时会优先选择default_order较小的topic。
 
@@ -199,4 +200,52 @@ PLUS:
 
 Weak的concept如何提升到mastered?
 
-Block的配比需要调整,
+## Lesson Block 结构与配方 (参考 Brilliant)
+
+- **核心配比**：整个 Lesson 的媒体 Block 占比设为 **image + visual 合计 30%-45%，visual 优先但不硬性数量**。Image 用作静态认知锚点（Look-once-to-recognize），Visual 用作动态机理探究、多变量交互或流程单步追踪（Try-it-to-understand）。
+- **动静交替节奏**：连续纯文字 Block 不得超过 **2 个**，或单段文字不得超过 **150 字**，超时必须插入 `visual` / `image` / `quiz` 等非纯文字 Block 作为认知缓冲。
+- **单个 Concept 限制**：planner 决定 visual和 image 数量，但每个 media block 必须有独立教学目的。
+- **Code Block 边界**：Code Block 保留编辑、运行、保存能力，但不是默认 lesson 配方。只有编程语言、算法/数据结构、Web/软件工程、数值/科学计算、机器学习实现类主题，或用户明确要求“写代码/运行代码/用某编程语言/代码实现/实现算法、函数或接口”时才生成 `code` block。裸词“实现”不能单独构成代码意图（如“自我实现”“实现共同富裕”不应触发 Code Block）。其他学科默认用 `text/example`、`image`、`visual`、`analogy` 表达。
+
+### 13-15 Block 理想结构 (以 2-Concept 为例)
+
+对于包含 2 个 Concept 的 Lesson，推荐采用 **13-15 Block** 的微解构闭环排布：
+
+1. **Hook** (`text`/`hook`): 文字引入，用反直觉或生活实例激发探索欲。
+2. **Roadmap** (`text`/`roadmap`): 交代学习路径与驱动问题。
+3. **Concept 1 Intro** (`text`/`explanation`): 引入概念 1 的核心问题。
+4. **Concept 1 Image** (`image`/`example`): 【Image 1】概念 1 的结构识别、真实场景或类比画面。
+5. **Concept 1 Application** (`text`/`example`): 概念 1 的具体样例或应用；只有代码适配学科才可替换为 `code`。
+6. **Concept 1 Visual** (`visual`/`deepening`): 【Interactive 1】概念 1 的动态机制、变量关系或过程观察。
+7. **Concept 1 Quiz** (`quiz`/`assessment`): 概念 1 的收尾检验。
+8. **Concept 2 Intro** (`text`/`explanation`): 引入概念 2 的核心问题。
+9. **Concept 2 Application** (`text`/`example`): 概念 2 的具体样例或应用；只有代码适配学科才可替换为 `code`。
+10. **Concept 2 Image** (`image`/`deepening`): 【Image 2】概念 2 的静态直观锚点。
+11. **Concept 2 Visual** (`visual`/`deepening`): 【Interactive 2】概念 2 的多变量交互或机制沙盒。
+12. **Concept 2 Quiz** (`quiz`/`assessment`): 概念 2 的收尾检验。
+13. **Transfer** (`text`/`transfer` 或 `visual`/`transfer`): 融合 2 个 Concept 的迁移应用；需要操作变量或过程时优先 `visual`。
+14. **Summary** (`text`/`summary`): 课后元认知反思与小结。
+
+### 16-20 Block 理想结构 (以 3-Concept 为例)
+
+对于包含 3 个 Concept 的 Lesson，推荐采用 **16-20 block** 的微解构深层闭环排布：
+
+1. **Hook** (`text`/`hook`): 激发好奇心与直觉假设。
+2. **Roadmap** (`text`/`roadmap`): 交代三个概念的递进逻辑关系。
+3. **Concept 1 Intro** (`text`/`explanation`): 引入概念 1。
+4. **Concept 1 Image** (`image`/`example`): 【Image 1】概念 1 静态直观心智示意图。
+5. **Concept 1 Visual** (`visual`/`deepening`): 【Interactive 1】概念 1 基础原理调试沙盒。
+6. **Concept 1 Application** (`text`/`example`): 概念 1 的应用样例；只有代码适配学科才可替换为 `code`。
+7. **Concept 1 Quiz** (`quiz`/`assessment`): 概念 1 的收尾检验。
+8. **Concept 2 Intro** (`text`/`explanation`): 引入概念 2。
+9. **Concept 2 Visual** (`visual`/`deepening`): 【Interactive 2】概念 2 动态时序或运行单步追踪。
+10. **Concept 2 Application** (`text`/`example`): 概念 2 的应用样例；只有代码适配学科才可替换为 `code`。
+11. **Concept 2 Visual** (`visual`/`deepening`): 【Interactive 3】概念 2 的第二个交互模型，仅当教学目标不同于第一个 visual 时使用。
+12. **Concept 2 Quiz** (`quiz`/`assessment`): 概念 2 的收尾检验。
+13. **Concept 3 Intro** (`text`/`explanation`): 引入概念 3。
+14. **Concept 3 Image** (`image`/`example`): 【Image 2】概念 3 的核心静态图表对比。
+15. **Concept 3 Visual** (`visual`/`deepening`): 【Interactive 4】概念 3 状态仿真分析组件。
+16. **Concept 3 Application** (`text`/`example`): 概念 3 的应用样例；只有代码适配学科才可替换为 `code`。
+17. **Concept 3 Quiz** (`quiz`/`assessment`): 概念 3 的收尾检验。
+18. **Transfer Visual** (`visual`/`transfer`): 【Interactive 5】打包整合三个概念并触发深度跨界迁移组件；不需要交互时可降级为 `text`/`transfer`。
+19. **Summary** (`text`/`summary`): 收尾元认知总结与后续引导。
