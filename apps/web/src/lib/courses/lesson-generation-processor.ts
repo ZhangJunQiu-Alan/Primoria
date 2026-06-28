@@ -11,6 +11,8 @@ import {
   type CompiledBatchBlock,
 } from "../ai/course-generation/block-writer";
 import { validateLessonBlocks } from "../ai/course-generation/lesson-validator";
+import { finalizeImageBlocks, type ImageGenerate } from "../ai/media/image-builder";
+import type { MediaAssetStore } from "../ai/media/media-assets";
 import { IR_VERSION } from "../ai/course-generation/lesson-plan-ir";
 import { CURRENT_CHECKPOINT_VERSIONS, isCheckpointCompatible } from "../ai/course-generation/versions";
 import { GenerationError, LeaseLostError, LessonValidationError, PlannerError } from "../ai/course-generation/generation-errors";
@@ -57,7 +59,13 @@ export type ProcessLessonJobOptions = {
   settings?: TutorProviderSettings;
   plannerInvoke?: LessonPlannerInvoke;
   writerInvoke?: BlockBatchInvoke;
+  /** Image generator for the imaging stage; default calls Gemini. Injectable so
+   * the pipeline can be tested without the real API. */
+  imageGenerate?: ImageGenerate;
+  mediaStore?: MediaAssetStore;
 };
+
+const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL ?? "gemini-3.1-flash-image";
 
 export type ProcessLessonJobOutcome = {
   ownerId: string;
@@ -110,10 +118,28 @@ export async function processLessonGenerationJob(
 
   const compiledBlocks = await writeMissingBatches(fence, ctx, store, batches, plan, settings, options.writerInvoke);
 
+  // ── Imaging ─────────────────────────────────────────────────────────────────
+  // Resolve any pending image blocks into media assets (parallel). A single image
+  // failure is rendered inline as an error block, not a lesson failure. The media
+  // cache makes this idempotent on resume, so it needs no separate checkpoint.
+  assertFenced(await store.updateStage(fence, { stage: "imaging", progressCompleted: batches.length }));
+
+  // Lesson images are GLOBAL (ownerId null): the media cache is keyed globally by
+  // brief semantics and shared across users, so the asset must be globally
+  // readable — an owner-scoped asset would 404 for every user who reuses it.
+  // Safe because generated images carry no user context (no text, and the brief
+  // is never exposed through the asset URL).
+  const blocks = await finalizeImageBlocks(assembleBlocks(compiledBlocks), {
+    ownerId: null,
+    model: IMAGE_MODEL,
+    language: ctx.course.language ?? null,
+    generate: options.imageGenerate,
+    store: options.mediaStore,
+  });
+
   // ── Validating ──────────────────────────────────────────────────────────────
   assertFenced(await store.updateStage(fence, { stage: "validating", progressCompleted: batches.length }));
 
-  const blocks = assembleBlocks(compiledBlocks);
   const result = validateLessonBlocks(blocks, plan.conceptIds);
   if (!result.ok) {
     // Cannot reliably attribute gaps to specific batches: keep the plan, drop all

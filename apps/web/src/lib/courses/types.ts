@@ -1,6 +1,7 @@
 import type { AlgorithmStep, MathExplorerArtifact, PhysicsScene } from "@/lib/agent-os";
+import type { ImageBrief } from "@/lib/ai/media/image-brief";
 
-export type BlockType = "text" | "analogy" | "transfer" | "visual" | "code" | "quiz" | "mind_map" | "slide" | "worksheet";
+export type BlockType = "text" | "analogy" | "transfer" | "visual" | "image" | "code" | "quiz" | "mind_map" | "slide" | "worksheet";
 
 /** Teaching role a block plays within a lesson's pedagogical arc (doc §4.3).
  * Optional on persisted blocks: historical blocks predate this metadata. */
@@ -58,6 +59,37 @@ export type VisualBlock = BlockBase & {
   physicsScene?: PhysicsScene;
   algorithmViz?: { algorithm: string; steps: AlgorithmStep[] };
   mathExplorer?: Omit<MathExplorerArtifact, "type" | "title" | "description">;
+};
+
+/** Static teaching image (AI-generated): a cognitive anchor — a concrete
+ * object, structure, scene, or analogy the learner recognizes at a glance.
+ * Distinct from `visual` (interactive mechanism models). The block references a
+ * stable media-asset URL; image bytes never live in the block JSONB. */
+export type ImageBlock = BlockBase & {
+  type: "image";
+  /** Media-asset row id; "" until the asset is generated, or on error. */
+  assetId: string;
+  /** `/api/media/assets/[assetId]`; "" until generated, or on error. */
+  imageUrl: string;
+  alt: string;
+  caption: string;
+  imageKind:
+    | "educational_illustration"
+    | "structure_diagram"
+    | "realistic_scene"
+    | "analogy_illustration";
+  prompt?: string;
+  model?: string;
+  aspectRatio?: "1:1" | "4:3" | "16:9";
+  resolution?: "1K" | "2K" | "4K";
+  /** Absent/"ready" renders the image; "error" renders an inline error state
+   * so generation instability is visible. The lesson still publishes. */
+  status?: "ready" | "error";
+  errorMessage?: string;
+  /** Transient: set only while the block is pending in the generation pipeline
+   * (the imaging stage consumes it and strips it). Never present on a published
+   * block — the validator rejects any image block that still carries one. */
+  brief?: ImageBrief;
 };
 
 export type CodeBlock = BlockBase & {
@@ -170,7 +202,7 @@ export type WorksheetBlock = BlockBase & {
   items: WorksheetItem[];
 };
 
-export type CourseBlock = TextBlock | AnalogyBlock | TransferBlock | VisualBlock | CodeBlock | QuizBlock | MindMapBlock | SlideBlock | WorksheetBlock;
+export type CourseBlock = TextBlock | AnalogyBlock | TransferBlock | VisualBlock | ImageBlock | CodeBlock | QuizBlock | MindMapBlock | SlideBlock | WorksheetBlock;
 
 export type LessonRole = "new" | "review" | "remediation";
 export type LessonProgress = "not_started" | "in_progress" | "completed";
@@ -211,11 +243,33 @@ export type Course = {
   updatedAt: number;
 };
 
+export function sortedCourseLessons(course: Course): Lesson[] {
+  return [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
+}
+
+export function currentCourseLesson(course: Course, preferredLessonId?: string | null): Lesson | null {
+  const sortedLessons = sortedCourseLessons(course);
+  const preferred = preferredLessonId
+    ? sortedLessons.find((lesson) => lesson.id === preferredLessonId && lesson.status === "generated" && Array.isArray(lesson.blocks))
+    : null;
+  if (preferred) return preferred;
+  const activeGeneratedLesson = sortedLessons.find(
+    (lesson) => lesson.status === "generated" && lesson.progress !== "completed" && Array.isArray(lesson.blocks),
+  );
+  if (activeGeneratedLesson) return activeGeneratedLesson;
+  const hasUnfinishedFutureLesson = sortedLessons.some((lesson) => lesson.progress !== "completed" && lesson.status !== "generated");
+  if (hasUnfinishedFutureLesson) return null;
+  return [...sortedLessons].reverse().find((lesson) => lesson.status === "generated" && Array.isArray(lesson.blocks)) ?? null;
+}
+
+export function currentLessonBlocks(course: Course, preferredLessonId?: string | null): CourseBlock[] {
+  return currentCourseLesson(course, preferredLessonId)?.blocks ?? [];
+}
+
 /** Flatten every materialized lesson's blocks into one ordered list (by sortKey).
  * Planned (ungenerated) lessons contribute nothing. */
 export function courseBlocks(course: Course): CourseBlock[] {
-  return [...course.lessons]
-    .sort((a, b) => a.sortKey - b.sortKey)
+  return sortedCourseLessons(course)
     .flatMap((lesson) => lesson.blocks ?? []);
 }
 
@@ -256,7 +310,7 @@ export type CourseSummaryLesson = {
 };
 
 export function summarizeCourse(course: Course): CourseSummary {
-  const sortedLessons = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
+  const sortedLessons = sortedCourseLessons(course);
   const lessons = sortedLessons.map((lesson): CourseSummaryLesson => ({
     id: lesson.id,
     title: lesson.title,
@@ -311,6 +365,8 @@ function defaultTitleFor(block: CourseBlock): string {
       return `Transfer: ${block.fromDomain} → ${block.toDomain}`;
     case "visual":
       return "Interactive visual";
+    case "image":
+      return "Illustration";
     case "code":
       return `Code (${block.language})`;
     case "quiz":

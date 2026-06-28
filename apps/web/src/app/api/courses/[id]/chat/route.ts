@@ -55,6 +55,9 @@ function blockToPrompt(block: CourseBlock) {
     const summary = block.items.map((it, i) => `${i + 1}[${it.kind}]: ${it.prompt.slice(0, 60)}`).join("; ");
     return `Block ${title} (worksheet, ${block.items.length} items): ${summary}`;
   }
+  if (block.type === "image") {
+    return `Block ${title} (image/${block.imageKind}): alt="${block.alt}", caption="${block.caption}"`;
+  }
   return `Block ${title} (code/${block.language}):\nExplanation: ${block.explanation}\nCode:\n${block.code}`;
 }
 

@@ -61,6 +61,16 @@ const CodeEdit = z.object({
   explanation: z.string(),
 });
 
+// Editing an image rewrites only its TEXT (title/alt/caption) and never the
+// picture — the asset is preserved. Regenerating the image is an explicit,
+// separate action (transform/add), not a block rewrite.
+const ImageEdit = z.object({
+  type: z.literal("image"),
+  title: z.string(),
+  alt: z.string(),
+  caption: z.string(),
+});
+
 const SlideItemEdit = z.object({
   id: z.string(),
   title: z.string(),
@@ -98,6 +108,7 @@ RULES:
 - For visual blocks with engine "echarts": update the echartsOption JSON to address the comment. Keep Primoria palette colors.
 - For visual blocks with engine "mermaid": update the mermaidDefinition DSL string. Keep valid Mermaid syntax.
 - For visual blocks with engine "physics": update the physicsScene JSON (bodies/constraints) to address the comment. Never write simulation code.
+- For image blocks: edit only the title, alt, and caption text. You cannot change the picture itself — never describe a new image.
 - Output valid JSON only.`;
 
 export type EditBlockInput = {
@@ -122,6 +133,9 @@ function schemaForBlock(block: CourseBlock) {
       return TransferEdit;
     case "visual":
       return schemaForVisualBlock(block);
+    case "image":
+      // Text-only edit; the picture/asset is preserved (regenerate is a separate action).
+      return ImageEdit;
     case "code":
       return CodeEdit;
     case "quiz":
@@ -426,6 +440,17 @@ function normalizeEditedBlock(raw: unknown, previous: CourseBlock): CourseBlock 
       return { ...previous, title, description, physicsScene: obj.physicsScene as VisualBlock["physicsScene"] };
     }
     return { ...previous, title, description, engine: "html" as const, html: cleanText(obj.html, previous.html ?? "") };
+  }
+
+  if (previous.type === "image") {
+    // Preserve the asset (assetId/imageUrl/imageKind/status); edit text only.
+    return {
+      ...previous,
+      type: "image",
+      title,
+      alt: cleanText(obj.alt, previous.alt),
+      caption: cleanText(obj.caption ?? obj.content, previous.caption),
+    };
   }
 
   if (previous.type === "worksheet") {

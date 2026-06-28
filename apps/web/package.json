@@ -21,6 +21,7 @@
     "db:seed:kg-embeddings": "node scripts/seed-kg-embeddings.mjs",
     "db:seed:kg-all": "node scripts/seed-kg.mjs all && node scripts/seed-kg-cross.mjs",
     "db:sync:kg": "pnpm db:migrate:kg && pnpm db:seed:kg && pnpm db:seed:kg-embeddings",
+    "test:image": "tsx tests/image-block-static.unit.ts && tsx tests/media-assets.unit.ts && tsx tests/gemini-image.unit.ts && tsx tests/image-pipeline.unit.ts",
     "test:widget:e2e": "node tests/widget-renderer.e2e.mjs",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",
     "db:migrate": "tsx scripts/migrate.ts",

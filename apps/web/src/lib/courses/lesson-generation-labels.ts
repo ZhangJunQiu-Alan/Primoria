@@ -14,6 +14,8 @@ export function lessonGenerationStageLabel(job: StageView): string {
       return "Planning lesson";
     case "writing":
       return `Writing blocks ${job.progressCompleted}/${Math.max(job.progressTotal, 1)}`;
+    case "imaging":
+      return "Generating images";
     case "validating":
       return "Checking lesson quality";
     case "saving":

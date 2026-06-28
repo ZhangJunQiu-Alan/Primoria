@@ -65,36 +65,35 @@ const quiz = {
   })),
 };
 
-function draft(blockCount: number) {
-  const textCount = blockCount - 4;
+function draft(blockCount: number, includeVisual = true) {
+  const fixedBlocks = includeVisual ? [analogy, visual, transfer, quiz] : [analogy, transfer, quiz];
+  const textCount = blockCount - fixedBlocks.length;
   return {
     title: "测试 Lesson",
     summary: "验证 Lesson Block 数量与构成规则。",
     estimatedMinutes: 45,
     blocks: [
       ...Array.from({ length: textCount }, (_, index) => text(index + 1)),
-      analogy,
-      visual,
-      transfer,
-      quiz,
+      ...fixedBlocks,
     ],
   };
 }
 
 function main() {
-  assert(normalizeCourseDraft(draft(15), "测试主题", 4).blocks.length === 15, "four concepts accept 15 blocks");
-  assert(normalizeCourseDraft(draft(16), "测试主题", 4).blocks.length === 16, "four concepts accept 16 blocks");
-  assert(normalizeCourseDraft(draft(17), "测试主题", 5).blocks.length === 17, "five concepts accept 17 blocks");
-  assert(normalizeCourseDraft(draft(18), "测试主题", 5).blocks.length === 18, "five concepts accept 18 blocks");
+  assert(normalizeCourseDraft(draft(8, false), "测试主题", 2).blocks.length === 8, "two concepts accept 8 blocks without visual");
+  assert(normalizeCourseDraft(draft(10, false), "测试主题", 2).blocks.length === 10, "two concepts accept 10 blocks");
+  assert(normalizeCourseDraft(draft(10, false), "测试主题", 3).blocks.length === 10, "three concepts accept 10 blocks");
+  assert(normalizeCourseDraft(draft(13, false), "测试主题", 3).blocks.length === 13, "three concepts accept 13 blocks");
+  assert(normalizeCourseDraft(draft(11), "测试主题", 2).blocks.length === 11, "two concepts accept visual allowance");
 
-  assertThrows(() => normalizeCourseDraft(draft(14), "测试主题", 4), "four concepts reject fewer than 15 blocks");
-  assertThrows(() => normalizeCourseDraft(draft(17), "测试主题", 4), "four concepts reject more than 16 blocks");
-  assertThrows(() => normalizeCourseDraft(draft(16), "测试主题", 5), "five concepts reject fewer than 17 blocks");
-  assertThrows(() => normalizeCourseDraft(draft(19), "测试主题", 5), "five concepts reject more than 18 blocks");
+  assertThrows(() => normalizeCourseDraft(draft(7, false), "测试主题", 2), "two concepts reject fewer than 8 blocks");
+  assertThrows(() => normalizeCourseDraft(draft(11, false), "测试主题", 2), "two concepts reject more than 10 blocks without visual");
+  assertThrows(() => normalizeCourseDraft(draft(9, false), "测试主题", 3), "three concepts reject fewer than 10 blocks");
+  assertThrows(() => normalizeCourseDraft(draft(14, false), "测试主题", 3), "three concepts reject more than 13 blocks without visual");
 
-  const withoutQuiz = draft(15);
+  const withoutQuiz = draft(10, false);
   withoutQuiz.blocks.splice(-1, 1, text(99));
-  assertThrows(() => normalizeCourseDraft(withoutQuiz, "测试主题", 4), "lesson requires exactly one quiz");
+  assertThrows(() => normalizeCourseDraft(withoutQuiz, "测试主题", 3), "lesson requires exactly one quiz");
 
   process.stdout.write("[course-lesson-composition.unit] ALL CHECKS PASSED\n");
 }

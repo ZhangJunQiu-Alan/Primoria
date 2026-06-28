@@ -9,12 +9,14 @@ import { IrParseError } from "./generation-errors";
 
 export const IR_VERSION = 1;
 
-/** The six block types still allowed for new generation (doc §4.1). */
+/** Block types allowed for new generation (doc §4.1). `I=image` is a static
+ * cognitive-anchor block (distinct from `V=visual`, the interactive engine). */
 export const TYPE_CODE_TO_BLOCK = {
   T: "text",
   A: "analogy",
   X: "transfer",
   V: "visual",
+  I: "image",
   C: "code",
   Q: "quiz",
 } as const;
@@ -105,12 +107,12 @@ export function decodeLessonPlanIr(raw: unknown): DecodedLessonPlan {
   };
 }
 
-/** Deterministic block-count window for a topic (doc §4.2). A normal 4-concept
- * topic targets 15-16, a 5-concept topic 17-18; otherwise the base range 12-20
- * applies. Each KG-mandated visual (one extra deepening block per visual-worthy
- * concept) raises the ceiling by one so the mandatory visuals fit without forcing
- * filler — the per-concept visual floor is enforced separately by the compiler. */
-export function expectedBlockRange(conceptCount?: number, visualCount = 0): { min: number; max: number } {
-  const base = conceptCount === 4 ? { min: 15, max: 16 } : conceptCount === 5 ? { min: 17, max: 18 } : { min: 12, max: 20 };
-  return { min: base.min, max: base.max + Math.max(0, visualCount) };
+/** Deterministic block-count window for a topic (doc §4.2). Topics are now
+ * intentionally small: 2 concepts target 8-10 blocks and 3 concepts target 10-13.
+ * Each media block (KG-mandated visual OR an image) raises the ceiling by one so
+ * the mandatory visuals and any anchor images fit without forcing filler — the
+ * per-concept visual floor is enforced separately by the compiler. */
+export function expectedBlockRange(conceptCount?: number, mediaCount = 0): { min: number; max: number } {
+  const base = conceptCount === 2 ? { min: 8, max: 10 } : conceptCount === 3 ? { min: 10, max: 13 } : { min: 8, max: 20 };
+  return { min: base.min, max: base.max + Math.max(0, mediaCount) };
 }
