@@ -3,6 +3,7 @@
 // (e.g. the /debug/pipeline inspector).
 
 import type { ConceptVisual } from "../../knowledge-graph/topic-graph";
+import type { KnowledgeBackground } from "../../learner-profile/types";
 import type { MasteryStatus } from "../../mastery/store";
 
 export type CourseContextConcept = {
@@ -34,6 +35,8 @@ export type CourseContext = {
   // Learner's content language (e.g. "zh", "en"), carried from the course so
   // generated lesson prose matches the language of their original topic prompt.
   language?: string | null;
+  // First-run onboarding signal. It controls teaching depth, not topic coverage.
+  knowledgeBackground?: KnowledgeBackground | null;
 };
 
 // Explicit content-language directive for generation prompts. KG topic/concept

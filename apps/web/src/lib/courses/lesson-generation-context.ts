@@ -3,6 +3,8 @@ import { getCourse } from "./store";
 import { getTopic, nextTopic } from "../knowledge-graph/topic-graph";
 import type { CourseContext, CourseContextTopic } from "../ai/deepagent/course-kg-context";
 import { ContextError } from "../ai/course-generation/generation-errors";
+import { getLearnerProfile } from "../learner-profile/store";
+import type { KnowledgeBackground } from "../learner-profile/types";
 import { listConceptMasteryByOwner } from "../mastery/owner-store";
 import type { MasteryStatus } from "../mastery/store";
 
@@ -59,11 +61,16 @@ export async function loadLessonGenerationContext(input: {
   // On a DB error, degrade to an empty map (every concept reads as untested =
   // full teaching) rather than failing the lesson.
   let masteryByConcept = new Map<string, MasteryStatus>();
+  let knowledgeBackground: KnowledgeBackground | null = null;
   try {
-    const masteryList = await listConceptMasteryByOwner(ownerId, graphId);
+    const [masteryList, profile] = await Promise.all([
+      listConceptMasteryByOwner(ownerId, graphId),
+      getLearnerProfile(ownerId),
+    ]);
     masteryByConcept = new Map<string, MasteryStatus>(masteryList.map((m) => [m.conceptId, m.status]));
+    knowledgeBackground = profile?.knowledgeBackground ?? null;
   } catch (error) {
-    console.warn(`[lesson-generation-context] mastery load failed for owner=${ownerId} graph=${graphId}; teaching all concepts as untested`, error);
+    console.warn(`[lesson-generation-context] profile/mastery load failed for owner=${ownerId} graph=${graphId}; teaching all concepts as untested`, error);
   }
 
   const next = nextTopic(graphId, topicId);
@@ -74,6 +81,7 @@ export async function loadLessonGenerationContext(input: {
     targetConceptId: null,
     nextTopic: next ? toContextTopic(next.topicId, next.name, next.conceptIds) : null,
     language: course.language ?? null,
+    knowledgeBackground,
   };
 
   return { course, lesson, kg };

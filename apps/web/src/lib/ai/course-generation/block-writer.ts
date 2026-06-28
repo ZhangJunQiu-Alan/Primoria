@@ -1,6 +1,7 @@
 import type { CourseBlock } from "@/lib/courses/types";
 import type { TutorProviderSettings } from "../types";
 import { languageDirective, type CourseContext } from "../deepagent/course-kg-context";
+import { knowledgeBackgroundDirective } from "../../learner-profile/types";
 import { invokeJson } from "./model-json";
 import { compileBlockContent } from "./block-content-compiler";
 import { WriterError } from "./generation-errors";
@@ -124,7 +125,8 @@ QUIZ CONCEPT ATTRIBUTION CONTRACT:
 - Never invent, translate, shorten, or infer a different conceptId.
 - Tag a cross-concept question with the single conceptId that is primarily being assessed.`
     : "";
-  const system = `You are Primoria's Block Writer for the lesson "${plan.title}" on topic "${kg.startTopic.name}". Write the content for the blocks listed below. Planner-owned block metadata is fixed: do not emit block-level "type" or "conceptIds". You MUST emit "order" so each result can be matched to its block. Keep blocks distinct from their neighbors. ${languageDirective(kg.language)}${quizContract}
+  const system = `You are Primoria's Block Writer for the lesson "${plan.title}" on topic "${kg.startTopic.name}". Write the content for the blocks listed below. Planner-owned block metadata is fixed: do not emit block-level "type" or "conceptIds". You MUST emit "order" so each result can be matched to its block. Keep blocks distinct from their neighbors. ${languageDirective(kg.language)}
+${knowledgeBackgroundDirective(kg.knowledgeBackground)}${quizContract}
 
 OUTPUT a single compact JSON array, one object per block, each including its "order" and the listed fields. No prose, no code fences.`;
   const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}`;

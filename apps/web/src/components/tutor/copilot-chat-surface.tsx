@@ -388,7 +388,8 @@ function PrimoriaMainWelcomeScreen({
 function stripInjectedCourseContext(content: unknown) {
   const text = contentToText(content);
   const marker = "Learner question:";
-  if (!text.includes("COURSE DETAIL MODE") || !text.includes(marker)) return text;
+  const hasHiddenContext = text.includes("COURSE DETAIL MODE") || text.includes("PRIMORIA LEARNER PROFILE");
+  if (!hasHiddenContext || !text.includes(marker)) return text;
   const index = text.lastIndexOf(marker);
   return text.slice(index + marker.length).trimStart();
 }
