@@ -355,6 +355,20 @@ button {
   visibility: hidden;
 }
 
+.onboarding-clarify {
+  display: grid;
+  gap: 10px;
+}
+
+.onboarding-clarify-message {
+  margin: 0;
+  color: #3f623b;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: pre-line;
+}
+
 .onboarding-actions {
   display: grid;
   gap: 8px;
@@ -1826,7 +1840,9 @@ button {
   gap: 14px;
   position: sticky;
   top: 0;
+  z-index: 30;
   height: 100vh;
+  overflow: visible;
   backdrop-filter: blur(18px);
 }
 
@@ -8360,7 +8376,7 @@ cpk-web-inspector {
 
 .nav-account-menu {
   position: absolute;
-  z-index: 40;
+  z-index: 80;
   left: calc(100% + 14px);
   bottom: 0;
   width: 260px;
@@ -8372,6 +8388,7 @@ cpk-web-inspector {
   background: rgba(255, 253, 248, 0.98);
   box-shadow: 0 22px 50px rgba(57, 42, 25, 0.16);
   backdrop-filter: blur(18px);
+  pointer-events: auto;
 }
 
 .nav-account-menu::before {
@@ -8434,7 +8451,12 @@ cpk-web-inspector {
   white-space: nowrap;
 }
 
-.nav-account .nav-account-signout:hover {
+.nav-account .nav-account-signout:disabled {
+  opacity: 0.62;
+  cursor: wait;
+}
+
+.nav-account .nav-account-signout:not(:disabled):hover {
   border-color: rgba(23, 19, 15, 0.18);
   background: #17130f;
   color: #fffdf8;

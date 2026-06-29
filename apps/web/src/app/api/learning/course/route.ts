@@ -9,6 +9,7 @@ import {
   InvalidCourseTopicAnchorError,
   resolveCourseContextFromTopicAnchor,
 } from "@/lib/knowledge-graph/course-context";
+import { recordLearningEvent } from "@/lib/learning-events/store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,6 +19,9 @@ const RequestSchema = z.object({
   startTopicId: z.string().min(1),
   targetConceptId: z.string().min(1).nullable().optional(),
   language: z.string().min(1).optional(),
+  // Set when this build came from a subject-clarification chip click; carries the
+  // original ambiguous query so the server can log a subject-level menu_select.
+  clarifySourceQuery: z.string().min(1).optional(),
 }).strict();
 
 function userFacingError(error: unknown) {
@@ -39,6 +43,15 @@ export async function POST(request: Request) {
 
     const anchor = RequestSchema.parse(await request.json());
     const courseContext = resolveCourseContextFromTopicAnchor(anchor);
+
+    if (anchor.clarifySourceQuery) {
+      await recordLearningEvent({
+        type: "position.menu_select",
+        ownerId,
+        graphId: anchor.graphId,
+        sourceQuery: anchor.clarifySourceQuery,
+      });
+    }
 
     const { course, firstLesson, summary } = await initializeCourseOutline({
       ownerId,

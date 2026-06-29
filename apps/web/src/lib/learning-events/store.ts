@@ -50,8 +50,19 @@ export type LearningEvent =
       conceptId?: string | null;
       rawQuery: string;
       branch: string;
+      mode?: string | null;
       topTopicId?: string | null;
       maxSimilarity: number;
+    }
+  | {
+      // Subject-level clarification: the learner picked one subject chip when the
+      // goal was ambiguous across knowledge graphs. (Replaces the old broad topic
+      // menu select — `selected` is now a graphId, not a topicId.)
+      type: "position.menu_select";
+      ownerId: string;
+      id?: string;
+      graphId: string;
+      sourceQuery: string;
     };
 
 type LearningEventRow = {
@@ -124,9 +135,16 @@ function toRow(event: LearningEvent): LearningEventRow {
         payload: {
           raw_query: event.rawQuery,
           branch: event.branch,
+          ...(event.mode ? { mode: event.mode } : {}),
           ...(event.topTopicId ? { top_topic_id: event.topTopicId } : {}),
           max_similarity: event.maxSimilarity,
         },
+      };
+    case "position.menu_select":
+      return {
+        ...base,
+        graphId: event.graphId,
+        payload: { selected: event.graphId, source_query: event.sourceQuery },
       };
   }
 }

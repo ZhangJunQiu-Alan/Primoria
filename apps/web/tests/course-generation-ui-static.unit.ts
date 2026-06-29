@@ -86,10 +86,17 @@ async function main() {
   assert(tutorNavRail.includes("nav-account-trigger"), "signed-in nav rail shows an avatar menu trigger");
   assert(tutorNavRail.includes("aria-expanded={accountOpen}"), "avatar menu trigger exposes expanded state");
   assert(tutorNavRail.includes("nav-account-menu"), "signed-in email and sign-out live in an account popover");
+  assert(tutorNavRail.includes("signingOut"), "sign out exposes a pending state instead of appearing unresponsive");
+  assert(tutorNavRail.includes("disabled={signingOut}"), "sign out cannot be double-submitted while the request is pending");
   assert(tutorNavRail.includes("title={accountEmail}"), "account popover preserves the full email as hover text");
   assert(tutorNavRail.includes('role="menuitem"'), "account popover exposes sign out as a menu item");
   assert(!tutorNavRail.includes("<button type=\"button\" onClick={signOut}>Sign out</button>"), "sign out is no longer flattened into the rail");
   assert(styles.includes(".nav-account-menu"), "account popover has dedicated styling");
+  assert(styles.includes(".nav-rail {\n  background: rgba(255, 253, 248, 0.82);"), "nav rail keeps the account popover in its own layout layer");
+  assert(styles.includes("z-index: 30;\n  height: 100vh;\n  overflow: visible;"), "nav rail paints above the workspace so the account popover remains clickable");
+  assert(styles.includes("z-index: 80;"), "account popover sits above the app workspace");
+  assert(styles.includes("pointer-events: auto;"), "account popover explicitly receives pointer events");
+  assert(styles.includes(".nav-account .nav-account-signout:disabled"), "sign out pending state has dedicated styling");
   assert(styles.includes("left: calc(100% + 14px)"), "account popover opens beside the desktop rail");
   assert(styles.includes("overflow-wrap: anywhere"), "account popover can show long emails without rail truncation");
   assert(styles.includes(".workspace-shell .nav-account-menu"), "account popover has a mobile workspace-shell placement");
