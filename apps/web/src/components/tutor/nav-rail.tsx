@@ -93,6 +93,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   const [authEnabled, setAuthEnabled] = useState<boolean | null>(initialAuthState?.authEnabled ?? null);
   const [user, setUser] = useState<AuthUser | null>(initialAuthState?.user ?? null);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
   const accountRootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -132,13 +133,19 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   }, [accountOpen]);
 
   async function signOut() {
-    await fetch("/api/auth/sign-out", { method: "POST" });
-    clearCopilotThreadStorage();
-    window.localStorage.removeItem("primoria:tutor-provider-settings");
-    setUser(null);
-    setAccountOpen(false);
-    router.push("/");
-    router.refresh();
+    if (signingOut) return;
+    setSigningOut(true);
+    try {
+      await fetch("/api/auth/sign-out", { method: "POST" });
+      clearCopilotThreadStorage();
+      window.localStorage.removeItem("primoria:tutor-provider-settings");
+      setUser(null);
+      setAccountOpen(false);
+      router.push("/");
+      router.refresh();
+    } finally {
+      setSigningOut(false);
+    }
   }
 
   const accountInitial = (user?.displayName ?? user?.email ?? "U").slice(0, 1).toUpperCase();
@@ -210,8 +217,14 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
                     <span title={accountEmail}>{accountEmail}</span>
                   </span>
                 </div>
-                <button type="button" className="nav-account-signout" onClick={signOut} role="menuitem">
-                  Sign out
+                <button
+                  type="button"
+                  className="nav-account-signout"
+                  onClick={signOut}
+                  role="menuitem"
+                  disabled={signingOut}
+                >
+                  {signingOut ? "Signing out..." : "Sign out"}
                 </button>
               </div>
             ) : null}

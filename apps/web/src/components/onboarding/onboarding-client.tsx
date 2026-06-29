@@ -15,11 +15,17 @@ import {
 type GoalAnchorSummary = {
   graphSubject: string;
   topicName: string;
-  branch: "specific" | "subject_start";
+  branch: "specific" | "subject_start" | "directed";
+};
+
+type GoalClarify = {
+  message: string;
+  candidates: { graphId: string; subject: string; startTopicId: string }[];
 };
 
 type OnboardingApiResponse = LearnerOnboardingState & {
   anchor?: GoalAnchorSummary;
+  clarify?: GoalClarify;
   course?: { courseId: string | null; lessonId: string | null };
   courseId?: string | null;
   error?: string;
@@ -232,6 +238,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
   );
   const [style, setStyle] = useState<TutorStyle>(() => normalizeTutorStyle(initialState.profile?.tutorStyle));
   const [anchor, setAnchor] = useState<GoalAnchorSummary | null>(null);
+  const [clarify, setClarify] = useState<GoalClarify | null>(null);
   const [courseId, setCourseId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -271,9 +278,9 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
 
   const goalSummary = useMemo(() => {
     if (anchor) {
-      return anchor.branch === "subject_start"
-        ? `Matched ${anchor.graphSubject}. We'll start from ${anchor.topicName}.`
-        : `Matched ${anchor.topicName} in ${anchor.graphSubject}.`;
+      return anchor.branch === "specific"
+        ? `Matched ${anchor.topicName} in ${anchor.graphSubject}.`
+        : `Matched ${anchor.graphSubject}. We'll start from ${anchor.topicName}.`;
     }
     if (state.profile?.goalStartTopicId) return "Learning goal saved.";
     if (state.profile?.goalSkippedAt) return "Learning goal skipped.";
@@ -282,6 +289,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
 
   function applyResponse(data: OnboardingApiResponse) {
     setState({ profile: data.profile ?? null, nextStep: data.nextStep, complete: data.complete });
+    setClarify(data.clarify ?? null);
     if (data.anchor) setAnchor(data.anchor);
     const nextCourseId = data.course?.courseId ?? data.courseId ?? null;
     if (nextCourseId) setCourseId(nextCourseId);
@@ -315,6 +323,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
     setBackground(initialState.profile?.knowledgeBackground ?? "");
     setStyle(normalizeTutorStyle(initialState.profile?.tutorStyle));
     setAnchor(null);
+    setClarify(null);
     setCourseId(null);
     setError("");
   }
@@ -344,18 +353,39 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
               <div className="onboarding-control-region">
                 <textarea
                   value={learningGoal}
-                  onChange={(event) => setLearningGoal(event.target.value)}
+                  onChange={(event) => {
+                    setLearningGoal(event.target.value);
+                    if (clarify) setClarify(null);
+                  }}
                   placeholder="e.g. I want to learn data structures and algorithms"
                   rows={4}
                   className="onboarding-goal-input"
                 />
-                <div className="onboarding-example-list" aria-label="Goal examples">
-                  {GOAL_EXAMPLES.map((example) => (
-                    <button key={example} type="button" onClick={() => setLearningGoal(example)}>
-                      {example}
-                    </button>
-                  ))}
-                </div>
+                {clarify ? (
+                  <div className="onboarding-clarify">
+                    <p className="onboarding-clarify-message">{clarify.message}</p>
+                    <div className="onboarding-choice-list onboarding-clarify-list">
+                      {clarify.candidates.map((candidate) => (
+                        <button
+                          key={candidate.graphId}
+                          type="button"
+                          disabled={busy}
+                          onClick={() => run(() => submit("/api/onboarding/goal", { learningGoal, graphId: candidate.graphId }))}
+                        >
+                          <strong>{candidate.subject}</strong>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="onboarding-example-list" aria-label="Goal examples">
+                    {GOAL_EXAMPLES.map((example) => (
+                      <button key={example} type="button" onClick={() => setLearningGoal(example)}>
+                        {example}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               <p className={`onboarding-note ${goalSummary ? "" : "onboarding-note-empty"}`}>
                 {goalSummary || "Learning goal will be matched to the knowledge graph."}

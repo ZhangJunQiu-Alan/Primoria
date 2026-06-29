@@ -464,13 +464,15 @@ function courseArtifactFromSummary(summary: unknown, status: "generating" | "rea
   return parsed.success ? parsed.data : null;
 }
 
-type MenuItem = { graphId: string; topicId: string; name: string; reason: string };
+type MenuItem = { graphId: string; subject: string; startTopicId: string };
 type CourseTopicAnchor = {
   graphId: string;
   startTopicId: string;
   targetConceptId: string | null;
+  // Set when the build came from a subject-clarification chip click.
+  clarifySourceQuery?: string;
 };
-type LearningPhase = "positioning" | "building" | "ready" | "broad" | "fallback" | "error";
+type LearningPhase = "positioning" | "building" | "ready" | "clarify_subject" | "fallback" | "error";
 type LearningGoalSnapshot = {
   phase: LearningPhase;
   artifact: CourseCardArtifact | null;
@@ -550,21 +552,23 @@ class LearningGoalTask {
       if (!posRes.ok) throw new Error(posData?.error || "positioning failed");
 
       const plan = posData?.plan;
-      if (plan?.branch === "broad") {
-        const resolvedGraphId = typeof posData?.graphId === "string" ? posData.graphId : this.graphId;
-        if (!resolvedGraphId) throw new Error("positioning result did not include a knowledge graph");
+      if (plan?.branch === "clarify_subject") {
         this.update({
-          menu: (plan.menu ?? []).map((m: { topicId: string; name: string; reason?: string }) => ({
-            graphId: resolvedGraphId,
-            topicId: m.topicId,
-            name: m.name,
-            reason: typeof m.reason === "string" ? m.reason.trim() : "",
-          })),
-          phase: "broad",
+          menu: (plan.candidates ?? [])
+            .filter((c: { graphId?: unknown; startTopicId?: unknown }) =>
+              typeof c.graphId === "string" && typeof c.startTopicId === "string",
+            )
+            .map((c: { graphId: string; subject?: string; startTopicId: string }) => ({
+              graphId: c.graphId,
+              subject: typeof c.subject === "string" ? c.subject : c.graphId,
+              startTopicId: c.startTopicId,
+            })),
+          message: typeof plan.message === "string" ? plan.message : "",
+          phase: "clarify_subject",
         });
         return;
       }
-      if (plan?.branch === "fallback" || plan?.branch !== "specific" || !plan.courseContext) {
+      if (plan?.branch === "fallback" || plan?.branch !== "positioned" || !plan.courseContext) {
         this.update({
           message: plan?.message || "无法定位这个学习目标，请重新输入更具体的内容。",
           phase: "fallback",
@@ -600,7 +604,13 @@ class LearningGoalTask {
       const buildRes = await fetch("/api/learning/course", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...anchor, language: detectKgLanguage(this.query) }),
+        body: JSON.stringify({
+          graphId: anchor.graphId,
+          startTopicId: anchor.startTopicId,
+          targetConceptId: anchor.targetConceptId,
+          language: detectKgLanguage(this.query),
+          ...(anchor.clarifySourceQuery ? { clarifySourceQuery: anchor.clarifySourceQuery } : {}),
+        }),
       });
       const buildData = await buildRes.json();
       if (!buildRes.ok) throw new Error(buildData?.error || "build failed");
@@ -761,7 +771,8 @@ function RestoredLessonGenerationCard({
 // browser component runs KG positioning (/api/knowledge-graph/position) and, for a
 // specific match, the asynchronous build (/api/learning/course). Both fetches carry
 // the user's session natively, so the course persists to app_courses under the
-// signed-in owner. specific -> course card, broad -> menu, fallback -> message.
+// signed-in owner. positioned -> course card, clarify_subject -> subject chips,
+// fallback -> message.
 function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string }) {
   const task = query?.trim() ? getLearningGoalTask(query, graphId) : null;
   const [snapshot, setSnapshot] = useState<LearningGoalSnapshot>(() => task?.getSnapshot() ?? emptyLearningGoalSnapshot());
@@ -804,30 +815,31 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
     );
   }
 
-  if (phase === "broad") {
+  if (phase === "clarify_subject") {
     return (
       <div className="message-row tool">
         <div className="tool-card status-card">
           <div className="tool-title">
             <span className="tool-dot" />
-            <span>可能的学习入口</span>
+            <span>选择一个学科开始</span>
           </div>
           <div className="visualizer">
+            {message ? <span className="tool-note kg-clarify-message">{message}</span> : null}
             <ul className="kg-menu-list">
               {menu.map((item) => (
-                <li key={item.topicId}>
+                <li key={item.graphId}>
                   <button
                     type="button"
                     className="kg-menu-item"
-                    aria-label={item.reason ? `${item.name}: ${item.reason}` : item.name}
+                    aria-label={item.subject}
                     onClick={() => task?.startCourseBuild({
                       graphId: item.graphId,
-                      startTopicId: item.topicId,
+                      startTopicId: item.startTopicId,
                       targetConceptId: null,
+                      clarifySourceQuery: query,
                     })}
                   >
-                    <span className="kg-menu-title">{item.name}</span>
-                    {item.reason ? <span className="kg-menu-reason">{item.reason}</span> : null}
+                    <span className="kg-menu-title">{item.subject}</span>
                   </button>
                 </li>
               ))}
