@@ -1,22 +1,34 @@
-import { classifyEntry, resolvePositioningParams, FALLBACK_MESSAGE, type BroadMenuItem, type PositioningParams, type PositioningResult } from "./positioning";
-import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse } from "./search";
-import { buildGraphCandidates, routeDominantGraph } from "./graph-router";
+import {
+  finalizeStage2,
+  resolvePositioningParams,
+  safeDefault,
+  type FinalizeContext,
+  type GraphCandidateLite,
+  type PositioningDiagnostics,
+  type PositioningMode,
+  type PositioningParams,
+  type PositioningResult,
+  type SubjectCandidate,
+} from "./positioning";
+import { runStage2Positioning } from "./positioning-llm";
+import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse, type KnowledgeGraphSearchResult } from "./search";
+import { buildGraphCandidates } from "./graph-router";
 import { detectKgLanguage } from "./display-name";
 import type { CourseContext, CourseContextTopic } from "./course-context";
 
 export type { CourseContext, CourseContextTopic } from "./course-context";
 
-// Shared "position a learning goal in the KG" core, reused by both the Next route
-// handler (/api/knowledge-graph/position) and — over HTTP — the LangGraph agent's
-// position_learning_goal tool. Keep the heavy/impure recall (search.ts) here; the
-// branch -> action mapping (planFromPositioning) is pure and unit-testable.
+// Shared "position a learning goal in the KG" core, reused by the Next route
+// handler (/api/knowledge-graph/position) and the onboarding goal resolver.
+// Pipeline: cross-graph recall -> relevance floor gate -> candidate subjects ->
+// margin (1 vs top-N graphs) -> one Stage-2 LLM call (positioning-llm) ->
+// pure validation/guardrails (finalizeStage2). No softmax/threshold heuristic.
 
 export type PositionLearningGoalInput = {
   query: string;
   graphId?: string;
   topK?: number;
   modelVersion?: string;
-  tau?: number;
   floor?: number;
   // User-facing locale for topic/concept display names. When omitted it is
   // inferred from the query text (CJK => "zh").
@@ -29,59 +41,104 @@ export type PositionLearningGoalResult = {
 };
 
 export type PositioningPlan =
-  | { branch: "specific"; courseContext: CourseContext }
-  | { branch: "broad"; menu: BroadMenuItem[] }
+  | { branch: "positioned"; mode: PositioningMode; courseContext: CourseContext }
+  | { branch: "clarify_subject"; message: string; candidates: SubjectCandidate[] }
   | { branch: "fallback"; message: string };
+
+function resultTopicId(r: KnowledgeGraphSearchResult): string | null {
+  return r.kind === "topic" ? r.nodeId : r.topicId;
+}
+
+function buildDiagnostics(
+  maxSimilarity: number,
+  candidates: GraphCandidateLite[],
+): PositioningDiagnostics {
+  return {
+    maxSimilarity,
+    candidateGraphs: candidates.map((c) => ({ graphId: c.graphId, bestSimilarity: c.bestSimilarity })),
+  };
+}
 
 export async function positionLearningGoal(
   input: PositionLearningGoalInput,
 ): Promise<PositionLearningGoalResult> {
-  const rawSearch = await searchKnowledgeGraphNodes(input);
+  const search = await searchKnowledgeGraphNodes(input);
   const overrides: Partial<PositioningParams> = {};
-  if (input.tau !== undefined) overrides.tau = input.tau;
   if (input.floor !== undefined) overrides.floor = input.floor;
+  const params = resolvePositioningParams(overrides);
+  const language = input.language ?? detectKgLanguage(input.query);
 
-  // Cross-graph recall (no graphId): LLM routing picks the single subject among
-  // the recalled candidates (handles aliases and cross-language goals), then the
-  // rest of positioning runs within that one graph. If no subject can be picked,
-  // ask the user for a more specific goal. A concrete graphId is unchanged.
-  let search = rawSearch;
-  if (rawSearch.graphId === ALL_KG_GRAPHS) {
-    const candidates = buildGraphCandidates(rawSearch.results);
-    const routed = await routeDominantGraph(input.query, candidates);
-    if (!routed) {
-      const params = resolvePositioningParams(overrides);
-      const maxSimilarity = rawSearch.results.length
-        ? Math.max(...rawSearch.results.map((r) => r.similarity))
-        : 0;
-      return {
-        result: {
-          branch: "fallback",
-          graphId: ALL_KG_GRAPHS,
-          params,
-          message: FALLBACK_MESSAGE,
-          diagnostics: { maxSimilarity, topicMass: [], topConcept: null },
-        },
-        search: rawSearch,
-      };
-    }
-    search = {
-      ...rawSearch,
-      graphId: routed,
-      results: rawSearch.results.filter((r) => r.graphId === routed),
+  const maxSimilarity = search.results.length ? Math.max(...search.results.map((r) => r.similarity)) : 0;
+
+  // Relevance floor gate: nothing in the library is close enough — fall back
+  // without spending a Stage-2 LLM call.
+  if (search.results.length === 0 || maxSimilarity < params.floor) {
+    return {
+      result: {
+        branch: "fallback",
+        graphId: search.graphId,
+        params,
+        diagnostics: buildDiagnostics(maxSimilarity, []),
+      },
+      search,
     };
   }
 
-  const language = input.language ?? detectKgLanguage(input.query);
-  const result = classifyEntry(search, overrides, language);
-  return { result, search };
+  const candidates = buildGraphCandidates(search.results).map(
+    (c): GraphCandidateLite => ({ graphId: c.graphId, subject: c.subject, bestSimilarity: c.bestSimilarity }),
+  );
+
+  // Margin: if the top subject clearly dominates, position inside it alone;
+  // otherwise hand the top-N graphs to Stage 2 to pick + position in one call.
+  const dominates =
+    candidates.length <= 1 ||
+    candidates[0].bestSimilarity - candidates[1].bestSimilarity >= params.marginWindow;
+  const selected = dominates ? candidates.slice(0, 1) : candidates.slice(0, params.maxStage2Graphs);
+
+  // Recall-hit topic ids per graph, for the directed guardrail.
+  const hitTopicIdsByGraph = new Map<string, Set<string>>();
+  for (const r of search.results) {
+    const topicId = resultTopicId(r);
+    if (!topicId) continue;
+    const set = hitTopicIdsByGraph.get(r.graphId) ?? new Set<string>();
+    set.add(topicId);
+    hitTopicIdsByGraph.set(r.graphId, set);
+  }
+
+  const ctx: FinalizeContext = {
+    candidates: selected,
+    hitTopicIdsByGraph,
+    language,
+    diagnostics: buildDiagnostics(maxSimilarity, selected),
+    params,
+  };
+
+  const decision = await runStage2Positioning(
+    { query: input.query, language, graphs: selected.map((c) => ({ graphId: c.graphId, subject: c.subject })) },
+    undefined,
+  );
+  const result = decision ? finalizeStage2(decision, ctx) : safeDefault(ctx);
+
+  // Surface the resolved graph on the search response so logging/events record
+  // the real subject rather than the cross-graph sentinel.
+  const resolvedSearch =
+    result.graphId && result.graphId !== ALL_KG_GRAPHS
+      ? { ...search, graphId: result.graphId }
+      : search;
+
+  return { result, search: resolvedSearch };
 }
 
-// Pure: turn a positioning result into the next action the agent should take.
-// specific -> course context for generation; broad -> menu; fallback -> message.
+// Pure: turn a positioning result into the next action a caller takes.
+// positioned -> course context for generation; clarify_subject -> subject chips;
+// fallback -> message.
 export function planFromPositioning(result: PositioningResult): PositioningPlan {
-  if (result.branch === "broad") {
-    return { branch: "broad", menu: result.menu ?? [] };
+  if (result.branch === "clarify_subject") {
+    return {
+      branch: "clarify_subject",
+      message: result.message ?? "",
+      candidates: result.candidates ?? [],
+    };
   }
   if (result.branch === "fallback") {
     return { branch: "fallback", message: result.message ?? "" };
@@ -95,7 +152,8 @@ export function planFromPositioning(result: PositioningResult): PositioningPlan 
     : { topicId: result.startTopicId ?? "", name: result.startTopicId ?? "", concepts: [] };
 
   return {
-    branch: "specific",
+    branch: "positioned",
+    mode: result.mode ?? "subject_start",
     courseContext: {
       learningPathType: "linear",
       graphId: result.graphId,

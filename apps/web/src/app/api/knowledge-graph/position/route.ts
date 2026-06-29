@@ -3,8 +3,6 @@ import { z } from "zod";
 
 import { buildPositioningLog, logPositioning } from "@/lib/knowledge-graph/positioning-log";
 import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
-import { enrichBroadMenuReasons } from "@/lib/knowledge-graph/broad-menu-reasons";
-import { detectKgLanguage } from "@/lib/knowledge-graph/display-name";
 import { requireAuth } from "@/lib/auth/guard";
 import { getCurrentUser } from "@/lib/auth/session";
 import { recordLearningEvent } from "@/lib/learning-events/store";
@@ -17,7 +15,6 @@ const RequestSchema = z.object({
   graphId: z.string().min(1).optional(),
   topK: z.number().int().min(1).max(50).optional(),
   modelVersion: z.string().min(1).optional(),
-  tau: z.number().min(0).max(1).optional(),
   floor: z.number().min(0).max(1).optional(),
   language: z.string().min(1).optional(),
 });
@@ -40,19 +37,7 @@ export async function POST(request: Request) {
     if (denied) return denied;
     const body = RequestSchema.parse(await request.json());
     const { result, search } = await positionLearningGoal(body);
-    let plan = planFromPositioning(result);
-    let responseResult = result;
-
-    if (plan.branch === "broad") {
-      const language = body.language ?? detectKgLanguage(body.query);
-      const menu = await enrichBroadMenuReasons({
-        query: body.query,
-        language,
-        menu: plan.menu,
-      });
-      plan = { branch: "broad", menu };
-      responseResult = { ...result, menu };
-    }
+    const plan = planFromPositioning(result);
 
     logPositioning(buildPositioningLog({ encodedQuery: search.encodedQuery, search, result }));
 
@@ -65,12 +50,13 @@ export async function POST(request: Request) {
         conceptId: result.targetConceptId ?? null,
         rawQuery: search.encodedQuery.rawQuery,
         branch: result.branch,
-        topTopicId: result.diagnostics.topicMass[0]?.topicId ?? null,
+        mode: result.mode ?? null,
+        topTopicId: result.startTopicId ?? null,
         maxSimilarity: result.diagnostics.maxSimilarity,
       });
     }
 
-    return NextResponse.json({ encodedQuery: search.encodedQuery, ...responseResult, plan });
+    return NextResponse.json({ encodedQuery: search.encodedQuery, ...result, plan });
   } catch (error) {
     console.error("[knowledge-graph/position]", error);
     return NextResponse.json({ error: userFacingError(error) }, { status: 503 });

@@ -63,12 +63,10 @@ function main() {
   const courseRouteSource = readFileSync(resolve(here, "../src/app/api/learning/course/route.ts"), "utf8");
 
   assert(!hookSource.includes("setActiveQuery(item.name)"), "menu click never restarts text positioning");
-  assert(hookSource.includes("startTopicId: item.topicId"), "menu click sends the selected topicId");
+  assert(hookSource.includes("startTopicId: item.startTopicId"), "menu click sends the selected startTopicId");
   assert(hookSource.includes("graphId: item.graphId"), "menu click sends the resolved graphId");
-  assert(hookSource.includes("reason: typeof m.reason"), "broad menu preserves server-generated relevance reasons");
   assert(hookSource.includes("className=\"kg-menu-item\""), "broad menu uses styled button rows");
   assert(hookSource.includes("className=\"kg-menu-title\""), "broad menu renders topic titles");
-  assert(hookSource.includes("className=\"kg-menu-reason\""), "broad menu renders relevance reason copy");
   assert(courseRouteSource.includes("startTopicId: z.string().min(1)"), "course API accepts a topic anchor ID");
   assert(!courseRouteSource.includes("courseContext: z.object"), "course API no longer trusts client CourseContext");
   assert(courseRouteSource.includes("resolveCourseContextFromTopicAnchor(anchor)"), "course API resolves context on the server");

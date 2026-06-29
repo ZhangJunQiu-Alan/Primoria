@@ -1,5 +1,5 @@
 import { detectKgLanguage, resolveKgDisplayName } from "@/lib/knowledge-graph/display-name";
-import { positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
+import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
 import { getTopicGraph } from "@/lib/knowledge-graph/topic-graph";
 
 export type OnboardingGoalAnchor = {
@@ -8,9 +8,19 @@ export type OnboardingGoalAnchor = {
   targetConceptId: string | null;
   topicName: string;
   graphSubject: string;
-  branch: "specific" | "subject_start";
+  branch: "specific" | "subject_start" | "directed";
   language: "zh" | "en";
 };
+
+export type OnboardingClarify = {
+  message: string;
+  candidates: { graphId: string; subject: string; startTopicId: string }[];
+  language: "zh" | "en";
+};
+
+export type OnboardingGoalResolution =
+  | { kind: "anchor"; anchor: OnboardingGoalAnchor }
+  | { kind: "clarify"; clarify: OnboardingClarify };
 
 function firstTopicInGraph(graphId: string) {
   const graph = getTopicGraph(graphId);
@@ -19,37 +29,59 @@ function firstTopicInGraph(graphId: string) {
   return { graph, topic };
 }
 
-export async function resolveOnboardingGoalAnchor(query: string): Promise<OnboardingGoalAnchor> {
-  const trimmed = query.trim();
-  const language = detectKgLanguage(trimmed);
-  const { result } = await positionLearningGoal({ query: trimmed, language });
-
-  if (result.branch === "fallback") {
-    throw new Error(result.message || "Please enter a more specific learning goal.");
-  }
-
-  if (result.branch === "specific" && result.startTopicId) {
-    const graph = getTopicGraph(result.graphId);
-    const topic = graph.topics.find((entry) => entry.topicId === result.startTopicId);
-    return {
-      graphId: result.graphId,
-      startTopicId: result.startTopicId,
-      targetConceptId: result.targetConceptId ?? null,
-      topicName: topic ? resolveKgDisplayName(topic, language) : result.startTopicId,
-      graphSubject: graph.subject,
-      branch: "specific",
-      language,
-    };
-  }
-
-  const { graph, topic } = firstTopicInGraph(result.graphId);
+// Commit a subject directly (chip click): start that graph from its root topic.
+// Deterministic — no LLM, no recall.
+function subjectStartAnchor(graphId: string, language: "zh" | "en"): OnboardingGoalAnchor {
+  const { graph, topic } = firstTopicInGraph(graphId);
   return {
-    graphId: graph.graphId,
+    graphId,
     startTopicId: topic.topicId,
     targetConceptId: null,
     topicName: resolveKgDisplayName(topic, language),
     graphSubject: graph.subject,
     branch: "subject_start",
     language,
+  };
+}
+
+export async function resolveOnboardingGoalAnchor(
+  query: string,
+  opts: { graphId?: string } = {},
+): Promise<OnboardingGoalResolution> {
+  const trimmed = query.trim();
+  const language = detectKgLanguage(trimmed);
+
+  // Subject chip picked during clarification → commit that subject from its root.
+  if (opts.graphId) {
+    return { kind: "anchor", anchor: subjectStartAnchor(opts.graphId, language) };
+  }
+
+  const { result } = await positionLearningGoal({ query: trimmed, language });
+  const plan = planFromPositioning(result);
+
+  if (plan.branch === "fallback") {
+    throw new Error(plan.message || "Please enter a more specific learning goal.");
+  }
+
+  if (plan.branch === "clarify_subject") {
+    return {
+      kind: "clarify",
+      clarify: { message: plan.message, candidates: plan.candidates, language },
+    };
+  }
+
+  const { courseContext, mode } = plan;
+  const graph = getTopicGraph(courseContext.graphId);
+  return {
+    kind: "anchor",
+    anchor: {
+      graphId: courseContext.graphId,
+      startTopicId: courseContext.startTopic.topicId,
+      targetConceptId: courseContext.targetConceptId ?? null,
+      topicName: courseContext.startTopic.name || courseContext.startTopic.topicId,
+      graphSubject: graph.subject,
+      branch: mode,
+      language,
+    },
   };
 }
