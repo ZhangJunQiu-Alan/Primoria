@@ -26,6 +26,7 @@ async function main() {
   );
 
   assert(!landingPage.includes("CopilotKitProvider"), "public landing component does not mount CopilotKit");
+  assert(landingPage.includes("<span>Primoria</span>"), "landing hero makes the product name a first-class part of the headline");
   assert(landingPage.includes("学习更加智能、更加定制化、更加高效"), "landing hero uses the product positioning line");
   assert(landingPage.includes("STEM"), "landing explains STEM coverage");
   assert(landingPage.includes("Interactive Visualization"), "landing highlights interactive visualization");
@@ -33,6 +34,9 @@ async function main() {
   assert(landingPage.includes("Course Copilot"), "landing explains the course copilot");
   assert(landingPage.includes("mastery"), "landing explains adaptive learning mastery");
   assert(landingPage.includes("Lazy Generation") || landingPage.includes("逐节"), "landing explains lesson-by-lesson generation");
+  assert(landingPage.includes("landing-map-stage"), "landing hero uses one dominant learning-map visual anchor");
+  assert(landingPage.includes("landing-capability-list"), "landing product section uses a restrained capability list");
+  assert(landingPage.includes("landing-workflow-line"), "landing workflow uses a linear path instead of card grid clutter");
   assert(landingPage.includes('href="/auth/sign-up?next=/"'), "primary CTA points to sign-up with tutor return");
   assert(landingPage.includes('href="/auth/sign-in?next=/"'), "secondary CTA points to sign-in with tutor return");
 
@@ -41,8 +45,12 @@ async function main() {
 
   assert(styles.includes(".landing-shell"), "landing has a dedicated shell style");
   assert(styles.includes(".landing-hero-visual"), "landing has a product visual scene");
+  assert(styles.includes(".landing-map-stage"), "landing has a dedicated map-stage visual anchor");
+  assert(styles.includes(".landing-capability-list"), "landing uses list structure for product capabilities");
   assert(styles.includes(".landing-subject-cloud"), "landing has dedicated STEM subject styling");
-  assert(styles.includes(".landing-workflow-grid"), "landing has dedicated workflow styling");
+  assert(styles.includes(".landing-workflow-line"), "landing has dedicated workflow path styling");
+  assert(!landingPage.includes("landing-visual-card"), "landing no longer uses stacked hero cards");
+  assert(!landingPage.includes("landing-product-grid"), "landing no longer uses a generic SaaS card grid for capabilities");
   assert(styles.includes("@media (max-width: 720px)"), "landing has mobile responsive behavior");
   assert(styles.includes("@media (prefers-reduced-motion: reduce)"), "landing respects reduced motion preferences");
 

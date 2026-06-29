@@ -88,6 +88,7 @@ function preloadWidgetDependency(dep: RuntimeWidgetDependency): Promise<WidgetDe
 
 export const THEME_CSS = `
 :root {
+  color-scheme: light;
   --color-background-primary: #fffdf8;
   --color-background-secondary: #f7f3ea;
   --color-background-tertiary: #efe8dc;
@@ -116,30 +117,6 @@ export const THEME_CSS = `
   --t: var(--color-text-tertiary);
   --bg2: var(--color-background-secondary);
   --b: var(--color-border-tertiary);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background-primary: #1c1914;
-    --color-background-secondary: #282420;
-    --color-background-tertiary: #221f1b;
-    --color-background-info: #0c3a6b;
-    --color-background-success: #143220;
-    --color-background-warning: #3a2700;
-    --color-background-danger: #3a1810;
-
-    --color-text-primary: #ede9df;
-    --color-text-secondary: #9a9187;
-    --color-text-tertiary: #6f675f;
-    --color-text-info: #7eb8f0;
-    --color-text-success: #7fc472;
-    --color-text-warning: #e8a84c;
-    --color-text-danger: #f09d8c;
-
-    --color-border-primary: rgba(237, 233, 223, 0.36);
-    --color-border-secondary: rgba(237, 233, 223, 0.22);
-    --color-border-tertiary: rgba(237, 233, 223, 0.12);
-  }
 }
 `;
 
@@ -206,57 +183,6 @@ svg .c-red > rect, svg .c-red > circle, svg .c-red > ellipse,
 svg rect.c-red, svg circle.c-red, svg ellipse.c-red { fill: #FCEBEB; stroke: #A32D2D; }
 svg .c-red text.th, svg .c-red text.t { fill: #791F1F; }
 svg .c-red text.ts { fill: #A32D2D; }
-
-@media (prefers-color-scheme: dark) {
-  svg text.t   { fill: #ede9df; }
-  svg text.ts  { fill: #9a9187; }
-  svg text.th  { fill: #ede9df; }
-
-  svg .c-blue > rect, svg .c-blue > circle, svg .c-blue > ellipse,
-  svg rect.c-blue, svg circle.c-blue, svg ellipse.c-blue { fill: #0C447C; stroke: #85B7EB; }
-  svg .c-blue text.th, svg .c-blue text.t { fill: #B5D4F4; }
-  svg .c-blue text.ts { fill: #85B7EB; }
-
-  svg .c-green > rect, svg .c-green > circle, svg .c-green > ellipse,
-  svg rect.c-green, svg circle.c-green, svg ellipse.c-green { fill: #27500A; stroke: #97C459; }
-  svg .c-green text.th, svg .c-green text.t { fill: #C0DD97; }
-  svg .c-green text.ts { fill: #97C459; }
-
-  svg .c-amber > rect, svg .c-amber > circle, svg .c-amber > ellipse,
-  svg rect.c-amber, svg circle.c-amber, svg ellipse.c-amber { fill: #633806; stroke: #EF9F27; }
-  svg .c-amber text.th, svg .c-amber text.t { fill: #FAC775; }
-  svg .c-amber text.ts { fill: #EF9F27; }
-
-  svg .c-coral > rect, svg .c-coral > circle, svg .c-coral > ellipse,
-  svg rect.c-coral, svg circle.c-coral, svg ellipse.c-coral { fill: #712B13; stroke: #F0997B; }
-  svg .c-coral text.th, svg .c-coral text.t { fill: #F5C4B3; }
-  svg .c-coral text.ts { fill: #F0997B; }
-
-  svg .c-purple > rect, svg .c-purple > circle, svg .c-purple > ellipse,
-  svg rect.c-purple, svg circle.c-purple, svg ellipse.c-purple { fill: #3C3489; stroke: #AFA9EC; }
-  svg .c-purple text.th, svg .c-purple text.t { fill: #CECBF6; }
-  svg .c-purple text.ts { fill: #AFA9EC; }
-
-  svg .c-gray > rect, svg .c-gray > circle, svg .c-gray > ellipse,
-  svg rect.c-gray, svg circle.c-gray, svg ellipse.c-gray { fill: #444441; stroke: #B4B2A9; }
-  svg .c-gray text.th, svg .c-gray text.t { fill: #D3D1C7; }
-  svg .c-gray text.ts { fill: #B4B2A9; }
-
-  svg .c-teal > rect, svg .c-teal > circle, svg .c-teal > ellipse,
-  svg rect.c-teal, svg circle.c-teal, svg ellipse.c-teal { fill: #085041; stroke: #5DCAA5; }
-  svg .c-teal text.th, svg .c-teal text.t { fill: #9FE1CB; }
-  svg .c-teal text.ts { fill: #5DCAA5; }
-
-  svg .c-pink > rect, svg .c-pink > circle, svg .c-pink > ellipse,
-  svg rect.c-pink, svg circle.c-pink, svg ellipse.c-pink { fill: #72243E; stroke: #ED93B1; }
-  svg .c-pink text.th, svg .c-pink text.t { fill: #F4C0D1; }
-  svg .c-pink text.ts { fill: #ED93B1; }
-
-  svg .c-red > rect, svg .c-red > circle, svg .c-red > ellipse,
-  svg rect.c-red, svg circle.c-red, svg ellipse.c-red { fill: #791F1F; stroke: #F09595; }
-  svg .c-red text.th, svg .c-red text.t { fill: #F7C1C1; }
-  svg .c-red text.ts { fill: #F09595; }
-}
 `;
 
 export const FORM_STYLES_CSS = `

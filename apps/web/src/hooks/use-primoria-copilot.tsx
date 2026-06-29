@@ -724,6 +724,44 @@ export function RestoredLessonGenerationCards() {
   );
 }
 
+type CourseGenerationNoticeKind = "active" | "failed" | "ready";
+
+function CourseGenerationNotice({
+  courseId,
+  title,
+  statusKind,
+  statusText,
+  bodyText,
+}: {
+  courseId: string;
+  title: string;
+  statusKind: CourseGenerationNoticeKind;
+  statusText: string;
+  bodyText: string;
+}) {
+  const active = statusKind === "active";
+  const courseHref = `/course/${encodeURIComponent(courseId)}/outline`;
+
+  return (
+    <article className={`restored-course-job course-generation-notice ${statusKind}`} aria-busy={active ? "true" : undefined}>
+      <div className="course-generation-notice-status">
+        <span className={active ? "tool-spinner" : "tool-dot"} aria-hidden="true" />
+        <span>{statusText}</span>
+      </div>
+      <div className="course-generation-notice-main">
+        <div>
+          <h3>{title}</h3>
+          <p>{bodyText}</p>
+        </div>
+        <div className="course-generation-notice-actions">
+          <a className="ghost-btn" href={courseHref}>打开课程</a>
+          <a className="soft-btn" href="/library">查看学习库</a>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 function RestoredLessonGenerationCard({
   initialJob,
   course,
@@ -734,36 +772,28 @@ function RestoredLessonGenerationCard({
   const { jobsByLessonId } = useLessonGenerationJobs(initialJob.courseId, [initialJob]);
   const liveJob = jobsByLessonId.get(initialJob.lessonId) ?? initialJob;
   const active = isLessonGenerationActive(liveJob);
-  const artifact = course && liveJob.status !== "failed"
-    ? courseArtifactFromSummary(course, active ? "generating" : "ready")
-    : null;
   const title = course?.title || "Course build";
-  const statusText = liveJob.status === "failed"
-    ? "第一节课生成失败，可在课程页重试。"
+  const failed = liveJob.status === "failed";
+  const statusKind = failed ? "failed" : active ? "active" : "ready";
+  const statusText = failed
+    ? "第一节课生成失败"
     : active
       ? `第一节课 · ${lessonGenerationStageLabel(liveJob)}`
-      : "第一节课 · Ready";
-  const courseHref = `/course/${encodeURIComponent(initialJob.courseId)}/outline`;
+      : "第一节课已准备好";
+  const bodyText = failed
+    ? "课程已创建，但第一节课没有生成成功。打开课程页可以重新生成。"
+    : active
+      ? "课程已创建，第一节课正在后台生成。你可以继续提问，或稍后从学习库进入。"
+      : "课程已创建，第一节课可以开始学习。";
 
   return (
-    <div className="restored-course-job">
-      {artifact ? <ToolCard artifact={artifact} /> : null}
-      <div className="message-row tool restored-course-job-status">
-        <div className="tool-card status-card">
-          <div className="tool-title">
-            <span className={active ? "tool-spinner" : "tool-dot"} />
-            <span>{statusText}</span>
-          </div>
-          <div className="visualizer">
-            <span className="tool-note">{title}</span>
-            <div className="tool-actions">
-              <a className="ghost-btn" href={courseHref}>Open course</a>
-              <a className="soft-btn" href="/library">Open Library</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <CourseGenerationNotice
+      courseId={initialJob.courseId}
+      title={title}
+      statusKind={statusKind}
+      statusText={statusText}
+      bodyText={bodyText}
+    />
   );
 }
 
@@ -791,27 +821,28 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
   }, [task]);
 
   if (phase === "ready" && artifact) {
-    const firstLessonStatus = liveFirstJob
-      ? liveFirstJob.status === "failed"
-        ? "第一节课生成失败，可在课程页重试。"
-        : isLessonGenerationActive(liveFirstJob)
-          ? `第一节课 · ${lessonGenerationStageLabel(liveFirstJob)}`
-          : null
-      : null;
+    const failed = liveFirstJob?.status === "failed";
+    const active = liveFirstJob ? isLessonGenerationActive(liveFirstJob) : false;
+    const statusKind: CourseGenerationNoticeKind = failed ? "failed" : active ? "active" : "ready";
+    const statusText = failed
+      ? "第一节课生成失败"
+      : active && liveFirstJob
+        ? `第一节课 · ${lessonGenerationStageLabel(liveFirstJob)}`
+        : "课程已创建";
+    const bodyText = failed
+      ? "课程已创建，但第一节课没有生成成功。打开课程页可以重新生成。"
+      : active
+        ? "课程已创建，第一节课正在后台生成。你可以继续提问，或稍后从学习库进入。"
+        : "可以打开课程页查看大纲并开始学习。";
+
     return (
-      <>
-        <ToolCard artifact={artifact} />
-        {firstLessonStatus ? (
-          <div className="message-row tool">
-            <div className="tool-card status-card">
-              <div className="tool-title">
-                {liveFirstJob && isLessonGenerationActive(liveFirstJob) ? <span className="tool-spinner" /> : null}
-                <span>{firstLessonStatus}</span>
-              </div>
-            </div>
-          </div>
-        ) : null}
-      </>
+      <CourseGenerationNotice
+        courseId={artifact.courseId}
+        title={artifact.title}
+        statusKind={statusKind}
+        statusText={statusText}
+        bodyText={bodyText}
+      />
     );
   }
 
