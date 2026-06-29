@@ -97,6 +97,12 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
   return user;
 }
 
+export async function invalidateCurrentSessionUserCache() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE)?.value;
+  if (token) sessionUserCache.delete(hashSessionToken(token));
+}
+
 export async function signOutCurrentSession() {
   if (!isAuthEnabled()) {
     await clearSessionCookie();

@@ -44,6 +44,7 @@ export function CourseLibraryGrid({
   const [page, setPage] = useState(1);
   const [initialRefreshOpen, setInitialRefreshOpen] = useState(true);
   const [openCourseMenuId, setOpenCourseMenuId] = useState<string | null>(null);
+  const [shareTarget, setShareTarget] = useState<CourseSummary | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<CourseSummary | null>(null);
   const [deletePending, setDeletePending] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -146,8 +147,6 @@ export function CourseLibraryGrid({
   const pageCount = Math.max(1, Math.ceil(filteredEntries.length / PAGE_SIZE));
   const currentPage = Math.min(page, pageCount);
   const visibleEntries = filteredEntries.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
-  const courseCount = courses.length;
-  const runningCount = lessonJobs.filter(isLessonGenerationActive).length;
   const hasActiveFilters = statusFilters.length > 0;
 
   function toggleStatusFilter(value: StatusFilterValue) {
@@ -174,6 +173,11 @@ export function CourseLibraryGrid({
     setOpenCourseMenuId(null);
     setDeleteError(null);
     setDeleteTarget(course);
+  }
+
+  function requestShareCourse(course: CourseSummary) {
+    setOpenCourseMenuId(null);
+    setShareTarget(course);
   }
 
   async function confirmDeleteCourse() {
@@ -285,6 +289,7 @@ export function CourseLibraryGrid({
           onClearStatusFilters={clearStatusFilters}
           openCourseMenuId={openCourseMenuId}
           onCourseMenuOpenChange={setOpenCourseMenuId}
+          onShareCourse={requestShareCourse}
           onDeleteCourse={requestDeleteCourse}
         />
       ) : (
@@ -293,12 +298,6 @@ export function CourseLibraryGrid({
 
       {filteredEntries.length > 0 ? (
         <footer className="library-table-footer">
-          <span>
-            Showing {visibleEntries.length} of {filteredEntries.length} item{filteredEntries.length === 1 ? "" : "s"}
-            {" · "}
-            {courseCount} course{courseCount === 1 ? "" : "s"}
-            {runningCount > 0 ? ` · ${runningCount} building` : ""}
-          </span>
           <div className="library-pagination" aria-label="Library pagination">
             <button type="button" onClick={() => setPage((value) => Math.max(1, value - 1))} disabled={currentPage <= 1}>
               <ChevronLeftIcon />
@@ -314,6 +313,12 @@ export function CourseLibraryGrid({
             <small>{PAGE_SIZE} / page</small>
           </div>
         </footer>
+      ) : null}
+      {shareTarget ? (
+        <ShareCourseDialog
+          course={shareTarget}
+          onClose={() => setShareTarget(null)}
+        />
       ) : null}
       {deleteTarget ? (
         <DeleteCourseDialog
@@ -344,6 +349,7 @@ function CourseTable({
   onClearStatusFilters,
   openCourseMenuId,
   onCourseMenuOpenChange,
+  onShareCourse,
   onDeleteCourse,
 }: {
   entries: LibraryEntry[];
@@ -357,6 +363,7 @@ function CourseTable({
   onClearStatusFilters: () => void;
   openCourseMenuId: string | null;
   onCourseMenuOpenChange: (courseId: string | null) => void;
+  onShareCourse: (course: CourseSummary) => void;
   onDeleteCourse: (course: CourseSummary) => void;
 }) {
   return (
@@ -425,14 +432,16 @@ function CourseTable({
           </tr>
         </thead>
         <tbody>
-          {entries.map((entry) =>
+          {entries.map((entry, index) =>
             entry.kind === "course" ? (
               <CourseRow
                 key={`course-${entry.id}`}
                 course={entry.course}
                 lessonJob={lessonJobByCourse.get(entry.id)}
                 menuOpen={openCourseMenuId === entry.id}
+                menuPlacement={index === entries.length - 1 ? "up" : "down"}
                 onMenuOpenChange={onCourseMenuOpenChange}
+                onShareCourse={onShareCourse}
                 onDeleteCourse={onDeleteCourse}
               />
             ) : (
@@ -499,13 +508,17 @@ function CourseRow({
   course,
   lessonJob,
   menuOpen,
+  menuPlacement,
   onMenuOpenChange,
+  onShareCourse,
   onDeleteCourse,
 }: {
   course: CourseSummary;
   lessonJob?: LessonGenerationJobSummary;
   menuOpen: boolean;
+  menuPlacement: "up" | "down";
   onMenuOpenChange: (courseId: string | null) => void;
+  onShareCourse: (course: CourseSummary) => void;
   onDeleteCourse: (course: CourseSummary) => void;
 }) {
   const status = courseStatus(course);
@@ -567,10 +580,17 @@ function CourseRow({
             <MoreIcon />
           </button>
           {menuOpen ? (
-            <div className="library-row-menu" role="menu" aria-label={`${course.title} actions`}>
+            <div
+              className={`library-row-menu${menuPlacement === "up" ? " drop-up" : ""}`}
+              role="menu"
+              aria-label={`${course.title} actions`}
+            >
               <Link href={`/course/${course.id}/outline`} role="menuitem">
                 View outline
               </Link>
+              <button type="button" role="menuitem" onClick={() => onShareCourse(course)}>
+                Share course
+              </button>
               <button type="button" className="danger" role="menuitem" onClick={() => onDeleteCourse(course)}>
                 Delete
               </button>
@@ -579,6 +599,68 @@ function CourseRow({
         </div>
       </td>
     </tr>
+  );
+}
+
+function ShareCourseDialog({
+  course,
+  onClose,
+}: {
+  course: CourseSummary;
+  onClose: () => void;
+}) {
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const shareUrl = useMemo(() => courseShareUrl(course.id), [course.id]);
+
+  useEffect(() => {
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [onClose]);
+
+  async function copyShareLink() {
+    try {
+      await copyTextToClipboard(shareUrl);
+      setCopyState("copied");
+    } catch {
+      setCopyState("failed");
+    }
+  }
+
+  return (
+    <div
+      className="library-share-backdrop"
+      role="presentation"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <div className="library-share-dialog" role="dialog" aria-modal="true" aria-labelledby="share-course-title">
+        <header className="library-share-header">
+          <div>
+            <span className="course-block-tag">Course link</span>
+            <h2 id="share-course-title">Share Course</h2>
+          </div>
+          <button type="button" className="library-share-close" onClick={onClose} aria-label="Close share dialog">
+            <CloseIcon />
+          </button>
+        </header>
+        <div className="library-share-body">
+          <p>
+            Anyone with this link can preview <strong>{course.title}</strong> and import it into their account.
+          </p>
+          <div className="library-share-link-row">
+            <input type="text" value={shareUrl} readOnly aria-label="Share course link" onFocus={(event) => event.currentTarget.select()} />
+            <button type="button" onClick={copyShareLink}>
+              <CopyIcon />
+              <span>{copyState === "copied" ? "Copied" : copyState === "failed" ? "Copy failed" : "Copy"}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -819,6 +901,29 @@ function initials(title: string) {
   return source.slice(0, 2).map((word) => word.slice(0, 1).toUpperCase()).join("");
 }
 
+function courseShareUrl(courseId: string) {
+  const path = `/learn/${encodeURIComponent(courseId)}`;
+  if (typeof window === "undefined") return path;
+  return `${window.location.origin}${path}`;
+}
+
+async function copyTextToClipboard(text: string) {
+  if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  const copied = document.execCommand("copy");
+  document.body.removeChild(textarea);
+  if (!copied) throw new Error("Clipboard copy failed");
+}
+
 function SearchIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -900,6 +1005,24 @@ function MoreIcon() {
       <circle cx="12" cy="5" r="1.8" />
       <circle cx="12" cy="12" r="1.8" />
       <circle cx="12" cy="19" r="1.8" />
+    </svg>
+  );
+}
+
+function CopyIcon() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="9" y="9" width="10" height="10" rx="2" />
+      <path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+      <path d="M6 6l12 12" />
+      <path d="M18 6L6 18" />
     </svg>
   );
 }
