@@ -9,8 +9,8 @@ import { expectedBlockRange } from "./lesson-plan-ir";
 
 export type LessonValidationResult = { ok: true } | { ok: false; missing: string[] };
 
-const MIN_MEDIA_RATIO = 0.15;
-const MAX_MEDIA_RATIO = 0.60;
+const MIN_MEDIA_RATIO = 0.30;
+const MAX_MEDIA_RATIO = 0.45;
 
 export function validateLessonBlocks(blocks: CourseBlock[], conceptIds: string[]): LessonValidationResult {
   const missing: string[] = [];

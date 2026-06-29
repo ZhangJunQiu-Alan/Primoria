@@ -64,7 +64,19 @@ const fixedIr = {
 };
 
 type Content = Record<string, unknown> & { order: number };
-function contentFor(j: { order: number; type: string; conceptIds?: string[] }, titleOverride?: string): Content {
+function visualPayloadFor(j: { engine?: string }): Record<string, unknown> {
+  const engine = j.engine ?? "mermaid";
+  const payload: Record<string, unknown> =
+    engine === "html" ? { html: "<div><input type=\"range\"></div>" }
+    : engine === "echarts" ? { echartsOption: { series: [{ type: "bar", data: [1, 2] }] } }
+    : engine === "physics" ? { physicsScene: { render: { width: 300, height: 200 }, bodies: [{ id: "b1", shape: "circle", x: 10, y: 10, radius: 5 }] } }
+    : engine === "algorithm" ? { algorithmViz: { algorithm: "x", steps: [{ description: "s", kind: "array", array: { values: [1, 2] } }] } }
+    : engine === "math_explorer" ? { mathExplorer: { parameters: [{ name: "a", min: 0, max: 1, default: 0.5 }] } }
+    : { mermaidDefinition: "flowchart LR\nA-->B" };
+  return { description: "d", engine, ...payload };
+}
+
+function contentFor(j: { order: number; type: string; conceptIds?: string[]; engine?: string }, titleOverride?: string): Content {
   const order = j.order;
   const title = titleOverride ?? `${j.type}${order}`;
   switch (j.type) {
@@ -75,7 +87,7 @@ function contentFor(j: { order: number; type: string; conceptIds?: string[] }, t
     case "code":
       return { order, title, language: "python", code: "print(1)", explanation: "e" };
     case "visual":
-      return { order, title, description: "d", engine: "mermaid", mermaidDefinition: "flowchart LR\nA-->B" };
+      return { order, title, ...visualPayloadFor(j) };
     case "quiz":
       return {
         order,
