@@ -73,7 +73,7 @@
             - 完成了一个lesson
             - 生成了一门新课(什么主题,定位在哪)
             - 冷启动时:用户输入的学习目标,KG的定位
-            - 如果宽泛目标给了菜单后,他选了哪个topic,还要记这个菜单是基于哪次 query 生成的
+            - 如果宽泛目标给了菜单后,选了哪个学科,还要记这个菜单是基于哪次 query 生成的
         - course_id(可为空)
         - lesson_id,哪个 lesson（可空）
         - block_id,哪个 block（可空）
@@ -85,18 +85,20 @@
           - quiz.submit（提交答案，一题一条事件）payload: { question_id, selected, is_correct, distractor_tag? }。一题一条，concept_id 列正好挂这道题的概念，跨概念的 quiz 不糊在一起；distractor_tag可以为空,如果错选时,这个选项代表的是哪种知识的误解,数据来源于Quiz
           - lesson.completed（完成一节，蒸馏触发器）payload: {}，每个 concept 收尾都有 quiz,完成该 lesson 内所有 concept quiz 后触发.
           - course.generated（生成新课）payload: { topic, source: "cold_start"|"profile" }。定位落点进 concept_id / graph_id 列，不重复放 payload
-          - position.computed（冷启动定位）payload: { raw_query, branch: "precise"|"broad"|"miss", top_topic_id, max_similarity }。形状复用 positioning-log.ts 的 PositioningLogRecord，把 console.log 改成写库
-          - position.menu_select（宽泛菜单选 topic）payload: { selected_topic_id, source_query }。source_query 不能省，否则不知道复用哪次定位去建课
+          - position.computed（冷启动定位）payload: { raw_query, branch: "positioned" | "clarify_subject" | "fallback", top_topic_id, max_similarity }。形状复用 positioning-log.ts 的 PositioningLogRecord，把 console.log 改成写库
+          - position.menu_select（宽泛澄清选学科）payload: { selected_topic_id, source_query }。source_query 不能省，否则不知道复用哪次定位去建课
           - 待功能（标灰，先不实现）TODO: quiz.hint payload: { question_id, count }（看提示交互未做，迭代三）；quiz.retry payload: { question_id, is_correct }（错题逻辑迭代三）；chat.code_run（运行功能未做，迭代三）
       - 异步蒸馏（Extractor Agent），当用户结束一个lesson的学习，触发一个后台任务。读取该期间的所有 learning_events，让 Extractor Agent 进行语义提炼（TODO: EXtractor Agent怎么实现）
   4. 完成如下行为：
      1. 如果用户描述/学习画像字段为空走冷启动
         用户输入后应该有的行为：
         - 具体目标（召回结果里很多都属于同一个 topic）：系统首先在KG中定位该Topic,并基于当前Topic所属KG中的Topic Order规划处一个大纲路径(包含从该KG中从当前Topic开始剩余的所有Topic),UI界面为线性学习.若当前Topic已经是末端,则进包含当前这一个Topic.然后,系统立刻生成大纲中第一个Topic对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
-        - 如果某个召回concept指数明显过高一样归类到行为1里面
-        - 宽泛目标（比如想学微积分）：提供一个返回菜单，列出部分相关topic（从命中的topic全集里按语义相似度降序取前 5，同时只保留与最佳命中相似度差值不超过阈值的topic，不为凑满5项添加低相关内容），让用户选择从哪个topic开始，并基于选择的Topic所属KG中的Topic Order规划处一个大纲路径(包含从该KG中从当前Topic开始剩余的所有Topic),UI界面为线性学习.若当前Topic已经是末端,则进包含当前这一个Topic.然后,系统立刻生成大纲中第一个Topic(也就是选中的Topic)对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
-        - 跨学科KG选择：按每个KG最强的3个命中做归一化衰减加权，避免某个KG因为返回了更多中等相关的节点，把实际拥有最强命中的KG挤掉。
-        - 暂时不考虑太模糊或者库里没有的情况，只做提醒： 请重新输入更具体的学习目标，或者联系我们添加相关Course内容。）
+        - LLM 判定为 specific
+        - 宽泛目标（比如想学微积分）：宽泛目标不再弹 topic 菜单;系统自动判定 subject_start(从该 KG topic 0 起)或 directed(从命中区段上游 topic 起),直接建大纲 + 首 lesson、其余 lazy。UI界面为线性学习.若当前Topic已经是末端,则进包含当前这一个Topic.然后,系统立刻生成大纲中第一个Topic(也就是选中的Topic)对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
+        - 跨学科KG选择：跨图改为 embedding 召回出候选学科 → 一次 LLM 在候选全图上选学科 + 定位;MAX_STAGE2_GRAPHS=3、GRAPH_MARGIN_WINDOW=0.06。
+        - 暂时不考虑太模糊或者库里没有的情况，只做提醒:
+          - 库里没有:保留原提醒文案(fallback)。
+          - 命中多个学科、定不下:不再是冷提醒,而是温暖 LLM 文案 + 可点学科 chip(clarify_subject,点 chip = 确定学科 + subject_start)。
       2. 如果用户描述/学习画像字段不为空走如下流程
          - example：用户说“我想学牛顿力学”→ 定位到 physics KG 的 topic -> 查询目前是否已经有了关于这个KG的大纲信息, 如果已经有了则在旧大纲路径下产出当前请求的Lesson. 如果没有则继续→ 获取Physic KG中从定位 topic 往后的所有Topic中的Concept → 读取用户对这些 Concept 的 mastery状态,决定哪些跳过、哪些快速复习、哪些补救（可以为空）-> 然后根据前面信息产出一个大纲路径(包含从该KG中从当前Topic开始剩余的所有Topic)系统立刻生成大纲中第一个Topic对应的Lesson具体内容,其余大纲节点采取LazyGeneration.
   5. 实现用户专属的分层记忆，
