@@ -1,4 +1,5 @@
 import type { CourseContext } from "../deepagent/course-kg-context";
+import type { ConceptVisual } from "../../knowledge-graph/topic-graph";
 import { isCodeEligibleLessonContext } from "./code-eligibility";
 import { CoverageError } from "./generation-errors";
 import {
@@ -16,6 +17,30 @@ export { isCodeEligibleLessonContext };
 // validated plan with one generation job per block, or throws a classified
 // CoverageError. It never invents teaching content or silently degrades.
 
+/** Concrete rendering engines. The writer NEVER chooses this — it is pinned
+ * deterministically from the KG `visual` affordance so the model cannot invent
+ * an unknown engine. */
+export type VisualEngine = "html" | "echarts" | "mermaid" | "physics" | "algorithm" | "math_explorer";
+
+const AFFORDANCE_TO_ENGINE: Record<ConceptVisual, VisualEngine> = {
+  interactive: "html",
+  simulation: "physics",
+  algorithm: "algorithm",
+  function: "math_explorer",
+  chart: "echarts",
+  diagram: "mermaid",
+};
+
+/** Pin a visual block's engine from its primary concept's KG affordance; default
+ * to `html` (the most flexible interactive engine) when no concept pins one. */
+function resolveVisualEngine(kg: CourseContext, conceptIds: string[]): VisualEngine {
+  for (const id of conceptIds) {
+    const affordance = kg.startTopic.concepts?.find((c) => c.conceptId === id)?.visual;
+    if (affordance) return AFFORDANCE_TO_ENGINE[affordance];
+  }
+  return "html";
+}
+
 export type BlockGenerationJob = {
   /** Stable across retries so regeneration cannot duplicate a block (doc §11.3). */
   jobId: string;
@@ -26,6 +51,9 @@ export type BlockGenerationJob = {
   goal: string;
   /** Adjacent block goals, so the writer can avoid overlap (doc §10.2). */
   neighborGoals: { prev?: string; next?: string };
+  /** Deterministically pinned for `visual` blocks (from the KG affordance); the
+   * writer emits only the payload, the compiler injects this engine. */
+  engine?: VisualEngine;
 };
 
 export type CompiledLessonPlan = {
@@ -44,8 +72,8 @@ export type CompileLessonPlanOptions = {
 
 const MIN_MINUTES = 3;
 const MAX_MINUTES = 60;
-const MIN_MEDIA_RATIO = 0.15;
-const MAX_MEDIA_RATIO = 0.60;
+const MIN_MEDIA_RATIO = 0.30;
+const MAX_MEDIA_RATIO = 0.45;
 
 function orderedConceptIds(kg: CourseContext): string[] {
   return [...(kg.startTopic.concepts ?? [])]
@@ -89,6 +117,7 @@ export function compileLessonPlanIr(
       prev: blocks[index - 1]?.goal,
       next: blocks[index + 1]?.goal,
     },
+    ...(block.type === "visual" ? { engine: resolveVisualEngine(kg, block.conceptIds) } : {}),
   }));
 
   return {

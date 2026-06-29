@@ -180,7 +180,7 @@ function main() {
   lowMedia[8][1] = "T";
   lowMedia[10][1] = "A";
   lowMedia[12][1] = "X";
-  assertThrows(() => compileLessonPlanIr(ir(lowMedia), kg(C2)), CoverageError, "media density below 15 percent rejected");
+  assertThrows(() => compileLessonPlanIr(ir(lowMedia), kg(C2)), CoverageError, "media density below 30 percent rejected");
 
   const highMedia = validTwoConceptBlocks();
   highMedia[0][1] = "V";
@@ -188,7 +188,7 @@ function main() {
   highMedia[4][1] = "V";
   highMedia[7][1] = "V";
   highMedia[9][1] = "V";
-  assertThrows(() => compileLessonPlanIr(ir(highMedia), kg(C2)), CoverageError, "media density above 60 percent rejected");
+  assertThrows(() => compileLessonPlanIr(ir(highMedia), kg(C2)), CoverageError, "media density above 45 percent rejected");
 
   const nonCode = validTwoConceptBlocks();
   nonCode[4][1] = "C";

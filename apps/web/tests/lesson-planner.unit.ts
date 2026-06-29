@@ -61,7 +61,10 @@ async function main() {
   assert(prompt.includes("generic \"implementation\" / \"实现\" language"), "prompt does not treat bare implementation language as code intent");
   assert(prompt.includes("exactly one Q=quiz") || prompt.includes("exactly one Q=quiz block"), "prompt requires per-concept quiz");
   assert(prompt.includes("conceptIds MUST be exactly [that one concept]"), "prompt forbids whole-lesson quiz conceptIds");
-  assert(prompt.includes("Combined I+V count should generally target 30%-45%"), "prompt states media density target");
+  assert(prompt.includes("Combined I+V count MUST be 30%-45%"), "prompt states media density target");
+  assert(prompt.includes("EXACT TARGETS FOR THIS LESSON"), "prompt injects arithmetic targets");
+  assert(prompt.includes("Produce EXACTLY 19 blocks"), "prompt states exact block count for 3 concepts");
+  assert(prompt.includes("RECOMMENDED SKELETON"), "prompt includes a fillable skeleton");
   assert(prompt.includes("VISUAL AFFORDANCE HINTS"), "prompt lists visual affordance hints");
   assert(prompt.includes("engine diagram"), "prompt names the per-concept visual engine hint");
   assert(!prompt.includes("each REQUIRES one V=visual"), "prompt no longer treats visual hints as exact quotas");

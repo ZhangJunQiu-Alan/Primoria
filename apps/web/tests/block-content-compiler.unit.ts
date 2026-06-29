@@ -79,6 +79,20 @@ function validIr() {
   };
 }
 
+// Mirror a correct writer: emit the payload for the job's pinned engine (the
+// compiler injects the engine, so this keeps the mock consistent with reality).
+function visualPayloadFor(j: { engine?: string }): Record<string, unknown> {
+  const engine = j.engine ?? "mermaid";
+  const payload: Record<string, unknown> =
+    engine === "html" ? { html: "<div><input type=\"range\"></div>" }
+    : engine === "echarts" ? { echartsOption: { series: [{ type: "bar", data: [1, 2] }] } }
+    : engine === "physics" ? { physicsScene: { render: { width: 300, height: 200 }, bodies: [{ id: "b1", shape: "circle", x: 10, y: 10, radius: 5 }] } }
+    : engine === "algorithm" ? { algorithmViz: { algorithm: "x", steps: [{ description: "s", kind: "array", array: { values: [1, 2] } }] } }
+    : engine === "math_explorer" ? { mathExplorer: { parameters: [{ name: "a", min: 0, max: 1, default: 0.5 }] } }
+    : { mermaidDefinition: "flowchart LR\nA-->B" };
+  return { description: "d", engine, ...payload };
+}
+
 function contentFor(j: BlockGenerationJob): Record<string, unknown> {
   const order = j.order;
   switch (j.type) {
@@ -101,7 +115,7 @@ function contentFor(j: BlockGenerationJob): Record<string, unknown> {
         caption: "Notice the structure.",
       };
     case "visual":
-      return { order, title: `v${order}`, description: "d", engine: "mermaid", mermaidDefinition: "flowchart LR\nA-->B" };
+      return { order, title: `v${order}`, ...visualPayloadFor(j) };
     case "quiz":
       return {
         order,
@@ -141,6 +155,22 @@ async function main() {
     "visual missing engine payload rejected",
   );
 
+  // #2: an algorithm visualization must use ONE consistent kind across all steps.
+  const algoStep = (kind: string, state: Record<string, unknown>) => ({ description: "s", kind, ...state });
+  const consistentAlgo = compileBlockContent(job({ order: 12, type: "visual" }), {
+    order: 12, title: "v", description: "d", engine: "algorithm",
+    algorithmViz: { algorithm: "Bubble Sort", steps: [algoStep("array", { array: { values: [3, 1] } }), algoStep("array", { array: { values: [1, 3] } })] },
+  }, "L1");
+  assert(consistentAlgo.type === "visual", "algorithm with one consistent kind compiles");
+  await assertRejects(
+    async () => compileBlockContent(job({ order: 12, type: "visual" }), {
+      order: 12, title: "v", description: "d", engine: "algorithm",
+      algorithmViz: { algorithm: "x", steps: [algoStep("array", { array: { values: [1] } }), algoStep("tree", { tree: { nodes: [{ id: "n1", value: 1 }] } })] },
+    }, "L1"),
+    BlockCompileError,
+    "algorithm mixing kinds across steps rejected",
+  );
+
   const plan = compileLessonPlanIr(validIr(), kg);
   const batches = batchBlockJobs(plan.jobs);
   assert(batches.some((b) => b.kind === "activation" && b.jobs.length === 2), "activation batched together");
@@ -152,28 +182,25 @@ async function main() {
   const quizBatch = batches.find((batch) => batch.kind === "quiz")!;
   const quizPrompt = buildBatchPrompt(quizBatch, plan, kg);
   assert(quizPrompt.system.includes("concept-closing quiz"), "quiz prompt identifies concept-closing quizzes");
-  assert(quizPrompt.system.includes("Every question MUST include exactly one \"conceptId\""), "quiz prompt requires per-question concept attribution");
+  assert(quizPrompt.system.includes("system assigns concept attribution"), "quiz prompt says the system assigns conceptId");
   assert(quizPrompt.user.includes("c1 [id=c1]") && !quizPrompt.user.includes("c2 [id=c2]"), "quiz prompt lists only that quiz concept id");
 
   const quizJob = quizBatch.jobs[0];
-  await assertRejects(
-    async () => compileBlockContent(quizJob, {
-      order: quizJob.order,
-      title: "quiz",
-      questions: [{ kind: "truefalse", id: "q1", question: "q?", correct: true }],
-    }, "L1"),
-    BlockCompileError,
-    "quiz question missing conceptId rejected",
-  );
-  await assertRejects(
-    async () => compileBlockContent(quizJob, {
-      order: quizJob.order,
-      title: "quiz",
-      questions: [{ kind: "truefalse", id: "q1", question: "q?", correct: true, conceptId: "invented-concept" }],
-    }, "L1"),
-    BlockCompileError,
-    "quiz question with unknown conceptId rejected",
-  );
+  // conceptId is now stamped deterministically: the writer may omit it, and any
+  // value it sends is overridden with the quiz block's single pinned concept.
+  const quizOmitted = compileBlockContent(quizJob, {
+    order: quizJob.order,
+    title: "quiz",
+    questions: [{ kind: "single", id: "q1", question: "q?", choices: [{ id: "a", text: "A" }, { id: "b", text: "B" }], correctId: "a" }],
+  }, "L1") as { questions: { conceptId: string }[] };
+  assert(quizOmitted.questions[0].conceptId === quizJob.conceptIds[0], "quiz conceptId stamped when writer omits it");
+
+  const quizInvented = compileBlockContent(quizJob, {
+    order: quizJob.order,
+    title: "quiz",
+    questions: [{ kind: "truefalse", id: "q1", question: "q?", correct: true, conceptId: "invented-concept" }],
+  }, "L1") as { questions: { conceptId: string }[] };
+  assert(quizInvented.questions[0].conceptId === quizJob.conceptIds[0], "writer-invented conceptId overridden with the pinned concept");
 
   const blocks = await writeLessonBlocks({
     plan,
@@ -238,6 +265,27 @@ async function main() {
   });
   assert(calls === 1, "first quiz attempt failed once");
   assert(repaired.length === 19, "repair recovered the quiz batch");
+
+  // Plan B: recovers on the SECOND repair (3rd attempt), and the repair hint
+  // carries the PRECISE per-block validation error so the writer can self-correct.
+  let quizAttempts = 0;
+  let sawPreciseHint = false;
+  const repairedTwice = await writeLessonBlocks({
+    plan,
+    lessonId: "L1",
+    kg,
+    invoke: async ({ batch, repairHint }) => {
+      if (batch.kind === "quiz" && batch.jobs[0].conceptIds[0] === "c1") {
+        quizAttempts += 1;
+        if (repairHint && /block \d+ \(quiz\)/.test(repairHint)) sawPreciseHint = true;
+        if (quizAttempts < 3) return [{ order: batch.jobs[0].order, title: "q" }]; // fail attempts 1 & 2
+      }
+      return batch.jobs.map((j) => contentFor(j));
+    },
+  });
+  assert(quizAttempts === 3, "quiz batch retried twice before succeeding");
+  assert(sawPreciseHint, "repair hint names the failing block precisely");
+  assert(repairedTwice.length === 19, "second repair recovered the lesson");
 
   await assertRejects(
     async () =>

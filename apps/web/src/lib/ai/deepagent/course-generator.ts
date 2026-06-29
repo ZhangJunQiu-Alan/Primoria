@@ -10,7 +10,6 @@ import { buildKgContextPrompt, type CourseContext, type CourseContextTopic } fro
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 import type { ImageBrief } from "@/lib/ai/media/image-brief";
 import { finalizeImageBlocks, makePendingImageBlock } from "@/lib/ai/media/image-builder";
-import { isCodeEligibleTopicOrGoal } from "@/lib/ai/course-generation/code-eligibility";
 
 const TextBlockSchema = z.object({
   type: z.literal("text"),
@@ -579,28 +578,6 @@ function repairLikelyJson(text: string) {
     .replace(/}\s*{/g, "},{");
 }
 
-export function normalizeCourseDraft(raw: unknown, topic: string, conceptCount?: number): z.infer<typeof CourseSchema> {
-  const candidate = raw && typeof raw === "object" && "course" in raw ? (raw as { course: unknown }).course : raw;
-  const obj = candidate && typeof candidate === "object" ? (candidate as Record<string, unknown>) : {};
-  const rawBlocks = Array.isArray(obj.blocks) ? obj.blocks : [];
-  const blocks = rawBlocks
-    .map((block) => normalizeBlock(block, topic))
-    .filter((block): block is z.infer<typeof CourseSchema>["blocks"][number] => Boolean(block));
-
-  const draft = {
-    title: cleanText(obj.title, `${topic}课程`).slice(0, 80),
-    summary: cleanText(obj.summary ?? obj.description, `一门关于「${topic}」的结构化短课程。`).slice(0, 240),
-    estimatedMinutes: normalizeMinutes(obj.estimatedMinutes ?? obj.estimated_minutes, blocks.length),
-    blocks,
-  };
-
-  const parsed = CourseSchema.safeParse(draft);
-  if (!parsed.success || !isUsableCourseDraft(parsed.data, conceptCount, topic)) {
-    throw new Error(`Course generator returned unusable course data: ${parsed.success ? "unsafe content" : parsed.error.message}`);
-  }
-  return parsed.data;
-}
-
 function normalizeBlock(block: unknown, topic: string): z.infer<typeof CourseSchema>["blocks"][number] | null {
   if (!block || typeof block !== "object") return null;
   const obj = block as Record<string, unknown>;
@@ -786,64 +763,4 @@ function stripEmoji(text: string): string {
 
 function escapeHtml(text: string): string {
   return text.replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char] ?? char);
-}
-
-function isUsableCourseDraft(course: z.infer<typeof CourseSchema>, conceptCount?: number, topic = course.title): boolean {
-  const suspicious = [
-    /error/i,
-    /schema/i,
-    /void/i,
-    /closing braces/i,
-    /ignore tags/i,
-    /final countdown/i,
-    /deliverable/i,
-    /must final/i,
-    /====/,
-    />>>/,
-  ];
-
-  const fields = [
-    course.title,
-    course.summary,
-    ...course.blocks.flatMap((block) =>
-      Object.entries(block)
-        .filter(([key, value]) => !["html", "echartsOption", "mermaidDefinition", "physicsScene", "echartsHeight"].includes(key) && typeof value === "string")
-        .map(([, value]) => value),
-    ),
-  ];
-
-  if (!hasRequiredLessonComposition(course, conceptCount, topic)) return false;
-
-  return fields.every((value) => {
-    const text = String(value);
-    if (text.length > 2200) return false;
-    return !suspicious.some((pattern) => pattern.test(text));
-  });
-}
-
-function hasRequiredLessonComposition(course: z.infer<typeof CourseSchema>, conceptCount?: number, topic = course.title): boolean {
-  const count = (type: z.infer<typeof CourseSchema>["blocks"][number]["type"]) =>
-    course.blocks.filter((block) => block.type === type).length;
-  const normalConceptCount = conceptCount === 2 || conceptCount === 3 ? conceptCount : null;
-  const baseRange = normalConceptCount === 2
-    ? { min: 13, max: 15 }
-    : normalConceptCount === 3
-      ? { min: 16, max: 20 }
-      : { min: 8, max: 20 };
-  const minimumTextBlocks = normalConceptCount ? normalConceptCount + 3 : 4;
-  const visualRatio = course.blocks.length ? count("visual") / course.blocks.length : 0;
-  const expectedQuizCount = normalConceptCount ?? 1;
-
-  return course.blocks.length >= baseRange.min
-    && course.blocks.length <= baseRange.max
-    && count("text") >= minimumTextBlocks
-    && count("transfer") === 1
-    && count("quiz") === expectedQuizCount
-    && visualRatio >= 0.15
-    && visualRatio <= 0.60
-    && (count("code") === 0 || isLegacyCodeEligibleTopic(topic));
-}
-
-function isLegacyCodeEligibleTopic(topic: string): boolean {
-  return isCodeEligibleTopicOrGoal(topic);
 }

@@ -1,46 +1,53 @@
 import { z } from "zod";
 
+// Standalone numeric fields use z.coerce.number() so a model that quotes its
+// numbers ("5") still validates instead of failing the whole visual block. Union
+// number|string fields (array values, node ids/values) are intentionally LEFT as
+// z.number() inside the union — coercing them would turn a legit non-numeric
+// label ("a") into NaN.
+const num = z.coerce.number();
+
 export const PhysicsBodyZodSchema = z.object({
   id: z.string(),
   shape: z.enum(["circle", "rectangle", "polygon"]),
-  x: z.number(),
-  y: z.number(),
-  radius: z.number().optional(),
-  width: z.number().optional(),
-  height: z.number().optional(),
-  vertices: z.array(z.object({ x: z.number(), y: z.number() })).optional(),
+  x: num,
+  y: num,
+  radius: num.optional(),
+  width: num.optional(),
+  height: num.optional(),
+  vertices: z.array(z.object({ x: num, y: num })).optional(),
   isStatic: z.boolean().optional(),
-  density: z.number().optional(),
-  friction: z.number().optional(),
-  restitution: z.number().optional(),
-  frictionAir: z.number().optional(),
-  angle: z.number().optional(),
-  velocity: z.object({ x: z.number(), y: z.number() }).optional(),
+  density: num.optional(),
+  friction: num.optional(),
+  restitution: num.optional(),
+  frictionAir: num.optional(),
+  angle: num.optional(),
+  velocity: z.object({ x: num, y: num }).optional(),
   label: z.string().optional(),
   render: z.object({
     fillStyle: z.string().optional(),
     strokeStyle: z.string().optional(),
-    lineWidth: z.number().optional(),
+    lineWidth: num.optional(),
   }).optional(),
 });
 
 export const PhysicsConstraintZodSchema = z.object({
   bodyAId: z.string(),
   bodyBId: z.string().nullable(),
-  pointA: z.object({ x: z.number(), y: z.number() }).optional(),
-  pointB: z.object({ x: z.number(), y: z.number() }).optional(),
-  length: z.number().optional(),
-  stiffness: z.number().optional(),
-  damping: z.number().optional(),
+  pointA: z.object({ x: num, y: num }).optional(),
+  pointB: z.object({ x: num, y: num }).optional(),
+  length: num.optional(),
+  stiffness: num.optional(),
+  damping: num.optional(),
   render: z.object({
     visible: z.boolean().optional(),
     strokeStyle: z.string().optional(),
-    lineWidth: z.number().optional(),
+    lineWidth: num.optional(),
   }).optional(),
 });
 
 export const PhysicsSceneZodSchema = z.object({
-  gravity: z.object({ x: z.number(), y: z.number() }).optional(),
+  gravity: z.object({ x: num, y: num }).optional(),
   walls: z.object({
     top: z.boolean().optional(),
     bottom: z.boolean().optional(),
@@ -50,11 +57,11 @@ export const PhysicsSceneZodSchema = z.object({
   bodies: z.array(PhysicsBodyZodSchema),
   constraints: z.array(PhysicsConstraintZodSchema).optional(),
   render: z.object({
-    width: z.number(),
-    height: z.number(),
+    width: num,
+    height: num,
     background: z.string().optional(),
   }),
-  timeScale: z.number().optional(),
+  timeScale: num.optional(),
 });
 
 // ── Algorithm visualization schemas ──────────────────────────────────────────
@@ -67,9 +74,9 @@ export const AlgorithmHighlightRoleSchema = z.enum([
 
 export const AlgorithmArrayStateSchema = z.object({
   values: z.array(z.union([z.number(), z.string()])),
-  highlights: z.array(z.object({ index: z.number(), role: AlgorithmHighlightRoleSchema })).optional(),
-  pointers: z.array(z.object({ index: z.number(), label: z.string() })).optional(),
-  sortedIndices: z.array(z.number()).optional(),
+  highlights: z.array(z.object({ index: num, role: AlgorithmHighlightRoleSchema })).optional(),
+  pointers: z.array(z.object({ index: num, label: z.string() })).optional(),
+  sortedIndices: z.array(num).optional(),
 });
 
 export const AlgorithmTreeStateSchema = z.object({
@@ -88,15 +95,15 @@ export const AlgorithmGraphStateSchema = z.object({
   nodes: z.array(z.object({
     id: z.string(),
     label: z.string(),
-    x: z.number(),
-    y: z.number(),
+    x: num,
+    y: num,
     value: z.union([z.number(), z.string()]).optional(),
   })),
   edges: z.array(z.object({
     from: z.string(),
     to: z.string(),
     directed: z.boolean().optional(),
-    weight: z.number().optional(),
+    weight: num.optional(),
   })),
   highlights: z.array(z.object({
     nodeId: z.string().optional(),
@@ -112,7 +119,7 @@ export const AlgorithmTableStateSchema = z.object({
   data: z.array(z.array(z.union([z.number(), z.string(), z.null()]))),
   rowLabels: z.array(z.string()).optional(),
   colLabels: z.array(z.string()).optional(),
-  highlights: z.array(z.object({ row: z.number(), col: z.number(), role: AlgorithmHighlightRoleSchema })).optional(),
+  highlights: z.array(z.object({ row: num, col: num, role: AlgorithmHighlightRoleSchema })).optional(),
   formula: z.string().optional(),
 });
 
@@ -170,10 +177,10 @@ export const MathExplorerCurveSchema = z.object({
 export const MathExplorerParameterSchema = z.object({
   name: z.string(),
   label: z.string().optional(),
-  min: z.number(),
-  max: z.number(),
-  default: z.number(),
-  step: z.number().optional(),
+  min: num,
+  max: num,
+  default: num,
+  step: num.optional(),
 });
 
 export const MathExplorerZodSchema = z.object({
@@ -184,9 +191,9 @@ export const MathExplorerZodSchema = z.object({
   functions: z.array(MathExplorerFunctionSchema).optional(),
   curves: z.array(MathExplorerCurveSchema).optional(),
   parameters: z.array(MathExplorerParameterSchema).max(6),
-  xRange: z.tuple([z.number(), z.number()]).optional(),
-  yRange: z.tuple([z.number(), z.number()]).optional(),
-  tRange: z.tuple([z.number(), z.number()]).optional(),
+  xRange: z.tuple([num, num]).optional(),
+  yRange: z.tuple([num, num]).optional(),
+  tRange: z.tuple([num, num]).optional(),
   xLabel: z.string().optional(),
   yLabel: z.string().optional(),
 });

@@ -74,15 +74,22 @@ function* extractBalancedJson(text: string): Generator<string> {
 /** Best-effort extraction of one JSON value from model text: raw, fenced, or a
  * balanced brace/bracket span. Throws if nothing parses. */
 export function parseJsonValue(text: string): unknown {
-  const trimmed = text.trim();
+  let cleaned = text.trim();
+  // Some models (e.g. MiniMax) emit a stray quote at the junction between two
+  // block tuples after a visual block, producing `],"[` (or escaped `],\"[`)
+  // where valid IR has `],[`. Only repair when the `[` opens the next tuple
+  // (i.e. is followed by its integer order) so we never corrupt a legitimate
+  // goal string that happens to start with `[`.
+  cleaned = cleaned.replace(/\],(?:\\*)"(\s*)\[(?=\s*\d)/g, '],[');
+
   const candidates: string[] = [];
   const push = (value?: string) => {
     const v = String(value ?? "").trim();
     if (v && !candidates.includes(v)) candidates.push(v);
   };
-  push(trimmed);
-  for (const match of trimmed.matchAll(/```(?:json)?\s*([\s\S]*?)```/gi)) push(match[1]);
-  for (const candidate of extractBalancedJson(trimmed)) push(candidate);
+  push(cleaned);
+  for (const match of cleaned.matchAll(/```(?:json)?\s*([\s\S]*?)```/gi)) push(match[1]);
+  for (const candidate of extractBalancedJson(cleaned)) push(candidate);
 
   for (const candidate of candidates) {
     try {
@@ -91,7 +98,7 @@ export function parseJsonValue(text: string): unknown {
       // try next candidate
     }
   }
-  throw new Error(`model did not return valid JSON. Preview: ${trimmed.replace(/\s+/g, " ").slice(0, 200)}`);
+  throw new Error(`model did not return valid JSON. Preview: ${cleaned.replace(/\s+/g, " ").slice(0, 200)}`);
 }
 
 async function rawAnthropicJson(settings: ProviderSettings, system: string, user: string): Promise<string> {

@@ -38,20 +38,42 @@ export const PEDAGOGICAL_ROLES = [
 
 const ROLE_SET = new Set<string>(PEDAGOGICAL_ROLES);
 
-// [order, typeCode, role, conceptIds, goal]
+// Canonical block shape is a named-field object (what the planner now emits).
+// The legacy positional tuple [order, typeCode, role, conceptIds, goal] is still
+// accepted so old plan checkpoints — and either-shaped model output — both decode.
+// `order`/`minutes`/`v` are coerced so a model that quotes its numbers ("1")
+// still parses instead of failing with "Expected number, received string".
 const BlockTupleSchema = z.tuple([
-  z.number().int(),
+  z.coerce.number().int(),
   z.string(),
   z.string(),
   z.array(z.string()),
   z.string(),
 ]);
 
+const BlockObjectSchema = z.object({
+  order: z.coerce.number().int(),
+  type: z.string(),
+  role: z.string(),
+  conceptIds: z.array(z.string()),
+  goal: z.string(),
+});
+
+const BlockSchema = z
+  .union([BlockTupleSchema, BlockObjectSchema])
+  .transform((b): z.infer<typeof BlockTupleSchema> =>
+    Array.isArray(b) ? b : [b.order, b.type, b.role, b.conceptIds, b.goal],
+  );
+
+// [title, estimatedMinutes] tuple or {title, minutes} object.
+const LessonMetaSchema = z
+  .union([z.tuple([z.string(), z.coerce.number()]), z.object({ title: z.string(), minutes: z.coerce.number() })])
+  .transform((l): [string, number] => (Array.isArray(l) ? l : [l.title, l.minutes]));
+
 export const LessonPlanIrSchema = z.object({
-  v: z.number().int(),
-  // [title, estimatedMinutes]
-  lesson: z.tuple([z.string(), z.number()]),
-  blocks: z.array(BlockTupleSchema).min(1),
+  v: z.coerce.number().int(),
+  lesson: LessonMetaSchema,
+  blocks: z.array(BlockSchema).min(1),
 });
 
 export type DecodedBlockPlan = {
