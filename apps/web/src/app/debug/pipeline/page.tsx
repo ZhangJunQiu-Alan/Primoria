@@ -195,12 +195,12 @@ export default function PipelineDebugPage() {
         const plan = (pos.plan ?? {}) as Record<string, any>;
         const branch = plan.branch as string | undefined;
 
-        if (branch !== "specific") {
+        if (branch !== "positioned") {
           patch("build", { status: "skipped", note: `branch = ${branch ?? "?"} — 不建课` });
           patch("course", { status: "skipped" });
-          if (branch === "broad") {
-            const names = (plan.menu ?? []).map((m: any) => m.name).join(" / ");
-            setSummary(`输入「${trimmed}」 → branch=broad → 返回菜单：${names || "(空)"}（不建课）`);
+          if (branch === "clarify_subject") {
+            const names = (plan.candidates ?? []).map((c: any) => c.subject).join(" / ");
+            setSummary(`输入「${trimmed}」 → branch=clarify_subject → 学科澄清：${names || "(空)"}（不建课）`);
           } else {
             setSummary(`输入「${trimmed}」 → branch=${branch} → ${plan.message ?? "提示用户换更具体的目标"}（不建课）`);
           }
@@ -217,7 +217,7 @@ export default function PipelineDebugPage() {
         const courseId = build.courseId as string | undefined;
         if (!courseId) {
           patch("course", { status: "skipped", note: "build 未返回 courseId" });
-          setSummary(`输入「${trimmed}」 → branch=specific → 建课成功但缺 courseId`);
+          setSummary(`输入「${trimmed}」 → branch=positioned → 建课成功但缺 courseId`);
           return;
         }
 
@@ -226,7 +226,7 @@ export default function PipelineDebugPage() {
         const startName = (plan.courseContext as any)?.startTopic?.name;
         const nextName = (plan.courseContext as any)?.nextTopic?.name;
         setSummary(
-          `输入「${trimmed}」 → branch=specific（${startName}${nextName ? ` → ${nextName}（两课时）` : "（单课时）"}）` +
+          `输入「${trimmed}」 → branch=positioned · ${plan.mode ?? "?"}（${startName}${nextName ? ` → ${nextName}（两课时）` : "（单课时）"}）` +
             ` → courseId=${courseId} → 「${c.title}」，${(c.blocks?.length ?? 0)} 个 block`,
         );
       } catch (error) {

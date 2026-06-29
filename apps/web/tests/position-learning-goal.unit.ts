@@ -25,18 +25,19 @@ function lesson(order: number, topicId: string, name: string, conceptId: string)
 function main() {
   // specific + nextTopic -> two-lesson course context
   const twoLessons: PositioningResult = {
-    branch: "specific",
+    branch: "positioned",
     graphId: "g1",
     params: baseParams,
     diagnostics: baseDiagnostics,
     startTopicId: "t1",
     targetConceptId: "c1",
     linear: true,
+    mode: "specific",
     path: [lesson(1, "t1", "Topic 1", "c1"), lesson(2, "t2", "Topic 2", "c2")],
   };
   const p1 = planFromPositioning(twoLessons);
-  assert(p1.branch === "specific", "two-lesson result is specific");
-  if (p1.branch !== "specific") return;
+  assert(p1.branch === "positioned", "two-lesson result is positioned");
+  if (p1.branch !== "positioned") return;
   assert(p1.courseContext.startTopic.topicId === "t1", "start topic preserved");
   assert(p1.courseContext.nextTopic?.topicId === "t2", "two-lesson keeps next topic");
   assert(p1.courseContext.targetConceptId === "c1", "target concept preserved");
@@ -49,24 +50,25 @@ function main() {
     targetConceptId: null,
   };
   const p2 = planFromPositioning(oneLesson);
-  assert(p2.branch === "specific", "leaf result is specific");
-  if (p2.branch !== "specific") return;
+  assert(p2.branch === "positioned", "leaf result is positioned");
+  if (p2.branch !== "positioned") return;
   assert(p2.courseContext.nextTopic === null, "leaf topic has no next topic");
   assert(p2.courseContext.targetConceptId === null, "no target concept on leaf");
 
-  // broad -> menu, never a course context
+  // clarify_subject -> menu, never a course context
   const broad: PositioningResult = {
-    branch: "broad",
+    branch: "clarify_subject",
     graphId: "g1",
     params: baseParams,
     diagnostics: baseDiagnostics,
-    menu: [{ topicId: "t1", name: "Topic 1", defaultOrder: 1, concepts: [], reason: "Matches the current goal." }],
+    message: "Ambiguous goal",
+    candidates: [{ graphId: "g1", subject: "Subject 1", startTopicId: "t1" }],
   };
   const p3 = planFromPositioning(broad);
-  assert(p3.branch === "broad", "broad stays broad");
-  if (p3.branch !== "broad") return;
-  assert(p3.menu.length === 1 && p3.menu[0].topicId === "t1", "broad returns the menu");
-  assert(p3.menu[0].reason === "Matches the current goal.", "broad plan preserves generated relevance reason");
+  assert(p3.branch === "clarify_subject", "clarify stays clarify");
+  if (p3.branch !== "clarify_subject") return;
+  assert(p3.candidates.length === 1 && p3.candidates[0].graphId === "g1", "clarify returns the candidates");
+  assert(p3.message === "Ambiguous goal", "clarify plan preserves message");
 
   // fallback -> message, never a course context
   const fallback: PositioningResult = {

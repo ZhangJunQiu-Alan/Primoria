@@ -2,9 +2,9 @@ import type { EncodedKnowledgeGraphQuery } from "./query-encoding";
 import type { KnowledgeGraphSearchResponse } from "./search";
 import type { PositioningResult } from "./positioning";
 
-// Log-and-tune: emit one structured line per positioning call so TAU/FLOOR can
-// later be calibrated against real traffic and user outcomes. The `outcome`
-// field is filled in after the user accepts an entry or re-inputs a goal.
+// Log-and-tune: emit one structured line per positioning call so the floor /
+// margin params can later be calibrated against real traffic and user outcomes.
+// The `outcome` field is filled in after the user accepts an entry or re-inputs.
 
 export type PositioningLogRecord = {
   ts: string;
@@ -16,12 +16,13 @@ export type PositioningLogRecord = {
   appliedRules: string[];
   params: PositioningResult["params"];
   branch: PositioningResult["branch"];
+  mode?: PositioningResult["mode"];
   maxSimilarity: number;
-  topTopicMass: Array<{ topicId: string; mass: number }>;
+  candidateGraphs: Array<{ graphId: string; bestSimilarity: number }>;
   topResults: Array<{ nodeId: string; kind: string; similarity: number }>;
   startTopicId?: string;
   targetConceptId?: string | null;
-  menuTopicIds?: string[];
+  candidateSubjectIds?: string[];
   outcome?: "accepted" | "reinput" | "abandoned";
 };
 
@@ -33,7 +34,7 @@ export function buildPositioningLog(input: {
   const { encodedQuery, search, result } = input;
   return {
     ts: new Date().toISOString(),
-    graphId: search.graphId,
+    graphId: result.graphId || search.graphId,
     modelVersion: search.modelVersion,
     topK: search.topK,
     rawQuery: encodedQuery.rawQuery,
@@ -41,12 +42,13 @@ export function buildPositioningLog(input: {
     appliedRules: encodedQuery.appliedRules,
     params: result.params,
     branch: result.branch,
+    mode: result.mode,
     maxSimilarity: result.diagnostics.maxSimilarity,
-    topTopicMass: result.diagnostics.topicMass.slice(0, 5),
+    candidateGraphs: result.diagnostics.candidateGraphs.slice(0, 5),
     topResults: search.results.slice(0, 5).map((r) => ({ nodeId: r.nodeId, kind: r.kind, similarity: r.similarity })),
     startTopicId: result.startTopicId,
     targetConceptId: result.targetConceptId,
-    menuTopicIds: result.menu?.map((m) => m.topicId),
+    candidateSubjectIds: result.candidates?.map((c) => c.graphId),
   };
 }
 

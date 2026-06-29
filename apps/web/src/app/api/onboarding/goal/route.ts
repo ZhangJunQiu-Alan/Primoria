@@ -11,6 +11,8 @@ export const dynamic = "force-dynamic";
 
 const RequestSchema = z.object({
   learningGoal: z.string().trim().min(1).max(300).optional(),
+  // Set when a subject-clarification chip was picked: commit that graph directly.
+  graphId: z.string().min(1).optional(),
   skip: z.boolean().optional(),
 }).strict();
 
@@ -31,7 +33,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Learning goal is required." }, { status: 400 });
     }
 
-    const anchor = await resolveOnboardingGoalAnchor(body.learningGoal);
+    const resolution = await resolveOnboardingGoalAnchor(body.learningGoal, { graphId: body.graphId });
+
+    // Ambiguous across subjects: surface chips, save nothing until the learner picks.
+    if (resolution.kind === "clarify") {
+      return NextResponse.json({
+        ...(await getLearnerOnboardingState(user.id)),
+        clarify: resolution.clarify,
+      });
+    }
+
+    const { anchor } = resolution;
     const profile = await saveLearningGoal({
       ownerId: user.id,
       learningGoal: body.learningGoal,
