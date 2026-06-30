@@ -25,9 +25,9 @@ const capabilities = [
     body: "当前 lesson 只呈现当前 blocks，下一节预加载但不会干扰正在学习的内容。",
   },
   {
-    label: "Course Copilot",
+    label: "Course Tutor",
     title: "围绕当前 block 提问",
-    body: "Course Copilot 知道你正在看哪一节、哪一个 block，可以解释、举例、出题或检查理解。",
+    body: "Course Tutor 知道你正在看哪一节、哪一个 block，可以解释、举例、出题或检查理解。",
   },
   {
     label: "Mastery loop",
@@ -130,7 +130,7 @@ export function LandingPage() {
             <div className="landing-map-status" aria-label="Generated lesson preview">
               <span>Interactive Visualization</span>
               <strong>知识不只是单薄的点，而是可观察、可操作、可被提问的实体。</strong>
-              <small>围绕当前 lesson 生成可视化、练习和 Course Copilot 上下文。</small>
+              <small>围绕当前 lesson 生成可视化、练习和 Course Tutor 上下文。</small>
             </div>
           </div>
         </div>

@@ -33,7 +33,7 @@ Use four label families on implementation issues:
 | --- | --- |
 | `type:roadmap` | Umbrella direction, not one PR. |
 | `type:learning-signal` | Attempts, mastery, weak concepts, revision evidence, adaptive decisions. |
-| `type:course-copilot` | Course detail assistant context, selected text, block edits, course patching. |
+| `type:course-tutor` | Course detail assistant context, selected text, block edits, course patching. |
 | `type:renderer` | HTML/React/widget/artifact rendering runtime. |
 | `type:workspace` | Workspace communication, members, tasks, class/team flows. |
 | `type:agent-runtime` | Agent runs, approvals, DeepAgent runtime, skills, tools, connections. |
@@ -82,8 +82,8 @@ Use four label families on implementation issues:
 | #18 Roadmap: adaptive learning system | `type:roadmap`, `area:adaptive-learning`, `priority:P0`, `status:umbrella` | Parent direction for the learning loop. |
 | #25 Adaptive course growth | `type:learning-signal`, `area:adaptive-learning`, `area:course`, `priority:P0`, `status:needs-slice` | Needs a concrete first loop around attempts, weak concepts, and remediation. |
 | #14 Block revision history | `type:learning-signal`, `type:memory`, `area:course`, `area:memory`, `priority:P0`, `status:ready` | Existing course edit events are the nearest raw evidence source. |
-| #1 Course Copilot context/actions | `type:course-copilot`, `area:course`, `priority:P0`, `status:needs-slice` | Course edits and adaptive growth depend on reliable targeting. |
-| #10 Selected-text Course Copilot UI | `type:course-copilot`, `area:course`, `priority:P0`, `status:ready` | A focused UX slice inside #1. |
+| #1 Course Tutor context/actions | `type:course-tutor`, `area:course`, `priority:P0`, `status:needs-slice` | Course edits and adaptive growth depend on reliable targeting. |
+| #10 Selected-text Course Tutor UI | `type:course-tutor`, `area:course`, `priority:P0`, `status:ready` | A focused UX slice inside #1. |
 | #17 React artifact renderer | `type:renderer`, `area:artifact`, `priority:P1`, `status:needs-slice` | Needed for complex stateful artifacts, but should align with artifact IR. |
 | #5 Long-term memory | `type:memory`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:needs-slice` | Memory should consume reviewed evidence, not replace raw signals. |
 | #8 Workspace communication | `type:workspace`, `area:workspace`, `priority:P1`, `status:needs-slice` | Workspace exists, but classroom/homework slices need tighter issue boundaries. |
@@ -109,7 +109,7 @@ First acceptance target:
 wrong quiz attempt -> weak block/concept signal -> generated remediation block -> persisted course version
 ```
 
-### P0: Make Course Copilot Targeting Reliable
+### P0: Make Course Tutor Targeting Reliable
 
 Before adaptive patching, the assistant must know exactly what it is changing:
 
