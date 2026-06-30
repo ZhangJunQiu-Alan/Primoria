@@ -764,8 +764,77 @@ export const mediaAssets = pgTable(
   }),
 );
 
+// Core memory layer (feature_specification.md §101): distilled "facts about the
+// learner" produced by the Extractor Agent from learning_events. One row per
+// fact. `category` routes consumption (preference/prior_knowledge/learning_gap
+// feed the lesson Planner + tutor; goal is long-term profile only). `status`
+// active facts apply immediately; a user-dismissed fact becomes a permanent
+// tombstone the extractor must never re-create (semantic skip). `evidence` keeps
+// the supporting events ([{ lessonId, eventIds[], at }]) for grounding/decay.
+export const learnerFacts = pgTable(
+  "learner_facts",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    text: text("text").notNull(),
+    // preference | prior_knowledge | learning_gap | goal
+    category: text("category").notNull(),
+    // active | dismissed
+    status: text("status").notNull().default("active"),
+    confidence: doublePrecision("confidence"),
+    evidence: jsonb("evidence").notNull().default([]),
+    occurrences: integer("occurrences").notNull().default(1),
+    sourceLessonId: text("source_lesson_id"),
+    lastSeenAt: timestamp("last_seen_at", { withTimezone: true }).notNull().defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerStatusIdx: index("learner_facts_owner_status_idx").on(table.ownerId, table.status),
+    ownerCategoryIdx: index("learner_facts_owner_category_idx").on(table.ownerId, table.category),
+  }),
+);
+
+// Recoverable post-lesson Extractor jobs. One row per completed lesson (unique
+// lesson_id), reused on re-run. Mirrors the lease/fencing model of
+// learning_progress_jobs, but simpler: a single LLM distillation step (no stage,
+// no decision gate — extracted facts auto-apply). A crashed worker's lease
+// expires and another worker re-runs the (idempotent on lesson_id) job.
+export const extractorJobs = pgTable(
+  "extractor_jobs",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => lessons.id, { onDelete: "cascade" }),
+    graphId: text("graph_id"),
+    // queued | running | completed | failed
+    status: text("status").notNull().default("queued"),
+    attempts: integer("attempts").notNull().default(0),
+    maxAttempts: integer("max_attempts").notNull().default(2),
+    leaseOwner: text("lease_owner"),
+    leaseToken: text("lease_token"),
+    leaseExpiresAt: timestamp("lease_expires_at", { withTimezone: true }),
+    heartbeatAt: timestamp("heartbeat_at", { withTimezone: true }),
+    lastError: text("last_error"),
+    errorCategory: text("error_category"),
+    startedAt: timestamp("started_at", { withTimezone: true }),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    lessonIdUnique: uniqueIndex("extractor_jobs_lesson_id_uidx").on(table.lessonId),
+    leaseTokenUnique: uniqueIndex("extractor_jobs_lease_token_uidx").on(table.leaseToken),
+    ownerStatusUpdatedIdx: index("extractor_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
+    statusLeaseIdx: index("extractor_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
+  }),
+);
+
 export type UserRow = typeof users.$inferSelect;
 export type MediaAssetRow = typeof mediaAssets.$inferSelect;
 export type LearnerProfileRow = typeof learnerProfiles.$inferSelect;
+export type LearnerFactRow = typeof learnerFacts.$inferSelect;
+export type ExtractorJobRow = typeof extractorJobs.$inferSelect;
 export type IdentityRow = typeof identities.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;
