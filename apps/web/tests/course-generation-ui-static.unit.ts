@@ -131,7 +131,7 @@ async function main() {
   assert(styles.includes("color: #5b534b;"), "tool card status headers use readable mid-contrast text");
   assert(styles.includes("color: #625950;"), "generated course summaries use readable mid-contrast text");
   assert(styles.includes(".course-meta {\n  font-size: 12px;\n  color: var(--muted);"), "generated course meta text is not rendered with low-contrast quiet color");
-  assert(styles.includes(".tool-note {\n  color: var(--muted);"), "restored course status notes are readable on warm cards");
+  assert(styles.includes(".tool-note {\n  color: #625950;"), "restored course status notes use readable mid-contrast text on warm cards");
   assert(styles.includes(".course-generation-notice"), "restored course generation notice has dedicated styling");
   assert(styles.includes(".course-generation-notice.failed"), "restored course generation failure state has dedicated styling");
   assert(styles.includes(".course-generation-notice-actions a"), "restored course generation notice actions are styled as buttons");
