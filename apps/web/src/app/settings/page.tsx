@@ -1,16 +1,13 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
+import { FactsAboutYou } from "@/components/profile/facts-about-you";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { listActiveFacts } from "@/lib/learner-facts/store";
 
 export const dynamic = "force-dynamic";
 
 const settingsSections = [
-  {
-    title: "Facts About You",
-    body: "Background information that helps Primoria personalize generated lessons.",
-    action: "EDIT FACTS",
-  },
   {
     title: "Content Language",
     body: "Language used for generated explanations and responses.",
@@ -45,6 +42,9 @@ export default async function SettingsPage() {
   const user = await getCurrentUser();
   if (authEnabled && !user) redirect("/auth/sign-in?next=/settings");
 
+  const facts = user ? await listActiveFacts(user.id) : [];
+  const factViews = facts.map((f) => ({ id: f.id, text: f.text, category: f.category }));
+
   return (
     <main className="app-shell profile-shell">
       <TutorNavRail initialAuthState={{ authEnabled, user }} />
@@ -52,6 +52,13 @@ export default async function SettingsPage() {
         <Link href="/profile" className="profile-back-link">← Back to Profile</Link>
         <h1 className="profile-detail-title">Settings</h1>
         <div className="settings-stack">
+          <article className="settings-card facts-card">
+            <div>
+              <h2>Facts About You</h2>
+              <p>What Primoria has learned from your activity to personalize lessons. Remove anything inaccurate — it won’t come back.</p>
+              <FactsAboutYou initialFacts={factViews} />
+            </div>
+          </article>
           {settingsSections.map((section) => (
             <article key={section.title} className="settings-card">
               <div>
