@@ -8,7 +8,9 @@ import { NextRequest } from "next/server";
 import { normalizeCopilotMessagesWithAttachments } from "@/lib/agent-os";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { getLearnerProfile } from "@/lib/learner-profile/store";
-import { tutorStyleDirective, type LearnerProfile } from "@/lib/learner-profile/types";
+import { listActiveFacts } from "@/lib/learner-facts/store";
+import { selectPlannerFacts } from "@/lib/courses/lesson-generation-context";
+import { factsDirective, tutorStyleDirective, type LearnerFact, type LearnerProfile } from "@/lib/learner-profile/types";
 
 import { requireAuth } from "@/lib/auth/guard";
 
@@ -67,13 +69,19 @@ function formatCourseDetailContextForAgent(context: unknown) {
   }
 }
 
-function formatLearnerProfileContextForAgent(profile: LearnerProfile | null) {
-  if (!profile?.tutorStyle) return "";
+function formatLearnerProfileContextForAgent(profile: LearnerProfile | null, facts: LearnerFact[] = []) {
+  // Same teaching-relevant facts the lesson Planner uses (preference /
+  // prior_knowledge / learning_gap, ranked + capped); goal is profile-only.
+  const selectedFacts = selectPlannerFacts(facts);
+  if (!profile?.tutorStyle && selectedFacts.length === 0) return "";
   return [
     "PRIMORIA LEARNER PROFILE - hidden context.",
-    tutorStyleDirective(profile.tutorStyle),
-    "This style affects AI Tutor dialogue only. Do not use it to create or modify course lesson content.",
-  ].join("\n");
+    profile?.tutorStyle ? tutorStyleDirective(profile.tutorStyle) : "",
+    selectedFacts.length ? factsDirective(selectedFacts) : "",
+    "This profile affects AI Tutor dialogue only. Do not use it to create or modify course lesson content.",
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 function withHiddenAgentContext(content: unknown, contexts: string[]) {
@@ -109,7 +117,7 @@ function contentToText(content: unknown) {
   return String(content ?? "");
 }
 
-function normalizeAgentMessages(messages: any[] = [], context?: unknown, learnerProfile?: LearnerProfile | null) {
+function normalizeAgentMessages(messages: any[] = [], context?: unknown, learnerProfile?: LearnerProfile | null, learnerFacts: LearnerFact[] = []) {
   const normalized = messages
     .filter((message) => message?.role !== "reasoning" && message?.role !== "activity")
     .map((message) => {
@@ -119,7 +127,7 @@ function normalizeAgentMessages(messages: any[] = [], context?: unknown, learner
       return message;
     });
   const courseContext = formatCourseDetailContextForAgent(context);
-  const profileContext = formatLearnerProfileContextForAgent(learnerProfile ?? null);
+  const profileContext = formatLearnerProfileContextForAgent(learnerProfile ?? null, learnerFacts);
   if (!courseContext && !profileContext) return normalized;
   const lastUserIndex = normalized.findLastIndex((message) => message?.role === "user");
   if (lastUserIndex < 0) return normalized;
@@ -145,18 +153,21 @@ function sanitizeAgentState(state: any) {
 class PrimoriaLangGraphAgent extends LangGraphAgent {
   ownerId: string | null;
   learnerProfile: LearnerProfile | null;
+  learnerFacts: LearnerFact[];
 
-  constructor(config: ConstructorParameters<typeof LangGraphAgent>[0] & { ownerId?: string | null; learnerProfile?: LearnerProfile | null }) {
-    const { ownerId, learnerProfile, ...agentConfig } = config;
+  constructor(config: ConstructorParameters<typeof LangGraphAgent>[0] & { ownerId?: string | null; learnerProfile?: LearnerProfile | null; learnerFacts?: LearnerFact[] }) {
+    const { ownerId, learnerProfile, learnerFacts, ...agentConfig } = config;
     super(agentConfig);
     this.ownerId = ownerId ?? null;
     this.learnerProfile = learnerProfile ?? null;
+    this.learnerFacts = learnerFacts ?? [];
   }
 
   clone() {
     const cloned = super.clone() as PrimoriaLangGraphAgent;
     cloned.ownerId = this.ownerId;
     cloned.learnerProfile = this.learnerProfile;
+    cloned.learnerFacts = this.learnerFacts;
     return cloned;
   }
 
@@ -179,7 +190,7 @@ class PrimoriaLangGraphAgent extends LangGraphAgent {
     return super.run({
       ...input,
       threadId: runtimeThreadId,
-      messages: normalizeAgentMessages(input?.messages, appContext, this.learnerProfile),
+      messages: normalizeAgentMessages(input?.messages, appContext, this.learnerProfile, this.learnerFacts),
       state: {
         ...sanitizedState,
         primoria_owner_id: ownerId,
@@ -215,13 +226,16 @@ export const POST = async (req: NextRequest) => {
   if (denied) return denied;
 
   const user = await getCurrentUser();
-  const learnerProfile = user?.id ? await getLearnerProfile(user.id) : null;
+  const [learnerProfile, learnerFacts] = user?.id
+    ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id)])
+    : [null, [] as LearnerFact[]];
   const normalizedRequest = await requestWithNormalizedAttachments(req);
   const primoriaAgent = new PrimoriaLangGraphAgent({
     deploymentUrl,
     graphId: "primoria_tutor",
     ownerId: user?.id ?? null,
     learnerProfile,
+    learnerFacts,
   });
 
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({

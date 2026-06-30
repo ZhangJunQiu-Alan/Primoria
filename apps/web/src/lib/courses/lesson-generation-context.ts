@@ -4,9 +4,23 @@ import { getTopic, nextTopic } from "../knowledge-graph/topic-graph";
 import type { CourseContext, CourseContextTopic } from "../ai/deepagent/course-kg-context";
 import { ContextError } from "../ai/course-generation/generation-errors";
 import { getLearnerProfile } from "../learner-profile/store";
-import type { KnowledgeBackground } from "../learner-profile/types";
+import { listActiveFacts } from "../learner-facts/store";
+import { PLANNER_FACT_CATEGORIES, type FactCategory, type KnowledgeBackground, type LearnerFact } from "../learner-profile/types";
 import { listConceptMasteryByOwner } from "../mastery/owner-store";
 import type { MasteryStatus } from "../mastery/store";
+
+const MAX_PLANNER_FACTS = 8;
+
+// Pick the facts that personalize teaching (preference / prior_knowledge /
+// learning_gap — never goal), ranked by confidence then recency, capped to bound
+// the prompt. Returns the shape the CourseContext carries.
+export function selectPlannerFacts(facts: LearnerFact[]): { text: string; category: FactCategory }[] {
+  return facts
+    .filter((f) => PLANNER_FACT_CATEGORIES.includes(f.category))
+    .sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0) || (Date.parse(b.lastSeenAt ?? "") || 0) - (Date.parse(a.lastSeenAt ?? "") || 0))
+    .slice(0, MAX_PLANNER_FACTS)
+    .map((f) => ({ text: f.text, category: f.category }));
+}
 
 // Immutable generation context loaded by the worker from explicit ownerId (doc
 // §9.1). Never uses request/session auth. A missing course/lesson/graph/topic is
@@ -62,15 +76,18 @@ export async function loadLessonGenerationContext(input: {
   // full teaching) rather than failing the lesson.
   let masteryByConcept = new Map<string, MasteryStatus>();
   let knowledgeBackground: KnowledgeBackground | null = null;
+  let facts: { text: string; category: FactCategory }[] = [];
   try {
-    const [masteryList, profile] = await Promise.all([
+    const [masteryList, profile, activeFacts] = await Promise.all([
       listConceptMasteryByOwner(ownerId, graphId),
       getLearnerProfile(ownerId),
+      listActiveFacts(ownerId),
     ]);
     masteryByConcept = new Map<string, MasteryStatus>(masteryList.map((m) => [m.conceptId, m.status]));
     knowledgeBackground = profile?.knowledgeBackground ?? null;
+    facts = selectPlannerFacts(activeFacts);
   } catch (error) {
-    console.warn(`[lesson-generation-context] profile/mastery load failed for owner=${ownerId} graph=${graphId}; teaching all concepts as untested`, error);
+    console.warn(`[lesson-generation-context] profile/mastery/facts load failed for owner=${ownerId} graph=${graphId}; teaching all concepts as untested`, error);
   }
 
   const next = nextTopic(graphId, topicId);
@@ -82,6 +99,7 @@ export async function loadLessonGenerationContext(input: {
     nextTopic: next ? toContextTopic(next.topicId, next.name, next.conceptIds) : null,
     language: course.language ?? null,
     knowledgeBackground,
+    facts,
   };
 
   return { course, lesson, kg };
