@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
@@ -24,9 +25,13 @@ export function CourseOutlineView({
   currentLessonId = null,
   onCourseUpdated,
 }: CourseOutlineViewProps) {
+  const router = useRouter();
   const [displayCourse, setDisplayCourse] = useState(course);
   const { jobsByLessonId, setJobs, refresh } = useLessonGenerationJobs(displayCourse.id, initialJobs);
   const [enqueueError, setEnqueueError] = useState<Record<string, string>>({});
+  const [jumpTarget, setJumpTarget] = useState<Lesson | null>(null);
+  const [jumpingLessonId, setJumpingLessonId] = useState<string | null>(null);
+  const [jumpError, setJumpError] = useState<string | null>(null);
   const refreshedRef = useRef<Set<string>>(new Set());
 
   const lessons = useMemo(
@@ -65,7 +70,7 @@ export function CourseOutlineView({
     })();
   }, [jobsByLessonId, displayCourse.id, onCourseUpdated]);
 
-  async function generate(lesson: Lesson) {
+  async function generate(lesson: Lesson): Promise<{ ok: true } | { ok: false; error: string }> {
     setEnqueueError((prev) => {
       const next = { ...prev };
       delete next[lesson.id];
@@ -81,12 +86,42 @@ export function CourseOutlineView({
       if (!response.ok) throw new Error(data.error ?? "Lesson generation failed");
       if (data.job) setJobs((prev) => upsertJob(prev, data.job!));
       else void refresh();
+      setDisplayCourse((prev) => {
+        const next = {
+          ...prev,
+          lessons: prev.lessons.map((candidate) =>
+            candidate.id === lesson.id && candidate.status !== "generated"
+              ? { ...candidate, status: "generating" as const, updatedAt: Date.now() }
+              : candidate,
+          ),
+        };
+        onCourseUpdated?.(next);
+        return next;
+      });
+      return { ok: true };
     } catch (error) {
+      const message = error instanceof Error ? error.message : "Lesson generation failed";
       setEnqueueError((prev) => ({
         ...prev,
-        [lesson.id]: error instanceof Error ? error.message : "Lesson generation failed",
+        [lesson.id]: message,
       }));
+      return { ok: false, error: message };
     }
+  }
+
+  async function confirmJumpAhead() {
+    if (!jumpTarget || jumpingLessonId) return;
+    setJumpError(null);
+    setJumpingLessonId(jumpTarget.id);
+    const result = await generate(jumpTarget);
+    setJumpingLessonId(null);
+    if (!result.ok) {
+      setJumpError(result.error);
+      return;
+    }
+    const lessonId = jumpTarget.id;
+    setJumpTarget(null);
+    router.push(`/course/${displayCourse.id}?lessonId=${encodeURIComponent(lessonId)}`);
   }
 
   if (visibleLessons === "upcoming" && renderedLessons.length === 0) return null;
@@ -138,6 +173,11 @@ export function CourseOutlineView({
                 enqueueError={enqueueError[lesson.id] ?? null}
                 isLast={index === renderedLessons.length - 1}
                 onGenerate={() => void generate(lesson)}
+                onJumpAhead={() => {
+                  setJumpError(null);
+                  setJumpTarget(lesson);
+                }}
+                summary={lessonSummary(lesson, displayCourse.language)}
               />
             ))}
           </ol>
@@ -147,6 +187,48 @@ export function CourseOutlineView({
           </div>
         )}
       </section>
+
+      {jumpTarget ? (
+        <div
+          className="course-outline-jump-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setJumpTarget(null);
+          }}
+        >
+          <section
+            className="course-outline-jump-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="course-outline-jump-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="course-outline-jump-close"
+              aria-label="Close jump ahead dialog"
+              onClick={() => setJumpTarget(null)}
+            >
+              ×
+            </button>
+            <div className="course-outline-jump-kicker">Jump ahead</div>
+            <h2 id="course-outline-jump-title">{jumpTarget.title}</h2>
+            <p>{lessonSummary(jumpTarget, displayCourse.language)}</p>
+            <div className="course-outline-jump-note">
+              This lesson will be generated when you start it.
+            </div>
+            {jumpError ? <p className="course-outline-jump-error">{jumpError}</p> : null}
+            <button
+              type="button"
+              className="course-outline-jump-primary"
+              disabled={jumpingLessonId === jumpTarget.id}
+              onClick={() => void confirmJumpAhead()}
+            >
+              {jumpingLessonId === jumpTarget.id ? "Generating..." : "Generate and jump ahead"}
+            </button>
+          </section>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -173,6 +255,8 @@ function LessonOutlineRow({
   enqueueError,
   isLast,
   onGenerate,
+  onJumpAhead,
+  summary,
 }: {
   courseId: string;
   lesson: Lesson;
@@ -182,10 +266,13 @@ function LessonOutlineRow({
   enqueueError: string | null;
   isLast: boolean;
   onGenerate: () => void;
+  onJumpAhead: () => void;
+  summary: string;
 }) {
   const state = lessonState(lesson, job, index, enqueueError);
   const isRemediation = lesson.role === "remediation";
   const canGenerate = state.canGenerate;
+  const actionHandler = state.actionKind === "jump" ? onJumpAhead : onGenerate;
 
   return (
     <li className={`course-outline-row course-outline-${state.tone}${isRemediation ? " course-outline-remediation" : ""}${isLast ? " last" : ""}`}>
@@ -196,6 +283,7 @@ function LessonOutlineRow({
       </div>
       <div className="course-outline-main">
         <h3>{lesson.title}</h3>
+        <p className="course-outline-description">{summary}</p>
         {state.detail ? <p className="course-outline-state-note">{state.detail}</p> : null}
         {isRemediation ? <span className="course-outline-insert-marker">Inserted remediation</span> : null}
         <div className="course-outline-meta" aria-label={`${lesson.title} metadata`}>
@@ -209,7 +297,7 @@ function LessonOutlineRow({
           <button
             type="button"
             disabled={!canGenerate}
-            onClick={canGenerate ? onGenerate : undefined}
+            onClick={canGenerate ? actionHandler : undefined}
             aria-label={`${state.actionLabel}: ${lesson.title}`}
           >
             {state.actionLabel}
@@ -228,6 +316,7 @@ function lessonState(
 ): {
   tone: "ready" | "locked" | "building" | "failed";
   actionLabel: string;
+  actionKind: "open" | "generate" | "jump";
   detail: string | null;
   canGenerate: boolean;
 } {
@@ -235,6 +324,7 @@ function lessonState(
     return {
       tone: "building",
       actionLabel: "Building",
+      actionKind: "generate",
       detail: lessonGenerationStageLabel(job),
       canGenerate: false,
     };
@@ -243,6 +333,7 @@ function lessonState(
     return {
       tone: "building",
       actionLabel: "Building",
+      actionKind: "generate",
       detail: "Lesson content is being prepared.",
       canGenerate: false,
     };
@@ -251,6 +342,7 @@ function lessonState(
     return {
       tone: "ready",
       actionLabel: "Open",
+      actionKind: "open",
       detail: null,
       canGenerate: false,
     };
@@ -260,24 +352,62 @@ function lessonState(
     return {
       tone: "failed",
       actionLabel: "Retry",
+      actionKind: "generate",
       detail: failure,
-      canGenerate: true,
-    };
-  }
-  if (index <= 1) {
-    return {
-      tone: "locked",
-      actionLabel: "Generate",
-      detail: "This lesson is not ready yet.",
       canGenerate: true,
     };
   }
   return {
     tone: "locked",
-    actionLabel: "Locked",
-    detail: "Complete the previous lesson to prepare this one.",
-    canGenerate: false,
+    actionLabel: "Jump ahead",
+    actionKind: "jump",
+    detail: "Generate this lesson now if you want to skip ahead.",
+    canGenerate: true,
   };
+}
+
+function lessonSummary(lesson: Lesson, language?: string | null): string {
+  if (lesson.description.trim()) return lesson.description.trim();
+  const zh = language?.toLowerCase().startsWith("zh") ?? false;
+  const title = lesson.title.trim();
+  const blocks = lesson.blocks ?? [];
+  const firstText = blocks.find((block) => block.type === "text" && block.markdown.trim());
+  if (firstText?.type === "text") return sentenceSnippet(firstText.markdown, zh);
+  const visual = blocks.find((block) => block.type === "visual" && block.description.trim());
+  if (visual?.type === "visual") return sentenceSnippet(visual.description, zh);
+  if (lesson.role === "remediation") {
+    return zh
+      ? `针对前面练习暴露的问题，补强「${title}」相关概念。`
+      : `A focused repair lesson for the gaps that appeared before ${title}.`;
+  }
+  if (lesson.status === "generating") {
+    return zh
+      ? `正在生成围绕「${title}」的讲解、例子和练习。`
+      : `Generating explanations, examples, and practice around ${title}.`;
+  }
+  if (lesson.status === "generated") {
+    return zh
+      ? `通过讲解、例子和练习巩固「${title}」。`
+      : `Introduces the core ideas, examples, and checks for ${title}.`;
+  }
+  return zh
+    ? `围绕「${title}」生成核心讲解、例子和练习。`
+    : `A planned lesson covering the core ideas, examples, and practice for ${title}.`;
+}
+
+function sentenceSnippet(text: string, zh: boolean): string {
+  const compact = text
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/[#>*_`[\]()]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!compact) return zh ? "这一节会围绕核心概念展开讲解和练习。" : "This lesson explains the core ideas with examples and practice.";
+  const end = compact.search(/[。！？.!?]/);
+  const firstSentence = end >= 24 ? compact.slice(0, end + 1) : compact;
+  const limit = zh ? 86 : 132;
+  return Array.from(firstSentence).length > limit
+    ? `${Array.from(firstSentence).slice(0, limit - 1).join("")}…`
+    : firstSentence;
 }
 
 function upsertJob(jobs: LessonGenerationJobSummary[], job: LessonGenerationJobSummary): LessonGenerationJobSummary[] {

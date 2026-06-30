@@ -77,10 +77,11 @@ function BlockShell({
 }) {
   return (
     <div className={`course-block course-block-${kind}`}>
-      <div className="course-block-meta">
-        <span className={`course-block-tag course-block-tag-${kind}`}>{kind}</span>
-        {title ? <strong>{title}</strong> : null}
-      </div>
+      {title ? (
+        <div className="course-block-meta">
+          <strong>{title}</strong>
+        </div>
+      ) : null}
       <div className="course-block-body">{children}</div>
     </div>
   );

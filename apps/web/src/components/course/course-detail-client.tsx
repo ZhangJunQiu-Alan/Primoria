@@ -7,10 +7,12 @@ import { z } from "zod";
 import { BlockRenderer } from "./block-renderer";
 import { CourseOutlineView } from "./course-outline-view";
 import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surface";
+import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
-import type { Course, CourseBlock } from "@/lib/courses/types";
+import type { Course, CourseBlock, Lesson } from "@/lib/courses/types";
 import { currentCourseLesson, currentLessonBlocks } from "@/lib/courses/types";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
+import { lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import { useLearningProgressRecommendation } from "@/hooks/use-learning-progress-recommendation";
 import { learningDecisionAcceptLabel, learningDecisionHeadline } from "@/lib/courses/learning-progress-labels";
 
@@ -454,6 +456,36 @@ function CourseGenerativeUI() {
   return null;
 }
 
+function CourseLessonPendingState({
+  lesson,
+  job,
+}: {
+  lesson: Lesson | null;
+  job?: LessonGenerationJobSummary;
+}) {
+  if (!lesson) {
+    return (
+      <div className="course-lesson-pending-card">
+        <span>Preparing lesson</span>
+        <h2>Lesson content is not ready yet.</h2>
+        <p>Open the course outline to choose a generated lesson or start generating the next one.</p>
+      </div>
+    );
+  }
+  const detail = job ? lessonGenerationStageLabel(job) : "Preparing this lesson.";
+  return (
+    <div className="course-lesson-pending-card">
+      <span>{lesson.status === "generating" ? "Generating lesson" : "Planned lesson"}</span>
+      <h2>{lesson.title}</h2>
+      <p>{lesson.description || "Primoria is preparing the explanations, examples, and practice for this lesson."}</p>
+      <div className="course-lesson-pending-progress" aria-label={detail}>
+        <i />
+      </div>
+      <small>{detail}</small>
+    </div>
+  );
+}
+
 function CourseAIAssistantPanel({
   course,
   visibleBlocks,
@@ -484,7 +516,7 @@ function CourseAIAssistantPanel({
   const startWidthRef = useRef(DEFAULT_SIDEBAR_WIDTH);
 
   // Use a v5 namespace so old LangGraph/CopilotKit dev checkpoints and
-  // context-injected course-chat history cannot leak into Course Copilot.
+  // context-injected course-chat history cannot leak into Course Tutor.
   const courseThreadId = courseThreadIdFor(course.id);
   const courseContext = useMemo(
     () => buildCourseContext(course, visibleBlocks, selectedBlock, selectedTextContext),
@@ -535,11 +567,6 @@ function CourseAIAssistantPanel({
   const selectedTextPreview = selectedTextContext
     ? `${Array.from(selectedTextContext.text).slice(0, 5).join("")}${Array.from(selectedTextContext.text).length > 5 ? "..." : ""}`
     : "";
-  const contextDescription = selectedTextContext
-    ? `已附加选中文本：「${selectedTextContext.text}」`
-    : selectedBlock
-      ? `${selectedBlock.type} block · 点击下方建议或直接提问`
-      : "选择一个 block 后，Copilot 会优先围绕该段内容回答。";
   const composerContext = selectedTextContext ? (
     <div
       className="course-ai-composer-context"
@@ -596,7 +623,7 @@ function CourseAIAssistantPanel({
     <aside
       className={`course-ai-sidebar${collapsed ? " collapsed" : ""}`}
       style={{ width: collapsed ? 56 : width }}
-      aria-label="Course AI assistant"
+      aria-label="Course Tutor assistant"
     >
       <button
         type="button"
@@ -632,8 +659,7 @@ function CourseAIAssistantPanel({
         </button>
         {!collapsed ? (
           <div className="course-ai-titleblock">
-            <strong>Course Copilot</strong>
-            <span>Ask about this course</span>
+            <strong>Course Tutor</strong>
           </div>
         ) : null}
       </div>
@@ -644,7 +670,6 @@ function CourseAIAssistantPanel({
               <div className={`course-ai-context-strip${selectedBlock ? "" : " empty"}`}>
                 <span>当前上下文</span>
                 <strong>{selectedBlock ? selectedBlockTitle : "还没有选中的 block"}</strong>
-                <p>{contextDescription}</p>
               </div>
               <div className="course-ai-suggestions" aria-label="Suggested prompts">
                 {suggestedPrompts.map((prompt) => (
@@ -661,8 +686,8 @@ function CourseAIAssistantPanel({
                 <PrimoriaCopilotChatSurface
                   key={courseThreadId}
                   threadId={courseThreadId}
-                  title={`Course: ${course.title}`}
-                  placeholder="Ask about this course, selected block, or upload a file…"
+                  title={`Course Tutor: ${course.title}`}
+                  placeholder="Ask More, Know You More"
                   className="course-copilot-surface"
                   context={{
                     description: "Primoria course detail mode",
@@ -675,7 +700,7 @@ function CourseAIAssistantPanel({
               </div>
             </>
           ) : (
-            <div className="course-ai-chat auth-required">Sign in to use Course Copilot.</div>
+            <div className="course-ai-chat auth-required">Sign in to use Course Tutor.</div>
           )}
         </>
       ) : null}
@@ -878,7 +903,7 @@ export function CourseDetailClient({
   copilotEnabled: boolean;
 }) {
   const [course, setCourse] = useState<Course>(initialCourse);
-  const [lessonJobs, setLessonJobs] = useState<LessonGenerationJobSummary[]>(initialLessonJobs);
+  const { jobs: lessonJobs, jobsByLessonId, setJobs: setLessonJobs } = useLessonGenerationJobs(course.id, initialLessonJobs);
   const [outlineKey, setOutlineKey] = useState(0);
   const currentLesson = useMemo(() => currentCourseLesson(course, initialLessonId), [course, initialLessonId]);
   const currentLessonId = currentLesson?.id ?? null;
@@ -929,6 +954,25 @@ export function CourseDetailClient({
   }, [course.id, currentLesson]);
 
   const selectedBlock = blocks.find((b) => b.id === selectedBlockId) ?? null;
+  const currentLessonJob = currentLessonId ? jobsByLessonId.get(currentLessonId) : undefined;
+
+  useEffect(() => {
+    if (!currentLessonId || currentLessonJob?.status !== "completed") return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/courses/${course.id}`, { cache: "no-store" });
+        if (!res.ok) return;
+        const data = (await res.json()) as { course?: Course };
+        if (!cancelled && data.course) setCourse(data.course);
+      } catch {
+        // Best-effort; the next navigation or reload shows the published lesson.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [course.id, currentLessonId, currentLessonJob?.status]);
 
   // After a recommendation is accepted (a lesson job was enqueued), refetch the
   // course (the new/next lesson now exists) and its lesson jobs, then remount the
@@ -1048,7 +1092,7 @@ export function CourseDetailClient({
     >
       <div className="course-detail-main">
         <div className="course-blocks-column">
-          {blocks.map((block) => (
+          {blocks.length > 0 ? blocks.map((block) => (
             <div
               key={block.id}
               role="group"
@@ -1087,7 +1131,7 @@ export function CourseDetailClient({
                 onAction={runBlockLearningAction}
               />
             </div>
-          ))}
+          )) : <CourseLessonPendingState lesson={currentLesson} job={currentLessonJob} />}
           <CourseOutlineView
             key={outlineKey}
             course={course}

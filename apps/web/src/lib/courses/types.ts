@@ -252,6 +252,7 @@ export function currentCourseLesson(course: Course, preferredLessonId?: string |
   const sortedLessons = sortedCourseLessons(course);
   const preferred = preferredLessonId
     ? sortedLessons.find((lesson) => lesson.id === preferredLessonId && lesson.status === "generated" && Array.isArray(lesson.blocks))
+      ?? sortedLessons.find((lesson) => lesson.id === preferredLessonId && lesson.status === "generating")
     : null;
   if (preferred) return preferred;
   const activeGeneratedLesson = sortedLessons.find(
