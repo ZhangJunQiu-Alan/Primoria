@@ -37,7 +37,7 @@ export function ProfileEditModal({ initialDisplayName }: ProfileEditModalProps) 
   return (
     <>
       <button type="button" className="profile-edit-button" onClick={() => setOpen(true)}>
-        EDIT
+        Edit profile
       </button>
       {open ? (
         <div className="profile-modal-backdrop" role="presentation" onMouseDown={(event) => {

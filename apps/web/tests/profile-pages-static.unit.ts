@@ -23,13 +23,20 @@ async function main() {
   const navRail = read("src/components/tutor/nav-rail.tsx");
   const styles = read("src/app/globals.css");
 
-  assert(profilePage.includes("profile-hero-card"), "profile page renders the copied centered profile hero card");
+  assert(profilePage.includes("profile-hero-card"), "profile page renders the profile hero card");
+  assert(profilePage.includes("profile-hero-identity"), "profile hero separates identity from metrics");
+  assert(profilePage.includes("profile-hero-action"), "profile hero keeps profile editing in the header action area");
+  assert(profilePage.includes("stats.lessonsCompleted"), "profile hero surfaces completed lessons");
+  assert(profilePage.includes("stats.questionsPracticed"), "profile hero surfaces practiced questions");
+  assert(profilePage.includes("profile-section-header"), "profile progress section has explanatory header copy");
+  assert(profilePage.includes("profile-list-copy"), "profile progress links include descriptions");
   assert(profilePage.includes("My Progress"), "profile page renders the progress section");
   assert(profilePage.includes("Weekly Report"), "profile page links to weekly report");
   assert(profilePage.includes("Learning Stats"), "profile page links to learning stats");
   assert(!profilePage.includes("Course Stats"), "profile page omits Course Stats as requested");
 
   assert(profileEditModal.includes("Edit Profile"), "profile edit modal copies the expected title");
+  assert(profileEditModal.includes("Edit profile"), "profile edit trigger uses readable sentence case");
   assert(profileEditModal.includes("Display Name"), "profile edit modal edits display name");
   assert(profileEditModal.includes('fetch("/api/profile"'), "profile edit modal saves through the profile API");
   assert(profileApi.includes(".update(users)"), "profile API updates the app-owned users table");
@@ -49,6 +56,10 @@ async function main() {
   assert(!navRail.includes("nav-progress-strip"), "temporary streak and XP rail widgets are removed");
   assert(!navRail.includes("nav-upgrade-link"), "temporary upgrade rail shortcut is removed");
   assert(styles.includes(".profile-shell"), "profile pages have dedicated shell styling");
+  assert(styles.includes(".profile-hero-identity"), "profile hero identity has dedicated styling");
+  assert(styles.includes("grid-template-areas"), "profile hero uses a deliberate dashboard layout");
+  assert(styles.includes(".profile-section-header"), "profile progress section header has dedicated styling");
+  assert(styles.includes(".profile-list-copy"), "profile progress row copy has dedicated styling");
   assert(styles.includes(".profile-list-card"), "profile progress list has dedicated styling");
   assert(styles.includes(".activity-heatmap"), "stats heatmap has dedicated styling");
   assert(styles.includes(".settings-card"), "settings cards have dedicated styling");
