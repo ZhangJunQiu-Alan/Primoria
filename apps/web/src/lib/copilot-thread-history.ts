@@ -183,9 +183,27 @@ export async function persistThreadSummaryToServer(summary: CopilotThreadSummary
   }
 }
 
+export async function persistChatFeedbackToServer(input: {
+  targetMessageId: string;
+  signal: "positive" | "negative";
+  via?: "thumb" | "text";
+  courseId?: string | null;
+  lessonId?: string | null;
+}) {
+  try {
+    await fetch("/api/learning-events/feedback", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(input),
+    });
+  } catch {
+    // Best-effort sync only.
+  }
+}
+
 export async function persistThreadMessageToServer(
   threadId: string,
-  message: { id: string; role: string; content: string; metadata?: unknown; createdAt?: number },
+  message: { id: string; role: string; content: string; metadata?: unknown; createdAt?: number; courseId?: string | null; lessonId?: string | null },
 ) {
   try {
     await fetch(`/api/copilot-threads/${encodeURIComponent(threadId)}/messages`, {

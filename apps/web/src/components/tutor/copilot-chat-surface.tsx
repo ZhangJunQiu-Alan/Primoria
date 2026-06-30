@@ -29,6 +29,7 @@ import { sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
 import {
   ensureThreadSummary,
   hydrateThreadMessagesFromServer,
+  persistChatFeedbackToServer,
   persistThreadMessageToServer,
   persistThreadSummaryToServer,
 } from "@/lib/copilot-thread-history";
@@ -50,6 +51,49 @@ const COPILOT_ACCEPTED_ATTACHMENTS = [
 ].join(",");
 const MAX_COPILOT_ATTACHMENT_BYTES = 10 * 1024 * 1024;
 const PrimoriaComposerContext = createContext<React.ReactNode>(null);
+
+// Course/lesson scope for the active chat, so assistant-message feedback can be
+// attributed to the lesson the learner is in (module-level message components
+// cannot receive surface props directly).
+const PrimoriaChatScopeContext = createContext<{ courseId?: string | null; lessonId?: string | null }>({});
+
+function AssistantFeedbackBar({ messageId }: { messageId: string }) {
+  const { courseId, lessonId } = useContext(PrimoriaChatScopeContext);
+  const [signal, setSignal] = useState<"positive" | "negative" | null>(null);
+
+  // Switch-only: feedback is append-only with no undo signal, so we never clear
+  // back to null (that would diverge from the DB). Re-clicking the active thumb
+  // is a no-op; switching records the new signal (the processor keeps the latest
+  // per message).
+  function send(next: "positive" | "negative") {
+    if (signal === next) return;
+    setSignal(next);
+    void persistChatFeedbackToServer({ targetMessageId: messageId, signal: next, via: "thumb", courseId, lessonId });
+  }
+
+  return (
+    <div className="primoria-copilot-feedback" role="group" aria-label="Was this helpful?">
+      <button
+        type="button"
+        className={`primoria-copilot-feedback-btn${signal === "positive" ? " is-active" : ""}`}
+        aria-pressed={signal === "positive"}
+        aria-label="Helpful"
+        onClick={() => send("positive")}
+      >
+        👍
+      </button>
+      <button
+        type="button"
+        className={`primoria-copilot-feedback-btn${signal === "negative" ? " is-active" : ""}`}
+        aria-pressed={signal === "negative"}
+        aria-label="Not helpful"
+        onClick={() => send("negative")}
+      >
+        👎
+      </button>
+    </div>
+  );
+}
 
 const PrimoriaUserMessage = Object.assign(
   function PrimoriaUserMessage({
@@ -142,6 +186,7 @@ const PrimoriaAssistantMessage = Object.assign(
             <div className="primoria-copilot-bubble primoria-copilot-assistant-bubble">
               <CourseMarkdown markdown={visibleContent} />
               {isRunning ? <span className="primoria-stream-caret" aria-hidden="true" /> : null}
+              {!isRunning && message.id ? <AssistantFeedbackBar messageId={message.id} /> : null}
             </div>
           </div>
         ) : null}
@@ -426,7 +471,7 @@ function messageText(message: { content?: unknown; role?: unknown }) {
   return message.role === "assistant" ? sanitizeCopilotAssistantText(text) : text;
 }
 
-function CopilotThreadHistoryRecorder({ threadId, title }: { threadId: string; title?: string }) {
+function CopilotThreadHistoryRecorder({ threadId, title, courseId, lessonId }: { threadId: string; title?: string; courseId?: string | null; lessonId?: string | null }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
   const recordedMessagesRef = useRef<Set<string>>(new Set());
 
@@ -457,9 +502,11 @@ function CopilotThreadHistoryRecorder({ threadId, title }: { threadId: string; t
         content,
         metadata: { source: "copilotkit" },
         createdAt: Date.now(),
+        courseId,
+        lessonId,
       });
     }
-  }, [agent.messages, threadId, title]);
+  }, [agent.messages, threadId, title, courseId, lessonId]);
 
   return null;
 }
@@ -482,6 +529,8 @@ export function PrimoriaCopilotChatSurface({
   welcomeScreen = false,
   suggestions,
   composerContext,
+  courseId,
+  lessonId,
 }: {
   threadId: string;
   title?: string;
@@ -491,6 +540,8 @@ export function PrimoriaCopilotChatSurface({
   welcomeScreen?: boolean;
   suggestions?: { title: string; message: string }[];
   composerContext?: React.ReactNode;
+  courseId?: string | null;
+  lessonId?: string | null;
 }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
   const stableContext = useMemo(
@@ -571,8 +622,9 @@ export function PrimoriaCopilotChatSurface({
   if (!restoredForCurrentThread) return <CopilotRestorePanel />;
 
   return (
+    <PrimoriaChatScopeContext.Provider value={{ courseId, lessonId }}>
     <div className={className}>
-      <CopilotThreadHistoryRecorder key={`history-${threadId}`} threadId={threadId} title={title} />
+      <CopilotThreadHistoryRecorder key={`history-${threadId}`} threadId={threadId} title={title} courseId={courseId} lessonId={lessonId} />
       {attachmentError ? <p className="attachment-error copilot-attachment-error">{attachmentError}</p> : null}
       <PrimoriaComposerContext.Provider value={composerContext}>
         <CopilotChat
@@ -615,6 +667,7 @@ export function PrimoriaCopilotChatSurface({
         />
       </PrimoriaComposerContext.Provider>
     </div>
+    </PrimoriaChatScopeContext.Provider>
   );
 }
 
