@@ -465,6 +465,7 @@ function CourseAIAssistantPanel({
   onCourseUpdated,
   copilotEnabled,
   selectedTextContext,
+  currentLessonId,
 }: {
   course: Course;
   visibleBlocks: CourseBlock[];
@@ -476,6 +477,7 @@ function CourseAIAssistantPanel({
   onCourseUpdated: (course: Course) => void;
   copilotEnabled: boolean;
   selectedTextContext: SelectedTextContext | null;
+  currentLessonId: string | null;
 }) {
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -666,6 +668,8 @@ function CourseAIAssistantPanel({
                     description: "Primoria course detail mode",
                     value: JSON.stringify(courseContext),
                   }}
+                  courseId={course.id}
+                  lessonId={currentLessonId}
                   composerContext={composerContext}
                 />
               </div>
@@ -1106,6 +1110,7 @@ export function CourseDetailClient({
         onWidthChange={setSidebarWidth}
         copilotEnabled={copilotEnabled}
         selectedTextContext={selectedTextContext}
+        currentLessonId={currentLessonId}
         onCourseUpdated={(nextCourse) => {
           setCourse(nextCourse);
           const nextBlocks = currentLessonBlocks(nextCourse, currentLessonId);
