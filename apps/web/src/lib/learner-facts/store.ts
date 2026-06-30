@@ -180,6 +180,67 @@ export async function dismissFact(ownerId: string, factId: string): Promise<void
     .where(and(eq(learnerFacts.ownerId, ownerId), eq(learnerFacts.id, factId)));
 }
 
+export async function addManualFact(ownerId: string, text: string, category: FactCategory): Promise<LearnerFact | null> {
+  if (!ownerId || !hasDatabaseUrl()) return null;
+  const cleanText = text.trim().replace(/\s+/g, " ");
+  if (!cleanText) return null;
+  const now = new Date();
+  const existing = await listAllFactsForExtraction(ownerId);
+  const same = existing.find((fact) => normalizeFactText(fact.text) === normalizeFactText(cleanText));
+
+  if (same) {
+    await getDb()
+      .update(learnerFacts)
+      .set({
+        text: cleanText,
+        category,
+        status: "active",
+        confidence: 1,
+        lastSeenAt: now,
+        updatedAt: now,
+      })
+      .where(and(eq(learnerFacts.ownerId, ownerId), eq(learnerFacts.id, same.id)));
+    const refreshed = await listActiveFacts(ownerId);
+    return refreshed.find((fact) => fact.id === same.id) ?? null;
+  }
+
+  const id = randomId();
+  const evidence: FactEvidence = { lessonId: null, eventIds: ["manual"], at: now.toISOString() };
+  await getDb().insert(learnerFacts).values({
+    id,
+    ownerId,
+    text: cleanText,
+    category,
+    status: "active",
+    confidence: 1,
+    evidence: [evidence],
+    occurrences: 1,
+    sourceLessonId: null,
+    lastSeenAt: now,
+    createdAt: now,
+    updatedAt: now,
+  });
+  const refreshed = await listActiveFacts(ownerId);
+  return refreshed.find((fact) => fact.id === id) ?? null;
+}
+
+export async function updateFact(ownerId: string, factId: string, input: { text: string; category: FactCategory }): Promise<LearnerFact | null> {
+  if (!ownerId || !hasDatabaseUrl()) return null;
+  const cleanText = input.text.trim().replace(/\s+/g, " ");
+  if (!cleanText) return null;
+  await getDb()
+    .update(learnerFacts)
+    .set({
+      text: cleanText,
+      category: input.category,
+      status: "active",
+      updatedAt: new Date(),
+    })
+    .where(and(eq(learnerFacts.ownerId, ownerId), eq(learnerFacts.id, factId)));
+  const refreshed = await listActiveFacts(ownerId);
+  return refreshed.find((fact) => fact.id === factId) ?? null;
+}
+
 // Apply the distiller's resolved ops. Idempotent against job re-runs: a reinforce
 // is skipped if the fact already has an evidence entry for this lessonId, and an
 // add is skipped if an existing fact (active OR dismissed — the dismissed

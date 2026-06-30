@@ -44,18 +44,18 @@ export default async function StatsPage() {
         </section>
 
         <ProfileStatSection title="Today's Summary">
-          <StatCard icon={<BookIcon />} title="Lessons" value={stats.lessonsCompleted} detail="Lessons completed" tone="blue" />
-          <StatCard icon={<BoltIcon />} title="Questions" value={stats.questionsPracticed} detail="Questions practiced" tone="green" />
-          <StatCard icon={<ClockIcon />} title="Learning Time" value={formatLearningTime(stats.learningMinutes)} detail="Total learning time" tone="orange" />
+          <StatCard icon={<BookIcon />} title="Lessons" value={stats.todayLessonsCompleted} detail="Lessons completed today" tone="blue" />
+          <StatCard icon={<BoltIcon />} title="Questions" value={stats.todayQuestionsPracticed} detail="Questions practiced today" tone="green" />
+          <StatCard icon={<ClockIcon />} title="Activity" value={stats.todayActivityEvents} detail="Recorded learning events today" tone="orange" />
           <StatCard icon={<FlameIcon />} title="Current Streak" value={`${stats.streakDays} day${stats.streakDays === 1 ? "" : "s"}`} detail="Keep it up!" tone="flame" />
-          <StatCard icon={<StarIcon />} title="XP Earned" value={stats.xp} detail="XP earned today" tone="gold" />
+          <StatCard icon={<StarIcon />} title="XP Earned" value={stats.todayXp} detail="XP earned today" tone="gold" />
         </ProfileStatSection>
 
         <ProfileStatSection title="Lifetime Statistics">
           <StatCard icon={<BookIcon />} title="Lessons Completed" value={stats.lessonsCompleted} detail="Total lessons finished" tone="blue" />
           <StatCard icon={<BoltIcon />} title="Questions Practiced" value={stats.questionsPracticed} detail="Total questions practiced" tone="green" />
-          <StatCard icon={<CalendarIcon />} title="Active Learning Days" value={stats.heatmapDays.filter((day) => day.activity > 0).length} detail="Days you practiced" tone="aqua" />
-          <StatCard icon={<ClockIcon />} title="Total Learning Time" value={formatLearningTime(stats.learningMinutes)} detail="All-time learning time" tone="orange" />
+          <StatCard icon={<CalendarIcon />} title="Active Learning Days" value={stats.activeDaysLast30} detail="Active days in the last 30 days" tone="aqua" />
+          <StatCard icon={<ClockIcon />} title="Planned Lesson Time" value={formatLearningTime(stats.plannedLessonMinutes)} detail="Estimated minutes in your courses" tone="orange" />
           <StatCard icon={<StarIcon />} title="Total XP" value={stats.xp} detail="All-time XP earned" tone="gold" />
         </ProfileStatSection>
       </section>

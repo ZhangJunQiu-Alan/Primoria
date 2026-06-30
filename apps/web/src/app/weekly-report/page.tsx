@@ -2,9 +2,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
-import { BoltIcon, BookIcon, ClockIcon, StarIcon } from "@/components/profile/profile-icons";
+import { BoltIcon, BookIcon, CalendarIcon, StarIcon } from "@/components/profile/profile-icons";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
-import { formatLearningTime, getProfileStats } from "@/lib/profile/stats";
+import { getProfileStats } from "@/lib/profile/stats";
 
 export const dynamic = "force-dynamic";
 
@@ -27,18 +27,18 @@ export default async function WeeklyReportPage() {
           <h1>Weekly Report</h1>
           <div className="profile-week-switch" aria-label="Current week">
             <span>‹</span>
-            <strong>Jun 29 - Jul 5</strong>
+            <strong>{stats.weekLabel}</strong>
             <span>›</span>
           </div>
         </header>
 
         <section className="weekly-summary-card">
           <div className="weekly-metrics">
-            <Metric icon={<BookIcon />} value={stats.lessonsCompleted} label="Lessons completed" tone="blue" />
-            <Metric icon={<BoltIcon />} value={stats.questionsPracticed} label="Questions practiced" tone="green" />
-            <Metric icon={<ClockIcon />} value={formatLearningTime(stats.learningMinutes)} label="Learning time" tone="orange" />
-            <Metric icon={<StarIcon />} value={stats.xp} label="XP earned" tone="gold" />
-            <Metric icon={<span className="profile-lightbulb">?</span>} value={stats.cardsCollected} label="Cards collected" tone="blue" />
+            <Metric icon={<BookIcon />} value={stats.weeklyLessonsCompleted} label="Lessons completed" tone="blue" />
+            <Metric icon={<BoltIcon />} value={stats.weeklyQuestionsPracticed} label="Questions practiced" tone="green" />
+            <Metric icon={<CalendarIcon />} value={stats.weeklyActivityEvents} label="Recorded events" tone="aqua" />
+            <Metric icon={<StarIcon />} value={stats.weeklyXp} label="XP earned" tone="gold" />
+            <Metric icon={<span className="profile-lightbulb">C</span>} value={stats.coursesWorkedOn.length} label="Courses worked on" tone="blue" />
           </div>
           <div className="weekly-active-days">
             <span>Active Days</span>
@@ -69,9 +69,9 @@ export default async function WeeklyReportPage() {
           <span className="profile-trophy">T</span>
           <div>
             <strong>Best Day of the Week</strong>
-            <h2>Monday, Jun 29</h2>
+            <h2>{stats.bestWeekDay?.display ?? "No activity yet"}</h2>
           </div>
-          <p>{Math.max(0, ...stats.weekDays.map((day) => day.activity))}<span>events</span></p>
+          <p>{stats.bestWeekDay?.activity ?? 0}<span>events</span></p>
         </section>
 
         <section className="profile-panel">
@@ -80,8 +80,8 @@ export default async function WeeklyReportPage() {
             {stats.coursesWorkedOn.length ? stats.coursesWorkedOn.map((course) => (
               <Link key={course.id} href={`/course/${encodeURIComponent(course.id)}/outline`} className="profile-course-row">
                 <strong>{course.title}</strong>
-                <span>{course.lessons} lessons · {course.questions} questions</span>
-                <em>{formatLearningTime(course.minutes)}</em>
+                <span>{course.lessons} completed lessons · {course.questions} questions · {course.activityEvents} events</span>
+                <em>{course.activityEvents}</em>
               </Link>
             )) : <p className="profile-empty-copy">No course activity yet.</p>}
           </div>
