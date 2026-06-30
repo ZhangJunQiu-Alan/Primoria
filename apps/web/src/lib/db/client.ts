@@ -47,6 +47,12 @@ export function getDb() {
   return db;
 }
 
+// The Drizzle handle and a transaction handle share the same query API; helpers
+// that must run inside or outside a transaction accept `DbOrTx`.
+export type Db = ReturnType<typeof getDb>;
+export type DbTransaction = Parameters<Parameters<Db["transaction"]>[0]>[0];
+export type DbOrTx = Db | DbTransaction;
+
 export async function closeDb(): Promise<void> {
   const existing = globalAny[globalKey];
 
