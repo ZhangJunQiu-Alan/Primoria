@@ -1,8 +1,17 @@
-import { and, desc, eq, gte } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { getDb, hasDatabaseUrl } from "@/lib/db/client";
 import { learningEvents, quizAttempts } from "@/lib/db/schema";
 import { listCourses } from "@/lib/courses/store";
 import type { CourseSummary } from "@/lib/courses/types";
+
+export type ProfileCourseActivity = {
+  id: string;
+  title: string;
+  lessons: number;
+  questions: number;
+  activityEvents: number;
+  lastActivityAt: number;
+};
 
 export type ProfileStats = {
   displayName: string;
@@ -10,14 +19,26 @@ export type ProfileStats = {
   initial: string;
   streakDays: number;
   xp: number;
+  todayXp: number;
+  weeklyXp: number;
+  courseCount: number;
   lessonsCompleted: number;
+  todayLessonsCompleted: number;
+  weeklyLessonsCompleted: number;
   questionsPracticed: number;
-  learningMinutes: number;
-  cardsCollected: number;
+  todayQuestionsPracticed: number;
+  weeklyQuestionsPracticed: number;
+  plannedLessonMinutes: number;
+  totalActivityEvents: number;
+  todayActivityEvents: number;
+  weeklyActivityEvents: number;
   activeDaysThisWeek: number;
+  activeDaysLast30: number;
+  weekLabel: string;
+  bestWeekDay: { display: string; activity: number } | null;
   weekDays: Array<{ label: string; date: number; activity: number }>;
   heatmapDays: Array<{ key: string; day: string; activity: number }>;
-  coursesWorkedOn: Array<{ id: string; title: string; lessons: number; questions: number; minutes: number }>;
+  coursesWorkedOn: ProfileCourseActivity[];
 };
 
 type ActivityRow = {
@@ -52,8 +73,12 @@ function formatDisplayName(displayName: string | null | undefined, email: string
   return displayName?.trim() || email?.split("@")[0] || "Learner";
 }
 
-function sumCourseMinutes(courses: CourseSummary[]) {
+function sumPlannedLessonMinutes(courses: CourseSummary[]) {
   return courses.reduce((total, course) => total + (course.estimatedMinutes || 0), 0);
+}
+
+function calculateXp(lessonsCompleted: number, questionsPracticed: number) {
+  return lessonsCompleted * 40 + questionsPracticed * 8;
 }
 
 function countCurrentStreak(activeKeys: Set<string>, today = new Date()) {
@@ -87,6 +112,46 @@ function buildHeatmapDays(activeCountByDay: Map<string, number>, today = new Dat
   });
 }
 
+function formatMonthDay(date: Date) {
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(date);
+}
+
+function formatWeekLabel(today = new Date()) {
+  const start = startOfWeek(today);
+  const end = new Date(start.getTime() + 6 * DAY_MS);
+  return `${formatMonthDay(start)} - ${formatMonthDay(end)}`;
+}
+
+function formatWeekDayDisplay(day: { label: string; date: number }, today = new Date()) {
+  const weekStart = startOfWeek(today);
+  const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const index = labels.indexOf(day.label);
+  const date = new Date(weekStart.getTime() + Math.max(0, index) * DAY_MS);
+  return new Intl.DateTimeFormat("en", { weekday: "long", month: "short", day: "numeric" }).format(date);
+}
+
+function selectBestWeekDay(weekDays: ProfileStats["weekDays"], today = new Date()) {
+  const best = weekDays.reduce((winner, day) => (day.activity > winner.activity ? day : winner), weekDays[0]);
+  if (!best || best.activity <= 0) return null;
+  return { display: formatWeekDayDisplay(best, today), activity: best.activity };
+}
+
+function rowTime(row: { createdAt: Date }) {
+  return row.createdAt.getTime();
+}
+
+function isOnOrAfter(row: { createdAt: Date }, date: Date) {
+  return rowTime(row) >= date.getTime();
+}
+
+function isToday(row: { createdAt: Date }, today = new Date()) {
+  return dayKey(row.createdAt) === dayKey(today);
+}
+
+function sumQuestions(rows: Array<{ total?: number | null }>) {
+  return rows.reduce((total, row) => total + (row.total ?? 0), 0);
+}
+
 export async function getProfileStats(input: {
   ownerId: string | null;
   displayName: string | null;
@@ -94,6 +159,8 @@ export async function getProfileStats(input: {
 }): Promise<ProfileStats> {
   const displayName = formatDisplayName(input.displayName, input.email);
   const initial = formatInitial(displayName, input.email);
+  const emptyWeekDays = buildWeekDays(new Map());
+  const emptyHeatmapDays = buildHeatmapDays(new Map());
 
   if (!input.ownerId || !hasDatabaseUrl()) {
     return {
@@ -102,19 +169,32 @@ export async function getProfileStats(input: {
       initial,
       streakDays: 0,
       xp: 0,
+      todayXp: 0,
+      weeklyXp: 0,
+      courseCount: 0,
       lessonsCompleted: 0,
+      todayLessonsCompleted: 0,
+      weeklyLessonsCompleted: 0,
       questionsPracticed: 0,
-      learningMinutes: 0,
-      cardsCollected: 0,
+      todayQuestionsPracticed: 0,
+      weeklyQuestionsPracticed: 0,
+      plannedLessonMinutes: 0,
+      totalActivityEvents: 0,
+      todayActivityEvents: 0,
+      weeklyActivityEvents: 0,
       activeDaysThisWeek: 0,
-      weekDays: buildWeekDays(new Map()),
-      heatmapDays: buildHeatmapDays(new Map()),
+      activeDaysLast30: 0,
+      weekLabel: formatWeekLabel(),
+      bestWeekDay: null,
+      weekDays: emptyWeekDays,
+      heatmapDays: emptyHeatmapDays,
       coursesWorkedOn: [],
     };
   }
 
   const now = new Date();
   const thirtyDaysAgo = new Date(startOfLocalDay(now).getTime() - 29 * DAY_MS);
+  const weekStart = startOfWeek(now);
   const [courses, attemptRows, eventRows] = await Promise.all([
     listCourses(input.ownerId),
     getDb()
@@ -124,7 +204,7 @@ export async function getProfileStats(input: {
         total: quizAttempts.total,
       })
       .from(quizAttempts)
-      .where(and(eq(quizAttempts.ownerId, input.ownerId), gte(quizAttempts.createdAt, thirtyDaysAgo)))
+      .where(eq(quizAttempts.ownerId, input.ownerId))
       .orderBy(desc(quizAttempts.createdAt)),
     getDb()
       .select({
@@ -133,49 +213,106 @@ export async function getProfileStats(input: {
         type: learningEvents.type,
       })
       .from(learningEvents)
-      .where(and(eq(learningEvents.ownerId, input.ownerId), gte(learningEvents.createdAt, thirtyDaysAgo)))
+      .where(eq(learningEvents.ownerId, input.ownerId))
       .orderBy(desc(learningEvents.createdAt)),
   ]);
 
-  const activityRows: ActivityRow[] = [...attemptRows, ...eventRows];
+  // Prefer the append-only event stream. Fall back to quiz attempts only for
+  // older local data that predates learning_events writes.
+  const activityRows: ActivityRow[] = eventRows.length
+    ? eventRows
+    : attemptRows.map((row) => ({ createdAt: row.createdAt, courseId: row.courseId, type: "quiz.attempt", total: row.total }));
+
+  const allActiveKeys = new Set<string>();
+  for (const row of [...activityRows, ...attemptRows]) {
+    allActiveKeys.add(dayKey(row.createdAt));
+  }
+
   const activeCountByDay = new Map<string, number>();
-  for (const row of activityRows) {
+  for (const row of activityRows.filter((row) => isOnOrAfter(row, thirtyDaysAgo))) {
     const key = dayKey(row.createdAt);
     activeCountByDay.set(key, (activeCountByDay.get(key) ?? 0) + 1);
   }
 
   const completedLessons = courses.reduce((total, course) => total + course.completedLessonCount, 0);
-  const questionsPracticed = attemptRows.reduce((total, row) => total + (row.total ?? 0), 0);
-  const learningMinutes = sumCourseMinutes(courses);
-  const xp = Math.max(completedLessons * 40, questionsPracticed * 8);
-  const weekStartKey = dayKey(startOfWeek(now));
+  const questionsPracticed = sumQuestions(attemptRows);
+  const plannedLessonMinutes = sumPlannedLessonMinutes(courses);
+  const lessonCompletedEvents = eventRows.filter((row) => row.type === "lesson.completed");
+  const todayLessonsCompleted = lessonCompletedEvents.filter((row) => isToday(row, now)).length;
+  const weeklyLessonsCompleted = lessonCompletedEvents.filter((row) => isOnOrAfter(row, weekStart)).length;
+  const todayQuestionsPracticed = sumQuestions(attemptRows.filter((row) => isToday(row, now)));
+  const weeklyAttemptRows = attemptRows.filter((row) => isOnOrAfter(row, weekStart));
+  const weeklyActivityRows = activityRows.filter((row) => isOnOrAfter(row, weekStart));
+  const weeklyLessonRows = lessonCompletedEvents.filter((row) => isOnOrAfter(row, weekStart));
+  const weeklyQuestionsPracticed = sumQuestions(weeklyAttemptRows);
+  const todayActivityEvents = activityRows.filter((row) => isToday(row, now)).length;
+  const weeklyActivityEvents = weeklyActivityRows.length;
+  const weekStartKey = dayKey(weekStart);
   const weekActiveDays = [...activeCountByDay.keys()].filter((key) => key >= weekStartKey).length;
+  const weekDays = buildWeekDays(activeCountByDay, now);
+  const heatmapDays = buildHeatmapDays(activeCountByDay, now);
+  const xp = calculateXp(completedLessons, questionsPracticed);
+  const todayXp = calculateXp(todayLessonsCompleted, todayQuestionsPracticed);
+  const weeklyXp = calculateXp(weeklyLessonsCompleted, weeklyQuestionsPracticed);
 
   const questionCountByCourse = new Map<string, number>();
-  for (const attempt of attemptRows) {
+  const weeklyLastActivityByCourse = new Map<string, number>();
+  for (const attempt of weeklyAttemptRows) {
     questionCountByCourse.set(attempt.courseId, (questionCountByCourse.get(attempt.courseId) ?? 0) + (attempt.total ?? 0));
+    weeklyLastActivityByCourse.set(attempt.courseId, Math.max(weeklyLastActivityByCourse.get(attempt.courseId) ?? 0, rowTime(attempt)));
+  }
+
+  const activityCountByCourse = new Map<string, number>();
+  for (const row of weeklyActivityRows) {
+    if (!row.courseId) continue;
+    activityCountByCourse.set(row.courseId, (activityCountByCourse.get(row.courseId) ?? 0) + 1);
+    weeklyLastActivityByCourse.set(row.courseId, Math.max(weeklyLastActivityByCourse.get(row.courseId) ?? 0, rowTime(row)));
+  }
+
+  const lessonCountByCourse = new Map<string, number>();
+  for (const row of weeklyLessonRows) {
+    if (!row.courseId) continue;
+    lessonCountByCourse.set(row.courseId, (lessonCountByCourse.get(row.courseId) ?? 0) + 1);
+    weeklyLastActivityByCourse.set(row.courseId, Math.max(weeklyLastActivityByCourse.get(row.courseId) ?? 0, rowTime(row)));
   }
 
   return {
     displayName,
     email: input.email,
     initial,
-    streakDays: countCurrentStreak(new Set(activeCountByDay.keys()), now),
+    streakDays: countCurrentStreak(allActiveKeys, now),
     xp,
+    todayXp,
+    weeklyXp,
+    courseCount: courses.length,
     lessonsCompleted: completedLessons,
+    todayLessonsCompleted,
+    weeklyLessonsCompleted,
     questionsPracticed,
-    learningMinutes,
-    cardsCollected: 0,
+    todayQuestionsPracticed,
+    weeklyQuestionsPracticed,
+    plannedLessonMinutes,
+    totalActivityEvents: activityRows.length,
+    todayActivityEvents,
+    weeklyActivityEvents,
     activeDaysThisWeek: weekActiveDays,
-    weekDays: buildWeekDays(activeCountByDay, now),
-    heatmapDays: buildHeatmapDays(activeCountByDay, now),
-    coursesWorkedOn: courses.slice(0, 4).map((course) => ({
-      id: course.id,
-      title: course.title,
-      lessons: course.completedLessonCount || course.generatedLessonCount,
-      questions: questionCountByCourse.get(course.id) ?? 0,
-      minutes: course.estimatedMinutes,
-    })),
+    activeDaysLast30: heatmapDays.filter((day) => day.activity > 0).length,
+    weekLabel: formatWeekLabel(now),
+    bestWeekDay: selectBestWeekDay(weekDays, now),
+    weekDays,
+    heatmapDays,
+    coursesWorkedOn: courses
+      .map((course) => ({
+        id: course.id,
+        title: course.title,
+        lessons: lessonCountByCourse.get(course.id) ?? 0,
+        questions: questionCountByCourse.get(course.id) ?? 0,
+        activityEvents: activityCountByCourse.get(course.id) ?? 0,
+        lastActivityAt: weeklyLastActivityByCourse.get(course.id) ?? 0,
+      }))
+      .filter((course) => course.activityEvents > 0 || course.questions > 0 || course.lessons > 0)
+      .sort((a, b) => b.lastActivityAt - a.lastActivityAt)
+      .slice(0, 4),
   };
 }
 

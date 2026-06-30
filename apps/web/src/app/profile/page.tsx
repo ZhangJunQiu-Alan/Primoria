@@ -4,7 +4,7 @@ import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { ProfileEditModal } from "@/components/profile/profile-edit-modal";
 import { BoltIcon, BookIcon, CalendarIcon, ChartIcon, FlameIcon, StarIcon } from "@/components/profile/profile-icons";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
-import { formatLearningTime, getProfileStats } from "@/lib/profile/stats";
+import { getProfileStats } from "@/lib/profile/stats";
 
 export const dynamic = "force-dynamic";
 
@@ -48,7 +48,7 @@ export default async function ProfilePage() {
             <div>
               <span className="profile-eyebrow">Progress</span>
               <h2>My Progress</h2>
-              <p>Track your weekly rhythm, completed lessons, quiz practice, and total learning time.</p>
+              <p>Track your weekly rhythm, completed lessons, quiz practice, and recorded learning activity.</p>
             </div>
           </div>
           <div className="profile-list-card">
@@ -56,7 +56,7 @@ export default async function ProfilePage() {
               <span className="profile-list-icon"><CalendarIcon /></span>
               <span className="profile-list-copy">
                 <strong>Weekly Report</strong>
-                <em>{stats.activeDaysThisWeek}/7 active days this week · {formatLearningTime(stats.learningMinutes)} planned learning</em>
+                <em>{stats.activeDaysThisWeek}/7 active days this week · {stats.weeklyActivityEvents} recorded events</em>
               </span>
               <span className="profile-list-arrow" aria-hidden="true">›</span>
             </Link>
@@ -64,7 +64,7 @@ export default async function ProfilePage() {
               <span className="profile-list-icon"><ChartIcon /></span>
               <span className="profile-list-copy">
                 <strong>Learning Stats</strong>
-                <em>{stats.lessonsCompleted} lessons completed · {stats.questionsPracticed} quiz questions practiced</em>
+                <em>{stats.lessonsCompleted} lessons completed · {stats.questionsPracticed} quiz questions practiced · {stats.courseCount} courses</em>
               </span>
               <span className="profile-list-arrow" aria-hidden="true">›</span>
             </Link>

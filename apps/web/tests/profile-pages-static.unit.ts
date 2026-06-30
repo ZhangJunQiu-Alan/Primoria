@@ -16,6 +16,7 @@ async function main() {
   const weeklyPage = read("src/app/weekly-report/page.tsx");
   const statsPage = read("src/app/stats/page.tsx");
   const settingsPage = read("src/app/settings/page.tsx");
+  const settingsFactsPage = read("src/app/settings/facts/page.tsx");
   const upgradePage = read("src/app/upgrade/page.tsx");
   const profileEditModal = read("src/components/profile/profile-edit-modal.tsx");
   const profileStats = read("src/lib/profile/stats.ts");
@@ -43,21 +44,48 @@ async function main() {
 
   assert(weeklyPage.includes("Daily Breakdown"), "weekly report renders daily breakdown");
   assert(weeklyPage.includes("Courses Worked On"), "weekly report renders worked-on courses");
+  assert(weeklyPage.includes("stats.weekLabel"), "weekly report uses a computed week label");
+  assert(weeklyPage.includes("stats.bestWeekDay?.display"), "weekly report uses the computed best active day");
+  assert(weeklyPage.includes("stats.weeklyLessonsCompleted"), "weekly report uses weekly completed lesson data");
+  assert(weeklyPage.includes("stats.weeklyQuestionsPracticed"), "weekly report uses weekly quiz practice data");
+  assert(weeklyPage.includes("stats.weeklyActivityEvents"), "weekly report uses weekly activity events");
+  assert(!weeklyPage.includes("Jun 29 - Jul 5"), "weekly report does not hardcode a fake week range");
+  assert(!weeklyPage.includes("Monday, Jun 29"), "weekly report does not hardcode a fake best day");
+  assert(!weeklyPage.includes("cardsCollected"), "weekly report does not render fake collected-card data");
   assert(statsPage.includes("Daily Activity (Last 30 Days)"), "stats page renders heatmap section");
   assert(statsPage.includes("Today's Summary"), "stats page renders today summary");
   assert(statsPage.includes("Lifetime Statistics"), "stats page renders lifetime statistics");
+  assert(statsPage.includes("stats.todayLessonsCompleted"), "today summary uses today's completed lessons");
+  assert(statsPage.includes("stats.todayQuestionsPracticed"), "today summary uses today's quiz practice");
+  assert(statsPage.includes("stats.todayActivityEvents"), "today summary uses today's recorded activity");
+  assert(statsPage.includes("Planned Lesson Time"), "stats page labels course estimates as planned lesson time");
+  assert(!statsPage.includes("Total Learning Time"), "stats page does not present planned course estimates as actual learning time");
   assert(settingsPage.includes("Facts About You"), "settings page renders facts section");
-  assert(settingsPage.includes("FactsAboutYou") && settingsPage.includes("listActiveFacts"), "settings page renders distilled facts from the store");
-  assert(!settingsPage.includes("EDIT FACTS"), "static EDIT FACTS action is replaced by the live facts list");
+  assert(settingsPage.includes('href="/settings/facts"'), "settings page links to the facts editor");
+  assert(settingsPage.includes("ContentLanguageSelect") && settingsPage.includes("getUserPreferences"), "settings page renders saved language preference");
+  assert(settingsPage.includes("listActiveFacts"), "settings page reads live fact previews");
+  assert(!settingsPage.includes("JOIN OUR DISCORD"), "settings page removes fake community action");
+  assert(!settingsPage.includes("DELETE ACCOUNT"), "settings page removes fake destructive account action");
   assert(settingsPage.includes("Content Language"), "settings page renders language section");
+  assert(settingsFactsPage.includes("Back to Settings"), "facts page returns to settings");
+  assert(settingsFactsPage.includes("FactsAboutYou") && settingsFactsPage.includes("listActiveFacts"), "facts page renders live facts from the store");
 
   const factsComponent = read("src/components/profile/facts-about-you.tsx");
+  assert(factsComponent.includes('method = editingId ? "PATCH" : "POST"'), "facts component saves add and edit through the API");
   assert(factsComponent.includes('method: "DELETE"') && factsComponent.includes("/api/learner-facts"), "facts component deletes via the learner-facts API");
-  assert(factsComponent.includes("won’t come back") || factsComponent.includes("hasn’t learned"), "facts component explains the dismiss/empty behavior");
+  assert(factsComponent.includes("Extract from text") && factsComponent.includes("disabled"), "facts component does not expose a fake extractor action");
   const factsRoute = read("src/app/api/learner-facts/route.ts");
   assert(factsRoute.includes("export async function GET") && factsRoute.includes("listActiveFacts"), "facts API lists active facts");
+  assert(factsRoute.includes("export async function POST") && factsRoute.includes("addManualFact"), "facts API adds manual facts");
+  assert(factsRoute.includes("export async function PATCH") && factsRoute.includes("updateFact"), "facts API edits manual facts");
   assert(factsRoute.includes("export async function DELETE") && factsRoute.includes("dismissFact"), "facts API dismisses on delete");
+  const preferencesRoute = read("src/app/api/settings/preferences/route.ts");
+  assert(preferencesRoute.includes("export async function PUT") && preferencesRoute.includes("saveUserPreferences"), "preferences API saves content language");
+  const settingsStore = read("src/lib/settings/user-settings.ts");
+  assert(settingsStore.includes("CONTENT_LANGUAGES") && settingsStore.includes("contentLanguage"), "settings store models content language");
   assert(styles.includes(".facts-list"), "facts list has dedicated styling");
+  assert(styles.includes(".settings-wide-action"), "settings overview has a dedicated wide action style");
+  assert(styles.includes(".facts-composer"), "facts editor has dedicated composer styling");
   assert(upgradePage.includes("Learn without limits with Pro"), "upgrade page renders Pro headline");
 
   assert(navRail.includes('href="/profile"'), "avatar menu links to profile");
@@ -77,6 +105,12 @@ async function main() {
 
   assert(profileStats.includes("quizAttempts"), "profile stats read quiz attempts");
   assert(profileStats.includes("learningEvents"), "profile stats read learning events");
+  assert(profileStats.includes("plannedLessonMinutes"), "profile stats exposes planned lesson minutes separately");
+  assert(profileStats.includes("weeklyActivityEvents"), "profile stats exposes weekly activity event count");
+  assert(profileStats.includes("todayQuestionsPracticed"), "profile stats exposes today's quiz practice");
+  assert(profileStats.includes("ProfileCourseActivity"), "profile stats returns typed course activity rows");
+  assert(!profileStats.includes("cardsCollected"), "profile stats no longer exposes fake collected-card data");
+  assert(!profileStats.includes("learningMinutes"), "profile stats no longer exposes estimated minutes as actual learning time");
 
   process.stdout.write("[profile-pages-static.unit] ALL CHECKS PASSED\n");
 }
