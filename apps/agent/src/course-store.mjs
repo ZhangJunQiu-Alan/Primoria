@@ -111,11 +111,11 @@ async function saveCourseToDb(course, ownerId) {
     for (const lesson of lessonRows) {
       await tx`
         insert into lessons (
-          id, course_id, owner_id, topic_id, title, role, progress, status, sort_key,
+          id, course_id, owner_id, topic_id, title, description, role, progress, status, sort_key,
           triggered_from, blocks, estimated_minutes, version, created_at, updated_at
         ) values (
           ${lesson.id}, ${lesson.courseId}, ${lesson.ownerId}, ${lesson.topicId}, ${lesson.title},
-          ${lesson.role}, ${lesson.progress}, ${lesson.status}, ${lesson.sortKey},
+          ${lesson.description}, ${lesson.role}, ${lesson.progress}, ${lesson.status}, ${lesson.sortKey},
           ${lesson.triggeredFrom}, ${lesson.blocks === null ? null : tx.json(lesson.blocks)},
           ${lesson.estimatedMinutes}, ${lesson.version}, ${lesson.createdAt}, ${lesson.updatedAt}
         )
@@ -124,6 +124,7 @@ async function saveCourseToDb(course, ownerId) {
           owner_id = excluded.owner_id,
           topic_id = excluded.topic_id,
           title = excluded.title,
+          description = excluded.description,
           role = excluded.role,
           progress = excluded.progress,
           status = excluded.status,
@@ -200,7 +201,7 @@ async function listCoursesFromDb(ownerId) {
 async function listLessonRowsForCourses(sql, courseIds) {
   if (!courseIds.length) return [];
   return sql`
-    select id, course_id, owner_id, topic_id, title, role, progress, status, sort_key,
+    select id, course_id, owner_id, topic_id, title, description, role, progress, status, sort_key,
            triggered_from, blocks, estimated_minutes, version, created_at, updated_at
     from lessons
     where course_id in ${sql(courseIds)}
@@ -242,6 +243,7 @@ function lessonsToRows(course, ownerId) {
     ownerId,
     topicId: lesson.topicId ?? null,
     title: lesson.title ?? course.title,
+    description: lesson.description ?? "",
     role: lesson.role ?? "new",
     progress: lesson.progress ?? "not_started",
     status: lesson.status ?? (Array.isArray(lesson.blocks) ? "generated" : "planned"),
@@ -264,6 +266,7 @@ function normalizeLessons(course) {
   return [{
     id: `${course.id}:lesson:1`,
     title: course.title,
+    description: course.summary ?? "",
     role: "new",
     progress: "not_started",
     status: "planned",
@@ -331,6 +334,7 @@ function rowToLesson(row) {
   return {
     id: row.id,
     title: row.title,
+    description: row.description ?? "",
     role: row.role ?? "new",
     progress: row.progress ?? "not_started",
     status: row.status ?? (Array.isArray(row.blocks) ? "generated" : "planned"),

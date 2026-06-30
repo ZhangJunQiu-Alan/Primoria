@@ -213,6 +213,7 @@ export type LessonStatus = "planned" | "generating" | "generated";
 export type Lesson = {
   id: string;
   title: string;
+  description: string;
   role: LessonRole;
   progress: LessonProgress;
   status: LessonStatus;
@@ -300,6 +301,7 @@ export type CourseSummary = {
 export type CourseSummaryLesson = {
   id: string;
   title: string;
+  description: string;
   role: LessonRole;
   progress: LessonProgress;
   status: LessonStatus;
@@ -314,6 +316,7 @@ export function summarizeCourse(course: Course): CourseSummary {
   const lessons = sortedLessons.map((lesson): CourseSummaryLesson => ({
     id: lesson.id,
     title: lesson.title,
+    description: lesson.description,
     role: lesson.role,
     progress: lesson.progress,
     status: lesson.status,
