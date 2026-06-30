@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { listCopilotMessages, upsertCopilotMessage } from "@/lib/copilot/thread-repository";
 import { recordLearningEvent } from "@/lib/learning-events/store";
+import { verifyEventScope } from "@/lib/learning-events/scope";
 
 const MessageSchema = z.object({
   id: z.string(),
@@ -10,6 +11,8 @@ const MessageSchema = z.object({
   content: z.string(),
   metadata: z.unknown().optional(),
   createdAt: z.number().int().optional(),
+  courseId: z.string().nullish(),
+  lessonId: z.string().nullish(),
 });
 
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
@@ -28,12 +31,15 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const body = MessageSchema.parse(await request.json());
   await upsertCopilotMessage(user.id, id, body);
   if (body.role === "user") {
+    const scope = await verifyEventScope(user.id, body.courseId, body.lessonId);
     await recordLearningEvent({
       type: "chat.question",
       ownerId: user.id,
       id: `cq_${body.id}`,
       threadId: id,
       messageId: body.id,
+      courseId: scope.courseId,
+      lessonId: scope.lessonId,
     });
   }
   return NextResponse.json({ ok: true });
