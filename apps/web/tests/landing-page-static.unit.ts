@@ -31,7 +31,8 @@ async function main() {
   assert(landingPage.includes("STEM"), "landing explains STEM coverage");
   assert(landingPage.includes("Interactive Visualization"), "landing highlights interactive visualization");
   assert(landingPage.includes("KG"), "landing names knowledge graph positioning");
-  assert(landingPage.includes("Course Copilot"), "landing explains the course copilot");
+  assert(landingPage.includes("Course Tutor"), "landing explains the course tutor");
+  assert(!landingPage.includes("Course Copilot"), "landing does not use the old Course Copilot name");
   assert(landingPage.includes("mastery"), "landing explains adaptive learning mastery");
   assert(landingPage.includes("Lazy Generation") || landingPage.includes("逐节"), "landing explains lesson-by-lesson generation");
   assert(landingPage.includes("landing-map-stage"), "landing hero uses one dominant learning-map visual anchor");
@@ -41,7 +42,7 @@ async function main() {
   assert(landingPage.includes('href="/auth/sign-in?next=/"'), "secondary CTA points to sign-in with tutor return");
 
   assert(rootLayout.includes("Adaptive STEM Learning"), "metadata title is suitable for a public landing page");
-  assert(rootLayout.includes("knowledge graphs, interactive visualization, code, quiz, and Course Copilot"), "metadata describes public product value");
+  assert(rootLayout.includes("knowledge graphs, interactive visualization, code, quiz, and Course Tutor"), "metadata describes public product value");
 
   assert(styles.includes(".landing-shell"), "landing has a dedicated shell style");
   assert(styles.includes(".landing-hero-visual"), "landing has a product visual scene");

@@ -174,7 +174,7 @@ node --check apps/agent/src/graph.mjs
 
 Current roadmap issues live in GitHub Issues. Major planned areas include:
 
-- Course Copilot context and actions
+- Course Tutor context and actions
 - Markdown rendering for course detail pages
 - Interactive widget stability
 - 3D interactive UI

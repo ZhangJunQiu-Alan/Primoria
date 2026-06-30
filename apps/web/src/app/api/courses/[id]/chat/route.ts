@@ -90,7 +90,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       ? blocks.find((block) => block.id === body.selectedBlockId) ?? null
       : null;
 
-    // Course Copilot is Q&A + behavior collection only — it never creates courses.
+    // Course Tutor is Q&A + behavior collection only — it never creates courses.
     // Course/lesson creation goes exclusively through the Lesson Job system.
     const model = createTutorModel(body.settings, { streaming: false });
     const memoryProvider = createMemoryProvider({
@@ -137,7 +137,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const result = await model.invoke([
       {
         role: "system",
-        content: `You are Primoria Course Copilot. Answer using the current course context. Be concise, practical, and learner-friendly. If the user writes Chinese, answer in Chinese. If they ask for exercises, provide 2-4 questions with short hints. If they ask to modify the course content, explain that you can revise the selected block when they phrase the requested change clearly.`,
+        content: `You are Primoria Course Tutor. Answer using the current course context. Be concise, practical, and learner-friendly. If the user writes Chinese, answer in Chinese. If they ask for exercises, provide 2-4 questions with short hints. If they ask to modify the course content, explain that you can revise the selected block when they phrase the requested change clearly.`,
       },
       {
         role: "user",
