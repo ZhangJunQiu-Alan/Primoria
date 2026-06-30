@@ -47,7 +47,17 @@ async function main() {
   assert(statsPage.includes("Today's Summary"), "stats page renders today summary");
   assert(statsPage.includes("Lifetime Statistics"), "stats page renders lifetime statistics");
   assert(settingsPage.includes("Facts About You"), "settings page renders facts section");
+  assert(settingsPage.includes("FactsAboutYou") && settingsPage.includes("listActiveFacts"), "settings page renders distilled facts from the store");
+  assert(!settingsPage.includes("EDIT FACTS"), "static EDIT FACTS action is replaced by the live facts list");
   assert(settingsPage.includes("Content Language"), "settings page renders language section");
+
+  const factsComponent = read("src/components/profile/facts-about-you.tsx");
+  assert(factsComponent.includes('method: "DELETE"') && factsComponent.includes("/api/learner-facts"), "facts component deletes via the learner-facts API");
+  assert(factsComponent.includes("won’t come back") || factsComponent.includes("hasn’t learned"), "facts component explains the dismiss/empty behavior");
+  const factsRoute = read("src/app/api/learner-facts/route.ts");
+  assert(factsRoute.includes("export async function GET") && factsRoute.includes("listActiveFacts"), "facts API lists active facts");
+  assert(factsRoute.includes("export async function DELETE") && factsRoute.includes("dismissFact"), "facts API dismisses on delete");
+  assert(styles.includes(".facts-list"), "facts list has dedicated styling");
   assert(upgradePage.includes("Learn without limits with Pro"), "upgrade page renders Pro headline");
 
   assert(navRail.includes('href="/profile"'), "avatar menu links to profile");

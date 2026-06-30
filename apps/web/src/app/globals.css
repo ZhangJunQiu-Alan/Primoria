@@ -13093,6 +13093,76 @@ cpk-web-inspector {
   margin: 0;
 }
 
+.facts-card {
+  align-items: stretch;
+}
+
+.facts-card > div {
+  width: 100%;
+}
+
+.facts-empty {
+  margin-top: 12px;
+  color: #716760;
+  font-size: 14px;
+}
+
+.facts-list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.facts-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(23, 19, 15, 0.035);
+}
+
+.facts-category {
+  flex: none;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #8a7f76;
+  min-width: 88px;
+}
+
+.facts-text {
+  flex: 1;
+  font-size: 14px;
+  color: #2c241d;
+}
+
+.facts-remove {
+  flex: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #a99e95;
+  font-size: 14px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.facts-remove:hover {
+  background: rgba(23, 19, 15, 0.08);
+  color: #2c241d;
+}
+
+.facts-remove:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 .settings-card p {
   margin-top: 6px;
   color: #716760;
