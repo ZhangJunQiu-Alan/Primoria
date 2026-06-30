@@ -3,7 +3,15 @@ import type { CourseContext, CourseContextTopic } from "../deepagent/course-kg-c
 import { languageDirective } from "../deepagent/course-kg-context";
 import { knowledgeBackgroundDirective } from "../../learner-profile/types";
 import { invokeJson } from "./model-json";
-import { expectedBlockRange, IR_VERSION, PEDAGOGICAL_ROLES, TYPE_CODE_TO_BLOCK, type TypeCode } from "./lesson-plan-ir";
+import {
+  expectedBlockRange,
+  IR_VERSION,
+  PEDAGOGICAL_ROLES,
+  TYPE_CODE_TO_BLOCK,
+  WRITER_INSTRUCTION_MAX,
+  WRITER_INSTRUCTION_MIN,
+  type TypeCode,
+} from "./lesson-plan-ir";
 
 // Lesson Planner: turns KG topic context into a compact tuple LessonPlan IR
 // (doc §10.1). It outputs only structure (order/type/role/concepts/goal), never
@@ -97,12 +105,12 @@ EXACT TARGETS FOR THIS LESSON (${conceptCount} concept${conceptCount === 1 ? "" 
 - ${skeleton.mediaCount} media blocks (I=image + V=visual together) = ${skeleton.mediaPct}%, inside the required 30%-45%.
 - Exactly 1 transfer block and exactly 1 summary block.
 
-RECOMMENDED SKELETON — fill real content into this exact scaffold, keeping the same block COUNT, quiz count, and media count. You MAY swap an I=image for a V=visual when no concrete picture helps, but NEVER drop a media block or merge two blocks:
+RECOMMENDED SKELETON — fill real content into this exact scaffold, keeping the same block COUNT, quiz count, and media count. The note after each row is only a planning hint; every final JSON block must still carry its own concrete writerInstruction. You MAY swap an I=image for a V=visual when no concrete picture helps, but NEVER drop a media block or merge two blocks:
 ${skeleton.text}
 `
     : "";
 
-  return `You are Primoria's Lesson Planner. You design the STRUCTURE of one lesson for a knowledge-graph topic, as a compact JSON IR. You do NOT write block content — only a plan the compiler will expand.
+  return `You are Primoria's Lesson Planner. You are the teaching DESIGNER: you design the structure of one lesson for a knowledge-graph topic AND, for every block, a concrete execution brief (writerInstruction) that tells the Block Writer exactly how to write it. You do NOT write block content — the Writer executes your briefs.
 
 LANGUAGE: ${languageDirective(kg.language)}
 ${knowledgeBackgroundDirective(kg.knowledgeBackground)}
@@ -150,16 +158,25 @@ TEACHING STRUCTURE (doc §4.3):
 - Exactly 1 final text block with role "summary".
 - Target ${min}-${max} blocks for ${conceptCount} concepts. Never pad with filler.
 ${targetsSection}
+WRITER INSTRUCTION (you write one per block; it is the Writer's execution brief, NOT the block content):
+- 1-2 concise sentences (${WRITER_INSTRUCTION_MIN}-${WRITER_INSTRUCTION_MAX} characters), in the LANGUAGE specified above.
+- Give the Writer the specific angle, example style, intuition build-up, or constraint for THIS exact block (e.g. "open with a guessing game, introduce the formula only after the learner feels why uncertainty matters").
+- Say whether this block needs an example, counter-example, analogy, or intuition warm-up, and how it serves its role.
+- Say how to avoid repeating the adjacent blocks (do not re-explain the roadmap, do not restate the previous example).
+- For visual/quiz/image/code blocks, name the interaction, checkpoint, or thing to make concrete.
+- Do NOT restate the goal verbatim, do NOT write the block content, do NOT include JSON/schema instructions, do NOT mention unrelated concepts.
+
 OUTPUT — a single compact JSON object, no indentation, no prose, no code fences. Each block is an OBJECT with named keys (never a positional array):
-{"v":${IR_VERSION},"lesson":{"title":"<lesson title>","minutes":<int>},"blocks":[{"order":<int>,"type":"<typeCode>","role":"<role>","conceptIds":["<conceptId>",...],"goal":"<one-line goal>"}, ...]}
+{"v":${IR_VERSION},"lesson":{"title":"<lesson title>","minutes":<int>},"blocks":[{"order":<int>,"type":"<typeCode>","role":"<role>","conceptIds":["<conceptId>",...],"goal":"<one-line goal>","writerInstruction":"<execution brief for the writer>"}, ...]}
 
 EXAMPLE (shape only — do NOT copy this content; use the real topic, concepts, and language above):
-{"v":${IR_VERSION},"lesson":{"title":"Example Lesson","minutes":30},"blocks":[{"order":1,"type":"T","role":"hook","conceptIds":["c1"],"goal":"spark curiosity with a real case"},{"order":2,"type":"T","role":"roadmap","conceptIds":["c1","c2"],"goal":"map the two concepts"},{"order":3,"type":"V","role":"deepening","conceptIds":["c1"],"goal":"operate the mechanism"}]}
+{"v":${IR_VERSION},"lesson":{"title":"Example Lesson","minutes":30},"blocks":[{"order":1,"type":"T","role":"hook","conceptIds":["c1"],"goal":"spark curiosity with a real case","writerInstruction":"Open with a surprising real-life situation and end by naming the concept. Do not explain the full definition yet."},{"order":2,"type":"T","role":"roadmap","conceptIds":["c1","c2"],"goal":"map the two concepts","writerInstruction":"State the two questions the lesson answers in order; keep it to a 2-sentence map, do not start teaching c1."},{"order":3,"type":"V","role":"deepening","conceptIds":["c1"],"goal":"operate the mechanism","writerInstruction":"Give one slider that drives the mechanism live and prompt the learner to predict before dragging."}]}
 
 Rules:
 - order is a strictly increasing integer starting at 1, written as a JSON NUMBER (not a quoted string).
 - type and role use only the codes/roles listed above; conceptIds must be drawn only from the VALID CONCEPT IDS above.
-- goal is a short phrase describing what the block teaches, in the LANGUAGE specified above.`;
+- goal is a short phrase describing what the block teaches, in the LANGUAGE specified above.
+- writerInstruction is REQUIRED on every block and must be specific to that block — never empty, never generic boilerplate.`;
 }
 
 export type LessonPlannerInvoke = (args: { system: string; user: string }) => Promise<unknown>;

@@ -12,10 +12,11 @@ import { IR_VERSION } from "./lesson-plan-ir";
 //    for the same IR + KG changes.
 
 export { IR_VERSION };
-// Bumped for the `image` block: planner/writer prompts now describe I=image and
-// the compiler/validator gained image rules + media-count ceiling.
-export const PROMPT_VERSION = "2026-06-28-image";
-export const COMPILER_VERSION = "2";
+// Bumped for the planner->writer `writerInstruction` contract: the planner now
+// emits a per-block execution brief and the writer prompt consumes it (IR_VERSION
+// also moved to 2). Previous: 2026-06-28-image (the I=image block).
+export const PROMPT_VERSION = "2026-06-30-writer-instruction";
+export const COMPILER_VERSION = "3";
 
 export type CheckpointVersions = {
   irVersion: number;

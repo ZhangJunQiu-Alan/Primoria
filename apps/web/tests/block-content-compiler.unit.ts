@@ -29,6 +29,7 @@ function job(partial: Partial<BlockGenerationJob> & Pick<BlockGenerationJob, "or
     pedagogicalRole: "explanation",
     conceptIds: ["c1"],
     goal: "g",
+    writerInstruction: "give the writer a concrete angle for this block",
     neighborGoals: {},
     ...partial,
   };
@@ -52,29 +53,30 @@ const kg: CourseContext = {
 };
 
 function validIr() {
+  const wi = "give the writer a concrete angle for this block";
   return {
-    v: 1,
+    v: 2,
     lesson: ["Lesson", 45],
     blocks: [
-      [1, "T", "hook", ["c1"], "hook"],
-      [2, "T", "roadmap", CONCEPTS, "roadmap"],
-      [3, "T", "explanation", ["c1"], "explain c1"],
-      [4, "I", "example", ["c1"], "image c1"],
-      [5, "T", "example", ["c1"], "example c1"],
-      [6, "V", "deepening", ["c1"], "visual c1"],
-      [7, "Q", "assessment", ["c1"], "quiz c1"],
-      [8, "T", "explanation", ["c2"], "explain c2"],
-      [9, "I", "example", ["c2"], "image c2"],
-      [10, "T", "example", ["c2"], "example c2"],
-      [11, "V", "deepening", ["c2"], "visual c2"],
-      [12, "Q", "assessment", ["c2"], "quiz c2"],
-      [13, "T", "explanation", ["c3"], "explain c3"],
-      [14, "I", "example", ["c3"], "image c3"],
-      [15, "T", "example", ["c3"], "example c3"],
-      [16, "V", "deepening", ["c3"], "visual c3"],
-      [17, "Q", "assessment", ["c3"], "quiz c3"],
-      [18, "V", "transfer", CONCEPTS, "transfer simulation"],
-      [19, "T", "summary", CONCEPTS, "summary"],
+      [1, "T", "hook", ["c1"], "hook", wi],
+      [2, "T", "roadmap", CONCEPTS, "roadmap", wi],
+      [3, "T", "explanation", ["c1"], "explain c1", wi],
+      [4, "I", "example", ["c1"], "image c1", wi],
+      [5, "T", "example", ["c1"], "example c1", wi],
+      [6, "V", "deepening", ["c1"], "visual c1", wi],
+      [7, "Q", "assessment", ["c1"], "quiz c1", wi],
+      [8, "T", "explanation", ["c2"], "explain c2", wi],
+      [9, "I", "example", ["c2"], "image c2", wi],
+      [10, "T", "example", ["c2"], "example c2", wi],
+      [11, "V", "deepening", ["c2"], "visual c2", wi],
+      [12, "Q", "assessment", ["c2"], "quiz c2", wi],
+      [13, "T", "explanation", ["c3"], "explain c3", wi],
+      [14, "I", "example", ["c3"], "image c3", wi],
+      [15, "T", "example", ["c3"], "example c3", wi],
+      [16, "V", "deepening", ["c3"], "visual c3", wi],
+      [17, "Q", "assessment", ["c3"], "quiz c3", wi],
+      [18, "V", "transfer", CONCEPTS, "transfer simulation", wi],
+      [19, "T", "summary", CONCEPTS, "summary", wi],
     ],
   };
 }

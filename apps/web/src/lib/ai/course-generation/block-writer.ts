@@ -113,7 +113,7 @@ function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
     if (concept?.visualHint) fields += `. Visualize specifically: ${concept.visualHint}`;
   }
 
-  return `- order ${job.order}: ${job.type} (role ${job.pedagogicalRole}), concepts: ${concepts}. Goal: ${job.goal}. Fields: ${fields}.${neighbors ? ` Avoid overlap — ${neighbors}.` : ""}`;
+  return `- order ${job.order}: ${job.type} (role ${job.pedagogicalRole}), concepts: ${concepts}. Goal: ${job.goal}. Writer instruction: ${job.writerInstruction} Fields: ${fields}.${neighbors ? ` Avoid overlap — ${neighbors}.` : ""}`;
 }
 
 export function buildBatchPrompt(batch: BlockBatch, plan: CompiledLessonPlan, kg: CourseContext): { system: string; user: string } {
@@ -124,7 +124,7 @@ QUIZ:
 - This is a concept-closing quiz. Use "kind":"single" (exactly one correct choice) with 2-4 options unless multi/truefalse genuinely tests better.
 - Do NOT emit any "conceptId" — the system assigns concept attribution deterministically.`
     : "";
-  const system = `You are Primoria's Block Writer for the lesson "${plan.title}" on topic "${kg.startTopic.name}". Write the content for the blocks listed below. Planner-owned block metadata is fixed: do not emit block-level "type" or "conceptIds". You MUST emit "order" so each result can be matched to its block. Keep blocks distinct from their neighbors. ${languageDirective(kg.language)}
+  const system = `You are Primoria's Block Writer for the lesson "${plan.title}" on topic "${kg.startTopic.name}". The Planner has already designed this lesson; you only EXECUTE each block. Write the content for the blocks listed below, following each block's "Writer instruction" exactly. Do NOT re-plan the lesson, do NOT add or drop blocks, and do NOT reorder. Planner-owned block metadata is fixed: do not emit block-level "type" or "conceptIds", and never change a block's type, role, or concepts. You MUST emit "order" so each result can be matched to its block. Keep blocks distinct from their neighbors. ${languageDirective(kg.language)}
 ${knowledgeBackgroundDirective(kg.knowledgeBackground)}${quizContract}
 
 OUTPUT a single compact JSON array, one object per block, each including its "order" as a JSON number and the listed fields. No prose, no code fences.`;
