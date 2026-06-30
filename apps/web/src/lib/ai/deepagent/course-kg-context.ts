@@ -3,7 +3,7 @@
 // (e.g. the /debug/pipeline inspector).
 
 import type { ConceptVisual } from "../../knowledge-graph/topic-graph";
-import type { KnowledgeBackground } from "../../learner-profile/types";
+import type { FactCategory, KnowledgeBackground } from "../../learner-profile/types";
 import type { MasteryStatus } from "../../mastery/store";
 
 export type CourseContextConcept = {
@@ -37,6 +37,10 @@ export type CourseContext = {
   language?: string | null;
   // First-run onboarding signal. It controls teaching depth, not topic coverage.
   knowledgeBackground?: KnowledgeBackground | null;
+  // Distilled learner facts (preference / prior_knowledge / learning_gap) that
+  // personalize HOW the Planner designs this lesson. Already filtered + capped by
+  // the loader; the Planner bakes them into each block's writerInstruction.
+  facts?: { text: string; category: FactCategory }[];
 };
 
 // Explicit content-language directive for generation prompts. KG topic/concept

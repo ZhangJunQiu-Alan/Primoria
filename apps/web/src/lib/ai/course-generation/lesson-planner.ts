@@ -1,7 +1,7 @@
 import type { TutorProviderSettings } from "../types";
 import type { CourseContext, CourseContextTopic } from "../deepagent/course-kg-context";
 import { languageDirective } from "../deepagent/course-kg-context";
-import { knowledgeBackgroundDirective } from "../../learner-profile/types";
+import { knowledgeBackgroundDirective, factsDirective } from "../../learner-profile/types";
 import { invokeJson } from "./model-json";
 import {
   expectedBlockRange,
@@ -114,6 +114,7 @@ ${skeleton.text}
 
 LANGUAGE: ${languageDirective(kg.language)}
 ${knowledgeBackgroundDirective(kg.knowledgeBackground)}
+${kg.facts?.length ? `\n${factsDirective(kg.facts)}\nWeave these into the per-block writerInstruction where relevant (preferences shape the angle, prior_knowledge lets you compress, learning_gap adds prerequisites/practice). Do not surface them as content or contradict the topic's required coverage.\n` : ""}
 
 TOPIC: ${kg.startTopic.name} (${kg.startTopic.topicId})
 CONCEPTS (teach in this default order; [..] = learner's prior mastery):

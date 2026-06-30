@@ -76,6 +76,21 @@ async function main() {
   assert(prompt.includes("Do NOT restate the goal"), "prompt forbids repeating goal in writerInstruction");
   assert(prompt.includes("REQUIRED on every block"), "prompt requires writerInstruction on every block");
 
+  // ── facts injection ────────────────────────────────────────────────────────
+  assert(!prompt.includes("WHAT WE'VE LEARNED ABOUT THIS LEARNER"), "no facts header when kg has no facts");
+  const promptWithFacts = buildPlannerPrompt({
+    ...kg,
+    facts: [
+      { text: "Prefers worked examples before definitions", category: "preference" },
+      { text: "Confuses limit value with function value", category: "learning_gap" },
+    ],
+  });
+  assert(promptWithFacts.includes("WHAT WE'VE LEARNED ABOUT THIS LEARNER"), "facts header present when kg has facts");
+  assert(promptWithFacts.includes("Prefers worked examples before definitions"), "preference fact rendered");
+  assert(promptWithFacts.includes("Confuses limit value with function value"), "learning_gap fact rendered");
+  assert(promptWithFacts.includes("<learner_facts>"), "facts injected inside a data block, not as bare instructions");
+  assert(promptWithFacts.includes("writerInstruction"), "facts guidance points the planner at writerInstruction");
+
   const raw = await planLesson(kg, { invoke: async () => fixedIr });
   const compiled = compileLessonPlanIr(raw, kg);
   assert(compiled.jobs.length === 19, "mocked planner IR compiles to 19 jobs");
