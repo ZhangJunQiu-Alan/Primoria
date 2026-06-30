@@ -10,7 +10,20 @@ import { learningEvents } from "@/lib/db/schema";
 export type QuizSelected = string | string[] | boolean;
 
 export type LearningEvent =
-  | { type: "chat.question"; ownerId: string; id?: string; threadId: string; messageId: string }
+  | { type: "chat.question"; ownerId: string; id?: string; threadId: string; messageId: string; courseId?: string | null; lessonId?: string | null }
+  | {
+      // Feedback on one assistant reply (feature_specification.md §83). "懂了/没懂"
+      // text feedback is normalized to positive/negative by the caller before
+      // recording; `via` records whether it came from a thumb or typed text.
+      type: "chat.feedback";
+      ownerId: string;
+      id?: string;
+      targetMessageId: string;
+      via: "thumb" | "text";
+      signal: "positive" | "negative";
+      courseId?: string | null;
+      lessonId?: string | null;
+    }
   | {
       type: "quiz.submit";
       ownerId: string;
@@ -81,7 +94,7 @@ function randomId() {
   return `evt_${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36)}`;
 }
 
-function toRow(event: LearningEvent): LearningEventRow {
+export function toRow(event: LearningEvent): LearningEventRow {
   const base: LearningEventRow = {
     id: event.id ?? randomId(),
     ownerId: event.ownerId,
@@ -96,7 +109,19 @@ function toRow(event: LearningEvent): LearningEventRow {
 
   switch (event.type) {
     case "chat.question":
-      return { ...base, payload: { thread_id: event.threadId, message_id: event.messageId } };
+      return {
+        ...base,
+        courseId: event.courseId ?? null,
+        lessonId: event.lessonId ?? null,
+        payload: { thread_id: event.threadId, message_id: event.messageId },
+      };
+    case "chat.feedback":
+      return {
+        ...base,
+        courseId: event.courseId ?? null,
+        lessonId: event.lessonId ?? null,
+        payload: { target_message_id: event.targetMessageId, via: event.via, signal: event.signal },
+      };
     case "quiz.submit":
       return {
         ...base,
