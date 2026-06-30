@@ -7,7 +7,7 @@ The main product direction is documented in [docs/long-horizon-learning-principl
 The repository is a pnpm monorepo with two main apps:
 
 - `apps/web` — Next.js web app, course library, tutor UI, course detail pages, API routes.
-- `apps/agent` — LangGraph agent used by the CopilotKit path.
+- `apps/agent` — LangGraph agent that powers the AI Tutor through CopilotKit.
 
 ## Prerequisites
 
@@ -86,16 +86,15 @@ pnpm --filter @primoria/web import:local-data you@example.com
 
 Create the account in the app before running the import command.
 
-### Optional CopilotKit / LangGraph mode
+### AI Tutor agent
 
-The default web tutor can run directly through the Next.js API routes. If you want to use the CopilotKit + LangGraph agent path, also set:
+The AI Tutor runs through CopilotKit and the LangGraph agent. Point the web app at the agent deployment:
 
 ```bash
-NEXT_PUBLIC_USE_COPILOTKIT=1
 LANGGRAPH_DEPLOYMENT_URL=http://localhost:2024
 ```
 
-Then copy the same provider settings into the agent app:
+Copy the same provider settings into the agent app for local development:
 
 ```bash
 cp apps/web/.env.local apps/agent/.env
@@ -118,7 +117,7 @@ Expected local services:
 
 ### Web app only
 
-Use this if `NEXT_PUBLIC_USE_COPILOTKIT` is not enabled:
+This starts only the Next.js app. AI Tutor requests still require `LANGGRAPH_DEPLOYMENT_URL` to point to a running agent.
 
 ```bash
 pnpm --filter @primoria/web dev

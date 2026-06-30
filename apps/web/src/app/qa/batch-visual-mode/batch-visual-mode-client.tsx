@@ -236,7 +236,7 @@ export function BatchVisualModeClient() {
       error: undefined,
     }));
 
-    const message = "Batch runner removed: /api/tutor/chat endpoint no longer exists. This QA tool used the default tutor path which has been replaced by the CopilotKit path.";
+    const message = "Batch runner removed: the legacy /api/tutor/chat endpoint no longer exists. Use the CopilotKit/LangGraph tutor path instead.";
     updateCase(id, (item) => ({
       ...item,
       status: "failed",
