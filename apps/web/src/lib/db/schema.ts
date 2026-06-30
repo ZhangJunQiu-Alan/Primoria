@@ -130,6 +130,7 @@ export const lessons = pgTable(
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     topicId: text("topic_id"),
     title: text("title").notNull(),
+    description: text("description").notNull().default(""),
     role: text("role").notNull().default("new"),
     progress: text("progress").notNull().default("not_started"),
     // Materialization axis, orthogonal to role/progress: a planned outline node

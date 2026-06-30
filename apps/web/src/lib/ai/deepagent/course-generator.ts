@@ -245,26 +245,39 @@ function outlineTopicsFrom(
   graphId: string,
   startTopicId: string | null,
   fallbackName: string,
-): { topicId: string | null; name: string; order: number }[] {
+  language?: string | null,
+): { topicId: string | null; name: string; description: string; order: number }[] {
   let graph;
   try {
     graph = getTopicGraph(graphId);
   } catch {
-    return [{ topicId: startTopicId, name: fallbackName, order: 1 }];
+    return [{ topicId: startTopicId, name: fallbackName, description: plannedLessonDescription(fallbackName, [], language), order: 1 }];
   }
   const start = startTopicId ? graph.topics.find((t) => t.topicId === startTopicId) : undefined;
   const startOrder = start?.defaultOrder ?? 0;
   const remaining = graph.topics
     .filter((t) => t.defaultOrder >= startOrder)
     .sort((a, b) => a.defaultOrder - b.defaultOrder)
-    .map((t) => ({ topicId: t.topicId as string | null, name: t.name, order: t.defaultOrder }));
-  return remaining.length > 0 ? remaining : [{ topicId: startTopicId, name: fallbackName, order: 1 }];
+    .map((t) => ({
+      topicId: t.topicId as string | null,
+      name: t.name,
+      description: plannedLessonDescription(
+        t.name,
+        t.conceptIds.map((concept) => lessonConceptName(concept, language)),
+        language,
+      ),
+      order: t.defaultOrder,
+    }));
+  return remaining.length > 0
+    ? remaining
+    : [{ topicId: startTopicId, name: fallbackName, description: plannedLessonDescription(fallbackName, [], language), order: 1 }];
 }
 
-function plannedLesson(topicId: string | null, title: string, order: number, now: number): Lesson {
+function plannedLesson(topicId: string | null, title: string, description: string, order: number, now: number): Lesson {
   return {
     id: randomId("lsn"),
     title,
+    description,
     role: "new",
     progress: "not_started",
     status: "planned",
@@ -295,8 +308,8 @@ function buildOutlineCourse(input: GenerateCourseInput, graphId: string | null):
   const startTopic = input.kgContext?.startTopic ?? null;
   const subject = subjectFor(graphId, input.topic);
   const outline = graphId
-    ? outlineTopicsFrom(graphId, startTopic?.topicId ?? null, startTopic?.name ?? input.topic)
-    : [{ topicId: null as string | null, name: input.topic, order: 1 }];
+    ? outlineTopicsFrom(graphId, startTopic?.topicId ?? null, startTopic?.name ?? input.topic, input.language)
+    : [{ topicId: null as string | null, name: input.topic, description: plannedLessonDescription(input.topic, [], input.language), order: 1 }];
   return {
     id: input.courseId ?? randomId("crs"),
     title: subject,
@@ -306,12 +319,27 @@ function buildOutlineCourse(input: GenerateCourseInput, graphId: string | null):
     anchorConceptId: input.kgContext?.targetConceptId ?? null,
     graphId,
     language: input.language ?? null,
-    lessons: outline.map((t) => plannedLesson(t.topicId, t.name, t.order, now)),
+    lessons: outline.map((t) => plannedLesson(t.topicId, t.name, t.description, t.order, now)),
     archivedAt: null,
     version: 1,
     createdAt: now,
     updatedAt: now,
   };
+}
+
+function plannedLessonDescription(title: string, conceptNames: string[], language?: string | null): string {
+  const isChinese = language?.toLowerCase().startsWith("zh") ?? false;
+  const concepts = conceptNames.filter(Boolean).slice(0, 3);
+  if (isChinese) {
+    if (concepts.length > 0) return `围绕 ${concepts.join("、")} 建立「${title}」的核心理解。`;
+    return `围绕「${title}」生成核心讲解、例子和练习。`;
+  }
+  if (concepts.length > 0) return `Builds the core understanding of ${title} through ${concepts.join(", ")}.`;
+  return `A planned lesson covering the core ideas, examples, and practice for ${title}.`;
+}
+
+function lessonConceptName(concept: { name: string; nameZh?: string | null }, language?: string | null): string {
+  return language?.toLowerCase().startsWith("zh") && concept.nameZh ? concept.nameZh : concept.name;
 }
 
 const BLOCK_SCHEMAS = {

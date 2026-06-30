@@ -24,6 +24,7 @@ export function courseLessons(course) {
   return [{
     id: `${course.id}:lesson:1`,
     title: course.title,
+    description: course.summary ?? "",
     role: "new",
     progress: "not_started",
     status: "generated",
@@ -45,6 +46,7 @@ export function summarizeCourse(course) {
   const lessons = courseLessons(course).map((/** @type {any} */ lesson) => ({
     id: lesson.id,
     title: lesson.title,
+    description: lesson.description ?? "",
     role: lesson.role ?? "new",
     progress: lesson.progress ?? "not_started",
     status: lesson.status ?? (Array.isArray(lesson.blocks) ? "generated" : "planned"),

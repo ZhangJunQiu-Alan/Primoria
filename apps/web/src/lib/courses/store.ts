@@ -212,6 +212,7 @@ export async function insertPlannedLesson(input: {
   ownerId: string;
   topicId: string | null;
   title: string;
+  description?: string | null;
   role: LessonRole;
   sortKey: number;
   triggeredFrom?: string | null;
@@ -226,6 +227,7 @@ export async function insertPlannedLesson(input: {
       ownerId: input.ownerId,
       topicId: input.topicId ?? null,
       title: input.title,
+      description: input.description ?? "",
       role: input.role,
       progress: "not_started",
       status: "planned",
@@ -297,6 +299,7 @@ async function saveCourseToDb(course: Course, ownerId: string) {
             ownerId: row.ownerId,
             topicId: row.topicId,
             title: row.title,
+            description: row.description,
             role: row.role,
             progress: row.progress,
             status: row.status,
@@ -371,6 +374,7 @@ function lessonToRow(lesson: Lesson, courseId: string, ownerId: string) {
     ownerId,
     topicId: lesson.topicId ?? null,
     title: lesson.title,
+    description: lesson.description ?? "",
     role: lesson.role,
     progress: lesson.progress,
     status: lesson.status,
@@ -406,6 +410,7 @@ function rowToLesson(row: typeof lessonsTable.$inferSelect): Lesson {
   return {
     id: row.id,
     title: row.title,
+    description: row.description ?? "",
     role: row.role as LessonRole,
     progress: row.progress as LessonProgress,
     status: row.status as LessonStatus,

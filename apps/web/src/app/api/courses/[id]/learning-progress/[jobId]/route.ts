@@ -65,6 +65,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       ownerId,
       topicId: decision.targetTopicId,
       title: decision.proposedTitle ?? "补救练习",
+      description: decision.reason ? `针对前一节练习结果补强：${decision.reason}` : "针对前一节练习暴露的问题补强关键概念。",
       role: "remediation",
       sortKey: decision.proposedSortKey ?? resolved.updatedAt,
       triggeredFrom: resolved.lessonId,

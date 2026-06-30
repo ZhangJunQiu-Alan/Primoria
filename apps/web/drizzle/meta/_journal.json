@@ -225,6 +225,13 @@
       "when": 1782800599137,
       "tag": "0031_small_wildside",
       "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1782805000000,
+      "tag": "0032_lesson_descriptions",
+      "breakpoints": true
     }
   ]
 }
