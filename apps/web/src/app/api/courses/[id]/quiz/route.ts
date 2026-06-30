@@ -6,6 +6,7 @@ import { getDb, hasDatabaseUrl } from "@/lib/db/client";
 import { quizAttempts } from "@/lib/db/schema";
 import { getCourse, markLessonProgress } from "@/lib/courses/store";
 import { enqueueLearningProgressJob } from "@/lib/courses/learning-progress-jobs";
+import { enqueueExtractorJob } from "@/lib/courses/extractor-jobs";
 import type { QuizQuestion } from "@/lib/courses/types";
 import { recordLearningEvent, type QuizSelected } from "@/lib/learning-events/store";
 
@@ -130,6 +131,16 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
             graphId: course?.graphId ?? null,
           }).catch((error) => {
             console.error("[courses/quiz] failed to enqueue progress job", error);
+          });
+          // Independent best-effort: distill durable learner facts from this
+          // lesson's activity. Never blocks the response or the progress job.
+          await enqueueExtractorJob({
+            ownerId: user.id,
+            courseId,
+            lessonId,
+            graphId: course?.graphId ?? null,
+          }).catch((error) => {
+            console.error("[courses/quiz] failed to enqueue extractor job", error);
           });
         }
       }
