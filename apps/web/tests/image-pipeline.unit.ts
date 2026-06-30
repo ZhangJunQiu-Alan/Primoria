@@ -41,28 +41,30 @@ function kg(conceptIds: string[] = CONCEPTS): CourseContext {
   };
 }
 
-type Tuple = [number, string, string, string[], string];
+type Tuple = [number, string, string, string[], string, string];
+
+const WI = "give the writer a concrete angle for this block";
 
 function validBlocks(): Tuple[] {
   return [
-    [1, "T", "hook", ["c1"], "hook"],
-    [2, "T", "roadmap", CONCEPTS, "roadmap"],
-    [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "I", "example", ["c1"], "image c1"],
-    [5, "T", "example", ["c1"], "example c1"],
-    [6, "V", "deepening", ["c1"], "visual c1"],
-    [7, "Q", "assessment", ["c1"], "quiz c1"],
-    [8, "T", "explanation", ["c2"], "explain c2"],
-    [9, "I", "example", ["c2"], "image c2"],
-    [10, "T", "example", ["c2"], "example c2"],
-    [11, "V", "deepening", ["c2"], "visual c2"],
-    [12, "Q", "assessment", ["c2"], "quiz c2"],
-    [13, "V", "transfer", CONCEPTS, "transfer simulation"],
-    [14, "T", "summary", CONCEPTS, "summary"],
+    [1, "T", "hook", ["c1"], "hook", WI],
+    [2, "T", "roadmap", CONCEPTS, "roadmap", WI],
+    [3, "T", "explanation", ["c1"], "explain c1", WI],
+    [4, "I", "example", ["c1"], "image c1", WI],
+    [5, "T", "example", ["c1"], "example c1", WI],
+    [6, "V", "deepening", ["c1"], "visual c1", WI],
+    [7, "Q", "assessment", ["c1"], "quiz c1", WI],
+    [8, "T", "explanation", ["c2"], "explain c2", WI],
+    [9, "I", "example", ["c2"], "image c2", WI],
+    [10, "T", "example", ["c2"], "example c2", WI],
+    [11, "V", "deepening", ["c2"], "visual c2", WI],
+    [12, "Q", "assessment", ["c2"], "quiz c2", WI],
+    [13, "V", "transfer", CONCEPTS, "transfer simulation", WI],
+    [14, "T", "summary", CONCEPTS, "summary", WI],
   ];
 }
 
-function ir(blocks: Tuple[], v = 1, minutes = 45) {
+function ir(blocks: Tuple[], v = 2, minutes = 45) {
   return { v, lesson: ["Lesson", minutes], blocks };
 }
 
@@ -77,17 +79,17 @@ function testCompilerImageRules() {
 
   // image must bind to a concept.
   const noConcept = validBlocks();
-  noConcept[3] = [4, "I", "deepening", [], "floating decoration"];
+  noConcept[3] = [4, "I", "deepening", [], "floating decoration", WI];
   assertThrows(() => compileLessonPlanIr(ir(noConcept), kg()), CoverageError, "image with no concept rejected");
 
   // image role must be example/deepening, never assessment.
   const badRole = validBlocks();
-  badRole[3] = [4, "I", "assessment", ["c1"], "quiz-as-image"];
+  badRole[3] = [4, "I", "assessment", ["c1"], "quiz-as-image", WI];
   assertThrows(() => compileLessonPlanIr(ir(badRole), kg()), CoverageError, "image with assessment role rejected");
 
   // image cannot stand in for a concept's required example (image excluded from coverage).
   const imageAsExample = validBlocks();
-  imageAsExample[4] = [5, "I", "example", ["c1"], "picture instead of example"];
+  imageAsExample[4] = [5, "I", "example", ["c1"], "picture instead of example", WI];
   assertThrows(() => compileLessonPlanIr(ir(imageAsExample), kg()), CoverageError, "image does not satisfy example coverage");
 }
 
@@ -98,6 +100,7 @@ const IMAGE_JOB: BlockGenerationJob = {
   pedagogicalRole: "deepening",
   conceptIds: ["c1"],
   goal: "anchor the chloroplast",
+  writerInstruction: "give the writer a concrete angle for this block",
   neighborGoals: {},
 };
 

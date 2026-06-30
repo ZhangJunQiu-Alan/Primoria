@@ -7,7 +7,13 @@ import { IrParseError } from "./generation-errors";
 // expands this into block jobs. Only syntax decoding lives here — no teaching
 // coverage judgement (that is the compiler's job).
 
-export const IR_VERSION = 1;
+export const IR_VERSION = 2;
+
+// Planner -> Writer execution-brief bounds. The instruction is a generation-time
+// contract (never persisted to the final CourseBlock); it must be present and
+// specific, so an empty or stub instruction fails the plan.
+export const WRITER_INSTRUCTION_MIN = 12;
+export const WRITER_INSTRUCTION_MAX = 320;
 
 /** Block types allowed for new generation (doc §4.1). `I=image` is a static
  * cognitive-anchor block (distinct from `V=visual`, the interactive engine). */
@@ -39,16 +45,20 @@ export const PEDAGOGICAL_ROLES = [
 const ROLE_SET = new Set<string>(PEDAGOGICAL_ROLES);
 
 // Canonical block shape is a named-field object (what the planner now emits).
-// The legacy positional tuple [order, typeCode, role, conceptIds, goal] is still
-// accepted so old plan checkpoints — and either-shaped model output — both decode.
-// `order`/`minutes`/`v` are coerced so a model that quotes its numbers ("1")
-// still parses instead of failing with "Expected number, received string".
+// The positional tuple [order, typeCode, role, conceptIds, goal, writerInstruction]
+// is also accepted so either-shaped model output decodes. `order`/`minutes`/`v`
+// are coerced so a model that quotes its numbers ("1") still parses instead of
+// failing with "Expected number, received string". `writerInstruction` is the
+// Planner -> Writer execution brief: required, non-empty, length-bounded.
+const WriterInstructionSchema = z.string().trim().min(WRITER_INSTRUCTION_MIN).max(WRITER_INSTRUCTION_MAX);
+
 const BlockTupleSchema = z.tuple([
   z.coerce.number().int(),
   z.string(),
   z.string(),
   z.array(z.string()),
   z.string(),
+  WriterInstructionSchema,
 ]);
 
 const BlockObjectSchema = z.object({
@@ -57,12 +67,13 @@ const BlockObjectSchema = z.object({
   role: z.string(),
   conceptIds: z.array(z.string()),
   goal: z.string(),
+  writerInstruction: WriterInstructionSchema,
 });
 
 const BlockSchema = z
   .union([BlockTupleSchema, BlockObjectSchema])
   .transform((b): z.infer<typeof BlockTupleSchema> =>
-    Array.isArray(b) ? b : [b.order, b.type, b.role, b.conceptIds, b.goal],
+    Array.isArray(b) ? b : [b.order, b.type, b.role, b.conceptIds, b.goal, b.writerInstruction],
   );
 
 // [title, estimatedMinutes] tuple or {title, minutes} object.
@@ -82,6 +93,8 @@ export type DecodedBlockPlan = {
   role: PedagogicalRole;
   conceptIds: string[];
   goal: string;
+  /** Planner -> Writer execution brief (generation-time only, not persisted). */
+  writerInstruction: string;
 };
 
 export type DecodedLessonPlan = {
@@ -92,7 +105,7 @@ export type DecodedLessonPlan = {
 };
 
 function decodeBlockTuple(tuple: z.infer<typeof BlockTupleSchema>, index: number): DecodedBlockPlan {
-  const [order, rawCode, rawRole, conceptIds, goal] = tuple;
+  const [order, rawCode, rawRole, conceptIds, goal, writerInstruction] = tuple;
   const code = rawCode as TypeCode;
   if (!(code in TYPE_CODE_TO_BLOCK)) {
     throw new IrParseError(`block ${index}: unknown type code "${rawCode}"`);
@@ -106,6 +119,7 @@ function decodeBlockTuple(tuple: z.infer<typeof BlockTupleSchema>, index: number
     role: rawRole as PedagogicalRole,
     conceptIds,
     goal,
+    writerInstruction,
   };
 }
 

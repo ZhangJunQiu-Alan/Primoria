@@ -5,6 +5,8 @@ import { CoverageError } from "./generation-errors";
 import {
   decodeLessonPlanIr,
   expectedBlockRange,
+  WRITER_INSTRUCTION_MAX,
+  WRITER_INSTRUCTION_MIN,
   type DecodedBlockPlan,
   type GeneratableBlockType,
 } from "./lesson-plan-ir";
@@ -49,6 +51,9 @@ export type BlockGenerationJob = {
   pedagogicalRole: PedagogicalRole;
   conceptIds: string[];
   goal: string;
+  /** Planner-authored execution brief for the writer (generation-time contract,
+   * never persisted to the final CourseBlock). */
+  writerInstruction: string;
   /** Adjacent block goals, so the writer can avoid overlap (doc §10.2). */
   neighborGoals: { prev?: string; next?: string };
   /** Deterministically pinned for `visual` blocks (from the KG affordance); the
@@ -100,6 +105,7 @@ export function compileLessonPlanIr(
   validateOrdering(blocks);
   validateConceptLegality(blocks, conceptSet);
   validateLessonComposition(blocks, concepts);
+  validateWriterInstructions(blocks);
   validateMediaRules(blocks);
   validateImageRules(blocks);
   validateCodeEligibility(blocks, kg, options.contextHint);
@@ -113,6 +119,7 @@ export function compileLessonPlanIr(
     pedagogicalRole: block.role,
     conceptIds: block.conceptIds,
     goal: block.goal,
+    writerInstruction: block.writerInstruction,
     neighborGoals: {
       prev: blocks[index - 1]?.goal,
       next: blocks[index + 1]?.goal,
@@ -172,6 +179,25 @@ function validateLessonComposition(blocks: DecodedBlockPlan[], concepts: string[
     throw new CoverageError(
       "lesson composition requires exactly one transfer, one quiz per concept, and a summary",
       missing,
+    );
+  }
+}
+
+/** The IR schema already bounds writerInstruction length; this is a defensive
+ * floor so a plan that somehow reached the compiler with an empty or out-of-range
+ * brief is rejected as a CoverageError rather than handed to the writer. */
+function validateWriterInstructions(blocks: DecodedBlockPlan[]): void {
+  const problems: string[] = [];
+  for (const block of blocks) {
+    const instruction = block.writerInstruction.trim();
+    if (instruction.length < WRITER_INSTRUCTION_MIN || instruction.length > WRITER_INSTRUCTION_MAX) {
+      problems.push(`writer-instruction:order${block.order}`);
+    }
+  }
+  if (problems.length > 0) {
+    throw new CoverageError(
+      `each block needs a concrete writerInstruction (${WRITER_INSTRUCTION_MIN}-${WRITER_INSTRUCTION_MAX} chars)`,
+      problems,
     );
   }
 }

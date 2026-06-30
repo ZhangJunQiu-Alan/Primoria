@@ -18,7 +18,10 @@ function assertThrows(run: () => unknown, ErrorClass: new (...args: never[]) => 
   assert(caught instanceof ErrorClass, `${message} (got ${caught?.constructor?.name ?? "no throw"})`);
 }
 
-type Tuple = [number, string, string, string[], string];
+type Tuple = [number, string, string, string[], string, string];
+
+// Shared filler brief; long enough to satisfy the writerInstruction length floor.
+const WI = "give the writer a concrete angle for this block";
 
 const C2 = ["c1", "c2"];
 const C3 = ["c1", "c2", "c3"];
@@ -43,50 +46,50 @@ function kg(conceptIds: string[] = C3, overrides: Partial<CourseContext> = {}): 
   };
 }
 
-function ir(blocks: Tuple[], v = 1, minutes = 45) {
+function ir(blocks: Tuple[], v = 2, minutes = 45) {
   return { v, lesson: ["Lesson", minutes], blocks };
 }
 
 function validTwoConceptBlocks(): Tuple[] {
   return [
-    [1, "T", "hook", ["c1"], "hook"],
-    [2, "T", "roadmap", C2, "roadmap"],
-    [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "I", "example", ["c1"], "image c1"],
-    [5, "T", "example", ["c1"], "example c1"],
-    [6, "V", "deepening", ["c1"], "visual c1"],
-    [7, "Q", "assessment", ["c1"], "quiz c1"],
-    [8, "T", "explanation", ["c2"], "explain c2"],
-    [9, "I", "example", ["c2"], "image c2"],
-    [10, "T", "example", ["c2"], "example c2"],
-    [11, "V", "deepening", ["c2"], "visual c2"],
-    [12, "Q", "assessment", ["c2"], "quiz c2"],
-    [13, "V", "transfer", C2, "transfer simulation"],
-    [14, "T", "summary", C2, "summary"],
+    [1, "T", "hook", ["c1"], "hook", WI],
+    [2, "T", "roadmap", C2, "roadmap", WI],
+    [3, "T", "explanation", ["c1"], "explain c1", WI],
+    [4, "I", "example", ["c1"], "image c1", WI],
+    [5, "T", "example", ["c1"], "example c1", WI],
+    [6, "V", "deepening", ["c1"], "visual c1", WI],
+    [7, "Q", "assessment", ["c1"], "quiz c1", WI],
+    [8, "T", "explanation", ["c2"], "explain c2", WI],
+    [9, "I", "example", ["c2"], "image c2", WI],
+    [10, "T", "example", ["c2"], "example c2", WI],
+    [11, "V", "deepening", ["c2"], "visual c2", WI],
+    [12, "Q", "assessment", ["c2"], "quiz c2", WI],
+    [13, "V", "transfer", C2, "transfer simulation", WI],
+    [14, "T", "summary", C2, "summary", WI],
   ];
 }
 
 function validThreeConceptBlocks(): Tuple[] {
   return [
-    [1, "T", "hook", ["c1"], "hook"],
-    [2, "T", "roadmap", C3, "roadmap"],
-    [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "I", "example", ["c1"], "image c1"],
-    [5, "T", "example", ["c1"], "example c1"],
-    [6, "V", "deepening", ["c1"], "visual c1"],
-    [7, "Q", "assessment", ["c1"], "quiz c1"],
-    [8, "T", "explanation", ["c2"], "explain c2"],
-    [9, "I", "example", ["c2"], "image c2"],
-    [10, "T", "example", ["c2"], "example c2"],
-    [11, "V", "deepening", ["c2"], "visual c2"],
-    [12, "Q", "assessment", ["c2"], "quiz c2"],
-    [13, "T", "explanation", ["c3"], "explain c3"],
-    [14, "I", "example", ["c3"], "image c3"],
-    [15, "T", "example", ["c3"], "example c3"],
-    [16, "V", "deepening", ["c3"], "visual c3"],
-    [17, "Q", "assessment", ["c3"], "quiz c3"],
-    [18, "V", "transfer", C3, "transfer simulation"],
-    [19, "T", "summary", C3, "summary"],
+    [1, "T", "hook", ["c1"], "hook", WI],
+    [2, "T", "roadmap", C3, "roadmap", WI],
+    [3, "T", "explanation", ["c1"], "explain c1", WI],
+    [4, "I", "example", ["c1"], "image c1", WI],
+    [5, "T", "example", ["c1"], "example c1", WI],
+    [6, "V", "deepening", ["c1"], "visual c1", WI],
+    [7, "Q", "assessment", ["c1"], "quiz c1", WI],
+    [8, "T", "explanation", ["c2"], "explain c2", WI],
+    [9, "I", "example", ["c2"], "image c2", WI],
+    [10, "T", "example", ["c2"], "example c2", WI],
+    [11, "V", "deepening", ["c2"], "visual c2", WI],
+    [12, "Q", "assessment", ["c2"], "quiz c2", WI],
+    [13, "T", "explanation", ["c3"], "explain c3", WI],
+    [14, "I", "example", ["c3"], "image c3", WI],
+    [15, "T", "example", ["c3"], "example c3", WI],
+    [16, "V", "deepening", ["c3"], "visual c3", WI],
+    [17, "Q", "assessment", ["c3"], "quiz c3", WI],
+    [18, "V", "transfer", C3, "transfer simulation", WI],
+    [19, "T", "summary", C3, "summary", WI],
   ];
 }
 
@@ -100,32 +103,46 @@ function main() {
   assert(compiled.jobs.filter((j) => j.type === "quiz").length === 3, "one quiz per concept");
   assert(compiled.jobs.some((j) => j.type === "visual" && j.pedagogicalRole === "transfer"), "visual transfer accepted");
   assert(compiled.estimatedMinutes === 45, "minutes pass through");
-  assert(compileLessonPlanIr(ir(validThreeConceptBlocks(), 1, 9999), kg()).estimatedMinutes === 60, "minutes clamped to 60");
+  assert(compileLessonPlanIr(ir(validThreeConceptBlocks(), 2, 9999), kg()).estimatedMinutes === 60, "minutes clamped to 60");
 
   const twoConceptCompiled = compileLessonPlanIr(ir(validTwoConceptBlocks()), kg(C2));
   assert(twoConceptCompiled.jobs.length === 14, "valid 2-concept plan compiles to 14 jobs");
 
   const minThree: Tuple[] = [
-    [1, "T", "hook", ["c1"], "hook"],
-    [2, "T", "roadmap", C3, "roadmap"],
-    [3, "T", "explanation", ["c1"], "explain c1"],
-    [4, "V", "example", ["c1"], "visual example c1"],
-    [5, "I", "deepening", ["c1"], "image c1"],
-    [6, "Q", "assessment", ["c1"], "quiz c1"],
-    [7, "T", "explanation", ["c2"], "explain c2"],
-    [8, "T", "example", ["c2"], "example c2"],
-    [9, "V", "deepening", ["c2"], "visual c2"],
-    [10, "Q", "assessment", ["c2"], "quiz c2"],
-    [11, "T", "explanation", ["c3"], "explain c3"],
-    [12, "V", "example", ["c3"], "visual example c3"],
-    [13, "I", "deepening", ["c3"], "image c3"],
-    [14, "Q", "assessment", ["c3"], "quiz c3"],
-    [15, "V", "transfer", C3, "transfer simulation"],
-    [16, "T", "summary", C3, "summary"],
+    [1, "T", "hook", ["c1"], "hook", WI],
+    [2, "T", "roadmap", C3, "roadmap", WI],
+    [3, "T", "explanation", ["c1"], "explain c1", WI],
+    [4, "V", "example", ["c1"], "visual example c1", WI],
+    [5, "I", "deepening", ["c1"], "image c1", WI],
+    [6, "Q", "assessment", ["c1"], "quiz c1", WI],
+    [7, "T", "explanation", ["c2"], "explain c2", WI],
+    [8, "T", "example", ["c2"], "example c2", WI],
+    [9, "V", "deepening", ["c2"], "visual c2", WI],
+    [10, "Q", "assessment", ["c2"], "quiz c2", WI],
+    [11, "T", "explanation", ["c3"], "explain c3", WI],
+    [12, "V", "example", ["c3"], "visual example c3", WI],
+    [13, "I", "deepening", ["c3"], "image c3", WI],
+    [14, "Q", "assessment", ["c3"], "quiz c3", WI],
+    [15, "V", "transfer", C3, "transfer simulation", WI],
+    [16, "T", "summary", C3, "summary", WI],
   ];
   assert(compileLessonPlanIr(ir(minThree), kg()).jobs.length === 16, "3-concept minimum 16 blocks accepted");
+  assert(
+    compileLessonPlanIr(ir(validThreeConceptBlocks()), kg()).jobs.every((job) => job.writerInstruction === WI),
+    "compiler carries writerInstruction to every job",
+  );
 
-  assertThrows(() => compileLessonPlanIr(ir(validThreeConceptBlocks(), 2), kg()), IrParseError, "unsupported IR version rejected");
+  // Missing / empty / too-short writerInstruction must fail the plan.
+  const missingWi = validThreeConceptBlocks().map((t) => t.slice(0, 5) as unknown as Tuple);
+  assertThrows(() => compileLessonPlanIr(ir(missingWi), kg()), IrParseError, "missing writerInstruction rejected");
+  const emptyWi = validThreeConceptBlocks();
+  emptyWi[3][5] = "";
+  assertThrows(() => compileLessonPlanIr(ir(emptyWi), kg()), IrParseError, "empty writerInstruction rejected");
+  const shortWi = validThreeConceptBlocks();
+  shortWi[3][5] = "too short";
+  assertThrows(() => compileLessonPlanIr(ir(shortWi), kg()), IrParseError, "too-short writerInstruction rejected");
+
+  assertThrows(() => compileLessonPlanIr(ir(validThreeConceptBlocks(), 3), kg()), IrParseError, "unsupported IR version rejected");
   assertThrows(() => compileLessonPlanIr({ v: 1, lesson: ["x"], blocks: [] }, kg()), IrParseError, "malformed IR rejected");
 
   const badCode = validThreeConceptBlocks();
@@ -140,7 +157,7 @@ function main() {
   assertThrows(() => compileLessonPlanIr(ir(tooFew), kg()), CoverageError, "15 blocks rejected for 3 concepts");
 
   const tooMany = validThreeConceptBlocks();
-  tooMany.splice(17, 0, [17.2, "T", "deepening", ["c1"], "extra 1"], [17.4, "T", "deepening", ["c2"], "extra 2"]);
+  tooMany.splice(17, 0, [17.2, "T", "deepening", ["c1"], "extra 1", WI], [17.4, "T", "deepening", ["c2"], "extra 2", WI]);
   tooMany.forEach((block, index) => (block[0] = index + 1));
   assertThrows(() => compileLessonPlanIr(ir(tooMany), kg()), CoverageError, "21 blocks rejected for 3 concepts");
 
@@ -161,7 +178,7 @@ function main() {
   assertThrows(() => compileLessonPlanIr(ir(noExample), kg()), CoverageError, "missing example rejected");
 
   const oneWholeLessonQuiz = validThreeConceptBlocks().filter((block) => block[1] !== "Q");
-  oneWholeLessonQuiz.splice(16, 0, [16.5, "Q", "assessment", C3, "whole lesson quiz"]);
+  oneWholeLessonQuiz.splice(16, 0, [16.5, "Q", "assessment", C3, "whole lesson quiz", WI]);
   oneWholeLessonQuiz.forEach((block, index) => (block[0] = index + 1));
   assertThrows(() => compileLessonPlanIr(ir(oneWholeLessonQuiz), kg()), CoverageError, "single combined quiz rejected");
 
