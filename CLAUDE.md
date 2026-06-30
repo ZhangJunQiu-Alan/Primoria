@@ -11,7 +11,7 @@ pnpm install
 # Start both web (port 3000) and LangGraph agent (port 2024)
 pnpm dev
 
-# Web app only (when NEXT_PUBLIC_USE_COPILOTKIT is not set)
+# Web app only; AI Tutor still needs LANGGRAPH_DEPLOYMENT_URL to reach a running agent
 pnpm --filter @primoria/web dev
 
 # Type-check
@@ -53,27 +53,25 @@ node --check apps/agent/src/graph.mjs
 ### Monorepo layout
 
 ```
-apps/web/     Next.js app — UI, API routes, DB, agent integration
-apps/agent/   LangGraph agent — CopilotKit path only
+apps/web/     Next.js app — UI, API routes, DB, CopilotKit integration
+apps/agent/   LangGraph agent — serves the primoria_tutor graph
 ```
 
-### Two tutor paths
+### AI Tutor path
 
-**Default path** (`NEXT_PUBLIC_USE_COPILOTKIT` not set):
-`POST /api/tutor/chat` → `runTutorAgent` / `runTutorAgentStream` in `apps/web/src/lib/ai/tutor-agent.ts` → `invokePrimoriaDeepAgent` in `apps/web/src/lib/ai/deepagent/primoria-deep-agent.ts`
+There is one active tutor runtime path:
 
-**CopilotKit path** (requires `LANGGRAPH_DEPLOYMENT_URL`):
-Browser CopilotKit runtime → `apps/agent/src/graph.mjs` (LangGraph, ESM only, no TypeScript)
+Browser CopilotKit UI → `apps/web/src/app/api/copilotkit/route.ts` → `LangGraphAgent(graphId: "primoria_tutor")` → `apps/agent/src/graph.mjs`.
 
-Both paths produce the same `TutorArtifact` union types and the same UI components consume them.
+The legacy `POST /api/tutor/chat` path, `apps/web/src/lib/ai/tutor-agent.ts`, and `apps/web/src/lib/ai/deepagent/primoria-deep-agent.ts` are no longer active runtime paths. Do not add new behavior to those old paths or try to keep them in sync.
 
 ### Agent tool pipeline (visualization)
 
-The standard visualization flow in both paths:
+The standard visualization flow in the active tutor path:
 1. `plan_visualization` — AI outputs `VisualizationPlanArtifact` (approach, technology, key elements)
 2. `widgetRenderer` — AI writes a self-contained HTML/CSS/JS fragment → `HtmlWidgetArtifact`
 
-The agent prompt is in `primoria-deep-agent.ts` (default path) and `graph.mjs` (CopilotKit path). Both files define the system prompt and tool schemas. **Keep them in sync when changing tool behavior.**
+The active tutor prompt and tool schemas live in `apps/agent/src/graph.mjs`.
 
 ### Artifact types (`apps/web/src/lib/ai/types.ts`)
 
@@ -89,11 +87,11 @@ The agent prompt is in `primoria-deep-agent.ts` (default path) and `graph.mjs` (
 
 Widgets execute inside a sandboxed `<iframe>`. The iframe host assembles a full HTML document (`assembleWidgetStandaloneHtml`) that includes: theme CSS, SVG helpers, form styles, a `window.sendPrompt` bridge, and all declared dependencies (scripts/styles/modules). External library URLs are validated against `ALLOWED_DEPENDENCY_URLS` — only CDN URLs in the allowlist are permitted. Streaming HTML is diffed before execution; scripts run only after HTML has settled. Libraries like `Matter`, `THREE`, `Chart`, `p5`, `mermaid`, `gsap`, `d3` are loaded from CDN at runtime, not installed as npm packages.
 
-`ToolCard` (`apps/web/src/components/generative-ui/tool-card.tsx`) routes each `TutorArtifact` type to its renderer. Adding a new artifact type requires: (1) the type in `types.ts`, (2) a branch in `ToolCard`, (3) schema in `primoria-deep-agent.ts` and `graph.mjs`.
+`ToolCard` (`apps/web/src/components/generative-ui/tool-card.tsx`) routes each `TutorArtifact` type to its renderer. Adding a new artifact type requires: (1) the type in `types.ts`, (2) a branch in `ToolCard`, (3) schema in `apps/agent/src/graph.mjs`.
 
 ### Course generation
 
-`generateCourseTool` in the agent calls `generateCourse` in `apps/web/src/lib/ai/deepagent/course-generator.ts`. Courses are stored in the `courses` table (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Course blocks are `jsonb` and include types: `text | analogy | transfer | visual | code`. Visual blocks currently carry `{ html }`.
+In the main AI Tutor, course creation starts with the `position_learning_goal` tool in `apps/agent/src/graph.mjs`; the web side performs KG positioning, course creation, and persistence. Courses are stored in the `courses` and `lessons` tables (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Lesson blocks are stored as `jsonb`.
 
 ### DB
 
