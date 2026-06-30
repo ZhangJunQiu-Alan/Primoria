@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { CopilotKitProvider } from "@/components/copilot-provider";
 import { CourseDetailClient } from "@/components/course/course-detail-client";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
@@ -28,19 +27,16 @@ export default async function CoursePage({
   const currentLesson = currentCourseLesson(course, requestedLessonId);
   const visibleBlocks = currentLessonBlocks(course, requestedLessonId);
   const visibleMinutes = currentLesson?.estimatedMinutes ?? course.estimatedMinutes;
+  const lessonTitle = currentLesson?.title ?? course.title;
 
   return (
-    <main className="app-shell">
-      <TutorNavRail />
+    <main className="app-shell course-app-shell">
       <section className="workspace course-workspace" style={{ ["--course-sidebar-width" as string]: "410px" }}>
         <header className="course-header">
           <div>
             <Link href="/library" className="course-back">← Library</Link>
-            <h1>{course.title}</h1>
-            <p className="course-summary-text">{course.summary}</p>
-            <div className="course-status-row" aria-label="Course lesson status">
-              <span className="course-status-pill">当前 lesson</span>
-              {currentLesson ? <span>{currentLesson.title}</span> : null}
+            <h1>{lessonTitle}</h1>
+            <div className="course-status-row" aria-label="Lesson status">
               <span>{visibleBlocks.length} blocks</span>
               <span>约 {visibleMinutes} min</span>
             </div>

@@ -16,6 +16,8 @@ async function main() {
   const libraryGrid = read("src/components/library/course-library-grid.tsx");
   const courseRoute = read("src/app/api/courses/[id]/route.ts");
   const courseStore = read("src/lib/courses/store.ts");
+  const courseTypes = read("src/lib/courses/types.ts");
+  const courseGenerator = read("src/lib/ai/deepagent/course-generator.ts");
   const courseOutlinePage = read("src/app/course/[id]/outline/page.tsx");
   const courseOutlineView = read("src/components/course/course-outline-view.tsx");
   const courseDetailClient = read("src/components/course/course-detail-client.tsx");
@@ -30,6 +32,7 @@ async function main() {
   const historyPopup = read("src/components/tutor/history-popup.tsx");
   const toolCard = read("src/components/generative-ui/tool-card.tsx");
   const styles = read("src/app/globals.css");
+  const lessonDescriptionMigration = read("drizzle/0032_lesson_descriptions.sql");
 
   assert(libraryPage.includes("CourseLibraryGrid"), "library delegates course grid to client component");
   assert(libraryPage.includes("listActiveLessonGenerationJobsByOwner"), "library fetches active lesson generation jobs");
@@ -54,11 +57,17 @@ async function main() {
   assert(libraryGrid.includes('method: "DELETE"'), "library delete action calls the course delete endpoint");
   assert(courseRoute.includes("export async function DELETE"), "course API exposes a delete endpoint");
   assert(courseStore.includes("export async function deleteCourse"), "course store can permanently delete a course");
+  assert(courseTypes.includes("description: string;"), "lesson model stores a first-class description");
+  assert(courseStore.includes("description: lesson.description ?? \"\""), "course store persists lesson descriptions");
+  assert(courseStore.includes("description: row.description ?? \"\""), "course store reads lesson descriptions");
+  assert(courseGenerator.includes("plannedLessonDescription"), "course outline generation produces lesson descriptions");
+  assert(courseGenerator.includes("conceptIds.map((concept) => lessonConceptName"), "lesson descriptions are derived from KG concept names");
+  assert(lessonDescriptionMigration.includes('ADD COLUMN "description" text DEFAULT \'\''), "database migration adds persisted lesson descriptions");
   assert(courseOutlinePage.includes("CourseOutlineView"), "course outline route delegates to the shared outline view");
   assert(courseDetailClient.includes("CourseOutlineView"), "course detail page reuses the shared outline view for upcoming lessons");
   assert(courseDetailClient.includes('visibleLessons="upcoming"'), "course detail page requests the upcoming lesson view");
   assert(courseDetailClient.includes("currentLessonBlocks(course, currentLessonId)"), "course detail renders only the active lesson's blocks");
-  assert(courseDetailClient.includes("visibleBlocks={blocks}"), "course detail gives Course Copilot only the visible lesson blocks");
+  assert(courseDetailClient.includes("visibleBlocks={blocks}"), "course detail gives Course Tutor only the visible lesson blocks");
   assert(coursePage.includes("currentLessonBlocks(course, requestedLessonId)"), "course page header counts only the active lesson's blocks");
   assert(courseOutlineView.includes("selectVisibleLessons"), "shared course outline centralizes lesson visibility selection");
   assert(courseOutlineView.includes('visibleLessons !== "upcoming"'), "full course outline still shows all lessons");
@@ -70,11 +79,16 @@ async function main() {
   assert(courseOutlineView.includes("course-outline-progress"), "shared course outline renders ready progress");
   assert(courseOutlineView.includes('role="progressbar"'), "course outline progress exposes accessible semantics");
   assert(courseOutlineView.includes("course-outline-node-wrap"), "shared course outline renders lesson timeline nodes");
+  assert(courseOutlineView.includes("course-outline-description"), "shared course outline renders each lesson description");
+  assert(courseOutlineView.includes("lesson.description.trim()"), "outline uses persisted lesson descriptions before fallback copy");
   assert(courseOutlineView.includes("course-outline-state-note"), "shared course outline explains unavailable lesson states");
   assert(courseOutlineView.includes("disabled={!canGenerate}"), "unavailable lesson actions use disabled buttons");
   assert(courseOutlineView.includes("course-outline-remediation"), "shared course outline marks inserted remediation lessons");
   assert(courseOutlineView.includes("LockIcon"), "shared course outline renders locked lessons with a lock icon");
-  assert(courseOutlineView.includes("Locked"), "shared course outline labels ungenerated lessons as locked");
+  assert(courseOutlineView.includes("Jump ahead"), "planned lessons can be explicitly generated and opened out of order");
+  assert(courseOutlineView.includes("course-outline-jump-dialog"), "jump ahead uses a confirmation dialog before generating");
+  assert(courseOutlineView.includes("Generate and jump ahead"), "jump ahead dialog exposes the generate-and-open action");
+  assert(courseOutlineView.includes("router.push(`/course/${displayCourse.id}?lessonId=${encodeURIComponent(lessonId)}`)"), "jump ahead routes to the selected lesson after enqueueing generation");
   assert(courseOutlineView.includes("Retry"), "shared course outline preserves retry for failed lesson generation");
   assert(!courseOutlineView.includes("course-outline-pill"), "lesson rows no longer render redundant state pills");
   assert(!courseOutlineView.includes("roleLabel("), "lesson rows no longer render lesson role metadata");
@@ -82,6 +96,8 @@ async function main() {
   assert(!courseDetailClient.includes("course-lesson-outline"), "course detail no longer renders the old upcoming-lessons list");
   assert(!styles.includes(".course-outline-pill"), "redundant lesson state pill styles are removed");
   assert(!styles.includes(".course-lesson-outline"), "old course detail outline styles are removed");
+  assert(courseDetailClient.includes("CourseLessonPendingState"), "course detail shows a waiting state for explicit jumps to generating lessons");
+  assert(courseDetailClient.includes("currentLessonJob?.status !== \"completed\""), "course detail refreshes once a jumped-to lesson finishes generating");
   assert(tutorNavRail.includes("accountOpen"), "nav rail stores account popover state");
   assert(tutorNavRail.includes("nav-account-trigger"), "signed-in nav rail shows an avatar menu trigger");
   assert(tutorNavRail.includes("aria-expanded={accountOpen}"), "avatar menu trigger exposes expanded state");
@@ -148,6 +164,9 @@ async function main() {
   assert(styles.includes(".course-outline-ready .course-outline-node"), "course outline page styles ready lessons");
   assert(styles.includes(".course-outline-locked .course-outline-node"), "course outline page styles locked lessons");
   assert(styles.includes(".course-outline-row-action"), "course outline page styles row actions");
+  assert(styles.includes(".course-outline-description"), "course outline page styles lesson descriptions");
+  assert(styles.includes(".course-outline-jump-dialog"), "course outline page styles the jump-ahead dialog");
+  assert(styles.includes(".course-lesson-pending-card"), "course detail page styles the jumped-to lesson waiting state");
   assert(styles.includes("max-width: 1440px"), "course outline content is constrained on wide displays");
   assert(styles.includes(".course-outline-row.course-outline-remediation"), "course outline page styles inserted remediation lessons");
 

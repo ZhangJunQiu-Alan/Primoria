@@ -13,6 +13,7 @@ function block(id: string): TextBlock {
 function lesson(input: Partial<Lesson> & Pick<Lesson, "id" | "sortKey">): Lesson {
   return {
     title: input.id,
+    description: `${input.id} description`,
     role: "new",
     progress: "not_started",
     status: "generated",
@@ -59,6 +60,8 @@ function main() {
 
   assert(currentCourseLesson(nextStillGenerating) === null, "completed old lessons are not shown while the next lesson is still generating");
   assert(currentLessonBlocks(nextStillGenerating).length === 0, "no stale completed blocks leak into the lesson page while the next lesson is generating");
+  assert(currentCourseLesson(nextStillGenerating, "lesson_2")?.id === "lesson_2", "explicit lesson jump can focus a generating lesson");
+  assert(currentLessonBlocks(nextStillGenerating, "lesson_2").length === 0, "generating lesson jumps show no stale blocks while content is pending");
 
   process.stdout.write("[current-lesson-selection.unit] ALL CHECKS PASSED\n");
 }
