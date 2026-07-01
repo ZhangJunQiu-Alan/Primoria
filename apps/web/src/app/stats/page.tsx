@@ -5,6 +5,7 @@ import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { BoltIcon, BookIcon, CalendarIcon, ClockIcon, FlameIcon, StarIcon } from "@/components/profile/profile-icons";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { formatLearningTime, getProfileStats } from "@/lib/profile/stats";
+import { getCurrentDictionary } from "@/lib/i18n/server";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +13,8 @@ export default async function StatsPage() {
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUser();
   if (authEnabled && !user) redirect("/auth/sign-in?next=/stats");
+  const { dictionary } = await getCurrentDictionary();
+  const t = dictionary.stats;
   const stats = await getProfileStats({
     ownerId: user?.id ?? null,
     displayName: user?.displayName ?? null,
@@ -22,12 +25,12 @@ export default async function StatsPage() {
     <main className="app-shell profile-shell">
       <TutorNavRail initialAuthState={{ authEnabled, user }} />
       <section className="profile-detail-workspace">
-        <Link href="/profile" className="profile-back-link">← Back to Profile</Link>
-        <h1 className="profile-detail-title">Detailed Statistics</h1>
+        <Link href="/profile" className="profile-back-link">← {t.backProfile}</Link>
+        <h1 className="profile-detail-title">{t.detailed}</h1>
 
         <section className="profile-panel activity-panel">
-          <h2>Daily Activity (Last 30 Days)</h2>
-          <div className="activity-heatmap" aria-label="Daily activity over the last 30 days">
+          <h2>{t.dailyActivity}</h2>
+          <div className="activity-heatmap" aria-label={t.dailyActivity}>
             <div className="activity-week-labels">
               {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => <span key={`${day}-${index}`}>{day}</span>)}
             </div>
@@ -36,27 +39,27 @@ export default async function StatsPage() {
                 <span
                   key={day.key}
                   className={day.activity > 3 ? "level-3" : day.activity > 1 ? "level-2" : day.activity > 0 ? "level-1" : ""}
-                  title={`${day.key}: ${day.activity} events`}
+                  title={`${day.key}: ${day.activity}`}
                 />
               ))}
             </div>
           </div>
         </section>
 
-        <ProfileStatSection title="Today's Summary">
-          <StatCard icon={<BookIcon />} title="Lessons" value={stats.todayLessonsCompleted} detail="Lessons completed today" tone="blue" />
-          <StatCard icon={<BoltIcon />} title="Questions" value={stats.todayQuestionsPracticed} detail="Questions practiced today" tone="green" />
-          <StatCard icon={<ClockIcon />} title="Activity" value={stats.todayActivityEvents} detail="Recorded learning events today" tone="orange" />
-          <StatCard icon={<FlameIcon />} title="Current Streak" value={`${stats.streakDays} day${stats.streakDays === 1 ? "" : "s"}`} detail="Keep it up!" tone="flame" />
-          <StatCard icon={<StarIcon />} title="XP Earned" value={stats.todayXp} detail="XP earned today" tone="gold" />
+        <ProfileStatSection title={t.todaySummary}>
+          <StatCard icon={<BookIcon />} title={t.lessons} value={stats.todayLessonsCompleted} detail={t.lessonsToday} tone="blue" />
+          <StatCard icon={<BoltIcon />} title={t.questions} value={stats.todayQuestionsPracticed} detail={t.questionsToday} tone="green" />
+          <StatCard icon={<ClockIcon />} title={t.activity} value={stats.todayActivityEvents} detail={t.eventsToday} tone="orange" />
+          <StatCard icon={<FlameIcon />} title={t.currentStreak} value={`${stats.streakDays} ${stats.streakDays === 1 ? t.day : t.days}`} detail={t.keepItUp} tone="flame" />
+          <StatCard icon={<StarIcon />} title={t.xpEarned} value={stats.todayXp} detail={t.xpToday} tone="gold" />
         </ProfileStatSection>
 
-        <ProfileStatSection title="Lifetime Statistics">
-          <StatCard icon={<BookIcon />} title="Lessons Completed" value={stats.lessonsCompleted} detail="Total lessons finished" tone="blue" />
-          <StatCard icon={<BoltIcon />} title="Questions Practiced" value={stats.questionsPracticed} detail="Total questions practiced" tone="green" />
-          <StatCard icon={<CalendarIcon />} title="Active Learning Days" value={stats.activeDaysLast30} detail="Active days in the last 30 days" tone="aqua" />
-          <StatCard icon={<ClockIcon />} title="Planned Lesson Time" value={formatLearningTime(stats.plannedLessonMinutes)} detail="Estimated minutes in your courses" tone="orange" />
-          <StatCard icon={<StarIcon />} title="Total XP" value={stats.xp} detail="All-time XP earned" tone="gold" />
+        <ProfileStatSection title={t.lifetime}>
+          <StatCard icon={<BookIcon />} title={t.lessonsCompleted} value={stats.lessonsCompleted} detail={t.totalLessonsFinished} tone="blue" />
+          <StatCard icon={<BoltIcon />} title={t.questionsPracticed} value={stats.questionsPracticed} detail={t.totalQuestionsPracticed} tone="green" />
+          <StatCard icon={<CalendarIcon />} title={t.activeLearningDays} value={stats.activeDaysLast30} detail={t.activeDaysDetail} tone="aqua" />
+          <StatCard icon={<ClockIcon />} title={t.plannedLessonTime} value={formatLearningTime(stats.plannedLessonMinutes)} detail={t.plannedMinutesDetail} tone="orange" />
+          <StatCard icon={<StarIcon />} title={t.totalXp} value={stats.xp} detail={t.allTimeXp} tone="gold" />
         </ProfileStatSection>
       </section>
     </main>

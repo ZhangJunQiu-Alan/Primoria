@@ -194,11 +194,7 @@ PLUS:
       2. 帮助Extractor做attention routing,如果learning_processing 更新出某个concept是weak就会重点关注这个concept相关的事件.
       3. 判断对concpet的掌握程度应该交给Quiz evidence+规则系统来做,不然Extractor看到用户说"我懂了",有可能会被误导
       4. 以后生成Lesson的时候,应该组合 EX: mastery: chain_rule = weak, episodic memory: 用户卡在“为什么乘内层导数”，机器嵌套类比有效
-  - 第三层: Episodic Memory
-
-
-
-
+  - 第三层: Episodic Memor
 
 Weak的concept如何提升到mastered?
 

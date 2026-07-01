@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { RestoredLessonGenerationCards, usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
 import { getCurrentThreadId, hydrateThreadHistoryFromServer, resetCopilotThreads, THREAD_EVENT_NAME } from "@/lib/copilot-thread-history";
-import { CopilotRestorePanel, PRIMORIA_MAIN_SUGGESTIONS, PrimoriaCopilotChatSurface } from "./copilot-chat-surface";
+import { useT } from "@/lib/i18n/client";
+import { CopilotRestorePanel, PrimoriaCopilotChatSurface } from "./copilot-chat-surface";
 
 function useCurrentCopilotThreadId() {
   const [threadId, setThreadId] = useState("");
@@ -34,8 +35,16 @@ function useCurrentCopilotThreadId() {
 }
 
 export function TutorChatCopilot() {
+  const t = useT();
   usePrimoriaGenerativeUI();
   const { threadId, isReady } = useCurrentCopilotThreadId();
+  const suggestions = useMemo(
+    () => t.tutor.suggestions.map((title, index) => ({
+      title,
+      message: t.tutor.suggestionMessages[index] ?? title,
+    })),
+    [t.tutor.suggestionMessages, t.tutor.suggestions],
+  );
 
   useEffect(() => {
     function onCopilotRunError(event: ErrorEvent) {
@@ -57,8 +66,9 @@ export function TutorChatCopilot() {
             key={`restore-${threadId}`}
             threadId={threadId}
             className="main-copilot-surface"
+            placeholder={t.tutor.composerPlaceholder}
             welcomeScreen
-            suggestions={PRIMORIA_MAIN_SUGGESTIONS}
+            suggestions={suggestions}
           />
         </>
       ) : (

@@ -2,21 +2,24 @@ import Link from "next/link";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { SparkleIcon } from "@/components/profile/profile-icons";
+import { getCurrentDictionary } from "@/lib/i18n/server";
 
 export const dynamic = "force-dynamic";
 
-const features = [
-  ["Personalized courses", true, true],
-  ["Unlimited lessons", false, true],
-  ["Unlimited AI chats", false, true],
-  ["Up to 15 courses/mo", false, true],
-  ["Jump ahead in courses", false, true],
-  ["Early access to memory", false, true],
+const featureFlags = [
+  [true, true],
+  [false, true],
+  [false, true],
+  [false, true],
+  [false, true],
+  [false, true],
 ] as const;
 
 export default async function UpgradePage() {
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUser();
+  const { dictionary } = await getCurrentDictionary();
+  const t = dictionary.upgrade;
 
   return (
     <main className="app-shell profile-shell">
@@ -24,23 +27,23 @@ export default async function UpgradePage() {
       <section className="upgrade-workspace">
         <div className="upgrade-card">
           <div className="upgrade-mascot" aria-hidden="true"><SparkleIcon /></div>
-          <p className="landing-eyebrow">Primoria Pro</p>
-          <h1>Learn without limits with Pro</h1>
+          <p className="landing-eyebrow">{t.eyebrow}</p>
+          <h1>{t.title}</h1>
           <div className="upgrade-table">
             <div className="upgrade-table-head">
-              <span>Feature</span>
-              <span>Free</span>
-              <span>Pro</span>
+              <span>{t.feature}</span>
+              <span>{t.free}</span>
+              <span>{t.pro}</span>
             </div>
-            {features.map(([label, free, pro]) => (
-              <div key={label} className="upgrade-row">
-                <span>{label}</span>
-                <strong>{free ? "Yes" : "-"}</strong>
-                <strong>{pro ? "Yes" : "-"}</strong>
+            {featureFlags.map(([free, pro], index) => (
+              <div key={t.features[index]} className="upgrade-row">
+                <span>{t.features[index]}</span>
+                <strong>{free ? t.yes : "-"}</strong>
+                <strong>{pro ? t.yes : "-"}</strong>
               </div>
             ))}
           </div>
-          <Link className="upgrade-cta" href="/profile">CONTINUE</Link>
+          <Link className="upgrade-cta" href="/profile">{dictionary.common.continue}</Link>
         </div>
       </section>
     </main>

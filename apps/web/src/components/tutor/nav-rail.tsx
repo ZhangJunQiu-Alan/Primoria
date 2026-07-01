@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { AuthUser } from "@/lib/auth/types";
 import { clearCopilotThreadStorage } from "@/lib/copilot-thread-history";
+import { useT } from "@/lib/i18n/client";
 
 type NavTab = {
   id: string;
@@ -88,6 +89,7 @@ type TutorNavRailProps = {
 };
 
 export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
+  const t = useT();
   const pathname = usePathname() ?? "/";
   const router = useRouter();
   const [authEnabled, setAuthEnabled] = useState<boolean | null>(initialAuthState?.authEnabled ?? null);
@@ -149,24 +151,31 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   }
 
   const accountInitial = (user?.displayName ?? user?.email ?? "U").slice(0, 1).toUpperCase();
-  const accountName = user?.displayName ?? "Learner";
+  const accountName = user?.displayName ?? t.nav.learner;
+  const tabCopy: Record<string, { label: string; description: string }> = {
+    tutor: { label: t.nav.tutor, description: t.nav.tutorDescription },
+    library: { label: t.nav.library, description: t.nav.libraryDescription },
+    workspace: { label: t.nav.workspace, description: t.nav.workspaceDescription },
+    course: { label: t.nav.courseBuilder, description: t.nav.courseBuilderDescription },
+  };
 
   return (
-    <aside className="nav-rail" aria-label="Primoria sections">
+    <aside className="nav-rail" aria-label={t.nav.aria}>
       <div className="nav-brand">
         <div className="brand-symbol" aria-hidden="true" />
         <span className="nav-brand-text">Primoria</span>
       </div>
       <nav className="nav-tabs">
         {TABS.map((tab) => {
+          const copy = tabCopy[tab.id] ?? { label: tab.label, description: tab.description };
           const active = isActive(pathname, tab.href);
           const className = `nav-tab${active ? " active" : ""}${tab.disabled ? " disabled" : ""}`;
           const inner = (
             <>
               <span className="nav-tab-icon" aria-hidden="true">{tab.icon}</span>
               <span className="nav-tab-copy">
-                <strong>{tab.label}</strong>
-                <span>{tab.description}</span>
+                <strong>{copy.label}</strong>
+                <span>{copy.description}</span>
               </span>
             </>
           );
@@ -177,14 +186,14 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
                 type="button"
                 className={className}
                 disabled
-                title={`${tab.label} · coming soon`}
+                title={`${copy.label} · ${t.nav.comingSoon}`}
               >
                 {inner}
               </button>
             );
           }
           return (
-            <Link key={tab.id} href={tab.href} className={className} title={tab.label} onClick={() => setAccountOpen(false)}>
+            <Link key={tab.id} href={tab.href} className={className} title={copy.label} onClick={() => setAccountOpen(false)}>
               {inner}
             </Link>
           );
@@ -192,15 +201,15 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
       </nav>
       <div className="nav-account">
         {authEnabled === null ? (
-          <span className="nav-account-hint">Checking workspace…</span>
+          <span className="nav-account-hint">{t.nav.checkingWorkspace}</span>
         ) : !authEnabled ? (
-          <span className="nav-account-hint">Local JSON mode</span>
+          <span className="nav-account-hint">{t.nav.localJsonMode}</span>
         ) : user ? (
           <div className="nav-account-user" ref={accountRootRef}>
             <button
               type="button"
               className="nav-account-trigger"
-              aria-label={`Account menu for ${accountName}`}
+              aria-label={`${t.nav.accountMenu}: ${accountName}`}
               aria-expanded={accountOpen}
               aria-controls="nav-account-menu"
               onClick={() => setAccountOpen((current) => !current)}
@@ -214,14 +223,14 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
                     <circle cx="12" cy="8" r="4" />
                     <path d="M4 21a8 8 0 0 1 16 0" />
                   </svg>
-                  <span>Profile</span>
+                  <span>{t.common.profile}</span>
                 </Link>
                 <Link className="nav-account-menu-item" href="/settings" role="menuitem" onClick={() => setAccountOpen(false)}>
                   <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="3" />
                     <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7.1 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 20.1 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
                   </svg>
-                  <span>Settings</span>
+                  <span>{t.common.settings}</span>
                 </Link>
                 <button
                   type="button"
@@ -235,15 +244,15 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
                     <path d="M15 12H3" />
                     <path d="M14 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5" />
                   </svg>
-                  {signingOut ? "Signing out..." : "Sign out"}
+                  {signingOut ? t.nav.signingOut : t.common.signOut}
                 </button>
               </div>
             ) : null}
           </div>
         ) : (
           <>
-            <Link className="nav-account-link" href="/auth/sign-in">Sign in</Link>
-            <Link className="nav-account-link primary" href="/auth/sign-up">Create account</Link>
+            <Link className="nav-account-link" href="/auth/sign-in">{t.common.signIn}</Link>
+            <Link className="nav-account-link primary" href="/auth/sign-up">{t.common.signUp}</Link>
           </>
         )}
       </div>

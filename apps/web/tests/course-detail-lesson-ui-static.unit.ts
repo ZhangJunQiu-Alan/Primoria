@@ -2,6 +2,7 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { dictionaries } from "../src/lib/i18n/dictionaries.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);
@@ -43,18 +44,18 @@ function main() {
   assert(!detail.includes("针对当前 block"), "bottom action panel no longer repeats the current-block label");
   assert(!detail.includes("学习动作</button>"), "course detail does not render a visible learning-action trigger button");
   assert(!detail.includes("course-block-action-toggle"), "course detail does not render the old visible action toggle");
-  assert(detail.includes("解释这一段"), "block action tray includes explain action");
-  assert(detail.includes("给我一个例子"), "block action tray includes example action");
-  assert(detail.includes("出 3 道练习"), "block action tray includes practice action");
-  assert(detail.includes("检查我是否理解"), "block action tray includes understanding-check action");
+  assert(detail.includes("t.actionExplain") && dictionaries.zh.course.actionExplain === "解释这一段", "block action tray includes explain action");
+  assert(detail.includes("t.actionExample") && dictionaries.zh.course.actionExample === "给我一个例子", "block action tray includes example action");
+  assert(detail.includes("t.actionPractice") && dictionaries.zh.course.actionPractice === "出 3 道练习", "block action tray includes practice action");
+  assert(detail.includes("t.actionCheck") && dictionaries.zh.course.actionCheck === "检查我是否理解", "block action tray includes understanding-check action");
   assert(detail.includes("sendCoursePrompt(courseThreadId"), "block actions still route through the existing Course Tutor prompt bridge");
   assert(detail.includes("currentLessonBlocks(course, currentLessonId)"), "course detail renders only blocks from the active lesson");
   assert(detail.includes("visibleBlocks={blocks}"), "Course Tutor receives the same active-lesson block list as the page");
   assert(detail.includes("currentLessonId={currentLessonId}"), "upcoming lesson view is anchored to the current lesson");
   assert(detail.includes("course-ai-context-strip"), "Course Tutor renders current block context");
-  assert(detail.includes("还没有选中的 block"), "Course Tutor has a no-selection empty context state");
-  assert(detail.includes("<strong>Course Tutor</strong>"), "Course Tutor is the visible sidebar title");
-  assert(detail.includes('placeholder="Ask More, Know You More"'), "Course Tutor input uses the updated placeholder");
+  assert(detail.includes("t.noSelectedBlock") && dictionaries.zh.course.noSelectedBlock === "还没有选中的 block", "Course Tutor has a no-selection empty context state");
+  assert(detail.includes("<strong>{t.tutorTitle}</strong>") && dictionaries.en.course.tutorTitle === "Course Tutor", "Course Tutor is the visible sidebar title");
+  assert(detail.includes("placeholder={t.composerPlaceholder}") && dictionaries.zh.course.composerPlaceholder === "Ask More, Know You More", "Course Tutor input uses the updated placeholder");
   assert(!detail.includes("Course Copilot"), "Course Tutor code has no old visible Course Copilot copy");
   assert(!detail.includes("Ask about this course"), "Course Tutor sidebar does not repeat the old generic subtitle");
   assert(!detail.includes("text block · 点击下方建议或直接提问"), "Course Tutor context strip omits block-type helper copy");

@@ -2,6 +2,7 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { dictionaries } from "../src/lib/i18n/dictionaries.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);
@@ -9,6 +10,14 @@ function assert(condition: unknown, message: string): asserts condition {
 
 function read(path: string) {
   return readFileSync(join(process.cwd(), path), "utf8");
+}
+
+// Copy now lives in the i18n dictionary. Assert the key resolves in both
+// languages instead of expecting a hardcoded string in the component source.
+function bilingual(zh: string, en: string, message: string) {
+  assert(typeof zh === "string" && zh.length > 0, `${message} (zh)`);
+  assert(typeof en === "string" && en.length > 0, `${message} (en)`);
+  assert(zh !== en, `${message} (zh/en differ)`);
 }
 
 async function main() {
@@ -31,19 +40,21 @@ async function main() {
   assert(profilePage.includes("stats.questionsPracticed"), "profile hero surfaces practiced questions");
   assert(profilePage.includes("profile-section-header"), "profile progress section has explanatory header copy");
   assert(profilePage.includes("profile-list-copy"), "profile progress links include descriptions");
-  assert(profilePage.includes("My Progress"), "profile page renders the progress section");
-  assert(profilePage.includes("Weekly Report"), "profile page links to weekly report");
-  assert(profilePage.includes("Learning Stats"), "profile page links to learning stats");
+  assert(profilePage.includes("getCurrentDictionary"), "profile page resolves copy from the i18n dictionary");
+  bilingual(dictionaries.zh.profile.myProgress, dictionaries.en.profile.myProgress, "profile page renders the progress section");
+  bilingual(dictionaries.zh.profile.weeklyReport, dictionaries.en.profile.weeklyReport, "profile page links to weekly report");
+  bilingual(dictionaries.zh.profile.learningStats, dictionaries.en.profile.learningStats, "profile page links to learning stats");
   assert(!profilePage.includes("Course Stats"), "profile page omits Course Stats as requested");
 
-  assert(profileEditModal.includes("Edit Profile"), "profile edit modal copies the expected title");
-  assert(profileEditModal.includes("Edit profile"), "profile edit trigger uses readable sentence case");
-  assert(profileEditModal.includes("Display Name"), "profile edit modal edits display name");
+  assert(profileEditModal.includes("useT"), "profile edit modal resolves copy from the i18n dictionary");
+  bilingual(dictionaries.zh.profile.editTitle, dictionaries.en.profile.editTitle, "profile edit modal copies the expected title");
+  bilingual(dictionaries.zh.profile.editProfile, dictionaries.en.profile.editProfile, "profile edit trigger uses readable label");
+  bilingual(dictionaries.zh.profile.displayName, dictionaries.en.profile.displayName, "profile edit modal edits display name");
   assert(profileEditModal.includes('fetch("/api/profile"'), "profile edit modal saves through the profile API");
   assert(profileApi.includes(".update(users)"), "profile API updates the app-owned users table");
 
-  assert(weeklyPage.includes("Daily Breakdown"), "weekly report renders daily breakdown");
-  assert(weeklyPage.includes("Courses Worked On"), "weekly report renders worked-on courses");
+  bilingual(dictionaries.zh.weekly.dailyBreakdown, dictionaries.en.weekly.dailyBreakdown, "weekly report renders daily breakdown");
+  bilingual(dictionaries.zh.weekly.coursesWorkedOn, dictionaries.en.weekly.coursesWorkedOn, "weekly report renders worked-on courses");
   assert(weeklyPage.includes("stats.weekLabel"), "weekly report uses a computed week label");
   assert(weeklyPage.includes("stats.bestWeekDay?.display"), "weekly report uses the computed best active day");
   assert(weeklyPage.includes("stats.weeklyLessonsCompleted"), "weekly report uses weekly completed lesson data");
@@ -52,28 +63,32 @@ async function main() {
   assert(!weeklyPage.includes("Jun 29 - Jul 5"), "weekly report does not hardcode a fake week range");
   assert(!weeklyPage.includes("Monday, Jun 29"), "weekly report does not hardcode a fake best day");
   assert(!weeklyPage.includes("cardsCollected"), "weekly report does not render fake collected-card data");
-  assert(statsPage.includes("Daily Activity (Last 30 Days)"), "stats page renders heatmap section");
-  assert(statsPage.includes("Today's Summary"), "stats page renders today summary");
-  assert(statsPage.includes("Lifetime Statistics"), "stats page renders lifetime statistics");
+  assert(statsPage.includes("getCurrentDictionary"), "stats page resolves copy from the i18n dictionary");
+  bilingual(dictionaries.zh.stats.dailyActivity, dictionaries.en.stats.dailyActivity, "stats page renders heatmap section");
+  bilingual(dictionaries.zh.stats.todaySummary, dictionaries.en.stats.todaySummary, "stats page renders today summary");
+  bilingual(dictionaries.zh.stats.lifetime, dictionaries.en.stats.lifetime, "stats page renders lifetime statistics");
   assert(statsPage.includes("stats.todayLessonsCompleted"), "today summary uses today's completed lessons");
   assert(statsPage.includes("stats.todayQuestionsPracticed"), "today summary uses today's quiz practice");
   assert(statsPage.includes("stats.todayActivityEvents"), "today summary uses today's recorded activity");
-  assert(statsPage.includes("Planned Lesson Time"), "stats page labels course estimates as planned lesson time");
+  bilingual(dictionaries.zh.stats.plannedLessonTime, dictionaries.en.stats.plannedLessonTime, "stats page labels course estimates as planned lesson time");
   assert(!statsPage.includes("Total Learning Time"), "stats page does not present planned course estimates as actual learning time");
-  assert(settingsPage.includes("Facts About You"), "settings page renders facts section");
+  assert(settingsPage.includes("getCurrentDictionary"), "settings page resolves copy from the i18n dictionary");
+  bilingual(dictionaries.zh.settings.factsTitle, dictionaries.en.settings.factsTitle, "settings page renders facts section");
   assert(settingsPage.includes('href="/settings/facts"'), "settings page links to the facts editor");
   assert(settingsPage.includes("ContentLanguageSelect") && settingsPage.includes("getUserPreferences"), "settings page renders saved language preference");
+  assert(settingsPage.includes("LanguageSwitcher"), "settings page exposes an interface language switcher");
   assert(settingsPage.includes("listActiveFacts"), "settings page reads live fact previews");
   assert(!settingsPage.includes("JOIN OUR DISCORD"), "settings page removes fake community action");
   assert(!settingsPage.includes("DELETE ACCOUNT"), "settings page removes fake destructive account action");
-  assert(settingsPage.includes("Content Language"), "settings page renders language section");
-  assert(settingsFactsPage.includes("Back to Settings"), "facts page returns to settings");
+  bilingual(dictionaries.zh.language.contentTitle, dictionaries.en.language.contentTitle, "settings page renders content language section");
+  bilingual(dictionaries.zh.language.interfaceTitle, dictionaries.en.language.interfaceTitle, "settings page renders interface language section");
+  bilingual(dictionaries.zh.settings.backSettings, dictionaries.en.settings.backSettings, "facts page returns to settings");
   assert(settingsFactsPage.includes("FactsAboutYou") && settingsFactsPage.includes("listActiveFacts"), "facts page renders live facts from the store");
 
   const factsComponent = read("src/components/profile/facts-about-you.tsx");
   assert(factsComponent.includes('method = editingId ? "PATCH" : "POST"'), "facts component saves add and edit through the API");
   assert(factsComponent.includes('method: "DELETE"') && factsComponent.includes("/api/learner-facts"), "facts component deletes via the learner-facts API");
-  assert(factsComponent.includes("Extract from text") && factsComponent.includes("disabled"), "facts component does not expose a fake extractor action");
+  assert(factsComponent.includes("disabled"), "facts component does not expose a fake extractor action");
   const factsRoute = read("src/app/api/learner-facts/route.ts");
   assert(factsRoute.includes("export async function GET") && factsRoute.includes("listActiveFacts"), "facts API lists active facts");
   assert(factsRoute.includes("export async function POST") && factsRoute.includes("addManualFact"), "facts API adds manual facts");
@@ -86,7 +101,8 @@ async function main() {
   assert(styles.includes(".facts-list"), "facts list has dedicated styling");
   assert(styles.includes(".settings-wide-action"), "settings overview has a dedicated wide action style");
   assert(styles.includes(".facts-composer"), "facts editor has dedicated composer styling");
-  assert(upgradePage.includes("Learn without limits with Pro"), "upgrade page renders Pro headline");
+  assert(upgradePage.includes("getCurrentDictionary"), "upgrade page resolves copy from the i18n dictionary");
+  bilingual(dictionaries.zh.upgrade.title, dictionaries.en.upgrade.title, "upgrade page renders Pro headline");
 
   assert(navRail.includes('href="/profile"'), "avatar menu links to profile");
   assert(navRail.includes('href="/settings"'), "avatar menu links to settings");

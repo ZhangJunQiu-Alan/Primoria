@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { TurnstileWidget } from "@/components/auth/turnstile";
+import { LanguageSwitcher } from "@/components/i18n/language-switcher";
+import { msg, useT } from "@/lib/i18n/client";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 const isSupabaseActive = Boolean(
@@ -28,6 +30,7 @@ function PasswordVisibilityIcon({ visible }: { visible: boolean }) {
 }
 
 export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "sign-up" }) {
+  const t = useT();
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get("next") ?? "/library";
@@ -42,7 +45,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
   const [pending, setPending] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(
-    searchParams.get("error") ? "Authentication callback failed. Please try again." : null
+    searchParams.get("error") ? t.auth.callbackFailed : null
   );
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaResetKey, setCaptchaResetKey] = useState(0);
@@ -52,16 +55,16 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
   const passwordReady = password.length >= 8;
   const passwordHint = isSignUp
     ? password.length === 0
-      ? "Use at least 8 characters."
+      ? t.auth.passwordEmptyHint
       : passwordReady
-        ? "Password length looks good."
-        : `${8 - password.length} more character${8 - password.length === 1 ? "" : "s"} needed.`
-    : "Use the password for this workspace.";
+        ? t.auth.passwordGoodHint
+        : msg(t.auth.passwordMoreHint, { count: 8 - password.length })
+    : t.auth.passwordWorkspaceHint;
   const nextCopy = useMemo(() => {
-    if (!next || next === "/library") return "Library";
-    if (next === "/") return "Tutor";
+    if (!next || next === "/library") return t.common.library;
+    if (next === "/") return t.topbar.title;
     return next.replace(/^\//, "");
-  }, [next]);
+  }, [next, t.common.library, t.topbar.title]);
 
   function redirectTo() {
     if (typeof window === "undefined") return undefined;
@@ -80,7 +83,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
 
   function guardCaptcha() {
     if (captchaEnabled && !captchaToken) {
-      setError("Please complete the Turnstile captcha first.");
+      setError(t.auth.captchaRequired);
       return false;
     }
     return true;
@@ -106,7 +109,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
           },
         });
         if (err) throw err;
-        setStatus("Registration successful! Please check your email for the verification link.");
+        setStatus(t.auth.registerSuccess);
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({
           email,
@@ -118,7 +121,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
         router.refresh();
       }
     } catch (err) {
-      setError(errorMessage(err, "Authentication failed."));
+      setError(errorMessage(err, t.auth.authFailed));
       resetCaptcha();
     } finally {
       setPending(false);
@@ -127,7 +130,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
 
   async function handleMagicLink() {
     if (!email) {
-      setError("Please enter your email first.");
+      setError(t.auth.emailFirst);
       return;
     }
     if (!guardCaptcha()) return;
@@ -141,9 +144,9 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
         options: { emailRedirectTo: redirectTo(), ...captchaOptions() },
       });
       if (err) throw err;
-      setStatus("Magic link sent! Please check your email inbox.");
+      setStatus(t.auth.magicLinkSent);
     } catch (err) {
-      setError(errorMessage(err, "Failed to send magic link."));
+      setError(errorMessage(err, t.auth.magicLinkFailed));
       resetCaptcha();
     } finally {
       setPending(false);
@@ -161,7 +164,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
       });
       if (err) throw err;
     } catch (err) {
-      setError(errorMessage(err, "Google login is currently unavailable."));
+      setError(errorMessage(err, t.auth.googleUnavailable));
     }
   }
 
@@ -181,33 +184,29 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
       router.push("/library");
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Authentication failed");
+      setError(err instanceof Error ? err.message : t.auth.authFailed);
     } finally {
       setPending(false);
     }
   }
 
-  const title = isSignUp ? "Create your workspace" : "Sign in to your workspace";
-  const cta = isSignUp ? "Create account" : "Sign in";
-  const subtitle = isSignUp
-    ? "Start with a private learning record, saved courses, and workspace history."
-    : "Continue with your saved Library, active builds, and tutor history.";
-  const heroTitle = isSignUp ? "Build from a clean learning record" : "Welcome back";
-  const heroCopy = isSignUp
-    ? "Your courses, progress, chat history, and generated workspace artifacts stay attached to one account."
-    : "Pick up active courses, generated lessons, workspace agents, and chat context without rebuilding your setup.";
+  const title = isSignUp ? t.auth.signUpTitle : t.auth.signInTitle;
+  const cta = isSignUp ? t.auth.createAccount : t.auth.signIn;
+  const subtitle = isSignUp ? t.auth.signUpSubtitle : t.auth.signInSubtitle;
+  const heroTitle = isSignUp ? t.auth.signUpHeroTitle : t.auth.signInHeroTitle;
+  const heroCopy = isSignUp ? t.auth.signUpHeroCopy : t.auth.signInHeroCopy;
 
   return (
     <div className="auth-panel">
       <div className="auth-hero" aria-hidden="true">
         <div className="auth-hero-copy">
-          <span>Primoria workspace</span>
+          <span>{t.auth.workspace}</span>
           <strong>{heroTitle}</strong>
           <p>{heroCopy}</p>
           <ul className="auth-hero-list">
-            <li><span />Saved courses and lessons</li>
-            <li><span />Tutor chat continuity</li>
-            <li><span />Workspace artifacts and progress</li>
+            {t.auth.benefits.map((item) => (
+              <li key={item}><span />{item}</li>
+            ))}
           </ul>
         </div>
         <div className="auth-hero-orbits">
@@ -219,24 +218,27 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
 
       <form className="auth-card" onSubmit={isSupabaseActive ? submitSupabase : submitCustomDb}>
         <div className="auth-heading">
-          <h1>{title}</h1>
-          <p>{subtitle}</p>
+          <div>
+            <h1>{title}</h1>
+            <p>{subtitle}</p>
+          </div>
+          <LanguageSwitcher className="auth-language-switcher" />
         </div>
 
         {isSupabaseActive && (
           <>
             <button type="button" onClick={handleGoogle} disabled={pending} className="auth-secondary-action">
               <span className="auth-provider-mark" aria-hidden="true">G</span>
-              <span>Continue with Google</span>
+              <span>{t.auth.google}</span>
             </button>
-            <div className="auth-divider"><span>or use email</span></div>
+            <div className="auth-divider"><span>{t.auth.emailDivider}</span></div>
           </>
         )}
 
         <div className="auth-fields">
           {isSignUp ? (
             <label className="auth-field">
-              <span>Display name</span>
+              <span>{t.auth.displayName}</span>
               <input
                 value={displayName}
                 onChange={(event) => setDisplayName(event.target.value)}
@@ -250,7 +252,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
           )}
 
           <label className="auth-field">
-            <span>Email</span>
+            <span>{t.auth.email}</span>
             <input
               type="email"
               value={email}
@@ -266,8 +268,8 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
 
           <div className="auth-field">
             <div className="auth-label-row">
-              <label htmlFor="auth-password">Password</label>
-              {!isSignUp && isSupabaseActive ? <Link href="/forgot">Forgot password?</Link> : null}
+              <label htmlFor="auth-password">{t.auth.password}</label>
+              {!isSignUp && isSupabaseActive ? <Link href="/forgot">{t.auth.forgotPassword}</Link> : null}
             </div>
             <div className="auth-password-control">
               <input
@@ -275,7 +277,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                placeholder={isSignUp ? "At least 8 characters" : "Your password"}
+                placeholder={isSignUp ? t.auth.passwordSignupPlaceholder : t.auth.passwordSigninPlaceholder}
                 minLength={isSignUp ? 8 : undefined}
                 autoComplete={isSignUp ? "new-password" : "current-password"}
                 required
@@ -287,7 +289,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
                 type="button"
                 onClick={() => setShowPassword((current) => !current)}
                 disabled={pending || password.length === 0}
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={showPassword ? t.auth.hidePassword : t.auth.showPassword}
               >
                 <PasswordVisibilityIcon visible={showPassword} />
               </button>
@@ -308,21 +310,21 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
         {status ? <p className="auth-message success" role="status">{status}</p> : null}
 
         <button className="auth-submit" type="submit" disabled={pending}>
-          {pending ? (isSignUp ? "Creating account…" : "Signing in…") : cta}
+          {pending ? (isSignUp ? t.auth.creating : t.auth.signingIn) : cta}
         </button>
 
         {isSupabaseActive && (
           <button type="button" onClick={handleMagicLink} disabled={pending || !email} className="auth-link-action">
-            Send email magic link
+            {t.auth.sendMagicLink}
           </button>
         )}
 
         <div className="auth-footer">
-          <p>After success, you’ll continue to <strong>{nextCopy}</strong>.</p>
+          <p>{t.auth.afterSuccess} <strong>{nextCopy}</strong>.</p>
           <p className="auth-switch">
-            {isSignUp ? "Already have an account?" : "New to Primoria?"}{" "}
+            {isSignUp ? t.auth.alreadyHave : t.auth.newToPrimoria}{" "}
             <Link href={isSignUp ? SIGN_IN_HREF : SIGN_UP_HREF}>
-              {isSignUp ? "Sign in" : "Create account"}
+              {isSignUp ? t.auth.signIn : t.auth.createAccount}
             </Link>
           </p>
         </div>
