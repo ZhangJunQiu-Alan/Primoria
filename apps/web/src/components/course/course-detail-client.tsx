@@ -15,6 +15,8 @@ import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation
 import { lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import { useLearningProgressRecommendation } from "@/hooks/use-learning-progress-recommendation";
 import { learningDecisionAcceptLabel, learningDecisionHeadline } from "@/lib/courses/learning-progress-labels";
+import { useT, msg } from "@/lib/i18n/client";
+import type { I18nDictionary } from "@/lib/i18n/dictionaries";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
@@ -364,18 +366,16 @@ function blockDisplayTitle(block: CourseBlock) {
   return block.title ?? block.type;
 }
 
-function blockActionPrompt(block: CourseBlock, action: "explain" | "example" | "practice" | "check") {
+function blockActionPrompt(
+  block: CourseBlock,
+  action: "explain" | "example" | "practice" | "check",
+  t: I18nDictionary["course"],
+) {
   const title = blockDisplayTitle(block);
-  if (action === "explain") {
-    return `解释一下当前选中的「${title}」这一段，先讲核心想法，再指出我应该记住什么。`;
-  }
-  if (action === "example") {
-    return `用一个具体例子帮我理解当前选中的「${title}」。`;
-  }
-  if (action === "practice") {
-    return `围绕当前选中的「${title}」出 3 道练习题，并给每题一个简短提示。`;
-  }
-  return `检查我是否理解当前选中的「${title}」，请用 3 个问题问我，并等我回答。`;
+  if (action === "explain") return msg(t.explainSelected, { title });
+  if (action === "example") return msg(t.exampleSelected, { title });
+  if (action === "practice") return msg(t.practiceSelected, { title });
+  return msg(t.checkSelected, { title });
 }
 
 function stopBlockActionEvent(event: React.SyntheticEvent) {
@@ -391,13 +391,14 @@ function CourseBlockActionTray({
   expanded: boolean;
   onAction: (block: CourseBlock, action: "explain" | "example" | "practice" | "check") => void;
 }) {
+  const t = useT().course;
   const controlsId = `course-block-actions-${block.id}`;
   const title = blockDisplayTitle(block);
   const actions = [
-    { key: "explain" as const, label: "解释这一段" },
-    { key: "example" as const, label: "给我一个例子" },
-    { key: "practice" as const, label: "出 3 道练习" },
-    { key: "check" as const, label: "检查我是否理解" },
+    { key: "explain" as const, label: t.actionExplain },
+    { key: "example" as const, label: t.actionExample },
+    { key: "practice" as const, label: t.actionPractice },
+    { key: "check" as const, label: t.actionCheck },
   ];
 
   if (!expanded) return null;
@@ -410,7 +411,7 @@ function CourseBlockActionTray({
       onKeyDown={stopBlockActionEvent}
       onKeyUp={stopBlockActionEvent}
     >
-      <div id={controlsId} className="course-block-action-panel" role="group" aria-label={`学习动作：${title}`}>
+      <div id={controlsId} className="course-block-action-panel" role="group" aria-label={msg(t.learningActions, { title })}>
         <div className="course-block-action-panel-copy">
           <strong>{title}</strong>
         </div>
@@ -463,21 +464,22 @@ function CourseLessonPendingState({
   lesson: Lesson | null;
   job?: LessonGenerationJobSummary;
 }) {
+  const t = useT().course;
   if (!lesson) {
     return (
       <div className="course-lesson-pending-card">
-        <span>Preparing lesson</span>
-        <h2>Lesson content is not ready yet.</h2>
-        <p>Open the course outline to choose a generated lesson or start generating the next one.</p>
+        <span>{t.preparingLesson}</span>
+        <h2>{t.notReadyTitle}</h2>
+        <p>{t.notReadyCopy}</p>
       </div>
     );
   }
-  const detail = job ? lessonGenerationStageLabel(job) : "Preparing this lesson.";
+  const detail = job ? lessonGenerationStageLabel(job) : t.preparingThisLesson;
   return (
     <div className="course-lesson-pending-card">
-      <span>{lesson.status === "generating" ? "Generating lesson" : "Planned lesson"}</span>
+      <span>{lesson.status === "generating" ? t.generatingLesson : t.plannedLesson}</span>
       <h2>{lesson.title}</h2>
-      <p>{lesson.description || "Primoria is preparing the explanations, examples, and practice for this lesson."}</p>
+      <p>{lesson.description || t.preparingLessonCopy}</p>
       <div className="course-lesson-pending-progress" aria-label={detail}>
         <i />
       </div>
@@ -511,6 +513,7 @@ function CourseAIAssistantPanel({
   selectedTextContext: SelectedTextContext | null;
   currentLessonId: string | null;
 }) {
+  const t = useT().course;
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
   const startWidthRef = useRef(DEFAULT_SIDEBAR_WIDTH);
@@ -555,14 +558,14 @@ function CourseAIAssistantPanel({
   const selectedBlockTitle = selectedBlock ? blockDisplayTitle(selectedBlock) : "";
   const suggestedPrompts = selectedBlock
     ? [
-        `解释一下当前选中的「${selectedBlockTitle}」这一段`,
-        `用一个例子帮我理解「${selectedBlockTitle}」`,
-        `围绕当前 block 出 3 道练习题`,
+        msg(t.explainSelected, { title: selectedBlockTitle }),
+        msg(t.exampleSelected, { title: selectedBlockTitle }),
+        t.practiceSelected,
       ]
     : [
-        `帮我总结《${course.title}》的学习路径`,
-        `基于这门课生成 3 个课后练习`,
-        `我应该先学哪一块？`,
+        msg(t.summarizePath, { title: course.title }),
+        t.generatePractice,
+        t.firstBlock,
       ];
   const selectedTextPreview = selectedTextContext
     ? `${Array.from(selectedTextContext.text).slice(0, 5).join("")}${Array.from(selectedTextContext.text).length > 5 ? "..." : ""}`
@@ -570,7 +573,7 @@ function CourseAIAssistantPanel({
   const composerContext = selectedTextContext ? (
     <div
       className="course-ai-composer-context"
-      aria-label="Current course context"
+      aria-label={t.currentContext}
       style={{
         boxSizing: "border-box",
         paddingLeft: 8,
@@ -579,7 +582,7 @@ function CourseAIAssistantPanel({
       <div
         className="course-ai-selection-pill"
         title={selectedTextContext.text}
-        aria-label="Selected text is attached to this request."
+        aria-label={t.selectedTextAttached}
         style={{
           width: "fit-content",
           maxWidth: "100%",
@@ -623,12 +626,12 @@ function CourseAIAssistantPanel({
     <aside
       className={`course-ai-sidebar${collapsed ? " collapsed" : ""}`}
       style={{ width: collapsed ? 56 : width }}
-      aria-label="Course Tutor assistant"
+      aria-label={t.tutorAria}
     >
       <button
         type="button"
         className="course-sidebar-resize-handle"
-        aria-label="Resize AI sidebar"
+        aria-label={t.resizeSidebar}
         onPointerDown={beginResize}
       />
       {copilotEnabled ? (
@@ -653,13 +656,13 @@ function CourseAIAssistantPanel({
           type="button"
           className="course-ai-collapse"
           onClick={() => onCollapsedChange(!collapsed)}
-          aria-label={collapsed ? "Expand AI sidebar" : "Collapse AI sidebar"}
+          aria-label={collapsed ? t.expandSidebar : t.collapseSidebar}
         >
           {collapsed ? "AI" : "→"}
         </button>
         {!collapsed ? (
           <div className="course-ai-titleblock">
-            <strong>Course Tutor</strong>
+            <strong>{t.tutorTitle}</strong>
           </div>
         ) : null}
       </div>
@@ -668,10 +671,10 @@ function CourseAIAssistantPanel({
           {copilotEnabled ? (
             <>
               <div className={`course-ai-context-strip${selectedBlock ? "" : " empty"}`}>
-                <span>当前上下文</span>
-                <strong>{selectedBlock ? selectedBlockTitle : "还没有选中的 block"}</strong>
+                <span>{t.currentContext}</span>
+                <strong>{selectedBlock ? selectedBlockTitle : t.noSelectedBlock}</strong>
               </div>
-              <div className="course-ai-suggestions" aria-label="Suggested prompts">
+              <div className="course-ai-suggestions" aria-label={t.suggestionsAria}>
                 {suggestedPrompts.map((prompt) => (
                   <button
                     key={prompt}
@@ -686,8 +689,8 @@ function CourseAIAssistantPanel({
                 <PrimoriaCopilotChatSurface
                   key={courseThreadId}
                   threadId={courseThreadId}
-                  title={`Course Tutor: ${course.title}`}
-                  placeholder="Ask More, Know You More"
+                  title={`${t.tutorTitle}: ${course.title}`}
+                  placeholder={t.composerPlaceholder}
                   className="course-copilot-surface"
                   context={{
                     description: "Primoria course detail mode",
@@ -700,7 +703,7 @@ function CourseAIAssistantPanel({
               </div>
             </>
           ) : (
-            <div className="course-ai-chat auth-required">Sign in to use Course Tutor.</div>
+            <div className="course-ai-chat auth-required">{t.signInTutor}</div>
           )}
         </>
       ) : null}
@@ -756,6 +759,7 @@ const POPUP_PRIMARY_BTN: React.CSSProperties = {
 // refreshes the course so the next/remediation lesson surfaces in the outline.
 function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onResolved: () => Promise<void> | void }) {
   const router = useRouter();
+  const t = useT().course;
   const { pending, resolving, resolve } = useLearningProgressRecommendation(courseId);
   const [generatingLessonId, setGeneratingLessonId] = useState<string | null>(null);
 
@@ -790,10 +794,10 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
 
   if (generatingLessonId) {
     return (
-      <div className="learning-progress-popup-overlay" role="dialog" aria-modal="true" aria-label="Generating remediation" style={POPUP_OVERLAY_STYLE}>
+      <div className="learning-progress-popup-overlay" role="dialog" aria-modal="true" aria-label={t.generatingRemediation} style={POPUP_OVERLAY_STYLE}>
         <div className="learning-progress-popup-card" style={POPUP_CARD_STYLE}>
-          <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>正在生成补救课…</strong>
-          <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>请稍候，补救内容生成完成后会自动为你打开。</p>
+          <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>{t.generatingRemediation}</strong>
+          <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>{t.generatingRemediationCopy}</p>
         </div>
       </div>
     );
@@ -845,17 +849,17 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
   const secondaryLabel = isComplete
     ? null
     : decision.kind === "next"
-      ? "否"
+      ? t.no
       : decision.nextLessonTitle
-        ? `不需要，开始学习「${decision.nextLessonTitle}」`
-        : "不需要";
+        ? msg(t.noNeedNext, { title: decision.nextLessonTitle })
+        : t.noNeed;
 
   return (
     <div
       className="learning-progress-popup-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label="Learning recommendation"
+      aria-label={t.learningRecommendation}
       style={POPUP_OVERLAY_STYLE}
       onClick={(e) => {
         if (e.target === e.currentTarget) void closePopup();
@@ -863,7 +867,7 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
     >
       <div className="learning-progress-popup-card" style={POPUP_CARD_STYLE}>
         <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>
-          {learningDecisionHeadline(decision)}
+          {learningDecisionHeadline(decision, t)}
         </strong>
         <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>{decision.reason}</p>
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 22 }}>
@@ -883,7 +887,7 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
             disabled={resolving}
             style={{ ...POPUP_PRIMARY_BTN, cursor: resolving ? "default" : "pointer" }}
           >
-            {resolving ? "处理中…" : isRemediation ? "是" : learningDecisionAcceptLabel(decision)}
+            {resolving ? t.processing : isRemediation ? t.yes : learningDecisionAcceptLabel(decision, t)}
           </button>
         </div>
       </div>
@@ -902,6 +906,7 @@ export function CourseDetailClient({
   initialLessonJobs?: LessonGenerationJobSummary[];
   copilotEnabled: boolean;
 }) {
+  const t = useT().course;
   const [course, setCourse] = useState<Course>(initialCourse);
   const { jobs: lessonJobs, jobsByLessonId, setJobs: setLessonJobs } = useLessonGenerationJobs(course.id, initialLessonJobs);
   const [outlineKey, setOutlineKey] = useState(0);
@@ -1026,7 +1031,7 @@ export function CourseDetailClient({
     setSelectedTextContext(null);
     setSidebarCollapsed(false);
     setExpandedActionsBlockId(block.id);
-    sendCoursePrompt(courseThreadId, blockActionPrompt(block, action));
+    sendCoursePrompt(courseThreadId, blockActionPrompt(block, action, t));
   }
 
   function updateSelectedText(block: CourseBlock, element: HTMLElement) {

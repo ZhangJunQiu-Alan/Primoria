@@ -2,20 +2,27 @@ import { eq } from "drizzle-orm";
 import { getDb, hasDatabaseUrl } from "../db/client";
 import { userSettings } from "../db/schema";
 import type { TutorProviderSettings } from "../agent-os";
+import { isUiLanguage, type UiLanguage } from "../i18n/dictionaries";
 
 export const CONTENT_LANGUAGES = ["auto", "zh", "en"] as const;
 export type ContentLanguage = (typeof CONTENT_LANGUAGES)[number];
 
 export type UserPreferences = {
   contentLanguage: ContentLanguage;
+  uiLanguage: UiLanguage | null;
 };
 
 const DEFAULT_PREFERENCES: UserPreferences = {
   contentLanguage: "auto",
+  uiLanguage: null,
 };
 
 function normalizeContentLanguage(value: unknown): ContentLanguage {
   return typeof value === "string" && (CONTENT_LANGUAGES as readonly string[]).includes(value) ? (value as ContentLanguage) : "auto";
+}
+
+function normalizeUiLanguage(value: unknown): UiLanguage | null {
+  return isUiLanguage(value) ? value : null;
 }
 
 function normalizePreferences(value: unknown): UserPreferences {
@@ -23,6 +30,7 @@ function normalizePreferences(value: unknown): UserPreferences {
   return {
     ...DEFAULT_PREFERENCES,
     contentLanguage: normalizeContentLanguage(raw.contentLanguage),
+    uiLanguage: normalizeUiLanguage(raw.uiLanguage),
   };
 }
 

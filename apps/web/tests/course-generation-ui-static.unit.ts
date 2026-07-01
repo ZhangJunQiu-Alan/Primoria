@@ -2,6 +2,7 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { dictionaries } from "../src/lib/i18n/dictionaries.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);
@@ -43,7 +44,7 @@ async function main() {
   assert(libraryGrid.includes("window.setInterval"), "library keeps polling while jobs are active");
   assert(libraryGrid.includes("INITIAL_REFRESH_WINDOW_MS"), "library polls briefly after opening to catch newly-started jobs");
   assert(libraryGrid.includes('kind: "job"'), "library can render generation jobs before course details sync");
-  assert(libraryGrid.includes("Filter by Status"), "library exposes a status filter menu");
+  assert(libraryGrid.includes("filterByStatus") && dictionaries.en.library.filterByStatus === "Filter by Status", "library exposes a status filter menu");
   assert(libraryGrid.includes("SortHeaderButton"), "library exposes sortable table headers");
   assert(libraryGrid.includes("sortEntries"), "library sorts course rows client-side");
   assert(libraryGrid.includes("<colgroup>"), "library table declares responsive column widths");
@@ -85,11 +86,11 @@ async function main() {
   assert(courseOutlineView.includes("disabled={!canGenerate}"), "unavailable lesson actions use disabled buttons");
   assert(courseOutlineView.includes("course-outline-remediation"), "shared course outline marks inserted remediation lessons");
   assert(courseOutlineView.includes("LockIcon"), "shared course outline renders locked lessons with a lock icon");
-  assert(courseOutlineView.includes("Jump ahead"), "planned lessons can be explicitly generated and opened out of order");
+  assert(courseOutlineView.includes("t.jumpAhead") && dictionaries.en.outline.jumpAhead === "Jump ahead", "planned lessons can be explicitly generated and opened out of order");
   assert(courseOutlineView.includes("course-outline-jump-dialog"), "jump ahead uses a confirmation dialog before generating");
-  assert(courseOutlineView.includes("Generate and jump ahead"), "jump ahead dialog exposes the generate-and-open action");
+  assert(courseOutlineView.includes("t.generateAndJump") && dictionaries.en.outline.generateAndJump === "Generate and jump ahead", "jump ahead dialog exposes the generate-and-open action");
   assert(courseOutlineView.includes("router.push(`/course/${displayCourse.id}?lessonId=${encodeURIComponent(lessonId)}`)"), "jump ahead routes to the selected lesson after enqueueing generation");
-  assert(courseOutlineView.includes("Retry"), "shared course outline preserves retry for failed lesson generation");
+  assert(courseOutlineView.includes("t.retry") && dictionaries.en.outline.retry === "Retry", "shared course outline preserves retry for failed lesson generation");
   assert(!courseOutlineView.includes("course-outline-pill"), "lesson rows no longer render redundant state pills");
   assert(!courseOutlineView.includes("roleLabel("), "lesson rows no longer render lesson role metadata");
   assert(!courseOutlineView.includes("CalendarIcon"), "lesson rows no longer render update date metadata");
@@ -143,7 +144,7 @@ async function main() {
   assert(libraryGrid.includes("library-row-menu${menuPlacement === \"up\" ? \" drop-up\" : \"\"}"), "library row menu receives a drop-up class when needed");
   assert(!libraryGrid.includes("Showing {visibleEntries.length}"), "library footer no longer shows item count copy");
   assert(libraryGrid.includes("ShareCourseDialog"), "library has a share course modal");
-  assert(libraryGrid.includes("Share course"), "library row menu exposes share course");
+  assert(libraryGrid.includes("shareCourse") && dictionaries.en.library.shareCourse === "Share course", "library row menu exposes share course");
   assert(libraryGrid.includes("courseShareUrl(course.id)"), "share modal derives a course share link");
   assert(libraryGrid.includes("/learn/${encodeURIComponent(courseId)}"), "share links use the public learn URL shape");
   assert(libraryGrid.includes("copyTextToClipboard(shareUrl)"), "share modal can copy the generated link");
@@ -190,12 +191,12 @@ async function main() {
   assert(copilotChatSurface.includes("finally"), "chat restoration always resolves instead of leaving the restore panel stuck");
   assert(!styles.includes("animation: primoria-message-enter"), "message rows do not replay opacity animations when remounted");
   assert(!styles.includes("animation: primoria-user-pop"), "user bubbles do not replay entry animations while the assistant streams");
-  assert(tutorTopbar.includes("New Chat"), "topbar exposes New Chat");
+  assert((tutorTopbar.includes("newChat") || tutorTopbar.includes("New Chat")) && dictionaries.en.topbar.newChat === "New Chat", "topbar exposes New Chat");
   assert(!tutorTopbar.includes("Settings"), "topbar no longer exposes Settings");
   assert(tutorNavRail.includes('pathname.endsWith("/outline")'), "course outlines keep Library selected in navigation");
   assert(toolCard.includes("}/outline`"), "home generated course card opens the unified outline page");
   assert(generativeUi.includes("}/outline`"), "restored lesson-generation cards open the unified outline page");
-  assert(historyPopup.includes("Recent"), "history popup is scoped to recent chats");
+  assert((historyPopup.includes("recent") || historyPopup.includes("Recent")) && dictionaries.en.tutor.recent === "Recent", "history popup is scoped to recent chats");
   assert(!historyPopup.includes("Start a new tutor chat"), "history popup no longer owns new-chat creation");
   assert(generativeUi.includes("/api/lesson-generation-jobs"), "home restore fetches active lesson generation jobs");
   assert(generativeUi.includes("selectRestorableLessonJobs"), "home restore dedupes restorable lesson jobs");

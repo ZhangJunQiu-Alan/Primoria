@@ -1,5 +1,8 @@
 import type { LearningProgressJobSummary } from "./learning-progress-jobs";
 import type { LearningDecision } from "./learning-progress-decider";
+import { formatMessage, type I18nDictionary } from "@/lib/i18n/dictionaries";
+
+type CourseLabels = I18nDictionary["course"];
 
 // Pure, client-safe labels for the learning-progress recommendation UI. Only
 // TYPES are imported from the store/decider modules, so no server-only code is
@@ -23,29 +26,29 @@ export function learningProgressStageLabel(job: Pick<LearningProgressJobSummary,
 }
 
 /** Headline for the recommendation popup, by decision kind. */
-export function learningDecisionHeadline(decision: LearningDecision): string {
+export function learningDecisionHeadline(decision: LearningDecision, t: CourseLabels): string {
   switch (decision.kind) {
     case "remediation":
-      return "建议先补一节";
+      return t.headlineRemediation;
     case "next":
-      return "Good Job！";
+      return t.headlineNext;
     case "course_complete":
-      return "恭喜，课程完成 🎉";
+      return t.headlineComplete;
     default:
-      return "学习建议";
+      return t.learningRecommendation;
   }
 }
 
 /** Primary-button label for the recommendation popup, by decision kind. */
-export function learningDecisionAcceptLabel(decision: LearningDecision): string {
+export function learningDecisionAcceptLabel(decision: LearningDecision, t: CourseLabels): string {
   switch (decision.kind) {
     case "remediation":
-      return "是";
+      return t.yes;
     case "next":
-      return decision.nextLessonTitle ? `开始学习「${decision.nextLessonTitle}」` : "开始下一节";
+      return decision.nextLessonTitle ? formatMessage(t.acceptNext, { title: decision.nextLessonTitle }) : t.acceptNextDefault;
     case "course_complete":
-      return "回首页";
+      return t.acceptComplete;
     default:
-      return "继续";
+      return t.continueLabel;
   }
 }

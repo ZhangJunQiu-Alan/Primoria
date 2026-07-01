@@ -7,6 +7,8 @@ import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import type { Course, Lesson } from "@/lib/courses/types";
+import { useT, msg } from "@/lib/i18n/client";
+import { formatMessage, type I18nDictionary } from "@/lib/i18n/dictionaries";
 
 type CourseOutlineViewProps = {
   course: Course;
@@ -26,6 +28,7 @@ export function CourseOutlineView({
   onCourseUpdated,
 }: CourseOutlineViewProps) {
   const router = useRouter();
+  const t = useT().outline;
   const [displayCourse, setDisplayCourse] = useState(course);
   const { jobsByLessonId, setJobs, refresh } = useLessonGenerationJobs(displayCourse.id, initialJobs);
   const [enqueueError, setEnqueueError] = useState<Record<string, string>>({});
@@ -132,24 +135,24 @@ export function CourseOutlineView({
         <header className="course-outline-summary">
           <Link href="/library" className="course-outline-back">
             <ArrowLeftIcon />
-            <span>Library</span>
+            <span>{t.backLibrary}</span>
           </Link>
           <div className="course-outline-summary-head">
             <div>
               <h1>{displayCourse.title}</h1>
-              <div className="course-outline-summary-meta" aria-label="Course outline summary">
-                <span><LessonsIcon />{lessons.length} lessons</span>
-                <span className="ready"><ReadyIcon />{generatedCount} ready</span>
-                <span className="locked"><LockIcon />{lockedCount} locked</span>
-                {buildingCount > 0 ? <span className="building"><BuildIcon />{buildingCount} building</span> : null}
+              <div className="course-outline-summary-meta" aria-label={t.ariaSummary}>
+                <span><LessonsIcon />{formatMessage(t.lessonsCount, { count: lessons.length })}</span>
+                <span className="ready"><ReadyIcon />{formatMessage(t.readyCount, { count: generatedCount })}</span>
+                <span className="locked"><LockIcon />{formatMessage(t.lockedCount, { count: lockedCount })}</span>
+                {buildingCount > 0 ? <span className="building"><BuildIcon />{formatMessage(t.buildingCount, { count: buildingCount })}</span> : null}
               </div>
             </div>
-            <span className="course-outline-ready-count">{generatedCount}/{lessons.length} ready</span>
+            <span className="course-outline-ready-count">{formatMessage(t.readyCount, { count: `${generatedCount}/${lessons.length}` })}</span>
           </div>
           <div
             className="course-outline-progress"
             role="progressbar"
-            aria-label="Course readiness"
+            aria-label={t.readiness}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={readyPercent}
@@ -159,7 +162,7 @@ export function CourseOutlineView({
         </header>
       ) : null}
 
-      <section className="course-outline-timeline" aria-label={visibleLessons === "upcoming" ? "Upcoming lessons" : "All course lessons"}>
+      <section className="course-outline-timeline" aria-label={visibleLessons === "upcoming" ? t.timelineUpcoming : t.timelineAll}>
         {renderedLessons.length > 0 ? (
           <ol className="course-outline-list">
             {renderedLessons.map((lesson, index) => (
@@ -178,12 +181,13 @@ export function CourseOutlineView({
                   setJumpTarget(lesson);
                 }}
                 summary={lessonSummary(lesson, displayCourse.language)}
+                t={t}
               />
             ))}
           </ol>
         ) : (
           <div className="course-outline-empty">
-            <p>No lessons have been added to this course yet.</p>
+            <p>{t.empty}</p>
           </div>
         )}
       </section>
@@ -206,16 +210,16 @@ export function CourseOutlineView({
             <button
               type="button"
               className="course-outline-jump-close"
-              aria-label="Close jump ahead dialog"
+              aria-label={t.closeJump}
               onClick={() => setJumpTarget(null)}
             >
               ×
             </button>
-            <div className="course-outline-jump-kicker">Jump ahead</div>
+            <div className="course-outline-jump-kicker">{t.jumpKicker}</div>
             <h2 id="course-outline-jump-title">{jumpTarget.title}</h2>
             <p>{lessonSummary(jumpTarget, displayCourse.language)}</p>
             <div className="course-outline-jump-note">
-              This lesson will be generated when you start it.
+              {t.jumpNote}
             </div>
             {jumpError ? <p className="course-outline-jump-error">{jumpError}</p> : null}
             <button
@@ -224,7 +228,7 @@ export function CourseOutlineView({
               disabled={jumpingLessonId === jumpTarget.id}
               onClick={() => void confirmJumpAhead()}
             >
-              {jumpingLessonId === jumpTarget.id ? "Generating..." : "Generate and jump ahead"}
+              {jumpingLessonId === jumpTarget.id ? t.generating : t.generateAndJump}
             </button>
           </section>
         </div>
@@ -257,6 +261,7 @@ function LessonOutlineRow({
   onGenerate,
   onJumpAhead,
   summary,
+  t,
 }: {
   courseId: string;
   lesson: Lesson;
@@ -268,8 +273,9 @@ function LessonOutlineRow({
   onGenerate: () => void;
   onJumpAhead: () => void;
   summary: string;
+  t: I18nDictionary["outline"];
 }) {
-  const state = lessonState(lesson, job, index, enqueueError);
+  const state = lessonState(lesson, job, index, enqueueError, t);
   const isRemediation = lesson.role === "remediation";
   const canGenerate = state.canGenerate;
   const actionHandler = state.actionKind === "jump" ? onJumpAhead : onGenerate;
@@ -285,14 +291,14 @@ function LessonOutlineRow({
         <h3>{lesson.title}</h3>
         <p className="course-outline-description">{summary}</p>
         {state.detail ? <p className="course-outline-state-note">{state.detail}</p> : null}
-        {isRemediation ? <span className="course-outline-insert-marker">Inserted remediation</span> : null}
-        <div className="course-outline-meta" aria-label={`${lesson.title} metadata`}>
-          <span><ClockIcon />{lesson.estimatedMinutes ? `~${lesson.estimatedMinutes} min` : "Time pending"}</span>
+        {isRemediation ? <span className="course-outline-insert-marker">{t.insertedRemediation}</span> : null}
+        <div className="course-outline-meta" aria-label={lesson.title}>
+          <span><ClockIcon />{lesson.estimatedMinutes ? `~${lesson.estimatedMinutes} min` : t.timePending}</span>
         </div>
       </div>
       <div className="course-outline-row-action">
         {lesson.status === "generated" ? (
-          <Link href={`/course/${courseId}?lessonId=${encodeURIComponent(lesson.id)}`} aria-label={`Open ${lesson.title}`}>Open</Link>
+          <Link href={`/course/${courseId}?lessonId=${encodeURIComponent(lesson.id)}`} aria-label={msg(t.openLesson, { title: lesson.title })}>{t.open}</Link>
         ) : (
           <button
             type="button"
@@ -313,6 +319,7 @@ function lessonState(
   job: LessonGenerationJobSummary | undefined,
   index: number,
   enqueueError: string | null,
+  t: I18nDictionary["outline"],
 ): {
   tone: "ready" | "locked" | "building" | "failed";
   actionLabel: string;
@@ -323,7 +330,7 @@ function lessonState(
   if (job && isLessonGenerationActive(job)) {
     return {
       tone: "building",
-      actionLabel: "Building",
+      actionLabel: t.building,
       actionKind: "generate",
       detail: lessonGenerationStageLabel(job),
       canGenerate: false,
@@ -332,26 +339,26 @@ function lessonState(
   if (lesson.status === "generating") {
     return {
       tone: "building",
-      actionLabel: "Building",
+      actionLabel: t.building,
       actionKind: "generate",
-      detail: "Lesson content is being prepared.",
+      detail: t.generatingDetail,
       canGenerate: false,
     };
   }
   if (lesson.status === "generated") {
     return {
       tone: "ready",
-      actionLabel: "Open",
+      actionLabel: t.open,
       actionKind: "open",
       detail: null,
       canGenerate: false,
     };
   }
-  const failure = enqueueError ?? (job?.status === "failed" ? job.lastError ?? "Generation failed" : null);
+  const failure = enqueueError ?? (job?.status === "failed" ? job.lastError ?? t.generationFailed : null);
   if (failure) {
     return {
       tone: "failed",
-      actionLabel: "Retry",
+      actionLabel: t.retry,
       actionKind: "generate",
       detail: failure,
       canGenerate: true,
@@ -359,9 +366,9 @@ function lessonState(
   }
   return {
     tone: "locked",
-    actionLabel: "Jump ahead",
+    actionLabel: t.jumpAhead,
     actionKind: "jump",
-    detail: "Generate this lesson now if you want to skip ahead.",
+    detail: t.lockedDetail,
     canGenerate: true,
   };
 }

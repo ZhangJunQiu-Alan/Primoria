@@ -8,6 +8,7 @@ import { ChatHistoryPopup } from "./history-popup";
 import { TutorNavRail } from "./nav-rail";
 import { TutorChatCopilot } from "./tutor-chat-copilot";
 import { TutorTopbar } from "./topbar";
+import { useT } from "@/lib/i18n/client";
 
 type AuthState = {
   authEnabled: boolean;
@@ -67,29 +68,29 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
 }
 
 function AuthLoadingPanel() {
+  const t = useT();
   return (
     <div className="auth-required-shell">
       <article className="auth-required-card">
-        <span className="course-block-tag">Checking session</span>
-        <h1>Loading your workspace…</h1>
-        <p>Primoria is verifying your account before opening the tutor.</p>
+        <span className="course-block-tag">{t.tutor.checkingSession}</span>
+        <h1>{t.tutor.loadingWorkspace}</h1>
+        <p>{t.tutor.verifyingAccount}</p>
       </article>
     </div>
   );
 }
 
 function AuthRequiredPanel() {
+  const t = useT();
   return (
     <div className="auth-required-shell">
       <article className="auth-required-card">
-        <span className="course-block-tag">Account required</span>
-        <h1>Your tutor workspace is private now</h1>
-        <p>
-          Sign in to use AI chat, save CopilotKit threads, generate courses, and keep Library data in Postgres.
-        </p>
+        <span className="course-block-tag">{t.tutor.accountRequired}</span>
+        <h1>{t.tutor.privateWorkspace}</h1>
+        <p>{t.tutor.authRequiredCopy}</p>
         <div className="auth-required-actions">
-          <Link href="/auth/sign-in">Sign in</Link>
-          <Link href="/auth/sign-up">Create account</Link>
+          <Link href="/auth/sign-in">{t.common.signIn}</Link>
+          <Link href="/auth/sign-up">{t.common.signUp}</Link>
         </div>
       </article>
     </div>

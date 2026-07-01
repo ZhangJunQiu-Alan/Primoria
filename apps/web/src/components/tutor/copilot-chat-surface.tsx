@@ -26,6 +26,7 @@ import {
 } from "@copilotkit/react-core/v2";
 import { CourseMarkdown } from "@/components/course/course-markdown";
 import { sanitizeCopilotAssistantText } from "@/hooks/use-primoria-copilot";
+import { useT } from "@/lib/i18n/client";
 import {
   ensureThreadSummary,
   hydrateThreadMessagesFromServer,
@@ -59,6 +60,7 @@ const PrimoriaChatScopeContext = createContext<{ courseId?: string | null; lesso
 
 function AssistantFeedbackBar({ messageId }: { messageId: string }) {
   const { courseId, lessonId } = useContext(PrimoriaChatScopeContext);
+  const t = useT();
   const [signal, setSignal] = useState<"positive" | "negative" | null>(null);
 
   // Switch-only: feedback is append-only with no undo signal, so we never clear
@@ -72,12 +74,12 @@ function AssistantFeedbackBar({ messageId }: { messageId: string }) {
   }
 
   return (
-    <div className="primoria-copilot-feedback" role="group" aria-label="Was this helpful?">
+    <div className="primoria-copilot-feedback" role="group" aria-label={t.tutor.feedbackGroup}>
       <button
         type="button"
         className={`primoria-copilot-feedback-btn${signal === "positive" ? " is-active" : ""}`}
         aria-pressed={signal === "positive"}
-        aria-label="Helpful"
+        aria-label={t.tutor.feedbackHelpful}
         onClick={() => send("positive")}
       >
         👍
@@ -86,7 +88,7 @@ function AssistantFeedbackBar({ messageId }: { messageId: string }) {
         type="button"
         className={`primoria-copilot-feedback-btn${signal === "negative" ? " is-active" : ""}`}
         aria-pressed={signal === "negative"}
-        aria-label="Not helpful"
+        aria-label={t.tutor.feedbackNotHelpful}
         onClick={() => send("negative")}
       >
         👎
@@ -335,6 +337,7 @@ function PrimoriaChatLayout({
   suggestionView: React.ReactElement;
   composerContext?: React.ReactNode;
 }) {
+  const t = useT();
   const scrollRef = useRef<HTMLDivElement>(null);
   const lastMessage = messages[messages.length - 1];
   const scrollKey = `${messages.length}:${lastMessage?.id ?? ""}:${typeof lastMessage?.content === "string" ? lastMessage.content.length : 0}`;
@@ -357,7 +360,7 @@ function PrimoriaChatLayout({
       onDragLeave={onDragLeave}
       onDrop={onDrop}
     >
-      {dragOver ? <div className="primoria-copilot-drop-overlay">Drop files here</div> : null}
+      {dragOver ? <div className="primoria-copilot-drop-overlay">{t.tutor.dropFiles}</div> : null}
       {showWelcome ? (
         <PrimoriaMainWelcomeScreen input={input} suggestionView={suggestionView} />
       ) : (
@@ -382,25 +385,6 @@ function PrimoriaChatLayout({
   );
 }
 
-const MAIN_SUGGESTIONS = [
-  {
-    title: "Visualize",
-    message: "做一个牛顿摆能量传递的互动可视化，并一步步解释",
-  },
-  {
-    title: "Build a course",
-    message: "给我生成一门关于信息熵直觉的课程",
-  },
-  {
-    title: "Step through",
-    message: "带我一步步解开普勒第二定律的几何直觉",
-  },
-  {
-    title: "Code",
-    message: "帮我把一段 React 组件改成 useMemo 优化版本，先解释原因",
-  },
-];
-
 const PrimoriaMainSuggestionView = Object.assign(
   function PrimoriaMainSuggestionView(props: CopilotChatSuggestionViewProps) {
     return <CopilotChatSuggestionView {...props} />;
@@ -415,13 +399,12 @@ function PrimoriaMainWelcomeScreen({
   input?: React.ReactNode;
   suggestionView?: React.ReactNode;
 }) {
+  const t = useT();
   return (
     <div data-testid="copilot-welcome-screen" className="primoria-main-welcome">
       <div className="primoria-main-welcome-card">
-        <h1>What do you want to learn today?</h1>
-        <p>
-          Ask for a concept, a course, a visual simulation, code help, or upload a file. Primoria will turn it into an interactive learning path.
-        </p>
+        <h1>{t.tutor.heroTitle}</h1>
+        <p>{t.tutor.heroSubtitle}</p>
         <div className="primoria-main-input">{input}</div>
         <div className="primoria-main-suggestions">{suggestionView}</div>
       </div>
@@ -512,10 +495,11 @@ function CopilotThreadHistoryRecorder({ threadId, title, courseId, lessonId }: {
 }
 
 export function CopilotRestorePanel() {
+  const t = useT();
   return (
     <div className="copilot-restore-panel" aria-live="polite">
       <span className="copilot-restore-dot" />
-      <span>Restoring your conversation…</span>
+      <span>{t.tutor.restoring}</span>
     </div>
   );
 }
@@ -543,6 +527,7 @@ export function PrimoriaCopilotChatSurface({
   courseId?: string | null;
   lessonId?: string | null;
 }) {
+  const t = useT();
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
   const stableContext = useMemo(
     () => ({
@@ -662,7 +647,7 @@ export function PrimoriaCopilotChatSurface({
           welcomeScreen={welcomeScreen ? PrimoriaMainWelcomeScreen : false}
           labels={{
             chatInputPlaceholder: placeholder,
-            chatInputToolbarAddButtonLabel: "Attach files",
+            chatInputToolbarAddButtonLabel: t.tutor.attachFiles,
           }}
         />
       </PrimoriaComposerContext.Provider>
@@ -670,5 +655,3 @@ export function PrimoriaCopilotChatSurface({
     </PrimoriaChatScopeContext.Provider>
   );
 }
-
-export { MAIN_SUGGESTIONS as PRIMORIA_MAIN_SUGGESTIONS };

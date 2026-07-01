@@ -4,12 +4,14 @@ import { listActiveLessonGenerationJobsByOwner } from "@/lib/courses/lesson-gene
 import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { CourseLibraryGrid } from "@/components/library/course-library-grid";
+import { getCurrentDictionary } from "@/lib/i18n/server";
 
 export const dynamic = "force-dynamic";
 
 export default async function LibraryPage() {
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUser();
+  const { dictionary: t } = await getCurrentDictionary();
   const shouldGate = authEnabled && !user;
   const [courses, lessonJobs] = shouldGate
     ? [[], []]
@@ -21,12 +23,12 @@ export default async function LibraryPage() {
       <section className="workspace library-workspace">
         {shouldGate ? (
           <div className="library-empty library-auth-empty">
-            <span className="course-block-tag">Private workspace</span>
-            <h2>Sign in to view your Library</h2>
-            <p>Your courses, chat threads, and settings are tied to your account.</p>
+            <span className="course-block-tag">{t.library.privateWorkspace}</span>
+            <h2>{t.library.signInTitle}</h2>
+            <p>{t.library.signInCopy}</p>
             <div className="auth-required-actions">
-              <Link href="/auth/sign-in">Sign in</Link>
-              <Link href="/auth/sign-up">Create account</Link>
+              <Link href="/auth/sign-in">{t.common.signIn}</Link>
+              <Link href="/auth/sign-up">{t.common.signUp}</Link>
             </div>
           </div>
         ) : (

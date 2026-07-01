@@ -1,0 +1,1409 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Primoria 建课 Agent 链路解释器</title>
+    <style>
+      :root {
+        --ink: #17130f;
+        --ink-soft: #4f463d;
+        --muted: #786f65;
+        --line: #ded5c7;
+        --line-strong: #c9bda9;
+        --paper: #fffaf0;
+        --paper-soft: #f7f1e7;
+        --wash: #edf5eb;
+        --blue: #dceaf7;
+        --green: #7cbf92;
+        --amber: #d28b16;
+        --orange: #ef7459;
+        --black: #15110d;
+        --shadow: 0 22px 80px rgba(38, 28, 18, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 12% 6%, rgba(189, 215, 239, 0.9), transparent 30rem),
+          radial-gradient(circle at 86% 10%, rgba(190, 230, 195, 0.85), transparent 34rem),
+          linear-gradient(120deg, #f7fbff 0%, #fff8ec 42%, #f5faef 100%);
+        font-family: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        line-height: 1.65;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(90, 80, 64, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(90, 80, 64, 0.055) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.86), transparent 76%);
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .page {
+        position: relative;
+        width: min(1480px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 28px 0 64px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 18px 0 28px;
+        border-bottom: 1px solid rgba(119, 104, 84, 0.18);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        font-family: Georgia, "Times New Roman", "Songti SC", serif;
+        font-size: 28px;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        border: 1px solid rgba(68, 118, 155, 0.34);
+        background:
+          radial-gradient(circle at 36% 32%, #fff4a8 0 18%, transparent 19%),
+          radial-gradient(circle at 63% 62%, #9de0b7 0 21%, transparent 22%),
+          radial-gradient(circle at 58% 36%, #a9cdf8 0 28%, transparent 29%),
+          #f8f4dc;
+        box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.46);
+      }
+
+      .topbar-note {
+        max-width: 620px;
+        color: var(--muted);
+        text-align: right;
+        font-size: 14px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 36px;
+        align-items: end;
+        padding: 54px 0 34px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+        color: #8a631c;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: var(--orange);
+        box-shadow: 18px 0 0 rgba(124, 191, 146, 0.8), 36px 0 0 rgba(116, 162, 220, 0.78);
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+      }
+
+      .hero h1 {
+        max-width: 780px;
+        font-family: Georgia, "Times New Roman", "Songti SC", serif;
+        font-size: 72px;
+        line-height: 0.96;
+        font-weight: 900;
+      }
+
+      .hero-lede {
+        max-width: 760px;
+        margin: 24px 0 0;
+        color: var(--ink-soft);
+        font-size: 20px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--ink-soft);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .pill.primary {
+        background: var(--black);
+        border-color: var(--black);
+        color: white;
+        box-shadow: 0 16px 34px rgba(21, 17, 13, 0.18);
+      }
+
+      .hero-board {
+        position: relative;
+        min-height: 420px;
+      }
+
+      .diagram-card {
+        position: absolute;
+        border: 1px solid rgba(130, 116, 93, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 252, 244, 0.82);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+      }
+
+      .card-course {
+        top: 12px;
+        right: 0;
+        width: 74%;
+        padding: 28px;
+      }
+
+      .card-course h2 {
+        margin-top: 12px;
+        font-family: Georgia, "Times New Roman", "Songti SC", serif;
+        font-size: 34px;
+        line-height: 1.05;
+      }
+
+      .course-path {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 24px;
+      }
+
+      .path-node {
+        min-height: 64px;
+        padding: 12px;
+        border-radius: 8px;
+        background: rgba(238, 235, 226, 0.8);
+        color: var(--muted);
+        font-weight: 900;
+      }
+
+      .path-node.active {
+        background: var(--black);
+        color: white;
+      }
+
+      .path-node::before {
+        content: "";
+        display: block;
+        width: 9px;
+        height: 9px;
+        margin-bottom: 8px;
+        border-radius: 999px;
+        background: #d8d1c4;
+      }
+
+      .path-node.active::before {
+        background: var(--orange);
+      }
+
+      .card-kg {
+        left: 0;
+        bottom: 30px;
+        width: 58%;
+        height: 246px;
+        overflow: hidden;
+      }
+
+      .card-kg svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .card-visual {
+        right: 26px;
+        bottom: 0;
+        width: 52%;
+        padding: 20px;
+      }
+
+      .visual-canvas {
+        height: 170px;
+        border: 1px solid rgba(210, 139, 22, 0.28);
+        border-radius: 8px;
+        background:
+          linear-gradient(90deg, rgba(210, 139, 22, 0.08) 1px, transparent 1px),
+          linear-gradient(rgba(210, 139, 22, 0.08) 1px, transparent 1px),
+          radial-gradient(circle at 74% 38%, rgba(124, 191, 146, 0.32), transparent 8rem),
+          rgba(255, 252, 244, 0.84);
+        background-size: 38px 38px, 38px 38px, auto, auto;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .visual-line {
+        position: absolute;
+        left: 58px;
+        top: 90px;
+        width: 72%;
+        height: 8px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--amber), var(--orange), rgba(124, 191, 146, 0.94));
+        transform: rotate(-10deg);
+      }
+
+      .bubble {
+        position: absolute;
+        border-radius: 999px;
+        border: 5px solid rgba(52, 44, 36, 0.18);
+        background: rgba(255, 250, 240, 0.72);
+      }
+
+      .bubble.a {
+        width: 62px;
+        height: 62px;
+        left: 52px;
+        top: 40px;
+      }
+
+      .bubble.b {
+        width: 40px;
+        height: 40px;
+        left: 218px;
+        top: 104px;
+        background: #bdd8fa;
+        border: none;
+      }
+
+      .bubble.c {
+        width: 78px;
+        height: 78px;
+        right: 44px;
+        bottom: 32px;
+        border-color: rgba(77, 153, 104, 0.35);
+        background: rgba(124, 191, 146, 0.34);
+      }
+
+      .section {
+        margin-top: 34px;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .section-heading h2 {
+        font-family: Georgia, "Times New Roman", "Songti SC", serif;
+        font-size: 42px;
+        line-height: 1.05;
+      }
+
+      .section-heading p {
+        max-width: 680px;
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .flow-shell {
+        display: grid;
+        grid-template-columns: 340px minmax(0, 1fr);
+        gap: 18px;
+      }
+
+      .step-rail,
+      .detail-panel,
+      .explainer-panel {
+        border: 1px solid rgba(130, 116, 93, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 252, 244, 0.82);
+        box-shadow: var(--shadow);
+      }
+
+      .step-rail {
+        padding: 12px;
+      }
+
+      .rail-step {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+        margin: 0;
+        padding: 14px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background: transparent;
+        text-align: left;
+        color: var(--ink-soft);
+        cursor: pointer;
+      }
+
+      .rail-step + .rail-step {
+        margin-top: 6px;
+      }
+
+      .rail-step:hover {
+        background: rgba(255, 255, 255, 0.64);
+        border-color: rgba(210, 139, 22, 0.22);
+      }
+
+      .rail-step[aria-selected="true"] {
+        background: var(--black);
+        color: white;
+      }
+
+      .step-index {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid currentColor;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 13px;
+      }
+
+      .step-title {
+        display: block;
+        font-weight: 900;
+        line-height: 1.25;
+      }
+
+      .step-subtitle {
+        display: block;
+        margin-top: 2px;
+        color: inherit;
+        opacity: 0.7;
+        font-size: 13px;
+        line-height: 1.35;
+      }
+
+      .detail-panel {
+        overflow: hidden;
+      }
+
+      .detail-top {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 24px;
+        padding: 28px;
+        border-bottom: 1px solid rgba(130, 116, 93, 0.16);
+        background: rgba(246, 240, 232, 0.7);
+      }
+
+      .detail-kicker {
+        color: #8a631c;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .detail-title {
+        margin-top: 8px;
+        font-family: Georgia, "Times New Roman", "Songti SC", serif;
+        font-size: 44px;
+        line-height: 1;
+      }
+
+      .detail-plain {
+        margin: 16px 0 0;
+        color: var(--ink-soft);
+        font-size: 20px;
+      }
+
+      .fact-card {
+        align-self: stretch;
+        padding: 20px;
+        border: 1px solid rgba(210, 139, 22, 0.28);
+        border-radius: 8px;
+        background: rgba(255, 250, 240, 0.76);
+      }
+
+      .fact-card strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+      }
+
+      .detail-cell {
+        min-height: 210px;
+        padding: 24px;
+        border-right: 1px solid rgba(130, 116, 93, 0.14);
+      }
+
+      .detail-cell:last-child {
+        border-right: 0;
+      }
+
+      .detail-cell h3 {
+        margin-bottom: 12px;
+        font-size: 16px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .detail-cell p {
+        margin: 0;
+        color: var(--ink-soft);
+      }
+
+      .file-list {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .file-list li {
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: rgba(238, 235, 226, 0.72);
+        color: #5f554b;
+        font-family: "SF Mono", Menlo, Consolas, monospace;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+
+      .flow-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 18px;
+        border-top: 1px solid rgba(130, 116, 93, 0.14);
+      }
+
+      .control-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .control-btn {
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--ink);
+        font-weight: 850;
+        cursor: pointer;
+      }
+
+      .control-btn:hover,
+      .control-btn.active {
+        border-color: var(--black);
+        background: var(--black);
+        color: white;
+      }
+
+      .progress-track {
+        width: 220px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(119, 104, 84, 0.16);
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        width: 8.33%;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--amber), var(--green));
+        transition: width 280ms ease;
+      }
+
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .tab-btn {
+        min-height: 44px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.66);
+        color: var(--ink-soft);
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .tab-btn[aria-selected="true"] {
+        background: var(--black);
+        color: white;
+        border-color: var(--black);
+      }
+
+      .explainer-panel {
+        padding: 28px;
+      }
+
+      .tab-panel {
+        display: none;
+      }
+
+      .tab-panel.active {
+        display: block;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .decision-card {
+        padding: 20px;
+        border: 1px solid rgba(130, 116, 93, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.52);
+      }
+
+      .decision-card h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      .decision-card p,
+      .decision-card li {
+        color: var(--ink-soft);
+      }
+
+      .decision-card ul {
+        margin: 10px 0 0;
+        padding-left: 20px;
+      }
+
+      .contract-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .block-card {
+        min-height: 116px;
+        padding: 14px;
+        border: 1px solid rgba(130, 116, 93, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.56);
+      }
+
+      .block-card strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .block-card span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .block-card.visual {
+        border-color: rgba(210, 139, 22, 0.42);
+        background: rgba(255, 244, 221, 0.62);
+      }
+
+      .block-card.quiz {
+        border-color: rgba(76, 139, 194, 0.36);
+        background: rgba(232, 243, 255, 0.65);
+      }
+
+      .state-row {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .state {
+        padding: 14px 10px;
+        border: 1px solid rgba(130, 116, 93, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.58);
+        text-align: center;
+        font-weight: 900;
+      }
+
+      .state small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .accordion {
+        display: grid;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      details {
+        border: 1px solid rgba(130, 116, 93, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.56);
+        overflow: hidden;
+      }
+
+      summary {
+        padding: 16px 18px;
+        cursor: pointer;
+        font-weight: 900;
+      }
+
+      details p {
+        margin: 0;
+        padding: 0 18px 18px;
+        color: var(--ink-soft);
+      }
+
+      .footer-note {
+        margin: 34px 0 0;
+        padding: 20px;
+        border-left: 4px solid var(--amber);
+        background: rgba(255, 252, 244, 0.72);
+        color: var(--ink-soft);
+      }
+
+      @media (max-width: 1180px) {
+        .hero,
+        .flow-shell,
+        .detail-top,
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+
+        .hero h1 {
+          font-size: 54px;
+        }
+
+        .hero-board {
+          min-height: 520px;
+        }
+
+        .card-course,
+        .card-kg,
+        .card-visual {
+          position: relative;
+          inset: auto;
+          width: 100%;
+          margin-top: 14px;
+        }
+
+        .detail-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .detail-cell {
+          border-right: 0;
+          border-bottom: 1px solid rgba(130, 116, 93, 0.14);
+        }
+
+        .detail-cell:last-child {
+          border-bottom: 0;
+        }
+
+        .contract-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .state-row {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 720px) {
+        .page {
+          width: min(100% - 28px, 1480px);
+          padding-top: 16px;
+        }
+
+        .topbar,
+        .section-heading,
+        .flow-controls {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .topbar-note {
+          text-align: left;
+        }
+
+        .hero h1 {
+          font-size: 42px;
+        }
+
+        .hero-lede,
+        .detail-plain {
+          font-size: 17px;
+        }
+
+        .detail-title {
+          font-size: 34px;
+        }
+
+        .contract-grid,
+        .state-row {
+          grid-template-columns: 1fr;
+        }
+
+        .course-path {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .diagram-card,
+        .step-rail,
+        .detail-panel,
+        .explainer-panel {
+          animation: rise 560ms ease both;
+        }
+
+        .visual-line {
+          animation: pulse-line 2.8s ease-in-out infinite;
+        }
+
+        @keyframes rise {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes pulse-line {
+          0%,
+          100% {
+            filter: saturate(1);
+            transform: rotate(-10deg) scaleX(1);
+          }
+          50% {
+            filter: saturate(1.5);
+            transform: rotate(-10deg) scaleX(1.04);
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="topbar">
+        <div class="brand" aria-label="Primoria">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Primoria</span>
+        </div>
+        <p class="topbar-note">
+          这不是普通流程图。它把当前代码里的建课链路拆成「人能听懂」的版本：谁先做、谁后做、哪里会恢复、哪里会校验。
+        </p>
+      </header>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <div class="eyebrow">Course Agent Chain</div>
+          <h1 id="hero-title">建课 Agent 到底在做什么</h1>
+          <p class="hero-lede">
+            一句话：它不是让一个聊天机器人一次写完整门课，而是一条分工流水线。先理解你的学习目标，
+            再在知识图谱里定位，从课程大纲开始，逐节生成 lesson，并用校验、断点和后台任务保证质量。
+          </p>
+          <div class="hero-actions">
+            <a class="pill primary" href="#flow">从第一步开始看</a>
+            <a class="pill" href="#details">看关键设计</a>
+          </div>
+        </div>
+
+        <div class="hero-board" aria-label="建课链路抽象预览">
+          <article class="diagram-card card-course">
+            <div class="eyebrow">Learning Path</div>
+            <h2>Photosynthesis: Light, Carbon, and Limits</h2>
+            <div class="course-path" aria-hidden="true">
+              <div class="path-node">Goal</div>
+              <div class="path-node active">Light reaction</div>
+              <div class="path-node">Calvin cycle</div>
+              <div class="path-node">Limits</div>
+            </div>
+          </article>
+
+          <article class="diagram-card card-kg" aria-label="知识图谱定位示意">
+            <svg viewBox="0 0 560 246" role="img" aria-label="知识图谱节点从目标定位到课程入口">
+              <defs>
+                <filter id="blurShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#1a130c" flood-opacity="0.12" />
+                </filter>
+              </defs>
+              <path d="M88 178 C154 78, 234 68, 290 122 S400 214, 496 90" fill="none" stroke="#d7d0c4" stroke-width="12" stroke-linecap="round" />
+              <path d="M88 178 C154 112, 226 88, 312 116 S420 136, 496 90" fill="none" stroke="#ef7459" stroke-width="7" stroke-linecap="round" />
+              <g filter="url(#blurShadow)">
+                <circle cx="88" cy="178" r="40" fill="#fffaf0" stroke="#cfc8ba" stroke-width="6" />
+                <circle cx="304" cy="118" r="54" fill="#b8d6fb" stroke="#8fb3e5" stroke-width="7" opacity="0.9" />
+                <circle cx="496" cy="90" r="43" fill="#b8e6c4" stroke="#7fbd91" stroke-width="7" opacity="0.9" />
+              </g>
+              <text x="64" y="184" font-size="20" font-weight="900" fill="#50463d">Goal</text>
+              <text x="276" y="126" font-size="20" font-weight="900" fill="#50463d">Topic</text>
+              <text x="470" y="96" font-size="20" font-weight="900" fill="#50463d">Next</text>
+            </svg>
+          </article>
+
+          <article class="diagram-card card-visual">
+            <div class="eyebrow">Interactive Visualization</div>
+            <div class="visual-canvas" aria-hidden="true">
+              <span class="visual-line"></span>
+              <span class="bubble a"></span>
+              <span class="bubble b"></span>
+              <span class="bubble c"></span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="flow" class="section" aria-labelledby="flow-title">
+        <div class="section-heading">
+          <h2 id="flow-title">从一句话到一节课</h2>
+          <p>
+            点击左侧每一步。右侧会用三层语言解释：不懂技术的人怎么理解、系统实际做什么、为什么要这样设计。
+          </p>
+        </div>
+
+        <div class="flow-shell">
+          <nav class="step-rail" id="stepRail" aria-label="建课 Agent 步骤"></nav>
+
+          <article class="detail-panel" aria-live="polite">
+            <div class="detail-top">
+              <div>
+                <div class="detail-kicker" id="detailKicker">Step 01</div>
+                <h2 class="detail-title" id="detailTitle">用户目标</h2>
+                <p class="detail-plain" id="detailPlain"></p>
+              </div>
+              <aside class="fact-card">
+                <strong>这一步的核心边界</strong>
+                <p id="detailBoundary"></p>
+              </aside>
+            </div>
+
+            <div class="detail-grid">
+              <section class="detail-cell">
+                <h3>系统实际做什么</h3>
+                <p id="detailActual"></p>
+              </section>
+              <section class="detail-cell">
+                <h3>为什么这样设计</h3>
+                <p id="detailDesign"></p>
+              </section>
+              <section class="detail-cell">
+                <h3>工程锚点</h3>
+                <ul class="file-list" id="detailFiles"></ul>
+              </section>
+            </div>
+
+            <div class="flow-controls">
+              <div class="control-group">
+                <button class="control-btn" type="button" id="prevStep">上一步</button>
+                <button class="control-btn active" type="button" id="playFlow">自动播放</button>
+                <button class="control-btn" type="button" id="nextStep">下一步</button>
+              </div>
+              <div class="progress-track" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="details" class="section" aria-labelledby="details-title">
+        <div class="section-heading">
+          <h2 id="details-title">关键设计细节</h2>
+          <p>
+            这部分回答几个最容易混淆的问题：Agent 是一个聊天机器人吗？Planner 和 Writer 有什么区别？
+            为什么视觉块和图片块要分开？为什么失败后可以恢复？
+          </p>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="关键设计分组">
+          <button class="tab-btn" type="button" role="tab" aria-selected="true" aria-controls="panel-overview" data-tab="overview">总览</button>
+          <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-roles" data-tab="roles">Planner vs Writer</button>
+          <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-recovery" data-tab="recovery">恢复与容错</button>
+          <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-contract" data-tab="contract">Block 合约</button>
+        </div>
+
+        <div class="explainer-panel">
+          <section class="tab-panel active" id="panel-overview" role="tabpanel">
+            <div class="two-col">
+              <article class="decision-card">
+                <h3>Agent 在这里是什么意思</h3>
+                <p>
+                  这里的 Agent 不是一个单独的聊天窗口，而是一组被编排的任务：定位、建大纲、排队、规划 lesson、
+                  写 block、生成图片、校验、保存。每一步有自己的输入和输出。
+                </p>
+              </article>
+              <article class="decision-card">
+                <h3>为什么不一次生成整门课</h3>
+                <p>
+                  因为整门课太长、太容易跑偏，也不方便失败恢复。现在先生成课程大纲，再逐节生成 lesson。
+                  用户打开当前 lesson 时，只需要当前 lesson 的 blocks；下一节只做预热。
+                </p>
+              </article>
+            </div>
+            <div class="accordion">
+              <details open>
+                <summary>课程大纲和 lesson 内容不是一回事</summary>
+                <p>
+                  大纲只告诉系统这门课有哪些 lesson，以及每节 lesson 大概讲什么。真正的正文、quiz、image、visual
+                  会在 Lesson Job 里生成。这样课程列表可以先稳定存在，内容则按需要逐节生产。
+                </p>
+              </details>
+              <details>
+                <summary>关闭页面不会停止生成</summary>
+                <p>
+                  生成 lesson 的工作在后台 worker 里跑，不依赖浏览器页面。页面只是发起任务和查看状态。
+                  这也是为什么 job store、lease、checkpoint 很重要。
+                </p>
+              </details>
+            </div>
+          </section>
+
+          <section class="tab-panel" id="panel-roles" role="tabpanel">
+            <div class="two-col">
+              <article class="decision-card">
+                <h3>Planner 只负责结构</h3>
+                <p>
+                  Planner 看 KG、掌握情况、用户资料和 lesson 目标，产出一个紧凑计划：这节课需要哪些 block，
+                  每个 block 讲什么目标，用什么类型，以及给 Writer 的简短指令。
+                </p>
+                <ul>
+                  <li>不写大段正文。</li>
+                  <li>不生成最终图片。</li>
+                  <li>不让模型自由决定 visual engine。</li>
+                </ul>
+              </article>
+              <article class="decision-card">
+                <h3>Writer 只负责内容</h3>
+                <p>
+                  Writer 不能重新规划课程。它拿到 Planner 的 block job 后，按照顺序补齐内容字段：
+                  text 写 markdown，quiz 写题目，visual 写对应 payload，image 写图片 brief。
+                </p>
+                <ul>
+                  <li>不增删 block。</li>
+                  <li>不改变顺序。</li>
+                  <li>出错后按精确错误修复。</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section class="tab-panel" id="panel-recovery" role="tabpanel">
+            <p>
+              这条链路按阶段保存进度。可以把它理解成游戏存档：Planner 计划成功后存一次，Writer 每批 block
+              成功后也存一次。失败重试时，不需要从头重新做所有事。
+            </p>
+            <div class="state-row" aria-label="Lesson job 阶段">
+              <div class="state">queued<small>等待</small></div>
+              <div class="state">planning<small>规划结构</small></div>
+              <div class="state">writing<small>写内容</small></div>
+              <div class="state">imaging<small>处理图片</small></div>
+              <div class="state">validating<small>验收</small></div>
+              <div class="state">saving<small>发布</small></div>
+            </div>
+            <div class="accordion">
+              <details open>
+                <summary>Lease 是什么</summary>
+                <p>
+                  Lease 可以理解成 worker 的临时工作证。只有持有当前有效工作证的 worker 才能推进和发布 lesson。
+                  如果旧 worker 卡住或超时，新 worker 可以接手，旧 worker 不能再把过期结果写回去。
+                </p>
+              </details>
+              <details>
+                <summary>为什么图片失败不一定让整节课失败</summary>
+                <p>
+                  图片是增强理解的媒体资产。当前设计允许单张图片生成失败后变成错误占位，但整节 lesson 不会因此全部失败。
+                  这能避免因为一个媒体调用拖垮完整课程。
+                </p>
+              </details>
+            </div>
+          </section>
+
+          <section class="tab-panel" id="panel-contract" role="tabpanel">
+            <p>
+              一节 lesson 不是随意堆文字，而是由有角色的 blocks 组成。常见的两概念 lesson 会围绕 intro、example、
+              image、visual、quiz、transfer、summary 展开。Validator 会检查数量、顺序、覆盖、媒体比例和字段结构。
+            </p>
+            <div class="contract-grid" aria-label="常见 block 类型">
+              <article class="block-card">
+                <strong>Text</strong>
+                <span>解释、例子、路线、总结。负责把概念说清楚。</span>
+              </article>
+              <article class="block-card">
+                <strong>Analogy</strong>
+                <span>用熟悉事物类比抽象概念，降低理解门槛。</span>
+              </article>
+              <article class="block-card visual">
+                <strong>Image</strong>
+                <span>静态直观锚点。先写 brief，再由图片阶段生成资产。</span>
+              </article>
+              <article class="block-card visual">
+                <strong>Visual</strong>
+                <span>可交互机制。用于变量关系、过程观察、算法演示。</span>
+              </article>
+              <article class="block-card">
+                <strong>Code</strong>
+                <span>只在适合代码的学科或用户明确需要代码时出现。</span>
+              </article>
+              <article class="block-card quiz">
+                <strong>Quiz</strong>
+                <span>每个 concept 收尾检查一次，用于后续掌握度判断。</span>
+              </article>
+              <article class="block-card">
+                <strong>Transfer</strong>
+                <span>把多个概念合在一起，迁移到新场景。</span>
+              </article>
+              <article class="block-card">
+                <strong>Summary</strong>
+                <span>课后反思和小结，帮助形成完整学习闭环。</span>
+              </article>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <p class="footer-note">
+        给非技术用户的最终理解：Primoria 的建课不是「模型随口生成一堆内容」，而是「知识图谱定位 + 课程骨架 +
+        后台逐节生产 + 结构化验收」。模型只负责它擅长的部分，系统负责边界、顺序、恢复和发布。
+      </p>
+    </main>
+
+    <script>
+      const steps = [
+        {
+          label: "用户目标",
+          subtitle: "一句自然语言开始",
+          plain:
+            "用户只需要说想学什么，比如“带我入门光合作用”。系统会先把这句话当成学习目标，而不是直接让模型开始写课。",
+          boundary:
+            "这一阶段只收集意图，不决定课程内容。真正的起点要等知识图谱定位完成。",
+          actual:
+            "前端把用户 query 发给定位流程，后端保留原始 query、语言偏好和后续可能的菜单选择。",
+          design:
+            "先保留原话，可以让后面的定位、菜单解释和课程标题都围绕同一个目标，避免中途丢失用户语境。",
+          files: ["apps/web/src/lib/knowledge-graph/position-learning-goal.ts"],
+        },
+        {
+          label: "KG 定位",
+          subtitle: "找到知识图谱里的入口",
+          plain:
+            "系统会先判断用户想学的东西属于哪个学科、哪个 topic，必要时给出几个可能入口让用户选择。",
+          boundary:
+            "定位只决定从哪里开始学，不负责生成 lesson 正文。",
+          actual:
+            "先做跨图谱检索和相似度门槛判断，再用 Stage-2 LLM 在候选 graph/topic 中做最终选择，最后产出 courseContext。",
+          design:
+            "用 KG 做锚点，可以让课程路径稳定落在真实知识结构里，而不是让模型凭感觉组织内容。",
+          files: [
+            "apps/web/src/lib/knowledge-graph/position-learning-goal.ts",
+            "apps/web/src/app/api/knowledge-graph/position/route.ts",
+          ],
+        },
+        {
+          label: "建课程大纲",
+          subtitle: "先有骨架，不写正文",
+          plain:
+            "系统会先创建一门课的 lesson 列表，比如第 1 节、第 2 节、第 3 节分别讲什么。",
+          boundary:
+            "这里不会生成 blocks。它只是确定课程目录和第一节 lesson。",
+          actual:
+            "initializeCourseOutline 根据 owner、graph 和 start topic 复用或创建 course outline，并找出要生成的第一节 lesson。",
+          design:
+            "大纲和内容拆开后，课程可以先进入 library，内容则按 lesson 逐步生产，避免一次性生成过长、难恢复的课程。",
+          files: [
+            "apps/web/src/app/api/learning/course/route.ts",
+            "apps/web/src/lib/ai/deepagent/course-generator.ts",
+          ],
+        },
+        {
+          label: "入队 Lesson Job",
+          subtitle: "交给后台 worker",
+          plain:
+            "第一节课不会在页面请求里硬等模型写完，而是被放进后台任务队列。页面可以关闭，任务仍然能继续。",
+          boundary:
+            "API route 只负责入队或返回已有任务，不直接跑大模型。",
+          actual:
+            "enqueueLessonGenerationJob 会检查 lesson 状态、已有 queued/running/failed job，并以幂等方式创建或复用 job。",
+          design:
+            "建课属于长任务。用 job store 能支持恢复、重试、进度展示和避免重复生成。",
+          files: [
+            "apps/web/src/lib/courses/lesson-generation-jobs.ts",
+            "apps/web/src/app/api/courses/[id]/lessons/[lessonId]/generate/route.ts",
+          ],
+        },
+        {
+          label: "加载学习上下文",
+          subtitle: "把个人化信息带进来",
+          plain:
+            "开始写 lesson 前，worker 会拿到这节课要讲的知识点、用户已经掌握什么、用户画像和可用事实。",
+          boundary:
+            "这些上下文用于影响 lesson 设计，但不是让模型读取整库数据。",
+          actual:
+            "loadLessonGenerationContext 读取 course、lesson、topic、concept mastery、learner profile、active facts，并只选取适合 Planner 的 facts。",
+          design:
+            "上下文要足够有用，但不能太散。只传需要的知识点和事实，能降低跑偏和 token 浪费。",
+          files: ["apps/web/src/lib/courses/lesson-generation-context.ts"],
+        },
+        {
+          label: "Planner 设计结构",
+          subtitle: "决定 block 蓝图",
+          plain:
+            "Planner 像课程设计师，只决定这节课应该有哪些段落、练习、图片、可视化和总结。",
+          boundary:
+            "Planner 不写完整正文，只产出紧凑的 LessonPlan IR 和 writerInstruction。",
+          actual:
+            "lesson-planner 使用 KG、掌握度、facts、语言和 block skeleton 生成结构化 plan，每个 block 有 type、role、conceptIds、goal、writerInstruction。",
+          design:
+            "结构先行可以让课程更稳定。Writer 后面只按计划填内容，不能随意改课程结构。",
+          files: [
+            "apps/web/src/lib/ai/course-generation/lesson-planner.ts",
+            "apps/web/src/lib/ai/course-generation/lesson-plan-ir.ts",
+          ],
+        },
+        {
+          label: "编译和校验 Plan",
+          subtitle: "先验结构是否合格",
+          plain:
+            "系统会检查 Planner 的设计是不是合理，比如有没有 quiz、有没有 summary、图片和 visual 比例是否过高。",
+          boundary:
+            "这一步验证的是课程结构，不验证最终正文质量。",
+          actual:
+            "lesson-plan-compiler 会检查 block 数量、顺序、concept 覆盖、quiz 覆盖、媒体规则、code 适配和 visual engine。",
+          design:
+            "把规则写进编译器，能把“课程应该长什么样”固定下来，而不是完全靠 prompt 约束模型。",
+          files: ["apps/web/src/lib/ai/course-generation/lesson-plan-compiler.ts"],
+        },
+        {
+          label: "Writer 分批写内容",
+          subtitle: "按计划填充 blocks",
+          plain:
+            "Writer 像内容作者。它不能重排课程，只能按照 Planner 的任务逐块写正文、题目、代码或 visual payload。",
+          boundary:
+            "Writer 不能新增、删除或重排 block；它只负责填字段。",
+          actual:
+            "block-writer 把计划切成 activation、concept、transfer、quiz、summary 等批次，并通过 repair loop 修复字段或结构错误。",
+          design:
+            "分批写能降低单次输出压力，也方便失败时只重写出错批次，不必整节 lesson 从头来。",
+          files: ["apps/web/src/lib/ai/course-generation/block-writer.ts"],
+        },
+        {
+          label: "Image 与 Visual",
+          subtitle: "静态图和交互机制分开",
+          plain:
+            "Image 是静态图片锚点；Visual 是能操作的交互块。它们服务不同学习目的，所以生成路径也不一样。",
+          boundary:
+            "Writer 可以写 image brief 或 visual payload，但图片资产会在 imaging 阶段单独生成。",
+          actual:
+            "image-builder 根据 brief 生成图片并缓存为资产；visual engine 由编译器根据 KG affordance 固定，Writer 只填对应 payload。",
+          design:
+            "分离媒体生成能控制质量和失败影响。图片失败不一定拖垮整节课，visual 则保持结构化、可渲染。",
+          files: [
+            "apps/web/src/lib/ai/media/image-builder.ts",
+            "apps/web/src/lib/ai/course-generation/lesson-plan-compiler.ts",
+          ],
+        },
+        {
+          label: "Lesson Validator",
+          subtitle: "发布前质检",
+          plain:
+            "写完后系统会做最后质检。通过才保存为可学习 lesson；不通过就报错或重试。",
+          boundary:
+            "Validator 是发布门槛，不是另一个创作模型。",
+          actual:
+            "processor 在 validating 阶段调用 validateLessonBlocks；失败会清理批次 checkpoint，让后续重试重新写内容。",
+          design:
+            "生成式内容必须有验收门。否则页面可能收到字段缺失、顺序错误或无法渲染的 blocks。",
+          files: [
+            "apps/web/src/lib/courses/lesson-generation-processor.ts",
+            "apps/web/src/lib/ai/course-generation/lesson-validator.ts",
+          ],
+        },
+        {
+          label: "保存和发布",
+          subtitle: "原子写回 lesson",
+          plain:
+            "只有通过校验的 lesson 才会被写回数据库，页面之后才能看到稳定内容。",
+          boundary:
+            "旧 worker 如果已经失去 lease，不能把过期结果发布出去。",
+          actual:
+            "publishLessonAndCompleteJob 用 lease fence 写入 lesson blocks、minutes、version，同时更新 course minutes 和 job completed 状态。",
+          design:
+            "原子发布和 lease fence 可以避免两个 worker 同时写、旧结果覆盖新结果。",
+          files: ["apps/web/src/lib/courses/lesson-generation-jobs.ts"],
+        },
+        {
+          label: "后续 lesson",
+          subtitle: "只预热下一节",
+          plain:
+            "学习当前 lesson 时，系统可以只预热下一节。不会把整门课的所有 lesson block 都塞进当前页面。",
+          boundary:
+            "prewarm 只是加速下一步，不代表用户已经决定跳过去，也不会越过课后确认。",
+          actual:
+            "prewarm-next route 只找当前 lesson 的 sortKey 下一节并 enqueue；没有下一节或已经生成则跳过。",
+          design:
+            "只预热一节能平衡速度和成本，也符合逐节学习、逐节反馈的产品逻辑。",
+          files: ["apps/web/src/app/api/courses/[id]/lessons/[lessonId]/prewarm-next/route.ts"],
+        },
+      ];
+
+      const stepRail = document.getElementById("stepRail");
+      const detailKicker = document.getElementById("detailKicker");
+      const detailTitle = document.getElementById("detailTitle");
+      const detailPlain = document.getElementById("detailPlain");
+      const detailBoundary = document.getElementById("detailBoundary");
+      const detailActual = document.getElementById("detailActual");
+      const detailDesign = document.getElementById("detailDesign");
+      const detailFiles = document.getElementById("detailFiles");
+      const progressFill = document.getElementById("progressFill");
+      const prevStep = document.getElementById("prevStep");
+      const nextStep = document.getElementById("nextStep");
+      const playFlow = document.getElementById("playFlow");
+      const tabButtons = document.querySelectorAll(".tab-btn");
+      const tabPanels = document.querySelectorAll(".tab-panel");
+
+      let current = 0;
+      let timer = null;
+
+      function renderRail() {
+        stepRail.innerHTML = "";
+        steps.forEach((step, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "rail-step";
+          button.setAttribute("role", "tab");
+          button.setAttribute("aria-selected", index === current ? "true" : "false");
+          button.innerHTML = `
+            <span class="step-index">${String(index + 1).padStart(2, "0")}</span>
+            <span>
+              <span class="step-title">${step.label}</span>
+              <span class="step-subtitle">${step.subtitle}</span>
+            </span>
+          `;
+          button.addEventListener("click", () => {
+            stopPlayback();
+            setStep(index);
+          });
+          stepRail.appendChild(button);
+        });
+      }
+
+      function setStep(index) {
+        current = (index + steps.length) % steps.length;
+        const step = steps[current];
+        detailKicker.textContent = `Step ${String(current + 1).padStart(2, "0")}`;
+        detailTitle.textContent = step.label;
+        detailPlain.textContent = step.plain;
+        detailBoundary.textContent = step.boundary;
+        detailActual.textContent = step.actual;
+        detailDesign.textContent = step.design;
+        detailFiles.innerHTML = step.files.map((file) => `<li>${file}</li>`).join("");
+        progressFill.style.width = `${((current + 1) / steps.length) * 100}%`;
+        [...stepRail.children].forEach((button, buttonIndex) => {
+          button.setAttribute("aria-selected", buttonIndex === current ? "true" : "false");
+        });
+      }
+
+      function stopPlayback() {
+        if (!timer) return;
+        window.clearInterval(timer);
+        timer = null;
+        playFlow.textContent = "自动播放";
+        playFlow.classList.add("active");
+      }
+
+      function startPlayback() {
+        if (timer) {
+          stopPlayback();
+          return;
+        }
+        playFlow.textContent = "暂停";
+        playFlow.classList.remove("active");
+        timer = window.setInterval(() => {
+          setStep(current + 1);
+        }, 1700);
+      }
+
+      prevStep.addEventListener("click", () => {
+        stopPlayback();
+        setStep(current - 1);
+      });
+
+      nextStep.addEventListener("click", () => {
+        stopPlayback();
+        setStep(current + 1);
+      });
+
+      playFlow.addEventListener("click", startPlayback);
+
+      tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = button.dataset.tab;
+          tabButtons.forEach((item) => item.setAttribute("aria-selected", item === button ? "true" : "false"));
+          tabPanels.forEach((panel) => {
+            panel.classList.toggle("active", panel.id === `panel-${target}`);
+          });
+        });
+      });
+
+      renderRail();
+      setStep(0);
+    </script>
+  </body>
+</html>

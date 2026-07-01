@@ -2,6 +2,7 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { dictionaries } from "../src/lib/i18n/dictionaries.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);
@@ -26,15 +27,21 @@ async function main() {
   );
 
   assert(!landingPage.includes("CopilotKitProvider"), "public landing component does not mount CopilotKit");
-  assert(landingPage.includes("<span>Primoria</span>"), "landing hero makes the product name a first-class part of the headline");
-  assert(landingPage.includes("学习更加智能、更加定制化、更加高效"), "landing hero uses the product positioning line");
-  assert(landingPage.includes("STEM"), "landing explains STEM coverage");
-  assert(landingPage.includes("Interactive Visualization"), "landing highlights interactive visualization");
-  assert(landingPage.includes("KG"), "landing names knowledge graph positioning");
-  assert(landingPage.includes("Course Tutor"), "landing explains the course tutor");
-  assert(!landingPage.includes("Course Copilot"), "landing does not use the old Course Copilot name");
-  assert(landingPage.includes("mastery"), "landing explains adaptive learning mastery");
-  assert(landingPage.includes("Lazy Generation") || landingPage.includes("逐节"), "landing explains lesson-by-lesson generation");
+
+  // Landing copy now resolves from the i18n dictionary.
+  const zhLanding = JSON.stringify(dictionaries.zh.landing);
+  const enLanding = JSON.stringify(dictionaries.en.landing);
+  assert(landingPage.includes("useT"), "landing resolves copy from the i18n dictionary");
+  assert(landingPage.includes("<span>{t.landing.headlineProduct}</span>"), "landing hero makes the product name a first-class part of the headline");
+  assert(dictionaries.zh.landing.headlineProduct === "Primoria" && dictionaries.en.landing.headlineProduct === "Primoria", "landing product name is Primoria in both languages");
+  assert(dictionaries.zh.landing.headline.includes("学习更加智能、更加定制化、更加高效"), "landing hero uses the product positioning line");
+  assert(zhLanding.includes("STEM") && enLanding.includes("STEM"), "landing explains STEM coverage");
+  assert(zhLanding.includes("Interactive Visualization") && enLanding.includes("Interactive Visualization"), "landing highlights interactive visualization");
+  assert(zhLanding.includes("KG") && enLanding.includes("KG"), "landing names knowledge graph positioning");
+  assert(zhLanding.includes("Course Tutor") && enLanding.includes("Course Tutor"), "landing explains the course tutor");
+  assert(!zhLanding.includes("Course Copilot") && !enLanding.includes("Course Copilot"), "landing does not use the old Course Copilot name");
+  assert(zhLanding.toLowerCase().includes("mastery") && enLanding.toLowerCase().includes("mastery"), "landing explains adaptive learning mastery");
+  assert((enLanding.includes("Lazy Generation") || enLanding.includes("Lazy")) && (zhLanding.includes("逐节") || zhLanding.includes("Lazy")), "landing explains lesson-by-lesson generation");
   assert(landingPage.includes("landing-map-stage"), "landing hero uses one dominant learning-map visual anchor");
   assert(landingPage.includes("landing-capability-list"), "landing product section uses a restrained capability list");
   assert(landingPage.includes("landing-workflow-line"), "landing workflow uses a linear path instead of card grid clutter");

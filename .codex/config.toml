@@ -1,0 +1,21 @@
+[mcp_servers.filesystem]
+command = "npx"
+args = [
+    "-y",
+    "@modelcontextprotocol/server-filesystem",
+    "/Users/zhangjunqiu/Documents/Primoria",
+]
+
+[mcp_servers.forge_extension]
+url = "http://localhost:52441/mcp"
+
+[mcp_servers.supabase]
+command = "npx"
+args = [
+    "-y",
+    "@supabase/mcp-server-supabase@latest",
+    "--supabase-url",
+    "https://rygafvlzzkvqhhenajzi.supabase.co",
+    "--supabase-key",
+    "",
+]

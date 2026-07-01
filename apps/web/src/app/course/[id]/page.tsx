@@ -6,6 +6,8 @@ import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 import { listLessonGenerationJobsByCourse } from "@/lib/courses/lesson-generation-jobs";
 import { currentCourseLesson, currentLessonBlocks } from "@/lib/courses/types";
+import { getCurrentDictionary } from "@/lib/i18n/server";
+import { formatMessage } from "@/lib/i18n/dictionaries";
 
 export const dynamic = "force-dynamic";
 
@@ -28,17 +30,19 @@ export default async function CoursePage({
   const visibleBlocks = currentLessonBlocks(course, requestedLessonId);
   const visibleMinutes = currentLesson?.estimatedMinutes ?? course.estimatedMinutes;
   const lessonTitle = currentLesson?.title ?? course.title;
+  const { dictionary } = await getCurrentDictionary();
+  const t = dictionary.course;
 
   return (
     <main className="app-shell course-app-shell">
       <section className="workspace course-workspace" style={{ ["--course-sidebar-width" as string]: "410px" }}>
         <header className="course-header">
           <div>
-            <Link href="/library" className="course-back">← Library</Link>
+            <Link href="/library" className="course-back">← {t.backLibrary}</Link>
             <h1>{lessonTitle}</h1>
-            <div className="course-status-row" aria-label="Lesson status">
-              <span>{visibleBlocks.length} blocks</span>
-              <span>约 {visibleMinutes} min</span>
+            <div className="course-status-row" aria-label={t.lessonStatus}>
+              <span>{formatMessage(t.blocks, { count: visibleBlocks.length })}</span>
+              <span>{formatMessage(t.minutes, { minutes: visibleMinutes })}</span>
             </div>
           </div>
         </header>

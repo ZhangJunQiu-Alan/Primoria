@@ -8,6 +8,7 @@ import {
   THREAD_EVENT_NAME,
   type CopilotThreadSummary,
 } from "@/lib/copilot-thread-history";
+import { useT } from "@/lib/i18n/client";
 
 function readSessions() {
   const currentThreadId = getCurrentThreadId();
@@ -26,6 +27,7 @@ export function ChatHistoryPopup({
   onClose: () => void;
   onSelectChat?: (threadId: string) => void;
 }) {
+  const t = useT();
   const [currentThreadId, setCurrentThread] = useState(getCurrentThreadId());
   const [sessions, setSessions] = useState<CopilotThreadSummary[]>([]);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -62,11 +64,11 @@ export function ChatHistoryPopup({
   const hasSession = sessions.length > 0;
 
   return (
-    <div className="history-dropdown" role="dialog" aria-label="Recent chat history">
+    <div className="history-dropdown" role="dialog" aria-label={t.tutor.recent}>
       <div className="history-panel" ref={panelRef}>
         <header className="history-head">
-          <strong>Recent</strong>
-          <button type="button" className="history-close" onClick={onClose} aria-label="Close">
+          <strong>{t.tutor.recent}</strong>
+          <button type="button" className="history-close" onClick={onClose} aria-label={t.common.close}>
             ×
           </button>
         </header>
@@ -86,8 +88,8 @@ export function ChatHistoryPopup({
                       onClose();
                     }}
                   >
-                    <strong>{session.title || "Tutor chat"}</strong>
-                    <span>{session.messageCount} messages · {active ? "live" : new Date(session.updatedAt).toLocaleDateString()}</span>
+                    <strong>{session.title || t.tutor.tutorChat}</strong>
+                    <span>{session.messageCount} {t.tutor.messages} · {active ? t.tutor.live : new Date(session.updatedAt).toLocaleDateString()}</span>
                   </button>
                 </li>
               );
@@ -95,7 +97,7 @@ export function ChatHistoryPopup({
           </ul>
         ) : (
           <p className="history-empty">
-            No recent conversations yet.
+            {t.tutor.noRecent}
           </p>
         )}
       </div>
