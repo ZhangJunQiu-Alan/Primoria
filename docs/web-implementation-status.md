@@ -61,11 +61,6 @@ Passed:
 - `pnpm --filter @primoria/web build`
 - Browser E2E: user prompt → API route → OpenAI-compatible backend → model generated `html_widget` → iframe render
 
-Preview artifacts:
-
-- `docs/primoria-web-settings.png`
-- `docs/primoria-web-real-widget.png`
-
 ## Next implementation steps
 
 1. Route adaptive course requests through knowledge-graph positioning before generation.
