@@ -55,8 +55,8 @@ function main() {
   assert(devOnboardingPage.includes("debugMode"), "dev onboarding route renders client in debug mode");
   assert(devOnboardingPage.includes('process.env.NODE_ENV === "production"'), "dev onboarding route is hidden in production by default");
 
-  const supabaseMiddleware = src("lib/supabase/middleware.ts");
-  assert(supabaseMiddleware.includes("^\\/dev\\/onboarding"), "dev onboarding route bypasses auth proxy");
+  const proxy = src("proxy.ts");
+  assert(proxy.includes("^\\/dev\\/onboarding"), "dev onboarding route bypasses auth proxy");
 
   const goalRoute = src("app/api/onboarding/goal/route.ts");
   assert(goalRoute.includes("resolveOnboardingGoalAnchor"), "goal route resolves KG anchor");

@@ -16,6 +16,8 @@ import type { CourseSummary } from "@/lib/courses/types";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import { detectKgLanguage } from "@/lib/knowledge-graph/display-name";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
+import { useT } from "@/lib/i18n/client";
+import { getTutorToolDisplay, getTutorToolIndicatorClass } from "@/lib/ai/tutor-tool-display";
 
 const WriteTodosParams = z.object({
   todos: z.array(
@@ -329,14 +331,16 @@ function ChatQuizQuestionView({
 }
 
 function ChatQuizTool({ status, parameters }: { status: string; parameters?: Partial<z.infer<typeof ChatQuizParams>> }) {
+  const t = useT();
   const parsed = ChatQuizParams.safeParse(parameters);
   if (!parsed.success) {
+    const display = getTutorToolDisplay("render_chat_quiz", status, t);
     return (
       <div className="primoria-copilot-tool">
         <div className="tool-card status-card">
           <div className="tool-title">
-            <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
-            <span>{status === "complete" ? "Quiz ready" : "Preparing quiz"}</span>
+            <span className={getTutorToolIndicatorClass(status)} />
+            <span>{display.title}</span>
           </div>
         </div>
       </div>
@@ -406,19 +410,21 @@ function CourseCardTool({
   result?: string;
   parameters?: Partial<z.infer<typeof GenerateCourseParams>>;
 }) {
+  const t = useT();
   const artifact = parseCourseCardResult(result);
   if (artifact) return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
+  const display = getTutorToolDisplay("generate_course", status, t);
 
   return (
     <div className="primoria-copilot-tool">
       <div className="tool-card status-card">
         <div className="tool-title">
-          <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
-          <span>generate_course · {status === "complete" ? "complete" : "executing"}</span>
+          <span className={getTutorToolIndicatorClass(status)} />
+          <span>{display.title}</span>
         </div>
         <div className="visualizer">
           <span className="tool-note">
-            {parameters?.topic ? `Course agent is composing: ${parameters.topic}` : "Course agent is composing the lesson."}
+            {parameters?.topic ? parameters.topic : display.detail}
           </span>
         </div>
       </div>
@@ -434,14 +440,16 @@ function GetCourseCardTool({
   result?: string;
   parameters?: Partial<z.infer<typeof GetCourseCardParams>>;
 }) {
+  const t = useT();
   const artifact = parseCourseCardResult(result);
   if (artifact) return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
+  const display = getTutorToolDisplay("get_course_card", status, t);
   return (
     <div className="primoria-copilot-tool">
       <div className="tool-card status-card">
         <div className="tool-title">
-          <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
-          <span>get_course_card · {status === "complete" ? "complete" : "executing"}</span>
+          <span className={getTutorToolIndicatorClass(status)} />
+          <span>{display.title}</span>
         </div>
       </div>
     </div>
@@ -1010,6 +1018,7 @@ export function usePrimoriaGenerativeUI() {
 }
 
 function VisualizerToolRender({ name, status, result }: { name: string; status: string; result?: string }) {
+  const t = useT();
   let artifact: unknown = null;
   if (result) {
     try {
@@ -1019,12 +1028,16 @@ function VisualizerToolRender({ name, status, result }: { name: string; status: 
   if (isTutorArtifact(artifact)) {
     return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
   }
+  const display = getTutorToolDisplay(name, status, t);
   return (
     <div className="primoria-copilot-tool">
       <div className="tool-card status-card">
         <div className="tool-title">
-          <span className={status === "complete" ? "tool-dot" : "tool-spinner"} />
-          <span>{name} · {status === "complete" ? "complete" : "executing"}</span>
+          <span className={getTutorToolIndicatorClass(status)} />
+          <span>{display.title}</span>
+        </div>
+        <div className="visualizer">
+          <span className="tool-note">{display.detail}</span>
         </div>
       </div>
     </div>

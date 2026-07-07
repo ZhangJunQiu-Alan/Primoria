@@ -12,6 +12,8 @@ import { MathExplorerRenderer } from "./math-explorer-renderer";
 import { WaveVisualizer } from "./wave-visualizer";
 import { GraphVisualizer } from "./graph-visualizer";
 import { MoleculeRenderer } from "./molecule-renderer";
+import { useT } from "@/lib/i18n/client";
+import { getTutorToolDisplay, getTutorToolIndicatorClass } from "@/lib/ai/tutor-tool-display";
 
 export function ToolCard({
   artifact,
@@ -23,6 +25,7 @@ export function ToolCard({
   collapsed?: boolean;
 }) {
   const router = useRouter();
+  const t = useT();
 
   if (artifact.type === "code") {
     return (
@@ -39,7 +42,7 @@ export function ToolCard({
           <summary className="tool-title plan-summary">
             <span className="tool-dot" />
             <span className="plan-title-text">
-              {collapsed ? `Plan · ${artifact.technology}` : "plan_visualization · complete"}
+              {t.tutor.visualizationPlanTitle}
             </span>
             <span className="plan-chevron" aria-hidden="true">▾</span>
           </summary>
@@ -75,10 +78,8 @@ export function ToolCard({
     const body = (
       <>
           <div className="tool-title">
-            <span className={isReady ? "tool-dot" : "tool-spinner"} />
-            <span>
-              generate_course · {isReady ? "ready" : "generating…"}
-            </span>
+            <span className={getTutorToolIndicatorClass(isReady ? "complete" : artifact.status)} />
+            <span>{isReady ? t.tutor.courseCardReady : t.tutor.courseCardPending}</span>
           </div>
           <div className="visualizer course-card-body">
             <strong className="course-title">{artifact.title}</strong>
@@ -95,8 +96,8 @@ export function ToolCard({
             </ul>
             <span className="course-meta">
               {isReady
-                ? `${artifact.outline.length} blocks · ~${artifact.estimatedMinutes} min · click to open`
-                : "You can switch pages; the course will appear in Library when it is ready."}
+                ? `${artifact.outline.length} ${t.tutor.courseCardMetaReady.replace("{minutes}", String(artifact.estimatedMinutes))}`
+                : t.tutor.courseCardMetaPending}
             </span>
           </div>
       </>
@@ -125,17 +126,16 @@ export function ToolCard({
   }
 
   if (artifact.type === "tool_status") {
+    const display = getTutorToolDisplay(artifact.name, artifact.status, t);
     return (
       <div className="message-row tool">
         <div className="tool-card status-card">
           <div className="tool-title">
-            <span className={artifact.status === "executing" ? "tool-spinner" : "tool-dot"} />
-            <span>
-              {artifact.name} · {artifact.status}
-            </span>
+            <span className={getTutorToolIndicatorClass(artifact.status)} />
+            <span>{display.title}</span>
           </div>
           <div className="visualizer">
-            <span className="tool-note">{artifact.description}</span>
+            <span className="tool-note">{display.detail}</span>
           </div>
         </div>
       </div>
@@ -181,7 +181,7 @@ export function ToolCard({
         <div className="tool-card todo-card">
           <div className="tool-title">
             <span className="tool-dot" />
-            <span>plan · tutor team</span>
+            <span>{t.tutor.todoTitle}</span>
           </div>
           <ol className="todo-list">
             {artifact.items.map((item, index) => (

@@ -367,7 +367,7 @@ export function MathExplorerRenderer({ artifact, variant = "tool" }: { artifact:
       <div className="tool-card">
         <div className="tool-title">
           <span className="tool-dot" />
-          <span>render_math_explorer · complete</span>
+          <span>{artifact.title}</span>
         </div>
         {body}
       </div>

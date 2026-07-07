@@ -164,13 +164,15 @@ const PrimoriaAssistantMessage = Object.assign(
     children: _children,
     ...props
   }: CopilotChatAssistantMessageProps) {
+    const t = useT();
     const safeContent = sanitizeCopilotAssistantText(stripInjectedCourseContext(message.content));
     const visibleContent = useProgressiveAssistantText(safeContent, Boolean(isRunning));
     const safeMessage = { ...message, content: safeContent };
     const hasText = visibleContent.trim().length > 0;
     const hasTools = Boolean(message.toolCalls?.length);
+    const showThinking = Boolean(isRunning) && !hasText && !hasTools;
 
-    if (!hasText && !hasTools) return null;
+    if (!hasText && !hasTools && !showThinking) return null;
 
     return (
       <div
@@ -180,13 +182,17 @@ const PrimoriaAssistantMessage = Object.assign(
         className={["primoria-copilot-message", "primoria-copilot-assistant-message", className].filter(Boolean).join(" ")}
         {...props}
       >
-        {hasText ? (
+        {hasText || showThinking ? (
           <div className="primoria-copilot-assistant-row">
             <div className="primoria-copilot-avatar" aria-hidden="true">
               <span />
             </div>
             <div className="primoria-copilot-bubble primoria-copilot-assistant-bubble">
-              <CourseMarkdown markdown={visibleContent} />
+              {hasText ? (
+                <CourseMarkdown markdown={visibleContent} />
+              ) : (
+                <span className="primoria-copilot-thinking">{t.tutor.assistantThinking}</span>
+              )}
               {isRunning ? <span className="primoria-stream-caret" aria-hidden="true" /> : null}
               {!isRunning && message.id ? <AssistantFeedbackBar messageId={message.id} /> : null}
             </div>

@@ -1047,6 +1047,10 @@ button {
   background: var(--coral);
 }
 
+.tool-dot-failed {
+  background: #b56474;
+}
+
 .tool-spinner {
   width: 13px;
   height: 13px;
@@ -2415,6 +2419,12 @@ button {
 .primoria-copilot-assistant-bubble {
   max-width: min(760px, 100%);
   background: rgba(255, 253, 248, 0.96);
+}
+
+.primoria-copilot-thinking {
+  color: #625950;
+  font-size: 14px;
+  font-weight: 650;
 }
 
 .primoria-copilot-feedback {

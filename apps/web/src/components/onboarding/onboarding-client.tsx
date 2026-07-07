@@ -122,7 +122,7 @@ const STEP_VISUALS: Record<OnboardingStep, OnboardingVisual> = {
   done: {
     src: "/onboarding/course-ready.svg",
     title: "Open the outline",
-    body: "The course path is ready to continue in the workspace.",
+    body: "The course path is ready to continue in your learning space.",
     mark: "04",
     width: 720,
     height: 840,
@@ -490,7 +490,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
               <div className="onboarding-step-copy">
                 <p className="onboarding-kicker">Onboarding complete</p>
                 <h1>Your learning path is ready.</h1>
-                <p className="onboarding-copy">The course outline can now open from the workspace.</p>
+                <p className="onboarding-copy">The course outline can now open from your learning space.</p>
               </div>
               <div className="onboarding-control-region onboarding-complete-region" />
               <p className="onboarding-note">
