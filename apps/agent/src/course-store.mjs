@@ -4,12 +4,29 @@ import postgres from "postgres";
 import { courseBlocks, courseLessons, summarizeCourse } from "./course-types.mjs";
 
 const dbGlobalKey = "__primoria_agent_postgres__";
+const SSL_DISABLED_VALUES = new Set(["0", "false", "disable", "disabled", "off", "none", "no"]);
+const SSL_REQUIRED_VALUES = new Set(["1", "true", "enable", "enabled", "on", "yes", "require", "required"]);
+const POSTGRES_JS_SSL_MODES = new Set(["allow", "prefer", "verify-full"]);
+
+/** @returns {false | "require" | "allow" | "prefer" | "verify-full" | undefined} */
+function getDatabaseSsl() {
+  const configured = process.env.DATABASE_SSL?.trim().toLowerCase();
+  if (!configured) return undefined;
+  if (SSL_DISABLED_VALUES.has(configured)) return false;
+  if (SSL_REQUIRED_VALUES.has(configured)) return "require";
+  if (POSTGRES_JS_SSL_MODES.has(configured)) {
+    return /** @type {"allow" | "prefer" | "verify-full"} */ (configured);
+  }
+  throw new Error("DATABASE_SSL must be one of: false, true, require, allow, prefer, verify-full.");
+}
+
 function getSql() {
   const url = process.env.DATABASE_URL;
   if (!url) return null;
   const globalAny = /** @type {any} */ (globalThis);
   if (!globalAny[dbGlobalKey]) {
-    globalAny[dbGlobalKey] = postgres(url, { max: 1, prepare: false });
+    const ssl = getDatabaseSsl();
+    globalAny[dbGlobalKey] = postgres(url, { max: 1, prepare: false, ...(ssl !== undefined ? { ssl } : {}) });
   }
   return /** @type {postgres.Sql} */ (globalAny[dbGlobalKey]);
 }

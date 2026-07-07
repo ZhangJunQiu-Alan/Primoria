@@ -4,9 +4,12 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import {
-  DEFAULT_EMBEDDING_MODEL,
   DEFAULT_GRAPH_ID,
-  DEFAULT_MODEL_VERSION,
+  DEFAULT_MINIMAX_EMBEDDING_MODEL,
+  DEFAULT_MINIMAX_MODEL_VERSION,
+  DEFAULT_OPENAI_EMBEDDING_MODEL,
+  DEFAULT_OPENAI_MODEL_VERSION,
+  KG_EMBEDDING_DIMENSION,
   REPO_ROOT,
   aliasPath,
   createPgClient,
@@ -18,7 +21,23 @@ import {
 } from "./kg-db-common.mjs";
 
 const arg = process.argv[2] || DEFAULT_GRAPH_ID;
-const EMBEDDING_DIMENSION = 1536;
+
+function getEmbeddingProvider() {
+  const provider = process.env.KG_EMBEDDING_PROVIDER || "openai-compatible";
+  if (provider === "openai" || provider === "openai-compatible") return "openai-compatible";
+  if (provider === "minimax") return "minimax";
+  throw new Error(`Unsupported KG_EMBEDDING_PROVIDER: ${provider}`);
+}
+
+function getDefaultModelVersion() {
+  return getEmbeddingProvider() === "minimax" ? DEFAULT_MINIMAX_MODEL_VERSION : DEFAULT_OPENAI_MODEL_VERSION;
+}
+
+function assertEmbeddingDimension(embedding) {
+  if (!Array.isArray(embedding) || embedding.length !== KG_EMBEDDING_DIMENSION) {
+    throw new Error(`Unexpected embedding dimension: ${embedding?.length ?? 0}`);
+  }
+}
 
 // Global node_id -> Chinese label map (temple/kg_zh_labels.json), used as an
 // alias so Chinese queries match English nodes in recall.
@@ -59,10 +78,10 @@ function buildEmbedText(graph, topicById, graphAliases, zhLabels, node) {
   return ["concept", node.name, node.description, `属: ${topic.name}`, aliasText].filter(Boolean).join(" / ");
 }
 
-async function createEmbeddings(inputs) {
+async function createOpenAiCompatibleEmbeddings(inputs) {
   const baseUrl = requireEnv("OPENAI_BASE_URL").replace(/\/$/, "");
   const apiKey = requireEnv("OPENAI_API_KEY");
-  const model = process.env.OPENAI_EMBEDDING_MODEL || DEFAULT_EMBEDDING_MODEL;
+  const model = process.env.OPENAI_EMBEDDING_MODEL || DEFAULT_OPENAI_EMBEDDING_MODEL;
   const batches = [];
 
   for (let i = 0; i < inputs.length; i += 64) batches.push(inputs.slice(i, i + 64));
@@ -86,14 +105,60 @@ async function createEmbeddings(inputs) {
       throw new Error(`Embedding count mismatch: expected ${batch.length}, got ${data?.length ?? 0}`);
     }
     for (const item of data.sort((a, b) => a.index - b.index)) {
-      if (!Array.isArray(item.embedding) || item.embedding.length !== EMBEDDING_DIMENSION) {
-        throw new Error(`Unexpected embedding dimension: ${item.embedding?.length ?? 0}`);
-      }
+      assertEmbeddingDimension(item.embedding);
       embeddings.push(item.embedding);
     }
   }
 
   return embeddings;
+}
+
+async function createMiniMaxEmbeddings(inputs) {
+  const baseUrl = (process.env.MINIMAX_EMBEDDING_BASE_URL || process.env.MINIMAX_BASE_URL || "https://api.minimax.chat/v1")
+    .replace(/\/$/, "");
+  const apiKey = requireEnv("MINIMAX_API_KEY");
+  const model = process.env.MINIMAX_EMBEDDING_MODEL || DEFAULT_MINIMAX_EMBEDDING_MODEL;
+  const groupId = process.env.MINIMAX_GROUP_ID;
+  const batches = [];
+
+  for (let i = 0; i < inputs.length; i += 64) batches.push(inputs.slice(i, i + 64));
+
+  const embeddings = [];
+  for (const batch of batches) {
+    const url = new URL(`${baseUrl}/embeddings`);
+    if (groupId) url.searchParams.set("GroupId", groupId);
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({ model, texts: batch, type: "db" }),
+    });
+    const json = await response.json().catch(() => ({}));
+    const statusCode = json.base_resp?.status_code;
+    if (!response.ok || (statusCode !== undefined && statusCode !== 0)) {
+      throw new Error(json.error?.message ?? json.base_resp?.status_msg ?? `Embedding request failed: ${response.status}`);
+    }
+
+    const vectors = json.vectors;
+    if (!Array.isArray(vectors) || vectors.length !== batch.length) {
+      throw new Error(`Embedding count mismatch: expected ${batch.length}, got ${vectors?.length ?? 0}`);
+    }
+    for (const embedding of vectors) {
+      assertEmbeddingDimension(embedding);
+      embeddings.push(embedding);
+    }
+  }
+
+  return embeddings;
+}
+
+async function createEmbeddings(inputs) {
+  return getEmbeddingProvider() === "minimax"
+    ? createMiniMaxEmbeddings(inputs)
+    : createOpenAiCompatibleEmbeddings(inputs);
 }
 
 function vectorLiteral(embedding) {
@@ -113,7 +178,7 @@ async function embedGraph(client, graphId, zhLabels) {
     embedText: buildEmbedText(graph, topicById, graphAliases, zhLabels, node),
   }));
 
-  const modelVersion = process.env.KG_EMBEDDING_MODEL_VERSION || DEFAULT_MODEL_VERSION;
+  const modelVersion = process.env.KG_EMBEDDING_MODEL_VERSION || getDefaultModelVersion();
   const embeddings = await createEmbeddings(rows.map((row) => row.embedText));
   rows.forEach((row, index) => {
     row.embedding = embeddings[index];

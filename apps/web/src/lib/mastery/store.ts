@@ -1,10 +1,12 @@
-import { supabaseEnv } from "@/lib/supabase/env";
-import { createClient, getUser } from "@/lib/supabase/server";
+import { and, eq } from "drizzle-orm";
 
-// Per-user concept mastery (public.user_concept_mastery, RLS-scoped to
-// auth.users). Feeds the cold-start lazy-diagnosis / adaptive path. Owner is
-// resolved internally from the request session; no-ops/empty when auth is not
-// configured or there is no signed-in user.
+import { getCurrentUser } from "@/lib/auth/session";
+import { getDb, hasDatabaseUrl } from "@/lib/db/client";
+import { userConceptMastery } from "@/lib/db/schema";
+
+// Per-user concept mastery in app-owned Postgres. Owner is resolved internally
+// from the request session; no-ops/empty when auth is not configured or there is
+// no signed-in user.
 
 export type MasteryStatus = "untested" | "weak" | "learning" | "mastered";
 
@@ -16,19 +18,9 @@ export type ConceptMastery = {
   updatedAt: number;
 };
 
-const TABLE = "user_concept_mastery";
-
-type MasteryRow = {
-  graph_id: string;
-  concept_id: string;
-  status: MasteryStatus;
-  score: number | null;
-  updated_at: string;
-};
-
 async function resolveOwner(): Promise<string | null> {
-  if (!supabaseEnv()) return null;
-  const user = await getUser();
+  if (!hasDatabaseUrl()) return null;
+  const user = await getCurrentUser();
   return user?.id ?? null;
 }
 
@@ -36,20 +28,17 @@ export async function listConceptMastery(graphId: string): Promise<ConceptMaster
   const owner = await resolveOwner();
   if (!owner) return [];
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from(TABLE)
-    .select("graph_id, concept_id, status, score, updated_at")
-    .eq("owner_id", owner)
-    .eq("graph_id", graphId);
-  if (error) throw new Error(`Failed to load mastery: ${error.message}`);
+  const rows = await getDb()
+    .select()
+    .from(userConceptMastery)
+    .where(and(eq(userConceptMastery.ownerId, owner), eq(userConceptMastery.graphId, graphId)));
 
-  return (data as MasteryRow[]).map((row) => ({
-    graphId: row.graph_id,
-    conceptId: row.concept_id,
-    status: row.status,
+  return rows.map((row) => ({
+    graphId: row.graphId,
+    conceptId: row.conceptId,
+    status: row.status as MasteryStatus,
     score: row.score,
-    updatedAt: new Date(row.updated_at).getTime(),
+    updatedAt: row.updatedAt.getTime(),
   }));
 }
 
@@ -62,14 +51,12 @@ export async function upsertConceptMastery(
   const owner = await resolveOwner();
   if (!owner) return;
 
-  const supabase = await createClient();
-  const { error } = await supabase.from(TABLE).upsert({
-    owner_id: owner,
-    graph_id: graphId,
-    concept_id: conceptId,
-    status,
-    score,
-    updated_at: new Date().toISOString(),
-  });
-  if (error) throw new Error(`Failed to save mastery: ${error.message}`);
+  const now = new Date();
+  await getDb()
+    .insert(userConceptMastery)
+    .values({ ownerId: owner, graphId, conceptId, status, score, updatedAt: now })
+    .onConflictDoUpdate({
+      target: [userConceptMastery.ownerId, userConceptMastery.graphId, userConceptMastery.conceptId],
+      set: { status, score, updatedAt: now },
+    });
 }

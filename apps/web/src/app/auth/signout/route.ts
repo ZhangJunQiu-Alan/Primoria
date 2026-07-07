@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
 
-import { supabaseEnv } from "@/lib/supabase/env";
-import { createClient } from "@/lib/supabase/server";
+import { signOutCurrentSession } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
-  if (supabaseEnv()) {
-    const supabase = await createClient();
-    await supabase.auth.signOut();
-  }
+  await signOutCurrentSession();
   return NextResponse.redirect(new URL("/login", request.url), { status: 303 });
 }

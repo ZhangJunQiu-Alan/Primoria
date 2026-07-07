@@ -3,6 +3,8 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+const MAX_QA_RESULTS_BODY_BYTES = 2 * 1024 * 1024;
+
 const QaResultSchema = z.object({
   id: z.string().min(1),
   prompt: z.string(),
@@ -32,9 +34,25 @@ function safeRunId(input?: string) {
   return cleaned || fallback;
 }
 
+function isQaResultsWriteAllowed() {
+  return process.env.NODE_ENV !== "production" && process.env.PRIMORIA_ENABLE_QA_ROUTES === "1";
+}
+
 export async function POST(request: Request) {
   try {
-    const body = RequestSchema.parse(await request.json());
+    if (!isQaResultsWriteAllowed()) return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });
+
+    const contentLength = request.headers.get("content-length");
+    if (contentLength && Number(contentLength) > MAX_QA_RESULTS_BODY_BYTES) {
+      return NextResponse.json({ ok: false, error: "QA result payload is too large" }, { status: 413 });
+    }
+
+    const rawBody = await request.text();
+    if (Buffer.byteLength(rawBody, "utf8") > MAX_QA_RESULTS_BODY_BYTES) {
+      return NextResponse.json({ ok: false, error: "QA result payload is too large" }, { status: 413 });
+    }
+
+    const body = RequestSchema.parse(JSON.parse(rawBody));
     const runId = safeRunId(body.runId);
     const generatedAt = body.generatedAt || new Date().toISOString();
     const payload = {

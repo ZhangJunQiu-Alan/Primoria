@@ -9,8 +9,11 @@ export const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 export const WEB_ROOT = resolve(SCRIPT_DIR, "..");
 export const REPO_ROOT = resolve(WEB_ROOT, "../..");
 export const DEFAULT_GRAPH_ID = "mit_calculus";
-export const DEFAULT_MODEL_VERSION = "openai:text-embedding-3-small:1536";
-export const DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small";
+export const KG_EMBEDDING_DIMENSION = 1536;
+export const DEFAULT_OPENAI_MODEL_VERSION = "openai:text-embedding-3-small:1536";
+export const DEFAULT_OPENAI_EMBEDDING_MODEL = "text-embedding-3-small";
+export const DEFAULT_MINIMAX_MODEL_VERSION = "minimax:embo-01:1536";
+export const DEFAULT_MINIMAX_EMBEDDING_MODEL = "embo-01";
 export const TEMPLE_DIR = resolve(REPO_ROOT, "temple");
 // temple/*.json that are not subject graphs (cross edges, label sidecar, etc.)
 const NON_GRAPH_FILES = new Set(["cross_subject_edges.json", "kg_zh_labels.json"]);
@@ -38,12 +41,25 @@ export function loadLocalEnv() {
   loadEnvFile(resolve(REPO_ROOT, ".env"));
 }
 
+const SSL_DISABLED_VALUES = new Set(["0", "false", "disable", "disabled", "off", "none", "no"]);
+const SSL_REQUIRED_VALUES = new Set(["1", "true", "enable", "enabled", "on", "yes", "require", "required"]);
+const SSL_MODES = new Set(["allow", "prefer", "verify-full"]);
+
+function getNodePostgresSsl() {
+  const configured = process.env.DATABASE_SSL?.trim().toLowerCase();
+  if (!configured || SSL_DISABLED_VALUES.has(configured)) return undefined;
+  if (SSL_REQUIRED_VALUES.has(configured) || SSL_MODES.has(configured)) {
+    return { rejectUnauthorized: configured === "verify-full" };
+  }
+  throw new Error("DATABASE_SSL must be one of: false, true, require, allow, prefer, verify-full.");
+}
+
 export function createPgClient() {
   loadLocalEnv();
   if (!process.env.DATABASE_URL) throw new Error("Missing DATABASE_URL");
   return new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.DATABASE_SSL === "false" ? undefined : { rejectUnauthorized: false },
+    ssl: getNodePostgresSsl(),
   });
 }
 
