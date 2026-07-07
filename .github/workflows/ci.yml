@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check
+        run: pnpm --filter @primoria/web typecheck
+
+      - name: Lint
+        run: pnpm --filter @primoria/web lint
+
+      - name: Unit tests
+        run: pnpm --filter @primoria/web test
+
+      - name: Agent graph syntax
+        run: node --check apps/agent/src/graph.mjs

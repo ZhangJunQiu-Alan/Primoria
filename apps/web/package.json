@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:widget": "tsx tests/widget-export.unit.ts && tsx tests/widget-renderer-preload.unit.ts && tsx tests/stem-code.unit.ts",
     "test:kg": "tsx tests/topic-grain.unit.ts && tsx tests/knowledge-graph-query.unit.ts && tsx tests/positioning.unit.ts && tsx tests/position-learning-goal.unit.ts && tsx tests/topic-selection-contract.unit.ts && tsx tests/course-branch-static.unit.ts && tsx tests/course-kg-context.unit.ts && tsx tests/course-markdown-latex.unit.ts && tsx tests/lesson-plan-compiler.unit.ts && tsx tests/lesson-planner.unit.ts && tsx tests/block-content-compiler.unit.ts && tsx tests/block-writer.unit.ts",
     "build:topic-graph": "node scripts/build-topic-graph.mjs",
@@ -86,6 +88,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tsx": "^4.22.3",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.10"
   }
 }

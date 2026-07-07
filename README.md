@@ -190,30 +190,28 @@ pnpm --filter @primoria/web db:migrate
 
 ## Tests and Verification
 
-There is no single all-project test runner. Run the suite that matches the area you changed.
+Unit tests run under Vitest:
 
 ```bash
-# Widget and renderer checks
-pnpm --filter @primoria/web test:widget
-pnpm --filter @primoria/web test:widget:e2e
+# All unit tests
+pnpm test
 
-# Knowledge graph, positioning, and course planning
-pnpm --filter @primoria/web test:kg
+# Watch mode
+pnpm --filter @primoria/web test:watch
+```
 
-# Lesson image generation pipeline
-pnpm --filter @primoria/web test:image
+Legacy self-executing `tests/*.unit.ts` scripts are executed through the `tests/legacy-units.spec.ts` bridge; write new tests as native vitest `tests/*.spec.ts` files.
 
-# Recoverable lesson-generation jobs
-pnpm --filter @primoria/web test:lesson-jobs
+Database-backed and E2E suites are not part of `pnpm test`:
+
+```bash
+# DB-backed tests (require DATABASE_URL)
 pnpm --filter @primoria/web test:lesson-jobs:db
-
-# Learning-progress and mastery decisions
-pnpm --filter @primoria/web test:progress
 pnpm --filter @primoria/web test:progress:db
-
-# Extractor and learner-fact pipeline
-pnpm --filter @primoria/web test:extractor
 pnpm --filter @primoria/web test:extractor:db
+
+# Widget browser E2E (requires a running app)
+pnpm --filter @primoria/web test:widget:e2e
 
 # Agent graph syntax and package checks
 node --check apps/agent/src/graph.mjs
@@ -221,7 +219,11 @@ pnpm --filter @primoria/agent typecheck
 pnpm --filter @primoria/agent test:course-store
 ```
 
-Database-backed tests require `DATABASE_URL`. Some E2E tests start their own isolated Next dev server; others expect a running app. Check the test file or the relevant docs before running long E2E suites.
+Some E2E tests start their own isolated Next dev server; others expect a running app. Check the test file before running long E2E suites.
+
+## CI
+
+`.github/workflows/ci.yml` runs on every push/PR to `main`: install, type-check, lint, unit tests, and an agent graph syntax check.
 
 ## Architecture
 
