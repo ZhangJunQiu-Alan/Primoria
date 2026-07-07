@@ -232,6 +232,13 @@
       "when": 1782805000000,
       "tag": "0032_lesson_descriptions",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1783449474146,
+      "tag": "0033_mature_big_bertha",
+      "breakpoints": true
     }
   ]
 }

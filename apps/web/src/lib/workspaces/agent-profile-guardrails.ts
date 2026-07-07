@@ -1,2 +1,0 @@
-export const AGENT_PURPOSE_MAX_LENGTH = 400;
-export const AGENT_BEHAVIOR_MAX_LENGTH = 6000;
