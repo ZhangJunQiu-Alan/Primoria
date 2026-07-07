@@ -5,9 +5,9 @@ import { loadLocalEnv } from "../../scripts/load-local-env";
 loadLocalEnv();
 
 // Workers process one job at a time (plus a heartbeat), so they need very few
-// connections. Default low to avoid exhausting the shared Postgres/Supabase
-// client limit when web + agent + several workers run together locally. An
-// explicit DATABASE_POOL_MAX still wins.
+// connections. Default low to avoid exhausting the shared Postgres connection
+// budget when web + agent + several workers run together locally. An explicit
+// DATABASE_POOL_MAX still wins.
 if (!process.env.DATABASE_POOL_MAX) process.env.DATABASE_POOL_MAX = "2";
 
 import { hasDatabaseUrl } from "../lib/db/client";

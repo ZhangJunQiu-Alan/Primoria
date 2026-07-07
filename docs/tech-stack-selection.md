@@ -1,4 +1,9 @@
-# AI 教育产品技术选型建议
+# AI 教育产品技术选型建议（历史草案）
+
+> 状态说明：这份文档是早期技术选型草案，不是当前 Primoria 仓库的运行说明。
+> 当前实现以 `apps/web` 的 Next.js、`apps/agent` 的 LangGraph/deepagents、
+> Drizzle、PostgreSQL、CopilotKit 为主；没有接入 iii SDK，也没有移动端
+> app 目录。新同学搭环境请以 `README.md` 为准。
 
 ## 1. 项目目标
 
@@ -19,12 +24,12 @@
 
 ## 2. 推荐结论
 
-推荐采用：
+早期草案推荐采用：
 
 - Web 端：Next.js
 - iOS / Android：Expo + React Native
 - 后端主语言：TypeScript / Node.js
-- AI 编排与异步任务：iii SDK
+- AI 编排与异步任务：iii SDK（未在当前代码库采用）
 - 数据库：PostgreSQL
 - 缓存与队列：Redis，必要时结合 iii 的 queue / trigger 能力
 - 文件存储：S3 兼容对象存储
@@ -32,7 +37,7 @@
 
 核心思路是：
 
-前端用 React 技术栈统一 Web 和移动端开发体验；后端用 TypeScript 保持团队语言一致；AI 任务流、Agent 编排、触发器、队列和共享状态交给 iii SDK 承担。
+前端用 React 技术栈统一 Web 和移动端开发体验；后端用 TypeScript 保持团队语言一致；AI 任务流、Agent 编排、触发器、队列和共享状态交给 iii SDK 承担。这是早期方案描述；当前 Primoria 的实际 agent runtime 是 LangGraph/deepagents，后台任务是 `apps/web/src/workers/*`。
 
 ## 3. 为什么选 Next.js 做 Web 端
 

@@ -78,7 +78,7 @@ The standard visualization flow in the active tutor path:
 
 The active tutor prompt and tool schemas live in `apps/agent/src/graph.mjs`.
 
-### Artifact types (`apps/web/src/lib/ai/types.ts`)
+### Artifact types (`packages/contracts/src/artifacts`, re-exported by `apps/web/src/lib/ai/types.ts`)
 
 `TutorArtifact` is a discriminated union on `type`:
 - `html_widget` — sandboxed iframe widget
@@ -100,11 +100,15 @@ In the main AI Tutor, course creation starts with the `position_learning_goal` t
 
 ### DB
 
-ORM: Drizzle + `postgres` driver. Schema: `apps/web/src/lib/db/schema.ts`. Tables include `users`, `identities`, `sessions`, `otp_codes`, `courses`, `course_edit_events`, `copilot_chat_threads`, `copilot_chat_messages`, and `user_settings`.
+ORM: Drizzle + `postgres` driver. Schema: `apps/web/src/lib/db/schema.ts`. Core tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, lesson/progress/extractor jobs, `knowledge_graph_*`, `learning_events`, `quiz_attempts`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `copilot_chat_threads`, `copilot_chat_messages`, `media_assets`, and `user_settings`.
+
+Local development currently uses the private Tencent Cloud PostgreSQL instance through an SSH tunnel. Supabase runtime helpers have been removed; do not add new Supabase URL/anon-key paths unless the database/auth strategy is intentionally changed.
 
 ### Model provider
 
 `apps/web/src/lib/ai/deepagent/model.ts` resolves provider settings from env vars or per-request `TutorProviderSettings`. Supports `openai-compatible` (default) and `anthropic-compatible`. The agent uses `ChatOpenAI` or `ChatAnthropic` from LangChain.
+
+KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current supported embedding providers are `openai-compatible` and `minimax`.
 
 ## Key constraints
 

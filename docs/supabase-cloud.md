@@ -1,86 +1,58 @@
-# Supabase Cloud Database
+# Supabase Cloud Database Runbook (Historical)
 
-Primoria already talks to Postgres through Drizzle, so the cloud deployment path is to use Supabase as the shared hosted Postgres provider. We do not need to introduce Supabase client-side APIs for this first step.
+This runbook is retained only as historical context. Primoria no longer uses
+Supabase as its default database host or auth provider.
 
-## 1. Create the cloud project
+Current runtime direction:
 
-Create a Supabase project at `https://database.new`.
+- Database: private Tencent Cloud PostgreSQL.
+- Local development: SSH tunnel to `127.0.0.1:15432`.
+- Same-server deployment: connect to PostgreSQL on `127.0.0.1:5432`.
+- Remote managed PostgreSQL with SSL: set `DATABASE_SSL=require`.
+- Auth: app-owned `users`, `identities`, `sessions`, and `auth_rate_limits`
+  tables.
+- Supabase URL, anon key, service-role key, and Supabase runtime helpers are not
+  part of the active Primoria path.
 
-Save the database password in the team secret manager. Do not commit it to the repo.
+Use the database section in [README.md](../README.md) as the source of truth for
+new setup.
 
-## 2. Copy the cloud connection string
+## When This Document Is Relevant
 
-In the Supabase project dashboard, open **Connect** and copy the **Session Pooler** connection string.
+Refer to this file only if the team intentionally decides to evaluate Supabase
+again as a generic hosted PostgreSQL provider. In that case, treat Supabase as a
+Postgres host only unless a separate architecture decision reintroduces Supabase
+Auth.
 
-Use it as `DATABASE_URL`:
+Do not copy old `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, or
+`SUPABASE_SERVICE_ROLE_KEY` setup into the active app environment.
+
+## Historical Setup Shape
+
+The old plan was:
+
+1. Create a Supabase project.
+2. Copy the dashboard Postgres connection string.
+3. Put that connection string in `DATABASE_URL`.
+4. Run `pnpm --filter @primoria/web db:migrate`.
+
+That still describes a generic hosted-Postgres migration flow, but it is not the
+current Primoria runbook.
+
+## Current Replacement
 
 ```bash
-DATABASE_URL="postgresql://postgres.[project-ref]:[db-password]@[pooler-host].pooler.supabase.com:5432/postgres"
+# Local development through the private Tencent Cloud tunnel
+DATABASE_URL="postgresql://primoria_app:[db-password]@127.0.0.1:15432/primoria"
+DATABASE_SSL=false
+
+# Remote direct SSL-required managed Postgres, if ever used
+DATABASE_SSL=require
 ```
 
-The Session Pooler URL is the default choice for this app because the Next.js server and Drizzle migrations need normal Postgres session behavior. Supabase's Transaction Pooler can be useful for highly constrained serverless runtimes, but it can break migration/session assumptions.
-
-Copy the full host from the Supabase dashboard instead of guessing it from the region. For example, the pooler host may be `aws-0-[region]` or `aws-1-[region]`.
-
-## 3. Configure local development
-
-Create `apps/web/.env.local`:
-
-```bash
-OPENAI_BASE_URL=https://ai.orbitlink.me/v1
-OPENAI_API_KEY=replace-with-your-key
-OPENAI_MODEL=gpt-5.4
-
-DATABASE_URL="postgresql://postgres.[project-ref]:[db-password]@[pooler-host].pooler.supabase.com:5432/postgres"
-```
-
-Then verify the cloud connection:
+Validate with:
 
 ```bash
 pnpm --filter @primoria/web db:check
-```
-
-## 4. Run migrations against Supabase
-
-Apply the existing Drizzle migrations to the cloud database:
-
-```bash
 pnpm --filter @primoria/web db:migrate
-pnpm --filter @primoria/web db:check
 ```
-
-After this, everyone who uses the same `DATABASE_URL` is sharing the same cloud database.
-
-## 5. Configure hosted app environments
-
-Set the same `DATABASE_URL` in the deployment platform environment variables for the web app.
-
-For production DeepAgent mode, also set:
-
-```bash
-PRIMORIA_WORKSPACE_DEEPAGENT=1
-PRIMORIA_WORKSPACE_DEEPAGENT_PERSISTENCE=postgres
-PRIMORIA_WORKSPACE_OPERATOR_TOKEN=replace-with-a-long-random-token
-```
-
-## 6. Current blocker for fully automatic setup
-
-The local Supabase CLI is installed, but this machine is not logged in:
-
-```bash
-supabase login
-```
-
-or
-
-```bash
-export SUPABASE_ACCESS_TOKEN=...
-```
-
-Once authenticated, the project can be linked with:
-
-```bash
-supabase link --project-ref <project-ref>
-```
-
-Primoria should still use `pnpm --filter @primoria/web db:migrate` as the source of truth for schema migrations because the app already stores migrations under `apps/web/drizzle`.

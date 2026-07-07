@@ -95,8 +95,8 @@ These artifacts are the evidence trail for long-horizon adaptation.
 Different surfaces should serve the same learning loop:
 
 - course views for structured progress
-- workspace views for collaboration and action
-- agent views for teaching behavior and capability management
+- future classroom/collaboration views for shared learning
+- tutor views for teaching behavior and capability boundaries
 - memory views for durable evidence
 - review views for diagnosis and correction
 
