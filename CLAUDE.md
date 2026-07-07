@@ -31,22 +31,27 @@ pnpm --filter @primoria/web db:migrate
 pnpm --filter @primoria/web import:local-data <email>
 ```
 
-### Tests (no test runner, run directly with tsx or node)
+### Tests (Vitest)
 
 ```bash
-# Unit tests
-node_modules/.pnpm/node_modules/.bin/tsx apps/web/tests/widget-html.unit.ts
-node_modules/.pnpm/node_modules/.bin/tsx apps/web/tests/sediment.unit.ts
-node_modules/.pnpm/node_modules/.bin/tsx apps/web/tests/widget-export.unit.ts
-node_modules/.pnpm/node_modules/.bin/tsx apps/web/tests/attachments.unit.ts
+# All unit tests (vitest; legacy tests/*.unit.ts scripts run via the
+# tests/legacy-units.spec.ts bridge as tsx child processes)
+pnpm --filter @primoria/web test
 
-# E2E (requires running app)
+# Watch mode
+pnpm --filter @primoria/web test:watch
+
+# DB-backed tests (need DATABASE_URL; not part of `pnpm test`)
+pnpm --filter @primoria/web test:lesson-jobs:db
+
+# E2E (requires running app; not part of `pnpm test`)
 node apps/web/tests/widget-renderer.e2e.mjs
-node apps/web/tests/sediment.e2e.mjs
 
 # Verify agent graph syntax
 node --check apps/agent/src/graph.mjs
 ```
+
+Write new tests as native vitest `tests/*.spec.ts` files; do not add new self-executing `*.unit.ts` scripts. CI (`.github/workflows/ci.yml`) runs typecheck, lint, and unit tests on every PR.
 
 ## Architecture
 

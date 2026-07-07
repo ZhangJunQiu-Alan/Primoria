@@ -13,7 +13,8 @@
     "lint": "pnpm --filter @primoria/web lint",
     "typecheck": "pnpm --filter @primoria/web typecheck",
     "test:widget": "pnpm --filter @primoria/web test:widget",
-    "test:widget:e2e": "pnpm --filter @primoria/web test:widget:e2e"
+    "test:widget:e2e": "pnpm --filter @primoria/web test:widget:e2e",
+    "test": "pnpm --filter @primoria/web test"
   },
   "devDependencies": {
     "playwright": "^1.60.0",
