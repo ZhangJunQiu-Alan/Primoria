@@ -29,6 +29,10 @@ async function main() {
   assert(agentGraph.includes("Do NOT call add_course_block"), "course detail mode forbids creating course quiz blocks");
   assert(!agentGraph.includes('call add_course_block with targetType "quiz"'), "old course-block quiz instruction is removed");
   assert(agentGraph.includes("Do not output <think>"), "agent prompt forbids think-tag output");
+  assert(agentGraph.includes("## Tutor Presence"), "agent prompt has global transparent tutor presence rules");
+  assert(agentGraph.includes("Use the learner's language"), "agent prompt follows the learner's language globally");
+  assert(agentGraph.includes("Keep visible text learner-facing"), "agent prompt keeps visible text learner-facing");
+  assert(agentGraph.includes("For any tool call, write at most one short sentence"), "agent prompt keeps tool-call narration concise");
   assert(agentGraph.includes("formatAvailableBlocks(course)"), "agent course detail prompt formats flattened course blocks");
   assert(agentCourseTypes.includes("export function courseBlocks"), "agent has a lessons-aware courseBlocks helper");
   assert(copilotRoute.includes("function flattenCourseBlocks"), "copilot route flattens lesson blocks for agent context");

@@ -217,7 +217,7 @@ export function MoleculeRenderer({ artifact }: { artifact: MoleculeArtifact }) {
       <div className="tool-card" style={{ overflow: "hidden" }}>
         <div className="tool-title">
           <span className="tool-dot" />
-          <span>render_molecule · {artifact.title}</span>
+          <span>{artifact.title}</span>
         </div>
         <div style={{ padding: "6px 12px 2px", display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{ fontFamily: "monospace", fontSize: 13, color: "#c8881a", fontWeight: 600 }}>

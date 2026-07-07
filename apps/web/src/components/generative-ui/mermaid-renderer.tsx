@@ -58,7 +58,7 @@ export function MermaidRenderer({ artifact, variant = "tool" }: { artifact: Merm
       <div className="tool-card widget-card mermaid-card">
         <div className="tool-title">
           <span className="tool-dot" />
-          <span>render_diagram · {artifact.title}</span>
+          <span>{artifact.title}</span>
         </div>
         {diagram}
       </div>

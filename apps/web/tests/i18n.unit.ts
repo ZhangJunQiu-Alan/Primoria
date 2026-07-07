@@ -8,6 +8,7 @@ import {
   languageFromAcceptLanguage,
   UI_LANGUAGES,
 } from "../src/lib/i18n/dictionaries.ts";
+import { getTutorToolDisplay } from "../src/lib/ai/tutor-tool-display.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);
@@ -52,6 +53,22 @@ function main() {
   // zh and en must share the exact same key structure so no string is missing in
   // one language once a page is wired up.
   assert(shape(dictionaries.zh) === shape(dictionaries.en), "zh and en dictionaries share the same key structure");
+  assert(dictionaries.zh.tutor.assistantThinking.includes("Primoria"), "zh tutor dictionary includes assistant thinking copy");
+  assert(dictionaries.en.tutor.assistantThinking.includes("Primoria"), "en tutor dictionary includes assistant thinking copy");
+  assert(dictionaries.zh.tutor.toolStatus.render_algorithm === "正在拆解步骤", "zh tutor dictionary includes algorithm status copy");
+  assert(dictionaries.en.tutor.toolStatus.render_algorithm === "Breaking the steps down", "en tutor dictionary includes algorithm status copy");
+  assert(dictionaries.zh.tutor.toolStatus.render_chat_quiz === "正在准备练习题", "zh tutor dictionary includes chat quiz status copy");
+  assert(dictionaries.en.tutor.toolStatus.render_chat_quiz === "Preparing the quiz", "en tutor dictionary includes chat quiz status copy");
+  assert(dictionaries.zh.tutor.toolCompleteStatus.render_chart === "图表已整理好", "zh tutor dictionary includes specific chart completion copy");
+  assert(dictionaries.en.tutor.toolCompleteStatus.render_3d_scene === "3D scene is ready", "en tutor dictionary includes specific 3D completion copy");
+  assert(getTutorToolDisplay("render_chart", "complete", dictionaries.zh).title === "图表已整理好", "complete chart status uses specific learner-facing title");
+  assert(getTutorToolDisplay("render_3d_scene", "complete", dictionaries.en).title === "3D scene is ready", "complete 3D status uses specific learner-facing title");
+  assert(getTutorToolDisplay("unknown_tool", "complete", dictionaries.zh).title === "学习组件已准备好", "unknown complete status falls back to specific default completion copy");
+  assert(dictionaries.zh.tutor.toolFailed.length > 0 && dictionaries.en.tutor.toolFailed.length > 0, "tutor dictionaries include recoverable tool failure copy");
+  assert(dictionaries.zh.tutor.courseCardReady === "课程路径已准备好", "zh tutor dictionary includes course card ready copy");
+  assert(dictionaries.en.tutor.courseCardReady === "Course path is ready", "en tutor dictionary includes course card ready copy");
+  assert(dictionaries.zh.tutor.visualizationPlanTitle === "可视化思路", "zh tutor dictionary includes visualization plan copy");
+  assert(dictionaries.en.tutor.visualizationPlanTitle === "Visualization plan", "en tutor dictionary includes visualization plan copy");
 
   process.stdout.write("[i18n.unit] ALL CHECKS PASSED\n");
 }

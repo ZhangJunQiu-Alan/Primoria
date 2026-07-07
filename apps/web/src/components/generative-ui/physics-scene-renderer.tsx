@@ -242,7 +242,7 @@ export function PhysicsSceneRenderer({ artifact, variant = "tool" }: { artifact:
       <div className="tool-card widget-card physics-card">
         <div className="tool-title">
           <span className="tool-dot" />
-          <span>render_physics_scene · {artifact.title}</span>
+          <span>{artifact.title}</span>
         </div>
         {body}
         {artifact.description && (

@@ -55,7 +55,7 @@ export function EChartsRenderer({ artifact, variant = "tool" }: { artifact: ECha
       <div className="tool-card widget-card echarts-card">
         <div className="tool-title">
           <span className="tool-dot" />
-          <span>render_chart · {artifact.title}</span>
+          <span>{artifact.title}</span>
         </div>
         {chart}
         {artifact.description && (

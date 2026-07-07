@@ -445,7 +445,7 @@ export function WaveVisualizer({ artifact }: { artifact: WaveVisualizationArtifa
       <div className="tool-card">
         <div className="tool-title">
           <span className="tool-dot" />
-          <span>render_wave · complete</span>
+          <span>{artifact.title}</span>
         </div>
         <div className="visualizer" style={{ padding: "12px 16px" }}>
           <strong style={{ display: "block", marginBottom: 4, color: C_TEXT, fontSize: 14 }}>
