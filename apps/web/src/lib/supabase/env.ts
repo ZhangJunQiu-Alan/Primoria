@@ -10,6 +10,12 @@ export function supabaseEnv(): SupabaseEnv | null {
   return { url, anonKey };
 }
 
+// The unauthenticated pass-through is a dev/staging convenience only.
+// In production a missing Supabase config must fail closed, not open.
+export function isAuthBypassAllowed(): boolean {
+  return !supabaseEnv() && process.env.NODE_ENV !== "production";
+}
+
 export function requireSupabaseEnv(): SupabaseEnv {
   const env = supabaseEnv();
   if (!env) {
