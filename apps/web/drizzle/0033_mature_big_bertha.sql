@@ -1,0 +1,16 @@
+DROP TABLE "workspace_agent_approvals" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_agent_capabilities" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_agent_connections" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_agent_memories" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_agent_profiles" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_agent_run_events" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_agent_runs" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_agent_skill_versions" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_agent_skills" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_artifacts" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_members" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_messages" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_tasks" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_thread_members" CASCADE;--> statement-breakpoint
+DROP TABLE "workspace_threads" CASCADE;--> statement-breakpoint
+DROP TABLE "workspaces" CASCADE;--> statement-breakpoint

@@ -1,8 +1,8 @@
 # Primoria
 
-Primoria is an AI-native learning workspace for adaptive course generation, course-aware tutoring, interactive learning artifacts, learner memory, and collaborative workspace agents.
+Primoria is an AI-native learning app for adaptive course generation, course-aware tutoring, interactive learning artifacts, and learner memory.
 
-The long-horizon product direction is documented in [docs/long-horizon-learning-principles.md](docs/long-horizon-learning-principles.md). Broader architecture notes live in [docs/product-architecture.md](docs/product-architecture.md), and workspace-agent design lives in [docs/workspace-agent-system.md](docs/workspace-agent-system.md).
+The long-horizon product direction is documented in [docs/long-horizon-learning-principles.md](docs/long-horizon-learning-principles.md). Broader architecture notes live in [docs/product-architecture.md](docs/product-architecture.md).
 
 ## Product Focus
 
@@ -24,9 +24,9 @@ Primoria is aimed at students and self-directed learners working through complex
 
 This is a pnpm monorepo:
 
-- `apps/web` - Next.js app: UI, API routes, auth, DB access, course generation, workers, CopilotKit integration, and workspace UI.
+- `apps/web` - Next.js app: UI, API routes, auth, DB access, course generation, workers, and CopilotKit integration.
 - `apps/agent` - LangGraph/deepagents tutor runtime serving the `primoria_tutor` graph.
-- `packages/contracts` - shared artifact, chat, stream, and workspace-agent contracts.
+- `packages/contracts` - shared artifact, chat, and stream contracts.
 - `packages/domain` - shared domain logic for agent context, memory, events, and signals.
 - `packages/memory` - optional memory-provider package integration.
 
@@ -77,7 +77,7 @@ ANTHROPIC_MODEL=your-model
 
 ### Database, Auth, and Knowledge Graph
 
-Primoria persistence is Postgres-first. Courses, lessons, auth/session data, chat history, workspace state, lesson jobs, learning events, concept mastery, learner facts, media assets, and workspace-agent data are stored in Postgres.
+Primoria persistence is Postgres-first. Courses, lessons, auth/session data, chat history, lesson jobs, learning events, concept mastery, learner facts, and media assets are stored in Postgres.
 
 ```bash
 DATABASE_URL="postgresql://postgres.[project-ref]:[db-password]@[pooler-host].pooler.supabase.com:5432/postgres"
@@ -134,16 +134,6 @@ Image blocks use Gemini image generation when configured:
 GEMINI_API_KEY=your-key
 GEMINI_IMAGE_MODEL=gemini-3.1-flash-image
 ```
-
-The workspace DeepAgent runtime is opt-in:
-
-```bash
-PRIMORIA_WORKSPACE_DEEPAGENT=1
-PRIMORIA_WORKSPACE_DEEPAGENT_PERSISTENCE=postgres
-PRIMORIA_WORKSPACE_OPERATOR_TOKEN=replace-with-a-long-random-token
-```
-
-Production workspace DeepAgent mode requires Postgres persistence and `DATABASE_URL`.
 
 ## Run Locally
 
@@ -225,14 +215,6 @@ pnpm --filter @primoria/web test:progress:db
 pnpm --filter @primoria/web test:extractor
 pnpm --filter @primoria/web test:extractor:db
 
-# Workspace agent unit/static checks
-pnpm --filter @primoria/web workspace:agent:test
-pnpm --filter @primoria/web workspace:agent-runtime:health-route
-
-# Workspace agent browser/runtime E2E checks
-pnpm --filter @primoria/web workspace:agent:e2e
-pnpm --filter @primoria/web workspace:agent:e2e:deepagent
-
 # Agent graph syntax and package checks
 node --check apps/agent/src/graph.mjs
 pnpm --filter @primoria/agent typecheck
@@ -240,15 +222,6 @@ pnpm --filter @primoria/agent test:course-store
 ```
 
 Database-backed tests require `DATABASE_URL`. Some E2E tests start their own isolated Next dev server; others expect a running app. Check the test file or the relevant docs before running long E2E suites.
-
-## CI
-
-The repository includes a PR-safe GitHub Actions workflow for the workspace-agent bundle:
-
-```bash
-pnpm --filter @primoria/web workspace:agent:test
-pnpm --filter @primoria/web workspace:agent-runtime:health-route
-```
 
 ## Architecture
 
@@ -319,14 +292,6 @@ Lesson materialization is recoverable and worker-driven:
 
 The main persistence tables include `courses`, `lessons`, `lesson_generation_jobs`, `lesson_generation_checkpoints`, `learning_events`, `learning_progress_jobs`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, and `extractor_jobs`.
 
-### Workspace Agents
-
-The workspace surface is implemented under `/workspace` with APIs under `apps/web/src/app/api/workspaces`.
-
-Workspace data includes rooms/threads, members, messages, tasks, artifacts, agent profiles, capabilities, connections, runs, run events, approvals, memories, and scoped skills. In production, workspace persistence requires Postgres. Local development may use fallback/local workspace behavior, but production code should treat Postgres as the source of truth.
-
-The optional DeepAgent workspace runtime is controlled by `PRIMORIA_WORKSPACE_DEEPAGENT`. It supports approval-aware tool calls, scoped memory, skills, and runtime health checks.
-
 ### Model Provider
 
 `apps/web/src/lib/ai/deepagent/model.ts` and `apps/agent/src/graph.mjs` resolve provider settings from environment variables. Supported providers are:
@@ -338,7 +303,7 @@ The web app also supports per-request provider settings where explicitly wired.
 
 ## Roadmap
 
-The current implementation covers the main personal learning loop: goal positioning, course creation, lazy lesson generation, interactive lesson blocks, quizzes, learning events, concept mastery, learner facts, chat history, account/session foundations, and workspace-agent foundations.
+The current implementation covers the main personal learning loop: goal positioning, course creation, lazy lesson generation, interactive lesson blocks, quizzes, learning events, concept mastery, learner facts, chat history, and account/session foundations.
 
 Near-term priorities:
 
@@ -352,9 +317,10 @@ Near-term priorities:
 Longer-term roadmap:
 
 - P0 personal learning loop: goal positioning, course creation, evaluation, remediation, and memory distillation.
-- P1 classroom/workspace: teacher, student, assignment, and class-learning analytics on top of workspace foundations.
-- P2 multi-agent collaboration: agent capability declarations, confidence, task execution, and marketplace-style discovery.
-- P3 collective intelligence: shared courses, feedback ranking, and system-level learning from aggregated outcomes.
+- P1 classroom: teacher, student, assignment, and class-learning analytics.
+- P2 collective intelligence: shared courses, feedback ranking, and system-level learning from aggregated outcomes.
+
+The former collaborative workspace-agent line (workspace rooms, agent profiles, approvals, skills, DeepAgent runtime) was removed in July 2026 to focus on the personal learning loop; see git history if it needs to be revived.
 
 ## Local Data Import
 

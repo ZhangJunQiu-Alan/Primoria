@@ -35,17 +35,7 @@
     "test:progress": "tsx tests/mastery-rules.unit.ts && tsx tests/learning-progress-decider.unit.ts && tsx tests/learning-progress-labels.unit.ts",
     "test:progress:db": "tsx tests/learning-progress-jobs.db.ts",
     "test:extractor": "tsx tests/learning-events-lesson-id.unit.ts && tsx tests/facts-directive.unit.ts && tsx tests/learner-facts-plan.unit.ts && tsx tests/distill-prompt.unit.ts && tsx tests/facts-consumption.unit.ts && tsx tests/feedback-latest.unit.ts",
-    "test:extractor:db": "tsx tests/extractor-jobs.db.ts",
-    "workspace:agent:e2e": "pnpm workspace:agent:e2e:direct && pnpm workspace:agent:e2e:approval",
-    "workspace:agent:e2e:direct": "node tests/workspace-direct-agent.e2e.mjs",
-    "workspace:agent:e2e:approval": "node tests/workspace-agent-approval.e2e.mjs",
-    "workspace:agent:e2e:api": "node tests/workspace-agent-api.e2e.mjs",
-    "workspace:agent:e2e:auth-db": "node tests/workspace-auth-db-agent.e2e.mjs",
-    "workspace:agent:e2e:deepagent": "node tests/workspace-deepagent-runtime.e2e.mjs",
-    "workspace:deepagent:e2e": "pnpm workspace:agent:e2e:deepagent",
-    "workspace:agent:test": "tsx tests/workspace.agent-triggers.unit.ts && tsx tests/workspace.agent-tools.unit.ts && tsx tests/workspace.agent-mcp.unit.ts && tsx tests/workspace.agent-skills.unit.ts && tsx tests/workspace.agent-runtime.unit.ts && tsx tests/workspace-client-merge.unit.ts && tsx tests/workspace-events.unit.ts && tsx tests/workspace-agent-runtime-health-route.unit.ts && tsx tests/workspace.unit.ts && tsx tests/workspace-ui-static.unit.ts",
-    "workspace:agent-runtime:health-route": "tsx tests/workspace-agent-runtime-health-route.unit.ts",
-    "workspace:agent-skills:maintenance": "tsx scripts/workspace-agent-skills-maintenance.ts"
+    "test:extractor:db": "tsx tests/extractor-jobs.db.ts"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.5",

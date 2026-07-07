@@ -135,7 +135,7 @@ Cures the "inline queries in `store.ts` + whole-jsonb rewrite" disease.
 ```
 lib/db/
   schema/     ← split today's 544-line schema.ts by table domain
-    courses.ts  identities.ts  workspaces.ts  learning.ts …
+    courses.ts  identities.ts  learning.ts …
   models/     ← single-entity CRUD classes (replace scattered store.ts)
     CourseModel.ts  CapabilityModel.ts …
   services/   ← cross-entity business logic, called by API routes
@@ -167,7 +167,7 @@ Before deleting anything, the legacy TS tutor path was traced end-to-end with
 
 | File | Live consumer |
 | --- | --- |
-| `lib/ai/deepagent/model.ts` | Used through Agent OS facades by course chat, workspace runtime model creation, course-generator, and course-editor. |
+| `lib/ai/deepagent/model.ts` | Used through Agent OS facades by course chat, course-generator, and course-editor. |
 | `lib/ai/deepagent/course-generator.ts` | Used through `lib/agent-os/ai.ts` by `/api/courses/[id]/chat`. |
 | `lib/ai/deepagent/course-editor.ts` | Used through `lib/agent-os/ai.ts` by `/api/courses/[id]/edit`. |
 
