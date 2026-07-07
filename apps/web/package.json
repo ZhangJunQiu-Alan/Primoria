@@ -50,7 +50,6 @@
     "@langchain/mcp-adapters": "^1.1.3",
     "@langchain/openai": "^1.4.6",
     "@primoria/contracts": "workspace:*",
-    "@primoria/domain": "workspace:*",
     "@primoria/memory": "workspace:*",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.1",

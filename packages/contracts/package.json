@@ -5,7 +5,6 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./agent": "./src/agent/index.ts",
     "./artifacts": "./src/artifacts/index.ts",
     "./chat": "./src/chat/index.ts",
     "./stream": "./src/stream/index.ts"

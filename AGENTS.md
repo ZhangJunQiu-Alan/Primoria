@@ -63,7 +63,7 @@ There is one active tutor runtime path:
 
 Browser CopilotKit UI → `apps/web/src/app/api/copilotkit/route.ts` → `LangGraphAgent(graphId: "primoria_tutor")` → `apps/agent/src/graph.mjs`.
 
-The legacy `POST /api/tutor/chat` path, `apps/web/src/lib/ai/tutor-agent.ts`, and `apps/web/src/lib/ai/deepagent/primoria-deep-agent.ts` are no longer active runtime paths. Do not add new behavior to those old paths or try to keep them in sync.
+The legacy `POST /api/tutor/chat` stack has been deleted. If you find references to it in older docs, they are stale.
 
 ### Agent tool pipeline (visualization)
 
