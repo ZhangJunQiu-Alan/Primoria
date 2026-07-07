@@ -1,5 +1,6 @@
 import { Pool } from "pg";
 
+import { getNodePostgresSsl } from "../db/ssl";
 import {
   createKnowledgeGraphEmbedding,
   getKnowledgeGraphEmbeddingModelVersion,
@@ -60,7 +61,7 @@ function getKnowledgeGraphPool() {
     globalForKnowledgeGraph.primoriaKnowledgeGraphPool = new Pool({
       connectionString: process.env.DATABASE_URL,
       max: 4,
-      ssl: process.env.DATABASE_SSL === "false" ? undefined : { rejectUnauthorized: false },
+      ssl: getNodePostgresSsl(),
     });
   }
 

@@ -1,6 +1,7 @@
 import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
+import { getDatabaseSsl } from "./ssl";
 
 type DbGlobal = {
   client?: postgres.Sql;
@@ -37,10 +38,12 @@ export function getDb() {
   const existing = globalAny[globalKey];
   if (existing?.db) return existing.db;
 
+  const ssl = getDatabaseSsl();
   const client = postgres(url, {
     max: getDatabasePoolMax(),
     connect_timeout: getDatabaseConnectTimeout(),
     prepare: false,
+    ...(ssl !== undefined ? { ssl } : {}),
   });
   const db = drizzle(client, { schema });
   globalAny[globalKey] = { client, db };

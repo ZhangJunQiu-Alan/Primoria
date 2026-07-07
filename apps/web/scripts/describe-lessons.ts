@@ -1,5 +1,6 @@
 import postgres from "postgres";
 import { loadLocalEnv } from "./load-local-env";
+import { getDatabaseSsl } from "../src/lib/db/ssl";
 
 loadLocalEnv();
 
@@ -7,7 +8,8 @@ async function main() {
   const databaseUrl = process.env.DATABASE_URL?.trim();
   if (!databaseUrl) throw new Error("DATABASE_URL is not configured.");
 
-  const sql = postgres(databaseUrl, { max: 1 });
+  const ssl = getDatabaseSsl();
+  const sql = postgres(databaseUrl, { max: 1, ...(ssl !== undefined ? { ssl } : {}) });
 
   try {
     const columns = await sql`

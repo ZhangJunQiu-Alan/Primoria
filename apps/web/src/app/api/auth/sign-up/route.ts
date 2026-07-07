@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { signUpWithEmail } from "@/lib/auth/accounts";
+import { authRateLimitHeaders, checkAuthRateLimit } from "@/lib/auth/rate-limit";
 import { isAuthEnabled } from "@/lib/auth/session";
 import { withAuthTimeout } from "@/lib/auth/timeouts";
 
@@ -16,6 +17,17 @@ export async function POST(request: Request) {
   }
   try {
     const body = RequestSchema.parse(await request.json());
+    const rateLimit = await withAuthTimeout(
+      checkAuthRateLimit({ headers: request.headers, email: body.email }),
+      "Auth rate limit",
+    );
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many sign-up attempts. Try again later." },
+        { status: 429, headers: authRateLimitHeaders(rateLimit) },
+      );
+    }
+
     const user = await withAuthTimeout(signUpWithEmail(body), "Sign up");
     return NextResponse.json({ user });
   } catch (error) {

@@ -1,5 +1,6 @@
 import postgres from "postgres";
 import { loadLocalEnv } from "./load-local-env";
+import { getDatabaseSsl } from "../src/lib/db/ssl";
 
 loadLocalEnv();
 
@@ -15,14 +16,16 @@ type DatabaseInfo = {
 async function main() {
   const databaseUrl = process.env.DATABASE_URL?.trim();
   if (!databaseUrl) {
-    throw new Error("DATABASE_URL is not configured. Add the Supabase cloud Postgres URL to apps/web/.env.local first.");
+    throw new Error("DATABASE_URL is not configured. Add the Primoria Postgres URL to apps/web/.env.local first.");
   }
 
   const parsed = new URL(databaseUrl);
+  const ssl = getDatabaseSsl();
   const sql = postgres(databaseUrl, {
     max: 1,
     prepare: false,
     connect_timeout: 10,
+    ...(ssl !== undefined ? { ssl } : {}),
   });
 
   try {

@@ -89,6 +89,23 @@ export const otpCodes = pgTable(
   }),
 );
 
+export const authRateLimits = pgTable(
+  "auth_rate_limits",
+  {
+    id: text("id").primaryKey(),
+    scope: text("scope").notNull(),
+    identifierHash: text("identifier_hash").notNull(),
+    windowStart: timestamp("window_start", { withTimezone: true }).notNull(),
+    attempts: integer("attempts").notNull().default(0),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    scopeHashIdx: index("auth_rate_limits_scope_hash_idx").on(table.scope, table.identifierHash),
+    expiresIdx: index("auth_rate_limits_expires_idx").on(table.expiresAt),
+  }),
+);
+
 export const courses = pgTable(
   "courses",
   {
@@ -363,8 +380,8 @@ export const learningProgressJobs = pgTable(
 // Per-user concept mastery (feature_specification.md §156). Second memory layer:
 // concept-level state only, no chat summaries. Drives skip / quick-review /
 // remediation decisions. Written owner-scoped from the learning-progress worker
-// (no request session). NOTE: this table predates Drizzle (it exists in Supabase
-// with RLS); the migration creates it idempotently (IF NOT EXISTS).
+// (no request session). The migration creates it idempotently because this table
+// existed before the current Drizzle-first migration sequence.
 export const userConceptMastery = pgTable(
   "user_concept_mastery",
   {

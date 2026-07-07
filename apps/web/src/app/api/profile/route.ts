@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
-import { getCurrentUser, invalidateCurrentSessionUserCache, isAuthEnabled } from "@/lib/auth/session";
+import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { getDb } from "@/lib/db/client";
 import { users } from "@/lib/db/schema";
 
@@ -22,6 +22,5 @@ export async function PATCH(request: Request) {
     .where(eq(users.id, user.id))
     .returning({ id: users.id, displayName: users.displayName });
 
-  await invalidateCurrentSessionUserCache();
   return NextResponse.json({ user: updated });
 }
