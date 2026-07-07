@@ -1,18 +1,20 @@
 # Primoria Web implementation status
 
-## Current result
+## Current Result
 
-The Web app is now a real AI Tutor implementation, not a static mock.
+The Web app is the active Primoria product surface. It is no longer a static
+mock and no longer depends on Supabase runtime helpers.
 
 Implemented:
 
 - Next.js / React / TypeScript web app under `apps/web`
 - Chat-first AI Tutor UI
 - Light Primoria visual style
-- Settings modal for OpenAI-compatible provider config
+- Settings UI for model/provider preferences where wired
 - CopilotKit thread history with New chat reset
 - CopilotKit runtime route backed by the LangGraph `primoria_tutor` graph
-- OpenAI-compatible and Anthropic-compatible model configuration
+- OpenAI-compatible and Anthropic-compatible chat model configuration
+- OpenAI-compatible and MiniMax KG embedding configuration
 - DeepAgent/LangGraph tutor prompt
 - Structured model response:
   - normal text reply
@@ -34,8 +36,11 @@ Implemented:
   - import map for approved visualization modules
   - widget-to-tutor prompt bridge
 - Local verification through CopilotKit and LangGraph Studio
+- Postgres-backed self-owned auth (`users`, `identities`, `sessions`)
+- Auth endpoint rate limiting through `auth_rate_limits`
+- Tencent Cloud PostgreSQL as the current shared development database
 
-## Runtime config
+## Runtime Config
 
 Server defaults live in `apps/web/.env.local`:
 
@@ -43,25 +48,29 @@ Server defaults live in `apps/web/.env.local`:
 OPENAI_BASE_URL=https://ai.orbitlink.me/v1
 OPENAI_API_KEY=...
 OPENAI_MODEL=gpt-5.4
+DATABASE_URL=postgresql://primoria_app:[password]@127.0.0.1:15432/primoria
+DATABASE_SSL=false
 ```
 
-The UI Settings modal can override:
+Supported model providers:
 
-- Base URL
-- Model
-- API key
+- `AI_PROVIDER=openai-compatible`
+- `AI_PROVIDER=anthropic-compatible`
 
-Blank settings use server defaults.
+KG embeddings are configured separately with `KG_EMBEDDING_PROVIDER`.
 
 ## Verification
 
 Passed:
 
 - `pnpm --filter @primoria/web typecheck`
+- `pnpm --filter @primoria/web test`
 - `pnpm --filter @primoria/web build`
-- Browser E2E: user prompt → API route → OpenAI-compatible backend → model generated `html_widget` → iframe render
+- `node --check apps/agent/src/graph.mjs`
 
-## Next implementation steps
+## Next Implementation Steps
 
-1. Route adaptive course requests through knowledge-graph positioning before generation.
-2. Add explicit structured intent routing if prompt-only routing becomes unstable.
+1. Run full local-stack QA: web, agent, workers, Tencent DB, and real model keys.
+2. Calibrate KG positioning thresholds after MiniMax embedding migration.
+3. Add user-level limits for cost-bearing AI endpoints beyond auth.
+4. Fix the remaining widget iframe sandbox hardening item.

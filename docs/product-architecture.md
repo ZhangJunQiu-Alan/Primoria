@@ -2,6 +2,12 @@
 
 The system-level design for Primoria as an adaptive learning platform.
 
+Status note, July 2026: the active product implementation is focused on the
+Ring 1 personal learning loop. The former collaborative workspace-agent runtime
+was removed from the codebase to reduce scope. Workspace/classroom and
+collective-intelligence sections below describe future product direction, not
+current runtime capability.
+
 `docs/architecture.md` covers code structure (packages, file organization).
 This document covers **what the system does** — the engines, data flows, agent
 ecosystem, and evolution mechanisms that make learning adaptive.
@@ -10,9 +16,10 @@ ecosystem, and evolution mechanisms that make learning adaptive.
 
 ## 1. Core identity
 
-Primoria is a learning ecosystem operating system. Not a single app — a platform
-where users, agents, courses, memory, and feedback form a living system that
-drives its own evolution.
+Primoria is a long-horizon adaptive learning system. The near-term product is a
+personal learning loop where goals, courses, memory, and feedback improve the
+next teaching step. Classroom, marketplace, and collective-intelligence concepts
+remain future expansion layers.
 
 The system operates as three nested rings:
 
@@ -38,7 +45,7 @@ The system operates as three nested rings:
 └──────────────────────────────────────────────────────────────┘
 ```
 
-Ring 1 is the heart (without it the others are empty shells). Ring 2 is an
+Ring 1 is the heart and the current implementation focus. Ring 2 is an
 amplifier. Ring 3 is a flywheel.
 
 ---
@@ -268,18 +275,19 @@ System behavior:
 
 ---
 
-## 7. Workspace and classroom
+## 7. Classroom and collaboration (future)
 
-The workspace extends the personal adaptive loop to group dimensions:
+Future classroom/collaboration features should extend the personal adaptive loop
+to group dimensions:
 
 - Teacher sees aggregated User Memory view (class-level weak concepts)
 - System suggests assignments based on class weakness distribution
 - Different students get different difficulty/type assignments (personalized)
 - Student collaboration → produces observations → feeds back into individual memory
 
-Workspace is built ON TOP of Ring 1. If personal memory + observation + agent
+This layer is built on top of Ring 1. If personal memory + observation + agent
 action feedback is not working, classroom features are hollow. Therefore
-workspace is P1/P2.
+classroom/collaboration remains P1/P2 after the personal loop is dependable.
 
 ---
 
@@ -376,21 +384,20 @@ P3 (ecosystem):
 
 This product architecture maps onto `docs/architecture.md` as follows:
 
-- `packages/contracts` defines: artifact types (block types), agent capability
-  schema, event schema, memory model types — all as Zod schemas (single source).
-- `packages/domain` contains: agent contracts and product policies for routing,
-  confidence signals, course/action contracts, and observation-to-memory
-  extraction logic. It should not become a centralized "Decision Engine"; the
-  agent/runtime owns planning and action choice.
-- `apps/web/lib/db` hosts: the four memory stores (User/Course/Agent/System),
-  event log table, concept graph, learner mastery state. Workspace's existing 17
-  tables provide the agent memory + collaboration substrate — they need type
-  extension, not replacement.
-- `apps/agent` executes: the actuator pool — specialized agents run behind the
-  stable Agent OS contracts and product policy layer.
+- `packages/contracts` defines shared artifact, chat, and stream contracts used
+  by the web app and agent runtime.
+- `packages/memory` contains optional memory-provider integration helpers.
+- `apps/web/src/lib/db` hosts app-owned Postgres schema and server-side data
+  access: auth/session tables, knowledge graph tables, course/lesson state,
+  learning events, mastery, learner profiles/facts, background jobs, media
+  assets, and rate-limit state.
+- `apps/agent` executes the active `primoria_tutor` LangGraph/deepagents graph.
+  It does not import from `apps/web`; bounded course-card reads are handled
+  through explicit agent-side DB code.
 
-The structural refactor (Phase 0–3) creates clean ground for these engines. The
-product features (P0–P3) are built on that ground afterward.
+The structural refactor notes in `docs/architecture.md` are historical. Current
+implementation work should stay grounded in the active personal learning loop
+unless a new architecture decision reopens classroom or marketplace scope.
 
 ---
 

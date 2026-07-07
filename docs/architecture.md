@@ -1,10 +1,11 @@
 # Primoria Architecture
 
-> Historical architecture and cleanup plan. This document records a migration
-> proposal and dead-code verification notes; it is not the current runtime source
-> of truth for the AI Tutor path. The active tutor path is
-> Browser CopilotKit UI → `/api/copilotkit` → `primoria_tutor` in
-> `apps/agent/src/graph.mjs`.
+> Historical architecture and cleanup plan. This document records an older
+> structural proposal and dead-code verification notes; it is not the current
+> runtime source of truth for the AI Tutor path. The active tutor path is Browser
+> CopilotKit UI → `/api/copilotkit` → `primoria_tutor` in
+> `apps/agent/src/graph.mjs`. The proposed `packages/domain` extraction is not
+> part of the current codebase.
 
 This document is the construction blueprint for Primoria's codebase structure. It
 defines the target package topology, the laws that govern dependencies, the
@@ -15,7 +16,8 @@ sharable). It deliberately does *not* design the adaptive-learning loop itself �
 that is a separate product-architecture effort. The goal here is to make the
 codebase a clean foundation that the learning loop can later be built on.
 
-Status: **Phase 0 verified, not yet executed.** See [Rollout](#6-phased-rollout).
+Status: **historical proposal**. Keep for context only; use README and AGENTS.md
+for current commands and runtime boundaries.
 
 ---
 

@@ -4,7 +4,7 @@ Primoria should borrow the architecture, not the exact visual skin.
 
 ## Web patterns we are adopting
 
-- Chat-first shell: the tutor is the primary workspace.
+- Chat-first shell: the tutor is the primary learning surface.
 - Tool rendering: agent calls become inline UI blocks inside the chat.
 - Controlled generative UI: React components registered by name and schema.
 - Sandboxed widget renderer: arbitrary HTML/SVG/CSS/JS renders inside an iframe.

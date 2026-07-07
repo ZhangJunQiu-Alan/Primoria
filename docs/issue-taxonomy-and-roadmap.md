@@ -2,7 +2,14 @@
 
 ## Purpose
 
-Primoria is moving from a course and widget generator into an adaptive learning workspace. The issue system should make that shift explicit so product ideas, agent work, PRs, and implementation slices stay aligned.
+Primoria is moving from a course and widget generator into an adaptive learning
+system. The issue system should make that shift explicit so product ideas,
+agent work, PRs, and implementation slices stay aligned.
+
+Status note, July 2026: the active implementation is the personal learning loop.
+The former collaborative workspace-agent runtime was removed from the codebase.
+Workspace/classroom issues should be treated as future scope, not existing
+runtime follow-up.
 
 The working product loop is:
 
@@ -35,8 +42,8 @@ Use four label families on implementation issues:
 | `type:learning-signal` | Attempts, mastery, weak concepts, revision evidence, adaptive decisions. |
 | `type:course-tutor` | Course detail assistant context, selected text, block edits, course patching. |
 | `type:renderer` | HTML/React/widget/artifact rendering runtime. |
-| `type:workspace` | Workspace communication, members, tasks, class/team flows. |
-| `type:agent-runtime` | Agent runs, approvals, DeepAgent runtime, skills, tools, connections. |
+| `type:classroom` | Future classroom, assignments, class/team flows, and collaboration. |
+| `type:agent-runtime` | Tutor graph runtime, tool orchestration, model/provider behavior, and future agent productization. |
 | `type:memory` | Reviewable memory, preference extraction, long-term personalization. |
 | `type:data-architecture` | Database, portability, service boundaries, infra abstractions. |
 | `type:sharing` | Published courses, learning paths, community or teacher distribution. |
@@ -51,8 +58,8 @@ Use four label families on implementation issues:
 | `area:adaptive-learning` | System-level learning loop and mastery decisions. |
 | `area:course` | Course generation, blocks, course detail, course edits. |
 | `area:artifact` | Generated artifact representation, renderers, saved outputs. |
-| `area:workspace` | Workspace communication and collaboration. |
-| `area:agent` | Agent profiles, runtime, tools, approvals, skills. |
+| `area:classroom` | Future classroom and collaboration surfaces. |
+| `area:agent` | Tutor runtime, tools, provider settings, and future agent surfaces. |
 | `area:memory` | Memory review, extraction, preference state. |
 | `area:infra` | Data architecture, deployment, CI, service abstractions. |
 
@@ -86,10 +93,10 @@ Use four label families on implementation issues:
 | #10 Selected-text Course Tutor UI | `type:course-tutor`, `area:course`, `priority:P0`, `status:ready` | A focused UX slice inside #1. |
 | #17 React artifact renderer | `type:renderer`, `area:artifact`, `priority:P1`, `status:needs-slice` | Needed for complex stateful artifacts, but should align with artifact IR. |
 | #5 Long-term memory | `type:memory`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:needs-slice` | Memory should consume reviewed evidence, not replace raw signals. |
-| #8 Workspace communication | `type:workspace`, `area:workspace`, `priority:P1`, `status:needs-slice` | Workspace exists, but classroom/homework slices need tighter issue boundaries. |
+| #8 Classroom/collaboration | `type:classroom`, `area:classroom`, `priority:P2`, `status:needs-slice` | Future scope after the personal loop is stable; the old workspace-agent runtime no longer exists. |
 | #15 Onboarding preferences | `type:onboarding`, `area:memory`, `priority:P1`, `status:ready` | Good cold-start signal source for adaptive decisions. |
 | #16 Postgres-first architecture | `type:data-architecture`, `area:infra`, `priority:P1`, `status:ready` | Current implementation is already Postgres-first; keep boundaries explicit. |
-| #13 Course sharing and paths | `type:sharing`, `area:course`, `area:workspace`, `priority:P2`, `status:needs-slice` | Better after course/artifact schemas stabilize. |
+| #13 Course sharing and paths | `type:sharing`, `area:course`, `priority:P2`, `status:needs-slice` | Better after course/artifact schemas stabilize. |
 
 ## Immediate Implementation Slices
 
@@ -133,15 +140,17 @@ Add a small artifact representation that can support:
 
 Then implement the React renderer against that representation rather than making a renderer-specific one-off schema.
 
-### P1: Agent Runtime Productization
+### P1: Tutor Runtime Productization
 
-Workspace agents already have profiles, capabilities, runs, approvals, skills, memory, and artifacts. The next slices should make runtime behavior dependable:
+The active agent runtime is the `primoria_tutor` LangGraph/deepagents graph. The
+next slices should make tutor behavior dependable before reintroducing broader
+agent surfaces:
 
-- production DeepAgent runtime path
-- approval resume path
-- run event display and persistence checks
-- saved artifact/memory review flows
-- Agent Store install behavior tests
+- provider failover and timeout behavior
+- tool status and artifact rendering consistency
+- course-detail context targeting
+- saved chat/thread persistence checks
+- model-specific widget and structured-output regression tests
 
 ### P1: Memory As Reviewed Evidence
 
@@ -153,16 +162,15 @@ Memory should not be a magic sink. Keep raw evidence in product tables and write
 
 ## First-Class `type:search`
 
-`type:search` is a cross-cutting issue type, not just the existing `search_workspace_messages` tool.
+`type:search` is a cross-cutting issue type.
 
 Use it when the work improves retrieval or discovery over:
 
-- workspace messages
 - artifacts
 - course blocks
 - learning signals
 - memory
-- agent runs
+- tutor threads
 - GitHub issues / AROS planning state
 
 A `type:search` issue should specify:

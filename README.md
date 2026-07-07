@@ -27,14 +27,14 @@ This is a pnpm monorepo:
 - `apps/web` - Next.js app: UI, API routes, auth, DB access, course generation, workers, and CopilotKit integration.
 - `apps/agent` - LangGraph/deepagents tutor runtime serving the `primoria_tutor` graph.
 - `packages/contracts` - shared artifact, chat, and stream contracts.
-- `packages/domain` - shared domain logic for agent context, memory, events, and signals.
 - `packages/memory` - optional memory-provider package integration.
 
 ## Prerequisites
 
 - Node.js 20+
 - pnpm 10+ (`corepack enable` is recommended)
-- Postgres. Supabase cloud Postgres is the current shared provider.
+- Postgres. The current shared provider is a private Tencent Cloud PostgreSQL
+  server reached through SSH tunnel for local development.
 - An OpenAI-compatible or Anthropic-compatible model endpoint.
 
 ## Install
@@ -80,10 +80,20 @@ ANTHROPIC_MODEL=your-model
 Primoria persistence is Postgres-first. Courses, lessons, auth/session data, chat history, lesson jobs, learning events, concept mastery, learner facts, and media assets are stored in Postgres.
 
 ```bash
-DATABASE_URL="postgresql://postgres.[project-ref]:[db-password]@[pooler-host].pooler.supabase.com:5432/postgres"
+DATABASE_URL="postgresql://primoria_app:[db-password]@127.0.0.1:15432/primoria"
+DATABASE_SSL=false
 ```
 
-Use the Supabase Dashboard Connect panel to copy the Session Pooler URI. Replace only the password placeholder; do not guess the pooler host.
+For local development, keep PostgreSQL private on the server and open an SSH tunnel:
+
+```bash
+ssh -N -L 15432:127.0.0.1:5432 ubuntu@<server>
+```
+
+Server deployments on the same Tencent Cloud host should use `127.0.0.1:5432`
+directly instead of opening port 5432 to the public internet.
+For a remote direct connection to a managed Postgres service that requires SSL,
+set `DATABASE_SSL=require`.
 
 Check the connection and apply Drizzle migrations:
 
@@ -107,14 +117,33 @@ or, for the common migration + KG seed + embedding flow:
 pnpm --filter @primoria/web db:sync:kg
 ```
 
-The main email/password session system stores `users`, `identities`, and `sessions` in Postgres once `DATABASE_URL` is set. Supabase-client/RLS-backed paths also need the public project values from the Supabase dashboard:
+KG embeddings default to the OpenAI-compatible `/embeddings` API:
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=replace-with-anon-key
+KG_EMBEDDING_PROVIDER=openai-compatible
+OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+KG_EMBEDDING_MODEL_VERSION=openai:text-embedding-3-small:1536
 ```
 
-See [docs/supabase-cloud.md](docs/supabase-cloud.md) for the cloud setup runbook.
+MiniMax native embeddings are also supported. Use this only with a MiniMax Open
+Platform key; legacy MiniMax embedding endpoints usually require `GroupId`.
+
+```bash
+KG_EMBEDDING_PROVIDER=minimax
+MINIMAX_API_KEY=your-minimax-key
+MINIMAX_GROUP_ID=your-minimax-group-id
+MINIMAX_EMBEDDING_BASE_URL=https://api.minimax.chat/v1
+MINIMAX_EMBEDDING_MODEL=embo-01
+KG_EMBEDDING_MODEL_VERSION=minimax:embo-01:1536
+```
+
+The email/password session system stores `users`, `identities`, and `sessions`
+in Postgres once `DATABASE_URL` is set. Supabase client keys are no longer part
+of the Primoria runtime path.
+
+Auth endpoints are rate-limited before password hashing/verification. Defaults:
+`AUTH_RATE_LIMIT_IP_MAX=5`, `AUTH_RATE_LIMIT_ACCOUNT_MAX=5`, and
+`AUTH_RATE_LIMIT_WINDOW_SECONDS=60`.
 
 ### AI Tutor Agent
 
@@ -254,7 +283,7 @@ The active tutor graph is defined in `apps/agent/src/graph.mjs`. It uses deepage
 - `stemRenderer` - constrained STEM simulations using the subject runtime API.
 - `render_chart`, `render_diagram`, `render_physics_scene`, `render_3d_scene`, `render_algorithm`, `render_math_explorer`, `render_wave`, `render_graph`, and `render_molecule` - specialized structured renderers.
 
-`TutorArtifact` types are defined in `packages/contracts/src/artifacts`. `ToolCard` routes artifacts to renderers in `apps/web/src/components/generative-ui/tool-card.tsx`.
+`TutorArtifact` types are defined in `packages/contracts/src/artifacts` and re-exported through `apps/web/src/lib/ai/types.ts`. `ToolCard` routes artifacts to renderers in `apps/web/src/components/generative-ui/tool-card.tsx`.
 
 Adding a new artifact type usually requires:
 
@@ -345,7 +374,8 @@ Create the account in the app before running the import command.
 
 ## Contribution Workflow
 
-Do not push directly to `main` for issue work.
+Prefer a feature branch for issue work. Direct `main` commits should be limited
+to local maintenance or explicitly requested cleanup.
 
 1. Pick an issue and comment that you are taking it.
 2. Create a dedicated branch for that issue.
