@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-import { supabaseEnv } from "./env";
+import { isAuthBypassAllowed, supabaseEnv } from "./env";
 
 const PUBLIC_PATTERNS = [
   /^\/login(\/|$)/,
@@ -17,8 +17,12 @@ function isPublicPath(pathname: string) {
 
 export async function updateSession(request: NextRequest) {
   const env = supabaseEnv();
-  // Staged rollout: until Supabase is configured, do not gate anything.
-  if (!env) return NextResponse.next({ request });
+  if (!env) {
+    // Staged rollout: without Supabase config, dev/staging pass through, but
+    // production fails closed instead of serving the whole app unauthenticated.
+    if (isAuthBypassAllowed()) return NextResponse.next({ request });
+    return new NextResponse("Auth is not configured", { status: 503 });
+  }
 
   let supabaseResponse = NextResponse.next({ request });
 
