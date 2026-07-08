@@ -4,6 +4,7 @@ import { PHYSICS_RUNTIME_CODE } from "./runtimes/physics-runtime";
 import { MATH_RUNTIME_CODE } from "./runtimes/math-runtime";
 import { CS_RUNTIME_CODE } from "./runtimes/cs-runtime";
 import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
+import { LEARNING_OBJECT_CSS, PRIMORIA_PALETTE_JS } from "./style-tokens";
 
 type WidgetExportInput = {
   title: string;
@@ -202,7 +203,8 @@ export function assembleWidgetStandaloneHtml({ html, title, dependencies }: Widg
   <title>${escapeHtml(title)}</title>
   ${IMPORT_MAP}
   ${dependencyTags}
-  <style>${STANDALONE_THEME_CSS}</style>
+  <style>${STANDALONE_THEME_CSS}${LEARNING_OBJECT_CSS}</style>
+  <script>${PRIMORIA_PALETTE_JS}</script>
   <script>
     window.sendPrompt = function() {};
     window.openLink = function(url) { if (url) window.open(url, '_blank', 'noopener,noreferrer'); };

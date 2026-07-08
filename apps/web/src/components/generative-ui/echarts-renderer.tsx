@@ -2,6 +2,61 @@
 
 import { useEffect, useRef } from "react";
 import type { EChartsArtifact } from "@/lib/agent-os";
+import { LO_GRID, LO_INK, LO_MUTED, SERIES_FILLS, SERIES_STROKES } from "./style-tokens";
+
+// The learning-object chart style is applied at render time (theme + series
+// defaults) so the model never writes colors into the option; the agent prompt
+// only says "colors come from the Primoria theme".
+
+let themeRegistered = false;
+
+function ensurePrimoriaTheme(echarts: typeof import("echarts")) {
+  if (themeRegistered) return;
+  themeRegistered = true;
+  const axis = {
+    axisLine: { lineStyle: { color: LO_MUTED } },
+    axisTick: { lineStyle: { color: LO_MUTED } },
+    axisLabel: { color: LO_MUTED },
+    splitLine: { lineStyle: { color: LO_GRID } },
+  };
+  echarts.registerTheme("primoria", {
+    color: [...SERIES_STROKES],
+    backgroundColor: "transparent",
+    textStyle: { color: LO_INK },
+    title: { textStyle: { color: LO_INK }, subtextStyle: { color: LO_MUTED } },
+    legend: { textStyle: { color: LO_MUTED } },
+    categoryAxis: axis,
+    valueAxis: axis,
+    logAxis: axis,
+    timeAxis: axis,
+  });
+}
+
+/** Bars get the pale-fill + 2px darker-stroke pair when the model left colors
+ * unset; other series types keep the theme's stroke palette. */
+function withSeriesDefaults(option: EChartsArtifact["option"]): EChartsArtifact["option"] {
+  if (!option || typeof option !== "object") return option;
+  const opt = option as Record<string, unknown>;
+  const raw = opt.series;
+  const list = Array.isArray(raw) ? raw : raw ? [raw] : [];
+  if (list.length === 0) return option;
+  const series = list.map((entry, i) => {
+    if (!entry || typeof entry !== "object") return entry;
+    const s = entry as Record<string, unknown>;
+    if (s.type !== "bar" || s.itemStyle || s.color) return entry;
+    const idx = i % SERIES_FILLS.length;
+    return {
+      ...s,
+      itemStyle: {
+        color: SERIES_FILLS[idx],
+        borderColor: SERIES_STROKES[idx],
+        borderWidth: 2,
+        borderRadius: [3, 3, 0, 0],
+      },
+    };
+  });
+  return { ...opt, series: Array.isArray(raw) ? series : series[0] } as EChartsArtifact["option"];
+}
 
 export function EChartsRenderer({ artifact, variant = "tool" }: { artifact: EChartsArtifact; variant?: "tool" | "course" }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -13,9 +68,10 @@ export function EChartsRenderer({ artifact, variant = "tool" }: { artifact: ECha
 
     import("echarts").then((echarts) => {
       if (disposed || !containerRef.current) return;
-      const chart = echarts.init(containerRef.current, undefined, { renderer: "svg" });
+      ensurePrimoriaTheme(echarts);
+      const chart = echarts.init(containerRef.current, "primoria", { renderer: "svg" });
       chartRef.current = chart;
-      chart.setOption(artifact.option);
+      chart.setOption(withSeriesDefaults(artifact.option));
 
       const ro = new ResizeObserver(() => chart.resize());
       ro.observe(containerRef.current);
@@ -34,7 +90,7 @@ export function EChartsRenderer({ artifact, variant = "tool" }: { artifact: ECha
 
   // Update option in-place without re-init when same chart instance exists
   useEffect(() => {
-    chartRef.current?.setOption(artifact.option, { notMerge: false });
+    chartRef.current?.setOption(withSeriesDefaults(artifact.option), { notMerge: false });
   }, [artifact.option]);
 
   const height = artifact.height ?? 400;

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { IDIOMORPH_JS } from "./idiomorph-inline";
 import { ExportOverlay } from "./export-overlay";
 import { assembleWidgetStandaloneHtml } from "./export-utils";
+import { LEARNING_OBJECT_CSS, PRIMORIA_PALETTE_JS } from "./style-tokens";
 import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
 import { normalizeWidgetDependencies, type WidgetDependency as RuntimeWidgetDependency } from "@/lib/ai/widget-dependencies";
 
@@ -704,12 +705,14 @@ function assembleShell() {
   " />
   <style>
     ${THEME_CSS}
+    ${LEARNING_OBJECT_CSS}
     ${SVG_CLASSES_CSS}
     ${FORM_STYLES_CSS}
   </style>
 </head>
 <body>
   <div id="content"></div>
+  <script>${PRIMORIA_PALETTE_JS}</script>
   <script>${IDIOMORPH_JS}</script>
   <script>${BRIDGE_JS}</script>
 </body>
