@@ -1,19 +1,20 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { authStyles } from "@/components/auth/styles";
+import { useT } from "@/lib/i18n/client";
 
 export function ResetPasswordForm() {
-  const router = useRouter();
+  const t = useT();
 
   return (
     <div style={authStyles.container}>
-      <h1 style={authStyles.title}>设置新密码</h1>
-      <p style={authStyles.label}>当前账号系统已切到 Primoria 自有数据库，邮件重置密码暂未开放。</p>
-      <button type="button" onClick={() => router.push("/login")} style={authStyles.primaryButton}>
-        返回登录
-      </button>
+      <h1 style={authStyles.title}>{t.auth.passwordRecoveryUnavailableTitle}</h1>
+      <p style={authStyles.label} role="status">{t.auth.passwordRecoveryUnavailableCopy}</p>
+      <Link href="/login" style={authStyles.primaryButton}>
+        {t.auth.backToLogin}
+      </Link>
     </div>
   );
 }
