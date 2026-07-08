@@ -502,17 +502,21 @@ PRIMORIA_WORKSPACE_DEEPAGENT_PERSISTENCE=memory
 - workspace 运行线已删除。
 - 继续写入这些 flags 会制造误导，让人以为 workspace runtime 仍存在。
 
-### 9.3 未完成密码找回/重置
+### 9.3 密码找回/重置
 
 当前状态：
 
-- `forgot` / `reset-password` UI 已从 Supabase recovery 降级为不可用提示。
+- `forgot` / `reset-password` 已接入自研一次性 token 流程。
+- token 只以 hash 形式存入 `otp_codes`，过期时间默认 30 分钟。
+- 邮件发送层使用腾讯云 SES `SendEmail` API + 已审核模板。
+- 重置成功后会更新 `identities.password_hash` 并删除该用户旧 session。
 
-后续选择：
+仍需业务侧完成：
 
-1. 接入自研邮件 token 流程。
-2. 接入第三方邮件服务。
-3. 测试阶段先隐藏入口。
+1. 在腾讯云 SES 控制台开通服务。
+2. 验证发信域名和发信地址。
+3. 创建并等待密码重置模板审核通过。
+4. 将 SES SecretId/SecretKey、发信地址、模板 ID 写入部署环境。
 
 ### 9.4 未部署生产环境
 
@@ -681,6 +685,7 @@ PRIMORIA_WORKSPACE_DEEPAGENT_PERSISTENCE=memory
 - 自研 auth guard / proxy
 - 登录注册 UI 切换
 - account / signout / forgot / reset 调整
+- 腾讯云 SES 密码重置邮件
 - 删除 Supabase runtime helper
 - 移除 direct Supabase deps
 - README / env example / docs 更新

@@ -144,6 +144,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
           <div className="auth-field">
             <div className="auth-label-row">
               <label htmlFor="auth-password">{t.auth.password}</label>
+              {!isSignUp ? <Link href="/forgot">{t.auth.forgotPassword}</Link> : null}
             </div>
             <div className="auth-password-control">
               <input

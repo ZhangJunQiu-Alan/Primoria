@@ -21,7 +21,7 @@ export type AuthRateLimitConfig = {
 
 type AuthRateLimitKey = {
   id: string;
-  scope: "auth:ip" | "auth:account";
+  scope: `${string}:ip` | `${string}:account`;
   identifierHash: string;
   maxAttempts: number;
   reason: "ip" | "account";
@@ -60,13 +60,15 @@ export function getAuthRateLimitKeys(input: {
   headers: Headers;
   email: string;
   config?: AuthRateLimitConfig;
+  scope?: string;
 }): AuthRateLimitKey[] {
   const config = input.config ?? getAuthRateLimitConfig();
+  const scope = input.scope ?? "auth";
   const ip = getClientIp(input.headers);
   const email = input.email.trim().toLowerCase();
   return [
-    buildKey("auth:ip", ip, config.ipMaxAttempts, "ip"),
-    buildKey("auth:account", email, config.accountMaxAttempts, "account"),
+    buildKey(`${scope}:ip`, ip, config.ipMaxAttempts, "ip"),
+    buildKey(`${scope}:account`, email, config.accountMaxAttempts, "account"),
   ];
 }
 
@@ -74,6 +76,7 @@ export async function checkAuthRateLimit(input: {
   headers: Headers;
   email: string;
   config?: AuthRateLimitConfig;
+  scope?: string;
 }): Promise<AuthRateLimitResult> {
   const config = input.config ?? getAuthRateLimitConfig();
   if (!config.enabled) return { allowed: true };
