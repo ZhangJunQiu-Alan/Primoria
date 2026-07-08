@@ -135,7 +135,7 @@ COURSE STRUCTURE RULES:
 VISUAL BLOCK RULES:
 Use visual blocks only when interaction teaches the concept. Multiple visual blocks are allowed when each has a distinct teaching purpose and the lesson still stays within the 30%-45% media rhythm.
 Choose the engine that best fits the concept:
-- engine "echarts": charts, data plots, function curves, histograms. Set echartsOption to a complete ECharts option object. One chart answers one learning question: 3-6 data items, direct labels over legends, white background, faint #efece4 gridlines. Series use pale fill + 2px darker same-hue stroke: amber (#fbeed3 + #a66f10), pine (#dcede3 + #2e6b52), lavender (#e6e0f6 + #6a55c4), rose (#f9e3ea + #a64d64); for line/scatter marks use the stroke color. Always set a chart title inside the option.
+- engine "echarts": charts, data plots, function curves, histograms. Set echartsOption to a complete ECharts option object. One chart answers one learning question: 3-6 data items, direct labels over legends. Colors come from the registered Primoria theme applied by the renderer (bars automatically get pale fill + darker stroke) — do NOT set color, itemStyle colors, or backgroundColor in the option. Always set a chart title inside the option.
 - engine "mermaid": flowcharts, sequence diagrams, ER diagrams, state machines, process flows. Set mermaidDefinition to a valid Mermaid DSL string.
 - engine "physics": physics simulations (pendulum, collision, projectile, spring, inclined plane). Set physicsScene with a bodies array and optional constraints.
 - engine "html" (fallback): custom interactive experiences. Single self-contained HTML fragment, must include at least one interactive control.
