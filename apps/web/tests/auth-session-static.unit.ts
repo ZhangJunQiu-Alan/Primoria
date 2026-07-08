@@ -23,6 +23,9 @@ function main() {
   assert(session.includes(".from(sessions)"), "getCurrentUser reads the sessions table");
   assert(session.includes("eq(sessions.tokenHash, tokenHash)"), "getCurrentUser validates the current session token hash");
   assert(session.includes("gt(sessions.expiresAt, now)"), "getCurrentUser rejects expired sessions from the database");
+  assert(session.includes("LOCAL_DATABASE_UNAVAILABLE_CODES"), "getCurrentUser recognizes local database tunnel/connectivity failures");
+  assert(session.includes('process.env.NODE_ENV === "production"'), "session lookup still fails closed in production");
+  assert(session.includes("treating the request as signed out"), "local database outage degrades to signed-out state instead of a dev overlay");
   assert(session.includes("getDb().delete(sessions).where(eq(sessions.tokenHash, tokenHash))"), "sign-out deletes the database session");
 
   assert(!profileRoute.includes("invalidateCurrentSessionUserCache"), "profile updates do not rely on local-only cache invalidation");
