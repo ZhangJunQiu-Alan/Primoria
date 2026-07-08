@@ -145,6 +145,38 @@ Auth endpoints are rate-limited before password hashing/verification. Defaults:
 `AUTH_RATE_LIMIT_IP_MAX=5`, `AUTH_RATE_LIMIT_ACCOUNT_MAX=5`, and
 `AUTH_RATE_LIMIT_WINDOW_SECONDS=60`.
 
+Password reset uses Tencent Cloud SES through the `SendEmail` API and an
+approved email template. The app generates a one-time reset token, stores only
+its hash in `otp_codes`, and sends a reset URL through SES. Configure:
+
+```bash
+APP_BASE_URL=https://your-primoria-domain.com
+EMAIL_PROVIDER=tencent-ses
+TENCENT_SES_SECRET_ID=your-secret-id
+TENCENT_SES_SECRET_KEY=your-secret-key
+TENCENT_SES_REGION=ap-guangzhou
+TENCENT_SES_ENDPOINT=ses.tencentcloudapi.com
+TENCENT_SES_FROM_EMAIL="Primoria <noreply@your-domain.com>"
+TENCENT_SES_PASSWORD_RESET_TEMPLATE_ID=123456
+TENCENT_SES_PASSWORD_RESET_SUBJECT="Reset your Primoria password"
+PASSWORD_RESET_EXPIRES_MINUTES=30
+```
+
+The SES template should expose at least one reset-link variable. Primoria sends
+both camelCase and snake_case names so the approved template can use whichever
+style Tencent Cloud accepts for the template:
+`resetUrl`/`reset_url`, `expiresMinutes`/`expires_minutes`, and
+`productName`/`product_name`.
+
+Business setup still required in the Tencent Cloud console:
+
+1. Activate SES for the account that will own production mail.
+2. Add and verify a sender domain.
+3. Create a sender address such as `noreply@your-domain.com`.
+4. Create and wait for approval of the password-reset email template.
+5. Create a least-privilege API key that can call SES `SendEmail` and place it
+   only in the deployment environment, not in git.
+
 ### AI Tutor Agent
 
 The web app talks to the LangGraph agent through CopilotKit:

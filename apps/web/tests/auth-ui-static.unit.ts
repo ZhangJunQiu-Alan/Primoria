@@ -32,8 +32,8 @@ async function main() {
   assert(authForm.includes("role=\"status\""), "success message is announced");
   assert(!authForm.includes("auth-mode-note"), "auth mode note copy is removed from the visible form");
   assert(!authForm.includes("course-block-tag"), "form eyebrow copy is removed from login/signup");
-  assert(!authForm.includes('href="/forgot"'), "sign-in form does not expose the unsupported password recovery route");
-  assert(!authForm.includes("forgotPassword"), "sign-in form does not render password recovery copy while no reset API exists");
+  assert(authForm.includes('href="/forgot"'), "sign-in form exposes the password recovery route");
+  assert(authForm.includes("forgotPassword"), "sign-in form renders password recovery copy");
   assert(authForm.includes("auth-hero-copy"), "hero content is wrapped in a stable layout block");
   assert(authForm.includes("className=\"auth-fields\""), "auth fields are grouped for sign-in/sign-up size parity");
   assert(authForm.includes("auth-field-spacer"), "sign-in reserves the display-name slot for seamless switching");
@@ -49,13 +49,14 @@ async function main() {
     ["forgot password", forgotForm],
     ["reset password", resetPasswordForm],
   ] as const) {
-    assert(!source.includes("<form"), `${name} page does not render a dead submission form`);
-    assert(!source.includes("fetch("), `${name} page does not call a missing reset API`);
+    assert(source.includes("<form"), `${name} page renders an active form`);
+    assert(source.includes("fetch("), `${name} page calls a reset API`);
     assert(!source.includes("createClient"), `${name} page does not use the removed Supabase client`);
-    assert(source.includes("passwordRecoveryUnavailableTitle"), `${name} page shows an explicit unavailable state`);
-    assert(source.includes("passwordRecoveryUnavailableCopy"), `${name} page explains the unavailable recovery path`);
+    assert(!source.includes("passwordRecoveryUnavailableTitle"), `${name} page no longer shows an unavailable state`);
     assert(source.includes('href="/login"'), `${name} page offers a working return-to-login action`);
   }
+  assert(forgotForm.includes("/api/auth/password-reset/request"), "forgot password page requests a reset email");
+  assert(resetPasswordForm.includes("/api/auth/password-reset/confirm"), "reset password page confirms the new password");
 
   assert(styles.includes(".auth-fields"), "auth field group has dedicated layout styling");
   assert(styles.includes(".app-shell.auth-shell"), "auth pages have a nav-free app shell");
