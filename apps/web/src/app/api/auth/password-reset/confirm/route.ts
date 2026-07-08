@@ -3,7 +3,6 @@ import { z } from "zod";
 import { confirmPasswordReset } from "@/lib/auth/password-reset";
 import { authRateLimitHeaders, checkAuthRateLimit } from "@/lib/auth/rate-limit";
 import { isAuthEnabled } from "@/lib/auth/session";
-import { withAuthTimeout } from "@/lib/auth/timeouts";
 
 const RequestSchema = z.object({
   token: z.string().min(24),
@@ -17,10 +16,11 @@ export async function POST(request: Request) {
 
   try {
     const body = RequestSchema.parse(await request.json());
-    const rateLimit = await withAuthTimeout(
-      checkAuthRateLimit({ headers: request.headers, email: body.token, scope: "password-reset-confirm" }),
-      "Password reset rate limit",
-    );
+    const rateLimit = await checkAuthRateLimit({
+      headers: request.headers,
+      email: body.token,
+      scope: "password-reset-confirm",
+    });
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: "Too many password reset attempts. Try again later." },
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await withAuthTimeout(confirmPasswordReset(body), "Password reset confirmation");
+    await confirmPasswordReset(body);
     return NextResponse.json({ ok: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Password reset failed";

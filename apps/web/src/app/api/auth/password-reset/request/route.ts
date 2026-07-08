@@ -3,7 +3,6 @@ import { z } from "zod";
 import { PASSWORD_RESET_GENERIC_MESSAGE, requestPasswordReset } from "@/lib/auth/password-reset";
 import { authRateLimitHeaders, checkAuthRateLimit } from "@/lib/auth/rate-limit";
 import { isAuthEnabled } from "@/lib/auth/session";
-import { withAuthTimeout } from "@/lib/auth/timeouts";
 import { isPasswordResetEmailConfigured } from "@/lib/email/password-reset";
 
 const RequestSchema = z.object({
@@ -20,10 +19,11 @@ export async function POST(request: Request) {
 
   try {
     const body = RequestSchema.parse(await request.json());
-    const rateLimit = await withAuthTimeout(
-      checkAuthRateLimit({ headers: request.headers, email: body.email, scope: "password-reset-request" }),
-      "Password reset rate limit",
-    );
+    const rateLimit = await checkAuthRateLimit({
+      headers: request.headers,
+      email: body.email,
+      scope: "password-reset-request",
+    });
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: "Too many password reset attempts. Try again later." },
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     }
 
     try {
-      await withAuthTimeout(requestPasswordReset(body.email), "Password reset request");
+      await requestPasswordReset(body.email);
     } catch (error) {
       console.error("[auth/password-reset] failed to send reset email", error);
     }

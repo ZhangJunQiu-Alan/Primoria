@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
+import { normalizeAuthRedirect } from "@/lib/auth/redirect";
 import { msg, useT } from "@/lib/i18n/client";
 
 const SIGN_IN_HREF = "/auth/sign-in";
@@ -23,7 +24,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
   const t = useT();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? "/library";
+  const next = normalizeAuthRedirect(searchParams.get("next"));
 
   // Normalize mode
   const normalizedMode = (mode === "signin" || mode === "sign-in") ? "sign-in" : "sign-up";
