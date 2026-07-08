@@ -26,10 +26,24 @@ export type ImageBrief = {
 };
 
 /** Bump to invalidate every cached asset after a house-style change. */
-export const STYLE_VERSION = "v1";
+export const STYLE_VERSION = "v2";
 export const DEFAULT_ASPECT_RATIO: ImageAspectRatio = "4:3";
 export const DEFAULT_RESOLUTION: ImageResolution = "1K";
 export const DEFAULT_LANGUAGE = "en";
+
+/** Primoria learning-object house style (STYLE_VERSION v2): flat vector for the
+ * illustration kinds, photographic only for realistic_scene. Palette words match
+ * the widget tokens so images and widgets read as one product. */
+const FLAT_VECTOR_BASE =
+  "Style: flat educational vector illustration, simple geometric shapes, low detail, bold clean outlines, slight paper-cut thickness with one hard offset shadow, warm off-white background, limited palette of deep pine green, amber, lavender and rose over warm neutrals, playful but precise. No gradients, no photorealism, no 3D render, no anime style.";
+
+const STYLE_BY_KIND: Record<ImageKind, string> = {
+  educational_illustration: FLAT_VECTOR_BASE,
+  analogy_illustration: `${FLAT_VECTOR_BASE} One focal visual metaphor, a single scene, minimal props.`,
+  structure_diagram: `${FLAT_VECTOR_BASE} Schematic composition, at most five objects connected by clear arrows or dashed lines, generous spacing between elements.`,
+  realistic_scene:
+    "Style: natural photographic rendering, warm soft daylight, one clear subject, uncluttered neutral background, true-to-life color.",
+};
 
 /** Assembles the text prompt sent to the image model from a brief. Enforces the
  * house constraint that AI images never carry text/labels/formulas — those
@@ -37,7 +51,7 @@ export const DEFAULT_LANGUAGE = "en";
 export function buildImagePrompt(brief: ImageBrief): string {
   const lines = [
     brief.prompt.trim(),
-    "Style: clean modern educational illustration, clear composition, neutral background.",
+    STYLE_BY_KIND[brief.imageKind],
     "Do not render any text, words, numbers, labels, axis ticks, formulas, or chemical notation inside the image.",
   ];
   if (brief.negativePrompt?.trim()) lines.push(`Avoid: ${brief.negativePrompt.trim()}.`);

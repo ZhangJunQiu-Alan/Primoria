@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 
-import { imageCacheKey, type ImageBrief } from "../src/lib/ai/media/image-brief.ts";
+import { imageCacheKey, STYLE_VERSION, type ImageBrief } from "../src/lib/ai/media/image-brief.ts";
 import {
   imageAssetUrl,
   resolveImageAsset,
@@ -71,7 +71,7 @@ function testCacheKeyStability() {
   assert(imageCacheKey(brief({ imageKind: "realistic_scene" }), MODEL) !== a, "imageKind change forks the cache");
   assert(imageCacheKey(brief({ resolution: "2K" }), MODEL) !== a, "resolution change forks the cache");
   assert(imageCacheKey(brief(), "other-model") !== a, "model change forks the cache");
-  assert(imageCacheKey(brief({ styleVersion: "v2" }), MODEL) !== a, "styleVersion change forks the cache");
+  assert(imageCacheKey(brief({ styleVersion: `${STYLE_VERSION}-next` }), MODEL) !== a, "styleVersion change forks the cache");
 
   // Defaults are applied, not left undefined.
   assert(imageCacheKey(brief({ resolution: "1K", aspectRatio: "4:3", language: "en" }), MODEL) === a, "defaults match explicit default values");
