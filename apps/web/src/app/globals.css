@@ -4473,6 +4473,248 @@ cpk-web-inspector {
   border: 0;
 }
 
+.language-switcher {
+  --language-switcher-height: 42px;
+  --language-switcher-bg: rgba(255, 253, 248, 0.84);
+  --language-switcher-border: rgba(23, 19, 15, 0.12);
+  --language-switcher-hover-border: rgba(200, 136, 26, 0.36);
+  --language-switcher-shadow: 0 12px 28px rgba(57, 42, 25, 0.08);
+  position: relative;
+  min-width: 0;
+  width: fit-content;
+  display: inline-flex;
+  border-radius: 999px;
+  color: var(--ink);
+  isolation: isolate;
+}
+
+.language-switcher-control {
+  min-height: var(--language-switcher-height);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 0 10px;
+  border: 1px solid var(--language-switcher-border);
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 253, 248, 0.38)),
+    var(--language-switcher-bg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78), var(--language-switcher-shadow);
+  color: currentColor;
+  appearance: none;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.language-switcher-globe {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(200, 136, 26, 0.16);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255, 229, 143, 0.95) 0 18%, transparent 19%),
+    radial-gradient(circle at 70% 62%, rgba(185, 215, 255, 0.95) 0 24%, transparent 25%),
+    linear-gradient(145deg, rgba(255, 253, 248, 0.95), rgba(232, 246, 228, 0.9));
+  color: rgba(23, 19, 15, 0.62);
+}
+
+.language-switcher-globe svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.language-switcher-label {
+  min-width: 0;
+  max-width: 7.5rem;
+  overflow: hidden;
+  color: rgba(23, 19, 15, 0.78);
+  font-size: 13px;
+  font-weight: 860;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.language-switcher-code {
+  flex: 0 0 auto;
+  min-width: 29px;
+  min-height: 24px;
+  padding: 0 7px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #17130f;
+  color: #fffdf8;
+  font-size: 11px;
+  font-weight: 920;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  box-shadow: 0 7px 16px rgba(23, 19, 15, 0.12);
+}
+
+.language-switcher-chevron {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: rgba(23, 19, 15, 0.62);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 160ms ease;
+}
+
+.language-switcher:hover .language-switcher-control,
+.language-switcher:focus-within .language-switcher-control {
+  border-color: var(--language-switcher-hover-border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 253, 248, 0.48)),
+    rgba(255, 250, 239, 0.94);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88), 0 16px 34px rgba(57, 42, 25, 0.11);
+}
+
+.language-switcher:hover .language-switcher-control {
+  transform: translateY(-1px);
+}
+
+.language-switcher:focus-within .language-switcher-control {
+  outline: 3px solid rgba(200, 136, 26, 0.2);
+  outline-offset: 3px;
+}
+
+.language-switcher:hover .language-switcher-chevron,
+.language-switcher:focus-within .language-switcher-chevron {
+  transform: translateY(1px);
+}
+
+.language-switcher[data-open="true"] .language-switcher-control {
+  border-color: rgba(200, 136, 26, 0.4);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 253, 248, 0.54)),
+    rgba(255, 250, 239, 0.96);
+}
+
+.language-switcher[data-open="true"] .language-switcher-chevron {
+  transform: rotate(180deg);
+}
+
+.language-switcher-control:disabled {
+  cursor: wait;
+}
+
+.language-switcher[data-saving="true"] .language-switcher-control {
+  opacity: 0.64;
+  transform: none;
+}
+
+.language-switcher-menu {
+  position: absolute;
+  z-index: 90;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: max(100%, 178px);
+  padding: 7px;
+  display: grid;
+  gap: 4px;
+  border: 1px solid rgba(23, 19, 15, 0.12);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 253, 248, 0.76)),
+    rgba(255, 250, 239, 0.94);
+  box-shadow: 0 18px 42px rgba(57, 42, 25, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  transform-origin: top right;
+  animation: language-menu-enter 150ms ease both;
+}
+
+.language-switcher-option {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 10px 0 8px;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: rgba(23, 19, 15, 0.78);
+  appearance: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 820;
+  text-align: left;
+}
+
+.language-switcher-option:hover,
+.language-switcher-option:focus-visible {
+  background: rgba(23, 19, 15, 0.055);
+  color: #17130f;
+  outline: none;
+}
+
+.language-switcher-option[aria-checked="true"] {
+  background: rgba(255, 229, 143, 0.24);
+  color: #17130f;
+}
+
+.language-switcher-check {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  color: #17130f;
+  font-size: 14px;
+  font-weight: 920;
+  line-height: 1;
+}
+
+.language-switcher-option-code {
+  min-width: 30px;
+  min-height: 24px;
+  padding: 0 7px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(23, 19, 15, 0.07);
+  color: rgba(23, 19, 15, 0.58);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.language-switcher-option[aria-checked="true"] .language-switcher-option-code {
+  background: #17130f;
+  color: #fffdf8;
+}
+
+@keyframes language-menu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (max-width: 1240px) {
   .library-table-card {
     border: 0;
@@ -9037,6 +9279,20 @@ cpk-web-inspector {
   gap: 14px;
 }
 
+.auth-language-switcher {
+  --language-switcher-height: 38px;
+  --language-switcher-shadow: 0 9px 22px rgba(57, 42, 25, 0.07);
+  justify-self: start;
+}
+
+.auth-language-switcher .language-switcher-control {
+  padding-right: 10px;
+}
+
+.auth-language-switcher .language-switcher-label {
+  max-width: 6.25rem;
+}
+
 .auth-heading h1 {
   margin: 0;
   font-size: clamp(34px, 4vw, 48px);
@@ -11829,6 +12085,17 @@ cpk-web-inspector {
   min-width: 104px;
 }
 
+.landing-language-switcher {
+  --language-switcher-height: 44px;
+  --language-switcher-bg: rgba(255, 253, 248, 0.76);
+  --language-switcher-border: rgba(23, 19, 15, 0.08);
+  --language-switcher-shadow: 0 14px 32px rgba(57, 42, 25, 0.07);
+}
+
+.landing-language-switcher .language-switcher-label {
+  font-size: 14px;
+}
+
 .landing-hero {
   width: min(1480px, calc(100% - 56px));
   min-height: calc(100dvh - 82px);
@@ -12364,6 +12631,7 @@ cpk-web-inspector {
 
   .landing-nav {
     min-height: 70px;
+    gap: 12px;
   }
 
   .landing-brand {
@@ -12373,6 +12641,24 @@ cpk-web-inspector {
   .landing-brand-mark {
     width: 36px;
     height: 36px;
+  }
+
+  .landing-nav-actions {
+    gap: 8px;
+  }
+
+  .landing-language-switcher {
+    --language-switcher-height: 38px;
+  }
+
+  .landing-language-switcher .language-switcher-control {
+    gap: 6px;
+    padding: 0 9px;
+  }
+
+  .landing-language-switcher .language-switcher-globe,
+  .landing-language-switcher .language-switcher-label {
+    display: none;
   }
 
   .landing-hero {
@@ -13491,6 +13777,31 @@ cpk-web-inspector {
   font-size: 17px;
   font-weight: 750;
   outline: none;
+}
+
+.settings-wide-select {
+  --language-switcher-height: 58px;
+  --language-switcher-bg: rgba(255, 253, 248, 0.78);
+  --language-switcher-border: rgba(23, 19, 15, 0.14);
+  --language-switcher-shadow: none;
+  width: 100%;
+  border-radius: 14px;
+}
+
+.settings-wide-select .language-switcher-control {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0 16px;
+}
+
+.settings-wide-select .language-switcher-label {
+  max-width: none;
+  font-size: 17px;
+  font-weight: 790;
+}
+
+.settings-wide-select .language-switcher-code {
+  margin-left: auto;
 }
 
 .settings-select-wrap select:focus,
