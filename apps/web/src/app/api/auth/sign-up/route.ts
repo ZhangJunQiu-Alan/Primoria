@@ -3,7 +3,6 @@ import { z } from "zod";
 import { signUpWithEmail } from "@/lib/auth/accounts";
 import { authRateLimitHeaders, checkAuthRateLimit } from "@/lib/auth/rate-limit";
 import { isAuthEnabled } from "@/lib/auth/session";
-import { withAuthTimeout } from "@/lib/auth/timeouts";
 
 const RequestSchema = z.object({
   email: z.string().email(),
@@ -17,10 +16,7 @@ export async function POST(request: Request) {
   }
   try {
     const body = RequestSchema.parse(await request.json());
-    const rateLimit = await withAuthTimeout(
-      checkAuthRateLimit({ headers: request.headers, email: body.email }),
-      "Auth rate limit",
-    );
+    const rateLimit = await checkAuthRateLimit({ headers: request.headers, email: body.email });
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: "Too many sign-up attempts. Try again later." },
@@ -28,7 +24,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const user = await withAuthTimeout(signUpWithEmail(body), "Sign up");
+    const user = await signUpWithEmail(body);
     return NextResponse.json({ user });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Sign up failed";

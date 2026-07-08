@@ -143,7 +143,10 @@ of the Primoria runtime path.
 
 Auth endpoints are rate-limited before password hashing/verification. Defaults:
 `AUTH_RATE_LIMIT_IP_MAX=5`, `AUTH_RATE_LIMIT_ACCOUNT_MAX=5`, and
-`AUTH_RATE_LIMIT_WINDOW_SECONDS=60`.
+`AUTH_RATE_LIMIT_WINDOW_SECONDS=60`. Proxy IP headers such as
+`cf-connecting-ip`, `x-real-ip`, `x-forwarded-for`, and `forwarded` are ignored
+unless `AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS=true`; only enable that when your
+edge layer overwrites client-supplied forwarding headers.
 
 Password reset uses Tencent Cloud SES through the `SendEmail` API and an
 approved email template. The app generates a one-time reset token, stores only

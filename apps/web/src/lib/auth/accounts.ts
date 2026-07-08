@@ -1,10 +1,13 @@
 import { randomBytes } from "node:crypto";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { getDb } from "../db/client";
 import { identities, users } from "../db/schema";
 import { hashPassword, verifyPassword } from "./password";
-import { createSession } from "./session";
+import { createSession, createSessionRecord, setCreatedSessionCookie } from "./session";
 import type { AuthUser } from "./types";
+
+const EMAIL_PASSWORD_PROVIDER = "email_password";
+const ACCOUNT_EXISTS_MESSAGE = "An account with this email already exists.";
 
 export function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
@@ -20,31 +23,46 @@ export async function signUpWithEmail(input: { email: string; password: string; 
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error("Enter a valid email address.");
 
   const db = getDb();
-  const existing = await db.select({ id: identities.id }).from(identities).where(eq(identities.providerUserId, email)).limit(1);
-  if (existing.length > 0) throw new Error("An account with this email already exists.");
-
   const userId = `usr_${randomBytes(12).toString("base64url")}`;
   const now = new Date();
-  await db.insert(users).values({
-    id: userId,
-    displayName: input.displayName?.trim() || email.split("@")[0],
-    createdAt: now,
-    updatedAt: now,
-  });
-  await db.insert(identities).values({
-    id: `idn_${randomBytes(12).toString("base64url")}`,
-    userId,
-    provider: "email_password",
-    providerUserId: email,
-    email,
-    passwordHash: hashPassword(input.password),
-    verifiedAt: now,
-    createdAt: now,
-    updatedAt: now,
-  });
-  await createSession(userId);
+  const displayName = input.displayName?.trim() || email.split("@")[0];
+  const passwordHash = hashPassword(input.password);
 
-  return { id: userId, displayName: input.displayName?.trim() || email.split("@")[0], avatarUrl: null, email };
+  try {
+    const session = await db.transaction(async (tx) => {
+      const existing = await tx
+        .select({ id: identities.id })
+        .from(identities)
+        .where(and(eq(identities.provider, EMAIL_PASSWORD_PROVIDER), eq(identities.providerUserId, email)))
+        .limit(1);
+      if (existing.length > 0) throw new Error(ACCOUNT_EXISTS_MESSAGE);
+
+      await tx.insert(users).values({
+        id: userId,
+        displayName,
+        createdAt: now,
+        updatedAt: now,
+      });
+      await tx.insert(identities).values({
+        id: `idn_${randomBytes(12).toString("base64url")}`,
+        userId,
+        provider: EMAIL_PASSWORD_PROVIDER,
+        providerUserId: email,
+        email,
+        passwordHash,
+        verifiedAt: now,
+        createdAt: now,
+        updatedAt: now,
+      });
+      return createSessionRecord(userId, tx);
+    });
+    await setCreatedSessionCookie(session);
+  } catch (error) {
+    if (isEmailIdentityUniqueViolation(error)) throw new Error(ACCOUNT_EXISTS_MESSAGE);
+    throw error;
+  }
+
+  return { id: userId, displayName, avatarUrl: null, email };
 }
 
 export async function signInWithEmail(input: { email: string; password: string }): Promise<AuthUser> {
@@ -60,7 +78,7 @@ export async function signInWithEmail(input: { email: string; password: string }
     })
     .from(identities)
     .innerJoin(users, eq(users.id, identities.userId))
-    .where(eq(identities.providerUserId, email))
+    .where(and(eq(identities.provider, EMAIL_PASSWORD_PROVIDER), eq(identities.providerUserId, email)))
     .limit(1);
 
   const row = rows[0];
@@ -70,4 +88,18 @@ export async function signInWithEmail(input: { email: string; password: string }
 
   await createSession(row.userId);
   return { id: row.userId, displayName: row.displayName, avatarUrl: row.avatarUrl, email: row.email };
+}
+
+function isEmailIdentityUniqueViolation(error: unknown) {
+  if (!error || typeof error !== "object") return false;
+  const record = error as Record<string, unknown>;
+  const message = error instanceof Error ? error.message : "";
+  const detail = typeof record.detail === "string" ? record.detail : "";
+  const constraint = typeof record.constraint === "string" ? record.constraint : "";
+  return (
+    record.code === "23505" &&
+    (constraint === "identities_provider_user_uidx" ||
+      message.includes("identities_provider_user_uidx") ||
+      detail.includes("identities_provider_user_uidx"))
+  );
 }

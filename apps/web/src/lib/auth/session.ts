@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { createHash, randomBytes } from "node:crypto";
 import { and, eq, gt } from "drizzle-orm";
-import { getDb, hasDatabaseUrl } from "../db/client";
+import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { identities, sessions, users } from "../db/schema";
 import { SESSION_COOKIE } from "./constants";
 import type { AuthUser } from "./types";
@@ -24,6 +24,11 @@ export function createSessionToken() {
 export function sessionExpiryDate() {
   return new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
 }
+
+export type CreatedSession = {
+  token: string;
+  expires: Date;
+};
 
 function errorText(error: unknown): string {
   if (!error) return "";
@@ -67,16 +72,25 @@ export async function clearSessionCookie() {
   });
 }
 
-export async function createSession(userId: string) {
+export async function createSessionRecord(userId: string, db: DbOrTx = getDb()): Promise<CreatedSession> {
   const token = createSessionToken();
   const expires = sessionExpiryDate();
-  await getDb().insert(sessions).values({
+  await db.insert(sessions).values({
     id: `ses_${randomBytes(12).toString("base64url")}`,
     userId,
     tokenHash: hashSessionToken(token),
     expiresAt: expires,
   });
-  await setSessionCookie(token, expires);
+  return { token, expires };
+}
+
+export async function setCreatedSessionCookie(session: CreatedSession) {
+  await setSessionCookie(session.token, session.expires);
+}
+
+export async function createSession(userId: string) {
+  const session = await createSessionRecord(userId);
+  await setCreatedSessionCookie(session);
 }
 
 export async function getCurrentUser(): Promise<AuthUser | null> {

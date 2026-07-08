@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { isIP } from "node:net";
 import { sql } from "drizzle-orm";
 import { getDb } from "../db/client";
 
@@ -17,6 +18,7 @@ export type AuthRateLimitConfig = {
   ipMaxAttempts: number;
   accountMaxAttempts: number;
   cleanupSampleRate: number;
+  trustProxyHeaders: boolean;
 };
 
 type AuthRateLimitKey = {
@@ -43,17 +45,19 @@ export function getAuthRateLimitConfig(): AuthRateLimitConfig {
     ipMaxAttempts: positiveIntEnv("AUTH_RATE_LIMIT_IP_MAX", DEFAULT_AUTH_RATE_LIMIT_IP_MAX, 1, 1000),
     accountMaxAttempts: positiveIntEnv("AUTH_RATE_LIMIT_ACCOUNT_MAX", DEFAULT_AUTH_RATE_LIMIT_ACCOUNT_MAX, 1, 1000),
     cleanupSampleRate: numberEnv("AUTH_RATE_LIMIT_CLEANUP_SAMPLE_RATE", DEFAULT_AUTH_RATE_LIMIT_CLEANUP_SAMPLE_RATE, 0, 1),
+    trustProxyHeaders: booleanEnv("AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS", false),
   };
 }
 
-export function getClientIp(headers: Headers): string {
+export function getClientIp(headers: Headers, options: { trustProxyHeaders?: boolean } = {}): string {
+  if (!options.trustProxyHeaders) return "unknown";
   const candidates = [
     headers.get("cf-connecting-ip"),
     headers.get("x-real-ip"),
     headers.get("x-forwarded-for")?.split(",")[0],
     headers.get("forwarded")?.match(/for="?([^;,"]+)/i)?.[1],
   ];
-  return candidates.map((candidate) => candidate?.trim()).find(Boolean) ?? "unknown";
+  return candidates.map(normalizeProxyIp).find(Boolean) ?? "unknown";
 }
 
 export function getAuthRateLimitKeys(input: {
@@ -64,7 +68,7 @@ export function getAuthRateLimitKeys(input: {
 }): AuthRateLimitKey[] {
   const config = input.config ?? getAuthRateLimitConfig();
   const scope = input.scope ?? "auth";
-  const ip = getClientIp(input.headers);
+  const ip = getClientIp(input.headers, { trustProxyHeaders: config.trustProxyHeaders });
   const email = input.email.trim().toLowerCase();
   return [
     buildKey(`${scope}:ip`, ip, config.ipMaxAttempts, "ip"),
@@ -166,6 +170,21 @@ function sha256(value: string) {
   return createHash("sha256").update(value).digest("hex");
 }
 
+function normalizeProxyIp(value: string | null | undefined) {
+  const raw = value?.trim().replace(/^"|"$/g, "");
+  if (!raw || raw.toLowerCase() === "unknown") return undefined;
+
+  if (isIP(raw)) return raw;
+
+  const bracketedIpv6 = raw.match(/^\[([^\]]+)\](?::\d+)?$/)?.[1];
+  if (bracketedIpv6 && isIP(bracketedIpv6)) return bracketedIpv6;
+
+  const ipv4WithPort = raw.match(/^(\d{1,3}(?:\.\d{1,3}){3}):\d+$/)?.[1];
+  if (ipv4WithPort && isIP(ipv4WithPort)) return ipv4WithPort;
+
+  return undefined;
+}
+
 function positiveIntEnv(name: string, fallback: number, min: number, max: number) {
   const configured = Number(process.env[name] ?? "");
   if (!Number.isFinite(configured) || configured <= 0) return fallback;
@@ -176,6 +195,13 @@ function numberEnv(name: string, fallback: number, min: number, max: number) {
   const configured = Number(process.env[name] ?? "");
   if (!Number.isFinite(configured)) return fallback;
   return Math.min(Math.max(configured, min), max);
+}
+
+function booleanEnv(name: string, fallback: boolean) {
+  const configured = process.env[name]?.trim().toLowerCase();
+  if (configured === "1" || configured === "true") return true;
+  if (configured === "0" || configured === "false") return false;
+  return fallback;
 }
 
 function rowsFromResult(result: unknown): Array<Record<string, unknown>> {
