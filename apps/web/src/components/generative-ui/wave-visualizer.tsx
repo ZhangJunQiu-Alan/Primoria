@@ -3,21 +3,22 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { WaveVisualizationArtifact, WaveComponent } from "@/lib/agent-os";
+import { LO_CANVAS, LO_INK, LO_MUTED, SERIES, SERIES_STROKES } from "./style-tokens";
 
-const PALETTE = ["#c8881a", "#4a7a5a", "#7c6ad0", "#b56474"];
-const C_BG = "#fbf7ee";
-const C_TEXT = "#3a352d";
-const C_MUTED = "#6b6357";
-const C_ZERO = "rgba(58,53,45,0.22)";
-const C_SUM = "#3a352d";
-const C_ENVELOPE = "rgba(200,136,26,0.45)";
+const PALETTE = [...SERIES_STROKES];
+const C_BG = LO_CANVAS;
+const C_TEXT = LO_INK;
+const C_MUTED = LO_MUTED;
+const C_ZERO = "rgba(41,36,28,0.22)";
+const C_SUM = LO_INK;
+const C_ENVELOPE = "rgba(166,111,16,0.45)";
 const FONT = "ui-sans-serif, system-ui, sans-serif";
 const MONO = "ui-monospace, monospace";
 
 type LocalWave = WaveComponent & { localAmplitude: number; localFrequency: number };
 
 function waveColor(wave: LocalWave, index: number): string {
-  return wave.color ?? PALETTE[index % PALETTE.length] ?? "#c8881a";
+  return wave.color ?? PALETTE[index % PALETTE.length] ?? SERIES.amber.stroke;
 }
 
 function evalWaveAt(wave: LocalWave, t: number): number {
@@ -228,7 +229,7 @@ export function WaveVisualizer({ artifact }: { artifact: WaveVisualizationArtifa
           ctx.moveTo(PAD.l, annoY);
           ctx.lineTo(xBeat, annoY);
           ctx.stroke();
-          ctx.fillStyle = "#c8881a";
+          ctx.fillStyle = SERIES.amber.stroke;
           ctx.font = `10px ${FONT}`;
           ctx.textAlign = "center";
           ctx.textBaseline = "bottom";
@@ -305,13 +306,13 @@ export function WaveVisualizer({ artifact }: { artifact: WaveVisualizationArtifa
         ctx.textAlign = "center";
         for (let k = 0; k <= n; k++) {
           const xPix = PAD.l + (k / n) * plotW;
-          ctx.fillStyle = "#4a7a5a";
+          ctx.fillStyle = SERIES.sage.stroke;
           ctx.textBaseline = "top";
           ctx.fillText("N", xPix, midY + scaleY + 3);
         }
         for (let k = 0; k < n; k++) {
           const xPix = PAD.l + ((2 * k + 1) / (2 * n)) * plotW;
-          ctx.fillStyle = "#c8881a";
+          ctx.fillStyle = SERIES.amber.stroke;
           ctx.textBaseline = "bottom";
           ctx.fillText("A", xPix, midY - scaleY - 3);
         }
@@ -486,7 +487,7 @@ export function WaveVisualizer({ artifact }: { artifact: WaveVisualizationArtifa
                       onChange={e => setLocalWaves(prev =>
                         prev.map((pw, pi) => pi === i ? { ...pw, localAmplitude: parseFloat(e.target.value) } : pw),
                       )}
-                      style={{ flex: 1, accentColor: "#c8881a" }}
+                      style={{ flex: 1, accentColor: SERIES.amber.stroke }}
                     />
                     <span style={{ fontSize: 11, color: C_MUTED, minWidth: 28, fontFamily: MONO, textAlign: "right" }}>
                       {w.localAmplitude.toFixed(2)}
@@ -503,7 +504,7 @@ export function WaveVisualizer({ artifact }: { artifact: WaveVisualizationArtifa
                       onChange={e => setLocalWaves(prev =>
                         prev.map((pw, pi) => pi === i ? { ...pw, localFrequency: parseFloat(e.target.value) } : pw),
                       )}
-                      style={{ flex: 1, accentColor: "#c8881a" }}
+                      style={{ flex: 1, accentColor: SERIES.amber.stroke }}
                     />
                     <span style={{ fontSize: 11, color: C_MUTED, minWidth: 40, fontFamily: MONO, textAlign: "right" }}>
                       {w.localFrequency.toFixed(2)}Hz
@@ -527,7 +528,7 @@ export function WaveVisualizer({ artifact }: { artifact: WaveVisualizationArtifa
                   setPlaying(false);
                 }
               }}
-              style={{ ...BTN, minWidth: 68, background: playing ? "#fff2de" : C_BG, borderColor: playing ? "#c8881a" : "#d5c9b8" }}
+              style={{ ...BTN, minWidth: 68, background: playing ? SERIES.amber.fill : C_BG, borderColor: playing ? SERIES.amber.stroke : "#d5c9b8" }}
             >
               {playing ? "Pause" : "Play"}
             </button>
@@ -542,7 +543,7 @@ export function WaveVisualizer({ artifact }: { artifact: WaveVisualizationArtifa
               <input
                 type="range" min={0.25} max={4} step={0.25} value={speed}
                 onChange={e => setSpeed(Number(e.target.value))}
-                style={{ width: 56, accentColor: "#c8881a" }}
+                style={{ width: 56, accentColor: SERIES.amber.stroke }}
               />
               <span style={{ fontSize: 10, color: C_MUTED, fontFamily: FONT }}>{speed}x</span>
             </div>
@@ -554,7 +555,7 @@ export function WaveVisualizer({ artifact }: { artifact: WaveVisualizationArtifa
                   if (!next) stopAudio();
                   else if (playing) startAudio();
                 }}
-                style={{ ...BTN, marginLeft: "auto", background: audioOn ? "#fff2de" : C_BG, borderColor: audioOn ? "#c8881a" : "#d5c9b8" }}
+                style={{ ...BTN, marginLeft: "auto", background: audioOn ? SERIES.amber.fill : C_BG, borderColor: audioOn ? SERIES.amber.stroke : "#d5c9b8" }}
               >
                 {audioOn ? "Audio on" : "Audio off"}
               </button>

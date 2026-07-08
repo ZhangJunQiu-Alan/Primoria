@@ -135,7 +135,7 @@ COURSE STRUCTURE RULES:
 VISUAL BLOCK RULES:
 Use visual blocks only when interaction teaches the concept. Multiple visual blocks are allowed when each has a distinct teaching purpose and the lesson still stays within the 30%-45% media rhythm.
 Choose the engine that best fits the concept:
-- engine "echarts": charts, data plots, function curves, histograms. Set echartsOption to a complete ECharts option object. Use Primoria palette: amber #c8881a, sage #4a7a5a, lavender #7c6ad0. Always set a chart title inside the option.
+- engine "echarts": charts, data plots, function curves, histograms. Set echartsOption to a complete ECharts option object. One chart answers one learning question: 3-6 data items, direct labels over legends, white background, faint #efece4 gridlines. Series use pale fill + 2px darker same-hue stroke: amber (#fbeed3 + #a66f10), pine (#dcede3 + #2e6b52), lavender (#e6e0f6 + #6a55c4), rose (#f9e3ea + #a64d64); for line/scatter marks use the stroke color. Always set a chart title inside the option.
 - engine "mermaid": flowcharts, sequence diagrams, ER diagrams, state machines, process flows. Set mermaidDefinition to a valid Mermaid DSL string.
 - engine "physics": physics simulations (pendulum, collision, projectile, spring, inclined plane). Set physicsScene with a bodies array and optional constraints.
 - engine "html" (fallback): custom interactive experiences. Single self-contained HTML fragment, must include at least one interactive control.
@@ -757,12 +757,12 @@ function normalizeHtml(value: unknown, topic: string): string {
   if (html && hasControl && looksRunnable) return stripEmoji(html);
 
   const safeTopic = escapeHtml(topic || "函数");
-  return `<div style="background:#fbf7ee;border:1px solid #c8881a;border-radius:16px;padding:18px;color:#3a352d;font-family:system-ui,sans-serif">
+  return `<div style="background:#ffffff;border:1px solid #e7dfd0;border-radius:16px;padding:18px;color:#29241c;font-family:system-ui,sans-serif">
   <h3 style="margin:0 0 8px">互动观察：${safeTopic}</h3>
   <p style="margin:0 0 12px;color:#6b6357">拖动输入值 x，观察输出如何按固定规则变化。</p>
   <label style="display:block;margin-bottom:8px;color:#6b6357">x = <span id="xv">2</span></label>
-  <input id="x" type="range" min="-5" max="5" step="1" value="2" style="width:100%">
-  <div id="out" style="margin-top:12px;padding:12px;background:#fff2de;border:1.5px solid #c8881a;border-radius:12px">f(2)=5</div>
+  <input id="x" type="range" min="-5" max="5" step="1" value="2" style="width:100%;accent-color:#2e6b52">
+  <div id="out" style="margin-top:12px;padding:12px;background:#fbeed3;border:2px solid #a66f10;border-radius:12px">f(2)=5</div>
   <script>
     const x=document.getElementById('x'),xv=document.getElementById('xv'),out=document.getElementById('out');
     function draw(){const v=Number(x.value);xv.textContent=String(v);out.textContent='f('+v+') = 2×'+v+' + 1 = '+(2*v+1)}

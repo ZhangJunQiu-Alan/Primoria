@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { GraphVisualizationArtifact, GraphNode, GraphEdge } from "@/lib/agent-os";
+import { LO_CANVAS, LO_INK, LO_MUTED, SERIES, SERIES_FILLS, SERIES_STROKES } from "./style-tokens";
 
 // ── Simulation types ──────────────────────────────────────────────────────────
 
@@ -14,12 +15,12 @@ const BASE_R = 22;
 const K = 75;                      // ideal edge length
 const REPULSION = K * K * 1.1;
 const ATTRACTION = 0.0011;
-const FILLS   = ["#fff2de", "#e8f3ea", "#efe7d7", "#fbeaf0"];
-const STROKES = ["#c8881a", "#4a7a5a", "#7c6ad0", "#b56474"];
-const C_BG    = "#fbf7ee";
+const FILLS   = [...SERIES_FILLS];
+const STROKES = [...SERIES_STROKES];
+const C_BG    = LO_CANVAS;
 const C_EDGE  = "#d5c9b8";
-const C_TEXT  = "#3a352d";
-const C_MUTED = "#6b6357";
+const C_TEXT  = LO_INK;
+const C_MUTED = LO_MUTED;
 const FONT    = "ui-sans-serif, system-ui, sans-serif";
 
 // ── Force simulation ──────────────────────────────────────────────────────────
@@ -157,8 +158,14 @@ function edgeEndpoints(src: SimNode, dst: SimNode, isDir: boolean) {
   return { x1: src.x + ux * nr(src), y1: src.y + uy * nr(src), x2: dst.x - ux * (nr(dst) + gap), y2: dst.y - uy * (nr(dst) + gap) };
 }
 
-function groupIdx(group: string | undefined, groups: string[]) {
-  return group ? groups.indexOf(group) : -1;
+/** Series pair for a node: a group named after a series family (pine/sage/amber/
+ * lavender/rose) resolves by name; other group names are assigned by index. */
+function groupSeries(group: string | undefined, groups: string[]): { fill: string; stroke: string } | null {
+  if (!group) return null;
+  const named = (SERIES as Record<string, { fill: string; stroke: string }>)[group.toLowerCase()];
+  if (named) return named;
+  const gi = groups.indexOf(group);
+  return gi >= 0 ? { fill: FILLS[gi % 4]!, stroke: STROKES[gi % 4]! } : null;
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -275,7 +282,7 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
   // ── Render ──────────────────────────────────────────────────────────────────
 
   const ARROW_COLORS: Record<string, string> = {
-    default: C_EDGE, amber: "#c8881a", sage: "#4a7a5a", lavender: "#7c6ad0",
+    default: C_EDGE, amber: SERIES.amber.stroke, sage: SERIES.sage.stroke, lavender: SERIES.lavender.stroke,
   };
 
 
@@ -326,7 +333,7 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
                   const isSelected = connectedEdges.has(edgeKey);
                   const isOut = isSelected && edge.source === selected;
                   const isIn  = isSelected && edge.target === selected;
-                  const color = isOut ? "#7c6ad0" : isIn ? "#4a7a5a" : isSelected ? "#c8881a" : C_EDGE;
+                  const color = isOut ? SERIES.lavender.stroke : isIn ? SERIES.sage.stroke : isSelected ? SERIES.amber.stroke : C_EDGE;
                   const markerName = isOut ? "lavender" : isIn ? "sage" : isSelected ? "amber" : "default";
                   const { x1, y1, x2, y2 } = edgeEndpoints(src, dst, isDir);
                   const midX = (x1 + x2) / 2, midY = (y1 + y2) / 2;
@@ -349,13 +356,13 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
 
                 {/* Nodes */}
                 {nodes.map(node => {
-                  const gi = groupIdx(node.group, groups);
+                  const series = groupSeries(node.group, groups);
                   const isSelected = node.id === selected;
                   const isConn = connectedNodes.has(node.id);
-                  const baseFill   = node.color ?? (gi >= 0 ? FILLS[gi % 4]!   : C_BG);
-                  const baseStroke = node.color ? "#7a6a5a" : (gi >= 0 ? STROKES[gi % 4]! : "#d5c9b8");
-                  const fill   = isSelected ? "#fff2de" : baseFill;
-                  const stroke = isSelected ? "#c8881a" : isConn ? STROKES[gi >= 0 ? gi % 4 : 0]! : baseStroke;
+                  const baseFill   = node.color ?? series?.fill ?? C_BG;
+                  const baseStroke = node.color ? "#7a6a5a" : series?.stroke ?? "#d5c9b8";
+                  const fill   = isSelected ? SERIES.amber.fill : baseFill;
+                  const stroke = isSelected ? SERIES.amber.stroke : isConn ? (series?.stroke ?? STROKES[0]!) : baseStroke;
                   const sw     = isSelected ? 2.5 : isConn ? 2 : 1.5;
                   const R      = nr(node);
                   const label  = node.label ?? node.id;
@@ -368,7 +375,7 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
                     >
                       {isSelected && (
                         <circle cx={node.x} cy={node.y} r={R + 5}
-                          fill="none" stroke="#c8881a" strokeWidth={1} strokeDasharray="4 3" opacity={0.6} />
+                          fill="none" stroke={SERIES.amber.stroke} strokeWidth={1} strokeDasharray="4 3" opacity={0.6} />
                       )}
                       <circle cx={node.x} cy={node.y} r={R}
                         fill={fill} stroke={stroke} strokeWidth={sw} />
@@ -392,8 +399,8 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
             if (!n) return null;
             const deg = artifact.edges.filter(e => e.source === selected || e.target === selected).length;
             return (
-              <div style={{ marginTop: 8, padding: "5px 10px", borderRadius: 8, background: "#fff2de",
-                border: "1px solid #c8881a", fontSize: 12, color: C_TEXT, display: "flex", gap: 12, alignItems: "center" }}>
+              <div style={{ marginTop: 8, padding: "5px 10px", borderRadius: 8, background: SERIES.amber.fill,
+                border: `1px solid ${SERIES.amber.stroke}`, fontSize: 12, color: C_TEXT, display: "flex", gap: 12, alignItems: "center" }}>
                 <strong>{n.label ?? n.id}</strong>
                 {n.group && <span style={{ color: C_MUTED }}>group: {n.group}</span>}
                 <span style={{ color: C_MUTED, marginLeft: "auto" }}>{deg} edge{deg !== 1 ? "s" : ""}</span>
@@ -404,15 +411,18 @@ export function GraphVisualizer({ artifact }: { artifact: GraphVisualizationArti
           {/* Group legend */}
           {groups.length > 0 && (
             <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {groups.map((g, i) => (
-                <span key={g} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: C_TEXT }}>
-                  <span style={{
-                    width: 9, height: 9, borderRadius: "50%", display: "inline-block",
-                    background: FILLS[i % 4], border: `1.5px solid ${STROKES[i % 4]}`,
-                  }} />
-                  {g}
-                </span>
-              ))}
+              {groups.map((g) => {
+                const s = groupSeries(g, groups) ?? { fill: C_BG, stroke: C_EDGE };
+                return (
+                  <span key={g} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: C_TEXT }}>
+                    <span style={{
+                      width: 9, height: 9, borderRadius: "50%", display: "inline-block",
+                      background: s.fill, border: `1.5px solid ${s.stroke}`,
+                    }} />
+                    {g}
+                  </span>
+                );
+              })}
             </div>
           )}
 

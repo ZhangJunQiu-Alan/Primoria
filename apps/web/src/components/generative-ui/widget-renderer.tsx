@@ -130,59 +130,63 @@ svg .node:hover { opacity: 0.86; }
 svg .arr { stroke: var(--s); stroke-width: 1.5; fill: none; }
 svg .leader { stroke: var(--t); stroke-width: 0.5; stroke-dasharray: 4 4; fill: none; }
 
-/* Blue */
+/* Learning-object series pairs (style-tokens.ts): pale fill + darker same-hue
+   stroke. Core hues map to the token series; blue/coral/teal/gray/red are
+   supporting hues tuned to the same formula. */
+
+/* Blue (supporting) */
 svg .c-blue > rect, svg .c-blue > circle, svg .c-blue > ellipse,
-svg rect.c-blue, svg circle.c-blue, svg ellipse.c-blue { fill: #E6F1FB; stroke: #185FA5; }
-svg .c-blue text.th, svg .c-blue text.t { fill: #0C447C; }
-svg .c-blue text.ts { fill: #185FA5; }
+svg rect.c-blue, svg circle.c-blue, svg ellipse.c-blue { fill: #e2ecf6; stroke: #33608f; }
+svg .c-blue text.th, svg .c-blue text.t { fill: #264a70; }
+svg .c-blue text.ts { fill: #33608f; }
 
-/* Green */
+/* Green = pine series */
 svg .c-green > rect, svg .c-green > circle, svg .c-green > ellipse,
-svg rect.c-green, svg circle.c-green, svg ellipse.c-green { fill: #EAF3DE; stroke: #3B6D11; }
-svg .c-green text.th, svg .c-green text.t { fill: #27500A; }
-svg .c-green text.ts { fill: #3B6D11; }
+svg rect.c-green, svg circle.c-green, svg ellipse.c-green { fill: #dcede3; stroke: #2e6b52; }
+svg .c-green text.th, svg .c-green text.t { fill: #22503d; }
+svg .c-green text.ts { fill: #2e6b52; }
 
-/* Amber */
+/* Amber = amber series */
 svg .c-amber > rect, svg .c-amber > circle, svg .c-amber > ellipse,
-svg rect.c-amber, svg circle.c-amber, svg ellipse.c-amber { fill: #FAEEDA; stroke: #854F0B; }
-svg .c-amber text.th, svg .c-amber text.t { fill: #633806; }
-svg .c-amber text.ts { fill: #854F0B; }
+svg rect.c-amber, svg circle.c-amber, svg ellipse.c-amber { fill: #fbeed3; stroke: #a66f10; }
+svg .c-amber text.th, svg .c-amber text.t { fill: #7c530c; }
+svg .c-amber text.ts { fill: #a66f10; }
 
-/* Coral */
+/* Coral (supporting) */
 svg .c-coral > rect, svg .c-coral > circle, svg .c-coral > ellipse,
-svg rect.c-coral, svg circle.c-coral, svg ellipse.c-coral { fill: #FAECE7; stroke: #993C1D; }
-svg .c-coral text.th, svg .c-coral text.t { fill: #712B13; }
-svg .c-coral text.ts { fill: #993C1D; }
+svg rect.c-coral, svg circle.c-coral, svg ellipse.c-coral { fill: #fae9e1; stroke: #b05a35; }
+svg .c-coral text.th, svg .c-coral text.t { fill: #7f3f24; }
+svg .c-coral text.ts { fill: #b05a35; }
 
-/* Purple */
+/* Purple = lavender series */
 svg .c-purple > rect, svg .c-purple > circle, svg .c-purple > ellipse,
-svg rect.c-purple, svg circle.c-purple, svg ellipse.c-purple { fill: #EEEDFE; stroke: #534AB7; }
-svg .c-purple text.th, svg .c-purple text.t { fill: #3C3489; }
-svg .c-purple text.ts { fill: #534AB7; }
+svg rect.c-purple, svg circle.c-purple, svg ellipse.c-purple { fill: #e6e0f6; stroke: #6a55c4; }
+svg .c-purple text.th, svg .c-purple text.t { fill: #4e3f96; }
+svg .c-purple text.ts { fill: #6a55c4; }
 
-/* Gray */
+/* Gray = disabled/muted tokens */
 svg .c-gray > rect, svg .c-gray > circle, svg .c-gray > ellipse,
-svg rect.c-gray, svg circle.c-gray, svg ellipse.c-gray { fill: #F1EFE8; stroke: #5F5E5A; }
-svg .c-gray text.th, svg .c-gray text.t { fill: #444441; }
-svg .c-gray text.ts { fill: #5F5E5A; }
+svg rect.c-gray, svg circle.c-gray, svg ellipse.c-gray { fill: #f1ede4; stroke: #6b6357; }
+svg .c-gray text.th, svg .c-gray text.t { fill: #4f483d; }
+svg .c-gray text.ts { fill: #6b6357; }
 
-/* Teal */
+/* Teal (supporting) */
 svg .c-teal > rect, svg .c-teal > circle, svg .c-teal > ellipse,
-svg rect.c-teal, svg circle.c-teal, svg ellipse.c-teal { fill: #E1F5EE; stroke: #0F6E56; }
-svg .c-teal text.th, svg .c-teal text.t { fill: #085041; }
-svg .c-teal text.ts { fill: #0F6E56; }
+svg rect.c-teal, svg circle.c-teal, svg ellipse.c-teal { fill: #e0f2ec; stroke: #1f7a60; }
+svg .c-teal text.th, svg .c-teal text.t { fill: #175c48; }
+svg .c-teal text.ts { fill: #1f7a60; }
 
-/* Pink */
+/* Pink = rose series */
 svg .c-pink > rect, svg .c-pink > circle, svg .c-pink > ellipse,
-svg rect.c-pink, svg circle.c-pink, svg ellipse.c-pink { fill: #FBEAF0; stroke: #993556; }
-svg .c-pink text.th, svg .c-pink text.t { fill: #72243E; }
-svg .c-pink text.ts { fill: #993556; }
+svg rect.c-pink, svg circle.c-pink, svg ellipse.c-pink { fill: #f9e3ea; stroke: #a64d64; }
+svg .c-pink text.th, svg .c-pink text.t { fill: #7c394b; }
+svg .c-pink text.ts { fill: #a64d64; }
 
-/* Red */
+/* Red = wrong/error tokens */
 svg .c-red > rect, svg .c-red > circle, svg .c-red > ellipse,
-svg rect.c-red, svg circle.c-red, svg ellipse.c-red { fill: #FCEBEB; stroke: #A32D2D; }
-svg .c-red text.th, svg .c-red text.t { fill: #791F1F; }
-svg .c-red text.ts { fill: #A32D2D; }
+svg rect.c-red, svg circle.c-red, svg ellipse.c-red { fill: #fbeae6; stroke: #c2452f; }
+svg .c-red text.th, svg .c-red text.t { fill: #93331f; }
+svg .c-red text.ts { fill: #c2452f; }
 `;
 
 export const FORM_STYLES_CSS = `

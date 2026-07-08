@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PhysicsSceneArtifact, PhysicsBody, PhysicsConstraint, PhysicsScene } from "@/lib/agent-os";
+import { SERIES } from "./style-tokens";
 
 type MatterModule = typeof import("matter-js");
 
@@ -45,9 +46,9 @@ function buildWorld(Matter: MatterModule, scene: PhysicsScene) {
       frictionAir: def.frictionAir ?? 0.01,
       angle: def.angle ?? 0,
       render: {
-        fillStyle: def.render?.fillStyle ?? "#c8881a",
-        strokeStyle: def.render?.strokeStyle ?? "#a06010",
-        lineWidth: def.render?.lineWidth ?? 1.5,
+        fillStyle: def.render?.fillStyle ?? SERIES.amber.fill,
+        strokeStyle: def.render?.strokeStyle ?? SERIES.amber.stroke,
+        lineWidth: def.render?.lineWidth ?? 2,
       },
       label: def.label ?? def.id,
     };
@@ -131,7 +132,7 @@ export function PhysicsSceneRenderer({ artifact, variant = "tool" }: { artifact:
         options: {
           width,
           height,
-          background: scene.render.background ?? "#fbf7ee",
+          background: scene.render.background ?? "#ffffff",
           wireframes: false,
           pixelRatio: window.devicePixelRatio ?? 1,
         },
@@ -153,7 +154,7 @@ export function PhysicsSceneRenderer({ artifact, variant = "tool" }: { artifact:
           ctx.fillStyle = "rgba(255,255,255,0.85)";
           const metrics = ctx.measureText(def.label);
           ctx.fillRect(x - metrics.width / 2 - 3, y - 8, metrics.width + 6, 16);
-          ctx.fillStyle = "#3a352d";
+          ctx.fillStyle = "#29241c";
           ctx.fillText(def.label, x, y);
         }
 
@@ -225,7 +226,7 @@ export function PhysicsSceneRenderer({ artifact, variant = "tool" }: { artifact:
               borderRadius: 6,
               padding: "3px 10px",
               fontSize: 12,
-              color: "#3a352d",
+              color: "#29241c",
               cursor: "pointer",
             }}
           >
