@@ -6,9 +6,6 @@ export type ImageKind =
   | "realistic_scene"
   | "analogy_illustration";
 
-export type ImageAspectRatio = "1:1" | "4:3" | "16:9";
-export type ImageResolution = "1K" | "2K" | "4K";
-
 /** What an `image` block wants drawn, decided by the Block Writer before any
  * asset exists. The Image Builder turns this into a media asset + final block. */
 export type ImageBrief = {
@@ -19,19 +16,15 @@ export type ImageBrief = {
   alt: string;
   caption: string;
   negativePrompt?: string;
-  aspectRatio?: ImageAspectRatio;
-  resolution?: ImageResolution;
   styleVersion?: string;
   language?: string;
 };
 
 /** Bump to invalidate every cached asset after a house-style change. */
-export const STYLE_VERSION = "v2";
-export const DEFAULT_ASPECT_RATIO: ImageAspectRatio = "4:3";
-export const DEFAULT_RESOLUTION: ImageResolution = "1K";
+export const STYLE_VERSION = "v3";
 export const DEFAULT_LANGUAGE = "en";
 
-/** Primoria learning-object house style (STYLE_VERSION v2): flat vector for the
+/** Primoria learning-object house style (STYLE_VERSION v3): flat vector for the
  * illustration kinds, photographic only for realistic_scene. Palette words match
  * the widget tokens so images and widgets read as one product. */
 const FLAT_VECTOR_BASE =
@@ -53,9 +46,9 @@ export function buildImagePrompt(brief: ImageBrief): string {
     brief.prompt.trim(),
     STYLE_BY_KIND[brief.imageKind],
     "Do not render any text, words, numbers, labels, axis ticks, formulas, or chemical notation inside the image.",
+    "Aspect ratio: 16:9.",
   ];
   if (brief.negativePrompt?.trim()) lines.push(`Avoid: ${brief.negativePrompt.trim()}.`);
-  if (brief.aspectRatio) lines.push(`Aspect ratio: ${brief.aspectRatio}.`);
   return lines.join("\n");
 }
 
@@ -69,8 +62,7 @@ export function imageCacheKey(brief: ImageBrief, model: string): string {
     learningGoal: brief.learningGoal.trim(),
     imageKind: brief.imageKind,
     styleVersion: brief.styleVersion ?? STYLE_VERSION,
-    aspectRatio: brief.aspectRatio ?? DEFAULT_ASPECT_RATIO,
-    resolution: brief.resolution ?? DEFAULT_RESOLUTION,
+    aspectRatio: "16:9",
     language: brief.language ?? DEFAULT_LANGUAGE,
   };
   return createHash("sha256").update(JSON.stringify(canonical)).digest("hex");

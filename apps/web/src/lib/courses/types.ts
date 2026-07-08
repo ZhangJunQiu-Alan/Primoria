@@ -80,8 +80,7 @@ export type ImageBlock = BlockBase & {
     | "analogy_illustration";
   prompt?: string;
   model?: string;
-  aspectRatio?: "1:1" | "4:3" | "16:9";
-  resolution?: "1K" | "2K" | "4K";
+  aspectRatio?: "16:9";
   /** Absent/"ready" renders the image; "error" renders an inline error state
    * so generation instability is visible. The lesson still publishes. */
   status?: "ready" | "error";

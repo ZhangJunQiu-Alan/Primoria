@@ -69,12 +69,11 @@ function testCacheKeyStability() {
   // Semantic changes fork the cache.
   assert(imageCacheKey(brief({ learningGoal: "something else" }), MODEL) !== a, "learningGoal change forks the cache");
   assert(imageCacheKey(brief({ imageKind: "realistic_scene" }), MODEL) !== a, "imageKind change forks the cache");
-  assert(imageCacheKey(brief({ resolution: "2K" }), MODEL) !== a, "resolution change forks the cache");
   assert(imageCacheKey(brief(), "other-model") !== a, "model change forks the cache");
   assert(imageCacheKey(brief({ styleVersion: `${STYLE_VERSION}-next` }), MODEL) !== a, "styleVersion change forks the cache");
 
   // Defaults are applied, not left undefined.
-  assert(imageCacheKey(brief({ resolution: "1K", aspectRatio: "4:3", language: "en" }), MODEL) === a, "defaults match explicit default values");
+  assert(imageCacheKey(brief({ language: "en" }), MODEL) === a, "defaults match explicit default values");
 }
 
 async function testReuseDoesNotRegenerate() {

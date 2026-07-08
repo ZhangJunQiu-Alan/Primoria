@@ -15,7 +15,6 @@ const BRIEF: ImageBrief = {
   alt: "Chloroplast",
   caption: "The stacked thylakoids sit in the stroma.",
   negativePrompt: "photorealism, clutter",
-  aspectRatio: "4:3",
 };
 
 const tinyPng = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
@@ -51,7 +50,7 @@ function testPromptGuardsAgainstText() {
   assert(prompt.includes("A flat illustration of a chloroplast cross-section"), "prompt keeps the brief prompt");
   assert(/Do not render any text/i.test(prompt), "prompt forbids embedded text/labels");
   assert(prompt.includes("Avoid: photorealism, clutter."), "prompt folds in the negative prompt");
-  assert(prompt.includes("Aspect ratio: 4:3."), "prompt includes aspect ratio hint");
+  assert(prompt.includes("Aspect ratio: 16:9."), "prompt includes aspect ratio hint");
 }
 
 function testConfigRequiresKey() {

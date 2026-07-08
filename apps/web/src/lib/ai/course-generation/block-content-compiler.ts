@@ -55,8 +55,6 @@ const ImageContentSchema = z.object({
   alt: nonEmpty,
   caption: nonEmpty,
   negativePrompt: z.string().optional(),
-  aspectRatio: z.enum(["1:1", "4:3", "16:9"]).optional(),
-  resolution: z.enum(["1K", "2K", "4K"]).optional(),
 });
 
 const AlgorithmVizPayloadSchema = z
@@ -354,8 +352,6 @@ export function compileBlockContent(job: BlockGenerationJob, rawContent: unknown
       alt: content.alt,
       caption: content.caption,
       negativePrompt: content.negativePrompt,
-      aspectRatio: content.aspectRatio,
-      resolution: content.resolution,
     };
     // Pending — the imaging stage resolves the asset and finalizes this block.
     return makePendingImageBlock({

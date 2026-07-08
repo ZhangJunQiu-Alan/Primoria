@@ -55,7 +55,6 @@ function readyBlock(pending: PendingImageBlock, asset: { assetId: string; imageU
     prompt: pending.brief.prompt,
     model,
     aspectRatio: pending.aspectRatio,
-    resolution: pending.resolution,
     status: "ready",
   };
 }
@@ -74,7 +73,6 @@ function errorBlock(pending: PendingImageBlock, message: string): ImageBlock {
     imageKind: pending.imageKind,
     prompt: pending.brief.prompt,
     aspectRatio: pending.aspectRatio,
-    resolution: pending.resolution,
     status: "error",
     errorMessage: message,
   };
@@ -132,8 +130,7 @@ export function makePendingImageBlock(args: {
     caption: args.brief.caption,
     imageKind: args.brief.imageKind,
     prompt: args.brief.prompt,
-    aspectRatio: args.brief.aspectRatio,
-    resolution: args.brief.resolution,
+    aspectRatio: "16:9",
     brief: args.brief,
   };
 }
