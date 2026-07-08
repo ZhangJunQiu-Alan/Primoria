@@ -344,7 +344,7 @@ git diff --check
 - `course-generation-ui-static.unit.ts`: ALL CHECKS PASSED
 - `i18n.unit.ts`: ALL CHECKS PASSED
 - `node --check apps/agent/src/graph.mjs`: 通过
-- `vitest run`: 1 test file passed，44 tests passed
+- `vitest run`: 3 test files passed，54 tests passed
 - `tsc --noEmit`: 通过
 - `git diff --check`: 通过
 
@@ -453,22 +453,19 @@ rg "render_[a-z_]+ ·|generate_course ·|get_course_card ·|plan_visualization �
 - UI 层也移除了主要工具状态标题里的内部工具名。
 - 后续真实 prompt 验收时，可以继续根据模型实际输出收紧分支 prompt。
 
-### 8.2 完成态统一显示“已准备好 / Ready”
+### 8.2 完成态标题已按工具细分
 
-当前 `getTutorToolDisplay` 对 `complete` 状态统一显示完成文案，detail 仍保留具体动作。
+当前 `getTutorToolDisplay` 对 `complete` 状态优先使用 `tutor.toolCompleteStatus[name]`，detail 仍保留执行中动作说明。
 
 优点：
 
-- 完成态短、稳定，不泄露工具状态。
+- 多个工具完成卡同时出现时，主标题可以区分具体结果，例如“图表已整理好”“步骤已拆解好”“3D 场景已搭建好”。
+- 未知工具仍回退到“学习组件已准备好 / Learning component is ready”，不会暴露内部工具名。
 
-可能的问题：
+剩余取舍：
 
-- 如果用户同时看到多个工具完成卡，主标题可能都叫“已准备好”。
-
-后续可选优化：
-
-- 改为 `图表已准备好`、`步骤已拆解好`、`3D 场景已准备好` 这类 per-tool complete 文案。
-- 这需要扩展 i18n 为 `toolCompleteStatus.*`，本次没有做，避免字典膨胀。
+- `tutor.toolComplete` 仍保留为兼容性通用文案，但当前 helper 不再把所有完成态直接映射到它。
+- 完成态文案需要随新增工具同步补齐 `toolCompleteStatus.*`，否则会走默认完成文案。
 
 ### 8.3 可视化规划卡仍显示 technology
 
