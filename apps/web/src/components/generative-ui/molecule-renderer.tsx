@@ -220,7 +220,7 @@ export function MoleculeRenderer({ artifact }: { artifact: MoleculeArtifact }) {
           <span>{artifact.title}</span>
         </div>
         <div style={{ padding: "6px 12px 2px", display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontFamily: "monospace", fontSize: 13, color: "#c8881a", fontWeight: 600 }}>
+          <span style={{ fontFamily: "monospace", fontSize: 13, color: "#7ed6ae", fontWeight: 600 }}>
             {formula}
           </span>
           <span style={{ fontSize: 12, color: "#888", flex: 1 }}>{artifact.description}</span>
@@ -249,9 +249,9 @@ export function MoleculeRenderer({ artifact }: { artifact: MoleculeArtifact }) {
               onClick={() => switchRepr(r)}
               style={{
                 fontSize: 11, padding: "2px 8px", borderRadius: 4, cursor: "pointer",
-                background: repr === r ? "#c8881a" : "#2a2a3a",
-                color: repr === r ? "#fff" : "#aaa",
-                border: `1px solid ${repr === r ? "#c8881a" : "#444"}`,
+                background: repr === r ? "#7ed6ae" : "#2a2a3a",
+                color: repr === r ? "#10312a" : "#aaa",
+                border: `1px solid ${repr === r ? "#7ed6ae" : "#444"}`,
               }}
             >
               {r === "ball_stick" ? "Ball & Stick" : r === "stick" ? "Stick" : "Space-Fill"}

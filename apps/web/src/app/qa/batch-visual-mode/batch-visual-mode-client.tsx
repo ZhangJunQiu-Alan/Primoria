@@ -468,10 +468,10 @@ export function BatchVisualModeClient() {
 
 function StatusBadge({ status }: { status: RunStatus }) {
   const styles: Record<RunStatus, { bg: string; border: string; color: string }> = {
-    queued: { bg: "#fbf7ee", border: "#d5c9b8", color: "#6b6357" },
-    running: { bg: "#fff2de", border: "#c8881a", color: "#7c560e" },
-    passed: { bg: "#e8f3ea", border: "#4a7a5a", color: "#2f6b43" },
-    failed: { bg: "#fbeaf0", border: "#b56474", color: "#8f3344" },
+    queued: { bg: "#f1ede4", border: "#b0a99c", color: "#6b6357" },
+    running: { bg: "#fbeed3", border: "#a66f10", color: "#7c560e" },
+    passed: { bg: "#e3f2e8", border: "#2e7d4f", color: "#2f6b43" },
+    failed: { bg: "#fbeae6", border: "#c2452f", color: "#8f3344" },
   };
   const style = styles[status];
   return (
@@ -518,7 +518,7 @@ const buttonStyle = {
 
 const primaryButtonStyle = {
   ...buttonStyle,
-  borderColor: "#c8881a",
+  borderColor: "#a66f10",
   background: "#fff2de",
   fontWeight: 700,
 } satisfies CSSProperties;

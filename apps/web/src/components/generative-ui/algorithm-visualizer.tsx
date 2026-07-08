@@ -7,28 +7,29 @@ import type {
   AlgorithmStep,
   AlgorithmHighlightRole,
 } from "@/lib/agent-os";
+import { LO_CANVAS, LO_INK, LO_MUTED, SERIES } from "./style-tokens";
 
 // ── Color palette ─────────────────────────────────────────────────────────────
 
 type RoleStyle = { fill: string; stroke: string; opacity?: number };
 
 const ROLE_STYLES: Record<string, RoleStyle> = {
-  comparing:  { fill: "#fff2de", stroke: "#c8881a" },
-  swapping:   { fill: "#fbeaf0", stroke: "#b56474" },
-  pivot:      { fill: "#efe7d7", stroke: "#7c6ad0" },
-  sorted:     { fill: "#e8f3ea", stroke: "#4a7a5a" },
-  current:    { fill: "#fff2de", stroke: "#c8881a" },
-  visited:    { fill: "#e8f3ea", stroke: "#4a7a5a" },
-  queued:     { fill: "#efe7d7", stroke: "#7c6ad0" },
-  stacked:    { fill: "#fbeaf0", stroke: "#b56474" },
-  path:       { fill: "#fff2de", stroke: "#c8881a" },
-  dependency: { fill: "#efe7d7", stroke: "#7c6ad0" },
-  result:     { fill: "#e8f3ea", stroke: "#4a7a5a" },
-  muted:      { fill: "#fbf7ee", stroke: "#eadfce", opacity: 0.4 },
+  comparing:  SERIES.amber,
+  swapping:   SERIES.rose,
+  pivot:      SERIES.lavender,
+  sorted:     SERIES.pine,
+  current:    SERIES.amber,
+  visited:    SERIES.pine,
+  queued:     SERIES.lavender,
+  stacked:    SERIES.rose,
+  path:       SERIES.amber,
+  dependency: SERIES.lavender,
+  result:     SERIES.pine,
+  muted:      { fill: LO_CANVAS, stroke: "#eadfce", opacity: 0.4 },
 };
-const DEFAULT_STYLE: RoleStyle = { fill: "#fbf7ee", stroke: "#d5c9b8" };
-const C_TEXT = "#3a352d";
-const C_MUTED = "#6b6357";
+const DEFAULT_STYLE: RoleStyle = { fill: LO_CANVAS, stroke: "#d5c9b8" };
+const C_TEXT = LO_INK;
+const C_MUTED = LO_MUTED;
 const FONT = "ui-sans-serif, system-ui, sans-serif";
 const MONO = "ui-monospace, monospace";
 
@@ -336,7 +337,7 @@ function GraphView({ step }: { step: AlgorithmStep }) {
               <div style={{ fontWeight: 600, color: C_MUTED, marginBottom: 3, fontSize: 10 }}>QUEUE</div>
               {queue.map((id, i) => (
                 <div key={i} style={{ padding: "2px 7px", marginBottom: 2, borderRadius: 4,
-                  background: "#efe7d7", border: "1px solid #7c6ad0", fontSize: 11 }}>
+                  background: SERIES.lavender.fill, border: `1px solid ${SERIES.lavender.stroke}`, fontSize: 11 }}>
                   {id}
                 </div>
               ))}
@@ -347,7 +348,7 @@ function GraphView({ step }: { step: AlgorithmStep }) {
               <div style={{ fontWeight: 600, color: C_MUTED, marginBottom: 3, fontSize: 10 }}>STACK</div>
               {[...stack].reverse().map((id, i) => (
                 <div key={i} style={{ padding: "2px 7px", marginBottom: 2, borderRadius: 4,
-                  background: "#fbeaf0", border: "1px solid #b56474", fontSize: 11 }}>
+                  background: SERIES.rose.fill, border: `1px solid ${SERIES.rose.stroke}`, fontSize: 11 }}>
                   {id}
                 </div>
               ))}
@@ -512,8 +513,8 @@ export function AlgorithmVisualizer({ artifact, variant = "tool" }: { artifact: 
             <button
               onClick={() => setPlaying(p => !p)}
               style={{ ...BTN, minWidth: 72,
-                background: playing ? "#fff2de" : "#fbf7ee",
-                borderColor: playing ? "#c8881a" : "#d5c9b8" }}
+                background: playing ? SERIES.amber.fill : LO_CANVAS,
+                borderColor: playing ? SERIES.amber.stroke : "#d5c9b8" }}
             >
               {playing ? "⏸ Pause" : "▶ Play"}
             </button>
@@ -526,7 +527,7 @@ export function AlgorithmVisualizer({ artifact, variant = "tool" }: { artifact: 
               <span style={{ fontSize: 10, color: C_MUTED, fontFamily: FONT }}>Speed</span>
               <input type="range" min={0.5} max={4} step={0.5} value={speed}
                 onChange={e => setSpeed(Number(e.target.value))}
-                style={{ width: 60, accentColor: "#c8881a" }} />
+                style={{ width: 60, accentColor: SERIES.pine.stroke }} />
               <span style={{ fontSize: 10, color: C_MUTED, fontFamily: FONT }}>{speed}×</span>
             </div>
           </div>
@@ -534,7 +535,7 @@ export function AlgorithmVisualizer({ artifact, variant = "tool" }: { artifact: 
           {/* Progress bar */}
           <div style={{ height: 3, background: "#efe8dc", borderRadius: 2, overflow: "hidden" }}>
             <div style={{
-              height: "100%", borderRadius: 2, background: "#c8881a",
+              height: "100%", borderRadius: 2, background: SERIES.amber.stroke,
               transition: "width 0.15s ease",
               width: `${((idx + 1) / steps.length) * 100}%`,
             }} />

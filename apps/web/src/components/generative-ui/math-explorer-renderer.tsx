@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MathExplorerArtifact, MathExplorerParameter } from "@/lib/agent-os";
+import { LO_WRONG, SERIES, SERIES_STROKES } from "./style-tokens";
 
 type MathCompiled = { evaluate(scope?: Record<string, number>): unknown };
 type MathInstance = { compile(expr: string): MathCompiled };
@@ -12,7 +13,7 @@ function getMathjs(): Promise<MathInstance> {
   return mathjsPromise;
 }
 
-const PALETTE = ["#c8881a", "#4a7a5a", "#7c6ad0", "#b56474"];
+const PALETTE = [...SERIES_STROKES];
 const N = 500;
 
 function niceGridStep(span: number): number {
@@ -314,7 +315,7 @@ export function MathExplorerRenderer({ artifact, variant = "tool" }: { artifact:
       )}
           <div ref={containerRef} style={{ width: "100%" }}>
             {mathLoadError ? (
-              <div style={{ padding: "24px", textAlign: "center", color: "#b56474", fontSize: 13, background: "#fde8eb", borderRadius: 10 }}>
+              <div style={{ padding: "24px", textAlign: "center", color: LO_WRONG.stroke, fontSize: 13, background: LO_WRONG.fill, borderRadius: 10 }}>
                 Failed to load math engine. Check network and reload.
               </div>
             ) : (
@@ -340,7 +341,7 @@ export function MathExplorerRenderer({ artifact, variant = "tool" }: { artifact:
                     onChange={(e) =>
                       setParamValues((prev) => ({ ...prev, [p.name]: parseFloat(e.target.value) }))
                     }
-                    style={{ flex: 1, minWidth: 120, accentColor: "#c8881a" }}
+                    style={{ flex: 1, minWidth: 120, accentColor: SERIES.amber.stroke }}
                   />
                   <span
                     style={{
