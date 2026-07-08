@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { FLAT_VECTOR_IMAGE_STYLE, LEARNING_OBJECT_STYLE_VERSION } from "@primoria/contracts/visual-style";
 
 export type ImageKind =
   | "educational_illustration"
@@ -21,19 +22,16 @@ export type ImageBrief = {
 };
 
 /** Bump to invalidate every cached asset after a house-style change. */
-export const STYLE_VERSION = "v3";
+export const STYLE_VERSION = LEARNING_OBJECT_STYLE_VERSION;
 export const DEFAULT_LANGUAGE = "en";
 
-/** Primoria learning-object house style (STYLE_VERSION v3): flat vector for the
+/** Primoria learning-object house style: flat vector for the
  * illustration kinds, photographic only for realistic_scene. Palette words match
  * the widget tokens so images and widgets read as one product. */
-const FLAT_VECTOR_BASE =
-  "Style: flat educational vector illustration, simple geometric shapes, low detail, bold clean outlines, slight paper-cut thickness with one hard offset shadow, warm off-white background, limited palette of deep pine green, amber, lavender and rose over warm neutrals, playful but precise. No gradients, no photorealism, no 3D render, no anime style.";
-
 const STYLE_BY_KIND: Record<ImageKind, string> = {
-  educational_illustration: FLAT_VECTOR_BASE,
-  analogy_illustration: `${FLAT_VECTOR_BASE} One focal visual metaphor, a single scene, minimal props.`,
-  structure_diagram: `${FLAT_VECTOR_BASE} Schematic composition, at most five objects connected by clear arrows or dashed lines, generous spacing between elements.`,
+  educational_illustration: FLAT_VECTOR_IMAGE_STYLE,
+  analogy_illustration: `${FLAT_VECTOR_IMAGE_STYLE} One focal visual metaphor, a single scene, minimal props.`,
+  structure_diagram: `${FLAT_VECTOR_IMAGE_STYLE} Schematic composition, at most five objects connected by clear arrows or dashed lines, generous spacing between elements.`,
   realistic_scene:
     "Style: natural photographic rendering, warm soft daylight, one clear subject, uncluttered neutral background, true-to-life color.",
 };

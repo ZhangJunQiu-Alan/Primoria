@@ -1,69 +1,107 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { LEARNING_OBJECT_CSS, PRIMORIA_PALETTE_JS } from "../src/components/generative-ui/style-tokens";
+import {
+  CSS_VARIABLES,
+  LEARNING_OBJECT_CSS,
+  LEARNING_OBJECT_STYLE_VERSION,
+  LO_CLASS_DESCRIPTIONS,
+  PRIMORIA_PALETTE,
+  PRIMORIA_PALETTE_JS,
+  SERIES,
+  SVG_CLASSES_CSS,
+  SVG_STYLE_CLASSES,
+  WIDGET_STYLE_PROMPT,
+} from "../src/components/generative-ui/style-tokens";
 
-// The agent prompt (graph.mjs) speaks the style vocabulary — class names, CSS
-// variables, PRIMORIA palette keys — while the values live in apps/web. The
-// agent cannot import from apps/web, so this test is the sync guard: every
-// name the prompt mentions must actually exist in what the iframe injects.
+// The style vocabulary is generated from packages/contracts/src/visual-style.mjs.
+// These tests guard the old failure mode where graph.mjs and style-tokens.ts
+// carried separate prose/value copies that could silently drift.
 
 const graphSource = readFileSync(
   fileURLToPath(new URL("../../agent/src/graph.mjs", import.meta.url)),
   "utf8",
 );
 
-// SVG_CLASSES_CSS lives in widget-renderer.tsx; read as text to avoid pulling
-// the React component tree into the test.
+const styleTokensSource = readFileSync(
+  fileURLToPath(new URL("../src/components/generative-ui/style-tokens.ts", import.meta.url)),
+  "utf8",
+);
+
 const widgetRendererSource = readFileSync(
   fileURLToPath(new URL("../src/components/generative-ui/widget-renderer.tsx", import.meta.url)),
   "utf8",
 );
 
-describe("style vocabulary sync between graph.mjs and the injected widget styles", () => {
-  it("mentions the vocabulary in the prompt at all", () => {
-    expect(graphSource).toContain("lo-stage");
-    expect(graphSource).toContain("PRIMORIA.");
-    expect(graphSource).toContain("--series-");
+describe("style vocabulary single source", () => {
+  it("the agent prompt imports the generated style guidance instead of hardcoding vocabulary", () => {
+    expect(graphSource).toContain("packages/contracts/src/visual-style.mjs");
+    expect(graphSource).toContain("WIDGET_STYLE_PROMPT");
+    expect(graphSource).toContain("WIDGET_RENDERER_DESCRIPTION");
+    expect(graphSource).not.toContain('class="lo-stage"');
+    expect(graphSource).not.toContain("var(--series-amber)");
   });
 
-  it("every lo-* class in the prompt exists in LEARNING_OBJECT_CSS", () => {
-    // (?<!-) keeps --lo-* CSS variables out of the class-name matches.
-    const names = new Set(graphSource.match(/(?<!-)\blo-[a-z]+(?:-[a-z]+)*\b/g) ?? []);
+  it("the web compatibility module re-exports tokens instead of redefining values", () => {
+    expect(styleTokensSource).toContain("@primoria/contracts/visual-style");
+    expect(styleTokensSource).not.toMatch(/#[0-9a-fA-F]{6}/);
+  });
+
+  it("the generated prompt carries the shared style version", () => {
+    expect(WIDGET_STYLE_PROMPT).toContain(`STYLE_VERSION ${LEARNING_OBJECT_STYLE_VERSION}`);
+  });
+
+  it("every lo-* class in the generated prompt exists in LEARNING_OBJECT_CSS", () => {
+    const names = new Set(WIDGET_STYLE_PROMPT.match(/(?<!-)\blo-[a-z]+(?:-[a-z]+)*\b/g) ?? []);
     expect(names.size).toBeGreaterThan(0);
     for (const name of names) {
       expect(LEARNING_OBJECT_CSS, `missing .${name}`).toContain(`.${name}`);
+      expect(LO_CLASS_DESCRIPTIONS, `missing description for .${name}`).toHaveProperty(name);
     }
   });
 
-  it("every c-* SVG class in the prompt exists in SVG_CLASSES_CSS", () => {
-    const names = new Set(graphSource.match(/\bc-[a-z]+\b/g) ?? []);
+  it("every c-* SVG class in the generated prompt exists in SVG_CLASSES_CSS", () => {
+    const names = new Set(WIDGET_STYLE_PROMPT.match(/\bc-[a-z]+\b/g) ?? []);
     expect(names.size).toBeGreaterThan(0);
     for (const name of names) {
-      expect(widgetRendererSource, `missing .${name}`).toContain(`.${name}`);
+      expect(SVG_CLASSES_CSS, `missing .${name}`).toContain(`.${name}`);
+      expect(SVG_STYLE_CLASSES, `missing source entry for .${name}`).toHaveProperty(name.slice(2));
     }
   });
 
-  it("every CSS variable in the prompt exists in LEARNING_OBJECT_CSS", () => {
-    const names = new Set(graphSource.match(/--(?:lo|series)-[a-z]+(?:-[a-z]+)*/g) ?? []);
+  it("every CSS variable in the generated prompt exists in LEARNING_OBJECT_CSS", () => {
+    const names = new Set(WIDGET_STYLE_PROMPT.match(/--(?:lo|series)-[a-z]+(?:-[a-z]+)*/g) ?? []);
     expect(names.size).toBeGreaterThan(0);
     for (const name of names) {
       expect(LEARNING_OBJECT_CSS, `missing ${name}`).toContain(`${name}:`);
+      expect(CSS_VARIABLES, `missing source entry for ${name}`).toContain(name);
     }
   });
 
-  it("every PRIMORIA.* key in the prompt exists in the palette global", () => {
+  it("every PRIMORIA.* key in the generated prompt exists in the palette global", () => {
     const keys = new Set(
-      (graphSource.match(/PRIMORIA\.[a-zA-Z]+/g) ?? []).map((m) => m.split(".")[1]!),
+      (WIDGET_STYLE_PROMPT.match(/PRIMORIA\.[a-zA-Z]+/g) ?? []).map((match) => match.split(".")[1]!),
     );
     expect(keys.size).toBeGreaterThan(0);
     for (const key of keys) {
       expect(PRIMORIA_PALETTE_JS, `missing PRIMORIA.${key}`).toContain(`${key}:`);
+      expect(PRIMORIA_PALETTE, `missing source entry for PRIMORIA.${key}`).toHaveProperty(key);
     }
   });
 
-  it("the palette global is injected into the widget iframe shell", () => {
+  it("series values are identical across CSS variables, SVG classes, and palette keys", () => {
+    expect(LEARNING_OBJECT_CSS).toContain(`--series-amber: ${SERIES.amber.stroke};`);
+    expect(LEARNING_OBJECT_CSS).toContain(`--series-amber-fill: ${SERIES.amber.fill};`);
+    expect(PRIMORIA_PALETTE_JS).toContain(`amber: "${SERIES.amber.stroke}"`);
+    expect(PRIMORIA_PALETTE_JS).toContain(`amberFill: "${SERIES.amber.fill}"`);
+    expect(SVG_CLASSES_CSS).toContain("svg .c-amber");
+    expect(SVG_CLASSES_CSS).toContain(`fill: ${SERIES.amber.fill}; stroke: ${SERIES.amber.stroke};`);
+    expect(SVG_CLASSES_CSS).toContain(`fill: ${SERIES.pine.fill}; stroke: ${SERIES.pine.stroke};`);
+  });
+
+  it("the shared styles are injected into the widget iframe shell", () => {
     expect(widgetRendererSource).toContain("PRIMORIA_PALETTE_JS");
     expect(widgetRendererSource).toContain("LEARNING_OBJECT_CSS");
+    expect(widgetRendererSource).toContain("SVG_CLASSES_CSS");
   });
 });

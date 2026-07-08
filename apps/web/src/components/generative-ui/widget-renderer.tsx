@@ -5,7 +5,7 @@ import { z } from "zod";
 import { IDIOMORPH_JS } from "./idiomorph-inline";
 import { ExportOverlay } from "./export-overlay";
 import { assembleWidgetStandaloneHtml } from "./export-utils";
-import { LEARNING_OBJECT_CSS, PRIMORIA_PALETTE_JS } from "./style-tokens";
+import { LEARNING_OBJECT_CSS, PRIMORIA_PALETTE_JS, SVG_CLASSES_CSS } from "./style-tokens";
 import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
 import { normalizeWidgetDependencies, type WidgetDependency as RuntimeWidgetDependency } from "@/lib/ai/widget-dependencies";
 
@@ -119,75 +119,6 @@ export const THEME_CSS = `
   --bg2: var(--color-background-secondary);
   --b: var(--color-border-tertiary);
 }
-`;
-
-export const SVG_CLASSES_CSS = `
-svg text.t   { font: 400 14px var(--font-sans); fill: var(--p); }
-svg text.ts  { font: 400 12px var(--font-sans); fill: var(--s); }
-svg text.th  { font: 700 14px var(--font-sans); fill: var(--p); }
-svg .box > rect, svg .box > circle, svg .box > ellipse { fill: var(--bg2); stroke: var(--b); }
-svg .node { cursor: pointer; }
-svg .node:hover { opacity: 0.86; }
-svg .arr { stroke: var(--s); stroke-width: 1.5; fill: none; }
-svg .leader { stroke: var(--t); stroke-width: 0.5; stroke-dasharray: 4 4; fill: none; }
-
-/* Learning-object series pairs (style-tokens.ts): pale fill + darker same-hue
-   stroke. Core hues map to the token series; blue/coral/teal/gray/red are
-   supporting hues tuned to the same formula. */
-
-/* Blue (supporting) */
-svg .c-blue > rect, svg .c-blue > circle, svg .c-blue > ellipse,
-svg rect.c-blue, svg circle.c-blue, svg ellipse.c-blue { fill: #e2ecf6; stroke: #33608f; }
-svg .c-blue text.th, svg .c-blue text.t { fill: #264a70; }
-svg .c-blue text.ts { fill: #33608f; }
-
-/* Green = pine series */
-svg .c-green > rect, svg .c-green > circle, svg .c-green > ellipse,
-svg rect.c-green, svg circle.c-green, svg ellipse.c-green { fill: #dcede3; stroke: #2e6b52; }
-svg .c-green text.th, svg .c-green text.t { fill: #22503d; }
-svg .c-green text.ts { fill: #2e6b52; }
-
-/* Amber = amber series */
-svg .c-amber > rect, svg .c-amber > circle, svg .c-amber > ellipse,
-svg rect.c-amber, svg circle.c-amber, svg ellipse.c-amber { fill: #fbeed3; stroke: #a66f10; }
-svg .c-amber text.th, svg .c-amber text.t { fill: #7c530c; }
-svg .c-amber text.ts { fill: #a66f10; }
-
-/* Coral (supporting) */
-svg .c-coral > rect, svg .c-coral > circle, svg .c-coral > ellipse,
-svg rect.c-coral, svg circle.c-coral, svg ellipse.c-coral { fill: #fae9e1; stroke: #b05a35; }
-svg .c-coral text.th, svg .c-coral text.t { fill: #7f3f24; }
-svg .c-coral text.ts { fill: #b05a35; }
-
-/* Purple = lavender series */
-svg .c-purple > rect, svg .c-purple > circle, svg .c-purple > ellipse,
-svg rect.c-purple, svg circle.c-purple, svg ellipse.c-purple { fill: #e6e0f6; stroke: #6a55c4; }
-svg .c-purple text.th, svg .c-purple text.t { fill: #4e3f96; }
-svg .c-purple text.ts { fill: #6a55c4; }
-
-/* Gray = disabled/muted tokens */
-svg .c-gray > rect, svg .c-gray > circle, svg .c-gray > ellipse,
-svg rect.c-gray, svg circle.c-gray, svg ellipse.c-gray { fill: #f1ede4; stroke: #6b6357; }
-svg .c-gray text.th, svg .c-gray text.t { fill: #4f483d; }
-svg .c-gray text.ts { fill: #6b6357; }
-
-/* Teal (supporting) */
-svg .c-teal > rect, svg .c-teal > circle, svg .c-teal > ellipse,
-svg rect.c-teal, svg circle.c-teal, svg ellipse.c-teal { fill: #e0f2ec; stroke: #1f7a60; }
-svg .c-teal text.th, svg .c-teal text.t { fill: #175c48; }
-svg .c-teal text.ts { fill: #1f7a60; }
-
-/* Pink = rose series */
-svg .c-pink > rect, svg .c-pink > circle, svg .c-pink > ellipse,
-svg rect.c-pink, svg circle.c-pink, svg ellipse.c-pink { fill: #f9e3ea; stroke: #a64d64; }
-svg .c-pink text.th, svg .c-pink text.t { fill: #7c394b; }
-svg .c-pink text.ts { fill: #a64d64; }
-
-/* Red = wrong/error tokens */
-svg .c-red > rect, svg .c-red > circle, svg .c-red > ellipse,
-svg rect.c-red, svg circle.c-red, svg ellipse.c-red { fill: #fbeae6; stroke: #c2452f; }
-svg .c-red text.th, svg .c-red text.t { fill: #93331f; }
-svg .c-red text.ts { fill: #c2452f; }
 `;
 
 export const FORM_STYLES_CSS = `
@@ -343,14 +274,15 @@ var COMMON_DEPENDENCIES = {
   d3: { global: 'd3', url: 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js', kind: 'script' },
   Chart: { global: 'Chart', url: 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js', kind: 'script' },
   gsap: { global: 'gsap', url: 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js', kind: 'script' },
-  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js', kind: 'script' },
+  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js', kind: 'script' },
   anime: { global: 'anime', url: 'https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js', kind: 'script' },
   Matter: { global: 'Matter', url: 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js', kind: 'script' },
   p5: { global: 'p5', url: 'https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js', kind: 'script' },
   math: { global: 'math', url: 'https://cdn.jsdelivr.net/npm/mathjs@14.2.1/lib/browser/math.min.js', kind: 'script' },
   L: { global: 'L', url: 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', kind: 'script' },
   mermaid: { global: 'mermaid', url: 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js', kind: 'script' },
-  cytoscape: { global: 'cytoscape', url: 'https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js', kind: 'script' }
+  cytoscape: { global: 'cytoscape', url: 'https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js', kind: 'script' },
+  echarts: { global: 'echarts', url: 'https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js', kind: 'script' }
 };
 var ALLOWED_DEPENDENCY_URLS = Object.keys(COMMON_DEPENDENCIES).reduce(function(map, key) {
   map[COMMON_DEPENDENCIES[key].url] = true;
@@ -414,6 +346,8 @@ function missingDependencies(text, explicitDeps) {
   if (source.indexOf('math.') !== -1 && !window.math) add(COMMON_DEPENDENCIES.math);
   if ((source.indexOf('L.map') !== -1 || source.indexOf('L.tileLayer') !== -1) && !window.L) add(COMMON_DEPENDENCIES.L);
   if (source.indexOf('mermaid.') !== -1 && !window.mermaid) add(COMMON_DEPENDENCIES.mermaid);
+  if ((source.indexOf('cytoscape.') !== -1 || source.indexOf('cytoscape(') !== -1) && !window.cytoscape) add(COMMON_DEPENDENCIES.cytoscape);
+  if ((source.indexOf('echarts.') !== -1 || source.indexOf('echarts.init') !== -1) && !window.echarts) add(COMMON_DEPENDENCIES.echarts);
   return deps;
 }
 
