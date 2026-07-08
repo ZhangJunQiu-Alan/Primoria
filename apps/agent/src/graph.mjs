@@ -8,6 +8,7 @@ import { z } from "zod";
 import { readFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
+import { WIDGET_STYLE_PROMPT } from "../../../packages/contracts/src/visual-style.mjs";
 import { getCourse } from "./course-store.mjs";
 import { courseBlocks, summarizeCourse } from "./course-types.mjs";
 
@@ -280,6 +281,20 @@ const WIDGET_DEPENDENCIES_BY_URL = new Map(
   Object.values(WIDGET_DEPENDENCY_ALLOWLIST).map((dep) => [dep.url, dep]),
 );
 
+const WIDGET_RENDERER_DESCRIPTION = [
+  "Render an interactive HTML/CSS/JS learning widget in a sandboxed iframe. MUST be used after plan_visualization for any visualization / simulation / demo request.",
+  "If you use an external browser library, include it in the optional dependencies array as {url, global, kind}; only Primoria's fixed whitelist is accepted, so prefer d3, cytoscape, Chart, gsap, THREE, anime, Matter, p5, math, L, mermaid, or echarts exact CDN URLs already known to the renderer.",
+  "Return a compact self-contained HTML fragment in the html argument: no doctype, no html/head/body wrapper, inline style/script only, target 70-130 lines and under about 8KB.",
+  "Implement every concrete requirement from the latest user message and the plan key_elements as visible UI behavior, not just hidden code.",
+  "Prefer one canvas or one inline SVG plus a small control/status panel; avoid verbose CSS, verbose explanatory text, and duplicate UI.",
+  "Avoid D3 unless absolutely necessary; for SVG, prefer plain DOM APIs such as createElementNS/setAttribute over complex D3 chains.",
+  "Include visible labels/legend/status for the important objects and comparisons so the learner can verify the concept by eye.",
+  "For physics/math visualizations, label anchors, extrema, variables, current values, and measured comparisons (for example equal areas, distances, angles, elapsed time) whenever the user mentions them.",
+  "Use CSS variables when useful and include interactive controls where appropriate.",
+  "Build as an inline responsive widget for a chat/course page, not a full-screen app shell; do not style body/html and do not use 100vh page layouts.",
+  WIDGET_STYLE_PROMPT,
+].join(" ");
+
 /**
  * @param {unknown} dependencies
  */
@@ -309,8 +324,7 @@ const widgetRendererTool = tool(
   },
   {
     name: "widgetRenderer",
-    description:
-      "Render an interactive HTML/CSS/JS learning widget in a sandboxed iframe. MUST be used after plan_visualization for any visualization / simulation / demo request. If you use an external browser library, include it in the optional dependencies array as {url, global, kind}; only Primoria's fixed whitelist is accepted, so prefer d3, Chart, gsap, THREE, anime, Matter, p5, math, L, or mermaid exact CDN URLs already known to the renderer. Return a compact self-contained HTML fragment in the html argument: no doctype, no html/head/body wrapper, inline style/script only, target 70-130 lines and under about 8KB. Implement every concrete requirement from the latest user message and the plan key_elements as visible UI behavior, not just hidden code. Prefer one canvas or one inline SVG plus a small control/status panel; avoid verbose CSS, verbose explanatory text, and duplicate UI. Avoid D3 unless absolutely necessary; for SVG, prefer plain DOM APIs such as createElementNS/setAttribute over complex D3 chains. Include visible labels/legend/status for the important objects and comparisons so the learner can verify the concept by eye. For physics/math visualizations, label anchors, extrema, variables, current values, and measured comparisons (for example equal areas, distances, angles, elapsed time) whenever the user mentions them. Use CSS variables when useful and include interactive controls where appropriate. Build as an inline responsive widget for a chat/course page, not a full-screen app shell; do not style body/html and do not use 100vh page layouts. Use the Primoria learning-object style, which the iframe provides as an injected stylesheet and a window.PRIMORIA palette — NEVER hardcode hex colors or invent your own visual style. A widget is one centered learning object: one concept, one primary action (observe / compare / choose / drag / adjust). For manipulable interactives use class=\"lo-stage\" as the bench holding tactile objects with class=\"lo-card\" (hover lift and the hard pickable shadow come from the class); mark states by adding lo-selected / lo-correct / lo-wrong / lo-disabled; drop targets use class=\"lo-drop\"; buttons on the stage use class=\"lo-btn\". For inline SVG use the shape classes c-amber / c-green / c-purple / c-pink (also c-blue / c-teal / c-gray / c-red) and text classes t / ts / th. When code needs a color (inline style, canvas, THREE), read it from CSS variables — var(--lo-ink), var(--lo-muted), var(--lo-grid), var(--series-amber), var(--series-amber-fill), same pattern for pine / lavender / rose — or from window.PRIMORIA (PRIMORIA.amber, PRIMORIA.pineFill, PRIMORIA.correct, PRIMORIA.wrong). Charts: 3-6 data items, direct labels instead of legends, gridlines var(--lo-grid); never use a saturated series color as a large fill — pair the *-fill variable with its stroke. Tabular numerals for changing values. No gradients, no glassmorphism, no neon, no emoji decoration.",
+    description: WIDGET_RENDERER_DESCRIPTION,
     schema: z.object({
       title: z.string().optional(),
       description: z.string(),
@@ -972,6 +986,14 @@ const renderMoleculeTool = tool(
   },
 );
 
+const RENDER_3D_SCENE_DESCRIPTION = [
+  "Render a 3D scientific visualization using THREE.js. Use for inherently 3D concepts: 3D vector operations, electric/magnetic/gravitational fields, orbital mechanics, wave propagation in 3D, molecular geometry (bond angles, VSEPR, orbitals), crystal lattice structures, 3D surfaces. Do NOT use for 2D physics (use render_physics_scene) or 2D charts.",
+  "IMPORTANT: Use a plain <script> (NOT type=\"module\", NO import statements). THREE is auto-loaded from CDN when THREE. appears in the code; use the THREE global directly. OrbitControls is available as new THREE.OrbitControls(camera, domElement) - provided by the runtime shim.",
+  "REQUIRED sections (all must be present):\n1. Container + WebGLRenderer using the shared page palette for the background, setPixelRatio capped at 2\n2. PerspectiveCamera(45, aspect, 0.1, 1000) at position (8, 6, 8)\n3. Three lights: AmbientLight(0xb8d4ff, 0.4) + DirectionalLight key(0xffffff, 0.8) at (5,8,5) + DirectionalLight rim(0xff66aa, 0.35) at (-5,-3,-5)\n4. new THREE.OrbitControls(camera, renderer.domElement) with enableDamping + dampingFactor 0.05\n5. GridHelper(10, 10, 0xccbbaa, 0xddd0c0)\n6. makeLabel(text) - CanvasTexture Sprite with depthTest:false for text annotations\n7. animate() loop - requestAnimationFrame + controls.update() + renderer.render()\n8. ResizeObserver - update camera.aspect + renderer.setSize on container resize",
+  WIDGET_STYLE_PROMPT,
+  "Container: <div id=\"scene\" style=\"width:100%;height:480px\">. Add overlay sliders/buttons for key parameters and a readout panel for live values.",
+].join("\n\n");
+
 const render3dSceneTool = tool(
   async ({ title, description, html }) => {
     return JSON.stringify({
@@ -983,8 +1005,7 @@ const render3dSceneTool = tool(
   },
   {
     name: "render_3d_scene",
-    description:
-      "Render a 3D scientific visualization using THREE.js. Use for inherently 3D concepts: 3D vector operations, electric/magnetic/gravitational fields, orbital mechanics, wave propagation in 3D, molecular geometry (bond angles, VSEPR, orbitals), crystal lattice structures, 3D surfaces. Do NOT use for 2D physics (use render_physics_scene) or 2D charts.\n\nIMPORTANT: Use a plain <script> (NOT type=\"module\", NO import statements). THREE is auto-loaded from CDN when THREE. appears in the code; use the THREE global directly. OrbitControls is available as new THREE.OrbitControls(camera, domElement) — provided by the runtime shim.\n\nREQUIRED sections (all must be present):\n1. Container + WebGLRenderer — background PRIMORIA.page, setPixelRatio capped at 2\n2. PerspectiveCamera(45, aspect, 0.1, 1000) at position (8, 6, 8)\n3. Three lights: AmbientLight(0xb8d4ff, 0.4) + DirectionalLight key(0xffffff, 0.8) at (5,8,5) + DirectionalLight rim(0xff66aa, 0.35) at (-5,-3,-5)\n4. new THREE.OrbitControls(camera, renderer.domElement) with enableDamping + dampingFactor 0.05\n5. GridHelper(10, 10, 0xccbbaa, 0xddd0c0)\n6. makeLabel(text) — CanvasTexture Sprite with depthTest:false for text annotations\n7. animate() loop — requestAnimationFrame + controls.update() + renderer.render()\n8. ResizeObserver — update camera.aspect + renderer.setSize on container resize\n\nPalette: read colors from the injected window.PRIMORIA global (PRIMORIA.amber, PRIMORIA.pine, PRIMORIA.lavender, PRIMORIA.rose, PRIMORIA.ink, PRIMORIA.page) instead of hardcoding hex values. Container: <div id=\"scene\" style=\"width:100%;height:480px\">. Add overlay sliders/buttons for key parameters and a readout panel for live values.",
+    description: RENDER_3D_SCENE_DESCRIPTION,
     schema: z.object({
       title: z.string().optional(),
       description: z.string(),

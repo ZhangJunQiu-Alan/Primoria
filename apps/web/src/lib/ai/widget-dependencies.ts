@@ -8,6 +8,7 @@ export type WidgetDependency = {
 
 export const WIDGET_DEPENDENCY_ALLOWLIST = {
   d3: { global: "d3", url: "https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js", kind: "script" },
+  cytoscape: { global: "cytoscape", url: "https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js", kind: "script" },
   Chart: { global: "Chart", url: "https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js", kind: "script" },
   gsap: { global: "gsap", url: "https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js", kind: "script" },
   THREE: { global: "THREE", url: "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js", kind: "script" },
