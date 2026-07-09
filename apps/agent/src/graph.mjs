@@ -8,7 +8,7 @@ import { z } from "zod";
 import { readFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
-import { WIDGET_STYLE_PROMPT } from "../../../packages/contracts/src/visual-style.mjs";
+import { WIDGET_STYLE_PROMPT } from "@primoria/contracts/visual-style";
 import { getCourse } from "./course-store.mjs";
 import { courseBlocks, summarizeCourse } from "./course-types.mjs";
 
