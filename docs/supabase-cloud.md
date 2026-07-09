@@ -5,8 +5,11 @@ Supabase as its default database host or auth provider.
 
 Current runtime direction:
 
-- Database: private Tencent Cloud PostgreSQL.
-- Local development: SSH tunnel to `127.0.0.1:15432`.
+- Local development database: Docker Compose Postgres using
+  `pgvector/pgvector:pg16`, bound to `127.0.0.1:5432`.
+- Historical/shared remote database: private Tencent Cloud PostgreSQL through
+  an SSH tunnel to `127.0.0.1:15432` only when intentionally targeting that
+  remote environment.
 - Same-server deployment: connect to PostgreSQL on `127.0.0.1:5432`.
 - Remote managed PostgreSQL with SSL: set `DATABASE_SSL=require`.
 - Auth: app-owned `users`, `identities`, `sessions`, and `auth_rate_limits`
@@ -42,9 +45,15 @@ current Primoria runbook.
 ## Current Replacement
 
 ```bash
-# Local development through the private Tencent Cloud tunnel
-DATABASE_URL="postgresql://primoria_app:[db-password]@127.0.0.1:15432/primoria"
-DATABASE_SSL=false
+# Local Docker development database
+docker compose up -d postgres
+DATABASE_URL="postgresql://primoria_app:primoria_dev@127.0.0.1:5432/primoria"
+DATABASE_SSL=disable
+
+# Optional historical Tencent Cloud tunnel, only when intentionally needed
+# ssh -N -L 15432:127.0.0.1:5432 ubuntu@<server>
+# DATABASE_URL="postgresql://primoria_app:[db-password]@127.0.0.1:15432/primoria"
+# DATABASE_SSL=false
 
 # Remote direct SSL-required managed Postgres, if ever used
 DATABASE_SSL=require
