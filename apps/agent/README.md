@@ -1,6 +1,6 @@
 # Primoria Agent
 
-LangGraph/deepagents runtime for the Primoria AI Tutor. It serves the `primoria_tutor` graph declared in `apps/agent/langgraph.json` and implemented in `apps/agent/src/graph.mjs`.
+LangGraph/deepagents runtime for the Primoria AI Tutor. It serves the `primoria_tutor` graph declared in the repository-root `langgraph.json` and implemented in `apps/agent/src/graph.mjs`.
 
 ## Local Development
 
@@ -12,7 +12,7 @@ cp apps/web/.env.local apps/agent/.env
 pnpm --filter @primoria/agent dev
 ```
 
-The dev script loads `apps/agent/.env` when present and runs `langgraphjs dev --host 127.0.0.1 --no-browser`, serving the graph at `http://localhost:2024`.
+The dev script loads `apps/agent/.env` when present and runs `langgraphjs dev --config ../../langgraph.json --host 127.0.0.1 --no-browser`, serving the graph at `http://localhost:2024`. Keep the LangGraph config at the repository root so deployment packages the shared workspace packages under `packages/`, including `@primoria/contracts`.
 
 The Next.js app talks to this graph through CopilotKit in `apps/web/src/app/api/copilotkit/route.ts`, using a `LangGraphAgent` subclass (`PrimoriaLangGraphAgent`) with `graphId: "primoria_tutor"`.
 

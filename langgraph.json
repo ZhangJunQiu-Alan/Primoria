@@ -1,0 +1,7 @@
+{
+  "node_version": "20",
+  "graphs": {
+    "primoria_tutor": "./apps/agent/src/graph.mjs:graph"
+  },
+  "env": "apps/agent/.env"
+}

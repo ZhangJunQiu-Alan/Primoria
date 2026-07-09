@@ -1,8 +1,0 @@
-{
-  "node_version": "20",
-  "graphs": {
-    "primoria_tutor": "./src/graph.mjs:graph"
-  },
-  "env": ".env",
-  "dependencies": ["."]
-}

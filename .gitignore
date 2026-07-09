@@ -28,3 +28,6 @@ dist/
 build/
 .cache/
 .primoria-courses.json
+
+# LangGraph API
+.langgraph_api
