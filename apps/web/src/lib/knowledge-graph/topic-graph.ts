@@ -41,6 +41,10 @@ export type TopicGraph = {
   graphId: string;
   subject: string;
   topics: TopicNode[];
+  // Generated (gen_*) graphs only: the graph-generation LLM judged this subject
+  // code-adapted, so lessons may include code blocks without matching the
+  // lexical patterns in code-eligibility.ts. Absent on curated library graphs.
+  codeAdapted?: boolean;
 };
 
 export { DEFAULT_TOPIC_GRAPH_ID } from "./data/topic-graphs.generated";

@@ -23,6 +23,10 @@ function profile(patch: Partial<LearnerProfile> = {}): LearnerProfile {
     goalStartTopicId: null,
     goalTargetConceptId: null,
     goalSkippedAt: null,
+    goalPositioningStatus: null,
+    goalPositioningMessage: null,
+    goalPositioningCandidates: [],
+    goalPositioningUpdatedAt: null,
     knowledgeBackground: null,
     knowledgeBackgroundSkippedAt: null,
     tutorStyle: null,
@@ -39,12 +43,24 @@ function main() {
   assert(nextOnboardingStep(null) === "goal", "missing profile starts at goal");
   assert(nextOnboardingStep(profile({ goalSkippedAt: "now" })) === "background", "goal can be skipped");
   assert(
+    nextOnboardingStep(profile({ learningGoal: "learn DSA", goalPositioningStatus: "pending" })) === "background",
+    "pending goal positioning does not block background step",
+  );
+  assert(
     nextOnboardingStep(profile({ goalGraphId: "g", goalStartTopicId: "t", knowledgeBackgroundSkippedAt: "now" })) === "style",
     "background can be skipped after goal anchor",
   );
   assert(
+    nextOnboardingStep(profile({ learningGoal: "science", goalPositioningStatus: "clarify", knowledgeBackgroundSkippedAt: "now", tutorStyleSkippedAt: "now" })) === "done",
+    "clarification is surfaced at the final step",
+  );
+  assert(
     isLearnerOnboardingComplete(profile({ goalSkippedAt: "now", knowledgeBackgroundSkippedAt: "now", tutorStyleSkippedAt: "now" })),
     "all three skipped steps count as complete",
+  );
+  assert(
+    !isLearnerOnboardingComplete(profile({ learningGoal: "science", goalPositioningStatus: "clarify", knowledgeBackgroundSkippedAt: "now", tutorStyleSkippedAt: "now" })),
+    "clarification must be resolved before onboarding is complete",
   );
 
   const page = src("app/page.tsx");
@@ -58,8 +74,18 @@ function main() {
   const proxy = src("proxy.ts");
   assert(proxy.includes("^\\/dev\\/onboarding"), "dev onboarding route bypasses auth proxy");
 
+  const onboardingPositioning = src("lib/learner-profile/onboarding-positioning.ts");
+  assert(onboardingPositioning.includes("getOrCreateGeneratedGraph"), "out-of-library goals reuse the Home generated-graph path");
+  assert(onboardingPositioning.includes('branch: "generated"'), "generated anchors are tagged for the client");
+
+  const onboardingCourse = src("lib/learner-profile/onboarding-course.ts");
+  assert(onboardingCourse.includes("GENERATED_GRAPH_PREFIX"), "course build routes gen_* anchors to the generated graph");
+  assert(onboardingCourse.includes("generatedGraph: graph"), "generated onboarding courses build from the stored graph");
+
   const goalRoute = src("app/api/onboarding/goal/route.ts");
   assert(goalRoute.includes("resolveOnboardingGoalAnchor"), "goal route resolves KG anchor");
+  assert(goalRoute.includes("after(() => positionLearningGoalInBackground"), "goal route positions KG anchor after the response");
+  assert(goalRoute.includes("savePendingLearningGoal"), "goal route saves the raw goal before background positioning");
   assert(goalRoute.includes("skipLearningGoal"), "goal route supports step skip");
 
   const backgroundRoute = src("app/api/onboarding/background/route.ts");
@@ -83,11 +109,14 @@ function main() {
 
   const styleRoute = src("app/api/onboarding/style/route.ts");
   assert(styleRoute.includes("saveTutorStyle"), "style route saves tutor style");
+  assert(styleRoute.includes("buildOnboardingCourse"), "style route can build the course if goal positioning finished late");
   assert(styleRoute.includes("skipTutorStyle"), "style route supports step skip");
 
   const onboardingClient = src("components/onboarding/onboarding-client.tsx");
   assert(onboardingClient.includes("normalizeTutorStyle"), "onboarding client normalizes tutor style");
   assert(onboardingClient.includes("new window.Image()"), "onboarding client preloads tutor persona images");
+  assert(onboardingClient.includes('goalStatus === "pending"'), "onboarding client handles pending background positioning");
+  assert(onboardingClient.includes("finalClarify"), "onboarding client asks ambiguous goals at the final step");
   assert(onboardingClient.includes("disabled={busy || !isTutorStyle(style)}"), "style submit blocks invalid tutor style");
   assert(onboardingClient.includes("unoptimized"), "onboarding visuals use direct public assets for cached preloads");
   assert(!onboardingClient.includes("key={visualImage.src}"), "onboarding visual image does not force remount on style change");
@@ -95,6 +124,9 @@ function main() {
   const positioning = src("lib/learner-profile/onboarding-positioning.ts");
   assert(positioning.includes('branch: "subject_start"'), "broad onboarding goal starts from subject root");
   assert(positioning.includes("sort((a, b) => a.defaultOrder - b.defaultOrder)"), "subject root uses first default_order topic");
+
+  const profileStore = src("lib/learner-profile/store.ts");
+  assert(profileStore.includes("goalPositioningStatus"), "profile store persists goal positioning status");
 
   const lessonContext = src("lib/courses/lesson-generation-context.ts");
   assert(lessonContext.includes("getLearnerProfile"), "lesson generation loads learner profile");

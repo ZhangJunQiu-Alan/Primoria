@@ -576,6 +576,11 @@ class LearningGoalTask {
         });
         return;
       }
+      if (plan?.branch === "out_of_library") {
+        const topic = typeof plan.topic === "string" && plan.topic.trim() ? plan.topic.trim() : this.query;
+        void this.buildFreeformCourse(topic);
+        return;
+      }
       if (plan?.branch === "fallback" || plan?.branch !== "positioned" || !plan.courseContext) {
         this.update({
           message: plan?.message || "无法定位这个学习目标，请重新输入更具体的内容。",
@@ -606,19 +611,28 @@ class LearningGoalTask {
   }
 
   private async buildCourse(anchor: CourseTopicAnchor) {
+    await this.requestCourseBuild({
+      graphId: anchor.graphId,
+      startTopicId: anchor.startTopicId,
+      targetConceptId: anchor.targetConceptId,
+      language: detectKgLanguage(this.query),
+      ...(anchor.clarifySourceQuery ? { clarifySourceQuery: anchor.clarifySourceQuery } : {}),
+    });
+  }
+
+  // Out-of-library goal: no KG anchor — the server designs a free-form outline.
+  private async buildFreeformCourse(topic: string) {
+    await this.requestCourseBuild({ topic, language: detectKgLanguage(this.query) });
+  }
+
+  private async requestCourseBuild(body: Record<string, unknown>) {
     this.update({ phase: "building", menu: [], message: "" });
 
     try {
       const buildRes = await fetch("/api/learning/course", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          graphId: anchor.graphId,
-          startTopicId: anchor.startTopicId,
-          targetConceptId: anchor.targetConceptId,
-          language: detectKgLanguage(this.query),
-          ...(anchor.clarifySourceQuery ? { clarifySourceQuery: anchor.clarifySourceQuery } : {}),
-        }),
+        body: JSON.stringify(body),
       });
       const buildData = await buildRes.json();
       if (!buildRes.ok) throw new Error(buildData?.error || "build failed");

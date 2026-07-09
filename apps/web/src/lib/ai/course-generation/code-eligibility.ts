@@ -74,6 +74,10 @@ export function hasExplicitCodeIntent(text: string | null | undefined): boolean 
 }
 
 export function isCodeEligibleLessonContext(kg: CourseContext, contextHint?: string | null): boolean {
+  // Graph-level allowance first: generated graphs carry a creation-time LLM
+  // judgment (codeAdapted) that lexical patterns cannot cover for long-tail
+  // subjects (e.g. "MCP", "Agent 架构").
+  if (kg.codeEligible === true) return true;
   return isCodeEligibleSubjectText(courseSubjectText(kg)) || hasExplicitCodeIntent(contextHint);
 }
 

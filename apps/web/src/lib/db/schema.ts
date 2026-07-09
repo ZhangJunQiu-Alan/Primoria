@@ -57,6 +57,10 @@ export const learnerProfiles = pgTable(
     goalStartTopicId: text("goal_start_topic_id"),
     goalTargetConceptId: text("goal_target_concept_id"),
     goalSkippedAt: timestamp("goal_skipped_at", { withTimezone: true }),
+    goalPositioningStatus: text("goal_positioning_status"),
+    goalPositioningMessage: text("goal_positioning_message"),
+    goalPositioningCandidates: jsonb("goal_positioning_candidates"),
+    goalPositioningUpdatedAt: timestamp("goal_positioning_updated_at", { withTimezone: true }),
     knowledgeBackground: text("knowledge_background"),
     knowledgeBackgroundSkippedAt: timestamp("knowledge_background_skipped_at", { withTimezone: true }),
     tutorStyle: text("tutor_style"),
@@ -498,6 +502,33 @@ export const extractorJobs = pgTable(
     leaseTokenUnique: uniqueIndex("extractor_jobs_lease_token_uidx").on(table.leaseToken),
     ownerStatusUpdatedIdx: index("extractor_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
     statusLeaseIdx: index("extractor_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
+  }),
+);
+
+// LLM-generated topic graphs for out-of-library learning goals (沉淀机制).
+// One row per normalized topic; `graph` holds the full TopicGraph JSON in the
+// exact shape of the static library graphs, so generated subjects can later be
+// reviewed and promoted into the formal library (status: candidate → promoted).
+// usage_count records demand and drives what is worth promoting.
+export const generatedTopicGraphs = pgTable(
+  "generated_topic_graphs",
+  {
+    graphId: text("graph_id").primaryKey(),
+    // normalized learner topic used for dedup/reuse across users
+    topicKey: text("topic_key").notNull(),
+    topic: text("topic").notNull(),
+    subject: text("subject").notNull(),
+    language: text("language"),
+    graph: jsonb("graph").notNull(),
+    // candidate | promoted | retired
+    status: text("status").notNull().default("candidate"),
+    usageCount: integer("usage_count").notNull().default(1),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    topicKeyUnique: uniqueIndex("generated_topic_graphs_topic_key_uidx").on(table.topicKey),
+    statusUsageIdx: index("generated_topic_graphs_status_usage_idx").on(table.status, table.usageCount),
   }),
 );
 

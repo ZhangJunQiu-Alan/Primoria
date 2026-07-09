@@ -1,0 +1,192 @@
+import { describe, expect, it } from "vitest";
+
+import { runStage2Positioning, type Stage2Graph } from "../src/lib/knowledge-graph/positioning-llm";
+import { planFromPositioning } from "../src/lib/knowledge-graph/position-learning-goal";
+import { resolvePositioningParams, type PositioningResult } from "../src/lib/knowledge-graph/positioning";
+import {
+  normalizeTopicKey,
+  parseGeneratedGraph,
+  toTopicGraph,
+} from "../src/lib/knowledge-graph/generated-graph";
+import { isCodeEligibleLessonContext } from "../src/lib/ai/course-generation/code-eligibility";
+import type { CourseContext } from "../src/lib/ai/deepagent/course-kg-context";
+
+const GRAPHS: Stage2Graph[] = [{ graphId: "artificial_intelligence", subject: "Introduction to Artificial Intelligence" }];
+const LIBRARY: Stage2Graph[] = [
+  ...GRAPHS,
+  { graphId: "discrete_math_and_probability", subject: "Discrete Math and Probability Theory" },
+];
+
+function invokerReturning(json: unknown) {
+  return async () => JSON.stringify(json);
+}
+
+describe("stage-2 out_of_library decision", () => {
+  it("parses an out_of_library outcome", async () => {
+    const decision = await runStage2Positioning(
+      { query: "我想学MCP", language: "zh", graphs: GRAPHS, librarySubjects: LIBRARY },
+      invokerReturning({ outcome: "out_of_library", topic: "MCP 协议", message: "为你定制课程" }),
+    );
+    expect(decision).toEqual({ outcome: "out_of_library", topic: "MCP 协议", message: "为你定制课程" });
+  });
+
+  it("accepts positioned on a library subject outside the candidate set", async () => {
+    const decision = await runStage2Positioning(
+      { query: "discrete math", language: "en", graphs: GRAPHS, librarySubjects: LIBRARY },
+      invokerReturning({
+        outcome: "positioned",
+        graphId: "discrete_math_and_probability",
+        mode: "subject_start",
+        startTopicId: "root",
+      }),
+    );
+    expect(decision).toMatchObject({ outcome: "positioned", graphId: "discrete_math_and_probability" });
+  });
+
+  it("rejects positioned on a graph outside the whole library", async () => {
+    const decision = await runStage2Positioning(
+      { query: "x", language: "en", graphs: GRAPHS, librarySubjects: LIBRARY },
+      invokerReturning({ outcome: "positioned", graphId: "made_up", mode: "subject_start", startTopicId: "root" }),
+    );
+    expect(decision).toBeNull();
+  });
+});
+
+describe("planFromPositioning out_of_library", () => {
+  it("maps the branch to a free-form plan", () => {
+    const result: PositioningResult = {
+      branch: "out_of_library",
+      graphId: "",
+      params: resolvePositioningParams(),
+      freeformTopic: "Agent 架构",
+      message: "为你定制课程",
+      diagnostics: { maxSimilarity: 0.5, candidateGraphs: [] },
+    };
+    expect(planFromPositioning(result)).toEqual({
+      branch: "out_of_library",
+      topic: "Agent 架构",
+      message: "为你定制课程",
+    });
+  });
+});
+
+function rawGraphJson(topicCount: number, conceptsPerTopic = 2, codeAdapted?: boolean) {
+  return JSON.stringify({
+    subject: "Model Context Protocol",
+    subjectZh: "模型上下文协议",
+    ...(codeAdapted === undefined ? {} : { codeAdapted }),
+    topics: Array.from({ length: topicCount }, (_, i) => ({
+      name: `Topic ${i + 1} and Friend`,
+      nameZh: `主题${i + 1}`,
+      concepts: Array.from({ length: conceptsPerTopic }, (_, j) => ({
+        name: `Concept ${i + 1}-${j + 1}`,
+        nameZh: `概念${i + 1}-${j + 1}`,
+        ...(j === 0 ? { visual: "diagram", visualHint: "Diagram the message flow." } : {}),
+      })),
+    })),
+  });
+}
+
+describe("parseGeneratedGraph", () => {
+  it("accepts a well-formed graph and keeps visual affordances", () => {
+    const raw = parseGeneratedGraph(rawGraphJson(6, 3));
+    expect(raw?.subject).toBe("Model Context Protocol");
+    expect(raw?.topics).toHaveLength(6);
+    expect(raw?.topics[0].concepts).toHaveLength(3);
+    expect(raw?.topics[0].concepts[0]).toMatchObject({ visual: "diagram", visualHint: "Diagram the message flow." });
+  });
+
+  it("truncates to 3 concepts per topic and drops invalid visuals", () => {
+    const raw = parseGeneratedGraph(
+      JSON.stringify({
+        subject: "S",
+        subjectZh: "",
+        topics: Array.from({ length: 4 }, (_, i) => ({
+          name: `T${i}`,
+          concepts: Array.from({ length: 5 }, (_, j) => ({ name: `C${j}`, visual: "hologram", visualHint: "x" })),
+        })),
+      }),
+    );
+    expect(raw?.topics[0].concepts).toHaveLength(3);
+    expect(raw?.topics[0].concepts[0].visual).toBeUndefined();
+    expect(raw?.topics[0].concepts[0].visualHint).toBeUndefined();
+  });
+
+  it("rejects graphs with fewer than four usable topics", () => {
+    expect(parseGeneratedGraph(rawGraphJson(3))).toBeNull();
+    expect(parseGeneratedGraph("not json")).toBeNull();
+  });
+
+  it("reads codeAdapted strictly (only literal true; absent defaults to false)", () => {
+    expect(parseGeneratedGraph(rawGraphJson(4, 2, true))?.codeAdapted).toBe(true);
+    expect(parseGeneratedGraph(rawGraphJson(4, 2, false))?.codeAdapted).toBe(false);
+    expect(parseGeneratedGraph(rawGraphJson(4))?.codeAdapted).toBe(false);
+  });
+});
+
+describe("toTopicGraph", () => {
+  it("builds a linear TopicGraph with deterministic gen_ ids", () => {
+    const key = normalizeTopicKey("MCP 协议");
+    const raw = parseGeneratedGraph(rawGraphJson(5))!;
+    const graph = toTopicGraph(raw, key);
+    const again = toTopicGraph(raw, key);
+
+    expect(graph.graphId).toMatch(/^gen_model_context_protocol_[0-9a-f]{8}$/);
+    expect(graph.graphId).toBe(again.graphId);
+    expect(graph.topics).toHaveLength(5);
+    expect(graph.topics[0].isRoot).toBe(true);
+    expect(graph.topics[0].prereqTopics).toEqual([]);
+    expect(graph.topics[0].successors).toEqual([{ topicId: graph.topics[1].topicId, hard: true }]);
+    expect(graph.topics[4].successors).toEqual([]);
+    expect(graph.topics[2].prereqTopics).toEqual([graph.topics[1].topicId]);
+    expect(graph.topics.map((t) => t.defaultOrder)).toEqual([1, 2, 3, 4, 5]);
+    // 2-3 concepts per topic, ordered — the lesson planner's contract.
+    for (const t of graph.topics) {
+      expect(t.conceptIds.length).toBeGreaterThanOrEqual(2);
+      expect(t.conceptIds.length).toBeLessThanOrEqual(3);
+      expect(t.conceptIds.map((c) => c.defaultOrder)).toEqual(t.conceptIds.map((_, i) => i + 1));
+    }
+    // concept ids unique across the graph (mastery is keyed by graphId+conceptId)
+    const ids = graph.topics.flatMap((t) => t.conceptIds.map((c) => c.conceptId));
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("carries codeAdapted onto the TopicGraph only when true", () => {
+    const key = normalizeTopicKey("MCP 协议");
+    expect(toTopicGraph(parseGeneratedGraph(rawGraphJson(4, 2, true))!, key).codeAdapted).toBe(true);
+    expect(toTopicGraph(parseGeneratedGraph(rawGraphJson(4, 2, false))!, key).codeAdapted).toBeUndefined();
+  });
+});
+
+describe("code eligibility for generated graphs", () => {
+  const kgFor = (codeEligible?: boolean): CourseContext => ({
+    learningPathType: "linear",
+    graphId: "gen_mcp_and_agent_architecture_ce27a911",
+    startTopic: {
+      topicId: "t1_agent_foundations",
+      name: "Agent Foundations and Protocol Motivation",
+      concepts: [{ conceptId: "t1c1_agent_foundations", name: "Agent Foundations", defaultOrder: 1 }],
+    },
+    targetConceptId: null,
+    nextTopic: null,
+    ...(codeEligible === undefined ? {} : { codeEligible }),
+  });
+
+  it("codeEligible=true allows code blocks for subjects the lexical patterns miss", () => {
+    expect(isCodeEligibleLessonContext(kgFor())).toBe(false);
+    expect(isCodeEligibleLessonContext(kgFor(true))).toBe(true);
+  });
+
+  it("codeEligible=false still defers to lexical patterns and explicit intent", () => {
+    expect(isCodeEligibleLessonContext(kgFor(false))).toBe(false);
+    expect(isCodeEligibleLessonContext(kgFor(false), "我要用 Python 实现二分查找")).toBe(true);
+  });
+});
+
+describe("normalizeTopicKey", () => {
+  it("collapses case, punctuation, and width variants onto one key", () => {
+    expect(normalizeTopicKey("MCP 协议!")).toBe(normalizeTopicKey("mcp 协议"));
+    expect(normalizeTopicKey("Agent   架构")).toBe(normalizeTopicKey("agent 架构"));
+    expect(normalizeTopicKey("ＭＣＰ")).toBe(normalizeTopicKey("mcp"));
+  });
+});
