@@ -279,6 +279,8 @@ function LessonOutlineRow({
   const isRemediation = lesson.role === "remediation";
   const canGenerate = state.canGenerate;
   const actionHandler = state.actionKind === "jump" ? onJumpAhead : onGenerate;
+  const estimatedTime = lesson.estimatedMinutes ? `~${lesson.estimatedMinutes} min` : state.tone === "locked" ? null : t.timePending;
+  const actionHintId = state.actionHint ? `lesson-action-hint-${lesson.id}` : undefined;
 
   return (
     <li className={`course-outline-row course-outline-${state.tone}${isRemediation ? " course-outline-remediation" : ""}${isLast ? " last" : ""}`}>
@@ -292,22 +294,32 @@ function LessonOutlineRow({
         <p className="course-outline-description">{summary}</p>
         {state.detail ? <p className="course-outline-state-note">{state.detail}</p> : null}
         {isRemediation ? <span className="course-outline-insert-marker">{t.insertedRemediation}</span> : null}
-        <div className="course-outline-meta" aria-label={lesson.title}>
-          <span><ClockIcon />{lesson.estimatedMinutes ? `~${lesson.estimatedMinutes} min` : t.timePending}</span>
-        </div>
+        {estimatedTime ? (
+          <div className="course-outline-meta" aria-label={lesson.title}>
+            <span><ClockIcon />{estimatedTime}</span>
+          </div>
+        ) : null}
       </div>
       <div className="course-outline-row-action">
         {lesson.status === "generated" ? (
           <Link href={`/course/${courseId}?lessonId=${encodeURIComponent(lesson.id)}`} aria-label={msg(t.openLesson, { title: lesson.title })}>{t.open}</Link>
         ) : (
-          <button
-            type="button"
-            disabled={!canGenerate}
-            onClick={canGenerate ? actionHandler : undefined}
-            aria-label={`${state.actionLabel}: ${lesson.title}`}
-          >
-            {state.actionLabel}
-          </button>
+          <span className="course-outline-action-wrap">
+            <button
+              type="button"
+              disabled={!canGenerate}
+              onClick={canGenerate ? actionHandler : undefined}
+              aria-label={`${state.actionLabel}: ${lesson.title}`}
+              aria-describedby={actionHintId}
+            >
+              {state.actionLabel}
+            </button>
+            {state.actionHint ? (
+              <span id={actionHintId} className="course-outline-action-tooltip" role="tooltip">
+                {state.actionHint}
+              </span>
+            ) : null}
+          </span>
         )}
       </div>
     </li>
@@ -325,6 +337,7 @@ function lessonState(
   actionLabel: string;
   actionKind: "open" | "generate" | "jump";
   detail: string | null;
+  actionHint: string | null;
   canGenerate: boolean;
 } {
   if (job && isLessonGenerationActive(job)) {
@@ -333,6 +346,7 @@ function lessonState(
       actionLabel: t.building,
       actionKind: "generate",
       detail: lessonGenerationStageLabel(job),
+      actionHint: null,
       canGenerate: false,
     };
   }
@@ -342,6 +356,7 @@ function lessonState(
       actionLabel: t.building,
       actionKind: "generate",
       detail: t.generatingDetail,
+      actionHint: null,
       canGenerate: false,
     };
   }
@@ -351,6 +366,7 @@ function lessonState(
       actionLabel: t.open,
       actionKind: "open",
       detail: null,
+      actionHint: null,
       canGenerate: false,
     };
   }
@@ -361,6 +377,7 @@ function lessonState(
       actionLabel: t.retry,
       actionKind: "generate",
       detail: failure,
+      actionHint: null,
       canGenerate: true,
     };
   }
@@ -368,7 +385,8 @@ function lessonState(
     tone: "locked",
     actionLabel: t.jumpAhead,
     actionKind: "jump",
-    detail: t.lockedDetail,
+    detail: null,
+    actionHint: t.lockedDetail,
     canGenerate: true,
   };
 }

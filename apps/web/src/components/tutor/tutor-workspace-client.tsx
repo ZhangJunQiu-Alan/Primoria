@@ -3,11 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { AuthUser } from "@/lib/auth/types";
-import { createNewThread } from "@/lib/copilot-thread-history";
-import { ChatHistoryPopup } from "./history-popup";
 import { TutorNavRail } from "./nav-rail";
 import { TutorChatCopilot } from "./tutor-chat-copilot";
-import { TutorTopbar } from "./topbar";
 import { useT } from "@/lib/i18n/client";
 
 type AuthState = {
@@ -17,7 +14,6 @@ type AuthState = {
 };
 
 export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: AuthState }) {
-  const [historyOpen, setHistoryOpen] = useState(false);
   const [authState, setAuthState] = useState<AuthState>(initialAuthState);
 
   useEffect(() => {
@@ -43,13 +39,6 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
     <>
       <TutorNavRail initialAuthState={{ authEnabled: authState.authEnabled, user: authState.user }} />
       <section className="workspace">
-        <TutorTopbar
-          onOpenHistory={() => setHistoryOpen((open) => !open)}
-          onNewChat={() => {
-            createNewThread();
-            setHistoryOpen(false);
-          }}
-        />
         {!authState.loaded ? (
           <AuthLoadingPanel />
         ) : authRequired ? (
@@ -57,11 +46,6 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
         ) : (
           <TutorChatCopilot />
         )}
-        <ChatHistoryPopup
-          open={historyOpen && !authRequired}
-          onClose={() => setHistoryOpen(false)}
-          onSelectChat={() => {}}
-        />
       </section>
     </>
   );
