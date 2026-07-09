@@ -1,0 +1,295 @@
+{
+  "topics": [
+    {
+      "name": "Agent and Tool Concepts",
+      "isRoot": true,
+      "nameZh": "Agent 与工具概念",
+      "topicId": "t1_agent_and_tool_concepts",
+      "conceptIds": [
+        {
+          "name": "Agent Definition",
+          "nameZh": "Agent 定义",
+          "visual": "diagram",
+          "conceptId": "t1c1_agent_definition",
+          "visualHint": "Show an agent as a central brain with sensors and actuators.",
+          "defaultOrder": 1
+        },
+        {
+          "name": "Tool Invocation",
+          "nameZh": "工具调用",
+          "visual": "diagram",
+          "conceptId": "t1c2_tool_invocation",
+          "visualHint": "Illustrate an agent calling an external tool and receiving a result.",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "hard": true,
+          "topicId": "t2_mcp_protocol_basics"
+        }
+      ],
+      "defaultOrder": 1,
+      "prereqTopics": []
+    },
+    {
+      "name": "MCP Protocol Basics",
+      "isRoot": false,
+      "nameZh": "MCP 协议基础",
+      "topicId": "t2_mcp_protocol_basics",
+      "conceptIds": [
+        {
+          "name": "MCP Overview",
+          "nameZh": "MCP 概述",
+          "visual": "diagram",
+          "conceptId": "t2c1_mcp_overview",
+          "visualHint": "Diagram the MCP protocol stack: transport, message, and capability layers.",
+          "defaultOrder": 1
+        },
+        {
+          "name": "Client-Server Model",
+          "nameZh": "客户端-服务器模型",
+          "visual": "diagram",
+          "conceptId": "t2c2_client_server_model",
+          "visualHint": "Show a client agent connecting to an MCP server over a transport.",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "hard": true,
+          "topicId": "t3_mcp_message_types"
+        }
+      ],
+      "defaultOrder": 2,
+      "prereqTopics": [
+        "t1_agent_and_tool_concepts"
+      ]
+    },
+    {
+      "name": "MCP Message Types",
+      "isRoot": false,
+      "nameZh": "MCP 消息类型",
+      "topicId": "t3_mcp_message_types",
+      "conceptIds": [
+        {
+          "name": "Request and Response",
+          "nameZh": "请求与响应",
+          "conceptId": "t3c1_request_and_response",
+          "defaultOrder": 1
+        },
+        {
+          "name": "Notification",
+          "nameZh": "通知",
+          "conceptId": "t3c2_notification",
+          "defaultOrder": 2
+        },
+        {
+          "name": "Error Handling",
+          "nameZh": "错误处理",
+          "conceptId": "t3c3_error_handling",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "hard": true,
+          "topicId": "t4_capability_negotiation"
+        }
+      ],
+      "defaultOrder": 3,
+      "prereqTopics": [
+        "t2_mcp_protocol_basics"
+      ]
+    },
+    {
+      "name": "Capability Negotiation",
+      "isRoot": false,
+      "nameZh": "能力协商",
+      "topicId": "t4_capability_negotiation",
+      "conceptIds": [
+        {
+          "name": "Capability Declaration",
+          "nameZh": "能力声明",
+          "conceptId": "t4c1_capability_declaration",
+          "defaultOrder": 1
+        },
+        {
+          "name": "Negotiation Flow",
+          "nameZh": "协商流程",
+          "visual": "algorithm",
+          "conceptId": "t4c2_negotiation_flow",
+          "visualHint": "Step through the handshake: client lists capabilities, server responds with supported ones.",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "hard": true,
+          "topicId": "t5_tool_registration_and_discovery"
+        }
+      ],
+      "defaultOrder": 4,
+      "prereqTopics": [
+        "t3_mcp_message_types"
+      ]
+    },
+    {
+      "name": "Tool Registration and Discovery",
+      "isRoot": false,
+      "nameZh": "工具注册与发现",
+      "topicId": "t5_tool_registration_and_discovery",
+      "conceptIds": [
+        {
+          "name": "Tool Registration",
+          "nameZh": "工具注册",
+          "conceptId": "t5c1_tool_registration",
+          "defaultOrder": 1
+        },
+        {
+          "name": "Tool Discovery",
+          "nameZh": "工具发现",
+          "visual": "diagram",
+          "conceptId": "t5c2_tool_discovery",
+          "visualHint": "Diagram a registry where tools are listed and queried by the agent.",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "hard": true,
+          "topicId": "t6_agent_planning_with_mcp"
+        }
+      ],
+      "defaultOrder": 5,
+      "prereqTopics": [
+        "t4_capability_negotiation"
+      ]
+    },
+    {
+      "name": "Agent Planning with MCP",
+      "isRoot": false,
+      "nameZh": "基于 MCP 的 Agent 规划",
+      "topicId": "t6_agent_planning_with_mcp",
+      "conceptIds": [
+        {
+          "name": "Task Decomposition",
+          "nameZh": "任务分解",
+          "conceptId": "t6c1_task_decomposition",
+          "defaultOrder": 1
+        },
+        {
+          "name": "Tool Selection",
+          "nameZh": "工具选择",
+          "visual": "algorithm",
+          "conceptId": "t6c2_tool_selection",
+          "visualHint": "Show a flowchart: agent breaks task into steps, selects tools via MCP.",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "hard": true,
+          "topicId": "t7_multi_agent_coordination"
+        }
+      ],
+      "defaultOrder": 6,
+      "prereqTopics": [
+        "t5_tool_registration_and_discovery"
+      ]
+    },
+    {
+      "name": "Multi-Agent Coordination",
+      "isRoot": false,
+      "nameZh": "多 Agent 协调",
+      "topicId": "t7_multi_agent_coordination",
+      "conceptIds": [
+        {
+          "name": "Agent Communication",
+          "nameZh": "Agent 通信",
+          "visual": "diagram",
+          "conceptId": "t7c1_agent_communication",
+          "visualHint": "Illustrate two agents exchanging MCP messages to coordinate.",
+          "defaultOrder": 1
+        },
+        {
+          "name": "Shared Context",
+          "nameZh": "共享上下文",
+          "conceptId": "t7c2_shared_context",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "hard": true,
+          "topicId": "t8_security_and_governance"
+        }
+      ],
+      "defaultOrder": 7,
+      "prereqTopics": [
+        "t6_agent_planning_with_mcp"
+      ]
+    },
+    {
+      "name": "Security and Governance",
+      "isRoot": false,
+      "nameZh": "安全与治理",
+      "topicId": "t8_security_and_governance",
+      "conceptIds": [
+        {
+          "name": "Authentication",
+          "nameZh": "身份验证",
+          "conceptId": "t8c1_authentication",
+          "defaultOrder": 1
+        },
+        {
+          "name": "Rate Limiting",
+          "nameZh": "速率限制",
+          "visual": "chart",
+          "conceptId": "t8c2_rate_limiting",
+          "visualHint": "Plot request count over time with a threshold line showing rate limiting.",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "hard": true,
+          "topicId": "t9_mcp_in_production"
+        }
+      ],
+      "defaultOrder": 8,
+      "prereqTopics": [
+        "t7_multi_agent_coordination"
+      ]
+    },
+    {
+      "name": "MCP in Production",
+      "isRoot": false,
+      "nameZh": "MCP 生产部署",
+      "topicId": "t9_mcp_in_production",
+      "conceptIds": [
+        {
+          "name": "Deployment Patterns",
+          "nameZh": "部署模式",
+          "visual": "diagram",
+          "conceptId": "t9c1_deployment_patterns",
+          "visualHint": "Show a production architecture: load balancer, MCP servers, agent instances.",
+          "defaultOrder": 1
+        },
+        {
+          "name": "Monitoring and Logging",
+          "nameZh": "监控与日志",
+          "conceptId": "t9c2_monitoring_and_logging",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "defaultOrder": 9,
+      "prereqTopics": [
+        "t8_security_and_governance"
+      ]
+    }
+  ],
+  "graphId": "gen_mcp_and_agent_architecture_ce27a911",
+  "subject": "MCP and Agent Architecture"
+}

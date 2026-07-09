@@ -1,0 +1,3 @@
+1. malformed lesson plan IR: [ { "code": "invalid_type", "expected": "number", "received": "nan", "path": [ "v" ], "message": "Expected number, received nan" }, { "code": "invalid_union", "unionErrors": [ { "issues": [ { "code": "invalid_type", "expected": "array", "received": "undefined", "path": [ "lesson" ], "message": "Required" } ], "name": "ZodError" }, { "issues": [ { "code": "invalid_type", "expected": "object", "received": "undefined", "path": [ "lesson" ], "message": "Required" } ], "name": "ZodError" } ], "path": [ "lesson" ], "message": "Invalid input" }, { "code": "invalid_type", "expected": "array", "received": "und
+
+2. 
