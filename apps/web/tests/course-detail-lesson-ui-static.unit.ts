@@ -38,14 +38,16 @@ function main() {
   assert(!detail.includes("current === block.id ? null : block.id"), "clicking the same block no longer toggles the action drawer closed");
   assert(detail.includes("setExpandedActionsBlockId(null)"), "course detail clears stale action drawers when the reader step changes");
   assert(detail.includes("CourseBlockActionTray"), "course detail renders per-block learning actions outside BlockRenderer");
-  assert(detail.includes('data-actions-expanded={expandedActionsBlockId === currentBlock.id ? "true" : "false"}'), "reader block itself tracks expanded state without a visible trigger");
-  assert(detail.includes("aria-controls={`course-block-actions-${currentBlock.id}`}"), "reader block itself controls the hidden bottom action panel");
+  assert(detail.includes('data-actions-expanded={actionsExpanded ? "true" : "false"}'), "reader block itself tracks expanded action state");
+  assert(detail.includes("aria-expanded={actionsExpanded}"), "reader action trigger exposes expanded state");
+  assert(detail.includes("aria-controls={`course-block-actions-${currentBlock.id}`}"), "reader action trigger controls the hidden bottom action panel");
+  assert(detail.includes("course-block-action-trigger"), "course detail renders a real per-block action trigger");
   assert(detail.includes("stopBlockActionEvent"), "block action tray stops events from selecting text or blocks accidentally");
   assert(detail.includes("isCourseBlockInteractiveTarget"), "course block wrapper ignores internal interactive controls");
   assert(detail.includes("[data-course-interactive='true']"), "course block wrapper treats visual canvases as internal interactive zones");
   assert(detail.includes("course-block-action-panel"), "expanded actions render as a hidden-until-click bottom panel");
   assert(!detail.includes("针对当前 block"), "bottom action panel no longer repeats the current-block label");
-  assert(!detail.includes("学习动作</button>"), "course detail does not render a visible learning-action trigger button");
+  assert(!detail.includes("学习动作</button>"), "course detail uses an icon action trigger instead of a text-heavy button");
   assert(!detail.includes("course-block-action-toggle"), "course detail does not render the old visible action toggle");
   assert(detail.includes("t.actionExplain") && dictionaries.zh.course.actionExplain === "解释这一段", "block action tray includes explain action");
   assert(detail.includes("t.actionExample") && dictionaries.zh.course.actionExample === "给我一个例子", "block action tray includes example action");
@@ -64,7 +66,7 @@ function main() {
   assert(detail.includes("isPracticeBlock(currentBlock)"), "reader reserves Check behavior for practice blocks");
   assert(detail.includes("course-quiz-submit:not(:disabled)") && detail.includes("worksheet-reveal-btn"), "reader Check delegates to existing quiz and worksheet controls");
   assert(detail.includes("const [sidebarCollapsed, setSidebarCollapsed] = useState(true)"), "Course Tutor AI rail starts collapsed by default");
-  assert(detail.includes("COLLAPSED_SIDEBAR_WIDTH"), "Course Tutor collapsed rail uses a named width constant");
+  assert(styles.includes("--course-collapsed-sidebar-width"), "Course Tutor collapsed rail uses CSS-owned responsive width");
   assert(detail.includes("if (collapsed) onCollapsedChange(false);"), "clicking the collapsed AI rail expands Course Tutor");
   assert(detail.includes("visibleBlocks={blocks}"), "Course Tutor receives the same active-lesson block list as the page");
   assert(detail.includes("currentLessonId={currentLessonId}"), "Course Tutor remains scoped to the current lesson");
@@ -81,7 +83,8 @@ function main() {
   assert(!detail.includes("scroll-spy"), "course detail does not add scroll spy classes");
   assert(!detail.includes("course-scroll-directory"), "course detail does not add a scrolling directory");
   assert(!styles.includes("course-scroll-directory"), "styles do not add a scrolling directory");
-  assert(!styles.includes(".course-block-action-toggle"), "styles do not keep the visible learning-action trigger");
+  assert(styles.includes(".course-block-action-trigger"), "styles include the accessible block action trigger");
+  assert(!styles.includes(".course-block-action-toggle"), "styles do not keep the old learning-action toggle");
 
   assert(blockRenderer.includes("function BlockShell"), "BlockRenderer remains focused on rendering block content");
   assert(!blockRenderer.includes("CourseBlockActionTray"), "learning actions are not embedded in BlockRenderer");
@@ -119,8 +122,9 @@ function main() {
   assert(styles.includes("[data-testid=\"copilot-chat-textarea\"]::-webkit-scrollbar"), "Course Tutor hides WebKit textarea scrollbars");
   assert(styles.includes('[data-testid="copilot-send-button"][disabled]'), "Course Tutor styles the disabled send button without hiding the textarea");
   assert(detail.includes("--course-sidebar-width"), "course detail updates the reserved width as the AI rail expands or collapses");
-  assert(detail.includes("style={{ width: collapsed ? COLLAPSED_SIDEBAR_WIDTH : width }}"), "collapsed Course Tutor rail uses the shared reader rail width");
-  assert(styles.includes("--course-sidebar-width: 84px"), "course workspace defaults to the narrow AI rail width");
+  assert(detail.includes('style={collapsed ? undefined : { ["--course-sidebar-width" as string]: `${width}px` }}'), "collapsed Course Tutor rail uses CSS default width instead of inline desktop width");
+  assert(styles.includes("--course-collapsed-sidebar-width: 84px"), "course workspace defaults to the narrow AI rail width");
+  assert(styles.includes("--course-collapsed-sidebar-width: 68px"), "mobile course workspace keeps its narrower collapsed rail width");
   assert(styles.includes(".course-transfer-path"), "transfer block path has dedicated styling");
   assert(styles.includes(".course-transfer-example"), "transfer block example has dedicated styling");
   assert(styles.includes(".course-transfer-example-body ol"), "transfer block example lists keep readable indentation");

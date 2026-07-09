@@ -8,6 +8,7 @@ import { z } from "zod";
 import { BlockRenderer } from "./block-renderer";
 import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surface";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
+import { useDialogFocus } from "@/hooks/use-dialog-focus";
 import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
 import type { Course, CourseBlock, Lesson } from "@/lib/courses/types";
 import { currentCourseLesson, currentLessonBlocks } from "@/lib/courses/types";
@@ -21,7 +22,6 @@ import type { I18nDictionary } from "@/lib/i18n/dictionaries";
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
 const DEFAULT_SIDEBAR_WIDTH = 410;
-const COLLAPSED_SIDEBAR_WIDTH = 84;
 const SIDEBAR_WIDTH_KEY = "primoria:course-ai-sidebar-width";
 const COURSE_COPILOT_PROMPT_EVENT = "primoria:course-copilot-prompt";
 
@@ -406,11 +406,11 @@ function CourseBlockActionTray({
     { key: "check" as const, label: t.actionCheck },
   ];
 
-  if (!expanded) return null;
-
   return (
     <div
-      className="course-block-learning-actions expanded"
+      className={`course-block-learning-actions${expanded ? " expanded" : ""}`}
+      hidden={!expanded}
+      aria-hidden={!expanded}
       onClick={stopBlockActionEvent}
       onMouseUp={stopBlockActionEvent}
       onKeyDown={stopBlockActionEvent}
@@ -630,7 +630,7 @@ function CourseAIAssistantPanel({
   return (
     <aside
       className={`course-ai-sidebar${collapsed ? " collapsed" : ""}`}
-      style={{ width: collapsed ? COLLAPSED_SIDEBAR_WIDTH : width }}
+      style={collapsed ? undefined : { ["--course-sidebar-width" as string]: `${width}px` }}
       aria-label={t.tutorAria}
       onClick={() => {
         if (collapsed) onCollapsedChange(false);
@@ -770,6 +770,10 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
   const t = useT().course;
   const { pending, resolving, resolve } = useLearningProgressRecommendation(courseId);
   const [generatingLessonId, setGeneratingLessonId] = useState<string | null>(null);
+  const popupDialogRef = useRef<HTMLDivElement | null>(null);
+  const popupPrimaryRef = useRef<HTMLButtonElement | null>(null);
+  const decision = pending?.decision ?? null;
+  const jobId = pending?.id ?? null;
 
   // While a remediation lesson generates, keep the popup open and poll the course
   // until that lesson materializes, then refresh so its blocks appear and close.
@@ -800,23 +804,10 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
     };
   }, [generatingLessonId, courseId, onResolved, router]);
 
-  if (generatingLessonId) {
-    return (
-      <div className="learning-progress-popup-overlay" role="dialog" aria-modal="true" aria-label={t.generatingRemediation} style={POPUP_OVERLAY_STYLE}>
-        <div className="learning-progress-popup-card" style={POPUP_CARD_STYLE}>
-          <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>{t.generatingRemediation}</strong>
-          <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>{t.generatingRemediationCopy}</p>
-        </div>
-      </div>
-    );
-  }
-
-  const decision = pending?.decision ?? null;
-  if (!pending || !decision) return null;
-  const jobId = pending.id;
   const goHome = () => router.push("/");
 
   async function acceptPrimary() {
+    if (!jobId) return;
     const result = await resolve(jobId, "accept");
     if (decision!.kind === "remediation" && result?.lessonId) {
       setGeneratingLessonId(result.lessonId);
@@ -838,6 +829,7 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
   //   • remediation, last lesson → decline and go home
   //   • next ("Good Job") → "否", go home
   async function declineSecondary() {
+    if (!jobId) return;
     await resolve(jobId, "dismiss");
     if (decision!.kind === "remediation" && decision!.nextLessonTitle) {
       await onResolved();
@@ -847,10 +839,39 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
 
   // Closing the popup == declining remediation; reveal the preloaded next lesson.
   async function closePopup() {
+    if (!jobId) return;
     await resolve(jobId, "dismiss");
     await onResolved();
     router.push(`/course/${courseId}`);
   }
+
+  useDialogFocus({
+    active: Boolean(generatingLessonId || (pending && decision)),
+    dialogRef: popupDialogRef,
+    initialFocusRef: generatingLessonId ? undefined : popupPrimaryRef,
+    onEscape: generatingLessonId ? undefined : () => void closePopup(),
+  });
+
+  if (generatingLessonId) {
+    return (
+      <div
+        ref={popupDialogRef}
+        tabIndex={-1}
+        className="learning-progress-popup-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label={t.generatingRemediation}
+        style={POPUP_OVERLAY_STYLE}
+      >
+        <div className="learning-progress-popup-card" style={POPUP_CARD_STYLE}>
+          <strong style={{ display: "block", fontSize: 17, color: "#3a2a14", marginBottom: 8 }}>{t.generatingRemediation}</strong>
+          <p style={{ margin: 0, color: "#5a4727", fontSize: 14, lineHeight: 1.6 }}>{t.generatingRemediationCopy}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!pending || !decision || !jobId) return null;
 
   const isRemediation = decision.kind === "remediation";
   const isComplete = decision.kind === "course_complete";
@@ -864,6 +885,8 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
 
   return (
     <div
+      ref={popupDialogRef}
+      tabIndex={-1}
       className="learning-progress-popup-overlay"
       role="dialog"
       aria-modal="true"
@@ -891,6 +914,7 @@ function LearningProgressPopup({ courseId, onResolved }: { courseId: string; onR
           )}
           <button
             type="button"
+            ref={popupPrimaryRef}
             onClick={() => void acceptPrimary()}
             disabled={resolving}
             style={{ ...POPUP_PRIMARY_BTN, cursor: resolving ? "default" : "pointer" }}
@@ -947,8 +971,13 @@ export function CourseDetailClient({
   useEffect(() => {
     const workspace = document.querySelector<HTMLElement>(".course-workspace");
     if (!workspace) return;
-    workspace.style.setProperty("--course-sidebar-width", `${sidebarCollapsed ? COLLAPSED_SIDEBAR_WIDTH : sidebarWidth}px`);
-    workspace.style.setProperty("--course-content-margin-end", sidebarCollapsed ? "auto" : "var(--course-content-gutter)");
+    if (sidebarCollapsed) {
+      workspace.style.removeProperty("--course-sidebar-width");
+      workspace.style.setProperty("--course-content-margin-end", "auto");
+      return;
+    }
+    workspace.style.setProperty("--course-sidebar-width", `${sidebarWidth}px`);
+    workspace.style.setProperty("--course-content-margin-end", "var(--course-content-gutter)");
   }, [sidebarCollapsed, sidebarWidth]);
 
   const maxStepIndex = Math.max(blocks.length - 1, 0);
@@ -1144,11 +1173,12 @@ export function CourseDetailClient({
         : t.continueLabel
     : t.continueLabel;
   const lessonTitle = currentLesson?.title ?? course.title;
+  const actionsExpanded = currentBlock ? expandedActionsBlockId === currentBlock.id : false;
 
   return (
     <div
       className={`course-detail-layout${sidebarCollapsed ? " sidebar-collapsed" : ""}`}
-      style={{ ["--course-sidebar-width" as string]: `${sidebarCollapsed ? COLLAPSED_SIDEBAR_WIDTH : sidebarWidth}px` }}
+      style={sidebarCollapsed ? undefined : { ["--course-sidebar-width" as string]: `${sidebarWidth}px` }}
     >
       <div className="course-detail-main">
         <div className="course-reader">
@@ -1171,12 +1201,8 @@ export function CourseDetailClient({
               <div className="course-reader-card" key={currentBlock.id}>
                 <div
                   ref={activeBlockRef}
-                  role="group"
-                  tabIndex={0}
                   data-block-id={currentBlock.id}
-                  data-actions-expanded={expandedActionsBlockId === currentBlock.id ? "true" : "false"}
-                  aria-controls={`course-block-actions-${currentBlock.id}`}
-                  aria-label={`Course block: ${blockDisplayTitle(currentBlock)}`}
+                  data-actions-expanded={actionsExpanded ? "true" : "false"}
                   className={`course-block-wrapper course-reader-block-wrapper${selectedBlockId === currentBlock.id ? " selected" : ""}`}
                   onClick={(event) => {
                     if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
@@ -1187,23 +1213,28 @@ export function CourseDetailClient({
                     if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
                     updateSelectedText(currentBlock, event.currentTarget);
                   }}
-                  onKeyUp={(event) => {
-                    if (event.key === "Shift" || event.key.startsWith("Arrow")) {
-                      updateSelectedText(currentBlock, event.currentTarget);
-                    }
-                  }}
-                  onKeyDown={(event) => {
-                    if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      openBlockActions(currentBlock);
-                    }
-                  }}
                 >
                   <BlockRenderer block={currentBlock} courseId={course.id} onBlockUpdated={updateBlockInCourse} />
+                  <button
+                    type="button"
+                    className="course-block-action-trigger"
+                    aria-label={msg(t.learningActions, { title: blockDisplayTitle(currentBlock) })}
+                    aria-expanded={actionsExpanded}
+                    aria-controls={`course-block-actions-${currentBlock.id}`}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      openBlockActions(currentBlock);
+                    }}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                      <path d="M12 5h.01" />
+                      <path d="M12 12h.01" />
+                      <path d="M12 19h.01" />
+                    </svg>
+                  </button>
                   <CourseBlockActionTray
                     block={currentBlock}
-                    expanded={expandedActionsBlockId === currentBlock.id}
+                    expanded={actionsExpanded}
                     onAction={runBlockLearningAction}
                   />
                 </div>

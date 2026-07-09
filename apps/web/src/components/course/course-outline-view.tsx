@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
+import { useDialogFocus } from "@/hooks/use-dialog-focus";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import type { Course, Lesson } from "@/lib/courses/types";
@@ -36,6 +37,8 @@ export function CourseOutlineView({
   const [jumpingLessonId, setJumpingLessonId] = useState<string | null>(null);
   const [jumpError, setJumpError] = useState<string | null>(null);
   const refreshedRef = useRef<Set<string>>(new Set());
+  const jumpDialogRef = useRef<HTMLElement | null>(null);
+  const jumpPrimaryRef = useRef<HTMLButtonElement | null>(null);
 
   const lessons = useMemo(
     () => [...displayCourse.lessons].sort((a, b) => a.sortKey - b.sortKey),
@@ -72,6 +75,17 @@ export function CourseOutlineView({
       }
     })();
   }, [jobsByLessonId, displayCourse.id, onCourseUpdated]);
+
+  function closeJumpDialog() {
+    setJumpTarget(null);
+  }
+
+  useDialogFocus({
+    active: Boolean(jumpTarget),
+    dialogRef: jumpDialogRef,
+    initialFocusRef: jumpPrimaryRef,
+    onEscape: closeJumpDialog,
+  });
 
   async function generate(lesson: Lesson): Promise<{ ok: true } | { ok: false; error: string }> {
     setEnqueueError((prev) => {
@@ -197,10 +211,12 @@ export function CourseOutlineView({
           className="course-outline-jump-backdrop"
           role="presentation"
           onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setJumpTarget(null);
+            if (event.target === event.currentTarget) closeJumpDialog();
           }}
         >
           <section
+            ref={jumpDialogRef}
+            tabIndex={-1}
             className="course-outline-jump-dialog"
             role="dialog"
             aria-modal="true"
@@ -211,7 +227,7 @@ export function CourseOutlineView({
               type="button"
               className="course-outline-jump-close"
               aria-label={t.closeJump}
-              onClick={() => setJumpTarget(null)}
+              onClick={closeJumpDialog}
             >
               ×
             </button>
@@ -224,6 +240,7 @@ export function CourseOutlineView({
             {jumpError ? <p className="course-outline-jump-error">{jumpError}</p> : null}
             <button
               type="button"
+              ref={jumpPrimaryRef}
               className="course-outline-jump-primary"
               disabled={jumpingLessonId === jumpTarget.id}
               onClick={() => void confirmJumpAhead()}

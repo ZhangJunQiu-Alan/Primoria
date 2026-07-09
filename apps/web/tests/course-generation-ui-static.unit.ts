@@ -39,6 +39,7 @@ async function main() {
   const waveRenderer = read("src/components/generative-ui/wave-visualizer.tsx");
   const moleculeRenderer = read("src/components/generative-ui/molecule-renderer.tsx");
   const styles = read("src/app/globals.css");
+  const nextEnv = read("next-env.d.ts");
   const lessonDescriptionMigration = read("drizzle/0032_lesson_descriptions.sql");
 
   assert(libraryPage.includes("CourseLibraryGrid"), "library delegates course grid to client component");
@@ -99,6 +100,7 @@ async function main() {
   assert(!courseOutlineView.includes("detail: t.lockedDetail"), "locked lesson skip-ahead copy is no longer rendered as persistent row detail");
   assert(styles.includes(".course-outline-action-tooltip"), "jump-ahead explanatory copy is hidden in an action tooltip");
   assert(courseOutlineView.includes("course-outline-jump-dialog"), "jump ahead uses a confirmation dialog before generating");
+  assert(courseOutlineView.includes("useDialogFocus") && courseOutlineView.includes("ref={jumpPrimaryRef}"), "jump ahead dialog manages focus");
   assert(courseOutlineView.includes("t.generateAndJump") && dictionaries.en.outline.generateAndJump === "Generate and jump ahead", "jump ahead dialog exposes the generate-and-open action");
   assert(courseOutlineView.includes("router.push(`/course/${displayCourse.id}?lessonId=${encodeURIComponent(lessonId)}`)"), "jump ahead routes to the selected lesson after enqueueing generation");
   assert(courseOutlineView.includes("t.retry") && dictionaries.en.outline.retry === "Retry", "shared course outline preserves retry for failed lesson generation");
@@ -111,6 +113,9 @@ async function main() {
   assert(courseDetailClient.includes("CourseLessonPendingState"), "course detail shows a waiting state for explicit jumps to generating lessons");
   assert(courseDetailClient.includes("currentLessonJob?.status !== \"completed\""), "course detail refreshes once a jumped-to lesson finishes generating");
   assert(tutorNavRail.includes("accountOpen"), "nav rail stores account popover state");
+  assert(tutorNavRail.includes("const threadId = createNewThread();"), "nav rail starts new chats by creating a fresh thread");
+  assert(tutorNavRail.includes("setCurrentThread(threadId);"), "nav rail updates active chat state immediately");
+  assert(tutorNavRail.includes("router.push(\"/\");"), "nav rail chat actions route back to Messages");
   assert(tutorNavRail.includes("nav-account-trigger"), "signed-in nav rail shows an avatar menu trigger");
   assert(tutorNavRail.includes("aria-expanded={accountOpen}"), "avatar menu trigger exposes expanded state");
   assert(tutorNavRail.includes("nav-account-menu"), "signed-in profile actions and sign-out live in an account popover");
@@ -124,6 +129,8 @@ async function main() {
   assert(tutorNavRail.includes('role="menuitem"'), "account popover exposes sign out as a menu item");
   assert(!tutorNavRail.includes("<button type=\"button\" onClick={signOut}>Sign out</button>"), "sign out is no longer flattened into the rail");
   assert(styles.includes(".nav-account-menu"), "account popover has dedicated styling");
+  assert(courseDetailClient.includes("useDialogFocus") && courseDetailClient.includes("ref={popupPrimaryRef}"), "learning recommendation dialog manages focus");
+  assert(!nextEnv.includes(".next/types/routes.d.ts"), "next-env.d.ts does not commit generated .next route imports");
   assert(styles.includes(".nav-rail {\n  background: rgba(255, 253, 248, 0.82);"), "nav rail keeps the account popover in its own layout layer");
   assert(styles.includes("z-index: 30;\n  height: 100vh;\n  overflow: visible;"), "nav rail paints above the workspace so the account popover remains clickable");
   assert(styles.includes("z-index: 80;"), "account popover sits above the app workspace");
