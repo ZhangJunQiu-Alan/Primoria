@@ -353,7 +353,7 @@ const BLOCK_SCHEMAS = {
 
 export type GeneratableBlockType = Exclude<BlockType, "mind_map" | "slide" | "worksheet">;
 
-const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL ?? "gemini-3.1-flash-image";
+const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL ?? "gemini-3.1-flash-lite-image";
 
 const ImageBriefContentSchema = z.object({
   title: z.string(),

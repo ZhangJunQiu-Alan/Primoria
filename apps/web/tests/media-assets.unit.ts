@@ -54,7 +54,7 @@ function memoryStore(): MediaAssetStore & { rows: NewMediaAsset[] } {
   };
 }
 
-const MODEL = "gemini-3.1-flash-image";
+const MODEL = "gemini-3.1-flash-lite-image";
 
 function testCacheKeyStability() {
   // conceptId ordering must not fork the cache.

@@ -6,7 +6,7 @@ import type { GeneratedImage } from "./media-assets";
 // lives in candidates[].content.parts[].inlineData; the parts array holds more
 // than one element in an unspecified order, so we .find the inlineData part
 // rather than assuming parts[0]. Default output mime is image/jpeg.
-const DEFAULT_MODEL = "gemini-3.1-flash-image";
+const DEFAULT_MODEL = "gemini-3.1-flash-lite-image";
 
 function endpoint(model: string): string {
   return `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;

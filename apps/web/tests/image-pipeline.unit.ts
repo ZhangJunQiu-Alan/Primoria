@@ -148,10 +148,10 @@ async function testFinalizeReadyAndReuse() {
   let generateCalls = 0;
   const generate = async (): Promise<GeneratedImage> => {
     generateCalls += 1;
-    return { mimeType: "image/jpeg", dataBase64: Buffer.from("img").toString("base64"), model: "gemini-3.1-flash-image" };
+    return { mimeType: "image/jpeg", dataBase64: Buffer.from("img").toString("base64"), model: "gemini-3.1-flash-lite-image" };
   };
 
-  const out1 = await finalizeImageBlocks([pending], { ownerId: "u1", model: "gemini-3.1-flash-image", generate, store });
+  const out1 = await finalizeImageBlocks([pending], { ownerId: "u1", model: "gemini-3.1-flash-lite-image", generate, store });
   const ready = out1[0];
   assert(ready.type === "image" && ready.status === "ready", "finalized block is ready");
   assert(ready.type === "image" && ready.imageUrl.startsWith("/api/media/assets/"), "ready block has an asset url");
@@ -160,7 +160,7 @@ async function testFinalizeReadyAndReuse() {
 
   // Re-finalize an identical pending block: the cache serves it, no second generation.
   const pending2 = compileBlockContent(IMAGE_JOB, IMAGE_CONTENT, "lesson1");
-  await finalizeImageBlocks([pending2], { ownerId: "u1", model: "gemini-3.1-flash-image", generate, store });
+  await finalizeImageBlocks([pending2], { ownerId: "u1", model: "gemini-3.1-flash-lite-image", generate, store });
   assert(generateCalls === 1, "identical brief reuses the cached asset (no second generation)");
 }
 
