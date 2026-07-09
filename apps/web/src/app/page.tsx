@@ -2,14 +2,14 @@ import { TutorWorkspaceClient } from "@/components/tutor/tutor-workspace-client"
 import { CopilotKitProvider } from "@/components/copilot-provider";
 import { LandingPage } from "@/components/landing/landing-page";
 import { OnboardingClient } from "@/components/onboarding/onboarding-client";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { getLearnerOnboardingState } from "@/lib/learner-profile/store";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const authEnabled = isAuthEnabled();
-  const user = await getCurrentUser();
+  const user = await getCurrentUserForRsc();
 
   if (authEnabled && !user) return <LandingPage />;
   if (authEnabled && user) {

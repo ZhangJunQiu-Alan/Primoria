@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { CopilotKitProvider } from "@/components/copilot-provider";
 import { CourseDetailClient } from "@/components/course/course-detail-client";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 import { listLessonGenerationJobsByCourse } from "@/lib/courses/lesson-generation-jobs";
 
@@ -17,11 +17,13 @@ export default async function CoursePage({
   const { id } = await params;
   const query = await searchParams;
   const requestedLessonId = Array.isArray(query.lessonId) ? query.lessonId[0] : query.lessonId;
-  const user = await getCurrentUser();
-  const course = await getCourse(id, user?.id ?? null);
+  const user = await getCurrentUserForRsc();
+  const [course, lessonJobs] = await Promise.all([
+    getCourse(id, user?.id ?? null),
+    listLessonGenerationJobsByCourse(id, user?.id ?? null),
+  ]);
   if (!course) notFound();
   const copilotEnabled = !isAuthEnabled() || Boolean(user);
-  const lessonJobs = await listLessonGenerationJobsByCourse(id, user?.id ?? null);
 
   return (
     <main className="app-shell course-app-shell">

@@ -17,6 +17,7 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
   const [authState, setAuthState] = useState<AuthState>(initialAuthState);
 
   useEffect(() => {
+    if (initialAuthState.loaded) return;
     let cancelled = false;
     async function loadAuth() {
       try {
@@ -31,7 +32,7 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [initialAuthState.loaded]);
 
   const authRequired = authState.loaded && authState.authEnabled && !authState.user;
 

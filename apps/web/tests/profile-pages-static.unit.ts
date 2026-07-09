@@ -40,7 +40,7 @@ async function main() {
   assert(profilePage.includes("stats.questionsPracticed"), "profile hero surfaces practiced questions");
   assert(profilePage.includes("profile-section-header"), "profile progress section has explanatory header copy");
   assert(profilePage.includes("profile-list-copy"), "profile progress links include descriptions");
-  assert(profilePage.includes("getCurrentDictionary"), "profile page resolves copy from the i18n dictionary");
+  assert(profilePage.includes("getDictionaryForUser"), "profile page resolves copy from the i18n dictionary without re-reading auth");
   bilingual(dictionaries.zh.profile.myProgress, dictionaries.en.profile.myProgress, "profile page renders the progress section");
   bilingual(dictionaries.zh.profile.weeklyReport, dictionaries.en.profile.weeklyReport, "profile page links to weekly report");
   bilingual(dictionaries.zh.profile.learningStats, dictionaries.en.profile.learningStats, "profile page links to learning stats");
@@ -63,7 +63,7 @@ async function main() {
   assert(!weeklyPage.includes("Jun 29 - Jul 5"), "weekly report does not hardcode a fake week range");
   assert(!weeklyPage.includes("Monday, Jun 29"), "weekly report does not hardcode a fake best day");
   assert(!weeklyPage.includes("cardsCollected"), "weekly report does not render fake collected-card data");
-  assert(statsPage.includes("getCurrentDictionary"), "stats page resolves copy from the i18n dictionary");
+  assert(statsPage.includes("getDictionaryForUser"), "stats page resolves copy from the i18n dictionary without re-reading auth");
   bilingual(dictionaries.zh.stats.dailyActivity, dictionaries.en.stats.dailyActivity, "stats page renders heatmap section");
   bilingual(dictionaries.zh.stats.todaySummary, dictionaries.en.stats.todaySummary, "stats page renders today summary");
   bilingual(dictionaries.zh.stats.lifetime, dictionaries.en.stats.lifetime, "stats page renders lifetime statistics");
@@ -72,7 +72,7 @@ async function main() {
   assert(statsPage.includes("stats.todayActivityEvents"), "today summary uses today's recorded activity");
   bilingual(dictionaries.zh.stats.plannedLessonTime, dictionaries.en.stats.plannedLessonTime, "stats page labels course estimates as planned lesson time");
   assert(!statsPage.includes("Total Learning Time"), "stats page does not present planned course estimates as actual learning time");
-  assert(settingsPage.includes("getCurrentDictionary"), "settings page resolves copy from the i18n dictionary");
+  assert(settingsPage.includes("getDictionaryForUser"), "settings page resolves copy from the i18n dictionary without re-reading auth");
   bilingual(dictionaries.zh.settings.factsTitle, dictionaries.en.settings.factsTitle, "settings page renders facts section");
   assert(settingsPage.includes('href="/settings/facts"'), "settings page links to the facts editor");
   assert(settingsPage.includes("ContentLanguageSelect") && settingsPage.includes("getUserPreferences"), "settings page renders saved language preference");
@@ -101,7 +101,7 @@ async function main() {
   assert(styles.includes(".facts-list"), "facts list has dedicated styling");
   assert(styles.includes(".settings-wide-action"), "settings overview has a dedicated wide action style");
   assert(styles.includes(".facts-composer"), "facts editor has dedicated composer styling");
-  assert(upgradePage.includes("getCurrentDictionary"), "upgrade page resolves copy from the i18n dictionary");
+  assert(upgradePage.includes("getDictionaryForUser"), "upgrade page resolves copy from the i18n dictionary without re-reading auth");
   bilingual(dictionaries.zh.upgrade.title, dictionaries.en.upgrade.title, "upgrade page renders Pro headline");
 
   assert(navRail.includes('href="/profile"'), "avatar menu links to profile");
