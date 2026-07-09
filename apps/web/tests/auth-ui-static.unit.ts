@@ -60,7 +60,8 @@ async function main() {
 
   assert(styles.includes(".auth-fields"), "auth field group has dedicated layout styling");
   assert(styles.includes(".app-shell.auth-shell"), "auth pages have a nav-free app shell");
-  assert(styles.includes("grid-template-rows: repeat(3, minmax(76px, auto))"), "auth field group keeps matching desktop rows");
+  assert(styles.includes("align-content: center;"), "auth card centers the form group vertically");
+  assert(styles.includes(".auth-field-spacer {\n  display: none;"), "sign-in does not reserve an empty display-name row");
   assert(styles.includes("place-items: center"), "auth workspace centers the fixed auth panel");
   assert(styles.includes("height: min(720px, calc(100dvh - 68px))"), "auth panel has a fixed desktop height");
   assert(styles.includes("grid-template-columns: minmax(0, 488px) minmax(0, 552px)"), "auth panel has fixed desktop columns");

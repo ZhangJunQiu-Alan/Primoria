@@ -6,5 +6,5 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   await signOutCurrentSession();
-  return NextResponse.redirect(new URL("/login", request.url), { status: 303 });
+  return NextResponse.redirect(new URL("/", request.url), { status: 303 });
 }
