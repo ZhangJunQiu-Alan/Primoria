@@ -80,6 +80,7 @@ Use four label families on implementation issues:
 | `status:ready` | Small enough for a focused PR. |
 | `status:needs-slice` | Valuable but still too broad or under-specified. |
 | `status:blocked` | Waiting on another issue or external decision. |
+| `status:baseline` | A usable baseline exists in the current product; future issues should be narrow hardening slices. |
 
 ## Current Issue Mapping
 
@@ -89,8 +90,8 @@ Use four label families on implementation issues:
 | #18 Roadmap: adaptive learning system | `type:roadmap`, `area:adaptive-learning`, `priority:P0`, `status:umbrella` | Parent direction for the learning loop. |
 | #25 Adaptive course growth | `type:learning-signal`, `area:adaptive-learning`, `area:course`, `priority:P0`, `status:needs-slice` | Needs a concrete first loop around attempts, weak concepts, and remediation. |
 | #14 Block revision history | `type:learning-signal`, `type:memory`, `area:course`, `area:memory`, `priority:P0`, `status:ready` | Existing course edit events are the nearest raw evidence source. |
-| #1 Course Tutor context/actions | `type:course-tutor`, `area:course`, `priority:P0`, `status:needs-slice` | Course edits and adaptive growth depend on reliable targeting. |
-| #10 Selected-text Course Tutor UI | `type:course-tutor`, `area:course`, `priority:P0`, `status:ready` | A focused UX slice inside #1. |
+| #1 Course Tutor context/actions | `type:course-tutor`, `area:course`, `priority:P0`, `status:baseline` | Lesson pages now pass current course, lesson, visible blocks, selected block, and selected text into Course Tutor; future work should be hardening, not first implementation. |
+| #10 Selected-text Course Tutor UI | `type:course-tutor`, `area:course`, `priority:P0`, `status:baseline` | Selected-text context is attached to Course Tutor and block actions; remaining work should target reliability and evidence capture. |
 | #17 React artifact renderer | `type:renderer`, `area:artifact`, `priority:P1`, `status:needs-slice` | Needed for complex stateful artifacts, but should align with artifact IR. |
 | #5 Long-term memory | `type:memory`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:needs-slice` | Memory should consume reviewed evidence, not replace raw signals. |
 | #8 Classroom/collaboration | `type:classroom`, `area:classroom`, `priority:P2`, `status:needs-slice` | Future scope after the personal loop is stable; the old workspace-agent runtime no longer exists. |
@@ -116,17 +117,23 @@ First acceptance target:
 wrong quiz attempt -> weak block/concept signal -> generated remediation block -> persisted course version
 ```
 
-### P0: Make Course Tutor Targeting Reliable
+### P0: Maintain Course Tutor Targeting Baseline
 
-Before adaptive patching, the assistant must know exactly what it is changing:
+The first Course Tutor targeting baseline exists on the lesson reader. The
+assistant receives:
 
 - selected block id
 - selected text, when present
-- course id and current course version
-- edit intent
-- before/after revision event
+- current course id and current lesson id
+- the active lesson's visible block list
+- edit intent through block actions or chat
 
-This work should stay focused on Course Detail behavior and avoid broad workspace changes.
+Next slices should keep this focused on Course Detail behavior and avoid broad
+workspace changes:
+
+- persist richer before/after revision evidence
+- add regression coverage for selected-text attachment across block types
+- verify the collapsed AI rail does not obscure reader navigation
 
 ### P1: Define Artifact IR Before React Renderer Work
 

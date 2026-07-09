@@ -352,6 +352,22 @@ Lessons are made of blocks rather than one long article. Core generated block ty
 
 Additional course block renderers include `mind_map`, `slide`, and `worksheet`.
 
+The course lesson surface is a focused reader, not a long course-detail feed.
+`/course/[id]` resolves the active lesson in the client, renders one
+`CourseBlock` at a time, and shows step progress as current block / total lesson
+blocks. Text, analogy, transfer, image, visual, code, slide, mind-map, quiz, and
+worksheet blocks all stay behind `BlockRenderer`; the reader only owns navigation
+and layout. Ordinary content steps advance with Continue / Done, while quiz and
+worksheet steps keep Check semantics by delegating to the existing practice
+controls. Done returns to `/course/[id]/outline`; lesson completion still comes
+from quiz/evidence paths.
+
+The lesson reader has its own top bar and returns to the outline with X. It no
+longer embeds the upcoming outline below the current lesson. Course Tutor remains
+available as a right-side AI rail: collapsed by default, expandable in place,
+and scoped to the current course, lesson, visible blocks, selected block, and
+selected text.
+
 Lesson materialization is recoverable and worker-driven:
 
 - `worker:lesson-generation` writes planned lesson content.
@@ -379,7 +395,9 @@ Near-term priorities:
 - Inject concept mastery into lesson-building prompts so mastered concepts are skimmed and weak concepts receive deeper instruction.
 - Improve learner-memory distillation for preferences, pace, depth, blockers, and useful learning moments.
 - Keep lesson generation close to the intended micro-learning recipe with balanced text, image, visual, quiz, code, analogy, and transfer blocks.
-- Improve course-detail tutor context for the current course, lesson, block, selected text, and concept.
+- Continue hardening the course reader and Course Tutor baseline: current lesson
+  context, visible block scope, selected block/text context, revision tools, and
+  collapsed AI rail behavior.
 - Increase interactive visualization stability across screen sizes and themes.
 
 Longer-term roadmap:
