@@ -1,5 +1,5 @@
 import { cookies, headers } from "next/headers";
-import { getCurrentUser } from "@/lib/auth/session";
+import { getCurrentUserForRsc } from "@/lib/auth/session";
 import { getUserPreferences } from "@/lib/settings/user-settings";
 import {
   getDictionary,
@@ -24,13 +24,21 @@ export async function resolveUiLanguage(userId?: string | null): Promise<UiLangu
   return languageFromAcceptLanguage(headerStore.get("accept-language"));
 }
 
-export async function getCurrentUiLanguage(): Promise<UiLanguage> {
-  const user = await getCurrentUser();
-  return resolveUiLanguage(user?.id ?? null);
+export async function resolveUiLanguageForUser(userId?: string | null): Promise<UiLanguage> {
+  return resolveUiLanguage(userId);
 }
 
-export async function getCurrentDictionary(): Promise<{ language: UiLanguage; dictionary: I18nDictionary }> {
-  const language = await getCurrentUiLanguage();
+export async function getCurrentUiLanguage(): Promise<UiLanguage> {
+  const user = await getCurrentUserForRsc();
+  return resolveUiLanguageForUser(user?.id ?? null);
+}
+
+export async function getDictionaryForUser(userId?: string | null): Promise<{ language: UiLanguage; dictionary: I18nDictionary }> {
+  const language = await resolveUiLanguageForUser(userId);
   return { language, dictionary: getDictionary(language) };
 }
 
+export async function getCurrentDictionary(): Promise<{ language: UiLanguage; dictionary: I18nDictionary }> {
+  const user = await getCurrentUserForRsc();
+  return getDictionaryForUser(user?.id ?? null);
+}

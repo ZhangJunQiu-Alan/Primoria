@@ -2,21 +2,22 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { FactsAboutYou } from "@/components/profile/facts-about-you";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { listActiveFacts } from "@/lib/learner-facts/store";
-import { getCurrentDictionary } from "@/lib/i18n/server";
+import { getDictionaryForUser } from "@/lib/i18n/server";
 
 export const dynamic = "force-dynamic";
 
 export default async function FactsSettingsPage() {
   const authEnabled = isAuthEnabled();
-  const user = await getCurrentUser();
+  const user = await getCurrentUserForRsc();
   if (authEnabled && !user) redirect("/auth/sign-in?next=/settings/facts");
 
-  const { dictionary } = await getCurrentDictionary();
+  const [{ dictionary }, facts] = await Promise.all([
+    getDictionaryForUser(user?.id ?? null),
+    user ? listActiveFacts(user.id) : Promise.resolve([]),
+  ]);
   const t = dictionary.settings;
-
-  const facts = user ? await listActiveFacts(user.id) : [];
   const factViews = facts.map((fact) => ({ id: fact.id, text: fact.text, category: fact.category }));
 
   return (

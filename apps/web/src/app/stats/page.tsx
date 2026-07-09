@@ -3,23 +3,25 @@ import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { BoltIcon, BookIcon, CalendarIcon, ClockIcon, FlameIcon, StarIcon } from "@/components/profile/profile-icons";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { formatLearningTime, getProfileStats } from "@/lib/profile/stats";
-import { getCurrentDictionary } from "@/lib/i18n/server";
+import { getDictionaryForUser } from "@/lib/i18n/server";
 
 export const dynamic = "force-dynamic";
 
 export default async function StatsPage() {
   const authEnabled = isAuthEnabled();
-  const user = await getCurrentUser();
+  const user = await getCurrentUserForRsc();
   if (authEnabled && !user) redirect("/auth/sign-in?next=/stats");
-  const { dictionary } = await getCurrentDictionary();
+  const [{ dictionary }, stats] = await Promise.all([
+    getDictionaryForUser(user?.id ?? null),
+    getProfileStats({
+      ownerId: user?.id ?? null,
+      displayName: user?.displayName ?? null,
+      email: user?.email ?? null,
+    }),
+  ]);
   const t = dictionary.stats;
-  const stats = await getProfileStats({
-    ownerId: user?.id ?? null,
-    displayName: user?.displayName ?? null,
-    email: user?.email ?? null,
-  });
 
   return (
     <main className="app-shell profile-shell">

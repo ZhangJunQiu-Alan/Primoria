@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { SparkleIcon } from "@/components/profile/profile-icons";
-import { getCurrentDictionary } from "@/lib/i18n/server";
+import { getDictionaryForUser } from "@/lib/i18n/server";
 
 export const dynamic = "force-dynamic";
 
@@ -17,8 +17,8 @@ const featureFlags = [
 
 export default async function UpgradePage() {
   const authEnabled = isAuthEnabled();
-  const user = await getCurrentUser();
-  const { dictionary } = await getCurrentDictionary();
+  const user = await getCurrentUserForRsc();
+  const { dictionary } = await getDictionaryForUser(user?.id ?? null);
   const t = dictionary.upgrade;
 
   return (

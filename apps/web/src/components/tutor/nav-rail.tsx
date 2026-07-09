@@ -85,8 +85,13 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   const t = useT();
   const pathname = usePathname() ?? "/";
   const router = useRouter();
-  const [authEnabled, setAuthEnabled] = useState<boolean | null>(initialAuthState?.authEnabled ?? null);
-  const [user, setUser] = useState<AuthUser | null>(initialAuthState?.user ?? null);
+  const hasInitialAuthState = Boolean(initialAuthState);
+  const [localAuthState, setLocalAuthState] = useState<{
+    authEnabled: boolean | null;
+    user: AuthUser | null;
+  } | null>(hasInitialAuthState ? null : { authEnabled: null, user: null });
+  const authEnabled = localAuthState?.authEnabled ?? initialAuthState?.authEnabled ?? null;
+  const user = localAuthState ? localAuthState.user : initialAuthState?.user ?? null;
   const [accountOpen, setAccountOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentThreadId, setCurrentThread] = useState("");
@@ -97,19 +102,19 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   const sidebarTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
+    if (hasInitialAuthState) return;
     let cancelled = false;
     fetch("/api/auth/me")
       .then((response) => response.json() as Promise<{ authEnabled: boolean; user: AuthUser | null }>)
       .then((data) => {
         if (cancelled) return;
-        setAuthEnabled(data.authEnabled);
-        setUser(data.user);
+        setLocalAuthState({ authEnabled: data.authEnabled, user: data.user });
       })
       .catch(() => undefined);
     return () => {
       cancelled = true;
     };
-  }, [pathname]);
+  }, [pathname, hasInitialAuthState]);
 
   useEffect(() => {
     if (!accountOpen) return;
@@ -170,7 +175,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
       await fetch("/api/auth/sign-out", { method: "POST" });
       clearCopilotThreadStorage();
       window.localStorage.removeItem("primoria:tutor-provider-settings");
-      setUser(null);
+      setLocalAuthState({ authEnabled: authEnabled ?? true, user: null });
       setAccountOpen(false);
       router.push("/");
       router.refresh();

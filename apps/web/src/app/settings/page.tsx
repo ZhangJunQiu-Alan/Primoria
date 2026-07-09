@@ -4,25 +4,27 @@ import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { BoltIcon, BookIcon, ChartIcon, SparkleIcon } from "@/components/profile/profile-icons";
 import { ContentLanguageSelect } from "@/components/profile/content-language-select";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { listActiveFacts } from "@/lib/learner-facts/store";
 import { getUserPreferences } from "@/lib/settings/user-settings";
-import { getCurrentDictionary } from "@/lib/i18n/server";
+import { getDictionaryForUser } from "@/lib/i18n/server";
 import { formatMessage } from "@/lib/i18n/dictionaries";
 
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
   const authEnabled = isAuthEnabled();
-  const user = await getCurrentUser();
+  const user = await getCurrentUserForRsc();
   if (authEnabled && !user) redirect("/auth/sign-in?next=/settings");
 
-  const { dictionary } = await getCurrentDictionary();
+  const settingsDataPromise = user
+    ? Promise.all([listActiveFacts(user.id), getUserPreferences(user.id)])
+    : Promise.all([Promise.resolve([]), getUserPreferences(null)]);
+  const [{ dictionary }, [facts, preferences]] = await Promise.all([
+    getDictionaryForUser(user?.id ?? null),
+    settingsDataPromise,
+  ]);
   const t = dictionary.settings;
-
-  const [facts, preferences] = user
-    ? await Promise.all([listActiveFacts(user.id), getUserPreferences(user.id)])
-    : [[], await getUserPreferences(null)] as const;
   const previewFacts = facts.slice(0, 2);
 
   return (

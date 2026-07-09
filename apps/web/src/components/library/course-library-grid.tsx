@@ -39,7 +39,7 @@ export function CourseLibraryGrid({
   const [statusFilterOpen, setStatusFilterOpen] = useState(false);
   const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({ key: "updated", direction: "desc" });
   const [page, setPage] = useState(1);
-  const [initialRefreshOpen, setInitialRefreshOpen] = useState(true);
+  const [initialRefreshOpen, setInitialRefreshOpen] = useState(() => initialLessonJobs.some(isLessonGenerationActive));
   const [openCourseMenuId, setOpenCourseMenuId] = useState<string | null>(null);
   const [shareTarget, setShareTarget] = useState<CourseSummary | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<CourseSummary | null>(null);
