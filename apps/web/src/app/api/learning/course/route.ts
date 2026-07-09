@@ -60,12 +60,15 @@ export async function POST(request: Request) {
       // topic, then build the course exactly like a library-anchored one — the
       // gen_* graphId gives per-owner course dedup and cross-user graph reuse.
       const generated = await getOrCreateGeneratedGraph({ topic: parsed.topic, language: parsed.language ?? null });
+      if (!generated) {
+        throw new Error(`Generated graph creation failed for out-of-library topic: ${parsed.topic}`);
+      }
       outlineInput = {
         ownerId,
         topic: parsed.topic,
         source: "cold_start" as const,
         language: parsed.language ?? null,
-        generatedGraph: generated?.graph,
+        generatedGraph: generated.graph,
       };
     } else {
       const anchor = parsed;

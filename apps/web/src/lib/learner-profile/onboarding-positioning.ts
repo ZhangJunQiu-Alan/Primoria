@@ -69,7 +69,8 @@ export async function resolveOnboardingGoalAnchor(
   if (plan.branch === "out_of_library") {
     const generated = await getOrCreateGeneratedGraph({ topic: plan.topic, language });
     if (!generated) {
-      throw new Error(plan.message || "暂时无法为这个主题生成课程，请换个说法再试一次。");
+      console.warn("[onboarding] generated graph creation failed:", { topic: plan.topic, language });
+      throw new Error("暂时无法为这个主题生成课程图谱，请换个具体说法再试一次。");
     }
     const root = [...generated.graph.topics].sort((a, b) => a.defaultOrder - b.defaultOrder)[0];
     if (!root) throw new Error("Generated graph has no topics.");

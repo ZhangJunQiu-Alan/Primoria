@@ -11,6 +11,7 @@ import {
   type SubjectCandidate,
 } from "./positioning";
 import { runStage2Positioning } from "./positioning-llm";
+import { runFreeformGoalGate } from "./freeform-goal-gate";
 import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse, type KnowledgeGraphSearchResult } from "./search";
 import { buildGraphCandidates } from "./graph-router";
 import { detectKgLanguage } from "./display-name";
@@ -39,6 +40,12 @@ export type PositionLearningGoalInput = {
 export type PositionLearningGoalResult = {
   result: PositioningResult;
   search: KnowledgeGraphSearchResponse;
+};
+
+export type PositionLearningGoalDeps = {
+  searchKnowledgeGraphNodes?: typeof searchKnowledgeGraphNodes;
+  runStage2Positioning?: typeof runStage2Positioning;
+  runFreeformGoalGate?: typeof runFreeformGoalGate;
 };
 
 export type PositioningPlan =
@@ -75,27 +82,43 @@ function buildDiagnostics(
 
 export async function positionLearningGoal(
   input: PositionLearningGoalInput,
+  deps: PositionLearningGoalDeps = {},
 ): Promise<PositionLearningGoalResult> {
-  const search = await searchKnowledgeGraphNodes(input);
+  const search = await (deps.searchKnowledgeGraphNodes ?? searchKnowledgeGraphNodes)(input);
   const overrides: Partial<PositioningParams> = {};
   if (input.floor !== undefined) overrides.floor = input.floor;
   const params = resolvePositioningParams(overrides);
   const language = input.language ?? detectKgLanguage(input.query);
+  const librarySubjects = listLibrarySubjects();
 
   const maxSimilarity = search.results.length ? Math.max(...search.results.map((r) => r.similarity)) : 0;
 
-  // Relevance floor gate: nothing in the library is close enough — fall back
-  // without spending a Stage-2 LLM call.
+  // Relevance floor gate: nothing in the library is close enough for grounded
+  // positioning. Give real, teachable out-of-library goals one lightweight
+  // chance to route into generated-graph course creation instead of silently
+  // collapsing everything to fallback.
   if (search.results.length === 0 || maxSimilarity < params.floor) {
-    return {
-      result: {
-        branch: "fallback",
-        graphId: search.graphId,
-        params,
-        diagnostics: buildDiagnostics(maxSimilarity, []),
-      },
-      search,
+    const ctx: FinalizeContext = {
+      candidates: [],
+      librarySubjects,
+      hitTopicIdsByGraph: new Map(),
+      language,
+      diagnostics: buildDiagnostics(maxSimilarity, []),
+      params,
     };
+    const decision = await (deps.runFreeformGoalGate ?? runFreeformGoalGate)({
+      query: input.query,
+      language,
+      librarySubjects,
+    });
+    const result = decision ? finalizeStage2(decision, ctx) : safeDefault(ctx);
+    if (result.branch === "out_of_library" && !result.freeformTopic) {
+      result.freeformTopic = search.encodedQuery.coreQuery;
+    }
+    if (result.branch === "fallback" && !result.graphId) {
+      result.graphId = search.graphId;
+    }
+    return { result, search };
   }
 
   const candidates = buildGraphCandidates(search.results).map(
@@ -119,7 +142,6 @@ export async function positionLearningGoal(
     hitTopicIdsByGraph.set(r.graphId, set);
   }
 
-  const librarySubjects = listLibrarySubjects();
   const ctx: FinalizeContext = {
     candidates: selected,
     librarySubjects,
@@ -129,7 +151,7 @@ export async function positionLearningGoal(
     params,
   };
 
-  const decision = await runStage2Positioning(
+  const decision = await (deps.runStage2Positioning ?? runStage2Positioning)(
     {
       query: input.query,
       language,

@@ -1,13 +1,19 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { runStage2Positioning, type Stage2Graph } from "../src/lib/knowledge-graph/positioning-llm";
-import { planFromPositioning } from "../src/lib/knowledge-graph/position-learning-goal";
+import { planFromPositioning, positionLearningGoal } from "../src/lib/knowledge-graph/position-learning-goal";
 import { resolvePositioningParams, type PositioningResult } from "../src/lib/knowledge-graph/positioning";
 import {
   normalizeTopicKey,
   parseGeneratedGraph,
   toTopicGraph,
 } from "../src/lib/knowledge-graph/generated-graph";
+import { encodeKnowledgeGraphQuery } from "../src/lib/knowledge-graph/query-encoding";
+import {
+  ALL_KG_GRAPHS,
+  type KnowledgeGraphSearchResponse,
+  type KnowledgeGraphSearchResult,
+} from "../src/lib/knowledge-graph/search";
 import { isCodeEligibleLessonContext } from "../src/lib/ai/course-generation/code-eligibility";
 import type { CourseContext } from "../src/lib/ai/deepagent/course-kg-context";
 
@@ -19,6 +25,33 @@ const LIBRARY: Stage2Graph[] = [
 
 function invokerReturning(json: unknown) {
   return async () => JSON.stringify(json);
+}
+
+function searchResponse(query: string, results: KnowledgeGraphSearchResult[] = []): KnowledgeGraphSearchResponse {
+  return {
+    encodedQuery: encodeKnowledgeGraphQuery(query),
+    graphId: ALL_KG_GRAPHS,
+    modelVersion: "test-model",
+    topK: 15,
+    results,
+  };
+}
+
+function searchResult(patch: Partial<KnowledgeGraphSearchResult> = {}): KnowledgeGraphSearchResult {
+  return {
+    graphId: "artificial_intelligence",
+    kind: "topic",
+    nodeId: "t_ai_intro",
+    name: "AI Intro",
+    description: null,
+    topicId: null,
+    topicName: null,
+    embedText: "AI Intro",
+    modelVersion: "test-model",
+    distance: 0.9,
+    similarity: 0.1,
+    ...patch,
+  };
 }
 
 describe("stage-2 out_of_library decision", () => {
@@ -67,6 +100,84 @@ describe("planFromPositioning out_of_library", () => {
       topic: "Agent 架构",
       message: "为你定制课程",
     });
+  });
+});
+
+describe("positionLearningGoal out-of-library orchestration", () => {
+  it("routes an empty recall for a teachable topic through the freeform gate", async () => {
+    const query = "MCP 和 Agent 架构";
+    const searchKnowledgeGraphNodes = vi.fn(async () => searchResponse(query));
+    const runStage2Positioning = vi.fn();
+    const runFreeformGoalGate = vi.fn(async () => ({
+      outcome: "out_of_library" as const,
+      topic: "MCP 和 Agent 架构",
+      message: "为你定制课程图谱",
+    }));
+
+    const { result } = await positionLearningGoal(
+      { query, floor: 0.28 },
+      { searchKnowledgeGraphNodes, runStage2Positioning, runFreeformGoalGate },
+    );
+
+    expect(result).toMatchObject({
+      branch: "out_of_library",
+      freeformTopic: "MCP 和 Agent 架构",
+      message: "为你定制课程图谱",
+    });
+    expect(runFreeformGoalGate).toHaveBeenCalledWith(
+      expect.objectContaining({ query, language: "zh", librarySubjects: expect.any(Array) }),
+    );
+    expect(runStage2Positioning).not.toHaveBeenCalled();
+  });
+
+  it("does not directly fallback when recall exists but is below the floor", async () => {
+    const query = "WebGPU shader 入门";
+    const searchKnowledgeGraphNodes = vi.fn(async () => searchResponse(query, [searchResult({ similarity: 0.12 })]));
+    const runStage2Positioning = vi.fn();
+    const runFreeformGoalGate = vi.fn(async () => ({
+      outcome: "out_of_library" as const,
+      topic: "WebGPU shader 入门",
+      message: "为你定制课程图谱",
+    }));
+
+    const { result } = await positionLearningGoal(
+      { query, floor: 0.28 },
+      { searchKnowledgeGraphNodes, runStage2Positioning, runFreeformGoalGate },
+    );
+
+    expect(result.branch).toBe("out_of_library");
+    expect(result.freeformTopic).toBe("WebGPU shader 入门");
+    expect(runFreeformGoalGate).toHaveBeenCalledTimes(1);
+    expect(runStage2Positioning).not.toHaveBeenCalled();
+  });
+
+  it("falls back when the freeform gate rejects or cannot classify the low-confidence goal", async () => {
+    const query = "随便学点东西";
+    const lowConfidenceSearch = vi.fn(async () => searchResponse(query, [searchResult({ similarity: 0.08 })]));
+    const runStage2Positioning = vi.fn();
+
+    const fallbackGate = vi.fn(async () => ({
+      outcome: "fallback" as const,
+      message: "请提供更具体的学习目标。",
+    }));
+    const fallbackResult = await positionLearningGoal(
+      { query, floor: 0.28 },
+      { searchKnowledgeGraphNodes: lowConfidenceSearch, runStage2Positioning, runFreeformGoalGate: fallbackGate },
+    );
+    expect(fallbackResult.result).toMatchObject({
+      branch: "fallback",
+      graphId: ALL_KG_GRAPHS,
+      message: "请提供更具体的学习目标。",
+    });
+
+    const nullGate = vi.fn(async () => null);
+    const nullResult = await positionLearningGoal(
+      { query, floor: 0.28 },
+      { searchKnowledgeGraphNodes: lowConfidenceSearch, runStage2Positioning, runFreeformGoalGate: nullGate },
+    );
+    expect(nullResult.result.branch).toBe("fallback");
+    expect(nullResult.result.graphId).toBe(ALL_KG_GRAPHS);
+    expect(runStage2Positioning).not.toHaveBeenCalled();
   });
 });
 
