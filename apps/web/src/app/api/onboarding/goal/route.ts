@@ -2,6 +2,7 @@ import { after, NextResponse } from "next/server";
 import { z } from "zod";
 
 import { requireAuthUser } from "@/lib/auth/guard";
+import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
 import { buildOnboardingCourse } from "@/lib/learner-profile/onboarding-course";
 import { resolveOnboardingGoalAnchor } from "@/lib/learner-profile/onboarding-positioning";
 import {
@@ -68,11 +69,14 @@ async function positionLearningGoalInBackground(ownerId: string, learningGoal: s
     });
     await buildCourseIfReady(ownerId, profile);
   } catch (error) {
+    logKnowledgeGraphError("onboarding/goal:background", error);
     if (!goalStillPending(await getLearnerProfile(ownerId), learningGoal)) return;
+    // Never persist raw error.message: SQL/table names must not reach profiles.
+    const safe = toSafeKnowledgeGraphError(error, { message: "Could not locate that goal. Please retry." });
     await saveLearningGoalPositioningFailure({
       ownerId,
       learningGoal,
-      message: error instanceof Error ? error.message : "Could not locate that goal.",
+      message: safe.message,
     });
   }
 }
@@ -130,6 +134,12 @@ export async function POST(request: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: "Invalid onboarding goal request." }, { status: 400 });
     }
-    return NextResponse.json({ error: error instanceof Error ? error.message : "Could not locate that goal." }, { status: 422 });
+    logKnowledgeGraphError("onboarding/goal", error);
+    const safe = toSafeKnowledgeGraphError(error, {
+      status: 422,
+      code: "onboarding_goal_failed",
+      message: "Could not locate that goal. Please retry.",
+    });
+    return NextResponse.json({ error: safe.message, code: safe.code }, { status: safe.status });
   }
 }

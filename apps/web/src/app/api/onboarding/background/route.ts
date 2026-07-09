@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { requireAuthUser } from "@/lib/auth/guard";
+import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
 import { buildOnboardingCourse } from "@/lib/learner-profile/onboarding-course";
 import { getLearnerOnboardingState, saveKnowledgeBackground, skipKnowledgeBackground } from "@/lib/learner-profile/store";
 import { isKnowledgeBackground } from "@/lib/learner-profile/types";
@@ -40,6 +41,11 @@ export async function POST(request: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: "Invalid onboarding background request." }, { status: 400 });
     }
-    return NextResponse.json({ error: error instanceof Error ? error.message : "Could not save background." }, { status: 503 });
+    logKnowledgeGraphError("onboarding/background", error);
+    const safe = toSafeKnowledgeGraphError(error, {
+      code: "onboarding_background_failed",
+      message: "Could not save your background right now. Please retry later.",
+    });
+    return NextResponse.json({ error: safe.message, code: safe.code }, { status: safe.status });
   }
 }

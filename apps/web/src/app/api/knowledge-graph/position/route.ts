@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
 import { buildPositioningLog, logPositioning } from "@/lib/knowledge-graph/positioning-log";
 import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
 import { requireAuthUser } from "@/lib/auth/guard";
@@ -17,18 +18,6 @@ const RequestSchema = z.object({
   floor: z.number().min(0).max(1).optional(),
   language: z.string().min(1).optional(),
 });
-
-function userFacingError(error: unknown) {
-  const message = error instanceof Error ? error.message : String(error);
-
-  if (/Missing DATABASE_URL/i.test(message)) return "Knowledge graph database settings are missing.";
-  if (/Missing OPENAI/i.test(message)) return "Embedding provider settings are missing.";
-  if (/Embedding request failed|fetch failed|timeout|network/i.test(message)) {
-    return "The embedding provider could not complete this search. Please retry.";
-  }
-
-  return "Knowledge graph positioning failed. Please retry.";
-}
 
 export async function POST(request: Request) {
   try {
@@ -56,7 +45,10 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ encodedQuery: search.encodedQuery, ...result, plan });
   } catch (error) {
-    console.error("[knowledge-graph/position]", error);
-    return NextResponse.json({ error: userFacingError(error) }, { status: 503 });
+    logKnowledgeGraphError("knowledge-graph/position", error);
+    const safe = toSafeKnowledgeGraphError(error, {
+      message: "Knowledge graph positioning failed. Please retry.",
+    });
+    return NextResponse.json({ error: safe.message, code: safe.code }, { status: safe.status });
   }
 }
