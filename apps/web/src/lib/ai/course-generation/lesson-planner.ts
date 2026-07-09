@@ -2,10 +2,11 @@ import type { TutorProviderSettings } from "../types";
 import type { CourseContext, CourseContextTopic } from "../deepagent/course-kg-context";
 import { languageDirective } from "../deepagent/course-kg-context";
 import { knowledgeBackgroundDirective, factsDirective } from "../../learner-profile/types";
-import { invokeJson } from "./model-json";
+import { invokeJson, type InvokeJsonArgs } from "./model-json";
 import {
   expectedBlockRange,
   IR_VERSION,
+  LessonPlanIrSchema,
   PEDAGOGICAL_ROLES,
   TYPE_CODE_TO_BLOCK,
   WRITER_INSTRUCTION_MAX,
@@ -21,6 +22,8 @@ import {
 const TYPE_CODE_LINES = Object.entries(TYPE_CODE_TO_BLOCK)
   .map(([code, type]) => `  ${code} = ${type}`)
   .join("\n");
+
+const REPAIR_SNIPPET_LIMIT = 6_000;
 
 function masteryTag(c: CourseContextTopic["concepts"][number]): string {
   return `[${c.mastery ?? "untested"}]`;
@@ -180,13 +183,48 @@ Rules:
 - writerInstruction is REQUIRED on every block and must be specific to that block — never empty, never generic boilerplate.`;
 }
 
-export type LessonPlannerInvoke = (args: { system: string; user: string }) => Promise<unknown>;
+export type LessonPlannerInvoke = (args: InvokeJsonArgs) => Promise<unknown>;
+
+type LessonPlannerOptions = { contextHint?: string; settings?: TutorProviderSettings; invoke?: LessonPlannerInvoke };
+
+function truncateForRepairPrompt(text: string): string {
+  if (text.length <= REPAIR_SNIPPET_LIMIT) return text;
+  return `${text.slice(0, REPAIR_SNIPPET_LIMIT)}\n...[truncated]`;
+}
+
+function summarizeRepairError(error: unknown): string {
+  if (error instanceof Error) return truncateForRepairPrompt(`${error.name}: ${error.message}`);
+  return truncateForRepairPrompt(String(error));
+}
+
+function stringifyRepairValue(value: unknown): string {
+  try {
+    const json = JSON.stringify(
+      value,
+      (_key, val) => (typeof val === "number" && !Number.isFinite(val) ? String(val) : val),
+      2,
+    );
+    return truncateForRepairPrompt(json ?? String(value));
+  } catch {
+    return truncateForRepairPrompt(String(value));
+  }
+}
+
+function lessonPlanInvokeArgs(system: string, user: string, settings?: TutorProviderSettings): InvokeJsonArgs {
+  return {
+    system,
+    user,
+    settings,
+    schema: LessonPlanIrSchema,
+    schemaName: "lesson_plan_ir",
+  };
+}
 
 /** Generate a raw (untrusted) LessonPlan IR for the start topic. The model call
  * is injectable so the planner can be unit-tested without a network. */
 export async function planLesson(
   kg: CourseContext,
-  options: { contextHint?: string; settings?: TutorProviderSettings; invoke?: LessonPlannerInvoke } = {},
+  options: LessonPlannerOptions = {},
 ): Promise<unknown> {
   const system = buildPlannerPrompt(kg);
   const user = [
@@ -196,8 +234,39 @@ export async function planLesson(
     .filter(Boolean)
     .join("\n");
 
-  const invoke: LessonPlannerInvoke =
-    options.invoke ?? (({ system: sys, user: usr }) => invokeJson({ system: sys, user: usr, settings: options.settings }));
+  const invoke = options.invoke ?? invokeJson;
 
-  return invoke({ system, user });
+  return invoke(lessonPlanInvokeArgs(system, user, options.settings));
+}
+
+/** Repair one malformed LessonPlan IR. The repaired value is still untrusted and
+ * must go through compileLessonPlanIr; this function only gives the model one
+ * targeted chance to fix structure/coverage before the job retry takes over. */
+export async function repairLessonPlan(
+  kg: CourseContext,
+  rawIr: unknown,
+  error: unknown,
+  options: LessonPlannerOptions = {},
+): Promise<unknown> {
+  const system = buildPlannerPrompt(kg);
+  const user = [
+    options.contextHint ? `Prior context from chat: ${options.contextHint}` : "",
+    "The previous LessonPlan IR failed deterministic validation. Repair the same LessonPlan IR structure only. Do not write final lesson content.",
+    `Validation error:\n${summarizeRepairError(error)}`,
+    `Previous raw IR:\n${stringifyRepairValue(rawIr)}`,
+    `Repair requirements:
+- Return exactly one JSON object matching lesson_plan_ir.
+- v must be ${IR_VERSION}.
+- lesson must include a title and minutes.
+- blocks must be an array of block objects with order, type, role, conceptIds, goal, and writerInstruction.
+- Use only the valid type codes, roles, and concept IDs from the system prompt.
+- Preserve the intended topic and teaching sequence when possible; fix missing/invalid fields instead of inventing an unrelated lesson.
+- Output only JSON, with no markdown or prose.`,
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+
+  const invoke = options.invoke ?? invokeJson;
+
+  return invoke(lessonPlanInvokeArgs(system, user, options.settings));
 }

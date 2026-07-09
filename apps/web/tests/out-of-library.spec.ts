@@ -112,6 +112,26 @@ describe("parseGeneratedGraph", () => {
     expect(raw?.topics[0].concepts[0].visualHint).toBeUndefined();
   });
 
+  it("rejects one-concept topics and nulls graphs with too few usable topics", () => {
+    const raw = parseGeneratedGraph(
+      JSON.stringify({
+        subject: "S",
+        subjectZh: "",
+        topics: [
+          { name: "Single Concept Topic", concepts: [{ name: "Only Concept" }] },
+          ...Array.from({ length: 4 }, (_, i) => ({
+            name: `Valid Topic ${i + 1}`,
+            concepts: [{ name: `A${i}` }, { name: `B${i}` }],
+          })),
+        ],
+      }),
+    );
+
+    expect(raw?.topics).toHaveLength(4);
+    expect(raw?.topics.some((topic) => topic.name === "Single Concept Topic")).toBe(false);
+    expect(parseGeneratedGraph(rawGraphJson(4, 1))).toBeNull();
+  });
+
   it("rejects graphs with fewer than four usable topics", () => {
     expect(parseGeneratedGraph(rawGraphJson(3))).toBeNull();
     expect(parseGeneratedGraph("not json")).toBeNull();
