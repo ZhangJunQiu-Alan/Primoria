@@ -38,6 +38,14 @@ ANTHROPIC_MODEL=your-model
 
 Set `DATABASE_URL` when tools need to read persisted course data, such as restoring course cards. Course creation itself is initiated by the agent with `position_learning_goal`, then performed by the web app's KG/course-generation flow.
 
+For local development, use the same Docker Compose database as the web app:
+
+```bash
+docker compose up -d postgres
+DATABASE_URL=postgresql://primoria_app:primoria_dev@127.0.0.1:5432/primoria
+DATABASE_SSL=disable
+```
+
 ## Verification
 
 ```bash

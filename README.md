@@ -33,8 +33,8 @@ This is a pnpm monorepo:
 
 - Node.js 20+
 - pnpm 10+ (`corepack enable` is recommended)
-- Postgres. The current shared provider is a private Tencent Cloud PostgreSQL
-  server reached through SSH tunnel for local development.
+- A Docker-compatible runtime for local Postgres. Docker Desktop works, but on
+  macOS the current local setup uses Docker CLI + Compose with Colima.
 - An OpenAI-compatible or Anthropic-compatible model endpoint.
 
 ## Install
@@ -79,14 +79,35 @@ ANTHROPIC_MODEL=your-model
 
 Primoria persistence is Postgres-first. Courses, lessons, auth/session data, chat history, lesson jobs, learning events, concept mastery, learner facts, and media assets are stored in Postgres.
 
+Local development defaults to the Docker Compose database in this repository.
+It runs `pgvector/pgvector:pg16`, creates the `primoria` database, creates the
+`primoria_app` user, enables the `vector` extension, and binds Postgres to
+`127.0.0.1:5432`.
+
+```bash
+DATABASE_URL="postgresql://primoria_app:primoria_dev@127.0.0.1:5432/primoria"
+DATABASE_SSL=disable
+```
+
+Start the local database before running app processes:
+
+```bash
+# If using Colima instead of Docker Desktop:
+# brew install docker docker-compose colima
+colima start
+
+docker compose up -d postgres
+```
+
+The local `primoria_dev` password is only for the Docker development database.
+Data is stored in the named Docker volume `primoria-postgres-data`.
+
+The old private Tencent Cloud tunnel is no longer the default local path. Use it
+only when intentionally targeting that remote database:
+
 ```bash
 DATABASE_URL="postgresql://primoria_app:[db-password]@127.0.0.1:15432/primoria"
 DATABASE_SSL=false
-```
-
-For local development, keep PostgreSQL private on the server and open an SSH tunnel:
-
-```bash
 ssh -N -L 15432:127.0.0.1:5432 ubuntu@<server>
 ```
 
@@ -208,6 +229,7 @@ If `GEMINI_IMAGE_MODEL` is unset, Primoria uses `gemini-3.1-flash-lite-image` by
 The root dev script runs every `dev:*` script in parallel: web app, LangGraph agent, lesson-generation worker, learning-progress worker, and extractor worker.
 
 ```bash
+docker compose up -d postgres
 pnpm dev
 ```
 

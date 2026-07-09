@@ -102,7 +102,7 @@ In the main AI Tutor, course creation starts with the `position_learning_goal` t
 
 ORM: Drizzle + `postgres` driver. Schema: `apps/web/src/lib/db/schema.ts`. Core tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, lesson/progress/extractor jobs, `knowledge_graph_*`, `learning_events`, `quiz_attempts`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `copilot_chat_threads`, `copilot_chat_messages`, `media_assets`, and `user_settings`.
 
-Local development currently uses the private Tencent Cloud PostgreSQL instance through an SSH tunnel. Supabase runtime helpers have been removed; do not add new Supabase URL/anon-key paths unless the database/auth strategy is intentionally changed.
+Local development uses the Docker Compose PostgreSQL service (`pgvector/pgvector:pg16`) bound to `127.0.0.1:5432`. The old `127.0.0.1:15432` Tencent Cloud SSH tunnel is a remote-database fallback only, not the default local path. Supabase runtime helpers have been removed; do not add new Supabase URL/anon-key paths unless the database/auth strategy is intentionally changed.
 
 ### Model provider
 

@@ -47,7 +47,8 @@ Implemented:
 - Local verification through CopilotKit and LangGraph Studio
 - Postgres-backed self-owned auth (`users`, `identities`, `sessions`)
 - Auth endpoint rate limiting through `auth_rate_limits`
-- Tencent Cloud PostgreSQL as the current shared development database
+- Docker Compose local PostgreSQL with `pgvector/pgvector:pg16` as the default
+  development database
 
 ## Runtime Config
 
@@ -57,8 +58,8 @@ Server defaults live in `apps/web/.env.local`:
 OPENAI_BASE_URL=https://ai.orbitlink.me/v1
 OPENAI_API_KEY=...
 OPENAI_MODEL=gpt-5.4
-DATABASE_URL=postgresql://primoria_app:[password]@127.0.0.1:15432/primoria
-DATABASE_SSL=false
+DATABASE_URL=postgresql://primoria_app:primoria_dev@127.0.0.1:5432/primoria
+DATABASE_SSL=disable
 ```
 
 Supported model providers:
@@ -79,7 +80,7 @@ Passed:
 
 ## Next Implementation Steps
 
-1. Run full local-stack QA: web, agent, workers, Tencent DB, and real model keys.
+1. Run full local-stack QA: web, agent, workers, Docker Postgres, and real model keys.
 2. Calibrate KG positioning thresholds after MiniMax embedding migration.
 3. Add user-level limits for cost-bearing AI endpoints beyond auth.
 4. Fix the remaining widget iframe sandbox hardening item.
