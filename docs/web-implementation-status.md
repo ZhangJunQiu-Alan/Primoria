@@ -10,6 +10,13 @@ Implemented:
 - Next.js / React / TypeScript web app under `apps/web`
 - Chat-first AI Tutor UI
 - Light Primoria visual style
+- Course outline route with generated/planned/locked lesson states and explicit
+  Jump ahead generation for planned lessons
+- Full-screen course lesson reader at `/course/[id]`: one block per step, lesson
+  title/progress in the reader top bar, bottom step controls, and no embedded
+  upcoming outline
+- Course Tutor on lesson pages as a collapsed right-side AI rail that expands
+  into the existing CopilotKit Course Tutor surface
 - Settings UI for model/provider preferences where wired
 - CopilotKit thread history with New chat reset
 - CopilotKit runtime route backed by the LangGraph `primoria_tutor` graph
@@ -22,6 +29,8 @@ Implemented:
   - `html_widget` artifact
   - `code` artifact
   - suggestions
+- Course block renderers for text, analogy, transfer, image, visual, code,
+  quiz, mind map, slide, and worksheet blocks
 - LangGraph visual tool pipeline:
   - prompt routing chooses course, visualization, STEM simulation, greeting, or concept answer
   - `plan_visualization`
@@ -74,3 +83,5 @@ Passed:
 2. Calibrate KG positioning thresholds after MiniMax embedding migration.
 3. Add user-level limits for cost-bearing AI endpoints beyond auth.
 4. Fix the remaining widget iframe sandbox hardening item.
+5. Browser-check the redesigned lesson reader across representative text,
+   visual, code, quiz, and worksheet lessons before release.
