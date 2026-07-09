@@ -71,8 +71,9 @@ function main() {
 
   // PATCH route: code branch + auth + originalCode backfill.
   assert(route.includes('z.literal("code")'), "route accepts code patches");
-  assert(route.includes("getCurrentUser"), "route resolves the owner for auth scoping");
-  assert(route.includes("requireAuth") && route.includes("if (denied) return denied"), "route returns 401 on expired session, not 404");
+  assert(route.includes("requireAuthUser"), "route resolves auth and owner in one session lookup");
+  assert(route.includes("const ownerId = user?.id ?? null"), "route passes the resolved owner into the store helper");
+  assert(route.includes("if (denied) return denied"), "route returns 401 on expired session, not 404");
   assert(route.includes("not a code block") && route.includes("status: 400"), "route maps not_code to 400");
   // Single-read save: backfill lives in the store helper, route calls it once.
   assert(route.includes("saveCodeBlockSource"), "route uses the single-read save helper");

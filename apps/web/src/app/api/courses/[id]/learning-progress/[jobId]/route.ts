@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { requireAuth } from "@/lib/auth/guard";
-import { getCurrentUser } from "@/lib/auth/session";
+import { requireAuthUser } from "@/lib/auth/guard";
 import { getCourse, insertPlannedLesson } from "@/lib/courses/store";
 import { resolveLearningProgressDecision } from "@/lib/courses/learning-progress-jobs";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
@@ -16,9 +15,9 @@ const RequestSchema = z.object({ action: z.enum(["accept", "dismiss"]) });
 // in control — nothing is generated until they confirm here.
 export async function POST(request: Request, context: { params: Promise<{ id: string; jobId: string }> }) {
   try {
-    const denied = await requireAuth();
+    const { denied, user } = await requireAuthUser();
     if (denied) return denied;
-    const ownerId = (await getCurrentUser())?.id;
+    const ownerId = user?.id;
     if (!ownerId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { id: courseId, jobId } = await context.params;

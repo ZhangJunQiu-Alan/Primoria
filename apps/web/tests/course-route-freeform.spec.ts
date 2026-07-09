@@ -1,8 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockState = vi.hoisted(() => ({
-  requireAuth: vi.fn(),
-  getCurrentUser: vi.fn(),
+  requireAuthUser: vi.fn(),
   getOrCreateGeneratedGraph: vi.fn(),
   initializeCourseOutline: vi.fn(),
   enqueueLessonGenerationJob: vi.fn(),
@@ -11,11 +10,7 @@ const mockState = vi.hoisted(() => ({
 }));
 
 vi.mock("../src/lib/auth/guard", () => ({
-  requireAuth: mockState.requireAuth,
-}));
-
-vi.mock("../src/lib/auth/session", () => ({
-  getCurrentUser: mockState.getCurrentUser,
+  requireAuthUser: mockState.requireAuthUser,
 }));
 
 vi.mock("../src/lib/knowledge-graph/generated-graph", () => ({
@@ -46,8 +41,7 @@ function request(body: unknown) {
 describe("learning course route freeform topics", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockState.requireAuth.mockResolvedValue(null);
-    mockState.getCurrentUser.mockResolvedValue({ id: "usr_1" });
+    mockState.requireAuthUser.mockResolvedValue({ denied: null, user: { id: "usr_1" } });
     mockState.initializeCourseOutline.mockResolvedValue({
       course: { id: "course_1" },
       firstLesson: { id: "lesson_1" },

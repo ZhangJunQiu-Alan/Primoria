@@ -7,7 +7,7 @@ import {
   removeCourseBlock,
   transformCourseBlock,
 } from "@/lib/agent-os/ai";
-import { requireAuth } from "@/lib/auth/guard";
+import { requireAuthUser } from "@/lib/auth/guard";
 
 const SettingsSchema = z
   .object({
@@ -73,9 +73,10 @@ const LegacyRewriteSchema = z.object({
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   try {
-    const denied = await requireAuth();
+    const { denied, user } = await requireAuthUser();
     if (denied) return denied;
     const { id } = await context.params;
+    const ownerId = user?.id ?? null;
     const json = await request.json();
     const body = "action" in (json ?? {})
       ? RequestSchema.parse(json)
@@ -86,6 +87,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         const result = await editCourseBlock(
           { courseId: id, blockId: body.blockId, comment: body.comment, selectedText: body.selectedText },
           body.settings,
+          ownerId,
         );
         return NextResponse.json({ course: result.course, block: result.block });
       }
@@ -93,6 +95,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         const result = await addCourseBlock(
           { courseId: id, targetType: body.targetType, instruction: body.instruction, afterBlockId: body.afterBlockId },
           body.settings,
+          ownerId,
         );
         return NextResponse.json({ course: result.course, block: result.block });
       }
@@ -100,15 +103,16 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         const result = await transformCourseBlock(
           { courseId: id, blockId: body.blockId, targetType: body.targetType, instruction: body.instruction },
           body.settings,
+          ownerId,
         );
         return NextResponse.json({ course: result.course, block: result.block });
       }
       case "remove": {
-        const result = await removeCourseBlock({ courseId: id, blockId: body.blockId, instruction: body.instruction });
+        const result = await removeCourseBlock({ courseId: id, blockId: body.blockId, instruction: body.instruction }, ownerId);
         return NextResponse.json({ course: result.course });
       }
       case "move": {
-        const result = await moveCourseBlock({ courseId: id, blockId: body.blockId, toIndex: body.toIndex, instruction: body.instruction });
+        const result = await moveCourseBlock({ courseId: id, blockId: body.blockId, toIndex: body.toIndex, instruction: body.instruction }, ownerId);
         return NextResponse.json({ course: result.course });
       }
     }

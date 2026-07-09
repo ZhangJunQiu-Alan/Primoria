@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireAuth } from "@/lib/auth/guard";
-import { getCurrentUser } from "@/lib/auth/session";
+import { requireAuthUser } from "@/lib/auth/guard";
 import { getCourse } from "@/lib/courses/store";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 
@@ -15,9 +14,9 @@ export const dynamic = "force-dynamic";
 // the post-lesson confirm gate — it only warms the cache so accept is instant.
 export async function POST(_request: Request, context: { params: Promise<{ id: string; lessonId: string }> }) {
   try {
-    const denied = await requireAuth();
+    const { denied, user } = await requireAuthUser();
     if (denied) return denied;
-    const ownerId = (await getCurrentUser())?.id;
+    const ownerId = user?.id;
     if (!ownerId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { id: courseId, lessonId } = await context.params;

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { requireAuth } from "@/lib/auth/guard";
-import { getCurrentUser } from "@/lib/auth/session";
+import { requireAuthUser } from "@/lib/auth/guard";
 import { getOnboardingCourseId } from "@/lib/learner-profile/onboarding-course";
 import { getLearnerOnboardingState } from "@/lib/learner-profile/store";
 
@@ -9,9 +8,8 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const denied = await requireAuth();
+  const { denied, user } = await requireAuthUser();
   if (denied) return denied;
-  const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const state = await getLearnerOnboardingState(user.id);

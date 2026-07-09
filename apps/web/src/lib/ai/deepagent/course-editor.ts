@@ -159,8 +159,9 @@ function schemaForVisualBlock(block: VisualBlock) {
 export async function editBlock(
   input: EditBlockInput,
   settings: TutorProviderSettings = {},
+  ownerId?: string | null,
 ): Promise<EditBlockResult> {
-  const course = await getCourse(input.courseId);
+  const course = await getCourse(input.courseId, ownerId);
   if (!course) throw new Error("Course not found");
   const block = courseBlocks(course).find((b) => b.id === input.blockId);
   if (!block) throw new Error("Block not found");
@@ -171,7 +172,7 @@ export async function editBlock(
   const rewritten = await invokeBlockEdit(model, schema, block, userPrompt);
 
   const next = normalizeEditedBlock(rewritten, block);
-  const updatedCourse = await updateBlock(input.courseId, input.blockId, next);
+  const updatedCourse = await updateBlock(input.courseId, input.blockId, next, ownerId);
   if (!updatedCourse) throw new Error("Update failed");
   await recordCourseEditEvent({
     courseId: input.courseId,
@@ -198,8 +199,9 @@ export type AddBlockInput = {
 export async function addBlock(
   input: AddBlockInput,
   settings: TutorProviderSettings = {},
+  ownerId?: string | null,
 ): Promise<EditBlockResult> {
-  const course = await getCourse(input.courseId);
+  const course = await getCourse(input.courseId, ownerId);
   if (!course) throw new Error("Course not found");
 
   const block = await generateBlock(
@@ -207,7 +209,7 @@ export async function addBlock(
     settings,
   );
   const atIndex = resolveInsertIndex(course, input.afterBlockId);
-  const updatedCourse = await insertBlock(input.courseId, block, atIndex);
+  const updatedCourse = await insertBlock(input.courseId, block, atIndex, ownerId);
   if (!updatedCourse) throw new Error("Insert failed");
 
   await recordCourseEditEvent({
@@ -232,8 +234,9 @@ export type TransformBlockInput = {
 export async function transformBlock(
   input: TransformBlockInput,
   settings: TutorProviderSettings = {},
+  ownerId?: string | null,
 ): Promise<EditBlockResult> {
-  const course = await getCourse(input.courseId);
+  const course = await getCourse(input.courseId, ownerId);
   if (!course) throw new Error("Course not found");
   const previous = courseBlocks(course).find((b) => b.id === input.blockId);
   if (!previous) throw new Error("Block not found");
@@ -254,7 +257,7 @@ export async function transformBlock(
     ...(previous.conceptIds ? { conceptIds: previous.conceptIds } : {}),
     ...(previous.pedagogicalRole ? { pedagogicalRole: previous.pedagogicalRole } : {}),
   };
-  const updatedCourse = await updateBlock(input.courseId, input.blockId, next);
+  const updatedCourse = await updateBlock(input.courseId, input.blockId, next, ownerId);
   if (!updatedCourse) throw new Error("Update failed");
 
   await recordCourseEditEvent({
@@ -271,15 +274,16 @@ export async function transformBlock(
 
 export async function removeCourseBlock(
   input: { courseId: string; blockId: string; instruction?: string },
+  ownerId?: string | null,
 ): Promise<{ course: Course }> {
-  const course = await getCourse(input.courseId);
+  const course = await getCourse(input.courseId, ownerId);
   if (!course) throw new Error("Course not found");
   if (courseBlocks(course).length <= 1) throw new Error("A course must keep at least one block.");
   const previous = courseBlocks(course).find((b) => b.id === input.blockId);
   if (!previous) throw new Error("Block not found");
   const lessonId = lessonIdForBlock(course, input.blockId);
 
-  const updatedCourse = await removeBlock(input.courseId, input.blockId);
+  const updatedCourse = await removeBlock(input.courseId, input.blockId, ownerId);
   if (!updatedCourse) throw new Error("Remove failed");
 
   await recordCourseEditEvent({
@@ -296,15 +300,16 @@ export async function removeCourseBlock(
 
 export async function moveCourseBlock(
   input: { courseId: string; blockId: string; toIndex: number; instruction?: string },
+  ownerId?: string | null,
 ): Promise<{ course: Course }> {
-  const course = await getCourse(input.courseId);
+  const course = await getCourse(input.courseId, ownerId);
   if (!course) throw new Error("Course not found");
   const flatBlocks = courseBlocks(course);
   const fromIndex = flatBlocks.findIndex((b) => b.id === input.blockId);
   if (fromIndex === -1) throw new Error("Block not found");
   const block = flatBlocks[fromIndex];
 
-  const updatedCourse = await moveBlock(input.courseId, input.blockId, input.toIndex);
+  const updatedCourse = await moveBlock(input.courseId, input.blockId, input.toIndex, ownerId);
   if (!updatedCourse) throw new Error("Move failed");
 
   await recordCourseEditEvent({

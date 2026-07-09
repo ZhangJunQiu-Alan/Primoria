@@ -3,8 +3,7 @@ import { z } from "zod";
 
 import { buildPositioningLog, logPositioning } from "@/lib/knowledge-graph/positioning-log";
 import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
-import { requireAuth } from "@/lib/auth/guard";
-import { getCurrentUser } from "@/lib/auth/session";
+import { requireAuthUser } from "@/lib/auth/guard";
 import { recordLearningEvent } from "@/lib/learning-events/store";
 
 export const runtime = "nodejs";
@@ -33,7 +32,7 @@ function userFacingError(error: unknown) {
 
 export async function POST(request: Request) {
   try {
-    const denied = await requireAuth();
+    const { denied, user } = await requireAuthUser();
     if (denied) return denied;
     const body = RequestSchema.parse(await request.json());
     const { result, search } = await positionLearningGoal(body);
@@ -41,7 +40,6 @@ export async function POST(request: Request) {
 
     logPositioning(buildPositioningLog({ encodedQuery: search.encodedQuery, search, result }));
 
-    const user = await getCurrentUser().catch(() => null);
     if (user) {
       await recordLearningEvent({
         type: "position.computed",

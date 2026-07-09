@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { saveCodeBlockSource, updateBlock } from "@/lib/courses/store";
-import { getCurrentUser } from "@/lib/auth/session";
-import { requireAuth } from "@/lib/auth/guard";
+import { requireAuthUser } from "@/lib/auth/guard";
 import type { MindMapBlock, MindMapNode } from "@/lib/courses/types";
 
 const PatchSchema = z.discriminatedUnion("type", [
@@ -18,12 +17,10 @@ export async function PATCH(
 
   // When auth is enabled, an expired/absent session must read as 401, not as a
   // 404 from the owner-scoped course lookup below. No-op when auth is disabled.
-  const denied = await requireAuth();
+  const { denied, user } = await requireAuthUser();
   if (denied) return denied;
 
   const body = PatchSchema.parse(await request.json());
-
-  const user = await getCurrentUser();
   const ownerId = user?.id ?? null;
 
   if (body.type === "code") {

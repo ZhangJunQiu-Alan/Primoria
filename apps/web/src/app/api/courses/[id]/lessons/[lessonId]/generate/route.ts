@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
-import { requireAuth } from "@/lib/auth/guard";
-import { getCurrentUser } from "@/lib/auth/session";
+import { requireAuthUser } from "@/lib/auth/guard";
 
 export const dynamic = "force-dynamic";
 
@@ -10,9 +9,9 @@ export const dynamic = "force-dynamic";
 // already-generated lesson. The model never runs in this route; no settings.
 export async function POST(_request: Request, context: { params: Promise<{ id: string; lessonId: string }> }) {
   try {
-    const denied = await requireAuth();
+    const { denied, user } = await requireAuthUser();
     if (denied) return denied;
-    const ownerId = (await getCurrentUser())?.id;
+    const ownerId = user?.id;
     if (!ownerId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { id, lessonId } = await context.params;
