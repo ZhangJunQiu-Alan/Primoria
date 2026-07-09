@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { confirmPasswordReset } from "@/lib/auth/password-reset";
+import { AUTH_UNAVAILABLE_ERROR, toSafeAuthError } from "@/lib/auth/errors";
 import { authRateLimitHeaders, checkAuthRateLimit } from "@/lib/auth/rate-limit";
 import { isAuthEnabled } from "@/lib/auth/session";
 
@@ -11,7 +12,7 @@ const RequestSchema = z.object({
 
 export async function POST(request: Request) {
   if (!isAuthEnabled()) {
-    return NextResponse.json({ error: "Database auth is not configured. Set DATABASE_URL first." }, { status: 503 });
+    return NextResponse.json(AUTH_UNAVAILABLE_ERROR.body, { status: AUTH_UNAVAILABLE_ERROR.status });
   }
 
   try {
@@ -31,8 +32,7 @@ export async function POST(request: Request) {
     await confirmPasswordReset(body);
     return NextResponse.json({ ok: true });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Password reset failed";
-    const status = /timed out|database/i.test(message) ? 503 : /invalid|expired|password/i.test(message) ? 400 : 500;
-    return NextResponse.json({ error: message }, { status });
+    const response = toSafeAuthError(error, "password-reset-confirm", "Password reset failed. Please try again.");
+    return NextResponse.json(response.body, { status: response.status });
   }
 }

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
-import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { normalizeAuthRedirect } from "@/lib/auth/redirect";
 import { msg, useT } from "@/lib/i18n/client";
 
@@ -67,8 +66,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
       });
       const data = (await response.json()) as { error?: string };
       if (!response.ok) throw new Error(data.error ?? "Authentication failed");
-      router.push(next);
-      router.refresh();
+      router.replace(next);
     } catch (err) {
       setError(err instanceof Error ? err.message : t.auth.authFailed);
     } finally {
@@ -108,7 +106,6 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
             <h1>{title}</h1>
             <p>{subtitle}</p>
           </div>
-          <LanguageSwitcher className="auth-language-switcher" />
         </div>
 
         <div className="auth-fields">

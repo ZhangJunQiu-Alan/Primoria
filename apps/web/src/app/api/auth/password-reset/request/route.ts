@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { PASSWORD_RESET_GENERIC_MESSAGE, requestPasswordReset } from "@/lib/auth/password-reset";
+import { AUTH_UNAVAILABLE_ERROR, PASSWORD_RESET_EMAIL_UNAVAILABLE_ERROR, toSafeAuthError } from "@/lib/auth/errors";
 import { authRateLimitHeaders, checkAuthRateLimit } from "@/lib/auth/rate-limit";
 import { isAuthEnabled } from "@/lib/auth/session";
 import { isPasswordResetEmailConfigured } from "@/lib/email/password-reset";
@@ -11,10 +12,12 @@ const RequestSchema = z.object({
 
 export async function POST(request: Request) {
   if (!isAuthEnabled()) {
-    return NextResponse.json({ error: "Database auth is not configured. Set DATABASE_URL first." }, { status: 503 });
+    return NextResponse.json(AUTH_UNAVAILABLE_ERROR.body, { status: AUTH_UNAVAILABLE_ERROR.status });
   }
   if (!isPasswordResetEmailConfigured()) {
-    return NextResponse.json({ error: "Password reset email is not configured." }, { status: 503 });
+    return NextResponse.json(PASSWORD_RESET_EMAIL_UNAVAILABLE_ERROR.body, {
+      status: PASSWORD_RESET_EMAIL_UNAVAILABLE_ERROR.status,
+    });
   }
 
   try {
@@ -39,8 +42,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true, message: PASSWORD_RESET_GENERIC_MESSAGE });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Password reset request failed";
-    const status = /timed out|database/i.test(message) ? 503 : /email|invalid/i.test(message) ? 400 : 500;
-    return NextResponse.json({ error: message }, { status });
+    const response = toSafeAuthError(error, "password-reset-request", "Password reset request failed. Please try again.");
+    return NextResponse.json(response.body, { status: response.status });
   }
 }

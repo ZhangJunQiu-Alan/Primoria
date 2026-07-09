@@ -2,6 +2,7 @@ import { randomBytes } from "node:crypto";
 import { and, eq } from "drizzle-orm";
 import { getDb } from "../db/client";
 import { identities, users } from "../db/schema";
+import { AuthError } from "./errors";
 import { hashPassword, verifyPassword } from "./password";
 import { createSession, createSessionRecord, setCreatedSessionCookie } from "./session";
 import type { AuthUser } from "./types";
@@ -14,13 +15,15 @@ export function normalizeEmail(email: string) {
 }
 
 export function validatePassword(password: string) {
-  if (password.length < 8) throw new Error("Password must be at least 8 characters.");
+  if (password.length < 8) throw new AuthError("weak_password", "Password must be at least 8 characters.", 400);
 }
 
 export async function signUpWithEmail(input: { email: string; password: string; displayName?: string | null }): Promise<AuthUser> {
   const email = normalizeEmail(input.email);
   validatePassword(input.password);
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error("Enter a valid email address.");
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    throw new AuthError("invalid_email", "Enter a valid email address.", 400);
+  }
 
   const db = getDb();
   const userId = `usr_${randomBytes(12).toString("base64url")}`;
@@ -35,7 +38,7 @@ export async function signUpWithEmail(input: { email: string; password: string; 
         .from(identities)
         .where(and(eq(identities.provider, EMAIL_PASSWORD_PROVIDER), eq(identities.providerUserId, email)))
         .limit(1);
-      if (existing.length > 0) throw new Error(ACCOUNT_EXISTS_MESSAGE);
+      if (existing.length > 0) throw new AuthError("account_exists", ACCOUNT_EXISTS_MESSAGE, 400);
 
       await tx.insert(users).values({
         id: userId,
@@ -58,7 +61,7 @@ export async function signUpWithEmail(input: { email: string; password: string; 
     });
     await setCreatedSessionCookie(session);
   } catch (error) {
-    if (isEmailIdentityUniqueViolation(error)) throw new Error(ACCOUNT_EXISTS_MESSAGE);
+    if (isEmailIdentityUniqueViolation(error)) throw new AuthError("account_exists", ACCOUNT_EXISTS_MESSAGE, 400);
     throw error;
   }
 
@@ -83,7 +86,7 @@ export async function signInWithEmail(input: { email: string; password: string }
 
   const row = rows[0];
   if (!row || !verifyPassword(input.password, row.passwordHash)) {
-    throw new Error("Invalid email or password.");
+    throw new AuthError("invalid_credentials", "Invalid email or password.", 401);
   }
 
   await createSession(row.userId);

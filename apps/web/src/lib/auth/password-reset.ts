@@ -4,6 +4,7 @@ import { getDb } from "../db/client";
 import { identities, otpCodes, sessions } from "../db/schema";
 import { buildPasswordResetUrl, sendPasswordResetEmail } from "../email/password-reset";
 import { normalizeEmail, validatePassword } from "./accounts";
+import { AuthError } from "./errors";
 import { hashPassword } from "./password";
 
 const PASSWORD_RESET_TARGET_TYPE = "password_reset";
@@ -94,7 +95,7 @@ export async function confirmPasswordReset(input: { token: string; password: str
     .limit(1);
 
   const row = rows[0];
-  if (!row) throw new Error("Password reset link is invalid or expired.");
+  if (!row) throw new AuthError("invalid_reset_token", "Password reset link is invalid or expired.", 400);
 
   await getDb().transaction(async (tx) => {
     await tx

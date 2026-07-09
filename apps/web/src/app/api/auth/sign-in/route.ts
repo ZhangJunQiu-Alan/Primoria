@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { signInWithEmail } from "@/lib/auth/accounts";
+import { AUTH_UNAVAILABLE_ERROR, toSafeAuthError } from "@/lib/auth/errors";
 import { authRateLimitHeaders, checkAuthRateLimit } from "@/lib/auth/rate-limit";
 import { isAuthEnabled } from "@/lib/auth/session";
 
@@ -11,7 +12,7 @@ const RequestSchema = z.object({
 
 export async function POST(request: Request) {
   if (!isAuthEnabled()) {
-    return NextResponse.json({ error: "Database auth is not configured. Set DATABASE_URL first." }, { status: 503 });
+    return NextResponse.json(AUTH_UNAVAILABLE_ERROR.body, { status: AUTH_UNAVAILABLE_ERROR.status });
   }
   try {
     const body = RequestSchema.parse(await request.json());
@@ -26,8 +27,7 @@ export async function POST(request: Request) {
     const user = await signInWithEmail(body);
     return NextResponse.json({ user });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Sign in failed";
-    const status = /timed out|database/i.test(message) ? 503 : /invalid|password|email/i.test(message) ? 401 : 500;
-    return NextResponse.json({ error: message }, { status });
+    const response = toSafeAuthError(error, "sign-in", "Sign in failed. Please try again.");
+    return NextResponse.json(response.body, { status: response.status });
   }
 }
