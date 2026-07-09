@@ -25,7 +25,7 @@ export default async function CoursePage({
 
   return (
     <main className="app-shell course-app-shell">
-      <section className="workspace course-workspace" style={{ ["--course-sidebar-width" as string]: "410px" }}>
+      <section className="workspace course-workspace">
         <CopilotKitProvider>
           <CourseDetailClient
             initialCourse={course}

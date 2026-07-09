@@ -7242,7 +7242,8 @@ cpk-web-inspector {
 
 /* ── course detail page ────────────────────────────────────────────── */
 .course-workspace {
-  --course-sidebar-width: 84px;
+  --course-collapsed-sidebar-width: 84px;
+  --course-sidebar-width: var(--course-collapsed-sidebar-width);
   --course-content-gutter: clamp(18px, 3vw, 44px);
   --course-content-margin-start: auto;
   --course-content-margin-end: var(--course-content-gutter);
@@ -7603,6 +7604,7 @@ cpk-web-inspector {
   to { transform: translateX(160%); }
 }
 .course-block-wrapper {
+  position: relative;
   appearance: none;
   background: transparent;
   border: none;
@@ -7615,6 +7617,36 @@ cpk-web-inspector {
   outline: 2px solid transparent;
   outline-offset: 4px;
   transition: outline-color 0.15s ease, transform 0.15s ease;
+}
+.course-block-action-trigger {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(23, 19, 15, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.92);
+  color: var(--muted);
+  box-shadow: 0 8px 20px rgba(57, 42, 25, 0.08);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.course-block-action-trigger:hover,
+.course-block-action-trigger:focus-visible,
+.course-block-wrapper[data-actions-expanded="true"] .course-block-action-trigger {
+  border-color: rgba(200, 136, 26, 0.38);
+  background: #fff8eb;
+  color: #8a5a14;
+  box-shadow: 0 10px 24px rgba(200, 136, 26, 0.16);
+}
+.course-block-action-trigger:focus-visible {
+  outline: 2px solid rgba(200, 136, 26, 0.58);
+  outline-offset: 2px;
 }
 .course-block-wrapper.selected {
   outline-color: #c8881a;
@@ -8617,7 +8649,8 @@ cpk-web-inspector {
 
 /* ── course detail AI sidebar ─────────────────────────────────────── */
 .course-detail-layout {
-  --course-sidebar-width: 84px;
+  --course-collapsed-sidebar-width: 84px;
+  --course-sidebar-width: var(--course-collapsed-sidebar-width);
   width: 100%;
   height: 100%;
   min-height: 0;
@@ -8641,7 +8674,8 @@ cpk-web-inspector {
   right: 0;
   bottom: 0;
   height: 100vh;
-  min-width: 84px;
+  width: var(--course-sidebar-width);
+  min-width: var(--course-sidebar-width);
   z-index: 30;
   display: flex;
   flex-direction: column;
@@ -8981,8 +9015,9 @@ cpk-web-inspector {
 }
 
 @media (max-width: 860px) {
-  .course-workspace {
-    --course-sidebar-width: 68px;
+  .course-workspace,
+  .course-detail-layout {
+    --course-collapsed-sidebar-width: 68px;
   }
 
   .course-reader {

@@ -188,13 +188,17 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
   };
 
   function startNewChat() {
-    createNewThread();
+    const threadId = createNewThread();
+    setCurrentThread(threadId);
     setSidebarOpen(false);
+    router.push("/");
   }
 
   function selectThread(threadId: string) {
     setCurrentThreadId(threadId);
+    setCurrentThread(threadId);
     setSidebarOpen(false);
+    router.push("/");
   }
 
   function renderTab(tab: NavTab, variant: "rail" | "sidebar") {
