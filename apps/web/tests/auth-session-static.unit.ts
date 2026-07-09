@@ -14,6 +14,9 @@ function read(path: string) {
 function main() {
   const session = read("src/lib/auth/session.ts");
   const profileRoute = read("src/app/api/profile/route.ts");
+  const signoutRoute = read("src/app/auth/signout/route.ts");
+  const navRail = read("src/components/tutor/nav-rail.tsx");
+  const homePage = read("src/app/page.tsx");
 
   assert(!session.includes("new Map"), "auth session does not use process-local Map cache");
   assert(!session.includes("SESSION_USER_CACHE_TTL_MS"), "auth session has no process-local TTL cache");
@@ -27,6 +30,9 @@ function main() {
   assert(session.includes('process.env.NODE_ENV === "production"'), "session lookup still fails closed in production");
   assert(session.includes("treating the request as signed out"), "local database outage degrades to signed-out state instead of a dev overlay");
   assert(session.includes("getDb().delete(sessions).where(eq(sessions.tokenHash, tokenHash))"), "sign-out deletes the database session");
+  assert(signoutRoute.includes('NextResponse.redirect(new URL("/", request.url), { status: 303 })'), "POST /auth/signout returns to the signed-out landing page");
+  assert(navRail.includes('router.push("/")'), "client sign-out returns to the signed-out landing page");
+  assert(homePage.includes("if (authEnabled && !user) return <LandingPage />;"), "home renders the landing page when signed out");
 
   assert(!profileRoute.includes("invalidateCurrentSessionUserCache"), "profile updates do not rely on local-only cache invalidation");
 

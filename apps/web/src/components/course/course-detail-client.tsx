@@ -17,7 +17,6 @@ import { lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labe
 import { useLearningProgressRecommendation } from "@/hooks/use-learning-progress-recommendation";
 import { learningDecisionAcceptLabel, learningDecisionHeadline } from "@/lib/courses/learning-progress-labels";
 import { useT, msg } from "@/lib/i18n/client";
-import type { I18nDictionary } from "@/lib/i18n/dictionaries";
 
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
@@ -371,67 +370,6 @@ function isPracticeBlock(block: CourseBlock) {
   return block.type === "quiz" || block.type === "worksheet";
 }
 
-function blockActionPrompt(
-  block: CourseBlock,
-  action: "explain" | "example" | "practice" | "check",
-  t: I18nDictionary["course"],
-) {
-  const title = blockDisplayTitle(block);
-  if (action === "explain") return msg(t.explainSelected, { title });
-  if (action === "example") return msg(t.exampleSelected, { title });
-  if (action === "practice") return msg(t.practiceSelected, { title });
-  return msg(t.checkSelected, { title });
-}
-
-function stopBlockActionEvent(event: React.SyntheticEvent) {
-  event.stopPropagation();
-}
-
-function CourseBlockActionTray({
-  block,
-  expanded,
-  onAction,
-}: {
-  block: CourseBlock;
-  expanded: boolean;
-  onAction: (block: CourseBlock, action: "explain" | "example" | "practice" | "check") => void;
-}) {
-  const t = useT().course;
-  const controlsId = `course-block-actions-${block.id}`;
-  const title = blockDisplayTitle(block);
-  const actions = [
-    { key: "explain" as const, label: t.actionExplain },
-    { key: "example" as const, label: t.actionExample },
-    { key: "practice" as const, label: t.actionPractice },
-    { key: "check" as const, label: t.actionCheck },
-  ];
-
-  return (
-    <div
-      className={`course-block-learning-actions${expanded ? " expanded" : ""}`}
-      hidden={!expanded}
-      aria-hidden={!expanded}
-      onClick={stopBlockActionEvent}
-      onMouseUp={stopBlockActionEvent}
-      onKeyDown={stopBlockActionEvent}
-      onKeyUp={stopBlockActionEvent}
-    >
-      <div id={controlsId} className="course-block-action-panel" role="group" aria-label={msg(t.learningActions, { title })}>
-        <div className="course-block-action-panel-copy">
-          <strong>{title}</strong>
-        </div>
-        <div className="course-block-action-tray">
-          {actions.map((action) => (
-            <button key={action.key} type="button" onClick={() => onAction(block, action.key)}>
-              {action.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function CourseSuggestionBridge({ threadId }: { threadId: string }) {
   const { agent } = useAgent({ agentId: "primoria_tutor", threadId, updates: [UseAgentUpdate.OnMessagesChanged] });
   const { copilotkit } = useCopilotKit();
@@ -678,10 +616,6 @@ function CourseAIAssistantPanel({
         <>
           {copilotEnabled ? (
             <>
-              <div className={`course-ai-context-strip${selectedBlock ? "" : " empty"}`}>
-                <span>{t.currentContext}</span>
-                <strong>{selectedBlock ? selectedBlockTitle : t.noSelectedBlock}</strong>
-              </div>
               <div className="course-ai-suggestions" aria-label={t.suggestionsAria}>
                 {suggestedPrompts.map((prompt) => (
                   <button
@@ -948,11 +882,9 @@ export function CourseDetailClient({
   const [readerStep, setReaderStep] = useState<{ lessonId: string | null; index: number }>({ lessonId: null, index: 0 });
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [selectedTextContext, setSelectedTextContext] = useState<SelectedTextContext | null>(null);
-  const [expandedActionsBlockId, setExpandedActionsBlockId] = useState<string | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
   const activeBlockRef = useRef<HTMLDivElement | null>(null);
-  const courseThreadId = courseThreadIdFor(course.id);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(SIDEBAR_WIDTH_KEY);
@@ -1058,18 +990,9 @@ export function CourseDetailClient({
     }));
   }
 
-  function openBlockActions(block: CourseBlock) {
+  function selectBlock(block: CourseBlock) {
     setSelectedBlockId(block.id);
     setSelectedTextContext(null);
-    setExpandedActionsBlockId(block.id);
-  }
-
-  function runBlockLearningAction(block: CourseBlock, action: "explain" | "example" | "practice" | "check") {
-    setSelectedBlockId(block.id);
-    setSelectedTextContext(null);
-    setSidebarCollapsed(false);
-    setExpandedActionsBlockId(block.id);
-    sendCoursePrompt(courseThreadId, blockActionPrompt(block, action, t));
   }
 
   function updateSelectedText(block: CourseBlock, element: HTMLElement) {
@@ -1133,7 +1056,6 @@ export function CourseDetailClient({
     setReaderStep({ lessonId: currentLessonId, index: next });
     setSelectedBlockId(null);
     setSelectedTextContext(null);
-    setExpandedActionsBlockId(null);
   }
 
   function runPracticeCheck() {
@@ -1173,7 +1095,6 @@ export function CourseDetailClient({
         : t.continueLabel
     : t.continueLabel;
   const lessonTitle = currentLesson?.title ?? course.title;
-  const actionsExpanded = currentBlock ? expandedActionsBlockId === currentBlock.id : false;
 
   return (
     <div
@@ -1202,12 +1123,11 @@ export function CourseDetailClient({
                 <div
                   ref={activeBlockRef}
                   data-block-id={currentBlock.id}
-                  data-actions-expanded={actionsExpanded ? "true" : "false"}
                   className={`course-block-wrapper course-reader-block-wrapper${selectedBlockId === currentBlock.id ? " selected" : ""}`}
                   onClick={(event) => {
                     if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
                     if (selectionTextInside(event.currentTarget)) return;
-                    openBlockActions(currentBlock);
+                    selectBlock(currentBlock);
                   }}
                   onMouseUp={(event) => {
                     if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
@@ -1215,28 +1135,6 @@ export function CourseDetailClient({
                   }}
                 >
                   <BlockRenderer block={currentBlock} courseId={course.id} onBlockUpdated={updateBlockInCourse} />
-                  <button
-                    type="button"
-                    className="course-block-action-trigger"
-                    aria-label={msg(t.learningActions, { title: blockDisplayTitle(currentBlock) })}
-                    aria-expanded={actionsExpanded}
-                    aria-controls={`course-block-actions-${currentBlock.id}`}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      openBlockActions(currentBlock);
-                    }}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                      <path d="M12 5h.01" />
-                      <path d="M12 12h.01" />
-                      <path d="M12 19h.01" />
-                    </svg>
-                  </button>
-                  <CourseBlockActionTray
-                    block={currentBlock}
-                    expanded={actionsExpanded}
-                    onAction={runBlockLearningAction}
-                  />
                 </div>
               </div>
             ) : (

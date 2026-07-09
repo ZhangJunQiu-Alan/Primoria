@@ -7478,10 +7478,6 @@ cpk-web-inspector {
   margin-bottom: 1.25em;
 }
 
-.course-reader-card .course-block-learning-actions {
-  margin-top: 18px;
-}
-
 .course-reader-controls {
   display: grid;
   grid-template-columns: 64px minmax(220px, 420px) 64px;
@@ -7618,36 +7614,6 @@ cpk-web-inspector {
   outline-offset: 4px;
   transition: outline-color 0.15s ease, transform 0.15s ease;
 }
-.course-block-action-trigger {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 2;
-  width: 32px;
-  height: 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(23, 19, 15, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 253, 248, 0.92);
-  color: var(--muted);
-  box-shadow: 0 8px 20px rgba(57, 42, 25, 0.08);
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
-}
-.course-block-action-trigger:hover,
-.course-block-action-trigger:focus-visible,
-.course-block-wrapper[data-actions-expanded="true"] .course-block-action-trigger {
-  border-color: rgba(200, 136, 26, 0.38);
-  background: #fff8eb;
-  color: #8a5a14;
-  box-shadow: 0 10px 24px rgba(200, 136, 26, 0.16);
-}
-.course-block-action-trigger:focus-visible {
-  outline: 2px solid rgba(200, 136, 26, 0.58);
-  outline-offset: 2px;
-}
 .course-block-wrapper.selected {
   outline-color: #c8881a;
 }
@@ -7689,96 +7655,6 @@ cpk-web-inspector {
 .course-block-body { font-size: 14px; line-height: 1.6; color: var(--ink); }
 .course-block-text p { margin: 0 0 10px; }
 .course-block-text p:last-child { margin-bottom: 0; }
-
-.course-block-learning-actions {
-  margin: 4px 0 0;
-  padding: 0;
-  border-top: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-.course-block-learning-actions.expanded {
-  animation: course-action-drawer-in 160ms ease-out both;
-}
-
-@keyframes course-action-drawer-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.course-block-action-tray button {
-  border: 1px solid rgba(23, 19, 15, 0.1);
-  border-radius: 999px;
-  background: #fffdf8;
-  color: var(--muted);
-  font: inherit;
-  font-size: 12px;
-  font-weight: 760;
-  line-height: 1;
-  cursor: pointer;
-}
-.course-block-action-panel {
-  position: relative;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-
-.course-block-action-panel-copy {
-  min-width: 0;
-}
-.course-block-action-panel-copy strong {
-  color: var(--ink);
-  font-size: 13px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.course-block-action-tray {
-  min-width: max-content;
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.course-block-action-tray button {
-  min-height: 30px;
-  padding: 7px 10px;
-}
-.course-block-action-tray button:hover {
-  border-color: rgba(74, 122, 90, 0.32);
-  background: #eef7f0;
-  color: #2f5a3d;
-}
-.course-block-action-tray button:focus-visible {
-  outline: 2px solid rgba(200, 136, 26, 0.58);
-  outline-offset: 2px;
-}
-
-@media (max-width: 720px) {
-  .course-block-action-panel {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .course-block-action-tray {
-    min-width: 0;
-    justify-content: flex-start;
-  }
-}
 
 .course-markdown {
   color: var(--ink);
@@ -8776,49 +8652,6 @@ cpk-web-inspector {
   white-space: nowrap;
 }
 
-.course-ai-context-strip {
-  flex: 0 0 auto;
-  margin: 10px 12px 0;
-  padding: 10px 11px;
-  border: 1px solid rgba(23, 19, 15, 0.08);
-  border-radius: 12px;
-  background: #fbf7f1;
-}
-.course-ai-context-strip.empty {
-  border-style: dashed;
-  background: #fffaf2;
-}
-
-.course-ai-context-strip > span {
-  display: block;
-  margin-bottom: 3px;
-  color: var(--quiet);
-  font-size: 9px;
-  font-weight: 850;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.course-ai-context-strip strong {
-  display: block;
-  font-size: 12px;
-  line-height: 1.25;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.course-ai-context-strip p {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
 .course-ai-block-chips,
 .course-ai-suggestions {
   display: flex;
@@ -9475,7 +9308,9 @@ cpk-web-inspector {
   padding: clamp(34px, 4vw, 50px);
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: clamp(22px, 3vw, 32px);
   color: #3d3326;
   background:
     linear-gradient(145deg, rgba(255, 242, 222, 0.96), rgba(232, 243, 234, 0.92)),
@@ -9484,10 +9319,10 @@ cpk-web-inspector {
 
 .auth-hero-copy {
   width: min(380px, 100%);
-  min-height: 390px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 16px;
 }
 
@@ -9546,10 +9381,12 @@ cpk-web-inspector {
 }
 
 .auth-hero-orbits {
-  position: absolute;
-  inset: 34px 34px auto auto;
-  width: 180px;
-  height: 180px;
+  position: relative;
+  inset: auto;
+  order: -1;
+  flex: 0 0 auto;
+  width: 158px;
+  height: 158px;
   border-radius: 50%;
   border: 1px solid rgba(122, 88, 24, 0.12);
 }
@@ -9590,7 +9427,8 @@ cpk-web-inspector {
   width: 100%;
   height: 100%;
   min-height: 0;
-  justify-content: center;
+  display: grid;
+  align-content: center;
   gap: 18px;
   padding: clamp(36px, 4vw, 58px) clamp(42px, 5vw, 66px);
   border: 0;
@@ -9601,8 +9439,8 @@ cpk-web-inspector {
 
 .auth-heading {
   display: grid;
-  min-height: 150px;
-  align-content: end;
+  min-height: 0;
+  align-content: start;
   gap: 14px;
 }
 
@@ -9620,15 +9458,16 @@ cpk-web-inspector {
 }
 
 .auth-fields {
-  min-height: 270px;
+  min-height: 0;
   display: grid;
-  grid-template-rows: repeat(3, minmax(76px, auto));
+  grid-template-rows: none;
   align-content: start;
   gap: 16px;
 }
 
 .auth-field-spacer {
-  min-height: 76px;
+  display: none;
+  min-height: 0;
   pointer-events: none;
 }
 
