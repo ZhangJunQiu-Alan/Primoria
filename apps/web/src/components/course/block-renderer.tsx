@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState, useCallback } from "react";
 import type {
   AnalogyBlock,
@@ -23,15 +24,104 @@ import type {
   WorksheetBlock,
   WorksheetItem,
 } from "@/lib/courses/types";
-import { MindMapBlockRenderer } from "@/components/course/mind-map-block-renderer";
-import { CodeBlockView as CodeBlockRunner } from "@/components/course/code-block-view";
 import { CourseInlineMarkdown, CourseMarkdown } from "@/components/course/course-markdown";
-import { WidgetRenderer } from "@/components/generative-ui/widget-renderer";
-import { EChartsRenderer } from "@/components/generative-ui/echarts-renderer";
-import { MermaidRenderer } from "@/components/generative-ui/mermaid-renderer";
-import { PhysicsSceneRenderer } from "@/components/generative-ui/physics-scene-renderer";
-import { AlgorithmVisualizer } from "@/components/generative-ui/algorithm-visualizer";
-import { MathExplorerRenderer } from "@/components/generative-ui/math-explorer-renderer";
+import type {
+  AlgorithmVisualizationArtifact,
+  EChartsArtifact,
+  MathExplorerArtifact,
+  MermaidArtifact,
+  PhysicsSceneArtifact,
+} from "@/lib/agent-os";
+
+type RendererVariant = "tool" | "course";
+type CodeBlockRunnerProps = {
+  block: CodeBlock;
+  courseId?: string;
+  onSaved?: (block: CodeBlock) => void;
+};
+type MindMapBlockRendererProps = {
+  block: MindMapBlock;
+  courseId?: string;
+};
+type WidgetRendererProps = {
+  title: string;
+  description: string;
+  html: string;
+  dependencies?: { url: string; global?: string; kind?: "script" | "module" | "style" }[];
+  onSendPrompt?: (prompt: string) => void;
+};
+
+const MindMapBlockRenderer = dynamic<MindMapBlockRendererProps>(
+  () => import("@/components/course/mind-map-block-renderer").then((mod) => mod.MindMapBlockRenderer),
+  {
+    ssr: false,
+    loading: () => <CourseLazyBlockLoading label="Loading mind map..." />,
+  },
+);
+
+const CodeBlockRunner = dynamic<CodeBlockRunnerProps>(
+  () => import("@/components/course/code-block-view").then((mod) => mod.CodeBlockView),
+  {
+    ssr: false,
+    loading: () => <CourseLazyBlockLoading label="Loading code editor..." />,
+  },
+);
+
+const WidgetRenderer = dynamic<WidgetRendererProps>(
+  () => import("@/components/generative-ui/widget-renderer").then((mod) => mod.WidgetRenderer),
+  {
+    ssr: false,
+    loading: () => <CourseLazyBlockLoading label="Loading visualization..." />,
+  },
+);
+
+const EChartsRenderer = dynamic<{ artifact: EChartsArtifact; variant?: RendererVariant }>(
+  () => import("@/components/generative-ui/echarts-renderer").then((mod) => mod.EChartsRenderer),
+  {
+    ssr: false,
+    loading: () => <CourseLazyBlockLoading label="Loading chart..." />,
+  },
+);
+
+const MermaidRenderer = dynamic<{ artifact: MermaidArtifact; variant?: RendererVariant }>(
+  () => import("@/components/generative-ui/mermaid-renderer").then((mod) => mod.MermaidRenderer),
+  {
+    ssr: false,
+    loading: () => <CourseLazyBlockLoading label="Loading diagram..." />,
+  },
+);
+
+const PhysicsSceneRenderer = dynamic<{ artifact: PhysicsSceneArtifact; variant?: RendererVariant }>(
+  () => import("@/components/generative-ui/physics-scene-renderer").then((mod) => mod.PhysicsSceneRenderer),
+  {
+    ssr: false,
+    loading: () => <CourseLazyBlockLoading label="Loading simulation..." />,
+  },
+);
+
+const AlgorithmVisualizer = dynamic<{ artifact: AlgorithmVisualizationArtifact; variant?: RendererVariant }>(
+  () => import("@/components/generative-ui/algorithm-visualizer").then((mod) => mod.AlgorithmVisualizer),
+  {
+    ssr: false,
+    loading: () => <CourseLazyBlockLoading label="Loading visualizer..." />,
+  },
+);
+
+const MathExplorerRenderer = dynamic<{ artifact: MathExplorerArtifact; variant?: RendererVariant }>(
+  () => import("@/components/generative-ui/math-explorer-renderer").then((mod) => mod.MathExplorerRenderer),
+  {
+    ssr: false,
+    loading: () => <CourseLazyBlockLoading label="Loading explorer..." />,
+  },
+);
+
+function CourseLazyBlockLoading({ label }: { label: string }) {
+  return (
+    <div className="course-lazy-block-loading" role="status">
+      {label}
+    </div>
+  );
+}
 
 export function BlockRenderer({
   block,

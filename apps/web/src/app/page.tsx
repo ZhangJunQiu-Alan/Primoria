@@ -1,8 +1,6 @@
-import { TutorWorkspaceClient } from "@/components/tutor/tutor-workspace-client";
-import { CopilotKitProvider } from "@/components/copilot-provider";
-import { LandingPage } from "@/components/landing/landing-page";
-import { OnboardingClient } from "@/components/onboarding/onboarding-client";
+import { redirect } from "next/navigation";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
+import { APP_HOME_PATH, loginPathWithNext } from "@/lib/auth/routes";
 import { getLearnerOnboardingState } from "@/lib/learner-profile/store";
 
 export const dynamic = "force-dynamic";
@@ -11,10 +9,12 @@ export default async function HomePage() {
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUserForRsc();
 
-  if (authEnabled && !user) return <LandingPage />;
+  if (authEnabled && !user) redirect(loginPathWithNext(APP_HOME_PATH));
+
   if (authEnabled && user) {
     const onboarding = await getLearnerOnboardingState(user.id);
     if (!onboarding.complete) {
+      const { OnboardingClient } = await import("@/components/onboarding/onboarding-client");
       return (
         <main className="app-shell onboarding-app-shell">
           <OnboardingClient initialState={onboarding} />
@@ -23,11 +23,11 @@ export default async function HomePage() {
     }
   }
 
+  const { TutorWorkspaceClient } = await import("@/components/tutor/tutor-workspace-client");
+
   return (
     <main className="app-shell">
-      <CopilotKitProvider>
-        <TutorWorkspaceClient initialAuthState={{ authEnabled, user, loaded: true }} />
-      </CopilotKitProvider>
+      <TutorWorkspaceClient initialAuthState={{ authEnabled, user, loaded: true }} />
     </main>
   );
 }

@@ -7927,6 +7927,18 @@ cpk-web-inspector {
   max-width: 100%;
 }
 
+.course-lazy-block-loading {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(23, 19, 15, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 253, 248, 0.72);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
 @media (max-width: 720px) {
   .course-visual-frame .visualizer,
   .course-visual-frame .course-visual-canvas {

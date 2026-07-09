@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { PUBLIC_LANDING_PATH } from "@/lib/auth/routes";
 import type { AuthUser } from "@/lib/auth/types";
 import {
   clearCopilotThreadStorage,
@@ -177,7 +178,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
       window.localStorage.removeItem("primoria:tutor-provider-settings");
       setLocalAuthState({ authEnabled: authEnabled ?? true, user: null });
       setAccountOpen(false);
-      router.push("/");
+      router.push(PUBLIC_LANDING_PATH);
       router.refresh();
     } finally {
       setSigningOut(false);

@@ -72,7 +72,9 @@ function main() {
   assert(devOnboardingPage.includes('process.env.NODE_ENV === "production"'), "dev onboarding route is hidden in production by default");
 
   const proxy = src("proxy.ts");
-  assert(proxy.includes("^\\/dev\\/onboarding"), "dev onboarding route bypasses auth proxy");
+  const authRoutes = src("lib/auth/routes.ts");
+  assert(proxy.includes("isPublicPath"), "proxy delegates public route checks to the shared auth route policy");
+  assert(authRoutes.includes("^\\/dev\\/onboarding"), "dev onboarding route bypasses auth proxy");
 
   const onboardingPositioning = src("lib/learner-profile/onboarding-positioning.ts");
   assert(onboardingPositioning.includes("getOrCreateGeneratedGraph"), "out-of-library goals reuse the Home generated-graph path");

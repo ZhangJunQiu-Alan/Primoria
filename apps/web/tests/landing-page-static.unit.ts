@@ -14,17 +14,21 @@ function read(path: string) {
 
 async function main() {
   const homePage = read("src/app/page.tsx");
+  const welcomePage = read("src/app/welcome/page.tsx");
+  const authRoutes = read("src/lib/auth/routes.ts");
+  const proxy = read("src/proxy.ts");
   const landingPage = read("src/components/landing/landing-page.tsx");
   const rootLayout = read("src/app/layout.tsx");
   const styles = read("src/app/globals.css");
 
-  assert(homePage.includes('import { LandingPage } from "@/components/landing/landing-page"'), "home imports the public landing page");
-  assert(homePage.includes("if (authEnabled && !user) return <LandingPage />;"), "unauthenticated visitors see the public landing page");
-  assert(homePage.includes("<CopilotKitProvider>"), "authenticated visitors still enter the AI Tutor workspace");
-  assert(
-    homePage.indexOf("if (authEnabled && !user) return <LandingPage />;") < homePage.indexOf("<CopilotKitProvider>"),
-    "landing branch resolves before the CopilotKit tutor tree renders",
-  );
+  assert(authRoutes.includes('PUBLIC_LANDING_PATH = "/welcome"'), "public landing path is centralized");
+  assert(authRoutes.includes("PUBLIC_ROUTE_PATTERNS"), "public route patterns live in the shared auth route module");
+  assert(proxy.includes('from "@/lib/auth/routes"'), "proxy reads the shared auth route module");
+  assert(!proxy.includes("const PUBLIC_PATTERNS"), "proxy does not maintain a private public-route list");
+  assert(welcomePage.includes('import { LandingPage } from "@/components/landing/landing-page"'), "welcome route imports the public landing page");
+  assert(welcomePage.includes("return <LandingPage />;"), "welcome route renders the public landing page");
+  assert(!homePage.includes("LandingPage"), "home no longer renders the landing page branch");
+  assert(homePage.includes("redirect(loginPathWithNext(APP_HOME_PATH))"), "home redirects signed-out or expired-cookie visitors to login");
 
   assert(!landingPage.includes("CopilotKitProvider"), "public landing component does not mount CopilotKit");
 
@@ -32,6 +36,7 @@ async function main() {
   const zhLanding = JSON.stringify(dictionaries.zh.landing);
   const enLanding = JSON.stringify(dictionaries.en.landing);
   assert(landingPage.includes("useT"), "landing resolves copy from the i18n dictionary");
+  assert(landingPage.includes("PUBLIC_LANDING_PATH"), "landing brand links back to the public welcome route");
   assert(landingPage.includes("<span>{t.landing.headlineProduct}</span>"), "landing hero makes the product name a first-class part of the headline");
   assert(dictionaries.zh.landing.headlineProduct === "Primoria" && dictionaries.en.landing.headlineProduct === "Primoria", "landing product name is Primoria in both languages");
   assert(dictionaries.zh.landing.headline.includes("学习更加智能、更加定制化、更加高效"), "landing hero uses the product positioning line");
