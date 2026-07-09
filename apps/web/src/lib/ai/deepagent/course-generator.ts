@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { getCourseByGraph, saveCourse } from "@/lib/courses/store";
-import { getTopicGraph } from "@/lib/knowledge-graph/topic-graph";
+import { getTopicGraph, type TopicGraph } from "@/lib/knowledge-graph/topic-graph";
 import type { BlockType, Course, CourseBlock, Lesson } from "@/lib/courses/types";
 import { courseBlocks, summarizeCourse } from "@/lib/courses/types";
 import type { CourseSummary } from "@/lib/courses/types";
@@ -154,6 +154,9 @@ export type GenerateCourseInput = {
   ownerId?: string;
   source?: "cold_start" | "profile";
   language?: string | null;
+  // LLM-generated topic graph for out-of-library goals; anchors the course to
+  // its gen_* graphId and shapes the outline exactly like a library graph.
+  generatedGraph?: TopicGraph;
 };
 
 function randomId(prefix: string) {
@@ -166,6 +169,8 @@ export type InitializeCourseOutlineInput = {
   kgContext?: CourseContext;
   source?: "cold_start" | "profile";
   language?: string | null;
+  // LLM-generated topic graph for out-of-library goals.
+  generatedGraph?: TopicGraph;
 };
 
 export type InitializeCourseOutlineResult = {
@@ -185,14 +190,19 @@ export async function initializeCourseOutline(
 ): Promise<InitializeCourseOutlineResult> {
   const { ownerId } = input;
   if (!ownerId) throw new Error("You must sign in to create a course.");
-  const graphId = input.kgContext?.graphId ?? null;
+  const graphId = input.kgContext?.graphId ?? input.generatedGraph?.graphId ?? null;
   const targetTopicId = input.kgContext?.startTopic?.topicId ?? null;
 
-  // Reuse the learner's existing Course for this subject KG, otherwise build a
-  // fresh outline of planned (lazy) lessons spanning the remaining topics.
+  // Reuse the learner's existing Course for this subject KG (library or
+  // generated), otherwise build a fresh outline of planned (lazy) lessons.
   let course = graphId ? await getCourseByGraph(ownerId, graphId) : undefined;
   const isNewCourse = !course;
-  if (!course) course = buildOutlineCourse({ topic: input.topic, kgContext: input.kgContext, language: input.language }, graphId);
+  if (!course) {
+    course = buildOutlineCourse(
+      { topic: input.topic, kgContext: input.kgContext, language: input.language, generatedGraph: input.generatedGraph },
+      graphId,
+    );
+  }
 
   const firstLesson = firstLessonForTopic(course, targetTopicId);
   if (!firstLesson) throw new Error("Course outline has no lessons to generate.");
@@ -253,6 +263,15 @@ function outlineTopicsFrom(
   } catch {
     return [{ topicId: startTopicId, name: fallbackName, description: plannedLessonDescription(fallbackName, [], language), order: 1 }];
   }
+  return outlineFromGraphTopics(graph, startTopicId, fallbackName, language);
+}
+
+function outlineFromGraphTopics(
+  graph: TopicGraph,
+  startTopicId: string | null,
+  fallbackName: string,
+  language?: string | null,
+): { topicId: string | null; name: string; description: string; order: number }[] {
   const start = startTopicId ? graph.topics.find((t) => t.topicId === startTopicId) : undefined;
   const startOrder = start?.defaultOrder ?? 0;
   const remaining = graph.topics
@@ -306,10 +325,12 @@ function subjectFor(graphId: string | null, fallback: string): string {
 function buildOutlineCourse(input: GenerateCourseInput, graphId: string | null): Course {
   const now = Date.now();
   const startTopic = input.kgContext?.startTopic ?? null;
-  const subject = subjectFor(graphId, input.topic);
-  const outline = graphId
-    ? outlineTopicsFrom(graphId, startTopic?.topicId ?? null, startTopic?.name ?? input.topic, input.language)
-    : [{ topicId: null as string | null, name: input.topic, description: plannedLessonDescription(input.topic, [], input.language), order: 1 }];
+  const subject = input.generatedGraph?.subject ?? subjectFor(graphId, input.topic);
+  const outline = input.generatedGraph
+    ? outlineFromGraphTopics(input.generatedGraph, null, input.topic, input.language)
+    : graphId
+      ? outlineTopicsFrom(graphId, startTopic?.topicId ?? null, startTopic?.name ?? input.topic, input.language)
+      : [{ topicId: null as string | null, name: input.topic, description: plannedLessonDescription(input.topic, [], input.language), order: 1 }];
   return {
     id: input.courseId ?? randomId("crs"),
     title: subject,

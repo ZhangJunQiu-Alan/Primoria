@@ -14,6 +14,7 @@ import { runStage2Positioning } from "./positioning-llm";
 import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse, type KnowledgeGraphSearchResult } from "./search";
 import { buildGraphCandidates } from "./graph-router";
 import { detectKgLanguage } from "./display-name";
+import { getTopicGraph, listTopicGraphIds } from "./topic-graph";
 import type { CourseContext, CourseContextTopic } from "./course-context";
 
 export type { CourseContext, CourseContextTopic } from "./course-context";
@@ -43,10 +44,23 @@ export type PositionLearningGoalResult = {
 export type PositioningPlan =
   | { branch: "positioned"; mode: PositioningMode; courseContext: CourseContext }
   | { branch: "clarify_subject"; message: string; candidates: SubjectCandidate[] }
+  | { branch: "out_of_library"; topic: string; message: string }
   | { branch: "fallback"; message: string };
 
 function resultTopicId(r: KnowledgeGraphSearchResult): string | null {
   return r.kind === "topic" ? r.nodeId : r.topicId;
+}
+
+function listLibrarySubjects(): Array<{ graphId: string; subject: string }> {
+  const out: Array<{ graphId: string; subject: string }> = [];
+  for (const graphId of listTopicGraphIds()) {
+    try {
+      out.push({ graphId, subject: getTopicGraph(graphId).subject || graphId });
+    } catch {
+      // skip dirty ids
+    }
+  }
+  return out;
 }
 
 function buildDiagnostics(
@@ -105,8 +119,10 @@ export async function positionLearningGoal(
     hitTopicIdsByGraph.set(r.graphId, set);
   }
 
+  const librarySubjects = listLibrarySubjects();
   const ctx: FinalizeContext = {
     candidates: selected,
+    librarySubjects,
     hitTopicIdsByGraph,
     language,
     diagnostics: buildDiagnostics(maxSimilarity, selected),
@@ -114,10 +130,18 @@ export async function positionLearningGoal(
   };
 
   const decision = await runStage2Positioning(
-    { query: input.query, language, graphs: selected.map((c) => ({ graphId: c.graphId, subject: c.subject })) },
+    {
+      query: input.query,
+      language,
+      graphs: selected.map((c) => ({ graphId: c.graphId, subject: c.subject })),
+      librarySubjects,
+    },
     undefined,
   );
   const result = decision ? finalizeStage2(decision, ctx) : safeDefault(ctx);
+  if (result.branch === "out_of_library" && !result.freeformTopic) {
+    result.freeformTopic = search.encodedQuery.coreQuery;
+  }
 
   // Surface the resolved graph on the search response so logging/events record
   // the real subject rather than the cross-graph sentinel.
@@ -139,6 +163,9 @@ export function planFromPositioning(result: PositioningResult): PositioningPlan 
       message: result.message ?? "",
       candidates: result.candidates ?? [],
     };
+  }
+  if (result.branch === "out_of_library") {
+    return { branch: "out_of_library", topic: result.freeformTopic ?? "", message: result.message ?? "" };
   }
   if (result.branch === "fallback") {
     return { branch: "fallback", message: result.message ?? "" };

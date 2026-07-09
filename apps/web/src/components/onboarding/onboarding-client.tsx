@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import {
   isTutorStyle,
+  type GoalPositioningCandidate,
   type KnowledgeBackground,
   type LearnerOnboardingState,
   type OnboardingStep,
@@ -15,12 +16,12 @@ import {
 type GoalAnchorSummary = {
   graphSubject: string;
   topicName: string;
-  branch: "specific" | "subject_start" | "directed";
+  branch: "specific" | "subject_start" | "directed" | "generated";
 };
 
 type GoalClarify = {
   message: string;
-  candidates: { graphId: string; subject: string; startTopicId: string }[];
+  candidates: GoalPositioningCandidate[];
 };
 
 type OnboardingApiResponse = LearnerOnboardingState & {
@@ -162,6 +163,10 @@ function debugOnboardingResponse(
     goalStartTopicId: null,
     goalTargetConceptId: null,
     goalSkippedAt: null,
+    goalPositioningStatus: null,
+    goalPositioningMessage: null,
+    goalPositioningCandidates: [],
+    goalPositioningUpdatedAt: null,
     knowledgeBackground: null,
     knowledgeBackgroundSkippedAt: null,
     tutorStyle: null,
@@ -188,6 +193,10 @@ function debugOnboardingResponse(
         goalStartTopicId: "arrays_and_strings",
         goalTargetConceptId: null,
         goalSkippedAt: null,
+        goalPositioningStatus: "positioned",
+        goalPositioningMessage: null,
+        goalPositioningCandidates: [],
+        goalPositioningUpdatedAt: now,
         updatedAt: now,
       },
       nextStep: "background",
@@ -253,7 +262,25 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
       ? { src: selectedTutorStyle.imageSrc, width: 1024, height: 1536 }
       : { src: visual.src, width: visual.width, height: visual.height };
   const completionHref = courseId ? `/course/${encodeURIComponent(courseId)}/outline` : "/";
-  const completionLabel = courseId ? "Open course outline" : "Enter homepage";
+  const completionLabel = courseId ? "Open course outline" : "Enter workspace";
+  const savedLearningGoal = state.profile?.learningGoal ?? learningGoal;
+  const goalStatus = state.profile?.goalPositioningStatus ?? null;
+  const finalClarify =
+    clarify ??
+    (goalStatus === "clarify" && state.profile?.goalPositioningCandidates.length
+      ? {
+          message: state.profile.goalPositioningMessage ?? "A few subjects match your goal. Pick where to start.",
+          candidates: state.profile.goalPositioningCandidates,
+        }
+      : null);
+
+  function applyResponse(data: OnboardingApiResponse) {
+    setState({ profile: data.profile ?? null, nextStep: data.nextStep, complete: data.complete });
+    setClarify(data.clarify ?? null);
+    if (data.anchor) setAnchor(data.anchor);
+    const nextCourseId = data.course?.courseId ?? data.courseId ?? null;
+    if (nextCourseId) setCourseId(nextCourseId);
+  }
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -272,28 +299,49 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
   }, []);
 
   useEffect(() => {
-    if (!state.complete || debugMode) return;
-    window.location.assign(courseId ? `/course/${encodeURIComponent(courseId)}/outline` : "/");
-  }, [courseId, debugMode, state.complete]);
+    if (debugMode || step !== "done" || goalStatus !== "pending") return;
+    let cancelled = false;
+
+    async function pollOnboarding() {
+      try {
+        const response = await fetch("/api/onboarding", { cache: "no-store" });
+        const data = (await response.json().catch(() => ({}))) as OnboardingApiResponse;
+        if (!cancelled && response.ok) applyResponse(data);
+      } catch {
+        // The final screen remains usable even if a background status poll fails.
+      }
+    }
+
+    const timer = window.setInterval(() => void pollOnboarding(), 2500);
+    void pollOnboarding();
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [debugMode, goalStatus, step]);
 
   const goalSummary = useMemo(() => {
     if (anchor) {
+      if (anchor.branch === "generated") {
+        return `Designed a custom path for ${anchor.graphSubject}. We'll start from ${anchor.topicName}.`;
+      }
       return anchor.branch === "specific"
         ? `Matched ${anchor.topicName} in ${anchor.graphSubject}.`
         : `Matched ${anchor.graphSubject}. We'll start from ${anchor.topicName}.`;
     }
+    if (state.profile?.goalPositioningStatus === "pending") return "Learning goal saved. Matching the knowledge graph in the background.";
+    if (state.profile?.goalPositioningStatus === "clarify") return "Learning goal saved. Choose a subject later if needed.";
+    if (state.profile?.goalPositioningStatus === "failed") return state.profile.goalPositioningMessage ?? "Learning goal saved. Course origin needs confirmation.";
     if (state.profile?.goalStartTopicId) return "Learning goal saved.";
     if (state.profile?.goalSkippedAt) return "Learning goal skipped.";
     return "";
-  }, [anchor, state.profile?.goalSkippedAt, state.profile?.goalStartTopicId]);
-
-  function applyResponse(data: OnboardingApiResponse) {
-    setState({ profile: data.profile ?? null, nextStep: data.nextStep, complete: data.complete });
-    setClarify(data.clarify ?? null);
-    if (data.anchor) setAnchor(data.anchor);
-    const nextCourseId = data.course?.courseId ?? data.courseId ?? null;
-    if (nextCourseId) setCourseId(nextCourseId);
-  }
+  }, [
+    anchor,
+    state.profile?.goalPositioningMessage,
+    state.profile?.goalPositioningStatus,
+    state.profile?.goalSkippedAt,
+    state.profile?.goalStartTopicId,
+  ]);
 
   async function run(action: () => Promise<OnboardingApiResponse>) {
     setBusy(true);
@@ -488,18 +536,61 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
           {step === "done" ? (
             <div className="onboarding-step onboarding-step-complete">
               <div className="onboarding-step-copy">
-                <p className="onboarding-kicker">Onboarding complete</p>
-                <h1>Your learning path is ready.</h1>
-                <p className="onboarding-copy">The course outline can now open from your learning space.</p>
+                <p className="onboarding-kicker">
+                  {finalClarify ? "Choose a subject" : goalStatus === "pending" ? "Preparing path" : "Onboarding complete"}
+                </p>
+                <h1>
+                  {finalClarify
+                    ? "Which subject should Primoria start from?"
+                    : goalStatus === "pending"
+                      ? "Your learning path is being prepared."
+                      : goalStatus === "failed"
+                        ? "Your workspace is ready."
+                        : "Your learning path is ready."}
+                </h1>
+                <p className="onboarding-copy">
+                  {finalClarify
+                    ? finalClarify.message
+                    : goalStatus === "pending"
+                      ? "Primoria is matching your goal in the background. You can enter the workspace while it finishes."
+                      : goalStatus === "failed"
+                        ? "We saved your goal, but the course origin still needs confirmation."
+                        : "The course outline can now open from your learning space."}
+                </p>
               </div>
-              <div className="onboarding-control-region onboarding-complete-region" />
+              <div className="onboarding-control-region onboarding-complete-region">
+                {finalClarify ? (
+                  <div className="onboarding-choice-list onboarding-clarify-list">
+                    {finalClarify.candidates.map((candidate) => (
+                      <button
+                        key={candidate.graphId}
+                        type="button"
+                        disabled={busy}
+                        onClick={() => run(() => submit("/api/onboarding/goal", { learningGoal: savedLearningGoal, graphId: candidate.graphId }))}
+                      >
+                        <strong>{candidate.subject}</strong>
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
               <p className="onboarding-note">
-                {courseId ? "The next screen will open the generated course outline." : "No course was created because the learning goal was skipped."}
+                {finalClarify
+                  ? "Pick one subject to generate the course outline from a stable graph anchor."
+                  : courseId
+                    ? "The next screen will open the generated course outline."
+                    : goalStatus === "pending"
+                      ? "Course preparation will continue in the background."
+                      : goalStatus === "failed"
+                        ? (state.profile?.goalPositioningMessage ?? "You can continue and confirm the course starting point later.")
+                        : "No course was created because the learning goal was skipped."}
               </p>
               <div className="onboarding-actions">
-                <Link className="onboarding-primary" href={completionHref}>
-                  {completionLabel}
-                </Link>
+                {finalClarify ? null : (
+                  <Link className="onboarding-primary" href={completionHref}>
+                    {completionLabel}
+                  </Link>
+                )}
                 {debugMode ? (
                   <button type="button" className="onboarding-skip" onClick={resetPreview}>
                     Restart preview

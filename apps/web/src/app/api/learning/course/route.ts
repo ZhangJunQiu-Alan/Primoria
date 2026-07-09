@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { initializeCourseOutline } from "@/lib/ai/deepagent/course-generator";
+import { getOrCreateGeneratedGraph } from "@/lib/knowledge-graph/generated-graph";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { requireAuth } from "@/lib/auth/guard";
 import { getCurrentUser } from "@/lib/auth/session";
@@ -14,7 +15,7 @@ import { recordLearningEvent } from "@/lib/learning-events/store";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const RequestSchema = z.object({
+const AnchorRequestSchema = z.object({
   graphId: z.string().min(1),
   startTopicId: z.string().min(1),
   targetConceptId: z.string().min(1).nullable().optional(),
@@ -23,6 +24,16 @@ const RequestSchema = z.object({
   // original ambiguous query so the server can log a subject-level menu_select.
   clarifySourceQuery: z.string().min(1).optional(),
 }).strict();
+
+// Out-of-library build: no KG anchor, just the learner's topic. The server
+// designs a free-form outline with one model call, then reuses the normal
+// lesson-job pipeline.
+const FreeformRequestSchema = z.object({
+  topic: z.string().min(1).max(200),
+  language: z.string().min(1).optional(),
+}).strict();
+
+const RequestSchema = z.union([AnchorRequestSchema, FreeformRequestSchema]);
 
 function userFacingError(error: unknown) {
   const message = error instanceof Error ? error.message : String(error);
@@ -41,25 +52,44 @@ export async function POST(request: Request) {
     const ownerId = (await getCurrentUser())?.id;
     if (!ownerId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const anchor = RequestSchema.parse(await request.json());
-    const courseContext = resolveCourseContextFromTopicAnchor(anchor);
+    const parsed = RequestSchema.parse(await request.json());
 
-    if (anchor.clarifySourceQuery) {
-      await recordLearningEvent({
-        type: "position.menu_select",
+    let outlineInput;
+    if ("topic" in parsed) {
+      // Out-of-library: reuse (or generate + persist) a topic graph for this
+      // topic, then build the course exactly like a library-anchored one — the
+      // gen_* graphId gives per-owner course dedup and cross-user graph reuse.
+      const generated = await getOrCreateGeneratedGraph({ topic: parsed.topic, language: parsed.language ?? null });
+      outlineInput = {
         ownerId,
-        graphId: anchor.graphId,
-        sourceQuery: anchor.clarifySourceQuery,
-      });
+        topic: parsed.topic,
+        source: "cold_start" as const,
+        language: parsed.language ?? null,
+        generatedGraph: generated?.graph,
+      };
+    } else {
+      const anchor = parsed;
+      const courseContext = resolveCourseContextFromTopicAnchor(anchor);
+
+      if (anchor.clarifySourceQuery) {
+        await recordLearningEvent({
+          type: "position.menu_select",
+          ownerId,
+          graphId: anchor.graphId,
+          sourceQuery: anchor.clarifySourceQuery,
+        });
+      }
+
+      outlineInput = {
+        ownerId,
+        topic: courseContext.startTopic.name,
+        kgContext: courseContext,
+        source: "cold_start" as const,
+        language: anchor.language ?? null,
+      };
     }
 
-    const { course, firstLesson, summary } = await initializeCourseOutline({
-      ownerId,
-      topic: courseContext.startTopic.name,
-      kgContext: courseContext,
-      source: "cold_start",
-      language: anchor.language ?? null,
-    });
+    const { course, firstLesson, summary } = await initializeCourseOutline(outlineInput);
 
     const enqueued = await enqueueLessonGenerationJob({ ownerId, courseId: course.id, lessonId: firstLesson.id });
     const job = enqueued.job ? toLessonGenerationJobSummary(enqueued.job) : null;

@@ -29,7 +29,7 @@ export type PositioningParams = {
 };
 
 export type PositioningMode = "specific" | "subject_start" | "directed";
-export type PositioningBranch = "positioned" | "clarify_subject" | "fallback";
+export type PositioningBranch = "positioned" | "clarify_subject" | "fallback" | "out_of_library";
 
 export type LessonPlan = {
   order: number;
@@ -61,8 +61,10 @@ export type PositioningResult = {
   path?: LessonPlan[];
   // clarify_subject
   candidates?: SubjectCandidate[];
-  // clarify_subject / fallback
+  // clarify_subject / fallback / out_of_library
   message?: string;
+  // out_of_library: concise course topic for free-form generation.
+  freeformTopic?: string;
   diagnostics: PositioningDiagnostics;
 };
 
@@ -78,14 +80,20 @@ export type Stage2Decision =
       reason?: string;
     }
   | { outcome: "clarify_subject"; message?: string; candidateGraphIds: string[] }
+  | { outcome: "out_of_library"; topic?: string; message?: string }
   | { outcome: "fallback"; message?: string };
 
 // Lean candidate view finalizeStage2 needs (decoupled from graph-router's
 // GraphCandidate so positioning.ts stays free of recall/router imports).
 export type GraphCandidateLite = { graphId: string; subject: string; bestSimilarity: number };
 
+export type LibrarySubject = { graphId: string; subject: string };
+
 export type FinalizeContext = {
   candidates: GraphCandidateLite[];
+  // Every subject in the library (not just recall candidates). Lets Stage 2
+  // route to a subject that embedding recall pruned, and validates its picks.
+  librarySubjects: LibrarySubject[];
   // recall-hit topic ids per graph, for the directed guardrail.
   hitTopicIdsByGraph: Map<string, Set<string>>;
   language: KgLanguage;
@@ -158,30 +166,52 @@ export function buildLinearPath(
   return { startTopicId, targetConceptId, linear: path.length > 1, path };
 }
 
-function subjectCandidateList(ctx: FinalizeContext): SubjectCandidate[] {
+function subjectChips(list: LibrarySubject[]): SubjectCandidate[] {
   const out: SubjectCandidate[] = [];
-  for (const c of ctx.candidates) {
+  for (const c of list) {
     const root = firstTopicOf(c.graphId);
     if (root) out.push({ graphId: c.graphId, subject: c.subject, startTopicId: root.topicId });
   }
   return out;
 }
 
-// Safe default when the LLM errors / times out / returns nothing usable: start
-// the top candidate subject from its root. Never blocks the learner.
+function subjectCandidateList(ctx: FinalizeContext): SubjectCandidate[] {
+  return subjectChips(ctx.candidates);
+}
+
+// Safe default when the LLM errors / times out / returns nothing usable. With a
+// single candidate subject, start it from its root; with several plausible
+// subjects, never guess — ask the learner to pick (clarify_subject) instead of
+// silently building a course in the wrong subject.
 export function safeDefault(ctx: FinalizeContext): PositioningResult {
   const top = ctx.candidates[0];
   if (!top) {
     return { branch: "fallback", graphId: "", params: ctx.params, message: FALLBACK_MESSAGE, diagnostics: ctx.diagnostics };
   }
+  if (ctx.candidates.length >= 2) {
+    const candidates = subjectCandidateList(ctx);
+    if (candidates.length >= 2) {
+      return {
+        branch: "clarify_subject",
+        graphId: candidates[0].graphId,
+        params: ctx.params,
+        candidates,
+        message: defaultClarifyMessage(candidates),
+        diagnostics: ctx.diagnostics,
+      };
+    }
+  }
   const root = firstTopicOf(top.graphId);
+  if (!root) {
+    return { branch: "fallback", graphId: "", params: ctx.params, message: FALLBACK_MESSAGE, diagnostics: ctx.diagnostics };
+  }
   return {
     branch: "positioned",
     graphId: top.graphId,
     params: ctx.params,
     mode: "subject_start",
     diagnostics: ctx.diagnostics,
-    ...buildLinearPath(top.graphId, root!.topicId, null, ctx.language),
+    ...buildLinearPath(top.graphId, root.topicId, null, ctx.language),
   };
 }
 
@@ -201,10 +231,27 @@ export function finalizeStage2(decision: Stage2Decision | null, ctx: FinalizeCon
     };
   }
 
+  if (decision.outcome === "out_of_library") {
+    return {
+      branch: "out_of_library",
+      graphId: "",
+      params: ctx.params,
+      freeformTopic: decision.topic?.trim() || undefined,
+      message: decision.message?.trim() || undefined,
+      diagnostics: ctx.diagnostics,
+    };
+  }
+
   if (decision.outcome === "clarify_subject") {
-    const all = subjectCandidateList(ctx);
-    const requested = new Set(decision.candidateGraphIds.filter((id) => validGraphIds.has(id)));
-    const candidates = requested.size > 0 ? all.filter((c) => requested.has(c.graphId)) : all;
+    // Chips may reference any library subject, not just recall candidates.
+    const subjectById = new Map(ctx.librarySubjects.map((s) => [s.graphId, s.subject]));
+    for (const c of ctx.candidates) subjectById.set(c.graphId, c.subject);
+    const requested = decision.candidateGraphIds.filter((id) => subjectById.has(id));
+    const base: LibrarySubject[] =
+      requested.length > 0
+        ? [...new Set(requested)].map((graphId) => ({ graphId, subject: subjectById.get(graphId)! }))
+        : ctx.candidates;
+    const candidates = subjectChips(base);
     if (candidates.length < 2) return safeDefault(ctx); // nothing to choose between
     const message = decision.message?.trim() || defaultClarifyMessage(candidates);
     return {
@@ -218,12 +265,16 @@ export function finalizeStage2(decision: Stage2Decision | null, ctx: FinalizeCon
   }
 
   // positioned
-  if (!validGraphIds.has(decision.graphId)) return safeDefault(ctx);
+  const inCandidates = validGraphIds.has(decision.graphId);
+  const inLibrary = inCandidates || ctx.librarySubjects.some((s) => s.graphId === decision.graphId);
+  if (!inLibrary) return safeDefault(ctx);
   const graphId = decision.graphId;
   const root = firstTopicOf(graphId);
   if (!root) return safeDefault(ctx);
 
-  let mode: PositioningMode = decision.mode;
+  // Stage 2 saw full topic lists only for recall candidates; a pick from the
+  // wider library list can only start the subject from its root.
+  let mode: PositioningMode = inCandidates ? decision.mode : "subject_start";
   let startTopicId = decision.startTopicId;
   let targetConceptId: string | null = decision.targetConceptId ?? null;
 

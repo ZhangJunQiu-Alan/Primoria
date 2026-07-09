@@ -34,6 +34,11 @@ function ctx(opts: {
   for (const [g, ids] of Object.entries(opts.hits ?? {})) hitTopicIdsByGraph.set(g, new Set(ids));
   return {
     candidates,
+    librarySubjects: [
+      { graphId: LA, subject: "Linear Algebra" },
+      { graphId: CALC, subject: "Calculus" },
+      { graphId: "Python", subject: "Python" },
+    ],
     hitTopicIdsByGraph,
     language: "en",
     diagnostics: { maxSimilarity: candidates[0]?.bestSimilarity ?? 0, candidateGraphs: [] },
@@ -91,10 +96,18 @@ function main() {
     assert(r.mode === "subject_start" && r.startTopicId === LA_T1, "bad topic id → subject_start root");
   }
 
-  // graphId not among candidates → safe default on top candidate.
+  // graphId in the library but not among candidates → positioned at that
+  // subject's root (Stage 2 may route past embedding-pruned candidates).
   {
-    const r = finalizeStage2(positioned({ graphId: "python", startTopicId: LA_T1 }), ctx());
-    assert(r.branch === "positioned" && r.graphId === LA && r.mode === "subject_start", "invalid graph → safeDefault top candidate");
+    const r = finalizeStage2(positioned({ graphId: "Python", startTopicId: "root" }), ctx());
+    assert(r.branch === "positioned" && r.graphId === "Python" && r.mode === "subject_start", "library graph outside candidates → subject_start");
+    assert(typeof r.startTopicId === "string" && r.startTopicId !== "root", "library-pick start coerced to real root topic");
+  }
+
+  // graphId not in the library at all → safe default (clarify with 2 candidates).
+  {
+    const r = finalizeStage2(positioned({ graphId: "not_a_graph", startTopicId: LA_T1 }), ctx());
+    assert(r.branch === "clarify_subject", "unknown graph → safeDefault clarify");
   }
 
   // clarify_subject → two subject chips, each starting at its root topic.
@@ -119,10 +132,31 @@ function main() {
     assert(r.branch === "fallback" && r.message === "be more specific", "fallback message kept");
   }
 
-  // null decision (LLM failure) → safe default subject_start on top candidate.
+  // null decision (LLM failure) with several candidates → clarify, never a
+  // silently-guessed course.
   {
     const r = finalizeStage2(null, ctx());
-    assert(r.branch === "positioned" && r.mode === "subject_start" && r.graphId === LA, "null → safeDefault");
+    assert(r.branch === "clarify_subject" && (r.candidates?.length ?? 0) === 2, "null + 2 candidates → clarify");
+    assert((r.message ?? "").length > 0, "degraded clarify has a message");
+  }
+
+  // null decision with a single dominating candidate → subject_start at its root.
+  {
+    const r = finalizeStage2(null, ctx({ candidates: [{ graphId: LA, subject: "Linear Algebra", bestSimilarity: 0.7 }] }));
+    assert(r.branch === "positioned" && r.mode === "subject_start" && r.graphId === LA, "null + 1 candidate → safeDefault positioned");
+  }
+
+  // out_of_library decision passes topic + message through.
+  {
+    const r = finalizeStage2({ outcome: "out_of_library", topic: "MCP 协议", message: "为你定制课程" }, ctx());
+    assert(r.branch === "out_of_library" && r.freeformTopic === "MCP 协议" && r.message === "为你定制课程", "out_of_library passthrough");
+  }
+
+  // clarify may offer library subjects beyond the recall candidates.
+  {
+    const d: Stage2Decision = { outcome: "clarify_subject", candidateGraphIds: [LA, "Python"], message: "" };
+    const r = finalizeStage2(d, ctx());
+    assert(r.branch === "clarify_subject" && r.candidates?.some((c) => c.graphId === "Python"), "clarify includes library subject");
   }
 
   // safe default with no candidates → fallback.

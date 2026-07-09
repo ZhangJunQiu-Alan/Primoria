@@ -38,6 +38,8 @@ export type LearnerFact = {
 };
 
 export type OnboardingStep = "goal" | "background" | "style" | "done";
+export type GoalPositioningStatus = "pending" | "positioned" | "clarify" | "failed";
+export type GoalPositioningCandidate = { graphId: string; subject: string; startTopicId: string };
 
 export type LearnerProfile = {
   ownerId: string;
@@ -46,6 +48,10 @@ export type LearnerProfile = {
   goalStartTopicId: string | null;
   goalTargetConceptId: string | null;
   goalSkippedAt: string | null;
+  goalPositioningStatus: GoalPositioningStatus | null;
+  goalPositioningMessage: string | null;
+  goalPositioningCandidates: GoalPositioningCandidate[];
+  goalPositioningUpdatedAt: string | null;
   knowledgeBackground: KnowledgeBackground | null;
   knowledgeBackgroundSkippedAt: string | null;
   tutorStyle: TutorStyle | null;

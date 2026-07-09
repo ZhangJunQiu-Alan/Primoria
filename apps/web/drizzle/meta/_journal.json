@@ -246,6 +246,20 @@
       "when": 1783457974329,
       "tag": "0034_bent_obadiah_stane",
       "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "7",
+      "when": 1783544400000,
+      "tag": "0035_onboarding_goal_positioning_status",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1783566387125,
+      "tag": "0036_huge_jackal",
+      "breakpoints": true
     }
   ]
 }

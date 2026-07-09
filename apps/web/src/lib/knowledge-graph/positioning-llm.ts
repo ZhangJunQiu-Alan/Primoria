@@ -29,20 +29,23 @@ const defaultInvoker: Stage2ModelInvoker = async ({ system, user }) => {
 };
 
 const SYSTEM_PROMPT = [
-  "You position a learner's study goal inside a fixed set of subject knowledge graphs.",
-  "You are given one or more candidate subjects, each with its full ordered topic list.",
-  "Decide ONE of three outcomes and reply with ONLY JSON (no prose, no markdown):",
+  "You route a learner's study goal to the right subject in a course library, or declare it outside the library.",
+  "You are given: (a) one or more candidate subjects with their full ordered topic lists, and (b) the complete list of every library subject (id + name only).",
+  "Decide ONE of four outcomes and reply with ONLY JSON (no prose, no markdown):",
   "",
   '1. {"outcome":"positioned","graphId":"<id>","mode":"specific|subject_start|directed","startTopicId":"<id>","targetConceptId":"<id|null>","reason":"<short>"}',
   '   - subject_start: the goal is just the bare subject with no direction → start at the FIRST topic (smallest order).',
   '   - directed: the goal names a sub-area / a level / says "review" / "I already know the basics" → start at the UPSTREAM topic of that region (do NOT start at topic 1, do NOT skip past the named region).',
   '   - specific: the goal clearly targets one concept → start at that concept\'s topic and set targetConceptId to it.',
+  '   - If the right subject is in the library list but its topics are NOT shown, still return positioned with that graphId, mode "subject_start", and startTopicId "root".',
   '2. {"outcome":"clarify_subject","candidateGraphIds":["<id>",...],"message":"<warm message in the learner\'s language listing the subjects and asking which to start>"}',
-  "   - use ONLY when several candidate subjects are genuinely plausible and none clearly wins.",
-  '3. {"outcome":"fallback","message":"<ask for a more specific goal, in the learner\'s language>"}',
-  "   - use only when nothing offered fits the goal.",
+  "   - use ONLY when several library subjects are genuinely plausible and none clearly wins.",
+  '3. {"outcome":"out_of_library","topic":"<concise course topic in the learner\'s language>","message":"<one warm sentence, in the learner\'s language, saying a custom course will be designed for this topic>"}',
+  "   - use when the goal is a real, teachable topic that NO library subject covers (e.g. a technology, framework, or field absent from the list). Do NOT force such a goal into a subject that merely sounds related.",
+  '4. {"outcome":"fallback","message":"<ask for a more specific goal, in the learner\'s language>"}',
+  "   - use only when the goal is too vague or is not a learning topic at all.",
   "",
-  "Rules: graphId and every topic/concept id MUST be copied verbatim from the provided graphs — never invent ids.",
+  "Rules: graphId and every topic/concept id MUST be copied verbatim from the provided data — never invent ids.",
   "Match on meaning across languages, not surface words. Prefer a dedicated subject over a broad one that merely mentions the topic.",
 ].join("\n");
 
@@ -56,14 +59,24 @@ function buildGraphBlock(graphId: string, subject: string, language: KgLanguage)
   return [`subject id=${graphId} | name=${subject}`, ...lines].join("\n");
 }
 
-function buildUserPrompt(query: string, graphs: Stage2Graph[], language: KgLanguage): string {
-  return [
+function buildUserPrompt(
+  query: string,
+  graphs: Stage2Graph[],
+  librarySubjects: Stage2Graph[],
+  language: KgLanguage,
+): string {
+  const lines = [
     `Learner goal: "${query}"`,
     "",
     "Candidate subjects (each line: [order] topicId — name (concepts)):",
     "",
     ...graphs.map((g) => buildGraphBlock(g.graphId, g.subject, language)),
-  ].join("\n");
+  ];
+  if (librarySubjects.length > 0) {
+    lines.push("", "All library subjects (graphId — name):");
+    lines.push(...librarySubjects.map((s) => `  ${s.graphId} — ${s.subject}`));
+  }
+  return lines.join("\n");
 }
 
 function parseDecision(text: string, validGraphIds: Set<string>): Stage2Decision | null {
@@ -81,6 +94,13 @@ function parseDecision(text: string, validGraphIds: Set<string>): Stage2Decision
 
   if (outcome === "fallback") {
     return { outcome: "fallback", message: typeof obj.message === "string" ? obj.message : undefined };
+  }
+  if (outcome === "out_of_library") {
+    return {
+      outcome: "out_of_library",
+      topic: typeof obj.topic === "string" ? obj.topic : undefined,
+      message: typeof obj.message === "string" ? obj.message : undefined,
+    };
   }
   if (outcome === "clarify_subject") {
     const ids = Array.isArray(obj.candidateGraphIds)
@@ -110,15 +130,16 @@ function parseDecision(text: string, validGraphIds: Set<string>): Stage2Decision
 }
 
 export async function runStage2Positioning(
-  input: { query: string; language: KgLanguage; graphs: Stage2Graph[] },
+  input: { query: string; language: KgLanguage; graphs: Stage2Graph[]; librarySubjects?: Stage2Graph[] },
   invokeModel: Stage2ModelInvoker = defaultInvoker,
 ): Promise<Stage2Decision | null> {
   if (input.graphs.length === 0) return null;
-  const validGraphIds = new Set(input.graphs.map((g) => g.graphId));
+  const librarySubjects = input.librarySubjects ?? [];
+  const validGraphIds = new Set([...input.graphs, ...librarySubjects].map((g) => g.graphId));
   try {
     const text = await invokeModel({
       system: SYSTEM_PROMPT,
-      user: buildUserPrompt(input.query, input.graphs, input.language),
+      user: buildUserPrompt(input.query, input.graphs, librarySubjects, input.language),
     });
     const decision = parseDecision(text, validGraphIds);
     if (process.env.KG_POSITION_DEBUG === "1") {

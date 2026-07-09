@@ -41,6 +41,10 @@ export type CourseContext = {
   // personalize HOW the Planner designs this lesson. Already filtered + capped by
   // the loader; the Planner bakes them into each block's writerInstruction.
   facts?: { text: string; category: FactCategory }[];
+  // Subject-level code-teaching allowance decided at graph level (generated
+  // graphs carry codeAdapted from their creation-time LLM judgment). true lets
+  // the plan include code blocks without matching code-eligibility.ts patterns.
+  codeEligible?: boolean;
 };
 
 // Explicit content-language directive for generation prompts. KG topic/concept

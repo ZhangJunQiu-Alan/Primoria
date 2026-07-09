@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { requireAuth } from "@/lib/auth/guard";
 import { getCurrentUser } from "@/lib/auth/session";
-import { getOnboardingCourseId } from "@/lib/learner-profile/onboarding-course";
+import { buildOnboardingCourse, getOnboardingCourseId } from "@/lib/learner-profile/onboarding-course";
 import { getLearnerOnboardingState, saveTutorStyle, skipTutorStyle } from "@/lib/learner-profile/store";
 import { isTutorStyle } from "@/lib/learner-profile/types";
 
@@ -33,7 +33,9 @@ export async function POST(request: Request) {
     }
 
     const state = await getLearnerOnboardingState(user.id);
-    const courseId = await getOnboardingCourseId(user.id, profile);
+    const existingCourseId = await getOnboardingCourseId(user.id, profile);
+    const course = existingCourseId ? null : await buildOnboardingCourse(user.id, profile);
+    const courseId = existingCourseId ?? course?.courseId ?? null;
     return NextResponse.json({ ...state, profile, courseId });
   } catch (error) {
     if (error instanceof z.ZodError) {

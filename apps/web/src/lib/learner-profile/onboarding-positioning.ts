@@ -1,4 +1,5 @@
 import { detectKgLanguage, resolveKgDisplayName } from "@/lib/knowledge-graph/display-name";
+import { getOrCreateGeneratedGraph } from "@/lib/knowledge-graph/generated-graph";
 import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
 import { getTopicGraph } from "@/lib/knowledge-graph/topic-graph";
 
@@ -8,7 +9,7 @@ export type OnboardingGoalAnchor = {
   targetConceptId: string | null;
   topicName: string;
   graphSubject: string;
-  branch: "specific" | "subject_start" | "directed";
+  branch: "specific" | "subject_start" | "directed" | "generated";
   language: "zh" | "en";
 };
 
@@ -61,6 +62,29 @@ export async function resolveOnboardingGoalAnchor(
 
   if (plan.branch === "fallback") {
     throw new Error(plan.message || "Please enter a more specific learning goal.");
+  }
+
+  // Out-of-library goal: same path as the Home input — reuse or generate a
+  // gen_* topic graph and anchor the onboarding course at its root.
+  if (plan.branch === "out_of_library") {
+    const generated = await getOrCreateGeneratedGraph({ topic: plan.topic, language });
+    if (!generated) {
+      throw new Error(plan.message || "暂时无法为这个主题生成课程，请换个说法再试一次。");
+    }
+    const root = [...generated.graph.topics].sort((a, b) => a.defaultOrder - b.defaultOrder)[0];
+    if (!root) throw new Error("Generated graph has no topics.");
+    return {
+      kind: "anchor",
+      anchor: {
+        graphId: generated.graph.graphId,
+        startTopicId: root.topicId,
+        targetConceptId: null,
+        topicName: resolveKgDisplayName(root, language),
+        graphSubject: generated.graph.subject,
+        branch: "generated",
+        language,
+      },
+    };
   }
 
   if (plan.branch === "clarify_subject") {
