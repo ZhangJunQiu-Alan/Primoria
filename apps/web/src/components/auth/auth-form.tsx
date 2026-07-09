@@ -49,9 +49,9 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
     : t.auth.passwordWorkspaceHint;
   const nextCopy = useMemo(() => {
     if (!next || next === "/library") return t.common.library;
-    if (next === "/") return t.topbar.title;
+    if (next === "/") return t.nav.tutor;
     return next.replace(/^\//, "");
-  }, [next, t.common.library, t.topbar.title]);
+  }, [next, t.common.library, t.nav.tutor]);
 
   async function submitAppDb(event: React.FormEvent) {
     event.preventDefault();

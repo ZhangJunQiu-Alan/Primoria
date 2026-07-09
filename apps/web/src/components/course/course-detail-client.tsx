@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAgent, useCopilotKit, useFrontendTool, UseAgentUpdate } from "@copilotkit/react-core/v2";
 import { z } from "zod";
 import { BlockRenderer } from "./block-renderer";
-import { CourseOutlineView } from "./course-outline-view";
 import { PrimoriaCopilotChatSurface } from "@/components/tutor/copilot-chat-surface";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import { usePrimoriaGenerativeUI } from "@/hooks/use-primoria-copilot";
@@ -21,6 +21,7 @@ import type { I18nDictionary } from "@/lib/i18n/dictionaries";
 const MIN_SIDEBAR_WIDTH = 320;
 const MAX_SIDEBAR_WIDTH = 620;
 const DEFAULT_SIDEBAR_WIDTH = 410;
+const COLLAPSED_SIDEBAR_WIDTH = 84;
 const SIDEBAR_WIDTH_KEY = "primoria:course-ai-sidebar-width";
 const COURSE_COPILOT_PROMPT_EVENT = "primoria:course-copilot-prompt";
 
@@ -366,6 +367,10 @@ function blockDisplayTitle(block: CourseBlock) {
   return block.title ?? block.type;
 }
 
+function isPracticeBlock(block: CourseBlock) {
+  return block.type === "quiz" || block.type === "worksheet";
+}
+
 function blockActionPrompt(
   block: CourseBlock,
   action: "explain" | "example" | "practice" | "check",
@@ -625,8 +630,11 @@ function CourseAIAssistantPanel({
   return (
     <aside
       className={`course-ai-sidebar${collapsed ? " collapsed" : ""}`}
-      style={{ width: collapsed ? 56 : width }}
+      style={{ width: collapsed ? COLLAPSED_SIDEBAR_WIDTH : width }}
       aria-label={t.tutorAria}
+      onClick={() => {
+        if (collapsed) onCollapsedChange(false);
+      }}
     >
       <button
         type="button"
@@ -907,17 +915,19 @@ export function CourseDetailClient({
   copilotEnabled: boolean;
 }) {
   const t = useT().course;
+  const router = useRouter();
   const [course, setCourse] = useState<Course>(initialCourse);
-  const { jobs: lessonJobs, jobsByLessonId, setJobs: setLessonJobs } = useLessonGenerationJobs(course.id, initialLessonJobs);
-  const [outlineKey, setOutlineKey] = useState(0);
+  const { jobsByLessonId, setJobs: setLessonJobs } = useLessonGenerationJobs(course.id, initialLessonJobs);
   const currentLesson = useMemo(() => currentCourseLesson(course, initialLessonId), [course, initialLessonId]);
   const currentLessonId = currentLesson?.id ?? null;
   const blocks = useMemo(() => currentLessonBlocks(course, currentLessonId), [course, currentLessonId]);
+  const [readerStep, setReaderStep] = useState<{ lessonId: string | null; index: number }>({ lessonId: null, index: 0 });
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [selectedTextContext, setSelectedTextContext] = useState<SelectedTextContext | null>(null);
   const [expandedActionsBlockId, setExpandedActionsBlockId] = useState<string | null>(null);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
+  const activeBlockRef = useRef<HTMLDivElement | null>(null);
   const courseThreadId = courseThreadIdFor(course.id);
 
   useEffect(() => {
@@ -937,15 +947,16 @@ export function CourseDetailClient({
   useEffect(() => {
     const workspace = document.querySelector<HTMLElement>(".course-workspace");
     if (!workspace) return;
-    workspace.style.setProperty("--course-sidebar-width", `${sidebarCollapsed ? 56 : sidebarWidth}px`);
+    workspace.style.setProperty("--course-sidebar-width", `${sidebarCollapsed ? COLLAPSED_SIDEBAR_WIDTH : sidebarWidth}px`);
     workspace.style.setProperty("--course-content-margin-end", sidebarCollapsed ? "auto" : "var(--course-content-gutter)");
   }, [sidebarCollapsed, sidebarWidth]);
 
-  useEffect(() => {
-    setSelectedBlockId((current) => (current && blocks.some((block) => block.id === current) ? current : null));
-    setSelectedTextContext((current) => (current && blocks.some((block) => block.id === current.blockId) ? current : null));
-    setExpandedActionsBlockId((current) => (current && blocks.some((block) => block.id === current) ? current : null));
-  }, [blocks]);
+  const maxStepIndex = Math.max(blocks.length - 1, 0);
+  const currentStepIndex = readerStep.lessonId === currentLessonId ? Math.min(readerStep.index, maxStepIndex) : 0;
+  const currentBlock = blocks[currentStepIndex] ?? null;
+  const totalSteps = blocks.length;
+  const currentStep = currentBlock ? currentStepIndex + 1 : 0;
+  const readerProgress = totalSteps > 0 ? (currentStep / totalSteps) * 100 : 0;
 
   // Preload only the immediately-next outline lesson while this lesson is open
   // (feature_specification.md §28). Preloading must not make the next lesson's
@@ -958,7 +969,11 @@ export function CourseDetailClient({
     void fetch(`/api/courses/${course.id}/lessons/${active.id}/prewarm-next`, { method: "POST" }).catch(() => {});
   }, [course.id, currentLesson]);
 
-  const selectedBlock = blocks.find((b) => b.id === selectedBlockId) ?? null;
+  const selectedBlock = blocks.find((b) => b.id === selectedBlockId) ?? currentBlock;
+  const activeSelectedTextContext =
+    selectedTextContext && blocks.some((block) => block.id === selectedTextContext.blockId)
+      ? selectedTextContext
+      : null;
   const currentLessonJob = currentLessonId ? jobsByLessonId.get(currentLessonId) : undefined;
 
   useEffect(() => {
@@ -996,15 +1011,9 @@ export function CourseDetailClient({
         const data = (await jobsRes.json()) as { jobs?: LessonGenerationJobSummary[] };
         if (Array.isArray(data.jobs)) setLessonJobs(data.jobs);
       }
-      setOutlineKey((key) => key + 1);
     } catch {
       // Best-effort — a manual reload still surfaces the new lesson.
     }
-  }
-
-  function selectBlock(block: CourseBlock) {
-    setSelectedBlockId(block.id);
-    setSelectedTextContext(null);
   }
 
   // Lift an in-place block edit (e.g. saved code) into the course state so the
@@ -1090,62 +1099,139 @@ export function CourseDetailClient({
     };
   }, [blocks]);
 
+  function goToStep(index: number) {
+    const next = Math.min(Math.max(index, 0), Math.max(totalSteps - 1, 0));
+    setReaderStep({ lessonId: currentLessonId, index: next });
+    setSelectedBlockId(null);
+    setSelectedTextContext(null);
+    setExpandedActionsBlockId(null);
+  }
+
+  function runPracticeCheck() {
+    const root = activeBlockRef.current;
+    if (!root) return;
+    const submit = root.querySelector<HTMLButtonElement>(".course-quiz-submit:not(:disabled)");
+    if (submit) {
+      submit.click();
+      return;
+    }
+    const reveal = root.querySelector<HTMLButtonElement>(".worksheet-reveal-btn");
+    if (reveal) {
+      reveal.click();
+      return;
+    }
+    root.querySelector<HTMLElement>("button:not(:disabled), input:not(:disabled), textarea:not(:disabled)")?.focus();
+  }
+
+  function runPrimaryAction() {
+    if (!currentBlock) return;
+    if (isPracticeBlock(currentBlock)) {
+      runPracticeCheck();
+      return;
+    }
+    if (currentStepIndex < totalSteps - 1) {
+      goToStep(currentStepIndex + 1);
+      return;
+    }
+    router.push(`/course/${course.id}/outline`);
+  }
+
+  const primaryActionLabel = currentBlock
+    ? isPracticeBlock(currentBlock)
+      ? t.readerCheck
+      : currentStepIndex >= totalSteps - 1
+        ? t.readerDone
+        : t.continueLabel
+    : t.continueLabel;
+  const lessonTitle = currentLesson?.title ?? course.title;
+
   return (
     <div
       className={`course-detail-layout${sidebarCollapsed ? " sidebar-collapsed" : ""}`}
-      style={{ ["--course-sidebar-width" as string]: `${sidebarCollapsed ? 56 : sidebarWidth}px` }}
+      style={{ ["--course-sidebar-width" as string]: `${sidebarCollapsed ? COLLAPSED_SIDEBAR_WIDTH : sidebarWidth}px` }}
     >
       <div className="course-detail-main">
-        <div className="course-blocks-column">
-          {blocks.length > 0 ? blocks.map((block) => (
-            <div
-              key={block.id}
-              role="group"
-              tabIndex={0}
-              data-block-id={block.id}
-              data-actions-expanded={expandedActionsBlockId === block.id ? "true" : "false"}
-              aria-controls={`course-block-actions-${block.id}`}
-              aria-label={`Course block: ${blockDisplayTitle(block)}`}
-              className={`course-block-wrapper${selectedBlockId === block.id ? " selected" : ""}`}
-              onClick={(event) => {
-                if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
-                if (selectionTextInside(event.currentTarget)) return;
-                openBlockActions(block);
-              }}
-              onMouseUp={(event) => {
-                if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
-                updateSelectedText(block, event.currentTarget);
-              }}
-              onKeyUp={(event) => {
-                if (event.key === "Shift" || event.key.startsWith("Arrow")) {
-                  updateSelectedText(block, event.currentTarget);
-                }
-              }}
-              onKeyDown={(event) => {
-                if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  openBlockActions(block);
-                }
-              }}
-            >
-              <BlockRenderer block={block} courseId={course.id} onBlockUpdated={updateBlockInCourse} />
-              <CourseBlockActionTray
-                block={block}
-                expanded={expandedActionsBlockId === block.id}
-                onAction={runBlockLearningAction}
-              />
+        <div className="course-reader">
+          <header className="course-reader-topbar">
+            <Link href={`/course/${course.id}/outline`} className="course-reader-close" aria-label={t.readerClose}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+                <path d="M5 5l14 14" />
+                <path d="M19 5L5 19" />
+              </svg>
+            </Link>
+            <h1>{lessonTitle}</h1>
+            <div className="course-reader-progress" aria-label={t.lessonStatus}>
+              <span><i style={{ width: `${readerProgress}%` }} /></span>
+              <strong>{currentStep}/{totalSteps}</strong>
             </div>
-          )) : <CourseLessonPendingState lesson={currentLesson} job={currentLessonJob} />}
-          <CourseOutlineView
-            key={outlineKey}
-            course={course}
-            initialJobs={lessonJobs}
-            variant="embedded"
-            visibleLessons="upcoming"
-            currentLessonId={currentLessonId}
-            onCourseUpdated={setCourse}
-          />
+          </header>
+
+          <main className="course-reader-stage" aria-live="polite">
+            {currentBlock ? (
+              <div className="course-reader-card" key={currentBlock.id}>
+                <div
+                  ref={activeBlockRef}
+                  role="group"
+                  tabIndex={0}
+                  data-block-id={currentBlock.id}
+                  data-actions-expanded={expandedActionsBlockId === currentBlock.id ? "true" : "false"}
+                  aria-controls={`course-block-actions-${currentBlock.id}`}
+                  aria-label={`Course block: ${blockDisplayTitle(currentBlock)}`}
+                  className={`course-block-wrapper course-reader-block-wrapper${selectedBlockId === currentBlock.id ? " selected" : ""}`}
+                  onClick={(event) => {
+                    if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
+                    if (selectionTextInside(event.currentTarget)) return;
+                    openBlockActions(currentBlock);
+                  }}
+                  onMouseUp={(event) => {
+                    if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
+                    updateSelectedText(currentBlock, event.currentTarget);
+                  }}
+                  onKeyUp={(event) => {
+                    if (event.key === "Shift" || event.key.startsWith("Arrow")) {
+                      updateSelectedText(currentBlock, event.currentTarget);
+                    }
+                  }}
+                  onKeyDown={(event) => {
+                    if (isCourseBlockInteractiveTarget(event.target, event.currentTarget)) return;
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      openBlockActions(currentBlock);
+                    }
+                  }}
+                >
+                  <BlockRenderer block={currentBlock} courseId={course.id} onBlockUpdated={updateBlockInCourse} />
+                  <CourseBlockActionTray
+                    block={currentBlock}
+                    expanded={expandedActionsBlockId === currentBlock.id}
+                    onAction={runBlockLearningAction}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="course-reader-card pending">
+                <CourseLessonPendingState lesson={currentLesson} job={currentLessonJob} />
+              </div>
+            )}
+          </main>
+
+          {currentBlock ? (
+            <footer className="course-reader-controls" aria-label={t.lessonStatus}>
+              <button type="button" className="course-reader-arrow" onClick={() => goToStep(currentStepIndex - 1)} disabled={currentStepIndex === 0} aria-label={t.readerPrevious}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M15 18 9 12l6-6" />
+                </svg>
+              </button>
+              <button type="button" className="course-reader-primary" onClick={runPrimaryAction}>
+                {primaryActionLabel}
+              </button>
+              <button type="button" className="course-reader-arrow" onClick={() => goToStep(currentStepIndex + 1)} disabled={currentStepIndex >= totalSteps - 1} aria-label={t.readerNext}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </button>
+            </footer>
+          ) : null}
         </div>
       </div>
       <LearningProgressPopup courseId={course.id} onResolved={refreshAfterRecommendation} />
@@ -1158,7 +1244,7 @@ export function CourseDetailClient({
         onCollapsedChange={setSidebarCollapsed}
         onWidthChange={setSidebarWidth}
         copilotEnabled={copilotEnabled}
-        selectedTextContext={selectedTextContext}
+        selectedTextContext={activeSelectedTextContext}
         currentLessonId={currentLessonId}
         onCourseUpdated={(nextCourse) => {
           setCourse(nextCourse);

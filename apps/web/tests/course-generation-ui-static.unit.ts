@@ -28,9 +28,7 @@ async function main() {
   const copilotProvider = read("src/components/copilot-provider.tsx");
   const homePage = read("src/app/page.tsx");
   const coursePage = read("src/app/course/[id]/page.tsx");
-  const tutorTopbar = read("src/components/tutor/topbar.tsx");
   const tutorNavRail = read("src/components/tutor/nav-rail.tsx");
-  const historyPopup = read("src/components/tutor/history-popup.tsx");
   const toolCard = read("src/components/generative-ui/tool-card.tsx");
   const toolDisplay = read("src/lib/ai/tutor-tool-display.ts");
   const chartRenderer = read("src/components/generative-ui/echarts-renderer.tsx");
@@ -73,11 +71,13 @@ async function main() {
   assert(courseGenerator.includes("conceptIds.map((concept) => lessonConceptName"), "lesson descriptions are derived from KG concept names");
   assert(lessonDescriptionMigration.includes('ADD COLUMN "description" text DEFAULT \'\''), "database migration adds persisted lesson descriptions");
   assert(courseOutlinePage.includes("CourseOutlineView"), "course outline route delegates to the shared outline view");
-  assert(courseDetailClient.includes("CourseOutlineView"), "course detail page reuses the shared outline view for upcoming lessons");
-  assert(courseDetailClient.includes('visibleLessons="upcoming"'), "course detail page requests the upcoming lesson view");
+  assert(!courseDetailClient.includes("CourseOutlineView"), "course detail reader no longer embeds the shared upcoming outline");
+  assert(!courseDetailClient.includes('visibleLessons="upcoming"'), "course detail reader no longer requests the upcoming lesson view");
   assert(courseDetailClient.includes("currentLessonBlocks(course, currentLessonId)"), "course detail renders only the active lesson's blocks");
+  assert(courseDetailClient.includes("currentStepIndex"), "course detail renders active lesson blocks as reader steps");
+  assert(courseDetailClient.includes("currentBlock = blocks[currentStepIndex] ?? null"), "course detail shows one block step at a time");
   assert(courseDetailClient.includes("visibleBlocks={blocks}"), "course detail gives Course Tutor only the visible lesson blocks");
-  assert(coursePage.includes("currentLessonBlocks(course, requestedLessonId)"), "course page header counts only the active lesson's blocks");
+  assert(!coursePage.includes("currentLessonBlocks(course, requestedLessonId)"), "course page leaves block progress to the client reader");
   assert(courseOutlineView.includes("selectVisibleLessons"), "shared course outline centralizes lesson visibility selection");
   assert(courseOutlineView.includes('visibleLessons !== "upcoming"'), "full course outline still shows all lessons");
   assert(courseOutlineView.includes("lessons[currentIndex + 1]"), "upcoming course detail view selects the next outline lesson after the active lesson");
@@ -95,6 +95,9 @@ async function main() {
   assert(courseOutlineView.includes("course-outline-remediation"), "shared course outline marks inserted remediation lessons");
   assert(courseOutlineView.includes("LockIcon"), "shared course outline renders locked lessons with a lock icon");
   assert(courseOutlineView.includes("t.jumpAhead") && dictionaries.en.outline.jumpAhead === "Jump ahead", "planned lessons can be explicitly generated and opened out of order");
+  assert(courseOutlineView.includes("actionHint: t.lockedDetail"), "locked lesson skip-ahead copy is attached to the jump action instead of the row body");
+  assert(!courseOutlineView.includes("detail: t.lockedDetail"), "locked lesson skip-ahead copy is no longer rendered as persistent row detail");
+  assert(styles.includes(".course-outline-action-tooltip"), "jump-ahead explanatory copy is hidden in an action tooltip");
   assert(courseOutlineView.includes("course-outline-jump-dialog"), "jump ahead uses a confirmation dialog before generating");
   assert(courseOutlineView.includes("t.generateAndJump") && dictionaries.en.outline.generateAndJump === "Generate and jump ahead", "jump ahead dialog exposes the generate-and-open action");
   assert(courseOutlineView.includes("router.push(`/course/${displayCourse.id}?lessonId=${encodeURIComponent(lessonId)}`)"), "jump ahead routes to the selected lesson after enqueueing generation");
@@ -202,8 +205,8 @@ async function main() {
   assert(!styles.includes("animation: primoria-user-pop"), "user bubbles do not replay entry animations while the assistant streams");
   assert(styles.includes(".primoria-copilot-thinking"), "assistant thinking state has dedicated styling");
   assert(styles.includes(".tool-dot-failed"), "failed tool states use a static failed indicator instead of a spinner");
-  assert((tutorTopbar.includes("newChat") || tutorTopbar.includes("New Chat")) && dictionaries.en.topbar.newChat === "New Chat", "topbar exposes New Chat");
-  assert(!tutorTopbar.includes("Settings"), "topbar no longer exposes Settings");
+  assert(tutorNavRail.includes("createNewThread") && dictionaries.en.nav.newChat === "New Chat", "expanded nav sidebar exposes New Chat");
+  assert(tutorNavRail.includes("readThreadHistory"), "expanded nav sidebar owns recent chat history");
   assert(tutorNavRail.includes('pathname.endsWith("/outline")'), "course outlines keep Library selected in navigation");
   assert(toolCard.includes("}/outline`"), "home generated course card opens the unified outline page");
   assert(generativeUi.includes("getTutorToolDisplay"), "Copilot tool renders use learner-facing tool status copy");
@@ -233,8 +236,8 @@ async function main() {
   assert(dictionaries.zh.tutor.toolCompleteStatus.render_chart === "图表已整理好", "Chinese tutor completion status maps chart completion to learner-facing copy");
   assert(dictionaries.en.tutor.toolCompleteStatus.render_3d_scene === "3D scene is ready", "English tutor completion status maps 3D completion to learner-facing copy");
   assert(generativeUi.includes("}/outline`"), "restored lesson-generation cards open the unified outline page");
-  assert((historyPopup.includes("recent") || historyPopup.includes("Recent")) && dictionaries.en.tutor.recent === "Recent", "history popup is scoped to recent chats");
-  assert(!historyPopup.includes("Start a new tutor chat"), "history popup no longer owns new-chat creation");
+  assert(tutorNavRail.includes("nav-sidebar-thread") && dictionaries.en.tutor.recent === "Recent", "expanded nav sidebar is scoped to recent chats");
+  assert(!tutorNavRail.includes("Start a new tutor chat"), "expanded nav sidebar avoids stale history-popup new-chat copy");
   assert(generativeUi.includes("/api/lesson-generation-jobs"), "home restore fetches active lesson generation jobs");
   assert(generativeUi.includes("selectRestorableLessonJobs"), "home restore dedupes restorable lesson jobs");
 
