@@ -13,9 +13,9 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
   const switcherRef = useRef<HTMLDivElement>(null);
   const controlRef = useRef<HTMLButtonElement>(null);
   const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const options: Array<{ value: UiLanguage; label: string; code: string }> = [
-    { value: "zh", label: t.common.chinese, code: "中" },
-    { value: "en", label: t.common.english, code: "EN" },
+  const options: Array<{ value: UiLanguage; label: string }> = [
+    { value: "zh", label: t.common.chinese },
+    { value: "en", label: t.common.english },
   ];
   const selectedIndex = Math.max(0, options.findIndex((option) => option.value === language));
   const current = options[selectedIndex] ?? options[0];
@@ -119,7 +119,6 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
           </svg>
         </span>
         <span className="language-switcher-label">{current.label}</span>
-        <span className="language-switcher-code">{current.code}</span>
         <svg className="language-switcher-chevron" viewBox="0 0 16 16" focusable="false" aria-hidden="true">
           <path d="M4.5 6.2 8 9.7l3.5-3.5" />
         </svg>
@@ -147,7 +146,6 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
                   {selected ? "✓" : ""}
                 </span>
                 <span>{option.label}</span>
-                <span className="language-switcher-option-code">{option.code}</span>
               </button>
             );
           })}
