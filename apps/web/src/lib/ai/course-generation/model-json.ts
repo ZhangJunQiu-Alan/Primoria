@@ -10,6 +10,15 @@ import { createTutorModel, resolveProviderSettings } from "../deepagent/model";
 
 type ProviderSettings = ReturnType<typeof resolveProviderSettings>;
 
+export type InvokeJsonArgs = {
+  system: string;
+  user: string;
+  settings?: TutorProviderSettings;
+  schema?: z.ZodTypeAny;
+  schemaName?: string;
+  timeoutMs?: number;
+};
+
 function shouldSkipStructuredOutput(settings: ProviderSettings): boolean {
   return settings.provider === "anthropic-compatible" && /minimax/i.test(settings.model);
 }
@@ -146,14 +155,7 @@ async function rawAnthropicJson(settings: ProviderSettings, system: string, user
  * output is attempted first; otherwise (or on failure) a JSON-prompt fallback
  * runs and the text is extracted with {@link parseJsonValue}.
  */
-export async function invokeJson(args: {
-  system: string;
-  user: string;
-  settings?: TutorProviderSettings;
-  schema?: z.ZodTypeAny;
-  schemaName?: string;
-  timeoutMs?: number;
-}): Promise<unknown> {
+export async function invokeJson(args: InvokeJsonArgs): Promise<unknown> {
   const { system, user, schema, schemaName = "result", timeoutMs = 90_000 } = args;
   const settings = resolveProviderSettings(args.settings ?? {});
   const model = createTutorModel(args.settings ?? {});

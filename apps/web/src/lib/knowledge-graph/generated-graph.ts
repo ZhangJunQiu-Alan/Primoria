@@ -26,6 +26,7 @@ export const GENERATED_GRAPH_PREFIX = "gen_";
 
 const MIN_TOPICS = 4;
 const MAX_TOPICS = 12;
+const MIN_CONCEPTS_PER_TOPIC = 2;
 const MAX_CONCEPTS_PER_TOPIC = 3;
 
 const VISUALS: ReadonlySet<string> = new Set<ConceptVisual>([
@@ -153,7 +154,7 @@ export function parseGeneratedGraph(text: string): RawGraph | null {
       });
       if (concepts.length >= MAX_CONCEPTS_PER_TOPIC) break;
     }
-    if (concepts.length === 0) continue;
+    if (concepts.length < MIN_CONCEPTS_PER_TOPIC) continue;
     topics.push({ name, nameZh: cleanString(t.nameZh), concepts });
     if (topics.length >= MAX_TOPICS) break;
   }

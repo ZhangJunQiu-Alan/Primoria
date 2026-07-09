@@ -196,8 +196,10 @@ Image blocks use Gemini image generation when configured:
 
 ```bash
 GEMINI_API_KEY=your-key
-GEMINI_IMAGE_MODEL=gemini-3.1-flash-image
+GEMINI_IMAGE_MODEL=gemini-3.1-flash-lite-image
 ```
+
+If `GEMINI_IMAGE_MODEL` is unset, Primoria uses `gemini-3.1-flash-lite-image` by default. Override it only when you want a different quality/cost tradeoff; output capability limits should be checked against Google's current model documentation.
 
 ## Run Locally
 

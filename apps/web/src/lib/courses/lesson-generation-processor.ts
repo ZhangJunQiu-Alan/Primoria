@@ -1,6 +1,6 @@
 import type { CourseBlock } from "./types";
 import type { TutorProviderSettings } from "../ai/types";
-import { planLesson, type LessonPlannerInvoke } from "../ai/course-generation/lesson-planner";
+import { planLesson, repairLessonPlan, type LessonPlannerInvoke } from "../ai/course-generation/lesson-planner";
 import { compileLessonPlanIr, type CompiledLessonPlan } from "../ai/course-generation/lesson-plan-compiler";
 import {
   batchBlockJobs,
@@ -15,7 +15,14 @@ import { finalizeImageBlocks, type ImageGenerate } from "../ai/media/image-build
 import type { MediaAssetStore } from "../ai/media/media-assets";
 import { IR_VERSION } from "../ai/course-generation/lesson-plan-ir";
 import { CURRENT_CHECKPOINT_VERSIONS, isCheckpointCompatible } from "../ai/course-generation/versions";
-import { GenerationError, LeaseLostError, LessonValidationError, PlannerError } from "../ai/course-generation/generation-errors";
+import {
+  CoverageError,
+  GenerationError,
+  IrParseError,
+  LeaseLostError,
+  LessonValidationError,
+  PlannerError,
+} from "../ai/course-generation/generation-errors";
 import {
   deleteLessonGenerationBatchCheckpoints,
   deleteLessonGenerationPlanAndDependents,
@@ -79,6 +86,10 @@ const PLAN_KEY = `plan:v${IR_VERSION}`;
 
 function assertFenced(ok: boolean): void {
   if (!ok) throw new LeaseLostError();
+}
+
+function isRepairablePlanError(error: unknown): error is IrParseError | CoverageError {
+  return error instanceof IrParseError || error instanceof CoverageError;
 }
 
 async function mapLimit<T>(items: T[], limit: number, fn: (item: T) => Promise<void>): Promise<void> {
@@ -178,8 +189,15 @@ async function loadOrCreatePlan(
   }
 
   try {
-    const rawIr = await planLesson(ctx.kg, { contextHint: ctx.course.topic, settings, invoke: plannerInvoke });
-    const compiled = compileLessonPlanIr(rawIr, ctx.kg, { contextHint: ctx.course.topic });
+    let rawIr = await planLesson(ctx.kg, { contextHint: ctx.course.topic, settings, invoke: plannerInvoke });
+    let compiled: CompiledLessonPlan;
+    try {
+      compiled = compileLessonPlanIr(rawIr, ctx.kg, { contextHint: ctx.course.topic });
+    } catch (error) {
+      if (!isRepairablePlanError(error)) throw error;
+      rawIr = await repairLessonPlan(ctx.kg, rawIr, error, { contextHint: ctx.course.topic, settings, invoke: plannerInvoke });
+      compiled = compileLessonPlanIr(rawIr, ctx.kg, { contextHint: ctx.course.topic });
+    }
     const payload: PlanCheckpointPayload = { rawIr, compiledPlan: compiled };
     assertFenced(await store.upsertCheckpoint(fence, { checkpointKey: PLAN_KEY, kind: "plan", payload, versions: CURRENT_CHECKPOINT_VERSIONS }));
     return compiled;
