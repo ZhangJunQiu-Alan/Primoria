@@ -15,6 +15,7 @@ function main() {
   const types = read("src/lib/courses/types.ts");
   const blockRenderer = read("src/components/course/block-renderer.tsx");
   const detail = read("src/components/course/course-detail-client.tsx");
+  const courseAi = read("src/components/course/course-ai-assistant-panel.tsx");
   const styles = read("src/app/globals.css");
   const editRoute = read("src/app/api/courses/[id]/edit/route.ts");
   const editor = read("src/lib/ai/deepagent/course-editor.ts");
@@ -41,8 +42,8 @@ function main() {
   assert(/kind="image"/.test(blockRenderer), "image block uses the image BlockShell kind");
 
   // ── Chat context ─────────────────────────────────────────────────
-  assert(detail.includes('block.type === "image"'), "tutor context serializes image alt/caption");
-  assert(/imageKind: block.imageKind/.test(detail), "image context carries imageKind");
+  assert(courseAi.includes('block.type === "image"'), "tutor context serializes image alt/caption");
+  assert(/imageKind: block.imageKind/.test(courseAi), "image context carries imageKind");
 
   // ── Styles ───────────────────────────────────────────────────────
   assert(styles.includes(".course-block-tag-image"), "image block has an outline/tag chip color");
@@ -54,7 +55,7 @@ function main() {
 
   // ── Course Editor surface ────────────────────────────────────────
   assert(/GeneratableBlockTypeSchema = z\.enum\(\[[^\]]*"image"/s.test(editRoute), "edit API accepts image as a generatable type");
-  assert(/BLOCK_TYPE_ENUM = z\.enum\(\[[^\]]*"image"/s.test(detail), "course detail add/transform tools allow image");
+  assert(/BLOCK_TYPE_ENUM = z\.enum\(\[[^\]]*"image"/s.test(courseAi), "course detail add/transform tools allow image");
   assert(editor.includes("const ImageEdit = z.object"), "editor has a text-only image edit schema");
   assert(!editor.includes("Image blocks cannot be edited"), "image blocks are now editable (text only)");
   assert(/previous\.type === "image"/.test(editor), "editor preserves the asset and edits only image text");

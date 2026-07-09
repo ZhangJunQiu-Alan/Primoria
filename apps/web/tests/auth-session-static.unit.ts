@@ -42,9 +42,9 @@ function main() {
   assert(session.includes('process.env.NODE_ENV === "production"'), "session lookup still fails closed in production");
   assert(session.includes("treating the request as signed out"), "local database outage degrades to signed-out state instead of a dev overlay");
   assert(session.includes("getDb().delete(sessions).where(eq(sessions.tokenHash, tokenHash))"), "sign-out deletes the database session");
-  assert(signoutRoute.includes('NextResponse.redirect(new URL("/", request.url), { status: 303 })'), "POST /auth/signout returns to the signed-out landing page");
-  assert(navRail.includes('router.push("/")'), "client sign-out returns to the signed-out landing page");
-  assert(homePage.includes("if (authEnabled && !user) return <LandingPage />;"), "home renders the landing page when signed out");
+  assert(signoutRoute.includes("PUBLIC_LANDING_PATH"), "POST /auth/signout returns to the public welcome page");
+  assert(navRail.includes("router.push(PUBLIC_LANDING_PATH)"), "client sign-out returns to the public welcome page");
+  assert(homePage.includes("redirect(loginPathWithNext(APP_HOME_PATH))"), "home redirects signed-out or expired-cookie visitors to login");
   assert(guard.includes("requireAuthUser"), "auth guard can return the resolved user to route handlers");
 
   assert(!profileRoute.includes("invalidateCurrentSessionUserCache"), "profile updates do not rely on local-only cache invalidation");

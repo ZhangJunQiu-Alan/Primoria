@@ -24,7 +24,9 @@ async function main() {
   const courseDetailClient = read("src/components/course/course-detail-client.tsx");
   const generativeUi = read("src/hooks/use-primoria-copilot.tsx");
   const tutorChat = read("src/components/tutor/tutor-chat-copilot.tsx");
+  const tutorWorkspaceClient = read("src/components/tutor/tutor-workspace-client.tsx");
   const copilotChatSurface = read("src/components/tutor/copilot-chat-surface.tsx");
+  const courseAiAssistantPanel = read("src/components/course/course-ai-assistant-panel.tsx");
   const copilotProvider = read("src/components/copilot-provider.tsx");
   const homePage = read("src/app/page.tsx");
   const coursePage = read("src/app/course/[id]/page.tsx");
@@ -200,8 +202,11 @@ async function main() {
   assert(generativeUi.includes("function CourseGenerationNotice"), "course generation status UI is centralized in a compact notice component");
   assert(!generativeUi.includes("firstLessonStatus"), "live course generation status no longer renders the old stacked status tool card");
   assert(!copilotProvider.includes("if (!enabled) return"), "CopilotKit provider stays mounted so client auth refresh cannot leave chat without context");
-  assert(homePage.includes("<CopilotKitProvider>"), "home tutor page always mounts the CopilotKit provider");
-  assert(coursePage.includes("<CopilotKitProvider>"), "course detail page always mounts the CopilotKit provider");
+  assert(homePage.includes("TutorWorkspaceClient"), "home tutor page enters the tutor workspace after auth checks");
+  assert(tutorWorkspaceClient.includes("CopilotKitProvider") && tutorWorkspaceClient.includes("ssr: false"), "home tutor chat lazy-loads its CopilotKit provider client-side");
+  assert(coursePage.includes("CourseDetailClient"), "course detail page enters the reader client after auth checks");
+  assert(courseDetailClient.includes("import(\"./course-ai-assistant-panel\")"), "course detail lazy-loads the Course Tutor panel");
+  assert(courseAiAssistantPanel.includes("CopilotKitProvider"), "Course Tutor panel owns its CopilotKit provider after lazy-load");
   assert(copilotChatSurface.includes("chatView={PrimoriaChatView}"), "chat uses a stable chat view component while messages stream");
   assert(copilotChatSurface.includes("PrimoriaComposerContext.Provider"), "chat passes composer context without creating an inline component type");
   assert(!copilotChatSurface.includes("chatView={((props"), "chat no longer remounts its message tree with an inline view component");

@@ -1,11 +1,32 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { AuthUser } from "@/lib/auth/types";
 import { TutorNavRail } from "./nav-rail";
-import { TutorChatCopilot } from "./tutor-chat-copilot";
 import { useT } from "@/lib/i18n/client";
+
+const TutorChatWithProvider = dynamic(
+  async () => {
+    const [{ CopilotKitProvider }, { TutorChatCopilot }] = await Promise.all([
+      import("@/components/copilot-provider"),
+      import("./tutor-chat-copilot"),
+    ]);
+
+    return function TutorChatWithProvider() {
+      return (
+        <CopilotKitProvider>
+          <TutorChatCopilot />
+        </CopilotKitProvider>
+      );
+    };
+  },
+  {
+    ssr: false,
+    loading: () => <TutorChatLoadingPanel />,
+  },
+);
 
 type AuthState = {
   authEnabled: boolean;
@@ -45,7 +66,7 @@ export function TutorWorkspaceClient({ initialAuthState }: { initialAuthState: A
         ) : authRequired ? (
           <AuthRequiredPanel />
         ) : (
-          <TutorChatCopilot />
+          <TutorChatWithProvider />
         )}
       </section>
     </>
@@ -58,6 +79,19 @@ function AuthLoadingPanel() {
     <div className="auth-required-shell">
       <article className="auth-required-card">
         <span className="course-block-tag">{t.tutor.checkingSession}</span>
+        <h1>{t.tutor.loadingWorkspace}</h1>
+        <p>{t.tutor.verifyingAccount}</p>
+      </article>
+    </div>
+  );
+}
+
+function TutorChatLoadingPanel() {
+  const t = useT();
+  return (
+    <div className="auth-required-shell">
+      <article className="auth-required-card">
+        <span className="course-block-tag">{t.tutor.loadingWorkspace}</span>
         <h1>{t.tutor.loadingWorkspace}</h1>
         <p>{t.tutor.verifyingAccount}</p>
       </article>

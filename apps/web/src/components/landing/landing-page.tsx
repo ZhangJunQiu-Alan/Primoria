@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
+import { PUBLIC_LANDING_PATH } from "@/lib/auth/routes";
 import { useT } from "@/lib/i18n/client";
 
 const subjectGroups = [
@@ -23,7 +24,7 @@ export function LandingPage() {
   return (
     <main className="landing-shell">
       <header className="landing-nav" aria-label="Primoria landing navigation">
-        <Link href="/" className="landing-brand" aria-label="Primoria home">
+        <Link href={PUBLIC_LANDING_PATH} className="landing-brand" aria-label="Primoria home">
           <span className="landing-brand-mark" aria-hidden="true" />
           <span>{t.common.brand}</span>
         </Link>

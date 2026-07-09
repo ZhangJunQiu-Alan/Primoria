@@ -15,6 +15,7 @@ function read(path: string) {
 function main() {
   const page = read("src/app/course/[id]/page.tsx");
   const detail = read("src/components/course/course-detail-client.tsx");
+  const courseAi = read("src/components/course/course-ai-assistant-panel.tsx");
   const blockRenderer = read("src/components/course/block-renderer.tsx");
   const styles = read("src/app/globals.css");
 
@@ -54,7 +55,7 @@ function main() {
   assert(!detail.includes("t.actionExample"), "removed bottom action tray no longer renders example action copy");
   assert(!detail.includes("t.actionPractice"), "removed bottom action tray no longer renders practice action copy");
   assert(!detail.includes("t.actionCheck"), "removed bottom action tray no longer renders understanding-check action copy");
-  assert(detail.includes("sendCoursePrompt(courseThreadId"), "Course Tutor suggestion prompts still route through the existing prompt bridge");
+  assert(courseAi.includes("sendCoursePrompt(courseThreadId"), "Course Tutor suggestion prompts still route through the existing prompt bridge");
   assert(detail.includes("currentLessonBlocks(course, currentLessonId)"), "course detail renders only blocks from the active lesson");
   assert(detail.includes("const currentBlock = blocks[currentStepIndex] ?? null"), "course detail renders a single active block step");
   assert(detail.includes("const readerProgress = totalSteps > 0 ? (currentStep / totalSteps) * 100 : 0"), "reader progress is based on current block over total lesson blocks");
@@ -68,17 +69,17 @@ function main() {
   assert(detail.includes("course-quiz-submit:not(:disabled)") && detail.includes("worksheet-reveal-btn"), "reader Check delegates to existing quiz and worksheet controls");
   assert(detail.includes("const [sidebarCollapsed, setSidebarCollapsed] = useState(true)"), "Course Tutor AI rail starts collapsed by default");
   assert(styles.includes("--course-collapsed-sidebar-width"), "Course Tutor collapsed rail uses CSS-owned responsive width");
-  assert(detail.includes("if (collapsed) onCollapsedChange(false);"), "clicking the collapsed AI rail expands Course Tutor");
+  assert(detail.includes("CourseAICollapsedRail") && courseAi.includes("if (collapsed) onCollapsedChange(false);"), "clicking the collapsed AI rail expands Course Tutor");
   assert(detail.includes("visibleBlocks={blocks}"), "Course Tutor receives the same active-lesson block list as the page");
   assert(detail.includes("currentLessonId={currentLessonId}"), "Course Tutor remains scoped to the current lesson");
-  assert(!detail.includes("course-ai-context-strip"), "Course Tutor no longer renders the visible current-context card");
-  assert(!detail.includes("t.noSelectedBlock"), "Course Tutor no longer renders a visible no-selection context state");
-  assert(detail.includes("buildCourseContext(course, visibleBlocks, selectedBlock, selectedTextContext)"), "Course Tutor still receives hidden selected-block and selected-text context");
-  assert(detail.includes("<strong>{t.tutorTitle}</strong>") && dictionaries.en.course.tutorTitle === "Course Tutor", "Course Tutor is the visible sidebar title");
-  assert(detail.includes("placeholder={t.composerPlaceholder}") && dictionaries.zh.course.composerPlaceholder === "Ask More, Know You More", "Course Tutor input uses the updated placeholder");
-  assert(!detail.includes("Course Copilot"), "Course Tutor code has no old visible Course Copilot copy");
-  assert(!detail.includes("Ask about this course"), "Course Tutor sidebar does not repeat the old generic subtitle");
-  assert(!detail.includes("text block · 点击下方建议或直接提问"), "Course Tutor context strip omits block-type helper copy");
+  assert(!courseAi.includes("course-ai-context-strip"), "Course Tutor no longer renders the visible current-context card");
+  assert(!courseAi.includes("t.noSelectedBlock"), "Course Tutor no longer renders a visible no-selection context state");
+  assert(courseAi.includes("buildCourseContext(course, visibleBlocks, selectedBlock, selectedTextContext)"), "Course Tutor still receives hidden selected-block and selected-text context");
+  assert(courseAi.includes("<strong>{t.tutorTitle}</strong>") && dictionaries.en.course.tutorTitle === "Course Tutor", "Course Tutor is the visible sidebar title");
+  assert(courseAi.includes("placeholder={t.composerPlaceholder}") && dictionaries.zh.course.composerPlaceholder === "Ask More, Know You More", "Course Tutor input uses the updated placeholder");
+  assert(!courseAi.includes("Course Copilot"), "Course Tutor code has no old visible Course Copilot copy");
+  assert(!courseAi.includes("Ask about this course"), "Course Tutor sidebar does not repeat the old generic subtitle");
+  assert(!courseAi.includes("text block · 点击下方建议或直接提问"), "Course Tutor context strip omits block-type helper copy");
 
   assert(!detail.includes("scrollSpy"), "course detail does not add scroll spy state");
   assert(!detail.includes("scroll-spy"), "course detail does not add scroll spy classes");
@@ -121,7 +122,7 @@ function main() {
   assert(styles.includes("[data-testid=\"copilot-chat-textarea\"]::-webkit-scrollbar"), "Course Tutor hides WebKit textarea scrollbars");
   assert(styles.includes('[data-testid="copilot-send-button"][disabled]'), "Course Tutor styles the disabled send button without hiding the textarea");
   assert(detail.includes("--course-sidebar-width"), "course detail updates the reserved width as the AI rail expands or collapses");
-  assert(detail.includes('style={collapsed ? undefined : { ["--course-sidebar-width" as string]: `${width}px` }}'), "collapsed Course Tutor rail uses CSS default width instead of inline desktop width");
+  assert(courseAi.includes('style={collapsed ? undefined : { ["--course-sidebar-width" as string]: `${width}px` }}'), "collapsed Course Tutor rail uses CSS default width instead of inline desktop width");
   assert(styles.includes("--course-collapsed-sidebar-width: 84px"), "course workspace defaults to the narrow AI rail width");
   assert(styles.includes("--course-collapsed-sidebar-width: 68px"), "mobile course workspace keeps its narrower collapsed rail width");
   assert(styles.includes(".course-transfer-path"), "transfer block path has dedicated styling");

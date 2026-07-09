@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { CopilotKitProvider } from "@/components/copilot-provider";
 import { CourseDetailClient } from "@/components/course/course-detail-client";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
@@ -28,14 +27,12 @@ export default async function CoursePage({
   return (
     <main className="app-shell course-app-shell">
       <section className="workspace course-workspace">
-        <CopilotKitProvider>
-          <CourseDetailClient
-            initialCourse={course}
-            initialLessonId={requestedLessonId ?? null}
-            initialLessonJobs={lessonJobs}
-            copilotEnabled={copilotEnabled}
-          />
-        </CopilotKitProvider>
+        <CourseDetailClient
+          initialCourse={course}
+          initialLessonId={requestedLessonId ?? null}
+          initialLessonJobs={lessonJobs}
+          copilotEnabled={copilotEnabled}
+        />
       </section>
     </main>
   );
