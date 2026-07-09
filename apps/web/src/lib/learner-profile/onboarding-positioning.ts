@@ -1,4 +1,5 @@
 import { detectKgLanguage, resolveKgDisplayName } from "@/lib/knowledge-graph/display-name";
+import { LearningGoalUserMessageError } from "@/lib/knowledge-graph/errors";
 import { getOrCreateGeneratedGraph } from "@/lib/knowledge-graph/generated-graph";
 import { planFromPositioning, positionLearningGoal } from "@/lib/knowledge-graph/position-learning-goal";
 import { getTopicGraph } from "@/lib/knowledge-graph/topic-graph";
@@ -61,7 +62,7 @@ export async function resolveOnboardingGoalAnchor(
   const plan = planFromPositioning(result);
 
   if (plan.branch === "fallback") {
-    throw new Error(plan.message || "Please enter a more specific learning goal.");
+    throw new LearningGoalUserMessageError(plan.message || "Please enter a more specific learning goal.");
   }
 
   // Out-of-library goal: same path as the Home input — reuse or generate a
@@ -70,7 +71,7 @@ export async function resolveOnboardingGoalAnchor(
     const generated = await getOrCreateGeneratedGraph({ topic: plan.topic, language });
     if (!generated) {
       console.warn("[onboarding] generated graph creation failed:", { topic: plan.topic, language });
-      throw new Error("暂时无法为这个主题生成课程图谱，请换个具体说法再试一次。");
+      throw new LearningGoalUserMessageError("暂时无法为这个主题生成课程图谱，请换个具体说法再试一次。");
     }
     const root = [...generated.graph.topics].sort((a, b) => a.defaultOrder - b.defaultOrder)[0];
     if (!root) throw new Error("Generated graph has no topics.");

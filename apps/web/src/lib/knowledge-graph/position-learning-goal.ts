@@ -12,7 +12,18 @@ import {
 } from "./positioning";
 import { runStage2Positioning } from "./positioning-llm";
 import { runFreeformGoalGate } from "./freeform-goal-gate";
-import { ALL_KG_GRAPHS, searchKnowledgeGraphNodes, type KnowledgeGraphSearchResponse, type KnowledgeGraphSearchResult } from "./search";
+import {
+  ALL_KG_GRAPHS,
+  makeEmptyKnowledgeGraphSearchResponse,
+  searchKnowledgeGraphNodes,
+  type KnowledgeGraphSearchResponse,
+  type KnowledgeGraphSearchResult,
+} from "./search";
+import {
+  allowKgInfraFallback,
+  classifyKnowledgeGraphFailure,
+  KnowledgeGraphUnavailableError,
+} from "./errors";
 import { buildGraphCandidates } from "./graph-router";
 import { detectKgLanguage } from "./display-name";
 import { getTopicGraph, listTopicGraphIds } from "./topic-graph";
@@ -84,7 +95,22 @@ export async function positionLearningGoal(
   input: PositionLearningGoalInput,
   deps: PositionLearningGoalDeps = {},
 ): Promise<PositionLearningGoalResult> {
-  const search = await (deps.searchKnowledgeGraphNodes ?? searchKnowledgeGraphNodes)(input);
+  // Distinguish KG coverage miss from KG infrastructure failure. A broken KG
+  // (missing table, dead DB, dead embedding provider) must fail loudly instead
+  // of silently rerouting every goal into the freeform gate / gen_* graphs.
+  // Only kg_schema_missing may degrade, and only behind the explicit dev flag.
+  let search: KnowledgeGraphSearchResponse;
+  try {
+    search = await (deps.searchKnowledgeGraphNodes ?? searchKnowledgeGraphNodes)(input);
+  } catch (error) {
+    const kind = classifyKnowledgeGraphFailure(error);
+    if (kind === "kg_schema_missing" && allowKgInfraFallback()) {
+      console.warn("[kg] degraded fallback enabled: kg_schema_missing -> freeform gate", error);
+      search = makeEmptyKnowledgeGraphSearchResponse(input);
+    } else {
+      throw new KnowledgeGraphUnavailableError(kind, error);
+    }
+  }
   const overrides: Partial<PositioningParams> = {};
   if (input.floor !== undefined) overrides.floor = input.floor;
   const params = resolvePositioningParams(overrides);

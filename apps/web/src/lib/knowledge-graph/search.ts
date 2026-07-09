@@ -54,7 +54,7 @@ const globalForKnowledgeGraph = globalThis as typeof globalThis & {
   primoriaKnowledgeGraphPool?: Pool;
 };
 
-function getKnowledgeGraphPool() {
+export function getKnowledgeGraphPool() {
   if (!process.env.DATABASE_URL) throw new Error("Missing DATABASE_URL");
 
   if (!globalForKnowledgeGraph.primoriaKnowledgeGraphPool) {
@@ -86,6 +86,23 @@ function mapRow(row: PgRow): KnowledgeGraphSearchResult {
     modelVersion: row.model_version,
     distance: Number(row.distance),
     similarity: Number(row.similarity),
+  };
+}
+
+// Synthesized "no results" response for the explicit local kg_schema_missing
+// fallback. Must not touch the embedding provider or the database.
+export function makeEmptyKnowledgeGraphSearchResponse(input: {
+  query: string;
+  graphId?: string;
+  topK?: number;
+  modelVersion?: string;
+}): KnowledgeGraphSearchResponse {
+  return {
+    encodedQuery: encodeKnowledgeGraphQuery(input.query),
+    graphId: input.graphId && input.graphId !== ALL_KG_GRAPHS ? input.graphId : ALL_KG_GRAPHS,
+    modelVersion: input.modelVersion || getKnowledgeGraphEmbeddingModelVersion(),
+    topK: clampTopK(input.topK),
+    results: [],
   };
 }
 
