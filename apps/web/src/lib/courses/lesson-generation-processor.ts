@@ -65,7 +65,7 @@ export type ProcessLessonJobOptions = {
   mediaStore?: MediaAssetStore;
 };
 
-const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL ?? "gemini-3.1-flash-image";
+const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL ?? "gemini-3.1-flash-lite-image";
 
 export type ProcessLessonJobOutcome = {
   ownerId: string;

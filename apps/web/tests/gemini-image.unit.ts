@@ -40,7 +40,7 @@ function okResponse(): Response {
       totalTokenCount: 1435,
       candidatesTokensDetails: [{ modality: "IMAGE", tokenCount: 1120 }],
     },
-    modelVersion: "gemini-3.1-flash-image",
+    modelVersion: "gemini-3.1-flash-lite-image",
   };
   return new Response(JSON.stringify(json), { status: 200, headers: { "Content-Type": "application/json" } });
 }
@@ -76,17 +76,17 @@ async function testSuccessfulParse() {
     return okResponse();
   }) as unknown as typeof fetch;
 
-  const result = await generateGeminiImage(BRIEF, { apiKey: "secret-key-123", model: "gemini-3.1-flash-image", fetchImpl });
+  const result = await generateGeminiImage(BRIEF, { apiKey: "secret-key-123", model: "gemini-3.1-flash-lite-image", fetchImpl });
 
   assert(result.dataBase64 === tinyPng, "extracts the inlineData part, not parts[0]");
   assert(result.mimeType === "image/jpeg", "uses the returned mime type");
-  assert(result.model === "gemini-3.1-flash-image", "reports the model version from the response");
+  assert(result.model === "gemini-3.1-flash-lite-image", "reports the model version from the response");
   assert(result.usage?.imageTokens === 1120, "captures image token usage");
   assert(result.usage?.totalTokens === 1435, "captures total token usage");
   assert(result.width === null && result.height === null, "dimensions are null (not returned by the API)");
 
   // Request shape.
-  assert(capturedUrl.includes("gemini-3.1-flash-image:generateContent"), "calls the generateContent endpoint for the model");
+  assert(capturedUrl.includes("gemini-3.1-flash-lite-image:generateContent"), "calls the generateContent endpoint for the model");
   const headers = capturedInit?.headers as Record<string, string>;
   assert(headers["x-goog-api-key"] === "secret-key-123", "passes the key in the x-goog-api-key header");
   const body = JSON.parse(String(capturedInit?.body));
