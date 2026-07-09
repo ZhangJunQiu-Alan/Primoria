@@ -6,13 +6,12 @@ import {
 import { LangGraphAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest } from "next/server";
 import { normalizeCopilotMessagesWithAttachments } from "@/lib/agent-os";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import { getLearnerProfile } from "@/lib/learner-profile/store";
 import { listActiveFacts } from "@/lib/learner-facts/store";
 import { selectPlannerFacts } from "@/lib/courses/lesson-generation-context";
 import { factsDirective, tutorStyleDirective, type LearnerFact, type LearnerProfile } from "@/lib/learner-profile/types";
 
-import { requireAuth } from "@/lib/auth/guard";
+import { requireAuthUser } from "@/lib/auth/guard";
 
 const deploymentUrl = process.env.LANGGRAPH_DEPLOYMENT_URL ?? "http://localhost:2024";
 
@@ -222,10 +221,9 @@ class PrimoriaLangGraphAgent extends LangGraphAgent {
 }
 
 export const POST = async (req: NextRequest) => {
-  const denied = await requireAuth();
+  const { denied, user } = await requireAuthUser();
   if (denied) return denied;
 
-  const user = await getCurrentUser();
   const [learnerProfile, learnerFacts] = user?.id
     ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id)])
     : [null, [] as LearnerFact[]];

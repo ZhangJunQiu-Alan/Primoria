@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getCurrentUser } from "@/lib/auth/session";
 import { getCourse } from "@/lib/courses/store";
 import type { CourseBlock } from "@/lib/courses/types";
 import { courseBlocks } from "@/lib/courses/types";
@@ -12,7 +11,7 @@ import {
   recordCourseInteraction,
   searchCourseMemory,
 } from "@primoria/memory";
-import { requireAuth } from "@/lib/auth/guard";
+import { requireAuthUser } from "@/lib/auth/guard";
 
 const RequestSchema = z.object({
   message: z.string().min(1),
@@ -77,13 +76,12 @@ function messageContentToString(content: unknown): string {
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   try {
-    const denied = await requireAuth();
+    const { denied, user } = await requireAuthUser();
     if (denied) return denied;
     const { id } = await context.params;
     const body = RequestSchema.parse(await request.json());
-    const course = await getCourse(id);
+    const course = await getCourse(id, user?.id ?? null);
     if (!course) return NextResponse.json({ error: "Course not found" }, { status: 404 });
-    const user = await getCurrentUser();
 
     const blocks = courseBlocks(course);
     const selectedBlock = body.selectedBlockId

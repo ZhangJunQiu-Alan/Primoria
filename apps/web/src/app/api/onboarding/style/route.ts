@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { requireAuth } from "@/lib/auth/guard";
-import { getCurrentUser } from "@/lib/auth/session";
+import { requireAuthUser } from "@/lib/auth/guard";
 import { buildOnboardingCourse, getOnboardingCourseId } from "@/lib/learner-profile/onboarding-course";
 import { getLearnerOnboardingState, saveTutorStyle, skipTutorStyle } from "@/lib/learner-profile/store";
 import { isTutorStyle } from "@/lib/learner-profile/types";
@@ -16,9 +15,8 @@ const RequestSchema = z.object({
 }).strict();
 
 export async function POST(request: Request) {
-  const denied = await requireAuth();
+  const { denied, user } = await requireAuthUser();
   if (denied) return denied;
-  const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { listCourses } from "@/lib/courses/store";
-import { requireAuth } from "@/lib/auth/guard";
+import { requireAuthUser } from "@/lib/auth/guard";
 export async function GET() {
-  const denied = await requireAuth();
+  const { denied, user } = await requireAuthUser();
   if (denied) return denied;
-  return NextResponse.json({ courses: await listCourses() });
+  return NextResponse.json({ courses: await listCourses(user?.id ?? null) });
 }

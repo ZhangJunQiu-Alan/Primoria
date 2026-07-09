@@ -4,8 +4,7 @@ import { z } from "zod";
 import { initializeCourseOutline } from "@/lib/ai/deepagent/course-generator";
 import { getOrCreateGeneratedGraph } from "@/lib/knowledge-graph/generated-graph";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
-import { requireAuth } from "@/lib/auth/guard";
-import { getCurrentUser } from "@/lib/auth/session";
+import { requireAuthUser } from "@/lib/auth/guard";
 import {
   InvalidCourseTopicAnchorError,
   resolveCourseContextFromTopicAnchor,
@@ -47,9 +46,9 @@ function userFacingError(error: unknown) {
 // A long-running worker generates the lesson; closing the page does not stop it.
 export async function POST(request: Request) {
   try {
-    const denied = await requireAuth();
+    const { denied, user } = await requireAuthUser();
     if (denied) return denied;
-    const ownerId = (await getCurrentUser())?.id;
+    const ownerId = user?.id;
     if (!ownerId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const parsed = RequestSchema.parse(await request.json());

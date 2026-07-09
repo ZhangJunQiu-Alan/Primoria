@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { cache } from "react";
 import { createHash, randomBytes } from "node:crypto";
 import { and, eq, gt } from "drizzle-orm";
 import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
@@ -133,6 +134,8 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
       }
     : null;
 }
+
+export const getCurrentUserForRsc = cache(getCurrentUser);
 
 export async function signOutCurrentSession() {
   if (!isAuthEnabled()) {

@@ -21,16 +21,16 @@ import type { TutorAgentResponse, TutorStreamEvent } from "@primoria/contracts/s
 export { createTutorModel, resolveProviderSettings };
 export type { TutorStreamEvent };
 
-export async function editCourseBlock(input: EditBlockInput, settings: TutorProviderSettings = {}) {
-  return editCourseBlockWithAi(input, settings);
+export async function editCourseBlock(input: EditBlockInput, settings: TutorProviderSettings = {}, ownerId?: string | null) {
+  return editCourseBlockWithAi(input, settings, ownerId);
 }
 
-export async function addCourseBlock(input: AddBlockInput, settings: TutorProviderSettings = {}) {
-  return addCourseBlockWithAi(input, settings);
+export async function addCourseBlock(input: AddBlockInput, settings: TutorProviderSettings = {}, ownerId?: string | null) {
+  return addCourseBlockWithAi(input, settings, ownerId);
 }
 
-export async function transformCourseBlock(input: TransformBlockInput, settings: TutorProviderSettings = {}) {
-  return transformCourseBlockWithAi(input, settings);
+export async function transformCourseBlock(input: TransformBlockInput, settings: TutorProviderSettings = {}, ownerId?: string | null) {
+  return transformCourseBlockWithAi(input, settings, ownerId);
 }
 
 export type RemoveCourseBlockInput = {
@@ -46,12 +46,12 @@ export type MoveCourseBlockInput = {
   instruction?: string;
 };
 
-export async function removeCourseBlock(input: RemoveCourseBlockInput) {
-  return removeCourseBlockWithAi(input);
+export async function removeCourseBlock(input: RemoveCourseBlockInput, ownerId?: string | null) {
+  return removeCourseBlockWithAi(input, ownerId);
 }
 
-export async function moveCourseBlock(input: MoveCourseBlockInput) {
-  return moveCourseBlockWithAi(input);
+export async function moveCourseBlock(input: MoveCourseBlockInput, ownerId?: string | null) {
+  return moveCourseBlockWithAi(input, ownerId);
 }
 
 export async function draftAgentCompletion(
