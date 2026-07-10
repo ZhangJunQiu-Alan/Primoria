@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it, vi } from "vitest";
 
 import {
   assertPersistableCourseBlock,
@@ -6,8 +6,13 @@ import {
   InvalidMermaidDefinitionError,
 } from "../src/lib/courses/mermaid-validation";
 import { MERMAID_CDN_URL, MERMAID_RUNTIME_VERSION } from "../src/lib/mermaid-runtime";
+import { mermaidParserWorkerClient } from "../src/lib/courses/mermaid-parser-worker-client";
 import type { CourseBlock } from "../src/lib/courses/types";
 import packageJson from "../package.json";
+
+afterAll(() => {
+  mermaidParserWorkerClient.dispose();
+});
 
 describe("Mermaid persistence validation", () => {
   it("keeps the installed parser and browser runtime on the same version", () => {
@@ -15,12 +20,31 @@ describe("Mermaid persistence validation", () => {
     expect(MERMAID_CDN_URL).toContain(`mermaid@${MERMAID_RUNTIME_VERSION}/`);
   });
 
-  it("restores Node globals after initializing the parser", async () => {
+  it("never installs browser globals in the main Node process", async () => {
     const beforeWindow = Object.getOwnPropertyDescriptor(globalThis, "window");
     const beforeDocument = Object.getOwnPropertyDescriptor(globalThis, "document");
+    const browserGlobalWrites: string[] = [];
+    const originalDefineProperty = Object.defineProperty;
+    const definePropertySpy = vi.spyOn(Object, "defineProperty").mockImplementation(
+      (target: object, property: PropertyKey, attributes: PropertyDescriptor & ThisType<unknown>) => {
+        if (
+          target === globalThis &&
+          ["window", "document", "DOMParser", "XMLSerializer", "HTMLElement", "SVGElement", "Element", "Node"]
+            .includes(String(property))
+        ) {
+          browserGlobalWrites.push(String(property));
+        }
+        return originalDefineProperty(target, property, attributes);
+      },
+    );
 
-    await assertValidMermaidDefinition("flowchart LR\nA-->B");
+    try {
+      await assertValidMermaidDefinition("mindmap\n  root((Root))\n    Child");
+    } finally {
+      definePropertySpy.mockRestore();
+    }
 
+    expect(browserGlobalWrites).toEqual([]);
     expect(Object.getOwnPropertyDescriptor(globalThis, "window")).toEqual(beforeWindow);
     expect(Object.getOwnPropertyDescriptor(globalThis, "document")).toEqual(beforeDocument);
   });
@@ -29,6 +53,8 @@ describe("Mermaid persistence validation", () => {
     "flowchart LR\nA-->B",
     "sequenceDiagram\nAlice->>Bob: Hello",
     "stateDiagram-v2\n[*] --> Ready\nReady --> [*]",
+    "mindmap\n  root((Root))\n    Child",
+    "architecture-beta\n  service api(server)[API]",
   ])("accepts parser-valid Mermaid DSL", async (definition) => {
     await expect(assertValidMermaidDefinition(definition)).resolves.toBeUndefined();
   });
@@ -63,7 +89,7 @@ describe("Mermaid persistence validation", () => {
     );
   });
 
-  it("serializes concurrent parser calls safely", async () => {
+  it("handles concurrent parser requests safely", async () => {
     await expect(
       Promise.all([
         assertValidMermaidDefinition("flowchart TB\nA-->B"),
