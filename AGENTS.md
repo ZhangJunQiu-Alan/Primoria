@@ -96,7 +96,7 @@ Widgets execute inside a sandboxed `<iframe>`. The iframe host assembles a full 
 
 ### Course generation
 
-In the main AI Tutor, course creation starts with the `position_learning_goal` tool in `apps/agent/src/graph.mjs`; the web side performs KG positioning, course creation, and persistence. Courses are stored in the `courses` and `lessons` tables (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Lesson blocks are stored as `jsonb`.
+In the main AI Tutor, course creation starts with the `position_learning_goal` tool in `apps/agent/src/graph.mjs`; the web side performs KG positioning, course creation, and persistence. Courses are stored in the `courses` and `lessons` tables (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Lesson blocks are stored as `jsonb`. Outline lesson descriptions start as deterministic templates; after a NEW course is created, one best-effort background LLM call (`apps/web/src/lib/ai/course-generation/outline-enrichment.ts`, scheduled with `after()` in `initializeCourseOutline`) rewrites them behind a description-equality write fence — failures keep the templates, and `PRIMORIA_DISABLE_OUTLINE_ENRICHMENT=1` disables the call.
 
 ### KG failure policy
 

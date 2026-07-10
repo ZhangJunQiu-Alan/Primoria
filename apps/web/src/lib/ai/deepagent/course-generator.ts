@@ -1,4 +1,6 @@
+import { after } from "next/server";
 import { z } from "zod";
+import { enrichCourseOutlineDescriptions } from "@/lib/ai/course-generation/outline-enrichment";
 import { getCourseByGraph, saveCourse } from "@/lib/courses/store";
 import { getTopicGraph, type TopicGraph } from "@/lib/knowledge-graph/topic-graph";
 import type { BlockType, Course, CourseBlock, Lesson } from "@/lib/courses/types";
@@ -227,7 +229,19 @@ export async function initializeCourseOutline(
       isNewCourse: false,
     };
   }
+  if (isNewCourse) scheduleOutlineEnrichment(course.id, ownerId);
   return { course, firstLesson, summary: summarizeCourse(course), isNewCourse };
+}
+
+// Best-effort: rewrite the freshly persisted template descriptions with one
+// background LLM call. after() throws outside a request scope (workers,
+// scripts, tests) — the outline keeps its template descriptions there.
+function scheduleOutlineEnrichment(courseId: string, ownerId: string) {
+  try {
+    after(() => enrichCourseOutlineDescriptions({ courseId, ownerId }));
+  } catch {
+    // no request scope — keep template descriptions
+  }
 }
 
 function firstLessonForTopic(course: Course, targetTopicId: string | null) {
