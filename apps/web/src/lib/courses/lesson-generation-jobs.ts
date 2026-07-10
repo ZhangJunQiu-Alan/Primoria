@@ -3,6 +3,7 @@ import { and, eq, inArray, sql } from "drizzle-orm";
 import { getDb, hasDatabaseUrl } from "../db/client";
 import { courses as coursesTable, lessons as lessonsTable, lessonGenerationCheckpoints, lessonGenerationJobs } from "../db/schema";
 import type { CourseBlock } from "./types";
+import { assertPersistableCourseBlocks } from "./mermaid-validation";
 import type { CheckpointVersions } from "../ai/course-generation/versions";
 import type { GenerationErrorCategory } from "../ai/course-generation/generation-errors";
 
@@ -493,6 +494,9 @@ export async function publishLessonAndCompleteJob(
   lesson: PublishLessonInput,
 ): Promise<{ ok: boolean }> {
   requireDatabase();
+  // Block Writer validates before checkpointing so invalid DSL normally gets a
+  // targeted repair. This final guard protects resumed and alternate paths.
+  await assertPersistableCourseBlocks(lesson.blocks);
   return getDb().transaction(async (tx) => {
     const jobRows = await tx.select().from(lessonGenerationJobs).where(fencedWhere(fence)).for("update");
     const job = jobRows[0];

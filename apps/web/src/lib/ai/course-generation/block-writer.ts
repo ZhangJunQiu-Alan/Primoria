@@ -4,7 +4,11 @@ import { languageDirective, type CourseContext } from "../deepagent/course-kg-co
 import { knowledgeBackgroundDirective } from "../../learner-profile/types";
 import { invokeJson } from "./model-json";
 import { compileBlockContent } from "./block-content-compiler";
-import { WriterError } from "./generation-errors";
+import { BlockCompileError, WriterError } from "./generation-errors";
+import {
+  assertPersistableCourseBlock,
+  InvalidMermaidDefinitionError,
+} from "../../courses/mermaid-validation";
 import type { GeneratableBlockType } from "./lesson-plan-ir";
 import type { BlockGenerationJob, CompiledLessonPlan, VisualEngine } from "./lesson-plan-compiler";
 
@@ -213,7 +217,19 @@ async function generateBatch(
         continue;
       }
       try {
-        blocks.push({ order: job.order, block: compileBlockContent(job, content, lessonId) });
+        const block = compileBlockContent(job, content, lessonId);
+        try {
+          await assertPersistableCourseBlock(block);
+        } catch (error) {
+          if (error instanceof InvalidMermaidDefinitionError) {
+            throw new BlockCompileError(
+              `block ${job.order} (visual) has invalid Mermaid syntax: ${error.diagnostic}`,
+              { jobId: job.jobId, diagnostic: error.diagnostic },
+            );
+          }
+          throw error;
+        }
+        blocks.push({ order: job.order, block });
       } catch (compileError) {
         firstFailure ??= compileError;
         failures.push(`block ${job.order} (${job.type}): ${(compileError as Error).message}`);

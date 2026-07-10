@@ -95,8 +95,31 @@ async function main() {
       ok((await store.failLessonGenerationJob(stale, { error: "e", category: "provider", retryable: true })).ok === false, "old token cannot fail job");
       ok((await store.publishLessonAndCompleteJob(stale, { title: "T", blocks: [], estimatedMinutes: 1 })).ok === false, "old token cannot publish");
 
-      // Active (new) token can publish; completed job is not reclaimable.
+      // Parser-invalid Mermaid is rejected before persistence, even with an
+      // otherwise valid active fence.
       const fresh2 = { jobId: claim2!.job.id, workerId: "wd", leaseToken: claim2!.leaseToken };
+      let invalidMermaidRejected = false;
+      try {
+        await store.publishLessonAndCompleteJob(fresh2, {
+          title: "Broken",
+          blocks: [{
+            id: "blk_bad",
+            type: "visual" as const,
+            title: "Broken",
+            description: "Broken diagram",
+            engine: "mermaid" as const,
+            mermaidDefinition: "flowchart LR\nA[Broken --> B",
+          }],
+          estimatedMinutes: 9,
+        });
+      } catch (error) {
+        invalidMermaidRejected = error instanceof Error && error.name === "InvalidMermaidDefinitionError";
+      }
+      ok(invalidMermaidRejected, "invalid Mermaid cannot publish");
+      const beforeValidPublish = await sql`select status, blocks from lessons where id=${lessonId}`;
+      ok(beforeValidPublish[0].status === "generating" && beforeValidPublish[0].blocks === null, "invalid Mermaid writes nothing");
+
+      // Active (new) token can publish; completed job is not reclaimable.
       ok((await store.publishLessonAndCompleteJob(fresh2, { title: "Final", blocks: [], estimatedMinutes: 9 })).ok === true, "active token publishes atomically");
       const reclaimCompleted = await store.claimNextLessonGenerationJob({ workerId: "we" });
       ok(!reclaimCompleted || reclaimCompleted.job.id !== claim2!.job.id, "completed job cannot be reclaimed");
