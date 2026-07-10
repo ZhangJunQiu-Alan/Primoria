@@ -1,5 +1,10 @@
 # KG Infrastructure Failure Routing Plan
 
+> **状态：已实现，合入 `main`（commit `04856352`，2026-07-10）。**
+> 本文保留为设计决策记录。实现与本文一致：`apps/web/src/lib/knowledge-graph/errors.ts`（分类 + 安全映射）、`positionLearningGoal()` 内的降级判断、`makeEmptyKnowledgeGraphSearchResponse()`、三个 route 接入安全错误、`/api/health`、`PRIMORIA_ALLOW_KG_INFRA_FALLBACK` 显式开关。
+> 测试：`apps/web/tests/kg-error-handling.spec.ts`、`apps/web/tests/onboarding-route-safety.spec.ts`。
+> 当前状态口径以 `temple/browser-qa-issue-list-2026-07-09.md` 为准。
+
 本文档给后续 Coding Agent 使用，目标是一次性修复 `temple/browser-qa-issue-list-2026-07-09.md` 的问题 1：
 
 > 本地数据库缺 KG 表时，onboarding 直接向用户暴露数据库错误。
