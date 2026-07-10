@@ -542,6 +542,8 @@ export async function publishLessonAndCompleteJob(
         status: "completed",
         stage: "completed",
         progressCompleted: sql`${lessonGenerationJobs.progressTotal}`,
+        lastError: null,
+        errorCategory: null,
         leaseOwner: null,
         leaseToken: null,
         leaseExpiresAt: null,

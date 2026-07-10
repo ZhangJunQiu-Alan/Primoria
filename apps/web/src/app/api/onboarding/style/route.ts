@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { requireAuthUser } from "@/lib/auth/guard";
-import { buildOnboardingCourse, getOnboardingCourseId } from "@/lib/learner-profile/onboarding-course";
+import {
+  buildOnboardingCourseWithStatus,
+  OnboardingCourseBuildError,
+} from "@/lib/learner-profile/onboarding-course-build";
 import { getLearnerOnboardingState, saveTutorStyle, skipTutorStyle } from "@/lib/learner-profile/store";
 import { isTutorStyle } from "@/lib/learner-profile/types";
 
@@ -30,15 +33,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Choose a tutor style or skip this step." }, { status: 400 });
     }
 
-    const state = await getLearnerOnboardingState(user.id);
-    const existingCourseId = await getOnboardingCourseId(user.id, profile);
-    const course = existingCourseId ? null : await buildOnboardingCourse(user.id, profile);
-    const courseId = existingCourseId ?? course?.courseId ?? null;
-    return NextResponse.json({ ...state, profile, courseId });
+    const course = await buildOnboardingCourseWithStatus(user.id, profile);
+    return NextResponse.json({ ...(await getLearnerOnboardingState(user.id)), course });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: "Invalid onboarding style request." }, { status: 400 });
     }
-    return NextResponse.json({ error: error instanceof Error ? error.message : "Could not save tutor style." }, { status: 503 });
+    if (error instanceof OnboardingCourseBuildError) {
+      return NextResponse.json({ error: error.message, code: error.code }, { status: error.status });
+    }
+    console.error("[onboarding/style]", error);
+    return NextResponse.json({ error: "Could not save your tutor style right now. Please retry." }, { status: 503 });
   }
 }

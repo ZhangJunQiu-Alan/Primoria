@@ -27,6 +27,9 @@ function profile(patch: Partial<LearnerProfile> = {}): LearnerProfile {
     goalPositioningMessage: null,
     goalPositioningCandidates: [],
     goalPositioningUpdatedAt: null,
+    onboardingCourseStatus: null,
+    onboardingCourseMessage: null,
+    onboardingCourseUpdatedAt: null,
     knowledgeBackground: null,
     knowledgeBackgroundSkippedAt: null,
     tutorStyle: null,
@@ -61,6 +64,14 @@ function main() {
   assert(
     !isLearnerOnboardingComplete(profile({ learningGoal: "science", goalPositioningStatus: "clarify", knowledgeBackgroundSkippedAt: "now", tutorStyleSkippedAt: "now" })),
     "clarification must be resolved before onboarding is complete",
+  );
+  assert(
+    !isLearnerOnboardingComplete(profile({ learningGoal: "science", goalGraphId: "g", goalStartTopicId: "t", onboardingCourseStatus: "failed", knowledgeBackgroundSkippedAt: "now", tutorStyleSkippedAt: "now", onboardingCompletedAt: "now" })),
+    "failed course preparation keeps onboarding open for retry",
+  );
+  assert(
+    isLearnerOnboardingComplete(profile({ learningGoal: "science", goalGraphId: "g", goalStartTopicId: "t", onboardingCourseStatus: "ready", knowledgeBackgroundSkippedAt: "now", tutorStyleSkippedAt: "now", onboardingCompletedAt: "now" })),
+    "ready course preparation allows onboarding completion",
   );
 
   const page = src("app/page.tsx");
@@ -129,6 +140,14 @@ function main() {
 
   const profileStore = src("lib/learner-profile/store.ts");
   assert(profileStore.includes("goalPositioningStatus"), "profile store persists goal positioning status");
+  assert(profileStore.includes("onboardingCourseStatus"), "profile store persists onboarding course status");
+
+  const onboardingCourseBuild = src("lib/learner-profile/onboarding-course-build.ts");
+  assert(onboardingCourseBuild.includes('status: "building"'), "course build records building state");
+  assert(onboardingCourseBuild.includes('status: "failed"'), "course build records failure state");
+
+  const onboardingRetryRoute = src("app/api/onboarding/course/route.ts");
+  assert(onboardingRetryRoute.includes("buildOnboardingCourseWithStatus"), "course retry route uses tracked build state");
 
   const lessonContext = src("lib/courses/lesson-generation-context.ts");
   assert(lessonContext.includes("getLearnerProfile"), "lesson generation loads learner profile");

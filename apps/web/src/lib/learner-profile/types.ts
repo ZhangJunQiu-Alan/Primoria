@@ -39,6 +39,7 @@ export type LearnerFact = {
 
 export type OnboardingStep = "goal" | "background" | "style" | "done";
 export type GoalPositioningStatus = "pending" | "positioned" | "clarify" | "failed";
+export type OnboardingCourseStatus = "pending" | "building" | "ready" | "failed";
 export type GoalPositioningCandidate = { graphId: string; subject: string; startTopicId: string };
 
 export type LearnerProfile = {
@@ -52,6 +53,9 @@ export type LearnerProfile = {
   goalPositioningMessage: string | null;
   goalPositioningCandidates: GoalPositioningCandidate[];
   goalPositioningUpdatedAt: string | null;
+  onboardingCourseStatus: OnboardingCourseStatus | null;
+  onboardingCourseMessage: string | null;
+  onboardingCourseUpdatedAt: string | null;
   knowledgeBackground: KnowledgeBackground | null;
   knowledgeBackgroundSkippedAt: string | null;
   tutorStyle: TutorStyle | null;
