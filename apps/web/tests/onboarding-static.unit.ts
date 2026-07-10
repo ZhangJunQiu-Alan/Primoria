@@ -142,11 +142,13 @@ function main() {
   const profileStore = src("lib/learner-profile/store.ts");
   assert(profileStore.includes("goalPositioningStatus"), "profile store persists goal positioning status");
   assert(profileStore.includes('eq(learnerProfiles.goalPositioningStatus, "pending")'), "profile store fences stale background goal writes");
+  assert(profileStore.includes("goalPositioningAttemptId"), "profile store fences same-text goal retries by attempt ID");
+  assert(goalRoute.includes("isLearningGoalPositioningAttemptPending"), "goal callback checks its attempt identity before resolving");
   assert(profileStore.includes("onboardingCourseStatus"), "profile store persists onboarding course status");
 
   const onboardingCourseBuild = src("lib/learner-profile/onboarding-course-build.ts");
-  assert(onboardingCourseBuild.includes('status: "building"'), "course build records building state");
-  assert(onboardingCourseBuild.includes('status: "failed"'), "course build records failure state");
+  assert(onboardingCourseBuild.includes("beginOnboardingCourseBuild"), "course build records a new building attempt");
+  assert(onboardingCourseBuild.includes("failOnboardingCourseBuild"), "course build records failure through its attempt fence");
 
   const onboardingRetryRoute = src("app/api/onboarding/course/route.ts");
   assert(onboardingRetryRoute.includes("buildOnboardingCourseWithStatus"), "course retry route uses tracked build state");

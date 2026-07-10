@@ -27,7 +27,7 @@ async function main() {
     await seedUser(sql, ownerId);
 
     // Fresh pending goal is left alone.
-    await store.savePendingLearningGoal(ownerId, "learn python");
+    const pendingAttempt = await store.savePendingLearningGoal(ownerId, "learn python");
     let state = await store.getLearnerOnboardingState(ownerId);
     ok(state.profile?.goalPositioningStatus === "pending", "fresh pending goal positioning is not repaired");
 
@@ -46,6 +46,7 @@ async function main() {
     const zombie = await store.savePositionedLearningGoalIfPending({
       ownerId,
       learningGoal: "learn python",
+      attemptId: pendingAttempt.attemptId,
       graphId: "python_fundamentals",
       startTopicId: "pyf_topic_running_python_programs",
       targetConceptId: null,
@@ -60,7 +61,7 @@ async function main() {
       startTopicId: "pyf_topic_running_python_programs",
       targetConceptId: null,
     });
-    await store.saveOnboardingCourseStatus({ ownerId, status: "building" });
+    const staleCourseAttempt = await store.beginOnboardingCourseBuild(ownerId);
     state = await store.getLearnerOnboardingState(ownerId);
     ok(state.profile?.onboardingCourseStatus === "building", "fresh building course is not repaired");
 
@@ -75,10 +76,27 @@ async function main() {
     ok(state.profile?.goalPositioningStatus === "positioned", "course repair leaves the positioned goal intact");
     ok(state.complete === false, "repaired failed course keeps onboarding incomplete");
 
-    // A build that really does finish later can still flip failed → ready.
-    await store.saveOnboardingCourseStatus({ ownerId, status: "ready" });
+    const zombieCompletion = await store.completeOnboardingCourseBuild({
+      ownerId,
+      attemptId: staleCourseAttempt.attemptId,
+    });
+    ok(zombieCompletion === null, "timed-out build cannot complete after stale recovery");
+
+    const retryCourseAttempt = await store.beginOnboardingCourseBuild(ownerId);
+    const retryCompletion = await store.completeOnboardingCourseBuild({
+      ownerId,
+      attemptId: retryCourseAttempt.attemptId,
+    });
+    ok(retryCompletion?.onboardingCourseStatus === "ready", "current retry can transition building to ready");
+
+    const zombieFailure = await store.failOnboardingCourseBuild({
+      ownerId,
+      attemptId: staleCourseAttempt.attemptId,
+      message: "stale failure",
+    });
+    ok(zombieFailure === null, "older failed build cannot overwrite a newer successful build");
     state = await store.getLearnerOnboardingState(ownerId);
-    ok(state.profile?.onboardingCourseStatus === "ready", "late successful build result still lands");
+    ok(state.profile?.onboardingCourseStatus === "ready", "newer successful build remains ready");
 
     await resetTestDb(sql);
   } finally {

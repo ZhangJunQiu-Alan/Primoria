@@ -12,6 +12,7 @@ import { resolveOnboardingGoalAnchor } from "@/lib/learner-profile/onboarding-po
 import {
   getLearnerOnboardingState,
   getLearnerProfile,
+  isLearningGoalPositioningAttemptPending,
   saveLearningGoal,
   saveLearningGoalClarification,
   saveLearningGoalPositioningFailure,
@@ -30,10 +31,6 @@ const RequestSchema = z.object({
   skip: z.boolean().optional(),
 }).strict();
 
-function goalStillPending(profile: Awaited<ReturnType<typeof getLearnerProfile>>, learningGoal: string) {
-  return profile?.learningGoal === learningGoal && profile.goalPositioningStatus === "pending";
-}
-
 function profileHasCourseDepth(profile: Awaited<ReturnType<typeof getLearnerProfile>>) {
   return Boolean(profile?.knowledgeBackground || profile?.knowledgeBackgroundSkippedAt);
 }
@@ -43,8 +40,8 @@ async function buildCourseIfReady(ownerId: string, profile: Awaited<ReturnType<t
   return buildOnboardingCourseWithStatus(ownerId, profile);
 }
 
-async function positionLearningGoalInBackground(ownerId: string, learningGoal: string) {
-  if (!goalStillPending(await getLearnerProfile(ownerId), learningGoal)) return;
+async function positionLearningGoalInBackground(ownerId: string, learningGoal: string, attemptId: string) {
+  if (!(await isLearningGoalPositioningAttemptPending(ownerId, attemptId))) return;
   // The learner polls until this finishes, so its duration is the real wait.
   const timing = createServerTiming();
 
@@ -56,6 +53,7 @@ async function positionLearningGoalInBackground(ownerId: string, learningGoal: s
         saveLearningGoalClarification({
           ownerId,
           learningGoal,
+          attemptId,
           message: resolution.clarify.message,
           candidates: resolution.clarify.candidates,
         }),
@@ -69,6 +67,7 @@ async function positionLearningGoalInBackground(ownerId: string, learningGoal: s
       savePositionedLearningGoalIfPending({
         ownerId,
         learningGoal,
+        attemptId,
         graphId: anchor.graphId,
         startTopicId: anchor.startTopicId,
         targetConceptId: anchor.targetConceptId,
@@ -85,6 +84,7 @@ async function positionLearningGoalInBackground(ownerId: string, learningGoal: s
     await saveLearningGoalPositioningFailure({
       ownerId,
       learningGoal,
+      attemptId,
       message: safe.message,
     });
   }
@@ -113,8 +113,9 @@ export async function POST(request: Request) {
     }
 
     if (!body.graphId) {
-      const profile = await timing.time("save_pending", () => savePendingLearningGoal(user.id, body.learningGoal!));
-      after(() => positionLearningGoalInBackground(user.id, body.learningGoal!));
+      const pending = await timing.time("save_pending", () => savePendingLearningGoal(user.id, body.learningGoal!));
+      const { profile, attemptId } = pending;
+      after(() => positionLearningGoalInBackground(user.id, body.learningGoal!, attemptId));
       return respond({ ...(await timing.time("state", () => getLearnerOnboardingState(user.id))), profile });
     }
 
