@@ -275,26 +275,26 @@
     },
     {
       "from": "c_python_syntax",
-      "to": "seq",
+      "to": "pyf_script_execution",
       "type": "prereq",
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "Python.json"
+      "to_graph": "python_fundamentals.json"
     },
     {
       "from": "c_lists_dicts",
-      "to": "dict",
+      "to": "pyf_dictionary_operations",
       "type": "prereq",
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "Python.json"
+      "to_graph": "python_fundamentals.json"
     },
     {
       "from": "oop",
       "to": "c_ucb61b_classes_objects",
       "type": "prereq",
       "strength": "hard",
-      "from_graph": "Python.json",
+      "from_graph": "sicp_cs61a.json",
       "to_graph": "data_structures_and_algorithms.json"
     },
     {
@@ -302,7 +302,7 @@
       "to": "c_ucb61b_recursion_analysis",
       "type": "prereq",
       "strength": "soft",
-      "from_graph": "Python.json",
+      "from_graph": "sicp_cs61a.json",
       "to_graph": "data_structures_and_algorithms.json"
     },
     {
@@ -310,7 +310,7 @@
       "to": "c_ucb61b_java_basics",
       "type": "prereq",
       "strength": "soft",
-      "from_graph": "Python.json",
+      "from_graph": "sicp_cs61a.json",
       "to_graph": "data_structures_and_algorithms.json"
     },
     {

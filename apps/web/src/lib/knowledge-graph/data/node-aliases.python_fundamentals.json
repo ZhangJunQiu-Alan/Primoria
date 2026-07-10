@@ -1,0 +1,25 @@
+{
+  "graphId": "python_fundamentals",
+  "aliases": {
+    "pyf_topic_running_python_programs": [
+      "Python basics",
+      "Python beginner course",
+      "learn Python from scratch",
+      "Python from the beginning",
+      "Python programming fundamentals",
+      "Python 入门",
+      "从零开始学 Python",
+      "Python 基础"
+    ],
+    "pyf_interactive_execution": [
+      "start learning Python",
+      "first Python code",
+      "Python interpreter basics"
+    ],
+    "pyf_script_execution": [
+      "first Python program",
+      "Python Hello World",
+      "run a Python file"
+    ]
+  }
+}

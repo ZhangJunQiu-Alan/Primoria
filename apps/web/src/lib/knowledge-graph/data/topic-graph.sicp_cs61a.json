@@ -1,8 +1,8 @@
 {
-  "graphId": "Python",
-  "subject": "Structure and Interpretation of Computer Programs",
-  "generatedFrom": "temple/Python.json",
-  "generatedAt": "2026-06-28",
+  "graphId": "sicp_cs61a",
+  "subject": "Structure and Interpretation of Computer Programs (CS61A)",
+  "generatedFrom": "temple/sicp_cs61a.json",
+  "generatedAt": "2026-07-10",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {

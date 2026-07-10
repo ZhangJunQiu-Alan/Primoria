@@ -147,7 +147,7 @@ export async function positionLearningGoal(
     return { result, search };
   }
 
-  const candidates = buildGraphCandidates(search.results).map(
+  const candidates = buildGraphCandidates(search.results, undefined, search.encodedQuery.coreQuery).map(
     (c): GraphCandidateLite => ({ graphId: c.graphId, subject: c.subject, bestSimilarity: c.bestSimilarity }),
   );
 
