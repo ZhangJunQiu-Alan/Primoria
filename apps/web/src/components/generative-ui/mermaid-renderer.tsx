@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 import type { MermaidArtifact } from "@/lib/agent-os";
 import { loadBrowserScript } from "@/lib/browser-script-loader";
+import { MERMAID_CDN_URL } from "@/lib/mermaid-runtime";
 
-const MERMAID_CDN_URL = "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js";
 type MermaidModule = typeof import("mermaid")["default"];
 
 function loadMermaid() {

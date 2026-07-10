@@ -7,6 +7,7 @@ import type { TutorProviderSettings } from "../types";
 import { createTutorModel } from "./model";
 import { generateBlock, type GeneratableBlockType } from "./course-generator";
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
+import { assertPersistableCourseBlock } from "@/lib/courses/mermaid-validation";
 
 const TextEdit = z.object({
   type: z.literal("text"),
@@ -172,6 +173,7 @@ export async function editBlock(
   const rewritten = await invokeBlockEdit(model, schema, block, userPrompt);
 
   const next = normalizeEditedBlock(rewritten, block);
+  await assertPersistableCourseBlock(next);
   const updatedCourse = await updateBlock(input.courseId, input.blockId, next, ownerId);
   if (!updatedCourse) throw new Error("Update failed");
   await recordCourseEditEvent({
@@ -208,6 +210,7 @@ export async function addBlock(
     { course, targetType: input.targetType, instruction: input.instruction },
     settings,
   );
+  await assertPersistableCourseBlock(block);
   const atIndex = resolveInsertIndex(course, input.afterBlockId);
   const updatedCourse = await insertBlock(input.courseId, block, atIndex, ownerId);
   if (!updatedCourse) throw new Error("Insert failed");
@@ -257,6 +260,7 @@ export async function transformBlock(
     ...(previous.conceptIds ? { conceptIds: previous.conceptIds } : {}),
     ...(previous.pedagogicalRole ? { pedagogicalRole: previous.pedagogicalRole } : {}),
   };
+  await assertPersistableCourseBlock(next);
   const updatedCourse = await updateBlock(input.courseId, input.blockId, next, ownerId);
   if (!updatedCourse) throw new Error("Update failed");
 

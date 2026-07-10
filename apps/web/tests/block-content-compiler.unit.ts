@@ -268,6 +268,33 @@ async function main() {
   assert(calls === 1, "first quiz attempt failed once");
   assert(repaired.length === 19, "repair recovered the quiz batch");
 
+  let mermaidAttempts = 0;
+  let sawMermaidDiagnostic = false;
+  const repairedMermaid = await writeLessonBlocks({
+    plan,
+    lessonId: "L1",
+    kg,
+    invoke: async ({ batch, repairHint }) => {
+      const targetIndex = batch.jobs.findIndex((candidate) => candidate.order === 11 && candidate.engine === "mermaid");
+      const contents = batch.jobs.map((candidate) => contentFor(candidate));
+      if (targetIndex < 0) return contents;
+
+      mermaidAttempts += 1;
+      if (repairHint?.includes("invalid Mermaid syntax")) sawMermaidDiagnostic = true;
+      if (mermaidAttempts === 1) {
+        return contents.map((content, index) =>
+          index === targetIndex
+            ? { ...content, mermaidDefinition: "flowchart LR\nA[Broken --> B" }
+            : content,
+        );
+      }
+      return contents;
+    },
+  });
+  assert(mermaidAttempts === 2, `invalid Mermaid batch receives a targeted repair (got ${mermaidAttempts} attempts)`);
+  assert(sawMermaidDiagnostic, "Mermaid repair hint carries the parser diagnostic");
+  assert(repairedMermaid.length === 19, "Mermaid repair recovers the lesson");
+
   // Plan B: recovers on the SECOND repair (3rd attempt), and the repair hint
   // carries the PRECISE per-block validation error so the writer can self-correct.
   let quizAttempts = 0;

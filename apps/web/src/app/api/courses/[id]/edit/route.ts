@@ -8,6 +8,7 @@ import {
   transformCourseBlock,
 } from "@/lib/agent-os/ai";
 import { requireAuthUser } from "@/lib/auth/guard";
+import { InvalidMermaidDefinitionError } from "@/lib/courses/mermaid-validation";
 
 const SettingsSchema = z
   .object({
@@ -118,6 +119,12 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     }
   } catch (error) {
     console.error("[course/edit]", error);
+    if (error instanceof InvalidMermaidDefinitionError) {
+      return NextResponse.json(
+        { error: "The Mermaid diagram has invalid syntax. Please revise and retry.", code: "invalid_mermaid" },
+        { status: 422 },
+      );
+    }
     const message = error instanceof Error ? error.message : "Edit failed";
     const status = /not found/i.test(message) ? 404 : 500;
     return NextResponse.json({ error: message }, { status });
