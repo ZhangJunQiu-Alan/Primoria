@@ -38,9 +38,10 @@ function main() {
   assert(session.includes(".from(sessions)"), "getCurrentUser reads the sessions table");
   assert(session.includes("eq(sessions.tokenHash, tokenHash)"), "getCurrentUser validates the current session token hash");
   assert(session.includes("gt(sessions.expiresAt, now)"), "getCurrentUser rejects expired sessions from the database");
-  assert(session.includes("LOCAL_DATABASE_UNAVAILABLE_CODES"), "getCurrentUser recognizes local database tunnel/connectivity failures");
-  assert(session.includes('process.env.NODE_ENV === "production"'), "session lookup still fails closed in production");
-  assert(session.includes("treating the request as signed out"), "local database outage degrades to signed-out state instead of a dev overlay");
+  assert(session.includes("isAuthUnavailableError(error)"), "getCurrentUser recognizes database connectivity failures");
+  assert(session.includes('new AuthError("auth_unavailable"'), "database outage throws typed auth_unavailable instead of masquerading as signed out");
+  assert(!session.includes("treating the request as signed out"), "database outage no longer degrades to a misleading signed-out state");
+  assert(guard.includes("toSafeAuthError(error, \"session\")"), "auth guard maps session lookup failures to a safe 503, not a 401");
   assert(session.includes("getDb().delete(sessions).where(eq(sessions.tokenHash, tokenHash))"), "sign-out deletes the database session");
   assert(signoutRoute.includes("PUBLIC_LANDING_PATH"), "POST /auth/signout returns to the public welcome page");
   assert(navRail.includes("router.push(PUBLIC_LANDING_PATH)"), "client sign-out returns to the public welcome page");

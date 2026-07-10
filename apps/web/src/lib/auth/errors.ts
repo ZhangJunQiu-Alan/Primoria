@@ -41,11 +41,25 @@ const AUTH_UNAVAILABLE_ERROR_CODES = new Set([
   "ENOTFOUND",
   "EHOSTUNREACH",
   "ETIMEDOUT",
+  "EAI_AGAIN",
+  "CONNECT_TIMEOUT",
   "57P01",
   "57P02",
   "57P03",
   "53300",
 ]);
+
+// Network-shaped codes worth matching inside message text as a fallback for
+// drivers that embed the code in the message instead of a structured field.
+const AUTH_UNAVAILABLE_MESSAGE_CODES = [
+  "ECONNREFUSED",
+  "ECONNRESET",
+  "ENOTFOUND",
+  "EHOSTUNREACH",
+  "ETIMEDOUT",
+  "EAI_AGAIN",
+  "CONNECT_TIMEOUT",
+];
 
 export const AUTH_UNAVAILABLE_ERROR: SafeAuthError = {
   status: 503,
@@ -80,7 +94,7 @@ export function toSafeAuthError(
     };
   }
 
-  if (hasAuthUnavailableCode(error)) {
+  if (isAuthUnavailableError(error)) {
     console.error(`[auth/${context}] authentication dependency unavailable`, error);
     return AUTH_UNAVAILABLE_ERROR;
   }
@@ -92,10 +106,17 @@ export function toSafeAuthError(
   };
 }
 
-function hasAuthUnavailableCode(error: unknown): boolean {
-  if (!error || typeof error !== "object") return false;
+// True when the error chain looks like "the database/network is unreachable",
+// as opposed to a bad request or an application bug.
+export function isAuthUnavailableError(error: unknown, depth = 0): boolean {
+  if (!error || typeof error !== "object" || depth > 4) return false;
   const record = error as Record<string, unknown>;
   const code = typeof record.code === "string" ? record.code : "";
   if (AUTH_UNAVAILABLE_ERROR_CODES.has(code)) return true;
-  return hasAuthUnavailableCode(record.cause);
+  const message = typeof record.message === "string" ? record.message : "";
+  if (AUTH_UNAVAILABLE_MESSAGE_CODES.some((c) => message.includes(c))) return true;
+  if (Array.isArray(record.errors) && record.errors.some((item) => isAuthUnavailableError(item, depth + 1))) {
+    return true;
+  }
+  return isAuthUnavailableError(record.cause, depth + 1);
 }
