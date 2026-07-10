@@ -26,9 +26,11 @@ const INITIAL_REFRESH_WINDOW_MS = 45_000;
 export function CourseLibraryGrid({
   initialCourses,
   initialLessonJobs = [],
+  onboardingIncomplete = false,
 }: {
   initialCourses: CourseSummary[];
   initialLessonJobs?: LessonGenerationJobSummary[];
+  onboardingIncomplete?: boolean;
 }) {
   const t = useT();
   const [courses, setCourses] = useState(initialCourses);
@@ -196,10 +198,20 @@ export function CourseLibraryGrid({
   }
 
   if (entries.length === 0) {
+    // Onboarding-incomplete users land at the onboarding flow on "/", so point
+    // them there explicitly instead of promising a course creator.
     return (
       <div className="library-empty">
-        <p>{initialRefreshOpen ? t.library.checkingBuilds : t.library.noCourses}</p>
-        <Link href="/" className="library-empty-action">{t.library.createFirstCourse}</Link>
+        <p>
+          {initialRefreshOpen
+            ? t.library.checkingBuilds
+            : onboardingIncomplete
+              ? t.library.finishOnboardingCopy
+              : t.library.noCourses}
+        </p>
+        <Link href="/" className="library-empty-action">
+          {onboardingIncomplete ? t.library.finishOnboardingCta : t.library.createFirstCourse}
+        </Link>
       </div>
     );
   }

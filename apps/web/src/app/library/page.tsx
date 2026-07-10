@@ -5,6 +5,7 @@ import { TutorNavRail } from "@/components/tutor/nav-rail";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
 import { CourseLibraryGrid } from "@/components/library/course-library-grid";
 import { getDictionaryForUser } from "@/lib/i18n/server";
+import { getLearnerOnboardingState } from "@/lib/learner-profile/store";
 
 export const dynamic = "force-dynamic";
 
@@ -16,10 +17,13 @@ export default async function LibraryPage() {
     ? Promise.resolve({ courses: [], lessonJobs: [] })
     : Promise.all([listCourses(user?.id), listActiveLessonGenerationJobsByOwner(user?.id)])
         .then(([courses, lessonJobs]) => ({ courses, lessonJobs }));
-  const [{ dictionary: t }, { courses, lessonJobs }] = await Promise.all([
+  const onboardingPromise = user ? getLearnerOnboardingState(user.id) : Promise.resolve(null);
+  const [{ dictionary: t }, { courses, lessonJobs }, onboarding] = await Promise.all([
     getDictionaryForUser(user?.id ?? null),
     libraryDataPromise,
+    onboardingPromise,
   ]);
+  const onboardingIncomplete = Boolean(user && onboarding && !onboarding.complete);
 
   return (
     <main className="app-shell">
@@ -36,7 +40,11 @@ export default async function LibraryPage() {
             </div>
           </div>
         ) : (
-          <CourseLibraryGrid initialCourses={courses} initialLessonJobs={lessonJobs} />
+          <CourseLibraryGrid
+            initialCourses={courses}
+            initialLessonJobs={lessonJobs}
+            onboardingIncomplete={onboardingIncomplete}
+          />
         )}
       </section>
     </main>
