@@ -1,29 +1,48 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useRef } from "react";
 import type { MermaidArtifact } from "@/lib/agent-os";
+import { loadBrowserScript } from "@/lib/browser-script-loader";
+
+const MERMAID_CDN_URL = "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js";
+type MermaidModule = typeof import("mermaid")["default"];
+
+function loadMermaid() {
+  return loadBrowserScript<MermaidModule>(MERMAID_CDN_URL, "mermaid");
+}
+
+let mermaidRenderSequence = 0;
+let mermaidRenderQueue: Promise<unknown> = Promise.resolve();
+
+function queueMermaidRender(mermaid: MermaidModule, definition: string) {
+  const renderId = `mermaid-${++mermaidRenderSequence}`;
+  const render = mermaidRenderQueue.then(() => {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "neutral",
+      fontFamily: "inherit",
+      securityLevel: "strict",
+    });
+    return mermaid.render(renderId, definition);
+  });
+  mermaidRenderQueue = render.then(() => undefined, () => undefined);
+  return { render, renderId };
+}
 
 export function MermaidRenderer({ artifact, variant = "tool" }: { artifact: MermaidArtifact; variant?: "tool" | "course" }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const uid = useId().replace(/:/g, "");
-  const renderId = `mermaid-${uid}`;
 
   useEffect(() => {
     if (!containerRef.current || !artifact.definition.trim()) return;
+    let cancelled = false;
+    let activeRenderId: string | null = null;
 
-    import("mermaid").then((mod) => {
-      const mermaid = mod.default;
-      mermaid.initialize({
-        startOnLoad: false,
-        theme: "neutral",
-        fontFamily: "inherit",
-        securityLevel: "strict",
-      });
-
-      mermaid
-        .render(renderId, artifact.definition)
+    void loadMermaid().then((mermaid) => {
+      const { render, renderId } = queueMermaidRender(mermaid, artifact.definition);
+      activeRenderId = renderId;
+      return render
         .then(({ svg }) => {
-          if (containerRef.current) {
+          if (!cancelled && containerRef.current) {
             containerRef.current.innerHTML = svg;
             // Make SVG responsive
             const svgEl = containerRef.current.querySelector("svg");
@@ -34,13 +53,23 @@ export function MermaidRenderer({ artifact, variant = "tool" }: { artifact: Merm
             }
           }
         })
-        .catch(() => {
-          if (containerRef.current) {
+        .catch((error) => {
+          console.error("[visualization] Mermaid failed to render:", error);
+          document.getElementById(`d${renderId}`)?.remove();
+          if (!cancelled && containerRef.current) {
             containerRef.current.textContent = "Diagram syntax error — check the Mermaid definition.";
           }
         });
+    }).catch((error) => {
+      console.error("[visualization] Mermaid failed to load:", error);
+      if (containerRef.current) containerRef.current.textContent = "Diagram library failed to load.";
     });
-  }, [artifact.definition, renderId]);
+
+    return () => {
+      cancelled = true;
+      if (activeRenderId) document.getElementById(`d${activeRenderId}`)?.remove();
+    };
+  }, [artifact.definition]);
 
   const diagram = (
     <div

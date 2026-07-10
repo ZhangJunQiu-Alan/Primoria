@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   distDir: process.env.NEXT_DIST_DIR,
   devIndicators: false,
+  serverExternalPackages: [
+    "shiki",
+    "echarts",
+    "mathjs",
+    "mermaid",
+    "matter-js",
+  ],
   turbopack: {
     root: path.join(process.cwd(), "../.."),
   },
