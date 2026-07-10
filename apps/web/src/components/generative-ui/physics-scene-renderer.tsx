@@ -2,9 +2,15 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PhysicsSceneArtifact, PhysicsBody, PhysicsConstraint, PhysicsScene } from "@/lib/agent-os";
+import { loadBrowserScript } from "@/lib/browser-script-loader";
 import { SERIES } from "./style-tokens";
 
 type MatterModule = typeof import("matter-js");
+const MATTER_CDN_URL = "https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js";
+
+function loadMatter() {
+  return loadBrowserScript<MatterModule>(MATTER_CDN_URL, "Matter");
+}
 
 function buildWorld(Matter: MatterModule, scene: PhysicsScene) {
   const { Engine, Render, Runner, Bodies, Body, Composite, Constraint, Events } = Matter;
@@ -110,6 +116,7 @@ export function PhysicsSceneRenderer({ artifact, variant = "tool" }: { artifact:
   const runnerRef = useRef<Matter.Runner | null>(null);
   const renderRef = useRef<Matter.Render | null>(null);
   const engineRef = useRef<Matter.Engine | null>(null);
+  const matterRef = useRef<MatterModule | null>(null);
   const [paused, setPaused] = useState(false);
 
   const { scene } = artifact;
@@ -120,9 +127,10 @@ export function PhysicsSceneRenderer({ artifact, variant = "tool" }: { artifact:
     if (!canvasRef.current) return;
     let stopped = false;
 
-    import("matter-js").then((Matter) => {
+    void loadMatter().then((Matter) => {
       if (stopped || !canvasRef.current) return;
 
+      matterRef.current = Matter;
       const { Render, Runner, Events } = Matter;
       const { engine, bodyMap } = buildWorld(Matter, scene);
 
@@ -169,40 +177,37 @@ export function PhysicsSceneRenderer({ artifact, variant = "tool" }: { artifact:
       Runner.run(runner, engine);
       runnerRef.current = runner;
 
-      return () => {
-        Render.stop(render);
-        Runner.stop(runner);
-        Matter.Engine.clear(engine);
-      };
-    });
+    }).catch((error) => console.error("[visualization] Matter.js failed to load:", error));
 
     return () => {
       stopped = true;
-      if (renderRef.current) {
-        import("matter-js").then(({ Render, Runner, Engine }) => {
-          if (renderRef.current) Render.stop(renderRef.current);
-          if (runnerRef.current) Runner.stop(runnerRef.current);
-        });
-      }
+      const Matter = matterRef.current;
+      if (Matter && renderRef.current) Matter.Render.stop(renderRef.current);
+      if (Matter && runnerRef.current) Matter.Runner.stop(runnerRef.current);
+      if (Matter && engineRef.current) Matter.Engine.clear(engineRef.current);
+      matterRef.current = null;
+      renderRef.current = null;
+      runnerRef.current = null;
+      engineRef.current = null;
     };
   // Reinitialize when scene changes
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scene]);
 
   const togglePause = useCallback(() => {
-    import("matter-js").then(({ Runner, Render }) => {
-      const runner = runnerRef.current;
-      const render = renderRef.current;
-      if (!runner || !render) return;
-      if (paused) {
-        Runner.start(runner, engineRef.current!);
-        Render.run(render);
-      } else {
-        Runner.stop(runner);
-        Render.stop(render);
-      }
-      setPaused((p) => !p);
-    });
+    const Matter = matterRef.current;
+    const runner = runnerRef.current;
+    const render = renderRef.current;
+    const engine = engineRef.current;
+    if (!Matter || !runner || !render || !engine) return;
+    if (paused) {
+      Matter.Runner.start(runner, engine);
+      Matter.Render.run(render);
+    } else {
+      Matter.Runner.stop(runner);
+      Matter.Render.stop(render);
+    }
+    setPaused((p) => !p);
   }, [paused]);
 
   const body = (

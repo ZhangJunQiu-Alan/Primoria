@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MathExplorerArtifact, MathExplorerParameter } from "@/lib/agent-os";
+import { loadBrowserScript } from "@/lib/browser-script-loader";
 import { LO_WRONG, SERIES, SERIES_STROKES } from "./style-tokens";
 
 type MathCompiled = { evaluate(scope?: Record<string, number>): unknown };
@@ -9,7 +10,12 @@ type MathInstance = { compile(expr: string): MathCompiled };
 
 let mathjsPromise: Promise<MathInstance> | null = null;
 function getMathjs(): Promise<MathInstance> {
-  if (!mathjsPromise) mathjsPromise = import("mathjs") as Promise<MathInstance>;
+  if (!mathjsPromise) {
+    mathjsPromise = loadBrowserScript<MathInstance>(
+      "https://cdn.jsdelivr.net/npm/mathjs@15.2.0/lib/browser/math.js",
+      "math",
+    );
+  }
   return mathjsPromise;
 }
 

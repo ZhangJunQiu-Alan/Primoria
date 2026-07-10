@@ -10,3 +10,6 @@ allowBuilds:
   protobufjs: true
   sharp: true
   unrs-resolver: true
+
+patchedDependencies:
+  streamdown@1.6.11: patches/streamdown@1.6.11.patch

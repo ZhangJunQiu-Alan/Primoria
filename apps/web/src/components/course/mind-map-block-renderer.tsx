@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useCallback } from "react";
 import type { MindMapBlock, MindMapNode } from "@/lib/courses/types";
+import { loadBrowserScript } from "@/lib/browser-script-loader";
 
 type MindElixirInstance = {
   init: () => void;
@@ -25,6 +26,12 @@ type MindElixirConstructor = {
   RIGHT: number;
   SIDE: number;
 };
+
+const MIND_ELIXIR_CDN_URL = "https://cdn.jsdelivr.net/npm/mind-elixir@5.12.2/dist/MindElixir.iife.js";
+
+function loadMindElixir() {
+  return loadBrowserScript<{ default: MindElixirConstructor }>(MIND_ELIXIR_CDN_URL, "MindElixir");
+}
 
 export function MindMapBlockRenderer({
   block,
@@ -66,9 +73,9 @@ export function MindMapBlockRenderer({
     if (!containerRef.current) return;
     let me: MindElixirInstance | null = null;
 
-    import("mind-elixir").then((mod) => {
+    void loadMindElixir().then((mod) => {
       if (!containerRef.current) return;
-      const MindElixir = (mod.default ?? mod) as unknown as MindElixirConstructor;
+      const MindElixir = mod.default;
       me = new MindElixir({
         el: containerRef.current,
         direction: MindElixir.SIDE,
@@ -82,7 +89,7 @@ export function MindMapBlockRenderer({
       me.init();
       meRef.current = me;
       me.bus.addListener("operation", scheduleSave);
-    });
+    }).catch((error) => console.error("[course] Mind map library failed to load:", error));
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);

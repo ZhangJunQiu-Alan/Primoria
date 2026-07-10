@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { EChartsArtifact } from "@/lib/agent-os";
+import { loadBrowserScript } from "@/lib/browser-script-loader";
 import { LO_GRID, LO_INK, LO_MUTED, SERIES_FILLS, SERIES_STROKES } from "./style-tokens";
 
 // The learning-object chart style is applied at render time (theme + series
@@ -9,8 +10,14 @@ import { LO_GRID, LO_INK, LO_MUTED, SERIES_FILLS, SERIES_STROKES } from "./style
 // only says "colors come from the Primoria theme".
 
 let themeRegistered = false;
+const ECHARTS_CDN_URL = "https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js";
+type EChartsModule = typeof import("echarts");
 
-function ensurePrimoriaTheme(echarts: typeof import("echarts")) {
+function loadECharts() {
+  return loadBrowserScript<EChartsModule>(ECHARTS_CDN_URL, "echarts");
+}
+
+function ensurePrimoriaTheme(echarts: EChartsModule) {
   if (themeRegistered) return;
   themeRegistered = true;
   const axis = {
@@ -65,24 +72,22 @@ export function EChartsRenderer({ artifact, variant = "tool" }: { artifact: ECha
   useEffect(() => {
     if (!containerRef.current) return;
     let disposed = false;
+    let resizeObserver: ResizeObserver | null = null;
 
-    import("echarts").then((echarts) => {
+    void loadECharts().then((echarts) => {
       if (disposed || !containerRef.current) return;
       ensurePrimoriaTheme(echarts);
       const chart = echarts.init(containerRef.current, "primoria", { renderer: "svg" });
       chartRef.current = chart;
       chart.setOption(withSeriesDefaults(artifact.option));
 
-      const ro = new ResizeObserver(() => chart.resize());
-      ro.observe(containerRef.current);
-
-      return () => {
-        ro.disconnect();
-      };
-    });
+      resizeObserver = new ResizeObserver(() => chart.resize());
+      resizeObserver.observe(containerRef.current);
+    }).catch((error) => console.error("[visualization] ECharts failed to load:", error));
 
     return () => {
       disposed = true;
+      resizeObserver?.disconnect();
       chartRef.current?.dispose();
       chartRef.current = null;
     };
