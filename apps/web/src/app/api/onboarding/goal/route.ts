@@ -3,7 +3,10 @@ import { z } from "zod";
 
 import { requireAuthUser } from "@/lib/auth/guard";
 import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
-import { buildOnboardingCourse } from "@/lib/learner-profile/onboarding-course";
+import {
+  buildOnboardingCourseWithStatus,
+  OnboardingCourseBuildError,
+} from "@/lib/learner-profile/onboarding-course-build";
 import { resolveOnboardingGoalAnchor } from "@/lib/learner-profile/onboarding-positioning";
 import {
   getLearnerOnboardingState,
@@ -34,12 +37,8 @@ function profileHasCourseDepth(profile: Awaited<ReturnType<typeof getLearnerProf
 }
 
 async function buildCourseIfReady(ownerId: string, profile: Awaited<ReturnType<typeof getLearnerProfile>>) {
-  if (!profileHasCourseDepth(profile)) return;
-  try {
-    await buildOnboardingCourse(ownerId, profile);
-  } catch (error) {
-    console.warn("[onboarding] course prebuild failed:", error instanceof Error ? error.message : error);
-  }
+  if (!profileHasCourseDepth(profile)) return null;
+  return buildOnboardingCourseWithStatus(ownerId, profile);
 }
 
 async function positionLearningGoalInBackground(ownerId: string, learningGoal: string) {
@@ -69,6 +68,7 @@ async function positionLearningGoalInBackground(ownerId: string, learningGoal: s
     });
     await buildCourseIfReady(ownerId, profile);
   } catch (error) {
+    if (error instanceof OnboardingCourseBuildError) return;
     logKnowledgeGraphError("onboarding/goal:background", error);
     if (!goalStillPending(await getLearnerProfile(ownerId), learningGoal)) return;
     // Never persist raw error.message: SQL/table names must not reach profiles.
@@ -122,17 +122,19 @@ export async function POST(request: Request) {
       startTopicId: anchor.startTopicId,
       targetConceptId: anchor.targetConceptId,
     });
-    const course = await buildOnboardingCourse(user.id, profile);
+    const course = await buildCourseIfReady(user.id, profile);
 
     return NextResponse.json({
       ...(await getLearnerOnboardingState(user.id)),
-      profile,
       anchor,
       course,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: "Invalid onboarding goal request." }, { status: 400 });
+    }
+    if (error instanceof OnboardingCourseBuildError) {
+      return NextResponse.json({ error: error.message, code: error.code }, { status: error.status });
     }
     logKnowledgeGraphError("onboarding/goal", error);
     const safe = toSafeKnowledgeGraphError(error, {

@@ -21,6 +21,7 @@ const mockState = vi.hoisted(() => ({
   savePendingLearningGoal: vi.fn(),
   skipLearningGoal: vi.fn(),
   saveKnowledgeBackground: vi.fn(),
+  saveOnboardingCourseStatus: vi.fn(),
   skipKnowledgeBackground: vi.fn(),
 }));
 
@@ -55,6 +56,7 @@ vi.mock("@/lib/learner-profile/store", () => ({
   savePendingLearningGoal: mockState.savePendingLearningGoal,
   skipLearningGoal: mockState.skipLearningGoal,
   saveKnowledgeBackground: mockState.saveKnowledgeBackground,
+  saveOnboardingCourseStatus: mockState.saveOnboardingCourseStatus,
   skipKnowledgeBackground: mockState.skipKnowledgeBackground,
 }));
 
@@ -90,6 +92,7 @@ describe("onboarding route error safety", () => {
     mockState.getLearnerOnboardingState.mockResolvedValue({ step: "goal" });
     mockState.savePendingLearningGoal.mockResolvedValue({ ownerId: "u1" });
     mockState.saveLearningGoalPositioningFailure.mockResolvedValue({ ownerId: "u1" });
+    mockState.saveOnboardingCourseStatus.mockResolvedValue({ ownerId: "u1" });
     vi.spyOn(console, "error").mockImplementation(() => {});
     vi.spyOn(console, "warn").mockImplementation(() => {});
   });
@@ -135,6 +138,43 @@ describe("onboarding route error safety", () => {
     );
   });
 
+  it("keeps the positioned goal when background course creation fails", async () => {
+    const { POST } = await import("../src/app/api/onboarding/goal/route");
+    mockState.getLearnerProfile.mockResolvedValue({
+      learningGoal: "learn mechanics",
+      goalPositioningStatus: "pending",
+    });
+    mockState.resolveOnboardingGoalAnchor.mockResolvedValue({
+      kind: "anchor",
+      anchor: {
+        graphId: "physics",
+        startTopicId: "mechanics",
+        targetConceptId: null,
+      },
+    });
+    mockState.saveLearningGoal.mockResolvedValue({
+      ownerId: "u1",
+      learningGoal: "learn mechanics",
+      goalGraphId: "physics",
+      goalStartTopicId: "mechanics",
+      goalTargetConceptId: null,
+      knowledgeBackground: "undergraduate",
+    });
+    mockState.buildOnboardingCourse.mockRejectedValue(Object.assign(new Error(RAW_SQL_MESSAGE), { code: "42P01" }));
+
+    const response = await POST(postRequest({ learningGoal: "learn mechanics" }));
+    expect(response.status).toBe(200);
+    await mockState.afterCallbacks[0]();
+
+    expect(mockState.saveLearningGoal).toHaveBeenCalledTimes(1);
+    expect(mockState.saveLearningGoalPositioningFailure).not.toHaveBeenCalled();
+    expect(mockState.saveOnboardingCourseStatus).toHaveBeenLastCalledWith({
+      ownerId: "u1",
+      status: "failed",
+      message: "We couldn't prepare your course right now. Please retry.",
+    });
+  });
+
   it("returns a safe 503 response when the sync graphId path hits a KG infrastructure failure", async () => {
     const { POST } = await import("../src/app/api/onboarding/goal/route");
     mockState.resolveOnboardingGoalAnchor.mockRejectedValue(infraError());
@@ -149,10 +189,24 @@ describe("onboarding route error safety", () => {
   it("returns a safe response when the background course build fails with a raw DB error", async () => {
     const { POST } = await import("../src/app/api/onboarding/background/route");
     mockState.buildOnboardingCourse.mockRejectedValue(Object.assign(new Error(RAW_SQL_MESSAGE), { code: "42P01" }));
-    mockState.saveKnowledgeBackground.mockResolvedValue({ ownerId: "u1" });
+    mockState.saveKnowledgeBackground.mockResolvedValue({
+      ownerId: "u1",
+      goalGraphId: "physics",
+      goalStartTopicId: "mechanics",
+    });
 
     const response = await POST(postRequest({ knowledgeBackground: "beginner" }));
     expect(response.status).toBe(503);
     expectNoLeak(JSON.stringify(await response.json()));
+    expect(mockState.saveOnboardingCourseStatus).toHaveBeenNthCalledWith(1, {
+      ownerId: "u1",
+      status: "building",
+    });
+    expect(mockState.saveOnboardingCourseStatus).toHaveBeenNthCalledWith(2, {
+      ownerId: "u1",
+      status: "failed",
+      message: "We couldn't prepare your course right now. Please retry.",
+    });
+    expectNoLeak(JSON.stringify(mockState.saveOnboardingCourseStatus.mock.calls[1][0]));
   });
 });

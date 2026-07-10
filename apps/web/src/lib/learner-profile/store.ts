@@ -10,11 +10,13 @@ import {
   type KnowledgeBackground,
   type LearnerOnboardingState,
   type LearnerProfile,
+  type OnboardingCourseStatus,
   type OnboardingStep,
   type TutorStyle,
 } from "./types";
 
 const GOAL_POSITIONING_STATUSES: readonly GoalPositioningStatus[] = ["pending", "positioned", "clarify", "failed"];
+const ONBOARDING_COURSE_STATUSES: readonly OnboardingCourseStatus[] = ["pending", "building", "ready", "failed"];
 
 function iso(value: Date | string | null | undefined) {
   if (!value) return null;
@@ -33,6 +35,9 @@ export function rowToLearnerProfile(row: LearnerProfileRow): LearnerProfile {
     goalPositioningMessage: row.goalPositioningMessage ?? null,
     goalPositioningCandidates: normalizeGoalPositioningCandidates(row.goalPositioningCandidates),
     goalPositioningUpdatedAt: iso(row.goalPositioningUpdatedAt),
+    onboardingCourseStatus: isOnboardingCourseStatus(row.onboardingCourseStatus) ? row.onboardingCourseStatus : null,
+    onboardingCourseMessage: row.onboardingCourseMessage ?? null,
+    onboardingCourseUpdatedAt: iso(row.onboardingCourseUpdatedAt),
     knowledgeBackground: isKnowledgeBackground(row.knowledgeBackground) ? row.knowledgeBackground : null,
     knowledgeBackgroundSkippedAt: iso(row.knowledgeBackgroundSkippedAt),
     tutorStyle: isTutorStyle(row.tutorStyle) ? row.tutorStyle : null,
@@ -58,6 +63,11 @@ function hasStyle(profile: LearnerProfile | null) {
 
 export function isLearnerOnboardingComplete(profile: LearnerProfile | null) {
   if (profile?.goalPositioningStatus === "clarify" && !profile.goalGraphId) return false;
+  if (
+    profile?.goalGraphId &&
+    profile.onboardingCourseStatus &&
+    profile.onboardingCourseStatus !== "ready"
+  ) return false;
   return Boolean(profile?.onboardingCompletedAt || profile?.onboardingSkippedAt || (hasGoal(profile) && hasBackground(profile) && hasStyle(profile)));
 }
 
@@ -106,6 +116,10 @@ function isGoalPositioningStatus(value: unknown): value is GoalPositioningStatus
   return typeof value === "string" && (GOAL_POSITIONING_STATUSES as readonly string[]).includes(value);
 }
 
+function isOnboardingCourseStatus(value: unknown): value is OnboardingCourseStatus {
+  return typeof value === "string" && (ONBOARDING_COURSE_STATUSES as readonly string[]).includes(value);
+}
+
 function normalizeGoalPositioningCandidates(value: unknown): GoalPositioningCandidate[] {
   if (!Array.isArray(value)) return [];
   return value.flatMap((item) => {
@@ -129,6 +143,9 @@ export async function savePendingLearningGoal(ownerId: string, learningGoal: str
     goalPositioningMessage: null,
     goalPositioningCandidates: null,
     goalPositioningUpdatedAt: new Date(),
+    onboardingCourseStatus: null,
+    onboardingCourseMessage: null,
+    onboardingCourseUpdatedAt: null,
     onboardingSkippedAt: null,
   });
 }
@@ -150,6 +167,9 @@ export async function saveLearningGoal(input: {
     goalPositioningMessage: null,
     goalPositioningCandidates: null,
     goalPositioningUpdatedAt: new Date(),
+    onboardingCourseStatus: "pending",
+    onboardingCourseMessage: null,
+    onboardingCourseUpdatedAt: new Date(),
     onboardingSkippedAt: null,
   });
 }
@@ -170,6 +190,9 @@ export async function saveLearningGoalClarification(input: {
     goalPositioningMessage: input.message,
     goalPositioningCandidates: input.candidates,
     goalPositioningUpdatedAt: new Date(),
+    onboardingCourseStatus: null,
+    onboardingCourseMessage: null,
+    onboardingCourseUpdatedAt: null,
     onboardingSkippedAt: null,
   });
 }
@@ -189,6 +212,9 @@ export async function saveLearningGoalPositioningFailure(input: {
     goalPositioningMessage: input.message,
     goalPositioningCandidates: null,
     goalPositioningUpdatedAt: new Date(),
+    onboardingCourseStatus: null,
+    onboardingCourseMessage: null,
+    onboardingCourseUpdatedAt: null,
     onboardingSkippedAt: null,
   });
 }
@@ -205,7 +231,22 @@ export async function skipLearningGoal(ownerId: string) {
     goalPositioningMessage: null,
     goalPositioningCandidates: null,
     goalPositioningUpdatedAt: null,
+    onboardingCourseStatus: null,
+    onboardingCourseMessage: null,
+    onboardingCourseUpdatedAt: null,
     onboardingSkippedAt: null,
+  });
+}
+
+export async function saveOnboardingCourseStatus(input: {
+  ownerId: string;
+  status: OnboardingCourseStatus;
+  message?: string | null;
+}) {
+  return upsertLearnerProfile(input.ownerId, {
+    onboardingCourseStatus: input.status,
+    onboardingCourseMessage: input.message ?? null,
+    onboardingCourseUpdatedAt: new Date(),
   });
 }
 

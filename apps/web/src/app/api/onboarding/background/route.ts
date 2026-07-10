@@ -3,7 +3,10 @@ import { z } from "zod";
 
 import { requireAuthUser } from "@/lib/auth/guard";
 import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
-import { buildOnboardingCourse } from "@/lib/learner-profile/onboarding-course";
+import {
+  buildOnboardingCourseWithStatus,
+  OnboardingCourseBuildError,
+} from "@/lib/learner-profile/onboarding-course-build";
 import { getLearnerOnboardingState, saveKnowledgeBackground, skipKnowledgeBackground } from "@/lib/learner-profile/store";
 import { isKnowledgeBackground } from "@/lib/learner-profile/types";
 
@@ -31,15 +34,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Choose a background or skip this step." }, { status: 400 });
     }
 
-    const course = await buildOnboardingCourse(user.id, profile);
+    const course = await buildOnboardingCourseWithStatus(user.id, profile);
     return NextResponse.json({
       ...(await getLearnerOnboardingState(user.id)),
-      profile,
       course,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: "Invalid onboarding background request." }, { status: 400 });
+    }
+    if (error instanceof OnboardingCourseBuildError) {
+      return NextResponse.json({ error: error.message, code: error.code }, { status: error.status });
     }
     logKnowledgeGraphError("onboarding/background", error);
     const safe = toSafeKnowledgeGraphError(error, {

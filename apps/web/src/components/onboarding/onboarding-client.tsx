@@ -167,6 +167,9 @@ function debugOnboardingResponse(
     goalPositioningMessage: null,
     goalPositioningCandidates: [],
     goalPositioningUpdatedAt: null,
+    onboardingCourseStatus: null,
+    onboardingCourseMessage: null,
+    onboardingCourseUpdatedAt: null,
     knowledgeBackground: null,
     knowledgeBackgroundSkippedAt: null,
     tutorStyle: null,
@@ -197,6 +200,9 @@ function debugOnboardingResponse(
         goalPositioningMessage: null,
         goalPositioningCandidates: [],
         goalPositioningUpdatedAt: now,
+        onboardingCourseStatus: "pending",
+        onboardingCourseMessage: null,
+        onboardingCourseUpdatedAt: now,
         updatedAt: now,
       },
       nextStep: "background",
@@ -215,6 +221,9 @@ function debugOnboardingResponse(
         ...profile,
         knowledgeBackground: body.skip ? null : (body.knowledgeBackground as KnowledgeBackground),
         knowledgeBackgroundSkippedAt: body.skip ? now : null,
+        onboardingCourseStatus: profile.goalSkippedAt ? null : "ready",
+        onboardingCourseMessage: null,
+        onboardingCourseUpdatedAt: profile.goalSkippedAt ? null : now,
         updatedAt: now,
       },
       nextStep: "style",
@@ -231,6 +240,9 @@ function debugOnboardingResponse(
       tutorStyle: body.skip ? null : normalizeTutorStyle(body.tutorStyle),
       tutorStyleSkippedAt: body.skip ? now : null,
       onboardingCompletedAt: now,
+      onboardingCourseStatus: profile.goalSkippedAt ? null : "ready",
+      onboardingCourseMessage: null,
+      onboardingCourseUpdatedAt: profile.goalSkippedAt ? null : now,
       updatedAt: now,
     },
     nextStep: "done",
@@ -261,10 +273,16 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
     step === "style"
       ? { src: selectedTutorStyle.imageSrc, width: 1024, height: 1536 }
       : { src: visual.src, width: visual.width, height: visual.height };
-  const completionHref = courseId ? `/course/${encodeURIComponent(courseId)}/outline` : "/";
-  const completionLabel = courseId ? "Open course outline" : "Enter workspace";
   const savedLearningGoal = state.profile?.learningGoal ?? learningGoal;
   const goalStatus = state.profile?.goalPositioningStatus ?? null;
+  const courseStatus =
+    state.profile?.onboardingCourseStatus ??
+    (courseId ? "ready" : state.profile?.goalGraphId ? "pending" : null);
+  const courseFailed = courseStatus === "failed";
+  const courseWaiting = courseStatus === "pending" || courseStatus === "building";
+  const courseReady = courseStatus === "ready" && Boolean(courseId);
+  const completionHref = courseReady ? `/course/${encodeURIComponent(courseId!)}/outline` : "/";
+  const completionLabel = courseReady ? "Open course outline" : "Enter workspace";
   const finalClarify =
     clarify ??
     (goalStatus === "clarify" && state.profile?.goalPositioningCandidates.length
@@ -279,7 +297,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
     setClarify(data.clarify ?? null);
     if (data.anchor) setAnchor(data.anchor);
     const nextCourseId = data.course?.courseId ?? data.courseId ?? null;
-    if (nextCourseId) setCourseId(nextCourseId);
+    if ("course" in data || "courseId" in data) setCourseId(nextCourseId);
   }
 
   useEffect(() => {
@@ -299,7 +317,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
   }, []);
 
   useEffect(() => {
-    if (debugMode || step !== "done" || goalStatus !== "pending") return;
+    if (debugMode || step !== "done" || (goalStatus !== "pending" && !courseWaiting)) return;
     let cancelled = false;
 
     async function pollOnboarding() {
@@ -318,7 +336,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [debugMode, goalStatus, step]);
+  }, [courseWaiting, debugMode, goalStatus, step]);
 
   const goalSummary = useMemo(() => {
     if (anchor) {
@@ -350,6 +368,15 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
       applyResponse(await action());
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
+      if (!debugMode) {
+        try {
+          const response = await fetch("/api/onboarding", { cache: "no-store" });
+          const data = (await response.json().catch(() => ({}))) as OnboardingApiResponse;
+          if (response.ok) applyResponse(data);
+        } catch {
+          // Keep the original action error visible when status refresh also fails.
+        }
+      }
     } finally {
       setBusy(false);
     }
@@ -385,7 +412,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
               ←
             </button>
             <span className="onboarding-brand">Primoria</span>
-            <div className="onboarding-progress" aria-label={`Step ${index + 1} of ${STEP_ORDER.length}`}>
+            <div className="onboarding-progress" aria-label={`Step ${Math.min(index + 1, STEP_ORDER.length)} of ${STEP_ORDER.length}`}>
               <span style={{ width: `${progress}%` }} />
             </div>
             <span className="onboarding-count">{Math.min(index + 1, STEP_ORDER.length)}/{STEP_ORDER.length}</span>
@@ -537,25 +564,45 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
             <div className="onboarding-step onboarding-step-complete">
               <div className="onboarding-step-copy">
                 <p className="onboarding-kicker">
-                  {finalClarify ? "Choose a subject" : goalStatus === "pending" ? "Preparing path" : "Onboarding complete"}
+                  {finalClarify
+                    ? "Choose a subject"
+                    : goalStatus === "pending"
+                      ? "Preparing path"
+                      : courseFailed
+                        ? "Course preparation failed"
+                        : courseWaiting
+                          ? "Preparing course"
+                          : "Onboarding complete"}
                 </p>
                 <h1>
                   {finalClarify
                     ? "Which subject should Primoria start from?"
                     : goalStatus === "pending"
                       ? "Your learning path is being prepared."
+                      : courseFailed
+                        ? "We couldn't prepare your course."
+                        : courseWaiting
+                          ? "Your course is being prepared."
                       : goalStatus === "failed"
                         ? "Your workspace is ready."
-                        : "Your learning path is ready."}
+                        : courseReady
+                          ? "Your learning path is ready."
+                          : "Your workspace is ready."}
                 </h1>
                 <p className="onboarding-copy">
                   {finalClarify
                     ? finalClarify.message
                     : goalStatus === "pending"
                       ? "Primoria is matching your goal in the background. You can enter the workspace while it finishes."
+                      : courseFailed
+                        ? (state.profile?.onboardingCourseMessage ?? "We couldn't prepare your course right now. Please retry.")
+                        : courseWaiting
+                          ? "Primoria is building your course outline. This page will update when it is ready."
                       : goalStatus === "failed"
                         ? "We saved your goal, but the course origin still needs confirmation."
-                        : "The course outline can now open from your learning space."}
+                        : courseReady
+                          ? "The course outline can now open from your learning space."
+                          : "Your onboarding preferences have been saved."}
                 </p>
               </div>
               <div className="onboarding-control-region onboarding-complete-region">
@@ -577,16 +624,33 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
               <p className="onboarding-note">
                 {finalClarify
                   ? "Pick one subject to generate the course outline from a stable graph anchor."
-                  : courseId
+                  : courseReady
                     ? "The next screen will open the generated course outline."
                     : goalStatus === "pending"
                       ? "Course preparation will continue in the background."
+                      : courseFailed
+                        ? "Retry keeps your learning goal and starts course preparation again."
+                        : courseWaiting
+                          ? "Course preparation is still running in the background."
                       : goalStatus === "failed"
                         ? (state.profile?.goalPositioningMessage ?? "You can continue and confirm the course starting point later.")
                         : "No course was created because the learning goal was skipped."}
               </p>
               <div className="onboarding-actions">
-                {finalClarify ? null : (
+                {finalClarify ? null : courseFailed || courseStatus === "pending" ? (
+                  <button
+                    type="button"
+                    className="onboarding-primary"
+                    disabled={busy}
+                    onClick={() => run(() => submit("/api/onboarding/course", {}))}
+                  >
+                    {busy ? "Preparing course…" : courseFailed ? "Retry course preparation" : "Prepare course"}
+                  </button>
+                ) : courseStatus === "building" ? (
+                  <button type="button" className="onboarding-primary" disabled>
+                    Preparing course…
+                  </button>
+                ) : (
                   <Link className="onboarding-primary" href={completionHref}>
                     {completionLabel}
                   </Link>
@@ -606,8 +670,20 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
         <aside className="onboarding-visual-pane" aria-hidden="true">
           <div className="onboarding-visual-copy">
             <span>{visual.mark}</span>
-            <strong>{visual.title}</strong>
-            <p>{visual.body}</p>
+            <strong>
+              {step === "done" && courseFailed
+                ? "Course preparation paused"
+                : step === "done" && courseWaiting
+                  ? "Building the outline"
+                  : visual.title}
+            </strong>
+            <p>
+              {step === "done" && courseFailed
+                ? "Your goal is safe. Retry when you are ready to prepare the course again."
+                : step === "done" && courseWaiting
+                  ? "Primoria is turning your goal into a course outline."
+                  : visual.body}
+            </p>
           </div>
           <Image
             className="onboarding-visual-image"
