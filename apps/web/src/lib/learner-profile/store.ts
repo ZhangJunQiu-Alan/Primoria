@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, inArray, isNull, lte, or } from "drizzle-orm";
 
 import { getDb, hasDatabaseUrl } from "@/lib/db/client";
 import { learnerProfiles, type LearnerProfileRow } from "@/lib/db/schema";
@@ -87,12 +87,101 @@ export async function getLearnerProfile(ownerId: string): Promise<LearnerProfile
 }
 
 export async function getLearnerOnboardingState(ownerId: string): Promise<LearnerOnboardingState> {
-  const profile = await getLearnerProfile(ownerId);
+  let profile = await getLearnerProfile(ownerId);
+  if (profile) profile = await failStaleOnboardingWork(profile);
   return {
     profile,
     nextStep: nextOnboardingStep(profile),
     complete: isLearnerOnboardingComplete(profile),
   };
+}
+
+// after() background work has no persistence: if the process dies before the
+// callback writes a terminal status, the profile stays in-flight forever and
+// the done-page poll never ends. Reads repair anything in-flight past this
+// window to "failed" so the learner gets the existing retry UI instead.
+export const ONBOARDING_STALE_PENDING_MS = 5 * 60 * 1000;
+
+export const GOAL_POSITIONING_INTERRUPTED_MESSAGE =
+  "Positioning was interrupted before it finished. Please submit your goal again.";
+export const COURSE_BUILD_INTERRUPTED_MESSAGE =
+  "Course preparation was interrupted before it finished. Please retry.";
+
+// A missing or unparseable timestamp on an in-flight status is itself broken
+// state, so it counts as stale.
+function isStaleTimestamp(value: string | null, cutoff: Date) {
+  if (!value) return true;
+  const parsed = Date.parse(value);
+  return !Number.isFinite(parsed) || parsed <= cutoff.getTime();
+}
+
+async function failStaleOnboardingWork(profile: LearnerProfile): Promise<LearnerProfile> {
+  const now = new Date();
+  const cutoff = new Date(now.getTime() - ONBOARDING_STALE_PENDING_MS);
+  let repaired = profile;
+
+  if (repaired.goalPositioningStatus === "pending" && isStaleTimestamp(repaired.goalPositioningUpdatedAt, cutoff)) {
+    const rows = await getDb()
+      .update(learnerProfiles)
+      .set({
+        goalPositioningStatus: "failed",
+        goalPositioningMessage: GOAL_POSITIONING_INTERRUPTED_MESSAGE,
+        goalPositioningCandidates: null,
+        goalPositioningUpdatedAt: now,
+        updatedAt: now,
+      })
+      .where(
+        and(
+          eq(learnerProfiles.ownerId, repaired.ownerId),
+          eq(learnerProfiles.goalPositioningStatus, "pending"),
+          // Re-check staleness inside the UPDATE so a goal submitted after our
+          // read (fresh timestamp) is never clobbered.
+          or(isNull(learnerProfiles.goalPositioningUpdatedAt), lte(learnerProfiles.goalPositioningUpdatedAt, cutoff)),
+        ),
+      )
+      .returning();
+    if (rows[0]) {
+      console.error("[onboarding] goal positioning stalled past timeout; marked failed for retry", {
+        ownerId: repaired.ownerId,
+      });
+      repaired = rowToLearnerProfile(rows[0]);
+    } else {
+      repaired = (await getLearnerProfile(repaired.ownerId)) ?? repaired;
+    }
+  }
+
+  const courseStatus = repaired.onboardingCourseStatus;
+  if (
+    (courseStatus === "pending" || courseStatus === "building") &&
+    isStaleTimestamp(repaired.onboardingCourseUpdatedAt, cutoff)
+  ) {
+    const rows = await getDb()
+      .update(learnerProfiles)
+      .set({
+        onboardingCourseStatus: "failed",
+        onboardingCourseMessage: COURSE_BUILD_INTERRUPTED_MESSAGE,
+        onboardingCourseUpdatedAt: now,
+        updatedAt: now,
+      })
+      .where(
+        and(
+          eq(learnerProfiles.ownerId, repaired.ownerId),
+          inArray(learnerProfiles.onboardingCourseStatus, ["pending", "building"]),
+          or(isNull(learnerProfiles.onboardingCourseUpdatedAt), lte(learnerProfiles.onboardingCourseUpdatedAt, cutoff)),
+        ),
+      )
+      .returning();
+    if (rows[0]) {
+      console.error("[onboarding] course preparation stalled past timeout; marked failed for retry", {
+        ownerId: repaired.ownerId,
+      });
+      repaired = rowToLearnerProfile(rows[0]);
+    } else {
+      repaired = (await getLearnerProfile(repaired.ownerId)) ?? repaired;
+    }
+  }
+
+  return repaired;
 }
 
 type ProfilePatch = Partial<typeof learnerProfiles.$inferInsert>;
@@ -110,6 +199,28 @@ async function upsertLearnerProfile(ownerId: string, patch: ProfilePatch): Promi
     })
     .returning();
   return rowToLearnerProfile(rows[0]);
+}
+
+// A background resolver may finish after the learner has submitted another
+// goal. The goal text and pending status are the write fence for that request.
+async function updatePendingLearningGoal(
+  ownerId: string,
+  learningGoal: string,
+  patch: ProfilePatch,
+): Promise<LearnerProfile | null> {
+  const now = new Date();
+  const rows = await getDb()
+    .update(learnerProfiles)
+    .set({ ...patch, updatedAt: now })
+    .where(
+      and(
+        eq(learnerProfiles.ownerId, ownerId),
+        eq(learnerProfiles.learningGoal, learningGoal),
+        eq(learnerProfiles.goalPositioningStatus, "pending"),
+      ),
+    )
+    .returning();
+  return rows[0] ? rowToLearnerProfile(rows[0]) : null;
 }
 
 function isGoalPositioningStatus(value: unknown): value is GoalPositioningStatus {
@@ -174,14 +285,36 @@ export async function saveLearningGoal(input: {
   });
 }
 
+export async function savePositionedLearningGoalIfPending(input: {
+  ownerId: string;
+  learningGoal: string;
+  graphId: string;
+  startTopicId: string;
+  targetConceptId: string | null;
+}) {
+  return updatePendingLearningGoal(input.ownerId, input.learningGoal, {
+    goalGraphId: input.graphId,
+    goalStartTopicId: input.startTopicId,
+    goalTargetConceptId: input.targetConceptId,
+    goalSkippedAt: null,
+    goalPositioningStatus: "positioned",
+    goalPositioningMessage: null,
+    goalPositioningCandidates: null,
+    goalPositioningUpdatedAt: new Date(),
+    onboardingCourseStatus: "pending",
+    onboardingCourseMessage: null,
+    onboardingCourseUpdatedAt: new Date(),
+    onboardingSkippedAt: null,
+  });
+}
+
 export async function saveLearningGoalClarification(input: {
   ownerId: string;
   learningGoal: string;
   message: string;
   candidates: GoalPositioningCandidate[];
 }) {
-  return upsertLearnerProfile(input.ownerId, {
-    learningGoal: input.learningGoal,
+  return updatePendingLearningGoal(input.ownerId, input.learningGoal, {
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
@@ -202,8 +335,7 @@ export async function saveLearningGoalPositioningFailure(input: {
   learningGoal: string;
   message: string;
 }) {
-  return upsertLearnerProfile(input.ownerId, {
-    learningGoal: input.learningGoal,
+  return updatePendingLearningGoal(input.ownerId, input.learningGoal, {
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,

@@ -99,6 +99,7 @@ function main() {
   assert(goalRoute.includes("resolveOnboardingGoalAnchor"), "goal route resolves KG anchor");
   assert(goalRoute.includes("after(() => positionLearningGoalInBackground"), "goal route positions KG anchor after the response");
   assert(goalRoute.includes("savePendingLearningGoal"), "goal route saves the raw goal before background positioning");
+  assert(goalRoute.includes("savePositionedLearningGoalIfPending"), "background goal result uses an atomic pending-goal write fence");
   assert(goalRoute.includes("skipLearningGoal"), "goal route supports step skip");
 
   const backgroundRoute = src("app/api/onboarding/background/route.ts");
@@ -140,6 +141,7 @@ function main() {
 
   const profileStore = src("lib/learner-profile/store.ts");
   assert(profileStore.includes("goalPositioningStatus"), "profile store persists goal positioning status");
+  assert(profileStore.includes('eq(learnerProfiles.goalPositioningStatus, "pending")'), "profile store fences stale background goal writes");
   assert(profileStore.includes("onboardingCourseStatus"), "profile store persists onboarding course status");
 
   const onboardingCourseBuild = src("lib/learner-profile/onboarding-course-build.ts");

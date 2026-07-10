@@ -19,6 +19,7 @@ const mockState = vi.hoisted(() => ({
   saveLearningGoalClarification: vi.fn(),
   saveLearningGoalPositioningFailure: vi.fn(),
   savePendingLearningGoal: vi.fn(),
+  savePositionedLearningGoalIfPending: vi.fn(),
   skipLearningGoal: vi.fn(),
   saveKnowledgeBackground: vi.fn(),
   saveOnboardingCourseStatus: vi.fn(),
@@ -54,6 +55,7 @@ vi.mock("@/lib/learner-profile/store", () => ({
   saveLearningGoalClarification: mockState.saveLearningGoalClarification,
   saveLearningGoalPositioningFailure: mockState.saveLearningGoalPositioningFailure,
   savePendingLearningGoal: mockState.savePendingLearningGoal,
+  savePositionedLearningGoalIfPending: mockState.savePositionedLearningGoalIfPending,
   skipLearningGoal: mockState.skipLearningGoal,
   saveKnowledgeBackground: mockState.saveKnowledgeBackground,
   saveOnboardingCourseStatus: mockState.saveOnboardingCourseStatus,
@@ -91,6 +93,7 @@ describe("onboarding route error safety", () => {
     mockState.requireAuthUser.mockResolvedValue({ denied: null, user: { id: "u1" } });
     mockState.getLearnerOnboardingState.mockResolvedValue({ step: "goal" });
     mockState.savePendingLearningGoal.mockResolvedValue({ ownerId: "u1" });
+    mockState.savePositionedLearningGoalIfPending.mockResolvedValue({ ownerId: "u1" });
     mockState.saveLearningGoalPositioningFailure.mockResolvedValue({ ownerId: "u1" });
     mockState.saveOnboardingCourseStatus.mockResolvedValue({ ownerId: "u1" });
     vi.spyOn(console, "error").mockImplementation(() => {});
@@ -152,7 +155,7 @@ describe("onboarding route error safety", () => {
         targetConceptId: null,
       },
     });
-    mockState.saveLearningGoal.mockResolvedValue({
+    mockState.savePositionedLearningGoalIfPending.mockResolvedValue({
       ownerId: "u1",
       learningGoal: "learn mechanics",
       goalGraphId: "physics",
@@ -166,13 +169,43 @@ describe("onboarding route error safety", () => {
     expect(response.status).toBe(200);
     await mockState.afterCallbacks[0]();
 
-    expect(mockState.saveLearningGoal).toHaveBeenCalledTimes(1);
+    expect(mockState.savePositionedLearningGoalIfPending).toHaveBeenCalledTimes(1);
     expect(mockState.saveLearningGoalPositioningFailure).not.toHaveBeenCalled();
     expect(mockState.saveOnboardingCourseStatus).toHaveBeenLastCalledWith({
       ownerId: "u1",
       status: "failed",
       message: "We couldn't prepare your course right now. Please retry.",
     });
+  });
+
+  it("abandons a stale background result after the user submits a newer goal", async () => {
+    const { POST } = await import("../src/app/api/onboarding/goal/route");
+    mockState.getLearnerProfile.mockResolvedValue({
+      learningGoal: "learn mechanics",
+      goalPositioningStatus: "pending",
+    });
+    mockState.resolveOnboardingGoalAnchor.mockResolvedValue({
+      kind: "anchor",
+      anchor: {
+        graphId: "physics",
+        startTopicId: "mechanics",
+        targetConceptId: null,
+      },
+    });
+    mockState.savePositionedLearningGoalIfPending.mockResolvedValue(null);
+
+    await POST(postRequest({ learningGoal: "learn mechanics" }));
+    await mockState.afterCallbacks[0]();
+
+    expect(mockState.savePositionedLearningGoalIfPending).toHaveBeenCalledWith({
+      ownerId: "u1",
+      learningGoal: "learn mechanics",
+      graphId: "physics",
+      startTopicId: "mechanics",
+      targetConceptId: null,
+    });
+    expect(mockState.buildOnboardingCourse).not.toHaveBeenCalled();
+    expect(mockState.saveLearningGoalPositioningFailure).not.toHaveBeenCalled();
   });
 
   it("returns a safe 503 response when the sync graphId path hits a KG infrastructure failure", async () => {

@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { requireAuthUser } from "@/lib/auth/guard";
 import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
+import { createServerTiming } from "@/lib/observability/server-timing";
 import {
   buildOnboardingCourseWithStatus,
   OnboardingCourseBuildError,
@@ -15,6 +16,7 @@ import {
   saveLearningGoalClarification,
   saveLearningGoalPositioningFailure,
   savePendingLearningGoal,
+  savePositionedLearningGoalIfPending,
   skipLearningGoal,
 } from "@/lib/learner-profile/store";
 
@@ -43,34 +45,41 @@ async function buildCourseIfReady(ownerId: string, profile: Awaited<ReturnType<t
 
 async function positionLearningGoalInBackground(ownerId: string, learningGoal: string) {
   if (!goalStillPending(await getLearnerProfile(ownerId), learningGoal)) return;
+  // The learner polls until this finishes, so its duration is the real wait.
+  const timing = createServerTiming();
 
   try {
-    const resolution = await resolveOnboardingGoalAnchor(learningGoal);
-    if (!goalStillPending(await getLearnerProfile(ownerId), learningGoal)) return;
+    const resolution = await timing.time("resolve_anchor", () => resolveOnboardingGoalAnchor(learningGoal));
 
     if (resolution.kind === "clarify") {
-      await saveLearningGoalClarification({
-        ownerId,
-        learningGoal,
-        message: resolution.clarify.message,
-        candidates: resolution.clarify.candidates,
-      });
+      await timing.time("save_clarify", () =>
+        saveLearningGoalClarification({
+          ownerId,
+          learningGoal,
+          message: resolution.clarify.message,
+          candidates: resolution.clarify.candidates,
+        }),
+      );
+      timing.log("onboarding/goal:background");
       return;
     }
 
     const { anchor } = resolution;
-    const profile = await saveLearningGoal({
-      ownerId,
-      learningGoal,
-      graphId: anchor.graphId,
-      startTopicId: anchor.startTopicId,
-      targetConceptId: anchor.targetConceptId,
-    });
-    await buildCourseIfReady(ownerId, profile);
+    const profile = await timing.time("save_positioned", () =>
+      savePositionedLearningGoalIfPending({
+        ownerId,
+        learningGoal,
+        graphId: anchor.graphId,
+        startTopicId: anchor.startTopicId,
+        targetConceptId: anchor.targetConceptId,
+      }),
+    );
+    if (profile) await timing.time("build_course", () => buildCourseIfReady(ownerId, profile));
+    timing.log("onboarding/goal:background");
   } catch (error) {
+    timing.log("onboarding/goal:background");
     if (error instanceof OnboardingCourseBuildError) return;
     logKnowledgeGraphError("onboarding/goal:background", error);
-    if (!goalStillPending(await getLearnerProfile(ownerId), learningGoal)) return;
     // Never persist raw error.message: SQL/table names must not reach profiles.
     const safe = toSafeKnowledgeGraphError(error, { message: "Could not locate that goal. Please retry." });
     await saveLearningGoalPositioningFailure({
@@ -82,59 +91,69 @@ async function positionLearningGoalInBackground(ownerId: string, learningGoal: s
 }
 
 export async function POST(request: Request) {
-  const { denied, user } = await requireAuthUser();
+  const timing = createServerTiming();
+  const respond = (body: unknown, init?: { status?: number }) => {
+    timing.log("onboarding/goal");
+    return NextResponse.json(body, { status: init?.status, headers: { "Server-Timing": timing.header() } });
+  };
+
+  const { denied, user } = await timing.time("auth", () => requireAuthUser());
   if (denied) return denied;
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!user) return respond({ error: "Unauthorized" }, { status: 401 });
 
   try {
     const body = RequestSchema.parse(await request.json());
     if (body.skip) {
-      const profile = await skipLearningGoal(user.id);
-      return NextResponse.json({ ...(await getLearnerOnboardingState(user.id)), profile });
+      const profile = await timing.time("save_skip", () => skipLearningGoal(user.id));
+      return respond({ ...(await timing.time("state", () => getLearnerOnboardingState(user.id))), profile });
     }
 
     if (!body.learningGoal) {
-      return NextResponse.json({ error: "Learning goal is required." }, { status: 400 });
+      return respond({ error: "Learning goal is required." }, { status: 400 });
     }
 
     if (!body.graphId) {
-      const profile = await savePendingLearningGoal(user.id, body.learningGoal);
+      const profile = await timing.time("save_pending", () => savePendingLearningGoal(user.id, body.learningGoal!));
       after(() => positionLearningGoalInBackground(user.id, body.learningGoal!));
-      return NextResponse.json({ ...(await getLearnerOnboardingState(user.id)), profile });
+      return respond({ ...(await timing.time("state", () => getLearnerOnboardingState(user.id))), profile });
     }
 
-    const resolution = await resolveOnboardingGoalAnchor(body.learningGoal, { graphId: body.graphId });
+    const resolution = await timing.time("resolve_anchor", () =>
+      resolveOnboardingGoalAnchor(body.learningGoal!, { graphId: body.graphId }),
+    );
 
     // A selected subject chip should deterministically commit that graph. If a
     // stale or invalid graph sneaks through, fall back to the normal clarify path.
     if (resolution.kind === "clarify") {
-      return NextResponse.json({
-        ...(await getLearnerOnboardingState(user.id)),
+      return respond({
+        ...(await timing.time("state", () => getLearnerOnboardingState(user.id))),
         clarify: resolution.clarify,
       });
     }
 
     const { anchor } = resolution;
-    const profile = await saveLearningGoal({
-      ownerId: user.id,
-      learningGoal: body.learningGoal,
-      graphId: anchor.graphId,
-      startTopicId: anchor.startTopicId,
-      targetConceptId: anchor.targetConceptId,
-    });
-    const course = await buildCourseIfReady(user.id, profile);
+    const profile = await timing.time("save_goal", () =>
+      saveLearningGoal({
+        ownerId: user.id,
+        learningGoal: body.learningGoal!,
+        graphId: anchor.graphId,
+        startTopicId: anchor.startTopicId,
+        targetConceptId: anchor.targetConceptId,
+      }),
+    );
+    const course = await timing.time("build_course", () => buildCourseIfReady(user.id, profile));
 
-    return NextResponse.json({
-      ...(await getLearnerOnboardingState(user.id)),
+    return respond({
+      ...(await timing.time("state", () => getLearnerOnboardingState(user.id))),
       anchor,
       course,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: "Invalid onboarding goal request." }, { status: 400 });
+      return respond({ error: "Invalid onboarding goal request." }, { status: 400 });
     }
     if (error instanceof OnboardingCourseBuildError) {
-      return NextResponse.json({ error: error.message, code: error.code }, { status: error.status });
+      return respond({ error: error.message, code: error.code }, { status: error.status });
     }
     logKnowledgeGraphError("onboarding/goal", error);
     const safe = toSafeKnowledgeGraphError(error, {
@@ -142,6 +161,6 @@ export async function POST(request: Request) {
       code: "onboarding_goal_failed",
       message: "Could not locate that goal. Please retry.",
     });
-    return NextResponse.json({ error: safe.message, code: safe.code }, { status: safe.status });
+    return respond({ error: safe.message, code: safe.code }, { status: safe.status });
   }
 }
