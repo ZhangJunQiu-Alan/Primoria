@@ -61,13 +61,15 @@ export function CourseOutlineView({
       (job) => job.status === "completed" && !refreshedRef.current.has(job.lessonId),
     );
     if (justCompleted.length === 0) return;
-    for (const job of justCompleted) refreshedRef.current.add(job.lessonId);
     (async () => {
       try {
         const res = await fetch(`/api/courses/${displayCourse.id}`, { cache: "no-store" });
         if (!res.ok) return;
         const data = (await res.json()) as { course?: Course };
         if (!data.course) return;
+        // Mark only after a successful refresh so a failed fetch is retried
+        // on the next jobs poll instead of pinning stale outline data.
+        for (const job of justCompleted) refreshedRef.current.add(job.lessonId);
         setDisplayCourse(data.course);
         onCourseUpdated?.(data.course);
       } catch {
