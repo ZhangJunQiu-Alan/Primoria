@@ -1,13 +1,8 @@
-import { JSDOM } from "jsdom";
-
 import type { CourseBlock } from "./types";
 import { MERMAID_RUNTIME_VERSION } from "../mermaid-runtime";
+import { mermaidParserWorkerClient } from "./mermaid-parser-worker-client";
 
 const MAX_MERMAID_DEFINITION_LENGTH = 50_000;
-type MermaidModule = typeof import("mermaid")["default"];
-
-let mermaidPromise: Promise<MermaidModule> | null = null;
-let parseQueue: Promise<unknown> = Promise.resolve();
 
 export class InvalidMermaidDefinitionError extends Error {
   readonly diagnostic: string;
@@ -19,64 +14,9 @@ export class InvalidMermaidDefinitionError extends Error {
   }
 }
 
-async function importMermaidParser() {
-  if (typeof window !== "undefined" && typeof document !== "undefined") {
-    return (await import("mermaid")).default;
-  }
-
-  const dom = new JSDOM("<!doctype html><html><body></body></html>");
-  const browserGlobals = {
-    window: dom.window,
-    document: dom.window.document,
-    DOMParser: dom.window.DOMParser,
-    XMLSerializer: dom.window.XMLSerializer,
-    HTMLElement: dom.window.HTMLElement,
-    SVGElement: dom.window.SVGElement,
-    Element: dom.window.Element,
-    Node: dom.window.Node,
-  };
-  const originalDescriptors = new Map<PropertyKey, PropertyDescriptor | undefined>();
-
-  for (const [key, value] of Object.entries(browserGlobals)) {
-    originalDescriptors.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
-    Object.defineProperty(globalThis, key, {
-      configurable: true,
-      value,
-      writable: true,
-    });
-  }
-
-  try {
-    return (await import("mermaid")).default;
-  } finally {
-    for (const [key, descriptor] of originalDescriptors) {
-      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
-      else Reflect.deleteProperty(globalThis, key);
-    }
-    dom.window.close();
-  }
-}
-
-function loadMermaidParser() {
-  mermaidPromise ??= importMermaidParser();
-  return mermaidPromise;
-}
-
 function conciseDiagnostic(error: unknown) {
   const message = error instanceof Error ? error.message : String(error);
   return message.replace(/\s+/g, " ").trim().slice(0, 500) || "parser rejected the definition";
-}
-
-async function parseDefinition(definition: string) {
-  const run = parseQueue.then(async () => {
-    const mermaid = await loadMermaidParser();
-    await mermaid.parse(definition);
-  });
-  parseQueue = run.then(
-    () => undefined,
-    () => undefined,
-  );
-  return run;
 }
 
 export async function assertValidMermaidDefinition(definition: string): Promise<void> {
@@ -89,7 +29,7 @@ export async function assertValidMermaidDefinition(definition: string): Promise<
   }
 
   try {
-    await parseDefinition(trimmed);
+    await mermaidParserWorkerClient.parse(trimmed);
   } catch (error) {
     throw new InvalidMermaidDefinitionError(conciseDiagnostic(error));
   }
