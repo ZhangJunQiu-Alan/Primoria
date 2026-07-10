@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { and, eq } from "drizzle-orm";
-import { getCurrentUser } from "@/lib/auth/session";
+import { toSafeAuthError } from "@/lib/auth/errors";
+import { requireConfiguredAuthUser } from "@/lib/auth/guard";
 import { getDb, hasDatabaseUrl } from "@/lib/db/client";
 import { quizAttempts } from "@/lib/db/schema";
 import { getCourse, markLessonProgress } from "@/lib/courses/store";
@@ -54,10 +55,9 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       return NextResponse.json({ ok: true, persisted: false });
     }
 
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const { denied, user } = await requireConfiguredAuthUser("courses-quiz");
+    if (denied) return denied;
+    if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Resolve the lesson owning this quiz block so the attempt and per-question
     // events can be aggregated per lesson during distillation.
@@ -148,8 +148,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
 
     return NextResponse.json({ ok: true, persisted: true });
   } catch (error) {
-    console.error("[courses/quiz]", error);
-    const message = error instanceof Error ? error.message : "Failed to save quiz attempt";
-    return NextResponse.json({ error: message }, { status: 500 });
+    const safe = toSafeAuthError(error, "courses-quiz", "Failed to save quiz attempt.");
+    return NextResponse.json(safe.body, { status: safe.status });
   }
 }

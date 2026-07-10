@@ -29,8 +29,9 @@ export async function resolveUiLanguageForUser(userId?: string | null): Promise<
 }
 
 export async function getCurrentUiLanguage(): Promise<UiLanguage> {
-  const user = await getCurrentUserForRsc();
-  return resolveUiLanguageForUser(user?.id ?? null);
+  // Root Layout must stay renderable while the auth database is unavailable.
+  // Persisted user preferences are loaded by page-level boundaries instead.
+  return resolveUiLanguage(null);
 }
 
 export async function getDictionaryForUser(userId?: string | null): Promise<{ language: UiLanguage; dictionary: I18nDictionary }> {

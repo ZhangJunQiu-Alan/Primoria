@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getOptionalAuthUser, requireConfiguredAuthUser } from "@/lib/auth/guard";
 import { listCopilotMessages, upsertCopilotMessage } from "@/lib/copilot/thread-repository";
 import { recordLearningEvent } from "@/lib/learning-events/store";
 import { verifyEventScope } from "@/lib/learning-events/scope";
@@ -16,17 +16,17 @@ const MessageSchema = z.object({
 });
 
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
-  if (!isAuthEnabled()) return NextResponse.json({ messages: [] });
-  const user = await getCurrentUser();
+  const { denied, user } = await getOptionalAuthUser("copilot-thread-messages");
+  if (denied) return denied;
   if (!user) return NextResponse.json({ messages: [] });
   const { id } = await context.params;
   return NextResponse.json({ messages: await listCopilotMessages(user.id, id) });
 }
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
-  if (!isAuthEnabled()) return NextResponse.json({ ok: false, error: "Auth is not configured" }, { status: 503 });
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  const { denied, user } = await requireConfiguredAuthUser("copilot-thread-messages");
+  if (denied) return denied;
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await context.params;
   const body = MessageSchema.parse(await request.json());
   await upsertCopilotMessage(user.id, id, body);

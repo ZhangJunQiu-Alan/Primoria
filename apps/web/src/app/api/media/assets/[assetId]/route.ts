@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth/session";
+import { getOptionalAuthUser } from "@/lib/auth/guard";
 import { hasDatabaseUrl } from "@/lib/db/client";
 import { getMediaAsset } from "@/lib/ai/media/media-assets";
 
@@ -13,13 +13,15 @@ export async function GET(_request: Request, context: { params: Promise<{ assetI
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
+    const { denied, user } = await getOptionalAuthUser("media-asset");
+    if (denied) return denied;
+
     const asset = await getMediaAsset(assetId);
     if (!asset) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
     if (asset.ownerId) {
-      const user = await getCurrentUser();
       if (!user || user.id !== asset.ownerId) {
         return NextResponse.json({ error: "Not found" }, { status: 404 });
       }

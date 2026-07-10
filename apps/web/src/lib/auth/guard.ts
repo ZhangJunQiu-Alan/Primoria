@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { toSafeAuthError } from "@/lib/auth/errors";
+import { AUTH_UNAVAILABLE_ERROR, toSafeAuthError } from "@/lib/auth/errors";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import type { AuthUser } from "@/lib/auth/types";
 
@@ -14,7 +14,18 @@ export async function requireAuth(): Promise<NextResponse | null> {
   return denied;
 }
 
-export async function requireAuthUser(): Promise<{ denied: NextResponse | null; user: AuthUser | null }> {
+type AuthGuardResult = { denied: NextResponse | null; user: AuthUser | null };
+
+async function resolveAuthUser(context: string): Promise<AuthGuardResult> {
+  try {
+    return { denied: null, user: await getCurrentUser() };
+  } catch (error) {
+    const safe = toSafeAuthError(error, context);
+    return { denied: NextResponse.json(safe.body, { status: safe.status }), user: null };
+  }
+}
+
+export async function requireAuthUser(context = "session"): Promise<AuthGuardResult> {
   if (!isAuthEnabled()) {
     if (process.env.NODE_ENV !== "production") return { denied: null, user: null };
     return {
@@ -22,16 +33,8 @@ export async function requireAuthUser(): Promise<{ denied: NextResponse | null; 
       user: null,
     };
   }
-  // Session lookup failures (database down, network) must surface as a 503
-  // service problem, not as a misleading 401 "signed out". Many routes call
-  // this guard outside their try/catch, so the mapping lives here.
-  let user: AuthUser | null;
-  try {
-    user = await getCurrentUser();
-  } catch (error) {
-    const safe = toSafeAuthError(error, "session");
-    return { denied: NextResponse.json(safe.body, { status: safe.status }), user: null };
-  }
+  const { denied, user } = await resolveAuthUser(context);
+  if (denied) return { denied, user: null };
   if (!user) {
     return {
       denied: NextResponse.json({ error: "Unauthorized" }, { status: 401 }),
@@ -39,4 +42,24 @@ export async function requireAuthUser(): Promise<{ denied: NextResponse | null; 
     };
   }
   return { denied: null, user };
+}
+
+// API writes that require a persisted identity must not use the local
+// development fail-open behavior of requireAuthUser().
+export async function requireConfiguredAuthUser(context: string): Promise<AuthGuardResult> {
+  if (!isAuthEnabled()) {
+    return {
+      denied: NextResponse.json(AUTH_UNAVAILABLE_ERROR.body, { status: AUTH_UNAVAILABLE_ERROR.status }),
+      user: null,
+    };
+  }
+  return requireAuthUser(context);
+}
+
+// Optional reads retain their anonymous result when no valid session exists.
+// A request that carries a session while the auth dependency is down receives
+// the same safe 503 contract as required-auth routes.
+export async function getOptionalAuthUser(context: string): Promise<AuthGuardResult> {
+  if (!isAuthEnabled()) return { denied: null, user: null };
+  return resolveAuthUser(context);
 }

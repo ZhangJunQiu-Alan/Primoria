@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getOptionalAuthUser, requireConfiguredAuthUser } from "@/lib/auth/guard";
 import { listCopilotThreads, upsertCopilotThread } from "@/lib/copilot/thread-repository";
 
 const ThreadSchema = z.object({
@@ -13,16 +13,16 @@ const ThreadSchema = z.object({
 });
 
 export async function GET() {
-  if (!isAuthEnabled()) return NextResponse.json({ threads: [] });
-  const user = await getCurrentUser();
+  const { denied, user } = await getOptionalAuthUser("copilot-threads");
+  if (denied) return denied;
   if (!user) return NextResponse.json({ threads: [] });
   return NextResponse.json({ threads: await listCopilotThreads(user.id) });
 }
 
 export async function POST(request: Request) {
-  if (!isAuthEnabled()) return NextResponse.json({ ok: false, error: "Auth is not configured" }, { status: 503 });
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  const { denied, user } = await requireConfiguredAuthUser("copilot-threads");
+  if (denied) return denied;
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const body = ThreadSchema.parse(await request.json());
   await upsertCopilotThread(user.id, body);
   return NextResponse.json({ ok: true });
