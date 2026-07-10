@@ -324,7 +324,8 @@ async function saveCourseToDb(course: Course, ownerId: string) {
             ownerId: row.ownerId,
             topicId: row.topicId,
             title: row.title,
-            description: row.description,
+            // Description has dedicated create/insert and fenced enrichment
+            // writes. Aggregate saves must not restore a stale snapshot.
             role: row.role,
             progress: row.progress,
             status: row.status,

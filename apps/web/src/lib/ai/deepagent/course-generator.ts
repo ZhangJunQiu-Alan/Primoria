@@ -209,10 +209,16 @@ export async function initializeCourseOutline(
   const firstLesson = firstLessonForTopic(course, targetTopicId);
   if (!firstLesson) throw new Error("Course outline has no lessons to generate.");
 
+  // Reuse is read-only. Re-saving an unchanged aggregate can write stale
+  // template descriptions over a concurrent per-lesson enrichment update.
+  if (!isNewCourse) {
+    return { course, firstLesson, summary: summarizeCourse(course), isNewCourse: false };
+  }
+
   try {
     await saveCourse(course, ownerId);
   } catch (error) {
-    if (!graphId || !isNewCourse || !isOwnerGraphUniqueViolation(error)) throw error;
+    if (!graphId || !isOwnerGraphUniqueViolation(error)) throw error;
 
     // Concurrent cold-start requests can both miss getCourseByGraph(), build
     // different random course ids, then race on courses_owner_graph_uidx. The
