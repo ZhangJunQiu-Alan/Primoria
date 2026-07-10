@@ -260,6 +260,31 @@ export async function markLessonProgress(
     .where(and(eq(lessonsTable.id, lessonId), eq(lessonsTable.courseId, courseId), eq(lessonsTable.ownerId, ownerId)));
 }
 
+/** Outline-enrichment write fence: replace a lesson description only if it
+ * still matches the value the enrichment run read, so learner or concurrent
+ * edits are never clobbered. Returns true when the row was updated. */
+export async function updateLessonDescriptionIfUnchanged(input: {
+  lessonId: string;
+  courseId: string;
+  ownerId: string;
+  expectedDescription: string;
+  description: string;
+}): Promise<boolean> {
+  const rows = await getDb()
+    .update(lessonsTable)
+    .set({ description: input.description, updatedAt: new Date() })
+    .where(
+      and(
+        eq(lessonsTable.id, input.lessonId),
+        eq(lessonsTable.courseId, input.courseId),
+        eq(lessonsTable.ownerId, input.ownerId),
+        eq(lessonsTable.description, input.expectedDescription),
+      ),
+    )
+    .returning({ id: lessonsTable.id });
+  return rows.length > 0;
+}
+
 async function saveCourseToDb(course: Course, ownerId: string) {
   const courseRow = courseToRow(course, ownerId);
   const lessonRows = course.lessons.map((lesson) => lessonToRow(lesson, course.id, ownerId));
