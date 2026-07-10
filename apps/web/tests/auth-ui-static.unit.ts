@@ -30,6 +30,10 @@ async function main() {
   assert(authForm.includes("aria-describedby=\"auth-password-hint\""), "password input is described by guidance text");
   assert(authForm.includes("role=\"alert\""), "error message is announced");
   assert(authForm.includes("role=\"status\""), "success message is announced");
+  assert(authForm.includes("accountCreatedRedirecting"), "successful registration announces destination navigation");
+  assert(authForm.includes("signedInRedirecting"), "successful sign-in announces destination navigation");
+  assert(authForm.includes("router.refresh()"), "successful auth refreshes RSC state after setting the session cookie");
+  assert(!authForm.includes("finally {\n      setPending(false)"), "successful auth keeps the form pending until navigation commits");
   assert(!authForm.includes("auth-mode-note"), "auth mode note copy is removed from the visible form");
   assert(!authForm.includes("course-block-tag"), "form eyebrow copy is removed from login/signup");
   assert(authForm.includes('href="/forgot"'), "sign-in form exposes the password recovery route");

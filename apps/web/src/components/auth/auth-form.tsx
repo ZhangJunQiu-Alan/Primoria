@@ -66,10 +66,11 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
       });
       const data = (await response.json()) as { error?: string };
       if (!response.ok) throw new Error(data.error ?? "Authentication failed");
+      setStatus(isSignUp ? t.auth.accountCreatedRedirecting : t.auth.signedInRedirecting);
       router.replace(next);
+      router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : t.auth.authFailed);
-    } finally {
       setPending(false);
     }
   }
