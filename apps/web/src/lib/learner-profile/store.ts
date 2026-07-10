@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 import { and, eq, inArray, isNull, lte, or } from "drizzle-orm";
 
 import { getDb, hasDatabaseUrl } from "@/lib/db/client";
@@ -82,18 +84,33 @@ export function nextOnboardingStep(profile: LearnerProfile | null): OnboardingSt
 
 export async function getLearnerProfile(ownerId: string): Promise<LearnerProfile | null> {
   if (!hasDatabaseUrl()) return null;
-  const rows = await getDb().select().from(learnerProfiles).where(eq(learnerProfiles.ownerId, ownerId)).limit(1);
+  const rows = await getLearnerProfileRows(ownerId);
   return rows[0] ? rowToLearnerProfile(rows[0]) : null;
 }
 
 export async function getLearnerOnboardingState(ownerId: string): Promise<LearnerOnboardingState> {
-  let profile = await getLearnerProfile(ownerId);
-  if (profile) profile = await failStaleOnboardingWork(profile);
+  if (!hasDatabaseUrl()) {
+    return { profile: null, nextStep: "goal", complete: false };
+  }
+  const rows = await getLearnerProfileRows(ownerId);
+  const row = rows[0];
+  let profile = row ? rowToLearnerProfile(row) : null;
+  if (profile && row) {
+    profile = await failStaleOnboardingWork(
+      profile,
+      row.goalPositioningAttemptId,
+      row.onboardingCourseAttemptId,
+    );
+  }
   return {
     profile,
     nextStep: nextOnboardingStep(profile),
     complete: isLearnerOnboardingComplete(profile),
   };
+}
+
+function getLearnerProfileRows(ownerId: string) {
+  return getDb().select().from(learnerProfiles).where(eq(learnerProfiles.ownerId, ownerId)).limit(1);
 }
 
 // after() background work has no persistence: if the process dies before the
@@ -115,10 +132,15 @@ function isStaleTimestamp(value: string | null, cutoff: Date) {
   return !Number.isFinite(parsed) || parsed <= cutoff.getTime();
 }
 
-async function failStaleOnboardingWork(profile: LearnerProfile): Promise<LearnerProfile> {
+async function failStaleOnboardingWork(
+  profile: LearnerProfile,
+  goalPositioningAttemptId: string | null,
+  initialCourseAttemptId: string | null,
+): Promise<LearnerProfile> {
   const now = new Date();
   const cutoff = new Date(now.getTime() - ONBOARDING_STALE_PENDING_MS);
   let repaired = profile;
+  let courseAttemptId = initialCourseAttemptId;
 
   if (repaired.goalPositioningStatus === "pending" && isStaleTimestamp(repaired.goalPositioningUpdatedAt, cutoff)) {
     const rows = await getDb()
@@ -134,6 +156,9 @@ async function failStaleOnboardingWork(profile: LearnerProfile): Promise<Learner
         and(
           eq(learnerProfiles.ownerId, repaired.ownerId),
           eq(learnerProfiles.goalPositioningStatus, "pending"),
+          goalPositioningAttemptId
+            ? eq(learnerProfiles.goalPositioningAttemptId, goalPositioningAttemptId)
+            : isNull(learnerProfiles.goalPositioningAttemptId),
           // Re-check staleness inside the UPDATE so a goal submitted after our
           // read (fresh timestamp) is never clobbered.
           or(isNull(learnerProfiles.goalPositioningUpdatedAt), lte(learnerProfiles.goalPositioningUpdatedAt, cutoff)),
@@ -145,8 +170,13 @@ async function failStaleOnboardingWork(profile: LearnerProfile): Promise<Learner
         ownerId: repaired.ownerId,
       });
       repaired = rowToLearnerProfile(rows[0]);
+      courseAttemptId = rows[0].onboardingCourseAttemptId ?? null;
     } else {
-      repaired = (await getLearnerProfile(repaired.ownerId)) ?? repaired;
+      const currentRows = await getLearnerProfileRows(repaired.ownerId);
+      if (currentRows[0]) {
+        repaired = rowToLearnerProfile(currentRows[0]);
+        courseAttemptId = currentRows[0].onboardingCourseAttemptId ?? null;
+      }
     }
   }
 
@@ -166,6 +196,9 @@ async function failStaleOnboardingWork(profile: LearnerProfile): Promise<Learner
       .where(
         and(
           eq(learnerProfiles.ownerId, repaired.ownerId),
+          courseAttemptId
+            ? eq(learnerProfiles.onboardingCourseAttemptId, courseAttemptId)
+            : isNull(learnerProfiles.onboardingCourseAttemptId),
           inArray(learnerProfiles.onboardingCourseStatus, ["pending", "building"]),
           or(isNull(learnerProfiles.onboardingCourseUpdatedAt), lte(learnerProfiles.onboardingCourseUpdatedAt, cutoff)),
         ),
@@ -174,6 +207,7 @@ async function failStaleOnboardingWork(profile: LearnerProfile): Promise<Learner
     if (rows[0]) {
       console.error("[onboarding] course preparation stalled past timeout; marked failed for retry", {
         ownerId: repaired.ownerId,
+        attemptId: courseAttemptId,
       });
       repaired = rowToLearnerProfile(rows[0]);
     } else {
@@ -202,10 +236,12 @@ async function upsertLearnerProfile(ownerId: string, patch: ProfilePatch): Promi
 }
 
 // A background resolver may finish after the learner has submitted another
-// goal. The goal text and pending status are the write fence for that request.
+// goal. The unique attempt ID is the request identity; goal text is retained as
+// a defense-in-depth check, not as the identity because same-text retries exist.
 async function updatePendingLearningGoal(
   ownerId: string,
   learningGoal: string,
+  attemptId: string,
   patch: ProfilePatch,
 ): Promise<LearnerProfile | null> {
   const now = new Date();
@@ -215,12 +251,28 @@ async function updatePendingLearningGoal(
     .where(
       and(
         eq(learnerProfiles.ownerId, ownerId),
+        eq(learnerProfiles.goalPositioningAttemptId, attemptId),
         eq(learnerProfiles.learningGoal, learningGoal),
         eq(learnerProfiles.goalPositioningStatus, "pending"),
       ),
     )
     .returning();
   return rows[0] ? rowToLearnerProfile(rows[0]) : null;
+}
+
+export async function isLearningGoalPositioningAttemptPending(ownerId: string, attemptId: string) {
+  const rows = await getDb()
+    .select({ ownerId: learnerProfiles.ownerId })
+    .from(learnerProfiles)
+    .where(
+      and(
+        eq(learnerProfiles.ownerId, ownerId),
+        eq(learnerProfiles.goalPositioningAttemptId, attemptId),
+        eq(learnerProfiles.goalPositioningStatus, "pending"),
+      ),
+    )
+    .limit(1);
+  return rows.length > 0;
 }
 
 function isGoalPositioningStatus(value: unknown): value is GoalPositioningStatus {
@@ -244,7 +296,8 @@ function normalizeGoalPositioningCandidates(value: unknown): GoalPositioningCand
 }
 
 export async function savePendingLearningGoal(ownerId: string, learningGoal: string) {
-  return upsertLearnerProfile(ownerId, {
+  const attemptId = randomUUID();
+  const profile = await upsertLearnerProfile(ownerId, {
     learningGoal,
     goalGraphId: null,
     goalStartTopicId: null,
@@ -253,12 +306,15 @@ export async function savePendingLearningGoal(ownerId: string, learningGoal: str
     goalPositioningStatus: "pending",
     goalPositioningMessage: null,
     goalPositioningCandidates: null,
+    goalPositioningAttemptId: attemptId,
     goalPositioningUpdatedAt: new Date(),
     onboardingCourseStatus: null,
+    onboardingCourseAttemptId: null,
     onboardingCourseMessage: null,
     onboardingCourseUpdatedAt: null,
     onboardingSkippedAt: null,
   });
+  return { profile, attemptId };
 }
 
 export async function saveLearningGoal(input: {
@@ -277,8 +333,10 @@ export async function saveLearningGoal(input: {
     goalPositioningStatus: "positioned",
     goalPositioningMessage: null,
     goalPositioningCandidates: null,
+    goalPositioningAttemptId: null,
     goalPositioningUpdatedAt: new Date(),
     onboardingCourseStatus: "pending",
+    onboardingCourseAttemptId: null,
     onboardingCourseMessage: null,
     onboardingCourseUpdatedAt: new Date(),
     onboardingSkippedAt: null,
@@ -288,11 +346,12 @@ export async function saveLearningGoal(input: {
 export async function savePositionedLearningGoalIfPending(input: {
   ownerId: string;
   learningGoal: string;
+  attemptId: string;
   graphId: string;
   startTopicId: string;
   targetConceptId: string | null;
 }) {
-  return updatePendingLearningGoal(input.ownerId, input.learningGoal, {
+  return updatePendingLearningGoal(input.ownerId, input.learningGoal, input.attemptId, {
     goalGraphId: input.graphId,
     goalStartTopicId: input.startTopicId,
     goalTargetConceptId: input.targetConceptId,
@@ -302,6 +361,7 @@ export async function savePositionedLearningGoalIfPending(input: {
     goalPositioningCandidates: null,
     goalPositioningUpdatedAt: new Date(),
     onboardingCourseStatus: "pending",
+    onboardingCourseAttemptId: null,
     onboardingCourseMessage: null,
     onboardingCourseUpdatedAt: new Date(),
     onboardingSkippedAt: null,
@@ -311,10 +371,11 @@ export async function savePositionedLearningGoalIfPending(input: {
 export async function saveLearningGoalClarification(input: {
   ownerId: string;
   learningGoal: string;
+  attemptId: string;
   message: string;
   candidates: GoalPositioningCandidate[];
 }) {
-  return updatePendingLearningGoal(input.ownerId, input.learningGoal, {
+  return updatePendingLearningGoal(input.ownerId, input.learningGoal, input.attemptId, {
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
@@ -324,6 +385,7 @@ export async function saveLearningGoalClarification(input: {
     goalPositioningCandidates: input.candidates,
     goalPositioningUpdatedAt: new Date(),
     onboardingCourseStatus: null,
+    onboardingCourseAttemptId: null,
     onboardingCourseMessage: null,
     onboardingCourseUpdatedAt: null,
     onboardingSkippedAt: null,
@@ -333,9 +395,10 @@ export async function saveLearningGoalClarification(input: {
 export async function saveLearningGoalPositioningFailure(input: {
   ownerId: string;
   learningGoal: string;
+  attemptId: string;
   message: string;
 }) {
-  return updatePendingLearningGoal(input.ownerId, input.learningGoal, {
+  return updatePendingLearningGoal(input.ownerId, input.learningGoal, input.attemptId, {
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
@@ -345,6 +408,7 @@ export async function saveLearningGoalPositioningFailure(input: {
     goalPositioningCandidates: null,
     goalPositioningUpdatedAt: new Date(),
     onboardingCourseStatus: null,
+    onboardingCourseAttemptId: null,
     onboardingCourseMessage: null,
     onboardingCourseUpdatedAt: null,
     onboardingSkippedAt: null,
@@ -362,24 +426,63 @@ export async function skipLearningGoal(ownerId: string) {
     goalPositioningStatus: null,
     goalPositioningMessage: null,
     goalPositioningCandidates: null,
+    goalPositioningAttemptId: null,
     goalPositioningUpdatedAt: null,
     onboardingCourseStatus: null,
+    onboardingCourseAttemptId: null,
     onboardingCourseMessage: null,
     onboardingCourseUpdatedAt: null,
     onboardingSkippedAt: null,
   });
 }
 
-export async function saveOnboardingCourseStatus(input: {
-  ownerId: string;
-  status: OnboardingCourseStatus;
-  message?: string | null;
-}) {
-  return upsertLearnerProfile(input.ownerId, {
-    onboardingCourseStatus: input.status,
-    onboardingCourseMessage: input.message ?? null,
+export async function beginOnboardingCourseBuild(ownerId: string) {
+  const attemptId = randomUUID();
+  const profile = await upsertLearnerProfile(ownerId, {
+    onboardingCourseStatus: "building",
+    onboardingCourseAttemptId: attemptId,
+    onboardingCourseMessage: null,
     onboardingCourseUpdatedAt: new Date(),
   });
+  return { attemptId, profile };
+}
+
+async function finishOnboardingCourseBuild(input: {
+  ownerId: string;
+  attemptId: string;
+  status: "ready" | "failed";
+  message?: string | null;
+}) {
+  const now = new Date();
+  const rows = await getDb()
+    .update(learnerProfiles)
+    .set({
+      onboardingCourseStatus: input.status,
+      onboardingCourseMessage: input.message ?? null,
+      onboardingCourseUpdatedAt: now,
+      updatedAt: now,
+    })
+    .where(
+      and(
+        eq(learnerProfiles.ownerId, input.ownerId),
+        eq(learnerProfiles.onboardingCourseAttemptId, input.attemptId),
+        eq(learnerProfiles.onboardingCourseStatus, "building"),
+      ),
+    )
+    .returning();
+  return rows[0] ? rowToLearnerProfile(rows[0]) : null;
+}
+
+export async function completeOnboardingCourseBuild(input: { ownerId: string; attemptId: string }) {
+  return finishOnboardingCourseBuild({ ...input, status: "ready" });
+}
+
+export async function failOnboardingCourseBuild(input: {
+  ownerId: string;
+  attemptId: string;
+  message: string;
+}) {
+  return finishOnboardingCourseBuild({ ...input, status: "failed" });
 }
 
 export async function saveKnowledgeBackground(ownerId: string, knowledgeBackground: KnowledgeBackground) {

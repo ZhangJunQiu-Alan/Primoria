@@ -1,0 +1,1 @@
+ALTER TABLE "learner_profiles" ADD COLUMN "onboarding_course_attempt_id" text;

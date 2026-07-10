@@ -1,6 +1,10 @@
 import { toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
 import { buildOnboardingCourse } from "./onboarding-course";
-import { saveOnboardingCourseStatus } from "./store";
+import {
+  beginOnboardingCourseBuild,
+  completeOnboardingCourseBuild,
+  failOnboardingCourseBuild,
+} from "./store";
 import type { LearnerProfile } from "./types";
 
 const COURSE_BUILD_ERROR_MESSAGE = "We couldn't prepare your course right now. Please retry.";
@@ -20,11 +24,16 @@ export class OnboardingCourseBuildError extends Error {
 export async function buildOnboardingCourseWithStatus(ownerId: string, profile: LearnerProfile | null) {
   if (!profile?.goalGraphId || !profile.goalStartTopicId) return null;
 
+  let attemptId: string | null = null;
   try {
-    await saveOnboardingCourseStatus({ ownerId, status: "building" });
+    const attempt = await beginOnboardingCourseBuild(ownerId);
+    attemptId = attempt.attemptId;
     const course = await buildOnboardingCourse(ownerId, profile);
     if (!course.courseId) throw new Error("Onboarding course build returned no course.");
-    await saveOnboardingCourseStatus({ ownerId, status: "ready" });
+    const completed = await completeOnboardingCourseBuild({ ownerId, attemptId });
+    if (!completed) {
+      console.info("[onboarding] ignored stale course build completion", { ownerId, attemptId });
+    }
     return course;
   } catch (error) {
     const mapped = toSafeKnowledgeGraphError(error, {
@@ -38,11 +47,20 @@ export async function buildOnboardingCourseWithStatus(ownerId: string, profile: 
       message: COURSE_BUILD_ERROR_MESSAGE,
     };
 
-    console.error("[onboarding] course prebuild failed", { ownerId, code: safe.code, error });
-    try {
-      await saveOnboardingCourseStatus({ ownerId, status: "failed", message: safe.message });
-    } catch (persistenceError) {
-      console.error("[onboarding] could not persist course prebuild failure", { ownerId, persistenceError });
+    console.error("[onboarding] course prebuild failed", { ownerId, attemptId, code: safe.code, error });
+    if (attemptId) {
+      try {
+        const failed = await failOnboardingCourseBuild({ ownerId, attemptId, message: safe.message });
+        if (!failed) {
+          console.info("[onboarding] ignored stale course build failure", { ownerId, attemptId });
+        }
+      } catch (persistenceError) {
+        console.error("[onboarding] could not persist course prebuild failure", {
+          ownerId,
+          attemptId,
+          persistenceError,
+        });
+      }
     }
     throw new OnboardingCourseBuildError({ ...safe, cause: error });
   }

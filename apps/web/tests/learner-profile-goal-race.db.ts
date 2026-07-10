@@ -22,12 +22,13 @@ async function main() {
     await resetTestDb(sql);
     await seedUser(sql, ownerId);
 
-    await store.savePendingLearningGoal(ownerId, "old mechanics goal");
-    await store.savePendingLearningGoal(ownerId, "new Python goal");
+    const oldAttempt = await store.savePendingLearningGoal(ownerId, "old mechanics goal");
+    const newAttempt = await store.savePendingLearningGoal(ownerId, "new Python goal");
 
     const stalePositioned = await store.savePositionedLearningGoalIfPending({
       ownerId,
       learningGoal: "old mechanics goal",
+      attemptId: oldAttempt.attemptId,
       graphId: "physics",
       startTopicId: "mechanics",
       targetConceptId: null,
@@ -35,12 +36,14 @@ async function main() {
     const staleClarification = await store.saveLearningGoalClarification({
       ownerId,
       learningGoal: "old mechanics goal",
+      attemptId: oldAttempt.attemptId,
       message: "Choose a physics subject.",
       candidates: [{ graphId: "physics", subject: "Physics", startTopicId: "mechanics" }],
     });
     const staleFailure = await store.saveLearningGoalPositioningFailure({
       ownerId,
       learningGoal: "old mechanics goal",
+      attemptId: oldAttempt.attemptId,
       message: "Could not locate that goal. Please retry.",
     });
 
@@ -56,6 +59,7 @@ async function main() {
     const positioned = await store.savePositionedLearningGoalIfPending({
       ownerId,
       learningGoal: "new Python goal",
+      attemptId: newAttempt.attemptId,
       graphId: "python_fundamentals",
       startTopicId: "pyf_topic_running_python_programs",
       targetConceptId: null,
@@ -63,10 +67,11 @@ async function main() {
     ok(positioned?.goalPositioningStatus === "positioned", "current pending goal can be positioned");
     ok(positioned?.goalGraphId === "python_fundamentals", "current goal receives its own graph");
 
-    await store.savePendingLearningGoal(ownerId, "ambiguous science goal");
+    const ambiguousAttempt = await store.savePendingLearningGoal(ownerId, "ambiguous science goal");
     const clarified = await store.saveLearningGoalClarification({
       ownerId,
       learningGoal: "ambiguous science goal",
+      attemptId: ambiguousAttempt.attemptId,
       message: "Choose a subject.",
       candidates: [{ graphId: "physics", subject: "Physics", startTopicId: "mechanics" }],
     });
@@ -81,6 +86,31 @@ async function main() {
     });
     ok(selected.goalPositioningStatus === "positioned", "explicit subject selection still commits");
     ok(selected.goalGraphId === "physics", "explicit subject selection keeps the chosen graph");
+
+    const sameTextAttemptA = await store.savePendingLearningGoal(ownerId, "learn Python basics");
+    await sql`update learner_profiles set goal_positioning_status = 'failed' where owner_id = ${ownerId}`;
+    const sameTextAttemptB = await store.savePendingLearningGoal(ownerId, "learn Python basics");
+    ok(sameTextAttemptA.attemptId !== sameTextAttemptB.attemptId, "same-text retries receive distinct attempt IDs");
+
+    const staleSameTextResult = await store.savePositionedLearningGoalIfPending({
+      ownerId,
+      learningGoal: "learn Python basics",
+      attemptId: sameTextAttemptA.attemptId,
+      graphId: "physics",
+      startTopicId: "mechanics",
+      targetConceptId: null,
+    });
+    ok(staleSameTextResult === null, "attempt A cannot write after same-text attempt B starts");
+
+    const currentSameTextResult = await store.savePositionedLearningGoalIfPending({
+      ownerId,
+      learningGoal: "learn Python basics",
+      attemptId: sameTextAttemptB.attemptId,
+      graphId: "python_fundamentals",
+      startTopicId: "pyf_topic_running_python_programs",
+      targetConceptId: null,
+    });
+    ok(currentSameTextResult?.goalGraphId === "python_fundamentals", "attempt B retains write authority");
 
     await resetTestDb(sql);
   } finally {
