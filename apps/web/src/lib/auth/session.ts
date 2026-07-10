@@ -5,10 +5,10 @@ import { and, eq, gt } from "drizzle-orm";
 import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { identities, sessions, users } from "../db/schema";
 import { SESSION_COOKIE } from "./constants";
+import { AuthError, isAuthUnavailableError } from "./errors";
 import type { AuthUser } from "./types";
 
 const SESSION_DAYS = 30;
-const LOCAL_DATABASE_UNAVAILABLE_CODES = ["ECONNREFUSED", "ETIMEDOUT", "ENOTFOUND", "ECONNRESET", "EHOSTUNREACH"];
 
 export function isAuthEnabled() {
   return hasDatabaseUrl();
@@ -30,26 +30,6 @@ export type CreatedSession = {
   token: string;
   expires: Date;
 };
-
-function errorText(error: unknown): string {
-  if (!error) return "";
-  if (error instanceof Error) {
-    const code = "code" in error ? String((error as { code?: unknown }).code ?? "") : "";
-    const cause = "cause" in error ? errorText((error as { cause?: unknown }).cause) : "";
-    return `${error.name} ${code} ${error.message} ${cause}`;
-  }
-  if (typeof error === "object") {
-    const record = error as Record<string, unknown>;
-    return `${String(record.code ?? "")} ${String(record.message ?? "")} ${errorText(record.cause)}`;
-  }
-  return String(error);
-}
-
-function shouldTreatSessionLookupAsSignedOut(error: unknown) {
-  if (process.env.NODE_ENV === "production") return false;
-  const text = errorText(error);
-  return LOCAL_DATABASE_UNAVAILABLE_CODES.some((code) => text.includes(code));
-}
 
 export async function setSessionCookie(token: string, expires: Date) {
   const cookieStore = await cookies();
@@ -117,9 +97,11 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
       .where(and(eq(sessions.tokenHash, tokenHash), gt(sessions.expiresAt, now)))
       .limit(1);
   } catch (error) {
-    if (shouldTreatSessionLookupAsSignedOut(error)) {
-      console.warn("[auth] Session lookup could not reach the local database; treating the request as signed out.");
-      return null;
+    // A database outage must not masquerade as "signed out": that turns a
+    // service problem into a misleading 401/login redirect for a user who
+    // holds a valid session cookie. Throw typed so callers map it to 503.
+    if (isAuthUnavailableError(error)) {
+      throw new AuthError("auth_unavailable", "Authentication is temporarily unavailable.", 503, error);
     }
     throw error;
   }
@@ -146,7 +128,14 @@ export async function signOutCurrentSession() {
   const token = cookieStore.get(SESSION_COOKIE)?.value;
   if (token) {
     const tokenHash = hashSessionToken(token);
-    await getDb().delete(sessions).where(eq(sessions.tokenHash, tokenHash));
+    try {
+      await getDb().delete(sessions).where(eq(sessions.tokenHash, tokenHash));
+    } catch (error) {
+      // Still clear the cookie so the browser signs out; the orphaned session
+      // row expires on its own. Anything else is a real failure.
+      if (!isAuthUnavailableError(error)) throw error;
+      console.error("[auth] sign-out could not reach the database; clearing the cookie only", error);
+    }
   }
   await clearSessionCookie();
 }

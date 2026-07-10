@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { toSafeAuthError } from "@/lib/auth/errors";
 import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
 import type { AuthUser } from "@/lib/auth/types";
 
@@ -21,7 +22,16 @@ export async function requireAuthUser(): Promise<{ denied: NextResponse | null; 
       user: null,
     };
   }
-  const user = await getCurrentUser();
+  // Session lookup failures (database down, network) must surface as a 503
+  // service problem, not as a misleading 401 "signed out". Many routes call
+  // this guard outside their try/catch, so the mapping lives here.
+  let user: AuthUser | null;
+  try {
+    user = await getCurrentUser();
+  } catch (error) {
+    const safe = toSafeAuthError(error, "session");
+    return { denied: NextResponse.json(safe.body, { status: safe.status }), user: null };
+  }
   if (!user) {
     return {
       denied: NextResponse.json({ error: "Unauthorized" }, { status: 401 }),
