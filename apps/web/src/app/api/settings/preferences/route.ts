@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getOptionalAuthUser } from "@/lib/auth/guard";
+import { isAuthEnabled } from "@/lib/auth/session";
 import { CONTENT_LANGUAGES, getUserPreferences, saveUserPreferences } from "@/lib/settings/user-settings";
 import { resolveUiLanguage } from "@/lib/i18n/server";
 import { UI_LANGUAGES, UI_LANGUAGE_COOKIE } from "@/lib/i18n/dictionaries";
@@ -11,23 +12,22 @@ const PreferencesSchema = z.object({
 });
 
 export async function GET() {
-  if (!isAuthEnabled()) {
-    const preferences = await getUserPreferences(null);
-    return NextResponse.json({ authEnabled: false, preferences: { ...preferences, uiLanguage: await resolveUiLanguage(null) } });
-  }
-  const user = await getCurrentUser();
+  const authEnabled = isAuthEnabled();
+  const { denied, user } = await getOptionalAuthUser("settings-preferences");
+  if (denied) return denied;
   if (!user) {
     const preferences = await getUserPreferences(null);
-    return NextResponse.json({ authEnabled: true, preferences: { ...preferences, uiLanguage: await resolveUiLanguage(null) } });
+    return NextResponse.json({ authEnabled, preferences: { ...preferences, uiLanguage: await resolveUiLanguage(null) } });
   }
   const preferences = await getUserPreferences(user.id);
-  return NextResponse.json({ authEnabled: true, preferences: { ...preferences, uiLanguage: await resolveUiLanguage(user.id) } });
+  return NextResponse.json({ authEnabled, preferences: { ...preferences, uiLanguage: await resolveUiLanguage(user.id) } });
 }
 
 export async function PUT(request: Request) {
   const patch = PreferencesSchema.parse(await request.json());
 
-  if (!isAuthEnabled()) {
+  const authEnabled = isAuthEnabled();
+  if (!authEnabled) {
     const preferences = { ...(await getUserPreferences(null)), uiLanguage: patch.uiLanguage ?? await resolveUiLanguage(null) };
     const response = NextResponse.json({ ok: true, authEnabled: false, preferences });
     if (patch.uiLanguage) {
@@ -41,7 +41,8 @@ export async function PUT(request: Request) {
     return response;
   }
 
-  const user = await getCurrentUser();
+  const { denied, user } = await getOptionalAuthUser("settings-preferences");
+  if (denied) return denied;
   if (!user) {
     if (patch.contentLanguage) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
     const preferences = { ...(await getUserPreferences(null)), uiLanguage: patch.uiLanguage ?? await resolveUiLanguage(null) };

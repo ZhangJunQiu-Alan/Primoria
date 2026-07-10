@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { requireConfiguredAuthUser } from "@/lib/auth/guard";
 import { getDb } from "@/lib/db/client";
 import { users } from "@/lib/db/schema";
 
 export async function PATCH(request: Request) {
-  if (!isAuthEnabled()) {
-    return NextResponse.json({ error: "Auth is not configured." }, { status: 503 });
-  }
-  const user = await getCurrentUser();
+  const { denied, user } = await requireConfiguredAuthUser("profile");
+  if (denied) return denied;
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = (await request.json().catch(() => null)) as { displayName?: unknown } | null;

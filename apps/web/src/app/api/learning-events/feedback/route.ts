@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { requireConfiguredAuthUser } from "@/lib/auth/guard";
 import { recordLearningEvent } from "@/lib/learning-events/store";
 import { verifyEventScope } from "@/lib/learning-events/scope";
 
@@ -17,9 +17,9 @@ const FeedbackSchema = z.object({
 });
 
 export async function POST(request: Request) {
-  if (!isAuthEnabled()) return NextResponse.json({ ok: false, error: "Auth is not configured" }, { status: 503 });
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  const { denied, user } = await requireConfiguredAuthUser("learning-feedback");
+  if (denied) return denied;
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = FeedbackSchema.parse(await request.json());
   const scope = await verifyEventScope(user.id, body.courseId, body.lessonId);

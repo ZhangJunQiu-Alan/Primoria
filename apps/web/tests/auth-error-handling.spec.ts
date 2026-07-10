@@ -16,6 +16,7 @@ describe("auth API safe error handling", () => {
   });
 
   it("returns typed public auth errors without rewriting the message", () => {
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
     const response = toSafeAuthError(
       new AuthError("invalid_credentials", "Invalid email or password.", 401),
       "sign-in",
@@ -25,6 +26,7 @@ describe("auth API safe error handling", () => {
       status: 401,
       body: { error: "Invalid email or password.", code: "invalid_credentials" },
     });
+    expect(spy).not.toHaveBeenCalled();
   });
 
   it("hides unexpected internal error details from responses", () => {

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getCurrentUser, isAuthEnabled } from "@/lib/auth/session";
+import { getOptionalAuthUser, requireConfiguredAuthUser } from "@/lib/auth/guard";
 import { addManualFact, dismissFact, listActiveFacts, updateFact } from "@/lib/learner-facts/store";
 import { FACT_CATEGORIES } from "@/lib/learner-profile/types";
 
@@ -10,8 +10,8 @@ import { FACT_CATEGORIES } from "@/lib/learner-profile/types";
 // manually adds the same fact again).
 
 export async function GET() {
-  if (!isAuthEnabled()) return NextResponse.json({ facts: [] });
-  const user = await getCurrentUser();
+  const { denied, user } = await getOptionalAuthUser("learner-facts");
+  if (denied) return denied;
   if (!user) return NextResponse.json({ facts: [] });
   const facts = await listActiveFacts(user.id);
   return NextResponse.json({
@@ -27,27 +27,27 @@ const FactPayloadSchema = z.object({
 const PatchSchema = FactPayloadSchema.extend({ factId: z.string().min(1) });
 
 export async function POST(request: Request) {
-  if (!isAuthEnabled()) return NextResponse.json({ ok: false, error: "Auth is not configured" }, { status: 503 });
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  const { denied, user } = await requireConfiguredAuthUser("learner-facts");
+  if (denied) return denied;
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const payload = FactPayloadSchema.parse(await request.json());
   const fact = await addManualFact(user.id, payload.text, payload.category);
   return NextResponse.json({ ok: true, fact: fact ? { id: fact.id, text: fact.text, category: fact.category } : null });
 }
 
 export async function PATCH(request: Request) {
-  if (!isAuthEnabled()) return NextResponse.json({ ok: false, error: "Auth is not configured" }, { status: 503 });
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  const { denied, user } = await requireConfiguredAuthUser("learner-facts");
+  if (denied) return denied;
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const payload = PatchSchema.parse(await request.json());
   const fact = await updateFact(user.id, payload.factId, { text: payload.text, category: payload.category });
   return NextResponse.json({ ok: true, fact: fact ? { id: fact.id, text: fact.text, category: fact.category } : null });
 }
 
 export async function DELETE(request: Request) {
-  if (!isAuthEnabled()) return NextResponse.json({ ok: false, error: "Auth is not configured" }, { status: 503 });
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  const { denied, user } = await requireConfiguredAuthUser("learner-facts");
+  if (denied) return denied;
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { factId } = DeleteSchema.parse(await request.json());
   await dismissFact(user.id, factId);
   return NextResponse.json({ ok: true });

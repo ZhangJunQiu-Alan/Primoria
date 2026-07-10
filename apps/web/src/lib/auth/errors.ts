@@ -43,6 +43,9 @@ const AUTH_UNAVAILABLE_ERROR_CODES = new Set([
   "ETIMEDOUT",
   "EAI_AGAIN",
   "CONNECT_TIMEOUT",
+  "CONNECTION_CLOSED",
+  "CONNECTION_DESTROYED",
+  "CONNECTION_ENDED",
   "57P01",
   "57P02",
   "57P03",
@@ -81,6 +84,9 @@ export function toSafeAuthError(
   fallbackMessage = "Authentication failed. Please try again.",
 ): SafeAuthError {
   if (isAuthError(error)) {
+    if (error.status >= 500) {
+      logServerAuthError(context, error.code, error.status, error.cause);
+    }
     return {
       status: error.status,
       body: { error: error.publicMessage, code: error.code },
@@ -95,11 +101,11 @@ export function toSafeAuthError(
   }
 
   if (isAuthUnavailableError(error)) {
-    console.error(`[auth/${context}] authentication dependency unavailable`, error);
+    logServerAuthError(context, "auth_unavailable", AUTH_UNAVAILABLE_ERROR.status, error);
     return AUTH_UNAVAILABLE_ERROR;
   }
 
-  console.error(`[auth/${context}] unexpected error`, error);
+  logServerAuthError(context, "internal_error", 500, error);
   return {
     status: 500,
     body: { error: fallbackMessage, code: "internal_error" },
@@ -111,12 +117,46 @@ export function toSafeAuthError(
 export function isAuthUnavailableError(error: unknown, depth = 0): boolean {
   if (!error || typeof error !== "object" || depth > 4) return false;
   const record = error as Record<string, unknown>;
-  const code = typeof record.code === "string" ? record.code : "";
+  const code = typeof record.code === "string" ? record.code.toUpperCase() : "";
   if (AUTH_UNAVAILABLE_ERROR_CODES.has(code)) return true;
+  if (/^08[A-Z0-9]{3}$/.test(code)) return true;
   const message = typeof record.message === "string" ? record.message : "";
   if (AUTH_UNAVAILABLE_MESSAGE_CODES.some((c) => message.includes(c))) return true;
   if (Array.isArray(record.errors) && record.errors.some((item) => isAuthUnavailableError(item, depth + 1))) {
     return true;
   }
   return isAuthUnavailableError(record.cause, depth + 1);
+}
+
+function findErrorCode(error: unknown, depth = 0): string | null {
+  if (!error || typeof error !== "object" || depth > 4) return null;
+  const record = error as Record<string, unknown>;
+  if (typeof record.code === "string" && record.code) return record.code;
+  if (Array.isArray(record.errors)) {
+    for (const item of record.errors) {
+      const code = findErrorCode(item, depth + 1);
+      if (code) return code;
+    }
+  }
+  return findErrorCode(record.cause, depth + 1);
+}
+
+function findErrorName(error: unknown): string | null {
+  if (!error || typeof error !== "object") return null;
+  const name = (error as Record<string, unknown>).name;
+  return typeof name === "string" && name ? name : null;
+}
+
+function logServerAuthError(
+  context: string,
+  code: AuthErrorCode,
+  status: number,
+  cause: unknown,
+) {
+  console.error(`[auth/${context}] request failed`, {
+    code,
+    status,
+    causeCode: findErrorCode(cause),
+    causeName: findErrorName(cause),
+  });
 }
