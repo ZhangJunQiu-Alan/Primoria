@@ -61,12 +61,13 @@ export function CourseOutlineView({
       (job) => job.status === "completed" && !refreshedRef.current.has(job.lessonId),
     );
     if (justCompleted.length === 0) return;
+    let cancelled = false;
     (async () => {
       try {
         const res = await fetch(`/api/courses/${displayCourse.id}`, { cache: "no-store" });
-        if (!res.ok) return;
+        if (cancelled || !res.ok) return;
         const data = (await res.json()) as { course?: Course };
-        if (!data.course) return;
+        if (cancelled || !data.course) return;
         // Mark only after a successful refresh so a failed fetch is retried
         // on the next jobs poll instead of pinning stale outline data.
         for (const job of justCompleted) refreshedRef.current.add(job.lessonId);
@@ -76,6 +77,9 @@ export function CourseOutlineView({
         // Ignore — the next refresh or a manual reload still shows published content.
       }
     })();
+    return () => {
+      cancelled = true;
+    };
   }, [jobsByLessonId, displayCourse.id, onCourseUpdated]);
 
   function closeJumpDialog() {
