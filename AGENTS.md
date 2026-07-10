@@ -98,6 +98,14 @@ Widgets execute inside a sandboxed `<iframe>`. The iframe host assembles a full 
 
 In the main AI Tutor, course creation starts with the `position_learning_goal` tool in `apps/agent/src/graph.mjs`; the web side performs KG positioning, course creation, and persistence. Courses are stored in the `courses` and `lessons` tables (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Lesson blocks are stored as `jsonb`.
 
+### KG failure policy
+
+`apps/web/src/lib/knowledge-graph/errors.ts` separates KG coverage misses from infrastructure failures. Coverage miss (KG healthy, library has no match) may route through the freeform gate into generated `gen_*` graphs. Infrastructure failure (missing KG tables, DB down, embedding provider down) throws `KnowledgeGraphUnavailableError` and maps to safe API errors — never return or persist raw `error.message` on positioning paths. `GET /api/health` reports DB/KG-schema/embedding state. `PRIMORIA_ALLOW_KG_INFRA_FALLBACK=1` (local dev only, never `NODE_ENV`-derived) lets only `kg_schema_missing` degrade into the freeform gate.
+
+### Route auth policy
+
+Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared by the proxy and pages — do not add a second public-path list. `/welcome` is the public landing; `/` is the signed-in app home (signed-out visits redirect through `/login`; sign-out lands on `/welcome`).
+
 ### DB
 
 ORM: Drizzle + `postgres` driver. Schema: `apps/web/src/lib/db/schema.ts`. Core tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, lesson/progress/extractor jobs, `knowledge_graph_*`, `learning_events`, `quiz_attempts`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `copilot_chat_threads`, `copilot_chat_messages`, `media_assets`, and `user_settings`.

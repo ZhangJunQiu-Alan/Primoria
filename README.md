@@ -158,6 +158,19 @@ MINIMAX_EMBEDDING_MODEL=embo-01
 KG_EMBEDDING_MODEL_VERSION=minimax:embo-01:1536
 ```
 
+`GET /api/health` reports database connectivity, KG table presence, and whether
+embeddings are seeded for the current model version (`ok` / `degraded` /
+`unhealthy`). KG infrastructure failures (missing KG tables, unreachable
+database, unavailable embedding provider) surface as safe API errors and never
+reroute learner goals into generated `gen_*` graphs. For local development
+against a database without KG tables, set:
+
+```bash
+# Local/dev only. Lets a missing-KG-schema error degrade into the freeform
+# out-of-library path instead of failing. Never enable in production.
+PRIMORIA_ALLOW_KG_INFRA_FALLBACK=1
+```
+
 The email/password session system stores `users`, `identities`, and `sessions`
 in Postgres once `DATABASE_URL` is set. Supabase client keys are no longer part
 of the Primoria runtime path.
@@ -239,6 +252,10 @@ Expected services:
 - LangGraph agent: `http://localhost:2024`
 - Background workers: run in the terminal process and require `DATABASE_URL`.
 
+Route entry points: `/welcome` is the public landing page; `/` is the signed-in
+app home and redirects signed-out visitors through `/login`. Signing out
+returns to `/welcome`.
+
 ### Individual Processes
 
 ```bash
@@ -265,6 +282,9 @@ pnpm lint
 
 # Build the web app
 pnpm build
+
+# Bundle size report (webpack build; reports land in apps/web/.next/analyze/)
+ANALYZE=true pnpm --filter @primoria/web exec next build --webpack
 
 # Generate migrations after schema changes
 pnpm --filter @primoria/web db:generate
