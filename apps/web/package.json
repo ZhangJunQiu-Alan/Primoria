@@ -37,6 +37,7 @@
     "test:lesson-jobs": "tsx tests/lesson-generation-jobs.unit.ts && tsx tests/lesson-generation-processor.unit.ts && tsx tests/lesson-generation-labels.unit.ts",
     "test:lesson-jobs:db": "tsx tests/lesson-generation-store.db.ts && tsx tests/lesson-generation-worker.db.ts",
     "test:onboarding-goal:db": "tsx tests/learner-profile-goal-race.db.ts && tsx tests/learner-profile-stale-recovery.db.ts",
+    "test:course-description:db": "tsx tests/course-description-race.db.ts",
     "test:progress": "tsx tests/mastery-rules.unit.ts && tsx tests/learning-progress-decider.unit.ts && tsx tests/learning-progress-labels.unit.ts",
     "test:progress:db": "tsx tests/learning-progress-jobs.db.ts",
     "test:extractor": "tsx tests/learning-events-lesson-id.unit.ts && tsx tests/facts-directive.unit.ts && tsx tests/learner-facts-plan.unit.ts && tsx tests/distill-prompt.unit.ts && tsx tests/facts-consumption.unit.ts && tsx tests/feedback-latest.unit.ts",
