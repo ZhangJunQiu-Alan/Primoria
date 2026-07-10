@@ -1,0 +1,1016 @@
+{
+  "graphId": "python_fundamentals",
+  "subject": "Python Fundamentals",
+  "generatedFrom": "temple/python_fundamentals.json",
+  "generatedAt": "2026-07-10",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "topics": [
+    {
+      "topicId": "pyf_topic_running_python_programs",
+      "name": "Running Python Programs",
+      "nameZh": "运行 Python 程序",
+      "defaultOrder": 1,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_interactive_execution",
+          "name": "Interactive Execution",
+          "nameZh": "交互式执行",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Trace a statement from the prompt through the interpreter to its displayed result."
+        },
+        {
+          "conceptId": "pyf_script_execution",
+          "name": "Script Execution",
+          "nameZh": "脚本执行",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_values_variables_names",
+          "hard": false
+        },
+        {
+          "topicId": "pyf_topic_for_loops_blocks",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_user_input_conversion",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_function_definitions_calls",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_files_persistent_data",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_exceptions_failure_recovery",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "pyf_topic_values_variables_names",
+      "name": "Values, Variables, and Names",
+      "nameZh": "值、变量与名称",
+      "defaultOrder": 2,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_runtime_values",
+          "name": "Runtime Values",
+          "nameZh": "运行时值",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "pyf_variable_binding",
+          "name": "Variable Binding",
+          "nameZh": "变量绑定",
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Show names as labels bound to values, then animate rebinding one name to a different value."
+        },
+        {
+          "conceptId": "pyf_identifier_rules",
+          "name": "Identifier Rules",
+          "nameZh": "标识符规则",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_working_with_text",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_numbers_expressions",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_list_structure_access",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_boolean_logic_branching",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_dictionaries_keyed_data",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_function_definitions_calls",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_function_results_scope",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_classes_objects_state",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_running_python_programs"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_working_with_text",
+      "name": "Working with Text",
+      "nameZh": "文本处理",
+      "defaultOrder": 3,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_string_values",
+          "name": "String Values",
+          "nameZh": "字符串值",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "pyf_string_transformations",
+          "name": "String Transformations",
+          "nameZh": "字符串转换",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "pyf_formatted_strings",
+          "name": "Formatted Strings",
+          "nameZh": "格式化字符串",
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Allow learners to edit variables and observe how the resulting formatted message changes."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_files_persistent_data",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_values_variables_names"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_numbers_expressions",
+      "name": "Numbers and Expressions",
+      "nameZh": "数值与表达式",
+      "defaultOrder": 4,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_numeric_types",
+          "name": "Numeric Types",
+          "nameZh": "数值类型",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "pyf_arithmetic_expressions",
+          "name": "Arithmetic Expressions",
+          "nameZh": "算术表达式",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_for_loops_blocks",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_user_input_conversion",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_values_variables_names"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_list_structure_access",
+      "name": "List Structure and Access",
+      "nameZh": "列表结构与访问",
+      "defaultOrder": 5,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_list_construction",
+          "name": "List Construction",
+          "nameZh": "列表构造",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "pyf_sequence_indexing",
+          "name": "Sequence Indexing",
+          "nameZh": "序列索引",
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Let learners select positive and negative indices and highlight the corresponding sequence element."
+        },
+        {
+          "conceptId": "pyf_list_length",
+          "name": "List Length",
+          "nameZh": "列表长度",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_list_changes_ordering",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_for_loops_blocks",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_slices_comprehensions",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_tuples_immutability",
+          "hard": false
+        },
+        {
+          "topicId": "pyf_topic_nested_collection_structures",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_values_variables_names"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_list_changes_ordering",
+      "name": "List Changes and Ordering",
+      "nameZh": "列表修改与排序",
+      "defaultOrder": 6,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_list_mutation",
+          "name": "List Mutation",
+          "nameZh": "列表修改",
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Allow learners to apply replace, append, insert, and remove operations while tracking the list after each step."
+        },
+        {
+          "conceptId": "pyf_list_ordering",
+          "name": "List Ordering",
+          "nameZh": "列表排序",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_iterative_collection_processing",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_function_results_scope",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_list_structure_access"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_for_loops_blocks",
+      "name": "For Loops and Code Blocks",
+      "nameZh": "for 循环与代码块",
+      "defaultOrder": 7,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_block_indentation",
+          "name": "Block Indentation",
+          "nameZh": "代码块缩进",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Highlight nested indentation levels and show which statements belong to each code block."
+        },
+        {
+          "conceptId": "pyf_for_iteration",
+          "name": "For Iteration",
+          "nameZh": "for 迭代",
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Step through an iterable and display the loop variable and executed block on each iteration."
+        },
+        {
+          "conceptId": "pyf_range_sequences",
+          "name": "Range Sequences",
+          "nameZh": "range 序列",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_slices_comprehensions",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_tuples_immutability",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_boolean_logic_branching",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_dictionaries_keyed_data",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_nested_collection_structures",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_while_loops_control",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_iterative_collection_processing",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_function_definitions_calls",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_running_python_programs",
+        "pyf_topic_numbers_expressions",
+        "pyf_topic_list_structure_access"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_slices_comprehensions",
+      "name": "Slices and List Comprehensions",
+      "nameZh": "切片与列表推导式",
+      "defaultOrder": 8,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_sequence_slicing",
+          "name": "Sequence Slicing",
+          "nameZh": "序列切片",
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Let learners drag slice boundaries and compare aliasing with a full-slice copy."
+        },
+        {
+          "conceptId": "pyf_list_comprehensions",
+          "name": "List Comprehensions",
+          "nameZh": "列表推导式",
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Expand a comprehension into its equivalent loop and map each part between the two forms."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_function_results_scope",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_list_structure_access",
+        "pyf_topic_for_loops_blocks"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_tuples_immutability",
+      "name": "Tuples and Immutability",
+      "nameZh": "元组与不可变性",
+      "defaultOrder": 9,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_tuple_immutability",
+          "name": "Tuple Immutability",
+          "nameZh": "元组不可变性",
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Compare an attempted element change with rebinding the tuple variable to a new tuple."
+        },
+        {
+          "conceptId": "pyf_tuple_traversal",
+          "name": "Tuple Traversal",
+          "nameZh": "元组遍历",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "pyf_topic_list_structure_access",
+        "pyf_topic_for_loops_blocks"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_boolean_logic_branching",
+      "name": "Boolean Logic and Branching",
+      "nameZh": "布尔逻辑与分支",
+      "defaultOrder": 10,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_comparison_expressions",
+          "name": "Comparison Expressions",
+          "nameZh": "比较表达式",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "pyf_compound_conditions",
+          "name": "Compound Conditions",
+          "nameZh": "复合条件",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "pyf_conditional_branching",
+          "name": "Conditional Branching",
+          "nameZh": "条件分支",
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Trace execution through an if-elif-else chain for several input cases."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_while_loops_control",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_iterative_collection_processing",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_testing_code_improvement",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_values_variables_names",
+        "pyf_topic_for_loops_blocks"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_dictionaries_keyed_data",
+      "name": "Dictionaries and Keyed Data",
+      "nameZh": "字典与键值数据",
+      "defaultOrder": 11,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_dictionary_operations",
+          "name": "Dictionary Operations",
+          "nameZh": "字典操作",
+          "defaultOrder": 1,
+          "visual": "interactive",
+          "visualHint": "Let learners add, update, retrieve, and delete key-value pairs while displaying the dictionary state."
+        },
+        {
+          "conceptId": "pyf_safe_dictionary_lookup",
+          "name": "Safe Dictionary Lookup",
+          "nameZh": "安全字典查找",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "pyf_dictionary_iteration",
+          "name": "Dictionary Iteration",
+          "nameZh": "字典遍历",
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Animate separate passes over items, keys, sorted keys, and values from one dictionary."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_nested_collection_structures",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_iterative_collection_processing",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_flexible_function_interfaces",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_files_persistent_data",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_values_variables_names",
+        "pyf_topic_for_loops_blocks"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_nested_collection_structures",
+      "name": "Nested Collection Structures",
+      "nameZh": "嵌套集合结构",
+      "defaultOrder": 12,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_nested_collections",
+          "name": "Nested Collections",
+          "nameZh": "嵌套集合",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram a list of dictionaries, a dictionary of lists, and a dictionary of dictionaries as nested containers."
+        },
+        {
+          "conceptId": "pyf_nested_data_traversal",
+          "name": "Nested Data Traversal",
+          "nameZh": "嵌套数据遍历",
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Trace a path through nested containers and show each key, index, and loop used to reach a target value."
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "pyf_topic_list_structure_access",
+        "pyf_topic_for_loops_blocks",
+        "pyf_topic_dictionaries_keyed_data"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_user_input_conversion",
+      "name": "User Input and Conversion",
+      "nameZh": "用户输入与转换",
+      "defaultOrder": 13,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_text_input",
+          "name": "Text Input",
+          "nameZh": "文本输入",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "pyf_explicit_type_conversion",
+          "name": "Explicit Type Conversion",
+          "nameZh": "显式类型转换",
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Let learners submit different strings and observe successful conversions or conversion failures."
+        },
+        {
+          "conceptId": "pyf_input_prompt_design",
+          "name": "Input Prompt Design",
+          "nameZh": "输入提示设计",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_while_loops_control",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_running_python_programs",
+        "pyf_topic_numbers_expressions"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_while_loops_control",
+      "name": "While Loops and Control",
+      "nameZh": "while 循环与控制",
+      "defaultOrder": 14,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_condition_controlled_loops",
+          "name": "Condition-Controlled Loops",
+          "nameZh": "条件控制循环",
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Trace the condition, loop body, state update, and exit point across several iterations."
+        },
+        {
+          "conceptId": "pyf_sentinel_flag_loops",
+          "name": "Sentinel and Flag Loops",
+          "nameZh": "哨兵与标志循环",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "pyf_loop_control",
+          "name": "Loop Control",
+          "nameZh": "循环控制",
+          "defaultOrder": 3,
+          "visual": "algorithm",
+          "visualHint": "Step through the same loop with break and continue cases and highlight the statements each case bypasses."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_iterative_collection_processing",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_for_loops_blocks",
+        "pyf_topic_boolean_logic_branching",
+        "pyf_topic_user_input_conversion"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_iterative_collection_processing",
+      "name": "Iterative Collection Processing",
+      "nameZh": "迭代式集合处理",
+      "defaultOrder": 15,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_collection_filtering",
+          "name": "Collection Filtering",
+          "nameZh": "集合筛选",
+          "defaultOrder": 1,
+          "visual": "algorithm",
+          "visualHint": "Animate items being tested and either retained, removed, or moved into a result collection."
+        },
+        {
+          "conceptId": "pyf_incremental_data_collection",
+          "name": "Incremental Data Collection",
+          "nameZh": "增量数据收集",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "pyf_topic_list_changes_ordering",
+        "pyf_topic_for_loops_blocks",
+        "pyf_topic_boolean_logic_branching",
+        "pyf_topic_dictionaries_keyed_data",
+        "pyf_topic_while_loops_control"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_function_definitions_calls",
+      "name": "Function Definitions and Calls",
+      "nameZh": "函数定义与调用",
+      "defaultOrder": 16,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_function_definition_calls",
+          "name": "Function Definition and Calls",
+          "nameZh": "函数定义与调用",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram control moving from a call site into a function body and then returning to the next statement."
+        },
+        {
+          "conceptId": "pyf_parameters_arguments",
+          "name": "Parameters and Arguments",
+          "nameZh": "形参与实参",
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Let learners match call arguments to parameter names and display the bindings created inside the function."
+        },
+        {
+          "conceptId": "pyf_positional_keyword_arguments",
+          "name": "Positional and Keyword Arguments",
+          "nameZh": "位置实参与关键字实参",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_flexible_function_interfaces",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_function_results_scope",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_modules_code_organization",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_classes_objects_state",
+          "hard": true
+        },
+        {
+          "topicId": "pyf_topic_testing_code_improvement",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_running_python_programs",
+        "pyf_topic_values_variables_names",
+        "pyf_topic_for_loops_blocks"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_flexible_function_interfaces",
+      "name": "Flexible Function Interfaces",
+      "nameZh": "灵活的函数接口",
+      "defaultOrder": 17,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_default_optional_parameters",
+          "name": "Default and Optional Parameters",
+          "nameZh": "默认与可选参数",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "pyf_variadic_positional_arguments",
+          "name": "Variadic Positional Arguments",
+          "nameZh": "可变位置实参",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "pyf_variadic_keyword_arguments",
+          "name": "Variadic Keyword Arguments",
+          "nameZh": "可变关键字实参",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "pyf_topic_dictionaries_keyed_data",
+        "pyf_topic_function_definitions_calls"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_function_results_scope",
+      "name": "Function Results and Scope",
+      "nameZh": "函数结果与作用域",
+      "defaultOrder": 18,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_function_return_values",
+          "name": "Function Return Values",
+          "nameZh": "函数返回值",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "pyf_mutable_argument_effects",
+          "name": "Mutable Argument Effects",
+          "nameZh": "可变实参效应",
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Compare passing a list directly with passing a sliced copy and track both objects after mutation."
+        },
+        {
+          "conceptId": "pyf_variable_scope",
+          "name": "Variable Scope",
+          "nameZh": "变量作用域",
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Diagram global and function-local name spaces and show which names are visible at each line."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_testing_code_improvement",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_values_variables_names",
+        "pyf_topic_list_changes_ordering",
+        "pyf_topic_slices_comprehensions",
+        "pyf_topic_function_definitions_calls"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_modules_code_organization",
+      "name": "Modules and Code Organization",
+      "nameZh": "模块与代码组织",
+      "defaultOrder": 19,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_module_imports",
+          "name": "Module Imports",
+          "nameZh": "模块导入",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram two Python files and trace how imported names become available in the calling module."
+        },
+        {
+          "conceptId": "pyf_import_aliases",
+          "name": "Import Aliases",
+          "nameZh": "导入别名",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "pyf_standard_library_use",
+          "name": "Standard Library Use",
+          "nameZh": "标准库使用",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "pyf_topic_function_definitions_calls"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_classes_objects_state",
+      "name": "Classes, Objects, and State",
+      "nameZh": "类、对象与状态",
+      "defaultOrder": 20,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_class_definitions_instances",
+          "name": "Class Definitions and Instances",
+          "nameZh": "类定义与实例",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Show one class definition producing multiple instances with separate identities."
+        },
+        {
+          "conceptId": "pyf_instance_attributes",
+          "name": "Instance Attributes",
+          "nameZh": "实例属性",
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Create two instances, edit one attribute, and show that the other instance remains unchanged."
+        },
+        {
+          "conceptId": "pyf_instance_methods",
+          "name": "Instance Methods",
+          "nameZh": "实例方法",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_inheritance_composition",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_values_variables_names",
+        "pyf_topic_function_definitions_calls"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_inheritance_composition",
+      "name": "Inheritance and Composition",
+      "nameZh": "继承与组合",
+      "defaultOrder": 21,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_class_inheritance",
+          "name": "Class Inheritance",
+          "nameZh": "类继承",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram a parent and child class, labeling inherited and newly defined members."
+        },
+        {
+          "conceptId": "pyf_method_overriding",
+          "name": "Method Overriding",
+          "nameZh": "方法重写",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "pyf_object_composition",
+          "name": "Object Composition",
+          "nameZh": "对象组合",
+          "defaultOrder": 3,
+          "visual": "diagram",
+          "visualHint": "Show a containing object linked to a component instance and label delegated responsibilities."
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "pyf_topic_classes_objects_state"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_files_persistent_data",
+      "name": "Files and Persistent Data",
+      "nameZh": "文件与持久化数据",
+      "defaultOrder": 22,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_file_paths_contexts",
+          "name": "File Paths and Contexts",
+          "nameZh": "文件路径与上下文",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram relative and absolute paths, then show a file opening and closing around a context block."
+        },
+        {
+          "conceptId": "pyf_text_file_io",
+          "name": "Text File Input and Output",
+          "nameZh": "文本文件输入输出",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "pyf_json_persistence",
+          "name": "JSON Persistence",
+          "nameZh": "JSON 持久化",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "pyf_topic_running_python_programs",
+        "pyf_topic_working_with_text",
+        "pyf_topic_dictionaries_keyed_data"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_exceptions_failure_recovery",
+      "name": "Exceptions and Failure Recovery",
+      "nameZh": "异常与故障恢复",
+      "defaultOrder": 23,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_runtime_exceptions",
+          "name": "Runtime Exceptions",
+          "nameZh": "运行时异常",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "pyf_try_except_control_flow",
+          "name": "Try-Except Control Flow",
+          "nameZh": "try-except 控制流",
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Trace successful and failing paths through try, except, else, and the following statements."
+        },
+        {
+          "conceptId": "pyf_selective_error_handling",
+          "name": "Selective Error Handling",
+          "nameZh": "选择性错误处理",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "pyf_topic_testing_code_improvement",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "pyf_topic_running_python_programs"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "pyf_topic_testing_code_improvement",
+      "name": "Testing and Code Improvement",
+      "nameZh": "测试与代码改进",
+      "defaultOrder": 24,
+      "conceptIds": [
+        {
+          "conceptId": "pyf_unit_testing",
+          "name": "Unit Testing",
+          "nameZh": "单元测试",
+          "defaultOrder": 1,
+          "visual": "diagram",
+          "visualHint": "Diagram production code, a test case, supplied inputs, observed results, and expected results."
+        },
+        {
+          "conceptId": "pyf_debugging_workflow",
+          "name": "Debugging Workflow",
+          "nameZh": "调试流程",
+          "defaultOrder": 2,
+          "visual": "algorithm",
+          "visualHint": "Display a repeatable cycle from reproduction and evidence gathering through isolation, correction, and verification."
+        },
+        {
+          "conceptId": "pyf_refactoring_readability",
+          "name": "Refactoring and Readability",
+          "nameZh": "重构与可读性",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "pyf_topic_boolean_logic_branching",
+        "pyf_topic_function_definitions_calls",
+        "pyf_topic_function_results_scope",
+        "pyf_topic_exceptions_failure_recovery"
+      ],
+      "isRoot": false
+    }
+  ]
+}

@@ -18,6 +18,10 @@ export const TEMPLE_DIR = resolve(REPO_ROOT, "temple");
 // temple/*.json that are not subject graphs (cross edges, label sidecar, etc.)
 const NON_GRAPH_FILES = new Set(["cross_subject_edges.json", "kg_zh_labels.json"]);
 
+function isGraphJsonFile(file) {
+  return file.endsWith(".json") && !file.endsWith("_source_map.json") && !NON_GRAPH_FILES.has(file);
+}
+
 function loadEnvFile(file) {
   if (!existsSync(file)) return;
 
@@ -77,7 +81,7 @@ export function graphPath(graphId = DEFAULT_GRAPH_ID) {
 // All subject-graph ids = temple/*.json minus the non-graph sidecars.
 export function listGraphIds() {
   return readdirSync(TEMPLE_DIR)
-    .filter((f) => f.endsWith(".json") && !NON_GRAPH_FILES.has(f))
+    .filter(isGraphJsonFile)
     .map((f) => basename(f, ".json"))
     .sort();
 }

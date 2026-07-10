@@ -37,7 +37,7 @@ function ctx(opts: {
     librarySubjects: [
       { graphId: LA, subject: "Linear Algebra" },
       { graphId: CALC, subject: "Calculus" },
-      { graphId: "Python", subject: "Python" },
+      { graphId: "python_fundamentals", subject: "Python Fundamentals" },
     ],
     hitTopicIdsByGraph,
     language: "en",
@@ -99,8 +99,8 @@ function main() {
   // graphId in the library but not among candidates → positioned at that
   // subject's root (Stage 2 may route past embedding-pruned candidates).
   {
-    const r = finalizeStage2(positioned({ graphId: "Python", startTopicId: "root" }), ctx());
-    assert(r.branch === "positioned" && r.graphId === "Python" && r.mode === "subject_start", "library graph outside candidates → subject_start");
+    const r = finalizeStage2(positioned({ graphId: "python_fundamentals", startTopicId: "root" }), ctx());
+    assert(r.branch === "positioned" && r.graphId === "python_fundamentals" && r.mode === "subject_start", "library graph outside candidates → subject_start");
     assert(typeof r.startTopicId === "string" && r.startTopicId !== "root", "library-pick start coerced to real root topic");
   }
 
@@ -154,9 +154,9 @@ function main() {
 
   // clarify may offer library subjects beyond the recall candidates.
   {
-    const d: Stage2Decision = { outcome: "clarify_subject", candidateGraphIds: [LA, "Python"], message: "" };
+    const d: Stage2Decision = { outcome: "clarify_subject", candidateGraphIds: [LA, "python_fundamentals"], message: "" };
     const r = finalizeStage2(d, ctx());
-    assert(r.branch === "clarify_subject" && r.candidates?.some((c) => c.graphId === "Python"), "clarify includes library subject");
+    assert(r.branch === "clarify_subject" && r.candidates?.some((c) => c.graphId === "python_fundamentals"), "clarify includes library subject");
   }
 
   // safe default with no candidates → fallback.

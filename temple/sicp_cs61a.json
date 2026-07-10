@@ -1,5 +1,5 @@
 {
-  "subject": "Structure and Interpretation of Computer Programs",
+  "subject": "Structure and Interpretation of Computer Programs (CS61A)",
   "schema": {
     "node_types": [
       "topic",

@@ -75,7 +75,9 @@ function buildEmbedText(graph, topicById, graphAliases, zhLabels, node) {
 
   const topic = topicById.get(node.topic);
   if (!topic) throw new Error(`Concept ${node.id} references missing topic ${node.topic}`);
-  return ["concept", node.name, node.description, `属: ${topic.name}`, aliasText].filter(Boolean).join(" / ");
+  return ["concept", node.name, graph.subject, node.description, `属: ${topic.name}`, aliasText]
+    .filter(Boolean)
+    .join(" / ");
 }
 
 async function createOpenAiCompatibleEmbeddings(inputs) {

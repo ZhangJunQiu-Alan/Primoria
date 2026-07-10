@@ -3,7 +3,7 @@
 import json, glob, os, sys
 from collections import defaultdict, deque
 
-SKIP = set()  # 非 KG 的 json 可在此排除
+SKIP = {"cross_subject_edges.json", "kg_zh_labels.json"}
 
 # concept 可视化亲和标注（可选；缺省 = none = 不强制 visual 块）。
 # 取值映射到 course visual 引擎：interactive→html, simulation→physics,
@@ -15,7 +15,7 @@ def load_graphs():
     graphs = {}
     for path in sorted(glob.glob(os.path.join(os.path.dirname(__file__), "*.json"))):
         name = os.path.basename(path)
-        if name in SKIP:
+        if name in SKIP or name.endswith("_source_map.json"):
             continue
         try:
             d = json.load(open(path, encoding="utf-8"))
