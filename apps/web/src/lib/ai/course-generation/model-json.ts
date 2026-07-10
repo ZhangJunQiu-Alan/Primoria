@@ -16,8 +16,21 @@ export type InvokeJsonArgs = {
   settings?: TutorProviderSettings;
   schema?: z.ZodTypeAny;
   schemaName?: string;
+  /** Deadline for the WHOLE operation (structured attempt + fallback share it). */
   timeoutMs?: number;
+  /** Caller cancellation; combined with the internal deadline. */
+  signal?: AbortSignal;
 };
+
+export const MODEL_JSON_TIMEOUT_CODE = "model_json_timeout";
+
+export class ModelJsonTimeoutError extends Error {
+  readonly code = MODEL_JSON_TIMEOUT_CODE;
+  constructor(message: string) {
+    super(message);
+    this.name = "ModelJsonTimeoutError";
+  }
+}
 
 function shouldSkipStructuredOutput(settings: ProviderSettings): boolean {
   return settings.provider === "anthropic-compatible" && /minimax/i.test(settings.model);
@@ -29,7 +42,7 @@ export async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, mes
     return await Promise.race([
       promise,
       new Promise<T>((_, reject) => {
-        timeout = setTimeout(() => reject(new Error(message)), timeoutMs);
+        timeout = setTimeout(() => reject(new ModelJsonTimeoutError(message)), timeoutMs);
       }),
     ]);
   } finally {
@@ -110,43 +123,42 @@ export function parseJsonValue(text: string): unknown {
   throw new Error(`model did not return valid JSON. Preview: ${cleaned.replace(/\s+/g, " ").slice(0, 200)}`);
 }
 
-async function rawAnthropicJson(settings: ProviderSettings, system: string, user: string): Promise<string> {
+async function rawAnthropicJson(
+  settings: ProviderSettings,
+  system: string,
+  user: string,
+  signal: AbortSignal,
+): Promise<string> {
   if (!settings.baseUrl) throw new Error("Missing ANTHROPIC_BASE_URL");
   if (!settings.apiKey) throw new Error("Missing ANTHROPIC_API_KEY");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 180_000);
-  try {
-    const response = await fetch(`${settings.baseUrl.replace(/\/$/, "")}/v1/messages`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": settings.apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: settings.model,
-        max_tokens: 8192,
-        temperature: 0.2,
-        system,
-        messages: [{ role: "user", content: user }],
-      }),
-    });
-    const json = (await response.json().catch(() => ({}))) as {
-      content?: Array<{ type: string; text?: string }>;
-      error?: { message?: string };
-    };
-    if (!response.ok) throw new Error(json.error?.message ?? `model request failed: ${response.status}`);
-    const out = (json.content ?? [])
-      .filter((part) => part.type === "text")
-      .map((part) => part.text ?? "")
-      .join("\n")
-      .trim();
-    if (!out) throw new Error("model returned no text content");
-    return out;
-  } finally {
-    clearTimeout(timeout);
-  }
+  const response = await fetch(`${settings.baseUrl.replace(/\/$/, "")}/v1/messages`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-api-key": settings.apiKey,
+      "anthropic-version": "2023-06-01",
+    },
+    signal,
+    body: JSON.stringify({
+      model: settings.model,
+      max_tokens: 8192,
+      temperature: 0.2,
+      system,
+      messages: [{ role: "user", content: user }],
+    }),
+  });
+  const json = (await response.json().catch(() => ({}))) as {
+    content?: Array<{ type: string; text?: string }>;
+    error?: { message?: string };
+  };
+  if (!response.ok) throw new Error(json.error?.message ?? `model request failed: ${response.status}`);
+  const out = (json.content ?? [])
+    .filter((part) => part.type === "text")
+    .map((part) => part.text ?? "")
+    .join("\n")
+    .trim();
+  if (!out) throw new Error("model returned no text content");
+  return out;
 }
 
 /**
@@ -154,39 +166,57 @@ async function rawAnthropicJson(settings: ProviderSettings, system: string, user
  * When `schema` is provided and the provider supports it, native structured
  * output is attempted first; otherwise (or on failure) a JSON-prompt fallback
  * runs and the text is extracted with {@link parseJsonValue}.
+ *
+ * `timeoutMs` is a single deadline for the whole operation: the fallback only
+ * gets whatever time the structured attempt left, and hitting the deadline
+ * aborts the in-flight network request (LangChain signal / fetch signal).
  */
 export async function invokeJson(args: InvokeJsonArgs): Promise<unknown> {
   const { system, user, schema, schemaName = "result", timeoutMs = 90_000 } = args;
   const settings = resolveProviderSettings(args.settings ?? {});
   const model = createTutorModel(args.settings ?? {});
 
-  if (shouldSkipStructuredOutput(settings)) {
-    return parseJsonValue(await rawAnthropicJson(settings, system, user));
-  }
-
-  if (schema) {
+  const deadlineAt = Date.now() + timeoutMs;
+  const controller = new AbortController();
+  const deadlineTimer = setTimeout(() => controller.abort(), timeoutMs);
+  const signal = args.signal ? AbortSignal.any([args.signal, controller.signal]) : controller.signal;
+  const remainingMs = () => Math.max(deadlineAt - Date.now(), 0);
+  // The underlying request's own abort rejection can win the race against
+  // withTimeout, so deadline-abort errors are re-classified to keep the
+  // timeout code stable. Caller aborts are propagated as-is.
+  const attempt = async <T>(promise: Promise<T>, label: string): Promise<T> => {
+    const message = `${schemaName} ${label} timed out`;
     try {
-      const structured = model.withStructuredOutput(schema, { name: schemaName });
-      return await withTimeout(
-        structured.invoke([
-          { role: "system", content: system },
-          { role: "user", content: user },
-        ]),
-        timeoutMs,
-        `${schemaName} structured output timed out`,
-      );
-    } catch {
-      // fall through to JSON-prompt mode
+      return await withTimeout(promise, remainingMs(), message);
+    } catch (error) {
+      if (error instanceof ModelJsonTimeoutError) throw error;
+      if (controller.signal.aborted && !args.signal?.aborted) throw new ModelJsonTimeoutError(message);
+      throw error;
     }
-  }
+  };
+  const messages = [
+    { role: "system", content: system },
+    { role: "user", content: user },
+  ];
 
-  const result = await withTimeout(
-    model.invoke([
-      { role: "system", content: system },
-      { role: "user", content: user },
-    ]),
-    timeoutMs,
-    `${schemaName} JSON generation timed out`,
-  );
-  return parseJsonValue(messageContentToString(result.content));
+  try {
+    if (shouldSkipStructuredOutput(settings)) {
+      return parseJsonValue(await attempt(rawAnthropicJson(settings, system, user, signal), "JSON generation"));
+    }
+
+    if (schema) {
+      try {
+        const structured = model.withStructuredOutput(schema, { name: schemaName });
+        return await attempt(structured.invoke(messages, { signal }), "structured output");
+      } catch (error) {
+        if (error instanceof ModelJsonTimeoutError || args.signal?.aborted) throw error;
+        // fall through to JSON-prompt mode with the remaining budget
+      }
+    }
+
+    const result = await attempt(model.invoke(messages, { signal }), "JSON generation");
+    return parseJsonValue(messageContentToString(result.content));
+  } finally {
+    clearTimeout(deadlineTimer);
+  }
 }
