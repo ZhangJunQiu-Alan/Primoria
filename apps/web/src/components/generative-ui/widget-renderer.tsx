@@ -26,6 +26,7 @@ export type WidgetRendererProps = z.infer<typeof WidgetRendererProps>;
 
 type WidgetRendererComponentProps = WidgetRendererProps & {
   onSendPrompt?: (prompt: string) => void;
+  variant?: "tool" | "course";
 };
 
 const WIDGET_DEPENDENCY_PRELOAD_TIMEOUT_MS = 8000;
@@ -653,7 +654,7 @@ function assembleShell() {
 </html>`;
 }
 
-export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }: WidgetRendererComponentProps) {
+export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, variant = "tool" }: WidgetRendererComponentProps) {
   const safeHtml = typeof html === "string" ? html : "";
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const shellReadyRef = useRef(false);
@@ -682,8 +683,8 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }:
   const htmlPreviewSettled = safeHtml === settledHtml;
   const canExecuteHtml = htmlPreviewSettled;
   const exportHtml = useMemo(
-    () => (safeHtml ? assembleWidgetStandaloneHtml({ title, html: safeHtml, dependencies: normalizedDependencies }) : undefined),
-    [safeHtml, normalizedDependencies, title],
+    () => (variant !== "course" && safeHtml ? assembleWidgetStandaloneHtml({ title, html: safeHtml, dependencies: normalizedDependencies }) : undefined),
+    [safeHtml, normalizedDependencies, title, variant],
   );
 
   const handleMessage = useCallback(
@@ -815,7 +816,7 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }:
           Widget returned empty HTML.
         </div>
       ) : null}
-      <ExportOverlay title={title} exportHtml={exportHtml} ready={Boolean(safeHtml) && canExecuteHtml}>
+      {variant === "course" ? (
         <iframe
           ref={iframeRef}
           className="widget-frame"
@@ -827,7 +828,21 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt }:
             display: safeHtml ? undefined : "none",
           }}
         />
-      </ExportOverlay>
+      ) : (
+        <ExportOverlay title={title} exportHtml={exportHtml} ready={Boolean(safeHtml) && canExecuteHtml}>
+          <iframe
+            ref={iframeRef}
+            className="widget-frame"
+            title={title}
+            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+            onLoad={() => setLoaded(true)}
+            style={{
+              height: showIframe ? (height > 0 ? height : 300) : 0,
+              display: safeHtml ? undefined : "none",
+            }}
+          />
+        </ExportOverlay>
+      )}
     </div>
   );
 }

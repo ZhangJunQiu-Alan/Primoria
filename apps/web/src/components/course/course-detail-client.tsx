@@ -11,7 +11,7 @@ import { useDialogFocus } from "@/hooks/use-dialog-focus";
 import type { Course, CourseBlock, Lesson } from "@/lib/courses/types";
 import { currentCourseLesson, currentLessonBlocks } from "@/lib/courses/types";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
-import { lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
+import { lessonGenerationStageLabel, isLessonGenerationActive } from "@/lib/courses/lesson-generation-labels";
 import { useLearningProgressRecommendation } from "@/hooks/use-learning-progress-recommendation";
 import { learningDecisionAcceptLabel, learningDecisionHeadline } from "@/lib/courses/learning-progress-labels";
 import { useT, msg } from "@/lib/i18n/client";
@@ -442,6 +442,35 @@ export function CourseDetailClient({
       ? selectedTextContext
       : null;
   const currentLessonJob = currentLessonId ? jobsByLessonId.get(currentLessonId) : undefined;
+  const currentLessonJobActive = currentLessonJob ? isLessonGenerationActive(currentLessonJob) : false;
+
+  // Progressive rendering: while the open lesson is still generating, the worker
+  // publishes a growing in-order prefix of blocks into the (still "generating")
+  // lesson. Poll the course so those early blocks surface as they land instead of
+  // waiting for the whole lesson. Keyed on the stable active flag (not `course`),
+  // so setCourse below doesn't restart the interval.
+  useEffect(() => {
+    if (!currentLessonId || !currentLessonJobActive) return;
+    let cancelled = false;
+    const controller = new AbortController();
+    const tick = async () => {
+      try {
+        const res = await fetch(`/api/courses/${course.id}`, { cache: "no-store", signal: controller.signal });
+        if (!res.ok) return;
+        const data = (await res.json()) as { course?: Course };
+        if (!cancelled && data.course) setCourse(data.course);
+      } catch {
+        // Best-effort streaming; the next tick or the completion refetch recovers.
+      }
+    };
+    const interval = window.setInterval(() => void tick(), 2_500);
+    void tick();
+    return () => {
+      cancelled = true;
+      controller.abort();
+      window.clearInterval(interval);
+    };
+  }, [course.id, currentLessonId, currentLessonJobActive]);
 
   useEffect(() => {
     if (!currentLessonId || currentLessonJob?.status !== "completed") return;
@@ -631,12 +660,15 @@ export function CourseDetailClient({
             <div className="course-reader-progress" aria-label={t.lessonStatus}>
               <span><i style={{ width: `${readerProgress}%` }} /></span>
               <strong>{currentStep}/{totalSteps}</strong>
+              {currentLessonJobActive && totalSteps > 0 ? (
+                <em className="course-reader-streaming" aria-live="polite">{t.generatingLesson}</em>
+              ) : null}
             </div>
           </header>
 
           <main className="course-reader-stage" aria-live="polite">
             {currentBlock ? (
-              <div className="course-reader-card" key={currentBlock.id}>
+              <div className={`course-reader-card${currentBlock.type === "quiz" ? " course-reader-card-quiz" : ""}`} key={currentBlock.id}>
                 <div
                   ref={activeBlockRef}
                   data-block-id={currentBlock.id}
@@ -651,7 +683,12 @@ export function CourseDetailClient({
                     updateSelectedText(currentBlock, event.currentTarget);
                   }}
                 >
-                  <BlockRenderer block={currentBlock} courseId={course.id} onBlockUpdated={updateBlockInCourse} />
+                  <BlockRenderer
+                    block={currentBlock}
+                    courseId={course.id}
+                    contentLanguage={course.language}
+                    onBlockUpdated={updateBlockInCourse}
+                  />
                 </div>
               </div>
             ) : (

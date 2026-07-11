@@ -156,6 +156,8 @@ async function main() {
   assert(styles.includes(".course-generation-notice"), "restored course generation notice has dedicated styling");
   assert(styles.includes(".course-generation-notice.failed"), "restored course generation failure state has dedicated styling");
   assert(styles.includes(".course-generation-notice-actions a"), "restored course generation notice actions are styled as buttons");
+  assert(styles.includes(".learning-goal-progress"), "KG and course planning render as lightweight inline progress");
+  assert(styles.includes(".copilot-chat-shell") && styles.includes(".primoria-main-welcome"), "course notices and the home surface share one background owner");
   assert(styles.includes("scrollbar-width: none"), "global UI hides scrollbar tracks");
   assert(styles.includes("table-layout: fixed"), "library table fits within its container without horizontal scrolling");
   assert(styles.includes(".library-col-actions"), "library reserves width for row actions");
@@ -200,6 +202,8 @@ async function main() {
   assert(generativeUi.includes("查看学习库"), "restored course generation notice uses learner-facing Chinese library action copy");
   assert(!generativeUi.includes("restored-course-job-status"), "restored course generation jobs no longer reuse generic tool-card status UI");
   assert(generativeUi.includes("function CourseGenerationNotice"), "course generation status UI is centralized in a compact notice component");
+  assert(generativeUi.includes('className="learning-goal-progress"'), "learning-goal work no longer renders a floating status card");
+  assert(generativeUi.includes("learningGoalProgressCopy"), "learning-goal progress uses learner-facing topic copy");
   assert(!generativeUi.includes("firstLessonStatus"), "live course generation status no longer renders the old stacked status tool card");
   assert(!copilotProvider.includes("if (!enabled) return"), "CopilotKit provider stays mounted so client auth refresh cannot leave chat without context");
   assert(homePage.includes("TutorWorkspaceClient"), "home tutor page enters the tutor workspace after auth checks");

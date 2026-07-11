@@ -18,6 +18,7 @@ import { detectKgLanguage } from "@/lib/knowledge-graph/display-name";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
 import { useT } from "@/lib/i18n/client";
 import { getTutorToolDisplay, getTutorToolIndicatorClass } from "@/lib/ai/tutor-tool-display";
+import { learningGoalProgressCopy } from "@/lib/ai/learning-goal-progress";
 
 const WriteTodosParams = z.object({
   todos: z.array(
@@ -916,18 +917,14 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
   }
 
   return (
-    <div className="message-row tool">
-      <div className="tool-card status-card">
-        <div className="tool-title">
-          <span className="tool-spinner" />
-          <span>{phase === "building" ? "generating course" : "locating in knowledge graph"}</span>
-        </div>
-        <div className="visualizer">
-          <span className="tool-note">
-            {phase === "building" ? "正在根据你的知识图谱位置生成课程…" : "正在知识图谱中定位你的学习目标…"}
-          </span>
-        </div>
-      </div>
+    <div
+      className="learning-goal-progress"
+      data-phase={phase}
+      role="status"
+      aria-live="polite"
+    >
+      <span className="tool-spinner" aria-hidden="true" />
+      <span>{learningGoalProgressCopy(query ?? "")}</span>
     </div>
   );
 }
