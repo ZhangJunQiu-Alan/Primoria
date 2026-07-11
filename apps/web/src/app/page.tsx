@@ -1,6 +1,5 @@
-import { redirect } from "next/navigation";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
-import { APP_HOME_PATH, loginPathWithNext } from "@/lib/auth/routes";
+import { LandingPage } from "@/components/landing/landing-page";
 import { getLearnerOnboardingState } from "@/lib/learner-profile/store";
 
 export const dynamic = "force-dynamic";
@@ -9,7 +8,7 @@ export default async function HomePage() {
   const authEnabled = isAuthEnabled();
   const user = await getCurrentUserForRsc();
 
-  if (authEnabled && !user) redirect(loginPathWithNext(APP_HOME_PATH));
+  if (authEnabled && !user) return <LandingPage />;
 
   if (authEnabled && user) {
     const onboarding = await getLearnerOnboardingState(user.id);

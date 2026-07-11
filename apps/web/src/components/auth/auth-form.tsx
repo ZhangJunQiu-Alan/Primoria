@@ -48,10 +48,15 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
         : msg(t.auth.passwordMoreHint, { count: 8 - password.length })
     : t.auth.passwordWorkspaceHint;
   const nextCopy = useMemo(() => {
+    if (isSignUp && next === "/") return t.auth.onboardingDestination;
     if (!next || next === "/library") return t.common.library;
     if (next === "/") return t.nav.tutor;
     return next.replace(/^\//, "");
-  }, [next, t.common.library, t.nav.tutor]);
+  }, [isSignUp, next, t.auth.onboardingDestination, t.common.library, t.nav.tutor]);
+  const switchHref = useMemo(() => {
+    const destination = isSignUp ? SIGN_IN_HREF : SIGN_UP_HREF;
+    return `${destination}?${new URLSearchParams({ next }).toString()}`;
+  }, [isSignUp, next]);
 
   async function submitAppDb(event: React.FormEvent) {
     event.preventDefault();
@@ -185,7 +190,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" | "sign-in" | "si
           <p>{t.auth.afterSuccess} <strong>{nextCopy}</strong>.</p>
           <p className="auth-switch">
             {isSignUp ? t.auth.alreadyHave : t.auth.newToPrimoria}{" "}
-            <Link href={isSignUp ? SIGN_IN_HREF : SIGN_UP_HREF}>
+            <Link href={switchHref}>
               {isSignUp ? t.auth.signIn : t.auth.createAccount}
             </Link>
           </p>

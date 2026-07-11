@@ -3,6 +3,7 @@ export const PUBLIC_LANDING_PATH = "/welcome";
 export const LOGIN_PATH = "/login";
 
 export const PUBLIC_ROUTE_PATTERNS: readonly RegExp[] = [
+  /^\/$/,
   new RegExp(`^${PUBLIC_LANDING_PATH}/?$`),
   /^\/login(\/|$)/,
   /^\/signup(\/|$)/,
