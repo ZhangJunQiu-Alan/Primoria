@@ -23,6 +23,7 @@ async function main() {
   const courseOutlineView = read("src/components/course/course-outline-view.tsx");
   const courseDetailClient = read("src/components/course/course-detail-client.tsx");
   const generativeUi = read("src/hooks/use-primoria-copilot.tsx");
+  const artifactContracts = read("../../packages/contracts/src/artifacts/index.ts");
   const tutorChat = read("src/components/tutor/tutor-chat-copilot.tsx");
   const tutorWorkspaceClient = read("src/components/tutor/tutor-workspace-client.tsx");
   const copilotChatSurface = read("src/components/tutor/copilot-chat-surface.tsx");
@@ -258,7 +259,7 @@ async function main() {
   assert(generativeUi.includes("selectRestorableLessonJobs"), "home restore dedupes restorable lesson jobs");
 
   for (const blockType of ["quiz", "mind_map", "slide", "worksheet"]) {
-    assert(generativeUi.includes(`"${blockType}"`), `course card parser accepts ${blockType} outline items`);
+    assert(artifactContracts.includes(`"${blockType}"`), `shared course card schema accepts ${blockType} outline items`);
   }
 
   assert(

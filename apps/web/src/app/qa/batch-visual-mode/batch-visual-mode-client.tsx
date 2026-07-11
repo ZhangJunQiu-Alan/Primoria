@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 import { ToolCard } from "@/components/generative-ui/tool-card";
+import { isTutorArtifact } from "@primoria/contracts/artifacts";
 import type { TutorArtifact, TutorStreamEvent } from "@/lib/agent-os";
 
 type RunStatus = "queued" | "running" | "passed" | "failed";
@@ -110,10 +111,6 @@ function createInitialCases(): BatchCase[] {
     reply: "",
     actualType: "none",
   }));
-}
-
-function isTutorArtifact(value: unknown): value is TutorArtifact {
-  return value !== null && typeof value === "object" && "type" in value && typeof (value as { type: unknown }).type === "string";
 }
 
 function artifactTitle(artifact: TutorArtifact | undefined, fallback: string) {
