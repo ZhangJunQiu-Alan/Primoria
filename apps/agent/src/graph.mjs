@@ -269,7 +269,7 @@ const WIDGET_DEPENDENCY_ALLOWLIST = {
   cytoscape: { global: "cytoscape", url: "https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js", kind: "script" },
   Chart: { global: "Chart", url: "https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js", kind: "script" },
   gsap: { global: "gsap", url: "https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js", kind: "script" },
-  THREE: { global: "THREE", url: "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js", kind: "script" },
+  THREE: { global: "THREE", url: "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js", kind: "script" },
   anime: { global: "anime", url: "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js", kind: "script" },
   Matter: { global: "Matter", url: "https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js", kind: "script" },
   p5: { global: "p5", url: "https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js", kind: "script" },
@@ -285,7 +285,9 @@ const WIDGET_DEPENDENCIES_BY_URL = new Map(
 const WIDGET_RENDERER_DESCRIPTION = [
   "Render an interactive HTML/CSS/JS learning widget in a sandboxed iframe. MUST be used after plan_visualization for any visualization / simulation / demo request.",
   "If you use an external browser library, include it in the optional dependencies array as {url, global, kind}; only Primoria's fixed whitelist is accepted, so prefer d3, cytoscape, Chart, gsap, THREE, anime, Matter, p5, math, L, mermaid, or echarts exact CDN URLs already known to the renderer.",
+  "Never put external <script src> or <link href> dependency tags in html; declare every external library only through the dependencies array and reference its global from inline code.",
   "Return a compact self-contained HTML fragment in the html argument: no doctype, no html/head/body wrapper, inline style/script only, target 70-130 lines and under about 8KB.",
+  "Every inline <script> must be fully closed. If the widget approaches the size limit, simplify decorative CSS and prose before shortening or dropping executable code.",
   "Implement every concrete requirement from the latest user message and the plan key_elements as visible UI behavior, not just hidden code.",
   "Prefer one canvas or one inline SVG plus a small control/status panel; avoid verbose CSS, verbose explanatory text, and duplicate UI.",
   "Avoid D3 unless absolutely necessary; for SVG, prefer plain DOM APIs such as createElementNS/setAttribute over complex D3 chains.",

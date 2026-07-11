@@ -7,6 +7,11 @@ import { ExportOverlay } from "./export-overlay";
 import { assembleWidgetStandaloneHtml } from "./export-utils";
 import { LEARNING_OBJECT_CSS, PRIMORIA_PALETTE_JS, SVG_CLASSES_CSS } from "./style-tokens";
 import { THREE_ORBIT_CONTROLS_SHIM } from "./three-orbit-controls-shim";
+import {
+  normalizeWidgetExternalUrl,
+  WIDGET_IFRAME_SANDBOX,
+  WIDGET_PROMPT_MAX_LENGTH,
+} from "@/lib/ai/widget-bridge";
 import { normalizeWidgetDependencies, type WidgetDependency as RuntimeWidgetDependency } from "@/lib/ai/widget-dependencies";
 
 export const WidgetDependency = z.object({
@@ -209,12 +214,19 @@ a:hover { text-decoration: underline; }
 `;
 
 const BRIDGE_JS = `
+function postParentMessage(message) {
+  window.parent.postMessage(
+    Object.assign({ channel: PRIMORIA_BRIDGE_CHANNEL }, message),
+    PRIMORIA_PARENT_ORIGIN
+  );
+}
+
 window.sendPrompt = function(text) {
-  window.parent.postMessage({ type: 'primoria-send-prompt', text: String(text || '') }, '*');
+  postParentMessage({ type: 'primoria-send-prompt', text: String(text || '') });
 };
 
 window.openLink = function(url) {
-  window.parent.postMessage({ type: 'primoria-open-link', url: String(url || '') }, '*');
+  postParentMessage({ type: 'primoria-open-link', url: String(url || '') });
 };
 
 function showWidgetError(message) {
@@ -251,9 +263,9 @@ document.addEventListener('click', function(event) {
   }
 
   var anchor = event.target.closest('a[href]');
-  if (anchor && /^https?:\\/\\//.test(anchor.href)) {
+  if (anchor) {
     event.preventDefault();
-    window.openLink(anchor.href);
+    if (/^https:\\/\\//.test(anchor.href)) window.openLink(anchor.href);
   }
 });
 
@@ -275,7 +287,7 @@ var COMMON_DEPENDENCIES = {
   d3: { global: 'd3', url: 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js', kind: 'script' },
   Chart: { global: 'Chart', url: 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js', kind: 'script' },
   gsap: { global: 'gsap', url: 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js', kind: 'script' },
-  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js', kind: 'script' },
+  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js', kind: 'script' },
   anime: { global: 'anime', url: 'https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js', kind: 'script' },
   Matter: { global: 'Matter', url: 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js', kind: 'script' },
   p5: { global: 'p5', url: 'https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js', kind: 'script' },
@@ -290,6 +302,26 @@ var ALLOWED_DEPENDENCY_URLS = Object.keys(COMMON_DEPENDENCIES).reduce(function(m
   return map;
 }, Object.create(null));
 var DEPENDENCY_LOAD_TIMEOUT_MS = 8000;
+
+function canonicalDependencyForVersionDrift(source) {
+  try {
+    var sourceUrl = new URL(String(source || ''));
+    if (sourceUrl.protocol !== 'https:' || sourceUrl.hostname !== 'cdn.jsdelivr.net') return null;
+    var sourcePackage = sourceUrl.pathname.match(/^\\/npm\\/((?:@[^\\/]+\\/)?[^@\\/]+)@/);
+    if (!sourcePackage) return null;
+
+    var dependencyKeys = Object.keys(COMMON_DEPENDENCIES);
+    for (var i = 0; i < dependencyKeys.length; i += 1) {
+      var dependency = COMMON_DEPENDENCIES[dependencyKeys[i]];
+      var canonicalUrl = new URL(dependency.url);
+      var canonicalPackage = canonicalUrl.pathname.match(/^\\/npm\\/((?:@[^\\/]+\\/)?[^@\\/]+)@/);
+      if (canonicalUrl.hostname === sourceUrl.hostname && canonicalPackage && canonicalPackage[1] === sourcePackage[1]) {
+        return dependency;
+      }
+    }
+  } catch (_) {}
+  return null;
+}
 
 function readGlobal(path) {
   if (!path) return undefined;
@@ -459,6 +491,13 @@ function runScripts(content, scripts, index, dependencies) {
       if (type) nextScript.type = type;
       if (info.src) {
         if (!ALLOWED_DEPENDENCY_URLS[String(info.src)]) {
+          var canonicalDependency = canonicalDependencyForVersionDrift(info.src);
+          if (canonicalDependency) {
+            loadDependencies([canonicalDependency], function() {
+              runScripts(content, scripts, index + 1, dependencies);
+            });
+            return;
+          }
           showWidgetError('Blocked non-whitelisted script source: ' + String(info.src));
           runScripts(content, scripts, index + 1, dependencies);
           return;
@@ -499,7 +538,9 @@ function runScripts(content, scripts, index, dependencies) {
 
 window.addEventListener('message', function(event) {
   if (event.source !== window.parent) return;
+  if (event.origin !== PRIMORIA_PARENT_ORIGIN) return;
   if (!event.data || event.data.type !== 'primoria-update-content') return;
+  if (event.data.channel !== PRIMORIA_BRIDGE_CHANNEL) return;
 
   var content = document.getElementById('content');
   if (!content) return;
@@ -571,7 +612,7 @@ function reportHeight() {
     height = Math.max(height, childRect.bottom - rect.top);
   }
   height = Math.min(Math.ceil(height + 4), 1400);
-  window.parent.postMessage({ type: 'primoria-widget-resize', height: height }, '*');
+  postParentMessage({ type: 'primoria-widget-resize', height: height });
 }
 
 var target = document.getElementById('content') || document.body;
@@ -609,7 +650,7 @@ function hasCompleteScriptTags(value: unknown) {
   return scriptOpens <= scriptCloses;
 }
 
-function assembleShell() {
+function assembleShell(channel: string, parentOrigin: string) {
   return `<!doctype html>
 <html>
 <head>
@@ -649,7 +690,11 @@ function assembleShell() {
   <div id="content"></div>
   <script>${PRIMORIA_PALETTE_JS}</script>
   <script>${IDIOMORPH_JS}</script>
-  <script>${BRIDGE_JS}</script>
+  <script>
+    const PRIMORIA_BRIDGE_CHANNEL = ${JSON.stringify(channel)};
+    const PRIMORIA_PARENT_ORIGIN = ${JSON.stringify(parentOrigin)};
+    ${BRIDGE_JS}
+  </script>
 </body>
 </html>`;
 }
@@ -657,6 +702,7 @@ function assembleShell() {
 export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, variant = "tool" }: WidgetRendererComponentProps) {
   const safeHtml = typeof html === "string" ? html : "";
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const bridgeChannelRef = useRef("");
   const shellReadyRef = useRef(false);
   const committedHtmlRef = useRef("");
   const executedHtmlRef = useRef("");
@@ -690,20 +736,23 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
   const handleMessage = useCallback(
     (event: MessageEvent) => {
       if (event.source !== iframeRef.current?.contentWindow) return;
+      if (!event.data || typeof event.data !== "object") return;
+      if (event.data.channel !== bridgeChannelRef.current) return;
 
-      if (event.data?.type === "primoria-widget-resize" && typeof event.data.height === "number") {
+      if (event.data.type === "primoria-widget-resize" && typeof event.data.height === "number" && Number.isFinite(event.data.height)) {
         setHeight(Math.max(90, Math.min(event.data.height, 4000)));
         return;
       }
 
-      if (event.data?.type === "primoria-send-prompt" && typeof event.data.text === "string") {
+      if (event.data.type === "primoria-send-prompt" && typeof event.data.text === "string") {
         const prompt = event.data.text.trim();
-        if (prompt) onSendPrompt?.(prompt);
+        if (prompt && prompt.length <= WIDGET_PROMPT_MAX_LENGTH) onSendPrompt?.(prompt);
         return;
       }
 
-      if (event.data?.type === "primoria-open-link" && typeof event.data.url === "string") {
-        window.open(event.data.url, "_blank", "noopener,noreferrer");
+      if (event.data.type === "primoria-open-link") {
+        const url = normalizeWidgetExternalUrl(event.data.url);
+        if (url) window.open(url, "_blank", "noopener,noreferrer");
       }
     },
     [onSendPrompt],
@@ -767,20 +816,39 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
 
     if (!shellReadyRef.current) {
       shellReadyRef.current = true;
-      iframe.srcdoc = assembleShell();
+      bridgeChannelRef.current = window.crypto.randomUUID();
+      iframe.srcdoc = assembleShell(bridgeChannelRef.current, window.location.origin);
       return;
     }
 
     if (!loaded || !iframe.contentWindow || safeHtml === committedHtmlRef.current) return;
     committedHtmlRef.current = safeHtml;
-    iframe.contentWindow.postMessage({ type: "primoria-update-content", html: safeHtml, dependencies: normalizedDependencies, executeScripts: false }, "*");
+    iframe.contentWindow.postMessage(
+      {
+        type: "primoria-update-content",
+        channel: bridgeChannelRef.current,
+        html: safeHtml,
+        dependencies: normalizedDependencies,
+        executeScripts: false,
+      },
+      "*",
+    );
   }, [safeHtml, normalizedDependencies, loaded]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
     if (!canExecuteHtml || !safeHtml || !loaded || !iframe?.contentWindow || safeHtml === executedHtmlRef.current) return;
     executedHtmlRef.current = safeHtml;
-    iframe.contentWindow.postMessage({ type: "primoria-update-content", html: safeHtml, dependencies: normalizedDependencies, executeScripts: true }, "*");
+    iframe.contentWindow.postMessage(
+      {
+        type: "primoria-update-content",
+        channel: bridgeChannelRef.current,
+        html: safeHtml,
+        dependencies: normalizedDependencies,
+        executeScripts: true,
+      },
+      "*",
+    );
   }, [safeHtml, normalizedDependencies, canExecuteHtml, loaded]);
 
   const showIframe = Boolean(safeHtml);
@@ -821,7 +889,7 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
           ref={iframeRef}
           className="widget-frame"
           title={title}
-          sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+          sandbox={WIDGET_IFRAME_SANDBOX}
           onLoad={() => setLoaded(true)}
           style={{
             height: showIframe ? (height > 0 ? height : 300) : 0,
@@ -834,7 +902,7 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
             ref={iframeRef}
             className="widget-frame"
             title={title}
-            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+            sandbox={WIDGET_IFRAME_SANDBOX}
             onLoad={() => setLoaded(true)}
             style={{
               height: showIframe ? (height > 0 ? height : 300) : 0,

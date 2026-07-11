@@ -62,6 +62,51 @@ const threeHtml = `
   document.getElementById('three-status').textContent = 'THREE OrbitControls ok';
 </script>`;
 
+const isolationHtml = `
+<section>
+  <strong>Opaque origin fixture</strong>
+  <p id="parent-access">parent pending</p>
+  <p id="storage-access">storage pending</p>
+</section>
+<script>
+  try {
+    void window.parent.document.body;
+    document.getElementById('parent-access').textContent = 'parent accessible';
+  } catch (_) {
+    document.getElementById('parent-access').textContent = 'parent blocked';
+  }
+  try {
+    window.localStorage.setItem('primoria-widget-isolation-probe', '1');
+    document.getElementById('storage-access').textContent = 'storage accessible';
+  } catch (_) {
+    document.getElementById('storage-access').textContent = 'storage blocked';
+  }
+</script>`;
+
+const bridgeHtml = `
+<section>
+  <strong>Bridge fixture</strong>
+  <button id="prompt-bridge" data-prompt="Explain the bridge fixture">Ask tutor</button>
+  <button id="valid-link" onclick="window.openLink('https://example.com/primoria-widget-bridge')">Open valid link</button>
+  <button id="invalid-link" onclick="window.openLink('javascript:alert(1)')">Open invalid link</button>
+</section>`;
+
+const staleChartDependencyHtml = `
+<section>
+  <strong>Canonical dependency fixture</strong>
+  <p id="canonical-chart-status">waiting</p>
+  <canvas id="canonical-chart" width="240" height="100"></canvas>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+  new Chart(document.getElementById('canonical-chart'), {
+    type: 'line',
+    data: { labels: ['A', 'B'], datasets: [{ data: [1, 2] }] },
+    options: { animation: false }
+  });
+  document.getElementById('canonical-chart-status').textContent = 'canonical Chart loaded';
+</script>`;
+
 const mathCode = `
 const scene = MathGL.scene({ title: 'linear fixture', xMin: -3, xMax: 3, yMin: -3, yMax: 3 });
 scene.plot(x => x, { label: 'y = x' });
@@ -89,6 +134,7 @@ world.run();`;
 
 export function WidgetRendererFixtureClient() {
   const [streamHtml, setStreamHtml] = useState(streamingInitialHtml);
+  const [bridgePrompt, setBridgePrompt] = useState("No prompt received");
 
   return (
     <main style={{ padding: 24, display: "grid", gap: 24 }}>
@@ -127,6 +173,31 @@ export function WidgetRendererFixtureClient() {
           description="Three dependency fixture"
           html={threeHtml}
           dependencies={[WIDGET_DEPENDENCY_ALLOWLIST.THREE]}
+        />
+      </section>
+
+      <section data-testid="isolation-section">
+        <h2>Opaque-origin isolation</h2>
+        <WidgetRenderer title="Isolation fixture" description="Isolation fixture" html={isolationHtml} />
+      </section>
+
+      <section data-testid="bridge-section">
+        <h2>Host bridge</h2>
+        <p data-testid="bridge-prompt">{bridgePrompt}</p>
+        <WidgetRenderer
+          title="Bridge fixture"
+          description="Bridge fixture"
+          html={bridgeHtml}
+          onSendPrompt={setBridgePrompt}
+        />
+      </section>
+
+      <section data-testid="canonical-dependency-section">
+        <h2>Canonical dependency repair</h2>
+        <WidgetRenderer
+          title="Canonical dependency fixture"
+          description="Canonical dependency fixture"
+          html={staleChartDependencyHtml}
         />
       </section>
 
