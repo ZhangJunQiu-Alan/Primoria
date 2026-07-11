@@ -11,7 +11,7 @@ export const WIDGET_DEPENDENCY_ALLOWLIST = {
   cytoscape: { global: "cytoscape", url: "https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js", kind: "script" },
   Chart: { global: "Chart", url: "https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js", kind: "script" },
   gsap: { global: "gsap", url: "https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js", kind: "script" },
-  THREE: { global: "THREE", url: "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js", kind: "script" },
+  THREE: { global: "THREE", url: "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js", kind: "script" },
   anime: { global: "anime", url: "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js", kind: "script" },
   Matter: { global: "Matter", url: "https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js", kind: "script" },
   p5: { global: "p5", url: "https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js", kind: "script" },

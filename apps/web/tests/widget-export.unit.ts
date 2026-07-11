@@ -51,7 +51,7 @@ async function main() {
 
   const threeDeps = normalizeWidgetDependencies([
     WIDGET_DEPENDENCY_ALLOWLIST.THREE,
-    { url: "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.min.js", global: "THREE", kind: "script" },
+    { url: "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js", global: "THREE", kind: "script" },
   ]);
   assert(threeDeps.length === 1, "Three.js keeps only the supported canonical dependency");
   assert(

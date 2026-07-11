@@ -91,6 +91,8 @@ The widget renders inside a sandboxed iframe with Primoria styling pre-injected.
 - Return an **HTML fragment only**, not a full document. No `<html>`, `<head>`, `<body>`.
 - Inline `<style>` and `<script>` are allowed and expected.
 - Approved module imports inside `<script type="module">`: `three`, `gsap`, `d3`, `chart.js`, `chart.js/auto`. Do not load other external resources.
+- Never emit external `<script src>` or `<link href>` tags. Declare approved libraries through the tool's `dependencies` array only.
+- Close every inline `<script>` tag. If output is getting long, simplify decorative CSS and prose before executable code.
 - No `<form>` tags — use `onclick` / `oninput` handlers directly.
 - Keep the widget compact: typical max height around 480px so it fits in a chat card.
 

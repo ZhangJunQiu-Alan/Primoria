@@ -63,6 +63,7 @@ async function main() {
       acceptDownloads: true,
       permissions: ["clipboard-read", "clipboard-write"],
     });
+    await context.addCookies([{ name: "primoria_session", value: "widget-renderer-e2e", url: BASE }]);
     const page = await context.newPage();
     const consoleErrors = [];
     page.on("console", (message) => {
@@ -93,6 +94,41 @@ async function main() {
 
     const threeFrame = page.frameLocator('iframe[title="Three dependency fixture"]');
     await threeFrame.locator("#three-status", { hasText: "THREE OrbitControls ok" }).waitFor({ timeout: 10000 });
+
+    const isolationFrameElement = page.locator('iframe[title="Isolation fixture"]');
+    assert((await isolationFrameElement.getAttribute("sandbox")) === "allow-scripts", "widget iframe should use an opaque-origin script sandbox");
+    const isolationFrame = page.frameLocator('iframe[title="Isolation fixture"]');
+    await isolationFrame.locator("#parent-access", { hasText: "parent blocked" }).waitFor({ timeout: 5000 });
+    await isolationFrame.locator("#storage-access", { hasText: "storage blocked" }).waitFor({ timeout: 5000 });
+
+    const bridgeFrame = page.frameLocator('iframe[title="Bridge fixture"]');
+    await bridgeFrame.locator("#prompt-bridge").click();
+    await page.getByTestId("bridge-prompt").getByText("Explain the bridge fixture", { exact: true }).waitFor({ timeout: 5000 });
+
+    let unexpectedPopup = null;
+    const captureUnexpectedPopup = (popup) => {
+      unexpectedPopup = popup;
+    };
+    context.on("page", captureUnexpectedPopup);
+    await bridgeFrame.locator("#invalid-link").click();
+    await delay(400);
+    context.off("page", captureUnexpectedPopup);
+    if (unexpectedPopup) await unexpectedPopup.close();
+    assert(unexpectedPopup === null, "non-HTTPS bridge URLs should not open a popup");
+
+    const validPopupPromise = context.waitForEvent("page");
+    await bridgeFrame.locator("#valid-link").click();
+    const validPopup = await validPopupPromise;
+    await delay(200);
+    assert(validPopup.url().startsWith("https://example.com/primoria-widget-bridge"), "HTTPS bridge URL should open through the host");
+    await validPopup.close();
+
+    const canonicalDependencyFrame = page.frameLocator('iframe[title="Canonical dependency fixture"]');
+    await canonicalDependencyFrame.locator("#canonical-chart-status", { hasText: "canonical Chart loaded" }).waitFor({ timeout: 10000 });
+    assert(
+      (await canonicalDependencyFrame.locator("[data-primoria-widget-error]").count()) === 0,
+      "known dependency version drift should use the canonical URL without a widget error",
+    );
 
     const mathFrame = page.frameLocator('iframe[title="Math fixture"]');
     await mathFrame.locator("canvas").first().waitFor({ timeout: 5000 });
