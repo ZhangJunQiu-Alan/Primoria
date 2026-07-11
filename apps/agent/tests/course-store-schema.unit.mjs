@@ -13,15 +13,16 @@ const here = dirname(fileURLToPath(import.meta.url));
 const storeSource = readFileSync(resolve(here, "../src/course-store.mjs"), "utf8");
 const courseTypesSource = readFileSync(resolve(here, "../src/course-types.mjs"), "utf8");
 
-const coursesInsertColumns = storeSource.match(/insert into courses\s*\(([\s\S]*?)\)\s*values/i)?.[1] ?? "";
-const coursesUpsertSet = storeSource.match(/insert into courses[\s\S]*?on conflict \(id\) do update set([\s\S]*?)(?:for \(const lesson|const keepIds)/i)?.[1] ?? "";
 const coursesSelects = storeSource.match(/select[\s\S]*?from courses/gi) ?? [];
 
-assert(!coursesInsertColumns.includes("blocks"), "agent courses insert does not write removed courses.blocks");
-assert(!coursesUpsertSet.includes("blocks"), "agent courses upsert does not update removed courses.blocks");
+assert(storeSource.includes("export async function getCourse"), "agent exposes the course-card read path");
+assert(!storeSource.includes("export async function saveCourse"), "agent does not own course writes");
+assert(!storeSource.includes("export async function updateBlock"), "agent does not own block writes");
+assert(!storeSource.includes("export async function listCourses"), "agent does not expose unused course listing");
+assert(!/\b(?:insert\s+into|update\s+(?:courses|lessons)|delete\s+from)\b/i.test(storeSource), "agent course store contains no mutating SQL");
 assert(coursesSelects.every((select) => !/\bblocks\b/.test(select)), "agent courses select does not read removed courses.blocks");
+assert(storeSource.includes("where id = ${id} and owner_id = ${ownerId}"), "agent course read is owner-scoped");
 assert(storeSource.includes("from lessons"), "agent store reads lesson rows");
-assert(storeSource.includes("insert into lessons"), "agent store writes lesson rows");
 assert(courseTypesSource.includes("export function courseBlocks"), "agent exposes courseBlocks compatibility helper");
 
 const sample = {
