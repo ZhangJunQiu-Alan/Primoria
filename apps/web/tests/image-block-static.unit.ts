@@ -65,7 +65,10 @@ function main() {
 
   // ── Cross-user cache safety: images are GLOBAL (ownerId null) so a brief-keyed
   // cache hit is readable by every user (an owner-scoped asset would 404 on reuse).
-  assert(/finalizeImageBlocks\([\s\S]*?ownerId: null/.test(processor), "lesson images are stored global (ownerId null)");
+  // The processor builds one shared imaging config (ownerId null) and finalizes
+  // each batch's images through it, so the prefix can advance past ready images.
+  assert(/imaging: FinalizeImageOptions = \{[\s\S]*?ownerId: null/.test(processor), "lesson images are stored global (ownerId null)");
+  assert(/finalizeImageBlocks\([\s\S]*?, imaging\)/.test(processor), "processor finalizes images through the shared imaging config");
   assert(/finalizeImageBlocks\(\[pending\], \{ ownerId: null/.test(generator), "editor images are stored global (ownerId null)");
 
   process.stdout.write("[image-block-static.unit] ALL CHECKS PASSED\n");
