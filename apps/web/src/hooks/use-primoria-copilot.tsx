@@ -10,7 +10,8 @@ import { ToolCard } from "@/components/generative-ui/tool-card";
 import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
 import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
 import { setTodos } from "@/lib/todos-store";
-import type { CourseCardArtifact, TutorArtifact } from "@/lib/agent-os";
+import { CourseCardArtifactSchema, TutorArtifactSchema } from "@primoria/contracts/artifacts";
+import type { CourseCardArtifact } from "@/lib/agent-os";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import type { CourseSummary } from "@/lib/courses/types";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
@@ -92,24 +93,6 @@ const GenerateCourseParams = z.object({
 
 const GetCourseCardParams = z.object({
   course_id: z.string(),
-});
-
-const CourseBlockTypeResult = z.enum(["text", "analogy", "transfer", "visual", "code", "quiz", "mind_map", "slide", "worksheet"]);
-
-const CourseCardResult = z.object({
-  type: z.literal("course_card"),
-  courseId: z.string(),
-  title: z.string(),
-  topic: z.string(),
-  summary: z.string(),
-  estimatedMinutes: z.number(),
-  outline: z.array(
-    z.object({
-      type: CourseBlockTypeResult,
-      title: z.string(),
-    }),
-  ),
-  status: z.enum(["generating", "ready"]),
 });
 
 const PositionLearningGoalParams = z.object({
@@ -395,7 +378,7 @@ function stripCourseCardPrefix(result: string) {
 function parseCourseCardResult(result?: string): CourseCardArtifact | null {
   if (!result) return null;
   try {
-    const parsed = CourseCardResult.safeParse(JSON.parse(stripCourseCardPrefix(result)));
+    const parsed = CourseCardArtifactSchema.safeParse(JSON.parse(stripCourseCardPrefix(result)));
     return parsed.success ? parsed.data : null;
   } catch {
     return null;
@@ -460,7 +443,7 @@ function GetCourseCardTool({
 function courseArtifactFromSummary(summary: unknown, status: "generating" | "ready" = "ready"): CourseCardArtifact | null {
   if (!summary || typeof summary !== "object") return null;
   const s = summary as Record<string, unknown>;
-  const parsed = CourseCardResult.safeParse({
+  const parsed = CourseCardArtifactSchema.safeParse({
     type: "course_card",
     courseId: s.id,
     title: s.title,
@@ -1036,8 +1019,9 @@ function VisualizerToolRender({ name, status, result }: { name: string; status: 
       artifact = JSON.parse(result);
     } catch {}
   }
-  if (isTutorArtifact(artifact)) {
-    return <div className="primoria-copilot-tool"><ToolCard artifact={artifact} /></div>;
+  const parsedArtifact = TutorArtifactSchema.safeParse(artifact);
+  if (parsedArtifact.success) {
+    return <div className="primoria-copilot-tool"><ToolCard artifact={parsedArtifact.data} /></div>;
   }
   const display = getTutorToolDisplay(name, status, t);
   return (
@@ -1053,10 +1037,6 @@ function VisualizerToolRender({ name, status, result }: { name: string; status: 
       </div>
     </div>
   );
-}
-
-function isTutorArtifact(value: unknown): value is TutorArtifact {
-  return value !== null && typeof value === "object" && "type" in value && typeof (value as { type: unknown }).type === "string";
 }
 
 function copilotContentToString(content: unknown) {
