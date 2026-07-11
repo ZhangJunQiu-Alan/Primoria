@@ -107,19 +107,33 @@ describe("representative auth route contracts", () => {
 
   it("does not expose raw driver messages from quiz persistence", async () => {
     routeState.requireConfiguredAuthUser.mockResolvedValue({ denied: null, user: { id: "u1" } });
-    routeState.getCourse.mockResolvedValue(null);
-    routeState.getDb.mockReturnValue({
-      insert: () => ({
-        values: async () => {
-          throw Object.assign(new Error(RAW_DRIVER_MESSAGE), { code: "42P01" });
+    routeState.getCourse.mockResolvedValue({
+      id: "c1",
+      graphId: null,
+      lessons: [
+        {
+          id: "l1",
+          blocks: [
+            { id: "b1", type: "quiz", questions: [{ id: "q1", kind: "single", prompt: "?", options: [], correctId: "a" }] },
+          ],
         },
-      }),
+      ],
+    });
+    routeState.getDb.mockReturnValue({
+      transaction: async (fn: (tx: unknown) => Promise<void>) =>
+        fn({
+          insert: () => ({
+            values: async () => {
+              throw Object.assign(new Error(RAW_DRIVER_MESSAGE), { code: "42P01" });
+            },
+          }),
+        }),
     });
     const { POST } = await import("../src/app/api/courses/[id]/quiz/route");
     const request = new Request("http://localhost/api/courses/c1/quiz", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ blockId: "b1", answers: [], score: 0, total: 1 }),
+      body: JSON.stringify({ blockId: "b1", answers: [] }),
     });
 
     const response = await POST(request, { params: Promise.resolve({ id: "c1" }) });

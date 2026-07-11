@@ -494,6 +494,7 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
 
   const handleSubmit = useCallback(async () => {
     if (state.phase !== "answering") return;
+    // Local score is optimistic UI only; the server regrades authoritatively.
     const score = block.questions.filter((q) => isCorrect(q, state.selections[q.id])).length;
     setState({ phase: "submitted", selections: state.selections, score });
 
@@ -508,7 +509,7 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
         await fetch(`/api/courses/${courseId}/quiz`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ blockId: block.id, answers, score, total: block.questions.length }),
+          body: JSON.stringify({ blockId: block.id, answers }),
         });
       } catch {
         // non-blocking
