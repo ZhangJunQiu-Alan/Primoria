@@ -4,7 +4,7 @@ export type KnowledgeBackground = (typeof KNOWLEDGE_BACKGROUNDS)[number];
 export const TUTOR_STYLES = ["socratic", "feynman", "euclid"] as const;
 export type TutorStyle = (typeof TUTOR_STYLES)[number];
 
-// Distilled "facts about the learner" (feature_specification.md §101), produced
+// Distilled "facts about the learner" (docs/product/feature_specification.md §101), produced
 // by the Extractor Agent. `category` routes consumption: preference /
 // prior_knowledge / learning_gap feed the lesson Planner + tutor; goal is
 // long-term profile only (not fed into generation to avoid polluting the current

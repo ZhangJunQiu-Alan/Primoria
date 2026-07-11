@@ -18,7 +18,7 @@ Implemented:
 - Course Tutor on lesson pages as a collapsed right-side AI rail that expands
   into the existing CopilotKit Course Tutor surface
 - Settings UI for model/provider preferences where wired
-- CopilotKit thread history with New chat reset
+- Postgres-backed CopilotKit thread history with New chat reset
 - CopilotKit runtime route backed by the LangGraph `primoria_tutor` graph
 - OpenAI-compatible and Anthropic-compatible chat model configuration
 - OpenAI-compatible and MiniMax KG embedding configuration
@@ -44,7 +44,7 @@ Implemented:
   - form/input default styles
   - import map for approved visualization modules
   - widget-to-tutor prompt bridge
-- Local verification through CopilotKit and LangGraph Studio
+- Local verification through CopilotKit, the LangGraph agent on port 2024, and browser QA
 - Postgres-backed self-owned auth (`users`, `identities`, `sessions`)
 - Auth endpoint rate limiting through `auth_rate_limits`
 - Docker Compose local PostgreSQL with `pgvector/pgvector:pg16` as the default
@@ -52,14 +52,18 @@ Implemented:
 
 ## Runtime Config
 
-Server defaults live in `apps/web/.env.local`:
+Local runtime config should start from `apps/web/.env.example`, then be copied to
+`apps/web/.env.local`. The LangGraph agent should receive the same relevant
+server-side values via `apps/agent/.env`.
 
 ```env
-OPENAI_BASE_URL=https://ai.orbitlink.me/v1
-OPENAI_API_KEY=...
+AI_PROVIDER=openai-compatible
+OPENAI_BASE_URL=https://your-openai-compatible-endpoint/v1
+OPENAI_API_KEY=your-key
 OPENAI_MODEL=gpt-5.4
 DATABASE_URL=postgresql://primoria_app:primoria_dev@127.0.0.1:5432/primoria
 DATABASE_SSL=disable
+LANGGRAPH_DEPLOYMENT_URL=http://localhost:2024
 ```
 
 Supported model providers:
@@ -67,7 +71,9 @@ Supported model providers:
 - `AI_PROVIDER=openai-compatible`
 - `AI_PROVIDER=anthropic-compatible`
 
-KG embeddings are configured separately with `KG_EMBEDDING_PROVIDER`.
+KG source JSON files live under `data/knowledge-graphs/source/`; generated graph
+exports awaiting review live under `data/knowledge-graphs/generated/`. KG
+embeddings are configured separately with `KG_EMBEDDING_PROVIDER`.
 
 ## Verification
 

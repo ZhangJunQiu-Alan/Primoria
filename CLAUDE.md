@@ -64,6 +64,8 @@ Write new tests as native vitest `tests/*.spec.ts` files; do not add new self-ex
 ```
 apps/web/     Next.js app — UI, API routes, DB, CopilotKit integration
 apps/agent/   LangGraph agent — serves the primoria_tutor graph
+data/knowledge-graphs/source/  Committed KG source JSON files and sidecars
+data/knowledge-graphs/generated/  Exported generated graph candidates awaiting review/promotion
 ```
 
 ### AI Tutor path

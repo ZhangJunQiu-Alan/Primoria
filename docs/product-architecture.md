@@ -8,9 +8,9 @@ was removed from the codebase to reduce scope. Workspace/classroom and
 collective-intelligence sections below describe future product direction, not
 current runtime capability.
 
-`docs/architecture.md` covers code structure (packages, file organization).
-This document covers **what the system does** — the engines, data flows, agent
-ecosystem, and evolution mechanisms that make learning adaptive.
+README and AGENTS.md cover current commands, package boundaries, and runtime
+constraints. This document covers **what the system does** — the engines, data
+flows, agent ecosystem, and evolution mechanisms that make learning adaptive.
 
 ---
 
@@ -83,7 +83,7 @@ One pipeline, four engines, one agent pool.
 
 Courses are not static documents. They grow on demand. Each block type is the
 materialization of a teaching method — a deliberate pedagogical action an agent
-can choose from the current course, learner, goal, and workspace context.
+can choose from the current course, learner, goal, and session context.
 
 ### Block types and their adaptive triggers
 
@@ -214,8 +214,9 @@ Review Agent     ← spaced repetition, memory strengthening
 Language Agent   ← language learning, translation, writing
 ```
 
-### Bidding protocol in group chat
+### Future bidding protocol in group chat
 
+This is future classroom/collaboration scope, not current runtime behavior.
 When a user asks a question in a group workspace:
 
 ```
@@ -344,7 +345,7 @@ Event Log + User Memory                         → Personal adaptive loop
 Personal adaptive loop                          → Agent specialization (no loop = no signal)
 Agent specialization + group chat + feedback    → Agent confidence / bidding
 Agent confidence model                          → High-quality self-nomination
-All of the above                                → Workspace classroom (teacher view)
+All of the above                                → Future workspace classroom (teacher view)
 Cross-user aggregation                          → Community (recommend agent/app)
 ```
 
@@ -382,7 +383,7 @@ P3 (ecosystem):
 
 ## 12. Relationship to code architecture
 
-This product architecture maps onto `docs/architecture.md` as follows:
+This product architecture maps onto the current codebase as follows:
 
 - `packages/contracts` defines shared artifact, chat, and stream contracts used
   by the web app and agent runtime.
@@ -395,9 +396,9 @@ This product architecture maps onto `docs/architecture.md` as follows:
   It does not import from `apps/web`; bounded course-card reads are handled
   through explicit agent-side DB code.
 
-The structural refactor notes in `docs/architecture.md` are historical. Current
-implementation work should stay grounded in the active personal learning loop
-unless a new architecture decision reopens classroom or marketplace scope.
+Current implementation work should stay grounded in the active personal
+learning loop unless a new architecture decision reopens classroom or
+marketplace scope.
 
 ---
 

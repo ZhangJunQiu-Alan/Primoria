@@ -12,7 +12,7 @@ export type QuizSelected = string | string[] | boolean;
 export type LearningEvent =
   | { type: "chat.question"; ownerId: string; id?: string; threadId: string; messageId: string; courseId?: string | null; lessonId?: string | null }
   | {
-      // Feedback on one assistant reply (feature_specification.md §83). "懂了/没懂"
+      // Feedback on one assistant reply (docs/product/feature_specification.md §83). "懂了/没懂"
       // text feedback is normalized to positive/negative by the caller before
       // recording; `via` records whether it came from a thumb or typed text.
       type: "chat.feedback";

@@ -1,7 +1,7 @@
 import { findTopicByConcept, getTopic, nextTopic } from "../knowledge-graph/topic-graph";
 import type { MasteryStatus } from "../mastery/store";
 
-// Pure post-lesson decision engine (feature_specification.md §28–30). Given
+// Pure post-lesson decision engine (docs/product/feature_specification.md §28–30). Given
 // updated concept mastery, decide what the learner should do next: insert a
 // same-graph remediation lesson when a concept is weak, otherwise advance to the
 // outline's next topic, or report the course complete when there is no next

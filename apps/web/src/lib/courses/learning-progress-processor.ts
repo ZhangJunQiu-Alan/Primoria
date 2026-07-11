@@ -14,7 +14,7 @@ import {
   type LearningProgressClaim,
 } from "./learning-progress-jobs";
 
-// Two-stage orchestration run for one claimed job (feature_specification.md §163):
+// Two-stage orchestration run for one claimed job (docs/product/feature_specification.md §163):
 // ① update concept mastery from this lesson's quiz evidence, then ② decide the
 // next step and record it as a pending recommendation. Both stages are idempotent
 // (mastery upsert + deterministic decision) so a crashed worker simply re-runs.

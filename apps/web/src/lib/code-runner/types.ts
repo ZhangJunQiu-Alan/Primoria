@@ -1,5 +1,4 @@
 // Shared types for the in-browser code runner (Python via Pyodide, JS in-worker).
-// See temple/code_block_execution.md §4.
 
 export type RunnableLanguage = "python" | "javascript";
 

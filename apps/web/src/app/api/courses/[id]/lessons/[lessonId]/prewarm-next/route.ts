@@ -6,7 +6,7 @@ import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/
 export const dynamic = "force-dynamic";
 
 // Speculative preload of the immediately-next outline lesson while the learner
-// studies the current one (feature_specification.md §28). Fired when a generated
+// studies the current one (docs/product/feature_specification.md §28). Fired when a generated
 // lesson opens. Only the single next lesson by sortKey is warmed; if the current
 // lesson is the last in the outline there is nothing to preload (structural
 // course-end, decided without quiz evidence) and we skip. enqueue is idempotent,

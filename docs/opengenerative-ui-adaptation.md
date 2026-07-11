@@ -11,7 +11,8 @@ Primoria should borrow the architecture, not the exact visual skin.
 - Resize bridge: the iframe reports its height to the parent for seamless layout.
 - Frontend tools: safe browser actions like opening the library or changing view state.
 - Default tool renderer: unrecognized tools still show status instead of disappearing.
-- Human review gates: generated courses should be reviewed before saving/publishing.
+- Review gates: generated graph candidates should be reviewed before promotion;
+  course creation itself is persisted through the app-owned Postgres course flow.
 
 ## Primoria-specific changes
 
@@ -32,10 +33,12 @@ Primoria should borrow the architecture, not the exact visual skin.
   - approved import map modules: `three`, `gsap`, `d3`, `chart.js`
   - resize bridge
   - widget-to-tutor prompt bridge via `window.sendPrompt()` and `data-prompt`
-- `usePrimoriaGenerativeUI` sketches the CopilotKit registration layer.
-- The active tutor route is CopilotKit -> LangGraph `primoria_tutor`.
-- LangGraph owns intent routing and tool calls for course generation, widget rendering, and STEM simulations.
-- CopilotKit renders tool results in the chat and stores local thread history by thread id.
+- The active tutor route is Browser CopilotKit UI -> `apps/web/src/app/api/copilotkit/route.ts` -> `primoria_tutor`.
+- LangGraph owns intent/tool orchestration. For course creation, the agent emits
+  `position_learning_goal`; the web side performs KG positioning, persistence,
+  and lesson-job enqueueing.
+- CopilotKit renders tool results in the chat. Thread history is persisted
+  through the app-owned Postgres chat tables.
 
 ## Still not adopted
 

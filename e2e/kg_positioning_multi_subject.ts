@@ -110,7 +110,8 @@ async function runTest() {
     }
   }
 
-  const testMdPath = path.resolve(__dirname, '../temple/test.md');
+  const testMdPath = path.resolve(__dirname, '../docs/qa/kg-positioning-multi-subject-test.md');
+  fs.mkdirSync(path.dirname(testMdPath), { recursive: true });
   fs.writeFileSync(testMdPath, results.join("\n"));
   console.log(`\nTest results written to ${testMdPath}`);
 

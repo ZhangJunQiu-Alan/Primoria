@@ -1,6 +1,6 @@
 import type { MasteryStatus } from "./store";
 
-// Deterministic v1 mastery rules (feature_specification.md §156). Pure — no I/O —
+// Deterministic v1 mastery rules (docs/product/feature_specification.md §156). Pure — no I/O —
 // so the transitions are unit-testable. Tunable "tacit" knobs live here.
 
 export type ConceptEvidence = { correct: number; total: number };
