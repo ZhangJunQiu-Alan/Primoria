@@ -8,8 +8,8 @@ import { buildGraphCandidates } from "../src/lib/knowledge-graph/graph-router";
 
 const repoRoot = resolve(import.meta.dirname, "../../..");
 
-function readTempleJson(name: string) {
-  return JSON.parse(readFileSync(resolve(repoRoot, "temple", name), "utf8"));
+function readKgSourceJson(name: string) {
+  return JSON.parse(readFileSync(resolve(repoRoot, "data/knowledge-graphs/source", name), "utf8"));
 }
 
 describe("curated KG library integrity", () => {
@@ -23,8 +23,8 @@ describe("curated KG library integrity", () => {
   });
 
   it("separates beginner Python from the CS61A/SICP curriculum", () => {
-    const fundamentals = readTempleJson("python_fundamentals.json");
-    const sicp = readTempleJson("sicp_cs61a.json");
+    const fundamentals = readKgSourceJson("python_fundamentals.json");
+    const sicp = readKgSourceJson("sicp_cs61a.json");
 
     expect(fundamentals.subject).toBe("Python Fundamentals");
     expect(fundamentals.nodes.some((node: { id?: string }) => node.id === "pyf_interactive_execution")).toBe(true);
@@ -33,8 +33,8 @@ describe("curated KG library integrity", () => {
   });
 
   it("maps every Python Fundamentals concept to exactly one source record", () => {
-    const graph = readTempleJson("python_fundamentals.json");
-    const sourceMap = readTempleJson("python_fundamentals_source_map.json");
+    const graph = readKgSourceJson("python_fundamentals.json");
+    const sourceMap = readKgSourceJson("python_fundamentals_source_map.json");
     const conceptIds = graph.nodes
       .filter((node: { kind?: string }) => node.kind === "concept")
       .map((node: { id: string }) => node.id)

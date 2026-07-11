@@ -1,5 +1,5 @@
 // Single point for resolving the user-facing display name of a KG node.
-// Names live on the source KG (temple/*.json -> generated artifact) as English
+// Names live on the source KG (data/knowledge-graphs/source/*.json -> generated artifact) as English
 // `name` plus Chinese `nameZh`; everything that shows a topic/concept to the
 // user — menus, learning paths, course-generation context — must go through
 // here instead of writing `nameZh ?? name` inline, so the fallback rule stays

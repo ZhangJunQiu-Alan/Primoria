@@ -1,8 +1,8 @@
 {
   "graphId": "software_construction",
   "subject": "Software Construction",
-  "generatedFrom": "temple/software_construction.json",
-  "generatedAt": "2026-06-28",
+  "generatedFrom": "data/knowledge-graphs/source/software_construction.json",
+  "generatedAt": "2026-07-11",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {

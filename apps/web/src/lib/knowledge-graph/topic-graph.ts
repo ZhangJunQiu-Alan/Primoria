@@ -1,6 +1,6 @@
 import { DEFAULT_TOPIC_GRAPH_ID, TOPIC_GRAPHS } from "./data/topic-graphs.generated";
 
-/** Concept visualization affordance from the KG (temple/*.json `visual`). Maps to
+/** Concept visualization affordance from the KG (data/knowledge-graphs/source/*.json `visual`). Maps to
  * a course visual engine: interactive→html, simulation→physics,
  * algorithm→algorithm_visualizer, function→math_explorer, chart→echarts,
  * diagram→mermaid. Absent = no forced visual. */

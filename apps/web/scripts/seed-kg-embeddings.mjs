@@ -39,10 +39,10 @@ function assertEmbeddingDimension(embedding) {
   }
 }
 
-// Global node_id -> Chinese label map (temple/kg_zh_labels.json), used as an
+// Global node_id -> Chinese label map (data/knowledge-graphs/source/kg_zh_labels.json), used as an
 // alias so Chinese queries match English nodes in recall.
 function loadZhLabels() {
-  const path = resolve(REPO_ROOT, "temple/kg_zh_labels.json");
+  const path = resolve(REPO_ROOT, "data/knowledge-graphs/source/kg_zh_labels.json");
   if (!existsSync(path)) return {};
   return readJson(path).labels ?? {};
 }

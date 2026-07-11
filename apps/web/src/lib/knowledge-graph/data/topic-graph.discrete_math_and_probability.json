@@ -1,8 +1,8 @@
 {
   "graphId": "discrete_math_and_probability",
   "subject": "Discrete Math and Probability Theory",
-  "generatedFrom": "temple/discrete_math_and_probability.json",
-  "generatedAt": "2026-06-28",
+  "generatedFrom": "data/knowledge-graphs/source/discrete_math_and_probability.json",
+  "generatedAt": "2026-07-11",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
   "topics": [
     {

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// One-time/idempotent migration: fold temple/kg_zh_labels.json (a flat
-// {nodeId -> 中文名} sidecar) into each temple/<graphId>.json node as `name_zh`.
+// One-time/idempotent migration: fold data/knowledge-graphs/source/kg_zh_labels.json (a flat
+// {nodeId -> 中文名} sidecar) into each data/knowledge-graphs/source/<graphId>.json node as `name_zh`.
 //
-// After this runs, temple/*.json is the single source of truth for Chinese
+// After this runs, data/knowledge-graphs/source/*.json is the single source of truth for Chinese
 // display names: build-topic-graph.mjs carries name_zh into the static artifact
 // and validate-kg.mjs enforces it. kg_zh_labels.json is kept only as the merge
 // input/archive — it is NOT a runtime source.
@@ -12,10 +12,10 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { TEMPLE_DIR, REPO_ROOT, listGraphIds, graphPath, readJson } from "./kg-db-common.mjs";
+import { KG_SOURCE_DIR, REPO_ROOT, listGraphIds, graphPath, readJson } from "./kg-db-common.mjs";
 
 function loadZhLabels() {
-  const path = resolve(TEMPLE_DIR, "kg_zh_labels.json");
+  const path = resolve(KG_SOURCE_DIR, "kg_zh_labels.json");
   if (!existsSync(path)) throw new Error(`Missing ${path}`);
   return readJson(path).labels ?? {};
 }
