@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
 
 import { LessonPlanIrSchema } from "../src/lib/ai/course-generation/lesson-plan-ir";
-import { planLesson, repairLessonPlan, type LessonPlannerInvoke } from "../src/lib/ai/course-generation/lesson-planner";
+import {
+  LESSON_PLANNER_MAX_TOKENS,
+  planLesson,
+  repairLessonPlan,
+  type LessonPlannerInvoke,
+} from "../src/lib/ai/course-generation/lesson-planner";
 import type { CourseContext } from "../src/lib/ai/deepagent/course-kg-context";
 import type { InvokeJsonArgs } from "../src/lib/ai/course-generation/model-json";
 
@@ -33,6 +38,7 @@ describe("planLesson structured output", () => {
     expect(result).toEqual({ ok: true });
     expect(seen?.schema).toBe(LessonPlanIrSchema);
     expect(seen?.schemaName).toBe("lesson_plan_ir");
+    expect(seen?.maxTokens).toBe(LESSON_PLANNER_MAX_TOKENS);
     expect(seen?.system).toContain("Primoria's Lesson Planner");
     expect(seen?.user).toContain("Produce the compact LessonPlan IR now");
   });
@@ -48,6 +54,7 @@ describe("planLesson structured output", () => {
 
     expect(seen?.schema).toBe(LessonPlanIrSchema);
     expect(seen?.schemaName).toBe("lesson_plan_ir");
+    expect(seen?.maxTokens).toBe(LESSON_PLANNER_MAX_TOKENS);
     expect(seen?.user).toContain("failed deterministic validation");
     expect(seen?.user).toContain("missing lesson and blocks");
     expect(seen?.user).toContain('"v": "NaN"');

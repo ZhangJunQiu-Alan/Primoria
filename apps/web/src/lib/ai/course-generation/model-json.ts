@@ -16,6 +16,8 @@ export type InvokeJsonArgs = {
   settings?: TutorProviderSettings;
   schema?: z.ZodTypeAny;
   schemaName?: string;
+  /** Maximum output tokens for this specific structured/JSON task. */
+  maxTokens?: number;
   /** Deadline for the WHOLE operation (structured attempt + fallback share it). */
   timeoutMs?: number;
   /** Caller cancellation; combined with the internal deadline. */
@@ -128,6 +130,7 @@ async function rawAnthropicJson(
   system: string,
   user: string,
   signal: AbortSignal,
+  maxTokens: number,
 ): Promise<string> {
   if (!settings.baseUrl) throw new Error("Missing ANTHROPIC_BASE_URL");
   if (!settings.apiKey) throw new Error("Missing ANTHROPIC_API_KEY");
@@ -141,7 +144,7 @@ async function rawAnthropicJson(
     signal,
     body: JSON.stringify({
       model: settings.model,
-      max_tokens: 8192,
+      max_tokens: maxTokens,
       temperature: 0.2,
       system,
       messages: [{ role: "user", content: user }],
@@ -174,7 +177,7 @@ async function rawAnthropicJson(
 export async function invokeJson(args: InvokeJsonArgs): Promise<unknown> {
   const { system, user, schema, schemaName = "result", timeoutMs = 90_000 } = args;
   const settings = resolveProviderSettings(args.settings ?? {});
-  const model = createTutorModel(args.settings ?? {});
+  const model = createTutorModel(args.settings ?? {}, { maxTokens: args.maxTokens });
 
   const deadlineAt = Date.now() + timeoutMs;
   const controller = new AbortController();
@@ -201,7 +204,9 @@ export async function invokeJson(args: InvokeJsonArgs): Promise<unknown> {
 
   try {
     if (shouldSkipStructuredOutput(settings)) {
-      return parseJsonValue(await attempt(rawAnthropicJson(settings, system, user, signal), "JSON generation"));
+      return parseJsonValue(
+        await attempt(rawAnthropicJson(settings, system, user, signal, args.maxTokens ?? 8192), "JSON generation"),
+      );
     }
 
     if (schema) {

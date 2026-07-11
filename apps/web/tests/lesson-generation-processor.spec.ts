@@ -59,6 +59,7 @@ function makeStore(seed: Checkpoint[] = []) {
     checkpoints: [...seed],
     deletedPlan: false,
     published: null as { title: string; blocks: unknown[]; estimatedMinutes: number } | null,
+    partials: [] as { id: string }[][],
   };
   const store: LessonJobStore = {
     async updateStage() {
@@ -88,6 +89,10 @@ function makeStore(seed: Checkpoint[] = []) {
     },
     async publish(_fence, lesson) {
       state.published = { title: lesson.title, blocks: lesson.blocks, estimatedMinutes: lesson.estimatedMinutes };
+      return { ok: true };
+    },
+    async publishPartial(_fence, input) {
+      state.partials.push(input.blocks as { id: string }[]);
       return { ok: true };
     },
   };
@@ -182,6 +187,17 @@ describe("lesson generation planner repair", () => {
     expect(state.published?.title).toBe("Photosynthesis Foundations");
     const planCheckpoint = state.checkpoints.find((cp) => cp.kind === "plan");
     expect((planCheckpoint?.payload as { rawIr?: unknown } | undefined)?.rawIr).toBe(fixedIr);
+
+    // Progressive publish: the worker streamed at least one partial, prefixes grew
+    // monotonically, and every partial is an in-order prefix of the final blocks.
+    const finalIds = (state.published?.blocks as { id: string }[]).map((b) => b.id);
+    expect(state.partials.length).toBeGreaterThan(0);
+    for (let i = 1; i < state.partials.length; i++) {
+      expect(state.partials[i].length).toBeGreaterThan(state.partials[i - 1].length);
+    }
+    for (const partial of state.partials) {
+      expect(partial.map((b) => b.id)).toEqual(finalIds.slice(0, partial.length));
+    }
   });
 
   it("clears checkpoints and does not publish when the one repair still fails", async () => {

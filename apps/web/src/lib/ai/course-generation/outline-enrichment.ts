@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { getCourse, updateLessonDescriptionIfUnchanged } from "@/lib/courses/store";
 import { invokeJson } from "./model-json";
+import { fastTierSettings } from "../deepagent/model";
 
 // QA issue 9: planned-lesson descriptions are deterministic templates
 // (plannedLessonDescription). After a NEW course outline is persisted, one
@@ -74,6 +75,8 @@ export async function enrichCourseOutlineDescriptions(input: {
     const raw = await invokeJson({
       system,
       user,
+      // Best-effort cosmetic rewrite (template kept on any failure) — fast tier.
+      settings: fastTierSettings(),
       schema: ResponseSchema,
       schemaName: "outline_descriptions",
       timeoutMs: ENRICHMENT_TIMEOUT_MS,

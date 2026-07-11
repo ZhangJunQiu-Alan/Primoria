@@ -76,6 +76,16 @@ describe("invokeJson deadline contract", () => {
     ).resolves.toEqual({ items: [] });
   });
 
+  it("passes a task-specific output limit to the model", async () => {
+    const { model } = makeModel({ invoke: vi.fn().mockResolvedValue({ content: "{}" }) });
+    mockState.createTutorModel.mockReturnValue(model);
+    const { invokeJson } = await loadInvokeJson();
+
+    await invokeJson({ system: "s", user: "u", maxTokens: 8192 });
+
+    expect(mockState.createTutorModel).toHaveBeenCalledWith({}, { maxTokens: 8192 });
+  });
+
   it("gives the fallback only the remaining budget, not a fresh timeout", async () => {
     // Structured attempt burns 600ms of a 1000ms budget, fallback hangs: the
     // whole call must fail at ~1000ms total, not 600ms + another 1000ms.
