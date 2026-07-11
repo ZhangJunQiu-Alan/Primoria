@@ -182,8 +182,10 @@ Auth endpoints are rate-limited before password hashing/verification. Defaults:
 `AUTH_RATE_LIMIT_IP_MAX=5`, `AUTH_RATE_LIMIT_ACCOUNT_MAX=5`, and
 `AUTH_RATE_LIMIT_WINDOW_SECONDS=60`. Proxy IP headers such as
 `cf-connecting-ip`, `x-real-ip`, `x-forwarded-for`, and `forwarded` are ignored
-unless `AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS=true`; only enable that when your
-edge layer overwrites client-supplied forwarding headers.
+unless one exact header is selected with `AUTH_RATE_LIMIT_CLIENT_IP_HEADER`.
+Only configure a header that your edge layer overwrites after removing any
+client-supplied value. When it is unset or the trusted header has no valid IP,
+the app skips the IP bucket and still enforces the per-account bucket.
 
 Password reset uses Tencent Cloud SES through the `SendEmail` API and an
 approved email template. The app generates a one-time reset token, stores only
@@ -331,6 +333,72 @@ pnpm --filter @primoria/agent test:course-store
 ```
 
 Some E2E tests start their own isolated Next dev server; others expect a running app. Check the test file before running long E2E suites.
+
+## Deployment (Single Server)
+
+Production runs the whole stack on one server (e.g. a Tencent Cloud CVM) with Docker Compose. `docker-compose.prod.yml` defines every process: Postgres, a one-shot migration job, the web app, the LangGraph agent, the three background workers, and a Caddy reverse proxy. All services restart automatically on crash and on server reboot.
+
+Port boundaries: only Caddy (80/443) is reachable from outside. The web app (3000), the agent (2024 — it has no auth of its own and must never be published), the workers, and Postgres stay on the internal compose network; Postgres additionally binds `127.0.0.1:5432` for server-side administration.
+
+### First Deploy
+
+Server prerequisites: Docker Engine with the Compose plugin, and at least 4 GB RAM — the Next.js image build needs it (on a 2 GB machine, add swap first).
+
+```bash
+git clone <repo-url> /srv/primoria && cd /srv/primoria
+cp .env.production.example .env   # fill in every replace-* value
+docker compose -f docker-compose.prod.yml up -d --build
+
+# First deploy only: seed the knowledge graph (uses the embedding provider).
+docker compose -f docker-compose.prod.yml run --rm migrate \
+  pnpm --filter @primoria/web db:sync:kg
+```
+
+Startup order is enforced by the compose file: postgres (healthcheck) → `migrate` (one-shot `db:migrate`, so new code never runs against an old schema) → web/agent/workers.
+
+HTTPS: leave `PRIMORIA_DOMAIN` empty to serve plain HTTP on `:80` while testing against a bare IP. Once a DNS A record points your domain at the server, set `PRIMORIA_DOMAIN` (and matching `APP_BASE_URL`/`NEXT_PUBLIC_APP_URL`), open ports 80+443 in the security group, and rerun `up -d --build` — Caddy provisions and renews certificates automatically.
+
+Provider note for mainland-China servers: direct DeepSeek/MiniMax endpoints work there (it is campus/office DNS that blocks them), while OpenRouter is unreliable from the mainland. `.env.production.example` defaults to direct endpoints — the opposite of a campus-network dev setup.
+
+### Updating
+
+```bash
+cd /srv/primoria
+git pull
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+This rebuilds the images, reruns migrations, and restarts only the services whose image or config changed. `NEXT_PUBLIC_*` values are baked into the web bundle at build time, so changing them also requires this rebuild.
+
+### Day-2 Operations
+
+```bash
+# Status / logs / restart one service
+docker compose -f docker-compose.prod.yml ps
+docker compose -f docker-compose.prod.yml logs -f --tail=200 web agent
+docker compose -f docker-compose.prod.yml restart worker-extractor
+
+# Requeue failed background jobs (all queues, one queue, or one job)
+docker compose -f docker-compose.prod.yml run --rm migrate \
+  pnpm --filter @primoria/web jobs:requeue-failed
+```
+
+### Monitoring and Alerts
+
+`GET /api/health` reports database/KG state plus job-queue backlog (queued/running/failed counts and the age of the oldest queued job per queue). A dead worker surfaces as a stalled queue: once a job waits longer than `PRIMORIA_HEALTH_QUEUE_STALL_SECONDS` (default 600), the overall status flips from `ok` to `degraded`.
+
+Point an uptime probe (Tencent Cloud 云监控 site monitoring, or any external uptime service) at `https://<domain>/api/health` every minute and alert when the response body stops containing `"status":"ok"` — that single check catches DB outages, missing schema, and dead workers.
+
+### Backups
+
+`scripts/pg-backup.sh` dumps the database via `pg_dump` into `/var/backups/primoria` (override with `PRIMORIA_BACKUP_DIR`) and prunes dumps older than 14 days. Schedule it daily:
+
+```bash
+crontab -e
+# 30 4 * * * /srv/primoria/scripts/pg-backup.sh >> /var/log/primoria-backup.log 2>&1
+```
+
+The restore command is documented in the script header.
 
 ## CI
 

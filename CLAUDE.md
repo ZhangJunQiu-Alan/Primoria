@@ -106,7 +106,7 @@ In the main AI Tutor, course creation starts with the `position_learning_goal` t
 
 ### KG failure policy
 
-`apps/web/src/lib/knowledge-graph/errors.ts` separates KG coverage misses from infrastructure failures. Coverage miss (KG healthy, library has no match) may route through the freeform gate into generated `gen_*` graphs. Infrastructure failure (missing KG tables, DB down, embedding provider down) throws `KnowledgeGraphUnavailableError` and maps to safe API errors — never return or persist raw `error.message` on positioning paths. `GET /api/health` reports DB/KG-schema/embedding state. `PRIMORIA_ALLOW_KG_INFRA_FALLBACK=1` (local dev only, never `NODE_ENV`-derived) lets only `kg_schema_missing` degrade into the freeform gate.
+`apps/web/src/lib/knowledge-graph/errors.ts` separates KG coverage misses from infrastructure failures. Coverage miss (KG healthy, library has no match) may route through the freeform gate into generated `gen_*` graphs. Infrastructure failure (missing KG tables, DB down, embedding provider down) throws `KnowledgeGraphUnavailableError` and maps to safe API errors — never return or persist raw `error.message` on positioning paths. `GET /api/health` reports DB/KG-schema/embedding state plus job-queue backlog (`apps/web/src/lib/courses/job-queue-health.ts`); a queued job older than `PRIMORIA_HEALTH_QUEUE_STALL_SECONDS` (default 600) flips the status to `degraded`. `PRIMORIA_ALLOW_KG_INFRA_FALLBACK=1` (local dev only, never `NODE_ENV`-derived) lets only `kg_schema_missing` degrade into the freeform gate.
 
 ### Route auth policy
 
@@ -123,6 +123,10 @@ Local development uses the Docker Compose PostgreSQL service (`pgvector/pgvector
 `apps/web/src/lib/ai/deepagent/model.ts` resolves provider credentials (provider/baseUrl/apiKey) exclusively from server-side env vars. There is no BYOK: clients cannot supply provider settings, and `TutorProviderSettings` now carries only the internal model-tier selection (`fastTierSettings`). Supports `openai-compatible` (default) and `anthropic-compatible`. The agent uses `ChatOpenAI` or `ChatAnthropic` from LangChain.
 
 KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current supported embedding providers are `openai-compatible` and `minimax`.
+
+### Deployment
+
+Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, a one-shot `migrate` service (blocks app startup until `db:migrate` succeeds), web, agent, the three workers, and a Caddy reverse proxy. Only Caddy (80/443) is public — the agent's 2024 port has no auth and must never be published. All images build from `docker/app.Dockerfile` (targets `web`/`agent`/`worker`); runtime env comes from a root `.env` (template: `.env.production.example`). Failed background jobs are requeued with `pnpm --filter @primoria/web jobs:requeue-failed [queue] [jobId]`; daily backups via `scripts/pg-backup.sh`. Full runbook: README "Deployment (Single Server)".
 
 ## Key constraints
 
