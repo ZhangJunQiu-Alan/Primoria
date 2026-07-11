@@ -6,8 +6,12 @@ export const dynamic = "force-dynamic";
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={null}>
-      <AuthForm mode="signin" />
-    </Suspense>
+    <main className="app-shell auth-shell">
+      <section className="workspace auth-workspace">
+        <Suspense fallback={<div className="p-8 text-center text-muted">Loading authentication...</div>}>
+          <AuthForm mode="signin" />
+        </Suspense>
+      </section>
+    </main>
   );
 }

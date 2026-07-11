@@ -27,8 +27,8 @@ async function main() {
   assert(!proxy.includes("const PUBLIC_PATTERNS"), "proxy does not maintain a private public-route list");
   assert(welcomePage.includes('import { LandingPage } from "@/components/landing/landing-page"'), "welcome route imports the public landing page");
   assert(welcomePage.includes("return <LandingPage />;"), "welcome route renders the public landing page");
-  assert(!homePage.includes("LandingPage"), "home no longer renders the landing page branch");
-  assert(homePage.includes("redirect(loginPathWithNext(APP_HOME_PATH))"), "home redirects signed-out or expired-cookie visitors to login");
+  assert(homePage.includes('import { LandingPage } from "@/components/landing/landing-page"'), "home imports the shared public landing page");
+  assert(homePage.includes("if (authEnabled && !user) return <LandingPage />"), "home renders landing content for signed-out visitors");
 
   assert(!landingPage.includes("CopilotKitProvider"), "public landing component does not mount CopilotKit");
 

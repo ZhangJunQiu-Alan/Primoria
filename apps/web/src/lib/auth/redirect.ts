@@ -1,4 +1,4 @@
-export const DEFAULT_AUTH_REDIRECT = "/library";
+export const DEFAULT_AUTH_REDIRECT = "/";
 
 const APP_REDIRECT_BASE = "https://primoria.local";
 

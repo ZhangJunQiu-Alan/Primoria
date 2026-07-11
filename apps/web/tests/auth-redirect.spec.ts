@@ -3,6 +3,10 @@ import { describe, expect, it } from "vitest";
 import { DEFAULT_AUTH_REDIRECT, normalizeAuthRedirect } from "@/lib/auth/redirect";
 
 describe("normalizeAuthRedirect", () => {
+  it("defaults authentication success to the root session router", () => {
+    expect(DEFAULT_AUTH_REDIRECT).toBe("/");
+  });
+
   it("falls back when the redirect target is missing or blank", () => {
     expect(normalizeAuthRedirect(null)).toBe(DEFAULT_AUTH_REDIRECT);
     expect(normalizeAuthRedirect(undefined)).toBe(DEFAULT_AUTH_REDIRECT);

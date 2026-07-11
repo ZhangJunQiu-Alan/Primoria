@@ -17,10 +17,13 @@ async function main() {
   const resetPasswordForm = read("src/components/auth/reset-password-form.tsx");
   const signInPage = read("src/app/auth/sign-in/page.tsx");
   const signUpPage = read("src/app/auth/sign-up/page.tsx");
+  const loginPage = read("src/app/login/page.tsx");
+  const signupPage = read("src/app/signup/page.tsx");
   const styles = read("src/app/globals.css");
 
   assert(authForm.includes('const SIGN_IN_HREF = "/auth/sign-in"'), "auth switch has stable sign-in route");
   assert(authForm.includes('const SIGN_UP_HREF = "/auth/sign-up"'), "auth switch has stable sign-up route");
+  assert(authForm.includes("new URLSearchParams({ next })"), "auth mode switching preserves the intended destination");
   assert(!authForm.includes('isSupabaseActive ? "/signup" : "/auth/sign-in"'), "create-account link no longer loops to sign-in");
   assert(!authForm.includes('isSupabaseActive ? "/login" : "/auth/sign-up"'), "sign-in link no longer loops to sign-up");
 
@@ -48,6 +51,8 @@ async function main() {
   assert(!signInPage.includes("TutorNavRail"), "sign-in page does not render the disabled nav rail");
   assert(signUpPage.includes('className="app-shell auth-shell"'), "sign-up page uses the focused auth shell");
   assert(!signUpPage.includes("TutorNavRail"), "sign-up page does not render the disabled nav rail");
+  assert(loginPage.includes('className="app-shell auth-shell"'), "login alias uses the same centered auth shell");
+  assert(signupPage.includes('className="app-shell auth-shell"'), "signup alias uses the same centered auth shell");
 
   for (const [name, source] of [
     ["forgot password", forgotForm],
