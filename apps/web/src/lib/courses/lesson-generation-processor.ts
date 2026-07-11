@@ -11,7 +11,7 @@ import {
   type CompiledBatchBlock,
 } from "../ai/course-generation/block-writer";
 import { validateLessonBlocks } from "../ai/course-generation/lesson-validator";
-import { finalizeImageBlocks, isPendingImageBlock, type ImageGenerate } from "../ai/media/image-builder";
+import { finalizeImageBlocks, isPendingImageBlock, type FinalizeImageOptions, type ImageGenerate } from "../ai/media/image-builder";
 import type { MediaAssetStore } from "../ai/media/media-assets";
 import { IR_VERSION } from "../ai/course-generation/lesson-plan-ir";
 import { CURRENT_CHECKPOINT_VERSIONS, isCheckpointCompatible } from "../ai/course-generation/versions";
@@ -134,29 +134,34 @@ export async function processLessonGenerationJob(
   const progressTotal = batches.length + 2;
   assertFenced(await store.updateStage(fence, { progressTotal }));
 
-  // ── Writing ───────────────────────────────────────────────────────────────
-  assertFenced(await store.updateStage(fence, { stage: "writing" }));
-
-  const compiledBlocks = await writeMissingBatches(fence, ctx, store, batches, plan, settings, options.writerInvoke);
-
-  // ── Imaging ─────────────────────────────────────────────────────────────────
-  // Resolve any pending image blocks into media assets (parallel). A single image
-  // failure is rendered inline as an error block, not a lesson failure. The media
-  // cache makes this idempotent on resume, so it needs no separate checkpoint.
-  assertFenced(await store.updateStage(fence, { stage: "imaging", progressCompleted: batches.length }));
-
   // Lesson images are GLOBAL (ownerId null): the media cache is keyed globally by
   // brief semantics and shared across users, so the asset must be globally
   // readable — an owner-scoped asset would 404 for every user who reuses it.
   // Safe because generated images carry no user context (no text, and the brief
   // is never exposed through the asset URL).
-  const blocks = await finalizeImageBlocks(assembleBlocks(compiledBlocks), {
+  const imaging: FinalizeImageOptions = {
     ownerId: null,
     model: IMAGE_MODEL,
     language: ctx.course.language ?? null,
     generate: options.imageGenerate,
     store: options.mediaStore,
-  });
+  };
+
+  // ── Writing (+ inline imaging) ──────────────────────────────────────────────
+  // Each batch resolves its own pending image blocks right after it is written, so
+  // the progressive-publish prefix can advance past ready images instead of
+  // stalling at the first one. Imaging is idempotent (global media cache) and a
+  // single image failure renders inline, never failing the lesson.
+  assertFenced(await store.updateStage(fence, { stage: "writing" }));
+
+  const compiledBlocks = await writeMissingBatches(fence, ctx, store, batches, plan, settings, imaging, options.writerInvoke);
+
+  // ── Imaging (safety net) ────────────────────────────────────────────────────
+  // Batches finalize their own images above, so this normally finds nothing
+  // pending and passes through — it only catches a block some path left unresolved.
+  assertFenced(await store.updateStage(fence, { stage: "imaging", progressCompleted: batches.length }));
+
+  const blocks = await finalizeImageBlocks(assembleBlocks(compiledBlocks), imaging);
 
   // ── Validating ──────────────────────────────────────────────────────────────
   assertFenced(await store.updateStage(fence, { stage: "validating", progressCompleted: batches.length }));
@@ -226,6 +231,7 @@ async function writeMissingBatches(
   batches: BlockBatch[],
   plan: CompiledLessonPlan,
   settings: TutorProviderSettings,
+  imaging: FinalizeImageOptions,
   writerInvoke?: BlockBatchInvoke,
 ): Promise<Map<string, CompiledBatchBlock[]>> {
   const checkpoints = await store.loadCheckpoints(fence.jobId);
@@ -238,10 +244,13 @@ async function writeMissingBatches(
 
   const planned = batches.map((batch) => ({ batch, key: batchCheckpointKey(batch) }));
   const results = new Map<string, CompiledBatchBlock[]>();
-  for (const { key } of planned) {
-    const existing = compatibleBatch.get(key);
-    if (existing) results.set(key, existing);
-  }
+  // Restore compatible batches, finalizing any pending image blocks (checkpoints
+  // store the pre-image compiled batch; imaging is idempotent, so images generated
+  // on a previous attempt are cache hits here).
+  const restored = planned.filter(({ key }) => compatibleBatch.has(key));
+  await mapLimit(restored, BATCH_CONCURRENCY, async ({ key }) => {
+    results.set(key, await finalizeBatchImages(compatibleBatch.get(key)!, imaging));
+  });
 
   // Reflect already-checkpointed batches in progress before generating the rest.
   assertFenced(await store.updateStage(fence, { progressCompleted: results.size }));
@@ -274,8 +283,10 @@ async function writeMissingBatches(
   const missing = planned.filter(({ key }) => !results.has(key));
   await mapLimit(missing, BATCH_CONCURRENCY, async ({ batch, key }) => {
     const compiled = await generateBlockBatch({ batch, plan, kg: ctx.kg, lessonId: ctx.lesson.id, settings, invoke: writerInvoke });
+    // Checkpoint the pre-image compiled batch (text is the expensive part to
+    // recover); imaging happens after and re-derives on resume from the cache.
     assertFenced(await store.upsertCheckpoint(fence, { checkpointKey: key, kind: "batch", payload: compiled, versions: CURRENT_CHECKPOINT_VERSIONS }));
-    results.set(key, compiled);
+    results.set(key, await finalizeBatchImages(compiled, imaging));
     assertFenced(await store.incrementProgress(fence));
     schedulePartialPublish();
   });
@@ -284,11 +295,24 @@ async function writeMissingBatches(
   return results;
 }
 
+// Finalize a single batch's pending image blocks in place, preserving order.
+// Returns the batch unchanged when it has no images (the common case), so
+// non-image batches never touch the imaging path.
+async function finalizeBatchImages(
+  compiled: CompiledBatchBlock[],
+  imaging: FinalizeImageOptions,
+): Promise<CompiledBatchBlock[]> {
+  if (!compiled.some((entry) => isPendingImageBlock(entry.block))) return compiled;
+  const finalized = await finalizeImageBlocks(compiled.map((entry) => entry.block), imaging);
+  return compiled.map((entry, index) => ({ order: entry.order, block: finalized[index] }));
+}
+
 // Longest in-order prefix of ready blocks safe to publish early. Walks the full
 // planned order sequence and stops at the first order not yet generated (a gap
-// from a still-running batch) or the first pending image block (unresolved until
-// the imaging stage and not persistable) — so a progressive publish is always a
-// contiguous, image-safe run from the start of the lesson.
+// from a still-running batch). Batches finalize their own images before entering
+// `results`, so image blocks here are already ready/error; the pending-image guard
+// is a defensive stop against any unresolved (non-persistable) image — keeping a
+// progressive publish a contiguous, image-safe run from the start of the lesson.
 function readyBlockPrefix(byKey: Map<string, CompiledBatchBlock[]>, expectedOrders: number[]): CourseBlock[] {
   const byOrder = new Map<number, CourseBlock>();
   for (const list of byKey.values()) for (const entry of list) byOrder.set(entry.order, entry.block);
