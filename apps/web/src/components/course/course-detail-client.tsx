@@ -139,7 +139,7 @@ const POPUP_PRIMARY_BTN: React.CSSProperties = {
   cursor: "pointer",
 };
 
-// Post-lesson recommendation popup (feature_specification.md §28–30). After a
+// Post-lesson recommendation popup (docs/product/feature_specification.md §28–30). After a
 // lesson is completed, the learning-progress worker records a next-step decision.
 // The popup has three shapes by decision kind:
 //   • remediation — offer to generate a remediation lesson ("是", stays open and
@@ -426,7 +426,7 @@ export function CourseDetailClient({
   const readerProgress = totalSteps > 0 ? (currentStep / totalSteps) * 100 : 0;
 
   // Preload only the immediately-next outline lesson while this lesson is open
-  // (feature_specification.md §28). Preloading must not make the next lesson's
+  // (docs/product/feature_specification.md §28). Preloading must not make the next lesson's
   // blocks visible on the current lesson page.
   const prewarmedRef = useRef<Set<string>>(new Set());
   useEffect(() => {

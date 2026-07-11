@@ -386,7 +386,7 @@ export const learningProgressJobs = pgTable(
   }),
 );
 
-// Per-user concept mastery (feature_specification.md §156). Second memory layer:
+// Per-user concept mastery (docs/product/feature_specification.md §156). Second memory layer:
 // concept-level state only, no chat summaries. Drives skip / quick-review /
 // remediation decisions. Written owner-scoped from the learning-progress worker
 // (no request session). The migration creates it idempotently because this table
@@ -443,7 +443,7 @@ export const mediaAssets = pgTable(
   }),
 );
 
-// Core memory layer (feature_specification.md §101): distilled "facts about the
+// Core memory layer (docs/product/feature_specification.md §101): distilled "facts about the
 // learner" produced by the Extractor Agent from learning_events. One row per
 // fact. `category` routes consumption (preference/prior_knowledge/learning_gap
 // feed the lesson Planner + tutor; goal is long-term profile only). `status`

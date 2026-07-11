@@ -2,7 +2,7 @@
 // Classic Web Worker that executes user code. Python runs on Pyodide (loaded
 // from CDN on first use); JavaScript runs in-worker with console capture.
 // The main thread (index.ts) owns the 5s timeout and terminates this worker on
-// timeout. See temple/code_block_execution.md §4.
+// timeout.
 //
 // NOTE: bundled by Next as a worker. Keep imports to the shared types only.
 import type { OutputChunk, RunResult, WorkerRequest, WorkerResponse } from "./types";

@@ -1,6 +1,6 @@
 // Main-thread entry for the in-browser code runner. Owns a singleton worker
 // (Pyodide stays warm across runs on the same page) and a hard 5s timeout that
-// terminates the worker to kill infinite loops. See temple/code_block_execution.md §4.
+// terminates the worker to kill infinite loops.
 import type { RunnableLanguage, RunPhase, RunResult, WorkerRequest, WorkerResponse } from "./types";
 
 export type { RunResult, OutputChunk, RunnableLanguage, RunPhase } from "./types";

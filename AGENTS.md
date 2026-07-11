@@ -60,6 +60,8 @@ Write new tests as native vitest `tests/*.spec.ts` files; do not add new self-ex
 ```
 apps/web/     Next.js app — UI, API routes, DB, CopilotKit integration
 apps/agent/   LangGraph agent — serves the primoria_tutor graph
+data/knowledge-graphs/source/  Committed KG source JSON files and sidecars
+data/knowledge-graphs/generated/  Exported generated graph candidates awaiting review/promotion
 ```
 
 ### AI Tutor path
@@ -104,7 +106,7 @@ In the main AI Tutor, course creation starts with the `position_learning_goal` t
 
 ### Route auth policy
 
-Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared by the proxy and pages — do not add a second public-path list. `/` resolves by session: signed-in visitors enter onboarding or the app home, while signed-out visitors see the landing page. `/welcome` remains a direct public landing URL, and sign-out lands there.
+Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared by the proxy and pages — do not add a second public-path list. `/welcome` is the public landing page. `/` is the signed-in app home and redirects signed-out visitors through `/login`; sign-out lands on `/welcome`.
 
 ### DB
 

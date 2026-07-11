@@ -28,6 +28,9 @@ This is a pnpm monorepo:
 - `apps/agent` - LangGraph/deepagents tutor runtime serving the `primoria_tutor` graph.
 - `packages/contracts` - shared artifact, chat, and stream contracts.
 - `packages/memory` - optional memory-provider package integration.
+- `data/knowledge-graphs/source` - committed source-of-truth KG JSON files and sidecars.
+- `data/knowledge-graphs/generated` - exported generated graph candidates awaiting review/promotion.
+- `docs` - current product, KG, UX, and implementation notes. Task reports and old handoff notes are not kept as project docs.
 
 ## Prerequisites
 
