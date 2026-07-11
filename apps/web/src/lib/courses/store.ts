@@ -2,7 +2,7 @@ import { and, desc, eq, inArray, isNull, notInArray } from "drizzle-orm";
 import type { CodeBlock, Course, CourseBlock, CourseSummary, Lesson, LessonProgress, LessonRole, LessonStatus } from "./types";
 import { summarizeCourse } from "./types";
 import { getCurrentUser } from "../auth/session";
-import { getDb, hasDatabaseUrl } from "../db/client";
+import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { courses as coursesTable, lessons as lessonsTable } from "../db/schema";
 
 export async function saveCourse(course: Course, ownerId?: string | null): Promise<Course> {
@@ -253,8 +253,9 @@ export async function markLessonProgress(
   lessonId: string,
   ownerId: string,
   progress: LessonProgress,
+  db: DbOrTx = getDb(),
 ): Promise<void> {
-  await getDb()
+  await db
     .update(lessonsTable)
     .set({ progress, updatedAt: new Date() })
     .where(and(eq(lessonsTable.id, lessonId), eq(lessonsTable.courseId, courseId), eq(lessonsTable.ownerId, ownerId)));

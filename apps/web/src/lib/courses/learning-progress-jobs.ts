@@ -1,6 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { and, eq, sql } from "drizzle-orm";
-import { getDb, hasDatabaseUrl } from "../db/client";
+import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { learningProgressJobs } from "../db/schema";
 import type { GenerationErrorCategory } from "../ai/course-generation/generation-errors";
 import type { LearningDecision } from "./learning-progress-decider";
@@ -94,15 +94,18 @@ function requireDatabase() {
 
 // ── Enqueue ────────────────────────────────────────────────────────────────
 
-/** Idempotently enqueue (or re-run) one orchestration job per lesson. */
+/** Idempotently enqueue (or re-run) one orchestration job per lesson. When a
+ * transaction handle is passed, the enqueue joins the caller's transaction so
+ * evidence writes and the job commit or roll back together. */
 export async function enqueueLearningProgressJob(
   input: EnqueueLearningProgressJobInput,
+  db?: DbOrTx,
 ): Promise<EnqueueLearningProgressJobResult> {
   requireDatabase();
   const { ownerId, courseId, lessonId, graphId } = input;
   if (!ownerId || !courseId || !lessonId) throw new Error("ownerId, courseId and lessonId are required to enqueue a progress job.");
 
-  return getDb().transaction(async (tx) => {
+  const run = async (tx: DbOrTx): Promise<EnqueueLearningProgressJobResult> => {
     const existingRows = await tx.select().from(learningProgressJobs).where(eq(learningProgressJobs.lessonId, lessonId)).for("update");
     const existing = existingRows[0] ? rowToJob(existingRows[0]) : null;
     const now = new Date();
@@ -153,7 +156,9 @@ export async function enqueueLearningProgressJob(
       })
       .returning();
     return { kind: "queued", job: rowToJob(rows[0]) };
-  });
+  };
+
+  return db ? run(db) : getDb().transaction(run);
 }
 
 // ── Claim & lease ────────────────────────────────────────────────────────────

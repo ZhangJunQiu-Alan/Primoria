@@ -17,11 +17,11 @@ const AnswerSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("truefalse"), questionId: z.string(), selected: z.boolean() }),
 ]);
 
+// score/total are computed server-side from the course's quiz block — the
+// client never supplies them (a client-sent score would be unverifiable).
 const RequestSchema = z.object({
   blockId: z.string(),
   answers: z.array(AnswerSchema),
-  score: z.number().int().min(0),
-  total: z.number().int().min(1),
 });
 
 type SubmittedAnswer = z.infer<typeof AnswerSchema>;
@@ -59,94 +59,134 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     if (denied) return denied;
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    // Resolve the lesson owning this quiz block so the attempt and per-question
-    // events can be aggregated per lesson during distillation.
+    // Resolve the quiz block from the owner's course. An attempt is only valid
+    // against a real quiz block — unknown course/block never writes anything.
     const course = await getCourse(courseId, user.id);
-    const lesson = course?.lessons.find((l) => l.blocks?.some((b) => b.id === body.blockId));
-    const lessonId = lesson?.id ?? null;
+    if (!course) {
+      return NextResponse.json({ error: "Course not found.", code: "not_found" }, { status: 404 });
+    }
+    const lesson = course.lessons.find((l) => l.blocks?.some((b) => b.id === body.blockId));
     const block = lesson?.blocks?.find((b) => b.id === body.blockId);
-    const questions = block && block.type === "quiz" ? block.questions : [];
+    if (!lesson || !block || block.type !== "quiz") {
+      return NextResponse.json({ error: "Quiz block not found.", code: "not_found" }, { status: 404 });
+    }
+    const lessonId = lesson.id;
+    const questions = block.questions;
+    if (questions.length === 0) {
+      return NextResponse.json({ error: "Quiz block has no questions.", code: "invalid_request" }, { status: 400 });
+    }
 
-    const db = getDb();
-    const attemptId = randomId();
-    await db.insert(quizAttempts).values({
-      id: attemptId,
-      ownerId: user.id,
-      courseId,
-      lessonId,
-      blockId: body.blockId,
-      answers: body.answers,
-      score: body.score,
-      total: body.total,
-    });
-
-    // One learning_event per question so each row's concept attribution stays
-    // clean (concept_id left null until quiz questions carry concept tags).
+    // Every submitted answer must target a distinct, existing question.
+    const questionById = new Map(questions.map((q) => [q.id, q]));
+    const seen = new Set<string>();
     for (const answer of body.answers) {
-      const question = questions.find((q) => q.id === answer.questionId);
-      if (!question) continue;
-      const { selected, isCorrect } = gradeAnswer(question, answer);
-      await recordLearningEvent({
-        type: "quiz.submit",
+      if (!questionById.has(answer.questionId) || seen.has(answer.questionId)) {
+        return NextResponse.json({ error: "Unknown or duplicate quiz question.", code: "invalid_request" }, { status: 400 });
+      }
+      seen.add(answer.questionId);
+    }
+
+    // Server-authoritative grading: score/total derive from the block's
+    // questions; unanswered questions count as incorrect.
+    const graded = body.answers.map((answer) => ({
+      answer,
+      ...gradeAnswer(questionById.get(answer.questionId)!, answer),
+    }));
+    const score = graded.filter((g) => g.isCorrect).length;
+    const total = questions.length;
+
+    const attemptId = randomId();
+    let lessonCompleted = false;
+
+    // One transaction: attempt row, per-question evidence, implicit lesson
+    // completion, and the progress-job enqueue commit or roll back together —
+    // the worker can never observe an attempt without its evidence, or a
+    // completed lesson without its job.
+    await getDb().transaction(async (tx) => {
+      await tx.insert(quizAttempts).values({
+        id: attemptId,
         ownerId: user.id,
-        id: `${attemptId}__${answer.questionId}`,
         courseId,
         lessonId,
         blockId: body.blockId,
-        conceptId: question.conceptId ?? null,
-        questionId: answer.questionId,
-        selected,
-        isCorrect,
+        answers: body.answers,
+        score,
+        total,
       });
-    }
 
-    // Implicit lesson completion: once every end-of-lesson quiz block has an
-    // attempt, record lesson.completed (deduped by deterministic id) and enqueue
-    // the learning-progress orchestration job (idempotent on lessonId).
-    if (lessonId && lesson) {
+      // One learning_event per question so each row's concept attribution stays
+      // clean (concept_id left null until quiz questions carry concept tags).
+      for (const { answer, selected, isCorrect } of graded) {
+        const question = questionById.get(answer.questionId)!;
+        await recordLearningEvent(
+          {
+            type: "quiz.submit",
+            ownerId: user.id,
+            id: `${attemptId}__${answer.questionId}`,
+            courseId,
+            lessonId,
+            blockId: body.blockId,
+            conceptId: question.conceptId ?? null,
+            questionId: answer.questionId,
+            selected,
+            isCorrect,
+          },
+          tx,
+        );
+      }
+
+      // Implicit lesson completion: once every end-of-lesson quiz block has an
+      // attempt, record lesson.completed (deduped by deterministic id) and
+      // enqueue the learning-progress orchestration job (idempotent on lessonId).
       const quizBlockIds = (lesson.blocks ?? []).filter((b) => b.type === "quiz").map((b) => b.id);
-      if (quizBlockIds.length > 0) {
-        const attempted = await db
-          .selectDistinct({ blockId: quizAttempts.blockId })
-          .from(quizAttempts)
-          .where(and(eq(quizAttempts.ownerId, user.id), eq(quizAttempts.lessonId, lessonId)));
-        const answered = new Set(attempted.map((row) => row.blockId));
-        const complete = quizBlockIds.every((blockId) => answered.has(blockId));
-        if (complete) {
-          // Advance the resume pointer: a completed lesson is no longer the
-          // course's first non-completed lesson, so Continue moves to the next.
-          await markLessonProgress(courseId, lessonId, user.id, "completed");
-          await recordLearningEvent({
+      const attempted = await tx
+        .selectDistinct({ blockId: quizAttempts.blockId })
+        .from(quizAttempts)
+        .where(and(eq(quizAttempts.ownerId, user.id), eq(quizAttempts.lessonId, lessonId)));
+      const answered = new Set(attempted.map((row) => row.blockId));
+      const complete = quizBlockIds.every((blockId) => answered.has(blockId));
+      if (complete) {
+        // Advance the resume pointer: a completed lesson is no longer the
+        // course's first non-completed lesson, so Continue moves to the next.
+        await markLessonProgress(courseId, lessonId, user.id, "completed", tx);
+        await recordLearningEvent(
+          {
             type: "lesson.completed",
             ownerId: user.id,
             id: `lesson_completed_${lessonId}`,
             courseId,
             lessonId,
-            graphId: course?.graphId ?? null,
-          });
-          await enqueueLearningProgressJob({
+            graphId: course.graphId ?? null,
+          },
+          tx,
+        );
+        await enqueueLearningProgressJob(
+          {
             ownerId: user.id,
             courseId,
             lessonId,
-            graphId: course?.graphId ?? null,
-          }).catch((error) => {
-            console.error("[courses/quiz] failed to enqueue progress job", error);
-          });
-          // Independent best-effort: distill durable learner facts from this
-          // lesson's activity. Never blocks the response or the progress job.
-          await enqueueExtractorJob({
-            ownerId: user.id,
-            courseId,
-            lessonId,
-            graphId: course?.graphId ?? null,
-          }).catch((error) => {
-            console.error("[courses/quiz] failed to enqueue extractor job", error);
-          });
-        }
+            graphId: course.graphId ?? null,
+          },
+          tx,
+        );
+        lessonCompleted = true;
       }
+    });
+
+    // Independent best-effort: distill durable learner facts from this lesson's
+    // activity. Runs after commit and never blocks the response.
+    if (lessonCompleted) {
+      await enqueueExtractorJob({
+        ownerId: user.id,
+        courseId,
+        lessonId,
+        graphId: course.graphId ?? null,
+      }).catch((error) => {
+        console.error("[courses/quiz] failed to enqueue extractor job", error);
+      });
     }
 
-    return NextResponse.json({ ok: true, persisted: true });
+    return NextResponse.json({ ok: true, persisted: true, score, total });
   } catch (error) {
     const safe = toSafeAuthError(error, "courses-quiz", "Failed to save quiz attempt.");
     return NextResponse.json(safe.body, { status: safe.status });

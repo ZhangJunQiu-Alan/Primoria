@@ -1,11 +1,14 @@
-import { getDb, hasDatabaseUrl } from "@/lib/db/client";
+import { getDb, hasDatabaseUrl, type DbOrTx } from "@/lib/db/client";
 import { learningEvents } from "@/lib/db/schema";
 
 // Append-only raw evidence stream. Each row is one user action; heavy payloads
 // (chat content, full quiz answers) stay in their own tables and are referenced
-// by pointer here. Recording is best-effort and must never break the primary
-// action — failures are logged and swallowed. `id` may be supplied by the caller
-// (frontend-generated) so a retried action only counts once.
+// by pointer here. Without a `db` handle, recording is best-effort and must
+// never break the primary action — failures are logged and swallowed. When the
+// caller passes a transaction handle, the event is authoritative evidence and
+// errors propagate so the surrounding transaction rolls back. `id` may be
+// supplied by the caller (frontend-generated) so a retried action only counts
+// once.
 
 export type QuizSelected = string | string[] | boolean;
 
@@ -174,8 +177,14 @@ export function toRow(event: LearningEvent): LearningEventRow {
   }
 }
 
-export async function recordLearningEvent(event: LearningEvent): Promise<void> {
+export async function recordLearningEvent(event: LearningEvent, db?: DbOrTx): Promise<void> {
   if (!hasDatabaseUrl()) return;
+  // Transactional path: the caller owns atomicity — do not swallow, a failed
+  // evidence write must roll back the whole transaction.
+  if (db) {
+    await db.insert(learningEvents).values(toRow(event)).onConflictDoNothing({ target: learningEvents.id });
+    return;
+  }
   try {
     const row = toRow(event);
     await getDb().insert(learningEvents).values(row).onConflictDoNothing({ target: learningEvents.id });
