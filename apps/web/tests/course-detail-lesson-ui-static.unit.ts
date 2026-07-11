@@ -67,6 +67,8 @@ function main() {
   assert(detail.includes("router.push(`/course/${course.id}/outline`)"), "reader close and Done return to the course outline");
   assert(detail.includes("isPracticeBlock(currentBlock)"), "reader reserves Check behavior for practice blocks");
   assert(detail.includes("course-quiz-submit:not(:disabled)") && detail.includes("worksheet-reveal-btn"), "reader Check delegates to existing quiz and worksheet controls");
+  assert(detail.includes("contentLanguage={course.language}"), "reader passes persisted course language to block chrome");
+  assert(detail.includes("course-reader-card-quiz"), "quiz steps can remove the redundant outer reader card chrome");
   assert(detail.includes("const [sidebarCollapsed, setSidebarCollapsed] = useState(true)"), "Course Tutor AI rail starts collapsed by default");
   assert(styles.includes("--course-collapsed-sidebar-width"), "Course Tutor collapsed rail uses CSS-owned responsive width");
   assert(detail.includes("CourseAICollapsedRail") && courseAi.includes("if (collapsed) onCollapsedChange(false);"), "clicking the collapsed AI rail expands Course Tutor");
@@ -98,6 +100,10 @@ function main() {
   assert(blockRenderer.includes("CourseVisualFrame"), "visual blocks render inside a clean course visual shell");
   assert(blockRenderer.includes('data-course-interactive="true"'), "visual blocks mark their canvas as interactive");
   assert(blockRenderer.includes('variant="course"'), "course visual renderers suppress their internal tool-card title bars");
+  assert(blockRenderer.includes('<WidgetRenderer variant="course"'), "HTML course visuals suppress widget export controls");
+  assert(!blockRenderer.includes("提交答案"), "quiz does not render a second visible submit action");
+  assert(blockRenderer.includes("quizCopyFor(contentLanguage)"), "quiz labels follow the generated course language");
+  assert(/\.course-quiz-submit\s*{[^}]*position:\s*absolute;[^}]*clip-path:\s*inset\(50%\);/s.test(styles), "quiz keeps only an invisible submit target for the reader Check button");
 
   assert(!styles.includes(".course-block-learning-actions"), "styles no longer include the removed block action tray");
   assert(!styles.includes(".course-block-action-panel"), "styles no longer include the removed bottom action panel");
@@ -109,6 +115,8 @@ function main() {
   assert(styles.includes("grid-template-rows: 96px minmax(0, 1fr) 118px"), "course reader reserves top progress, content, and bottom controls");
   assert(styles.includes(".course-reader-card .course-block"), "reader card keeps BlockRenderer responsible for the block body");
   assert(styles.includes("@keyframes course-reader-card-in"), "reader step changes have a restrained entrance transition");
+  assert(styles.includes("padding: clamp(28px, 3.4vw, 48px)"), "reader content starts at a normal distance from the card edge");
+  assert(!styles.includes("radial-gradient(circle at 44% 100%"), "reader controls share the same continuous background as the stage");
   assert(styles.includes(".course-ai-sidebar.collapsed .course-ai-collapse"), "collapsed AI rail has dedicated affordance styling");
   assert(styles.includes("cursor: pointer;"), "collapsed AI rail signals that the whole strip can be opened");
   assert(!styles.includes("min-width: 30px;"), "empty reader progress does not force a visible orange segment");

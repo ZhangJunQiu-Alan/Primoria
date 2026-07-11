@@ -49,6 +49,7 @@ type WidgetRendererProps = {
   html: string;
   dependencies?: { url: string; global?: string; kind?: "script" | "module" | "style" }[];
   onSendPrompt?: (prompt: string) => void;
+  variant?: RendererVariant;
 };
 
 const MindMapBlockRenderer = dynamic<MindMapBlockRendererProps>(
@@ -127,10 +128,12 @@ export function BlockRenderer({
   block,
   courseId,
   onBlockUpdated,
+  contentLanguage,
 }: {
   block: CourseBlock;
   courseId?: string;
   onBlockUpdated?: (block: CourseBlock) => void;
+  contentLanguage?: string | null;
 }) {
   if (block.type === "text") return <TextBlockView block={block} />;
   if (block.type === "analogy") return <AnalogyBlockView block={block} />;
@@ -138,7 +141,7 @@ export function BlockRenderer({
   if (block.type === "visual") return <VisualBlockView block={block} />;
   if (block.type === "image") return <ImageBlockView block={block} />;
   if (block.type === "code") return <CodeBlockView block={block} courseId={courseId} onBlockUpdated={onBlockUpdated} />;
-  if (block.type === "quiz") return <QuizBlockView block={block} courseId={courseId} />;
+  if (block.type === "quiz") return <QuizBlockView block={block} courseId={courseId} contentLanguage={contentLanguage} />;
   if (block.type === "mind_map") return <MindMapBlockView block={block} courseId={courseId} />;
   if (block.type === "slide") return <SlideBlockView block={block} />;
   if (block.type === "worksheet") return <WorksheetBlockView block={block} />;
@@ -286,7 +289,7 @@ function VisualBlockView({ block }: { block: VisualBlock }) {
     <BlockShell kind="visual" title={block.title}>
       <CourseMarkdown markdown={block.description} className="course-block-text course-visual-caption" />
       <CourseVisualFrame>
-        <WidgetRenderer title={block.title ?? "Visual"} description={block.description} html={block.html ?? ""} />
+        <WidgetRenderer variant="course" title={block.title ?? "Visual"} description={block.description} html={block.html ?? ""} />
       </CourseVisualFrame>
     </BlockShell>
   );
@@ -444,7 +447,37 @@ function isCorrect(q: QuizQuestion, sel: string | string[] | boolean | undefined
   return sel === q.correct;
 }
 
-function QuizBlockView({ block, courseId }: { block: QuizBlock; courseId?: string }) {
+const QUIZ_COPY = {
+  en: {
+    single: "Single choice",
+    multi: "Multiple choice",
+    truefalse: "True or false",
+    correct: "Correct",
+    incorrect: "Incorrect",
+    score: "Score",
+    allCorrect: "All correct!",
+    true: "True",
+    false: "False",
+  },
+  zh: {
+    single: "单选",
+    multi: "多选",
+    truefalse: "判断",
+    correct: "正确",
+    incorrect: "错误",
+    score: "得分",
+    allCorrect: "全部正确！",
+    true: "正确",
+    false: "错误",
+  },
+} as const;
+
+function quizCopyFor(language?: string | null) {
+  return language?.toLowerCase().startsWith("zh") ? QUIZ_COPY.zh : QUIZ_COPY.en;
+}
+
+function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock; courseId?: string; contentLanguage?: string | null }) {
+  const copy = quizCopyFor(contentLanguage);
   const [state, setState] = useState<QuizState>({
     phase: "answering",
     selections: {},
@@ -494,20 +527,24 @@ function QuizBlockView({ block, courseId }: { block: QuizBlock; courseId?: strin
             selection={state.selections[q.id]}
             submitted={state.phase === "submitted"}
             onSelect={setSelection}
+            copy={copy}
           />
         ))}
         {state.phase === "answering" ? (
           <button
             className="course-quiz-submit"
+            type="button"
             disabled={!allAnswered}
             onClick={handleSubmit}
+            tabIndex={-1}
+            aria-hidden="true"
           >
-            提交答案
+            Check
           </button>
         ) : (
           <div className="course-quiz-score">
-            得分：{state.score} / {block.questions.length}
-            {state.score === block.questions.length ? " 🎉 全部正确！" : ""}
+            {copy.score}: {state.score} / {block.questions.length}
+            {state.score === block.questions.length ? ` ${copy.allCorrect}` : ""}
           </div>
         )}
       </div>
@@ -521,12 +558,14 @@ function QuestionView({
   selection,
   submitted,
   onSelect,
+  copy,
 }: {
   index: number;
   question: QuizQuestion;
   selection: string | string[] | boolean | undefined;
   submitted: boolean;
   onSelect: (id: string, value: string | string[] | boolean) => void;
+  copy: (typeof QUIZ_COPY)[keyof typeof QUIZ_COPY];
 }) {
   const correct = submitted ? isCorrect(question, selection) : null;
 
@@ -535,11 +574,11 @@ function QuestionView({
       <div className="course-quiz-q-header">
         <span className="course-quiz-q-index">{index + 1}</span>
         <span className="course-quiz-q-kind">
-          {question.kind === "single" ? "单选" : question.kind === "multi" ? "多选" : "判断"}
+          {question.kind === "single" ? copy.single : question.kind === "multi" ? copy.multi : copy.truefalse}
         </span>
         {submitted && (
           <span className={`course-quiz-q-result ${correct ? "correct" : "wrong"}`}>
-            {correct ? "✓ 正确" : "✗ 错误"}
+            {correct ? `✓ ${copy.correct}` : `✗ ${copy.incorrect}`}
           </span>
         )}
       </div>
@@ -567,6 +606,8 @@ function QuestionView({
           selected={typeof selection === "boolean" ? selection : undefined}
           submitted={submitted}
           onSelect={(val) => onSelect(question.id, val)}
+          trueLabel={copy.true}
+          falseLabel={copy.false}
         />
       )}
 
@@ -652,11 +693,15 @@ function TrueFalseView({
   selected,
   submitted,
   onSelect,
+  trueLabel,
+  falseLabel,
 }: {
   question: TrueFalseQuestion;
   selected: boolean | undefined;
   submitted: boolean;
   onSelect: (val: boolean) => void;
+  trueLabel: string;
+  falseLabel: string;
 }) {
   return (
     <div className="course-quiz-choices course-quiz-truefalse">
@@ -671,7 +716,7 @@ function TrueFalseView({
             className={`course-quiz-choice ${isSelected ? "selected" : ""} ${isCorrectChoice ? "correct" : ""} ${isWrongSelection ? "wrong" : ""}`}
             onClick={() => onSelect(val)}
           >
-            {val ? "正确 ✓" : "错误 ✗"}
+            {val ? `${trueLabel} ✓` : `${falseLabel} ✗`}
           </button>
         );
       })}
