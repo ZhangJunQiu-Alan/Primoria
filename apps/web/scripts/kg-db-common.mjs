@@ -14,8 +14,8 @@ export const DEFAULT_OPENAI_MODEL_VERSION = "openai:text-embedding-3-small:1536"
 export const DEFAULT_OPENAI_EMBEDDING_MODEL = "text-embedding-3-small";
 export const DEFAULT_MINIMAX_MODEL_VERSION = "minimax:embo-01:1536";
 export const DEFAULT_MINIMAX_EMBEDDING_MODEL = "embo-01";
-export const TEMPLE_DIR = resolve(REPO_ROOT, "temple");
-// temple/*.json that are not subject graphs (cross edges, label sidecar, etc.)
+export const KG_SOURCE_DIR = resolve(REPO_ROOT, "data/knowledge-graphs/source");
+// data/knowledge-graphs/source/*.json that are not subject graphs (cross edges, label sidecar, etc.)
 const NON_GRAPH_FILES = new Set(["cross_subject_edges.json", "kg_zh_labels.json"]);
 
 function isGraphJsonFile(file) {
@@ -71,23 +71,23 @@ export function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
 }
 
-// graph_id maps directly to temple/<graph_id>.json
+// graph_id maps directly to data/knowledge-graphs/source/<graph_id>.json
 export function graphPath(graphId = DEFAULT_GRAPH_ID) {
-  const path = resolve(TEMPLE_DIR, `${graphId}.json`);
+  const path = resolve(KG_SOURCE_DIR, `${graphId}.json`);
   if (!existsSync(path)) throw new Error(`No source JSON for graph_id=${graphId} (${path})`);
   return path;
 }
 
-// All subject-graph ids = temple/*.json minus the non-graph sidecars.
+// All subject-graph ids = data/knowledge-graphs/source/*.json minus the non-graph sidecars.
 export function listGraphIds() {
-  return readdirSync(TEMPLE_DIR)
+  return readdirSync(KG_SOURCE_DIR)
     .filter(isGraphJsonFile)
     .map((f) => basename(f, ".json"))
     .sort();
 }
 
 export function crossEdgesPath() {
-  return resolve(TEMPLE_DIR, "cross_subject_edges.json");
+  return resolve(KG_SOURCE_DIR, "cross_subject_edges.json");
 }
 
 export function aliasPath(graphId = DEFAULT_GRAPH_ID) {

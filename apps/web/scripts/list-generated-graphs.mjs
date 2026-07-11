@@ -3,9 +3,9 @@
 // 沉淀机制 review tooling for generated_topic_graphs.
 //
 //   node scripts/list-generated-graphs.mjs            # candidates ranked by demand
-//   node scripts/list-generated-graphs.mjs <graphId>  # export one graph JSON to temple/generated/
+//   node scripts/list-generated-graphs.mjs <graphId>  # export one graph JSON to data/knowledge-graphs/generated/
 //
-// Promotion path: review the exported JSON, convert it into a temple/*.json
+// Promotion path: review the exported JSON, convert it into a data/knowledge-graphs/source/*.json
 // subject graph (build-topic-graph.mjs input), run the normal seed + embedding
 // pipeline, then set status='promoted' on the row so routing prefers the
 // formal library copy.
@@ -47,7 +47,7 @@ async function main() {
       [arg],
     );
     if (rows.length === 0) throw new Error(`generated graph not found: ${arg}`);
-    const dir = resolve(REPO_ROOT, "temple/generated");
+    const dir = resolve(REPO_ROOT, "data/knowledge-graphs/generated");
     mkdirSync(dir, { recursive: true });
     const path = resolve(dir, `topic-graph.${arg}.json`);
     writeFileSync(path, `${JSON.stringify(rows[0].graph, null, 2)}\n`);

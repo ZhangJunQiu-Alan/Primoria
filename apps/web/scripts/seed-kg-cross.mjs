@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Seed cross-subject prerequisite edges (from_graph_id != to_graph_id) from
-// temple/cross_subject_edges.json into public.knowledge_graph_edges.
+// data/knowledge-graphs/source/cross_subject_edges.json into public.knowledge_graph_edges.
 // Must run AFTER all subject graphs are seeded (FKs reference both endpoints).
 
 import { createPgClient, crossEdgesPath, readJson, withTransaction } from "./kg-db-common.mjs";

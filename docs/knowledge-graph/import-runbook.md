@@ -1,4 +1,9 @@
-# 定义（给AI看的内容）
+# Knowledge Graph Import Runbook
+
+Current source of truth: KG source JSON files live in
+`data/knowledge-graphs/source/`. Generated graph candidates awaiting review live
+in `data/knowledge-graphs/generated/`. Runtime topic DAG artifacts are generated
+under `apps/web/src/lib/knowledge-graph/data/`.
 
 ## KG 质量评估方向
 
@@ -23,10 +28,10 @@
 
 前置：脚本在 `apps/web/scripts/`，DB 表为 `knowledge_graphs / _topics / _concepts / _edges`(+embeddings)。
 
-1. **过门禁**：`python3 temple/validate_kg.py` 全绿；spec 构建的图最后跑 `enrich_manual.py` 补描述。
-2. **让脚本能读到 JSON**：现有 `kg-db-common.mjs graphPath()` 与 `build-topic-graph.mjs` 写死 calculus 单图，需改成按 `graph_id → temple/<file>.json` 映射。
+1. **过门禁**：`python3 scripts/validate_kg.py` 全绿；spec 构建的图最后跑 `enrich_manual.py` 补描述。
+2. **放入 source 目录**：新增或更新 `data/knowledge-graphs/source/<graph_id>.json`；`kg-db-common.mjs graphPath()` 会按 `graph_id` 读取同名 JSON。
 3. **建表**：`pnpm db:migrate:kg`（已建则跳过）。
-4. **导入图**：`pnpm db:seed:kg <graph_id>`（upsert 节点/边，并删除该图中已移除的行）。旧 Calculus 用 `delete from knowledge_graph_* where graph_id='calculus_single_variable_v1'` 清掉，新图用新 graph_id 导入。
+4. **导入图**：`pnpm db:seed:kg <graph_id>`（upsert 节点/边，并删除该图中已移除的行）。
 5. **跨学科边**：`seed-kg` 只写同图边；`cross_subject_edges.json`(from≠to graph) 要单独插入 `knowledge_graph_edges`。
 6. **嵌入**：`pnpm db:seed:kg-embeddings <graph_id>`（需 OpenAI text-embedding-3-small，供定位/RAG）。
 7. **topic 派生件**：`pnpm build:topic-graph <graph_id>` → `src/lib/knowledge-graph/data/topic-graph.<id>.json`（入口分类/下一 topic）。

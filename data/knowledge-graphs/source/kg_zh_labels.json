@@ -1,6 +1,6 @@
 {
   "generated_at": "2026-06-23T14:04:29.290Z",
-  "source": "display labels for temple KG nodes; topic labels aligned with regrouped source KG",
+  "source": "display labels for source KG nodes; topic labels aligned with regrouped source KG",
   "labels": {
     "topic_intro": "函数与控制",
     "expr_stmt": "表达式与语句",

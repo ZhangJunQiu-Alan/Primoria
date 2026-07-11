@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""硬门禁校验：对 temple/*.json 的 KG 跑 5 道门禁，输出通过表。"""
+"""硬门禁校验：对 data/knowledge-graphs/source/*.json 的 KG 跑 5 道门禁，输出通过表。"""
 import json, glob, os, sys
 from collections import defaultdict, deque
 
 SKIP = {"cross_subject_edges.json", "kg_zh_labels.json"}
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+KG_SOURCE_DIR = os.path.join(REPO_ROOT, "data", "knowledge-graphs", "source")
 
 # concept 可视化亲和标注（可选；缺省 = none = 不强制 visual 块）。
 # 取值映射到 course visual 引擎：interactive→html, simulation→physics,
@@ -13,7 +15,7 @@ VISUAL_ENUM = {"interactive", "simulation", "algorithm", "function", "chart", "d
 
 def load_graphs():
     graphs = {}
-    for path in sorted(glob.glob(os.path.join(os.path.dirname(__file__), "*.json"))):
+    for path in sorted(glob.glob(os.path.join(KG_SOURCE_DIR, "*.json"))):
         name = os.path.basename(path)
         if name in SKIP or name.endswith("_source_map.json"):
             continue

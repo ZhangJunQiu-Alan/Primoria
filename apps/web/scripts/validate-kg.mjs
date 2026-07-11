@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Source-of-truth KG validator. Reads temple/*.json directly (no DB) and gates
+// Source-of-truth KG validator. Reads data/knowledge-graphs/source/*.json directly (no DB) and gates
 // the localization contract: every topic/concept node must carry a non-empty
 // name (English) and name_zh (Chinese), and every reference (concept->topic,
 // edge from/to) must resolve. Skips non-graph sidecars (cross edges, label file).

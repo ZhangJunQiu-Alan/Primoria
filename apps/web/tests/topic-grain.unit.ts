@@ -19,15 +19,15 @@ function formatCounts(counts: Map<number, number>) {
     .join(", ");
 }
 
-function validateSourceTopics(templeDir: string) {
+function validateSourceTopics(sourceDir: string) {
   const failures: string[] = [];
   const counts = new Map<number, number>();
-  const files = readdirSync(templeDir).filter(
+  const files = readdirSync(sourceDir).filter(
     (file) => file.endsWith(".json") && !["cross_subject_edges.json", "kg_zh_labels.json"].includes(file),
   );
 
   for (const file of files) {
-    const json = JSON.parse(readFileSync(join(templeDir, file), "utf8")) as {
+    const json = JSON.parse(readFileSync(join(sourceDir, file), "utf8")) as {
       nodes?: Array<{ id?: string; kind?: string; topic?: string | null }>;
     };
     const nodes = json.nodes ?? [];
@@ -78,7 +78,7 @@ async function main() {
   const appRoot = join(testsDir, "..");
   const repoRoot = join(appRoot, "..", "..");
 
-  const sourceCounts = validateSourceTopics(join(repoRoot, "temple"));
+  const sourceCounts = validateSourceTopics(join(repoRoot, "data/knowledge-graphs/source"));
   const generatedCounts = validateGeneratedTopics(join(appRoot, "src/lib/knowledge-graph/data"));
 
   process.stdout.write(
