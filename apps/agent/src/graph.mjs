@@ -1,5 +1,5 @@
 import { tool } from "@langchain/core/tools";
-import { Annotation, MemorySaver, getConfig } from "@langchain/langgraph";
+import { MemorySaver, getConfig } from "@langchain/langgraph";
 import { ChatOpenAI } from "@langchain/openai";
 import { ChatAnthropic } from "@langchain/anthropic";
 import { createDeepAgent, FilesystemBackend } from "deepagents";
@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import { WIDGET_STYLE_PROMPT } from "@primoria/contracts/visual-style";
 import { getCourse } from "./course-store.mjs";
 import { courseBlocks, summarizeCourse } from "./course-types.mjs";
+import { trimAgentHistory } from "./context-trim.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -505,22 +506,14 @@ function getRuntimeOwnerId(runtime) {
     ?? null;
 }
 
+// One zod schema for middleware state and agent context. langchain v1
+// middleware/agent APIs validate these as zod objects — Annotation.Root only
+// appeared to work here because the langgraph dev server bypasses ReactAgent's
+// middleware-state validation; bare graph.invoke() throws on it.
 const PrimoriaContextSchema = z.object({
   primoria_owner_id: z.string().optional(),
   user_id: z.string().optional(),
   copilotkit: z.any().optional(),
-});
-
-const PrimoriaContextAnnotation = Annotation.Root({
-  primoria_owner_id: Annotation(),
-  user_id: Annotation(),
-  copilotkit: Annotation(),
-});
-
-const PrimoriaStateAnnotation = Annotation.Root({
-  primoria_owner_id: Annotation(),
-  user_id: Annotation(),
-  copilotkit: Annotation(),
 });
 
 /**
@@ -595,7 +588,20 @@ const primoriaCourseDetailMiddleware = createMiddleware({
 const primoriaContextMiddleware = createMiddleware({
   name: "PrimoriaContextMiddleware",
   contextSchema: PrimoriaContextSchema,
-  stateSchema: PrimoriaStateAnnotation,
+  stateSchema: PrimoriaContextSchema,
+});
+
+// Per-request history hygiene (state is untouched): compacts bulky payloads in
+// past turns and caps total history size at turn boundaries, keeping the
+// request prefix byte-stable so provider prompt caches keep hitting.
+const primoriaHistoryTrimMiddleware = createMiddleware({
+  name: "PrimoriaHistoryTrimMiddleware",
+  contextSchema: PrimoriaContextSchema,
+  wrapModelCall: async (request, handler) => {
+    const messages = /** @type {typeof request.messages} */ (trimAgentHistory(request.messages));
+    if (messages === request.messages) return handler(request);
+    return handler({ ...request, messages });
+  },
 });
 
 const renderChartTool = tool(
@@ -1166,6 +1172,44 @@ For plain factual / conceptual questions that do not require a visualization, an
 
 If the latest prompt includes an explicit COURSE DETAIL MODE system/context section, that section overrides the COURSE branch above. In that mode, summarize/explain from the existing course context, and use render_chat_quiz for quiz/practice requests unless the learner clearly asks for a new/different course.`;
 
+// One structured line per LLM call so prompt-cache hit rate is observable in
+// dev/prod logs. Field names vary by provider; every lookup is best-effort.
+// Disable with PRIMORIA_LLM_USAGE_LOG=0.
+/** @param {string} source */
+function usageLogCallbacks(source) {
+  if (process.env.PRIMORIA_LLM_USAGE_LOG === "0") return [];
+  return [
+    {
+      /** @param {any} output */
+      handleLLMEnd(output) {
+        try {
+          const message = output?.generations?.[0]?.[0]?.message;
+          const usage = message?.usage_metadata ?? {};
+          const raw = message?.response_metadata?.usage ?? output?.llmOutput?.tokenUsage ?? {};
+          console.log(
+            JSON.stringify({
+              ts: new Date().toISOString(),
+              message: "llm usage",
+              source,
+              model: message?.response_metadata?.model_name ?? message?.response_metadata?.model ?? null,
+              inputTokens: usage.input_tokens ?? raw.prompt_tokens ?? raw.promptTokens ?? null,
+              outputTokens: usage.output_tokens ?? raw.completion_tokens ?? raw.completionTokens ?? null,
+              cacheReadTokens:
+                usage.input_token_details?.cache_read ??
+                raw.prompt_cache_hit_tokens ??
+                raw.prompt_tokens_details?.cached_tokens ??
+                null,
+              cacheWriteTokens: usage.input_token_details?.cache_creation ?? null,
+            }),
+          );
+        } catch {
+          // observability must never break the call
+        }
+      },
+    },
+  ];
+}
+
 /**
  * @param {{ streaming?: boolean }} [options]
  */
@@ -1189,6 +1233,7 @@ function createModel(options = {}) {
       temperature: 0.2,
       maxTokens: streaming ? 24000 : 4096,
       streaming,
+      callbacks: usageLogCallbacks("tutor-agent"),
       clientOptions: {
         timeout: 180_000,
         maxRetries: 1,
@@ -1203,6 +1248,7 @@ function createModel(options = {}) {
     temperature: 0.2,
     maxTokens: 24000,
     streaming,
+    callbacks: usageLogCallbacks("tutor-agent"),
     configuration: { baseURL: baseUrl.replace(/\/$/, "") },
   });
 }
@@ -1231,8 +1277,8 @@ export const graph = createDeepAgent({
   ],
   systemPrompt: SYSTEM_PROMPT,
   subagents,
-  middleware: [primoriaContextMiddleware, primoriaCourseDetailMiddleware],
-  contextSchema: /** @type {any} */ (PrimoriaContextAnnotation),
+  middleware: [primoriaContextMiddleware, primoriaHistoryTrimMiddleware, primoriaCourseDetailMiddleware],
+  contextSchema: PrimoriaContextSchema,
   checkpointer,
   backend: new FilesystemBackend({
     rootDir: process.cwd(),

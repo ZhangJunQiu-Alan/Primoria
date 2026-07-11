@@ -49,6 +49,10 @@ node apps/web/tests/widget-renderer.e2e.mjs
 
 # Verify agent graph syntax
 node --check apps/agent/src/graph.mjs
+
+# Agent tests (offline; graph-e2e invokes the real graph against a local fake LLM)
+pnpm --filter @primoria/agent test:context-trim
+pnpm --filter @primoria/agent test:graph-e2e
 ```
 
 Write new tests as native vitest `tests/*.spec.ts` files; do not add new self-executing `*.unit.ts` scripts. CI (`.github/workflows/ci.yml`) runs typecheck, lint, and unit tests on every PR.

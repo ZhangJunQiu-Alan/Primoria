@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "if [ -f .env ]; then set -a; . ./.env; set +a; fi; langgraphjs dev --config ../../langgraph.json --host 127.0.0.1 --no-browser",
     "typecheck": "tsc --noEmit",
-    "test:course-store": "node tests/course-store-schema.unit.mjs"
+    "test:course-store": "node tests/course-store-schema.unit.mjs",
+    "test:context-trim": "node tests/context-trim.unit.mjs",
+    "test:graph-e2e": "node tests/graph-invoke.e2e.mjs"
   },
   "dependencies": {
     "@langchain/anthropic": "^1.4.0",
