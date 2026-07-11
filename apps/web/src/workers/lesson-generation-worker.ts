@@ -26,6 +26,15 @@ import { processLessonGenerationJob, type ProcessLessonJobOutcome } from "../lib
 const WORKER_ID = `lesson_worker_${hostname()}_${process.pid}_${randomBytes(3).toString("hex")}`;
 const SHUTDOWN_GRACE_MS = 10_000;
 
+// Concurrent claim loops in this process (multi-lesson parallelism). Claims use
+// FOR UPDATE SKIP LOCKED and every claim carries its own lease token, so loops
+// can safely share one WORKER_ID.
+const rawWorkerConcurrency = Number(process.env.LESSON_WORKER_CONCURRENCY ?? "");
+const WORKER_CONCURRENCY =
+  Number.isInteger(rawWorkerConcurrency) && rawWorkerConcurrency >= 1 && rawWorkerConcurrency <= 4
+    ? rawWorkerConcurrency
+    : 2;
+
 let running = true;
 
 function log(level: "info" | "warn" | "error", message: string, fields: Record<string, unknown> = {}) {
@@ -133,14 +142,13 @@ async function processClaim(claim: LessonGenerationClaim) {
   }
 }
 
-async function loop() {
-  log("info", "lesson generation worker started", { idlePollMs: WORKER_IDLE_POLL_MS });
+async function loop(slot: number) {
   while (running) {
     let claim: LessonGenerationClaim | undefined;
     try {
       claim = await claimNextLessonGenerationJob({ workerId: WORKER_ID });
     } catch (error) {
-      log("error", "claim query failed", { error: String(error) });
+      log("error", "claim query failed", { slot, error: String(error) });
       await sleep(WORKER_IDLE_POLL_MS);
       continue;
     }
@@ -150,7 +158,7 @@ async function loop() {
     }
     await processClaim(claim);
   }
-  log("info", "lesson generation worker stopped");
+  log("info", "claim loop stopped", { slot });
 }
 
 function installSignalHandlers() {
@@ -175,7 +183,12 @@ async function main() {
     process.exit(1);
   }
   installSignalHandlers();
-  await loop();
+  log("info", "lesson generation worker started", {
+    idlePollMs: WORKER_IDLE_POLL_MS,
+    concurrency: WORKER_CONCURRENCY,
+  });
+  await Promise.all(Array.from({ length: WORKER_CONCURRENCY }, (_, slot) => loop(slot)));
+  log("info", "lesson generation worker stopped");
   process.exit(0);
 }
 

@@ -1,4 +1,5 @@
 import type { TutorProviderSettings } from "../types";
+import { fastTierSettings } from "../deepagent/model";
 import type { CourseContext, CourseContextTopic } from "../deepagent/course-kg-context";
 import { languageDirective } from "../deepagent/course-kg-context";
 import { knowledgeBackgroundDirective, factsDirective } from "../../learner-profile/types";
@@ -186,6 +187,7 @@ Rules:
 export type LessonPlannerInvoke = (args: InvokeJsonArgs) => Promise<unknown>;
 
 type LessonPlannerOptions = { contextHint?: string; settings?: TutorProviderSettings; invoke?: LessonPlannerInvoke };
+export const LESSON_PLANNER_MAX_TOKENS = 8192;
 
 function truncateForRepairPrompt(text: string): string {
   if (text.length <= REPAIR_SNIPPET_LIMIT) return text;
@@ -214,9 +216,12 @@ function lessonPlanInvokeArgs(system: string, user: string, settings?: TutorProv
   return {
     system,
     user,
-    settings,
+    // Planning outputs structure-only IR that the deterministic compiler validates,
+    // so it runs on the fast tier when AI_MODEL_FAST is set.
+    settings: fastTierSettings(settings),
     schema: LessonPlanIrSchema,
     schemaName: "lesson_plan_ir",
+    maxTokens: LESSON_PLANNER_MAX_TOKENS,
   };
 }
 

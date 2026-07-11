@@ -3,6 +3,7 @@ import type { TutorProviderSettings } from "../types";
 import { languageDirective, type CourseContext } from "../deepagent/course-kg-context";
 import { knowledgeBackgroundDirective } from "../../learner-profile/types";
 import { invokeJson } from "./model-json";
+import { fastTierSettings } from "../deepagent/model";
 import { compileBlockContent } from "./block-content-compiler";
 import { BlockCompileError, WriterError } from "./generation-errors";
 import {
@@ -26,6 +27,11 @@ export type BlockBatch = { kind: BlockBatchKind; jobs: BlockGenerationJob[] };
 export type BlockBatchInvoke = (input: { batch: BlockBatch; system: string; user: string; repairHint?: string }) => Promise<unknown>;
 
 const isActivation = (j: BlockGenerationJob) => j.pedagogicalRole === "hook" || j.pedagogicalRole === "roadmap";
+
+// Batch kinds whose output is short and schema-tight (validated block-by-block by
+// the compiler), so they run on the fast tier. concept/transfer batches — which
+// carry interactive visuals — stay on the default model.
+const FAST_TIER_BATCH_KINDS = new Set<BlockBatchKind>(["activation", "quiz", "summary"]);
 
 /** Deterministic checkpoint key for one batch (engineering doc §4.2). Stable
  * across worker restarts so a resumed worker reuses completed batch checkpoints
@@ -195,7 +201,16 @@ async function generateBatch(
   let repairHint: string | undefined;
   let lastError: unknown;
 
+  const tier = FAST_TIER_BATCH_KINDS.has(batch.kind) ? "fast" : "default";
+
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
+    if (attempt > 1) {
+      // Repair fired — one structured line per repair so repair rate is observable
+      // per batch kind/tier when validating a fast-tier model swap.
+      console.warn(
+        JSON.stringify({ ts: new Date().toISOString(), message: "block batch repair", kind: batch.kind, tier, attempt, lessonId }),
+      );
+    }
     let byOrder: Map<number, unknown>;
     try {
       const raw = await invoke({ batch, system, user, repairHint });
@@ -284,8 +299,13 @@ async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promis
 }
 
 function defaultInvoke(settings?: TutorProviderSettings): BlockBatchInvoke {
-  return ({ system, user, repairHint }) =>
-    invokeJson({ system, user: repairHint ? `${user}\n\n${repairHint}` : user, settings, timeoutMs: 120_000 });
+  return ({ batch, system, user, repairHint }) =>
+    invokeJson({
+      system,
+      user: repairHint ? `${user}\n\n${repairHint}` : user,
+      settings: FAST_TIER_BATCH_KINDS.has(batch.kind) ? fastTierSettings(settings) : settings,
+      timeoutMs: 120_000,
+    });
 }
 
 /** Generate and compile every block for a compiled plan. Returns CourseBlocks

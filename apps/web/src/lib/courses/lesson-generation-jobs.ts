@@ -560,6 +560,39 @@ export async function publishLessonAndCompleteJob(
   });
 }
 
+/** Best-effort progressive publish: write an in-order PREFIX of ready blocks into
+ * the still-"generating" lesson so the reader can render early content while later
+ * batches finish. Never authoritative — the final publishLessonAndCompleteJob
+ * overwrites with the validated full set. Fenced like every worker mutation, and
+ * gated on status="generating" so it can never clobber a lesson the final publish
+ * already flipped to "generated". Leaves status/version/course minutes untouched.
+ * Returns {ok:false} on a lost lease or a raced status flip so the caller can skip. */
+export async function publishPartialLessonBlocks(
+  fence: Fence,
+  input: { blocks: CourseBlock[] },
+): Promise<{ ok: boolean }> {
+  requireDatabase();
+  // The prefix is composed of already-checkpointed, compiler-validated blocks with
+  // no pending image blocks — same safety net the authoritative publish uses.
+  await assertPersistableCourseBlocks(input.blocks);
+  return getDb().transaction(async (tx) => {
+    const jobRows = await tx
+      .select({ id: lessonGenerationJobs.id, lessonId: lessonGenerationJobs.lessonId })
+      .from(lessonGenerationJobs)
+      .where(fencedWhere(fence))
+      .for("update");
+    const job = jobRows[0];
+    if (!job) return { ok: false };
+
+    const updated = await tx
+      .update(lessonsTable)
+      .set({ blocks: input.blocks, updatedAt: new Date() })
+      .where(and(eq(lessonsTable.id, job.lessonId), eq(lessonsTable.status, "generating")))
+      .returning({ id: lessonsTable.id });
+    return { ok: updated.length > 0 };
+  });
+}
+
 // ── Owner-scoped reads ───────────────────────────────────────────────────────
 
 export async function getLessonGenerationJob(jobId: string, ownerId?: string | null): Promise<LessonGenerationJobSummary | undefined> {

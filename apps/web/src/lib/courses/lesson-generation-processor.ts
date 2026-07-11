@@ -11,7 +11,7 @@ import {
   type CompiledBatchBlock,
 } from "../ai/course-generation/block-writer";
 import { validateLessonBlocks } from "../ai/course-generation/lesson-validator";
-import { finalizeImageBlocks, type ImageGenerate } from "../ai/media/image-builder";
+import { finalizeImageBlocks, isPendingImageBlock, type ImageGenerate } from "../ai/media/image-builder";
 import type { MediaAssetStore } from "../ai/media/media-assets";
 import { IR_VERSION } from "../ai/course-generation/lesson-plan-ir";
 import { CURRENT_CHECKPOINT_VERSIONS, isCheckpointCompatible } from "../ai/course-generation/versions";
@@ -29,6 +29,7 @@ import {
   incrementLessonGenerationProgress,
   loadLessonGenerationCheckpoints,
   publishLessonAndCompleteJob,
+  publishPartialLessonBlocks,
   updateLessonGenerationStage,
   upsertLessonGenerationCheckpoint,
   type LessonGenerationClaim,
@@ -57,6 +58,7 @@ export type LessonJobStore = {
   deleteBatchCheckpoints: typeof deleteLessonGenerationBatchCheckpoints;
   deletePlanAndDependents: typeof deleteLessonGenerationPlanAndDependents;
   publish: typeof publishLessonAndCompleteJob;
+  publishPartial: typeof publishPartialLessonBlocks;
 };
 
 export type ProcessLessonJobOptions = {
@@ -83,6 +85,14 @@ export type ProcessLessonJobOutcome = {
 };
 
 const PLAN_KEY = `plan:v${IR_VERSION}`;
+
+// Concurrent block batches per lesson. Peak in-flight LLM calls is roughly this
+// times LESSON_WORKER_CONCURRENCY, so raise both with provider rate limits in mind.
+const rawBatchConcurrency = Number(process.env.LESSON_BATCH_CONCURRENCY ?? "");
+const BATCH_CONCURRENCY =
+  Number.isInteger(rawBatchConcurrency) && rawBatchConcurrency >= 1 && rawBatchConcurrency <= 8
+    ? rawBatchConcurrency
+    : 6;
 
 function assertFenced(ok: boolean): void {
   if (!ok) throw new LeaseLostError();
@@ -236,15 +246,59 @@ async function writeMissingBatches(
   // Reflect already-checkpointed batches in progress before generating the rest.
   assertFenced(await store.updateStage(fence, { progressCompleted: results.size }));
 
+  // Progressive publish (best-effort): after each batch lands, push the growing
+  // in-order prefix of ready blocks into the still-"generating" lesson so the
+  // reader renders early content while later batches finish. Never authoritative
+  // — the final publish overwrites with the validated full set — and never throws
+  // into the pipeline. Serialized + high-water-marked so a slow write can't regress
+  // the visible prefix, and stopped at the first gap or pending image (below).
+  const expectedOrders = plan.jobs.map((job) => job.order).sort((a, b) => a - b);
+  let publishedPrefix = 0;
+  let partialChain: Promise<void> = Promise.resolve();
+  const schedulePartialPublish = () => {
+    const prefix = readyBlockPrefix(results, expectedOrders);
+    if (prefix.length <= publishedPrefix) return;
+    publishedPrefix = prefix.length;
+    partialChain = partialChain.then(async () => {
+      try {
+        await store.publishPartial(fence, { blocks: prefix });
+      } catch {
+        // Preview only — the next batch or the final publish recovers.
+      }
+    });
+  };
+
+  // Surface any batches restored from checkpoints before generating the rest.
+  schedulePartialPublish();
+
   const missing = planned.filter(({ key }) => !results.has(key));
-  await mapLimit(missing, 3, async ({ batch, key }) => {
+  await mapLimit(missing, BATCH_CONCURRENCY, async ({ batch, key }) => {
     const compiled = await generateBlockBatch({ batch, plan, kg: ctx.kg, lessonId: ctx.lesson.id, settings, invoke: writerInvoke });
     assertFenced(await store.upsertCheckpoint(fence, { checkpointKey: key, kind: "batch", payload: compiled, versions: CURRENT_CHECKPOINT_VERSIONS }));
     results.set(key, compiled);
     assertFenced(await store.incrementProgress(fence));
+    schedulePartialPublish();
   });
 
+  await partialChain;
   return results;
+}
+
+// Longest in-order prefix of ready blocks safe to publish early. Walks the full
+// planned order sequence and stops at the first order not yet generated (a gap
+// from a still-running batch) or the first pending image block (unresolved until
+// the imaging stage and not persistable) — so a progressive publish is always a
+// contiguous, image-safe run from the start of the lesson.
+function readyBlockPrefix(byKey: Map<string, CompiledBatchBlock[]>, expectedOrders: number[]): CourseBlock[] {
+  const byOrder = new Map<number, CourseBlock>();
+  for (const list of byKey.values()) for (const entry of list) byOrder.set(entry.order, entry.block);
+  const prefix: CourseBlock[] = [];
+  for (const order of expectedOrders) {
+    const block = byOrder.get(order);
+    if (!block || isPendingImageBlock(block)) break;
+    prefix.push(block);
+  }
+  return prefix;
 }
 
 function assembleBlocks(byKey: Map<string, CompiledBatchBlock[]>): CourseBlock[] {
@@ -262,4 +316,5 @@ const DEFAULT_STORE: LessonJobStore = {
   deleteBatchCheckpoints: deleteLessonGenerationBatchCheckpoints,
   deletePlanAndDependents: deleteLessonGenerationPlanAndDependents,
   publish: publishLessonAndCompleteJob,
+  publishPartial: publishPartialLessonBlocks,
 };
