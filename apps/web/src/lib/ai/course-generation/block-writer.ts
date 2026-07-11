@@ -134,10 +134,19 @@ QUIZ:
 - This is a concept-closing quiz. Use "kind":"single" (exactly one correct choice) with 2-4 options unless multi/truefalse genuinely tests better.
 - Do NOT emit any "conceptId" — the system assigns concept attribution deterministically.`
     : "";
-  const system = `You are Primoria's Block Writer for the lesson "${plan.title}" on topic "${kg.startTopic.name}". The Planner has already designed this lesson; you only EXECUTE each block. Write the content for the blocks listed below, following each block's "Writer instruction" exactly. Do NOT re-plan the lesson, do NOT add or drop blocks, and do NOT reorder. Planner-owned block metadata is fixed: do not emit block-level "type" or "conceptIds", and never change a block's type, role, or concepts. You MUST emit "order" so each result can be matched to its block. Keep blocks distinct from their neighbors. ${languageDirective(kg.language)}
-${knowledgeBackgroundDirective(kg.knowledgeBackground)}${quizContract}
+  // Cache-prefix layout: the static writer contract comes first (byte-identical
+  // across lessons and batch kinds), lesson-specific context after it, and the
+  // batch-kind quiz contract last — so every batch call shares the longest
+  // possible prompt-cache prefix and non-quiz systems are a strict prefix of
+  // the quiz system.
+  const system = `You are Primoria's Block Writer. The Planner has already designed this lesson; you only EXECUTE each block. Write the content for the blocks listed in the user message, following each block's "Writer instruction" exactly. Do NOT re-plan the lesson, do NOT add or drop blocks, and do NOT reorder. Planner-owned block metadata is fixed: do not emit block-level "type" or "conceptIds", and never change a block's type, role, or concepts. You MUST emit "order" so each result can be matched to its block. Keep blocks distinct from their neighbors.
 
-OUTPUT a single compact JSON array, one object per block, each including its "order" as a JSON number and the listed fields. No prose, no code fences.`;
+OUTPUT a single compact JSON array, one object per block, each including its "order" as a JSON number and the listed fields. No prose, no code fences.
+
+LESSON CONTEXT:
+Lesson: "${plan.title}" on topic "${kg.startTopic.name}".
+${languageDirective(kg.language)}
+${knowledgeBackgroundDirective(kg.knowledgeBackground)}${quizContract}`;
   const user = `Blocks to write:\n${batch.jobs.map((job) => describeJob(job, kg)).join("\n")}`;
   return { system, user };
 }

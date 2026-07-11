@@ -1,6 +1,45 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { ChatAnthropic } from "@langchain/anthropic";
+import type { CallbackHandlerMethods } from "@langchain/core/callbacks/base";
 import type { TutorProviderSettings } from "../types";
+
+// One structured line per LLM call so prompt-cache hit rate is observable
+// (DeepSeek reports prompt_cache_hit_tokens; OpenAI-style providers report
+// prompt_tokens_details.cached_tokens; Anthropic reports cache_read). Every
+// lookup is best-effort. Disable with PRIMORIA_LLM_USAGE_LOG=0.
+export function llmUsageCallbacks(source: string): CallbackHandlerMethods[] {
+  if (process.env.PRIMORIA_LLM_USAGE_LOG === "0") return [];
+  return [
+    {
+      handleLLMEnd(output) {
+        try {
+          type LooseRecord = Record<string, any>;
+          const message = (output as LooseRecord)?.generations?.[0]?.[0]?.message;
+          const usage = message?.usage_metadata ?? {};
+          const raw = message?.response_metadata?.usage ?? (output as LooseRecord)?.llmOutput?.tokenUsage ?? {};
+          console.log(
+            JSON.stringify({
+              ts: new Date().toISOString(),
+              message: "llm usage",
+              source,
+              model: message?.response_metadata?.model_name ?? message?.response_metadata?.model ?? null,
+              inputTokens: usage.input_tokens ?? raw.prompt_tokens ?? raw.promptTokens ?? null,
+              outputTokens: usage.output_tokens ?? raw.completion_tokens ?? raw.completionTokens ?? null,
+              cacheReadTokens:
+                usage.input_token_details?.cache_read ??
+                raw.prompt_cache_hit_tokens ??
+                raw.prompt_tokens_details?.cached_tokens ??
+                null,
+              cacheWriteTokens: usage.input_token_details?.cache_creation ?? null,
+            }),
+          );
+        } catch {
+          // observability must never break the call
+        }
+      },
+    },
+  ];
+}
 
 function normalizeOpenAICompatibleBaseUrl(baseUrl?: string) {
   if (!baseUrl) return baseUrl;
@@ -54,6 +93,7 @@ export function createTutorModel(
       temperature: 0.2,
       maxTokens,
       streaming,
+      callbacks: llmUsageCallbacks("tutor-model"),
     });
   }
 
@@ -64,6 +104,7 @@ export function createTutorModel(
     temperature: 0.2,
     maxTokens,
     streaming,
+    callbacks: llmUsageCallbacks("tutor-model"),
     configuration: {
       baseURL: baseUrl.replace(/\/$/, ""),
     },
@@ -91,6 +132,7 @@ export function createUtilityModel(
       maxTokens,
       streaming: false,
       maxRetries: 1,
+      callbacks: llmUsageCallbacks("utility-model"),
     });
   }
 
@@ -103,6 +145,7 @@ export function createUtilityModel(
     streaming: false,
     maxRetries: 1,
     timeout,
+    callbacks: llmUsageCallbacks("utility-model"),
     configuration: {
       baseURL: baseUrl.replace(/\/$/, ""),
     },
