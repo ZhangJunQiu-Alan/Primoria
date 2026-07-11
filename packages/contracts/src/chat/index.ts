@@ -31,10 +31,10 @@ export type ChatAttachment = AttachmentMetadata & {
   base64Text: string;
 };
 
+// Provider credentials (provider/baseUrl/apiKey) are resolved server-side from
+// environment variables only — never supplied by clients. This type carries just
+// the internal model-tier selection (see fastTierSettings).
 export type TutorProviderSettings = {
-  provider?: "openai-compatible" | "anthropic-compatible";
-  baseUrl?: string;
-  apiKey?: string;
   model?: string;
 };
 

@@ -74,7 +74,6 @@ describe("API auth contracts", () => {
     "src/app/api/learner-facts/route.ts",
     "src/app/api/media/assets/[assetId]/route.ts",
     "src/app/api/settings/preferences/route.ts",
-    "src/app/api/settings/provider/route.ts",
   ];
 
   const requiredRoutes = [
@@ -84,7 +83,6 @@ describe("API auth contracts", () => {
     "src/app/api/learner-facts/route.ts",
     "src/app/api/learning-events/feedback/route.ts",
     "src/app/api/profile/route.ts",
-    "src/app/api/settings/provider/route.ts",
   ];
 
   it("routes optional reads through the optional auth contract", () => {

@@ -175,6 +175,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
     try {
       await fetch("/api/auth/sign-out", { method: "POST" });
       clearCopilotThreadStorage();
+      // Legacy purge: BYOK is removed; wipe any provider key left in localStorage by old builds.
       window.localStorage.removeItem("primoria:tutor-provider-settings");
       setLocalAuthState({ authEnabled: authEnabled ?? true, user: null });
       setAccountOpen(false);

@@ -281,6 +281,13 @@
       "when": 1783676325970,
       "tag": "0039_abnormal_robin_chapel",
       "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "7",
+      "when": 1783793255575,
+      "tag": "0040_ancient_vertigo",
+      "breakpoints": true
     }
   ]
 }

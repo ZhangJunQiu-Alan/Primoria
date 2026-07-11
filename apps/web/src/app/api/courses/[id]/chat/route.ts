@@ -16,14 +16,6 @@ import { requireAuthUser } from "@/lib/auth/guard";
 const RequestSchema = z.object({
   message: z.string().min(1),
   selectedBlockId: z.string().nullable().optional(),
-  settings: z
-    .object({
-      provider: z.enum(["openai-compatible", "anthropic-compatible"]).optional(),
-      baseUrl: z.string().optional(),
-      apiKey: z.string().optional(),
-      model: z.string().optional(),
-    })
-    .optional(),
   attachments: AttachmentsSchema,
 });
 
@@ -90,7 +82,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
 
     // Course Tutor is Q&A + behavior collection only — it never creates courses.
     // Course/lesson creation goes exclusively through the Lesson Job system.
-    const model = createTutorModel(body.settings, { streaming: false });
+    const model = createTutorModel({}, { streaming: false });
     const memoryProvider = createMemoryProvider({
       apiKey: process.env.MEM0_API_KEY,
       host: process.env.MEM0_HOST,
@@ -100,7 +92,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       .map((block, index) => `${index + 1}. [${block.type}] ${block.title ?? block.type}`)
       .join("\n");
     const selected = selectedBlock ? blockToPrompt(selectedBlock) : "No selected block; answer from the whole course.";
-    const processedAttachments = await processAttachments(body.attachments ?? [], body.settings);
+    const processedAttachments = await processAttachments(body.attachments ?? []);
     const attachmentContext = buildAttachmentContext(processedAttachments);
     const memoryContext = user
       ? await searchCourseMemory(

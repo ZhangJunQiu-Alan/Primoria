@@ -21,9 +21,8 @@ type CompletionResponse = {
   };
 };
 
+// Credentials (baseUrl/apiKey) come from env only — no BYOK. Callers may pick a model.
 export type OpenAICompatibleSettings = {
-  baseUrl?: string;
-  apiKey?: string;
   model?: string;
 };
 
@@ -73,8 +72,8 @@ export async function createChatCompletion(
   messages: CompletionMessage[],
   settings: OpenAICompatibleSettings = {},
 ) {
-  const baseUrl = settings.baseUrl || process.env.OPENAI_BASE_URL;
-  const apiKey = settings.apiKey || process.env.OPENAI_API_KEY;
+  const baseUrl = process.env.OPENAI_BASE_URL;
+  const apiKey = process.env.OPENAI_API_KEY;
   const model = settings.model || process.env.OPENAI_MODEL || "gpt-5.4";
 
   if (!baseUrl) throw new Error("Missing OPENAI_BASE_URL");
@@ -134,8 +133,8 @@ export async function streamChatCompletion(
   settings: OpenAICompatibleSettings = {},
   onDelta: (delta: string) => void,
 ) {
-  const baseUrl = settings.baseUrl || process.env.OPENAI_BASE_URL;
-  const apiKey = settings.apiKey || process.env.OPENAI_API_KEY;
+  const baseUrl = process.env.OPENAI_BASE_URL;
+  const apiKey = process.env.OPENAI_API_KEY;
   const model = settings.model || process.env.OPENAI_MODEL || "gpt-5.4";
 
   if (!baseUrl) throw new Error("Missing OPENAI_BASE_URL");

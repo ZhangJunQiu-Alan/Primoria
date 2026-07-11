@@ -10,15 +10,6 @@ import {
 import { requireAuthUser } from "@/lib/auth/guard";
 import { InvalidMermaidDefinitionError } from "@/lib/courses/mermaid-validation";
 
-const SettingsSchema = z
-  .object({
-    provider: z.enum(["openai-compatible", "anthropic-compatible"]).optional(),
-    baseUrl: z.string().optional(),
-    apiKey: z.string().optional(),
-    model: z.string().optional(),
-  })
-  .optional();
-
 const GeneratableBlockTypeSchema = z.enum([
   "text",
   "analogy",
@@ -35,21 +26,18 @@ const RequestSchema = z.discriminatedUnion("action", [
     blockId: z.string(),
     comment: z.string().min(1),
     selectedText: z.string().optional(),
-    settings: SettingsSchema,
   }),
   z.object({
     action: z.literal("add"),
     targetType: GeneratableBlockTypeSchema,
     instruction: z.string().min(1),
     afterBlockId: z.string().optional(),
-    settings: SettingsSchema,
   }),
   z.object({
     action: z.literal("transform"),
     blockId: z.string(),
     targetType: GeneratableBlockTypeSchema,
     instruction: z.string().min(1),
-    settings: SettingsSchema,
   }),
   z.object({
     action: z.literal("remove"),
@@ -69,7 +57,6 @@ const LegacyRewriteSchema = z.object({
   blockId: z.string(),
   comment: z.string().min(1),
   selectedText: z.string().optional(),
-  settings: SettingsSchema,
 });
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
@@ -87,7 +74,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       case "rewrite": {
         const result = await editCourseBlock(
           { courseId: id, blockId: body.blockId, comment: body.comment, selectedText: body.selectedText },
-          body.settings,
+          {},
           ownerId,
         );
         return NextResponse.json({ course: result.course, block: result.block });
@@ -95,7 +82,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       case "add": {
         const result = await addCourseBlock(
           { courseId: id, targetType: body.targetType, instruction: body.instruction, afterBlockId: body.afterBlockId },
-          body.settings,
+          {},
           ownerId,
         );
         return NextResponse.json({ course: result.course, block: result.block });
@@ -103,7 +90,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       case "transform": {
         const result = await transformCourseBlock(
           { courseId: id, blockId: body.blockId, targetType: body.targetType, instruction: body.instruction },
-          body.settings,
+          {},
           ownerId,
         );
         return NextResponse.json({ course: result.course, block: result.block });

@@ -1,7 +1,6 @@
 import { eq } from "drizzle-orm";
 import { getDb, hasDatabaseUrl } from "../db/client";
 import { userSettings } from "../db/schema";
-import type { TutorProviderSettings } from "../agent-os";
 import { isUiLanguage, type UiLanguage } from "../i18n/dictionaries";
 
 export const CONTENT_LANGUAGES = ["auto", "zh", "en"] as const;
@@ -34,12 +33,6 @@ function normalizePreferences(value: unknown): UserPreferences {
   };
 }
 
-export async function getProviderSettings(userId: string): Promise<TutorProviderSettings> {
-  if (!hasDatabaseUrl()) return {};
-  const rows = await getDb().select().from(userSettings).where(eq(userSettings.userId, userId)).limit(1);
-  return (rows[0]?.providerSettings ?? {}) as TutorProviderSettings;
-}
-
 export async function getUserPreferences(userId: string | null | undefined): Promise<UserPreferences> {
   if (!userId || !hasDatabaseUrl()) return DEFAULT_PREFERENCES;
   const rows = await getDb().select({ preferences: userSettings.preferences }).from(userSettings).where(eq(userSettings.userId, userId)).limit(1);
@@ -67,26 +60,4 @@ export async function saveUserPreferences(userId: string, patch: Partial<UserPre
       },
     });
   return next;
-}
-
-export async function saveProviderSettings(userId: string, settings: TutorProviderSettings): Promise<TutorProviderSettings> {
-  if (!hasDatabaseUrl()) return settings;
-  const now = new Date();
-  await getDb()
-    .insert(userSettings)
-    .values({
-      userId,
-      providerSettings: settings,
-      preferences: {},
-      createdAt: now,
-      updatedAt: now,
-    })
-    .onConflictDoUpdate({
-      target: userSettings.userId,
-      set: {
-        providerSettings: settings,
-        updatedAt: now,
-      },
-    });
-  return settings;
 }

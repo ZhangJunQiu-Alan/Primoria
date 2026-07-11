@@ -48,14 +48,12 @@ function normalizeOpenAICompatibleBaseUrl(baseUrl?: string) {
 }
 
 export function resolveProviderSettings(settings: TutorProviderSettings = {}) {
-  const provider = settings.provider || process.env.AI_PROVIDER || "openai-compatible";
+  const provider = process.env.AI_PROVIDER || "openai-compatible";
   const rawBaseUrl =
-    settings.baseUrl ||
-    (provider === "anthropic-compatible" ? process.env.ANTHROPIC_BASE_URL : process.env.OPENAI_BASE_URL);
+    provider === "anthropic-compatible" ? process.env.ANTHROPIC_BASE_URL : process.env.OPENAI_BASE_URL;
   const baseUrl = provider === "openai-compatible" ? normalizeOpenAICompatibleBaseUrl(rawBaseUrl) : rawBaseUrl;
   const apiKey =
-    settings.apiKey ||
-    (provider === "anthropic-compatible" ? process.env.ANTHROPIC_API_KEY : process.env.OPENAI_API_KEY);
+    provider === "anthropic-compatible" ? process.env.ANTHROPIC_API_KEY : process.env.OPENAI_API_KEY;
   const model =
     settings.model ||
     (provider === "anthropic-compatible" ? process.env.ANTHROPIC_MODEL : process.env.OPENAI_MODEL) ||

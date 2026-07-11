@@ -9,8 +9,8 @@ const routeState = vi.hoisted(() => ({
   getDb: vi.fn(),
   getCourse: vi.fn(),
   markLessonProgress: vi.fn(),
-  getProviderSettings: vi.fn(),
-  saveProviderSettings: vi.fn(),
+  getUserPreferences: vi.fn(),
+  saveUserPreferences: vi.fn(),
   recordLearningEvent: vi.fn(),
   enqueueLearningProgressJob: vi.fn(),
   enqueueExtractorJob: vi.fn(),
@@ -37,8 +37,9 @@ vi.mock("@/lib/courses/store", () => ({
 }));
 
 vi.mock("@/lib/settings/user-settings", () => ({
-  getProviderSettings: routeState.getProviderSettings,
-  saveProviderSettings: routeState.saveProviderSettings,
+  CONTENT_LANGUAGES: ["auto", "zh", "en"],
+  getUserPreferences: routeState.getUserPreferences,
+  saveUserPreferences: routeState.saveUserPreferences,
 }));
 
 vi.mock("@/lib/learning-events/store", () => ({
@@ -84,14 +85,14 @@ describe("representative auth route contracts", () => {
     });
   });
 
-  it("propagates optional-auth outages from provider settings", async () => {
+  it("propagates optional-auth outages from user preferences", async () => {
     routeState.getOptionalAuthUser.mockResolvedValue({ denied: unavailableResponse(), user: null });
-    const { GET } = await import("../src/app/api/settings/provider/route");
+    const { GET } = await import("../src/app/api/settings/preferences/route");
 
     const response = await GET();
     expect(response.status).toBe(503);
     expect(await response.json()).toMatchObject({ code: "auth_unavailable" });
-    expect(routeState.getProviderSettings).not.toHaveBeenCalled();
+    expect(routeState.getUserPreferences).not.toHaveBeenCalled();
   });
 
   it("propagates required-auth outages from profile writes", async () => {
