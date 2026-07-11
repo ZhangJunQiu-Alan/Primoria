@@ -59,7 +59,7 @@ Use four label families on implementation issues:
 | `area:course` | Course generation, blocks, course detail, course edits. |
 | `area:artifact` | Generated artifact representation, renderers, saved outputs. |
 | `area:classroom` | Future classroom and collaboration surfaces. |
-| `area:agent` | Tutor runtime, tools, provider settings, and future agent surfaces. |
+| `area:agent` | Tutor runtime, tools, model-provider configuration, and future agent surfaces. |
 | `area:memory` | Memory review, extraction, preference state. |
 | `area:infra` | Data architecture, deployment, CI, service abstractions. |
 

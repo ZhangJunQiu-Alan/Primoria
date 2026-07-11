@@ -152,7 +152,6 @@ function CourseRevisionAction({
             blockId: selectedBlock.id,
             comment: String(instruction ?? ""),
             selectedText: selectedTextContext?.blockId === selectedBlock.id ? selectedTextContext.text : undefined,
-            settings: readSettings(),
           }),
         });
         const data = (await response.json()) as { course?: Course; block?: CourseBlock; error?: string };
@@ -257,7 +256,7 @@ function CourseStructureActions({
           .describe("Insert the new block right after this existing block id. Omit to append at the end."),
       }),
       handler: async ({ targetType, instruction, afterBlockId }) => {
-        const res = await postEdit({ action: "add", targetType, instruction, afterBlockId, settings: readSettings() });
+        const res = await postEdit({ action: "add", targetType, instruction, afterBlockId });
         if (!res.ok) return res;
         return { ok: true, blockId: res.block?.id, message: `Added a new ${targetType} block.` };
       },
@@ -277,7 +276,7 @@ function CourseStructureActions({
       }),
       handler: async ({ targetType, instruction }) => {
         if (!selectedBlock) return { ok: false, error: "No block is selected. Ask the learner to click a block first." };
-        const res = await postEdit({ action: "transform", blockId: selectedBlock.id, targetType, instruction, settings: readSettings() });
+        const res = await postEdit({ action: "transform", blockId: selectedBlock.id, targetType, instruction });
         if (!res.ok) return res;
         return { ok: true, blockId: res.block?.id, message: `Converted the block into a ${targetType} block.` };
       },
@@ -586,32 +585,3 @@ export function CourseAIAssistantPanel(props: CourseAIAssistantPanelProps) {
   );
 }
 
-const SETTINGS_KEY = "primoria:tutor-provider-settings";
-let providerSettingsCache: { provider?: "openai-compatible" | "anthropic-compatible"; baseUrl?: string; apiKey?: string; model?: string } | undefined;
-
-async function refreshProviderSettingsCache() {
-  try {
-    const response = await fetch("/api/settings/provider", { cache: "no-store" });
-    if (!response.ok) return;
-    const data = (await response.json()) as { authEnabled?: boolean; settings?: typeof providerSettingsCache };
-    if (data.authEnabled && data.settings) {
-      providerSettingsCache = data.settings;
-      window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(data.settings));
-    }
-  } catch {
-    // Keep local fallback.
-  }
-}
-
-function readSettings() {
-  if (typeof window === "undefined") return undefined;
-  if (providerSettingsCache) return providerSettingsCache;
-  void refreshProviderSettingsCache();
-  const raw = window.localStorage.getItem(SETTINGS_KEY);
-  if (!raw) return undefined;
-  try {
-    return JSON.parse(raw) as { provider?: "openai-compatible" | "anthropic-compatible"; baseUrl?: string; apiKey?: string; model?: string };
-  } catch {
-    return undefined;
-  }
-}

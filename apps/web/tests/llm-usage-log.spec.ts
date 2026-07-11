@@ -9,6 +9,7 @@ import { createTutorModel } from "../src/lib/ai/deepagent/model";
 
 let server: Server;
 let baseUrl: string;
+const savedEnv: Record<string, string | undefined> = {};
 
 beforeAll(async () => {
   server = createServer((req, res) => {
@@ -33,10 +34,19 @@ beforeAll(async () => {
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", () => resolve()));
   const address = server.address();
   baseUrl = `http://127.0.0.1:${typeof address === "object" && address ? address.port : 0}/v1`;
+  // Provider credentials come from env only (no BYOK); point them at the fake server.
+  for (const key of ["AI_PROVIDER", "OPENAI_BASE_URL", "OPENAI_API_KEY"]) savedEnv[key] = process.env[key];
+  process.env.AI_PROVIDER = "openai-compatible";
+  process.env.OPENAI_BASE_URL = baseUrl;
+  process.env.OPENAI_API_KEY = "fake";
 });
 
 afterAll(() => {
   server.close();
+  for (const [key, value] of Object.entries(savedEnv)) {
+    if (value === undefined) delete process.env[key];
+    else process.env[key] = value;
+  }
 });
 
 describe("llm usage logging", () => {
@@ -45,7 +55,7 @@ describe("llm usage logging", () => {
     const original = console.log;
     console.log = (...args: unknown[]) => { lines.push(args.map(String).join(" ")); };
     try {
-      const model = createTutorModel({ provider: "openai-compatible", baseUrl, apiKey: "fake", model: "deepseek-chat" });
+      const model = createTutorModel({ model: "deepseek-chat" });
       const result = await model.invoke([{ role: "user", content: "hi" }]);
       expect(String(result.content)).toBe("ok");
     } finally {

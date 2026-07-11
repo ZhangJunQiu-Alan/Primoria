@@ -428,7 +428,7 @@ The main persistence tables include `courses`, `lessons`, `lesson_generation_job
 - `openai-compatible`
 - `anthropic-compatible`
 
-The web app also supports per-request provider settings where explicitly wired.
+Provider credentials come only from server-side environment variables. The app does not support BYOK — clients cannot supply their own provider, base URL, or API key.
 
 ## Roadmap
 

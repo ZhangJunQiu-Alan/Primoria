@@ -116,7 +116,7 @@ Local development uses the Docker Compose PostgreSQL service (`pgvector/pgvector
 
 ### Model provider
 
-`apps/web/src/lib/ai/deepagent/model.ts` resolves provider settings from env vars or per-request `TutorProviderSettings`. Supports `openai-compatible` (default) and `anthropic-compatible`. The agent uses `ChatOpenAI` or `ChatAnthropic` from LangChain.
+`apps/web/src/lib/ai/deepagent/model.ts` resolves provider credentials (provider/baseUrl/apiKey) exclusively from server-side env vars. There is no BYOK: clients cannot supply provider settings, and `TutorProviderSettings` now carries only the internal model-tier selection (`fastTierSettings`). Supports `openai-compatible` (default) and `anthropic-compatible`. The agent uses `ChatOpenAI` or `ChatAnthropic` from LangChain.
 
 KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current supported embedding providers are `openai-compatible` and `minimax`.
 

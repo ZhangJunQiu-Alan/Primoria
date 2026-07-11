@@ -6,17 +6,14 @@ function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`assertion failed: ${message}`);
 }
 
-const visionSettings = {
-  provider: "openai-compatible" as const,
-  baseUrl: "http://localhost:1",
-  apiKey: "test",
-  model: "gpt-4o",
-};
+// Provider credentials come from env only (no BYOK); settings carries just the model.
+process.env.AI_PROVIDER = "openai-compatible";
+process.env.OPENAI_BASE_URL ||= "http://localhost:1";
+process.env.OPENAI_API_KEY ||= "test";
 
-const textOnlySettings = {
-  ...visionSettings,
-  model: "text-only-small",
-};
+const visionSettings = { model: "gpt-4o" };
+
+const textOnlySettings = { model: "text-only-small" };
 
 function dataSource(text: string, mimeType: string) {
   return {
