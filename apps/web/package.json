@@ -29,6 +29,7 @@
     "test:widget:e2e": "node tests/widget-renderer.e2e.mjs",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",
     "db:migrate": "tsx scripts/migrate.ts",
+    "jobs:requeue-failed": "tsx scripts/requeue-failed-jobs.ts",
     "db:check": "tsx scripts/check-database.ts",
     "import:local-data": "tsx scripts/import-local-data.ts",
     "worker:lesson-generation": "tsx src/workers/lesson-generation-worker.ts",

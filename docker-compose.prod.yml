@@ -1,0 +1,156 @@
+# Production topology for a single server (e.g. one Tencent Cloud CVM).
+#
+#   cp .env.production.example .env   # fill in secrets first
+#   docker compose -f docker-compose.prod.yml up -d --build
+#
+# Only Caddy (80/443) is reachable from outside. The agent (2024), the web app
+# (3000), the workers, and Postgres stay on the internal compose network —
+# never add `ports:` to them except the loopback Postgres binding below.
+
+x-db-env: &db-env
+  DATABASE_URL: postgresql://primoria_app:${POSTGRES_PASSWORD}@postgres:5432/primoria
+  DATABASE_SSL: disable
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: primoria
+      POSTGRES_USER: primoria_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    ports:
+      # Loopback-only, for server-side psql/pg_dump administration.
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - primoria-postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U primoria_app -d primoria"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # One-shot: applies Drizzle migrations before the app processes start, so a
+  # deploy can never run new code against an old schema.
+  migrate:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: worker
+    image: primoria-worker
+    restart: "no"
+    env_file: .env
+    environment:
+      <<: *db-env
+    command: ["pnpm", "--filter", "@primoria/web", "db:migrate"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: web
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-}
+        NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
+    image: primoria-web
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      <<: *db-env
+      LANGGRAPH_DEPLOYMENT_URL: http://agent:2024
+      DATABASE_POOL_MAX: "10"
+    expose:
+      - "3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      agent:
+        condition: service_started
+
+  agent:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: agent
+    image: primoria-agent
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      <<: *db-env
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  worker-lesson-generation:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: worker
+    image: primoria-worker
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      <<: *db-env
+      DATABASE_POOL_MAX: "3"
+    command: ["pnpm", "--filter", "@primoria/web", "worker:lesson-generation"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  worker-learning-progress:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: worker
+    image: primoria-worker
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      <<: *db-env
+      DATABASE_POOL_MAX: "3"
+    command: ["pnpm", "--filter", "@primoria/web", "worker:learning-progress"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  worker-extractor:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+      target: worker
+    image: primoria-worker
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      <<: *db-env
+      DATABASE_POOL_MAX: "3"
+    command: ["pnpm", "--filter", "@primoria/web", "worker:extractor"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      # Set PRIMORIA_DOMAIN to your domain for automatic HTTPS; leave it unset
+      # to serve plain HTTP on port 80 (IP-only access, pre-domain testing).
+      PRIMORIA_DOMAIN: ${PRIMORIA_DOMAIN:-}
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - primoria-caddy-data:/data
+      - primoria-caddy-config:/config
+    depends_on:
+      - web
+
+volumes:
+  primoria-postgres-data:
+  primoria-caddy-data:
+  primoria-caddy-config:

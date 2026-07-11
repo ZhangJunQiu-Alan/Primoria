@@ -1,0 +1,14 @@
+.git
+node_modules
+**/node_modules
+**/.next
+**/.env
+**/.env.*
+!.env.production.example
+**/*.log
+.DS_Store
+temple
+e2e
+supabase
+docker-compose.yml
+docker-compose.prod.yml

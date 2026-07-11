@@ -8,6 +8,15 @@ const DEFAULT_AUTH_RATE_LIMIT_IP_MAX = 5;
 const DEFAULT_AUTH_RATE_LIMIT_ACCOUNT_MAX = 5;
 const DEFAULT_AUTH_RATE_LIMIT_CLEANUP_SAMPLE_RATE = 0.01;
 
+const AUTH_RATE_LIMIT_CLIENT_IP_HEADERS = [
+  "cf-connecting-ip",
+  "x-real-ip",
+  "x-forwarded-for",
+  "forwarded",
+] as const;
+
+export type AuthRateLimitClientIpHeader = (typeof AUTH_RATE_LIMIT_CLIENT_IP_HEADERS)[number];
+
 export type AuthRateLimitResult =
   | { allowed: true }
   | { allowed: false; retryAfterSeconds: number; reason: "ip" | "account" };
@@ -18,7 +27,7 @@ export type AuthRateLimitConfig = {
   ipMaxAttempts: number;
   accountMaxAttempts: number;
   cleanupSampleRate: number;
-  trustProxyHeaders: boolean;
+  clientIpHeader: AuthRateLimitClientIpHeader | null;
 };
 
 type AuthRateLimitKey = {
@@ -45,19 +54,23 @@ export function getAuthRateLimitConfig(): AuthRateLimitConfig {
     ipMaxAttempts: positiveIntEnv("AUTH_RATE_LIMIT_IP_MAX", DEFAULT_AUTH_RATE_LIMIT_IP_MAX, 1, 1000),
     accountMaxAttempts: positiveIntEnv("AUTH_RATE_LIMIT_ACCOUNT_MAX", DEFAULT_AUTH_RATE_LIMIT_ACCOUNT_MAX, 1, 1000),
     cleanupSampleRate: numberEnv("AUTH_RATE_LIMIT_CLEANUP_SAMPLE_RATE", DEFAULT_AUTH_RATE_LIMIT_CLEANUP_SAMPLE_RATE, 0, 1),
-    trustProxyHeaders: booleanEnv("AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS", false),
+    clientIpHeader: clientIpHeaderEnv(),
   };
 }
 
-export function getClientIp(headers: Headers, options: { trustProxyHeaders?: boolean } = {}): string {
-  if (!options.trustProxyHeaders) return "unknown";
-  const candidates = [
-    headers.get("cf-connecting-ip"),
-    headers.get("x-real-ip"),
-    headers.get("x-forwarded-for")?.split(",")[0],
-    headers.get("forwarded")?.match(/for="?([^;,"]+)/i)?.[1],
-  ];
-  return candidates.map(normalizeProxyIp).find(Boolean) ?? "unknown";
+export function getClientIp(
+  headers: Headers,
+  options: { clientIpHeader?: AuthRateLimitClientIpHeader | null } = {},
+): string {
+  const header = options.clientIpHeader;
+  if (!header) return "unknown";
+
+  const value = headers.get(header);
+  if (header === "x-forwarded-for") return normalizeProxyIp(value?.split(",")[0]) ?? "unknown";
+  if (header === "forwarded") {
+    return normalizeProxyIp(value?.match(/for="?([^;,"]+)/i)?.[1]) ?? "unknown";
+  }
+  return normalizeProxyIp(value) ?? "unknown";
 }
 
 export function getAuthRateLimitKeys(input: {
@@ -68,12 +81,12 @@ export function getAuthRateLimitKeys(input: {
 }): AuthRateLimitKey[] {
   const config = input.config ?? getAuthRateLimitConfig();
   const scope = input.scope ?? "auth";
-  const ip = getClientIp(input.headers, { trustProxyHeaders: config.trustProxyHeaders });
+  const ip = getClientIp(input.headers, { clientIpHeader: config.clientIpHeader });
   const email = input.email.trim().toLowerCase();
-  return [
-    buildKey(`${scope}:ip`, ip, config.ipMaxAttempts, "ip"),
-    buildKey(`${scope}:account`, email, config.accountMaxAttempts, "account"),
-  ];
+  const accountKey = buildKey(`${scope}:account`, email, config.accountMaxAttempts, "account");
+  if (ip === "unknown") return [accountKey];
+
+  return [buildKey(`${scope}:ip`, ip, config.ipMaxAttempts, "ip"), accountKey];
 }
 
 export async function checkAuthRateLimit(input: {
@@ -197,11 +210,15 @@ function numberEnv(name: string, fallback: number, min: number, max: number) {
   return Math.min(Math.max(configured, min), max);
 }
 
-function booleanEnv(name: string, fallback: boolean) {
-  const configured = process.env[name]?.trim().toLowerCase();
-  if (configured === "1" || configured === "true") return true;
-  if (configured === "0" || configured === "false") return false;
-  return fallback;
+function clientIpHeaderEnv(): AuthRateLimitClientIpHeader | null {
+  const configured = process.env.AUTH_RATE_LIMIT_CLIENT_IP_HEADER?.trim().toLowerCase();
+  if (!configured) return null;
+  if ((AUTH_RATE_LIMIT_CLIENT_IP_HEADERS as readonly string[]).includes(configured)) {
+    return configured as AuthRateLimitClientIpHeader;
+  }
+  throw new Error(
+    `Invalid AUTH_RATE_LIMIT_CLIENT_IP_HEADER. Expected one of: ${AUTH_RATE_LIMIT_CLIENT_IP_HEADERS.join(", ")}`,
+  );
 }
 
 function rowsFromResult(result: unknown): Array<Record<string, unknown>> {
