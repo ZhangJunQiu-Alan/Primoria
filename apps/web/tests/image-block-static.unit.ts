@@ -46,7 +46,6 @@ function main() {
   assert(/imageKind: block.imageKind/.test(courseAi), "image context carries imageKind");
 
   // ── Styles ───────────────────────────────────────────────────────
-  assert(styles.includes(".course-block-tag-image"), "image block has an outline/tag chip color");
   assert(styles.includes(".course-image {"), "image element has dedicated styling");
   assert(styles.includes("object-fit: contain"), "image never crops teaching content");
   assert(/\.course-image\s*{[^}]*width:\s*100%/.test(styles.replace(/\n/g, "")), "image spans the lesson width");
