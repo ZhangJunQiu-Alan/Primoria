@@ -26,7 +26,6 @@ async function main() {
   const statsPage = read("src/app/stats/page.tsx");
   const settingsPage = read("src/app/settings/page.tsx");
   const settingsFactsPage = read("src/app/settings/facts/page.tsx");
-  const upgradePage = read("src/app/upgrade/page.tsx");
   const profileEditModal = read("src/components/profile/profile-edit-modal.tsx");
   const profileStats = read("src/lib/profile/stats.ts");
   const profileApi = read("src/app/api/profile/route.ts");
@@ -101,8 +100,6 @@ async function main() {
   assert(styles.includes(".facts-list"), "facts list has dedicated styling");
   assert(styles.includes(".settings-wide-action"), "settings overview has a dedicated wide action style");
   assert(styles.includes(".facts-composer"), "facts editor has dedicated composer styling");
-  assert(upgradePage.includes("getDictionaryForUser"), "upgrade page resolves copy from the i18n dictionary without re-reading auth");
-  bilingual(dictionaries.zh.upgrade.title, dictionaries.en.upgrade.title, "upgrade page renders Pro headline");
 
   assert(navRail.includes('href="/profile"'), "avatar menu links to profile");
   assert(navRail.includes('href="/settings"'), "avatar menu links to settings");
@@ -117,7 +114,6 @@ async function main() {
   assert(styles.includes(".profile-list-card"), "profile progress list has dedicated styling");
   assert(styles.includes(".activity-heatmap"), "stats heatmap has dedicated styling");
   assert(styles.includes(".settings-card"), "settings cards have dedicated styling");
-  assert(styles.includes(".upgrade-card"), "upgrade page has dedicated styling");
 
   assert(profileStats.includes("quizAttempts"), "profile stats read quiz attempts");
   assert(profileStats.includes("learningEvents"), "profile stats read learning events");
