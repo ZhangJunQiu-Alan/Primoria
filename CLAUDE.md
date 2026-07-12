@@ -110,6 +110,14 @@ Widgets execute inside a sandboxed `<iframe>`. The iframe host assembles a full 
 
 In the main AI Tutor, course creation starts with the `position_learning_goal` tool in `apps/agent/src/tools/course.mjs`; the web side performs KG positioning, course creation, and persistence. Courses are stored in the `courses` and `lessons` tables (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Lesson blocks are stored as `jsonb`. Outline lesson descriptions start as deterministic templates; after a NEW course is created, one best-effort background LLM call (`apps/web/src/lib/ai/course-generation/outline-enrichment.ts`, scheduled with `after()` in `initializeCourseOutline`) rewrites them behind a description-equality write fence — failures keep the templates, and `PRIMORIA_DISABLE_OUTLINE_ENRICHMENT=1` disables the call.
 
+### Course sharing
+
+Courses are shared via public snapshot links. `course_share_links` stores one immutable, sanitized snapshot per course (learner progress stripped, non-global image assets degraded); the public `/share/[token]` page and the import flow read only the snapshot, never the live course rows. Revoking and re-enabling mints a new token, so revoked links stay dead. Imports are idempotent per user via `courses.imported_from_share_id`. Owner APIs: `/api/courses/[id]/share` (GET/POST/DELETE); import: `POST /api/share/[token]/import`; logic: `apps/web/src/lib/courses/share-store.ts`.
+
+### Media assets
+
+Lesson image assets are a global pool by design: generation always writes `media_assets.owner_id = NULL`, the media route serves ownerless assets publicly with immutable caching, and `imageCacheKey` (a hash of brief semantics) reuses one asset across users. Image briefs must stay user-agnostic — never feed learner facts into them, and never add owner-scoping to lesson images. `owner_id` is a reserved private channel with no current writers.
+
 ### KG failure policy
 
 `apps/web/src/lib/knowledge-graph/errors.ts` separates KG coverage misses from infrastructure failures. Coverage miss (KG healthy, library has no match) may route through the freeform gate into generated `gen_*` graphs. Infrastructure failure (missing KG tables, DB down, embedding provider down) throws `KnowledgeGraphUnavailableError` and maps to safe API errors — never return or persist raw `error.message` on positioning paths. `GET /api/health` reports DB/KG-schema/embedding state plus job-queue backlog (`apps/web/src/lib/courses/job-queue-health.ts`); a queued job older than `PRIMORIA_HEALTH_QUEUE_STALL_SECONDS` (default 600) flips the status to `degraded`. `PRIMORIA_ALLOW_KG_INFRA_FALLBACK=1` (local dev only, never `NODE_ENV`-derived) lets only `kg_schema_missing` degrade into the freeform gate.
