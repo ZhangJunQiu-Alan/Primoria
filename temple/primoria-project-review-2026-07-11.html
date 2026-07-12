@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <link rel="icon" href="data:,">
-  <title>Primoria 项目全景评估 · 2026-07-11</title>
+  <title>Primoria 项目全景复审 · 2026-07-12</title>
   <style>
     :root {
       --page: #eef2f0;
@@ -943,8 +943,8 @@
       </nav>
       <div class="nav-meta">
         <strong>审查基线</strong><br>
-        Commit <code>7ffac274</code><br>
-        2026-07-11 · 本地代码与隔离 PostgreSQL
+        Commit <code>2fab0049</code><br>
+        2026-07-12 · 本地代码与隔离 PostgreSQL
       </div>
     </aside>
 
@@ -952,13 +952,13 @@
       <header class="report-header">
         <div class="header-row">
           <div class="header-title">
-            <p class="header-kicker">项目全景评估 · 代码证据优先</p>
-            <h1>Primoria 已是强功能 Alpha，下一阶段应先补可信边界，再扩产品。</h1>
-            <p>当前核心差异化不是“AI 能生成课程”，而是 KG 定位、可恢复课程生成、交互式学习块、学习事件和掌握度决策已经串成闭环。最大风险也不再是功能缺失，而是 Widget 隔离、BYOK 密钥、学习证据一致性和生产运维尚未达到公开多用户环境的要求。</p>
+            <p class="header-kicker">项目全景复审 · 代码与运行证据优先</p>
+            <h1>Primoria 的工程骨架已明显变稳，但生产运行时和证据幂等性仍是发布阻断项。</h1>
+            <p>本轮确认旧报告中的 Widget 隔离、BYOK、迁移归属、Agent 巨型组合点和 CI 缺口等问题已经关闭。当前最大风险转移到生产 Agent 仍使用开发服务器与内存状态、直接依赖存在高危安全公告，以及 Quiz 重试会重复写入学习证据。</p>
           </div>
-          <div class="overall-score" aria-label="总体成熟度 6.4 分">
+          <div class="overall-score" aria-label="总体成熟度 7.1 分">
             <span>定性成熟度 / 10</span>
-            <strong>6.4</strong>
+            <strong>7.1</strong>
             <em>Public launch: No</em>
           </div>
         </div>
@@ -968,70 +968,71 @@
         <div class="section-inner">
           <div class="section-head">
             <div><span class="section-index">01 / EXECUTIVE</span><h2>整体判断</h2></div>
-            <p>这是对当前实现成熟度的判断，不是功能数量评分。分数用于比较改进优先级，不代表行业认证。</p>
+            <p>分数用于比较风险和投入顺序，不代表行业认证。生产结论按典型中小型单机部署、公开多用户访问假设给出。</p>
           </div>
 
           <div class="decision-banner">
             <div class="decision-copy">
-              <strong>推荐定位：继续保持“模块化单体 + 独立 Agent + PostgreSQL Workers”</strong>
-              <p>不要现在拆微服务。当前架构足以支撑中小型封闭测试，下一步应强化模块边界、证据可靠性和运维能力，而不是增加网络边界与分布式复杂度。</p>
+              <strong>架构方向保持不变：模块化单体 + 独立 Agent + PostgreSQL Workers</strong>
+              <p>不拆微服务。现有边界已经足够支撑下一阶段，优先把生产 Agent、事务幂等、outbox、权限隔离和可观测性补完整。</p>
             </div>
-            <div class="ship-state ready"><span>本地 / 内部 Alpha</span><strong>可以继续使用</strong></div>
-            <div class="ship-state conditional"><span>受控封闭测试</span><strong>修完 P0 后</strong></div>
-            <div class="ship-state blocked"><span>公开多用户生产</span><strong>暂不建议</strong></div>
+            <div class="ship-state ready"><span>本地 / 内部 Alpha</span><strong>可继续使用</strong></div>
+            <div class="ship-state conditional"><span>受控封闭测试</span><strong>限量可用</strong></div>
+            <div class="ship-state blocked"><span>公开多用户生产</span><strong>P0 未关闭</strong></div>
           </div>
 
           <div class="metric-strip" aria-label="项目规模指标">
-            <div class="metric"><strong>40.4k</strong><span>TS / TSX / MJS 源码行</span></div>
-            <div class="metric"><strong>39</strong><span>Next API routes</span></div>
-            <div class="metric"><strong>21</strong><span>核心 Drizzle 表</span></div>
+            <div class="metric"><strong>40.5k</strong><span>Web / Agent / Contracts 行数</span></div>
+            <div class="metric"><strong>38</strong><span>Next API routes</span></div>
+            <div class="metric"><strong>22</strong><span>Drizzle tables</span></div>
             <div class="metric"><strong>3</strong><span>可恢复后台 Worker</span></div>
             <div class="metric"><strong>944</strong><span>策展 KG concepts</span></div>
-            <div class="metric"><strong>230</strong><span>本轮通过的 Web tests</span></div>
+            <div class="metric"><strong>261</strong><span>通过的 Web tests</span></div>
           </div>
 
           <div class="overview-grid">
             <div class="assessment-summary">
               <h3>一句话架构评价</h3>
-              <p><strong>方向正确：</strong>Next.js 负责产品与数据写入，LangGraph 负责 AI 编排，PostgreSQL 负责任务、课程与学习状态，Worker 负责长任务。这个分工符合当前产品阶段。</p>
-              <p><strong>边界未完成：</strong>Agent 仍保留未使用的课程写入代码，Artifact runtime schema 在 Agent/Web 重复，39 条 API route 的错误与业务边界不一致，三类 Worker 有明显运行框架复制。</p>
-              <p><strong>产品潜力真实：</strong>21 张知识图谱、可视化 Artifact、课程 checkpoint、学习事件、掌握度与 learner facts 已构成稀缺的教育产品资产。但掌握度置信度、间隔复习和内容来源治理仍处于 v1。</p>
+              <p><strong>模块边界已改善：</strong>Agent graph 缩到 66 行组合点，Tool/Artifact runtime schema 由 contracts 共享；Web 仍是唯一业务写入端，Agent 没有越过数据边界。</p>
+              <p><strong>可靠性基础较强：</strong>课程生成、进度决策和 learner facts 都采用 PostgreSQL lease、fencing、幂等 job row 与恢复测试；KG coverage miss 与基础设施故障也已明确分流。</p>
+              <p><strong>生产外壳仍不完整：</strong>Compose 解决了“没有部署拓扑”，但 Agent target 实际执行开发服务器；容器、数据库角色、健康检查、备份和观测仍达不到公开生产要求。</p>
             </div>
 
             <div class="score-panel">
               <h3>成熟度分面</h3>
               <div class="score-list">
-                <div class="score-line"><span>课程生成可靠性</span><div class="score-track"><span style="--score:83%;--score-color:var(--green)"></span></div><strong>8.3</strong></div>
-                <div class="score-line"><span>架构方向</span><div class="score-track"><span style="--score:72%;--score-color:var(--blue)"></span></div><strong>7.2</strong></div>
-                <div class="score-line"><span>测试基础</span><div class="score-track"><span style="--score:73%;--score-color:var(--teal)"></span></div><strong>7.3</strong></div>
-                <div class="score-line"><span>前端产品化</span><div class="score-track"><span style="--score:64%;--score-color:var(--amber)"></span></div><strong>6.4</strong></div>
-                <div class="score-line"><span>数据一致性</span><div class="score-track"><span style="--score:61%;--score-color:var(--amber)"></span></div><strong>6.1</strong></div>
+                <div class="score-line"><span>课程生成可靠性</span><div class="score-track"><span style="--score:85%;--score-color:var(--green)"></span></div><strong>8.5</strong></div>
+                <div class="score-line"><span>架构边界</span><div class="score-track"><span style="--score:81%;--score-color:var(--blue)"></span></div><strong>8.1</strong></div>
+                <div class="score-line"><span>测试与 CI</span><div class="score-track"><span style="--score:88%;--score-color:var(--teal)"></span></div><strong>8.8</strong></div>
+                <div class="score-line"><span>前端产品化</span><div class="score-track"><span style="--score:66%;--score-color:var(--amber)"></span></div><strong>6.6</strong></div>
+                <div class="score-line"><span>数据一致性</span><div class="score-track"><span style="--score:72%;--score-color:var(--amber)"></span></div><strong>7.2</strong></div>
                 <div class="score-line"><span>学习科学深度</span><div class="score-track"><span style="--score:56%;--score-color:var(--amber)"></span></div><strong>5.6</strong></div>
-                <div class="score-line"><span>生产运维</span><div class="score-track"><span style="--score:43%;--score-color:var(--coral)"></span></div><strong>4.3</strong></div>
-                <div class="score-line"><span>安全边界</span><div class="score-track"><span style="--score:40%;--score-color:var(--coral)"></span></div><strong>4.0</strong></div>
+                <div class="score-line"><span>生产运维</span><div class="score-track"><span style="--score:56%;--score-color:var(--coral)"></span></div><strong>5.6</strong></div>
+                <div class="score-line"><span>安全基线</span><div class="score-track"><span style="--score:60%;--score-color:var(--coral)"></span></div><strong>6.0</strong></div>
               </div>
             </div>
           </div>
 
           <div class="strengths-risks">
             <div class="plain-panel good">
-              <h3 class="panel-title">最有价值的现有资产</h3>
+              <h3 class="panel-title">已从技术债清单移除</h3>
               <ul>
-                <li>课程生成已拆成 Planner、确定性 Compiler、Writer、Validator 和版本化 checkpoint。</li>
-                <li>Lesson、Progress、Extractor 三类任务都有 lease、fencing、SKIP LOCKED、重试和 DB 竞态测试。</li>
-                <li>KG infrastructure failure 与 coverage miss 已分开，不会把系统故障伪装成自由课程。</li>
-                <li>交互可视化有多种结构化 renderer，Widget allowlist 已有 Web/Agent 同步测试。</li>
-                <li>课程阅读器聚焦单步学习，AI Tutor 保持课程上下文，真实浏览器 QA 主路径可用。</li>
+                <li>Widget iframe 已收紧为 opaque-origin <code>allow-scripts</code>，消息桥有来源、channel、长度和 URL 校验。</li>
+                <li>BYOK 已删除，模型凭据只从服务端环境变量读取。</li>
+                <li>Quiz 已改为服务端评分，并将 attempt、逐题 evidence、lesson completion 与 progress job 放进同一事务。</li>
+                <li>Auth 的 unknown IP 不再形成跨账户全局限流桶。</li>
+                <li><code>db:bootstrap</code> 已成为 App/Auth/Course 与 KG schema 的唯一部署入口。</li>
+                <li>Agent 已模块化，Widget allowlist 和 Artifact schemas 已共享并有漂移测试。</li>
+                <li>CI 已覆盖 typecheck、lint、unit、KG、migration、DB、bundle 与浏览器主路径。</li>
+                <li>单机 Compose、Caddy、三 Worker、requeue 和备份脚本已形成部署基线。</li>
               </ul>
             </div>
             <div class="plain-panel bad">
-              <h3 class="panel-title">当前最大风险</h3>
+              <h3 class="panel-title">当前发布阻断</h3>
               <ul>
-                <li>模型生成脚本运行在可同源、可弹窗逃逸的 iframe sandbox 中。</li>
-                <li>用户 Provider API key 明文存 DB，并通过 GET 返回浏览器写入 localStorage。</li>
-                <li>Quiz 的 score/total 信任客户端；学习事件失败会被吞掉，但掌握度只读事件流。</li>
-                <li>生产无部署编排、Tracing、告警、错误聚合和任务运维界面。</li>
-                <li>CI 不运行 Agent 单测、DB 集成测试、KG 验证和真实浏览器主路径。</li>
+                <li>生产 Agent image 执行 <code>langgraphjs dev</code>，并显式使用 <code>MemorySaver</code>。</li>
+                <li><code>pnpm audit --prod</code> 报告 12 个 high；直接依赖 Next.js 16.1.6 涉及 Proxy 绕过和 DoS。</li>
+                <li>Quiz 请求没有 submission/idempotency key，超时重试会创建第二次 attempt 和第二组 mastery evidence。</li>
               </ul>
             </div>
           </div>
@@ -1041,8 +1042,8 @@
       <section id="architecture" class="content-band alt" data-section>
         <div class="section-inner">
           <div class="section-head">
-            <div><span class="section-index">02 / ARCHITECTURE</span><h2>架构评估与更优方案</h2></div>
-            <p>推荐方案不是推倒重来，而是在现有模块化单体上增加真正的契约、服务与事件边界。</p>
+            <div><span class="section-index">02 / ARCHITECTURE</span><h2>架构评估与推荐演进</h2></div>
+            <p>本轮代码已经向“模块化单体+”靠近。后续继续沿纵向业务切片演进，不进行全仓重构。</p>
           </div>
 
           <div class="architecture-controls">
@@ -1050,57 +1051,69 @@
               <button type="button" data-arch="current" aria-pressed="true">当前实现</button>
               <button type="button" data-arch="target" aria-pressed="false">推荐演进</button>
             </div>
-            <p>切换查看“保留什么、增加什么”，不是两个互斥重写方案。</p>
+            <p>推荐演进保留 Next.js、PostgreSQL、LangGraph 和三个 processor。</p>
           </div>
 
           <div class="architecture-board">
             <div class="architecture-panel" data-arch-panel="current">
               <div class="arch-row">
-                <div class="arch-box green span-2"><strong>Browser / Next.js UI</strong><span>Onboarding、Tutor、Library、Course Reader、Profile、Stats</span></div>
-                <div class="arch-box blue span-2"><strong>CopilotKit Gateway</strong><span><code>/api/copilotkit</code> 注入课程、Profile、Facts 上下文</span></div>
-                <div class="arch-box amber"><strong>External Models</strong><span>OpenAI-compatible、Anthropic-compatible、Gemini image</span></div>
+                <div class="arch-box green span-2"><strong>Next.js Product Shell / BFF</strong><span>页面、Auth、API、Course、KG、Learning、Media 与唯一 DB 写入边界</span></div>
+                <div class="arch-box blue span-2"><strong>CopilotKit Gateway</strong><span><code>/api/copilotkit</code> 连接浏览器与 primoria_tutor</span></div>
+                <div class="arch-box amber"><strong>Model Providers</strong><span>凭据只在 server env；课程、Tutor、image 分开配置</span></div>
               </div>
               <div class="arch-row">
-                <div class="arch-box green span-2"><strong>apps/web 模块化单体</strong><span>API、Auth、KG、Course、Learning、Media、DB 写入均在 Web 侧</span></div>
-                <div class="arch-box blue span-2"><strong>apps/agent / LangGraph</strong><span>1,288 行 graph 组合工具、prompt、middleware、model；读取课程卡</span></div>
-                <div class="arch-box coral"><strong>边界漂移</strong><span>Agent 仍保留未使用课程写操作；Artifact schemas 多处重复</span></div>
+                <div class="arch-box blue span-2"><strong>Modular Agent</strong><span>66 行 graph 组合 prompts、middleware、model 与 tools；schemas 来自 contracts</span></div>
+                <div class="arch-box coral span-2"><strong>Production Runtime Gap</strong><span>Docker target 仍启动 dev server；MemorySaver 不能跨重启保留线程状态</span></div>
+                <div class="arch-box green"><strong>Sandboxed Widgets</strong><span>opaque origin + shared dependency allowlist</span></div>
               </div>
               <div class="arch-row">
-                <div class="arch-box teal span-2"><strong>PostgreSQL + pgvector</strong><span>21 个 App 表、KG 表、会话、课程、事件、掌握度、媒体与任务</span></div>
-                <div class="arch-box green"><strong>Lesson Worker</strong><span>Planner → batches → image → validate → publish</span></div>
-                <div class="arch-box green"><strong>Progress Worker</strong><span>quiz evidence → mastery → next/remediation</span></div>
-                <div class="arch-box green"><strong>Extractor Worker</strong><span>learning events → durable learner facts</span></div>
+                <div class="arch-box teal span-2"><strong>PostgreSQL + pgvector</strong><span>课程、事件、掌握度、facts、jobs、KG 与 embeddings</span></div>
+                <div class="arch-box green"><strong>Lesson Worker</strong><span>checkpoint + lease + fence</span></div>
+                <div class="arch-box green"><strong>Progress Worker</strong><span>evidence → mastery → decision</span></div>
+                <div class="arch-box green"><strong>Extractor Worker</strong><span>events → learner facts</span></div>
               </div>
             </div>
 
             <div class="architecture-panel" data-arch-panel="target" hidden>
               <div class="arch-row">
-                <div class="arch-box green span-2"><strong>Next.js Product Shell</strong><span>页面、BFF、授权与统一错误合同；保留现有 App Router</span></div>
-                <div class="arch-box blue span-2"><strong>Agent Orchestrator</strong><span>只负责编排，课程读取通过显式 Read Adapter，不持有写能力</span></div>
-                <div class="arch-box amber"><strong>Provider Gateway</strong><span>统一 deadline、cost、SSRF policy、redaction 与 secret handle</span></div>
+                <div class="arch-box green span-2"><strong>Next.js Product Shell</strong><span>Route 只做 HTTP、auth、validation 和错误映射；领域服务处理业务事务</span></div>
+                <div class="arch-box blue span-2"><strong>Supported Agent Server</strong><span>生产 server、持久 checkpointer、健康检查、deadline 与可追踪 request id</span></div>
+                <div class="arch-box amber"><strong>Provider Gateway</strong><span>统一 timeout、retry budget、usage、redaction 与 circuit policy</span></div>
               </div>
               <div class="arch-row">
-                <div class="arch-box green span-2"><strong>Web Service Boundaries</strong><span>CourseService、LearningService、AuthService、KgService；route 只做 HTTP 转换</span></div>
-                <div class="arch-box blue span-2"><strong>packages/contracts</strong><span>Zod runtime schemas 成为 Tool、Artifact、Event、Config 的单一事实源</span></div>
-                <div class="arch-box coral"><strong>Security Boundary</strong><span>Widget opaque origin；SecretsProvider；URL allowlist；CSP 与消息协议</span></div>
+                <div class="arch-box green span-2"><strong>Vertical Service Boundaries</strong><span>Course、Learning、Auth、KG 依旧进程内；按用例组织事务</span></div>
+                <div class="arch-box blue span-2"><strong>Contracts + Outbox</strong><span>Tool、Artifact、Event、Job payload 单一 schema；提交后副作用可恢复</span></div>
+                <div class="arch-box coral"><strong>Edge Baseline</strong><span>安全 headers、异步密码 KDF、统一安全错误</span></div>
               </div>
               <div class="arch-row">
-                <div class="arch-box teal span-2"><strong>Postgres Source of Truth</strong><span>统一 migration ownership、CHECK constraints、学习事件 version + outbox</span></div>
-                <div class="arch-box green span-2"><strong>Shared Worker Runner</strong><span>统一 claim、heartbeat、shutdown、structured log；三个 processor 保持独立</span></div>
-                <div class="arch-box blue"><strong>Observability</strong><span>OpenTelemetry trace、job metrics、provider usage、alert 与 runbook</span></div>
+                <div class="arch-box teal span-2"><strong>Least-Privilege PostgreSQL</strong><span>migration role 与 runtime role 分离；每进程只获得必要 secrets</span></div>
+                <div class="arch-box green span-2"><strong>Shared Worker Runner</strong><span>统一 claim、heartbeat、shutdown、metrics；processor 保持独立</span></div>
+                <div class="arch-box blue"><strong>Observability</strong><span>trace、structured logs、queue/provider metrics 与 alerts</span></div>
               </div>
             </div>
           </div>
 
-          <div class="arch-note"><strong>核心建议：</strong>只抽取真正需要跨 runtime 的契约和纯规则。不要把每个表都包装成 Repository，也不要为了“服务化”把 Course、KG、Learning 拆成网络服务。当前规模下，进程内模块边界比微服务更便宜、更容易测试。</div>
+          <div class="arch-note"><strong>为什么不拆微服务：</strong>当前最严重的问题发生在同一事务、同一容器和同一部署节点内。拆服务会先增加网络失败、版本兼容和分布式事务成本，并不会自动解决 Agent dev runtime、重复证据或权限过宽。</div>
 
           <table class="option-table">
             <thead><tr><th>方案</th><th>改动</th><th>优点</th><th>代价 / 风险</th><th>判断</th></tr></thead>
             <tbody>
-              <tr><td>A. 保持当前结构</td><td>只修具体 Bug</td><td>交付最快、迁移风险最低</td><td>graph、API、CSS、schema 与 worker 复制继续增长</td><td><span class="decision-tag later">仅短期</span></td></tr>
-              <tr class="recommended-row"><td><strong>B. 模块化单体+</strong></td><td>契约 schema、服务层、outbox、统一 worker runner、可观测性</td><td>保留当前性能与开发速度，同时降低最真实的漂移和运维风险</td><td>需要按纵向功能切片迁移，不能一次重构全仓库</td><td><span class="decision-tag keep">推荐</span></td></tr>
-              <tr><td>C. 微服务 + 独立队列</td><td>拆 Course、KG、Learning、Auth 服务，引入 Redis/Kafka</td><td>团队和流量足够大时可独立扩缩容</td><td>事务、部署、追踪、版本兼容和本地开发成本显著上升</td><td><span class="decision-tag avoid">现在不做</span></td></tr>
-              <tr><td>D. Temporal 工作流</td><td>把课程生成/学习流程迁入 durable workflow</td><td>跨小时/天、人工审批、多服务补偿时更稳</td><td>当前 Postgres job 已能恢复，迁移收益暂不覆盖平台复杂度</td><td><span class="decision-tag later">有触发条件再做</span></td></tr>
+              <tr><td>A. 只修 Bug</td><td>不补服务/outbox/观测边界</td><td>短期最快</td><td>每次新增副作用都会重复可靠性问题</td><td><span class="decision-tag later">仅止血</span></td></tr>
+              <tr class="recommended-row"><td><strong>B. 模块化单体+</strong></td><td>服务层、共享契约、outbox、worker runner、可观测性</td><td>保留本地事务和开发速度，直接降低当前风险</td><td>需要按 Course/Learning/Auth/KG 逐片迁移</td><td><span class="decision-tag keep">推荐</span></td></tr>
+              <tr><td>C. 微服务 + Redis/Kafka</td><td>拆 Course、KG、Learning、Auth 网络服务</td><td>大团队和独立流量可分别扩缩容</td><td>部署、追踪、消息幂等、数据一致性和本地开发显著变贵</td><td><span class="decision-tag avoid">现在不做</span></td></tr>
+              <tr><td>D. Temporal</td><td>迁移跨阶段长工作流</td><td>适合跨天、人工审批、多服务补偿</td><td>现有 Postgres jobs 已覆盖当前恢复范围</td><td><span class="decision-tag later">触发后评估</span></td></tr>
+            </tbody>
+          </table>
+
+          <h3 style="margin:28px 0 10px;font-size:17px">当前做法与业界常见方案的权衡</h3>
+          <table class="option-table">
+            <thead><tr><th>主题</th><th>当前做法</th><th>当前做法的优势 / 代价</th><th>常见生产方案</th><th>生产方案的优势 / 代价</th></tr></thead>
+            <tbody>
+              <tr><td>Agent runtime</td><td><code>langgraphjs dev</code> + MemorySaver</td><td>启动简单、适合开发；重启丢状态，缺少生产生命周期保证</td><td>Standalone Agent Server + persistent checkpointer</td><td>恢复、扩缩和观测更完整；部署配置、存储和可能的许可成本更高</td></tr>
+              <tr><td>事务后副作用</td><td>commit 后直接 enqueue + catch</td><td>代码少、延迟低；进程崩溃窗口会永久漏任务</td><td>Transactional outbox + idempotent consumer</td><td>可恢复、可审计；增加 dispatcher、清理与积压监控</td></tr>
+              <tr><td>后台队列</td><td>PostgreSQL + SKIP LOCKED</td><td>复用事务和运维栈，当前规模合适；极高吞吐和跨域隔离能力有限</td><td>Redis/Kafka/managed queue</td><td>吞吐与独立扩缩更强；引入消息一致性、额外运维和本地开发成本</td></tr>
+              <tr><td>数据库权限</td><td>migration/runtime 共用超级用户</td><td>部署最省事；应用漏洞可扩大为 DDL/全库事故</td><td>migration owner + least-privilege runtime roles</td><td>缩小事故半径；需要维护 grants 和迁移流程</td></tr>
+              <tr><td>掌握度</td><td>最新 lesson ratio 覆盖状态</td><td>规则直观、容易测试；低样本过度自信且无法解释长期保持</td><td>append-only evidence + confidence/retention aggregation</td><td>可解释、可回放、适合复习；模型、数据与产品说明更复杂</td></tr>
             </tbody>
           </table>
         </div>
@@ -1109,8 +1122,8 @@
       <section id="risks" class="content-band" data-section>
         <div class="section-inner">
           <div class="section-head">
-            <div><span class="section-index">03 / RISKS</span><h2>主要风险与技术债</h2></div>
-            <p>P0 是公开生产阻塞项；P1 是封闭测试阶段需要进入排期的问题；P2 可逐步偿还。</p>
+            <div><span class="section-index">03 / RISKS</span><h2>仍未完成的风险与技术债</h2></div>
+            <p>这里不再保留已修复项。P0 阻止公开生产；P1 应在扩大封测前排期；P2 可按产品节奏偿还。</p>
           </div>
 
           <div class="risk-toolbar">
@@ -1120,88 +1133,88 @@
               <button type="button" data-risk-filter="p1" aria-pressed="false">P1</button>
               <button type="button" data-risk-filter="p2" aria-pressed="false">P2</button>
             </div>
-            <p>风险编号用于网页内追踪，不代表仓库 issue 编号。</p>
+            <p>风险编号是本报告内部编号。</p>
           </div>
 
           <div class="risk-matrix-wrap">
             <div class="risk-matrix" aria-label="风险影响与发生可能性矩阵">
               <div class="matrix-cell header">可能性 / 影响</div><div class="matrix-cell header">低</div><div class="matrix-cell header">中</div><div class="matrix-cell header">高</div>
-              <div class="matrix-cell header">高</div><div class="matrix-cell medium"><span class="matrix-dot">R12</span></div><div class="matrix-cell high"><span class="matrix-dot">R4</span><span class="matrix-dot">R7</span></div><div class="matrix-cell high"><span class="matrix-dot">R1</span><span class="matrix-dot">R2</span><span class="matrix-dot">R3</span></div>
-              <div class="matrix-cell header">中</div><div class="matrix-cell low"><span class="matrix-dot">R11</span></div><div class="matrix-cell medium"><span class="matrix-dot">R6</span><span class="matrix-dot">R8</span><span class="matrix-dot">R9</span></div><div class="matrix-cell high"><span class="matrix-dot">R5</span></div>
-              <div class="matrix-cell header">低</div><div class="matrix-cell low"></div><div class="matrix-cell low"><span class="matrix-dot">R10</span></div><div class="matrix-cell medium"></div>
+              <div class="matrix-cell header">高</div><div class="matrix-cell medium"><span class="matrix-dot">R12</span></div><div class="matrix-cell high"><span class="matrix-dot">R4</span><span class="matrix-dot">R5</span></div><div class="matrix-cell high"><span class="matrix-dot">R1</span><span class="matrix-dot">R2</span><span class="matrix-dot">R3</span></div>
+              <div class="matrix-cell header">中</div><div class="matrix-cell low"><span class="matrix-dot">R11</span></div><div class="matrix-cell medium"><span class="matrix-dot">R6</span><span class="matrix-dot">R8</span><span class="matrix-dot">R9</span><span class="matrix-dot">R10</span></div><div class="matrix-cell high"><span class="matrix-dot">R7</span></div>
+              <div class="matrix-cell header">低</div><div class="matrix-cell low"></div><div class="matrix-cell low"></div><div class="matrix-cell medium"></div>
             </div>
 
             <div class="risk-list" id="risk-list">
               <article class="risk-item" data-priority="p0">
                 <div class="risk-id">R1<br><span class="priority-tag p0">P0</span></div>
-                <div class="risk-copy"><h3>模型生成 Widget 的 iframe 隔离可被同源脚本削弱</h3><p><code>widget-renderer.tsx:824,837</code> 同时启用 <code>allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox</code>。Widget 是模型生成的不可信 JS，这种组合不应作为安全边界。</p></div>
-                <div class="risk-action"><strong>更安全的方向</strong><p>移除 same-origin、popups 与 escape；优先 opaque-origin <code>sandbox="allow-scripts"</code>。如确需同源能力，改为独立 Widget origin，并用严格消息协议和 URL 白名单桥接。</p></div>
+                <div class="risk-copy"><h3>生产镜像启动 LangGraph 开发服务器，并把会话状态放在内存</h3><p><code>docker/app.Dockerfile:34-37</code> 在 <code>NODE_ENV=production</code> 下执行 <code>langgraphjs dev</code>；<code>apps/agent/src/graph.mjs:34</code> 使用 <code>MemorySaver</code>。进程重启会丢 checkpoint，开发 server 也不是受支持的生产拓扑。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>在保留单机 Compose 的前提下，使用受支持的 standalone Agent Server/生产构建，配置持久 checkpointer、readiness/liveness、优雅停机和固定镜像版本。</p></div>
               </article>
 
               <article class="risk-item" data-priority="p0">
                 <div class="risk-id">R2<br><span class="priority-tag p0">P0</span></div>
-                <div class="risk-copy"><h3>BYOK API key 明文存储并回传浏览器，且 baseUrl 缺少 SSRF 限制</h3><p><code>user-settings.ts:37-40,72-91</code> 把完整 settings 存入 JSONB；<code>settings/provider/route.ts:14-27</code> 返回完整值；<code>course-ai-assistant-panel.tsx:589-613</code> 再写入 localStorage。<code>baseUrl</code> 只校验为 string。</p></div>
-                <div class="risk-action"><strong>更安全的方向</strong><p>服务端仅保存 secret handle；KMS/Vault 做 envelope encryption；GET 只返回 provider/model/configured/last4。限制 HTTPS、域名 allowlist，并拒绝 localhost、私网与 link-local 地址。</p></div>
+                <div class="risk-copy"><h3>生产依赖审计有 12 个 high，直接依赖 Next.js 落后于安全修复</h3><p><code>apps/web/package.json</code> 固定 Next.js 16.1.6。2026-07-12 的 <code>pnpm audit --prod</code> 报告 8 low、28 moderate、12 high；Next 项包含 App Router Proxy bypass、Server Components DoS、连接耗尽和 SSRF 公告。其余 high 来自 form-data、hono、langsmith、ws，需做可达性确认。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>先升级并回归 Next 到覆盖全部公告的版本（审计当前指向至少 16.2.6），再升级/override 可达的传递依赖；CI 增加 production dependency audit，并记录临时豁免的 owner、理由和到期日。</p></div>
               </article>
 
               <article class="risk-item" data-priority="p0">
                 <div class="risk-id">R3<br><span class="priority-tag p0">P0</span></div>
-                <div class="risk-copy"><h3>Quiz 信任客户端分数，学习证据与完成状态不是一个原子提交</h3><p><code>quiz/route.ts:20-25,72-80</code> 直接持久化客户端 <code>score/total</code>；即使 block 不存在仍可能写 course 级 attempt。事件写入会在 <code>learning-events/store.ts:177-184</code> 吞错，但 Progress Worker 只从事件流读取证据。</p></div>
-                <div class="risk-action"><strong>更安全的方向</strong><p>服务端从课程 block 重算 score/total，拒绝无效 block/question。attempt、question evidence、lesson completion 与 outbox 在同一事务提交；Worker 从 outbox/权威 attempt 读取并提供 reconciliation。</p></div>
+                <div class="risk-copy"><h3>Quiz 提交不是幂等操作，网络重试会重复增加掌握度证据</h3><p><code>quiz/route.ts:22-25,98</code> 请求没有 submission id，服务端每次生成新 attempt id。客户端在服务端已提交但响应丢失后重试，会写第二条 attempt 和第二组 <code>quiz.submit</code> 事件，最终把同一次答题计算两次。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>客户端创建稳定 submission id；数据库对 <code>(owner_id, block_id, submission_id)</code> 建唯一约束。重复请求返回第一次保存的 score/total，不再次写 evidence 或触发 completion。</p></div>
               </article>
 
-              <article class="risk-item" data-priority="p0">
-                <div class="risk-id">R4<br><span class="priority-tag p0">P0</span></div>
-                <div class="risk-copy"><h3>未信任代理头时，所有登录请求共享同一个 unknown IP 限流桶</h3><p><code>auth/rate-limit.ts:52-75</code> 在默认配置下返回 <code>unknown</code>，仍构造全局 IP key。任意 6 次尝试可能影响其他账户，形成全站登录可用性风险。</p></div>
-                <div class="risk-action"><strong>更安全的方向</strong><p>无法得到可信 IP 时跳过 IP bucket，仅保留 account/device bucket；部署时明确一层可信反向代理并覆盖 forwarding headers，配套配置启动检查。</p></div>
+              <article class="risk-item" data-priority="p1">
+                <div class="risk-id">R4<br><span class="priority-tag p1">P1</span></div>
+                <div class="risk-copy"><h3>容器、数据库角色和 secrets 没有最小权限隔离</h3><p><code>docker/app.Dockerfile</code> 没有非 root runtime stage，Web/Agent/Workers 保留完整源码、dev dependencies 和编译工具链。Compose 把同一个根 <code>.env</code> 注入所有进程；migration 与 runtime 共用由 Postgres image 创建的 <code>primoria_app</code> 超级用户。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>多阶段最小镜像 + 非 root 用户；migration role 与 runtime role 分离；按服务注入最少环境变量；只读文件系统和 capability drop 在验证后启用。</p></div>
               </article>
 
-              <article class="risk-item" data-priority="p0">
-                <div class="risk-id">R5<br><span class="priority-tag p0">P0</span></div>
-                <div class="risk-copy"><h3>生产运行缺少进程编排、Tracing、告警与可恢复操作入口</h3><p>仓库没有 Web、Agent、3 Workers 的生产 Docker/Process manifest。可观测性主要是 console；<code>/api/health</code> 只覆盖 DB/KG。没有队列积压、lease 过期、provider 延迟/成本和失败率告警。</p></div>
-                <div class="risk-action"><strong>更安全的方向</strong><p>先定义单一部署拓扑和连接池预算；加入 OpenTelemetry trace + structured logs + job/provider metrics；建立 failed-job replay、migration、backup、rollback 和 incident runbook。</p></div>
+              <article class="risk-item" data-priority="p1">
+                <div class="risk-id">R5<br><span class="priority-tag p1">P1</span></div>
+                <div class="risk-copy"><h3>健康检查可能出现“HTTP 200 但关键队列未知”的假绿</h3><p><code>health/route.ts:32-39</code> 只有 queue 为 stalled 才降级，<code>unknown</code> 与 failed backlog 不影响总状态；degraded 仍返回 200。Compose 只有 PostgreSQL healthcheck，Web、Agent、Workers 与 Caddy 只依赖进程 started。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>拆 liveness/readiness；queue unknown 必须影响 readiness，failed/oldest-running/heartbeat 建独立指标和告警；Compose 依赖 service_healthy。再补 trace id、structured logs、provider latency/cost 和 job lifecycle metrics。</p></div>
               </article>
 
               <article class="risk-item" data-priority="p1">
                 <div class="risk-id">R6<br><span class="priority-tag p1">P1</span></div>
-                <div class="risk-copy"><h3>Drizzle 与 legacy SQL 同时承担 schema bootstrap</h3><p><code>db:migrate</code> 使用 Drizzle；<code>db:migrate:auth/courses/kg</code> 又读取 <code>supabase/migrations</code>。KG 可以单独管理，但 auth/course baseline 命令仍存在，新的部署者难判断唯一顺序。</p></div>
-                <div class="risk-action"><strong>长期方向</strong><p>明确 App schema 与 KG schema 的唯一 owner；提供一个可重复的 <code>db:bootstrap</code>。删除已失效 baseline 命令，或把它们标成 legacy/import-only。</p></div>
+                <div class="risk-copy"><h3>Extractor enqueue 在事务提交后 best-effort，失败会永久漏掉 learner facts</h3><p><code>quiz/route.ts:176-186</code> 在主事务后 enqueue，并只记录 console error。若数据库或进程在这个窗口失败，quiz/evidence 已提交，但没有可恢复记录要求后续提取。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>把 extractor intent 写进同一事务的 outbox，dispatcher 至少一次投递，job 唯一键负责去重；增加扫描“lesson completed 但无 extractor job”的 reconciliation。</p></div>
               </article>
 
               <article class="risk-item" data-priority="p1">
                 <div class="risk-id">R7<br><span class="priority-tag p1">P1</span></div>
-                <div class="risk-copy"><h3>CI 绿灯不能证明 Agent、数据库与真实学习主路径</h3><p><code>.github/workflows/ci.yml:25-35</code> 仅跑 Web typecheck/lint/unit 与 Agent 语法。Agent typecheck/unit、7 个 DB tests、KG validation、Widget E2E、登录到课程完成 smoke 都在 CI 外。</p></div>
-                <div class="risk-action"><strong>长期方向</strong><p>分成 fast checks 与 integration checks：Postgres service container 跑 migrations + DB tests；Agent 跑 typecheck/unit；Playwright 跑一条稳定主路径；为 bundle 与 migration drift 加预算。</p></div>
+                <div class="risk-copy"><h3>备份只保存在同一台服务器，恢复能力没有被自动证明</h3><p><code>scripts/pg-backup.sh:14-28</code> 生成本机 gzip SQL 并保留 14 天。磁盘、主机或账号同时失效时备份一起丢失；仓库没有加密异地复制、恢复演练、恢复时间/恢复点目标或 PITR。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>加密上传对象存储并启用版本/保留策略；定期在隔离数据库自动恢复并校验关键表；定义 RPO/RTO。涉及 destructive migration 时准备 expand/contract 与回滚 runbook。</p></div>
               </article>
 
               <article class="risk-item" data-priority="p1">
                 <div class="risk-id">R8<br><span class="priority-tag p1">P1</span></div>
-                <div class="risk-copy"><h3>跨 runtime 契约仍靠重复 Zod/对象定义，Agent graph 成为 1,288 行组合点</h3><p><code>packages/contracts</code> 已有类型，但 Agent tools 和 <code>use-primoria-copilot.tsx</code> 仍重复 schemas，部分 renderer 使用 <code>z.any()</code>。Graph 同时承担工具、prompt、middleware、model 与 allowlist。</p></div>
-                <div class="risk-action"><strong>长期方向</strong><p>在 contracts 中导出 Zod schemas 和 inferred types；按 tools/middleware/prompts/model 拆 Agent 文件但保留单一 graph composition；禁止新增 <code>z.any()</code> artifact。</p></div>
+                <div class="risk-copy"><h3>Web 边缘安全基线不一致：原始错误、同步密码 KDF、缺少标准 headers</h3><p>多条 Course/KG route 直接返回任意 <code>error.message</code>；<code>auth/password.ts:1-19</code> 在请求线程执行 210k 次同步 PBKDF2；Next/Caddy 未配置 app-level CSP、HSTS、nosniff、Referrer/Permissions Policy。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>统一安全错误 mapper，只记录内部 cause + request id；改用异步 KDF（可评估 Argon2id）并做并发压测；在 Caddy/Next 建立可回归的 header baseline，先 report-only 验证 CSP。</p></div>
               </article>
 
               <article class="risk-item" data-priority="p1">
                 <div class="risk-id">R9<br><span class="priority-tag p1">P1</span></div>
-                <div class="risk-copy"><h3>关键状态机只在 TypeScript 注释中约束，数据库接受任意 text</h3><p>三类 job 的 <code>status/stage/errorCategory/decisionStatus</code> 都是 text，没有 CHECK/enum；score、attempts、progress 也缺少范围约束。代码测试很强，但人工 SQL 或迁移错误仍可写入非法状态。</p></div>
-                <div class="risk-action"><strong>长期方向</strong><p>对稳定状态加入 CHECK constraints，并约束 score、attempts、progress 非负及 completed/lease 字段组合。先 audit 现有数据，再 additive migration。</p></div>
+                <div class="risk-copy"><h3>关键状态机与数值范围仍主要依赖 TypeScript，而不是数据库约束</h3><p><code>db/schema.ts:191-204,304-320,358-373,489-498</code> 的 job status/stage/errorCategory/decisionStatus、quiz score/total、attempt/progress 数值没有完整 CHECK；人工 SQL 或未来代码路径可写入非法状态。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>用 forward migration 添加 CHECK：状态集合、<code>0 ≤ score ≤ total</code>、attempts/progress 非负、completed 状态的时间/lease 组合。先查询并清理违规行，再设为 validated。</p></div>
               </article>
 
               <article class="risk-item" data-priority="p1">
                 <div class="risk-id">R10<br><span class="priority-tag p1">P1</span></div>
-                <div class="risk-copy"><h3>产品界面存在“看起来能用、实际上没有后端合同”的功能</h3><p>Library 生成 <code>/learn/:courseId</code> 分享链接并声称可预览/导入，但仓库没有该 route。Weekly report 左右箭头是无交互的 span；Upgrade 页面没有支付或订阅状态。</p></div>
-                <div class="risk-action"><strong>长期方向</strong><p>在真实分享 token、版本化 snapshot、导入与隐私规则完成前隐藏分享。历史周报实现查询后再启用箭头。付费前先验证留存，不要让占位 UI 承诺不存在的能力。</p></div>
+                <div class="risk-copy"><h3>掌握度模型仍把低样本比例当作稳定掌握</h3><p><code>mastery/rules.ts:11-18</code> 先要求 3 题全对，但下一条 ratio gate 又允许 2/2 直接 mastered。存储只保留最新 score/status，没有累计证据数、时间、提示、难度、置信度或遗忘信息。</p></div>
+                <div class="risk-action"><strong>更长期方向</strong><p>先明确最小证据合同，再建设 append-only Evidence v2 和可回放聚合；mastery 输出 score + confidence + evidence count + last observed，间隔复习后再加入 retention。</p></div>
               </article>
 
-              <article class="risk-item" data-priority="p1">
-                <div class="risk-id">R11<br><span class="priority-tag p1">P1</span></div>
-                <div class="risk-copy"><h3>掌握度 v1 只有最新比例，没有证据量、时间衰减与置信度</h3><p><code>mastery/rules.ts:9-20</code> 中 <code>MASTERED_MIN_QUESTIONS=3</code> 会被下一行 ratio gate 绕过，测试明确接受 2/2 mastered。当前 <code>score</code> 覆盖旧值，无法区分 1/1 与长期稳定正确。</p></div>
-                <div class="risk-action"><strong>长期方向</strong><p>先明确产品规则：至少证据数、不同时间点、难度与提示使用。存 evidence_count、last_evidence_at、confidence/retention；再考虑 BKT/IRT/FSRS，不要直接上复杂模型。</p></div>
+              <article class="risk-item" data-priority="p2">
+                <div class="risk-id">R11<br><span class="priority-tag p2">P2</span></div>
+                <div class="risk-copy"><h3>界面仍有未兑现的产品合同</h3><p><code>course-library-grid.tsx:925</code> 生成不存在的 <code>/learn/:courseId</code> 分享链接；Upgrade CTA 只回到 Profile，没有 billing/subscription 状态。用户会把展示入口理解为已交付能力。</p></div>
+                <div class="risk-action"><strong>更安全的方向</strong><p>未实现前隐藏入口；要上线分享则定义 snapshot、token、权限、撤销、preview/import；要上线付费则先建立 entitlement 与 webhook 幂等合同。</p></div>
               </article>
 
               <article class="risk-item" data-priority="p2">
                 <div class="risk-id">R12<br><span class="priority-tag p2">P2</span></div>
-                <div class="risk-copy"><h3>UI 与内容资产的规模开始超过单文件维护能力</h3><p><code>globals.css</code> 有 14,514 行、2,072 个 class；多个 Client Component 超过 700 行；双语 dictionary 1,120 行。21 张策展 KG 中只有 Python 有 concept source map。</p></div>
-                <div class="risk-action"><strong>长期方向</strong><p>新功能开始用 CSS Modules + shared tokens，逐域迁移；拆分组件状态机；字典按 domain/locale 分片；为 KG 加 provenance、review status、version 和 owner。</p></div>
+                <div class="risk-copy"><h3>UI 与内容治理规模继续超过单文件和人工约定的承载能力</h3><p><code>globals.css</code> 14,514 行；Copilot hook 1,052 行、Library 1,048 行、Widget renderer 902 行；24 个 KG JSON 中只有 1 个 source map。历史 migrations 还会先创建再删除已退役 Workspace 表，虽无残留但增加 fresh bootstrap 噪声。</p></div>
+                <div class="risk-action"><strong>更长期方向</strong><p>仅在修改热点时按 feature 切组件、样式和 state machine；新增 KG 强制 source/reviewer/version；历史 migration 保持不可变，只有当启动耗时或维护成本真实上升时再做受控 baseline squash。</p></div>
               </article>
             </div>
           </div>
@@ -1212,34 +1225,25 @@
         <div class="section-inner">
           <div class="section-head">
             <div><span class="section-index">04 / STACK</span><h2>技术栈：保留、补充与暂缓</h2></div>
-            <p>建议以问题驱动增加技术栈。现有 Postgres 与 Worker 模型应继续使用，不应被“更潮”的组件替换。</p>
+            <p>当前不缺框架，缺的是生产化配置、可靠副作用和可操作证据。</p>
           </div>
-
           <table class="stack-table">
-            <thead><tr><th>领域</th><th>决策</th><th>建议</th><th>为什么适合 Primoria</th></tr></thead>
+            <thead><tr><th>领域</th><th>当前选择</th><th>决定</th><th>下一步</th></tr></thead>
             <tbody>
-              <tr><td>Web / BFF</td><td><span class="decision-tag keep">保留</span></td><td>Next.js 16 + React 19</td><td>SSR、App Router、route handlers 和现有产品边界匹配；没有拆前后端的必要。</td></tr>
-              <tr><td>AI orchestration</td><td><span class="decision-tag keep">保留</span></td><td>LangGraph + CopilotKit</td><td>工具编排、UI artifact 和课程上下文已经形成真实资产。重点是缩小 Graph 职责，不是换框架。</td></tr>
-              <tr><td>Primary data</td><td><span class="decision-tag keep">保留</span></td><td>PostgreSQL + pgvector + Drizzle</td><td>结构化学习状态、JSONB blocks、vector KG、job queue 都能在一个事务系统中处理。</td></tr>
-              <tr><td>Workflow queue</td><td><span class="decision-tag keep">保留</span></td><td>现有 Postgres lease/fencing queue</td><td>已通过并发与恢复测试。先补运维、outbox 和统一 runner，不引入 Redis。</td></tr>
-              <tr><td>Runtime contracts</td><td><span class="decision-tag add">立即补</span></td><td>共享 Zod schemas in <code>packages/contracts</code></td><td>消除 Agent/Web/tool renderer 多处手写 schema 与 <code>z.any()</code>，让漂移在编译/测试期失败。</td></tr>
-              <tr><td>Observability</td><td><span class="decision-tag add">立即补</span></td><td>OpenTelemetry + 一个后端</td><td>贯穿 Next route、Agent、provider、Worker、DB job；能够回答首 token、课程完成、失败阶段和成本。</td></tr>
-              <tr><td>Secrets</td><td><span class="decision-tag add">立即补</span></td><td><code>SecretsProvider</code> + KMS/Vault envelope encryption</td><td>Provider key 不再返回浏览器；以后可切换云 KMS，而业务代码只处理 secret handle。</td></tr>
-              <tr><td>Learning events</td><td><span class="decision-tag add">立即补</span></td><td>Postgres transactional outbox + versioned event envelope</td><td>不需要 Kafka，也能保证 quiz、event、job enqueue 一致，并支持重放与 reconciliation。</td></tr>
-              <tr><td>Browser tests</td><td><span class="decision-tag add">立即补</span></td><td>Playwright CI smoke + accessibility assertions</td><td>覆盖真实登录、建课、课程推进、恢复状态和 Widget sandbox；替代只靠静态字符串测试。</td></tr>
-              <tr><td>Spaced review</td><td><span class="decision-tag later">产品 v2</span></td><td>FSRS 思路 / TypeScript 实现</td><td>先建立稳定 review item 与 feedback schema，再引入可解释的 retention 调度。</td></tr>
-              <tr><td>EdTech standards</td><td><span class="decision-tag later">机构化后</span></td><td>Caliper event vocabulary、QTI 3、LTI 1.3</td><td>Caliper 对学习事件，QTI 对题目交换，LTI 对 LMS 接入；个人学习闭环稳定前不应抢优先级。</td></tr>
-              <tr><td>Durable workflow</td><td><span class="decision-tag later">有触发再引入</span></td><td>Temporal</td><td>当流程跨天、有人审、跨多服务并需要补偿时收益明显；当前课程 Job 尚未达到这个阈值。</td></tr>
+              <tr><td>Web / BFF</td><td>Next.js 16.1.6 + React 19</td><td><span class="decision-tag keep">保留并升级</span></td><td>先升级 Next ≥ 16.2.6 并回归 Proxy、Server Actions、image、streaming 与 bundle。</td></tr>
+              <tr><td>Agent</td><td>LangGraph + DeepAgents + CopilotKit</td><td><span class="decision-tag keep">保留框架</span></td><td>替换 dev server/MemorySaver 的生产用法；不要重写 Tutor 编排。</td></tr>
+              <tr><td>Data / Queue</td><td>PostgreSQL + pgvector + SKIP LOCKED</td><td><span class="decision-tag keep">保留</span></td><td>补 outbox、least-privilege roles、constraints、backup restore drill。</td></tr>
+              <tr><td>Contracts</td><td>Zod + plain ESM shared package</td><td><span class="decision-tag keep">继续收敛</span></td><td>扩展到 event/job payload；不把所有内部对象都公共化。</td></tr>
+              <tr><td>Observability</td><td>console + health JSON</td><td><span class="decision-tag later">必须补</span></td><td>OpenTelemetry、结构化日志、error aggregation、queue/provider SLI。</td></tr>
+              <tr><td>Learning model</td><td>事件 + mastery ratio + learner facts</td><td><span class="decision-tag later">演进 v2</span></td><td>先修幂等，再加 evidence version、confidence、retention 与解释。</td></tr>
             </tbody>
           </table>
-
           <h3 style="margin:28px 0 10px;font-size:17px">现在不建议增加</h3>
           <div class="do-not-add">
-            <div class="avoid-item"><strong>微服务</strong><span>当前团队与流量规模没有抵消网络和部署成本。</span></div>
-            <div class="avoid-item"><strong>Kafka</strong><span>Postgres outbox 已足够解决当前证据一致性。</span></div>
-            <div class="avoid-item"><strong>Redis / BullMQ</strong><span>会复制已通过验证的 Job 能力并增加运维组件。</span></div>
-            <div class="avoid-item"><strong>独立向量数据库</strong><span>KG 与 learner data 仍适合 pgvector 的事务一致性。</span></div>
-            <div class="avoid-item"><strong>Redux</strong><span>当前 UI 更需要拆组件状态机，不是增加全局状态容器。</span></div>
+            <div><strong>Redis / Kafka</strong><span>当前 PostgreSQL jobs 能满足规模；先修 outbox 和观测。</span></div>
+            <div><strong>Course/KG/Auth 微服务</strong><span>会破坏本地事务，不能解决当前三个 P0。</span></div>
+            <div><strong>Temporal</strong><span>等工作流跨天、跨服务或有人审批准入再评估。</span></div>
+            <div><strong>第二套 ORM / Auth</strong><span>Drizzle 与现有 Auth 已有明确归属，不再引入 Supabase runtime。</span></div>
           </div>
         </div>
       </section>
@@ -1247,47 +1251,38 @@
       <section id="education" class="content-band" data-section>
         <div class="section-inner">
           <div class="section-head">
-            <div><span class="section-index">05 / EDUCATION PRODUCT</span><h2>如何成为更强的教育产品</h2></div>
-            <p>下一阶段的核心不是增加更多 Block，而是提高“为什么教这个、证据是否可信、何时复习、是否真的学会”的质量。</p>
+            <div><span class="section-index">05 / EDUCATION PRODUCT</span><h2>教育产品能力与缺口</h2></div>
+            <p>产品下一阶段不应继续堆页面，而应让每一次教学决策都基于可信、可解释、可回放的学习证据。</p>
           </div>
-
-          <div class="learning-loop" aria-label="Primoria 长周期学习闭环成熟度">
+          <div class="learning-loop" aria-label="学习闭环成熟度">
             <div class="loop-step"><span>STEP 1</span><strong>目标定位</strong><em>较强：KG + freeform gate</em></div>
             <div class="loop-step partial"><span>STEP 2</span><strong>诊断起点</strong><em>部分：背景标签较粗</em></div>
-            <div class="loop-step"><span>STEP 3</span><strong>生成与教学</strong><em>较强：多形态 Blocks</em></div>
-            <div class="loop-step partial"><span>STEP 4</span><strong>证据采集</strong><em>部分：Quiz / feedback</em></div>
-            <div class="loop-step weak"><span>STEP 5</span><strong>掌握度更新</strong><em>薄弱：低置信度 v1</em></div>
-            <div class="loop-step weak"><span>STEP 6</span><strong>复习与保持</strong><em>缺失：无间隔调度</em></div>
+            <div class="loop-step"><span>STEP 3</span><strong>生成与教学</strong><em>较强：课程恢复 + 多形态 Blocks</em></div>
+            <div class="loop-step partial"><span>STEP 4</span><strong>证据采集</strong><em>服务端可信，但提交未幂等</em></div>
+            <div class="loop-step weak"><span>STEP 5</span><strong>掌握度更新</strong><em>薄弱：低样本 v1</em></div>
+            <div class="loop-step weak"><span>STEP 6</span><strong>复习与保持</strong><em>缺失：无 retention 调度</em></div>
           </div>
 
-          <div class="product-grid">
-            <figure class="product-shot">
-              <img src="project-review-assets/course-reader-current.png" alt="Primoria 当前课程阅读器，显示 Python 课程第二个学习步骤与右侧 AI 面板">
-              <figcaption>真实浏览器 QA 截图，2026-07-11。当前阅读器已经具备清晰的单步节奏、进度与课程内 AI 入口；后续应强化学习证据与适应性，而不是继续增加页面装饰。</figcaption>
-            </figure>
-            <div class="kg-panel" aria-label="知识图谱规模">
-              <div class="kg-metric"><strong>21</strong><span>通过结构校验的策展 graphs</span></div>
-              <div class="kg-metric"><strong>390</strong><span>topics</span></div>
-              <div class="kg-metric"><strong>944</strong><span>minimal testable concepts</span></div>
-              <div class="kg-metric"><strong>1,136</strong><span>intra + cross-subject edges</span></div>
-              <div class="kg-note"><strong>治理缺口：</strong>当前只有 Python Fundamentals 有 concept source map。其余图谱缺少统一来源、版本、reviewer 和变更审计，难以向教师或家长解释内容可信度。</div>
-            </div>
+          <div class="kg-panel" aria-label="知识图谱规模">
+            <div class="kg-metric"><strong>21</strong><span>通过结构校验的策展 graphs</span></div>
+            <div class="kg-metric"><strong>390</strong><span>topics</span></div>
+            <div class="kg-metric"><strong>944</strong><span>minimal testable concepts</span></div>
+            <div class="kg-metric"><strong>1,136</strong><span>intra + cross-subject edges</span></div>
+            <div class="kg-note"><strong>真正的教育护城河：</strong>不是生成更多课程，而是把 KG 定位、题目证据、误区、补救、复习和长期保持串成可验证闭环。当前内容来源治理和长期保持仍是最明显缺口。</div>
           </div>
 
           <h3 style="margin:32px 0 12px;font-size:18px">功能扩展优先级</h3>
           <table class="feature-table">
-            <thead><tr><th>能力</th><th>用户价值</th><th>成本</th><th>建议形态</th><th>为什么现在 / 以后</th></tr></thead>
+            <thead><tr><th>能力</th><th>用户价值</th><th>成本</th><th>建议形态</th><th>前置条件</th></tr></thead>
             <tbody>
-              <tr><td><strong>Learning Evidence v2</strong></td><td>很高</td><td>M</td><td>服务端评分、证据量、时间、提示、难度、置信度</td><td>所有自适应功能的地基，先于新 Block 和课堂功能。</td></tr>
-              <tr><td><strong>诊断式起点</strong></td><td>很高</td><td>M</td><td>每个目标 5-8 个自适应先修问题，可跳过</td><td>把“beginner/intermediate”自述升级为真实 placement。</td></tr>
-              <tr><td><strong>间隔复习队列</strong></td><td>很高</td><td>L</td><td>Concept/item review state + retention target + 每日队列</td><td>让 Primoria 从一次性课程生成器变成长周期学习产品。</td></tr>
-              <tr><td><strong>误区模型</strong></td><td>高</td><td>M</td><td>distractorTag、misconception、对应补救策略</td><td>当前只有对错，不能解释“错在哪里、下一步教什么”。</td></tr>
-              <tr><td><strong>可解释自适应</strong></td><td>高</td><td>M</td><td>Mastery map + “为什么推荐这一节” + 证据时间线</td><td>提升学习者控制感，也方便人工纠正系统判断。</td></tr>
-              <tr><td><strong>来源与审核</strong></td><td>高</td><td>L</td><td>KG/source map、block citations、review status、版本</td><td>教育产品可信度与未来教师合作的前提。</td></tr>
-              <tr><td><strong>项目式证据</strong></td><td>中高</td><td>L</td><td>Project rubric、artifact submission、人工/AI 双评</td><td>补足 Quiz 无法衡量的迁移与综合能力。</td></tr>
-              <tr><td><strong>课程分享</strong></td><td>中</td><td>M</td><td>不可变 snapshot、share token、preview/import、撤销</td><td>先修复当前假链接，再谈社区课程。</td></tr>
-              <tr><td><strong>Teacher / Classroom</strong></td><td>潜在很高</td><td>XL</td><td>班级、作业、干预队列、掌握度分布、隐私策略</td><td>个人闭环与证据可信后再做，否则只是管理壳。</td></tr>
-              <tr><td><strong>QTI / LTI 接入</strong></td><td>机构场景高</td><td>L</td><td>QTI import/export；LTI launch/grade passback</td><td>等学校或 LMS 客户成为明确目标后再投资。</td></tr>
+              <tr><td><strong>Submission idempotency</strong></td><td>很高</td><td>S</td><td>稳定 submission id + 唯一约束 + replay response</td><td>所有可信学习证据的前提。</td></tr>
+              <tr><td><strong>Learning Evidence v2</strong></td><td>很高</td><td>M</td><td>版本、题目、难度、提示、时间、证据数、confidence</td><td>完成幂等与 event contract。</td></tr>
+              <tr><td><strong>诊断式起点</strong></td><td>很高</td><td>M</td><td>目标相关的 5-8 题 placement，可跳过</td><td>题目必须绑定 concept。</td></tr>
+              <tr><td><strong>误区与补救</strong></td><td>高</td><td>M</td><td>distractorTag → misconception → remediation strategy</td><td>先有稳定 question/concept contract。</td></tr>
+              <tr><td><strong>间隔复习</strong></td><td>很高</td><td>L</td><td>review item/state/log + retention target + 每日队列</td><td>Mastery confidence 与跨天证据。</td></tr>
+              <tr><td><strong>来源与审核</strong></td><td>高</td><td>L</td><td>source、reviewer、version、diff、promotion gate</td><td>新 KG 先强制，历史内容逐步补齐。</td></tr>
+              <tr><td><strong>课程分享</strong></td><td>中</td><td>M</td><td>不可变 snapshot、token、preview/import、撤销</td><td>先删除当前假链接或补完整合同。</td></tr>
+              <tr><td><strong>Teacher / Classroom</strong></td><td>潜在高</td><td>XL</td><td>班级、作业、干预队列、隐私与审计</td><td>个人学习闭环与证据可信后再做。</td></tr>
             </tbody>
           </table>
         </div>
@@ -1297,40 +1292,36 @@
         <div class="section-inner">
           <div class="section-head">
             <div><span class="section-index">06 / ROADMAP</span><h2>下一步行动路线</h2></div>
-            <p>顺序按“降低不可逆风险 → 建立可信证据 → 放大教育价值 → 扩组织能力”排列。</p>
+            <p>先关闭发布阻断，再补可恢复副作用和运维闭环，最后扩展学习科学能力。</p>
           </div>
-
           <div class="roadmap-controls segmented" role="group" aria-label="路线时间范围">
             <button type="button" data-roadmap="now" aria-pressed="true">0-30 天</button>
             <button type="button" data-roadmap="next" aria-pressed="false">31-90 天</button>
             <button type="button" data-roadmap="later" aria-pressed="false">90-180 天</button>
           </div>
-
           <div class="roadmap-panel" data-roadmap-panel="now">
             <div class="roadmap-list">
-              <div class="roadmap-item"><div class="roadmap-time">Week 1</div><div><h3>关闭 Widget 与 BYOK 安全缺口</h3><p>opaque-origin sandbox、消息协议、协议白名单、SecretsProvider、密钥轮换、SSRF 防护。</p></div><div class="roadmap-result">退出条件：恶意 Widget 无法读 parent/localStorage/API；GET 不返回 secret。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Week 1-2</div><div><h3>让 Quiz 与学习事件成为可信事务</h3><p>服务端评分、block/question 校验、attempt + evidence + completion + outbox 原子提交，增加 reconciliation。</p></div><div class="roadmap-result">退出条件：篡改 score/total 无效；任何 job 都能找到完整证据或明确失败。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Week 2</div><div><h3>修正 Auth limiter 的 unknown bucket</h3><p>无可信 IP 时不创建全局 IP key；加入部署配置检查与多用户回归测试。</p></div><div class="roadmap-result">退出条件：不同账户不会因 unknown IP 互相限流。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Week 2-3</div><div><h3>建立生产拓扑与可观测性</h3><p>Web/Agent/Workers 部署 manifest、连接池预算、OTel、job/provider metrics、告警与 runbook。</p></div><div class="roadmap-result">退出条件：能从一个 trace 定位请求、Agent、provider、job 与 DB 阶段。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Week 3-4</div><div><h3>扩充 CI 的真实质量门</h3><p>Agent typecheck/unit、Postgres migrations + DB tests、KG validate、Playwright smoke、sandbox security test。</p></div><div class="roadmap-result">退出条件：PR 绿灯覆盖最重要的运行时边界。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Week 1</div><div><h3>升级依赖并替换生产 Agent runtime</h3><p>Next ≥16.2.6；处理可达 high advisories；production Agent Server + persistent checkpointer。</p></div><div class="roadmap-result">退出条件：prod audit 无未豁免 high；容器不执行 dev server；重启后 thread 可恢复。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Week 1-2</div><div><h3>让 Quiz submit 可安全重放</h3><p>submission id、唯一约束、stored response；补并发/超时重试 DB tests。</p></div><div class="roadmap-result">退出条件：同一提交重复 2 次仍只有 1 attempt 与 1 组 evidence。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Week 2</div><div><h3>为提交后副作用增加 outbox</h3><p>先覆盖 extractor enqueue，再复用到其他“事务后 best-effort”路径。</p></div><div class="roadmap-result">退出条件：故障注入后 intent 可恢复、重复投递无重复业务结果。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Week 2-3</div><div><h3>收紧生产权限与健康检查</h3><p>非 root 最小镜像、migration/runtime DB role、服务级 env、Agent/Web healthcheck。</p></div><div class="roadmap-result">退出条件：runtime 不能 DDL；queue unknown 使 readiness 失败；服务按 healthy 启动。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Week 3-4</div><div><h3>建立观测、备份恢复与 Web edge baseline</h3><p>trace/log/metrics、异地备份与 restore drill、统一错误、异步 KDF、安全 headers。</p></div><div class="roadmap-result">退出条件：能定位一次失败全链路；自动恢复校验通过；错误响应无内部信息。</div></div>
             </div>
           </div>
-
           <div class="roadmap-panel" data-roadmap-panel="next" hidden>
             <div class="roadmap-list">
-              <div class="roadmap-item"><div class="roadmap-time">Month 2</div><div><h3>Learning Evidence v2 与 Mastery confidence</h3><p>事件版本、证据数、时间、难度、提示、confidence/retention；明确 mastered 最低证据合同。</p></div><div class="roadmap-result">产出：可解释、可回放、不会被 1/1 轻易抬升的 mastery。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Month 2</div><div><h3>共享 runtime contracts，收缩巨型文件</h3><p>Zod schemas 进入 contracts；拆 graph 工具/prompt/middleware；抽 shared worker runner；新 UI 用 CSS Modules。</p></div><div class="roadmap-result">产出：跨 runtime drift 由测试失败阻止，新增 renderer 不再改四处。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Month 2-3</div><div><h3>诊断式 onboarding 与误区标签</h3><p>基于目标 KG 生成短 placement；Quiz distractor 映射 misconception；推荐理由引用证据。</p></div><div class="roadmap-result">产出：起点更准，补救不再只依赖一个 weak 状态。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Month 3</div><div><h3>间隔复习最小闭环</h3><p>先定义 review item/state/log；再引入 FSRS 风格 retention 调度和每日 Review 页面。</p></div><div class="roadmap-result">产出：跨天回访理由明确，能测 7 日/30 日保持率。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Month 2</div><div><h3>Learning Evidence v2 与 Mastery confidence</h3><p>事件版本、证据数、提示、时间、难度、confidence；修正最低证据合同。</p></div><div class="roadmap-result">产出：掌握度可解释、可回放，不再由 2/2 直接抬升。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Month 2</div><div><h3>数据库约束与 shared worker runner</h3><p>状态 CHECK、数值范围；统一 heartbeat、shutdown、metrics 与 error taxonomy。</p></div><div class="roadmap-result">产出：非法状态进不了库，三个 worker 的运行语义一致。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Month 2-3</div><div><h3>隐藏假入口，补诊断式 onboarding</h3><p>删除未实现分享/付费 affordance；增加与目标 concept 对齐的短 placement。</p></div><div class="roadmap-result">产出：UI 承诺与后端合同一致，学习起点更可信。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Month 3</div><div><h3>间隔复习最小闭环</h3><p>review item/state/log、每日队列、7/30 日 retention 指标。</p></div><div class="roadmap-result">产出：产品从一次性课程走向长期学习。</div></div>
             </div>
           </div>
-
           <div class="roadmap-panel" data-roadmap-panel="later" hidden>
             <div class="roadmap-list">
-              <div class="roadmap-item"><div class="roadmap-time">Month 4</div><div><h3>内容 provenance 与生成 KG promotion 工作台</h3><p>来源、reviewer、版本、diff、usage、质量评估；candidate 到 curated 的人工门槛。</p></div><div class="roadmap-result">产出：内容质量可审核，热门自由主题能安全沉淀。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Month 4-5</div><div><h3>项目式学习与方法效果实验</h3><p>Rubric、artifact、transfer evidence；记录 teaching_method 和 outcome，做受控实验。</p></div><div class="roadmap-result">产出：不仅知道答对没，还能判断哪种教学方法有效。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Month 5-6</div><div><h3>决定是否进入 Classroom</h3><p>以个人闭环留存、教师访谈和隐私需求为 Gate；确定班级、作业、干预和家长/教师视图。</p></div><div class="roadmap-result">产出：Go/No-Go，而不是默认堆一个 Workspace 页面。</div></div>
-              <div class="roadmap-item"><div class="roadmap-time">Trigger-based</div><div><h3>评估 QTI/LTI 或 Temporal</h3><p>机构客户需要题库/LMS 时做 QTI/LTI；工作流跨天、跨服务、人工审批时再做 Temporal。</p></div><div class="roadmap-result">产出：技术投入由真实业务触发，不由架构想象触发。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Month 4</div><div><h3>内容 provenance 与 KG promotion 工作台</h3><p>来源、reviewer、版本、diff、usage 和人工 promotion gate。</p></div><div class="roadmap-result">产出：课程内容可追溯，生成 KG 可受控沉淀。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Month 4-5</div><div><h3>项目式证据与教学策略实验</h3><p>Rubric、artifact、transfer evidence；记录 teaching method 与 outcome。</p></div><div class="roadmap-result">产出：衡量迁移能力，并知道哪种教学策略有效。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Month 5-6</div><div><h3>决定是否进入 Classroom</h3><p>以个人留存、教师访谈、隐私与运维能力为 Gate。</p></div><div class="roadmap-result">产出：明确 Go/No-Go，不默认重建 Workspace。</div></div>
+              <div class="roadmap-item"><div class="roadmap-time">Trigger-based</div><div><h3>评估 QTI/LTI、Temporal 或微服务</h3><p>只有机构合同、跨天人工工作流、独立扩缩容和团队边界出现时才引入。</p></div><div class="roadmap-result">产出：新增技术由可测业务约束触发。</div></div>
             </div>
           </div>
         </div>
@@ -1340,75 +1331,68 @@
         <div class="section-inner">
           <div class="section-head">
             <div><span class="section-index">07 / EVIDENCE</span><h2>证据、验证与限制</h2></div>
-            <p>本报告只把本轮实际运行或可直接从代码确认的内容标为已证实，生产环境行为仍需部署后验证。</p>
+            <p>只有本轮实际运行或从当前代码直接确认的内容标为已证实。</p>
           </div>
-
           <div class="evidence-grid">
-            <div class="evidence-card"><span class="evidence-tag proven">已运行</span><strong>静态质量门</strong><p>Web/Agent typecheck、Web lint、Agent syntax 与两个 Agent unit suites 通过。Lint 仅有一个既有 <code>&lt;img&gt;</code> warning。</p></div>
-            <div class="evidence-card"><span class="evidence-tag proven">已运行</span><strong>Web tests 与构建</strong><p>Vitest: 38 files passed、1 skipped；230 tests passed、1 skipped。Next.js 16.1.6 production build 通过。</p></div>
-            <div class="evidence-card"><span class="evidence-tag proven">已运行</span><strong>隔离 PostgreSQL</strong><p>Onboarding、description race、lesson jobs、progress jobs、extractor jobs 的 DB suites 全部通过。</p></div>
-            <div class="evidence-card"><span class="evidence-tag proven">已运行</span><strong>KG validation</strong><p>21/21 curated graphs 通过 validator；共 390 topics、944 concepts、1,074 intra edges 与 62 cross edges。</p></div>
-            <div class="evidence-card"><span class="evidence-tag partial">已有近期证据</span><strong>真实浏览器路径</strong><p>2026-07-11 QA 覆盖 Messages、Library、Widget、课程打开与 Continue；未覆盖移动端、完整新建课、上传、退出重登。</p></div>
-            <div class="evidence-card"><span class="evidence-tag blocked">尚未证明</span><strong>生产能力</strong><p>未做真实部署、故障注入、并发压测、成本压测、备份恢复或公开网络安全测试，不能据此宣称 production-ready。</p></div>
+            <div class="evidence-card"><span class="evidence-tag proven">已运行</span><strong>静态质量门</strong><p>Web typecheck、lint、Agent syntax/typecheck/unit/integration 全通过；lint 仅 1 个既有 <code>&lt;img&gt;</code> warning。</p></div>
+            <div class="evidence-card"><span class="evidence-tag proven">已运行</span><strong>Web tests 与构建</strong><p>45 files passed、1 skipped；261 tests passed、1 skipped。Next 16.1.6 production build 与 route bundle budgets 通过。</p></div>
+            <div class="evidence-card"><span class="evidence-tag proven">已运行</span><strong>隔离 PostgreSQL</strong><p><code>db:bootstrap</code> 连续执行成功；Lesson、Onboarding、Description、Progress、Extractor DB suites 全部通过。</p></div>
+            <div class="evidence-card"><span class="evidence-tag proven">已运行</span><strong>KG 与部署静态检查</strong><p>21/21 curated graphs 通过；Compose 使用临时 env 成功展开；Agent 生产 command 的 dev server 问题由展开后的 Dockerfile 直接确认。</p></div>
+            <div class="evidence-card"><span class="evidence-tag blocked">未通过</span><strong>Production dependency audit</strong><p>8 low、28 moderate、12 high、0 critical。直接依赖 Next 16.1.6 存在 high advisories。</p></div>
+            <div class="evidence-card"><span class="evidence-tag partial">部分验证</span><strong>本报告页面</strong><p>目录锚点、重复 ID、内联脚本语法与 Git diff 检查通过；当前本地浏览器连接组件缺失，未完成实际截图、点击与移动端渲染验证。</p></div>
+            <div class="evidence-card"><span class="evidence-tag blocked">尚未证明</span><strong>真实生产能力</strong><p>未做真实部署、Agent 重启恢复、故障注入、并发/成本压测、异地恢复演练或公开网络渗透测试。</p></div>
           </div>
 
           <table class="evidence-table">
             <thead><tr><th>证据类别</th><th>本轮结果</th><th>关键位置</th></tr></thead>
             <tbody>
-              <tr><td>代码规模</td><td>Web 37,521 行；Agent 1,966 行；contracts 659 行；memory 266 行</td><td><code>apps/web/src</code>、<code>apps/agent/src</code>、<code>packages/*</code></td></tr>
-              <tr><td>复杂度热点</td><td>graph 1,288 行；Copilot hook 1,109；Library 1,048；Block renderer 895；global CSS 14,514</td><td><code>graph.mjs</code>、<code>use-primoria-copilot.tsx</code>、<code>course-library-grid.tsx</code></td></tr>
-              <tr><td>API / 数据</td><td>39 API routes；21 Drizzle tables；3 recoverable workers</td><td><code>apps/web/src/app/api</code>、<code>db/schema.ts</code>、<code>src/workers</code></td></tr>
-              <tr><td>测试结构</td><td>39 native spec files；47 legacy unit scripts；7 DB scripts</td><td><code>apps/web/tests</code></td></tr>
-              <tr><td>范围限制</td><td>按用户此前要求，本报告不评估密码重置与邮件验证方案，也不清理历史 profile message</td><td>非目标，不应由接手 Agent 自动扩大</td></tr>
+              <tr><td>代码规模</td><td>Web 37,576 行；Agent 1,477 行；contracts 1,418 行</td><td><code>apps/web/src</code>、<code>apps/agent/src</code>、<code>packages/contracts/src</code></td></tr>
+              <tr><td>复杂度热点</td><td>global CSS 14,514；dictionary 1,120；Copilot hook 1,052；Library 1,048；Widget renderer 902</td><td><code>globals.css</code>、<code>dictionaries.ts</code>、<code>use-primoria-copilot.tsx</code></td></tr>
+              <tr><td>API / 数据</td><td>38 API routes；22 Drizzle tables；3 recoverable workers</td><td><code>apps/web/src/app/api</code>、<code>db/schema.ts</code>、<code>src/workers</code></td></tr>
+              <tr><td>内容资产</td><td>21 graphs；390 topics；944 concepts；1,074 intra edges；62 cross edges；1 source map</td><td><code>data/knowledge-graphs/source</code></td></tr>
+              <tr><td>范围限制</td><td>按既定要求，不评估密码重置与邮件验证，也不清理历史 profile message</td><td>接手 Agent 不应自动扩大范围</td></tr>
             </tbody>
           </table>
 
           <details open>
             <summary>关键代码证据</summary>
-            <div>
-              <ul class="evidence-list">
-                <li>Widget sandbox：<code>apps/web/src/components/generative-ui/widget-renderer.tsx:824,837</code></li>
-                <li>Provider secret：<code>apps/web/src/lib/settings/user-settings.ts:37-40,72-91</code>、<code>apps/web/src/app/api/settings/provider/route.ts:14-27</code></li>
-                <li>Quiz / event consistency：<code>apps/web/src/app/api/courses/[id]/quiz/route.ts:20-149</code>、<code>apps/web/src/lib/learning-events/store.ts:177-184</code></li>
-                <li>Mastery v1：<code>apps/web/src/lib/mastery/rules.ts:9-20</code></li>
-                <li>CI coverage：<code>.github/workflows/ci.yml:25-35</code></li>
-                <li>Dead share surface：<code>apps/web/src/components/library/course-library-grid.tsx:620-680,924-927</code></li>
-              </ul>
-            </div>
+            <div><ul class="evidence-list">
+              <li>生产 Agent：<code>docker/app.Dockerfile:34-37</code>、<code>apps/agent/src/graph.mjs:34</code></li>
+              <li>Quiz 幂等与 outbox：<code>apps/web/src/app/api/courses/[id]/quiz/route.ts:22-25,98,176-186</code></li>
+              <li>权限与健康：<code>docker-compose.prod.yml:10-12,36-151</code>、<code>apps/web/src/app/api/health/route.ts:32-39</code></li>
+              <li>数据库约束：<code>apps/web/src/lib/db/schema.ts:184-216,304-320,350-385,481-509</code></li>
+              <li>Mastery v1：<code>apps/web/src/lib/mastery/rules.ts:9-20</code></li>
+              <li>CI coverage：<code>.github/workflows/ci.yml:15-182</code></li>
+            </ul></div>
           </details>
 
           <details>
-            <summary>需要补充的业务背景</summary>
-            <div>
-              <ul class="evidence-list">
-                <li>目标部署平台、单实例/多实例方式、Web/Agent/Worker 是否同机。</li>
-                <li>预期 DAU、峰值并发、每个课程平均 LLM 调用与可接受成本。</li>
-                <li>主要用户年龄、国家/地区、是否面向未成年人以及数据保留要求。</li>
-                <li>近期商业方向：个人订阅、学校/机构、教师工具还是内容平台。</li>
-                <li>学习结果指标：课程完成、7/30 日保持率、考试提升、项目能力或其他目标。</li>
-              </ul>
-            </div>
+            <summary>仍需补充的业务背景</summary>
+            <div><ul class="evidence-list">
+              <li>预计 DAU、峰值并发、课程生成频率、provider 成本预算与可接受延迟。</li>
+              <li>Agent thread 是否要求跨部署长期恢复，以及允许的最大会话丢失窗口。</li>
+              <li>数据 RPO/RTO、部署地区、是否面向未成年人及数据保留要求。</li>
+              <li>近期商业方向：个人订阅、学校/机构、教师工具还是内容平台。</li>
+              <li>核心学习结果：完成率、7/30 日保持率、考试提升或项目迁移能力。</li>
+            </ul></div>
           </details>
 
           <details>
-            <summary>外部标准与官方参考</summary>
-            <div>
-              <div class="source-links">
-                <a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html" target="_blank" rel="noreferrer">WHATWG HTML Standard：iframe sandbox</a>
-                <a href="https://nextjs.org/docs/app/guides/instrumentation" target="_blank" rel="noreferrer">Next.js 官方：Instrumentation / OpenTelemetry</a>
-                <a href="https://docs.temporal.io/temporal" target="_blank" rel="noreferrer">Temporal 官方：Durable Execution</a>
-                <a href="https://www.1edtech.org/standards/caliper" target="_blank" rel="noreferrer">1EdTech：Caliper Analytics</a>
-                <a href="https://www.1edtech.org/standards/qti" target="_blank" rel="noreferrer">1EdTech：QTI</a>
-                <a href="https://www.1edtech.org/standards/lti" target="_blank" rel="noreferrer">1EdTech：LTI 1.3</a>
-                <a href="https://github.com/open-spaced-repetition/awesome-fsrs" target="_blank" rel="noreferrer">Open Spaced Repetition：FSRS implementations</a>
-              </div>
+            <summary>官方参考与安全公告</summary>
+            <div class="source-links">
+              <a href="https://docs.langchain.com/oss/javascript/langgraph/local-server" target="_blank" rel="noreferrer">LangGraph 官方：Local server 用于开发与测试</a>
+              <a href="https://docs.langchain.com/langsmith/deploy-standalone-server" target="_blank" rel="noreferrer">LangChain 官方：Standalone Agent Server 部署</a>
+              <a href="https://github.com/advisories/GHSA-26hh-7cqf-hhc6" target="_blank" rel="noreferrer">GitHub Advisory：Next.js Proxy bypass follow-up</a>
+              <a href="https://github.com/advisories/GHSA-96hv-2xvq-fx4p" target="_blank" rel="noreferrer">GitHub Advisory：ws memory exhaustion</a>
+              <a href="https://nextjs.org/docs/app/guides/instrumentation" target="_blank" rel="noreferrer">Next.js 官方：Instrumentation / OpenTelemetry</a>
+              <a href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html" target="_blank" rel="noreferrer">OWASP：HTTP Security Response Headers</a>
             </div>
           </details>
         </div>
       </section>
 
       <footer class="report-footer">
-        <div><span>Primoria 项目全景评估 · 2026-07-11</span><span>基线 <code>7ffac274</code> · 评估与展示页，不包含业务代码修改</span></div>
+        <div><span>Primoria 项目全景复审 · 2026-07-12</span><span>基线 <code>2fab0049</code> · 仅更新评估网页，不修改业务代码</span></div>
       </footer>
     </main>
   </div>
@@ -1423,7 +1407,6 @@
         architecturePanels.forEach((panel) => { panel.hidden = panel.getAttribute("data-arch-panel") !== value; });
       });
     });
-
     const riskButtons = document.querySelectorAll("[data-risk-filter]");
     const riskItems = document.querySelectorAll(".risk-item");
     riskButtons.forEach((button) => {
@@ -1433,7 +1416,6 @@
         riskItems.forEach((item) => { item.hidden = value !== "all" && item.getAttribute("data-priority") !== value; });
       });
     });
-
     const roadmapButtons = document.querySelectorAll("[data-roadmap]");
     const roadmapPanels = document.querySelectorAll("[data-roadmap-panel]");
     roadmapButtons.forEach((button) => {
@@ -1443,7 +1425,6 @@
         roadmapPanels.forEach((panel) => { panel.hidden = panel.getAttribute("data-roadmap-panel") !== value; });
       });
     });
-
     const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
     const sections = Array.from(document.querySelectorAll("[data-section]"));
     const observer = new IntersectionObserver((entries) => {
