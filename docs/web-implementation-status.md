@@ -19,7 +19,10 @@ Implemented:
   into the existing CopilotKit Course Tutor surface
 - Settings UI for model/provider preferences where wired
 - Postgres-backed CopilotKit thread history with New chat reset
-- CopilotKit runtime route backed by the LangGraph `primoria_tutor` graph
+- CopilotKit runtime route backed by Primoria's self-hosted AG-UI service and
+  the LangGraph `primoria_tutor` graph
+- PostgreSQL-backed Agent runs, streamed events, leases, cancellation,
+  conservative retry/recovery, and LangGraph checkpoints
 - OpenAI-compatible and Anthropic-compatible chat model configuration
 - OpenAI-compatible and MiniMax KG embedding configuration
 - DeepAgent/LangGraph tutor prompt
@@ -44,7 +47,8 @@ Implemented:
   - form/input default styles
   - import map for approved visualization modules
   - widget-to-tutor prompt bridge
-- Local verification through CopilotKit, the LangGraph agent on port 2024, and browser QA
+- Local verification through CopilotKit, the self-hosted Agent runtime on port
+  2024, and browser QA
 - Postgres-backed self-owned auth (`users`, `identities`, `sessions`)
 - Auth endpoint rate limiting through `auth_rate_limits`
 - Docker Compose local PostgreSQL with `pgvector/pgvector:pg16` as the default
@@ -63,7 +67,7 @@ OPENAI_API_KEY=your-key
 OPENAI_MODEL=gpt-5.4
 DATABASE_URL=postgresql://primoria_app:primoria_dev@127.0.0.1:5432/primoria
 DATABASE_SSL=disable
-LANGGRAPH_DEPLOYMENT_URL=http://localhost:2024
+PRIMORIA_AGENT_URL=http://localhost:2024
 ```
 
 Supported model providers:
@@ -82,7 +86,10 @@ Passed:
 - `pnpm --filter @primoria/web typecheck`
 - `pnpm --filter @primoria/web test`
 - `pnpm --filter @primoria/web build`
-- `node --check apps/agent/src/graph.mjs`
+- `pnpm --filter @primoria/agent typecheck`
+- `pnpm --filter @primoria/agent test`
+- `pnpm --filter @primoria/agent test:integration`
+- `pnpm --filter @primoria/agent test:runtime:db`
 
 ## Next Implementation Steps
 

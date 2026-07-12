@@ -3,7 +3,7 @@ import {
   ExperimentalEmptyAdapter,
   copilotRuntimeNextJSAppRouterEndpoint,
 } from "@copilotkit/runtime";
-import { LangGraphAgent } from "@copilotkit/runtime/langgraph";
+import { LangGraphHttpAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest } from "next/server";
 import { normalizeCopilotMessagesWithAttachments } from "@/lib/agent-os";
 import { getLearnerProfile } from "@/lib/learner-profile/store";
@@ -13,7 +13,8 @@ import { factsDirective, tutorStyleDirective, type LearnerFact, type LearnerProf
 
 import { requireAuthUser } from "@/lib/auth/guard";
 
-const deploymentUrl = process.env.LANGGRAPH_DEPLOYMENT_URL ?? "http://localhost:2024";
+const agentRuntimeBaseUrl = process.env.PRIMORIA_AGENT_URL ?? "http://localhost:2024";
+const agentRuntimeUrl = `${agentRuntimeBaseUrl.replace(/\/$/, "")}/agent`;
 
 function settingsFromEnvironment() {
   const provider = process.env.AI_PROVIDER === "anthropic-compatible" ? "anthropic-compatible" : "openai-compatible";
@@ -149,24 +150,30 @@ function sanitizeAgentState(state: any) {
   };
 }
 
-class PrimoriaLangGraphAgent extends LangGraphAgent {
+class PrimoriaHttpAgent extends LangGraphHttpAgent {
   ownerId: string | null;
   learnerProfile: LearnerProfile | null;
   learnerFacts: LearnerFact[];
+  runtimeBaseUrl: string;
+  activeRunId: string | null;
 
-  constructor(config: ConstructorParameters<typeof LangGraphAgent>[0] & { ownerId?: string | null; learnerProfile?: LearnerProfile | null; learnerFacts?: LearnerFact[] }) {
-    const { ownerId, learnerProfile, learnerFacts, ...agentConfig } = config;
+  constructor(config: ConstructorParameters<typeof LangGraphHttpAgent>[0] & { runtimeBaseUrl: string; ownerId?: string | null; learnerProfile?: LearnerProfile | null; learnerFacts?: LearnerFact[] }) {
+    const { runtimeBaseUrl, ownerId, learnerProfile, learnerFacts, ...agentConfig } = config;
     super(agentConfig);
+    this.runtimeBaseUrl = runtimeBaseUrl;
     this.ownerId = ownerId ?? null;
     this.learnerProfile = learnerProfile ?? null;
     this.learnerFacts = learnerFacts ?? [];
+    this.activeRunId = null;
   }
 
   clone() {
-    const cloned = super.clone() as PrimoriaLangGraphAgent;
+    const cloned = super.clone() as PrimoriaHttpAgent;
+    cloned.runtimeBaseUrl = this.runtimeBaseUrl;
     cloned.ownerId = this.ownerId;
     cloned.learnerProfile = this.learnerProfile;
     cloned.learnerFacts = this.learnerFacts;
+    cloned.activeRunId = this.activeRunId;
     return cloned;
   }
 
@@ -182,13 +189,13 @@ class PrimoriaLangGraphAgent extends LangGraphAgent {
     // Keep Primoria product chat history in Postgres while using a fresh
     // LangGraph runtime checkpoint per run. This avoids stale dev checkpoints
     // causing @ag-ui/langgraph "Message not found" errors.
-    const runtimeThreadId = crypto.randomUUID();
+    this.activeRunId = input.runId;
     const ownerId = this.ownerId ?? undefined;
     const appContext = Array.isArray(input?.context) ? input.context : [];
     const sanitizedState = sanitizeAgentState(input?.state);
     return super.run({
       ...input,
-      threadId: runtimeThreadId,
+      threadId: input.runId,
       messages: normalizeAgentMessages(input?.messages, appContext, this.learnerProfile, this.learnerFacts),
       state: {
         ...sanitizedState,
@@ -218,6 +225,14 @@ class PrimoriaLangGraphAgent extends LangGraphAgent {
       },
     });
   }
+
+  abortRun() {
+    super.abortRun();
+    if (!this.activeRunId) return;
+    void fetch(`${this.runtimeBaseUrl.replace(/\/$/, "")}/runs/${encodeURIComponent(this.activeRunId)}/cancel`, {
+      method: "POST",
+    }).catch(() => {});
+  }
 }
 
 export const POST = async (req: NextRequest) => {
@@ -228,9 +243,10 @@ export const POST = async (req: NextRequest) => {
     ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id)])
     : [null, [] as LearnerFact[]];
   const normalizedRequest = await requestWithNormalizedAttachments(req);
-  const primoriaAgent = new PrimoriaLangGraphAgent({
-    deploymentUrl,
-    graphId: "primoria_tutor",
+  const primoriaAgent = new PrimoriaHttpAgent({
+    url: agentRuntimeUrl,
+    agentId: "primoria_tutor",
+    runtimeBaseUrl: agentRuntimeBaseUrl,
     ownerId: user?.id ?? null,
     learnerProfile,
     learnerFacts,

@@ -8,10 +8,10 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 # Install deps
 pnpm install
 
-# Start both web (port 3000) and LangGraph agent (port 2024)
+# Start web, self-hosted Agent runtime, and background workers
 pnpm dev
 
-# Web app only; AI Tutor still needs LANGGRAPH_DEPLOYMENT_URL to reach a running agent
+# Web app only; AI Tutor still needs PRIMORIA_AGENT_URL to reach a running agent
 pnpm --filter @primoria/web dev
 
 # Type-check
@@ -23,7 +23,7 @@ pnpm lint
 # Build
 pnpm build
 
-# Bootstrap all schemas (KG + Drizzle App/Auth/Course)
+# Bootstrap KG, Drizzle App/Auth/Course, and Agent runtime schemas
 pnpm db:bootstrap
 
 # Generate Drizzle migrations after App/Auth/Course schema changes
@@ -57,7 +57,7 @@ node apps/web/tests/widget-renderer.e2e.mjs
 node --check apps/agent/src/graph.mjs
 ```
 
-Write new tests as native vitest `tests/*.spec.ts` files; do not add new self-executing `*.unit.ts` scripts. CI (`.github/workflows/ci.yml`) runs typecheck, lint, and unit tests on every PR.
+Write new Web tests as native Vitest `tests/*.spec.ts` files; do not add new self-executing Web `*.unit.ts` scripts. Agent tests remain plain ESM under `apps/agent/tests/` and run through package scripts. CI (`.github/workflows/ci.yml`) runs typecheck, lint, and unit tests on every PR.
 
 ## Architecture
 
@@ -65,7 +65,7 @@ Write new tests as native vitest `tests/*.spec.ts` files; do not add new self-ex
 
 ```
 apps/web/     Next.js app — UI, API routes, DB, CopilotKit integration
-apps/agent/   LangGraph agent — serves the primoria_tutor graph
+apps/agent/   Self-hosted Node/AG-UI runtime for the primoria_tutor graph
 data/knowledge-graphs/source/  Committed KG source JSON files and sidecars
 data/knowledge-graphs/generated/  Exported generated graph candidates awaiting review/promotion
 ```
@@ -74,9 +74,11 @@ data/knowledge-graphs/generated/  Exported generated graph candidates awaiting r
 
 There is one active tutor runtime path:
 
-Browser CopilotKit UI → `apps/web/src/app/api/copilotkit/route.ts` → `LangGraphAgent(graphId: "primoria_tutor")` → `apps/agent/src/graph.mjs`.
+Browser CopilotKit UI → `apps/web/src/app/api/copilotkit/route.ts` → `PrimoriaHttpAgent` → internal AG-UI `POST /agent` → `apps/agent/src/graph.mjs`.
 
 The legacy `POST /api/tutor/chat` stack has been deleted. If you find references to it in older docs, they are stale.
+
+The Agent runtime persists AG-UI events, run state, leases, cancellation, retry metadata, and LangGraph checkpoints in PostgreSQL's isolated `agent_runtime` schema. Automatic retry is allowed only before user-visible/tool output. Interrupted runs with persisted output fail explicitly to avoid replaying side effects. Manual retry creates a new run ID and preserves the original audit trail.
 
 ### Agent tool pipeline (visualization)
 
@@ -116,7 +118,7 @@ Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared b
 
 ### DB
 
-ORM: Drizzle + `postgres` driver. Drizzle is the sole owner of App/Auth/Course schema (`apps/web/src/lib/db/schema.ts` and `apps/web/drizzle/`). Versioned SQL under `apps/web/db/knowledge-graph/migrations/` is the sole owner of KG/pgvector schema. `pnpm db:bootstrap` applies both owners idempotently and is the only deployment schema entrypoint. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, lesson/progress/extractor jobs, `knowledge_graph_*`, `learning_events`, `quiz_attempts`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `copilot_chat_threads`, `copilot_chat_messages`, `media_assets`, and `user_settings`.
+ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, jobs, learning events, mastery, learner profiles/facts, chat messages, media assets, and settings.
 
 Local development uses the Docker Compose PostgreSQL service (`pgvector/pgvector:pg16`) bound to `127.0.0.1:5432`. The old `127.0.0.1:15432` Tencent Cloud SSH tunnel is a remote-database fallback only, not the default local path. Supabase runtime helpers have been removed; do not add new Supabase URL/anon-key paths unless the database/auth strategy is intentionally changed.
 
@@ -128,11 +130,11 @@ KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current
 
 ### Deployment
 
-Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, a one-shot `migrate` service (blocks app startup until `db:bootstrap` succeeds), web, agent, the three workers, and a Caddy reverse proxy. Only Caddy (80/443) is public — the agent's 2024 port has no auth and must never be published. All images build from `docker/app.Dockerfile` (targets `web`/`agent`/`worker`); runtime env comes from a root `.env` (template: `.env.production.example`). Failed background jobs are requeued with `pnpm --filter @primoria/web jobs:requeue-failed [queue] [jobId]`; daily backups via `scripts/pg-backup.sh`. Full runbook: README "Deployment (Single Server)".
+Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, App/KG and Agent-runtime migration jobs, web, the self-hosted Node/AG-UI agent, three workers, and Caddy. Web waits for Agent readiness; Agent shutdown drains active runs. Only Caddy is public; port 2024 must never be published. Full runbook: README "Deployment (Single Server)".
 
 ## Key constraints
 
 - `apps/agent/` is plain ESM (`.mjs`), no TypeScript, no imports from `apps/web/`.
 - Widget HTML must be an iframe fragment (no `<html>/<head>/<body>` wrapper, no `100vh` layouts).
 - The widget dependency allowlist is single-sourced in `packages/contracts/src/artifacts/widget-dependencies.mjs`; agent and web import it — never re-declare widget CDN URLs elsewhere (`apps/web/tests/widget-dependencies-sync.spec.ts` enforces this).
-- DB access is only from `apps/web/` server-side code; never from client components directly.
+- App/Auth/Course/KG writes remain Web-owned. `apps/agent/` may access only `agent_runtime` plus its existing bounded owner-scoped course-card read; never access DB from client components.

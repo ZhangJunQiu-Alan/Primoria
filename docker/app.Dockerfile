@@ -34,7 +34,7 @@ CMD ["pnpm", "--filter", "@primoria/web", "worker:lesson-generation"]
 FROM source AS agent
 ENV NODE_ENV=production
 EXPOSE 2024
-CMD ["pnpm", "--filter", "@primoria/agent", "exec", "langgraphjs", "dev", "--config", "../../langgraph.json", "--host", "0.0.0.0", "--port", "2024", "--no-browser"]
+CMD ["pnpm", "--filter", "@primoria/agent", "start"]
 
 FROM source AS webbuild
 # NEXT_PUBLIC_* values are inlined into the client bundle at build time, so
