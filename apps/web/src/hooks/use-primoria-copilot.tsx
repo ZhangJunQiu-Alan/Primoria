@@ -11,6 +11,23 @@ import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
 import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
 import { setTodos } from "@/lib/todos-store";
 import { CourseCardArtifactSchema, TutorArtifactSchema } from "@primoria/contracts/artifacts";
+import {
+  GetCourseCardArgsSchema,
+  PlanVisualizationArgsSchema,
+  PositionLearningGoalArgsSchema,
+  Render3dSceneArgsSchema,
+  RenderAlgorithmArgsSchema,
+  RenderChartArgsSchema,
+  RenderChatQuizArgsSchema,
+  RenderDiagramArgsSchema,
+  RenderGraphArgsSchema,
+  RenderMathExplorerArgsSchema,
+  RenderMoleculeArgsSchema,
+  RenderPhysicsSceneArgsSchema,
+  RenderWaveArgsSchema,
+  WidgetDependencySchema,
+} from "@primoria/contracts/artifacts/schemas";
+import type { ChatQuizQuestion, PlanVisualizationArgs, RenderChatQuizArgs } from "@primoria/contracts/artifacts";
 import type { CourseCardArtifact } from "@/lib/agent-os";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import type { CourseSummary } from "@/lib/courses/types";
@@ -31,73 +48,20 @@ const WriteTodosParams = z.object({
   ),
 });
 
-const PlanVisualizationParams = z.object({
-  title: z.string().optional(),
-  approach: z.string(),
-  technology: z.string(),
-  key_elements: z.union([z.array(z.string()), z.string()]),
-});
-
+// widgetRenderer is registered via useComponent (a frontend tool), so this
+// schema is part of that tool's public shape — keep the streaming-tolerant
+// defaults; only the dependency sub-schema comes from contracts.
 const RenderWidgetParams = z.object({
   title: z.string().optional(),
   description: z.string().optional().default(""),
   html: z.string().optional().default(""),
-  dependencies: z.array(z.object({
-    url: z.string(),
-    global: z.string().optional(),
-    kind: z.enum(["script", "module", "style"]).optional(),
-  })).optional(),
+  dependencies: z.array(WidgetDependencySchema).optional(),
 });
 
-const ChatQuizChoiceParams = z.object({
-  id: z.string(),
-  text: z.string(),
-});
-
-const ChatQuizQuestionParams = z.discriminatedUnion("kind", [
-  z.object({
-    kind: z.literal("single"),
-    id: z.string(),
-    question: z.string(),
-    choices: z.array(ChatQuizChoiceParams).min(2).max(6),
-    correctId: z.string(),
-    explanation: z.string().optional(),
-  }),
-  z.object({
-    kind: z.literal("multi"),
-    id: z.string(),
-    question: z.string(),
-    choices: z.array(ChatQuizChoiceParams).min(2).max(6),
-    correctIds: z.array(z.string()).min(1),
-    explanation: z.string().optional(),
-  }),
-  z.object({
-    kind: z.literal("truefalse"),
-    id: z.string(),
-    question: z.string(),
-    correct: z.boolean(),
-    explanation: z.string().optional(),
-  }),
-]);
-
-const ChatQuizParams = z.object({
-  title: z.string().optional(),
-  description: z.string().optional().default(""),
-  questions: z.array(ChatQuizQuestionParams).min(1).max(6),
-});
-
+// Legacy tool name; older stored threads may still reference it.
 const GenerateCourseParams = z.object({
   topic: z.string(),
   context_hint: z.string().optional(),
-});
-
-const GetCourseCardParams = z.object({
-  course_id: z.string(),
-});
-
-const PositionLearningGoalParams = z.object({
-  query: z.string(),
-  graph_id: z.string().optional(),
 });
 
 const COURSE_CARD_PREFIX = "PRIMORIA_COURSE_CARD:";
@@ -116,7 +80,7 @@ function WriteTodosSink({ todos }: { todos: z.infer<typeof WriteTodosParams>["to
   );
 }
 
-function normalizePlanKeyElements(value: z.infer<typeof PlanVisualizationParams>["key_elements"]) {
+function normalizePlanKeyElements(value: PlanVisualizationArgs["key_elements"]) {
   if (Array.isArray(value)) return value.map(String).filter(Boolean);
   return String(value ?? "")
     .split(/[\n,，、;；]+/)
@@ -138,7 +102,6 @@ function WidgetCard({ title, description, html, dependencies }: z.infer<typeof R
   );
 }
 
-type ChatQuizQuestion = z.infer<typeof ChatQuizQuestionParams>;
 type ChatQuizSelection = string | string[] | boolean;
 type ChatQuizState =
   | { phase: "answering"; selections: Record<string, ChatQuizSelection> }
@@ -164,7 +127,7 @@ function ChatQuizCard({
   title,
   description,
   questions,
-}: z.infer<typeof ChatQuizParams>) {
+}: RenderChatQuizArgs) {
   const [state, setState] = useState<ChatQuizState>({ phase: "answering", selections: {} });
 
   const setSelection = useCallback((questionId: string, value: ChatQuizSelection) => {
@@ -314,9 +277,9 @@ function ChatQuizQuestionView({
   );
 }
 
-function ChatQuizTool({ status, parameters }: { status: string; parameters?: Partial<z.infer<typeof ChatQuizParams>> }) {
+function ChatQuizTool({ status, parameters }: { status: string; parameters?: Partial<RenderChatQuizArgs> }) {
   const t = useT();
-  const parsed = ChatQuizParams.safeParse(parameters);
+  const parsed = RenderChatQuizArgsSchema.safeParse(parameters);
   if (!parsed.success) {
     const display = getTutorToolDisplay("render_chat_quiz", status, t);
     return (
@@ -422,7 +385,7 @@ function GetCourseCardTool({
 }: {
   status: "inProgress" | "executing" | "complete";
   result?: string;
-  parameters?: Partial<z.infer<typeof GetCourseCardParams>>;
+  parameters?: Partial<z.infer<typeof GetCourseCardArgsSchema>>;
 }) {
   const t = useT();
   const artifact = parseCourseCardResult(result);
@@ -806,7 +769,7 @@ function RestoredLessonGenerationCard({
 // Web-as-brain course card. The agent tool only surfaces the learner's goal; this
 // browser component runs KG positioning (/api/knowledge-graph/position) and, for a
 // specific match, the asynchronous build (/api/learning/course). Both fetches carry
-// the user's session natively, so the course persists to app_courses under the
+// the user's session natively, so the course persists to courses under the
 // signed-in owner. positioned -> course card, clarify_subject -> subject chips,
 // fallback -> message.
 function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string }) {
@@ -930,7 +893,7 @@ export function usePrimoriaGenerativeUI() {
 
   useRenderTool({
     name: "plan_visualization",
-    parameters: PlanVisualizationParams,
+    parameters: PlanVisualizationArgsSchema,
     render: ({ status, parameters }) => (
       <VisualizationPlanTool
         status={status}
@@ -943,7 +906,7 @@ export function usePrimoriaGenerativeUI() {
 
   useRenderTool({
     name: "render_chat_quiz",
-    parameters: ChatQuizParams,
+    parameters: RenderChatQuizArgsSchema,
     render: ({ status, parameters }) => (
       <ChatQuizTool status={status} parameters={parameters} />
     ),
@@ -975,7 +938,7 @@ export function usePrimoriaGenerativeUI() {
 
   useRenderTool({
     name: "position_learning_goal",
-    parameters: PositionLearningGoalParams,
+    parameters: PositionLearningGoalArgsSchema,
     render: ({ parameters }) => <LearningGoalCard query={parameters?.query} graphId={parameters?.graph_id} />,
   });
 
@@ -990,21 +953,21 @@ export function usePrimoriaGenerativeUI() {
 
   useRenderTool({
     name: "get_course_card",
-    parameters: GetCourseCardParams,
+    parameters: GetCourseCardArgsSchema,
     render: ({ status, result, parameters }) => (
       <GetCourseCardTool status={status} result={result} parameters={parameters} />
     ),
   });
 
-  useRenderTool({ name: "render_chart", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_chart" status={status} result={result} /> });
-  useRenderTool({ name: "render_diagram", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_diagram" status={status} result={result} /> });
-  useRenderTool({ name: "render_physics_scene", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_physics_scene" status={status} result={result} /> });
-  useRenderTool({ name: "render_algorithm", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_algorithm" status={status} result={result} /> });
-  useRenderTool({ name: "render_math_explorer", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_math_explorer" status={status} result={result} /> });
-  useRenderTool({ name: "render_wave", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_wave" status={status} result={result} /> });
-  useRenderTool({ name: "render_graph", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_graph" status={status} result={result} /> });
-  useRenderTool({ name: "render_molecule", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_molecule" status={status} result={result} /> });
-  useRenderTool({ name: "render_3d_scene", parameters: z.any(), render: ({ status, result }) => <VisualizerToolRender name="render_3d_scene" status={status} result={result} /> });
+  useRenderTool({ name: "render_chart", parameters: RenderChartArgsSchema, render: ({ status, result }) => <VisualizerToolRender name="render_chart" status={status} result={result} /> });
+  useRenderTool({ name: "render_diagram", parameters: RenderDiagramArgsSchema, render: ({ status, result }) => <VisualizerToolRender name="render_diagram" status={status} result={result} /> });
+  useRenderTool({ name: "render_physics_scene", parameters: RenderPhysicsSceneArgsSchema, render: ({ status, result }) => <VisualizerToolRender name="render_physics_scene" status={status} result={result} /> });
+  useRenderTool({ name: "render_algorithm", parameters: RenderAlgorithmArgsSchema, render: ({ status, result }) => <VisualizerToolRender name="render_algorithm" status={status} result={result} /> });
+  useRenderTool({ name: "render_math_explorer", parameters: RenderMathExplorerArgsSchema, render: ({ status, result }) => <VisualizerToolRender name="render_math_explorer" status={status} result={result} /> });
+  useRenderTool({ name: "render_wave", parameters: RenderWaveArgsSchema, render: ({ status, result }) => <VisualizerToolRender name="render_wave" status={status} result={result} /> });
+  useRenderTool({ name: "render_graph", parameters: RenderGraphArgsSchema, render: ({ status, result }) => <VisualizerToolRender name="render_graph" status={status} result={result} /> });
+  useRenderTool({ name: "render_molecule", parameters: RenderMoleculeArgsSchema, render: ({ status, result }) => <VisualizerToolRender name="render_molecule" status={status} result={result} /> });
+  useRenderTool({ name: "render_3d_scene", parameters: Render3dSceneArgsSchema, render: ({ status, result }) => <VisualizerToolRender name="render_3d_scene" status={status} result={result} /> });
 
   useDefaultRenderTool({
     render: () => <></>,

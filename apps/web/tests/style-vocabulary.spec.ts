@@ -18,8 +18,10 @@ import {
 // These tests guard the old failure mode where graph.mjs and style-tokens.ts
 // carried separate prose/value copies that could silently drift.
 
+// The widget tool prompt moved out of graph.mjs into tools/visualization.mjs
+// when the agent was split into modules.
 const graphSource = readFileSync(
-  fileURLToPath(new URL("../../agent/src/graph.mjs", import.meta.url)),
+  fileURLToPath(new URL("../../agent/src/tools/visualization.mjs", import.meta.url)),
   "utf8",
 );
 

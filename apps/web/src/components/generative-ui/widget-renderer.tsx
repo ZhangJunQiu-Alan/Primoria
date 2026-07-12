@@ -12,19 +12,18 @@ import {
   WIDGET_IFRAME_SANDBOX,
   WIDGET_PROMPT_MAX_LENGTH,
 } from "@/lib/ai/widget-bridge";
-import { normalizeWidgetDependencies, type WidgetDependency as RuntimeWidgetDependency } from "@/lib/ai/widget-dependencies";
-
-export const WidgetDependency = z.object({
-  url: z.string(),
-  global: z.string().optional(),
-  kind: z.enum(["script", "module", "style"]).optional(),
-});
+import {
+  normalizeWidgetDependencies,
+  WIDGET_DEPENDENCY_ALLOWLIST,
+  type WidgetDependency as RuntimeWidgetDependency,
+} from "@/lib/ai/widget-dependencies";
+import { WidgetDependencySchema } from "@primoria/contracts/artifacts/schemas";
 
 export const WidgetRendererProps = z.object({
   title: z.string(),
   description: z.string(),
   html: z.string().optional().default(""),
-  dependencies: z.array(WidgetDependency).optional(),
+  dependencies: z.array(WidgetDependencySchema).optional(),
 });
 
 export type WidgetRendererProps = z.infer<typeof WidgetRendererProps>;
@@ -283,20 +282,7 @@ function notifyWidgetReady() {
   try { reportHeight(); } catch (_) {}
 }
 
-var COMMON_DEPENDENCIES = {
-  d3: { global: 'd3', url: 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js', kind: 'script' },
-  Chart: { global: 'Chart', url: 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js', kind: 'script' },
-  gsap: { global: 'gsap', url: 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js', kind: 'script' },
-  THREE: { global: 'THREE', url: 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js', kind: 'script' },
-  anime: { global: 'anime', url: 'https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js', kind: 'script' },
-  Matter: { global: 'Matter', url: 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js', kind: 'script' },
-  p5: { global: 'p5', url: 'https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js', kind: 'script' },
-  math: { global: 'math', url: 'https://cdn.jsdelivr.net/npm/mathjs@14.2.1/lib/browser/math.min.js', kind: 'script' },
-  L: { global: 'L', url: 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', kind: 'script' },
-  mermaid: { global: 'mermaid', url: 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js', kind: 'script' },
-  cytoscape: { global: 'cytoscape', url: 'https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js', kind: 'script' },
-  echarts: { global: 'echarts', url: 'https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js', kind: 'script' }
-};
+var COMMON_DEPENDENCIES = ${JSON.stringify(WIDGET_DEPENDENCY_ALLOWLIST)};
 var ALLOWED_DEPENDENCY_URLS = Object.keys(COMMON_DEPENDENCIES).reduce(function(map, key) {
   map[COMMON_DEPENDENCIES[key].url] = true;
   return map;
