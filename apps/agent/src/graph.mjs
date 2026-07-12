@@ -31,36 +31,39 @@ import {
 import { getCourseCardTool, positionLearningGoalTool } from "./tools/course.mjs";
 import { renderChatQuizTool } from "./tools/quiz.mjs";
 
-const checkpointer = new MemorySaver();
+/** @param {{ checkpointer?: any }} [options] */
+export function createPrimoriaGraph({ checkpointer = new MemorySaver() } = {}) {
+  return createDeepAgent({
+    name: "primoria-tutor",
+    model: createModel(),
+    tools: [
+      planVisualizationTool,
+      widgetRendererTool,
+      renderChatQuizTool,
+      getCourseCardTool,
+      renderChartTool,
+      renderDiagramTool,
+      renderPhysicsSceneTool,
+      render3dSceneTool,
+      renderAlgorithmTool,
+      renderMathExplorerTool,
+      renderWaveTool,
+      renderGraphTool,
+      renderMoleculeTool,
+      stemRendererTool,
+      positionLearningGoalTool,
+    ],
+    systemPrompt: SYSTEM_PROMPT,
+    subagents,
+    middleware: [primoriaContextMiddleware, primoriaHistoryTrimMiddleware, primoriaCourseDetailMiddleware],
+    contextSchema: PrimoriaContextSchema,
+    checkpointer,
+    backend: new FilesystemBackend({
+      rootDir: process.cwd(),
+      virtualMode: true,
+    }),
+    skills: ["/skills/"],
+  });
+}
 
-export const graph = createDeepAgent({
-  name: "primoria-tutor",
-  model: createModel(),
-  tools: [
-    planVisualizationTool,
-    widgetRendererTool,
-    renderChatQuizTool,
-    getCourseCardTool,
-    renderChartTool,
-    renderDiagramTool,
-    renderPhysicsSceneTool,
-    render3dSceneTool,
-    renderAlgorithmTool,
-    renderMathExplorerTool,
-    renderWaveTool,
-    renderGraphTool,
-    renderMoleculeTool,
-    stemRendererTool,
-    positionLearningGoalTool,
-  ],
-  systemPrompt: SYSTEM_PROMPT,
-  subagents,
-  middleware: [primoriaContextMiddleware, primoriaHistoryTrimMiddleware, primoriaCourseDetailMiddleware],
-  contextSchema: PrimoriaContextSchema,
-  checkpointer,
-  backend: new FilesystemBackend({
-    rootDir: process.cwd(),
-    virtualMode: true,
-  }),
-  skills: ["/skills/"],
-});
+export const graph = createPrimoriaGraph();

@@ -393,8 +393,11 @@ This product architecture maps onto the current codebase as follows:
   learning events, mastery, learner profiles/facts, background jobs, media
   assets, and rate-limit state.
 - `apps/agent` executes the active `primoria_tutor` LangGraph/deepagents graph.
-  It does not import from `apps/web`; bounded course-card reads are handled
-  through explicit agent-side DB code.
+  Its self-hosted Node/AG-UI runtime owns only the isolated `agent_runtime`
+  schema for durable runs, streamed events, leases, cancellation, retries, and
+  LangGraph checkpoints. It does not import from `apps/web`; bounded
+  course-card reads are handled through explicit agent-side DB code, while all
+  product writes remain Web-owned.
 
 Current implementation work should stay grounded in the active personal
 learning loop unless a new architecture decision reopens classroom or

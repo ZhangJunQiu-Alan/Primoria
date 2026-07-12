@@ -149,11 +149,17 @@ Then implement the React renderer against that representation rather than making
 
 ### P1: Tutor Runtime Productization
 
-The active agent runtime is the `primoria_tutor` LangGraph/deepagents graph. The
-next slices should make tutor behavior dependable before reintroducing broader
-agent surfaces:
+The active baseline is a self-hosted Node/AG-UI service around the
+`primoria_tutor` LangGraph/deepagents graph. PostgreSQL now persists runs,
+events, leases, cancellation state, conservative retry/recovery metadata, and
+checkpoints. The service has readiness/liveness checks and graceful shutdown;
+it does not depend on LangGraph Agent Server, LangSmith Deployment, or Redis.
+
+Next slices should improve behavior and observability without weakening the
+current ownership boundary:
 
 - provider failover and timeout behavior
+- metrics and alerts for queue age, stale leases, failures, and cancellation latency
 - tool status and artifact rendering consistency
 - course-detail context targeting
 - saved chat/thread persistence checks

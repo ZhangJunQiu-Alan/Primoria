@@ -127,10 +127,10 @@ pnpm --filter @primoria/web db:check
 pnpm db:bootstrap
 ```
 
-`db:bootstrap` applies the versioned KG/pgvector schema first and then all
-Drizzle App/Auth/Course migrations. It is safe to repeat and never calls an
-external model provider. Drizzle remains the sole owner of App/Auth/Course
-schema; `apps/web/db/knowledge-graph/migrations/` is the sole KG schema owner.
+`db:bootstrap` applies the versioned KG/pgvector schema, Drizzle
+App/Auth/Course migrations, and the isolated `agent_runtime` schema. It is safe
+to repeat and never calls an external model provider. Each schema keeps its own
+owner and migration history.
 
 Knowledge-graph source data and embeddings are initialized separately. For a
 new environment, import every graph, cross-subject edge, and embedding with:
@@ -235,13 +235,15 @@ Business setup still required in the Tencent Cloud console:
 
 ### AI Tutor Agent
 
-The web app talks to the LangGraph agent through CopilotKit:
+The web app talks to Primoria's self-hosted AG-UI Agent runtime through CopilotKit:
 
 ```bash
-LANGGRAPH_DEPLOYMENT_URL=http://localhost:2024
+PRIMORIA_AGENT_URL=http://localhost:2024
 ```
 
-If unset, the web route defaults to `http://localhost:2024`.
+If unset, the web route defaults to `http://localhost:2024`. The service uses
+the open-source LangGraph library directly; it does not use LangGraph Agent
+Server, LangSmith Deployment, Redis, or a LangGraph production license.
 
 ### Optional Capabilities
 
@@ -258,7 +260,7 @@ If `GEMINI_IMAGE_MODEL` is unset, Primoria uses `gemini-3.1-flash-lite-image` by
 
 ### Full Local Stack
 
-The root dev script runs every `dev:*` script in parallel: web app, LangGraph agent, lesson-generation worker, learning-progress worker, and extractor worker.
+The root dev script runs every `dev:*` script in parallel: web app, Primoria Agent runtime, lesson-generation worker, learning-progress worker, and extractor worker.
 
 ```bash
 docker compose up -d postgres
@@ -268,7 +270,7 @@ pnpm dev
 Expected services:
 
 - Web app: `http://localhost:3000`
-- LangGraph agent: `http://localhost:2024`
+- Primoria Agent runtime: `http://localhost:2024`
 - Background workers: run in the terminal process and require `DATABASE_URL`.
 
 Route entry points: `/welcome` is the public landing page; `/` is the signed-in
@@ -278,10 +280,10 @@ returns to `/welcome`.
 ### Individual Processes
 
 ```bash
-# Web app only. AI Tutor still needs LANGGRAPH_DEPLOYMENT_URL to point at a running agent.
+# Web app only. AI Tutor still needs PRIMORIA_AGENT_URL to point at a running agent.
 pnpm --filter @primoria/web dev
 
-# LangGraph agent only.
+# Primoria Agent runtime only. Applies its runtime migration before starting.
 pnpm --filter @primoria/agent dev
 
 # Background workers.
@@ -346,6 +348,9 @@ pnpm --filter @primoria/agent typecheck
 pnpm test:agent
 pnpm test:agent:integration
 
+# Agent run-store and real HTTP/SSE integration (isolated TEST_DATABASE_URL)
+pnpm --filter @primoria/agent test:runtime:db
+
 # Production route bundle budgets (run after build)
 pnpm --filter @primoria/web build
 pnpm --filter @primoria/web bundle:check
@@ -355,7 +360,7 @@ The learning-path smoke requires `CI_LEARNING_SMOKE=1` and a test `DATABASE_URL`
 
 ## Deployment (Single Server)
 
-Production runs the whole stack on one server (e.g. a Tencent Cloud CVM) with Docker Compose. `docker-compose.prod.yml` defines every process: Postgres, a one-shot migration job, the web app, the LangGraph agent, the three background workers, and a Caddy reverse proxy. All services restart automatically on crash and on server reboot.
+Production runs the whole stack on one server (e.g. a Tencent Cloud CVM) with Docker Compose. `docker-compose.prod.yml` defines Postgres, App/KG and Agent-runtime migration jobs, the web app, the self-hosted Agent runtime, three background workers, and Caddy.
 
 Port boundaries: only Caddy (80/443) is reachable from outside. The web app (3000), the agent (2024 — it has no auth of its own and must never be published), the workers, and Postgres stay on the internal compose network; Postgres additionally binds `127.0.0.1:5432` for server-side administration.
 
@@ -374,8 +379,8 @@ docker compose -f docker-compose.prod.yml run --rm migrate \
 ```
 
 Startup order is enforced by the compose file: postgres (healthcheck) →
-`migrate` (one-shot `db:bootstrap`, so new code never runs against an old App or
-KG schema) → web/agent/workers. KG data and embedding imports remain separate
+`migrate` (App/KG) → `agent-migrate` (`agent_runtime`) → healthy Agent → Web.
+KG data and embedding imports remain separate
 because an external model outage must not block a normal application release.
 
 HTTPS: leave `PRIMORIA_DOMAIN` empty to serve plain HTTP on `:80` while testing against a bare IP. Once a DNS A record points your domain at the server, set `PRIMORIA_DOMAIN` (and matching `APP_BASE_URL`/`NEXT_PUBLIC_APP_URL`), open ports 80+443 in the security group, and rerun `up -d --build` — Caddy provisions and renews certificates automatically.
@@ -403,11 +408,24 @@ docker compose -f docker-compose.prod.yml restart worker-extractor
 # Requeue failed background jobs (all queues, one queue, or one job)
 docker compose -f docker-compose.prod.yml run --rm migrate \
   pnpm --filter @primoria/web jobs:requeue-failed
+
+# Inspect and operate durable Agent runs
+pnpm agent:runs:status
+pnpm agent:runs:inspect <runId>
+pnpm agent:runs:cancel <runId>
+# Creates a new run ID and preserves the original run's events for audit.
+pnpm agent:runs:retry <runId>
+pnpm agent:runs:recover
+pnpm agent:runs:prune [retentionDays]
 ```
 
 ### Monitoring and Alerts
 
 `GET /api/health` reports database/KG state plus job-queue backlog (queued/running/failed counts and the age of the oldest queued job per queue). A dead worker surfaces as a stalled queue: once a job waits longer than `PRIMORIA_HEALTH_QUEUE_STALL_SECONDS` (default 600), the overall status flips from `ok` to `degraded`.
+
+The internal Agent service exposes `/health/live` and `/health/ready`; Docker
+Compose gates Web startup on Agent readiness. Port 2024 is not an external
+monitoring endpoint and must remain private to the Compose network.
 
 Point an uptime probe (Tencent Cloud 云监控 site monitoring, or any external uptime service) at `https://<domain>/api/health` every minute and alert when the response body stops containing `"status":"ok"` — that single check catches DB outages, missing schema, and dead workers.
 
@@ -431,7 +449,7 @@ command is documented in the script header.
 
 - `fast-checks`: Web typecheck/lint/unit, KG source validation, Drizzle migration drift, and Agent syntax/type/unit/offline graph integration.
 - `bundle-budget`: production build plus raw/gzip first-load JS budgets from `apps/web/bundle-budgets.json`.
-- `database-integration`: `pgvector/pg16`, two consecutive `db:bootstrap` runs, and all seven DB-backed tests.
+- `database-integration`: `pgvector/pg16`, two consecutive `db:bootstrap` runs, all seven Web DB tests, and Agent run-store/HTTP tests.
 - `browser-integration`: an isolated `pgvector/pg16` database, deterministic login-to-course-completion smoke, and Widget renderer E2E.
 
 ## Architecture
@@ -440,7 +458,7 @@ command is documented in the script header.
 
 There is one active main tutor runtime path:
 
-Browser CopilotKit UI -> `apps/web/src/app/api/copilotkit/route.ts` -> `PrimoriaLangGraphAgent` / `LangGraphAgent(graphId: "primoria_tutor")` -> `apps/agent/src/graph.mjs`.
+Browser CopilotKit UI -> `apps/web/src/app/api/copilotkit/route.ts` -> `PrimoriaHttpAgent` -> internal AG-UI `POST /agent` -> `apps/agent/src/graph.mjs`.
 
 The route normalizes Copilot attachments, injects hidden course-detail context when the learner is inside a course, and adds learner profile/fact context for tutor dialogue.
 

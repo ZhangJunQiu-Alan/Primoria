@@ -121,6 +121,9 @@ jobs:
       - name: Database tests
         run: pnpm test:db
 
+      - name: Agent runtime database and HTTP tests
+        run: pnpm --filter @primoria/agent test:runtime:db
+
   browser-integration:
     runs-on: ubuntu-latest
     timeout-minutes: 30
