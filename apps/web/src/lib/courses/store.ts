@@ -376,7 +376,7 @@ async function listCourseSummariesFromDb(ownerId: string, options: { includeArch
   return rows.map((row) => summarizeCourse(rowToCourse(row, lessonsByCourse.get(row.id) ?? [])));
 }
 
-function courseToRow(course: Course, ownerId: string) {
+export function courseToRow(course: Course, ownerId: string) {
   return {
     id: course.id,
     ownerId,
@@ -394,7 +394,7 @@ function courseToRow(course: Course, ownerId: string) {
   };
 }
 
-function lessonToRow(lesson: Lesson, courseId: string, ownerId: string) {
+export function lessonToRow(lesson: Lesson, courseId: string, ownerId: string) {
   return {
     id: lesson.id,
     courseId,

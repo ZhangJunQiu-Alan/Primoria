@@ -288,6 +288,13 @@
       "when": 1783793255575,
       "tag": "0040_ancient_vertigo",
       "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "7",
+      "when": 1783860987163,
+      "tag": "0041_special_shadow_king",
+      "breakpoints": true
     }
   ]
 }

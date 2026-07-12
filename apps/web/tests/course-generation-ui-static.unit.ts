@@ -167,9 +167,10 @@ async function main() {
   assert(!libraryGrid.includes("Showing {visibleEntries.length}"), "library footer no longer shows item count copy");
   assert(libraryGrid.includes("ShareCourseDialog"), "library has a share course modal");
   assert(libraryGrid.includes("shareCourse") && dictionaries.en.library.shareCourse === "Share course", "library row menu exposes share course");
-  assert(libraryGrid.includes("courseShareUrl(course.id)"), "share modal derives a course share link");
-  assert(libraryGrid.includes("/learn/${encodeURIComponent(courseId)}"), "share links use the public learn URL shape");
+  assert(libraryGrid.includes("/api/courses/${course.id}/share"), "share modal drives sharing through the share API");
+  assert(!libraryGrid.includes("/learn/"), "share modal no longer fabricates the removed /learn URL");
   assert(libraryGrid.includes("copyTextToClipboard(shareUrl)"), "share modal can copy the generated link");
+  assert(libraryGrid.includes("shareRevoke"), "share modal exposes revocation");
   assert(libraryGrid.includes("if (event.target === event.currentTarget) onClose();"), "share modal closes when clicking outside the card");
   assert(styles.includes(".library-actions-heading"), "library actions heading aligns with the primary row action");
   assert(styles.includes(".library-row-menu.drop-up"), "library row menu has a drop-up placement style");
