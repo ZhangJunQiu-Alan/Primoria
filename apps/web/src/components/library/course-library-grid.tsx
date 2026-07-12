@@ -617,6 +617,12 @@ function CourseRow({
   );
 }
 
+type ShareDialogState =
+  | { phase: "loading" }
+  | { phase: "off" }
+  | { phase: "active"; sharePath: string }
+  | { phase: "error"; message: string };
+
 function ShareCourseDialog({
   course,
   onClose,
@@ -625,8 +631,9 @@ function ShareCourseDialog({
   onClose: () => void;
 }) {
   const t = useT();
+  const [state, setState] = useState<ShareDialogState>({ phase: "loading" });
+  const [busy, setBusy] = useState(false);
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
-  const shareUrl = useMemo(() => courseShareUrl(course.id), [course.id]);
 
   useEffect(() => {
     function closeOnEscape(event: KeyboardEvent) {
@@ -635,6 +642,46 @@ function ShareCourseDialog({
     document.addEventListener("keydown", closeOnEscape);
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [onClose]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/courses/${course.id}/share`);
+        if (!res.ok) throw new Error(String(res.status));
+        const body = (await res.json()) as { share: { sharePath: string } | null };
+        if (cancelled) return;
+        setState(body.share ? { phase: "active", sharePath: body.share.sharePath } : { phase: "off" });
+      } catch {
+        if (!cancelled) setState({ phase: "error", message: t.library.shareLoadFailed });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [course.id, t.library.shareLoadFailed]);
+
+  const shareUrl = state.phase === "active" && typeof window !== "undefined" ? `${window.location.origin}${state.sharePath}` : "";
+
+  async function mutateShare(method: "POST" | "DELETE") {
+    if (busy) return;
+    setBusy(true);
+    setCopyState("idle");
+    try {
+      const res = await fetch(`/api/courses/${course.id}/share`, { method });
+      if (!res.ok) throw new Error(String(res.status));
+      if (method === "DELETE") {
+        setState({ phase: "off" });
+      } else {
+        const body = (await res.json()) as { share: { sharePath: string } };
+        setState({ phase: "active", sharePath: body.share.sharePath });
+      }
+    } catch {
+      setState({ phase: "error", message: t.library.shareActionFailed });
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function copyShareLink() {
     try {
@@ -664,16 +711,44 @@ function ShareCourseDialog({
           </button>
         </header>
         <div className="library-share-body">
-          <p>
-            {msg(t.library.shareCopy, { title: course.title })}
-          </p>
-          <div className="library-share-link-row">
-            <input type="text" value={shareUrl} readOnly aria-label={t.library.shareLink} onFocus={(event) => event.currentTarget.select()} />
-            <button type="button" onClick={copyShareLink}>
-              <CopyIcon />
-              <span>{copyState === "copied" ? t.library.copied : copyState === "failed" ? t.library.copyFailed : t.library.copy}</span>
-            </button>
-          </div>
+          {state.phase === "loading" ? <p>…</p> : null}
+          {state.phase === "error" ? <p role="alert">{state.message}</p> : null}
+          {state.phase === "off" ? (
+            <>
+              <p>{msg(t.library.shareOffCopy, { title: course.title })}</p>
+              <div className="library-share-actions">
+                <button type="button" className="library-share-primary" disabled={busy} onClick={() => mutateShare("POST")}>
+                  {t.library.shareCreate}
+                </button>
+              </div>
+            </>
+          ) : null}
+          {state.phase === "active" ? (
+            <>
+              <p>{msg(t.library.shareCopy, { title: course.title })}</p>
+              <div className="library-share-link-row">
+                <input
+                  type="text"
+                  value={shareUrl}
+                  readOnly
+                  aria-label={t.library.shareLink}
+                  onFocus={(event) => event.currentTarget.select()}
+                />
+                <button type="button" onClick={copyShareLink}>
+                  <CopyIcon />
+                  <span>{copyState === "copied" ? t.library.copied : copyState === "failed" ? t.library.copyFailed : t.library.copy}</span>
+                </button>
+              </div>
+              <div className="library-share-actions">
+                <button type="button" disabled={busy} onClick={() => mutateShare("POST")}>
+                  {t.library.shareUpdate}
+                </button>
+                <button type="button" className="danger" disabled={busy} onClick={() => mutateShare("DELETE")}>
+                  {t.library.shareRevoke}
+                </button>
+              </div>
+            </>
+          ) : null}
         </div>
       </div>
     </div>
@@ -919,12 +994,6 @@ function initials(title: string) {
   const ascii = words.filter((word) => /^[a-z0-9]/i.test(word));
   const source = ascii.length > 0 ? ascii : words;
   return source.slice(0, 2).map((word) => word.slice(0, 1).toUpperCase()).join("");
-}
-
-function courseShareUrl(courseId: string) {
-  const path = `/learn/${encodeURIComponent(courseId)}`;
-  if (typeof window === "undefined") return path;
-  return `${window.location.origin}${path}`;
 }
 
 async function copyTextToClipboard(text: string) {

@@ -13,6 +13,8 @@ export const PUBLIC_ROUTE_PATTERNS: readonly RegExp[] = [
   /^\/forgot(\/|$)/,
   /^\/reset-password(\/|$)/,
   /^\/dev\/onboarding(\/|$)/,
+  // Public course-share previews; the page reads only immutable snapshots.
+  /^\/share(\/|$)/,
 ];
 
 export function isPublicPath(pathname: string): boolean {

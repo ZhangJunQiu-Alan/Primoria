@@ -131,6 +131,10 @@ export const courses = pgTable(
     // concept names stay English for indexing.
     language: text("language"),
     archivedAt: timestamp("archived_at", { withTimezone: true }),
+    // Set when this course was created by importing a shared snapshot;
+    // references course_share_links.id (no FK so revoking/deleting the share
+    // never touches imported copies).
+    importedFromShareId: text("imported_from_share_id"),
     version: integer("version").notNull().default(1),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
@@ -145,6 +149,33 @@ export const courses = pgTable(
     ownerGraphUnique: uniqueIndex("courses_owner_graph_uidx")
       .on(table.ownerId, table.graphId)
       .where(sql`${table.archivedAt} IS NULL`),
+    // Importing the same share twice is a no-op that returns the first copy.
+    ownerImportedShareUnique: uniqueIndex("courses_owner_imported_share_uidx")
+      .on(table.ownerId, table.importedFromShareId)
+      .where(sql`${table.importedFromShareId} IS NOT NULL`),
+  }),
+);
+
+/** Public share links for courses. `snapshot` is an immutable, sanitized copy
+ * of the course (progress stripped, only global media referenced) taken when
+ * sharing was enabled or last refreshed; the public /share/[token] page reads
+ * only this table, never the live course. Revoking sets revoked_at; re-enabling
+ * mints a new token so old links stay dead. */
+export const courseShareLinks = pgTable(
+  "course_share_links",
+  {
+    id: text("id").primaryKey(),
+    token: text("token").notNull(),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    snapshot: jsonb("snapshot").notNull(),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
+  },
+  (table) => ({
+    tokenUnique: uniqueIndex("course_share_links_token_uidx").on(table.token),
+    courseUnique: uniqueIndex("course_share_links_course_uidx").on(table.courseId),
   }),
 );
 
