@@ -24,6 +24,18 @@ COPY packages/memory/package.json ./packages/memory/package.json
 RUN pnpm install --frozen-lockfile
 COPY . .
 
+# Keep non-web targets directly after source so legacy Docker builders can stop
+# without executing the memory-intensive Next.js build stage.
+FROM source AS worker
+ENV NODE_ENV=production
+# Default command; docker-compose.prod.yml overrides per worker service.
+CMD ["pnpm", "--filter", "@primoria/web", "worker:lesson-generation"]
+
+FROM source AS agent
+ENV NODE_ENV=production
+EXPOSE 2024
+CMD ["pnpm", "--filter", "@primoria/agent", "exec", "langgraphjs", "dev", "--config", "../../langgraph.json", "--host", "0.0.0.0", "--port", "2024", "--no-browser"]
+
 FROM source AS webbuild
 # NEXT_PUBLIC_* values are inlined into the client bundle at build time, so
 # they must be provided as build args (docker compose passes them from .env).
@@ -38,13 +50,3 @@ FROM webbuild AS web
 ENV NODE_ENV=production
 EXPOSE 3000
 CMD ["pnpm", "--filter", "@primoria/web", "start"]
-
-FROM source AS worker
-ENV NODE_ENV=production
-# Default command; docker-compose.prod.yml overrides per worker service.
-CMD ["pnpm", "--filter", "@primoria/web", "worker:lesson-generation"]
-
-FROM source AS agent
-ENV NODE_ENV=production
-EXPOSE 2024
-CMD ["pnpm", "--filter", "@primoria/agent", "exec", "langgraphjs", "dev", "--config", "../../langgraph.json", "--host", "0.0.0.0", "--port", "2024", "--no-browser"]

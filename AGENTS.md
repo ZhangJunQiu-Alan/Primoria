@@ -23,9 +23,15 @@ pnpm lint
 # Build
 pnpm build
 
-# DB migrations (after schema changes in apps/web/src/lib/db/schema.ts)
+# Bootstrap all schemas (KG + Drizzle App/Auth/Course)
+pnpm db:bootstrap
+
+# Generate Drizzle migrations after App/Auth/Course schema changes
 pnpm --filter @primoria/web db:generate
 pnpm --filter @primoria/web db:migrate
+
+# First-time full KG data + embedding import
+pnpm db:initialize:kg
 
 # One-time local data import into a DB account
 pnpm --filter @primoria/web import:local-data <email>
@@ -78,7 +84,7 @@ The standard visualization flow in the active tutor path:
 1. `plan_visualization` — AI outputs `VisualizationPlanArtifact` (approach, technology, key elements)
 2. `widgetRenderer` — AI writes a self-contained HTML/CSS/JS fragment → `HtmlWidgetArtifact`
 
-The active tutor prompt and tool schemas live in `apps/agent/src/graph.mjs`.
+The agent is split into modules composed only by `apps/agent/src/graph.mjs`: `prompts.mjs` (system prompt + subagents), `model.mjs`, `middleware.mjs`, `widget-html.mjs`, and `tools/{visualization,renderers,course,quiz}.mjs`. Tool-argument Zod schemas are imported from `@primoria/contracts/artifacts/schemas` — the same runtime schemas the web hook uses.
 
 ### Artifact types (`packages/contracts/src/artifacts`, re-exported by `apps/web/src/lib/ai/types.ts`)
 
@@ -94,11 +100,11 @@ The active tutor prompt and tool schemas live in `apps/agent/src/graph.mjs`.
 
 Widgets execute inside a sandboxed `<iframe>`. The iframe host assembles a full HTML document (`assembleWidgetStandaloneHtml`) that includes: theme CSS, SVG helpers, form styles, a `window.sendPrompt` bridge, and all declared dependencies (scripts/styles/modules). External library URLs are validated against `ALLOWED_DEPENDENCY_URLS` — only CDN URLs in the allowlist are permitted. Streaming HTML is diffed before execution; scripts run only after HTML has settled. Libraries like `Matter`, `THREE`, `Chart`, `p5`, `mermaid`, `gsap`, `d3` are loaded from CDN at runtime, not installed as npm packages.
 
-`ToolCard` (`apps/web/src/components/generative-ui/tool-card.tsx`) routes each `TutorArtifact` type to its renderer. Adding a new artifact type requires: (1) the type in `types.ts`, (2) a branch in `ToolCard`, (3) schema in `apps/agent/src/graph.mjs`.
+`ToolCard` (`apps/web/src/components/generative-ui/tool-card.tsx`) routes each `TutorArtifact` type to its renderer. Cross-runtime Zod schemas live in `packages/contracts/src/artifacts/schemas.mjs` (plain ESM runtime shared by agent and web) with hand-written types in `schemas.d.mts`; `apps/web/tests/contracts-artifact-schemas.spec.ts` guards drift between the two. Adding a new artifact type requires: (1) type + schema in `packages/contracts/src/artifacts`, (2) a branch in `ToolCard`, (3) the tool in the matching `apps/agent/src/tools/*.mjs` module. Never type an artifact or tool-argument schema as `z.any()` — import the contracts schema.
 
 ### Course generation
 
-In the main AI Tutor, course creation starts with the `position_learning_goal` tool in `apps/agent/src/graph.mjs`; the web side performs KG positioning, course creation, and persistence. Courses are stored in the `courses` and `lessons` tables (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Lesson blocks are stored as `jsonb`. Outline lesson descriptions start as deterministic templates; after a NEW course is created, one best-effort background LLM call (`apps/web/src/lib/ai/course-generation/outline-enrichment.ts`, scheduled with `after()` in `initializeCourseOutline`) rewrites them behind a description-equality write fence — failures keep the templates, and `PRIMORIA_DISABLE_OUTLINE_ENRICHMENT=1` disables the call.
+In the main AI Tutor, course creation starts with the `position_learning_goal` tool in `apps/agent/src/tools/course.mjs`; the web side performs KG positioning, course creation, and persistence. Courses are stored in the `courses` and `lessons` tables (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Lesson blocks are stored as `jsonb`. Outline lesson descriptions start as deterministic templates; after a NEW course is created, one best-effort background LLM call (`apps/web/src/lib/ai/course-generation/outline-enrichment.ts`, scheduled with `after()` in `initializeCourseOutline`) rewrites them behind a description-equality write fence — failures keep the templates, and `PRIMORIA_DISABLE_OUTLINE_ENRICHMENT=1` disables the call.
 
 ### KG failure policy
 
@@ -110,7 +116,7 @@ Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared b
 
 ### DB
 
-ORM: Drizzle + `postgres` driver. Schema: `apps/web/src/lib/db/schema.ts`. Core tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, lesson/progress/extractor jobs, `knowledge_graph_*`, `learning_events`, `quiz_attempts`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `copilot_chat_threads`, `copilot_chat_messages`, `media_assets`, and `user_settings`.
+ORM: Drizzle + `postgres` driver. Drizzle is the sole owner of App/Auth/Course schema (`apps/web/src/lib/db/schema.ts` and `apps/web/drizzle/`). Versioned SQL under `apps/web/db/knowledge-graph/migrations/` is the sole owner of KG/pgvector schema. `pnpm db:bootstrap` applies both owners idempotently and is the only deployment schema entrypoint. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core tables include `users`, `identities`, `sessions`, `auth_rate_limits`, `courses`, `lessons`, lesson/progress/extractor jobs, `knowledge_graph_*`, `learning_events`, `quiz_attempts`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `copilot_chat_threads`, `copilot_chat_messages`, `media_assets`, and `user_settings`.
 
 Local development uses the Docker Compose PostgreSQL service (`pgvector/pgvector:pg16`) bound to `127.0.0.1:5432`. The old `127.0.0.1:15432` Tencent Cloud SSH tunnel is a remote-database fallback only, not the default local path. Supabase runtime helpers have been removed; do not add new Supabase URL/anon-key paths unless the database/auth strategy is intentionally changed.
 
@@ -122,11 +128,11 @@ KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current
 
 ### Deployment
 
-Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, a one-shot `migrate` service (blocks app startup until `db:migrate` succeeds), web, agent, the three workers, and a Caddy reverse proxy. Only Caddy (80/443) is public — the agent's 2024 port has no auth and must never be published. All images build from `docker/app.Dockerfile` (targets `web`/`agent`/`worker`); runtime env comes from a root `.env` (template: `.env.production.example`). Failed background jobs are requeued with `pnpm --filter @primoria/web jobs:requeue-failed [queue] [jobId]`; daily backups via `scripts/pg-backup.sh`. Full runbook: README "Deployment (Single Server)".
+Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, a one-shot `migrate` service (blocks app startup until `db:bootstrap` succeeds), web, agent, the three workers, and a Caddy reverse proxy. Only Caddy (80/443) is public — the agent's 2024 port has no auth and must never be published. All images build from `docker/app.Dockerfile` (targets `web`/`agent`/`worker`); runtime env comes from a root `.env` (template: `.env.production.example`). Failed background jobs are requeued with `pnpm --filter @primoria/web jobs:requeue-failed [queue] [jobId]`; daily backups via `scripts/pg-backup.sh`. Full runbook: README "Deployment (Single Server)".
 
 ## Key constraints
 
 - `apps/agent/` is plain ESM (`.mjs`), no TypeScript, no imports from `apps/web/`.
 - Widget HTML must be an iframe fragment (no `<html>/<head>/<body>` wrapper, no `100vh` layouts).
-- The widget dependency allowlist in `widget-renderer.tsx` and `graph.mjs` must be kept in sync.
+- The widget dependency allowlist is single-sourced in `packages/contracts/src/artifacts/widget-dependencies.mjs`; agent and web import it — never re-declare widget CDN URLs elsewhere (`apps/web/tests/widget-dependencies-sync.spec.ts` enforces this).
 - DB access is only from `apps/web/` server-side code; never from client components directly.

@@ -4,7 +4,7 @@ import next from "eslint-config-next";
 export default [
   ...next,
   {
-    ignores: [".next/**", "node_modules/**", "tests/**", "next-env.d.ts"],
+    ignores: [".next/**", ".next-*/**", "node_modules/**", "tests/**", "next-env.d.ts"],
   },
   {
     // The following rules were added in React 19's react-hooks lint package and

@@ -47,15 +47,21 @@ function assertEmbeddingDimensions(embedding: number[]) {
   }
 }
 
-async function createOpenAiCompatibleEmbedding(input: string) {
-  const baseUrl = process.env.OPENAI_BASE_URL;
-  const apiKey = process.env.OPENAI_API_KEY;
+export function resolveOpenAiCompatibleEmbeddingSettings() {
+  const baseUrl = process.env.KG_EMBEDDING_BASE_URL || process.env.OPENAI_BASE_URL;
+  const apiKey = process.env.KG_EMBEDDING_API_KEY || process.env.OPENAI_API_KEY;
   const model = process.env.OPENAI_EMBEDDING_MODEL || DEFAULT_OPENAI_KG_EMBEDDING_MODEL;
 
-  if (!baseUrl) throw new Error("Missing OPENAI_BASE_URL");
-  if (!apiKey) throw new Error("Missing OPENAI_API_KEY");
+  if (!baseUrl) throw new Error("Missing KG_EMBEDDING_BASE_URL or OPENAI_BASE_URL");
+  if (!apiKey) throw new Error("Missing KG_EMBEDDING_API_KEY or OPENAI_API_KEY");
 
-  const response = await fetch(`${baseUrl.replace(/\/$/, "")}/embeddings`, {
+  return { baseUrl: baseUrl.replace(/\/$/, ""), apiKey, model };
+}
+
+async function createOpenAiCompatibleEmbedding(input: string) {
+  const { baseUrl, apiKey, model } = resolveOpenAiCompatibleEmbeddingSettings();
+
+  const response = await fetch(`${baseUrl}/embeddings`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

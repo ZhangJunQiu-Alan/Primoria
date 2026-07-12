@@ -81,9 +81,11 @@ function buildEmbedText(graph, topicById, graphAliases, zhLabels, node) {
 }
 
 async function createOpenAiCompatibleEmbeddings(inputs) {
-  const baseUrl = requireEnv("OPENAI_BASE_URL").replace(/\/$/, "");
-  const apiKey = requireEnv("OPENAI_API_KEY");
+  const baseUrl = (process.env.KG_EMBEDDING_BASE_URL || process.env.OPENAI_BASE_URL)?.replace(/\/$/, "");
+  const apiKey = process.env.KG_EMBEDDING_API_KEY || process.env.OPENAI_API_KEY;
   const model = process.env.OPENAI_EMBEDDING_MODEL || DEFAULT_OPENAI_EMBEDDING_MODEL;
+  if (!baseUrl) throw new Error("Missing KG_EMBEDDING_BASE_URL or OPENAI_BASE_URL");
+  if (!apiKey) throw new Error("Missing KG_EMBEDDING_API_KEY or OPENAI_API_KEY");
   const batches = [];
 
   for (let i = 0; i < inputs.length; i += 64) batches.push(inputs.slice(i, i + 64));

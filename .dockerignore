@@ -9,6 +9,5 @@ node_modules
 .DS_Store
 temple
 e2e
-supabase
 docker-compose.yml
 docker-compose.prod.yml

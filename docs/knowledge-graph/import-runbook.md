@@ -30,11 +30,11 @@ under `apps/web/src/lib/knowledge-graph/data/`.
 
 1. **过门禁**：`python3 scripts/validate_kg.py` 全绿；spec 构建的图最后跑 `enrich_manual.py` 补描述。
 2. **放入 source 目录**：新增或更新 `data/knowledge-graphs/source/<graph_id>.json`；`kg-db-common.mjs graphPath()` 会按 `graph_id` 读取同名 JSON。
-3. **建表**：`pnpm db:migrate:kg`（已建则跳过）。
+3. **初始化 schema**：新环境运行 `pnpm db:bootstrap`；只维护 KG schema 时可运行 `pnpm --filter @primoria/web db:migrate:kg`。两个命令都可重复执行。
 4. **导入图**：`pnpm db:seed:kg <graph_id>`（upsert 节点/边，并删除该图中已移除的行）。
 5. **跨学科边**：`seed-kg` 只写同图边；`cross_subject_edges.json`(from≠to graph) 要单独插入 `knowledge_graph_edges`。
 6. **嵌入**：`pnpm db:seed:kg-embeddings <graph_id>`（需 OpenAI text-embedding-3-small，供定位/RAG）。
 7. **topic 派生件**：`pnpm build:topic-graph <graph_id>` → `src/lib/knowledge-graph/data/topic-graph.<id>.json`（入口分类/下一 topic）。
 8. **接消费端**：按需更新 `search.ts` 的 `DEFAULT_KG_GRAPH_ID` / 图注册表。
 
-单图速通：`pnpm db:sync:kg`(= migrate + seed + embeddings)。
+新环境全量导入：`pnpm db:initialize:kg`（所有 subject graphs + retired graph cleanup + cross-subject edges + 所有 embeddings）。单图维护按步骤 4、6 分别传 `<graph_id>`。

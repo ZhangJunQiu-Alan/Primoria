@@ -303,3 +303,24 @@ comment on column public.kg_node_embeddings.embedding is
 
 comment on column public.kg_node_embeddings.model_version is
   'Embedding provider/model/dimension identifier used to support re-embedding without changing core graph tables.';
+
+-- The app schema and KG schema have separate migration owners. Reconcile the
+-- one cross-boundary foreign key here so either migration family may have been
+-- installed first on an existing database.
+do $$
+begin
+  if to_regclass('public.user_concept_mastery') is not null
+    and not exists (
+      select 1
+      from pg_constraint
+      where conrelid = to_regclass('public.user_concept_mastery')
+        and conname = 'user_concept_mastery_graph_id_concept_id_fkey'
+    )
+  then
+    alter table public.user_concept_mastery
+      add constraint user_concept_mastery_graph_id_concept_id_fkey
+      foreign key (graph_id, concept_id)
+      references public.knowledge_graph_concepts (graph_id, concept_id)
+      on delete cascade;
+  end if;
+end $$;
