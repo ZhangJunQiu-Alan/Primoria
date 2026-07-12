@@ -16,18 +16,16 @@
 !.env.example
 !.env.production.example
 
-# Supabase CLI local link/cache state
-supabase/.temp/
-**/supabase/.temp/
-
 # Dependencies and build outputs
 node_modules/
 .pnpm-home/
 .next/
+.next-*/
 *.tsbuildinfo
 dist/
 build/
 .cache/
+test-results/
 .primoria-courses.json
 
 # LangGraph API

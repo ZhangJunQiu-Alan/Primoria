@@ -55,9 +55,6 @@ async function main() {
     console.log(`Drizzle migrations table: ${migrationTable ? `present (${migrationTable.schema})` : "not found"}`);
     console.log(info.version.split("\n")[0]);
 
-    if (!parsed.hostname.includes("supabase.")) {
-      console.log("Note: DATABASE_URL does not look like a Supabase cloud host. That may be intentional for local or alternate Postgres providers.");
-    }
   } finally {
     await sql.end({ timeout: 5 });
   }

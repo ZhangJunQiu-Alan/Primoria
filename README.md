@@ -84,8 +84,8 @@ Primoria persistence is Postgres-first. Courses, lessons, auth/session data, cha
 
 Local development defaults to the Docker Compose database in this repository.
 It runs `pgvector/pgvector:pg16`, creates the `primoria` database, creates the
-`primoria_app` user, enables the `vector` extension, and binds Postgres to
-`127.0.0.1:5432`.
+`primoria_app` user, and binds Postgres to `127.0.0.1:5432`. `pnpm db:bootstrap`
+enables the `vector` extension and installs all schemas.
 
 ```bash
 DATABASE_URL="postgresql://primoria_app:primoria_dev@127.0.0.1:5432/primoria"
@@ -119,35 +119,49 @@ directly instead of opening port 5432 to the public internet.
 For a remote direct connection to a managed Postgres service that requires SSL,
 set `DATABASE_SSL=require`.
 
-Check the connection and apply Drizzle migrations:
+Check the connection and bootstrap all database schemas. This is the only
+schema initialization command for local Docker and production deployments:
 
 ```bash
 pnpm --filter @primoria/web db:check
-pnpm --filter @primoria/web db:migrate
+pnpm db:bootstrap
 ```
 
-Knowledge-graph seeding and embedding maintenance use separate scripts:
+`db:bootstrap` applies the versioned KG/pgvector schema first and then all
+Drizzle App/Auth/Course migrations. It is safe to repeat and never calls an
+external model provider. Drizzle remains the sole owner of App/Auth/Course
+schema; `apps/web/db/knowledge-graph/migrations/` is the sole KG schema owner.
+
+Knowledge-graph source data and embeddings are initialized separately. For a
+new environment, import every graph, cross-subject edge, and embedding with:
 
 ```bash
-pnpm --filter @primoria/web db:migrate:kg
-pnpm --filter @primoria/web db:seed:kg
+pnpm db:initialize:kg
+```
+
+Individual maintenance commands remain available when updating one graph:
+
+```bash
+pnpm --filter @primoria/web db:seed:kg <graph-id>
 pnpm --filter @primoria/web db:seed:kg-cross
-pnpm --filter @primoria/web db:seed:kg-embeddings
-```
-
-or, for the common migration + KG seed + embedding flow:
-
-```bash
-pnpm --filter @primoria/web db:sync:kg
+pnpm --filter @primoria/web db:seed:kg-embeddings <graph-id>
 ```
 
 KG embeddings default to the OpenAI-compatible `/embeddings` API:
 
 ```bash
 KG_EMBEDDING_PROVIDER=openai-compatible
+KG_EMBEDDING_BASE_URL=https://api.openai.com/v1
+KG_EMBEDDING_API_KEY=your-embedding-key
 OPENAI_EMBEDDING_MODEL=text-embedding-3-small
 KG_EMBEDDING_MODEL_VERSION=openai:text-embedding-3-small:1536
 ```
+
+When `KG_EMBEDDING_BASE_URL` and `KG_EMBEDDING_API_KEY` are unset, the
+OpenAI-compatible embedding path falls back to `OPENAI_BASE_URL` and
+`OPENAI_API_KEY`. Only use that fallback when the chat endpoint also implements
+`POST /embeddings`; DeepSeek's chat endpoint does not serve the configured
+OpenAI embedding model.
 
 MiniMax native embeddings are also supported. Use this only with a MiniMax Open
 Platform key; legacy MiniMax embedding endpoints usually require `GroupId`.
@@ -297,8 +311,8 @@ pnpm --filter @primoria/web db:generate
 # Verify database connectivity
 pnpm --filter @primoria/web db:check
 
-# Apply Drizzle migrations
-pnpm --filter @primoria/web db:migrate
+# Apply all KG and App/Auth/Course schema migrations
+pnpm db:bootstrap
 ```
 
 ## Tests and Verification
@@ -315,24 +329,29 @@ pnpm --filter @primoria/web test:watch
 
 Legacy self-executing `tests/*.unit.ts` scripts are executed through the `tests/legacy-units.spec.ts` bridge; write new tests as native vitest `tests/*.spec.ts` files.
 
-Database-backed and E2E suites are not part of `pnpm test`:
+Database-backed and E2E suites remain separate from `pnpm test`, but CI runs them in dedicated jobs:
 
 ```bash
-# DB-backed tests (require DATABASE_URL)
-pnpm --filter @primoria/web test:lesson-jobs:db
-pnpm --filter @primoria/web test:progress:db
-pnpm --filter @primoria/web test:extractor:db
+# All seven DB-backed tests. TEST_DATABASE_URL must be an isolated database
+# whose name contains "test" and must differ from DATABASE_URL.
+pnpm test:db
 
-# Widget browser E2E (requires a running app)
-pnpm --filter @primoria/web test:widget:e2e
+# Browser E2E suites start their own isolated Next dev servers.
+pnpm test:learning-path:e2e
+pnpm test:widget:e2e
 
-# Agent graph syntax and package checks
+# Agent package and offline real-graph checks
 node --check apps/agent/src/graph.mjs
 pnpm --filter @primoria/agent typecheck
-pnpm --filter @primoria/agent test:course-store
+pnpm test:agent
+pnpm test:agent:integration
+
+# Production route bundle budgets (run after build)
+pnpm --filter @primoria/web build
+pnpm --filter @primoria/web bundle:check
 ```
 
-Some E2E tests start their own isolated Next dev server; others expect a running app. Check the test file before running long E2E suites.
+The learning-path smoke requires `CI_LEARNING_SMOKE=1` and a test `DATABASE_URL`; seed it first with `pnpm --filter @primoria/web exec tsx scripts/seed-ci-learning-smoke.ts`. It exercises real sign-in, course rendering, quiz grading, lesson completion, and progress/extractor job persistence without calling an external model.
 
 ## Deployment (Single Server)
 
@@ -349,12 +368,15 @@ git clone <repo-url> /srv/primoria && cd /srv/primoria
 cp .env.production.example .env   # fill in every replace-* value
 docker compose -f docker-compose.prod.yml up -d --build
 
-# First deploy only: seed the knowledge graph (uses the embedding provider).
+# First deploy only: seed every knowledge graph, cross-graph edge, and embedding.
 docker compose -f docker-compose.prod.yml run --rm migrate \
-  pnpm --filter @primoria/web db:sync:kg
+  pnpm --filter @primoria/web db:initialize:kg
 ```
 
-Startup order is enforced by the compose file: postgres (healthcheck) → `migrate` (one-shot `db:migrate`, so new code never runs against an old schema) → web/agent/workers.
+Startup order is enforced by the compose file: postgres (healthcheck) →
+`migrate` (one-shot `db:bootstrap`, so new code never runs against an old App or
+KG schema) → web/agent/workers. KG data and embedding imports remain separate
+because an external model outage must not block a normal application release.
 
 HTTPS: leave `PRIMORIA_DOMAIN` empty to serve plain HTTP on `:80` while testing against a bare IP. Once a DNS A record points your domain at the server, set `PRIMORIA_DOMAIN` (and matching `APP_BASE_URL`/`NEXT_PUBLIC_APP_URL`), open ports 80+443 in the security group, and rerun `up -d --build` — Caddy provisions and renews certificates automatically.
 
@@ -394,15 +416,23 @@ Point an uptime probe (Tencent Cloud 云监控 site monitoring, or any external 
 `scripts/pg-backup.sh` dumps the database via `pg_dump` into `/var/backups/primoria` (override with `PRIMORIA_BACKUP_DIR`) and prunes dumps older than 14 days. Schedule it daily:
 
 ```bash
+sudo install -d -o "$USER" -g "$(id -gn)" -m 700 /var/backups/primoria
 crontab -e
 # 30 4 * * * /srv/primoria/scripts/pg-backup.sh >> /var/log/primoria-backup.log 2>&1
 ```
 
-The restore command is documented in the script header.
+Backups are written through a temporary file and atomically renamed only after
+`pg_dump` and gzip both succeed. Files are owner-readable only. The restore
+command is documented in the script header.
 
 ## CI
 
-`.github/workflows/ci.yml` runs on every push/PR to `main`: install, type-check, lint, unit tests, and an agent graph syntax check.
+`.github/workflows/ci.yml` runs four independent gates on every push/PR to `main`:
+
+- `fast-checks`: Web typecheck/lint/unit, KG source validation, Drizzle migration drift, and Agent syntax/type/unit/offline graph integration.
+- `bundle-budget`: production build plus raw/gzip first-load JS budgets from `apps/web/bundle-budgets.json`.
+- `database-integration`: `pgvector/pg16`, two consecutive `db:bootstrap` runs, and all seven DB-backed tests.
+- `browser-integration`: an isolated `pgvector/pg16` database, deterministic login-to-course-completion smoke, and Widget renderer E2E.
 
 ## Architecture
 
@@ -424,7 +454,7 @@ The agent may read persisted course data for bounded tool behavior such as resto
 
 ### Agent Tooling and Artifacts
 
-The active tutor graph is defined in `apps/agent/src/graph.mjs`. It uses deepagents with a focused tool surface:
+The active tutor graph is composed in `apps/agent/src/graph.mjs` from focused modules — `prompts.mjs`, `model.mjs`, `middleware.mjs`, `widget-html.mjs`, and `tools/{visualization,renderers,course,quiz}.mjs`. It uses deepagents with a focused tool surface:
 
 - `position_learning_goal` - the only main-tutor entry for creating a course from a learner goal.
 - `get_course_card` - restores a course card from persisted course data.
@@ -437,9 +467,9 @@ The active tutor graph is defined in `apps/agent/src/graph.mjs`. It uses deepage
 
 Adding a new artifact type usually requires:
 
-1. Add the shared type in `packages/contracts/src/artifacts`.
+1. Add the shared type and Zod schema in `packages/contracts/src/artifacts` (runtime schemas live in `schemas.mjs` + hand-written `schemas.d.mts`, shared by the agent and the web hook — never `z.any()`).
 2. Add a renderer or branch in `ToolCard`.
-3. Add or update the agent tool schema in `apps/agent/src/graph.mjs`.
+3. Add or update the agent tool in the matching `apps/agent/src/tools/*.mjs` module.
 
 ### Widget Rendering
 
@@ -447,7 +477,7 @@ HTML widgets execute inside a sandboxed iframe. `apps/web/src/components/generat
 
 Widget HTML must be a fragment: no `<!doctype>`, no `<html>`, `<head>`, or `<body>` wrapper, and no `100vh` app-shell layouts.
 
-External widget dependencies are normalized and allowlisted in both `apps/web/src/lib/ai/widget-dependencies.ts` and `apps/agent/src/graph.mjs`. Keep those lists in sync.
+External widget dependencies are allowlisted in a single source: `packages/contracts/src/artifacts/widget-dependencies.mjs`. The agent tool, the web normalizer (`apps/web/src/lib/ai/widget-dependencies.ts`), and the iframe bootstrap all import it; `apps/web/tests/widget-dependencies-sync.spec.ts` fails if a copy is reintroduced.
 
 ### Course Generation and Learning Progress
 
@@ -491,7 +521,7 @@ The main persistence tables include `courses`, `lessons`, `lesson_generation_job
 
 ### Model Provider
 
-`apps/web/src/lib/ai/deepagent/model.ts` and `apps/agent/src/graph.mjs` resolve provider settings from environment variables. Supported providers are:
+`apps/web/src/lib/ai/deepagent/model.ts` and `apps/agent/src/model.mjs` resolve provider settings from environment variables. Supported providers are:
 
 - `openai-compatible`
 - `anthropic-compatible`

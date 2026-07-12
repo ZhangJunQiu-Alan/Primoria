@@ -5,10 +5,17 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  checks:
+  fast-checks:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -22,14 +29,154 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Type-check
+      - name: Web type-check
         run: pnpm --filter @primoria/web typecheck
 
-      - name: Lint
+      - name: Web lint
         run: pnpm --filter @primoria/web lint
 
-      - name: Unit tests
+      - name: Web unit tests
         run: pnpm --filter @primoria/web test
 
-      - name: Agent graph syntax
-        run: node --check apps/agent/src/graph.mjs
+      - name: KG source validation
+        run: pnpm --filter @primoria/web validate:kg
+
+      - name: Drizzle migration drift
+        run: pnpm --filter @primoria/web db:check:migrations
+
+      - name: Agent syntax and type-check
+        run: node --check apps/agent/src/graph.mjs && pnpm --filter @primoria/agent typecheck
+
+      - name: Agent unit tests
+        run: pnpm test:agent
+
+      - name: Agent graph integration
+        run: pnpm test:agent:integration
+
+  bundle-budget:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      DATABASE_URL: postgresql://primoria:primoria@127.0.0.1:5432/primoria
+      DATABASE_SSL: disable
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Production build
+        run: pnpm --filter @primoria/web build
+
+      - name: Route bundle budgets
+        run: pnpm --filter @primoria/web bundle:check
+
+  database-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: primoria_test
+          POSTGRES_USER: primoria
+          POSTGRES_PASSWORD: primoria_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U primoria -d primoria_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://primoria:primoria_ci@127.0.0.1:5432/primoria_app_ci
+      TEST_DATABASE_URL: postgresql://primoria:primoria_ci@127.0.0.1:5432/primoria_test
+      DATABASE_SSL: disable
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Bootstrap schemas
+        run: DATABASE_URL="$TEST_DATABASE_URL" pnpm db:bootstrap
+
+      - name: Verify bootstrap idempotence
+        run: DATABASE_URL="$TEST_DATABASE_URL" pnpm db:bootstrap
+
+      - name: Database tests
+        run: pnpm test:db
+
+  browser-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: primoria_browser_test
+          POSTGRES_USER: primoria
+          POSTGRES_PASSWORD: primoria_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U primoria -d primoria_browser_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://primoria:primoria_ci@127.0.0.1:5432/primoria_browser_test
+      DATABASE_SSL: disable
+      CI_LEARNING_SMOKE: "1"
+      PRIMORIA_DISABLE_OUTLINE_ENRICHMENT: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Bootstrap schemas
+        run: pnpm db:bootstrap
+
+      - name: Seed deterministic learning path
+        run: pnpm --filter @primoria/web exec tsx scripts/seed-ci-learning-smoke.ts
+
+      - name: Login-to-course-completion smoke
+        run: pnpm test:learning-path:e2e
+
+      - name: Widget renderer E2E
+        run: pnpm test:widget:e2e
+        env:
+          NEXT_DIST_DIR: .next-widget-e2e
+
+      - name: Upload browser failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-failure-artifacts
+          path: test-results/
+          if-no-files-found: ignore

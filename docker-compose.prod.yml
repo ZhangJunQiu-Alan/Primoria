@@ -24,15 +24,15 @@ services:
       - "127.0.0.1:5432:5432"
     volumes:
       - primoria-postgres-data:/var/lib/postgresql/data
-      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U primoria_app -d primoria"]
       interval: 5s
       timeout: 5s
       retries: 20
 
-  # One-shot: applies Drizzle migrations before the app processes start, so a
-  # deploy can never run new code against an old schema.
+  # One-shot: applies both KG schema migrations and Drizzle app migrations
+  # before app processes start. Data/embedding seeds remain an explicit
+  # first-deploy operation and never block a normal release.
   migrate:
     build:
       context: .
@@ -43,7 +43,7 @@ services:
     env_file: .env
     environment:
       <<: *db-env
-    command: ["pnpm", "--filter", "@primoria/web", "db:migrate"]
+    command: ["pnpm", "--filter", "@primoria/web", "db:bootstrap"]
     depends_on:
       postgres:
         condition: service_healthy

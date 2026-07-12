@@ -46,7 +46,7 @@ const DB_UNAVAILABLE_CODES = new Set([
 
 // Secondary fallback only, for provider errors that carry no structured code.
 const EMBEDDING_MESSAGE_PATTERN =
-  /Missing OPENAI_|Missing MINIMAX_|Unsupported KG_EMBEDDING_PROVIDER|Embedding request failed|embedding provider returned|Unexpected embedding dimension|fetch failed/i;
+  /Missing OPENAI_|Missing MINIMAX_|Missing KG_EMBEDDING_|Unsupported KG_EMBEDDING_PROVIDER|Embedding request failed|embedding provider returned|Unexpected embedding dimension|fetch failed/i;
 
 function classifyShallow(error: unknown): KnowledgeGraphFailureKind {
   if (error instanceof KnowledgeGraphUnavailableError) return error.kind;

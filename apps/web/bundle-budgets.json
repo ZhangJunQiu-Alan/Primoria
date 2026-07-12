@@ -1,0 +1,30 @@
+{
+  "maxChunkKiB": 650,
+  "routes": {
+    "/": {
+      "manifest": "server/app/page_client-reference-manifest.js",
+      "maxRawKiB": 575,
+      "maxGzipKiB": 175
+    },
+    "/library": {
+      "manifest": "server/app/library/page_client-reference-manifest.js",
+      "maxRawKiB": 550,
+      "maxGzipKiB": 165
+    },
+    "/course/[id]": {
+      "manifest": "server/app/course/[id]/page_client-reference-manifest.js",
+      "maxRawKiB": 1024,
+      "maxGzipKiB": 305
+    },
+    "/auth/sign-in": {
+      "manifest": "server/app/auth/sign-in/page_client-reference-manifest.js",
+      "maxRawKiB": 520,
+      "maxGzipKiB": 160
+    },
+    "/welcome": {
+      "manifest": "server/app/welcome/page_client-reference-manifest.js",
+      "maxRawKiB": 520,
+      "maxGzipKiB": 160
+    }
+  }
+}

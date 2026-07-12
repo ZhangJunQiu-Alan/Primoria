@@ -9,11 +9,17 @@
     "dev:worker": "pnpm --filter @primoria/web worker:lesson-generation",
     "dev:progress": "pnpm --filter @primoria/web worker:learning-progress",
     "dev:extractor": "pnpm --filter @primoria/web worker:extractor",
+    "db:bootstrap": "pnpm --filter @primoria/web db:bootstrap",
+    "db:initialize:kg": "pnpm --filter @primoria/web db:initialize:kg",
     "build": "pnpm --filter @primoria/web build",
     "lint": "pnpm --filter @primoria/web lint",
     "typecheck": "pnpm --filter @primoria/web typecheck",
     "test:widget": "pnpm --filter @primoria/web test:widget",
     "test:widget:e2e": "pnpm --filter @primoria/web test:widget:e2e",
+    "test:db": "pnpm --filter @primoria/web test:db",
+    "test:agent": "pnpm --filter @primoria/agent test",
+    "test:agent:integration": "pnpm --filter @primoria/agent test:integration",
+    "test:learning-path:e2e": "node e2e/learning-path.smoke.mjs",
     "test": "pnpm --filter @primoria/web test"
   },
   "devDependencies": {

@@ -8,7 +8,9 @@
     "typecheck": "tsc --noEmit",
     "test:course-store": "node tests/course-store-schema.unit.mjs",
     "test:context-trim": "node tests/context-trim.unit.mjs",
-    "test:graph-e2e": "node tests/graph-invoke.e2e.mjs"
+    "test:graph-e2e": "node tests/graph-invoke.e2e.mjs",
+    "test": "pnpm test:course-store && pnpm test:context-trim",
+    "test:integration": "pnpm test:graph-e2e"
   },
   "dependencies": {
     "@langchain/anthropic": "^1.4.0",
