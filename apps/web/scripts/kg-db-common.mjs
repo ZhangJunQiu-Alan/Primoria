@@ -19,7 +19,7 @@ export const KG_SOURCE_DIR = resolve(REPO_ROOT, "data/knowledge-graphs/source");
 const NON_GRAPH_FILES = new Set(["cross_subject_edges.json", "kg_zh_labels.json"]);
 
 function isGraphJsonFile(file) {
-  return file.endsWith(".json") && !file.endsWith("_source_map.json") && !NON_GRAPH_FILES.has(file);
+  return file.endsWith(".json") && !NON_GRAPH_FILES.has(file);
 }
 
 function loadEnvFile(file) {

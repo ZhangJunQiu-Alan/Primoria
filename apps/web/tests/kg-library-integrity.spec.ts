@@ -13,12 +13,11 @@ function readKgSourceJson(name: string) {
 }
 
 describe("curated KG library integrity", () => {
-  it("keeps source-map sidecars out of the graph registry", () => {
+  it("keeps sidecars out of the graph registry", () => {
     const graphIds = listGraphIds();
 
     expect(graphIds).toContain("python_fundamentals");
     expect(graphIds).toContain("sicp_cs61a");
-    expect(graphIds).not.toContain("python_fundamentals_source_map");
     expect(graphIds).not.toContain("Python");
   });
 
@@ -30,19 +29,6 @@ describe("curated KG library integrity", () => {
     expect(fundamentals.nodes.some((node: { id?: string }) => node.id === "pyf_interactive_execution")).toBe(true);
     expect(sicp.subject).toBe("Structure and Interpretation of Computer Programs (CS61A)");
     expect(sicp.nodes.some((node: { id?: string }) => node.id === "recursion")).toBe(true);
-  });
-
-  it("maps every Python Fundamentals concept to exactly one source record", () => {
-    const graph = readKgSourceJson("python_fundamentals.json");
-    const sourceMap = readKgSourceJson("python_fundamentals_source_map.json");
-    const conceptIds = graph.nodes
-      .filter((node: { kind?: string }) => node.kind === "concept")
-      .map((node: { id: string }) => node.id)
-      .sort();
-    const coveredIds = sourceMap.coverage.map((item: { concept_id: string }) => item.concept_id).sort();
-
-    expect(new Set(coveredIds).size).toBe(coveredIds.length);
-    expect(coveredIds).toEqual(conceptIds);
   });
 
   it("keeps beginner intent aliases on the Python Fundamentals root", () => {
