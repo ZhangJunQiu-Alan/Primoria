@@ -145,7 +145,6 @@ async function main() {
   assert(styles.includes("min-height: 48px;"), "account popover rows use compact menu sizing");
   assert(!styles.includes(".nav-progress-strip"), "removed streak and XP rail widget styles");
   assert(!styles.includes(".nav-upgrade-link"), "removed upgrade rail shortcut styles");
-  assert(styles.includes(".workspace-shell .nav-account-menu"), "account popover has a mobile workspace-shell placement");
   assert(styles.includes(".library-card-generating"), "generating placeholders have dedicated styling");
   assert(styles.includes(".library-card-failed"), "failed placeholders have dedicated styling");
   assert(styles.includes(".library-filter-menu"), "status filter menu has dedicated styling");

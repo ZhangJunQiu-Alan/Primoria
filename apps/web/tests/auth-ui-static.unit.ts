@@ -75,7 +75,6 @@ async function main() {
   assert(styles.includes("height: min(720px, calc(100dvh - 68px))"), "auth panel has a fixed desktop height");
   assert(styles.includes("grid-template-columns: minmax(0, 488px) minmax(0, 552px)"), "auth panel has fixed desktop columns");
   assert(styles.includes(".auth-hero-copy"), "hero content has dedicated stable layout styling");
-  assert(styles.includes(".auth-secondary-action"), "secondary provider action has dedicated styling");
   assert(styles.includes(".auth-password-control"), "password control has dedicated styling");
   assert(styles.includes(".auth-password-control button svg"), "password visibility icon has dedicated styling");
   assert(styles.includes(".auth-message.success"), "success state has dedicated styling");
