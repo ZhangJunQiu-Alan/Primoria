@@ -8134,8 +8134,7 @@ cpk-web-inspector {
 }
 
 .profile-workspace,
-.profile-detail-workspace,
-.upgrade-workspace {
+.profile-detail-workspace {
   min-width: 0;
   min-height: 0;
   overflow: auto;
@@ -8156,8 +8155,7 @@ cpk-web-inspector {
 .profile-panel,
 .weekly-summary-card,
 .profile-highlight-card,
-.settings-card,
-.upgrade-card {
+.settings-card {
   border: 1px solid rgba(23, 19, 15, 0.16);
   background: rgba(255, 253, 244, 0.78);
   box-shadow: 0 2px 7px rgba(57, 42, 25, 0.08);
@@ -9341,97 +9339,6 @@ cpk-web-inspector {
   color: #a43c31;
 }
 
-.upgrade-workspace {
-  display: grid;
-  place-items: center;
-  padding: 36px;
-  background:
-    radial-gradient(circle at 50% 18%, rgba(185, 215, 255, 0.72), transparent 36%),
-    linear-gradient(180deg, #dcebff 0%, #f8efe6 100%);
-}
-
-.upgrade-card {
-  width: min(720px, 100%);
-  padding: 42px;
-  border-radius: 28px;
-  display: grid;
-  gap: 24px;
-  text-align: center;
-}
-
-.upgrade-mascot {
-  width: 78px;
-  height: 78px;
-  margin: 0 auto;
-  display: grid;
-  place-items: center;
-  border-radius: 24px;
-  background: #fffdf8;
-  color: #ef8aa9;
-  box-shadow: 0 14px 40px rgba(57, 42, 25, 0.12);
-}
-
-.upgrade-mascot svg {
-  width: 38px;
-  height: 38px;
-}
-
-.upgrade-card h1 {
-  margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(36px, 6vw, 62px);
-  line-height: 0.95;
-}
-
-.upgrade-table {
-  border: 1px solid rgba(23, 19, 15, 0.12);
-  border-radius: 18px;
-  overflow: hidden;
-  text-align: left;
-}
-
-.upgrade-table-head,
-.upgrade-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 90px 90px;
-  align-items: center;
-}
-
-.upgrade-table-head {
-  background: #17130f;
-  color: #fffdf8;
-  font-weight: 900;
-}
-
-.upgrade-table-head span,
-.upgrade-row span,
-.upgrade-row strong {
-  padding: 14px 16px;
-}
-
-.upgrade-row {
-  background: #fffaf2;
-}
-
-.upgrade-row + .upgrade-row {
-  border-top: 1px solid rgba(23, 19, 15, 0.1);
-}
-
-.upgrade-row strong {
-  text-align: center;
-}
-
-.upgrade-cta {
-  min-height: 54px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  background: #17130f;
-  color: #fffdf8;
-  text-decoration: none;
-  font-weight: 950;
-}
-
 @media (max-width: 1100px) {
   .profile-hero-card {
     grid-template-columns: 1fr;
@@ -9462,8 +9369,7 @@ cpk-web-inspector {
 
 @media (max-width: 720px) {
   .profile-workspace,
-  .profile-detail-workspace,
-  .upgrade-workspace {
+  .profile-detail-workspace {
     padding: 24px 16px 48px;
   }
 

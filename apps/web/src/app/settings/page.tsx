@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { TutorNavRail } from "@/components/tutor/nav-rail";
-import { BoltIcon, BookIcon, ChartIcon, SparkleIcon } from "@/components/profile/profile-icons";
+import { BookIcon, ChartIcon, SparkleIcon } from "@/components/profile/profile-icons";
 import { ContentLanguageSelect } from "@/components/profile/content-language-select";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { getCurrentUserForRsc, isAuthEnabled } from "@/lib/auth/session";
@@ -80,14 +80,6 @@ export default async function SettingsPage() {
           </article>
 
           <section className="settings-secondary-grid" aria-label={t.title}>
-            <article className="settings-mini-card">
-              <span className="settings-icon plan"><BoltIcon /></span>
-              <div>
-                <h2>{t.subscription}</h2>
-                <p>{t.currentPlan}</p>
-              </div>
-              <Link href="/upgrade">{t.upgrade}</Link>
-            </article>
             <article className="settings-mini-card">
               <span className="settings-icon info">i</span>
               <div>
