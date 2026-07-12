@@ -3,10 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PhysicsSceneArtifact, PhysicsBody, PhysicsConstraint, PhysicsScene } from "@/lib/agent-os";
 import { loadBrowserScript } from "@/lib/browser-script-loader";
+import { WIDGET_DEPENDENCY_ALLOWLIST } from "@primoria/contracts/artifacts/widget-dependencies";
 import { SERIES } from "./style-tokens";
 
 type MatterModule = typeof import("matter-js");
-const MATTER_CDN_URL = "https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js";
+const MATTER_CDN_URL = WIDGET_DEPENDENCY_ALLOWLIST.Matter.url;
 
 function loadMatter() {
   return loadBrowserScript<MatterModule>(MATTER_CDN_URL, "Matter");

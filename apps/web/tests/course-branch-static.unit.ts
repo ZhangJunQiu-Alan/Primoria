@@ -14,9 +14,10 @@ function assert(condition: unknown, message: string): asserts condition {
 
 const here = dirname(fileURLToPath(import.meta.url));
 const graphSource = readFileSync(resolve(here, "../../agent/src/graph.mjs"), "utf8");
+const courseToolsSource = readFileSync(resolve(here, "../../agent/src/tools/course.mjs"), "utf8");
 
 function main() {
-  assert(graphSource.includes('name: "position_learning_goal"'), "position_learning_goal tool is defined");
+  assert(courseToolsSource.includes('name: "position_learning_goal"'), "position_learning_goal tool is defined");
 
   assert(/tools:\s*\[[^\]]*positionLearningGoalTool/.test(graphSource), "tools array registers positionLearningGoalTool");
 

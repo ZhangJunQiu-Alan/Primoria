@@ -6,6 +6,14 @@
   "exports": {
     ".": "./src/index.ts",
     "./artifacts": "./src/artifacts/index.ts",
+    "./artifacts/schemas": {
+      "types": "./src/artifacts/schemas.d.mts",
+      "default": "./src/artifacts/schemas.mjs"
+    },
+    "./artifacts/widget-dependencies": {
+      "types": "./src/artifacts/widget-dependencies.d.mts",
+      "default": "./src/artifacts/widget-dependencies.mjs"
+    },
     "./chat": "./src/chat/index.ts",
     "./stream": "./src/stream/index.ts",
     "./visual-style": {

@@ -2,27 +2,13 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { z } from "zod";
+import { StemRendererArgsSchema } from "@primoria/contracts/artifacts/schemas";
 import { validateStemCode } from "@/lib/ai/stem-code";
 import { ExportOverlay } from "./export-overlay";
 import { assembleStemIframeShell, assembleStemStandaloneHtml } from "./export-utils";
 
-export const StemRendererProps = z.object({
-  subject: z.enum(["physics", "math", "cs"]).describe(
-    "The STEM subject domain. Supports: 'physics' (Matter.js rigid-body), 'math' (Canvas 2D MathGL), 'cs' (AlgoViz step-by-step algorithm visualizations)."
-  ),
-  scene: z
-    .string()
-    .describe("Scene type, e.g. 'pendulum', 'spring', 'collision', 'projectile'"),
-  title: z.string().describe("Short title for the simulation"),
-  description: z.string().describe("One-sentence description of what this demonstrates"),
-  code: z
-    .string()
-    .describe(
-      "JavaScript code using the subject's Runtime API. " +
-      "Only use methods documented in the API reference returned by plan_visualization. " +
-      "Do NOT import any libraries — the runtime is pre-loaded."
-    ),
-});
+// Shared with the agent's stemRenderer tool schema (cross-runtime contract).
+export const StemRendererProps = StemRendererArgsSchema;
 
 export type StemRendererStatus = "executing" | "inProgress" | "complete";
 type StemRendererPropsType = z.infer<typeof StemRendererProps> & {
