@@ -23,6 +23,9 @@ pnpm lint
 # Build
 pnpm build
 
+# Production dependency audit; fails on high/critical advisories
+pnpm audit:prod
+
 # Bootstrap KG, Drizzle App/Auth/Course, and Agent runtime schemas
 pnpm db:bootstrap
 
@@ -130,7 +133,7 @@ KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current
 
 ### Deployment
 
-Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, App/KG and Agent-runtime migration jobs, web, the self-hosted Node/AG-UI agent, three workers, and Caddy. Web waits for Agent readiness; Agent shutdown drains active runs. Only Caddy is public; port 2024 must never be published. Full runbook: README "Deployment (Single Server)".
+Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, App/KG and Agent-runtime migration jobs, web, the self-hosted Node/AG-UI agent, three workers, and Caddy. Web waits for Agent readiness; Agent shutdown drains active runs. Only Caddy is public; port 2024 must never be published. Full runbook: README "Deployment (Single Server)"; credential timing, preflight gates, rollback, and commit/push handoff: `docs/deployment-preflight.md`. Do not request deployment credentials, deploy, commit, or push until the user explicitly asks.
 
 ## Key constraints
 

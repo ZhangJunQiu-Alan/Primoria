@@ -7,10 +7,22 @@ import { ChatAnthropic } from "@langchain/anthropic";
 /** @param {string} source */
 function usageLogCallbacks(source) {
   if (process.env.PRIMORIA_LLM_USAGE_LOG === "0") return [];
+  const startedAt = new Map();
   return [
     {
-      /** @param {any} output */
-      handleLLMEnd(output) {
+      /**
+       * @param {unknown} _llm
+       * @param {unknown[]} _prompts
+       * @param {string} runId
+       */
+      handleLLMStart(_llm, _prompts, runId) {
+        startedAt.set(String(runId), Date.now());
+      },
+      /**
+       * @param {any} output
+       * @param {string} runId
+       */
+      handleLLMEnd(output, runId) {
         try {
           const message = output?.generations?.[0]?.[0]?.message;
           const usage = message?.usage_metadata ?? {};
@@ -20,7 +32,10 @@ function usageLogCallbacks(source) {
               ts: new Date().toISOString(),
               message: "llm usage",
               source,
+              provider: process.env.AI_PROVIDER ?? "openai-compatible",
               model: message?.response_metadata?.model_name ?? message?.response_metadata?.model ?? null,
+              durationMs: startedAt.has(String(runId)) ? Date.now() - startedAt.get(String(runId)) : null,
+              cost: null,
               inputTokens: usage.input_tokens ?? raw.prompt_tokens ?? raw.promptTokens ?? null,
               outputTokens: usage.output_tokens ?? raw.completion_tokens ?? raw.completionTokens ?? null,
               cacheReadTokens:
@@ -33,6 +48,8 @@ function usageLogCallbacks(source) {
           );
         } catch {
           // observability must never break the call
+        } finally {
+          startedAt.delete(String(runId));
         }
       },
     },

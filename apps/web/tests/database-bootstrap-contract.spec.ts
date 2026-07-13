@@ -25,7 +25,7 @@ describe("database bootstrap and production Docker contract", () => {
     expect(dockerIgnore).not.toMatch(/^supabase$/m);
     expect(dockerIgnore).not.toContain("apps/web/db");
     expect(compose).toContain('command: ["pnpm", "--filter", "@primoria/web", "db:bootstrap"]');
-    expect(compose).not.toContain("docker-entrypoint-initdb.d");
+    expect(compose).toContain("docker-entrypoint-initdb.d/10-runtime-role.sh");
     expect(bootstrap.indexOf("runKnowledgeGraphMigrations()"))
       .toBeLessThan(bootstrap.indexOf("runMigrations()"));
   });
@@ -48,5 +48,20 @@ describe("database bootstrap and production Docker contract", () => {
     expect(productionEnv).toContain("KG_EMBEDDING_PROVIDER=minimax");
     expect(productionEnv).not.toMatch(/^KG_EMBEDDING_PROVIDER=openai-compatible$/m);
     expect(backup).toContain('REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"');
+    expect(backup).toContain("--format=custom");
+    expect(backup).toContain("sha256sum");
+    expect(backup).toContain("--sse");
+    expect(backup).toContain("amazon/aws-cli:2.27.49");
+  });
+
+  it("gates production services on real health checks", () => {
+    const compose = readRepoFile("docker-compose.prod.yml");
+    expect(compose).toContain("/api/health/ready");
+    expect(compose).toContain("/api/health/live");
+    expect(compose.match(/condition: service_healthy/g)?.length).toBeGreaterThanOrEqual(3);
+    const webService = compose.slice(compose.indexOf("  web:"), compose.indexOf("  agent-migrate:"));
+    const agentService = compose.slice(compose.indexOf("  agent:\n"), compose.indexOf("  worker-lesson-generation:"));
+    expect(webService).not.toContain("ports:");
+    expect(agentService).not.toContain("ports:");
   });
 });

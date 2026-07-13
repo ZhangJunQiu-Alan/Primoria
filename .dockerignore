@@ -1,7 +1,9 @@
 .git
 node_modules
 **/node_modules
-**/.next
+**/.next*
+**/*.tsbuildinfo
+test-results
 **/.env
 **/.env.*
 !.env.production.example
