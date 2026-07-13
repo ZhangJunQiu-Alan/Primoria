@@ -21,6 +21,7 @@ const AnswerSchema = z.discriminatedUnion("kind", [
 // client never supplies them (a client-sent score would be unverifiable).
 const RequestSchema = z.object({
   blockId: z.string(),
+  submissionId: z.string().uuid(),
   answers: z.array(AnswerSchema),
 });
 
@@ -28,6 +29,14 @@ type SubmittedAnswer = z.infer<typeof AnswerSchema>;
 
 function randomId() {
   return `qa_${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36)}`;
+}
+
+function answerFingerprint(answers: SubmittedAnswer[]) {
+  return JSON.stringify(
+    answers
+      .map((answer) => answer.kind === "multi" ? { ...answer, selectedIds: [...answer.selectedIds].sort() } : answer)
+      .sort((left, right) => left.questionId.localeCompare(right.questionId)),
+  );
 }
 
 function gradeAnswer(question: QuizQuestion, answer: SubmittedAnswer): { selected: QuizSelected | null; isCorrect: boolean } {
@@ -96,23 +105,56 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const total = questions.length;
 
     const attemptId = randomId();
-    let lessonCompleted = false;
 
     // One transaction: attempt row, per-question evidence, implicit lesson
     // completion, and the progress-job enqueue commit or roll back together —
     // the worker can never observe an attempt without its evidence, or a
     // completed lesson without its job.
-    await getDb().transaction(async (tx) => {
-      await tx.insert(quizAttempts).values({
-        id: attemptId,
-        ownerId: user.id,
-        courseId,
-        lessonId,
-        blockId: body.blockId,
-        answers: body.answers,
-        score,
-        total,
-      });
+    const result = await getDb().transaction(async (tx) => {
+      const [inserted] = await tx
+        .insert(quizAttempts)
+        .values({
+          id: attemptId,
+          ownerId: user.id,
+          courseId,
+          lessonId,
+          blockId: body.blockId,
+          submissionId: body.submissionId,
+          answers: body.answers,
+          score,
+          total,
+        })
+        .onConflictDoNothing({
+          target: [quizAttempts.ownerId, quizAttempts.blockId, quizAttempts.submissionId],
+        })
+        .returning({ id: quizAttempts.id });
+
+      if (!inserted) {
+        const [existing] = await tx
+          .select({
+            id: quizAttempts.id,
+            answers: quizAttempts.answers,
+            score: quizAttempts.score,
+            total: quizAttempts.total,
+          })
+          .from(quizAttempts)
+          .where(and(
+            eq(quizAttempts.ownerId, user.id),
+            eq(quizAttempts.blockId, body.blockId),
+            eq(quizAttempts.submissionId, body.submissionId),
+          ));
+        if (!existing) throw new Error("Idempotent quiz attempt could not be loaded.");
+        const existingAnswers = z.array(AnswerSchema).safeParse(existing.answers);
+        if (!existingAnswers.success || answerFingerprint(existingAnswers.data) !== answerFingerprint(body.answers)) {
+          return { kind: "conflict" as const };
+        }
+        return {
+          kind: "replayed" as const,
+          attemptId: existing.id,
+          score: existing.score,
+          total: existing.total,
+        };
+      }
 
       // One learning_event per question so each row's concept attribution stays
       // clean (concept_id left null until quiz questions carry concept tags).
@@ -169,24 +211,38 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
           },
           tx,
         );
-        lessonCompleted = true;
+        await enqueueExtractorJob(
+          {
+            ownerId: user.id,
+            courseId,
+            lessonId,
+            graphId: course.graphId ?? null,
+          },
+          tx,
+        );
       }
+      return { kind: "created" as const, attemptId, score, total, lessonCompleted: complete };
     });
 
-    // Independent best-effort: distill durable learner facts from this lesson's
-    // activity. Runs after commit and never blocks the response.
-    if (lessonCompleted) {
-      await enqueueExtractorJob({
-        ownerId: user.id,
-        courseId,
-        lessonId,
-        graphId: course.graphId ?? null,
-      }).catch((error) => {
-        console.error("[courses/quiz] failed to enqueue extractor job", error);
+    if (result.kind === "conflict") {
+      return NextResponse.json(
+        { error: "Submission ID was already used for different answers.", code: "idempotency_conflict" },
+        { status: 409 },
+      );
+    }
+
+    if (result.kind === "replayed") {
+      return NextResponse.json({
+        ok: true,
+        persisted: true,
+        attemptId: result.attemptId,
+        score: result.score,
+        total: result.total,
+        deduplicated: true,
       });
     }
 
-    return NextResponse.json({ ok: true, persisted: true, score, total });
+    return NextResponse.json({ ok: true, persisted: true, attemptId: result.attemptId, score, total, deduplicated: false });
   } catch (error) {
     const safe = toSafeAuthError(error, "courses-quiz", "Failed to save quiz attempt.");
     return NextResponse.json(safe.body, { status: safe.status });

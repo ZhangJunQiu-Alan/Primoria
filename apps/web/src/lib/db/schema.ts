@@ -340,6 +340,7 @@ export const quizAttempts = pgTable(
     courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
     lessonId: text("lesson_id"),
     blockId: text("block_id").notNull(),
+    submissionId: text("submission_id").notNull(),
     answers: jsonb("answers").notNull(),
     score: integer("score").notNull(),
     total: integer("total").notNull(),
@@ -348,6 +349,11 @@ export const quizAttempts = pgTable(
   (table) => ({
     ownerCourseIdx: index("quiz_attempts_owner_course_idx").on(table.ownerId, table.courseId),
     blockIdx: index("quiz_attempts_block_idx").on(table.blockId),
+    ownerBlockSubmissionUnique: uniqueIndex("quiz_attempts_owner_block_submission_uidx").on(
+      table.ownerId,
+      table.blockId,
+      table.submissionId,
+    ),
   }),
 );
 
@@ -539,6 +545,13 @@ export const extractorJobs = pgTable(
     statusLeaseIdx: index("extractor_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
   }),
 );
+
+export const workerHeartbeats = pgTable("worker_heartbeats", {
+  workerType: text("worker_type").primaryKey(),
+  workerId: text("worker_id").notNull(),
+  heartbeatAt: timestamp("heartbeat_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
 
 // LLM-generated topic graphs for out-of-library learning goals (沉淀机制).
 // One row per normalized topic; `graph` holds the full TopicGraph JSON in the

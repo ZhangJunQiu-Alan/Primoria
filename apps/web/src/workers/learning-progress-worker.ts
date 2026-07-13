@@ -15,6 +15,7 @@ import {
   type LearningProgressClaim,
 } from "../lib/courses/learning-progress-jobs";
 import { processLearningProgressJob } from "../lib/courses/learning-progress-processor";
+import { recordWorkerHeartbeat } from "../lib/courses/worker-health";
 
 // Long-running recoverable Learning-Progress Worker. Owned by the web package;
 // after a learner finishes a lesson it updates concept mastery and records a
@@ -116,6 +117,9 @@ async function loop() {
     let claim: LearningProgressClaim | undefined;
     try {
       claim = await claimNextLearningProgressJob({ workerId: WORKER_ID });
+      await recordWorkerHeartbeat("learningProgress", WORKER_ID).catch((error) => {
+        log("warn", "worker heartbeat write failed", { error: String(error) });
+      });
     } catch (error) {
       log("error", "claim query failed", { error: String(error) });
       await sleep(WORKER_IDLE_POLL_MS);

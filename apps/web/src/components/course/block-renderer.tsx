@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
 import type {
   AnalogyBlock,
   CodeBlock,
@@ -478,6 +478,7 @@ function quizCopyFor(language?: string | null) {
 
 function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock; courseId?: string; contentLanguage?: string | null }) {
   const copy = quizCopyFor(contentLanguage);
+  const submissionIdRef = useRef<string | null>(null);
   const [state, setState] = useState<QuizState>({
     phase: "answering",
     selections: {},
@@ -499,6 +500,7 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
     setState({ phase: "submitted", selections: state.selections, score });
 
     if (courseId) {
+      submissionIdRef.current ??= crypto.randomUUID();
       const answers = block.questions.map((q) => {
         const sel = state.selections[q.id];
         if (q.kind === "single") return { kind: "single" as const, questionId: q.id, selectedId: String(sel ?? "") };
@@ -509,7 +511,7 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
         await fetch(`/api/courses/${courseId}/quiz`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ blockId: block.id, answers }),
+          body: JSON.stringify({ blockId: block.id, submissionId: submissionIdRef.current, answers }),
         });
       } catch {
         // non-blocking

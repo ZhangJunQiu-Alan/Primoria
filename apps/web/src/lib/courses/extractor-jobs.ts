@@ -75,12 +75,12 @@ function requireDatabase() {
 // ── Enqueue ──────────────────────────────────────────────────────────────────
 
 /** Idempotently enqueue (or re-run) one extraction job per lesson. */
-export async function enqueueExtractorJob(input: EnqueueExtractorJobInput): Promise<EnqueueExtractorJobResult> {
+export async function enqueueExtractorJob(input: EnqueueExtractorJobInput, db?: DbOrTx): Promise<EnqueueExtractorJobResult> {
   requireDatabase();
   const { ownerId, courseId, lessonId, graphId } = input;
   if (!ownerId || !courseId || !lessonId) throw new Error("ownerId, courseId and lessonId are required to enqueue an extractor job.");
 
-  return getDb().transaction(async (tx) => {
+  const run = async (tx: DbOrTx): Promise<EnqueueExtractorJobResult> => {
     const existingRows = await tx.select().from(extractorJobs).where(eq(extractorJobs.lessonId, lessonId)).for("update");
     const existing = existingRows[0] ? rowToJob(existingRows[0]) : null;
     const now = new Date();
@@ -129,7 +129,40 @@ export async function enqueueExtractorJob(input: EnqueueExtractorJobInput): Prom
       })
       .returning();
     return { kind: "queued", job: rowToJob(rows[0]) };
-  });
+  };
+
+  return db ? run(db) : getDb().transaction(run);
+}
+
+export async function reconcileMissingExtractorJobs(limit = 100): Promise<number> {
+  requireDatabase();
+  const batchSize = Math.max(1, Math.min(Math.floor(limit), 1_000));
+  const result = await getDb().execute(sql`
+    insert into extractor_jobs (
+      id, owner_id, course_id, lesson_id, graph_id, status,
+      attempts, max_attempts, created_at, updated_at
+    )
+    select
+      'exjob_reconcile_' || md5(event.lesson_id),
+      event.owner_id,
+      event.course_id,
+      event.lesson_id,
+      event.graph_id,
+      'queued', 0, ${MAX_WORKER_ATTEMPTS}, now(), now()
+    from learning_events as event
+    where event.type = 'lesson.completed'
+      and event.course_id is not null
+      and event.lesson_id is not null
+      and not exists (
+        select 1 from extractor_jobs as job where job.lesson_id = event.lesson_id
+      )
+    order by event.created_at asc
+    limit ${batchSize}
+    on conflict (lesson_id) do nothing
+    returning id
+  `);
+  if (Array.isArray(result)) return result.length;
+  return Array.isArray((result as { rows?: unknown[] }).rows) ? (result as { rows: unknown[] }).rows.length : 0;
 }
 
 // ── Claim & lease ──────────────────────────────────────────────────────────────

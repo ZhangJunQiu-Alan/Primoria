@@ -123,9 +123,13 @@ describe("representative auth route contracts", () => {
       transaction: async (fn: (tx: unknown) => Promise<void>) =>
         fn({
           insert: () => ({
-            values: async () => {
-              throw Object.assign(new Error(RAW_DRIVER_MESSAGE), { code: "42P01" });
-            },
+            values: () => ({
+              onConflictDoNothing: () => ({
+                returning: async () => {
+                  throw Object.assign(new Error(RAW_DRIVER_MESSAGE), { code: "42P01" });
+                },
+              }),
+            }),
           }),
         }),
     });
@@ -133,7 +137,11 @@ describe("representative auth route contracts", () => {
     const request = new Request("http://localhost/api/courses/c1/quiz", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ blockId: "b1", answers: [] }),
+      body: JSON.stringify({
+        blockId: "b1",
+        submissionId: "00000000-0000-4000-8000-000000000001",
+        answers: [],
+      }),
     });
 
     const response = await POST(request, { params: Promise.resolve({ id: "c1" }) });

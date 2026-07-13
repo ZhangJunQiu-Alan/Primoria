@@ -16,6 +16,7 @@ import {
   type LessonGenerationClaim,
 } from "../lib/courses/lesson-generation-jobs";
 import { processLessonGenerationJob, type ProcessLessonJobOutcome } from "../lib/courses/lesson-generation-processor";
+import { recordWorkerHeartbeat } from "../lib/courses/worker-health";
 
 // Long-running recoverable Lesson Worker (engineering doc §8). Owned by the web
 // package; uses platform/server model configuration only (no BYOK). Run with:
@@ -147,6 +148,9 @@ async function loop(slot: number) {
     let claim: LessonGenerationClaim | undefined;
     try {
       claim = await claimNextLessonGenerationJob({ workerId: WORKER_ID });
+      await recordWorkerHeartbeat("lessonGeneration", WORKER_ID).catch((error) => {
+        log("warn", "worker heartbeat write failed", { slot, error: String(error) });
+      });
     } catch (error) {
       log("error", "claim query failed", { slot, error: String(error) });
       await sleep(WORKER_IDLE_POLL_MS);
