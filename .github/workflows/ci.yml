@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Production dependency audit
+        run: pnpm audit:prod
+
       - name: Web type-check
         run: pnpm --filter @primoria/web typecheck
 
