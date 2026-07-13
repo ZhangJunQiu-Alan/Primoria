@@ -8,8 +8,20 @@
 # never add `ports:` to them except the loopback Postgres binding below.
 
 x-db-env: &db-env
-  DATABASE_URL: postgresql://primoria_app:${POSTGRES_PASSWORD}@postgres:5432/primoria
+  DATABASE_URL: postgresql://primoria_runtime:${POSTGRES_RUNTIME_PASSWORD}@postgres:5432/primoria
   DATABASE_SSL: disable
+
+x-migration-db-env: &migration-db-env
+  DATABASE_URL: postgresql://primoria_migrator:${POSTGRES_MIGRATOR_PASSWORD}@postgres:5432/primoria
+  DATABASE_SSL: disable
+
+x-runtime-hardening: &runtime-hardening
+  read_only: true
+  cap_drop: ["ALL"]
+  security_opt: ["no-new-privileges:true"]
+  init: true
+  tmpfs:
+    - /tmp:size=64m,mode=1777
 
 services:
   postgres:
@@ -17,15 +29,17 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: primoria
-      POSTGRES_USER: primoria_app
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_USER: primoria_migrator
+      POSTGRES_PASSWORD: ${POSTGRES_MIGRATOR_PASSWORD:?set POSTGRES_MIGRATOR_PASSWORD in .env}
+      POSTGRES_RUNTIME_PASSWORD: ${POSTGRES_RUNTIME_PASSWORD:?set POSTGRES_RUNTIME_PASSWORD in .env}
     ports:
       # Loopback-only, for server-side psql/pg_dump administration.
       - "127.0.0.1:5432:5432"
     volumes:
       - primoria-postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres/init-runtime-role.sh:/docker-entrypoint-initdb.d/10-runtime-role.sh:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U primoria_app -d primoria"]
+      test: ["CMD-SHELL", "pg_isready -U primoria_migrator -d primoria"]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -40,15 +54,20 @@ services:
       target: worker
     image: primoria-worker
     restart: "no"
-    env_file: .env
     environment:
-      <<: *db-env
+      <<: *migration-db-env
+      KG_EMBEDDING_PROVIDER: ${KG_EMBEDDING_PROVIDER:-minimax}
+      MINIMAX_API_KEY: ${MINIMAX_API_KEY:-}
+      MINIMAX_GROUP_ID: ${MINIMAX_GROUP_ID:-}
+      MINIMAX_EMBEDDING_BASE_URL: ${MINIMAX_EMBEDDING_BASE_URL:-}
+      MINIMAX_EMBEDDING_MODEL: ${MINIMAX_EMBEDDING_MODEL:-}
     command: ["pnpm", "--filter", "@primoria/web", "db:bootstrap"]
     depends_on:
       postgres:
         condition: service_healthy
 
   web:
+    <<: *runtime-hardening
     build:
       context: .
       dockerfile: docker/app.Dockerfile
@@ -58,13 +77,28 @@ services:
         NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
     image: primoria-web
     restart: unless-stopped
-    env_file: .env
     environment:
       <<: *db-env
       PRIMORIA_AGENT_URL: http://agent:2024
       DATABASE_POOL_MAX: "10"
+      APP_BASE_URL: ${APP_BASE_URL:?set APP_BASE_URL in .env}
+      AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+      AI_MODEL_FAST: ${AI_MODEL_FAST:-}
+      EMAIL_PROVIDER: ${EMAIL_PROVIDER:-}
+      TENCENT_SES_SECRET_ID: ${TENCENT_SES_SECRET_ID:-}
+      TENCENT_SES_SECRET_KEY: ${TENCENT_SES_SECRET_KEY:-}
+      PRIMORIA_HEALTH_WORKER_STALE_SECONDS: ${PRIMORIA_HEALTH_WORKER_STALE_SECONDS:-30}
     expose:
       - "3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -78,25 +112,47 @@ services:
       target: agent
     image: primoria-agent
     restart: "no"
-    env_file: .env
     environment:
-      <<: *db-env
+      <<: *migration-db-env
     command: ["pnpm", "--filter", "@primoria/agent", "db:migrate"]
     depends_on:
       migrate:
         condition: service_completed_successfully
 
+  grant-runtime:
+    image: pgvector/pgvector:pg16
+    restart: "no"
+    environment:
+      PGPASSWORD: ${POSTGRES_MIGRATOR_PASSWORD:?set POSTGRES_MIGRATOR_PASSWORD in .env}
+      POSTGRES_USER: primoria_migrator
+      POSTGRES_DB: primoria
+      POSTGRES_RUNTIME_PASSWORD: ${POSTGRES_RUNTIME_PASSWORD:?set POSTGRES_RUNTIME_PASSWORD in .env}
+      PGHOST: postgres
+    volumes:
+      - ./docker/postgres/init-runtime-role.sh:/init-runtime-role.sh:ro
+      - ./docker/postgres/grant-runtime.sql:/grant-runtime.sql:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - /bin/sh /init-runtime-role.sh && psql -v ON_ERROR_STOP=1 -h postgres -U primoria_migrator -d primoria -f /grant-runtime.sql
+    depends_on:
+      agent-migrate:
+        condition: service_completed_successfully
+
   agent:
+    <<: *runtime-hardening
     build:
       context: .
       dockerfile: docker/app.Dockerfile
       target: agent
     image: primoria-agent
     restart: unless-stopped
-    env_file: .env
     environment:
       <<: *db-env
       AGENT_RUN_CONCURRENCY: ${AGENT_RUN_CONCURRENCY:-2}
+      AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
     stop_grace_period: 40s
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:2024/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
@@ -105,55 +161,71 @@ services:
       retries: 12
       start_period: 20s
     depends_on:
-      agent-migrate:
+      grant-runtime:
         condition: service_completed_successfully
 
   worker-lesson-generation:
+    <<: *runtime-hardening
     build:
       context: .
       dockerfile: docker/app.Dockerfile
       target: worker
     image: primoria-worker
     restart: unless-stopped
-    env_file: .env
     environment:
       <<: *db-env
       DATABASE_POOL_MAX: "3"
+      AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
     command: ["pnpm", "--filter", "@primoria/web", "worker:lesson-generation"]
+    healthcheck: &worker-healthcheck
+      test: ["CMD", "node", "-e", "require('fs').stat('/tmp/primoria-worker-ready',(e,s)=>{if(e||Date.now()-s.mtimeMs>30000)process.exit(1)})"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
     depends_on:
-      migrate:
+      grant-runtime:
         condition: service_completed_successfully
 
   worker-learning-progress:
+    <<: *runtime-hardening
     build:
       context: .
       dockerfile: docker/app.Dockerfile
       target: worker
     image: primoria-worker
     restart: unless-stopped
-    env_file: .env
     environment:
       <<: *db-env
       DATABASE_POOL_MAX: "3"
     command: ["pnpm", "--filter", "@primoria/web", "worker:learning-progress"]
+    healthcheck: *worker-healthcheck
     depends_on:
-      migrate:
+      grant-runtime:
         condition: service_completed_successfully
 
   worker-extractor:
+    <<: *runtime-hardening
     build:
       context: .
       dockerfile: docker/app.Dockerfile
       target: worker
     image: primoria-worker
     restart: unless-stopped
-    env_file: .env
     environment:
       <<: *db-env
       DATABASE_POOL_MAX: "3"
+      AI_PROVIDER: ${AI_PROVIDER:-openai-compatible}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
     command: ["pnpm", "--filter", "@primoria/web", "worker:extractor"]
+    healthcheck: *worker-healthcheck
     depends_on:
-      migrate:
+      grant-runtime:
         condition: service_completed_successfully
 
   caddy:
@@ -170,8 +242,15 @@ services:
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - primoria-caddy-data:/data
       - primoria-caddy-config:/config
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1/api/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
     depends_on:
-      - web
+      web:
+        condition: service_healthy
 
 volumes:
   primoria-postgres-data:

@@ -9,9 +9,13 @@ import type { TutorProviderSettings } from "../types";
 // lookup is best-effort. Disable with PRIMORIA_LLM_USAGE_LOG=0.
 export function llmUsageCallbacks(source: string): CallbackHandlerMethods[] {
   if (process.env.PRIMORIA_LLM_USAGE_LOG === "0") return [];
+  const startedAt = new Map<string, number>();
   return [
     {
-      handleLLMEnd(output) {
+      handleLLMStart(_llm, _prompts, runId) {
+        startedAt.set(String(runId), Date.now());
+      },
+      handleLLMEnd(output, runId) {
         try {
           type LooseRecord = Record<string, any>;
           const message = (output as LooseRecord)?.generations?.[0]?.[0]?.message;
@@ -22,7 +26,10 @@ export function llmUsageCallbacks(source: string): CallbackHandlerMethods[] {
               ts: new Date().toISOString(),
               message: "llm usage",
               source,
+              provider: process.env.AI_PROVIDER ?? "openai-compatible",
               model: message?.response_metadata?.model_name ?? message?.response_metadata?.model ?? null,
+              durationMs: startedAt.has(String(runId)) ? Date.now() - startedAt.get(String(runId))! : null,
+              cost: null,
               inputTokens: usage.input_tokens ?? raw.prompt_tokens ?? raw.promptTokens ?? null,
               outputTokens: usage.output_tokens ?? raw.completion_tokens ?? raw.completionTokens ?? null,
               cacheReadTokens:
@@ -35,6 +42,8 @@ export function llmUsageCallbacks(source: string): CallbackHandlerMethods[] {
           );
         } catch {
           // observability must never break the call
+        } finally {
+          startedAt.delete(String(runId));
         }
       },
     },

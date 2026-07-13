@@ -236,6 +236,7 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
 }
 
 export const POST = async (req: NextRequest) => {
+  const requestId = req.headers.get("x-request-id") ?? crypto.randomUUID();
   const { denied, user } = await requireAuthUser();
   if (denied) return denied;
 
@@ -250,6 +251,7 @@ export const POST = async (req: NextRequest) => {
     ownerId: user?.id ?? null,
     learnerProfile,
     learnerFacts,
+    headers: { "x-request-id": requestId },
   });
 
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({

@@ -24,14 +24,24 @@ COPY packages/memory/package.json ./packages/memory/package.json
 RUN pnpm install --frozen-lockfile
 COPY . .
 
+# Runtime images deliberately start from a clean Node base. Native build tools
+# remain in the build stage and are not available to a compromised service.
+FROM node:20-bookworm-slim AS runtime
+ENV PNPM_HOME=/pnpm
+ENV PATH=$PNPM_HOME:$PATH
+RUN corepack enable
+WORKDIR /app
+COPY --from=source --chown=node:node /app /app
+USER node
+
 # Keep non-web targets directly after source so legacy Docker builders can stop
 # without executing the memory-intensive Next.js build stage.
-FROM source AS worker
+FROM runtime AS worker
 ENV NODE_ENV=production
 # Default command; docker-compose.prod.yml overrides per worker service.
 CMD ["pnpm", "--filter", "@primoria/web", "worker:lesson-generation"]
 
-FROM source AS agent
+FROM runtime AS agent
 ENV NODE_ENV=production
 EXPOSE 2024
 CMD ["pnpm", "--filter", "@primoria/agent", "start"]
@@ -46,7 +56,8 @@ ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter @primoria/web build
 
-FROM webbuild AS web
+FROM runtime AS web
+COPY --from=webbuild --chown=node:node /app/apps/web/.next /app/apps/web/.next
 ENV NODE_ENV=production
 EXPOSE 3000
 CMD ["pnpm", "--filter", "@primoria/web", "start"]

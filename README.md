@@ -351,6 +351,9 @@ pnpm test:agent:integration
 # Agent run-store and real HTTP/SSE integration (isolated TEST_DATABASE_URL)
 pnpm --filter @primoria/agent test:runtime:db
 
+# Production dependency audit; fails on high/critical advisories
+pnpm audit:prod
+
 # Production route bundle budgets (run after build)
 pnpm --filter @primoria/web build
 pnpm --filter @primoria/web bundle:check
@@ -360,7 +363,19 @@ The learning-path smoke requires `CI_LEARNING_SMOKE=1` and a test `DATABASE_URL`
 
 ## Deployment (Single Server)
 
+Deployment credentials, preflight gates, privilege verification, rollback, and
+the deferred commit/push handoff are tracked in
+[`docs/deployment-preflight.md`](docs/deployment-preflight.md).
+
 Production runs the whole stack on one server (e.g. a Tencent Cloud CVM) with Docker Compose. `docker-compose.prod.yml` defines Postgres, App/KG and Agent-runtime migration jobs, the web app, the self-hosted Agent runtime, three background workers, and Caddy.
+
+Production database privileges are split: one-shot schema jobs use
+`primoria_migrator`; Web, Agent, and Workers use the non-owner
+`primoria_runtime` role with table DML only. The grant job runs after both
+migration owners and also upgrades existing volumes. Set distinct
+`POSTGRES_MIGRATOR_PASSWORD` and `POSTGRES_RUNTIME_PASSWORD` values. Long-lived
+app containers run as a non-root user with a read-only root filesystem, all
+Linux capabilities dropped, and only service-specific environment variables.
 
 Port boundaries: only Caddy (80/443) is reachable from outside. The web app (3000), the agent (2024 — it has no auth of its own and must never be published), the workers, and Postgres stay on the internal compose network; Postgres additionally binds `127.0.0.1:5432` for server-side administration.
 
@@ -431,7 +446,7 @@ Point an uptime probe (Tencent Cloud 云监控 site monitoring, or any external 
 
 ### Backups
 
-`scripts/pg-backup.sh` dumps the database via `pg_dump` into `/var/backups/primoria` (override with `PRIMORIA_BACKUP_DIR`) and prunes dumps older than 14 days. Schedule it daily:
+`scripts/pg-backup.sh` creates a PostgreSQL custom-format dump in `/var/backups/primoria` (override with `PRIMORIA_BACKUP_DIR`) and prunes dumps older than 14 days. Schedule it daily:
 
 ```bash
 sudo install -d -o "$USER" -g "$(id -gn)" -m 700 /var/backups/primoria
@@ -440,8 +455,12 @@ crontab -e
 ```
 
 Backups are written through a temporary file and atomically renamed only after
-`pg_dump` and gzip both succeed. Files are owner-readable only. The restore
-command is documented in the script header.
+`pg_dump` succeeds, then checksummed and uploaded with server-side encryption to
+the configured private Tencent COS bucket. A backup is successful only after
+the remote checksum round-trip succeeds. Files are owner-readable only. Run
+`scripts/pg-restore-drill.sh` weekly to restore the latest remote dump into an
+isolated disposable database and verify critical tables. Initial objectives are
+RPO 24 hours and RTO 4 hours; PITR requires a later WAL-archival design.
 
 ## CI
 
