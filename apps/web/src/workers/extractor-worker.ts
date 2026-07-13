@@ -15,12 +15,14 @@ import { classifyGenerationError } from "../lib/ai/course-generation/generation-
 import {
   claimNextExtractorJob,
   failExtractorJob,
+  reconcileMissingExtractorJobs,
   renewExtractorLease,
   HEARTBEAT_INTERVAL_MS,
   WORKER_IDLE_POLL_MS,
   type ExtractorClaim,
 } from "../lib/courses/extractor-jobs";
 import { processExtractorJob } from "../lib/courses/extractor-processor";
+import { recordWorkerHeartbeat } from "../lib/courses/worker-health";
 
 // Long-running recoverable Extractor Worker (web package). After a learner
 // finishes a lesson it distills durable "facts about the learner" from that
@@ -32,8 +34,11 @@ import { processExtractorJob } from "../lib/courses/extractor-processor";
 
 const WORKER_ID = `extractor_worker_${hostname()}_${process.pid}_${randomBytes(3).toString("hex")}`;
 const SHUTDOWN_GRACE_MS = 10_000;
+const RECONCILE_INTERVAL_MS = 15 * 60_000;
+const RECONCILE_BATCH_SIZE = 100;
 
 let running = true;
+let lastReconciledAt = 0;
 
 function log(level: "info" | "warn" | "error", message: string, fields: Record<string, unknown> = {}) {
   const line = { ts: new Date().toISOString(), workerId: WORKER_ID, message, ...fields };
@@ -120,9 +125,21 @@ async function processClaim(claim: ExtractorClaim) {
 async function loop() {
   log("info", "extractor worker started", { idlePollMs: WORKER_IDLE_POLL_MS });
   while (running) {
+    if (Date.now() - lastReconciledAt >= RECONCILE_INTERVAL_MS) {
+      try {
+        const queued = await reconcileMissingExtractorJobs(RECONCILE_BATCH_SIZE);
+        log("info", "extractor reconciliation completed", { queued });
+      } catch (error) {
+        log("error", "extractor reconciliation failed", { error: String(error) });
+      }
+      lastReconciledAt = Date.now();
+    }
     let claim: ExtractorClaim | undefined;
     try {
       claim = await claimNextExtractorJob({ workerId: WORKER_ID });
+      await recordWorkerHeartbeat("extractor", WORKER_ID).catch((error) => {
+        log("warn", "worker heartbeat write failed", { error: String(error) });
+      });
     } catch (error) {
       log("error", "claim query failed", { error: String(error) });
       await sleep(WORKER_IDLE_POLL_MS);

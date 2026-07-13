@@ -40,6 +40,12 @@ vi.mock("@/lib/courses/extractor-jobs", () => ({
 type TxOptions = {
   attemptedBlockIds?: string[];
   insertError?: Error;
+  existingAttempt?: {
+    id: string;
+    answers: unknown;
+    score: number;
+    total: number;
+  };
 };
 
 function makeTx(opts: TxOptions = {}) {
@@ -47,10 +53,22 @@ function makeTx(opts: TxOptions = {}) {
   const tx = {
     insert: () => ({
       values: (row: Record<string, unknown>) => {
-        if (opts.insertError) return Promise.reject(opts.insertError);
-        inserted.push(row);
-        return Promise.resolve();
+        const created = !opts.existingAttempt;
+        if (created) inserted.push(row);
+        return {
+          onConflictDoNothing: () => ({
+            returning: async () => {
+              if (opts.insertError) throw opts.insertError;
+              return created ? [{ id: row.id }] : [];
+            },
+          }),
+        };
       },
+    }),
+    select: () => ({
+      from: () => ({
+        where: async () => opts.existingAttempt ? [opts.existingAttempt] : [],
+      }),
     }),
     selectDistinct: () => ({
       from: () => ({
@@ -89,6 +107,8 @@ const courseFixture = {
   ],
 };
 
+const SUBMISSION_ID = "00000000-0000-4000-8000-000000000001";
+
 function quizRequest(body: unknown) {
   return new Request("http://localhost/api/courses/c1/quiz", {
     method: "POST",
@@ -99,7 +119,10 @@ function quizRequest(body: unknown) {
 
 async function postQuiz(body: unknown) {
   const { POST } = await import("../src/app/api/courses/[id]/quiz/route");
-  return POST(quizRequest(body), { params: Promise.resolve({ id: "c1" }) });
+  const requestBody = body && typeof body === "object" && !("submissionId" in body)
+    ? { ...body, submissionId: SUBMISSION_ID }
+    : body;
+  return POST(quizRequest(requestBody), { params: Promise.resolve({ id: "c1" }) });
 }
 
 describe("quiz route server-authoritative grading", () => {
@@ -130,7 +153,7 @@ describe("quiz route server-authoritative grading", () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toMatchObject({ ok: true, persisted: true, score: 1, total: 2 });
     expect(inserted).toHaveLength(1);
-    expect(inserted[0]).toMatchObject({ blockId: "b1", score: 1, total: 2, ownerId: "u1" });
+    expect(inserted[0]).toMatchObject({ blockId: "b1", submissionId: SUBMISSION_ID, score: 1, total: 2, ownerId: "u1" });
     // Per-question evidence carries server-side grading.
     const events = routeState.recordLearningEvent.mock.calls.map(([event]) => event);
     expect(events).toHaveLength(2);
@@ -187,6 +210,65 @@ describe("quiz route server-authoritative grading", () => {
     expect(routeState.enqueueExtractorJob).not.toHaveBeenCalled();
   });
 
+  it("fails the whole submission when transactional extractor enqueue fails", async () => {
+    const { tx } = installDb({ attemptedBlockIds: ["b1", "b2"] });
+    routeState.enqueueExtractorJob.mockRejectedValue(new Error("extractor enqueue failed"));
+
+    const response = await postQuiz({
+      blockId: "b1",
+      answers: [{ kind: "single", questionId: "q1", selectedId: "a" }],
+    });
+
+    expect(response.status).toBe(500);
+    expect(await response.json()).toEqual({ error: "Failed to save quiz attempt.", code: "internal_error" });
+    expect(routeState.enqueueExtractorJob).toHaveBeenCalledWith(
+      { ownerId: "u1", courseId: "c1", lessonId: "l1", graphId: "g1" },
+      tx,
+    );
+  });
+
+  it("returns the original result without writing evidence for a repeated submission", async () => {
+    const answers = [{ kind: "single" as const, questionId: "q1", selectedId: "a" }];
+    installDb({
+      existingAttempt: { id: "qa_original", answers, score: 1, total: 2 },
+    });
+
+    const response = await postQuiz({ blockId: "b1", answers });
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({
+      ok: true,
+      attemptId: "qa_original",
+      score: 1,
+      total: 2,
+      deduplicated: true,
+    });
+    expect(routeState.recordLearningEvent).not.toHaveBeenCalled();
+    expect(routeState.markLessonProgress).not.toHaveBeenCalled();
+    expect(routeState.enqueueLearningProgressJob).not.toHaveBeenCalled();
+    expect(routeState.enqueueExtractorJob).not.toHaveBeenCalled();
+  });
+
+  it("rejects reuse of a submission id with different answers", async () => {
+    installDb({
+      existingAttempt: {
+        id: "qa_original",
+        answers: [{ kind: "single", questionId: "q1", selectedId: "b" }],
+        score: 0,
+        total: 2,
+      },
+    });
+
+    const response = await postQuiz({
+      blockId: "b1",
+      answers: [{ kind: "single", questionId: "q1", selectedId: "a" }],
+    });
+
+    expect(response.status).toBe(409);
+    expect(await response.json()).toMatchObject({ code: "idempotency_conflict" });
+    expect(routeState.recordLearningEvent).not.toHaveBeenCalled();
+  });
+
   it("commits completion, lesson.completed and the progress job in the same transaction", async () => {
     const { tx } = installDb({ attemptedBlockIds: ["b1", "b2"] });
 
@@ -204,8 +286,10 @@ describe("quiz route server-authoritative grading", () => {
       { ownerId: "u1", courseId: "c1", lessonId: "l1", graphId: "g1" },
       tx,
     );
-    // Extractor enqueue is best-effort and runs after the transaction.
-    expect(routeState.enqueueExtractorJob).toHaveBeenCalledWith({ ownerId: "u1", courseId: "c1", lessonId: "l1", graphId: "g1" });
+    expect(routeState.enqueueExtractorJob).toHaveBeenCalledWith(
+      { ownerId: "u1", courseId: "c1", lessonId: "l1", graphId: "g1" },
+      tx,
+    );
   });
 });
 

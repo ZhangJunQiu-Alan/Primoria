@@ -295,6 +295,20 @@
       "when": 1783860987163,
       "tag": "0041_special_shadow_king",
       "breakpoints": true
+    },
+    {
+      "idx": 42,
+      "version": "7",
+      "when": 1783870787104,
+      "tag": "0042_modern_the_liberteens",
+      "breakpoints": true
+    },
+    {
+      "idx": 43,
+      "version": "7",
+      "when": 1783872798320,
+      "tag": "0043_naive_ikaris",
+      "breakpoints": true
     }
   ]
 }

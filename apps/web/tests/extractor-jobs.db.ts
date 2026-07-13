@@ -102,6 +102,19 @@ async function main() {
       ok(r2.ok && r2.status === "failed", "retryable failure with no budget fails permanently");
     }
 
+    // ── reconciliation repairs a durable completion with no job ──────────────
+    {
+      const { ownerId, courseId, lessonId } = await freshLesson();
+      await sql`
+        insert into learning_events (id, owner_id, type, course_id, lesson_id, graph_id, payload)
+        values (${`lesson_completed_${lessonId}`}, ${ownerId}, 'lesson.completed', ${courseId}, ${lessonId}, 'g-reconcile', '{}'::jsonb)
+      `;
+      ok(await store.reconcileMissingExtractorJobs(100) === 1, "reconciliation queues a missing extractor job");
+      ok(await store.reconcileMissingExtractorJobs(100) === 0, "reconciliation is idempotent");
+      const [job] = await sql`select status, graph_id from extractor_jobs where lesson_id=${lessonId}`;
+      ok(job.status === "queued" && job.graph_id === "g-reconcile", "reconciled job preserves completion context");
+    }
+
     finish(NAME);
   } finally {
     await teardownTestDb(sql);
