@@ -1,7 +1,4 @@
 import { z } from "zod";
-import fs from "node:fs";
-import path from "node:path";
-import { pathToFileURL } from "node:url";
 import type {
   AttachmentMetadata,
   ChatAttachment,
@@ -86,30 +83,7 @@ function cleanBase64Text(value: string) {
 }
 
 function pdfWorkerUrl() {
-  const roots = [process.cwd(), path.join(process.cwd(), ".."), path.join(process.cwd(), "../..")];
-  const candidates = roots.flatMap((root) => [
-    path.join(root, "node_modules/pdf-parse/dist/worker/pdf.worker.mjs"),
-    path.join(root, "node_modules/pdf-parse/dist/pdf-parse/esm/pdf.worker.mjs"),
-    ...pnpmPdfWorkerCandidates(root),
-  ]);
-  const workerPath = candidates.find((candidate) => fs.existsSync(candidate));
-  return workerPath ? pathToFileURL(workerPath).toString() : undefined;
-}
-
-function pnpmPdfWorkerCandidates(root: string) {
-  const pnpmDir = path.join(root, "node_modules/.pnpm");
-  if (!fs.existsSync(pnpmDir)) return [];
-
-  return fs
-    .readdirSync(pnpmDir)
-    .filter((entry) => entry.startsWith("pdf-parse@"))
-    .flatMap((entry) => {
-      const packageRoot = path.join(pnpmDir, entry, "node_modules/pdf-parse");
-      return [
-        path.join(packageRoot, "dist/worker/pdf.worker.mjs"),
-        path.join(packageRoot, "dist/pdf-parse/esm/pdf.worker.mjs"),
-      ];
-    });
+  return new URL("./pdf.worker.mjs", import.meta.resolve("pdf-parse")).toString();
 }
 
 async function extractDocumentText(attachment: ChatAttachment, buffer: Buffer) {

@@ -1,3 +1,4 @@
+import path from "node:path";
 import { Worker } from "node:worker_threads";
 
 export const MERMAID_PARSE_TIMEOUT_MS = 30_000;
@@ -39,7 +40,7 @@ function isParseResponse(value: unknown): value is ParseResponse {
 }
 
 function createNodeWorker(): MermaidWorker {
-  return new Worker(new URL("./mermaid-validation-worker.mjs", import.meta.url));
+  return new Worker(path.join(process.cwd(), "src/lib/courses/mermaid-validation-worker.mjs"));
 }
 
 export class MermaidParserWorkerClient {

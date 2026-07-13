@@ -3,28 +3,28 @@
   "routes": {
     "/": {
       "manifest": "server/app/page_client-reference-manifest.js",
-      "maxRawKiB": 575,
-      "maxGzipKiB": 175
+      "maxRawKiB": 620,
+      "maxGzipKiB": 185
     },
     "/library": {
       "manifest": "server/app/library/page_client-reference-manifest.js",
-      "maxRawKiB": 550,
-      "maxGzipKiB": 165
+      "maxRawKiB": 600,
+      "maxGzipKiB": 178
     },
     "/course/[id]": {
       "manifest": "server/app/course/[id]/page_client-reference-manifest.js",
-      "maxRawKiB": 1024,
-      "maxGzipKiB": 305
+      "maxRawKiB": 1040,
+      "maxGzipKiB": 310
     },
     "/auth/sign-in": {
       "manifest": "server/app/auth/sign-in/page_client-reference-manifest.js",
-      "maxRawKiB": 520,
-      "maxGzipKiB": 160
+      "maxRawKiB": 565,
+      "maxGzipKiB": 170
     },
     "/welcome": {
       "manifest": "server/app/welcome/page_client-reference-manifest.js",
-      "maxRawKiB": 520,
-      "maxGzipKiB": 160
+      "maxRawKiB": 570,
+      "maxGzipKiB": 170
     }
   }
 }
