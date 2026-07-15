@@ -1,5 +1,7 @@
 # Knowledge Graph Import Runbook
 
+Status: current operational runbook, July 2026.
+
 Current source of truth: KG source JSON files live in
 `data/knowledge-graphs/source/`. Generated graph candidates awaiting review live
 in `data/knowledge-graphs/generated/`. Runtime topic DAG artifacts are generated
@@ -28,13 +30,13 @@ under `apps/web/src/lib/knowledge-graph/data/`.
 
 前置：脚本在 `apps/web/scripts/`，DB 表为 `knowledge_graphs / _topics / _concepts / _edges`(+embeddings)。
 
-1. **过门禁**：`python3 scripts/validate_kg.py` 全绿；spec 构建的图最后跑 `enrich_manual.py` 补描述。
+1. **过门禁**：全量运行 `pnpm --filter @primoria/web validate:kg`；单图运行 `node apps/web/scripts/validate-kg.mjs <graph_id>`。校验直接读取 source JSON，并检查中英文名称、引用完整性与每个 topic 2–3 个 concept 的粒度门禁。根目录旧 Python 校验器不是当前主门禁。
 2. **放入 source 目录**：新增或更新 `data/knowledge-graphs/source/<graph_id>.json`；`kg-db-common.mjs graphPath()` 会按 `graph_id` 读取同名 JSON。
 3. **初始化 schema**：新环境运行 `pnpm db:bootstrap`；只维护 KG schema 时可运行 `pnpm --filter @primoria/web db:migrate:kg`。两个命令都可重复执行。
-4. **导入图**：`pnpm db:seed:kg <graph_id>`（upsert 节点/边，并删除该图中已移除的行）。
-5. **跨学科边**：`seed-kg` 只写同图边；`cross_subject_edges.json`(from≠to graph) 要单独插入 `knowledge_graph_edges`。
-6. **嵌入**：`pnpm db:seed:kg-embeddings <graph_id>`（需 OpenAI text-embedding-3-small，供定位/RAG）。
-7. **topic 派生件**：`pnpm build:topic-graph <graph_id>` → `src/lib/knowledge-graph/data/topic-graph.<id>.json`（入口分类/下一 topic）。
-8. **接消费端**：按需更新 `search.ts` 的 `DEFAULT_KG_GRAPH_ID` / 图注册表。
+4. **导入图**：`pnpm --filter @primoria/web db:seed:kg <graph_id>`（upsert 节点/边，并删除该图中已移除的行）。
+5. **跨学科边**：`seed-kg` 只写同图边；更新 `data/knowledge-graphs/source/cross_subject_edges.json` 后运行 `pnpm --filter @primoria/web db:seed:kg-cross`。
+6. **嵌入**：`pnpm --filter @primoria/web db:seed:kg-embeddings <graph_id>`，供定位/RAG 使用。Provider 由 `KG_EMBEDDING_PROVIDER` 配置，当前支持 `openai-compatible` 与 `minimax`；嵌入模型与维度必须和数据库数据一致。
+7. **topic 派生件**：`pnpm --filter @primoria/web build:topic-graph <graph_id>` → `apps/web/src/lib/knowledge-graph/data/topic-graph.<id>.json`（入口分类/下一 topic）。
+8. **接消费端**：确认 `search.ts`、图路由和显示名称能找到新图；不要另建与 source 目录并行的图注册表。
 
-新环境全量导入：`pnpm db:initialize:kg`（所有 subject graphs + retired graph cleanup + cross-subject edges + 所有 embeddings）。单图维护按步骤 4、6 分别传 `<graph_id>`。
+新环境全量导入：`pnpm db:initialize:kg`（所有 subject graphs + retired graph cleanup + cross-subject edges + 所有 embeddings）。单图维护按步骤 4、6 分别传 `<graph_id>`；任何 source 变更都必须重新执行步骤 1。

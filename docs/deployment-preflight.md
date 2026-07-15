@@ -2,6 +2,7 @@
 
 This is the release handoff for the single-server production stack. Do not put
 real credentials in this repository, commit messages, issue text, or logs.
+It reflects the modular-monolith-plus stack as of July 2026.
 
 ## Deployment trigger
 
@@ -19,13 +20,17 @@ explicitly asks to deploy:
 - Target server SSH host, port, user, and authentication method.
 - Production domain and confirmation that its DNS A/AAAA records may be changed.
 - Production `APP_BASE_URL` / `NEXT_PUBLIC_APP_URL`.
-- Chat model provider, base URL, model names, and server-side API key.
+- Chat model provider, base URL, server-side API key, default `OPENAI_MODEL`,
+  fast routing model `AI_MODEL_FAST`, and optional content model
+  `AI_MODEL_CONTENT`.
 - Embedding provider credentials. For MiniMax this includes API key and group ID
   when the account requires one.
 - Tencent SES secret ID/key, region, verified sender, approved password-reset
   template ID, and subject.
 - Optional Cloudflare Turnstile site key and corresponding server-side secret if
   Turnstile is enabled by the deployed auth flow.
+- If internal analytics is enabled, the exact operator email allowlist for
+  `PRIMORIA_INTERNAL_EMAILS`; do not enable the page without an allowlist.
 - Git remote authentication only if the existing environment cannot push.
 
 Generate the migration and runtime database passwords at deployment time. They
@@ -61,6 +66,9 @@ pnpm install --frozen-lockfile
 pnpm --filter @primoria/web typecheck
 pnpm lint
 pnpm --filter @primoria/web test
+pnpm --filter @primoria/agent test
+pnpm catalog:validate
+pnpm --filter @primoria/web test:interactive-routing
 pnpm build
 pnpm audit:prod
 docker compose -f docker-compose.prod.yml config --quiet
@@ -83,7 +91,12 @@ capability restrictions in `docker-compose.prod.yml`.
 7. On the first deployment only, initialize KG data and embeddings.
 8. Verify health, authentication, course access, one quiz submission/replay,
    Tutor streaming, Worker queue consumption, email delivery, and public TLS.
-9. Run `scripts/pg-restore-drill.sh` and retain its JSON success record.
+9. In the main Tutor, request one catalog-backed visualization. Confirm
+   `open_interactive_component` selection, card rendering, and a spoken
+   adjustment producing a patch rather than a full replacement.
+10. If internal analytics is enabled, confirm an allowlisted operator can open
+    the analysis page and a normal authenticated user receives a denial.
+11. Run `scripts/pg-restore-drill.sh` and retain its JSON success record.
 
 ```bash
 docker compose -f docker-compose.prod.yml up -d --build
@@ -131,6 +144,5 @@ owner's explicit instruction. At that time:
 4. Run validation appropriate to every batch and the final combined tree.
 5. Push only after all commits succeed; report commit SHAs and pushed branch.
 
-Likely boundaries for the current hardening work are dependency/CI security,
-quiz idempotency, deployment privilege isolation, and documentation. Re-evaluate
-the actual diff at commit time instead of treating this list as fixed.
+Derive commit boundaries from the actual diff at hand; this runbook does not
+predefine release batches.

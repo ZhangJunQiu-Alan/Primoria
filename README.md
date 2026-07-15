@@ -1,8 +1,14 @@
 # Primoria
 
-Primoria is an AI-native learning app for adaptive course generation, course-aware tutoring, interactive learning artifacts, and learner memory.
+Primoria is an AI-native learning app for adaptive course generation,
+course-aware tutoring, cross-disciplinary interactive learning, and durable
+learner memory.
 
-The long-horizon product direction is documented in [docs/long-horizon-learning-principles.md](docs/long-horizon-learning-principles.md). Broader architecture notes live in [docs/product-architecture.md](docs/product-architecture.md).
+Start from the [documentation map](docs/README.md). The long-horizon product
+direction is documented in
+[docs/long-horizon-learning-principles.md](docs/long-horizon-learning-principles.md),
+while [docs/product-architecture.md](docs/product-architecture.md) separates the
+active personal-learning architecture from future classroom and ecosystem ideas.
 
 ## Product Focus
 
@@ -18,7 +24,12 @@ The core loop is:
 6. Update concept mastery and decide whether to continue, skim, or insert remediation.
 7. Distill durable learner facts for future tutoring and course planning.
 
-Primoria is aimed at students and self-directed learners working through complex subjects with prerequisite structure, especially mathematics, physics, algorithms, machine learning, software engineering, and other topics where interactive visualization and evidence-driven review are useful.
+Primoria is aimed at students and self-directed learners across all subjects.
+Library knowledge graphs provide structured paths where coverage exists;
+generated graphs and the freeform path cover out-of-library goals. Interactive
+components are likewise cross-disciplinary: STEM simulations sit alongside
+timelines, source comparison, close reading, argument maps, language, music,
+geography, policy, art, and experiment design.
 
 ## Repository Layout
 
@@ -30,7 +41,8 @@ This is a pnpm monorepo:
 - `packages/memory` - optional memory-provider package integration.
 - `data/knowledge-graphs/source` - committed source-of-truth KG JSON files and sidecars.
 - `data/knowledge-graphs/generated` - exported generated graph candidates awaiting review/promotion.
-- `docs` - current product, KG, UX, and implementation notes. Task reports and old handoff notes are not kept as project docs.
+- `data/visualization-components` - versioned all-subject interactive-component catalog and JSON Schema.
+- `docs` - current product, KG, UX, operations, and dated implementation evidence; `docs/README.md` defines status and precedence.
 
 ## Prerequisites
 
@@ -69,6 +81,11 @@ AI_PROVIDER=openai-compatible
 OPENAI_BASE_URL=https://your-openai-compatible-endpoint/v1
 OPENAI_API_KEY=your-key
 OPENAI_MODEL=gpt-5.4
+# Optional fast tier for routing and utility calls.
+AI_MODEL_FAST=your-fast-model
+# Optional content-quality tier for source comparison and causal timelines.
+# Falls back to OPENAI_MODEL, never AI_MODEL_FAST.
+AI_MODEL_CONTENT=your-quality-model
 ```
 
 ```bash
@@ -245,6 +262,10 @@ If unset, the web route defaults to `http://localhost:2024`. The service uses
 the open-source LangGraph library directly; it does not use LangGraph Agent
 Server, LangSmith Deployment, Redis, or a LangGraph production license.
 
+Provider credentials are server-owned. Primoria does not support BYOK; clients
+cannot choose a provider, base URL, or API key. UI/content-language and learning
+preferences are product settings, not provider credentials.
+
 ### Optional Capabilities
 
 Image blocks use Gemini image generation when configured:
@@ -255,6 +276,16 @@ GEMINI_IMAGE_MODEL=gemini-3.1-flash-lite-image
 ```
 
 If `GEMINI_IMAGE_MODEL` is unset, Primoria uses `gemini-3.1-flash-lite-image` by default. Override it only when you want a different quality/cost tradeoff; output capability limits should be checked against Google's current model documentation.
+
+The authenticated internal visualization report aggregates catalog misses and
+per-component render reliability at `/internal/visualization-analytics`. It is
+open to authenticated users in development. Production fails closed unless both
+variables are configured:
+
+```bash
+PRIMORIA_ENABLE_INTERNAL_ANALYTICS=1
+PRIMORIA_INTERNAL_EMAILS=operator@example.com
+```
 
 ## Run Locally
 
@@ -315,6 +346,15 @@ pnpm --filter @primoria/web db:check
 
 # Apply all KG and App/Auth/Course schema migrations
 pnpm db:bootstrap
+
+# Validate the all-subject interactive-component catalog
+pnpm catalog:validate
+
+# Validate the fixed routing fixture without calling a model
+pnpm --filter @primoria/web test:interactive-routing
+
+# Run the same routing fixture against the configured real model
+pnpm --filter @primoria/web eval:interactive-routing
 ```
 
 ## Tests and Verification
@@ -491,16 +531,28 @@ The agent may read persisted course data for bounded tool behavior such as resto
 
 ### Agent Tooling and Artifacts
 
-The active tutor graph is composed in `apps/agent/src/graph.mjs` from focused modules — `prompts.mjs`, `model.mjs`, `middleware.mjs`, `widget-html.mjs`, and `tools/{visualization,renderers,course,quiz}.mjs`. It uses deepagents with a focused tool surface:
+The active tutor graph is composed in `apps/agent/src/graph.mjs` from focused
+modules — `prompts.mjs`, `model.mjs`, `middleware.mjs`, `widget-html.mjs`, and
+`tools/{course,interactive,quiz,renderers,visualization}.mjs`. It uses deepagents
+with a focused tool surface:
 
 - `position_learning_goal` - the only main-tutor entry for creating a course from a learner goal.
 - `get_course_card` - restores a course card from persisted course data.
 - `render_chat_quiz` - creates a temporary quiz inside chat without creating a course block or changing mastery.
+- `open_interactive_component` - opens or patches one of 19 schema-validated,
+  pre-engineered React teaching components. This catalog path outranks generic
+  renderers when a component fits.
 - `plan_visualization` + `widgetRenderer` - custom interactive HTML widget flow.
 - `stemRenderer` - constrained STEM simulations using the subject runtime API.
 - `render_chart`, `render_diagram`, `render_physics_scene`, `render_3d_scene`, `render_algorithm`, `render_math_explorer`, `render_wave`, `render_graph`, and `render_molecule` - specialized structured renderers.
 
 `TutorArtifact` types are defined in `packages/contracts/src/artifacts` and re-exported through `apps/web/src/lib/ai/types.ts`. `ToolCard` routes artifacts to renderers in `apps/web/src/components/generative-ui/tool-card.tsx`.
+
+`open_interactive_component` is deliberately a frontend-tool signal rather than
+a persisted `TutorArtifact`: the browser card calls the authenticated Web API,
+generates a full config or minimal patch, validates it with the component Zod
+schema, and renders the registered React component. The Agent never owns or
+persists the config.
 
 Adding a new artifact type usually requires:
 
@@ -509,6 +561,17 @@ Adding a new artifact type usually requires:
 3. Add or update the agent tool in the matching `apps/agent/src/tools/*.mjs` module.
 
 ### Widget Rendering
+
+Primoria has two complementary visualization paths:
+
+1. **Catalog component:** the main Tutor chooses
+   `open_interactive_component`; Web performs config generation/patching and
+   renders a pre-engineered React component. The catalog, Web registry, widget
+   map, and shared Agent routing prior are guarded by sync tests.
+2. **Off-catalog fallback:** specialized structured renderers handle known chart,
+   diagram, physics, algorithm, math, wave, graph, molecule, and 3D shapes;
+   `plan_visualization` + `widgetRenderer` handles the remaining custom HTML
+   widget cases in a sandboxed iframe.
 
 HTML widgets execute inside a sandboxed iframe. `apps/web/src/components/generative-ui/widget-renderer.tsx` assembles a standalone document around the fragment, theme CSS, SVG/form helpers, a `window.sendPrompt` bridge, and validated dependencies.
 
@@ -554,6 +617,16 @@ Lesson materialization is recoverable and worker-driven:
 - `worker:learning-progress` updates concept mastery and produces next-step recommendations after lesson completion.
 - `worker:extractor` distills durable learner facts from learning events.
 
+Cold start is also persistent. Onboarding captures a learning goal, knowledge
+background, and Tutor style, positions or generates the required graph, and
+prepares the first course. Those three choices are mirrored into evidence-backed
+learner facts. Later lesson completion queues both mastery/diagnosis work and an
+idempotent Extractor job; active facts are visible and dismissible from Settings.
+
+Course sharing uses immutable, sanitized snapshots in `course_share_links`.
+Public links never read live course rows, revocation rotates the token, and
+imports are idempotent per learner.
+
 The main persistence tables include `courses`, `lessons`, `lesson_generation_jobs`, `lesson_generation_checkpoints`, `learning_events`, `learning_progress_jobs`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, and `extractor_jobs`.
 
 ### Model Provider
@@ -571,14 +644,15 @@ The current implementation covers the main personal learning loop: goal position
 
 Near-term priorities:
 
-- Stabilize remediation after lesson quizzes, including learner choice, navigation, and resume behavior.
-- Inject concept mastery into lesson-building prompts so mastered concepts are skimmed and weak concepts receive deeper instruction.
-- Improve learner-memory distillation for preferences, pace, depth, blockers, and useful learning moments.
+- Stabilize remediation after lesson quizzes, including learner choice, navigation, resume behavior, and cross-graph prerequisites.
+- Improve learner-memory extraction quality, evidence review, correction, and decay without confusing facts with concept mastery.
 - Keep lesson generation close to the intended micro-learning recipe with balanced text, image, visual, quiz, code, analogy, and transfer blocks.
 - Continue hardening the course reader and Course Tutor baseline: current lesson
   context, visible block scope, selected block/text context, revision tools, and
   collapsed AI rail behavior.
-- Increase interactive visualization stability across screen sizes and themes.
+- Accumulate real `visualization.render` traffic, use the internal analytics page
+  to prioritize catalog expansion, and keep the fixed routing fixture green.
+- Deepen high-value humanities interactions before adding many shallow components.
 
 Longer-term roadmap:
 
@@ -606,6 +680,12 @@ Create the account in the app before running the import command.
 - Widgets must be iframe fragments and must only use allowlisted external dependencies.
 - Long-running course generation, progress updates, and learner-fact extraction run through workers and require `DATABASE_URL`.
 - Shared artifact contracts live in `packages/contracts`, not in app-local type files.
+- Interactive component config schemas and calculations live in
+  `apps/web/src/lib/interactive`; the Agent sees only the compact catalog prior
+  in `packages/contracts/src/artifacts/interactive-catalog.mjs`.
+- Update the relevant current-state document and `docs/README.md` navigation when
+  a runtime path, tool, data owner, route, environment variable, or public
+  capability changes.
 
 ## Contribution Workflow
 

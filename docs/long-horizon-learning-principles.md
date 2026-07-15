@@ -112,6 +112,22 @@ The core loop is:
 6. update memory, plan, or next action
 7. repeat
 
+## Current Implementation Mapping (July 2026)
+
+| Principle | Current implementation | Remaining gap |
+| --- | --- | --- |
+| Goal and cold start | Onboarding captures prior learning, desired learning, teaching preferences, tutor choice, and background | Make later goal changes and conflicts reviewable |
+| Structured progress | Courses, lessons, blocks, generation decisions, and progress state are persisted | Improve recovery/resume and intervention explanations |
+| Evidence | Quiz attempts, learning events, course edits, and Tutor conversations provide raw evidence | Normalize success criteria across teaching methods |
+| Learner state | Concept mastery, learner profiles/facts, mastery jobs, and extractor jobs | Add learner-facing provenance, correction, and deletion controls |
+| Method choice | Course blocks, quizzes, catalog interactions, structured artifacts, and sandbox widgets provide multiple teaching forms | Measure which method helped and route from that evidence |
+| Repetition | Cross-session state is durable | Explicit spaced-repetition scheduling remains future work |
+
+This mapping is the boundary between implemented infrastructure and product
+direction. A principle is not considered complete merely because its table or
+worker exists; the decision must improve the next learning step and leave
+evidence that can be evaluated.
+
 ## Design Rules
 
 - Prefer evidence over intuition.

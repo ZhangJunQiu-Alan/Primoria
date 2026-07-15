@@ -1,101 +1,129 @@
-# Primoria Web implementation status
+# Primoria Web Implementation Status
 
-## Current Result
+Status: current implementation inventory, July 2026.
 
-The Web app is the active Primoria product surface. It is no longer a static
-mock and no longer depends on Supabase runtime helpers.
+`apps/web` is the active product surface and product-data owner. It is a
+Next.js/React/TypeScript application backed by PostgreSQL and the self-hosted
+AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
 
-Implemented:
+## Implemented product loop
 
-- Next.js / React / TypeScript web app under `apps/web`
-- Chat-first AI Tutor UI
-- Light Primoria visual style
-- Course outline route with generated/planned/locked lesson states and explicit
-  Jump ahead generation for planned lessons
-- Full-screen course lesson reader at `/course/[id]`: one block per step, lesson
-  title/progress in the reader top bar, bottom step controls, and no embedded
-  upcoming outline
-- Course Tutor on lesson pages as a collapsed right-side AI rail that expands
-  into the existing CopilotKit Course Tutor surface
-- Settings UI for model/provider preferences where wired
-- Postgres-backed CopilotKit thread history with New chat reset
-- CopilotKit runtime route backed by Primoria's self-hosted AG-UI service and
-  the LangGraph `primoria_tutor` graph
-- PostgreSQL-backed Agent runs, streamed events, leases, cancellation,
-  conservative retry/recovery, and LangGraph checkpoints
-- OpenAI-compatible and Anthropic-compatible chat model configuration
-- OpenAI-compatible and MiniMax KG embedding configuration
-- DeepAgent/LangGraph tutor prompt
-- Structured model response:
-  - normal text reply
-  - visualization plan artifact
-  - `html_widget` artifact
-  - `code` artifact
-  - suggestions
-- Course block renderers for text, analogy, transfer, image, visual, code,
-  quiz, mind map, slide, and worksheet blocks
-- LangGraph visual tool pipeline:
-  - prompt routing chooses course, visualization, STEM simulation, greeting, or concept answer
-  - `plan_visualization`
-  - `widgetRenderer`
-  - `stemRenderer`
-- Sandboxed iframe renderer for interactive HTML/CSS/JS widgets
-- Runtime iframe resize bridge
-- OpenGenerativeUI-style widget shell:
-  - Primoria theme CSS injection
-  - SVG helper classes
-  - form/input default styles
-  - import map for approved visualization modules
-  - widget-to-tutor prompt bridge
-- Local verification through CopilotKit, the self-hosted Agent runtime on port
-  2024, and browser QA
-- Postgres-backed self-owned auth (`users`, `identities`, `sessions`)
-- Auth endpoint rate limiting through `auth_rate_limits`
-- Docker Compose local PostgreSQL with `pgvector/pgvector:pg16` as the default
-  development database
+- Self-owned email/password auth, sessions, password reset, and rate limiting.
+- Cold-start onboarding for learning goal, KG anchor, knowledge background,
+  Tutor style, first-course preparation, stale-run recovery, and fact sync.
+- Main CopilotKit Tutor connected to the durable `primoria_tutor` runtime.
+- Postgres-backed chat threads and New chat lifecycle.
+- KG positioning across library graphs with generated-graph coverage fallback
+  and explicit infrastructure-failure handling.
+- Course outline initialization, background description enrichment, lazy lesson
+  generation, job recovery, and Jump ahead generation.
+- One-block-at-a-time lesson reader plus course-aware Tutor rail.
+- Text, analogy, image, visual, quiz, code, transfer, mind-map, slide, and
+  worksheet block renderers.
+- Idempotent course quiz submissions, learning events, concept mastery, and
+  post-lesson diagnosis/recommendations.
+- Post-lesson Extractor jobs and reviewable/dismissible learner facts.
+- Immutable snapshot course sharing with idempotent import.
+- Global user-agnostic generated-image cache.
+- Chinese/English interface dictionaries and separate content-language handling.
 
-## Runtime Config
+## Tutor and visualization
 
-Local runtime config should start from `apps/web/.env.example`, then be copied to
-`apps/web/.env.local`. The LangGraph agent should receive the same relevant
-server-side values via `apps/agent/.env`.
+The active path is:
+
+```text
+Browser CopilotKit
+→ /api/copilotkit
+→ PrimoriaHttpAgent
+→ internal POST /agent
+→ apps/agent/src/graph.mjs
+```
+
+Visualization is catalog-first:
+
+- 19 all-subject schema-driven React components selected through
+  `open_interactive_component`.
+- Authenticated Web stage 2 creates a full config or validated minimal patch.
+- Structured chart/diagram/STEM/algorithm/math/3D/wave/graph/molecule renderers
+  handle off-catalog shapes with known contracts.
+- `plan_visualization` + sandboxed `widgetRenderer` remains the custom fallback.
+- Catalog, Web registry, Agent routing prior, React widget map, and default
+  configs are protected by sync/render tests.
+- `visualization.render` telemetry feeds the allowlisted internal report at
+  `/internal/visualization-analytics`.
+- A fixed 28-case fixture provides repeatable stage-1 routing evaluation.
+
+HTML widgets run in a sandboxed iframe with validated dependency URLs, Primoria
+theme tokens, SVG/form helpers, resize and prompt bridges, and deferred script
+execution until streaming HTML settles.
+
+## Persistence and workers
+
+PostgreSQL stores App/Auth/Course data, KG/pgvector data, chat history, sharing
+snapshots, learner profile/facts, mastery, media, and durable jobs. Three Web
+workers consume Postgres queues:
+
+- `worker:lesson-generation`;
+- `worker:learning-progress`;
+- `worker:extractor`.
+
+The Agent owns only its isolated `agent_runtime` schema plus the existing
+bounded owner-scoped course-card read. Web remains the owner of product writes.
+
+## Runtime configuration
+
+Start from `apps/web/.env.example`; copy relevant server-side provider and DB
+values to `apps/agent/.env` for local Agent development.
 
 ```env
 AI_PROVIDER=openai-compatible
-OPENAI_BASE_URL=https://your-openai-compatible-endpoint/v1
+OPENAI_BASE_URL=https://your-endpoint/v1
 OPENAI_API_KEY=your-key
 OPENAI_MODEL=gpt-5.4
+AI_MODEL_FAST=your-fast-model
+AI_MODEL_CONTENT=your-quality-model
 DATABASE_URL=postgresql://primoria_app:primoria_dev@127.0.0.1:5432/primoria
 DATABASE_SSL=disable
 PRIMORIA_AGENT_URL=http://localhost:2024
 ```
 
-Supported model providers:
+`AI_MODEL_CONTENT` is optional and applies to source comparison and causal
+timeline configuration. When unset, those components use the normal default
+model rather than `AI_MODEL_FAST`.
 
-- `AI_PROVIDER=openai-compatible`
-- `AI_PROVIDER=anthropic-compatible`
+Production access to the internal visualization report additionally requires:
 
-KG source JSON files live under `data/knowledge-graphs/source/`; generated graph
-exports awaiting review live under `data/knowledge-graphs/generated/`. KG
-embeddings are configured separately with `KG_EMBEDDING_PROVIDER`.
+```env
+PRIMORIA_ENABLE_INTERNAL_ANALYTICS=1
+PRIMORIA_INTERNAL_EMAILS=operator@example.com
+```
 
-## Verification
+## Verification baseline
 
-Passed:
+Primary gates:
 
-- `pnpm --filter @primoria/web typecheck`
-- `pnpm --filter @primoria/web test`
-- `pnpm --filter @primoria/web build`
-- `pnpm --filter @primoria/agent typecheck`
-- `pnpm --filter @primoria/agent test`
-- `pnpm --filter @primoria/agent test:integration`
-- `pnpm --filter @primoria/agent test:runtime:db`
+```bash
+pnpm --filter @primoria/web typecheck
+pnpm lint
+pnpm --filter @primoria/web test
+pnpm catalog:validate
+pnpm --filter @primoria/web test:interactive-routing
+pnpm --filter @primoria/agent typecheck
+pnpm --filter @primoria/agent test
+pnpm --filter @primoria/agent test:integration
+pnpm build
+```
 
-## Next Implementation Steps
+DB-backed and browser suites remain separate CI gates. The latest local
+catalog-routing run passed all 28 real-model cases; this result is evidence, not
+a permanent guarantee, so rerun the evaluator after catalog or prompt changes.
 
-1. Run full local-stack QA: web, agent, workers, Docker Postgres, and real model keys.
-2. Calibrate KG positioning thresholds after MiniMax embedding migration.
-3. Add user-level limits for cost-bearing AI endpoints beyond auth.
-4. Fix the remaining widget iframe sandbox hardening item.
-5. Browser-check the redesigned lesson reader across representative text,
-   visual, code, quiz, and worksheet lessons before release.
+## Remaining hardening
+
+1. Accumulate 2–4 weeks of real visualization traffic before selecting the
+   next component batch.
+2. Deepen high-value humanities interactions before optimizing for component count.
+3. Close the full remediation/resume loop, including cross-graph prerequisites.
+4. Improve learner-fact extraction quality, review, correction, and decay.
+5. Keep browser QA representative across text, visual, code, quiz, worksheet,
+   course sharing, onboarding, and Tutor patch flows.

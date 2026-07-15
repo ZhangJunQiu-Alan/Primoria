@@ -88,33 +88,35 @@ Use four label families on implementation issues:
 | --- | --- | --- |
 | #26 Search/retrieval as first-class surface | `type:search`, `area:agent`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:needs-slice` | Seed issue for retrieval/discovery across planning and runtime state. |
 | #18 Roadmap: adaptive learning system | `type:roadmap`, `area:adaptive-learning`, `priority:P0`, `status:umbrella` | Parent direction for the learning loop. |
-| #25 Adaptive course growth | `type:learning-signal`, `area:adaptive-learning`, `area:course`, `priority:P0`, `status:needs-slice` | Needs a concrete first loop around attempts, weak concepts, and remediation. |
+| #25 Adaptive course growth | `type:learning-signal`, `area:adaptive-learning`, `area:course`, `priority:P0`, `status:baseline` | Quiz attempts, learning events, mastery projection, generation decisions, and course progress exist; dependable remediation/resume decisions remain narrow follow-ups. |
 | #14 Block revision history | `type:learning-signal`, `type:memory`, `area:course`, `area:memory`, `priority:P0`, `status:ready` | Existing course edit events are the nearest raw evidence source. |
 | #1 Course Tutor context/actions | `type:course-tutor`, `area:course`, `priority:P0`, `status:baseline` | Lesson pages now pass current course, lesson, visible blocks, selected block, and selected text into Course Tutor; future work should be hardening, not first implementation. |
 | #10 Selected-text Course Tutor UI | `type:course-tutor`, `area:course`, `priority:P0`, `status:baseline` | Selected-text context is attached to Course Tutor and block actions; remaining work should target reliability and evidence capture. |
-| #17 React artifact renderer | `type:renderer`, `area:artifact`, `priority:P1`, `status:needs-slice` | Needed for complex stateful artifacts, but should align with artifact IR. |
-| #5 Long-term memory | `type:memory`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:needs-slice` | Memory should consume reviewed evidence, not replace raw signals. |
+| #17 React artifact renderer | `type:renderer`, `area:artifact`, `priority:P1`, `status:baseline` | Nineteen typed React visualization components are production-routable; unified persistence for arbitrary generated React apps remains future work. |
+| #5 Long-term memory | `type:memory`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:baseline` | Learner profiles/facts, onboarding facts, extractor jobs, and mastery exist; review/correction UX and stronger adaptive consumption remain. |
 | #8 Classroom/collaboration | `type:classroom`, `area:classroom`, `priority:P2`, `status:needs-slice` | Future scope after the personal loop is stable; the old workspace-agent runtime no longer exists. |
-| #15 Onboarding preferences | `type:onboarding`, `area:memory`, `priority:P1`, `status:ready` | Good cold-start signal source for adaptive decisions. |
-| #16 Postgres-first architecture | `type:data-architecture`, `area:infra`, `priority:P1`, `status:ready` | Current implementation is already Postgres-first; keep boundaries explicit. |
-| #13 Course sharing and paths | `type:sharing`, `area:course`, `priority:P2`, `status:needs-slice` | Better after course/artifact schemas stabilize. |
+| #15 Onboarding preferences | `type:onboarding`, `area:memory`, `priority:P1`, `status:baseline` | Completed onboarding persists goals, prior learning, teaching preferences, tutor selection, and background into profile/fact state. |
+| #16 Postgres-first architecture | `type:data-architecture`, `area:infra`, `priority:P1`, `status:baseline` | The current modular-monolith-plus deployment is Postgres-first with explicit Web and Agent schema ownership. |
+| #13 Course sharing and paths | `type:sharing`, `area:course`, `priority:P2`, `status:baseline` | Read-only course publication and sharing exist; collaborative editing and learning-path composition remain future work. |
 
 ## Immediate Implementation Slices
 
-### P0: Make Learning Signals First-Class
+### P0: Close the Adaptive Decision Loop
 
-Create the minimum data and service layer for adaptive decisions:
+The minimum evidence layer already exists:
 
-- `quiz_attempts` or `learning_attempts` table.
-- `learning_signals` derived view/service.
-- course block ids as stable evidence targets.
-- simple weak-concept heuristic.
-- remediation block insertion or course patch persistence.
+- quiz attempts and learning events
+- concept mastery projections and mastery jobs
+- stable course/lesson/block context
+- persisted generation decisions and course patches
+- learner profiles/facts from onboarding and extraction
 
-First acceptance target:
+The next acceptance target is an evidence-backed closed loop:
 
 ```text
-wrong quiz attempt -> weak block/concept signal -> generated remediation block -> persisted course version
+weak/repeated evidence -> explainable adaptive decision
+-> remediation or next-lesson action -> persisted result
+-> later evidence proves whether the intervention helped
 ```
 
 ### P0: Maintain Course Tutor Targeting Baseline
@@ -135,17 +137,21 @@ workspace changes:
 - add regression coverage for selected-text attachment across block types
 - verify the collapsed AI rail does not obscure reader navigation
 
-### P1: Define Artifact IR Before React Renderer Work
+### P1: Unify Artifact Persistence Without Replacing the Catalog
 
-Add a small artifact representation that can support:
+The current artifact union supports structured renderers and sandbox widgets,
+while the visualization catalog provides typed React components through a
+frontend-tool path. Do not collapse these working paths merely to create one
+renderer abstraction. Any future persistent application representation must
+define ownership and lifecycle for:
 
 - `html_widget`
-- `react_widget`
-- `quiz`
-- `course_patch`
-- `learning_app`
+- catalog component id + version + validated config
+- generated application source and review state
+- course/lesson attachment and sharing policy
 
-Then implement the React renderer against that representation rather than making a renderer-specific one-off schema.
+The 19-component catalog remains the reviewed production path for stateful
+React interactions.
 
 ### P1: Tutor Runtime Productization
 
@@ -167,11 +173,25 @@ current ownership boundary:
 
 ### P1: Memory As Reviewed Evidence
 
-Memory should not be a magic sink. Keep raw evidence in product tables and write memory only after a reviewable extraction step:
+Raw evidence remains in product tables. Existing learner facts are derived from
+explicit onboarding data and extractor jobs; the next slices add review and
+correction rather than inventing another memory store:
 
-- onboarding preference -> explicit memory
-- course edit event -> extracted preference candidate
-- repeated weak signal -> reviewed misconception / weak concept memory
+- expose fact provenance and confidence
+- let the learner correct or delete inferred facts
+- keep explicit onboarding facts distinguishable from model inference
+- measure whether retrieved facts improve Tutor/course decisions
+
+### P1: Visualization Analytics And Depth
+
+The catalog and production route are implemented. Use the internal
+`visualization.render` analysis surface to drive the next work:
+
+- cluster sandbox fallbacks and catalog misses by topic
+- compare render/success rates by `componentId`
+- expand or deepen components only after real usage evidence
+- prioritize humanities interactions such as annotation, source comparison,
+  timeline exploration, and map linkage instead of merely adding display cards
 
 ## First-Class `type:search`
 

@@ -1,6 +1,9 @@
 # Primoria Product Architecture
 
-The system-level design for Primoria as an adaptive learning platform.
+The system-level design for Primoria as an adaptive learning platform. The
+current deployment shape is a **modular monolith plus**: the Next.js Web app
+owns product data and policy, the self-hosted Agent runtime owns durable model
+runs, and PostgreSQL is the shared infrastructure boundary.
 
 Status note, July 2026: the active product implementation is focused on the
 Ring 1 personal learning loop. The former collaborative workspace-agent runtime
@@ -109,6 +112,15 @@ persists the event, and generates/inserts the drill block. This is what
 
 ## 4. Four-layer memory model
 
+This is the target memory model. Its July 2026 implementation state is:
+
+| Layer | Current state |
+| --- | --- |
+| User Memory | Implemented through onboarding, learner profiles/facts, learning events, concept mastery, and extractor/mastery workers |
+| Course Memory | Partially implemented through course/lesson state, KG positioning, generation decisions, and progress; a separate semantic memory object is not exposed |
+| Agent Memory | Future; the current Tutor has durable run/checkpoint state, not a marketplace agent memory lifecycle |
+| System Memory | Future; no cross-user pedagogy model is used for routing |
+
 ### Layer overview
 
 ```
@@ -174,7 +186,7 @@ Agent memory read/write permissions:
 A single user interaction produces one event that is consumed by multiple paths:
 
 ```
-Example: 小明 in group chat asks "Why does recursion need a base case?"
+Future example: 小明 in group chat asks "Why does recursion need a base case?"
          Visual Agent answered (animation). Math Agent answered (formal).
          小明 adopted Visual Agent's answer, ignored Math Agent.
 
@@ -193,7 +205,11 @@ the total system.
 
 ---
 
-## 6. Multi-agent ecosystem
+## 6. Multi-agent ecosystem (future product direction)
+
+The active Tutor may delegate bounded work to internal subagents and tools, but
+Primoria does not currently expose a user-owned agent pool, bidding protocol, or
+agent marketplace. The rest of this section defines the future product model.
 
 ### Agent specialization
 
@@ -294,9 +310,14 @@ classroom/collaboration remains P1/P2 after the personal loop is dependable.
 
 ## 8. Application generation (evolved sedimentation)
 
-Current state: agent generates widget → auto-saved to capability library.
-Future: agent observes user struggling on a concept → **proactively generates
-a specialized practice app** → saves to library → recommends to similar users.
+Current state: the Tutor can open one of 19 reviewed declarative interactive
+components or generate a sandboxed HTML widget as fallback. Catalog components
+are reusable code assets, but generated sandbox widgets are not automatically
+saved as user applications or published to a capability library.
+
+Future: the agent observes a learner struggling on a concept → **proactively
+generates a specialized practice app** → saves it with an explicit review and
+persistence contract → recommends it where policy allows.
 
 Applications are not one-off byproducts. They are **outputs of the adaptive
 loop** — an agent can choose "generate a standalone app for this user's
@@ -352,31 +373,24 @@ Cross-user aggregation                          → Community (recommend agent/a
 ### Implementation priority
 
 ```
-P0 (core loop — must work first):
-  Course multi-block-type + on-demand growth
-  Observation layer (collect learning signals)
-  User Memory + Course Memory
-  Agent action policy (v1: rule/context backed)
-  → Acceptance: user learns, system detects weakness, agent inserts or proposes
-    an appropriate block
+Current baseline:
+  Course/lesson generation, structured lesson blocks, quizzes, learning events,
+  concept mastery, learner facts, KG positioning, durable Tutor runs, 19 reviewed
+  interactive components, sandbox fallback, and read-only course sharing.
+
+P0 (close the personal loop):
+  Convert mastery/fact signals into dependable remediation and resume decisions
+  Improve content accuracy, observability, failure recovery, and evaluation
+  Use visualization.render analytics to deepen high-value components
 
 P1 (loop enhancement):
-  Agent Memory + confidence model
-  Agent bidding in group chat
-  Application auto-generation (from observation triggers)
-  Workspace basics (teacher view + differentiated assignment)
+  Spaced repetition and cross-session review scheduling
+  Explicit user review/correction of inferred facts
+  Persisted, policy-reviewed generated practice applications
 
-P2 (scale):
-  System Memory (cross-user aggregation)
-  Community (shared courses/apps/peers)
-  Spaced repetition / cross-session review scheduling
-  Agent marketplace with natural selection ranking
-
-P3 (ecosystem):
-  User-created agents with full lifecycle
-  Agent fork/inheritance
-  Course template evolution from aggregate data
-  Platform-level routing strategy optimization
+P2/P3 (future ecosystem):
+  Agent memory/confidence, group bidding, classroom views, System Memory,
+  community discovery, user-created agents, and marketplace evolution
 ```
 
 ---
@@ -388,6 +402,9 @@ This product architecture maps onto the current codebase as follows:
 - `packages/contracts` defines shared artifact, chat, and stream contracts used
   by the web app and agent runtime.
 - `packages/memory` contains optional memory-provider integration helpers.
+- `data/visualization-components` is the canonical declarative component
+  catalog and JSON Schema. The Agent consumes its compact projection from
+  `packages/contracts`; the Web app validates and renders full configurations.
 - `apps/web/src/lib/db` hosts app-owned Postgres schema and server-side data
   access: auth/session tables, knowledge graph tables, course/lesson state,
   learning events, mastery, learner profiles/facts, background jobs, media
@@ -398,6 +415,11 @@ This product architecture maps onto the current codebase as follows:
   LangGraph checkpoints. It does not import from `apps/web`; bounded
   course-card reads are handled through explicit agent-side DB code, while all
   product writes remain Web-owned.
+- The main visualization route is catalog-first:
+  `open_interactive_component` → frontend tool signal → authenticated Web API →
+  `InteractiveComponentCard`. Specialized structured artifacts and
+  `plan_visualization` → `widgetRenderer` provide progressively more flexible
+  fallbacks.
 
 Current implementation work should stay grounded in the active personal
 learning loop unless a new architecture decision reopens classroom or
@@ -458,7 +480,11 @@ Content Space (what to render)
      └──────────────────────────────────────┘  (loop: update state + confidence)
 ```
 
-### Goal Space in detail
+### Goal Space in detail (future explicit product object)
+
+Today, onboarding goals plus courses provide most of this scope. A first-class
+hierarchical Goal/Folder entity, Goal Memory, sharing rules, and cross-course
+aggregation are not yet implemented.
 
 Goal ≈ a folder/project. It is the lightest possible scope container:
 
@@ -488,7 +514,7 @@ What Goal compresses:
 - Raw: all possible learning paths = all subgraphs of concept graph × orderings
 - After: a bounded subgraph + time rhythm + clear "what's next within scope"
 
-### Five-layer memory (updated with Goal Memory)
+### Five-layer memory target (updated with future Goal Memory)
 
 ```
 System Memory     global: what methods work universally (P2/P3)
