@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { requireAuthUser } from "@/lib/auth/guard";
+import { syncOnboardingFact } from "@/lib/learner-facts/store";
 import {
   buildOnboardingCourseWithStatus,
   OnboardingCourseBuildError,
@@ -27,8 +28,10 @@ export async function POST(request: Request) {
     let profile;
     if (body.skip) {
       profile = await skipTutorStyle(user.id);
+      await syncOnboardingFact(user.id, { kind: "tutor_style", value: null });
     } else if (isTutorStyle(body.tutorStyle)) {
       profile = await saveTutorStyle(user.id, body.tutorStyle);
+      await syncOnboardingFact(user.id, { kind: "tutor_style", value: body.tutorStyle });
     } else {
       return NextResponse.json({ error: "Choose a tutor style or skip this step." }, { status: 400 });
     }
