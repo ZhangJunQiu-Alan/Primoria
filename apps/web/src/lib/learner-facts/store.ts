@@ -1,7 +1,14 @@
 import { and, desc, eq } from "drizzle-orm";
 import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { learnerFacts } from "../db/schema";
-import type { FactCategory, FactEvidence, LearnerFact } from "../learner-profile/types";
+import type {
+  FactCategory,
+  FactEvidence,
+  KnowledgeBackground,
+  LearnerFact,
+  LearnerProfile,
+  TutorStyle,
+} from "../learner-profile/types";
 
 // Owner-scoped access to distilled learner facts. Written from the Extractor
 // worker (explicit ownerId, no request session); read by lesson generation, the
@@ -22,6 +29,117 @@ function randomId() {
 
 export function normalizeFactText(text: string) {
   return text.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+export type OnboardingFactInput =
+  | { kind: "learning_goal"; value: string | null }
+  | { kind: "knowledge_background"; value: KnowledgeBackground | null }
+  | { kind: "tutor_style"; value: TutorStyle | null };
+
+export type OnboardingFactDescriptor = {
+  sourceId: string;
+  text: string;
+  category: FactCategory;
+};
+
+export function buildOnboardingFact(input: OnboardingFactInput): OnboardingFactDescriptor | null {
+  if (!input.value) return null;
+
+  if (input.kind === "learning_goal") {
+    const goal = input.value.trim();
+    return goal
+      ? { sourceId: "onboarding:learning_goal", text: `Wants to learn: ${goal}`, category: "goal" }
+      : null;
+  }
+
+  if (input.kind === "knowledge_background") {
+    const labels: Record<KnowledgeBackground, string> = {
+      high_school: "High school",
+      undergraduate: "University",
+      graduate: "Graduate",
+    };
+    return {
+      sourceId: "onboarding:knowledge_background",
+      text: `Knowledge background: ${labels[input.value]}`,
+      category: "prior_knowledge",
+    };
+  }
+
+  const tutorFacts: Record<TutorStyle, string> = {
+    socratic: "Selected Socrates as tutor; prefers guiding questions before direct answers.",
+    feynman: "Selected Richard Feynman as tutor; prefers intuition and analogies before formal details.",
+    euclid: "Selected Euclid as tutor; prefers precise definitions and structured reasoning.",
+  };
+  return {
+    sourceId: "onboarding:tutor_style",
+    text: tutorFacts[input.value],
+    category: "preference",
+  };
+}
+
+function hasEvidenceSource(fact: LearnerFact, sourceId: string) {
+  return fact.evidence.some((evidence) => evidence.eventIds.includes(sourceId));
+}
+
+export async function syncOnboardingFact(ownerId: string, input: OnboardingFactInput): Promise<void> {
+  if (!ownerId || !hasDatabaseUrl()) return;
+  const sourceId = `onboarding:${input.kind}`;
+  const descriptor = buildOnboardingFact(input);
+  const existing = await listAllFactsForExtraction(ownerId);
+  const sourced = existing.find((fact) => hasEvidenceSource(fact, sourceId));
+
+  if (!descriptor) {
+    if (sourced) {
+      await getDb()
+        .update(learnerFacts)
+        .set({ status: "dismissed", updatedAt: new Date() })
+        .where(and(eq(learnerFacts.ownerId, ownerId), eq(learnerFacts.id, sourced.id)));
+    }
+    return;
+  }
+
+  const now = new Date();
+  const evidence: FactEvidence = { lessonId: null, eventIds: [descriptor.sourceId], at: now.toISOString() };
+  if (sourced) {
+    await getDb()
+      .update(learnerFacts)
+      .set({
+        text: descriptor.text,
+        category: descriptor.category,
+        status: "active",
+        confidence: 1,
+        evidence: [evidence],
+        occurrences: 1,
+        sourceLessonId: null,
+        lastSeenAt: now,
+        updatedAt: now,
+      })
+      .where(and(eq(learnerFacts.ownerId, ownerId), eq(learnerFacts.id, sourced.id)));
+    return;
+  }
+
+  await getDb().insert(learnerFacts).values({
+    id: randomId(),
+    ownerId,
+    text: descriptor.text,
+    category: descriptor.category,
+    status: "active",
+    confidence: 1,
+    evidence: [evidence],
+    occurrences: 1,
+    sourceLessonId: null,
+    lastSeenAt: now,
+    createdAt: now,
+    updatedAt: now,
+  });
+}
+
+export async function syncOnboardingProfileFacts(
+  profile: Pick<LearnerProfile, "ownerId" | "learningGoal" | "knowledgeBackground" | "tutorStyle">,
+): Promise<void> {
+  await syncOnboardingFact(profile.ownerId, { kind: "learning_goal", value: profile.learningGoal });
+  await syncOnboardingFact(profile.ownerId, { kind: "knowledge_background", value: profile.knowledgeBackground });
+  await syncOnboardingFact(profile.ownerId, { kind: "tutor_style", value: profile.tutorStyle });
 }
 
 // Planned mutation for one op, decided purely from the current facts. Pure so the

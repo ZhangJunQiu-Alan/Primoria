@@ -4,6 +4,7 @@ import { z } from "zod";
 import { requireAuthUser } from "@/lib/auth/guard";
 import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
 import { createServerTiming } from "@/lib/observability/server-timing";
+import { syncOnboardingFact } from "@/lib/learner-facts/store";
 import {
   buildOnboardingCourseWithStatus,
   OnboardingCourseBuildError,
@@ -35,9 +36,15 @@ export async function POST(request: Request) {
     let profile;
     if (body.skip) {
       profile = await timing.time("save_background", () => skipKnowledgeBackground(user.id));
+      await timing.time("sync_fact", () =>
+        syncOnboardingFact(user.id, { kind: "knowledge_background", value: null }),
+      );
     } else if (isKnowledgeBackground(body.knowledgeBackground)) {
       const knowledgeBackground = body.knowledgeBackground;
       profile = await timing.time("save_background", () => saveKnowledgeBackground(user.id, knowledgeBackground));
+      await timing.time("sync_fact", () =>
+        syncOnboardingFact(user.id, { kind: "knowledge_background", value: knowledgeBackground }),
+      );
     } else {
       return respond({ error: "Choose a background or skip this step." }, { status: 400 });
     }

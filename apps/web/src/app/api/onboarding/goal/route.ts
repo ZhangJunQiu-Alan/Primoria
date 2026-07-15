@@ -4,6 +4,7 @@ import { z } from "zod";
 import { requireAuthUser } from "@/lib/auth/guard";
 import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowledge-graph/errors";
 import { createServerTiming } from "@/lib/observability/server-timing";
+import { syncOnboardingFact } from "@/lib/learner-facts/store";
 import {
   buildOnboardingCourseWithStatus,
   OnboardingCourseBuildError,
@@ -105,6 +106,7 @@ export async function POST(request: Request) {
     const body = RequestSchema.parse(await request.json());
     if (body.skip) {
       const profile = await timing.time("save_skip", () => skipLearningGoal(user.id));
+      await timing.time("sync_fact", () => syncOnboardingFact(user.id, { kind: "learning_goal", value: null }));
       return respond({ ...(await timing.time("state", () => getLearnerOnboardingState(user.id))), profile });
     }
 
@@ -115,6 +117,9 @@ export async function POST(request: Request) {
     if (!body.graphId) {
       const pending = await timing.time("save_pending", () => savePendingLearningGoal(user.id, body.learningGoal!));
       const { profile, attemptId } = pending;
+      await timing.time("sync_fact", () =>
+        syncOnboardingFact(user.id, { kind: "learning_goal", value: body.learningGoal! }),
+      );
       after(() => positionLearningGoalInBackground(user.id, body.learningGoal!, attemptId));
       return respond({ ...(await timing.time("state", () => getLearnerOnboardingState(user.id))), profile });
     }
@@ -141,6 +146,9 @@ export async function POST(request: Request) {
         startTopicId: anchor.startTopicId,
         targetConceptId: anchor.targetConceptId,
       }),
+    );
+    await timing.time("sync_fact", () =>
+      syncOnboardingFact(user.id, { kind: "learning_goal", value: body.learningGoal! }),
     );
     const course = await timing.time("build_course", () => buildCourseIfReady(user.id, profile));
 
