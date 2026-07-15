@@ -4,7 +4,7 @@ import {
   SourceComparisonConfigSchema,
   SourceComparisonPatchSchema,
   buildSourceComparisonRows,
-} from "../src/lib/qa/components/source-comparison";
+} from "../src/lib/interactive/components/source-comparison";
 
 describe("buildSourceComparisonRows", () => {
   it("uses provenance without inventing a reliability judgement", () => {

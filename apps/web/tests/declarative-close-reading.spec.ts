@@ -4,7 +4,7 @@ import {
   CloseReadingPatchSchema,
   DEFAULT_CLOSE_READING_CONFIG,
   segmentAnnotatedPassage,
-} from "../src/lib/qa/components/close-reading";
+} from "../src/lib/interactive/components/close-reading";
 
 describe("segmentAnnotatedPassage", () => {
   it("segments exact quotations without changing the passage", () => {

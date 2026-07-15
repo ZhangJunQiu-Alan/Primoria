@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
-import { computeLensImage, type LensImagingConfig } from "@/lib/qa/components/lens-imaging";
+import { computeLensImage, type LensImagingConfig } from "@/lib/interactive/components/lens-imaging";
 import { WIDGET_COLORS } from "./palette";
 
 // Config-driven lens-imaging widget. Sliders, drag, and LLM patches all write

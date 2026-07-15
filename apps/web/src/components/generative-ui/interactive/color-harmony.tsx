@@ -1,6 +1,6 @@
 "use client";
 
-import { deriveColorHarmony, type ColorHarmonyConfig } from "@/lib/qa/components/color-harmony";
+import { deriveColorHarmony, type ColorHarmonyConfig } from "@/lib/interactive/components/color-harmony";
 import { WIDGET_COLORS } from "./palette";
 import { SegmentedControl, SliderRow } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

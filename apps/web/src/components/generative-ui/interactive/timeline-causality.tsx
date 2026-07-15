@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import { deriveTimelineCausality, type TimelineCausalityConfig } from "@/lib/qa/components/timeline-causality";
+import { deriveTimelineCausality, type TimelineCausalityConfig } from "@/lib/interactive/components/timeline-causality";
 import { WIDGET_COLORS } from "./palette";
 
 const shellStyle: CSSProperties = {

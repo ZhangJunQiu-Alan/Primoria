@@ -8,8 +8,8 @@ import {
   getImplementedComponent,
   getRegistryEntry,
   type LensRouteResponse,
-} from "@/lib/qa/components/registry";
-import type { ImplementedComponent } from "@/lib/qa/components/types";
+} from "@/lib/interactive/components/registry";
+import { configureComponent, type CurrentInstance } from "@/lib/interactive/configure";
 
 // Experimental two-stage declarative-component router (QA only):
 // stage 1 sees only the component catalog (one line each) and picks a
@@ -30,8 +30,6 @@ const RequestSchema = z.object({
     .nullable()
     .optional(),
 });
-
-type CurrentInstance = { componentId: string; config: Record<string, unknown> };
 
 function isQaRouteAllowed() {
   return process.env.NODE_ENV !== "production" && process.env.PRIMORIA_ENABLE_QA_ROUTES === "1";
@@ -58,30 +56,6 @@ componentId 只能取目录中出现过的值或 null。reason 用一句中文�
     ? `当前组件实例:${current.componentId},config=${JSON.stringify(current.config)}\n\n学生消息:${prompt}`
     : `当前没有组件实例。\n\n学生消息:${prompt}`;
   return { system, user };
-}
-
-function buildConfigurePrompts(
-  prompt: string,
-  component: ImplementedComponent,
-  intent: "create" | "adjust",
-  current: CurrentInstance | null,
-) {
-  if (intent === "adjust" && current && current.componentId === component.componentId) {
-    const system = `你在调整一个已渲染的「${component.name}」组件。根据学生消息输出一个最小 config 补丁:只包含需要改变的字段,不要重复未变化的字段。
-
-${component.schemaDoc}
-${component.patchHints ? `\n语义提示:${component.patchHints}` : ""}
-只返回补丁 JSON。`;
-    const user = `当前 config:${JSON.stringify(current.config)}\n\n学生消息:${prompt}`;
-    return { system, user, mode: "patch" as const };
-  }
-  const system = `你在为「${component.name}」组件生成初始 config。从学生消息中提取参数;没提到的数值/枚举字段用默认值。文本内容字段(如材料、事件、标注)要根据学生的主题写出具体、教学上成立的内容,禁止输出「待补充」之类的占位文本。
-
-${component.schemaDoc}
-
-只返回完整 config JSON。`;
-  const user = `学生消息:${prompt}`;
-  return { system, user, mode: "create" as const };
 }
 
 export async function POST(request: Request) {
@@ -125,26 +99,12 @@ export async function POST(request: Request) {
         ? getImplementedComponent(decision.componentId)
         : undefined;
     if (component && (decision.intent === "create" || decision.intent === "adjust")) {
-      const configure = buildConfigurePrompts(body.prompt, component, decision.intent, current);
-      const stage2Start = Date.now();
-      const rawValue = await invokeJson({
-        system: configure.system,
-        user: configure.user,
-        settings: fastTierSettings(),
-        schema: configure.mode === "patch" ? component.patchSchema : component.configSchema,
-        schemaName: "configure_component",
-        timeoutMs: STAGE_TIMEOUT_MS,
-      });
-      const stage2Ms = Date.now() - stage2Start;
-      if (configure.mode === "patch") {
-        const patch = component.patchSchema.safeParse(rawValue);
-        if (!patch.success) return NextResponse.json({ ok: false, error: "config 补丁未通过 Zod 校验" }, { status: 502 });
-        response.stage2 = { mode: "patch", patch: patch.data as Record<string, unknown>, ms: stage2Ms };
-      } else {
-        const config = component.configSchema.safeParse(rawValue);
-        if (!config.success) return NextResponse.json({ ok: false, error: "config 未通过 Zod 校验" }, { status: 502 });
-        response.stage2 = { mode: "create", config: config.data as Record<string, unknown>, ms: stage2Ms };
-      }
+      const result = await configureComponent(body.prompt, component, decision.intent, current);
+      if (!result.ok) return NextResponse.json({ ok: false, error: result.error }, { status: 502 });
+      response.stage2 =
+        result.mode === "patch"
+          ? { mode: "patch", patch: result.patch, ms: result.ms }
+          : { mode: "create", config: result.config, ms: result.ms };
     }
 
     return NextResponse.json(response);

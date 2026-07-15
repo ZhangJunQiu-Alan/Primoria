@@ -216,6 +216,7 @@ export type RenderChatQuizArgs = {
 
 export type PositionLearningGoalArgs = { query: string; graph_id?: string };
 export type GetCourseCardArgs = { course_id: string };
+export type OpenInteractiveComponentArgs = { component_id: string; request: string };
 
 export type RenderChartArgs = {
   title: string;
@@ -289,6 +290,7 @@ export declare const ChatQuizQuestionSchema: z.ZodType<ChatQuizQuestion>;
 export declare const RenderChatQuizArgsSchema: z.ZodType<RenderChatQuizArgs>;
 
 export declare const PositionLearningGoalArgsSchema: z.ZodType<PositionLearningGoalArgs>;
+export declare const OpenInteractiveComponentArgsSchema: z.ZodType<OpenInteractiveComponentArgs>;
 export declare const GetCourseCardArgsSchema: z.ZodType<GetCourseCardArgs>;
 
 export declare const RenderChartArgsSchema: z.ZodType<RenderChartArgs>;

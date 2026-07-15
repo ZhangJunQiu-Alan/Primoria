@@ -1,6 +1,6 @@
 "use client";
 
-import { computeTitration, type AcidBaseTitrationConfig } from "@/lib/qa/components/acid-base-titration";
+import { computeTitration, type AcidBaseTitrationConfig } from "@/lib/interactive/components/acid-base-titration";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SegmentedControl, SliderRow } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

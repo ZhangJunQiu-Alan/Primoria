@@ -1,6 +1,6 @@
 "use client";
 
-import { buildSourceComparisonRows, type SourceComparisonConfig } from "@/lib/qa/components/source-comparison";
+import { buildSourceComparisonRows, type SourceComparisonConfig } from "@/lib/interactive/components/source-comparison";
 import { WIDGET_COLORS } from "./palette";
 
 const FOCUS_OPTIONS = [

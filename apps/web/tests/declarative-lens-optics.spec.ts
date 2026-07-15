@@ -4,8 +4,8 @@ import {
   LensImagingConfigSchema,
   LensImagingPatchSchema,
   computeLensImage,
-} from "../src/lib/qa/components/lens-imaging";
-import { COMPONENT_REGISTRY } from "../src/lib/qa/components/registry";
+} from "../src/lib/interactive/components/lens-imaging";
+import { COMPONENT_REGISTRY } from "../src/lib/interactive/components/registry";
 
 // Correctness criteria from the component spec: 1/f = 1/u + 1/v.
 

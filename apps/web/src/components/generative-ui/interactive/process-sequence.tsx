@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { deriveProcessSequence, type ProcessSequenceConfig } from "@/lib/qa/components/process-sequence";
+import { deriveProcessSequence, type ProcessSequenceConfig } from "@/lib/interactive/components/process-sequence";
 import { WIDGET_COLORS } from "./palette";
 import { Readout } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

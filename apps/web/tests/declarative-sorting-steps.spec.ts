@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_SORTING_STEPS_CONFIG, SortingStepsConfigSchema, SortingStepsPatchSchema, traceSort } from "../src/lib/qa/components/sorting-steps";
+import { DEFAULT_SORTING_STEPS_CONFIG, SortingStepsConfigSchema, SortingStepsPatchSchema, traceSort } from "../src/lib/interactive/components/sorting-steps";
 
 describe("sorting steps component", () => {
   it("validates defaults, patches, and value bounds", () => {

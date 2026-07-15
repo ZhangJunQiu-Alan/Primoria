@@ -96,6 +96,23 @@ export const GetCourseCardArgsSchema = z.object({
   course_id: z.string(),
 });
 
+// ── Interactive components ──────────────────────────────────────────────────
+
+// Stage-1 routing happens as the tutor LLM's tool choice: picking this tool
+// with a component_id IS the catalog selection. Stage-2 (config generation)
+// runs web-side with the learner's session; the tool result is a stateless
+// signal, mirroring position_learning_goal.
+export const OpenInteractiveComponentArgsSchema = z.object({
+  component_id: z
+    .string()
+    .describe("Catalog componentId, e.g. physics.lens-imaging. Must be one of the ids listed in the system prompt catalog."),
+  request: z
+    .string()
+    .min(1)
+    .max(2000)
+    .describe("The learner's visualization request or adjustment, verbatim, in the learner's language."),
+});
+
 // ── ECharts / Mermaid ───────────────────────────────────────────────────────
 
 export const RenderChartArgsSchema = z.object({

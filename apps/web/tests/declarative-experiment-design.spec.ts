@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_EXPERIMENT_DESIGN_CONFIG, ExperimentDesignConfigSchema, ExperimentDesignPatchSchema, summarizeExperimentDesign } from "../src/lib/qa/components/experiment-design";
+import { DEFAULT_EXPERIMENT_DESIGN_CONFIG, ExperimentDesignConfigSchema, ExperimentDesignPatchSchema, summarizeExperimentDesign } from "../src/lib/interactive/components/experiment-design";
 
 describe("experiment design component", () => {
   it("validates defaults, patches, and sample bounds", () => {

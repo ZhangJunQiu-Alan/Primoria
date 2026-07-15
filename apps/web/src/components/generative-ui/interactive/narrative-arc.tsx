@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { analyzeNarrativeArc, type NarrativeArcConfig } from "@/lib/qa/components/narrative-arc";
+import { analyzeNarrativeArc, type NarrativeArcConfig } from "@/lib/interactive/components/narrative-arc";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SegmentedControl } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

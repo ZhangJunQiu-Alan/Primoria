@@ -1,6 +1,6 @@
 "use client";
 
-import { summarizeClimate, type ClimateComparisonConfig } from "@/lib/qa/components/climate-comparison";
+import { summarizeClimate, type ClimateComparisonConfig } from "@/lib/interactive/components/climate-comparison";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SegmentedControl } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

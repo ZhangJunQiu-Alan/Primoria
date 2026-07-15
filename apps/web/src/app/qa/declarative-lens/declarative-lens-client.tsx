@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import { COMPONENT_REGISTRY, type LensRouteResponse, type SelectDecision } from "@/lib/qa/components/registry";
-import type { ComponentConfig } from "@/lib/qa/components/types";
-import { WIDGETS } from "./widgets";
+import { COMPONENT_REGISTRY, type LensRouteResponse, type SelectDecision } from "@/lib/interactive/components/registry";
+import type { ComponentConfig } from "@/lib/interactive/components/types";
+import { WIDGETS } from "@/components/generative-ui/interactive";
 
 // QA page for the declarative-component engine experiment: the input below
 // goes through the REAL fast-tier LLM (two-stage: select_component →

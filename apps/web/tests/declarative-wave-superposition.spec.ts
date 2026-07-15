@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_WAVE_SUPERPOSITION_CONFIG, describeSuperposition, sampleWave, WaveSuperpositionConfigSchema, WaveSuperpositionPatchSchema } from "../src/lib/qa/components/wave-superposition";
+import { DEFAULT_WAVE_SUPERPOSITION_CONFIG, describeSuperposition, sampleWave, WaveSuperpositionConfigSchema, WaveSuperpositionPatchSchema } from "../src/lib/interactive/components/wave-superposition";
 
 describe("wave superposition component", () => {
   it("validates defaults, patches, and bounds", () => {

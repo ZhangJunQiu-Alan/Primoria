@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CharacterRelationshipsConfigSchema, CharacterRelationshipsPatchSchema, DEFAULT_CHARACTER_RELATIONSHIPS_CONFIG, deriveCharacterRelationships } from "../src/lib/qa/components/character-relationships";
+import { CharacterRelationshipsConfigSchema, CharacterRelationshipsPatchSchema, DEFAULT_CHARACTER_RELATIONSHIPS_CONFIG, deriveCharacterRelationships } from "../src/lib/interactive/components/character-relationships";
 
 describe("character relationships component", () => {
   it("validates defaults and patches", () => {

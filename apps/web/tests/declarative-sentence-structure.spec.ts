@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { analyzeSentenceStructure, DEFAULT_SENTENCE_STRUCTURE_CONFIG, SentenceStructureConfigSchema, SentenceStructurePatchSchema } from "../src/lib/qa/components/sentence-structure";
+import { analyzeSentenceStructure, DEFAULT_SENTENCE_STRUCTURE_CONFIG, SentenceStructureConfigSchema, SentenceStructurePatchSchema } from "../src/lib/interactive/components/sentence-structure";
 
 describe("sentence structure component", () => {
   it("validates defaults, language enum, and patches", () => {
