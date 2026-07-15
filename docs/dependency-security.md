@@ -6,9 +6,11 @@ Production dependencies are audited in CI with:
 pnpm audit:prod
 ```
 
-The command fails on `high` or `critical` advisories. `pnpm audit --prod` may
-still report lower severities; those remain visible for normal dependency
-maintenance but do not block every change.
+The command fails on `high` or `critical` advisories. It uses
+`scripts/audit-prod-bulk.mjs`, which collects production dependency versions
+from `pnpm -r list --prod --json --depth Infinity` and calls npm's supported
+bulk advisory endpoint directly. Lower severities remain visible for normal
+dependency maintenance but do not block every change.
 
 2026-07-12 baseline: upgrading Next.js from 16.1.6 to 16.2.6 and applying the
 documented transitive fixes reduced the production audit from 8 low / 28

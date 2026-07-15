@@ -12,7 +12,7 @@
     "db:bootstrap": "pnpm --filter @primoria/web db:bootstrap && pnpm --filter @primoria/agent db:migrate",
     "db:initialize:kg": "pnpm --filter @primoria/web db:initialize:kg",
     "build": "pnpm --filter @primoria/web build",
-    "audit:prod": "pnpm audit --prod --audit-level high",
+    "audit:prod": "node scripts/audit-prod-bulk.mjs --audit-level high",
     "lint": "pnpm --filter @primoria/web lint",
     "typecheck": "pnpm --filter @primoria/web typecheck",
     "test:widget": "pnpm --filter @primoria/web test:widget",
