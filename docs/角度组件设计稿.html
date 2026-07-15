@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Primoria · 角度组件方案</title>
+  <style>
+    :root {
+      --lo-page: #fbf7ee;
+      --lo-canvas: #ffffff;
+      --lo-border: #e7dfd0;
+      --lo-ink: #29241c;
+      --lo-muted: #6b6357;
+      --lo-grid: #efece4;
+      --lo-stage: #1e4d40;
+      --lo-stage-deep: #10312a;
+      --lo-highlight: #7ed6ae;
+      --amber: #a66f10;
+      --amber-fill: #fbeed3;
+      --pine: #2e6b52;
+      --pine-fill: #dcede3;
+      --lavender: #6a55c4;
+      --lavender-fill: #e6e0f6;
+      --rose: #a64d64;
+      --rose-fill: #f9e3ea;
+      --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--lo-page); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--lo-ink);
+      background: var(--lo-page);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    button, input { font: inherit; }
+    button, input[type="range"] { cursor: pointer; }
+    button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--lo-highlight);
+      outline-offset: 3px;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 44px 0 72px;
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 32px;
+      align-items: end;
+      padding: 0 2px 28px;
+      border-bottom: 1px solid var(--lo-border);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--pine);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    .intro p {
+      max-width: 660px;
+      margin: 14px 0 0;
+      color: var(--lo-muted);
+      font-size: 15px;
+    }
+
+    .version {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 6px 12px;
+      border: 1px solid var(--lo-border);
+      border-radius: 999px;
+      color: var(--lo-muted);
+      background: var(--lo-canvas);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .version::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--pine);
+      content: "";
+    }
+
+    .comparison {
+      display: grid;
+      gap: 36px;
+      padding-top: 36px;
+    }
+
+    .concept {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.32fr) minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .concept-copy {
+      position: sticky;
+      top: 24px;
+      padding: 8px 4px 0;
+    }
+
+    .concept-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 16px;
+      border: 1px solid var(--lo-border);
+      border-radius: 50%;
+      color: var(--pine);
+      background: var(--lo-canvas);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .concept-copy h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .concept-copy p {
+      margin: 9px 0 0;
+      color: var(--lo-muted);
+      font-size: 13px;
+    }
+
+    .component {
+      overflow: hidden;
+      border: 1px solid var(--lo-border);
+      border-radius: 12px;
+      background: var(--lo-canvas);
+    }
+
+    .component-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      min-height: 52px;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--lo-border);
+      background: var(--lo-page);
+    }
+
+    .component-title {
+      display: grid;
+      gap: 1px;
+    }
+
+    .component-title strong { font-size: 14px; font-weight: 500; }
+    .component-title span { color: var(--lo-muted); font-size: 12px; }
+
+    .component-id {
+      color: var(--lo-muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 210px;
+      min-height: 360px;
+    }
+
+    .visual {
+      position: relative;
+      display: grid;
+      min-width: 0;
+      place-items: center;
+      padding: 18px;
+      border-right: 1px solid var(--lo-border);
+      background: var(--lo-canvas);
+    }
+
+    .visual svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 330px;
+      overflow: visible;
+      touch-action: none;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 20px 16px;
+      background: var(--lo-page);
+    }
+
+    .control-group { display: grid; gap: 8px; }
+    .control-label {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--lo-muted);
+      font-size: 12px;
+    }
+
+    .control-label output {
+      color: var(--lo-ink);
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 22px;
+      margin: 0;
+      accent-color: var(--pine);
+    }
+
+    .preset-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .preset {
+      min-height: 40px;
+      border: 1px solid var(--lo-border);
+      border-radius: 8px;
+      color: var(--lo-muted);
+      background: var(--lo-canvas);
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .preset:hover { border-color: var(--pine); color: var(--pine); }
+    .preset[aria-pressed="true"] {
+      border-color: var(--pine);
+      color: var(--pine);
+      background: var(--pine-fill);
+    }
+
+    .readouts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 16px 15px;
+      border-top: 1px solid var(--lo-border);
+      background: var(--lo-canvas);
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 4px 10px;
+      border: 1px solid var(--lo-border);
+      border-radius: 999px;
+      color: var(--lo-muted);
+      background: var(--lo-page);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chip strong { margin-left: 4px; color: var(--lo-ink); font-weight: 500; }
+    .chip[data-tone="amber"] { border-color: var(--amber); color: var(--amber); background: var(--amber-fill); }
+    .chip[data-tone="pine"] { border-color: var(--pine); color: var(--pine); background: var(--pine-fill); }
+    .chip[data-tone="lavender"] { border-color: var(--lavender); color: var(--lavender); background: var(--lavender-fill); }
+    .chip[data-tone="rose"] { border-color: var(--rose); color: var(--rose); background: var(--rose-fill); }
+
+    .hint {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--lo-border);
+      color: var(--lo-muted);
+      font-size: 11px;
+    }
+
+    .ink-line { stroke: var(--lo-ink); }
+    .muted-line { stroke: var(--lo-muted); }
+    .grid-line { stroke: var(--lo-grid); }
+    .amber-line { stroke: var(--amber); }
+    .pine-line { stroke: var(--pine); }
+    .lavender-line { stroke: var(--lavender); }
+    .rose-line { stroke: var(--rose); }
+    .amber-fill { fill: var(--amber-fill); }
+    .pine-fill { fill: var(--pine-fill); }
+    .lavender-fill { fill: var(--lavender-fill); }
+    .rose-fill { fill: var(--rose-fill); }
+    .canvas-fill { fill: var(--lo-canvas); }
+    .ink-fill { fill: var(--lo-ink); }
+    .muted-fill { fill: var(--lo-muted); }
+    .amber-text { fill: var(--amber); }
+    .pine-text { fill: var(--pine); }
+    .lavender-text { fill: var(--lavender); }
+    .rose-text { fill: var(--rose); }
+    .svg-label { font-family: var(--font-sans); font-size: 12px; font-weight: 400; }
+    .svg-value { font-family: var(--font-sans); font-size: 16px; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+    .handle {
+      cursor: grab;
+      outline: none;
+    }
+    .handle:active { cursor: grabbing; }
+    .handle:focus-visible circle:last-child { stroke: var(--lo-highlight); stroke-width: 5; }
+
+    .footer-note {
+      margin: 38px 0 0;
+      padding: 18px 0 0;
+      border-top: 1px solid var(--lo-border);
+      color: var(--lo-muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 840px) {
+      .intro, .concept { grid-template-columns: 1fr; }
+      .concept-copy { position: static; }
+      .workspace { grid-template-columns: 1fr; }
+      .visual { min-height: 310px; border-right: 0; border-bottom: 1px solid var(--lo-border); }
+      .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hint { margin: 0; }
+    }
+
+    @media (max-width: 560px) {
+      .page { width: min(100% - 20px, 1180px); padding-top: 24px; }
+      .intro { gap: 14px; }
+      .component-head { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .controls { grid-template-columns: 1fr; }
+      .visual { padding: 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <div>
+        <p class="eyebrow">声明式交互组件 · 设计探索</p>
+        <h1>角度不是一个组件，<br />而是三种学习动作。</h1>
+        <p>三个原型共用同一套视觉语言，但分别服务于测量、比较和验证。先选教学颗粒度，再收敛 config。</p>
+      </div>
+      <span class="version">Primoria learning-object v3</span>
+    </header>
+
+    <section class="comparison" aria-label="角度组件方案对比">
+      <article class="concept">
+        <div class="concept-copy">
+          <span class="concept-index">01</span>
+          <h2>自由量角</h2>
+          <p>一个角、一个拖拽动作。适合认识角、估角和分类，是最小可入库颗粒度。</p>
+        </div>
+
+        <section class="component" aria-labelledby="measure-title">
+          <header class="component-head">
+            <div class="component-title">
+              <strong id="measure-title">拖动射线，观察角度变化</strong>
+              <span>从大小变化建立角的直觉</span>
+            </div>
+            <span class="component-id">math.angle-measure</span>
+          </header>
+
+          <div class="workspace">
+            <div class="visual">
+              <svg id="measure-svg" viewBox="0 0 520 310" role="img" aria-label="可拖动射线的角度测量图">
+                <g aria-hidden="true">
+                  <line x1="34" y1="52" x2="486" y2="52" class="grid-line" />
+                  <line x1="34" y1="104" x2="486" y2="104" class="grid-line" />
+                  <line x1="34" y1="156" x2="486" y2="156" class="grid-line" />
+                  <line x1="34" y1="208" x2="486" y2="208" class="grid-line" />
+                  <line x1="34" y1="260" x2="486" y2="260" class="grid-line" />
+                  <line x1="80" y1="30" x2="80" y2="278" class="grid-line" />
+                  <line x1="170" y1="30" x2="170" y2="278" class="grid-line" />
+                  <line x1="260" y1="30" x2="260" y2="278" class="grid-line" />
+                  <line x1="350" y1="30" x2="350" y2="278" class="grid-line" />
+                  <line x1="440" y1="30" x2="440" y2="278" class="grid-line" />
+                </g>
+                <path id="measure-sector" class="amber-fill" opacity="0.78" />
+                <path id="measure-arc" fill="none" class="amber-line" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="165" y1="235" x2="445" y2="235" class="ink-line" stroke-width="3" stroke-linecap="round" />
+                <line id="measure-arm" x1="165" y1="235" class="pine-line" stroke-width="4" stroke-linecap="round" />
+                <circle cx="165" cy="235" r="7" class="ink-fill" />
+                <text x="146" y="260" class="svg-label muted-fill">O</text>
+                <text id="measure-label" class="svg-value amber-text" text-anchor="middle"></text>
+                <g id="measure-handle" class="handle" role="slider" tabindex="0" aria-label="角度" aria-valuemin="0" aria-valuemax="180">
+                  <circle id="measure-hit" r="23" fill="transparent" />
+                  <circle id="measure-dot" r="9" class="canvas-fill pine-line" stroke-width="3" />
+                </g>
+              </svg>
+            </div>
+
+            <aside class="controls" aria-label="自由量角控制">
+              <label class="control-group">
+                <span class="control-label">角度 <output id="measure-output">62°</output></span>
+                <input id="measure-range" type="range" min="0" max="180" step="1" value="62" />
+              </label>
+              <div class="control-group">
+                <span class="control-label">快速比较</span>
+                <div class="preset-row" id="measure-presets">
+                  <button class="preset" type="button" data-value="30">30°</button>
+                  <button class="preset" type="button" data-value="60">60°</button>
+                  <button class="preset" type="button" data-value="90">90°</button>
+                  <button class="preset" type="button" data-value="120">120°</button>
+                </div>
+              </div>
+              <p class="hint">拖动绿色端点，或用方向键微调。</p>
+            </aside>
+          </div>
+          <div class="readouts">
+            <span class="chip">当前角度<strong id="measure-chip-value">62°</strong></span>
+            <span class="chip" data-tone="amber" id="measure-kind">锐角</span>
+            <span class="chip">与直角相差<strong id="measure-diff">28°</strong></span>
+          </div>
+        </section>
+      </article>
+
+      <article class="concept">
+        <div class="concept-copy">
+          <span class="concept-index">02</span>
+          <h2>交角关系</h2>
+          <p>调整一条直线，同时观察对顶角相等、邻补角和为 180°。重点是比较关系。</p>
+        </div>
+
+        <section class="component" aria-labelledby="relation-title">
+          <header class="component-head">
+            <div class="component-title">
+              <strong id="relation-title">改变交角，哪些关系始终不变？</strong>
+              <span>颜色只编码角的配对关系</span>
+            </div>
+            <span class="component-id">math.intersecting-angles</span>
+          </header>
+
+          <div class="workspace">
+            <div class="visual">
+              <svg id="relation-svg" viewBox="0 0 520 310" role="img" aria-label="相交直线的对顶角与邻补角关系图">
+                <line x1="48" y1="155" x2="472" y2="155" class="ink-line" stroke-width="3" stroke-linecap="round" />
+                <line id="relation-line" class="pine-line" stroke-width="3" stroke-linecap="round" />
+                <path id="relation-a" class="amber-fill" opacity="0.9" />
+                <path id="relation-c" class="amber-fill" opacity="0.9" />
+                <path id="relation-b" class="lavender-fill" opacity="0.85" />
+                <path id="relation-d" class="lavender-fill" opacity="0.85" />
+                <circle cx="260" cy="155" r="6" class="ink-fill" />
+                <text id="relation-label-a" class="svg-value amber-text" text-anchor="middle"></text>
+                <text id="relation-label-b" class="svg-value lavender-text" text-anchor="middle"></text>
+                <text id="relation-label-c" class="svg-value amber-text" text-anchor="middle"></text>
+                <text id="relation-label-d" class="svg-value lavender-text" text-anchor="middle"></text>
+              </svg>
+            </div>
+
+            <aside class="controls" aria-label="交角关系控制">
+              <label class="control-group">
+                <span class="control-label">∠A <output id="relation-output">48°</output></span>
+                <input id="relation-range" type="range" min="15" max="165" step="1" value="48" />
+              </label>
+              <div class="control-group">
+                <span class="control-label">观察重点</span>
+                <div class="preset-row" id="relation-modes">
+                  <button class="preset" type="button" data-mode="vertical" aria-pressed="true">对顶角</button>
+                  <button class="preset" type="button" data-mode="linear" aria-pressed="false">邻补角</button>
+                </div>
+              </div>
+              <p class="hint">不管交角怎样变化，配对关系都不变。</p>
+            </aside>
+          </div>
+          <div class="readouts">
+            <span class="chip" data-tone="amber">∠A = ∠C<strong id="relation-equal">48°</strong></span>
+            <span class="chip" data-tone="lavender">∠B = ∠D<strong id="relation-supplement">132°</strong></span>
+            <span class="chip">∠A + ∠B<strong>180°</strong></span>
+          </div>
+        </section>
+      </article>
+
+      <article class="concept">
+        <div class="concept-copy">
+          <span class="concept-index">03</span>
+          <h2>圆周角验证</h2>
+          <p>移动圆周上的观察点，验证同弧所对圆周角保持不变，且等于圆心角的一半。</p>
+        </div>
+
+        <section class="component" aria-labelledby="circle-title">
+          <header class="component-head">
+            <div class="component-title">
+              <strong id="circle-title">移动点 B，圆周角会改变吗？</strong>
+              <span>用不变量理解定理，而不是背结论</span>
+            </div>
+            <span class="component-id">math.inscribed-angle</span>
+          </header>
+
+          <div class="workspace">
+            <div class="visual">
+              <svg id="circle-svg" viewBox="0 0 520 310" role="img" aria-label="圆周角与圆心角关系图">
+                <circle cx="250" cy="155" r="120" fill="none" class="muted-line" stroke-width="1.5" />
+                <path id="circle-arc" fill="none" class="amber-line" stroke-width="6" stroke-linecap="round" />
+                <path id="circle-central-sector" class="amber-fill" opacity="0.72" />
+                <line id="circle-oa" class="amber-line" stroke-width="2.5" />
+                <line id="circle-oc" class="amber-line" stroke-width="2.5" />
+                <line id="circle-ba" class="lavender-line" stroke-width="2.5" />
+                <line id="circle-bc" class="lavender-line" stroke-width="2.5" />
+                <path id="circle-inscribed-arc" fill="none" class="lavender-line" stroke-width="2.5" stroke-linecap="round" />
+                <circle cx="250" cy="155" r="6" class="ink-fill" />
+                <circle id="circle-a" r="7" class="canvas-fill amber-line" stroke-width="3" />
+                <circle id="circle-c" r="7" class="canvas-fill amber-line" stroke-width="3" />
+                <circle id="circle-b" r="9" class="canvas-fill lavender-line" stroke-width="3" />
+                <text x="238" y="176" class="svg-label muted-fill">O</text>
+                <text id="circle-label-a" class="svg-label amber-text">A</text>
+                <text id="circle-label-b" class="svg-label lavender-text">B</text>
+                <text id="circle-label-c" class="svg-label amber-text">C</text>
+                <text id="circle-central-label" class="svg-value amber-text" text-anchor="middle">100°</text>
+                <text id="circle-inscribed-label" class="svg-value lavender-text" text-anchor="middle">50°</text>
+              </svg>
+            </div>
+
+            <aside class="controls" aria-label="圆周角控制">
+              <label class="control-group">
+                <span class="control-label">观察点 B <output id="circle-output">下方</output></span>
+                <input id="circle-range" type="range" min="205" max="335" step="1" value="270" />
+              </label>
+              <div class="control-group">
+                <span class="control-label">快速移动</span>
+                <div class="preset-row" id="circle-presets">
+                  <button class="preset" type="button" data-value="225">左下</button>
+                  <button class="preset" type="button" data-value="270" aria-pressed="true">下方</button>
+                  <button class="preset" type="button" data-value="315">右下</button>
+                  <button class="preset" type="button" data-value="245">偏左</button>
+                </div>
+              </div>
+              <p class="hint">B 改变位置，但它始终观察同一段弧 AC。</p>
+            </aside>
+          </div>
+          <div class="readouts">
+            <span class="chip" data-tone="amber">圆心角 ∠AOC<strong>100°</strong></span>
+            <span class="chip" data-tone="lavender">圆周角 ∠ABC<strong id="circle-angle">50°</strong></span>
+            <span class="chip" data-tone="pine">关系<strong>∠AOC = 2 × ∠ABC</strong></span>
+          </div>
+        </section>
+      </article>
+    </section>
+
+    <p class="footer-note">设计预览：仅用于比较教学颗粒度与交互方式，尚未接入声明式组件注册表。</p>
+  </main>
+
+  <script>
+    (() => {
+      const byId = (id) => document.getElementById(id);
+      const ns = "http://www.w3.org/2000/svg";
+      const point = (cx, cy, radius, deg) => {
+        const rad = (deg * Math.PI) / 180;
+        return { x: cx + radius * Math.cos(rad), y: cy - radius * Math.sin(rad) };
+      };
+      const polarArc = (cx, cy, radius, startDeg, endDeg) => {
+        const start = point(cx, cy, radius, startDeg);
+        const end = point(cx, cy, radius, endDeg);
+        const delta = Math.abs(endDeg - startDeg);
+        return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${delta > 180 ? 1 : 0} 0 ${end.x} ${end.y}`;
+      };
+      const sector = (cx, cy, radius, startDeg, endDeg) => {
+        const start = point(cx, cy, radius, startDeg);
+        const end = point(cx, cy, radius, endDeg);
+        const delta = Math.abs(endDeg - startDeg);
+        return `M ${cx} ${cy} L ${start.x} ${start.y} A ${radius} ${radius} 0 ${delta > 180 ? 1 : 0} 0 ${end.x} ${end.y} Z`;
+      };
+      const setLine = (line, a, b) => {
+        line.setAttribute("x1", a.x);
+        line.setAttribute("y1", a.y);
+        line.setAttribute("x2", b.x);
+        line.setAttribute("y2", b.y);
+      };
+      const setPosition = (node, p) => {
+        node.setAttribute("cx", p.x);
+        node.setAttribute("cy", p.y);
+      };
+
+      const measureRange = byId("measure-range");
+      const measureSvg = byId("measure-svg");
+      const measureHandle = byId("measure-handle");
+      let draggingMeasure = false;
+
+      const angleKind = (angle) => {
+        if (angle === 0) return "零角";
+        if (angle < 90) return "锐角";
+        if (angle === 90) return "直角";
+        if (angle < 180) return "钝角";
+        return "平角";
+      };
+
+      function renderMeasure(next) {
+        const angle = Math.max(0, Math.min(180, Math.round(Number(next))));
+        measureRange.value = String(angle);
+        const end = point(165, 235, 220, angle);
+        byId("measure-arm").setAttribute("x2", end.x);
+        byId("measure-arm").setAttribute("y2", end.y);
+        measureHandle.setAttribute("transform", `translate(${end.x} ${end.y})`);
+        measureHandle.setAttribute("aria-valuenow", String(angle));
+        measureHandle.setAttribute("aria-valuetext", `${angle} 度，${angleKind(angle)}`);
+        byId("measure-sector").setAttribute("d", sector(165, 235, 58, 0, angle));
+        byId("measure-arc").setAttribute("d", polarArc(165, 235, 68, 0, angle));
+        const label = point(165, 235, 91, angle / 2);
+        byId("measure-label").setAttribute("x", label.x);
+        byId("measure-label").setAttribute("y", label.y + 5);
+        byId("measure-label").textContent = `${angle}°`;
+        byId("measure-output").textContent = `${angle}°`;
+        byId("measure-chip-value").textContent = `${angle}°`;
+        byId("measure-kind").textContent = angleKind(angle);
+        byId("measure-diff").textContent = `${Math.abs(90 - angle)}°`;
+        document.querySelectorAll("#measure-presets .preset").forEach((button) => {
+          button.setAttribute("aria-pressed", String(Number(button.dataset.value) === angle));
+        });
+      }
+
+      measureRange.addEventListener("input", (event) => renderMeasure(event.target.value));
+      byId("measure-presets").addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-value]");
+        if (button) renderMeasure(button.dataset.value);
+      });
+      measureHandle.addEventListener("keydown", (event) => {
+        const delta = event.key === "ArrowRight" || event.key === "ArrowUp" ? 1 : event.key === "ArrowLeft" || event.key === "ArrowDown" ? -1 : 0;
+        if (!delta) return;
+        event.preventDefault();
+        renderMeasure(Number(measureRange.value) + delta);
+      });
+      measureHandle.addEventListener("pointerdown", (event) => {
+        draggingMeasure = true;
+        measureHandle.setPointerCapture(event.pointerId);
+      });
+      measureHandle.addEventListener("pointermove", (event) => {
+        if (!draggingMeasure) return;
+        const rect = measureSvg.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * 520;
+        const y = ((event.clientY - rect.top) / rect.height) * 310;
+        const angle = Math.atan2(235 - y, x - 165) * 180 / Math.PI;
+        renderMeasure(angle < 0 ? 0 : angle > 180 ? 180 : angle);
+      });
+      measureHandle.addEventListener("pointerup", () => { draggingMeasure = false; });
+      measureHandle.addEventListener("pointercancel", () => { draggingMeasure = false; });
+
+      const relationRange = byId("relation-range");
+      let relationMode = "vertical";
+      function relationWedge(start, end) { return sector(260, 155, 72, start, end); }
+      function relationLabel(deg) { return point(260, 155, 98, deg); }
+
+      function renderRelation(next) {
+        const angle = Math.max(15, Math.min(165, Math.round(Number(next))));
+        relationRange.value = String(angle);
+        const p1 = point(260, 155, 220, angle);
+        const p2 = point(260, 155, 220, angle + 180);
+        setLine(byId("relation-line"), p1, p2);
+        byId("relation-a").setAttribute("d", relationWedge(0, angle));
+        byId("relation-b").setAttribute("d", relationWedge(angle, 180));
+        byId("relation-c").setAttribute("d", relationWedge(180, 180 + angle));
+        byId("relation-d").setAttribute("d", relationWedge(180 + angle, 360));
+        const labels = [
+          ["relation-label-a", angle / 2, `A · ${angle}°`],
+          ["relation-label-b", (angle + 180) / 2, `B · ${180 - angle}°`],
+          ["relation-label-c", 180 + angle / 2, `C · ${angle}°`],
+          ["relation-label-d", 270 + angle / 2, `D · ${180 - angle}°`],
+        ];
+        labels.forEach(([id, deg, text]) => {
+          const label = relationLabel(deg);
+          byId(id).setAttribute("x", label.x);
+          byId(id).setAttribute("y", label.y + 5);
+          byId(id).textContent = text;
+        });
+        byId("relation-output").textContent = `${angle}°`;
+        byId("relation-equal").textContent = `${angle}°`;
+        byId("relation-supplement").textContent = `${180 - angle}°`;
+        const vertical = relationMode === "vertical";
+        byId("relation-a").style.opacity = vertical ? "0.95" : "0.95";
+        byId("relation-c").style.opacity = vertical ? "0.95" : "0.28";
+        byId("relation-b").style.opacity = vertical ? "0.28" : "0.95";
+        byId("relation-d").style.opacity = "0.28";
+      }
+
+      relationRange.addEventListener("input", (event) => renderRelation(event.target.value));
+      byId("relation-modes").addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-mode]");
+        if (!button) return;
+        relationMode = button.dataset.mode;
+        document.querySelectorAll("#relation-modes .preset").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item.dataset.mode === relationMode));
+        });
+        renderRelation(relationRange.value);
+      });
+
+      const circleRange = byId("circle-range");
+      const circleCenter = { x: 250, y: 155 };
+      const circleRadius = 120;
+      const aDeg = 140;
+      const cDeg = 40;
+      const a = point(circleCenter.x, circleCenter.y, circleRadius, aDeg);
+      const c = point(circleCenter.x, circleCenter.y, circleRadius, cDeg);
+      setPosition(byId("circle-a"), a);
+      setPosition(byId("circle-c"), c);
+      byId("circle-label-a").setAttribute("x", a.x - 21);
+      byId("circle-label-a").setAttribute("y", a.y + 3);
+      byId("circle-label-c").setAttribute("x", c.x + 13);
+      byId("circle-label-c").setAttribute("y", c.y + 3);
+      setLine(byId("circle-oa"), circleCenter, a);
+      setLine(byId("circle-oc"), circleCenter, c);
+      byId("circle-arc").setAttribute("d", polarArc(circleCenter.x, circleCenter.y, circleRadius, cDeg, aDeg));
+      byId("circle-central-sector").setAttribute("d", sector(circleCenter.x, circleCenter.y, 48, cDeg, aDeg));
+
+      function angleBetween(from, first, second) {
+        const v1 = { x: first.x - from.x, y: first.y - from.y };
+        const v2 = { x: second.x - from.x, y: second.y - from.y };
+        const dot = v1.x * v2.x + v1.y * v2.y;
+        const cross = v1.x * v2.y - v1.y * v2.x;
+        return Math.atan2(Math.abs(cross), dot) * 180 / Math.PI;
+      }
+
+      function renderCircle(next) {
+        const deg = Math.max(205, Math.min(335, Math.round(Number(next))));
+        circleRange.value = String(deg);
+        const b = point(circleCenter.x, circleCenter.y, circleRadius, deg);
+        setPosition(byId("circle-b"), b);
+        setLine(byId("circle-ba"), b, a);
+        setLine(byId("circle-bc"), b, c);
+        byId("circle-label-b").setAttribute("x", b.x + (b.x < circleCenter.x ? -22 : 12));
+        byId("circle-label-b").setAttribute("y", b.y + (b.y < circleCenter.y ? -8 : 18));
+        const angle = angleBetween(b, a, c);
+        const dirA = Math.atan2(-(a.y - b.y), a.x - b.x) * 180 / Math.PI;
+        const dirC = Math.atan2(-(c.y - b.y), c.x - b.x) * 180 / Math.PI;
+        const start = Math.min(dirA, dirC);
+        const end = Math.max(dirA, dirC);
+        byId("circle-inscribed-arc").setAttribute("d", polarArc(b.x, b.y, 34, start, end));
+        const bisector = point(b.x, b.y, 57, (start + end) / 2);
+        byId("circle-inscribed-label").setAttribute("x", bisector.x);
+        byId("circle-inscribed-label").setAttribute("y", bisector.y + 5);
+        byId("circle-inscribed-label").textContent = `${Math.round(angle)}°`;
+        byId("circle-angle").textContent = `${Math.round(angle)}°`;
+        const position = deg < 250 ? "左下" : deg > 295 ? "右下" : "下方";
+        byId("circle-output").textContent = position;
+        document.querySelectorAll("#circle-presets .preset").forEach((button) => {
+          button.setAttribute("aria-pressed", String(Number(button.dataset.value) === deg));
+        });
+      }
+
+      circleRange.addEventListener("input", (event) => renderCircle(event.target.value));
+      byId("circle-presets").addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-value]");
+        if (button) renderCircle(button.dataset.value);
+      });
+
+      renderMeasure(62);
+      renderRelation(48);
+      renderCircle(270);
+    })();
+  </script>
+</body>
+</html>

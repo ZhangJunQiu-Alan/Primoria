@@ -20,6 +20,7 @@
     "test:db": "pnpm --filter @primoria/web test:db",
     "test:agent": "pnpm --filter @primoria/agent test",
     "test:agent:integration": "pnpm --filter @primoria/agent test:integration",
+    "catalog:validate": "node scripts/validate-visualization-catalog.mjs",
     "agent:runs:status": "pnpm --filter @primoria/agent runs:admin status",
     "agent:runs:inspect": "pnpm --filter @primoria/agent runs:admin inspect",
     "agent:runs:cancel": "pnpm --filter @primoria/agent runs:admin cancel",
