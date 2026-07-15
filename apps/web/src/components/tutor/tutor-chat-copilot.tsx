@@ -61,7 +61,7 @@ export function TutorChatCopilot() {
     <div className="copilot-chat-shell" aria-busy={!isReady}>
       {isReady ? (
         <>
-          <RestoredLessonGenerationCards />
+          <RestoredLessonGenerationCards key={`restored-jobs-${threadId}`} threadId={threadId} />
           <PrimoriaCopilotChatSurface
             key={`restore-${threadId}`}
             threadId={threadId}

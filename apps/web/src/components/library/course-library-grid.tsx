@@ -5,13 +5,20 @@ import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import type { CourseSummary } from "@/lib/courses/types";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
+import {
+  PENDING_COURSE_BUILDS_EVENT,
+  readPendingCourseBuilds,
+  removePendingCourseBuild,
+  type PendingCourseBuild,
+} from "@/lib/courses/course-build-session";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
 import { msg, useT } from "@/lib/i18n/client";
 import type { I18nDictionary } from "@/lib/i18n/dictionaries";
 
 type LibraryEntry =
   | { kind: "course"; id: string; updatedAt: number; course: CourseSummary }
-  | { kind: "job"; id: string; updatedAt: number; job: LessonGenerationJobSummary };
+  | { kind: "job"; id: string; updatedAt: number; job: LessonGenerationJobSummary }
+  | { kind: "pending"; id: string; updatedAt: number; build: PendingCourseBuild };
 
 type ViewMode = "table" | "cards";
 type StatusFilterValue = "no_lessons" | "not_started" | "in_progress" | "reviewing" | "done";
@@ -35,6 +42,7 @@ export function CourseLibraryGrid({
   const t = useT();
   const [courses, setCourses] = useState(initialCourses);
   const [lessonJobs, setLessonJobs] = useState(initialLessonJobs);
+  const [pendingBuilds, setPendingBuilds] = useState<PendingCourseBuild[]>([]);
   const [query, setQuery] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("table");
   const [statusFilters, setStatusFilters] = useState<StatusFilterValue[]>([]);
@@ -48,7 +56,9 @@ export function CourseLibraryGrid({
   const [deletePending, setDeletePending] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const deferredQuery = useDeferredValue(query);
-  const shouldPoll = initialRefreshOpen || lessonJobs.some(isLessonGenerationActive);
+  const shouldPoll = initialRefreshOpen
+    || lessonJobs.some(isLessonGenerationActive)
+    || pendingBuilds.some((build) => build.status === "building" || build.status === "ready");
 
   // Map each course to its outstanding lesson job (first/lazy generation), preferring
   // an active job over a failed one (engineering doc §13.5).
@@ -65,6 +75,22 @@ export function CourseLibraryGrid({
     const timeout = window.setTimeout(() => setInitialRefreshOpen(false), INITIAL_REFRESH_WINDOW_MS);
     return () => window.clearTimeout(timeout);
   }, []);
+
+  useEffect(() => {
+    function refreshPendingBuilds() {
+      setPendingBuilds(readPendingCourseBuilds());
+    }
+    refreshPendingBuilds();
+    window.addEventListener(PENDING_COURSE_BUILDS_EVENT, refreshPendingBuilds);
+    return () => window.removeEventListener(PENDING_COURSE_BUILDS_EVENT, refreshPendingBuilds);
+  }, []);
+
+  useEffect(() => {
+    const courseIds = new Set(courses.map((course) => course.id));
+    const syncedBuilds = pendingBuilds.filter((build) => build.courseId && courseIds.has(build.courseId));
+    if (syncedBuilds.length === 0) return;
+    for (const build of syncedBuilds) removePendingCourseBuild(build.id);
+  }, [courses, pendingBuilds]);
 
   useEffect(() => {
     if (!openCourseMenuId) return;
@@ -127,9 +153,12 @@ export function CourseLibraryGrid({
         ...lessonJobs
           .filter((job) => !courseIds.has(job.courseId))
           .map((job): LibraryEntry => ({ kind: "job", id: job.id, updatedAt: job.updatedAt, job })),
+        ...pendingBuilds
+          .filter((build) => !build.courseId || !courseIds.has(build.courseId))
+          .map((build): LibraryEntry => ({ kind: "pending", id: build.id, updatedAt: build.updatedAt, build })),
       ].sort((a, b) => b.updatedAt - a.updatedAt);
     },
-    [courses, lessonJobs],
+    [courses, lessonJobs, pendingBuilds],
   );
 
   const normalizedQuery = deferredQuery.trim().toLowerCase();
@@ -457,8 +486,10 @@ function CourseTable({
                 onDeleteCourse={onDeleteCourse}
                 t={t}
               />
-            ) : (
+            ) : entry.kind === "job" ? (
               <JobRow key={`job-${entry.id}`} job={entry.job} />
+            ) : (
+              <PendingBuildRow key={`pending-${entry.id}`} build={entry.build} />
             ),
           )}
         </tbody>
@@ -507,9 +538,13 @@ function CourseCards({
           <li key={`course-${entry.id}`}>
             <CourseCard course={entry.course} lessonJob={lessonJobByCourse.get(entry.id)} />
           </li>
-        ) : (
+        ) : entry.kind === "job" ? (
           <li key={`job-${entry.id}`}>
             <JobCard job={entry.job} />
+          </li>
+        ) : (
+          <li key={`pending-${entry.id}`}>
+            <PendingBuildCard build={entry.build} />
           </li>
         ),
       )}
@@ -795,6 +830,61 @@ function JobRow({ job }: { job: LessonGenerationJobSummary }) {
   );
 }
 
+function pendingBuildCopy(build: PendingCourseBuild, t: I18nDictionary) {
+  if (build.status === "building") {
+    return { status: t.library.preparingCourse, detail: t.library.preparingCourseCopy, failed: false };
+  }
+  if (build.status === "ready") {
+    return { status: t.library.courseBuildReady, detail: t.library.buildingCourseCopy, failed: false };
+  }
+  const timedOut = build.errorCode === "positioning_timeout" || build.errorCode === "course_build_timeout";
+  return {
+    status: t.library.courseBuildFailed,
+    detail: timedOut ? t.library.courseBuildTimedOut : t.library.courseBuildFailedCopy,
+    failed: true,
+  };
+}
+
+function PendingBuildRow({ build }: { build: PendingCourseBuild }) {
+  const t = useT();
+  const copy = pendingBuildCopy(build, t);
+  const title = build.title || build.topic;
+  const href = build.courseId ? `/course/${encodeURIComponent(build.courseId)}/outline` : "/";
+  return (
+    <tr className={copy.failed ? "library-row-failed" : "library-row-generating"}>
+      <td data-label={t.library.name}>
+        <div className="library-course-name">
+          <CourseThumb title={title} pending={!copy.failed} />
+          <div className="library-course-copy">
+            <Link href={href} className="library-course-title">{title}</Link>
+          </div>
+        </div>
+      </td>
+      <td data-label={t.library.status}>
+        <StatusPill tone={copy.failed ? "danger" : "working"}>{copy.status}</StatusPill>
+      </td>
+      <td data-label={t.library.progress}>
+        <ProgressMeter completed={build.status === "ready" ? 1 : 0} total={1} />
+      </td>
+      <td data-label={t.library.currentLesson}>
+        <div className="library-current-lesson">
+          <strong>{copy.status}</strong>
+          <span>{copy.detail}</span>
+        </div>
+      </td>
+      <td data-label={t.library.lessons} className="library-number-cell">—</td>
+      <td data-label={t.library.updated} className="library-date-cell">{formatDate(build.updatedAt)}</td>
+      <td data-label={t.library.actions}>
+        <div className="library-row-actions">
+          <Link href={href} className="library-row-action primary">
+            {build.courseId ? t.common.open : t.library.returnTutor}
+          </Link>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
 function CourseCard({ course, lessonJob }: { course: CourseSummary; lessonJob?: LessonGenerationJobSummary }) {
   const t = useT();
   const status = courseStatus(course, t);
@@ -844,6 +934,31 @@ function JobCard({ job }: { job: LessonGenerationJobSummary }) {
         <span>{t.library.firstLesson}</span>
         <span>{statusLabel}</span>
       </div>
+    </article>
+  );
+}
+
+function PendingBuildCard({ build }: { build: PendingCourseBuild }) {
+  const t = useT();
+  const copy = pendingBuildCopy(build, t);
+  const title = build.title || build.topic;
+  const href = build.courseId ? `/course/${encodeURIComponent(build.courseId)}/outline` : "/";
+  return (
+    <article className={`library-course-card ${copy.failed ? "library-card-failed" : "library-card-generating"}`}>
+      <div className="library-course-card-head">
+        <CourseThumb title={title} pending={!copy.failed} />
+        <StatusPill tone={copy.failed ? "danger" : "working"}>{copy.status}</StatusPill>
+      </div>
+      <Link href={href} className="library-course-title">{title}</Link>
+      <p>{copy.detail}</p>
+      <ProgressMeter completed={build.status === "ready" ? 1 : 0} total={1} />
+      <div className="library-course-card-meta">
+        <span>{build.courseId ? t.common.open : t.library.returnTutor}</span>
+        <span>{copy.status}</span>
+      </div>
+      <Link href={href} className="library-row-action primary">
+        {build.courseId ? t.common.open : t.library.returnTutor}
+      </Link>
     </article>
   );
 }
@@ -937,12 +1052,16 @@ function searchableText(entry: LibraryEntry) {
   if (entry.kind === "job") {
     return `building course ${entry.job.courseId} ${entry.job.lessonId} ${entry.job.id} ${entry.job.stage} ${entry.job.status}`.toLowerCase();
   }
+  if (entry.kind === "pending") {
+    return `${entry.build.topic} ${entry.build.title ?? ""} ${entry.build.status}`.toLowerCase();
+  }
   const lessonTitles = entry.course.lessons.map((lesson) => lesson.title).join(" ");
   return `${entry.course.title} ${entry.course.topic} ${entry.course.summary} ${entry.course.id} ${lessonTitles}`.toLowerCase();
 }
 
 function entryStatusFilterValue(entry: LibraryEntry): StatusFilterValue {
   if (entry.kind === "job") return isLessonGenerationActive(entry.job) ? "in_progress" : "no_lessons";
+  if (entry.kind === "pending") return entry.build.status === "failed" ? "no_lessons" : "in_progress";
   return courseStatusFilterValue(entry.course);
 }
 
@@ -973,6 +1092,10 @@ function sortValue(entry: LibraryEntry, key: SortKey) {
   if (entry.kind === "job") {
     if (key === "lessons") return 1;
     return jobProgressValue(entry.job);
+  }
+  if (entry.kind === "pending") {
+    if (key === "lessons") return 0;
+    return entry.build.status === "ready" ? 1 : 0;
   }
   if (key === "lessons") return entry.course.lessonCount;
   const progress = lessonProgress(entry.course);

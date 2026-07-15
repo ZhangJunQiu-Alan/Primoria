@@ -43,14 +43,19 @@ export type GeneratedGraphResult = {
   created: boolean;
 };
 
-export type GraphModelInvoker = (input: { system: string; user: string }) => Promise<string>;
+export const GENERATED_GRAPH_TIMEOUT_MS = 90_000;
 
-const defaultInvoker: GraphModelInvoker = async ({ system, user }) => {
+export type GraphModelInvoker = (input: { system: string; user: string; signal?: AbortSignal }) => Promise<string>;
+
+const defaultInvoker: GraphModelInvoker = async ({ system, user, signal }) => {
   const model = createUtilityModel({}, { maxTokens: 8192, timeoutMs: 90_000 });
-  const response = await model.invoke([
-    { role: "system", content: system },
-    { role: "user", content: user },
-  ]);
+  const response = await model.invoke(
+    [
+      { role: "system", content: system },
+      { role: "user", content: user },
+    ],
+    { signal },
+  );
   return typeof response.content === "string" ? response.content : JSON.stringify(response.content);
 };
 
@@ -199,17 +204,31 @@ export function toTopicGraph(raw: RawGraph, topicKey: string): TopicGraph {
 export async function generateTopicGraph(
   input: { topic: string; language?: string | null },
   invokeModel: GraphModelInvoker = defaultInvoker,
+  timeoutMs = GENERATED_GRAPH_TIMEOUT_MS,
 ): Promise<TopicGraph | null> {
+  const controller = new AbortController();
+  let timeout: ReturnType<typeof setTimeout> | undefined;
   try {
-    const text = await invokeModel({
-      system: SYSTEM_PROMPT,
-      user: `Learner topic: "${input.topic}"`,
-    });
+    const text = await Promise.race([
+      invokeModel({
+        system: SYSTEM_PROMPT,
+        user: `Learner topic: "${input.topic}"`,
+        signal: controller.signal,
+      }),
+      new Promise<never>((_, reject) => {
+        timeout = setTimeout(() => {
+          controller.abort();
+          reject(new Error(`Generated graph timed out after ${timeoutMs}ms.`));
+        }, timeoutMs);
+      }),
+    ]);
     const raw = parseGeneratedGraph(text);
     return raw ? toTopicGraph(raw, normalizeTopicKey(input.topic)) : null;
   } catch (error) {
     console.warn("[generated-graph] generation failed:", error instanceof Error ? error.message : error);
     return null;
+  } finally {
+    if (timeout) clearTimeout(timeout);
   }
 }
 

@@ -54,6 +54,9 @@ async function main() {
   assert(libraryGrid.includes("window.setInterval"), "library keeps polling while jobs are active");
   assert(libraryGrid.includes("INITIAL_REFRESH_WINDOW_MS"), "library polls briefly after opening to catch newly-started jobs");
   assert(libraryGrid.includes('kind: "job"'), "library can render generation jobs before course details sync");
+  assert(libraryGrid.includes('kind: "pending"'), "library renders session course builds before a formal course exists");
+  assert(libraryGrid.includes("PENDING_COURSE_BUILDS_EVENT"), "library follows live session build updates");
+  assert(libraryGrid.includes("PendingBuildRow") && libraryGrid.includes("PendingBuildCard"), "pending course builds render in table and card views");
   assert(libraryGrid.includes("filterByStatus") && dictionaries.en.library.filterByStatus === "Filter by Status", "library exposes a status filter menu");
   assert(libraryGrid.includes("SortHeaderButton"), "library exposes sortable table headers");
   assert(libraryGrid.includes("sortEntries"), "library sorts course rows client-side");
@@ -197,6 +200,7 @@ async function main() {
   assert(tutorChat.includes("getCurrentThreadId()"), "home chat restores the existing thread instead of always starting fresh");
   assert(!tutorChat.includes("startFreshCurrentThread"), "home chat does not force a new thread on remount");
   assert(tutorChat.includes("RestoredLessonGenerationCards"), "home chat restores active lesson generation cards after reload");
+  assert(tutorChat.includes("restored-jobs-${threadId}"), "starting a new thread immediately remounts restored job notices");
   assert(generativeUi.includes("course-generation-notice"), "restored course generation jobs render as compact notices");
   assert(generativeUi.includes("course-generation-notice-actions"), "restored course generation notices expose clear actions");
   assert(generativeUi.includes("打开课程"), "restored course generation notice uses learner-facing Chinese course action copy");
@@ -257,6 +261,12 @@ async function main() {
   assert(!tutorNavRail.includes("Start a new tutor chat"), "expanded nav sidebar avoids stale history-popup new-chat copy");
   assert(generativeUi.includes("/api/lesson-generation-jobs"), "home restore fetches active lesson generation jobs");
   assert(generativeUi.includes("selectRestorableLessonJobs"), "home restore dedupes restorable lesson jobs");
+  assert(generativeUi.includes("readSeenLessonFailureIds"), "home restore suppresses lesson failures already shown in this browser");
+  assert(generativeUi.includes("resolveLessonGenerationTarget"), "lesson generation notices resolve the real lesson number and title");
+  assert(!generativeUi.includes('"第一节课生成失败"'), "lesson failure notices do not hard-code the first lesson");
+  assert(generativeUi.includes("LEARNING_GOAL_POSITION_TIMEOUT_MS = 45_000"), "learning-goal positioning has a 45-second client deadline");
+  assert(generativeUi.includes("COURSE_BUILD_TIMEOUT_MS = 100_000"), "course creation has a 100-second client deadline");
+  assert(generativeUi.includes("retryCourseBuild"), "course creation failures expose a retry action");
 
   for (const blockType of ["quiz", "mind_map", "slide", "worksheet"]) {
     assert(artifactContracts.includes(`"${blockType}"`), `shared course card schema accepts ${blockType} outline items`);

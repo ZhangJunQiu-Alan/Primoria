@@ -8,7 +8,7 @@
     },
     "/library": {
       "manifest": "server/app/library/page_client-reference-manifest.js",
-      "maxRawKiB": 600,
+      "maxRawKiB": 605,
       "maxGzipKiB": 178
     },
     "/course/[id]": {
