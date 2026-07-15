@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://primoria.local/schemas/visualization-catalog.v1.json",
+  "title": "Primoria interactive visualization catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "catalogId",
+    "scope",
+    "interactionArchetypes",
+    "components"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./catalog.schema.json"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "catalogId": {
+      "const": "primoria.interactive-visualization"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disciplinePolicy", "selectionUnit", "fallbackPolicy"],
+      "properties": {
+        "disciplinePolicy": {
+          "const": "all-subjects"
+        },
+        "selectionUnit": {
+          "const": "one-teaching-scene"
+        },
+        "fallbackPolicy": {
+          "const": "sandbox-widget"
+        }
+      }
+    },
+    "interactionArchetypes": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "observe",
+          "adjust",
+          "drag",
+          "sequence",
+          "compare",
+          "annotate",
+          "construct",
+          "classify",
+          "simulate",
+          "explore-spatial"
+        ]
+      }
+    },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/component"
+      }
+    }
+  },
+  "$defs": {
+    "localizedText": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "zh-CN"],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "zh-CN": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "rendererKey"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["implemented", "prototype", "planned", "deprecated"]
+        },
+        "rendererKey": {
+          "type": "string",
+          "pattern": "^[a-z][A-Za-z0-9]*$"
+        },
+        "replacedBy": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$"
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "componentId",
+        "version",
+        "name",
+        "catalogDescription",
+        "teachingPurpose",
+        "primaryAction",
+        "disciplineTags",
+        "capabilityTags",
+        "implementation",
+        "configSchema",
+        "patchHints",
+        "fallbackConditions",
+        "examplePrompts"
+      ],
+      "properties": {
+        "componentId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "name": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "catalogDescription": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "teachingPurpose": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "primaryAction": {
+          "type": "string",
+          "enum": [
+            "observe",
+            "adjust",
+            "drag",
+            "sequence",
+            "compare",
+            "annotate",
+            "construct",
+            "classify",
+            "simulate",
+            "explore-spatial"
+          ]
+        },
+        "disciplineTags": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
+        },
+        "capabilityTags": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
+        },
+        "implementation": {
+          "$ref": "#/$defs/implementation"
+        },
+        "configSchema": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["type", "additionalProperties", "properties", "required", "default"],
+          "properties": {
+            "$schema": {
+              "const": "https://json-schema.org/draft/2020-12/schema"
+            },
+            "type": {
+              "const": "object"
+            },
+            "additionalProperties": {
+              "const": false
+            },
+            "properties": {
+              "type": "object",
+              "minProperties": 1,
+              "maxProperties": 7
+            },
+            "required": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 7,
+              "uniqueItems": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "default": {
+              "type": "object"
+            }
+          }
+        },
+        "patchHints": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/localizedText"
+          }
+        },
+        "fallbackConditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/localizedText"
+          }
+        },
+        "examplePrompts": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/localizedText"
+          }
+        }
+      }
+    }
+  }
+}

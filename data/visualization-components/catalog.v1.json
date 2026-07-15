@@ -1,0 +1,667 @@
+{
+  "$schema": "./catalog.schema.json",
+  "schemaVersion": "1.0.0",
+  "catalogId": "primoria.interactive-visualization",
+  "scope": {
+    "disciplinePolicy": "all-subjects",
+    "selectionUnit": "one-teaching-scene",
+    "fallbackPolicy": "sandbox-widget"
+  },
+  "interactionArchetypes": [
+    "observe",
+    "adjust",
+    "drag",
+    "sequence",
+    "compare",
+    "annotate",
+    "construct",
+    "classify",
+    "simulate",
+    "explore-spatial"
+  ],
+  "components": [
+    {
+      "componentId": "physics.lens-imaging",
+      "version": 1,
+      "name": { "en": "Lens imaging", "zh-CN": "透镜成像" },
+      "catalogDescription": { "en": "Convex and concave lens imaging with principal rays, image distance, and magnification.", "zh-CN": "凸凹透镜成像、三条特殊光线、像距与放大率。" },
+      "teachingPurpose": { "en": "Connect object distance and focal length to image position, orientation, and scale.", "zh-CN": "建立物距、焦距与像的位置、方向和大小之间的联系。" },
+      "primaryAction": "drag",
+      "disciplineTags": ["physics", "optics"],
+      "capabilityTags": ["ray-diagram", "thin-lens", "derived-readout"],
+      "implementation": { "status": "implemented", "rendererKey": "lensImaging" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "lensType": { "type": "string", "enum": ["convex", "concave"], "default": "convex" },
+          "focalLength": { "type": "number", "minimum": 4, "maximum": 30, "default": 10 },
+          "objectDistance": { "type": "number", "minimum": 2, "maximum": 60, "default": 30 },
+          "objectHeight": { "type": "number", "minimum": 3, "maximum": 16, "default": 8 },
+          "showRays": { "type": "boolean", "default": true }
+        },
+        "required": ["lensType", "focalLength", "objectDistance", "objectHeight", "showRays"],
+        "default": { "lensType": "convex", "focalLength": 10, "objectDistance": 30, "objectHeight": 8, "showRays": true }
+      },
+      "patchHints": [
+        { "en": "Inside the focal point means objectDistance is less than focalLength.", "zh-CN": "“焦点以内”表示 objectDistance 小于 focalLength。" },
+        { "en": "A little larger or smaller changes the current numeric value by about 30%.", "zh-CN": "“调大或调小一点”按当前数值约 30% 调整。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Fall back for compound lenses, aberrations, or non-thin-lens optics.", "zh-CN": "复合透镜、像差或非薄透镜模型应降级。" }
+      ],
+      "examplePrompts": [
+        { "en": "Show a convex lens with a 10 cm focal length and the object at 30 cm.", "zh-CN": "演示焦距 10cm、物距 30cm 的凸透镜成像。" },
+        { "en": "Move the object inside the focal point.", "zh-CN": "把物体移到焦点以内。" }
+      ]
+    },
+    {
+      "componentId": "chem.acid-base-titration",
+      "version": 1,
+      "name": { "en": "Strong acid-base titration", "zh-CN": "强酸强碱滴定" },
+      "catalogDescription": { "en": "Strong acid and strong base titration curve with equivalence point and indicator range.", "zh-CN": "强酸强碱滴定曲线、等当点与指示剂变色区间。" },
+      "teachingPurpose": { "en": "Relate added titrant volume to pH and equivalence-point behaviour.", "zh-CN": "理解滴定剂体积、pH 与等当点变化之间的关系。" },
+      "primaryAction": "adjust",
+      "disciplineTags": ["chemistry"],
+      "capabilityTags": ["titration-curve", "equivalence-point", "indicator-range"],
+      "implementation": { "status": "implemented", "rendererKey": "acidBaseTitration" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "acidConcentration": { "type": "number", "minimum": 0.01, "maximum": 0.5, "default": 0.1 },
+          "acidVolume": { "type": "number", "minimum": 10, "maximum": 50, "default": 25 },
+          "baseConcentration": { "type": "number", "minimum": 0.01, "maximum": 0.5, "default": 0.1 },
+          "addedBaseVolume": { "type": "number", "minimum": 0, "maximum": 100, "default": 0 },
+          "indicator": { "type": "string", "enum": ["phenolphthalein", "methyl-orange", "none"], "default": "phenolphthalein" }
+        },
+        "required": ["acidConcentration", "acidVolume", "baseConcentration", "addedBaseVolume", "indicator"],
+        "default": { "acidConcentration": 0.1, "acidVolume": 25, "baseConcentration": 0.1, "addedBaseVolume": 0, "indicator": "phenolphthalein" }
+      },
+      "patchHints": [
+        { "en": "Add one drop means increasing addedBaseVolume by 0.1 mL.", "zh-CN": "“加一滴”表示 addedBaseVolume 增加 0.1mL。" },
+        { "en": "At equivalence sets the added base amount from the acid and base mole ratio.", "zh-CN": "“调到等当点”按酸碱物质的量计算 addedBaseVolume。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Weak acids, buffers, and polyprotic systems require another component.", "zh-CN": "弱酸、缓冲体系和多元酸需要其他组件。" }
+      ],
+      "examplePrompts": [
+        { "en": "Titrate 25 mL of 0.1 M hydrochloric acid with 0.1 M sodium hydroxide.", "zh-CN": "用 0.1M NaOH 滴定 25mL、0.1M 的盐酸。" },
+        { "en": "Add base until the equivalence point.", "zh-CN": "加碱直到等当点。" }
+      ]
+    },
+    {
+      "componentId": "physics.wave-superposition",
+      "version": 1,
+      "name": { "en": "Wave superposition", "zh-CN": "波的叠加" },
+      "catalogDescription": { "en": "Two harmonic waves and their resultant with adjustable amplitude, frequency, and phase.", "zh-CN": "两列简谐波及其合成波，振幅、频率和相位可调。" },
+      "teachingPurpose": { "en": "Build intuition for constructive, destructive, and beat-like superposition.", "zh-CN": "建立相长、相消及拍频式叠加的直觉。" },
+      "primaryAction": "adjust",
+      "disciplineTags": ["physics", "music", "engineering"],
+      "capabilityTags": ["harmonic-wave", "superposition", "animated-curve"],
+      "implementation": { "status": "implemented", "rendererKey": "waveSuperposition" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "amplitude1": { "type": "number", "minimum": 0.2, "maximum": 2, "default": 1 },
+          "amplitude2": { "type": "number", "minimum": 0.2, "maximum": 2, "default": 1 },
+          "frequency1": { "type": "number", "minimum": 0.5, "maximum": 3, "default": 1 },
+          "frequency2": { "type": "number", "minimum": 0.5, "maximum": 3, "default": 1 },
+          "phaseDiffDeg": { "type": "number", "minimum": 0, "maximum": 360, "default": 0 },
+          "showComponents": { "type": "boolean", "default": true }
+        },
+        "required": ["amplitude1", "amplitude2", "frequency1", "frequency2", "phaseDiffDeg", "showComponents"],
+        "default": { "amplitude1": 1, "amplitude2": 1, "frequency1": 1, "frequency2": 1, "phaseDiffDeg": 0, "showComponents": true }
+      },
+      "patchHints": [
+        { "en": "Completely cancel means equal amplitudes and frequencies with phaseDiffDeg set to 180.", "zh-CN": "“完全抵消”表示等振幅、等频率且 phaseDiffDeg 为 180。" },
+        { "en": "Make the second wave faster increases frequency2 by about 30%.", "zh-CN": "“第二列波快一点”表示 frequency2 增加约 30%。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Nonlinear waves, dispersion, and multi-dimensional fields require another simulation.", "zh-CN": "非线性波、色散和多维波场需要其他模拟。" }
+      ],
+      "examplePrompts": [
+        { "en": "Show two equal waves in phase.", "zh-CN": "演示两列等幅同相波。" },
+        { "en": "Set the phase difference to 180 degrees.", "zh-CN": "把相位差调到 180 度。" }
+      ]
+    },
+    {
+      "componentId": "cs.sorting-steps",
+      "version": 1,
+      "name": { "en": "Sorting steps", "zh-CN": "排序分步" },
+      "catalogDescription": { "en": "Step through bubble, selection, or insertion sorting with comparisons and swaps.", "zh-CN": "逐步执行冒泡、选择或插入排序并显示比较与交换。" },
+      "teachingPurpose": { "en": "Connect algorithm rules to the exact sequence of comparisons and mutations.", "zh-CN": "把算法规则与具体比较、交换过程对应起来。" },
+      "primaryAction": "sequence",
+      "disciplineTags": ["computer-science"],
+      "capabilityTags": ["sorting", "algorithm-trace", "step-player"],
+      "implementation": { "status": "implemented", "rendererKey": "sortingSteps" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "algorithm": { "type": "string", "enum": ["bubble", "selection", "insertion"], "default": "bubble" },
+          "values": { "type": "array", "minItems": 4, "maxItems": 10, "items": { "type": "integer", "minimum": 1, "maximum": 99 }, "default": [5, 2, 4, 1, 8, 3] }
+        },
+        "required": ["algorithm", "values"],
+        "default": { "algorithm": "bubble", "values": [5, 2, 4, 1, 8, 3] }
+      },
+      "patchHints": [
+        { "en": "Use a different data set replaces the entire values array.", "zh-CN": "“换一组数据”整体替换 values 数组。" },
+        { "en": "Make it more shuffled replaces values while preserving its length and range.", "zh-CN": "“再乱一点”保持长度和范围并重新排列 values。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Recursive, graph, and non-comparison sorting need dedicated components.", "zh-CN": "递归排序、图算法和非比较排序需要专用组件。" }
+      ],
+      "examplePrompts": [
+        { "en": "Sort 5, 2, 4, 1 with bubble sort step by step.", "zh-CN": "逐步演示冒泡排序 5、2、4、1。" },
+        { "en": "Switch to selection sort with a new data set.", "zh-CN": "换成选择排序并使用一组新数据。" }
+      ]
+    },
+    {
+      "componentId": "math.function-explorer",
+      "version": 1,
+      "name": { "en": "Function transformation", "zh-CN": "函数变换探索" },
+      "catalogDescription": { "en": "Explore translations, stretches, and reflections of a base function.", "zh-CN": "探索基本函数的平移、伸缩与翻转。" },
+      "teachingPurpose": { "en": "Relate the parameters in y = a f(b(x-h)) + k to geometric graph transformations.", "zh-CN": "理解 y=a·f(b(x-h))+k 中参数与图像变换的关系。" },
+      "primaryAction": "adjust",
+      "disciplineTags": ["mathematics", "economics", "statistics"],
+      "capabilityTags": ["function-plot", "parameter-change", "coordinate-system"],
+      "implementation": { "status": "implemented", "rendererKey": "functionExplorer" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "functionType": { "type": "string", "enum": ["quadratic", "sin", "abs", "sqrt"], "default": "quadratic" },
+          "a": { "type": "number", "minimum": -3, "maximum": 3, "default": 1 },
+          "b": { "type": "number", "minimum": 0.25, "maximum": 4, "default": 1 },
+          "h": { "type": "number", "minimum": -5, "maximum": 5, "default": 0 },
+          "k": { "type": "number", "minimum": -5, "maximum": 5, "default": 0 },
+          "showOriginal": { "type": "boolean", "default": true }
+        },
+        "required": ["functionType", "a", "b", "h", "k", "showOriginal"],
+        "default": { "functionType": "quadratic", "a": 1, "b": 1, "h": 0, "k": 0, "showOriginal": true }
+      },
+      "patchHints": [
+        { "en": "Move right increases h; move up increases k.", "zh-CN": "“向右移动”增加 h，“向上移动”增加 k。" },
+        { "en": "Flip vertically changes the sign of a.", "zh-CN": "“上下翻转”改变 a 的符号。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Piecewise, implicit, and data-fitted functions require dedicated components.", "zh-CN": "分段函数、隐函数和数据拟合函数需要专用组件。" }
+      ],
+      "examplePrompts": [
+        { "en": "Show a quadratic shifted right by 2 and up by 1.", "zh-CN": "演示向右平移 2、向上平移 1 的二次函数。" },
+        { "en": "Flip the absolute-value graph vertically.", "zh-CN": "把绝对值函数上下翻转。" }
+      ]
+    },
+    {
+      "componentId": "math.angle-measure",
+      "version": 1,
+      "name": { "en": "Angle measurement", "zh-CN": "角度测量" },
+      "catalogDescription": { "en": "Drag a ray to measure and classify a single angle.", "zh-CN": "拖动射线测量并分类一个角。" },
+      "teachingPurpose": { "en": "Develop magnitude intuition for acute, right, obtuse, and straight angles.", "zh-CN": "建立锐角、直角、钝角和平角的大小直觉。" },
+      "primaryAction": "drag",
+      "disciplineTags": ["mathematics", "design", "engineering"],
+      "capabilityTags": ["angle", "measurement", "classification"],
+      "implementation": { "status": "implemented", "rendererKey": "angleMeasure" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "angleDeg": { "type": "number", "minimum": 0, "maximum": 180, "default": 60 },
+          "showClassification": { "type": "boolean", "default": true },
+          "showProtractor": { "type": "boolean", "default": false }
+        },
+        "required": ["angleDeg", "showClassification", "showProtractor"],
+        "default": { "angleDeg": 60, "showClassification": true, "showProtractor": false }
+      },
+      "patchHints": [
+        { "en": "Make it a right angle sets angleDeg to 90.", "zh-CN": "“变成直角”把 angleDeg 设为 90。" },
+        { "en": "A little wider increases angleDeg by about 15 degrees.", "zh-CN": "“再张开一点”把 angleDeg 增加约 15 度。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Multi-angle constructions, proofs, and 3D dihedral angles require other components.", "zh-CN": "多角构造、几何证明和三维二面角需要其他组件。" }
+      ],
+      "examplePrompts": [
+        { "en": "Show a 35 degree acute angle.", "zh-CN": "演示一个 35 度锐角。" },
+        { "en": "Open the angle until it becomes obtuse.", "zh-CN": "把角张开到钝角。" }
+      ]
+    },
+    {
+      "componentId": "general.timeline-causality",
+      "version": 1,
+      "name": { "en": "Causal timeline", "zh-CN": "因果时间线" },
+      "catalogDescription": { "en": "Arrange events chronologically and reveal direct causal links and turning points.", "zh-CN": "按时间排列事件，并呈现直接因果关系与转折点。" },
+      "teachingPurpose": { "en": "Separate chronology from causality while tracing how events influence later outcomes.", "zh-CN": "区分时间先后与因果关系，并追踪事件如何影响后续结果。" },
+      "primaryAction": "sequence",
+      "disciplineTags": ["history", "literature", "geography", "civics", "science"],
+      "capabilityTags": ["chronology", "causality", "turning-point"],
+      "implementation": { "status": "implemented", "rendererKey": "timelineCausality" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "timelineTitle": { "type": "string", "maxLength": 120, "default": "A sequence of connected events" },
+          "events": { "type": "array", "minItems": 2, "maxItems": 12, "items": { "type": "object", "required": ["id", "label", "dateLabel", "summary"], "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "dateLabel": { "type": "string" }, "summary": { "type": "string" } } }, "default": [{ "id": "event-1", "label": "Initial condition", "dateLabel": "Phase 1", "summary": "The situation before change." }, { "id": "event-2", "label": "Turning point", "dateLabel": "Phase 2", "summary": "A change redirects what follows." }, { "id": "event-3", "label": "Outcome", "dateLabel": "Phase 3", "summary": "The later consequence." }] },
+          "causalLinks": { "type": "array", "minItems": 1, "maxItems": 16, "items": { "type": "object", "required": ["fromEventId", "toEventId", "explanation"], "properties": { "fromEventId": { "type": "string" }, "toEventId": { "type": "string" }, "explanation": { "type": "string" } } }, "default": [{ "fromEventId": "event-1", "toEventId": "event-2", "explanation": "The initial condition makes the turning point possible." }, { "fromEventId": "event-2", "toEventId": "event-3", "explanation": "The turning point changes the final outcome." }] }
+        },
+        "required": ["timelineTitle", "events", "causalLinks"],
+        "default": { "timelineTitle": "A sequence of connected events", "events": [{ "id": "event-1", "label": "Initial condition", "dateLabel": "Phase 1", "summary": "The situation before change." }, { "id": "event-2", "label": "Turning point", "dateLabel": "Phase 2", "summary": "A change redirects what follows." }, { "id": "event-3", "label": "Outcome", "dateLabel": "Phase 3", "summary": "The later consequence." }], "causalLinks": [{ "fromEventId": "event-1", "toEventId": "event-2", "explanation": "The initial condition makes the turning point possible." }, { "fromEventId": "event-2", "toEventId": "event-3", "explanation": "The turning point changes the final outcome." }] }
+      },
+      "patchHints": [
+        { "en": "Add the missing turning point appends one event and the causal links that mention it.", "zh-CN": "“补上转折点”增加一个事件及与它相关的 causalLinks。" },
+        { "en": "Show what caused this adds or updates causalLinks rather than changing event order.", "zh-CN": "“说明它为什么发生”增加或更新 causalLinks，不改变事件顺序。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Dense chronologies with hundreds of events or uncertain scholarly dating require a specialized timeline.", "zh-CN": "数百事件的密集年表或存在学术争议的年代需要专用时间线。" }
+      ],
+      "examplePrompts": [
+        { "en": "Build a causal timeline of the French Revolution's major turning points.", "zh-CN": "制作法国大革命主要转折点的因果时间线。" },
+        { "en": "Show how three decisions lead to the ending of the novel.", "zh-CN": "展示小说中三个决定如何导致结局。" }
+      ]
+    },
+    {
+      "componentId": "general.process-sequence",
+      "version": 1,
+      "name": { "en": "Process sequence", "zh-CN": "过程序列" },
+      "catalogDescription": { "en": "Step through a bounded process with inputs, transformations, outputs, and feedback.", "zh-CN": "逐步呈现一个有限过程的输入、转化、输出与反馈。" },
+      "teachingPurpose": { "en": "Make state changes and dependencies explicit instead of presenting a static flowchart.", "zh-CN": "把状态变化和步骤依赖显性化，而不是只展示静态流程图。" },
+      "primaryAction": "sequence",
+      "disciplineTags": ["cross-disciplinary", "civics", "biology", "business", "language"],
+      "capabilityTags": ["process", "state-change", "step-player"],
+      "implementation": { "status": "implemented", "rendererKey": "processSequence" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "processName": { "type": "string", "maxLength": 120, "default": "A multi-step process" },
+          "steps": { "type": "array", "minItems": 2, "maxItems": 10, "items": { "type": "object", "required": ["id", "label", "input", "change", "output"], "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "input": { "type": "string" }, "change": { "type": "string" }, "output": { "type": "string" } } }, "default": [{ "id": "step-1", "label": "Receive input", "input": "Starting material", "change": "Interpret or transform the input", "output": "Intermediate result" }, { "id": "step-2", "label": "Produce outcome", "input": "Intermediate result", "change": "Apply the final transformation", "output": "Final outcome" }] },
+          "feedbackLinks": { "type": "array", "minItems": 0, "maxItems": 6, "items": { "type": "object", "required": ["fromStepId", "toStepId", "reason"], "properties": { "fromStepId": { "type": "string" }, "toStepId": { "type": "string" }, "reason": { "type": "string" } } }, "default": [] }
+        },
+        "required": ["processName", "steps", "feedbackLinks"],
+        "default": { "processName": "A multi-step process", "steps": [{ "id": "step-1", "label": "Receive input", "input": "Starting material", "change": "Interpret or transform the input", "output": "Intermediate result" }, { "id": "step-2", "label": "Produce outcome", "input": "Intermediate result", "change": "Apply the final transformation", "output": "Final outcome" }], "feedbackLinks": [] }
+      },
+      "patchHints": [
+        { "en": "What happens next appends one complete semantic step.", "zh-CN": "“接下来发生什么”增加一个完整的语义步骤。" },
+        { "en": "Show the feedback adds a feedbackLink without duplicating steps.", "zh-CN": "“显示反馈过程”增加 feedbackLink，不复制步骤。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Unbounded workflows, executable business processes, and live operational data require dedicated systems.", "zh-CN": "无边界工作流、可执行业务流程和实时运营数据需要专用系统。" }
+      ],
+      "examplePrompts": [
+        { "en": "Step through how a bill becomes law.", "zh-CN": "逐步演示一项法案如何成为法律。" },
+        { "en": "Show the stages of transcription as input, change, and output.", "zh-CN": "按输入、转化和输出展示转录过程。" }
+      ]
+    },
+    {
+      "componentId": "humanities.source-comparison",
+      "version": 1,
+      "name": { "en": "Source comparison", "zh-CN": "材料来源比较" },
+      "catalogDescription": { "en": "Compare two to four sources by provenance, claims, evidence, and limitations.", "zh-CN": "按出处、主张、证据与局限比较两到四份材料。" },
+      "teachingPurpose": { "en": "Practice corroboration without collapsing distinct sources into a single summary.", "zh-CN": "练习材料互证，同时保留不同来源之间的差异。" },
+      "primaryAction": "compare",
+      "disciplineTags": ["history", "literature", "civics", "religious-studies", "media-studies"],
+      "capabilityTags": ["source-criticism", "corroboration", "evidence-comparison"],
+      "implementation": { "status": "implemented", "rendererKey": "sourceComparison" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "inquiryQuestion": { "type": "string", "maxLength": 240, "default": "How do these sources explain the same issue differently?" },
+          "sources": { "type": "array", "minItems": 2, "maxItems": 4, "items": { "type": "object", "required": ["id", "title", "creator", "context", "claim", "evidence", "limitation"], "properties": { "id": { "type": "string" }, "title": { "type": "string" }, "creator": { "type": "string" }, "context": { "type": "string" }, "claim": { "type": "string" }, "evidence": { "type": "string" }, "limitation": { "type": "string" } } }, "default": [{ "id": "source-a", "title": "Source A", "creator": "First observer", "context": "Produced close to the event", "claim": "The change was deliberate.", "evidence": "Direct testimony", "limitation": "Narrow viewpoint" }, { "id": "source-b", "title": "Source B", "creator": "Later analyst", "context": "Produced with broader records", "claim": "The change emerged gradually.", "evidence": "Multiple archived records", "limitation": "Written long after the event" }] },
+          "comparisonFocus": { "type": "string", "enum": ["provenance", "claims", "corroboration", "limitations"], "default": "corroboration" }
+        },
+        "required": ["inquiryQuestion", "sources", "comparisonFocus"],
+        "default": { "inquiryQuestion": "How do these sources explain the same issue differently?", "sources": [{ "id": "source-a", "title": "Source A", "creator": "First observer", "context": "Produced close to the event", "claim": "The change was deliberate.", "evidence": "Direct testimony", "limitation": "Narrow viewpoint" }, { "id": "source-b", "title": "Source B", "creator": "Later analyst", "context": "Produced with broader records", "claim": "The change emerged gradually.", "evidence": "Multiple archived records", "limitation": "Written long after the event" }], "comparisonFocus": "corroboration" }
+      },
+      "patchHints": [
+        { "en": "Focus on bias changes comparisonFocus to limitations and preserves the sources.", "zh-CN": "“重点看偏见”把 comparisonFocus 调为 limitations，并保留原材料。" },
+        { "en": "Add another account appends one complete source record.", "zh-CN": "“再加入一种说法”增加一条完整 source 记录。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Full-document annotation, copyrighted long passages, or automatic factual verification require other tools.", "zh-CN": "全文标注、受版权保护的长文本或自动事实核查需要其他工具。" }
+      ],
+      "examplePrompts": [
+        { "en": "Compare two eyewitness accounts of the same protest.", "zh-CN": "比较同一场抗议活动的两份目击者记录。" },
+        { "en": "Show where the narrator and the critic agree and disagree.", "zh-CN": "展示叙述者与评论者在哪些地方一致或分歧。" }
+      ]
+    },
+    {
+      "componentId": "humanities.argument-map",
+      "version": 1,
+      "name": { "en": "Argument map", "zh-CN": "论证结构图" },
+      "catalogDescription": { "en": "Construct a central claim with reasons, evidence, objections, and replies.", "zh-CN": "围绕中心主张构建理由、证据、反对意见与回应。" },
+      "teachingPurpose": { "en": "Expose inferential structure so learners can test support rather than only summarize conclusions.", "zh-CN": "显性呈现推理结构，让学习者检验证成关系而非只复述结论。" },
+      "primaryAction": "construct",
+      "disciplineTags": ["philosophy", "law", "history", "literature", "civics"],
+      "capabilityTags": ["claim-evidence", "objection-reply", "reasoning-structure"],
+      "implementation": { "status": "implemented", "rendererKey": "argumentMap" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "centralClaim": { "type": "string", "maxLength": 240, "default": "The proposed conclusion is justified." },
+          "statements": { "type": "array", "minItems": 3, "maxItems": 14, "items": { "type": "object", "required": ["id", "kind", "text"], "properties": { "id": { "type": "string" }, "kind": { "type": "string", "enum": ["reason", "evidence", "objection", "reply"] }, "text": { "type": "string" } } }, "default": [{ "id": "reason-1", "kind": "reason", "text": "A general reason supports the claim." }, { "id": "evidence-1", "kind": "evidence", "text": "A concrete example supports the reason." }, { "id": "objection-1", "kind": "objection", "text": "An alternative interpretation challenges it." }] },
+          "relations": { "type": "array", "minItems": 2, "maxItems": 20, "items": { "type": "object", "required": ["fromId", "toId", "relationType"], "properties": { "fromId": { "type": "string" }, "toId": { "type": "string" }, "relationType": { "type": "string", "enum": ["supports", "challenges", "responds-to"] } } }, "default": [{ "fromId": "evidence-1", "toId": "reason-1", "relationType": "supports" }, { "fromId": "reason-1", "toId": "central-claim", "relationType": "supports" }, { "fromId": "objection-1", "toId": "central-claim", "relationType": "challenges" }] }
+        },
+        "required": ["centralClaim", "statements", "relations"],
+        "default": { "centralClaim": "The proposed conclusion is justified.", "statements": [{ "id": "reason-1", "kind": "reason", "text": "A general reason supports the claim." }, { "id": "evidence-1", "kind": "evidence", "text": "A concrete example supports the reason." }, { "id": "objection-1", "kind": "objection", "text": "An alternative interpretation challenges it." }], "relations": [{ "fromId": "evidence-1", "toId": "reason-1", "relationType": "supports" }, { "fromId": "reason-1", "toId": "central-claim", "relationType": "supports" }, { "fromId": "objection-1", "toId": "central-claim", "relationType": "challenges" }] }
+      },
+      "patchHints": [
+        { "en": "Challenge that claim adds an objection and a challenges relation.", "zh-CN": "“反驳这个主张”增加 objection 和 challenges 关系。" },
+        { "en": "Add evidence appends evidence and links it to the relevant reason.", "zh-CN": "“补充证据”增加 evidence 并连接到对应 reason。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Formal symbolic proofs and unrestricted debate graphs require dedicated components.", "zh-CN": "形式化符号证明和无边界辩论图需要专用组件。" }
+      ],
+      "examplePrompts": [
+        { "en": "Map the argument for and against civil disobedience.", "zh-CN": "画出支持与反对公民不服从的论证结构。" },
+        { "en": "Show the claim, evidence, and counterargument in this essay.", "zh-CN": "展示这篇文章的主张、证据和反方意见。" }
+      ]
+    },
+    {
+      "componentId": "literature.narrative-arc",
+      "version": 1,
+      "name": { "en": "Narrative arc", "zh-CN": "叙事弧线" },
+      "catalogDescription": { "en": "Trace story beats against narrative tension from exposition to resolution.", "zh-CN": "沿叙事张力追踪从开端到结局的关键情节。" },
+      "teachingPurpose": { "en": "Relate plot events to changes in tension and narrative function.", "zh-CN": "理解情节事件如何改变叙事张力并承担不同叙事功能。" },
+      "primaryAction": "sequence",
+      "disciplineTags": ["literature", "language", "film-studies", "theatre", "arts"],
+      "capabilityTags": ["story-structure", "tension", "plot-beat"],
+      "implementation": { "status": "implemented", "rendererKey": "narrativeArc" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workTitle": { "type": "string", "maxLength": 160, "default": "A narrative" },
+          "narrativeForm": { "type": "string", "enum": ["five-part", "three-act", "episodic"], "default": "five-part" },
+          "beats": { "type": "array", "minItems": 3, "maxItems": 10, "items": { "type": "object", "required": ["id", "stage", "event", "tension", "function"], "properties": { "id": { "type": "string" }, "stage": { "type": "string" }, "event": { "type": "string" }, "tension": { "type": "integer", "minimum": 0, "maximum": 10 }, "function": { "type": "string" } } }, "default": [{ "id": "beat-1", "stage": "Exposition", "event": "The initial situation is established.", "tension": 2, "function": "Introduce the central conditions." }, { "id": "beat-2", "stage": "Crisis", "event": "The conflict reaches its decisive point.", "tension": 9, "function": "Force an irreversible choice." }, { "id": "beat-3", "stage": "Resolution", "event": "Consequences settle into a new state.", "tension": 3, "function": "Reveal what has changed." }] }
+        },
+        "required": ["workTitle", "narrativeForm", "beats"],
+        "default": { "workTitle": "A narrative", "narrativeForm": "five-part", "beats": [{ "id": "beat-1", "stage": "Exposition", "event": "The initial situation is established.", "tension": 2, "function": "Introduce the central conditions." }, { "id": "beat-2", "stage": "Crisis", "event": "The conflict reaches its decisive point.", "tension": 9, "function": "Force an irreversible choice." }, { "id": "beat-3", "stage": "Resolution", "event": "Consequences settle into a new state.", "tension": 3, "function": "Reveal what has changed." }] }
+      },
+      "patchHints": [
+        { "en": "Make the climax more intense increases the tension of the crisis beat, not every beat.", "zh-CN": "“让高潮更强烈”只提高危机情节的 tension，不修改所有情节。" },
+        { "en": "Add the missing turning point appends a beat with its narrative function.", "zh-CN": "“补上转折点”增加一个带叙事功能说明的 beat。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Nonlinear, multi-thread, or reader-directed narratives require specialized structures.", "zh-CN": "非线性、多线叙事或读者选择型叙事需要专用结构。" }
+      ],
+      "examplePrompts": [
+        { "en": "Show the narrative arc of Macbeth.", "zh-CN": "展示《麦克白》的叙事弧线。" },
+        { "en": "Compare where tension rises and falls in this short story.", "zh-CN": "比较这篇短篇小说中张力上升和下降的位置。" }
+      ]
+    },
+    {
+      "componentId": "literature.character-relationships",
+      "version": 1,
+      "name": { "en": "Character relationships", "zh-CN": "人物关系演变" },
+      "catalogDescription": { "en": "Explore a bounded cast and how relationships change across the work.", "zh-CN": "探索有限人物群体及其关系在作品中的变化。" },
+      "teachingPurpose": { "en": "Distinguish relationship type, direction, and change from simple character co-occurrence.", "zh-CN": "区分关系类型、方向和变化，而不只是人物是否同时出现。" },
+      "primaryAction": "compare",
+      "disciplineTags": ["literature", "history", "film-studies", "theatre"],
+      "capabilityTags": ["character-network", "relationship-change", "bounded-network"],
+      "implementation": { "status": "implemented", "rendererKey": "characterRelationships" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workTitle": { "type": "string", "maxLength": 160, "default": "A work with an ensemble cast" },
+          "characters": { "type": "array", "minItems": 2, "maxItems": 10, "items": { "type": "object", "required": ["id", "name", "role", "goal"], "properties": { "id": { "type": "string" }, "name": { "type": "string" }, "role": { "type": "string" }, "goal": { "type": "string" } } }, "default": [{ "id": "character-a", "name": "Character A", "role": "Protagonist", "goal": "Protect the existing order" }, { "id": "character-b", "name": "Character B", "role": "Challenger", "goal": "Change the existing order" }] },
+          "relationships": { "type": "array", "minItems": 1, "maxItems": 18, "items": { "type": "object", "required": ["fromCharacterId", "toCharacterId", "relationship", "phase"], "properties": { "fromCharacterId": { "type": "string" }, "toCharacterId": { "type": "string" }, "relationship": { "type": "string" }, "phase": { "type": "string" } } }, "default": [{ "fromCharacterId": "character-a", "toCharacterId": "character-b", "relationship": "Opposition shaped by mutual dependence", "phase": "Middle" }] },
+          "selectedPhase": { "type": "string", "maxLength": 80, "default": "Middle" }
+        },
+        "required": ["workTitle", "characters", "relationships", "selectedPhase"],
+        "default": { "workTitle": "A work with an ensemble cast", "characters": [{ "id": "character-a", "name": "Character A", "role": "Protagonist", "goal": "Protect the existing order" }, { "id": "character-b", "name": "Character B", "role": "Challenger", "goal": "Change the existing order" }], "relationships": [{ "fromCharacterId": "character-a", "toCharacterId": "character-b", "relationship": "Opposition shaped by mutual dependence", "phase": "Middle" }], "selectedPhase": "Middle" }
+      },
+      "patchHints": [
+        { "en": "Show the ending changes selectedPhase without rewriting relationship evidence from other phases.", "zh-CN": "“看结局时的关系”修改 selectedPhase，不覆盖其他阶段的关系证据。" },
+        { "en": "Add a character appends the character and only relationships explicitly supported by the text.", "zh-CN": "“加入一个人物”增加人物，并只添加文本明确支持的关系。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Large social networks and uncertain historical prosopography require dedicated graph tools.", "zh-CN": "大型社会网络和不确定的历史人物群体研究需要专用图工具。" }
+      ],
+      "examplePrompts": [
+        { "en": "Show how Elizabeth and Darcy's relationship changes through the novel.", "zh-CN": "展示伊丽莎白和达西的关系如何随小说发展而变化。" },
+        { "en": "Map the alliances in the play's final act.", "zh-CN": "画出这部戏剧最后一幕的人物联盟。" }
+      ]
+    },
+    {
+      "componentId": "literature.close-reading",
+      "version": 1,
+      "name": { "en": "Close reading", "zh-CN": "文本细读" },
+      "catalogDescription": { "en": "Annotate short passages by quoting evidence and explaining a literary or rhetorical effect.", "zh-CN": "通过引用证据并解释文学或修辞效果来标注短文本。" },
+      "teachingPurpose": { "en": "Tie interpretation to exact language rather than detached thematic claims.", "zh-CN": "把解释落实到具体语言，而不是脱离文本讨论主题。" },
+      "primaryAction": "annotate",
+      "disciplineTags": ["literature", "language", "history", "philosophy", "religious-studies"],
+      "capabilityTags": ["quotation", "annotation", "rhetorical-device"],
+      "implementation": { "status": "implemented", "rendererKey": "closeReading" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "passage": { "type": "string", "maxLength": 1200, "default": "A short passage whose language supports more than one interpretation." },
+          "focus": { "type": "string", "enum": ["diction", "imagery", "syntax", "structure", "voice"], "default": "diction" },
+          "annotations": { "type": "array", "minItems": 1, "maxItems": 8, "items": { "type": "object", "required": ["quote", "focus", "device", "observation", "effect"], "properties": { "quote": { "type": "string" }, "focus": { "type": "string", "enum": ["diction", "imagery", "syntax", "structure", "voice"] }, "device": { "type": "string" }, "observation": { "type": "string" }, "effect": { "type": "string" } } }, "default": [{ "quote": "more than one interpretation", "focus": "diction", "device": "qualification", "observation": "The wording resists a single fixed reading.", "effect": "It invites the reader to compare plausible meanings." }] }
+        },
+        "required": ["passage", "focus", "annotations"],
+        "default": { "passage": "A short passage whose language supports more than one interpretation.", "focus": "diction", "annotations": [{ "quote": "more than one interpretation", "focus": "diction", "device": "qualification", "observation": "The wording resists a single fixed reading.", "effect": "It invites the reader to compare plausible meanings." }] }
+      },
+      "patchHints": [
+        { "en": "Focus on syntax changes focus and annotations, while preserving the passage.", "zh-CN": "“重点看句法”修改 focus 和 annotations，同时保留 passage。" },
+        { "en": "Add textual evidence appends an annotation containing an exact short quote.", "zh-CN": "“再补一处文本证据”增加包含准确短引文的 annotation。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Long copyrighted passages, manuscript facsimiles, and audio performance analysis require other tools.", "zh-CN": "受版权保护的长文本、手稿影像和音频表演分析需要其他工具。" }
+      ],
+      "examplePrompts": [
+        { "en": "Annotate the imagery and syntax in this four-line passage.", "zh-CN": "标注这四行文本中的意象和句法。" },
+        { "en": "Show which exact words make the narrator sound unreliable.", "zh-CN": "指出哪些具体词语使叙述者显得不可靠。" }
+      ]
+    },
+    {
+      "componentId": "language.sentence-structure",
+      "version": 1,
+      "name": { "en": "Sentence structure", "zh-CN": "句子结构分析" },
+      "catalogDescription": { "en": "Build a sentence from phrases and inspect their grammatical roles and dependencies.", "zh-CN": "从短语构建句子，并检查语法角色与依存关系。" },
+      "teachingPurpose": { "en": "Connect surface word order to phrase function and dependency.", "zh-CN": "把表层语序与短语功能、依存关系联系起来。" },
+      "primaryAction": "construct",
+      "disciplineTags": ["language", "linguistics", "literature"],
+      "capabilityTags": ["syntax", "phrase-role", "dependency"],
+      "implementation": { "status": "implemented", "rendererKey": "sentenceStructure" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sentence": { "type": "string", "maxLength": 240, "default": "The careful reader notices the contrast." },
+          "languageCode": { "type": "string", "enum": ["en", "zh", "es", "fr", "de", "ja"], "default": "en" },
+          "phrases": { "type": "array", "minItems": 2, "maxItems": 12, "items": { "type": "object", "required": ["id", "text", "role", "dependsOnId"], "properties": { "id": { "type": "string" }, "text": { "type": "string" }, "role": { "type": "string" }, "dependsOnId": { "type": ["string", "null"] } } }, "default": [{ "id": "subject", "text": "The careful reader", "role": "subject", "dependsOnId": "predicate" }, { "id": "predicate", "text": "notices", "role": "predicate", "dependsOnId": null }, { "id": "object", "text": "the contrast", "role": "object", "dependsOnId": "predicate" }] },
+          "targetStructure": { "type": "string", "enum": ["clause", "phrase", "word-order", "dependency"], "default": "dependency" }
+        },
+        "required": ["sentence", "languageCode", "phrases", "targetStructure"],
+        "default": { "sentence": "The careful reader notices the contrast.", "languageCode": "en", "phrases": [{ "id": "subject", "text": "The careful reader", "role": "subject", "dependsOnId": "predicate" }, { "id": "predicate", "text": "notices", "role": "predicate", "dependsOnId": null }, { "id": "object", "text": "the contrast", "role": "object", "dependsOnId": "predicate" }], "targetStructure": "dependency" }
+      },
+      "patchHints": [
+        { "en": "Make it passive replaces the sentence and phrase roles together.", "zh-CN": "“改成被动语态”同时替换 sentence 和 phrases 的语法角色。" },
+        { "en": "Show word order changes targetStructure to word-order without changing the language.", "zh-CN": "“重点看语序”把 targetStructure 改为 word-order，不改变语言。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Languages outside the supported grammar models and disputed parses require sandbox fallback.", "zh-CN": "未支持语法模型的语言和存在争议的句法分析应走沙箱降级。" }
+      ],
+      "examplePrompts": [
+        { "en": "Break this sentence into subject, predicate, and object.", "zh-CN": "把这个句子拆成主语、谓语和宾语。" },
+        { "en": "Show how the phrase order changes in the passive voice.", "zh-CN": "展示被动语态中短语顺序如何变化。" }
+      ]
+    },
+    {
+      "componentId": "social.policy-tradeoff",
+      "version": 1,
+      "name": { "en": "Policy trade-off", "zh-CN": "公共政策权衡" },
+      "catalogDescription": { "en": "Compare bounded policy options across criteria and stakeholder priorities.", "zh-CN": "按评价标准和利益相关者优先级比较有限政策选项。" },
+      "teachingPurpose": { "en": "Make value conflicts and distributional consequences visible without pretending there is one neutral score.", "zh-CN": "呈现价值冲突与分配后果，而不是假装存在唯一中立评分。" },
+      "primaryAction": "compare",
+      "disciplineTags": ["civics", "economics", "law", "geography", "ethics", "public-policy"],
+      "capabilityTags": ["tradeoff", "stakeholder", "criteria-comparison"],
+      "implementation": { "status": "implemented", "rendererKey": "policyTradeoff" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "policyQuestion": { "type": "string", "maxLength": 240, "default": "Which policy best balances access, cost, and long-term effects?" },
+          "options": { "type": "array", "minItems": 2, "maxItems": 5, "items": { "type": "object", "required": ["id", "label", "summary"], "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "summary": { "type": "string" } } }, "default": [{ "id": "option-a", "label": "Targeted intervention", "summary": "Direct resources to the groups with greatest need." }, { "id": "option-b", "label": "Universal intervention", "summary": "Provide the same baseline support to everyone." }] },
+          "criteria": { "type": "array", "minItems": 2, "maxItems": 6, "items": { "type": "object", "required": ["id", "label", "importance"], "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "importance": { "type": "integer", "minimum": 1, "maximum": 5 } } }, "default": [{ "id": "access", "label": "Access", "importance": 5 }, { "id": "cost", "label": "Public cost", "importance": 3 }, { "id": "durability", "label": "Long-term durability", "importance": 4 }] },
+          "stakeholders": { "type": "array", "minItems": 2, "maxItems": 6, "items": { "type": "object", "required": ["id", "label", "priority"], "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "priority": { "type": "string" } } }, "default": [{ "id": "residents", "label": "Residents", "priority": "Reliable access" }, { "id": "government", "label": "Government", "priority": "Sustainable public spending" }] }
+        },
+        "required": ["policyQuestion", "options", "criteria", "stakeholders"],
+        "default": { "policyQuestion": "Which policy best balances access, cost, and long-term effects?", "options": [{ "id": "option-a", "label": "Targeted intervention", "summary": "Direct resources to the groups with greatest need." }, { "id": "option-b", "label": "Universal intervention", "summary": "Provide the same baseline support to everyone." }], "criteria": [{ "id": "access", "label": "Access", "importance": 5 }, { "id": "cost", "label": "Public cost", "importance": 3 }, { "id": "durability", "label": "Long-term durability", "importance": 4 }], "stakeholders": [{ "id": "residents", "label": "Residents", "priority": "Reliable access" }, { "id": "government", "label": "Government", "priority": "Sustainable public spending" }] }
+      },
+      "patchHints": [
+        { "en": "Prioritise equity increases the importance of the relevant criterion rather than deleting other criteria.", "zh-CN": "“更重视公平”提高相关 criterion 的 importance，不删除其他标准。" },
+        { "en": "Consider another group appends one stakeholder with a stated priority.", "zh-CN": "“再考虑一个群体”增加一个带明确 priority 的 stakeholder。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Live policy forecasting, monetary valuation, and legal advice require specialized models and sourced data.", "zh-CN": "实时政策预测、货币估值和法律建议需要专门模型与有来源的数据。" }
+      ],
+      "examplePrompts": [
+        { "en": "Compare targeted and universal housing subsidies.", "zh-CN": "比较定向住房补贴和普惠住房补贴。" },
+        { "en": "Show how the preferred option changes when equity matters more than cost.", "zh-CN": "展示当公平比成本更重要时，偏好方案如何变化。" }
+      ]
+    },
+    {
+      "componentId": "geography.climate-comparison",
+      "version": 1,
+      "name": { "en": "Climate profile comparison", "zh-CN": "气候特征比较" },
+      "catalogDescription": { "en": "Compare monthly temperature and precipitation profiles for two or three places.", "zh-CN": "比较两到三个地点的月度气温与降水特征。" },
+      "teachingPurpose": { "en": "Connect seasonal patterns to latitude, altitude, and maritime or continental influence.", "zh-CN": "把季节模式与纬度、海拔及海洋性或大陆性影响联系起来。" },
+      "primaryAction": "compare",
+      "disciplineTags": ["geography", "environmental-studies", "earth-science"],
+      "capabilityTags": ["climate-profile", "seasonality", "place-comparison"],
+      "implementation": { "status": "implemented", "rendererKey": "climateComparison" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "places": { "type": "array", "minItems": 2, "maxItems": 3, "items": { "type": "object", "required": ["name", "latitudeDeg", "elevationM", "monthlyTemperatureC", "monthlyPrecipitationMm"], "properties": { "name": { "type": "string" }, "latitudeDeg": { "type": "number", "minimum": -90, "maximum": 90 }, "elevationM": { "type": "number", "minimum": -500, "maximum": 9000 }, "monthlyTemperatureC": { "type": "array", "minItems": 12, "maxItems": 12, "items": { "type": "number" } }, "monthlyPrecipitationMm": { "type": "array", "minItems": 12, "maxItems": 12, "items": { "type": "number" } } } }, "default": [{ "name": "Coastal place", "latitudeDeg": 1, "elevationM": 15, "monthlyTemperatureC": [27, 27, 28, 28, 28, 28, 28, 28, 28, 28, 27, 27], "monthlyPrecipitationMm": [240, 170, 190, 180, 170, 160, 150, 160, 180, 200, 250, 260] }, { "name": "Continental place", "latitudeDeg": 40, "elevationM": 300, "monthlyTemperatureC": [-2, 1, 7, 14, 20, 25, 28, 27, 22, 15, 7, 1], "monthlyPrecipitationMm": [25, 28, 35, 45, 55, 65, 70, 60, 48, 38, 30, 26] }] },
+          "comparisonFocus": { "type": "string", "enum": ["temperature-range", "precipitation-seasonality", "hemisphere", "continentality"], "default": "continentality" }
+        },
+        "required": ["places", "comparisonFocus"],
+        "default": { "places": [{ "name": "Coastal place", "latitudeDeg": 1, "elevationM": 15, "monthlyTemperatureC": [27, 27, 28, 28, 28, 28, 28, 28, 28, 28, 27, 27], "monthlyPrecipitationMm": [240, 170, 190, 180, 170, 160, 150, 160, 180, 200, 250, 260] }, { "name": "Continental place", "latitudeDeg": 40, "elevationM": 300, "monthlyTemperatureC": [-2, 1, 7, 14, 20, 25, 28, 27, 22, 15, 7, 1], "monthlyPrecipitationMm": [25, 28, 35, 45, 55, 65, 70, 60, 48, 38, 30, 26] }], "comparisonFocus": "continentality" }
+      },
+      "patchHints": [
+        { "en": "Compare rainfall seasonality changes comparisonFocus without replacing the place data.", "zh-CN": "“比较降水季节性”修改 comparisonFocus，不替换地点数据。" },
+        { "en": "Add a mountain location appends one place with elevation and twelve monthly readings.", "zh-CN": "“加入一个高山地点”增加带海拔和十二个月数据的 place。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Forecasting, live weather, and gridded geospatial analysis require sourced external data.", "zh-CN": "气候预测、实时天气和网格化地理分析需要有来源的外部数据。" }
+      ],
+      "examplePrompts": [
+        { "en": "Compare the climate profiles of Singapore and Beijing.", "zh-CN": "比较新加坡和北京的气候特征。" },
+        { "en": "Explain which place has stronger continentality.", "zh-CN": "解释哪个地点的大陆性更强。" }
+      ]
+    },
+    {
+      "componentId": "arts.color-harmony",
+      "version": 1,
+      "name": { "en": "Color harmony", "zh-CN": "色彩和声" },
+      "catalogDescription": { "en": "Explore complementary, analogous, and triadic relationships on a color wheel.", "zh-CN": "在色轮上探索互补、类似与三角色彩关系。" },
+      "teachingPurpose": { "en": "Connect hue relationships to contrast, cohesion, and visual emphasis.", "zh-CN": "理解色相关系如何影响对比、统一与视觉强调。" },
+      "primaryAction": "adjust",
+      "disciplineTags": ["arts", "design", "media-studies"],
+      "capabilityTags": ["color-theory", "harmony", "contrast"],
+      "implementation": { "status": "implemented", "rendererKey": "colorHarmony" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "baseHueDeg": { "type": "number", "minimum": 0, "maximum": 359, "default": 30 },
+          "harmony": { "type": "string", "enum": ["complementary", "analogous", "triadic"], "default": "complementary" },
+          "saturationPct": { "type": "number", "minimum": 10, "maximum": 100, "default": 70 },
+          "lightnessPct": { "type": "number", "minimum": 15, "maximum": 85, "default": 55 }
+        },
+        "required": ["baseHueDeg", "harmony", "saturationPct", "lightnessPct"],
+        "default": { "baseHueDeg": 30, "harmony": "complementary", "saturationPct": 70, "lightnessPct": 55 }
+      },
+      "patchHints": [
+        { "en": "Make it more muted decreases saturationPct.", "zh-CN": "“更柔和一些”降低 saturationPct。" },
+        { "en": "Try a triadic palette changes harmony without changing the base hue.", "zh-CN": "“试试三角色”只把 harmony 改为 triadic，不改变基础色相。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Pigment mixing, color-management workflows, and artwork-specific image analysis require dedicated tools.", "zh-CN": "颜料混色、色彩管理流程和具体作品图像分析需要专用工具。" }
+      ],
+      "examplePrompts": [
+        { "en": "Show a complementary palette based on orange.", "zh-CN": "展示以橙色为基础的互补色方案。" },
+        { "en": "Make the palette less saturated and switch to analogous colors.", "zh-CN": "降低饱和度并换成类似色。" }
+      ]
+    },
+    {
+      "componentId": "music.rhythm-pattern",
+      "version": 1,
+      "name": { "en": "Rhythm pattern", "zh-CN": "节奏型探索" },
+      "catalogDescription": { "en": "Build and play a bounded rhythm pattern with meter, subdivision, accents, and rests.", "zh-CN": "用拍号、细分、重音与休止构建并播放有限节奏型。" },
+      "teachingPurpose": { "en": "Relate notation and accent structure to heard rhythmic grouping.", "zh-CN": "把节奏记号、重音结构与听到的节拍分组联系起来。" },
+      "primaryAction": "construct",
+      "disciplineTags": ["music", "performing-arts"],
+      "capabilityTags": ["meter", "rhythm-grid", "auditory-playback"],
+      "implementation": { "status": "implemented", "rendererKey": "rhythmPattern" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "timeSignature": { "type": "string", "enum": ["2/4", "3/4", "4/4", "6/8"], "default": "4/4" },
+          "tempoBpm": { "type": "integer", "minimum": 40, "maximum": 200, "default": 96 },
+          "subdivision": { "type": "string", "enum": ["quarter", "eighth", "sixteenth"], "default": "eighth" },
+          "steps": { "type": "array", "minItems": 4, "maxItems": 32, "items": { "type": "string", "enum": ["accent", "hit", "rest"] }, "default": ["accent", "rest", "hit", "rest", "hit", "rest", "hit", "rest"] }
+        },
+        "required": ["timeSignature", "tempoBpm", "subdivision", "steps"],
+        "default": { "timeSignature": "4/4", "tempoBpm": 96, "subdivision": "eighth", "steps": ["accent", "rest", "hit", "rest", "hit", "rest", "hit", "rest"] }
+      },
+      "patchHints": [
+        { "en": "Make it faster increases tempoBpm by about 20%.", "zh-CN": "“更快一点”把 tempoBpm 提高约 20%。" },
+        { "en": "Add syncopation changes selected hits and accents while preserving meter.", "zh-CN": "“加入切分”调整部分 hit 与 accent，同时保留拍号。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Full notation, pitched harmony, recorded audio, and ensemble timing require dedicated music tools.", "zh-CN": "完整乐谱、有音高的和声、录音和合奏时序需要专用音乐工具。" }
+      ],
+      "examplePrompts": [
+        { "en": "Build a syncopated pattern in 4/4 at 100 BPM.", "zh-CN": "构建一个 100 BPM、4/4 拍的切分节奏。" },
+        { "en": "Switch this rhythm to 6/8 and slow it down.", "zh-CN": "把这个节奏换成 6/8 拍并放慢。" }
+      ]
+    },
+    {
+      "componentId": "psychology.experiment-design",
+      "version": 1,
+      "name": { "en": "Experiment design", "zh-CN": "实验设计" },
+      "catalogDescription": { "en": "Construct a controlled study from hypothesis, variables, controls, groups, and sample size.", "zh-CN": "用假设、变量、控制条件、分组和样本量构建受控研究。" },
+      "teachingPurpose": { "en": "Separate causal design choices from conclusions and identify confounds before interpreting results.", "zh-CN": "区分因果设计与结论，并在解释结果前识别混杂因素。" },
+      "primaryAction": "construct",
+      "disciplineTags": ["psychology", "social-science", "education", "health", "research-methods"],
+      "capabilityTags": ["experimental-design", "variables", "confound-control"],
+      "implementation": { "status": "implemented", "rendererKey": "experimentDesign" },
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hypothesis": { "type": "string", "maxLength": 240, "default": "Changing the independent variable affects the measured outcome." },
+          "independentVariable": { "type": "string", "maxLength": 120, "default": "Study condition" },
+          "dependentVariable": { "type": "string", "maxLength": 120, "default": "Measured outcome" },
+          "controlVariables": { "type": "array", "minItems": 1, "maxItems": 8, "items": { "type": "string" }, "default": ["Testing time", "Instructions"] },
+          "groups": { "type": "array", "minItems": 2, "maxItems": 5, "items": { "type": "object", "required": ["label", "condition"], "properties": { "label": { "type": "string" }, "condition": { "type": "string" } } }, "default": [{ "label": "Control group", "condition": "Baseline condition" }, { "label": "Treatment group", "condition": "Changed independent variable" }] },
+          "sampleSize": { "type": "integer", "minimum": 4, "maximum": 1000, "default": 40 }
+        },
+        "required": ["hypothesis", "independentVariable", "dependentVariable", "controlVariables", "groups", "sampleSize"],
+        "default": { "hypothesis": "Changing the independent variable affects the measured outcome.", "independentVariable": "Study condition", "dependentVariable": "Measured outcome", "controlVariables": ["Testing time", "Instructions"], "groups": [{ "label": "Control group", "condition": "Baseline condition" }, { "label": "Treatment group", "condition": "Changed independent variable" }], "sampleSize": 40 }
+      },
+      "patchHints": [
+        { "en": "Control for age appends age to controlVariables instead of changing the hypothesis.", "zh-CN": "“控制年龄影响”把年龄加入 controlVariables，不修改 hypothesis。" },
+        { "en": "Use a larger sample increases sampleSize within the supported range.", "zh-CN": "“扩大样本”在支持范围内增加 sampleSize。" }
+      ],
+      "fallbackConditions": [
+        { "en": "Clinical protocols, ethics approval, power analysis, and real participant data require specialist workflows.", "zh-CN": "临床方案、伦理审批、功效分析和真实受试者数据需要专业流程。" }
+      ],
+      "examplePrompts": [
+        { "en": "Design an experiment testing whether background music affects recall.", "zh-CN": "设计一个检验背景音乐是否影响记忆的实验。" },
+        { "en": "Show the confounds in this sleep and exam-performance study.", "zh-CN": "展示这项睡眠与考试成绩研究中的混杂因素。" }
+      ]
+    }
+  ]
+}
