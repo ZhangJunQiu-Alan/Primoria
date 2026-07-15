@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { analyzeNarrativeArc, DEFAULT_NARRATIVE_ARC_CONFIG, NarrativeArcConfigSchema, NarrativeArcPatchSchema } from "../src/lib/qa/components/narrative-arc";
+import { analyzeNarrativeArc, DEFAULT_NARRATIVE_ARC_CONFIG, NarrativeArcConfigSchema, NarrativeArcPatchSchema } from "../src/lib/interactive/components/narrative-arc";
 
 describe("narrative arc component", () => {
   it("validates defaults, patches, and tension bounds", () => {

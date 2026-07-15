@@ -14,6 +14,10 @@
       "types": "./src/artifacts/widget-dependencies.d.mts",
       "default": "./src/artifacts/widget-dependencies.mjs"
     },
+    "./artifacts/interactive-catalog": {
+      "types": "./src/artifacts/interactive-catalog.d.mts",
+      "default": "./src/artifacts/interactive-catalog.mjs"
+    },
     "./chat": "./src/chat/index.ts",
     "./stream": "./src/stream/index.ts",
     "./visual-style": {

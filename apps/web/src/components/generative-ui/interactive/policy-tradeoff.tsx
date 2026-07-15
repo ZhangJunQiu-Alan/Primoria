@@ -1,6 +1,6 @@
 "use client";
 
-import { derivePolicyTradeoff, type PolicyTradeoffConfig } from "@/lib/qa/components/policy-tradeoff";
+import { derivePolicyTradeoff, type PolicyTradeoffConfig } from "@/lib/interactive/components/policy-tradeoff";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SliderRow } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

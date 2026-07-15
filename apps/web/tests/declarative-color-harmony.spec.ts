@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ColorHarmonyConfigSchema, ColorHarmonyPatchSchema, DEFAULT_COLOR_HARMONY_CONFIG, deriveColorHarmony } from "../src/lib/qa/components/color-harmony";
+import { ColorHarmonyConfigSchema, ColorHarmonyPatchSchema, DEFAULT_COLOR_HARMONY_CONFIG, deriveColorHarmony } from "../src/lib/interactive/components/color-harmony";
 
 describe("color harmony component", () => {
   it("validates defaults, patches, and hue bounds", () => {

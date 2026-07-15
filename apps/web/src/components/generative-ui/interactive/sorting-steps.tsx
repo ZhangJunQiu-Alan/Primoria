@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { traceSort, type SortingStepsConfig } from "@/lib/qa/components/sorting-steps";
+import { traceSort, type SortingStepsConfig } from "@/lib/interactive/components/sorting-steps";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SegmentedControl } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

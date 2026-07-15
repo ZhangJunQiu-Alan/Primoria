@@ -1,6 +1,6 @@
 "use client";
 
-import { analyzeSentenceStructure, type SentenceStructureConfig } from "@/lib/qa/components/sentence-structure";
+import { analyzeSentenceStructure, type SentenceStructureConfig } from "@/lib/interactive/components/sentence-structure";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SegmentedControl } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

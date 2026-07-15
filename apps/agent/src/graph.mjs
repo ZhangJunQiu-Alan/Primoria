@@ -29,6 +29,7 @@ import {
   renderWaveTool,
 } from "./tools/renderers.mjs";
 import { getCourseCardTool, positionLearningGoalTool } from "./tools/course.mjs";
+import { openInteractiveComponentTool } from "./tools/interactive.mjs";
 import { renderChatQuizTool } from "./tools/quiz.mjs";
 
 /** @param {{ checkpointer?: any }} [options] */
@@ -52,6 +53,7 @@ export function createPrimoriaGraph({ checkpointer = new MemorySaver() } = {}) {
       renderMoleculeTool,
       stemRendererTool,
       positionLearningGoalTool,
+      openInteractiveComponentTool,
     ],
     systemPrompt: SYSTEM_PROMPT,
     subagents,

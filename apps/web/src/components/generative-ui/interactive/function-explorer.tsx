@@ -1,6 +1,6 @@
 "use client";
 
-import { evaluateBaseFunction, evaluateTransformedFunction, type FunctionExplorerConfig } from "@/lib/qa/components/function-explorer";
+import { evaluateBaseFunction, evaluateTransformedFunction, type FunctionExplorerConfig } from "@/lib/interactive/components/function-explorer";
 import { WIDGET_COLORS } from "./palette";
 import { SegmentedControl, SliderRow } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

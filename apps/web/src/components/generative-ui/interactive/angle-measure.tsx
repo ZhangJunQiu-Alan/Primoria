@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type PointerEvent as ReactPointerEvent } from "react";
-import { classifyAngle, type AngleMeasureConfig } from "@/lib/qa/components/angle-measure";
+import { classifyAngle, type AngleMeasureConfig } from "@/lib/interactive/components/angle-measure";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SliderRow } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

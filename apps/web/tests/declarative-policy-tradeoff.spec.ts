@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_POLICY_TRADEOFF_CONFIG, derivePolicyTradeoff, PolicyTradeoffConfigSchema, PolicyTradeoffPatchSchema } from "../src/lib/qa/components/policy-tradeoff";
+import { DEFAULT_POLICY_TRADEOFF_CONFIG, derivePolicyTradeoff, PolicyTradeoffConfigSchema, PolicyTradeoffPatchSchema } from "../src/lib/interactive/components/policy-tradeoff";
 
 describe("policy tradeoff component", () => {
   it("validates defaults, patches, and importance bounds", () => {

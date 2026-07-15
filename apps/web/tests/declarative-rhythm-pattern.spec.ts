@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { analyzeRhythmPattern, DEFAULT_RHYTHM_PATTERN_CONFIG, RhythmPatternConfigSchema, RhythmPatternPatchSchema } from "../src/lib/qa/components/rhythm-pattern";
+import { analyzeRhythmPattern, DEFAULT_RHYTHM_PATTERN_CONFIG, RhythmPatternConfigSchema, RhythmPatternPatchSchema } from "../src/lib/interactive/components/rhythm-pattern";
 
 describe("rhythm pattern component", () => {
   it("validates defaults, patches, and tempo bounds", () => {

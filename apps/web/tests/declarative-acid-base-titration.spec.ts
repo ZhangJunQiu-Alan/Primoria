@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { AcidBaseTitrationConfigSchema, AcidBaseTitrationPatchSchema, computeTitration, DEFAULT_ACID_BASE_TITRATION_CONFIG } from "../src/lib/qa/components/acid-base-titration";
+import { AcidBaseTitrationConfigSchema, AcidBaseTitrationPatchSchema, computeTitration, DEFAULT_ACID_BASE_TITRATION_CONFIG } from "../src/lib/interactive/components/acid-base-titration";
 
 describe("acid-base titration component", () => {
   it("has bounded defaults and patches", () => {

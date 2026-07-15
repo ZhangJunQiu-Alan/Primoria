@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { segmentAnnotatedPassage, type CloseReadingConfig } from "@/lib/qa/components/close-reading";
+import { segmentAnnotatedPassage, type CloseReadingConfig } from "@/lib/interactive/components/close-reading";
 import { WIDGET_COLORS } from "./palette";
 
 const FOCUS_OPTIONS = [

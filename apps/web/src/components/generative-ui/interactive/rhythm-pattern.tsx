@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { analyzeRhythmPattern, type RhythmPatternConfig } from "@/lib/qa/components/rhythm-pattern";
+import { analyzeRhythmPattern, type RhythmPatternConfig } from "@/lib/interactive/components/rhythm-pattern";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SegmentedControl, SliderRow } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

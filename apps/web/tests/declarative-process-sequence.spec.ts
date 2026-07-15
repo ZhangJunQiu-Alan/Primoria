@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_PROCESS_SEQUENCE_CONFIG, deriveProcessSequence, ProcessSequenceConfigSchema, ProcessSequencePatchSchema } from "../src/lib/qa/components/process-sequence";
+import { DEFAULT_PROCESS_SEQUENCE_CONFIG, deriveProcessSequence, ProcessSequenceConfigSchema, ProcessSequencePatchSchema } from "../src/lib/interactive/components/process-sequence";
 
 describe("process sequence component", () => {
   it("validates defaults, patches, and minimum steps", () => {

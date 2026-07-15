@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { AngleMeasureConfigSchema, AngleMeasurePatchSchema, classifyAngle, DEFAULT_ANGLE_MEASURE_CONFIG } from "../src/lib/qa/components/angle-measure";
+import { AngleMeasureConfigSchema, AngleMeasurePatchSchema, classifyAngle, DEFAULT_ANGLE_MEASURE_CONFIG } from "../src/lib/interactive/components/angle-measure";
 
 describe("angle measure component", () => {
   it("validates defaults, patches, and bounds", () => {

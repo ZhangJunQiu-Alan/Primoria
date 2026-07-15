@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { describeSuperposition, sampleWave, type WaveSuperpositionConfig } from "@/lib/qa/components/wave-superposition";
+import { describeSuperposition, sampleWave, type WaveSuperpositionConfig } from "@/lib/interactive/components/wave-superposition";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SliderRow } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

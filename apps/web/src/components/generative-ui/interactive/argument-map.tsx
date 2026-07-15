@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import { analyzeArgumentMap, type ArgumentMapConfig } from "@/lib/qa/components/argument-map";
+import { analyzeArgumentMap, type ArgumentMapConfig } from "@/lib/interactive/components/argument-map";
 import { WIDGET_COLORS } from "./palette";
 
 const kindLabels = { reason: "理由", evidence: "证据", objection: "反对意见", reply: "回应" } as const;

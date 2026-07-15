@@ -4,7 +4,7 @@ import {
   ArgumentMapPatchSchema,
   DEFAULT_ARGUMENT_MAP_CONFIG,
   analyzeArgumentMap,
-} from "../src/lib/qa/components/argument-map";
+} from "../src/lib/interactive/components/argument-map";
 
 describe("analyzeArgumentMap", () => {
   it("groups statements and counts semantic relations", () => {

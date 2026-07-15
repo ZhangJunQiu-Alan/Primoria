@@ -4,7 +4,7 @@ import {
   TimelineCausalityConfigSchema,
   TimelineCausalityPatchSchema,
   deriveTimelineCausality,
-} from "../src/lib/qa/components/timeline-causality";
+} from "../src/lib/interactive/components/timeline-causality";
 
 describe("deriveTimelineCausality", () => {
   it("derives incoming and outgoing causal counts in event order", () => {

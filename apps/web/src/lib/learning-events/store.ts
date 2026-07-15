@@ -79,6 +79,19 @@ export type LearningEvent =
       id?: string;
       graphId: string;
       sourceQuery: string;
+    }
+  | {
+      // Visualization telemetry: one row per rendered (or failed) visualization.
+      // This is the expansion signal for the interactive-component catalog —
+      // `sandbox` rows are catalog misses, `interactive` rows are catalog hits.
+      type: "visualization.render";
+      ownerId: string;
+      id?: string;
+      source: "sandbox" | "interactive";
+      topic: string;
+      componentId?: string | null;
+      status: "rendered" | "script_error" | "config_invalid" | "api_error";
+      detail?: string | null;
     };
 
 type LearningEventRow = {
@@ -173,6 +186,17 @@ export function toRow(event: LearningEvent): LearningEventRow {
         ...base,
         graphId: event.graphId,
         payload: { selected: event.graphId, source_query: event.sourceQuery },
+      };
+    case "visualization.render":
+      return {
+        ...base,
+        payload: {
+          source: event.source,
+          topic: event.topic,
+          status: event.status,
+          ...(event.componentId ? { component_id: event.componentId } : {}),
+          ...(event.detail ? { detail: event.detail } : {}),
+        },
       };
   }
 }

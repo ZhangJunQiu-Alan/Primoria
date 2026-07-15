@@ -18,6 +18,7 @@ import {
   type WidgetDependency as RuntimeWidgetDependency,
 } from "@/lib/ai/widget-dependencies";
 import { WidgetDependencySchema } from "@primoria/contracts/artifacts/schemas";
+import { reportVisualizationEvent } from "@/lib/telemetry/visualization-client";
 
 export const WidgetRendererProps = z.object({
   title: z.string(),
@@ -231,6 +232,7 @@ window.openLink = function(url) {
 function showWidgetError(message) {
   var content = document.getElementById('content');
   if (!content || content.querySelector('[data-primoria-widget-error]')) return;
+  postParentMessage({ type: 'primoria-widget-status', status: 'script_error', detail: String(message || '').slice(0, 300) });
   var box = document.createElement('div');
   box.setAttribute('data-primoria-widget-error', '1');
   box.style.cssText = 'margin:12px 0;padding:10px 12px;border:1px solid #d76e52;border-radius:12px;background:#ffede6;color:#71331f;font:13px/1.45 var(--font-sans,system-ui);';
@@ -280,6 +282,11 @@ function notifyWidgetReady() {
   try { document.dispatchEvent(new Event('DOMContentLoaded', { bubbles: true, cancelable: true })); } catch (_) {}
   try { window.dispatchEvent(new Event('load')); } catch (_) {}
   try { reportHeight(); } catch (_) {}
+  try {
+    if (!document.querySelector('[data-primoria-widget-error]')) {
+      postParentMessage({ type: 'primoria-widget-status', status: 'rendered' });
+    }
+  } catch (_) {}
 }
 
 var COMMON_DEPENDENCIES = ${JSON.stringify(WIDGET_DEPENDENCY_ALLOWLIST)};
@@ -699,6 +706,7 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
   const [dependencyPreloadResult, setDependencyPreloadResult] = useState<WidgetDependencyPreloadSnapshot | null>(null);
   const settledTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reportedStatusesRef = useRef(new Set<string>());
   const normalizedDependencies = useMemo(() => normalizeWidgetDependencies(dependencies), [dependencies]);
   const dependencyPreloadKey = useMemo(
     () => normalizedDependencies.map((dep) => `${dep.kind ?? "script"}:${dep.url}`).join("|"),
@@ -736,12 +744,26 @@ export function WidgetRenderer({ html = "", title, dependencies, onSendPrompt, v
         return;
       }
 
+      if (event.data.type === "primoria-widget-status" && variant !== "course") {
+        const status = event.data.status === "rendered" ? "rendered" : "script_error";
+        if (!reportedStatusesRef.current.has(status)) {
+          reportedStatusesRef.current.add(status);
+          reportVisualizationEvent({
+            source: "sandbox",
+            topic: title,
+            status,
+            detail: typeof event.data.detail === "string" ? event.data.detail.slice(0, 300) : null,
+          });
+        }
+        return;
+      }
+
       if (event.data.type === "primoria-open-link") {
         const url = normalizeWidgetExternalUrl(event.data.url);
         if (url) window.open(url, "_blank", "noopener,noreferrer");
       }
     },
-    [onSendPrompt],
+    [onSendPrompt, title, variant],
   );
 
   useEffect(() => {

@@ -8,11 +8,13 @@ import { StemRenderer, StemRendererProps } from "@/components/generative-ui/stem
 import { PlanCard } from "@/components/generative-ui/plan-card";
 import { ToolCard } from "@/components/generative-ui/tool-card";
 import { PlanProgressCard } from "@/components/tutor/plan-progress-card";
+import { InteractiveComponentCard } from "@/components/generative-ui/interactive-component-card";
 import { normalizeWidgetHtml } from "@/lib/ai/widget-html";
 import { setTodos } from "@/lib/todos-store";
 import { CourseCardArtifactSchema, TutorArtifactSchema } from "@primoria/contracts/artifacts";
 import {
   GetCourseCardArgsSchema,
+  OpenInteractiveComponentArgsSchema,
   PlanVisualizationArgsSchema,
   PositionLearningGoalArgsSchema,
   Render3dSceneArgsSchema,
@@ -1027,6 +1029,17 @@ export function usePrimoriaGenerativeUI() {
     name: "position_learning_goal",
     parameters: PositionLearningGoalArgsSchema,
     render: ({ parameters }) => <LearningGoalCard query={parameters?.query} graphId={parameters?.graph_id} />,
+  });
+
+  useRenderTool({
+    name: "open_interactive_component",
+    parameters: OpenInteractiveComponentArgsSchema,
+    render: ({ parameters }) =>
+      parameters?.component_id && parameters?.request ? (
+        <InteractiveComponentCard componentId={parameters.component_id} request={parameters.request} />
+      ) : (
+        <></>
+      ),
   });
 
   // Backward-compatible: older local runs/messages may still carry generate_course.

@@ -1,3 +1,4 @@
+import { formatInteractiveCatalogLines } from "@primoria/contracts/artifacts/interactive-catalog";
 import { courseBlocks } from "./course-types.mjs";
 
 /**
@@ -66,6 +67,7 @@ Before choosing a tool or writing an answer, respond like a transparent learning
 You have access to:
 - write_todos: lay out a short plan visible to the learner (call it first when a request needs multiple steps)
 - task: delegate a focused job to a subagent (concept-agent or visualization-agent)
+- open_interactive_component: open one pedagogical interactive component from the catalog (see INTERACTIVE COMPONENT branch)
 - plan_visualization / widgetRenderer: visualization tools
 - position_learning_goal: surface a learning goal so the UI can locate it in the knowledge graph and build a course. This is the ONLY way a course is created.
 - render_chat_quiz: render a temporary interactive quiz directly inside chat. It never creates a course block and never updates mastery.
@@ -77,7 +79,15 @@ COURSE branch has highest priority only when the learner is in the main tutor wo
 3. Stop. Never call task, plan_visualization, or widgetRenderer in COURSE branch, and never attempt to generate a course by any other means.
 In main tutor mode, if the learner asks for a quiz / test / practice questions / 测验 / 测试 / 练习题 / 考考我 / 出题 / 自测 on a topic, enter COURSE branch and call position_learning_goal for that topic. If they are already inside COURSE DETAIL MODE, call render_chat_quiz instead so the quiz appears inside the chat and does not create a course block.
 
-CHART branch (if COURSE does not match): user asks for chart / graph / data plot / bar chart / line chart / scatter / pie / radar / histogram / heatmap / treemap.
+INTERACTIVE COMPONENT branch (if COURSE does not match): the learner asks for an interactive demonstration, exploration, or adjustable teaching scene that matches ONE of these catalog components (componentId(名称):描述):
+${formatInteractiveCatalogLines()}
+1. Call open_interactive_component with the matching component_id and the learner's request verbatim (in their language) as \`request\`. The UI card generates the concrete parameters and renders the component — you never see or set parameter values.
+2. In the same turn, tell the learner in one short warm sentence what interactive scene you are opening. Do NOT invent parameter values or describe the result.
+3. Stop.
+When the learner later asks to ADJUST the open component (change a parameter, switch a type, move an object), call open_interactive_component again with the SAME component_id and the adjustment request verbatim.
+This branch outranks every render branch below: when a catalog component fits, prefer it over render_chart / render_algorithm / render_wave / render_math_explorer and plan_visualization. If NO catalog component fits the request, continue to the branches below — they are the intended fallback for off-catalog visualizations.
+
+CHART branch (if COURSE and INTERACTIVE COMPONENT do not match): user asks for chart / graph / data plot / bar chart / line chart / scatter / pie / radar / histogram / heatmap / treemap.
   Call render_chart with a complete ECharts option JSON. Stop immediately. Do NOT call plan_visualization.
 
 DIAGRAM branch (if COURSE and CHART do not match): user asks for flowchart / sequence diagram / architecture diagram / ER diagram / class diagram / mind map / simple state machine / process flow with clear linear or hierarchical structure.

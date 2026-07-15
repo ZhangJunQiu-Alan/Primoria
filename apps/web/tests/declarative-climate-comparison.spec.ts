@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ClimateComparisonConfigSchema, ClimateComparisonPatchSchema, DEFAULT_CLIMATE_COMPARISON_CONFIG, summarizeClimate } from "../src/lib/qa/components/climate-comparison";
+import { ClimateComparisonConfigSchema, ClimateComparisonPatchSchema, DEFAULT_CLIMATE_COMPARISON_CONFIG, summarizeClimate } from "../src/lib/interactive/components/climate-comparison";
 
 describe("climate comparison component", () => {
   it("validates defaults, patches, and twelve-month inputs", () => {

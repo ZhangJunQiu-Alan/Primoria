@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_FUNCTION_EXPLORER_CONFIG, evaluateTransformedFunction, FunctionExplorerConfigSchema, FunctionExplorerPatchSchema } from "../src/lib/qa/components/function-explorer";
+import { DEFAULT_FUNCTION_EXPLORER_CONFIG, evaluateTransformedFunction, FunctionExplorerConfigSchema, FunctionExplorerPatchSchema } from "../src/lib/interactive/components/function-explorer";
 
 describe("function explorer component", () => {
   it("validates defaults, patches, and bounds", () => {

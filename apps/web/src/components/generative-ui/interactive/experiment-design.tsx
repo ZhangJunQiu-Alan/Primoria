@@ -1,6 +1,6 @@
 "use client";
 
-import { summarizeExperimentDesign, type ExperimentDesignConfig } from "@/lib/qa/components/experiment-design";
+import { summarizeExperimentDesign, type ExperimentDesignConfig } from "@/lib/interactive/components/experiment-design";
 import { WIDGET_COLORS } from "./palette";
 import { Readout, SliderRow } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";

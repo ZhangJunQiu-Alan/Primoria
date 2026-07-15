@@ -1,8 +1,8 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { WIDGETS } from "../src/app/qa/declarative-lens/widgets";
-import { COMPONENT_REGISTRY } from "../src/lib/qa/components/registry";
+import { WIDGETS } from "../src/components/generative-ui/interactive";
+import { COMPONENT_REGISTRY } from "../src/lib/interactive/components/registry";
 
 describe("visualization widget registry", () => {
   it("has one renderer for every implemented component and no orphan renderers", () => {

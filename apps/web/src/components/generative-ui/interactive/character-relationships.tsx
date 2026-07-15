@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { deriveCharacterRelationships, type CharacterRelationshipsConfig } from "@/lib/qa/components/character-relationships";
+import { deriveCharacterRelationships, type CharacterRelationshipsConfig } from "@/lib/interactive/components/character-relationships";
 import { WIDGET_COLORS } from "./palette";
 import { Readout } from "./primitives/controls";
 import { WidgetShell } from "./primitives/widget-shell";
