@@ -17,6 +17,27 @@ and starts `src/server.mjs` with Node watch mode on `http://localhost:2024`.
 
 The Next.js app uses `PrimoriaHttpAgent` to send AG-UI input to `POST /agent`. Runs, emitted events, leases, cancellation state, and LangGraph checkpoints are persisted in PostgreSQL's `agent_runtime` schema.
 
+## Runtime Boundary
+
+`apps/agent` owns Tutor orchestration, tool selection, durable Agent runs, and
+streamed AG-UI events. Product state remains Web-owned: course creation, KG
+positioning, interactive-component configs, onboarding, mastery, learner facts,
+and background-job writes happen in `apps/web`.
+
+The main tool groups are:
+
+- `position_learning_goal` for the Web-owned course-creation flow.
+- `open_interactive_component` for a catalog component. It returns only a
+  stateless signal; the browser/Web generate and validate the config.
+- `render_chat_quiz` for a temporary chat quiz.
+- specialized structured renderers for charts, diagrams, simulations,
+  algorithms, math, 3D, wave, graph, and molecule views.
+- `plan_visualization` followed immediately by `widgetRenderer` or
+  `stemRenderer` for off-catalog custom widgets.
+
+The catalog-first visualization contract is documented in
+[`../../docs/交互组件规范.md`](../../docs/交互组件规范.md).
+
 ## Required Environment
 
 The agent needs the same model-provider settings as the web app:
@@ -38,6 +59,11 @@ ANTHROPIC_MODEL=your-model
 ```
 
 `DATABASE_URL` is required. Agent-owned runtime tables and checkpoints use the isolated `agent_runtime` schema; bounded course-card reads still use App tables. Course creation remains Web-owned.
+
+Provider credentials are server-owned; there is no client BYOK path. The
+Agent uses its configured default model. Web-only stage-1 utilities may use
+`AI_MODEL_FAST`, while content-rich interactive configuration may use
+`AI_MODEL_CONTENT`.
 
 For local development, use the same Docker Compose database as the web app:
 

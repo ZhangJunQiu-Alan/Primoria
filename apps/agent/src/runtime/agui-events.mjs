@@ -44,7 +44,13 @@ export function createAguiEventMapper(emit) {
         if (!toolChunk?.id) continue;
         let tool = tools.get(toolChunk.id);
         if (!tool) {
-          tool = { id: toolChunk.id, name: toolChunk.name ?? "unknown", parentMessageId: message.id, ended: false };
+          tool = {
+            id: toolChunk.id,
+            name: toolChunk.name ?? "unknown",
+            parentMessageId: message.id,
+            argsEmitted: false,
+            ended: false,
+          };
           tools.set(tool.id, tool);
           await emit({
             type: EventType.TOOL_CALL_START,
@@ -55,6 +61,7 @@ export function createAguiEventMapper(emit) {
         }
         if (toolChunk.args) {
           await emit({ type: EventType.TOOL_CALL_ARGS, toolCallId: tool.id, delta: toolChunk.args });
+          tool.argsEmitted = true;
         }
       }
       return;
@@ -67,7 +74,13 @@ export function createAguiEventMapper(emit) {
       for (const call of output?.tool_calls ?? []) {
         let tool = tools.get(call.id);
         if (!tool) {
-          tool = { id: call.id, name: call.name, parentMessageId: message?.id ?? output?.id, ended: false };
+          tool = {
+            id: call.id,
+            name: call.name,
+            parentMessageId: message?.id ?? output?.id,
+            argsEmitted: false,
+            ended: false,
+          };
           tools.set(tool.id, tool);
           await emit({
             type: EventType.TOOL_CALL_START,
@@ -75,7 +88,10 @@ export function createAguiEventMapper(emit) {
             toolCallName: tool.name,
             parentMessageId: tool.parentMessageId,
           });
+        }
+        if (!tool.argsEmitted) {
           await emit({ type: EventType.TOOL_CALL_ARGS, toolCallId: tool.id, delta: JSON.stringify(call.args ?? {}) });
+          tool.argsEmitted = true;
         }
         if (!tool.ended) {
           await emit({ type: EventType.TOOL_CALL_END, toolCallId: tool.id });
