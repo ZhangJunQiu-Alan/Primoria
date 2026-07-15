@@ -1,18 +1,17 @@
-// Shared palette for QA declarative widgets — keeps the batch visually
-// consistent. Production integration will replace these with pine-stage theme
-// tokens; do not add per-widget ad-hoc colors.
+// Production semantic tokens with fallbacks for isolated QA rendering.
+// Widgets inherit the same pine-stage palette as the surrounding Tutor UI.
 
 export const WIDGET_COLORS = {
-  ink: "#2f2a23",
-  muted: "#6b6357",
-  line: "#d8d2c4",
-  surface: "#fff",
-  surfaceSoft: "#f7f3e9",
-  chipBg: "#f3efe4",
-  accent: "#2e6e4e",
-  accentSoft: "#e2eee6",
-  series1: "#c07a1f",
-  series2: "#3b6ea8",
-  series3: "#9a4f86",
-  warn: "#a05a1c",
+  ink: "var(--color-text-primary, #17130f)",
+  muted: "var(--color-text-secondary, #6f675f)",
+  line: "var(--color-border-tertiary, rgba(23, 19, 15, 0.12))",
+  surface: "var(--color-background-primary, #fffdf8)",
+  surfaceSoft: "var(--color-background-secondary, #f3eee7)",
+  chipBg: "var(--color-background-tertiary, #efe8dc)",
+  accent: "var(--color-text-success, #2f6b43)",
+  accentSoft: "var(--color-background-success, #eaf7ee)",
+  series1: "var(--color-text-warning, #7c560e)",
+  series2: "var(--color-text-info, #245f9f)",
+  series3: "var(--color-data-series-3, #7a4f92)",
+  warn: "var(--color-text-danger, #9d3d2d)",
 } as const;

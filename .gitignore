@@ -21,6 +21,7 @@ node_modules/
 .pnpm-home/
 .next/
 .next-*/
+apps/web/next-env.d.ts
 *.tsbuildinfo
 dist/
 build/

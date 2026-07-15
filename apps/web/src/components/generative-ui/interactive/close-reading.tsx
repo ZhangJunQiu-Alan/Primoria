@@ -1,36 +1,32 @@
 "use client";
 
 import { useState } from "react";
+import { msg } from "@/lib/i18n/client";
+import { useInteractiveT } from "./i18n";
 import { segmentAnnotatedPassage, type CloseReadingConfig } from "@/lib/interactive/components/close-reading";
 import { WIDGET_COLORS } from "./palette";
-
-const FOCUS_OPTIONS = [
-  ["diction", "措辞"],
-  ["imagery", "意象"],
-  ["syntax", "句法"],
-  ["structure", "结构"],
-  ["voice", "声音"],
-] as const;
 
 export function CloseReadingWidget({ config, onChange }: {
   config: CloseReadingConfig;
   onChange: (next: CloseReadingConfig) => void;
 }) {
   const result = segmentAnnotatedPassage(config);
+  const t = useInteractiveT().widgets;
+  const focusOptions = [["diction", t.diction], ["imagery", t.imagery], ["syntax", t.syntax], ["structure", t.structure], ["voice", t.voice]] as const;
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const fallbackIndex = config.annotations.findIndex((annotation) => annotation.focus === config.focus);
   const activeIndex = selectedIndex !== null && config.annotations[selectedIndex]?.focus === config.focus ? selectedIndex : fallbackIndex;
   const activeAnnotation = activeIndex >= 0 ? config.annotations[activeIndex] : null;
 
   return (
-    <section style={{ overflow: "hidden", border: `1px solid ${WIDGET_COLORS.line}`, borderRadius: 10, background: WIDGET_COLORS.surface }} aria-label="文本细读">
+    <section style={{ overflow: "hidden", border: `1px solid ${WIDGET_COLORS.line}`, borderRadius: 10, background: WIDGET_COLORS.surface }} aria-label={t.closeReadingAria}>
       <header style={{ padding: "12px 16px", borderBottom: `1px solid ${WIDGET_COLORS.line}`, background: WIDGET_COLORS.surfaceSoft }}>
-        <div style={{ fontSize: 13.5, fontWeight: 600 }}>文本细读 · 证据先于解释</div>
-        <div style={{ marginTop: 2, color: WIDGET_COLORS.muted, fontSize: 11.5 }}>点击高亮短语，查看“观察 → 效果”的推理链</div>
+        <div style={{ fontSize: 13.5, fontWeight: 600 }}>{t.closeReadingTitle}</div>
+        <div style={{ marginTop: 2, color: WIDGET_COLORS.muted, fontSize: 11.5 }}>{t.closeReadingSubtitle}</div>
       </header>
 
-      <div role="group" aria-label="细读维度" style={{ display: "flex", flexWrap: "wrap", gap: 7, padding: "12px 16px 0" }}>
-        {FOCUS_OPTIONS.map(([value, label]) => {
+      <div role="group" aria-label={t.closeReadingFocus} style={{ display: "flex", flexWrap: "wrap", gap: 7, padding: "12px 16px 0" }}>
+        {focusOptions.map(([value, label]) => {
           const active = config.focus === value;
           const count = config.annotations.filter((annotation) => annotation.focus === value).length;
           return (
@@ -67,17 +63,17 @@ export function CloseReadingWidget({ config, onChange }: {
           {activeAnnotation ? (
             <>
               <div style={{ color: WIDGET_COLORS.series3, fontSize: 11.5, fontWeight: 600 }}>{activeAnnotation.device}</div>
-              <div style={{ marginTop: 8, color: WIDGET_COLORS.muted, fontSize: 11.5 }}>观察</div>
+              <div style={{ marginTop: 8, color: WIDGET_COLORS.muted, fontSize: 11.5 }}>{t.observation}</div>
               <p style={{ margin: "3px 0 0", fontSize: 12.5, lineHeight: 1.5 }}>{activeAnnotation.observation}</p>
-              <div style={{ marginTop: 11, color: WIDGET_COLORS.muted, fontSize: 11.5 }}>产生的效果</div>
+              <div style={{ marginTop: 11, color: WIDGET_COLORS.muted, fontSize: 11.5 }}>{t.effect}</div>
               <p style={{ margin: "3px 0 0", fontSize: 12.5, lineHeight: 1.5 }}>{activeAnnotation.effect}</p>
             </>
-          ) : <div style={{ color: WIDGET_COLORS.muted, fontSize: 12 }}>当前维度没有标注。</div>}
+          ) : <div style={{ color: WIDGET_COLORS.muted, fontSize: 12 }}>{t.noAnnotations}</div>}
         </aside>
       </div>
       {result.missingAnnotationIndexes.length > 0 ? (
         <div style={{ padding: "0 16px 14px", color: WIDGET_COLORS.warn, fontSize: 11.5 }}>
-          {result.missingAnnotationIndexes.length} 条标注引用未在原文中找到，已安全忽略。
+          {msg(t.ignoredAnnotations, { count: result.missingAnnotationIndexes.length })}
         </div>
       ) : null}
     </section>

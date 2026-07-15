@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
+import { useInteractiveT } from "./i18n";
 import { computeLensImage, type LensImagingConfig } from "@/lib/interactive/components/lens-imaging";
 import { WIDGET_COLORS } from "./palette";
 
@@ -98,6 +99,7 @@ export function LensImagingWidget({ config, onChange }: {
   config: LensImagingConfig;
   onChange: (next: LensImagingConfig) => void;
 }) {
+  const t = useInteractiveT().widgets;
   const svgRef = useRef<SVGSVGElement | null>(null);
   const draggingRef = useRef(false);
   const image = computeLensImage(config);
@@ -176,13 +178,13 @@ export function LensImagingWidget({ config, onChange }: {
         xCm={clampedV}
         hCm={hi}
         color={image.real ? COLORS.accent : COLORS.ray3}
-        label={far ? "像(很远)" : "像"}
+        label={far ? t.distantImage : t.image}
         dashed={!image.real}
       />
     );
   }
 
-  const sizeLabel = image.none ? "" : Math.abs(image.m) > 1.02 ? "放大" : Math.abs(image.m) < 0.98 ? "缩小" : "等大";
+  const sizeLabel = image.none ? "" : Math.abs(image.m) > 1.02 ? t.enlarged : Math.abs(image.m) < 0.98 ? t.reduced : t.sameSize;
 
   return (
     <div style={{ border: `1px solid ${COLORS.line}`, borderRadius: 8, overflow: "hidden", background: COLORS.surface }}>
@@ -190,7 +192,7 @@ export function LensImagingWidget({ config, onChange }: {
         display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8,
         padding: "10px 14px", borderBottom: `1px solid ${COLORS.line}`, background: COLORS.surfaceSoft,
       }}>
-        <span style={{ fontWeight: 600, fontSize: 13.5 }}>透镜成像 · 交互演示</span>
+        <span style={{ fontWeight: 600, fontSize: 13.5 }}>{t.lensTitle}</span>
         <span style={{ fontFamily: "ui-monospace, SF Mono, Menlo, monospace", fontSize: 11, color: COLORS.muted }}>
           physics.lens-imaging
         </span>
@@ -200,7 +202,7 @@ export function LensImagingWidget({ config, onChange }: {
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="img"
-        aria-label="透镜成像光路图"
+        aria-label={t.lensAria}
         style={{ display: "block", width: "100%", height: "auto", touchAction: "none" }}
       >
         <line x1={14} y1={CY} x2={W - 14} y2={CY} stroke={COLORS.muted} strokeWidth={1} />
@@ -224,7 +226,7 @@ export function LensImagingWidget({ config, onChange }: {
 
         {image.none ? (
           <text x={CX} y={CY - 130} textAnchor="middle" fontSize={13} fill={COLORS.warn} fontWeight={600}>
-            u = f:折射光平行射出,不成像
+            {t.noImageAtFocus}
           </text>
         ) : (
           imageNode
@@ -243,29 +245,29 @@ export function LensImagingWidget({ config, onChange }: {
           }}
         >
           <rect x={ox - 16} y={Math.min(oy, CY)} width={32} height={Math.abs(CY - oy)} fill="transparent" />
-          <ArrowMarker xCm={-u} hCm={h} color={COLORS.ray1} label="物" />
+          <ArrowMarker xCm={-u} hCm={h} color={COLORS.ray1} label={t.object} />
         </g>
       </svg>
 
       <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontSize: 11.5, color: COLORS.muted, padding: "0 14px" }}>
-        <span>━ 平行光线(橙)/ 过光心(蓝)/ 过焦点(紫);虚线 = 虚像反向延长</span>
+        <span>{t.rayLegend}</span>
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "10px 14px 4px" }}>
-        <span style={roStyle}>物距 u = <b style={{ color: COLORS.ink }}>{fmt(u)} cm</b></span>
-        <span style={roStyle}>焦距 f = <b style={{ color: COLORS.ink }}>{fmt(f)} cm</b></span>
+        <span style={roStyle}>{t.objectDistance} u = <b style={{ color: COLORS.ink }}>{fmt(u)} cm</b></span>
+        <span style={roStyle}>{t.focalLength} f = <b style={{ color: COLORS.ink }}>{fmt(f)} cm</b></span>
         {image.none ? (
-          <span style={{ ...roStyle, borderColor: COLORS.warn, color: COLORS.warn }}>u = f · 不成像</span>
+          <span style={{ ...roStyle, borderColor: COLORS.warn, color: COLORS.warn }}>{t.noImageAtFocus}</span>
         ) : (
           <>
-            <span style={roStyle}>像距 v = <b style={{ color: COLORS.ink }}>{fmt(Math.abs(image.v))} cm</b></span>
-            <span style={roStyle}>放大率 |m| = <b style={{ color: COLORS.ink }}>{fmt(Math.abs(image.m))}</b></span>
+            <span style={roStyle}>{t.imageDistance} v = <b style={{ color: COLORS.ink }}>{fmt(Math.abs(image.v))} cm</b></span>
+            <span style={roStyle}>{t.magnification} |m| = <b style={{ color: COLORS.ink }}>{fmt(Math.abs(image.m))}</b></span>
             <span style={{
               ...roStyle,
               borderColor: image.real ? COLORS.accent : COLORS.ray3,
               color: image.real ? COLORS.accent : COLORS.ray3,
             }}>
-              {image.real ? "实像 · 倒立" : "虚像 · 正立"} · {sizeLabel}
+              {image.real ? t.realInverted : t.virtualUpright} · {sizeLabel}
             </span>
           </>
         )}
@@ -273,9 +275,9 @@ export function LensImagingWidget({ config, onChange }: {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "8px 20px", padding: "12px 16px 16px" }}>
         {([
-          ["focalLength", "焦距 f", 4, 30, 0.5],
-          ["objectDistance", "物距 u", 2, 60, 0.5],
-          ["objectHeight", "物高 h", 3, 16, 1],
+          ["focalLength", `${t.focalLength} f`, 4, 30, 0.5],
+          ["objectDistance", `${t.objectDistance} u`, 2, 60, 0.5],
+          ["objectHeight", `${t.objectHeight} h`, 3, 16, 1],
         ] as const).map(([key, label, min, max, step]) => (
           <label key={key} style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={ctlLabelStyle}>{label}</span>
@@ -290,9 +292,9 @@ export function LensImagingWidget({ config, onChange }: {
           </label>
         ))}
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={ctlLabelStyle}>透镜类型</span>
+          <span style={ctlLabelStyle}>{t.lensType}</span>
           <span style={{ display: "flex", border: `1px solid ${COLORS.line}`, borderRadius: 7, overflow: "hidden" }}>
-            {([["convex", "凸透镜"], ["concave", "凹透镜"]] as const).map(([value, label]) => (
+            {([["convex", t.convexLens], ["concave", t.concaveLens]] as const).map(([value, label]) => (
               <button
                 key={value}
                 type="button"
@@ -312,7 +314,7 @@ export function LensImagingWidget({ config, onChange }: {
       </div>
 
       <div style={{ fontSize: 11.5, color: COLORS.muted, padding: "0 16px 12px" }}>
-        直接拖动橙色物体箭头可改变物距 —— 拖拽、滑块与自然语言指令写入的是同一个 config。
+        {t.lensInteractionTip}
       </div>
     </div>
   );

@@ -85,6 +85,16 @@ export function fastTierSettings(settings: TutorProviderSettings = {}): TutorPro
   return fast ? { ...settings, model: fast } : settings;
 }
 
+// Content-rich humanities components benefit from a higher-quality model than
+// the catalog router. AI_MODEL_CONTENT can pin a dedicated pro model; when it
+// is unset they use the normal default model instead of silently falling back
+// to AI_MODEL_FAST.
+export function contentTierSettings(settings: TutorProviderSettings = {}): TutorProviderSettings {
+  if (settings.model) return settings;
+  const content = process.env.AI_MODEL_CONTENT?.trim();
+  return content ? { ...settings, model: content } : settings;
+}
+
 export function createTutorModel(
   settings: TutorProviderSettings = {},
   options: { streaming?: boolean; maxTokens?: number } = {},
