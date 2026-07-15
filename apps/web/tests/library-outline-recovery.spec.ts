@@ -7,8 +7,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { CourseOutlineView } from "../src/components/course/course-outline-view";
 import { CourseLibraryGrid } from "../src/components/library/course-library-grid";
+import {
+  beginPendingCourseBuild,
+  clearPendingCourseBuilds,
+  markPendingCourseBuildReady,
+  readPendingCourseBuilds,
+} from "../src/lib/courses/course-build-session";
 import type { LessonGenerationJobSummary } from "../src/lib/courses/lesson-generation-jobs";
-import type { Course } from "../src/lib/courses/types";
+import { summarizeCourse, type Course } from "../src/lib/courses/types";
 
 const mockState = vi.hoisted(() => ({
   outlineJobs: [] as LessonGenerationJobSummary[],
@@ -16,6 +22,16 @@ const mockState = vi.hoisted(() => ({
   setJobs: vi.fn(),
   refreshJobs: vi.fn(),
 }));
+
+class MemoryStorage implements Storage {
+  private values = new Map<string, string>();
+  get length() { return this.values.size; }
+  clear() { this.values.clear(); }
+  getItem(key: string) { return this.values.get(key) ?? null; }
+  key(index: number) { return [...this.values.keys()][index] ?? null; }
+  removeItem(key: string) { this.values.delete(key); }
+  setItem(key: string, value: string) { this.values.set(key, value); }
+}
 
 vi.mock("next/link", async () => {
   const { createElement } = await import("react");
@@ -141,9 +157,12 @@ function course(title: string, lessonStatus: "generating" | "generated" = "gener
 }
 
 beforeEach(() => {
+  Object.defineProperty(window, "localStorage", { value: new MemoryStorage(), configurable: true });
+  Object.defineProperty(window, "sessionStorage", { value: new MemoryStorage(), configurable: true });
   (globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
   mockState.outlineJobs = [];
   vi.clearAllMocks();
+  clearPendingCourseBuilds();
 });
 
 afterEach(async () => {
@@ -158,6 +177,34 @@ afterEach(async () => {
 });
 
 describe("Library empty recovery states", () => {
+  it("shows a session build immediately and replaces it after the course syncs", async () => {
+    beginPendingCourseBuild({ id: "build-chemistry", topic: "Chemistry" });
+    markPendingCourseBuildReady("build-chemistry", { courseId: "course-1", title: "Chemistry" });
+    let resolveCourses!: (response: Response) => void;
+    const fetchMock = vi.fn((input: RequestInfo | URL) => {
+      if (String(input) === "/api/courses") {
+        return new Promise<Response>((resolve) => {
+          resolveCourses = resolve;
+        });
+      }
+      return Promise.resolve(jsonResponse({ jobs: [] }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const view = await mount(createElement(CourseLibraryGrid, { initialCourses: [] }));
+    await waitFor(() => expect(view.container.textContent).toContain("Chemistry"));
+    expect(view.container.textContent).toContain("课程已创建，正在同步");
+
+    await act(async () => {
+      resolveCourses(jsonResponse({ courses: [summarizeCourse(course("Synced Chemistry"))] }));
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    await waitFor(() => expect(view.container.textContent).toContain("Synced Chemistry"));
+    await waitFor(() => expect(readPendingCourseBuilds()).toHaveLength(0));
+  });
+
   it("shows onboarding copy and CTA for an empty incomplete library", async () => {
     const view = await mount(
       createElement(CourseLibraryGrid, { initialCourses: [], onboardingIncomplete: true }),

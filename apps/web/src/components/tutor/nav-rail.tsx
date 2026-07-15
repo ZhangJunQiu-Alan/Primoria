@@ -14,6 +14,7 @@ import {
   THREAD_EVENT_NAME,
   type CopilotThreadSummary,
 } from "@/lib/copilot-thread-history";
+import { clearPendingCourseBuilds } from "@/lib/courses/course-build-session";
 import { useT } from "@/lib/i18n/client";
 
 type NavTab = {
@@ -175,6 +176,7 @@ export function TutorNavRail({ initialAuthState }: TutorNavRailProps = {}) {
     try {
       await fetch("/api/auth/sign-out", { method: "POST" });
       clearCopilotThreadStorage();
+      clearPendingCourseBuilds();
       // Legacy purge: BYOK is removed; wipe any provider key left in localStorage by old builds.
       window.localStorage.removeItem("primoria:tutor-provider-settings");
       setLocalAuthState({ authEnabled: authEnabled ?? true, user: null });

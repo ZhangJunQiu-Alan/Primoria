@@ -32,9 +32,20 @@ import type { CourseCardArtifact } from "@/lib/agent-os";
 import type { LessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import type { CourseSummary } from "@/lib/courses/types";
 import { isLessonGenerationActive, lessonGenerationStageLabel } from "@/lib/courses/lesson-generation-labels";
+import { resolveLessonGenerationTarget } from "@/lib/courses/lesson-generation-notice";
+import {
+  beginPendingCourseBuild,
+  markLessonFailureSeen,
+  markPendingCourseBuildFailed,
+  markPendingCourseBuildReady,
+  readSeenLessonFailureIds,
+  removePendingCourseBuild,
+  type PendingCourseBuildErrorCode,
+} from "@/lib/courses/course-build-session";
+import { fetchWithTimeout, RequestTimeoutError } from "@/lib/http/fetch-with-timeout";
 import { detectKgLanguage } from "@/lib/knowledge-graph/display-name";
 import { useLessonGenerationJobs } from "@/hooks/use-lesson-generation-jobs";
-import { useT } from "@/lib/i18n/client";
+import { msg, useT } from "@/lib/i18n/client";
 import { getTutorToolDisplay, getTutorToolIndicatorClass } from "@/lib/ai/tutor-tool-display";
 import { learningGoalProgressCopy } from "@/lib/ai/learning-goal-progress";
 
@@ -65,6 +76,8 @@ const GenerateCourseParams = z.object({
 });
 
 const COURSE_CARD_PREFIX = "PRIMORIA_COURSE_CARD:";
+export const LEARNING_GOAL_POSITION_TIMEOUT_MS = 45_000;
+export const COURSE_BUILD_TIMEOUT_MS = 100_000;
 
 function WriteTodosSink({ todos }: { todos: z.infer<typeof WriteTodosParams>["todos"] }) {
   useEffect(() => {
@@ -431,8 +444,10 @@ type LearningPhase = "positioning" | "building" | "ready" | "clarify_subject" | 
 type LearningGoalSnapshot = {
   phase: LearningPhase;
   artifact: CourseCardArtifact | null;
+  courseSummary: CourseSummary | null;
   menu: MenuItem[];
   message: string;
+  errorCode: PendingCourseBuildErrorCode | null;
   builtCourseId: string | null;
   firstJob: LessonGenerationJobSummary | null;
 };
@@ -443,8 +458,10 @@ function emptyLearningGoalSnapshot(): LearningGoalSnapshot {
   return {
     phase: "positioning",
     artifact: null,
+    courseSummary: null,
     menu: [],
     message: "",
+    errorCode: null,
     builtCourseId: null,
     firstJob: null,
   };
@@ -459,6 +476,9 @@ class LearningGoalTask {
   private snapshot = emptyLearningGoalSnapshot();
   private started = false;
   private buildAnchorKey = "";
+  private readonly pendingBuildId = typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? `course-build-${crypto.randomUUID()}`
+    : `course-build-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 
   constructor(
     readonly key: string,
@@ -481,13 +501,23 @@ class LearningGoalTask {
   start() {
     if (this.started) return;
     this.started = true;
+    beginPendingCourseBuild({ id: this.pendingBuildId, topic: this.query });
     void this.positionLearningGoal();
+  }
+
+  retry() {
+    this.started = false;
+    this.buildAnchorKey = "";
+    this.snapshot = emptyLearningGoalSnapshot();
+    for (const listener of this.listeners) listener(this.snapshot);
+    this.start();
   }
 
   startCourseBuild(anchor: CourseTopicAnchor) {
     const anchorKey = `${anchor.graphId}:${anchor.startTopicId}:${anchor.targetConceptId ?? ""}`;
     if (this.buildAnchorKey === anchorKey && (this.snapshot.phase === "building" || this.snapshot.phase === "ready")) return;
     this.buildAnchorKey = anchorKey;
+    beginPendingCourseBuild({ id: this.pendingBuildId, topic: this.query });
     void this.buildCourse(anchor);
   }
 
@@ -498,16 +528,21 @@ class LearningGoalTask {
 
   private async positionLearningGoal() {
     try {
-      const posRes = await fetch("/api/knowledge-graph/position", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ query: this.query, graphId: this.graphId, language: detectKgLanguage(this.query) }),
-      });
+      const posRes = await fetchWithTimeout(
+        "/api/knowledge-graph/position",
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ query: this.query, graphId: this.graphId, language: detectKgLanguage(this.query) }),
+        },
+        LEARNING_GOAL_POSITION_TIMEOUT_MS,
+      );
       const posData = await posRes.json();
       if (!posRes.ok) throw new Error(posData?.error || "positioning failed");
 
       const plan = posData?.plan;
       if (plan?.branch === "clarify_subject") {
+        removePendingCourseBuild(this.pendingBuildId);
         this.update({
           menu: (plan.candidates ?? [])
             .filter((c: { graphId?: unknown; startTopicId?: unknown }) =>
@@ -529,6 +564,7 @@ class LearningGoalTask {
         return;
       }
       if (plan?.branch === "fallback" || plan?.branch !== "positioned" || !plan.courseContext) {
+        removePendingCourseBuild(this.pendingBuildId);
         this.update({
           message: plan?.message || "无法定位这个学习目标，请重新输入更具体的内容。",
           phase: "fallback",
@@ -550,8 +586,11 @@ class LearningGoalTask {
         targetConceptId: typeof courseContext.targetConceptId === "string" ? courseContext.targetConceptId : null,
       });
     } catch (error) {
+      const errorCode = error instanceof RequestTimeoutError ? "positioning_timeout" : "positioning_failed";
+      markPendingCourseBuildFailed(this.pendingBuildId, errorCode);
       this.update({
-        message: error instanceof Error ? error.message : "Something went wrong.",
+        message: "",
+        errorCode,
         phase: "error",
       });
     }
@@ -573,28 +612,40 @@ class LearningGoalTask {
   }
 
   private async requestCourseBuild(body: Record<string, unknown>) {
-    this.update({ phase: "building", menu: [], message: "" });
+    this.update({ phase: "building", menu: [], message: "", errorCode: null });
 
     try {
-      const buildRes = await fetch("/api/learning/course", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      const buildRes = await fetchWithTimeout(
+        "/api/learning/course",
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(body),
+        },
+        COURSE_BUILD_TIMEOUT_MS,
+      );
       const buildData = await buildRes.json();
       if (!buildRes.ok) throw new Error(buildData?.error || "build failed");
 
       const built = courseArtifactFromSummary(buildData.summary);
       if (!built) throw new Error("course summary was unusable");
+      const courseSummary = buildData.summary && Array.isArray(buildData.summary.lessons)
+        ? buildData.summary as CourseSummary
+        : null;
+      markPendingCourseBuildReady(this.pendingBuildId, { courseId: built.courseId, title: built.title });
       this.update({
-        builtCourseId: typeof buildData.courseId === "string" ? buildData.courseId : null,
+        builtCourseId: built.courseId,
         firstJob: (buildData.job as LessonGenerationJobSummary | null | undefined) ?? null,
+        courseSummary,
         artifact: built,
         phase: "ready",
       });
     } catch (error) {
+      const errorCode = error instanceof RequestTimeoutError ? "course_build_timeout" : "course_build_failed";
+      markPendingCourseBuildFailed(this.pendingBuildId, errorCode);
       this.update({
-        message: error instanceof Error ? error.message : "Something went wrong.",
+        message: "",
+        errorCode,
         phase: "error",
       });
     }
@@ -637,7 +688,7 @@ function selectRestorableLessonJobs(jobs: LessonGenerationJobSummary[]) {
   return [...byCourse.values()].sort((a, b) => b.updatedAt - a.updatedAt);
 }
 
-export function RestoredLessonGenerationCards() {
+export function RestoredLessonGenerationCards({ threadId }: { threadId: string }) {
   const [jobs, setJobs] = useState<LessonGenerationJobSummary[]>([]);
   const [courses, setCourses] = useState<CourseSummary[]>([]);
 
@@ -655,7 +706,9 @@ export function RestoredLessonGenerationCards() {
 
         if (jobsResponse.ok) {
           const data = (await jobsResponse.json()) as { jobs?: LessonGenerationJobSummary[] };
+          const seenFailureIds = readSeenLessonFailureIds();
           const restorableJobs = selectRestorableLessonJobs(Array.isArray(data.jobs) ? data.jobs : [])
+            .filter((job) => job.status !== "failed" || !seenFailureIds.has(job.id))
             .filter((job) => !isJobRepresentedByLearningGoalTask(job.id));
           setJobs(restorableJobs);
         }
@@ -674,7 +727,7 @@ export function RestoredLessonGenerationCards() {
       cancelled = true;
       controller.abort();
     };
-  }, []);
+  }, [threadId]);
 
   const courseById = useMemo(() => {
     const map = new Map<string, CourseSummary>();
@@ -743,17 +796,15 @@ function RestoredLessonGenerationCard({
   const active = isLessonGenerationActive(liveJob);
   const title = course?.title || "Course build";
   const failed = liveJob.status === "failed";
+  const t = useT();
+  const target = resolveLessonGenerationTarget(course, liveJob);
   const statusKind = failed ? "failed" : active ? "active" : "ready";
-  const statusText = failed
-    ? "第一节课生成失败"
-    : active
-      ? `第一节课 · ${lessonGenerationStageLabel(liveJob)}`
-      : "第一节课已准备好";
-  const bodyText = failed
-    ? "课程已创建，但第一节课没有生成成功。打开课程页可以重新生成。"
-    : active
-      ? "课程已创建，第一节课正在后台生成。你可以继续提问，或稍后从学习库进入。"
-      : "课程已创建，第一节课可以开始学习。";
+  const statusText = lessonNoticeStatusText(t, liveJob, target, statusKind);
+  const bodyText = lessonNoticeBodyText(t, target, statusKind);
+
+  useEffect(() => {
+    if (failed) markLessonFailureSeen(liveJob.id);
+  }, [failed, liveJob.id]);
 
   return (
     <CourseGenerationNotice
@@ -773,15 +824,20 @@ function RestoredLessonGenerationCard({
 // signed-in owner. positioned -> course card, clarify_subject -> subject chips,
 // fallback -> message.
 function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string }) {
+  const t = useT();
   const task = query?.trim() ? getLearningGoalTask(query, graphId) : null;
   const [snapshot, setSnapshot] = useState<LearningGoalSnapshot>(() => task?.getSnapshot() ?? emptyLearningGoalSnapshot());
   const renderSnapshot = task ? snapshot : emptyLearningGoalSnapshot();
-  const { phase, artifact, menu, message, builtCourseId, firstJob } = renderSnapshot;
+  const { phase, artifact, courseSummary, menu, message, errorCode, builtCourseId, firstJob } = renderSnapshot;
 
   // Poll the first lesson's job after the course is created so the card can show
   // its generation stage and flip to Ready when published (engineering doc §13.3).
   const { jobsByLessonId } = useLessonGenerationJobs(builtCourseId, firstJob ? [firstJob] : []);
   const liveFirstJob = firstJob ? jobsByLessonId.get(firstJob.lessonId) ?? firstJob : null;
+
+  useEffect(() => {
+    if (liveFirstJob?.status === "failed") markLessonFailureSeen(liveFirstJob.id);
+  }, [liveFirstJob?.id, liveFirstJob?.status]);
 
   useEffect(() => {
     if (!task) return;
@@ -793,16 +849,11 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
     const failed = liveFirstJob?.status === "failed";
     const active = liveFirstJob ? isLessonGenerationActive(liveFirstJob) : false;
     const statusKind: CourseGenerationNoticeKind = failed ? "failed" : active ? "active" : "ready";
-    const statusText = failed
-      ? "第一节课生成失败"
-      : active && liveFirstJob
-        ? `第一节课 · ${lessonGenerationStageLabel(liveFirstJob)}`
-        : "课程已创建";
-    const bodyText = failed
-      ? "课程已创建，但第一节课没有生成成功。打开课程页可以重新生成。"
-      : active
-        ? "课程已创建，第一节课正在后台生成。你可以继续提问，或稍后从学习库进入。"
-        : "可以打开课程页查看大纲并开始学习。";
+    const target = liveFirstJob ? resolveLessonGenerationTarget(courseSummary, liveFirstJob) : null;
+    const statusText = liveFirstJob
+      ? lessonNoticeStatusText(t, liveFirstJob, target, statusKind)
+      : t.tutor.courseCreated;
+    const bodyText = lessonNoticeBodyText(t, target, statusKind);
 
     return (
       <CourseGenerationNotice
@@ -851,11 +902,17 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
   }
 
   if (phase === "fallback" || phase === "error") {
+    const errorMessage = errorCode ? t.tutor.courseBuildErrors[errorCode] : message;
     return (
       <div className="message-row tool">
         <div className="tool-card status-card">
           <div className="visualizer">
-            <span className="tool-note">{message}</span>
+            <span className="tool-note">{errorMessage}</span>
+            {phase === "error" ? (
+              <button type="button" className="soft-btn" onClick={() => task?.retry()}>
+                {t.tutor.retryCourseBuild}
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
@@ -873,6 +930,36 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
       <span>{learningGoalProgressCopy(query ?? "")}</span>
     </div>
   );
+}
+
+function lessonNoticeStatusText(
+  t: ReturnType<typeof useT>,
+  job: LessonGenerationJobSummary,
+  target: ReturnType<typeof resolveLessonGenerationTarget>,
+  statusKind: CourseGenerationNoticeKind,
+) {
+  if (!target) {
+    if (statusKind === "failed") return t.tutor.lessonGenerationFailed;
+    if (statusKind === "active") return `${t.tutor.lessonGenerating} · ${lessonGenerationStageLabel(job)}`;
+    return t.tutor.lessonReady;
+  }
+  const values = { number: target.number, title: target.title };
+  if (statusKind === "failed") return msg(t.tutor.lessonGenerationFailedNamed, values);
+  if (statusKind === "active") {
+    return `${msg(t.tutor.lessonGeneratingNamed, values)} · ${lessonGenerationStageLabel(job)}`;
+  }
+  return msg(t.tutor.lessonReadyNamed, values);
+}
+
+function lessonNoticeBodyText(
+  t: ReturnType<typeof useT>,
+  target: ReturnType<typeof resolveLessonGenerationTarget>,
+  statusKind: CourseGenerationNoticeKind,
+) {
+  const title = target?.title ?? t.tutor.thisLesson;
+  if (statusKind === "failed") return msg(t.tutor.lessonGenerationFailedCopy, { title });
+  if (statusKind === "active") return msg(t.tutor.lessonGeneratingCopy, { title });
+  return msg(t.tutor.lessonReadyCopy, { title });
 }
 
 export function usePrimoriaGenerativeUI() {
