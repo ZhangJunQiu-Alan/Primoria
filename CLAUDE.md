@@ -56,6 +56,11 @@ pnpm --filter @primoria/web test:lesson-jobs:db
 # E2E (requires running app; not part of `pnpm test`)
 node apps/web/tests/widget-renderer.e2e.mjs
 
+# Catalog and stage-1 routing regression
+pnpm catalog:validate
+pnpm --filter @primoria/web test:interactive-routing
+pnpm --filter @primoria/web eval:interactive-routing  # calls configured real model
+
 # Verify agent graph syntax
 node --check apps/agent/src/graph.mjs
 
@@ -73,8 +78,10 @@ Write new Web tests as native Vitest `tests/*.spec.ts` files; do not add new sel
 ```
 apps/web/     Next.js app — UI, API routes, DB, CopilotKit integration
 apps/agent/   Self-hosted Node/AG-UI runtime for the primoria_tutor graph
+packages/contracts/  Cross-runtime artifacts, tool schemas, dependency and interactive catalogs
 data/knowledge-graphs/source/  Committed KG source JSON files and sidecars
 data/knowledge-graphs/generated/  Exported generated graph candidates awaiting review/promotion
+data/visualization-components/  Versioned all-subject catalog and JSON Schema
 ```
 
 ### AI Tutor path
@@ -87,13 +94,28 @@ The legacy `POST /api/tutor/chat` stack has been deleted. If you find references
 
 The Agent runtime persists AG-UI events, run state, leases, cancellation, retry metadata, and LangGraph checkpoints in PostgreSQL's isolated `agent_runtime` schema. Automatic retry is allowed only before user-visible/tool output. Interrupted runs with persisted output fail explicitly to avoid replaying side effects. Manual retry creates a new run ID and preserves the original audit trail.
 
-### Agent tool pipeline (visualization)
+### Visualization routing
 
-The standard visualization flow in the active tutor path:
-1. `plan_visualization` — AI outputs `VisualizationPlanArtifact` (approach, technology, key elements)
-2. `widgetRenderer` — AI writes a self-contained HTML/CSS/JS fragment → `HtmlWidgetArtifact`
+Visualization is catalog-first with structured/sandbox fallbacks:
 
-The agent is split into modules composed only by `apps/agent/src/graph.mjs`: `prompts.mjs` (system prompt + subagents), `model.mjs`, `middleware.mjs`, `widget-html.mjs`, and `tools/{visualization,renderers,course,quiz}.mjs`. Tool-argument Zod schemas are imported from `@primoria/contracts/artifacts/schemas` — the same runtime schemas the web hook uses.
+1. When one of the 19 all-subject catalog entries fits, the main model calls
+   `open_interactive_component`. This is a stateless Web-as-brain signal; the
+   browser card calls authenticated `POST /api/interactive-component`.
+2. Web generates a full config for create or a minimal patch for adjust,
+   validates it with the component Zod schema, and renders the registered React
+   component. The Agent never reads or writes the config.
+3. If no catalog entry fits, use the matching specialized renderer. Remaining
+   custom cases use the inseparable `plan_visualization` → `widgetRenderer`
+   sandbox flow.
+
+The isolated QA route uses the shared `selectInteractiveComponent` helper to
+evaluate stage-1 routing; it is not the production Tutor path. Production
+selection is the model's `open_interactive_component` tool choice.
+
+The agent is split into modules composed only by `apps/agent/src/graph.mjs`:
+`prompts.mjs`, `model.mjs`, `middleware.mjs`, `widget-html.mjs`, and
+`tools/{course,interactive,quiz,renderers,visualization}.mjs`. Tool-argument Zod
+schemas are imported from `@primoria/contracts/artifacts/schemas`.
 
 ### Artifact types (`packages/contracts/src/artifacts`, re-exported by `apps/web/src/lib/ai/types.ts`)
 
@@ -104,6 +126,12 @@ The agent is split into modules composed only by `apps/agent/src/graph.mjs`: `pr
 - `course_card` — links to a generated course
 - `todo_list` — step tracker
 - `tool_status` — transient executing/complete status
+- specialized structured artifacts: `echarts_widget`, `mermaid_diagram`,
+  `physics_scene`, `algorithm_visualization`, `math_explorer`,
+  `wave_visualization`, `graph_visualization`, and `molecule`
+
+`open_interactive_component` is a frontend-tool signal, not a `TutorArtifact`.
+Its UI state stays in `InteractiveComponentCard` and the Web component runtime.
 
 ### Widget rendering (`apps/web/src/components/generative-ui/widget-renderer.tsx`)
 
@@ -111,9 +139,27 @@ Widgets execute inside a sandboxed `<iframe>`. The iframe host assembles a full 
 
 `ToolCard` (`apps/web/src/components/generative-ui/tool-card.tsx`) routes each `TutorArtifact` type to its renderer. Cross-runtime Zod schemas live in `packages/contracts/src/artifacts/schemas.mjs` (plain ESM runtime shared by agent and web) with hand-written types in `schemas.d.mts`; `apps/web/tests/contracts-artifact-schemas.spec.ts` guards drift between the two. Adding a new artifact type requires: (1) type + schema in `packages/contracts/src/artifacts`, (2) a branch in `ToolCard`, (3) the tool in the matching `apps/agent/src/tools/*.mjs` module. Never type an artifact or tool-argument schema as `z.any()` — import the contracts schema.
 
+Adding a catalog component is a different workflow: update the versioned JSON
+catalog, Web component module and registry, shared compact Agent catalog, React
+widget and widget map, then pass the catalog/registry/widget sync tests. The
+canonical checklist is `docs/交互组件规范.md`.
+
 ### Course generation
 
 In the main AI Tutor, course creation starts with the `position_learning_goal` tool in `apps/agent/src/tools/course.mjs`; the web side performs KG positioning, course creation, and persistence. Courses are stored in the `courses` and `lessons` tables (Drizzle schema in `apps/web/src/lib/db/schema.ts`). Lesson blocks are stored as `jsonb`. Outline lesson descriptions start as deterministic templates; after a NEW course is created, one best-effort background LLM call (`apps/web/src/lib/ai/course-generation/outline-enrichment.ts`, scheduled with `after()` in `initializeCourseOutline`) rewrites them behind a description-equality write fence — failures keep the templates, and `PRIMORIA_DISABLE_OUTLINE_ENRICHMENT=1` disables the call.
+
+### Onboarding, mastery, and learner facts
+
+Onboarding persists the learning goal/KG anchor, knowledge background, and Tutor
+style in `learner_profiles` and prepares the first course. Those three choices
+are mirrored into evidence-backed `learner_facts`; changing or skipping a
+choice updates or dismisses its corresponding fact.
+
+Keep mastery and facts distinct. `user_concept_mastery` is rule/evidence-driven
+concept state written by the learning-progress worker. `learner_facts` stores
+durable preferences, prior knowledge, learning gaps, and goals, written by
+onboarding sync or the Extractor worker. Only active teaching-relevant fact
+categories enter Tutor/planner context; stale goals do not drive lesson content.
 
 ### Course sharing
 
@@ -139,7 +185,12 @@ Local development uses the Docker Compose PostgreSQL service (`pgvector/pgvector
 
 ### Model provider
 
-`apps/web/src/lib/ai/deepagent/model.ts` resolves provider credentials (provider/baseUrl/apiKey) exclusively from server-side env vars. There is no BYOK: clients cannot supply provider settings, and `TutorProviderSettings` now carries only the internal model-tier selection (`fastTierSettings`). Supports `openai-compatible` (default) and `anthropic-compatible`. The agent uses `ChatOpenAI` or `ChatAnthropic` from LangChain.
+`apps/web/src/lib/ai/deepagent/model.ts` resolves provider credentials
+exclusively from server-side env vars. There is no BYOK. Internal model tiers
+are `AI_MODEL_FAST` for routing/utility work and optional `AI_MODEL_CONTENT` for
+source comparison and causal timelines; the latter falls back to the default
+model, never the fast tier. Supports `openai-compatible` and
+`anthropic-compatible`.
 
 KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current supported embedding providers are `openai-compatible` and `minimax`.
 
@@ -147,9 +198,16 @@ KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current
 
 Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, App/KG and Agent-runtime migration jobs, web, the self-hosted Node/AG-UI agent, three workers, and Caddy. Web waits for Agent readiness; Agent shutdown drains active runs. Only Caddy is public; port 2024 must never be published. Full runbook: README "Deployment (Single Server)"; credential timing, preflight gates, rollback, and commit/push handoff: `docs/deployment-preflight.md`. Do not request deployment credentials, deploy, commit, or push until the user explicitly asks.
 
+The internal visualization analytics page is `/internal/visualization-analytics`.
+Production access fails closed unless `PRIMORIA_ENABLE_INTERNAL_ANALYTICS=1`
+and the authenticated email is listed in `PRIMORIA_INTERNAL_EMAILS`.
+
 ## Key constraints
 
 - `apps/agent/` is plain ESM (`.mjs`), no TypeScript, no imports from `apps/web/`.
 - Widget HTML must be an iframe fragment (no `<html>/<head>/<body>` wrapper, no `100vh` layouts).
 - The widget dependency allowlist is single-sourced in `packages/contracts/src/artifacts/widget-dependencies.mjs`; agent and web import it — never re-declare widget CDN URLs elsewhere (`apps/web/tests/widget-dependencies-sync.spec.ts` enforces this).
+- The Agent's interactive routing prior is single-sourced in `packages/contracts/src/artifacts/interactive-catalog.mjs`; sync tests prevent component-id/name drift with the Web registry.
 - App/Auth/Course/KG writes remain Web-owned. `apps/agent/` may access only `agent_runtime` plus its existing bounded owner-scoped course-card read; never access DB from client components.
+- `apps/web/next-env.d.ts` is generated by Next and intentionally ignored. `typecheck` runs `next typegen` before `tsc`; tests must not read or require that file.
+- `docs/README.md` defines document precedence. Update current-state docs when runtime paths, tools, schemas, routes, environment variables, or public capabilities change.

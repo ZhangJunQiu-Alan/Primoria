@@ -2,6 +2,10 @@
 
 用于推断「一个概念该不该独立成节点、节点间连什么边」。
 
+状态：当前 KG 内容规范，2026 年 7 月。source 位于
+`data/knowledge-graphs/source/`；自动门禁运行
+`pnpm --filter @primoria/web validate:kg`。本规范解释内容判断，不能替代脚本校验与人工学科审核。
+
 ## 节点 (concept node)
 
 **定义**:一个能独立出 quiz 题检验的最小概念 = 单一可诊断技能/结果。
@@ -37,3 +41,5 @@
 - id 无重复;边端点、`topic` 引用都存在。
 - 先修边**无环**(必须是 DAG,才能拓扑排序排课)。
 - 无入边的起点概念数量可控、符合预期(应是该学科的真正入口)。
+- 每个 topic 保持 2–3 个 concept；节点同时具备非空 `name` 与 `name_zh`。
+- 修改跨学科边后运行 `pnpm --filter @primoria/web db:seed:kg-cross`；修改图后按导入 runbook 重建派生 topic 图与 embeddings。

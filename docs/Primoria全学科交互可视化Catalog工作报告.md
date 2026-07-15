@@ -1,106 +1,64 @@
 # Primoria 全学科交互可视化 Catalog 工作报告
 
-## 1. 当前环境
+状态：当前实现报告，2026-07-15。组件开发规范以
+[`交互组件规范.md`](交互组件规范.md) 为准。
 
-- 仓库：`/Users/zhangjunqiu/Documents/Project/Primoria`
-- 分支：`main`
-- HEAD：`5c9dec08`
-- 状态：代码未提交、未推送，工作树包含其他任务的既有改动
-- 本任务未引入数据库迁移、外部依赖或生产部署变更
+## 1. 决策与范围
 
-## 2. 任务目标与最终决策
-
-最初方向是根据 KG 中约 355 个 concept 逐个制作 Visualization，后来调整为：
-
-- 不按 KG concept 数量机械生产组件
-- 建设 Primoria 项目级、跨学科 Visualization Catalog
-- 覆盖所有学科，而非局限于 STEM
-- 每个组件对应一个清晰的教学场景
-- 学科通过 `disciplineTags` 多对多复用组件
-- Catalog 外需求继续降级到现有 sandbox HTML Widget
-- Config 只描述教学语义，不包含坐标、颜色、尺寸等视觉实现字段
-- 每个组件独立实现学科逻辑，不建立万能 JSON 渲染器
-
-Catalog 策略：
+Catalog 不再按 KG 中约 355 个 concept 逐个制造组件，而以“一个可复用的
+教学场景”为选择单位：
 
 ```text
 disciplinePolicy = all-subjects
 selectionUnit = one-teaching-scene
-fallbackPolicy = sandbox-widget
+primaryPath = schema-driven-react-component
+fallbackPolicy = specialized-renderer-or-sandbox-widget
 ```
 
-## 3. 核心交付物
+核心约束：
 
-### Catalog
+- 覆盖所有学科，不局限于 STEM；
+- `disciplineTags` 多对多复用组件；
+- config 只描述教学语义，不含颜色、坐标、尺寸；
+- 每个组件独立实现领域计算，不建设万能 JSON renderer；
+- Catalog 外需求保留结构化 renderer 和 sandbox fallback；
+- 扩容优先级由真实未命中和成功率数据决定。
+
+## 2. 当前交付物
+
+Catalog 与共享契约：
 
 - `data/visualization-components/catalog.v1.json`
 - `data/visualization-components/catalog.schema.json`
 - `scripts/validate-visualization-catalog.mjs`
+- `packages/contracts/src/artifacts/interactive-catalog.mjs`
+- `packages/contracts/src/artifacts/schemas.mjs`
 
-根目录新增命令：
+生产运行时：
 
-```bash
-pnpm catalog:validate
-```
+- `apps/agent/src/tools/interactive.mjs`
+- `apps/web/src/lib/interactive/components/`
+- `apps/web/src/lib/interactive/configure.ts`
+- `apps/web/src/app/api/interactive-component/route.ts`
+- `apps/web/src/components/generative-ui/interactive/`
+- `apps/web/src/components/generative-ui/interactive-component-card.tsx`
 
-Catalog 每个条目包含：
+评测与观测：
 
-- 双语名称、目录描述和教学目的
-- `componentId`、版本和 `rendererKey`
-- 学科标签、能力标签、主要交互方式
-- 完整 JSON Schema 和默认 config
-- Patch 语义提示
-- 降级条件
-- 中英文示例指令
-- 实现状态
+- `apps/web/tests/fixtures/interactive-routing.v1.json`
+- `apps/web/scripts/eval-interactive-routing.ts`
+- `apps/web/src/lib/telemetry/visualization-analytics.ts`
+- `apps/web/src/app/internal/visualization-analytics/page.tsx`
 
-当前统计：
+统计：
 
 ```text
 组件总数：19
 implemented：19
-学科标签：37
 planned/prototype：0
 ```
 
-### 声明式组件运行时
-
-组件契约与纯计算：
-
-- `apps/web/src/lib/qa/components/`
-- `apps/web/src/lib/qa/components/registry.ts`
-- `apps/web/src/lib/qa/components/types.ts`
-
-每个组件模块提供：
-
-```text
-Zod 完整 config schema
-Zod 最小 patch schema
-默认 config
-纯计算/分析函数
-ImplementedComponent 元数据
-Schema 文档和自然语言 patch 提示
-```
-
-React 渲染层：
-
-- `apps/web/src/app/qa/declarative-lens/widgets/`
-- `apps/web/src/app/qa/declarative-lens/widgets/index.tsx`
-- `apps/web/src/app/qa/declarative-lens/widgets/palette.ts`
-- `apps/web/src/app/qa/declarative-lens/widgets/primitives/controls.tsx`
-- `apps/web/src/app/qa/declarative-lens/widgets/primitives/widget-shell.tsx`
-
-共用部分只抽取了：
-
-- Widget 外壳
-- Slider
-- Segmented control
-- Readout
-- Primoria 统一 Palette
-
-学科计算和可视化仍由各组件独立实现。
-
-## 4. 已实现的 19 个组件
+## 3. 已实现的 19 个组件
 
 ### 数学、科学与计算
 
@@ -110,8 +68,6 @@ React 渲染层：
 - `cs.sorting-steps`
 - `math.function-explorer`
 - `math.angle-measure`
-
-包含薄透镜公式、滴定 pH、简谐波叠加、三种排序轨迹、函数变换和角度分类等纯计算逻辑。
 
 ### 通用、人文与语言
 
@@ -124,13 +80,6 @@ React 渲染层：
 - `literature.close-reading`
 - `language.sentence-structure`
 
-特别处理了：
-
-- 时间先后不自动等同因果
-- 失效事件、人物和依存引用会被过滤
-- 文本高亮不使用 `innerHTML`
-- 政治、文学和历史材料避免自动替学生得出唯一结论
-
 ### 社会科学、地理与艺术
 
 - `social.policy-tradeoff`
@@ -139,202 +88,107 @@ React 渲染层：
 - `music.rhythm-pattern`
 - `psychology.experiment-design`
 
-实现说明：
+人文组件不是静态卡片堆叠：时间线可选择事件并记录逐事件标注；史料比较
+可切换比较维度、选择材料并记录逐材料标注；两者都展示 AI 内容核验提示。
 
-- 政策组件只展示标准权重与利益相关者，不自动宣布“赢家”
-- 色彩组件中的动态 HSL 是教学对象，不是 UI 主题漂移
-- 节奏组件使用浏览器 Web Audio API，无外部音频依赖
-- 拍号会影响每小节步数
-- 实验设计会检查对照组并分配样本量
+## 4. 生产路由
 
-## 5. QA 路由与两阶段 LLM 流程
-
-页面：
-
-- `apps/web/src/app/qa/declarative-lens/page.tsx`
-- `apps/web/src/app/qa/declarative-lens/declarative-lens-client.tsx`
-
-API：
-
-- `apps/web/src/app/api/qa/declarative-lens/route.ts`
-
-流程：
+主 Tutor：
 
 ```text
-用户消息
-  → Stage 1：只读取精简 Catalog，选择 componentId 和 intent
-  → Stage 2：只读取选中组件的完整 schema
-  → 生成完整 config 或最小 patch
-  → Zod 校验
-  → 对应 React Widget 渲染
+用户请求
+→ 主模型命中 Catalog
+→ open_interactive_component(component_id, request)
+→ InteractiveComponentCard
+→ Web Stage 2
+→ 完整 config 或最小 patch
+→ Zod 全量校验
+→ React Widget
 ```
 
-Intent：
+后续口语调整再次调用同一个工具和 componentId，卡片携带当前 config；
+Web 只生成变化字段，合并后重新校验完整对象。Agent 不读取具体 config。
+
+未命中 Catalog 时，Agent 继续路由到结构化 renderer；再不匹配才进入
+`plan_visualization → widgetRenderer` sandbox fallback。
+
+QA 路由保留 `create / adjust / off_catalog / chat` 四类意图，用于隔离
+Stage-1 评测。它不是生产 Tutor 的第二条主链路。
+
+## 5. 模型与内容质量
+
+- Stage-1 QA 路由和普通组件 Stage 2 使用 `AI_MODEL_FAST`（如配置）。
+- `general.timeline-causality` 和 `humanities.source-comparison` 使用
+  `AI_MODEL_CONTENT`；未配置时使用默认模型，不回落到 fast tier。
+- 史实、日期和材料主张显示核验提醒。
+- 固定 UI 文案全部进入中英文 dictionaries。
+
+## 6. 主题与交互状态
+
+`WIDGET_COLORS` 已从 QA 占位色迁移到生产语义 token，并为独立 SSR/QA
+保留 fallback。拖拽、滑块、按钮和自然语言 patch 共享 config；播放态、
+当前选择和学生临时标注等非教学参数可保留为局部 UI state。
+
+## 7. 测试与真实验证
+
+自动门禁覆盖：
+
+- 19 个组件的默认 config、patch schema、边界和领域计算；
+- JSON Catalog 默认值与 Zod 默认值同步；
+- Agent Catalog 与 Web Registry 的 id/名称/描述同步；
+- Registry 与 Widget Map 一一对应；
+- 19 个默认组件全部可 SSR；
+- 卡片中英文文案；
+- 内容质量模型选择；
+- 内部分析聚合与生产访问门禁；
+- `next-env.d.ts` 生成文件卫生契约。
+
+固定路由集包含 28 条跨学科、英文/中文、模糊调整、目录外和普通聊天
+prompt。2026-07-15 对配置的真实模型执行结果为 28/28；该结果应在 Catalog
+或 prompt 变更后重跑，不应被当作永久常量。
+
+登录态全链路人工验证已完成：主 Tutor 对“演示凸透镜成像”选择
+`open_interactive_component`，卡片正确渲染，后续口语调整走 patch。
+
+最新合并前验证基线：
 
 ```text
-create
-adjust
-off_catalog
-chat
+Web unit：394 passed，1 skipped
+Agent unit/typecheck：通过
+Web typecheck：通过
+Web production build：通过
+Catalog validate：通过
+真实路由评测：28/28
 ```
 
-安全边界：
+## 8. 观测闭环
 
-```text
-仅 NODE_ENV !== production
-并且 PRIMORIA_ENABLE_QA_ROUTES=1
-页面仍受现有登录策略保护
-```
+每次渲染写 `visualization.render` learning event：
 
-启动方式：
+- `source=sandbox`：目录未命中/兜底需求；
+- `source=interactive`：Catalog 组件；
+- status：`rendered`、`script_error`、`config_invalid`、`api_error`；
+- interactive 事件附 `component_id`。
 
-```bash
-PRIMORIA_ENABLE_QA_ROUTES=1 pnpm --filter @primoria/web dev
-```
+内部页 `/internal/visualization-analytics` 支持 14/28 天窗口，按规范化 topic
+聚类 sandbox 需求，并按 componentId 展示 interactive 成功率。生产访问使用
+开关 + 邮箱白名单，默认失败关闭。
 
-登录后访问：
+## 9. 已关闭的历史问题
 
-```text
-http://localhost:3000/qa/declarative-lens
-```
+旧报告中以下表述已经失效：
 
-## 6. 测试覆盖
+- 组件代码不再位于 `src/lib/qa` 或 QA 页面目录；已迁入生产路径。
+- 不再是“未接生产 Agent/contracts”；主 Tutor 已注册工具和共享 Catalog。
+- `next-env.d.ts` 不再需要 dev/build 后手工 checkout：文件已取消跟踪并由
+  `next typegen` 生成，相关测试不再读取它。
+- 内容型组件的 pro/default-quality tier、史实提醒、生产 token 和 i18n 已完成。
 
-测试位置：
+## 10. 下一阶段
 
-- `apps/web/tests/declarative-*.spec.ts`
-- `apps/web/tests/visualization-catalog-implemented.spec.ts`
-- `apps/web/tests/visualization-widgets-render.spec.ts`
+不立即堆第二批组件。先积累 2–4 周真实流量，再按以下顺序决策：
 
-每个新增组件都有独立测试，覆盖：
-
-- 默认 config
-- Patch schema
-- 上下界
-- 学科计算正确性
-- 失效引用过滤
-- Catalog 默认值与 Zod 默认值一致性
-- Registry 与 Widget renderer 一一对应
-- 19 个默认组件均可实际 SSR 渲染
-
-最终验证结果：
-
-```text
-pnpm --filter @primoria/web test
-75 个测试文件通过
-1 个按项目约定跳过
-373 项测试通过
-1 项跳过
-```
-
-其他验证：
-
-```text
-pnpm --filter @primoria/web typecheck   通过
-pnpm catalog:validate                  通过
-pnpm --filter @primoria/web build      通过
-git diff --check                       通过
-pnpm lint                              0 errors
-```
-
-Lint 有一条与本任务无关的既有警告：
-
-```text
-apps/web/src/components/course/block-renderer.tsx:315
-@next/next/no-img-element
-```
-
-## 7. 运行态验证
-
-已在开发模式真实调用：
-
-```text
-POST /api/qa/declarative-lens
-prompt = "show a 90 degree angle"
-```
-
-结果：
-
-```json
-{
-  "intent": "create",
-  "componentId": "math.angle-measure",
-  "config": {
-    "angleDeg": 90,
-    "showClassification": false,
-    "showProtractor": false
-  }
-}
-```
-
-HTTP 状态为 `200`，Stage 1 路由和 Stage 2 config 生成均成功。
-
-## 8. 重要陷阱
-
-运行 `next dev` 会把：
-
-```ts
-import "./.next/types/routes.d.ts";
-```
-
-自动改成：
-
-```ts
-import "./.next/dev/types/routes.d.ts";
-```
-
-但现有静态测试要求生产路径。如果直接执行完整测试，真正断言失败有时会被 Vitest 包装成：
-
-```text
-SyntaxError: Unexpected token '�', "�" is not valid JSON
-convert-source-map
-```
-
-这不是 Visualization 测试失败。
-
-处理方式：
-
-- 运行 `next build` 恢复生产声明；或
-- 将 `apps/web/next-env.d.ts` 恢复为 `.next/types/routes.d.ts`
-
-当前文件已经恢复，完整测试为绿色。
-
-## 9. 工作树边界
-
-当前工作树很脏，而且相关目录多数仍是 untracked。不要执行：
-
-```bash
-git add -A
-git reset --hard
-git checkout -- .
-```
-
-以下修改属于其他已有任务，不能假定由 Visualization 工作产生：
-
-```text
-apps/web/src/components/library/course-library-grid.tsx
-apps/web/src/components/tutor/nav-rail.tsx
-apps/web/src/components/tutor/tutor-chat-copilot.tsx
-apps/web/src/hooks/use-primoria-copilot.tsx
-apps/web/src/lib/i18n/dictionaries.ts
-apps/web/src/lib/knowledge-graph/generated-graph.ts
-apps/web/tests/course-generation-ui-static.unit.ts
-apps/web/tests/library-outline-recovery.spec.ts
-apps/web/src/lib/courses/*
-apps/web/src/lib/http/*
-相关 course/fetch/generated-graph tests
-temple/*
-```
-
-如果后续要提交，必须先按路径和功能边界重新审查、选择性暂存。
-
-## 10. 明确未做的事项
-
-以下不是遗漏，而是当前范围之外：
-
-- 没有提交或推送
-- 没有替换生产 Tutor 的 `plan_visualization → widgetRenderer` HTML 流程
-- 没有让生产环境开放 QA 页面
-- 没有新增数据库表或持久化实例
-- 没有为 Catalog 外场景取消 sandbox fallback
-- 没有做所有组件的登录态浏览器截图基线；已用 SSR 渲染烟测和真实 API 调用覆盖运行时装载
+1. sandbox 高频 topic；
+2. 当前组件失败率；
+3. 是否能形成可工程化、可验证的学生操作；
+4. 是否应先深化现有人文组件，而不是增加浅层展示组件。
