@@ -58,9 +58,20 @@ const FOCUS_LABELS = {
   limitations: "局限与偏差",
 } as const;
 
-export function buildSourceComparisonRows(config: SourceComparisonConfig) {
+type SourceComparisonCopy = {
+  focusLabels: Record<z.infer<typeof ComparisonFocusSchema>, string>;
+  evidencePrefix: (evidence: string) => string;
+};
+
+export function buildSourceComparisonRows(
+  config: SourceComparisonConfig,
+  copy: SourceComparisonCopy = {
+    focusLabels: FOCUS_LABELS,
+    evidencePrefix: (evidence) => `证据: ${evidence}`,
+  },
+) {
   return {
-    focusLabel: FOCUS_LABELS[config.comparisonFocus],
+    focusLabel: copy.focusLabels[config.comparisonFocus],
     rows: config.sources.map((source) => {
       const content =
         config.comparisonFocus === "provenance"
@@ -69,7 +80,7 @@ export function buildSourceComparisonRows(config: SourceComparisonConfig) {
             ? source.claim
             : config.comparisonFocus === "limitations"
               ? source.limitation
-              : `${source.claim}｜证据: ${source.evidence}`;
+              : `${source.claim}｜${copy.evidencePrefix(source.evidence)}`;
       return { sourceId: source.id, title: source.title, content };
     }),
   };

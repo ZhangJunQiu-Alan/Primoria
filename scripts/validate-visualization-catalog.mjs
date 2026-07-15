@@ -208,18 +208,20 @@ for (const requiredNonStemTag of ["history", "literature", "language", "philosop
   if (!disciplineTags.has(requiredNonStemTag)) fail("components", `all-subject catalog is missing ${requiredNonStemTag} coverage`);
 }
 
-const qaComponentDir = resolve(repoRoot, "apps/web/src/lib/qa/components");
-const qaRegistrySource = readFileSync(resolve(qaComponentDir, "registry.ts"), "utf8");
-const implementedModuleSource = readdirSync(qaComponentDir)
+const componentDir = resolve(repoRoot, "apps/web/src/lib/interactive/components");
+const registrySource = readFileSync(resolve(componentDir, "registry.ts"), "utf8");
+const implementedModuleSource = readdirSync(componentDir)
   .filter((name) => name.endsWith(".ts") && !["registry.ts", "types.ts"].includes(name))
-  .map((name) => readFileSync(resolve(qaComponentDir, name), "utf8"))
+  .map((name) => readFileSync(resolve(componentDir, name), "utf8"))
   .join("\n");
-const qaModuleSources = `${qaRegistrySource}\n${implementedModuleSource}`;
-const qaComponentIds = [...qaModuleSources.matchAll(/componentId:\s*"([a-z][a-z0-9-]*\.[a-z][a-z0-9-]*)"/g)].map(
+const componentModuleSources = `${registrySource}\n${implementedModuleSource}`;
+const registeredComponentIds = [
+  ...componentModuleSources.matchAll(/componentId:\s*"([a-z][a-z0-9-]*\.[a-z][a-z0-9-]*)"/g),
+].map(
   (match) => match[1],
 );
-for (const componentId of new Set(qaComponentIds)) {
-  if (!componentIds.has(componentId)) fail("components", `missing current QA registry component ${componentId}`);
+for (const componentId of new Set(registeredComponentIds)) {
+  if (!componentIds.has(componentId)) fail("components", `missing current production registry component ${componentId}`);
 }
 const implementedComponentIds = [...implementedModuleSource.matchAll(/componentId:\s*"([a-z][a-z0-9-]*\.[a-z][a-z0-9-]*)"/g)].map(
   (match) => match[1],
@@ -239,4 +241,6 @@ if (errors.length > 0) {
 const statusSummary = [...statusCounts.entries()].map(([status, count]) => `${status}=${count}`).join(", ");
 console.log(`[visualization-catalog] OK: ${catalog.components.length} components (${statusSummary})`);
 console.log(`[visualization-catalog] discipline tags: ${[...disciplineTags].sort().join(", ")}`);
-console.log(`[visualization-catalog] current QA registry covered: ${[...new Set(qaComponentIds)].sort().join(", ")}`);
+console.log(
+  `[visualization-catalog] production registry covered: ${[...new Set(registeredComponentIds)].sort().join(", ")}`,
+);

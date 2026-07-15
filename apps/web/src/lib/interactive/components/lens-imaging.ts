@@ -3,7 +3,7 @@ import type { ImplementedComponent } from "./types";
 
 // physics.lens-imaging — 薄透镜成像。声明式组件样板:config schema、纯计算、
 // LLM schema 文档三者同源于此文件;React 渲染在
-// apps/web/src/app/qa/declarative-lens/widgets/lens-imaging.tsx。
+// apps/web/src/components/generative-ui/interactive/lens-imaging.tsx。
 
 export const LensImagingConfigSchema = z.object({
   lensType: z.enum(["convex", "concave"]).default("convex"),

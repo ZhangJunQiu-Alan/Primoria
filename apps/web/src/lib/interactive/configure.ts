@@ -1,13 +1,22 @@
 import { invokeJson } from "@/lib/ai/course-generation/model-json";
-import { fastTierSettings } from "@/lib/ai/deepagent/model";
+import { contentTierSettings, fastTierSettings } from "@/lib/ai/deepagent/model";
 import type { ImplementedComponent } from "@/lib/interactive/components/types";
 
 // Stage-2 of the declarative-component flow: given a selected component,
 // generate a full config (create) or a minimal patch (adjust) with the
-// fast-tier LLM and validate it against the component's Zod schema. Shared by
-// the production route (/api/interactive-component) and the QA experiment.
+// the catalog-appropriate LLM tier and validate it against the component's Zod
+// schema. Shared by the production route and the QA experiment.
 
 export const CONFIGURE_TIMEOUT_MS = 30_000;
+
+const CONTENT_QUALITY_COMPONENTS = new Set([
+  "general.timeline-causality",
+  "humanities.source-comparison",
+]);
+
+export function usesContentQualityTier(componentId: string) {
+  return CONTENT_QUALITY_COMPONENTS.has(componentId);
+}
 
 export type CurrentInstance = { componentId: string; config: Record<string, unknown> };
 
@@ -51,7 +60,7 @@ export async function configureComponent(
   const rawValue = await invokeJson({
     system: configure.system,
     user: configure.user,
-    settings: fastTierSettings(),
+    settings: usesContentQualityTier(component.componentId) ? contentTierSettings() : fastTierSettings(),
     schema: configure.mode === "patch" ? component.patchSchema : component.configSchema,
     schemaName: "configure_component",
     timeoutMs: CONFIGURE_TIMEOUT_MS,

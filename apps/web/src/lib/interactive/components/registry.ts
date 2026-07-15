@@ -20,9 +20,9 @@ import { timelineCausalityComponent } from "./timeline-causality";
 import { waveSuperpositionComponent } from "./wave-superposition";
 import type { ImplementedComponent, RegistryEntry } from "./types";
 
-// Single source of the component catalog. Adding a component = add its module
-// under this directory, list it here, and register its widget in
-// apps/web/src/app/qa/declarative-lens/widgets/index.tsx. Nothing else.
+// Production component registry. Adding a component also requires the
+// versioned JSON catalog, compact Agent catalog, and client widget map under
+// components/generative-ui/interactive.
 
 export const COMPONENT_REGISTRY: RegistryEntry[] = [
   lensImagingComponent,

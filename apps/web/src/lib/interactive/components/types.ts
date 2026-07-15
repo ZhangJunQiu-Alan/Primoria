@@ -1,9 +1,7 @@
 import type { z } from "zod";
 
-// Declarative-component engine (QA experiment). A registry entry is either a
-// catalog-only planned component or a fully implemented one. The router and
-// the QA client are generic over this interface — adding a component must not
-// require touching them.
+// Declarative-component engine shared by the production Tutor path and the
+// isolated QA route. A registry entry is either catalog-only or implemented.
 
 export type PlannedComponent = {
   implemented: false;

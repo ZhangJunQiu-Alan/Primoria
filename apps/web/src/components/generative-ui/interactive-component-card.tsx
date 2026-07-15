@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { msg } from "@/lib/i18n/client";
 import { WIDGETS } from "./interactive";
+import { useInteractiveT } from "./interactive/i18n";
 import { reportVisualizationEvent } from "@/lib/telemetry/visualization-client";
 
 // Browser-side stage-2 executor for open_interactive_component signals
@@ -51,6 +53,7 @@ function readCachedConfig(componentId: string, request: string): ComponentConfig
 }
 
 export function InteractiveComponentCard({ componentId, request }: { componentId: string; request: string }) {
+  const t = useInteractiveT().card;
   const [state, setState] = useState<CardState>(() => {
     const cached = readCachedConfig(componentId, request);
     return cached ? { status: "ready", config: cached } : { status: "loading" };
@@ -73,7 +76,7 @@ export function InteractiveComponentCard({ componentId, request }: { componentId
         const json = (await response.json()) as { ok: boolean; config?: ComponentConfig; error?: string };
         if (cancelled) return;
         if (!json.ok || !json.config) {
-          setState({ status: "error", message: json.error ?? "配置生成失败" });
+          setState({ status: "error", message: json.error ?? t.configFailed });
           reportVisualizationEvent({
             source: "interactive",
             topic: request,
@@ -91,20 +94,20 @@ export function InteractiveComponentCard({ componentId, request }: { componentId
         reportVisualizationEvent({ source: "interactive", topic: request, componentId, status: "rendered" });
       } catch (error) {
         if (cancelled) return;
-        setState({ status: "error", message: error instanceof Error ? error.message : "请求失败" });
+        setState({ status: "error", message: error instanceof Error ? error.message : t.requestFailed });
         reportVisualizationEvent({ source: "interactive", topic: request, componentId, status: "api_error" });
       }
     })();
     return () => {
       cancelled = true;
     };
-  }, [componentId, request, renderWidget]);
+  }, [componentId, request, renderWidget, t.configFailed, t.requestFailed]);
 
   if (!renderWidget) {
     return (
       <div className="message-row tool">
         <div className="tool-card status-card">
-          <div className="tool-title"><span className="tool-dot" /><span>暂不支持该互动组件,请换一种说法试试。</span></div>
+          <div className="tool-title"><span className="tool-dot" /><span>{t.unsupported}</span></div>
         </div>
       </div>
     );
@@ -114,7 +117,7 @@ export function InteractiveComponentCard({ componentId, request }: { componentId
     return (
       <div className="message-row tool">
         <div className="tool-card status-card" aria-busy="true">
-          <div className="tool-title"><span className="tool-spinner" /><span>正在为你准备互动组件…</span></div>
+          <div className="tool-title"><span className="tool-spinner" /><span>{t.preparing}</span></div>
         </div>
       </div>
     );
@@ -124,7 +127,7 @@ export function InteractiveComponentCard({ componentId, request }: { componentId
     return (
       <div className="message-row tool">
         <div className="tool-card status-card">
-          <div className="tool-title"><span className="tool-dot" /><span>互动组件生成失败:{state.message}</span></div>
+          <div className="tool-title"><span className="tool-dot" /><span>{msg(t.generationFailed, { message: state.message })}</span></div>
         </div>
       </div>
     );

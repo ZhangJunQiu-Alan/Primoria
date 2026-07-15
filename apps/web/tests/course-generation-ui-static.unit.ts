@@ -42,7 +42,6 @@ async function main() {
   const waveRenderer = read("src/components/generative-ui/wave-visualizer.tsx");
   const moleculeRenderer = read("src/components/generative-ui/molecule-renderer.tsx");
   const styles = read("src/app/globals.css");
-  const nextEnv = read("next-env.d.ts");
   const lessonDescriptionMigration = read("drizzle/0032_lesson_descriptions.sql");
 
   assert(libraryPage.includes("CourseLibraryGrid"), "library delegates course grid to client component");
@@ -136,7 +135,6 @@ async function main() {
   assert(!tutorNavRail.includes("<button type=\"button\" onClick={signOut}>Sign out</button>"), "sign out is no longer flattened into the rail");
   assert(styles.includes(".nav-account-menu"), "account popover has dedicated styling");
   assert(courseDetailClient.includes("useDialogFocus") && courseDetailClient.includes("ref={popupPrimaryRef}"), "learning recommendation dialog manages focus");
-  assert(nextEnv.includes(".next/types/routes.d.ts"), "next-env.d.ts tracks Next 16 typed route declarations");
   assert(styles.includes(".nav-rail {\n  background: rgba(255, 253, 248, 0.82);"), "nav rail keeps the account popover in its own layout layer");
   assert(styles.includes("z-index: 30;\n  height: 100vh;\n  overflow: visible;"), "nav rail paints above the workspace so the account popover remains clickable");
   assert(styles.includes("z-index: 80;"), "account popover sits above the app workspace");

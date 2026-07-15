@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "cases": [
+    { "id": "lens-zh", "prompt": "演示凸透镜成像", "intent": "create", "componentId": "physics.lens-imaging" },
+    { "id": "lens-en", "prompt": "Show me how a concave lens forms an image", "intent": "create", "componentId": "physics.lens-imaging" },
+    { "id": "timeline-history", "prompt": "把法国大革命的关键事件和因果关系做成时间线", "intent": "create", "componentId": "general.timeline-causality" },
+    { "id": "source-history", "prompt": "比较两份关于鸦片战争原因的史料及其局限", "intent": "create", "componentId": "humanities.source-comparison" },
+    { "id": "close-reading", "prompt": "用互动方式细读这首诗的意象和措辞", "intent": "create", "componentId": "literature.close-reading" },
+    { "id": "argument-map", "prompt": "画出是否应该禁止一次性塑料的论证结构", "intent": "create", "componentId": "humanities.argument-map" },
+    { "id": "titration", "prompt": "可视化强酸强碱滴定曲线和等当点", "intent": "create", "componentId": "chem.acid-base-titration" },
+    { "id": "wave", "prompt": "让我拖动相位看看两列波如何叠加", "intent": "create", "componentId": "physics.wave-superposition" },
+    { "id": "sorting", "prompt": "一步步演示插入排序", "intent": "create", "componentId": "cs.sorting-steps" },
+    { "id": "function", "prompt": "探索二次函数平移伸缩和翻折", "intent": "create", "componentId": "math.function-explorer" },
+    { "id": "angle", "prompt": "给我一个可以拖动射线的量角器", "intent": "create", "componentId": "math.angle-measure" },
+    { "id": "process", "prompt": "把论文同行评审的输入变化输出和反馈做成流程", "intent": "create", "componentId": "general.process-sequence" },
+    { "id": "narrative", "prompt": "展示哈姆雷特的叙事弧线和张力变化", "intent": "create", "componentId": "literature.narrative-arc" },
+    { "id": "characters", "prompt": "交互查看红楼梦主要人物关系如何变化", "intent": "create", "componentId": "literature.character-relationships" },
+    { "id": "sentence", "prompt": "比较日语和英语句子的语序与依存关系", "intent": "create", "componentId": "language.sentence-structure" },
+    { "id": "policy", "prompt": "比较碳税和排放交易对不同利益相关者的权衡", "intent": "create", "componentId": "social.policy-tradeoff" },
+    { "id": "climate", "prompt": "比较新加坡和伦敦每月气温降水", "intent": "create", "componentId": "geography.climate-comparison" },
+    { "id": "color", "prompt": "做一个能探索互补色和三角色的色轮", "intent": "create", "componentId": "arts.color-harmony" },
+    { "id": "rhythm", "prompt": "让我自己编一个 6/8 拍节奏并播放", "intent": "create", "componentId": "music.rhythm-pattern" },
+    { "id": "experiment", "prompt": "设计一个研究睡眠对记忆影响的受控实验", "intent": "create", "componentId": "psychology.experiment-design" },
+    { "id": "adjust-lens", "prompt": "把焦距调到 15 厘米", "intent": "adjust", "componentId": "physics.lens-imaging", "current": { "componentId": "physics.lens-imaging", "config": { "focalLength": 10 } } },
+    { "id": "adjust-vague-rhythm", "prompt": "把它调快一点", "intent": "adjust", "componentId": "music.rhythm-pattern", "current": { "componentId": "music.rhythm-pattern", "config": { "tempoBpm": 90 } } },
+    { "id": "adjust-timeline", "prompt": "再加一个转折事件", "intent": "adjust", "componentId": "general.timeline-causality", "current": { "componentId": "general.timeline-causality", "config": {} } },
+    { "id": "off-catalog-circuit", "prompt": "做一个能接线并测电流的电路实验台", "intent": "off_catalog", "componentId": null },
+    { "id": "off-catalog-orbit", "prompt": "做一个三维行星轨道模拟器", "intent": "off_catalog", "componentId": null },
+    { "id": "off-catalog-map", "prompt": "在世界地图上拖动查看丝绸之路城市", "intent": "off_catalog", "componentId": null },
+    { "id": "chat-explain", "prompt": "解释一下导数是什么，不需要画图", "intent": "chat", "componentId": null },
+    { "id": "chat-greeting", "prompt": "你好，今天适合学什么？", "intent": "chat", "componentId": null }
+  ]
+}
