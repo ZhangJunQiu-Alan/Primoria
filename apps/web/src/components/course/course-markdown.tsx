@@ -7,7 +7,9 @@ const FENCED_CODE_BLOCK_RE = /(^|\n)(`{3,}|~{3,})[^\n]*\n[\s\S]*?\n\2(?=\n|$)/g;
 const INLINE_CODE_RE = /(`+)([\s\S]*?)\1/g;
 const DISPLAY_MATH_RE = /\$\$[\s\S]*?\$\$/g;
 const INLINE_MATH_RE = /(?<!\\)\$(?!\$)(?:\\.|[^$\\\n])+(?<!\\)\$/g;
-const BRACKET_MATH_RE = /\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)/g;
+const DISPLAY_BRACKET_MATH_RE = /(?<!\\)\\\[([\s\S]*?)(?<!\\)\\\]/g;
+const INLINE_BRACKET_MATH_RE = /(?<!\\)\\\(([\s\S]*?)(?<!\\)\\\)/g;
+const BRACKET_MATH_CUE_RE = /(?<!\\)\\(?:\(|\[)/;
 const PROTECTED_PREFIX = "\uE000primoria-protected-";
 const PROTECTED_SUFFIX = "\uE001";
 
@@ -230,9 +232,13 @@ function wrapBareLatexLine(line: string, inlineOnly: boolean) {
 function normalizeMarkdownSegmentMath(markdown: string, inlineOnly: boolean) {
   const protectedParts: ProtectedPart[] = [];
   let normalized = protectWith(markdown, INLINE_CODE_RE, protectedParts);
+  normalized = normalized.replace(
+    DISPLAY_BRACKET_MATH_RE,
+    (_match, formula: string) => inlineOnly ? `$${formula}$` : `$$${formula}$$`,
+  );
+  normalized = normalized.replace(INLINE_BRACKET_MATH_RE, (_match, formula: string) => `$${formula}$`);
   normalized = protectWith(normalized, DISPLAY_MATH_RE, protectedParts);
   normalized = protectWith(normalized, INLINE_MATH_RE, protectedParts);
-  normalized = protectWith(normalized, BRACKET_MATH_RE, protectedParts);
   normalized = normalized
     .split("\n")
     .map((line) => wrapBareLatexLine(line, inlineOnly))
@@ -241,7 +247,7 @@ function normalizeMarkdownSegmentMath(markdown: string, inlineOnly: boolean) {
 }
 
 export function normalizeCourseMarkdownMath(markdown: string, options: { inlineOnly?: boolean } = {}) {
-  if (!hasBareLatexCue(markdown)) return markdown;
+  if (!hasBareLatexCue(markdown) && !BRACKET_MATH_CUE_RE.test(markdown)) return markdown;
 
   const protectedParts: ProtectedPart[] = [];
   const protectedMarkdown = protectWith(markdown, FENCED_CODE_BLOCK_RE, protectedParts, "fence");

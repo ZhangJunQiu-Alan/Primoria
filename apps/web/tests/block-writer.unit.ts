@@ -66,6 +66,8 @@ function main() {
   // Existing directives are preserved.
   assert(/language/i.test(system), "system prompt keeps the language directive");
   assert(system.includes("LEARNER BACKGROUND"), "system prompt keeps the knowledge-background directive");
+  assert(system.includes("single dollar delimiters ($...$)"), "system prompt requires remark-math inline delimiters");
+  assert(system.includes("Never use \\(...\\) or \\[...\\]"), "system prompt rejects unsupported LaTeX bracket delimiters");
   assert(user.includes("Fields:"), "user prompt keeps the per-block field hints");
 
   // A quiz batch keeps its contract and still surfaces the instruction.

@@ -12,10 +12,9 @@ import { IR_VERSION } from "./lesson-plan-ir";
 //    for the same IR + KG changes.
 
 export { IR_VERSION };
-// Bumped for the planner->writer `writerInstruction` contract: the planner now
-// emits a per-block execution brief and the writer prompt consumes it (IR_VERSION
-// also moved to 2). Previous: 2026-06-28-image (the I=image block).
-export const PROMPT_VERSION = "2026-06-30-writer-instruction";
+// Bumped so resumed generation does not reuse writer batches created before the
+// Markdown math delimiter contract. Previous: 2026-06-30-writer-instruction.
+export const PROMPT_VERSION = "2026-07-17-markdown-math-delimiters";
 export const COMPILER_VERSION = "3";
 
 export type CheckpointVersions = {

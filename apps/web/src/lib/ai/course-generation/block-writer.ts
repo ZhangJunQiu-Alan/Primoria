@@ -143,6 +143,10 @@ QUIZ:
 
 OUTPUT a single compact JSON array, one object per block, each including its "order" as a JSON number and the listed fields. No prose, no code fences.
 
+MATH IN MARKDOWN:
+- Wrap every inline LaTeX formula in single dollar delimiters ($...$) and every display formula in double dollar delimiters ($$...$$).
+- Never use \\(...\\) or \\[...\\] delimiters. Escape LaTeX backslashes correctly inside the JSON string.
+
 LESSON CONTEXT:
 Lesson: "${plan.title}" on topic "${kg.startTopic.name}".
 ${languageDirective(kg.language)}
