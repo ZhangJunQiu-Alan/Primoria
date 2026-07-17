@@ -13,6 +13,8 @@ const globalsCssPath = resolve(repoRoot, "apps/web/src/app/globals.css");
 const ALIVE_PREFIXES = [
   "course-outline-", // course-outline-view.tsx / tool-card.tsx: `course-outline-${...}`
   "library-status-", // course-library-grid.tsx: `library-status-${tone}`
+  "rarity-", // gamification-hub.tsx: `rarity-${achievement.rarity}`
+  "role-", // gamification-hub.tsx: `role-${lesson.role}`
   "is-", // code-block-view.tsx: `is-${output.status}`
   "cm-", // CodeMirror editor DOM
   "copilotKit", // CopilotKit UI DOM
