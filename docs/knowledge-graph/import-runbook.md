@@ -24,7 +24,7 @@ under `apps/web/src/lib/knowledge-graph/data/`.
 3. **粒度一致性**：同层 concept 尺度相当；topic 子图约 2–3 个 concept。
 4. **先修关系学理正确**：方向对、hard/soft 强度对、关键前置不漏、不堆冗余边。边可选带 `reason`(一句话、≤240 字，说明为何 `to` 需先学 `from`)——`validate-kg.mjs` 只校验类型与长度,非必填;`build-topic-graph.mjs` 会带进 `conceptEdges` 供建课时铺垫动机。
 5. **教学顺序合理**：default_order 排出的路径符合实际教学，且不与 prereq 边冲突。
-6. **可诊断/可出题性**：每个 concept 能独立出 quiz；相邻 concept「会分别做错」才拆，「一起记忆的清单」不拆。
+6. **可诊断/可出题性**：每个 concept 能独立出 quiz；相邻 concept「会分别做错」才拆，「一起记忆的清单」不拆。concept 可选带 `assessment_hint`(一句话、≤240 字,点明该考的可观察技能)——`validate-kg.mjs` 只校验类型与长度,非必填;`build-topic-graph.mjs` 带进概念,**仅**供 block-writer 出题用,不参与 mastery 判定。
 
 ## 导入新KG的步骤（顺序）
 

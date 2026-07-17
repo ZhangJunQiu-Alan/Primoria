@@ -17,7 +17,7 @@ const kg: CourseContext = {
     topicId: "t1",
     name: "Entropy",
     concepts: [
-      { conceptId: "entropy", name: "Entropy", defaultOrder: 1 },
+      { conceptId: "entropy", name: "Entropy", defaultOrder: 1, assessmentHint: "compute the entropy of a small distribution" },
       { conceptId: "info", name: "Information", defaultOrder: 2 },
     ],
   },
@@ -78,6 +78,12 @@ function main() {
   const quiz = buildBatchPrompt(quizBatch, plan, kg);
   assert(quiz.user.includes("Writer instruction:"), "quiz prompt carries the writer instruction");
   assert(quiz.system.includes("QUIZ:"), "quiz prompt keeps the quiz contract");
+  // KG assessment hint surfaces on quiz blocks only.
+  assert(
+    quiz.user.includes("Check specifically: compute the entropy of a small distribution"),
+    "quiz prompt injects the concept's KG assessment hint",
+  );
+  assert(!/Check specifically:/.test(user), "non-quiz block does not inject the assessment hint");
 
   process.stdout.write("[block-writer.unit] ALL CHECKS PASSED\n");
 }

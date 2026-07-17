@@ -122,6 +122,14 @@ function describeJob(job: BlockGenerationJob, kg: CourseContext): string {
     fields = `"title","description",${VISUAL_ENGINE_HINTS[job.engine]}. The engine is FIXED to "${job.engine}" by the system — do NOT output an "engine" field and do NOT invent another; provide only the payload key shown above as a sibling of title/description`;
     if (concept?.visualHint) fields += `. Visualize specifically: ${concept.visualHint}`;
   }
+  if (job.type === "quiz") {
+    // KG-authored per-concept assessment hints: what a good check looks like.
+    // Guides question design only; concept attribution/mastery are unaffected.
+    const hints = job.conceptIds
+      .map((id) => kg.startTopic.concepts?.find((c) => c.conceptId === id)?.assessmentHint)
+      .filter((h): h is string => Boolean(h));
+    if (hints.length) fields += ` Check specifically: ${hints.join("; ")}.`;
+  }
 
   return `- order ${job.order}: ${job.type} (role ${job.pedagogicalRole}), concepts: ${concepts}. Goal: ${job.goal}. Writer instruction: ${job.writerInstruction} Fields: ${fields}.${neighbors ? ` Avoid overlap — ${neighbors}.` : ""}`;
 }

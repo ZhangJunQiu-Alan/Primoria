@@ -43,6 +43,13 @@ function validateGraph(graphId) {
     const isStr = (v) => typeof v === "string" && v.trim().length > 0;
     if (!isStr(node.name)) errors.push(`${node.id}: missing/empty name`);
     if (!isStr(node.name_zh)) errors.push(`${node.id}: missing/empty name_zh`);
+    if (node.assessment_hint !== undefined) {
+      if (!isStr(node.assessment_hint)) {
+        errors.push(`${node.id}: assessment_hint must be a non-empty string when present`);
+      } else if (node.assessment_hint.length > 240) {
+        errors.push(`${node.id}: assessment_hint exceeds 240 chars (${node.assessment_hint.length})`);
+      }
+    }
   }
 
   // concept -> topic reference integrity

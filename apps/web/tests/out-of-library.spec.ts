@@ -313,6 +313,25 @@ describe("toTopicGraph", () => {
     expect(graph.conceptEdges!.some((e) => e.to === ids[0])).toBe(false);
   });
 
+  it("carries per-concept assessmentHint onto TopicConcepts", () => {
+    const raw = parseGeneratedGraph(
+      JSON.stringify({
+        subject: "S",
+        subjectZh: "",
+        topics: Array.from({ length: 4 }, (_, i) => ({
+          name: `T${i}`,
+          concepts: [
+            { name: `A${i}`, assessmentHint: `test A${i} skill` },
+            { name: `B${i}` },
+          ],
+        })),
+      }),
+    )!;
+    const graph = toTopicGraph(raw, normalizeTopicKey("assess"));
+    expect(graph.topics[0].conceptIds[0].assessmentHint).toBe("test A0 skill");
+    expect(graph.topics[0].conceptIds[1].assessmentHint).toBeUndefined();
+  });
+
   it("omits conceptEdges entirely when the model supplied no reasons", () => {
     const graph = toTopicGraph(parseGeneratedGraph(rawGraphJson(4))!, normalizeTopicKey("no-reason"));
     // edges still emitted (linear chain), just without reason fields

@@ -23,6 +23,11 @@ export type TopicConcept = {
    * prerequisite graph: how load-bearing this concept is (how much depends on it).
    * Distinct from defaultOrder (local teaching sequence). Absent = uncomputed. */
   centrality?: number;
+  /** Optional one-line hint describing what a good check of THIS concept looks
+   * like (the observable skill to test). Consumed only by quiz-block generation,
+   * never by mastery scoring. Authored on library concepts (opt-in) and emitted by
+   * the graph generator for gen_* graphs. Absent = no authored hint. */
+  assessmentHint?: string;
 };
 
 export type TopicSuccessor = {
