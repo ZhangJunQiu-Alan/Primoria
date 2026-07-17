@@ -216,7 +216,7 @@ export type RenderChatQuizArgs = {
 
 export type PositionLearningGoalArgs = { query: string; graph_id?: string };
 export type GetCourseCardArgs = { course_id: string };
-export type OpenInteractiveComponentArgs = { component_id: string; request: string };
+export type OpenInteractiveComponentArgs = { component_id: string; request: string; target_instance_id?: string };
 
 export type RenderChartArgs = {
   title: string;

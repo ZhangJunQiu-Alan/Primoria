@@ -46,7 +46,8 @@
     "test:progress:db": "tsx tests/learning-progress-jobs.db.ts",
     "test:extractor": "tsx tests/learning-events-lesson-id.unit.ts && tsx tests/facts-directive.unit.ts && tsx tests/learner-facts-plan.unit.ts && tsx tests/distill-prompt.unit.ts && tsx tests/facts-consumption.unit.ts && tsx tests/feedback-latest.unit.ts",
     "test:extractor:db": "tsx tests/extractor-jobs.db.ts",
-    "test:db": "pnpm test:lesson-jobs:db && pnpm test:onboarding-goal:db && pnpm test:course-description:db && pnpm test:progress:db && pnpm test:extractor:db"
+    "test:interactive-budget:db": "RUN_INTERACTIVE_BUDGET_DB=1 vitest run tests/interactive-request-budget.db.spec.ts",
+    "test:db": "pnpm test:lesson-jobs:db && pnpm test:onboarding-goal:db && pnpm test:course-description:db && pnpm test:progress:db && pnpm test:extractor:db && pnpm test:interactive-budget:db"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.5",

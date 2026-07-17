@@ -41,6 +41,9 @@ jobs:
       - name: Web unit tests
         run: pnpm --filter @primoria/web test
 
+      - name: Visualization catalog and routing contracts
+        run: pnpm catalog:validate && pnpm --filter @primoria/web test:interactive-routing
+
       - name: KG source validation
         run: pnpm --filter @primoria/web validate:kg
 
