@@ -23,6 +23,10 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
   worksheet block renderers.
 - Idempotent course quiz submissions, learning events, concept mastery, and
   post-lesson diagnosis/recommendations.
+- Server-authoritative solo progression with an idempotent XP ledger, eight
+  guild ranks, three daily quests, course quest map, and ten Profile
+  achievements. Full RPG presentation is Profile-only; older learning history
+  is excluded by each player's progression start time.
 - Post-lesson Extractor jobs and reviewable/dismissible learner facts.
 - Immutable snapshot course sharing with idempotent import.
 - Global user-agnostic generated-image cache.
@@ -61,7 +65,8 @@ execution until streaming HTML settles.
 ## Persistence and workers
 
 PostgreSQL stores App/Auth/Course data, KG/pgvector data, chat history, sharing
-snapshots, learner profile/facts, mastery, media, and durable jobs. Three Web
+snapshots, learner profile/facts, mastery, the progression ledger and
+achievements, media, and durable jobs. Three Web
 workers consume Postgres queues:
 
 - `worker:lesson-generation`;
@@ -126,5 +131,7 @@ a permanent guarantee, so rerun the evaluator after catalog or prompt changes.
 2. Deepen high-value humanities interactions before optimizing for component count.
 3. Close the full remediation/resume loop, including cross-graph prerequisites.
 4. Improve learner-fact extraction quality, review, correction, and decay.
-5. Keep browser QA representative across text, visual, code, quiz, worksheet,
+5. Observe XP pace and quest completion quality before changing the fixed
+   launch economy; do not add competitive or social progression implicitly.
+6. Keep browser QA representative across text, visual, code, quiz, worksheet,
    course sharing, onboarding, and Tutor patch flows.

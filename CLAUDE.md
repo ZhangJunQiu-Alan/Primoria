@@ -165,6 +165,27 @@ durable preferences, prior knowledge, learning gaps, and goals, written by
 onboarding sync or the Extractor worker. Only active teaching-relevant fact
 categories enter Tutor/planner context; stale goals do not drive lesson content.
 
+### Personal progression and guild profile
+
+Keep progression separate from both mastery and learner facts. XP represents
+verified effort/completion; it is not proof of competence. Full RPG UI belongs
+only on `/profile`; quiz/course pages may show transient rewards after a
+successful server response, while `/stats` and `/weekly-report` remain numeric.
+
+`xp_awards` is an append-only server ledger. Award XP only through a unique
+owner/rule/dedupe key and increment `player_progress.total_xp` only when that
+ledger row is inserted. `player_progress.started_at` excludes all earlier
+learning history. Daily quests and streaks use the validated IANA timezone in
+`user_settings.preferences.timeZone`, with UTC fallback. The launch catalog is
+fixed at eight ranks, three daily quests, and ten solo achievements; do not add
+leaderboards, group quests, Teach-Back bosses, matching games, or client-authored
+rewards without a new product decision.
+
+A concept requires at least three concept-question results and 80% accuracy to
+become `mastered`. Mastery workers emit idempotent `mastery.transition` events
+only when status changes; lesson completion emits idempotent `lesson.completed`
+events.
+
 ### Course sharing
 
 Courses are shared via public snapshot links. `course_share_links` stores one immutable, sanitized snapshot per course (learner progress stripped, non-global image assets degraded); the public `/share/[token]` page and the import flow read only the snapshot, never the live course rows. Revoking and re-enabling mints a new token, so revoked links stay dead. Imports are idempotent per user via `courses.imported_from_share_id`. Owner APIs: `/api/courses/[id]/share` (GET/POST/DELETE); import: `POST /api/share/[token]/import`; logic: `apps/web/src/lib/courses/share-store.ts`.
@@ -183,7 +204,7 @@ Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared b
 
 ### DB
 
-ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include users, identities, sessions, rate limits, courses, lessons, jobs, learning events, mastery, learner profiles/facts, chat messages, media assets, and settings.
+ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include users, identities, sessions, rate limits, courses, lessons, jobs, learning events, mastery, learner profiles/facts, `player_progress`, `xp_awards`, `daily_quest_completions`, `achievement_unlocks`, chat messages, media assets, and settings.
 
 Local development uses the Docker Compose PostgreSQL service (`pgvector/pgvector:pg16`) bound to `127.0.0.1:5432`. The old `127.0.0.1:15432` Tencent Cloud SSH tunnel is a remote-database fallback only, not the default local path. Supabase runtime helpers have been removed; do not add new Supabase URL/anon-key paths unless the database/auth strategy is intentionally changed.
 
