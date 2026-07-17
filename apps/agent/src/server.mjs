@@ -5,6 +5,7 @@ import { RunAgentInputSchema } from "@ag-ui/core";
 import { createPrimoriaGraph } from "./graph.mjs";
 import { createRunStore } from "./runtime/run-store.mjs";
 import { createRunWorker } from "./runtime/runner.mjs";
+import { getAgentInternalToken, inputMatchesOwner, isAuthorizedAgentRequest, ownerIdFromRequest } from "./runtime/internal-auth.mjs";
 
 const PORT = Number(process.env.PORT ?? 2024);
 const HOST = process.env.HOST ?? "0.0.0.0";
@@ -46,9 +47,10 @@ function runIdFromStatusPath(pathname) {
  * @param {import("node:http").ServerResponse} res
  * @param {any} store
  * @param {any} input
+ * @param {string} ownerId
  */
-async function streamRun(req, res, store, input) {
-  await store.ensureRun(input);
+async function streamRun(req, res, store, input, ownerId) {
+  await store.ensureRun(input, ownerId);
   res.writeHead(200, {
     "content-type": "text/event-stream; charset=utf-8",
     "cache-control": "no-cache, no-transform",
@@ -59,32 +61,29 @@ async function streamRun(req, res, store, input) {
 
   let afterId = Number(req.headers["x-primoria-after-event-id"] ?? 0);
   let lastHeartbeat = Date.now();
-  let terminalSeen = false;
+  let pollMs = 100;
   while (!res.destroyed && !res.writableEnded) {
-    const events = await store.listEvents(input.runId, afterId);
+    const batch = await store.readStreamBatch(input.runId, afterId, ownerId);
+    if (!batch) break;
+    const events = Array.isArray(batch.events) ? batch.events : [];
     for (const row of events) {
       afterId = Number(row.id);
       res.write(`id: ${afterId}\ndata: ${JSON.stringify(row.event)}\n\n`);
     }
-    const run = await store.getRun(input.runId);
-    if (!run) break;
-    if (TERMINAL.has(run.status)) {
-      if (terminalSeen && events.length === 0) break;
-      terminalSeen = true;
-    } else {
-      terminalSeen = false;
-    }
+    if (TERMINAL.has(batch.status) && events.length < 200) break;
     if (Date.now() - lastHeartbeat > 10_000) {
       res.write(": heartbeat\n\n");
       lastHeartbeat = Date.now();
     }
-    await delay(100);
+    await delay(pollMs);
+    pollMs = events.length > 0 ? 100 : Math.min(2_000, pollMs * 2);
   }
   if (!res.destroyed) res.end();
 }
 
 export async function startAgentServer() {
   if (!DATABASE_URL) throw new Error("DATABASE_URL is required for the Agent runtime");
+  getAgentInternalToken();
   const store = createRunStore(DATABASE_URL);
   await store.ping();
   const checkpointer = PostgresSaver.fromConnString(DATABASE_URL, { schema: "agent_runtime" });
@@ -98,6 +97,20 @@ export async function startAgentServer() {
   });
   await worker.start();
 
+  const retentionDays = Math.max(1, Number(process.env.AGENT_RUN_RETENTION_DAYS ?? 30));
+  const pruneIntervalMs = Math.max(1, Number(process.env.AGENT_RUN_PRUNE_INTERVAL_HOURS ?? 24)) * 60 * 60 * 1_000;
+  const pruneRuns = async () => {
+    try {
+      const pruned = await store.prune(retentionDays);
+      if (pruned > 0) process.stdout.write(`[agent-runtime] pruned ${pruned} expired runs\n`);
+    } catch (error) {
+      console.error("[agent-runtime] retention prune failed", error);
+    }
+  };
+  await pruneRuns();
+  const pruneTimer = setInterval(() => void pruneRuns(), pruneIntervalMs);
+  pruneTimer.unref();
+
   let ready = true;
   const server = createServer(async (req, res) => {
     try {
@@ -109,29 +122,35 @@ export async function startAgentServer() {
         return json(res, 200, { status: "ok", activeRuns: worker.activeCount() });
       }
 
+      if (!isAuthorizedAgentRequest(req)) return json(res, 401, { error: "unauthorized" });
+      const ownerId = ownerIdFromRequest(req);
+      if (!ownerId) return json(res, 400, { error: "owner_required" });
+
       const cancelRunId = runIdFromCancelPath(url.pathname);
       if (req.method === "POST" && cancelRunId) {
-        const cancelled = await store.cancel(cancelRunId);
+        const cancelled = await store.cancel(cancelRunId, ownerId);
         return json(res, cancelled ? 202 : 404, { ok: cancelled, runId: cancelRunId });
       }
 
       const statusRunId = runIdFromStatusPath(url.pathname);
       if (req.method === "GET" && statusRunId) {
-        const run = await store.getRun(statusRunId);
+        const run = await store.getRun(statusRunId, ownerId);
         return run ? json(res, 200, { id: run.id, status: run.status, attempts: run.attempts, errorCategory: run.error_category }) : json(res, 404, { error: "not_found" });
       }
 
       if (req.method === "POST" && url.pathname === "/agent") {
         const parsed = RunAgentInputSchema.safeParse(await readJson(req));
         if (!parsed.success) return json(res, 400, { error: "invalid_agent_input" });
-        await streamRun(req, res, store, parsed.data);
+        if (!inputMatchesOwner(parsed.data, ownerId)) return json(res, 403, { error: "owner_mismatch" });
+        await streamRun(req, res, store, parsed.data, ownerId);
         return;
       }
       json(res, 404, { error: "not_found" });
     } catch (error) {
       console.error("[agent-runtime] request failed", error);
       const code = error && typeof error === "object" && "code" in error ? error.code : null;
-      if (!res.headersSent) json(res, code === "run_id_conflict" ? 409 : 500, { error: "agent_runtime_error" });
+      const status = code === "owner_mismatch" ? 404 : code === "owner_required" ? 400 : code === "run_id_conflict" ? 409 : 500;
+      if (!res.headersSent) json(res, status, { error: status === 404 ? "not_found" : "agent_runtime_error" });
       else if (!res.destroyed) res.end();
     }
   });
@@ -146,6 +165,7 @@ export async function startAgentServer() {
   async function close(reason = "close") {
     if (!ready) return;
     ready = false;
+    clearInterval(pruneTimer);
     process.stdout.write(`[agent-runtime] ${reason}; draining\n`);
     const serverClosed = new Promise((resolve) => server.close(() => resolve(undefined)));
     await worker.stop(Math.max(1_000, Number(process.env.AGENT_SHUTDOWN_GRACE_MS ?? 30_000)));

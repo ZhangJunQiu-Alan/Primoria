@@ -6,6 +6,7 @@ import {
 import { LangGraphHttpAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest } from "next/server";
 import { normalizeCopilotMessagesWithAttachments } from "@/lib/agent-os";
+import { getAgentInternalToken } from "@/lib/ai/agent-internal-auth";
 import { getLearnerProfile } from "@/lib/learner-profile/store";
 import { listActiveFacts } from "@/lib/learner-facts/store";
 import { selectPlannerFacts } from "@/lib/courses/lesson-generation-context";
@@ -231,6 +232,10 @@ class PrimoriaHttpAgent extends LangGraphHttpAgent {
     if (!this.activeRunId) return;
     void fetch(`${this.runtimeBaseUrl.replace(/\/$/, "")}/runs/${encodeURIComponent(this.activeRunId)}/cancel`, {
       method: "POST",
+      headers: {
+        "x-primoria-agent-token": getAgentInternalToken(),
+        "x-primoria-owner-id": this.ownerId ?? "local-dev",
+      },
     }).catch(() => {});
   }
 }
@@ -239,6 +244,7 @@ export const POST = async (req: NextRequest) => {
   const requestId = req.headers.get("x-request-id") ?? crypto.randomUUID();
   const { denied, user } = await requireAuthUser();
   if (denied) return denied;
+  const ownerId = user?.id ?? "local-dev";
 
   const [learnerProfile, learnerFacts] = user?.id
     ? await Promise.all([getLearnerProfile(user.id), listActiveFacts(user.id)])
@@ -248,10 +254,14 @@ export const POST = async (req: NextRequest) => {
     url: agentRuntimeUrl,
     agentId: "primoria_tutor",
     runtimeBaseUrl: agentRuntimeBaseUrl,
-    ownerId: user?.id ?? null,
+    ownerId,
     learnerProfile,
     learnerFacts,
-    headers: { "x-request-id": requestId },
+    headers: {
+      "x-request-id": requestId,
+      "x-primoria-agent-token": getAgentInternalToken(),
+      "x-primoria-owner-id": ownerId,
+    },
   });
 
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({

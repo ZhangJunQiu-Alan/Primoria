@@ -31,37 +31,65 @@ export function createRunStore(databaseUrl = process.env.DATABASE_URL) {
     },
 
     /** @param {any} input */
-    async ensureRun(input) {
+    async ensureRun(input, expectedOwnerId = ownerIdFromInput(input)) {
+      if (!expectedOwnerId) throw Object.assign(new Error("Agent run owner is required"), { code: "owner_required" });
       const hash = inputHash(input);
       const maxAttempts = Math.max(1, Number(process.env.AGENT_RUN_MAX_ATTEMPTS ?? 2));
       await sql`
         insert into agent_runtime.runs (id, thread_id, owner_id, input, input_hash, max_attempts)
-        values (${input.runId}, ${input.threadId}, ${ownerIdFromInput(input)}, ${sql.json(input)}, ${hash}, ${maxAttempts})
+        values (${input.runId}, ${input.threadId}, ${expectedOwnerId}, ${sql.json(input)}, ${hash}, ${maxAttempts})
         on conflict (id) do nothing
       `;
       const [run] = await sql`select * from agent_runtime.runs where id = ${input.runId}`;
       if (!run) throw new Error("Agent run could not be created");
+      if (run.owner_id !== expectedOwnerId) {
+        throw Object.assign(new Error("runId belongs to another owner"), { code: "owner_mismatch" });
+      }
       if (run.input_hash !== hash) {
         throw Object.assign(new Error("runId was already used for a different request"), { code: "run_id_conflict" });
       }
       return run;
     },
 
-    /** @param {string} runId */
-    async getRun(runId) {
-      const [run] = await sql`select * from agent_runtime.runs where id = ${runId}`;
+    /** @param {string} runId @param {string | null} [ownerId] */
+    async getRun(runId, ownerId = null) {
+      const ownerFilter = ownerId ? sql`and owner_id = ${ownerId}` : sql``;
+      const [run] = await sql`select * from agent_runtime.runs where id = ${runId} ${ownerFilter}`;
       return run ?? null;
     },
 
-    /** @param {string} runId @param {number} [afterId] */
-    async listEvents(runId, afterId = 0) {
+    /** @param {string} runId @param {number} [afterId] @param {string | null} [ownerId] */
+    async listEvents(runId, afterId = 0, ownerId = null) {
+      const ownerFilter = ownerId
+        ? sql`and exists (select 1 from agent_runtime.runs r where r.id = run_id and r.owner_id = ${ownerId})`
+        : sql``;
       return sql`
         select id, event, created_at
         from agent_runtime.events
-        where run_id = ${runId} and id > ${afterId}
+        where run_id = ${runId} and id > ${afterId} ${ownerFilter}
         order by id asc
         limit 200
       `;
+    },
+
+    /** @param {string} runId @param {number} afterId @param {string} ownerId */
+    async readStreamBatch(runId, afterId, ownerId) {
+      const [row] = await sql`
+        select r.id, r.status,
+          coalesce((
+            select jsonb_agg(jsonb_build_object('id', e.id, 'event', e.event, 'created_at', e.created_at) order by e.id)
+            from (
+              select id, event, created_at
+              from agent_runtime.events
+              where run_id = r.id and id > ${afterId}
+              order by id asc
+              limit 200
+            ) e
+          ), '[]'::jsonb) as events
+        from agent_runtime.runs r
+        where r.id = ${runId} and r.owner_id = ${ownerId}
+      `;
+      return row ?? null;
     },
 
     /** @param {string} workerId @param {number} leaseMs */
@@ -136,8 +164,9 @@ export function createRunStore(databaseUrl = process.env.DATABASE_URL) {
       });
     },
 
-    /** @param {string} runId */
-    async cancel(runId) {
+    /** @param {string} runId @param {string | null} [ownerId] */
+    async cancel(runId, ownerId = null) {
+      const ownerFilter = ownerId ? sql`and owner_id = ${ownerId}` : sql``;
       return sql.begin(async (tx) => {
         const rows = await tx`
           update agent_runtime.runs
@@ -145,7 +174,7 @@ export function createRunStore(databaseUrl = process.env.DATABASE_URL) {
               status = case when status = 'queued' then 'cancelled' else status end,
               completed_at = case when status = 'queued' then now() else completed_at end,
               updated_at = now()
-          where id = ${runId} and status in ('queued', 'running')
+          where id = ${runId} and status in ('queued', 'running') ${ownerFilter}
           returning id, status
         `;
         if (!rows[0]) return false;
@@ -294,13 +323,31 @@ export function createRunStore(databaseUrl = process.env.DATABASE_URL) {
 
     /** @param {number} retentionDays */
     async prune(retentionDays) {
-      const rows = await sql`
-        delete from agent_runtime.runs
-        where status in ('completed', 'failed', 'cancelled')
-          and completed_at < now() - (${retentionDays} * interval '1 day')
-        returning id
-      `;
-      return rows.length;
+      return sql.begin(async (tx) => {
+        const doomed = await tx`
+          delete from agent_runtime.runs
+          where status in ('completed', 'failed', 'cancelled')
+            and completed_at < now() - (${retentionDays} * interval '1 day')
+          returning id, thread_id
+        `;
+        const threadIds = [...new Set(doomed.map((run) => run.thread_id))];
+        if (threadIds.length === 0) return 0;
+        const orphaned = await tx`
+          select candidate.thread_id
+          from unnest(${threadIds}::text[]) as candidate(thread_id)
+          where not exists (
+            select 1 from agent_runtime.runs retained
+            where retained.thread_id = candidate.thread_id
+          )
+        `;
+        const orphanedThreadIds = orphaned.map((row) => row.thread_id);
+        if (orphanedThreadIds.length > 0) {
+          await tx`delete from agent_runtime.checkpoint_writes where thread_id = any(${orphanedThreadIds}::text[])`;
+          await tx`delete from agent_runtime.checkpoint_blobs where thread_id = any(${orphanedThreadIds}::text[])`;
+          await tx`delete from agent_runtime.checkpoints where thread_id = any(${orphanedThreadIds}::text[])`;
+        }
+        return doomed.length;
+      });
     },
 
   };
