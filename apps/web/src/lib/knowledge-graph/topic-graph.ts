@@ -45,6 +45,11 @@ export type ConceptPrerequisiteEdge = {
   from: string;
   to: string;
   strength: "hard" | "soft";
+  // Optional one-line rationale for why `to` requires `from`. Authored on library
+  // source edges (skipped on most; opt-in) and emitted by the graph generator for
+  // gen_* graphs. Drives the lesson planner's "why this order" motivation and lets
+  // reviewers audit generated edges. Absent = no authored rationale.
+  reason?: string;
 };
 
 export type TopicGraph = {

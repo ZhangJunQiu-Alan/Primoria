@@ -90,7 +90,13 @@ function buildOne(graphId) {
   );
   const conceptEdges = graph.edges
     .filter((e) => e.type === "prereq" && conceptIds.has(e.from) && conceptIds.has(e.to))
-    .map((e) => ({ from: e.from, to: e.to, strength: e.strength === "hard" ? "hard" : "soft" }))
+    .map((e) => ({
+      from: e.from,
+      to: e.to,
+      strength: e.strength === "hard" ? "hard" : "soft",
+      // Carry the optional authored rationale through to the runtime artifact.
+      ...(typeof e.reason === "string" && e.reason.trim() ? { reason: e.reason.trim() } : {}),
+    }))
     .sort((a, b) => (a.from === b.from ? a.to.localeCompare(b.to) : a.from.localeCompare(b.from)));
 
   const artifact = {
