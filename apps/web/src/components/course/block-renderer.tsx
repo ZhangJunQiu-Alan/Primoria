@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type {
   AnalogyBlock,
   CodeBlock,
@@ -32,6 +32,7 @@ import type {
   MermaidArtifact,
   PhysicsSceneArtifact,
 } from "@/lib/agent-os";
+import { achievementByCode, LEVELS, type AchievementCode, type LevelCode } from "@/lib/gamification/catalog";
 
 type RendererVariant = "tool" | "course";
 type CodeBlockRunnerProps = {
@@ -456,6 +457,10 @@ const QUIZ_COPY = {
     incorrect: "Incorrect",
     score: "Score",
     allCorrect: "All correct!",
+    saveFailed: "Progress was not saved. Try again before leaving this lesson.",
+    xpEarned: "XP earned",
+    levelUp: "Guild rank advanced",
+    badgesUnlocked: "Badge unlocked",
     true: "True",
     false: "False",
   },
@@ -467,6 +472,10 @@ const QUIZ_COPY = {
     incorrect: "错误",
     score: "得分",
     allCorrect: "全部正确！",
+    saveFailed: "学习进度未保存，请在离开课程前重试。",
+    xpEarned: "获得 XP",
+    levelUp: "公会阶位提升",
+    badgesUnlocked: "解锁徽章",
     true: "正确",
     false: "错误",
   },
@@ -478,7 +487,14 @@ function quizCopyFor(language?: string | null) {
 
 function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock; courseId?: string; contentLanguage?: string | null }) {
   const copy = quizCopyFor(contentLanguage);
+  const locale = contentLanguage?.toLowerCase().startsWith("zh") ? "zh" : "en";
   const submissionIdRef = useRef<string | null>(null);
+  const [rewardNotice, setRewardNotice] = useState<{
+    xpAwarded: number;
+    levelUp: { from: LevelCode; to: LevelCode } | null;
+    unlockedAchievements: AchievementCode[];
+  } | null>(null);
+  const [saveError, setSaveError] = useState(false);
   const [state, setState] = useState<QuizState>({
     phase: "answering",
     selections: {},
@@ -493,6 +509,12 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
 
   const allAnswered = block.questions.every((q) => state.selections[q.id] !== undefined);
 
+  useEffect(() => {
+    if (!rewardNotice) return;
+    const timeout = window.setTimeout(() => setRewardNotice(null), 5_000);
+    return () => window.clearTimeout(timeout);
+  }, [rewardNotice]);
+
   const handleSubmit = useCallback(async () => {
     if (state.phase !== "answering") return;
     // Local score is optimistic UI only; the server regrades authoritatively.
@@ -500,6 +522,7 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
     setState({ phase: "submitted", selections: state.selections, score });
 
     if (courseId) {
+      setSaveError(false);
       submissionIdRef.current ??= crypto.randomUUID();
       const answers = block.questions.map((q) => {
         const sel = state.selections[q.id];
@@ -508,13 +531,28 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
         return { kind: "truefalse" as const, questionId: q.id, selected: sel === true };
       });
       try {
-        await fetch(`/api/courses/${courseId}/quiz`, {
+        const response = await fetch(`/api/courses/${courseId}/quiz`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ blockId: block.id, submissionId: submissionIdRef.current, answers }),
         });
+        if (!response.ok) throw new Error("quiz persistence failed");
+        const payload = await response.json() as {
+          rewards?: {
+            xpAwarded: number;
+            levelUp: { from: LevelCode; to: LevelCode } | null;
+            unlockedAchievements: AchievementCode[];
+          };
+        };
+        if (payload.rewards && (
+          payload.rewards.xpAwarded > 0
+          || payload.rewards.levelUp
+          || payload.rewards.unlockedAchievements.length > 0
+        )) {
+          setRewardNotice(payload.rewards);
+        }
       } catch {
-        // non-blocking
+        setSaveError(true);
       }
     }
   }, [block, courseId, state]);
@@ -545,9 +583,23 @@ function QuizBlockView({ block, courseId, contentLanguage }: { block: QuizBlock;
             Check
           </button>
         ) : (
-          <div className="course-quiz-score">
-            {copy.score}: {state.score} / {block.questions.length}
-            {state.score === block.questions.length ? ` ${copy.allCorrect}` : ""}
+          <div className="course-quiz-result-stack">
+            <div className="course-quiz-score">
+              {copy.score}: {state.score} / {block.questions.length}
+              {state.score === block.questions.length ? ` ${copy.allCorrect}` : ""}
+            </div>
+            {saveError ? <div className="course-quiz-save-error" role="alert">{copy.saveFailed}</div> : null}
+            {rewardNotice ? (
+              <div className="course-reward-toast" role="status" aria-live="polite">
+                {rewardNotice.xpAwarded > 0 ? <strong>+{rewardNotice.xpAwarded} XP · {copy.xpEarned}</strong> : null}
+                {rewardNotice.levelUp ? (
+                  <span>{copy.levelUp} · {LEVELS.find((level) => level.code === rewardNotice.levelUp?.to)?.[locale]}</span>
+                ) : null}
+                {rewardNotice.unlockedAchievements.map((code) => (
+                  <span key={code}>{copy.badgesUnlocked} · {achievementByCode(code)[locale][0]}</span>
+                ))}
+              </div>
+            ) : null}
           </div>
         )}
       </div>
