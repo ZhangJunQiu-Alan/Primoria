@@ -12,10 +12,13 @@
     "test:course-store": "node tests/course-store-schema.unit.mjs",
     "test:context-trim": "node tests/context-trim.unit.mjs",
     "test:agui-events": "node tests/agui-events.unit.mjs",
+    "test:interactive-tool": "node tests/interactive-tool.unit.mjs",
+    "test:internal-auth": "node tests/internal-auth.unit.mjs",
+    "test:interactive-routing-contract": "node tests/interactive-routing-contract.unit.mjs",
     "test:runtime-worker": "node tests/runtime-worker.unit.mjs",
     "test:graph-e2e": "node tests/graph-invoke.e2e.mjs",
     "test:runtime:db": "node tests/runtime-store.db.mjs && node tests/runtime-server.db.e2e.mjs",
-    "test": "pnpm test:course-store && pnpm test:context-trim && pnpm test:agui-events && pnpm test:runtime-worker",
+    "test": "pnpm test:course-store && pnpm test:context-trim && pnpm test:agui-events && pnpm test:interactive-tool && pnpm test:internal-auth && pnpm test:interactive-routing-contract && pnpm test:runtime-worker",
     "test:integration": "pnpm test:graph-e2e"
   },
   "dependencies": {

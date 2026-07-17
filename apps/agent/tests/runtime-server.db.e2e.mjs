@@ -36,26 +36,46 @@ process.env.AI_PROVIDER = "openai-compatible";
 process.env.OPENAI_API_KEY = "fake";
 process.env.OPENAI_BASE_URL = `http://127.0.0.1:${modelServer.address().port}/v1`;
 process.env.OPENAI_MODEL = "test";
+process.env.PRIMORIA_AGENT_INTERNAL_SECRET = "runtime-test-secret";
 
 const { migrateAgentRuntime } = await import("../src/runtime/migrate.mjs");
 await migrateAgentRuntime(databaseUrl);
 const { startAgentServer } = await import("../src/server.mjs");
 const runtime = await startAgentServer();
 const runId = `run_${randomUUID()}`;
+const ownerId = "runtime-test-owner";
+const requestBody = {
+  threadId: `thread_${randomUUID()}`,
+  runId,
+  state: { primoria_owner_id: ownerId, user_id: ownerId },
+  messages: [{ id: "user-message-1", role: "user", content: "hello" }],
+  tools: [],
+  context: [],
+  forwardedProps: {
+    config: {
+      configurable: { primoria_owner_id: ownerId },
+      metadata: { primoria_owner_id: ownerId },
+    },
+  },
+};
 
 try {
+  const unauthorized = await fetch("http://127.0.0.1:3214/agent", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(requestBody),
+  });
+  assert.equal(unauthorized.status, 401);
+
   const response = await fetch("http://127.0.0.1:3214/agent", {
     method: "POST",
-    headers: { "content-type": "application/json", accept: "text/event-stream" },
-    body: JSON.stringify({
-      threadId: `thread_${randomUUID()}`,
-      runId,
-      state: {},
-      messages: [{ id: "user-message-1", role: "user", content: "hello" }],
-      tools: [],
-      context: [],
-      forwardedProps: {},
-    }),
+    headers: {
+      "content-type": "application/json",
+      accept: "text/event-stream",
+      "x-primoria-agent-token": "runtime-test-secret",
+      "x-primoria-owner-id": ownerId,
+    },
+    body: JSON.stringify(requestBody),
   });
   assert.equal(response.status, 200);
   const body = await response.text();
@@ -67,6 +87,42 @@ try {
     "TEXT_MESSAGE_END",
     "RUN_FINISHED",
   ]);
+  const conflictingOwnerId = "other-owner";
+  const conflictingOwnerBody = {
+    ...requestBody,
+    state: { primoria_owner_id: conflictingOwnerId, user_id: conflictingOwnerId },
+    forwardedProps: {
+      config: {
+        configurable: { primoria_owner_id: conflictingOwnerId },
+        metadata: { primoria_owner_id: conflictingOwnerId },
+      },
+    },
+  };
+  const hiddenRunIdConflict = await fetch("http://127.0.0.1:3214/agent", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      accept: "text/event-stream",
+      "x-primoria-agent-token": "runtime-test-secret",
+      "x-primoria-owner-id": conflictingOwnerId,
+    },
+    body: JSON.stringify(conflictingOwnerBody),
+  });
+  assert.equal(hiddenRunIdConflict.status, 404);
+  const hiddenFromOtherOwner = await fetch(`http://127.0.0.1:3214/runs/${runId}`, {
+    headers: {
+      "x-primoria-agent-token": "runtime-test-secret",
+      "x-primoria-owner-id": "other-owner",
+    },
+  });
+  assert.equal(hiddenFromOtherOwner.status, 404);
+  const visibleToOwner = await fetch(`http://127.0.0.1:3214/runs/${runId}`, {
+    headers: {
+      "x-primoria-agent-token": "runtime-test-secret",
+      "x-primoria-owner-id": ownerId,
+    },
+  });
+  assert.equal(visibleToOwner.status, 200);
   assert.equal((await runtime.store.getRun(runId)).status, "completed");
   process.stdout.write("[runtime-server.db.e2e] ALL CHECKS PASSED\n");
 } finally {
