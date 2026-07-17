@@ -74,8 +74,9 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     return NextResponse.json({ status: "accepted", kind: "remediation", lessonId: lesson.id, job }, { status: 202 });
   } catch (error) {
     console.error("[course/learning-progress/confirm]", error);
-    const message = error instanceof Error ? error.message : "Failed to resolve recommendation";
-    const status = /not found/i.test(message) ? 404 : 500;
-    return NextResponse.json({ error: message }, { status });
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: "Invalid recommendation action", code: "invalid_request" }, { status: 400 });
+    }
+    return NextResponse.json({ error: "Failed to resolve recommendation. Please retry." }, { status: 500 });
   }
 }

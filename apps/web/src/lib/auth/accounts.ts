@@ -29,7 +29,7 @@ export async function signUpWithEmail(input: { email: string; password: string; 
   const userId = `usr_${randomBytes(12).toString("base64url")}`;
   const now = new Date();
   const displayName = input.displayName?.trim() || email.split("@")[0];
-  const passwordHash = hashPassword(input.password);
+  const passwordHash = await hashPassword(input.password);
 
   try {
     const session = await db.transaction(async (tx) => {
@@ -85,7 +85,7 @@ export async function signInWithEmail(input: { email: string; password: string }
     .limit(1);
 
   const row = rows[0];
-  if (!row || !verifyPassword(input.password, row.passwordHash)) {
+  if (!row || !(await verifyPassword(input.password, row.passwordHash))) {
     throw new AuthError("invalid_credentials", "Invalid email or password.", 401);
   }
 

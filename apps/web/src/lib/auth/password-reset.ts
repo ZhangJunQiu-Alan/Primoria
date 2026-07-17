@@ -96,11 +96,12 @@ export async function confirmPasswordReset(input: { token: string; password: str
 
   const row = rows[0];
   if (!row) throw new AuthError("invalid_reset_token", "Password reset link is invalid or expired.", 400);
+  const passwordHash = await hashPassword(input.password);
 
   await getDb().transaction(async (tx) => {
     await tx
       .update(identities)
-      .set({ passwordHash: hashPassword(input.password), updatedAt: now })
+      .set({ passwordHash, updatedAt: now })
       .where(eq(identities.id, row.identityId));
     await tx.delete(sessions).where(eq(sessions.userId, row.userId));
     await tx.update(otpCodes).set({ consumedAt: now }).where(eq(otpCodes.id, row.otpId));

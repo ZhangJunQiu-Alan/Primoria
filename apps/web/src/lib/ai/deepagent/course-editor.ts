@@ -8,6 +8,7 @@ import { createTutorModel } from "./model";
 import { generateBlock, type GeneratableBlockType } from "./course-generator";
 import { PhysicsSceneZodSchema } from "@/lib/ai/visual-schemas";
 import { assertPersistableCourseBlock } from "@/lib/courses/mermaid-validation";
+import { CourseEditRejectedError, CourseResourceNotFoundError } from "@/lib/courses/errors";
 
 const TextEdit = z.object({
   type: z.literal("text"),
@@ -140,9 +141,9 @@ function schemaForBlock(block: CourseBlock) {
     case "code":
       return CodeEdit;
     case "quiz":
-      throw new Error("Quiz blocks cannot be edited via the block editor.");
+      throw new CourseEditRejectedError("Quiz blocks cannot be edited via the block editor.");
     case "mind_map":
-      throw new Error("Mind map blocks cannot be edited via the block editor.");
+      throw new CourseEditRejectedError("Mind map blocks cannot be edited via the block editor.");
     case "slide":
       return SlideEdit;
     case "worksheet":
@@ -163,9 +164,9 @@ export async function editBlock(
   ownerId?: string | null,
 ): Promise<EditBlockResult> {
   const course = await getCourse(input.courseId, ownerId);
-  if (!course) throw new Error("Course not found");
+  if (!course) throw new CourseResourceNotFoundError("course");
   const block = courseBlocks(course).find((b) => b.id === input.blockId);
-  if (!block) throw new Error("Block not found");
+  if (!block) throw new CourseResourceNotFoundError("block");
 
   const model = createTutorModel(settings);
   const schema = schemaForBlock(block);
@@ -204,7 +205,7 @@ export async function addBlock(
   ownerId?: string | null,
 ): Promise<EditBlockResult> {
   const course = await getCourse(input.courseId, ownerId);
-  if (!course) throw new Error("Course not found");
+  if (!course) throw new CourseResourceNotFoundError("course");
 
   const block = await generateBlock(
     { course, targetType: input.targetType, instruction: input.instruction },
@@ -240,11 +241,11 @@ export async function transformBlock(
   ownerId?: string | null,
 ): Promise<EditBlockResult> {
   const course = await getCourse(input.courseId, ownerId);
-  if (!course) throw new Error("Course not found");
+  if (!course) throw new CourseResourceNotFoundError("course");
   const previous = courseBlocks(course).find((b) => b.id === input.blockId);
-  if (!previous) throw new Error("Block not found");
+  if (!previous) throw new CourseResourceNotFoundError("block");
   if (previous.type === input.targetType) {
-    throw new Error("Block is already this type. Use the block editor to rewrite it.");
+    throw new CourseEditRejectedError("Block is already this type. Use the block editor to rewrite it.");
   }
 
   const generated = await generateBlock(
@@ -281,10 +282,10 @@ export async function removeCourseBlock(
   ownerId?: string | null,
 ): Promise<{ course: Course }> {
   const course = await getCourse(input.courseId, ownerId);
-  if (!course) throw new Error("Course not found");
-  if (courseBlocks(course).length <= 1) throw new Error("A course must keep at least one block.");
+  if (!course) throw new CourseResourceNotFoundError("course");
+  if (courseBlocks(course).length <= 1) throw new CourseEditRejectedError("A course must keep at least one block.");
   const previous = courseBlocks(course).find((b) => b.id === input.blockId);
-  if (!previous) throw new Error("Block not found");
+  if (!previous) throw new CourseResourceNotFoundError("block");
   const lessonId = lessonIdForBlock(course, input.blockId);
 
   const updatedCourse = await removeBlock(input.courseId, input.blockId, ownerId);
@@ -307,10 +308,10 @@ export async function moveCourseBlock(
   ownerId?: string | null,
 ): Promise<{ course: Course }> {
   const course = await getCourse(input.courseId, ownerId);
-  if (!course) throw new Error("Course not found");
+  if (!course) throw new CourseResourceNotFoundError("course");
   const flatBlocks = courseBlocks(course);
   const fromIndex = flatBlocks.findIndex((b) => b.id === input.blockId);
-  if (fromIndex === -1) throw new Error("Block not found");
+  if (fromIndex === -1) throw new CourseResourceNotFoundError("block");
   const block = flatBlocks[fromIndex];
 
   const updatedCourse = await moveBlock(input.courseId, input.blockId, input.toIndex, ownerId);

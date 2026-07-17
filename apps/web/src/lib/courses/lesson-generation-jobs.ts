@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { getDb, hasDatabaseUrl } from "../db/client";
+import { CourseResourceNotFoundError } from "./errors";
 import { courses as coursesTable, lessons as lessonsTable, lessonGenerationCheckpoints, lessonGenerationJobs } from "../db/schema";
 import type { CourseBlock } from "./types";
 import { assertPersistableCourseBlocks } from "./mermaid-validation";
@@ -124,7 +125,7 @@ export async function enqueueLessonGenerationJob(
     const lessonRows = await tx.select().from(lessonsTable).where(eq(lessonsTable.id, lessonId)).for("update");
     const lesson = lessonRows[0];
     if (!lesson || lesson.ownerId !== ownerId || lesson.courseId !== courseId) {
-      throw new Error("Lesson not found");
+      throw new CourseResourceNotFoundError("lesson");
     }
 
     const existingRows = await tx.select().from(lessonGenerationJobs).where(eq(lessonGenerationJobs.lessonId, lessonId)).for("update");
