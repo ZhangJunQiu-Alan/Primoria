@@ -95,6 +95,7 @@ These artifacts are the evidence trail for long-horizon adaptation.
 Different surfaces should serve the same learning loop:
 
 - course views for structured progress
+- profile views for private motivation, quests, and achievement history
 - future classroom/collaboration views for shared learning
 - tutor views for teaching behavior and capability boundaries
 - memory views for durable evidence
@@ -120,6 +121,7 @@ The core loop is:
 | Structured progress | Courses, lessons, blocks, generation decisions, and progress state are persisted | Improve recovery/resume and intervention explanations |
 | Evidence | Quiz attempts, learning events, course edits, and Tutor conversations provide raw evidence | Normalize success criteria across teaching methods |
 | Learner state | Concept mastery, learner profiles/facts, mastery jobs, and extractor jobs | Add learner-facing provenance, correction, and deletion controls |
+| Motivation feedback | Private XP ledger, eight guild ranks, three daily quests, streaks, course quest map, and ten achievements on Profile | Observe pace and quest quality before changing the fixed launch economy |
 | Method choice | Course blocks, quizzes, catalog interactions, structured artifacts, and sandbox widgets provide multiple teaching forms | Measure which method helped and route from that evidence |
 | Repetition | Cross-session state is durable | Explicit spaced-repetition scheduling remains future work |
 
@@ -135,6 +137,8 @@ evidence that can be evaluated.
 - Prefer reusable learning state over one-off output.
 - Prefer history that can be reviewed over invisible internal state.
 - Prefer small corrective loops over large monolithic lessons.
+- Keep effort feedback (XP) separate from demonstrated competence (mastery).
+- Reward trusted learning events, not page views, chat volume, or client claims.
 
 ## Non-Goals
 
@@ -144,6 +148,7 @@ Primoria is not only:
 - a chat UI
 - a quiz engine
 - a static agent marketplace
+- an XP farm, public leaderboard, or social competition layer
 
 Those are useful pieces, but they are subordinate to the long-horizon learning loop.
 

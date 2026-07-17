@@ -48,6 +48,7 @@ Use four label families on implementation issues:
 | `type:data-architecture` | Database, portability, service boundaries, infra abstractions. |
 | `type:sharing` | Published courses, learning paths, community or teacher distribution. |
 | `type:onboarding` | Cold-start learner preferences and first-run setup. |
+| `type:progression` | Private XP, guild levels, daily quests, streaks, achievements, and reward feedback. |
 | `type:refactor` | Behavior-preserving structure extraction and maintainability work. |
 | `type:search` | Search/retrieval/discovery work across messages, artifacts, memory, issues, or learning evidence. |
 
@@ -61,6 +62,7 @@ Use four label families on implementation issues:
 | `area:classroom` | Future classroom and collaboration surfaces. |
 | `area:agent` | Tutor runtime, tools, model-provider configuration, and future agent surfaces. |
 | `area:memory` | Memory review, extraction, preference state. |
+| `area:profile` | Learner identity, personal progression, achievements, and profile-only RPG presentation. |
 | `area:infra` | Data architecture, deployment, CI, service abstractions. |
 
 ### Priority Labels
@@ -110,6 +112,7 @@ The minimum evidence layer already exists:
 - stable course/lesson/block context
 - persisted generation decisions and course patches
 - learner profiles/facts from onboarding and extraction
+- private progression projections from the same trusted learning events
 
 The next acceptance target is an evidence-backed closed loop:
 
@@ -118,6 +121,21 @@ weak/repeated evidence -> explainable adaptive decision
 -> remediation or next-lesson action -> persisted result
 -> later evidence proves whether the intervention helped
 ```
+
+XP, quests, streaks, and achievements may make this loop visible and motivating,
+but they must not become mastery evidence or change the remediation decision.
+
+### P1: Maintain The Private Progression Baseline
+
+The launch baseline exists: eight guild ranks, three daily quests, a course
+quest map, ten achievements, an idempotent XP ledger, learner-local dates, and
+transient course reward notices. Follow-up issues should be narrow and use
+`type:progression` plus `area:profile`.
+
+Valid slices include reward-pacing analysis, accessibility, copy, empty states,
+and regression coverage. Group quests, public leaderboards, Teach-Back bosses,
+matching games, and client-authored rewards require a new product decision; they
+are not implicit hardening work.
 
 ### P0: Maintain Course Tutor Targeting Baseline
 
