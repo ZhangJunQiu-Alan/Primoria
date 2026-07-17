@@ -256,6 +256,8 @@ The web app talks to Primoria's self-hosted AG-UI Agent runtime through CopilotK
 
 ```bash
 PRIMORIA_AGENT_URL=http://localhost:2024
+# Required in production on both Web and Agent; local development has a shared fallback.
+PRIMORIA_AGENT_INTERNAL_SECRET=<long-random-secret>
 ```
 
 If unset, the web route defaults to `http://localhost:2024`. The service uses
@@ -388,7 +390,7 @@ pnpm --filter @primoria/agent typecheck
 pnpm test:agent
 pnpm test:agent:integration
 
-# Agent run-store and real HTTP/SSE integration (isolated TEST_DATABASE_URL)
+# Agent run-store, owner isolation, retention, and real HTTP/SSE integration (isolated TEST_DATABASE_URL)
 pnpm --filter @primoria/agent test:runtime:db
 
 # Production dependency audit; fails on high/critical advisories
@@ -417,7 +419,7 @@ migration owners and also upgrades existing volumes. Set distinct
 app containers run as a non-root user with a read-only root filesystem, all
 Linux capabilities dropped, and only service-specific environment variables.
 
-Port boundaries: only Caddy (80/443) is reachable from outside. The web app (3000), the agent (2024 — it has no auth of its own and must never be published), the workers, and Postgres stay on the internal compose network; Postgres additionally binds `127.0.0.1:5432` for server-side administration.
+Port boundaries: only Caddy (80/443) is reachable from outside. The web app (3000), the token- and owner-authenticated Agent (2024, still never publish it), the workers, and Postgres stay on the internal compose network; Postgres additionally binds `127.0.0.1:5432` for server-side administration.
 
 ### First Deploy
 

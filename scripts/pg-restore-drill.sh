@@ -62,11 +62,33 @@ docker cp "$WORK_DIR/$FILE" "$CONTAINER:/tmp/restore.dump"
 docker exec -e PGPASSWORD="$PASSWORD" "$CONTAINER" pg_restore -U postgres -d primoria_restore \
   --no-owner --no-privileges --exit-on-error /tmp/restore.dump
 
-TABLES=(users courses lessons learning_events lesson_generation_jobs learning_progress_jobs extractor_jobs worker_heartbeats)
-for table in "${TABLES[@]}"; do
+PUBLIC_TABLES=(users courses lessons learning_events lesson_generation_jobs learning_progress_jobs extractor_jobs worker_heartbeats)
+AGENT_TABLES=(runs events checkpoints checkpoint_blobs checkpoint_writes checkpoint_migrations)
+for table in "${PUBLIC_TABLES[@]}"; do
   docker exec -e PGPASSWORD="$PASSWORD" "$CONTAINER" psql -U postgres -d primoria_restore \
     -v ON_ERROR_STOP=1 -Atc "select count(*) from public.$table" >/dev/null
 done
+for table in "${AGENT_TABLES[@]}"; do
+  docker exec -e PGPASSWORD="$PASSWORD" "$CONTAINER" psql -U postgres -d primoria_restore \
+    -v ON_ERROR_STOP=1 -Atc "select count(*) from agent_runtime.$table" >/dev/null
+done
 
-printf '{"status":"ok","backup":"s3://%s/%s","tablesChecked":%d,"durationSeconds":%d,"rtoHours":4}\n' \
-  "$COS_BUCKET" "$KEY" "${#TABLES[@]}" "$(( $(date +%s) - STARTED_AT ))"
+docker exec -e PGPASSWORD="$PASSWORD" "$CONTAINER" psql -U postgres -d primoria_restore \
+  -v ON_ERROR_STOP=1 -Atc "
+    do \$\$ begin
+      if exists (
+        select 1 from agent_runtime.events event
+        left join agent_runtime.runs run on run.id = event.run_id
+        where run.id is null
+      ) then raise exception 'orphaned agent event'; end if;
+      if exists (
+        select 1 from agent_runtime.runs
+        where status not in ('queued', 'running', 'completed', 'failed', 'cancelled')
+           or attempts < 0 or max_attempts <= 0
+      ) then raise exception 'invalid agent run state'; end if;
+    end \$\$;
+    select id, owner_id, status from agent_runtime.runs order by created_at desc limit 1;
+  " >/dev/null
+
+printf '{"status":"ok","backup":"s3://%s/%s","tablesChecked":%d,"relationsChecked":2,"durationSeconds":%d,"rtoHours":4}\n' \
+  "$COS_BUCKET" "$KEY" "$(( ${#PUBLIC_TABLES[@]} + ${#AGENT_TABLES[@]} ))" "$(( $(date +%s) - STARTED_AT ))"
