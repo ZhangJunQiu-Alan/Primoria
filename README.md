@@ -1,8 +1,8 @@
 # Primoria
 
 Primoria is an AI-native learning app for adaptive course generation,
-course-aware tutoring, cross-disciplinary interactive learning, and durable
-learner memory.
+course-aware tutoring, cross-disciplinary interactive learning, durable
+learner memory, and evidence-backed personal progression.
 
 Start from the [documentation map](docs/README.md). The long-horizon product
 direction is documented in
@@ -22,7 +22,8 @@ The core loop is:
 4. Render mixed learning blocks: explanation, analogy, image, interactive visual, quiz, code, transfer, and review-oriented formats.
 5. Record learning events, quiz attempts, feedback, and lesson completion.
 6. Update concept mastery and decide whether to continue, skim, or insert remediation.
-7. Distill durable learner facts for future tutoring and course planning.
+7. Turn verified learning effort into private XP, daily quests, streaks, and achievements without confusing progression with mastery.
+8. Distill durable learner facts for future tutoring and course planning.
 
 Primoria is aimed at students and self-directed learners across all subjects.
 Library knowledge graphs provide structured paths where coverage exists;
@@ -97,7 +98,7 @@ ANTHROPIC_MODEL=your-model
 
 ### Database, Auth, and Knowledge Graph
 
-Primoria persistence is Postgres-first. Courses, lessons, auth/session data, chat history, lesson jobs, learning events, concept mastery, learner facts, and media assets are stored in Postgres.
+Primoria persistence is Postgres-first. Courses, lessons, auth/session data, chat history, lesson jobs, learning events, concept mastery, learner facts, personal progression, achievements, and media assets are stored in Postgres.
 
 Local development defaults to the Docker Compose database in this repository.
 It runs `pgvector/pgvector:pg16`, creates the `primoria` database, creates the
@@ -527,7 +528,12 @@ The legacy `POST /api/tutor/chat` stack is no longer an active runtime path. Do 
 
 ### State Ownership
 
-The web app owns user state, course creation, learning events, mastery updates, background jobs, and database writes. The tutor agent owns tool orchestration and structured interaction. In the main course-creation path, the agent expresses intent through `position_learning_goal`; the browser/web side performs KG positioning, creates the course, persists records, and enqueues generation jobs.
+The web app owns user state, course creation, learning events, mastery updates,
+personal progression, background jobs, and database writes. The tutor agent owns
+tool orchestration and structured interaction. In the main course-creation path,
+the agent expresses intent through `position_learning_goal`; the browser/web
+side performs KG positioning, creates the course, persists records, and enqueues
+generation jobs.
 
 The agent may read persisted course data for bounded tool behavior such as restoring a course card, but new state-changing behavior should be implemented through web-owned APIs, workers, or repositories rather than direct agent-side database mutation.
 
@@ -629,7 +635,25 @@ Course sharing uses immutable, sanitized snapshots in `course_share_links`.
 Public links never read live course rows, revocation rotates the token, and
 imports are idempotent per learner.
 
-The main persistence tables include `courses`, `lessons`, `lesson_generation_jobs`, `lesson_generation_checkpoints`, `learning_events`, `learning_progress_jobs`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, and `extractor_jobs`.
+The main persistence tables include `courses`, `lessons`, `lesson_generation_jobs`, `lesson_generation_checkpoints`, `learning_events`, `learning_progress_jobs`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `extractor_jobs`, `player_progress`, `xp_awards`, `daily_quest_completions`, and `achievement_unlocks`.
+
+### Personal Progression and Guild Profile
+
+`/profile` is the only full RPG surface. It combines a private guild rank and XP
+star chart, the active course quest map, three daily quests, and a ten-badge
+achievement wall. Quiz and course surfaces show only transient server-confirmed
+reward notices; `/stats` and `/weekly-report` keep numeric XP summaries.
+
+XP is an effort/completion signal. Concept mastery is a separate competence
+signal and requires at least three concept questions with 80% accuracy before a
+concept can become `mastered`. The XP ledger is append-only and deduplicated by
+server-owned keys. Existing accounts start this system at zero XP: events before
+`player_progress.started_at` are never replayed into levels, quests, streaks, or
+achievements. Daily boundaries use the learner's browser-synchronized IANA
+timezone, falling back to UTC.
+
+This release is solo and private. It does not include group quests, public
+leaderboards, Teach-Back bosses, matching games, or other new minigames.
 
 ### Model Provider
 
@@ -642,12 +666,17 @@ Provider credentials come only from server-side environment variables. The app d
 
 ## Roadmap
 
-The current implementation covers the main personal learning loop: goal positioning, course creation, lazy lesson generation, interactive lesson blocks, quizzes, learning events, concept mastery, learner facts, chat history, and account/session foundations.
+The current implementation covers the main personal learning loop: goal
+positioning, course creation, lazy lesson generation, interactive lesson blocks,
+quizzes, learning events, concept mastery, learner facts, private guild
+progression, chat history, and account/session foundations.
 
 Near-term priorities:
 
 - Stabilize remediation after lesson quizzes, including learner choice, navigation, resume behavior, and cross-graph prerequisites.
 - Improve learner-memory extraction quality, evidence review, correction, and decay without confusing facts with concept mastery.
+- Observe private XP pace and daily-quest completion quality before changing the
+  fixed launch economy; keep progression separate from mastery and social scope.
 - Keep lesson generation close to the intended micro-learning recipe with balanced text, image, visual, quiz, code, analogy, and transfer blocks.
 - Continue hardening the course reader and Course Tutor baseline: current lesson
   context, visible block scope, selected block/text context, revision tools, and

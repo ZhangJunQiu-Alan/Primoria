@@ -27,14 +27,17 @@ async function main() {
   const settingsPage = read("src/app/settings/page.tsx");
   const settingsFactsPage = read("src/app/settings/facts/page.tsx");
   const profileEditModal = read("src/components/profile/profile-edit-modal.tsx");
+  const gamificationHub = read("src/components/profile/gamification-hub.tsx");
   const profileStats = read("src/lib/profile/stats.ts");
   const profileApi = read("src/app/api/profile/route.ts");
   const navRail = read("src/components/tutor/nav-rail.tsx");
   const styles = read("src/app/globals.css");
 
-  assert(profilePage.includes("profile-hero-card"), "profile page renders the profile hero card");
-  assert(profilePage.includes("profile-hero-identity"), "profile hero separates identity from metrics");
-  assert(profilePage.includes("profile-hero-action"), "profile hero keeps profile editing in the header action area");
+  assert(profilePage.includes("profile-guild-hero"), "profile page renders the RPG guild hero");
+  assert(profilePage.includes("profile-guild-identity"), "guild hero separates identity from its atlas");
+  assert(profilePage.includes("profile-guild-action"), "guild hero keeps profile editing in the header action area");
+  assert(profilePage.includes("getGamificationProfile"), "profile page loads server-authoritative game progression");
+  assert(profilePage.includes("profile-guild-constellation"), "guild hero renders the signature constellation atlas");
   assert(profilePage.includes("stats.lessonsCompleted"), "profile hero surfaces completed lessons");
   assert(profilePage.includes("stats.questionsPracticed"), "profile hero surfaces practiced questions");
   assert(profilePage.includes("profile-section-header"), "profile progress section has explanatory header copy");
@@ -44,6 +47,11 @@ async function main() {
   bilingual(dictionaries.zh.profile.weeklyReport, dictionaries.en.profile.weeklyReport, "profile page links to weekly report");
   bilingual(dictionaries.zh.profile.learningStats, dictionaries.en.profile.learningStats, "profile page links to learning stats");
   assert(!profilePage.includes("Course Stats"), "profile page omits Course Stats as requested");
+  assert(gamificationHub.includes("guild-quest-path"), "game hub renders the active course as a questline");
+  assert(gamificationHub.includes("guild-achievement-filters"), "badge wall provides category filters");
+  assert(gamificationHub.includes('fetch("/api/settings/preferences"'), "game hub syncs the browser IANA timezone");
+  bilingual(dictionaries.zh.profile.game.achievements, dictionaries.en.profile.game.achievements, "profile game hub renders badges");
+  bilingual(dictionaries.zh.profile.game.dailyContracts, dictionaries.en.profile.game.dailyContracts, "profile game hub renders daily quests");
 
   assert(profileEditModal.includes("useT"), "profile edit modal resolves copy from the i18n dictionary");
   bilingual(dictionaries.zh.profile.editTitle, dictionaries.en.profile.editTitle, "profile edit modal copies the expected title");
@@ -107,8 +115,9 @@ async function main() {
   assert(!navRail.includes("nav-progress-strip"), "temporary streak and XP rail widgets are removed");
   assert(!navRail.includes("nav-upgrade-link"), "temporary upgrade rail shortcut is removed");
   assert(styles.includes(".profile-shell"), "profile pages have dedicated shell styling");
-  assert(styles.includes(".profile-hero-identity"), "profile hero identity has dedicated styling");
-  assert(styles.includes("grid-template-areas"), "profile hero uses a deliberate dashboard layout");
+  assert(styles.includes(".profile-guild-identity"), "guild hero identity has dedicated styling");
+  assert(styles.includes(".profile-guild-star-path"), "guild hero constellation has dedicated styling");
+  assert(styles.includes(".guild-badge-grid"), "achievement grid has dedicated styling");
   assert(styles.includes(".profile-section-header"), "profile progress section header has dedicated styling");
   assert(styles.includes(".profile-list-copy"), "profile progress row copy has dedicated styling");
   assert(styles.includes(".profile-list-card"), "profile progress list has dedicated styling");

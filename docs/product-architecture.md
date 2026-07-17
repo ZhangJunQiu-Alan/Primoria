@@ -20,9 +20,10 @@ flows, agent ecosystem, and evolution mechanisms that make learning adaptive.
 ## 1. Core identity
 
 Primoria is a long-horizon adaptive learning system. The near-term product is a
-personal learning loop where goals, courses, memory, and feedback improve the
-next teaching step. Classroom, marketplace, and collective-intelligence concepts
-remain future expansion layers.
+personal learning loop where goals, courses, evidence, mastery, private
+progression, memory, and feedback improve the next teaching step. Classroom,
+marketplace, and collective-intelligence concepts remain future expansion
+layers.
 
 The system operates as three nested rings:
 
@@ -43,7 +44,7 @@ The system operates as three nested rings:
                                  │ decision flows out
 ┌────────────────────────────────▼─────────────────────────────┐
 │  Ring 1: Personal Loop (individual learning)                  │
-│  Course → Observation → Memory → Agent Action → Course/Agent/App │
+│  Course → Evidence → Mastery/Progression → Memory → Next Action │
 │  — the core engine, foundation of everything                  │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -108,6 +109,24 @@ contract**. An agent may decide "use drill now"; Primoria validates the action,
 persists the event, and generates/inserts the drill block. This is what
 "adaptive" means — blocks grow on demand, not pre-authored in a fixed arc.
 
+### Personal progression as a feedback layer
+
+The implemented guild Profile makes verified learning effort visible without
+turning XP into a competence score:
+
+- **Mastery** answers “what can this learner demonstrate?” It is concept-level,
+  evidence-driven, and requires at least three questions with 80% accuracy.
+- **Progression** answers “what verified learning actions has this learner
+  completed since joining the system?” It uses an append-only XP ledger, daily
+  quests, streaks, levels, and achievements.
+- **Learner facts** answer “what durable context helps teach this person?” They
+  remain reviewable preference, background, gap, and goal statements.
+
+The full RPG presentation exists only on `/profile`. Course and quiz surfaces
+can show transient rewards after committed writes; Stats and Weekly Report show
+numeric XP only. The first release is deliberately solo: no leaderboard, group
+quest, Teach-Back boss, matching game, or public competitive rank.
+
 ---
 
 ## 4. Four-layer memory model
@@ -116,7 +135,7 @@ This is the target memory model. Its July 2026 implementation state is:
 
 | Layer | Current state |
 | --- | --- |
-| User Memory | Implemented through onboarding, learner profiles/facts, learning events, concept mastery, and extractor/mastery workers |
+| User Memory | Implemented through onboarding, learner profiles/facts, learning events, concept mastery, private progression, and extractor/mastery workers |
 | Course Memory | Partially implemented through course/lesson state, KG positioning, generation decisions, and progress; a separate semantic memory object is not exposed |
 | Agent Memory | Future; the current Tutor has durable run/checkpoint state, not a marketplace agent memory lifecycle |
 | System Memory | Future; no cross-user pedagogy model is used for routing |
@@ -184,6 +203,19 @@ Agent memory read/write permissions:
 ## 5. Observation layer and multi-path consumption
 
 A single user interaction produces one event that is consumed by multiple paths:
+
+```text
+Current solo example: a learner submits a course quiz.
+
+Committed quiz attempt
+├─► learning evidence: owner-scoped quiz and learning-event history
+├─► mastery: concept status changes only when evidence thresholds are met
+├─► progression: idempotent XP, quest, streak, and badge evaluation
+└─► next-step diagnosis: continue, review, or remediation recommendation
+```
+
+These projections share trusted events but keep different meanings. A large XP
+total never marks a concept mastered, and a learner fact never grants XP.
 
 ```
 Future example: 小明 in group chat asks "Why does recursion need a base case?"
@@ -375,8 +407,9 @@ Cross-user aggregation                          → Community (recommend agent/a
 ```
 Current baseline:
   Course/lesson generation, structured lesson blocks, quizzes, learning events,
-  concept mastery, learner facts, KG positioning, durable Tutor runs, 19 reviewed
-  interactive components, sandbox fallback, and read-only course sharing.
+  concept mastery, learner facts, private guild progression, KG positioning,
+  durable Tutor runs, 19 reviewed interactive components, sandbox fallback, and
+  read-only course sharing.
 
 P0 (close the personal loop):
   Convert mastery/fact signals into dependable remediation and resume decisions
@@ -386,6 +419,7 @@ P0 (close the personal loop):
 P1 (loop enhancement):
   Spaced repetition and cross-session review scheduling
   Explicit user review/correction of inferred facts
+  Evidence-led tuning of the private progression economy
   Persisted, policy-reviewed generated practice applications
 
 P2/P3 (future ecosystem):
@@ -407,8 +441,8 @@ This product architecture maps onto the current codebase as follows:
   `packages/contracts`; the Web app validates and renders full configurations.
 - `apps/web/src/lib/db` hosts app-owned Postgres schema and server-side data
   access: auth/session tables, knowledge graph tables, course/lesson state,
-  learning events, mastery, learner profiles/facts, background jobs, media
-  assets, and rate-limit state.
+  learning events, mastery, learner profiles/facts, progression ledger,
+  achievements, background jobs, media assets, and rate-limit state.
 - `apps/agent` executes the active `primoria_tutor` LangGraph/deepagents graph.
   Its self-hosted Node/AG-UI runtime owns only the isolated `agent_runtime`
   schema for durable runs, streamed events, leases, cancellation, retries, and
@@ -546,5 +580,7 @@ Inactive Goal memory is not loaded — scope isolation prevents signal pollution
   marketplace. Those are useful surfaces but subordinate to the adaptive loop.
 - This design does not prescribe UI layout or visual design.
 - This design does not specify exact LLM prompts or model choices.
+- Personal progression is not a public rank, social competition system, or
+  replacement for evidence-based mastery.
 - System Memory and collective intelligence (Ring 3) are explicitly deferred to
   P2/P3 — they require data volume that only exists after Ring 1 is live.

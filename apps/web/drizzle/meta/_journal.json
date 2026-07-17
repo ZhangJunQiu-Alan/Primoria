@@ -330,6 +330,13 @@
       "when": 1784287262065,
       "tag": "0046_hesitant_wallflower",
       "breakpoints": true
+    },
+    {
+      "idx": 47,
+      "version": "7",
+      "when": 1784303549217,
+      "tag": "0047_slim_earthquake",
+      "breakpoints": true
     }
   ]
 }
