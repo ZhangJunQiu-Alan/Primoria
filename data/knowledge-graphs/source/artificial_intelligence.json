@@ -129,6 +129,7 @@
       "topic": "ai_search_part1",
       "description": "Formulating a problem for search as states, actions, a transition model, a goal test, and path costs, enabling systematic solution finding.",
       "default_order": 1,
+      "centrality": 0.1327,
       "name_zh": "搜索问题建模"
     },
     {
@@ -138,6 +139,7 @@
       "topic": "ai_search_part1",
       "description": "Search strategies using no domain knowledge, including breadth-first, depth-first, and uniform-cost search, differing in completeness, optimality, and complexity.",
       "default_order": 2,
+      "centrality": 0.096,
       "name_zh": "无信息搜索",
       "visual": "algorithm",
       "visual_hint": "Animate BFS and DFS exploring a search tree/graph with the frontier."
@@ -149,6 +151,7 @@
       "topic": "ai_search_part1",
       "description": "Heuristic functions estimating the cost to reach the goal, where admissibility (never overestimating) and consistency guarantee optimal informed search.",
       "default_order": 3,
+      "centrality": 0.0519,
       "name_zh": "启发式与可容性"
     },
     {
@@ -158,6 +161,7 @@
       "topic": "ai_search_part2",
       "description": "Informed search using heuristics to guide exploration, including greedy best-first and A*, which expands nodes by estimated total path cost.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "有信息搜索（A*）",
       "visual": "algorithm",
       "visual_hint": "Animate A* expanding nodes by f = g + h on a grid."
@@ -169,6 +173,7 @@
       "topic": "ai_search_part2",
       "description": "Adversarial search computing optimal play in zero-sum games by recursively assuming each player maximises its own outcome against an optimal opponent.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "对抗搜索（Minimax）",
       "visual": "algorithm",
       "visual_hint": "Step a minimax game tree backing up values from the leaves."
@@ -180,6 +185,7 @@
       "topic": "ai_search_part2",
       "description": "An optimisation of minimax that prunes branches which cannot affect the final decision, allowing deeper search within the same time budget.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "Alpha-Beta剪枝",
       "visual": "algorithm",
       "visual_hint": "Step minimax with alpha-beta pruning, showing cut branches."
@@ -191,6 +197,7 @@
       "topic": "ai_csp",
       "description": "Constraint satisfaction problems defined by variables, domains, and constraints, seeking assignments that satisfy all constraints simultaneously.",
       "default_order": 1,
+      "centrality": 0.079,
       "name_zh": "约束满足问题"
     },
     {
@@ -200,6 +207,7 @@
       "topic": "ai_csp",
       "description": "A depth-first search for CSPs that assigns variables one at a time and backtracks when a constraint is violated, pruning the search tree.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "回溯搜索",
       "visual": "algorithm",
       "visual_hint": "Animate backtracking search assigning CSP variables and backing up on failure."
@@ -211,6 +219,7 @@
       "topic": "ai_csp_ai_arc_consistency",
       "description": "Constraint propagation that prunes domain values inconsistent with constraints, with arc consistency and forward checking reducing search effort.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "约束传播"
     },
     {
@@ -220,6 +229,7 @@
       "topic": "ai_csp_ai_arc_consistency",
       "description": "Search that iteratively improves a complete assignment using local moves, such as hill climbing and min-conflicts, trading completeness for scalability.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "局部搜索"
     },
     {
@@ -229,6 +239,7 @@
       "topic": "ai_mdp",
       "description": "Markov decision processes modelling sequential decisions under uncertainty with states, actions, stochastic transitions, rewards, and a discount factor.",
       "default_order": 1,
+      "centrality": 0.1595,
       "name_zh": "马尔可夫决策过程"
     },
     {
@@ -238,6 +249,7 @@
       "topic": "ai_mdp",
       "description": "The Bellman equations recursively expressing the optimal value of a state as the best expected immediate reward plus discounted future value.",
       "default_order": 2,
+      "centrality": 0.0654,
       "name_zh": "Bellman方程"
     },
     {
@@ -247,6 +259,7 @@
       "topic": "ai_mdp_ai_value_iteration",
       "description": "A dynamic-programming algorithm computing optimal MDP values by iteratively applying the Bellman update until the value function converges.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "价值迭代",
       "visual": "algorithm",
       "visual_hint": "Iterate MDP state values on a grid until convergence."
@@ -258,6 +271,7 @@
       "topic": "ai_mdp_ai_value_iteration",
       "description": "An MDP algorithm alternating policy evaluation, computing a policy's values, with policy improvement, acting greedily, until the policy stabilises.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "策略迭代"
     },
     {
@@ -267,6 +281,7 @@
       "topic": "ai_rl",
       "description": "Reinforcement learning, where an agent learns optimal behaviour by interacting with an unknown environment and receiving rewards, without a transition model.",
       "default_order": 1,
+      "centrality": 0.0931,
       "name_zh": "强化学习框架"
     },
     {
@@ -276,6 +291,7 @@
       "topic": "ai_rl",
       "description": "Temporal-difference learning updating value estimates from successive observations, bootstrapping from later estimates without waiting for final outcomes.",
       "default_order": 2,
+      "centrality": 0.0803,
       "name_zh": "时序差分学习"
     },
     {
@@ -285,6 +301,7 @@
       "topic": "ai_rl_ai_qlearning",
       "description": "A model-free, off-policy reinforcement-learning algorithm that learns optimal action values directly from experience, independent of the policy followed.",
       "default_order": 1,
+      "centrality": 0.0654,
       "name_zh": "Q学习",
       "visual": "algorithm",
       "visual_hint": "Update a Q-table as an agent moves through a gridworld."
@@ -296,6 +313,7 @@
       "topic": "ai_rl_ai_qlearning",
       "description": "The exploration-exploitation tradeoff balancing trying new actions to gain information against choosing currently best actions to maximise reward.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "探索与利用"
     },
     {
@@ -305,6 +323,7 @@
       "topic": "ai_rl_ai_qlearning",
       "description": "Approximate Q-learning representing the value function with features and weights, generalising across states too numerous to store in a table.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "近似Q学习"
     },
     {
@@ -314,6 +333,7 @@
       "topic": "ai_probability",
       "description": "Probability fundamentals for AI, including random variables, joint and marginal distributions, and independence, used to reason under uncertainty.",
       "default_order": 1,
+      "centrality": 0.1063,
       "name_zh": "概率基础"
     },
     {
@@ -323,6 +343,7 @@
       "topic": "ai_probability",
       "description": "Bayes' rule inverting conditional probabilities to update beliefs about hypotheses given observed evidence, combining prior probabilities with likelihoods.",
       "default_order": 2,
+      "centrality": 0.0973,
       "name_zh": "贝叶斯规则"
     },
     {
@@ -332,6 +353,7 @@
       "topic": "ai_probability_ai_bayes_nets",
       "description": "Bayesian networks compactly representing a joint distribution as a directed acyclic graph that encodes conditional independence among variables.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "贝叶斯网络",
       "visual": "diagram",
       "visual_hint": "Directed acyclic graph of a Bayesian network with conditional dependencies."
@@ -343,6 +365,7 @@
       "topic": "ai_probability_ai_bayes_nets",
       "description": "Inference in Bayesian networks computing posterior probabilities via exact methods like variable elimination or approximate sampling techniques.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "贝叶斯网络推理"
     },
     {
@@ -352,6 +375,7 @@
       "topic": "ai_markov_models",
       "description": "Markov models representing stochastic state sequences satisfying the Markov property, where the next state depends only on the current state.",
       "default_order": 1,
+      "centrality": 0.0944,
       "name_zh": "马尔可夫模型"
     },
     {
@@ -361,6 +385,7 @@
       "topic": "ai_markov_models",
       "description": "Hidden Markov models pairing an unobserved Markov state sequence with observations, used to infer hidden states from noisy evidence.",
       "default_order": 2,
+      "centrality": 0.0819,
       "name_zh": "隐马尔可夫模型",
       "visual": "diagram",
       "visual_hint": "Trellis diagram of hidden states and observations over time."
@@ -372,6 +397,7 @@
       "topic": "ai_markov_models",
       "description": "The forward algorithm computing the filtered belief over hidden states given the observations seen so far, via recursive probability updates.",
       "default_order": 3,
+      "centrality": 0.0548,
       "name_zh": "前向算法"
     },
     {
@@ -381,6 +407,7 @@
       "topic": "ai_inference_naive_bayes",
       "description": "The Viterbi algorithm using dynamic programming to find the single most likely sequence of hidden states given an observation sequence.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "维特比算法",
       "visual": "algorithm",
       "visual_hint": "Step the Viterbi trellis selecting the most likely hidden-state path."
@@ -392,6 +419,7 @@
       "topic": "ai_inference_naive_bayes",
       "description": "Particle filtering approximating the belief over states with weighted samples, propagated and resampled to track distributions in large state spaces.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "粒子滤波"
     },
     {
@@ -401,6 +429,7 @@
       "topic": "ai_inference_naive_bayes",
       "description": "A simple probabilistic classifier applying Bayes' rule under the assumption that features are conditionally independent given the class label.",
       "default_order": 3,
+      "centrality": 0.079,
       "name_zh": "朴素贝叶斯"
     },
     {
@@ -410,6 +439,7 @@
       "topic": "ai_ml",
       "description": "A linear classifier that learns a separating hyperplane by updating weights on misclassified examples via the perceptron learning rule.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "感知机",
       "visual": "function",
       "visual_hint": "Plot a linear decision boundary updating as the perceptron learns."
@@ -421,6 +451,7 @@
       "topic": "ai_ml",
       "description": "Multilayer neural networks composing linear transformations with nonlinear activations to learn complex, nonlinear decision functions from data.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "神经网络",
       "visual": "diagram",
       "visual_hint": "Diagram a multilayer network of weighted connections and activations."
@@ -432,6 +463,7 @@
       "topic": "ai_ml",
       "description": "Generalisation describing how well a model performs on unseen data, with overfitting and model capacity governing the gap between training and test error.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "泛化与过拟合"
     }
   ],

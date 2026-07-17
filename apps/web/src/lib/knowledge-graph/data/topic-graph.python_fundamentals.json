@@ -2,8 +2,8 @@
   "graphId": "python_fundamentals",
   "subject": "Python Fundamentals",
   "generatedFrom": "data/knowledge-graphs/source/python_fundamentals.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "pyf_topic_running_python_programs",
@@ -16,6 +16,7 @@
           "name": "Interactive Execution",
           "nameZh": "交互式执行",
           "defaultOrder": 1,
+          "centrality": 0.4197,
           "visual": "diagram",
           "visualHint": "Trace a statement from the prompt through the interpreter to its displayed result."
         },
@@ -23,7 +24,8 @@
           "conceptId": "pyf_script_execution",
           "name": "Script Execution",
           "nameZh": "脚本执行",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.9291
         }
       ],
       "successors": [
@@ -65,13 +67,15 @@
           "conceptId": "pyf_runtime_values",
           "name": "Runtime Values",
           "nameZh": "运行时值",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.571
         },
         {
           "conceptId": "pyf_variable_binding",
           "name": "Variable Binding",
           "nameZh": "变量绑定",
           "defaultOrder": 2,
+          "centrality": 0.3786,
           "visual": "diagram",
           "visualHint": "Show names as labels bound to values, then animate rebinding one name to a different value."
         },
@@ -79,7 +83,8 @@
           "conceptId": "pyf_identifier_rules",
           "name": "Identifier Rules",
           "nameZh": "标识符规则",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -131,19 +136,22 @@
           "conceptId": "pyf_string_values",
           "name": "String Values",
           "nameZh": "字符串值",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0902
         },
         {
           "conceptId": "pyf_string_transformations",
           "name": "String Transformations",
           "nameZh": "字符串转换",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "pyf_formatted_strings",
           "name": "Formatted Strings",
           "nameZh": "格式化字符串",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Allow learners to edit variables and observe how the resulting formatted message changes."
         }
@@ -169,13 +177,15 @@
           "conceptId": "pyf_numeric_types",
           "name": "Numeric Types",
           "nameZh": "数值类型",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0775
         },
         {
           "conceptId": "pyf_arithmetic_expressions",
           "name": "Arithmetic Expressions",
           "nameZh": "算术表达式",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -203,13 +213,15 @@
           "conceptId": "pyf_list_construction",
           "name": "List Construction",
           "nameZh": "列表构造",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2164
         },
         {
           "conceptId": "pyf_sequence_indexing",
           "name": "Sequence Indexing",
           "nameZh": "序列索引",
           "defaultOrder": 2,
+          "centrality": 0.0984,
           "visual": "interactive",
           "visualHint": "Let learners select positive and negative indices and highlight the corresponding sequence element."
         },
@@ -217,7 +229,8 @@
           "conceptId": "pyf_list_length",
           "name": "List Length",
           "nameZh": "列表长度",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -258,6 +271,7 @@
           "name": "List Mutation",
           "nameZh": "列表修改",
           "defaultOrder": 1,
+          "centrality": 0.0599,
           "visual": "interactive",
           "visualHint": "Allow learners to apply replace, append, insert, and remove operations while tracking the list after each step."
         },
@@ -265,7 +279,8 @@
           "conceptId": "pyf_list_ordering",
           "name": "List Ordering",
           "nameZh": "列表排序",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -294,6 +309,7 @@
           "name": "Block Indentation",
           "nameZh": "代码块缩进",
           "defaultOrder": 1,
+          "centrality": 0.199,
           "visual": "diagram",
           "visualHint": "Highlight nested indentation levels and show which statements belong to each code block."
         },
@@ -302,6 +318,7 @@
           "name": "For Iteration",
           "nameZh": "for 迭代",
           "defaultOrder": 2,
+          "centrality": 0.0845,
           "visual": "algorithm",
           "visualHint": "Step through an iterable and display the loop variable and executed block on each iteration."
         },
@@ -309,7 +326,8 @@
           "conceptId": "pyf_range_sequences",
           "name": "Range Sequences",
           "nameZh": "range 序列",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -364,6 +382,7 @@
           "name": "Sequence Slicing",
           "nameZh": "序列切片",
           "defaultOrder": 1,
+          "centrality": 0.0318,
           "visual": "interactive",
           "visualHint": "Let learners drag slice boundaries and compare aliasing with a full-slice copy."
         },
@@ -372,6 +391,7 @@
           "name": "List Comprehensions",
           "nameZh": "列表推导式",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Expand a comprehension into its equivalent loop and map each part between the two forms."
         }
@@ -399,6 +419,7 @@
           "name": "Tuple Immutability",
           "nameZh": "元组不可变性",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Compare an attempted element change with rebinding the tuple variable to a new tuple."
         },
@@ -406,7 +427,8 @@
           "conceptId": "pyf_tuple_traversal",
           "name": "Tuple Traversal",
           "nameZh": "元组遍历",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -426,19 +448,22 @@
           "conceptId": "pyf_comparison_expressions",
           "name": "Comparison Expressions",
           "nameZh": "比较表达式",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0963
         },
         {
           "conceptId": "pyf_compound_conditions",
           "name": "Compound Conditions",
           "nameZh": "复合条件",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0642
         },
         {
           "conceptId": "pyf_conditional_branching",
           "name": "Conditional Branching",
           "nameZh": "条件分支",
           "defaultOrder": 3,
+          "centrality": 0.0318,
           "visual": "algorithm",
           "visualHint": "Trace execution through an if-elif-else chain for several input cases."
         }
@@ -474,6 +499,7 @@
           "name": "Dictionary Operations",
           "nameZh": "字典操作",
           "defaultOrder": 1,
+          "centrality": 0.103,
           "visual": "interactive",
           "visualHint": "Let learners add, update, retrieve, and delete key-value pairs while displaying the dictionary state."
         },
@@ -481,13 +507,15 @@
           "conceptId": "pyf_safe_dictionary_lookup",
           "name": "Safe Dictionary Lookup",
           "nameZh": "安全字典查找",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "pyf_dictionary_iteration",
           "name": "Dictionary Iteration",
           "nameZh": "字典遍历",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Animate separate passes over items, keys, sorted keys, and values from one dictionary."
         }
@@ -527,6 +555,7 @@
           "name": "Nested Collections",
           "nameZh": "嵌套集合",
           "defaultOrder": 1,
+          "centrality": 0.0353,
           "visual": "diagram",
           "visualHint": "Diagram a list of dictionaries, a dictionary of lists, and a dictionary of dictionaries as nested containers."
         },
@@ -535,6 +564,7 @@
           "name": "Nested Data Traversal",
           "nameZh": "嵌套数据遍历",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Trace a path through nested containers and show each key, index, and loop used to reach a target value."
         }
@@ -557,13 +587,15 @@
           "conceptId": "pyf_text_input",
           "name": "Text Input",
           "nameZh": "文本输入",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0714
         },
         {
           "conceptId": "pyf_explicit_type_conversion",
           "name": "Explicit Type Conversion",
           "nameZh": "显式类型转换",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Let learners submit different strings and observe successful conversions or conversion failures."
         },
@@ -571,7 +603,8 @@
           "conceptId": "pyf_input_prompt_design",
           "name": "Input Prompt Design",
           "nameZh": "输入提示设计",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -597,6 +630,7 @@
           "name": "Condition-Controlled Loops",
           "nameZh": "条件控制循环",
           "defaultOrder": 1,
+          "centrality": 0.0609,
           "visual": "algorithm",
           "visualHint": "Trace the condition, loop body, state update, and exit point across several iterations."
         },
@@ -604,13 +638,15 @@
           "conceptId": "pyf_sentinel_flag_loops",
           "name": "Sentinel and Flag Loops",
           "nameZh": "哨兵与标志循环",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "pyf_loop_control",
           "name": "Loop Control",
           "nameZh": "循环控制",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Step through the same loop with break and continue cases and highlight the statements each case bypasses."
         }
@@ -639,6 +675,7 @@
           "name": "Collection Filtering",
           "nameZh": "集合筛选",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Animate items being tested and either retained, removed, or moved into a result collection."
         },
@@ -646,7 +683,8 @@
           "conceptId": "pyf_incremental_data_collection",
           "name": "Incremental Data Collection",
           "nameZh": "增量数据收集",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -670,6 +708,7 @@
           "name": "Function Definition and Calls",
           "nameZh": "函数定义与调用",
           "defaultOrder": 1,
+          "centrality": 0.2327,
           "visual": "diagram",
           "visualHint": "Diagram control moving from a call site into a function body and then returning to the next statement."
         },
@@ -678,6 +717,7 @@
           "name": "Parameters and Arguments",
           "nameZh": "形参与实参",
           "defaultOrder": 2,
+          "centrality": 0.1238,
           "visual": "interactive",
           "visualHint": "Let learners match call arguments to parameter names and display the bindings created inside the function."
         },
@@ -685,7 +725,8 @@
           "conceptId": "pyf_positional_keyword_arguments",
           "name": "Positional and Keyword Arguments",
           "nameZh": "位置实参与关键字实参",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0459
         }
       ],
       "successors": [
@@ -727,19 +768,22 @@
           "conceptId": "pyf_default_optional_parameters",
           "name": "Default and Optional Parameters",
           "nameZh": "默认与可选参数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "pyf_variadic_positional_arguments",
           "name": "Variadic Positional Arguments",
           "nameZh": "可变位置实参",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "pyf_variadic_keyword_arguments",
           "name": "Variadic Keyword Arguments",
           "nameZh": "可变关键字实参",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -759,13 +803,15 @@
           "conceptId": "pyf_function_return_values",
           "name": "Function Return Values",
           "nameZh": "函数返回值",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0417
         },
         {
           "conceptId": "pyf_mutable_argument_effects",
           "name": "Mutable Argument Effects",
           "nameZh": "可变实参效应",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Compare passing a list directly with passing a sliced copy and track both objects after mutation."
         },
@@ -774,6 +820,7 @@
           "name": "Variable Scope",
           "nameZh": "变量作用域",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram global and function-local name spaces and show which names are visible at each line."
         }
@@ -803,6 +850,7 @@
           "name": "Module Imports",
           "nameZh": "模块导入",
           "defaultOrder": 1,
+          "centrality": 0.0669,
           "visual": "diagram",
           "visualHint": "Diagram two Python files and trace how imported names become available in the calling module."
         },
@@ -810,13 +858,15 @@
           "conceptId": "pyf_import_aliases",
           "name": "Import Aliases",
           "nameZh": "导入别名",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "pyf_standard_library_use",
           "name": "Standard Library Use",
           "nameZh": "标准库使用",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -836,6 +886,7 @@
           "name": "Class Definitions and Instances",
           "nameZh": "类定义与实例",
           "defaultOrder": 1,
+          "centrality": 0.0986,
           "visual": "diagram",
           "visualHint": "Show one class definition producing multiple instances with separate identities."
         },
@@ -844,6 +895,7 @@
           "name": "Instance Attributes",
           "nameZh": "实例属性",
           "defaultOrder": 2,
+          "centrality": 0.0567,
           "visual": "interactive",
           "visualHint": "Create two instances, edit one attribute, and show that the other instance remains unchanged."
         },
@@ -851,7 +903,8 @@
           "conceptId": "pyf_instance_methods",
           "name": "Instance Methods",
           "nameZh": "实例方法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0503
         }
       ],
       "successors": [
@@ -877,6 +930,7 @@
           "name": "Class Inheritance",
           "nameZh": "类继承",
           "defaultOrder": 1,
+          "centrality": 0.0353,
           "visual": "diagram",
           "visualHint": "Diagram a parent and child class, labeling inherited and newly defined members."
         },
@@ -884,13 +938,15 @@
           "conceptId": "pyf_method_overriding",
           "name": "Method Overriding",
           "nameZh": "方法重写",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "pyf_object_composition",
           "name": "Object Composition",
           "nameZh": "对象组合",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Show a containing object linked to a component instance and label delegated responsibilities."
         }
@@ -912,6 +968,7 @@
           "name": "File Paths and Contexts",
           "nameZh": "文件路径与上下文",
           "defaultOrder": 1,
+          "centrality": 0.0548,
           "visual": "diagram",
           "visualHint": "Diagram relative and absolute paths, then show a file opening and closing around a context block."
         },
@@ -919,13 +976,15 @@
           "conceptId": "pyf_text_file_io",
           "name": "Text File Input and Output",
           "nameZh": "文本文件输入输出",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "pyf_json_persistence",
           "name": "JSON Persistence",
           "nameZh": "JSON 持久化",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -946,13 +1005,15 @@
           "conceptId": "pyf_runtime_exceptions",
           "name": "Runtime Exceptions",
           "nameZh": "运行时异常",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0788
         },
         {
           "conceptId": "pyf_try_except_control_flow",
           "name": "Try-Except Control Flow",
           "nameZh": "try-except 控制流",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "algorithm",
           "visualHint": "Trace successful and failing paths through try, except, else, and the following statements."
         },
@@ -960,7 +1021,8 @@
           "conceptId": "pyf_selective_error_handling",
           "name": "Selective Error Handling",
           "nameZh": "选择性错误处理",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -985,6 +1047,7 @@
           "name": "Unit Testing",
           "nameZh": "单元测试",
           "defaultOrder": 1,
+          "centrality": 0.0398,
           "visual": "diagram",
           "visualHint": "Diagram production code, a test case, supplied inputs, observed results, and expected results."
         },
@@ -993,6 +1056,7 @@
           "name": "Debugging Workflow",
           "nameZh": "调试流程",
           "defaultOrder": 2,
+          "centrality": 0.0353,
           "visual": "algorithm",
           "visualHint": "Display a repeatable cycle from reproduction and evidence gathering through isolation, correction, and verification."
         },
@@ -1000,7 +1064,8 @@
           "conceptId": "pyf_refactoring_readability",
           "name": "Refactoring and Readability",
           "nameZh": "重构与可读性",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -1011,6 +1076,473 @@
         "pyf_topic_exceptions_failure_recovery"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "pyf_block_indentation",
+      "to": "pyf_condition_controlled_loops",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_block_indentation",
+      "to": "pyf_conditional_branching",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_block_indentation",
+      "to": "pyf_for_iteration",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_block_indentation",
+      "to": "pyf_function_definition_calls",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_class_definitions_instances",
+      "to": "pyf_class_inheritance",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_class_definitions_instances",
+      "to": "pyf_instance_attributes",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_class_definitions_instances",
+      "to": "pyf_object_composition",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_class_inheritance",
+      "to": "pyf_method_overriding",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_comparison_expressions",
+      "to": "pyf_compound_conditions",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_comparison_expressions",
+      "to": "pyf_unit_testing",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_compound_conditions",
+      "to": "pyf_condition_controlled_loops",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_compound_conditions",
+      "to": "pyf_conditional_branching",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_condition_controlled_loops",
+      "to": "pyf_loop_control",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_condition_controlled_loops",
+      "to": "pyf_sentinel_flag_loops",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_conditional_branching",
+      "to": "pyf_collection_filtering",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_debugging_workflow",
+      "to": "pyf_refactoring_readability",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_dictionary_operations",
+      "to": "pyf_dictionary_iteration",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_dictionary_operations",
+      "to": "pyf_incremental_data_collection",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_dictionary_operations",
+      "to": "pyf_json_persistence",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_dictionary_operations",
+      "to": "pyf_nested_collections",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_dictionary_operations",
+      "to": "pyf_safe_dictionary_lookup",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_dictionary_operations",
+      "to": "pyf_variadic_keyword_arguments",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_file_paths_contexts",
+      "to": "pyf_text_file_io",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_for_iteration",
+      "to": "pyf_collection_filtering",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_for_iteration",
+      "to": "pyf_dictionary_iteration",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_for_iteration",
+      "to": "pyf_list_comprehensions",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_for_iteration",
+      "to": "pyf_nested_data_traversal",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_for_iteration",
+      "to": "pyf_tuple_traversal",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_function_definition_calls",
+      "to": "pyf_class_definitions_instances",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_function_definition_calls",
+      "to": "pyf_function_return_values",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_function_definition_calls",
+      "to": "pyf_module_imports",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_function_definition_calls",
+      "to": "pyf_parameters_arguments",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_function_definition_calls",
+      "to": "pyf_refactoring_readability",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_function_definition_calls",
+      "to": "pyf_variable_scope",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_function_return_values",
+      "to": "pyf_unit_testing",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_instance_attributes",
+      "to": "pyf_instance_methods",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_instance_attributes",
+      "to": "pyf_object_composition",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_instance_methods",
+      "to": "pyf_class_inheritance",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_instance_methods",
+      "to": "pyf_method_overriding",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_interactive_execution",
+      "to": "pyf_script_execution",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_list_construction",
+      "to": "pyf_for_iteration",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_list_construction",
+      "to": "pyf_list_comprehensions",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_list_construction",
+      "to": "pyf_list_mutation",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_list_construction",
+      "to": "pyf_nested_collections",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_list_construction",
+      "to": "pyf_sequence_indexing",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_list_construction",
+      "to": "pyf_tuple_immutability",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_list_mutation",
+      "to": "pyf_collection_filtering",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_list_mutation",
+      "to": "pyf_list_ordering",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_list_mutation",
+      "to": "pyf_mutable_argument_effects",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_module_imports",
+      "to": "pyf_import_aliases",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_module_imports",
+      "to": "pyf_standard_library_use",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_nested_collections",
+      "to": "pyf_nested_data_traversal",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_numeric_types",
+      "to": "pyf_arithmetic_expressions",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_numeric_types",
+      "to": "pyf_explicit_type_conversion",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_numeric_types",
+      "to": "pyf_range_sequences",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_parameters_arguments",
+      "to": "pyf_instance_methods",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_parameters_arguments",
+      "to": "pyf_mutable_argument_effects",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_parameters_arguments",
+      "to": "pyf_positional_keyword_arguments",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_parameters_arguments",
+      "to": "pyf_variadic_keyword_arguments",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_parameters_arguments",
+      "to": "pyf_variadic_positional_arguments",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_positional_keyword_arguments",
+      "to": "pyf_default_optional_parameters",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_runtime_exceptions",
+      "to": "pyf_debugging_workflow",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_runtime_exceptions",
+      "to": "pyf_try_except_control_flow",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_runtime_values",
+      "to": "pyf_comparison_expressions",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_runtime_values",
+      "to": "pyf_numeric_types",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_runtime_values",
+      "to": "pyf_string_values",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_runtime_values",
+      "to": "pyf_variable_binding",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_script_execution",
+      "to": "pyf_block_indentation",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_script_execution",
+      "to": "pyf_file_paths_contexts",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_script_execution",
+      "to": "pyf_function_definition_calls",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_script_execution",
+      "to": "pyf_runtime_exceptions",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_script_execution",
+      "to": "pyf_runtime_values",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_script_execution",
+      "to": "pyf_text_input",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_sentinel_flag_loops",
+      "to": "pyf_incremental_data_collection",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_sequence_indexing",
+      "to": "pyf_list_length",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_sequence_indexing",
+      "to": "pyf_list_mutation",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_sequence_indexing",
+      "to": "pyf_sequence_slicing",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_sequence_slicing",
+      "to": "pyf_mutable_argument_effects",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_string_values",
+      "to": "pyf_file_paths_contexts",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_string_values",
+      "to": "pyf_formatted_strings",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_string_values",
+      "to": "pyf_string_transformations",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_text_file_io",
+      "to": "pyf_json_persistence",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_text_input",
+      "to": "pyf_explicit_type_conversion",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_text_input",
+      "to": "pyf_input_prompt_design",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_text_input",
+      "to": "pyf_sentinel_flag_loops",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_try_except_control_flow",
+      "to": "pyf_selective_error_handling",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_unit_testing",
+      "to": "pyf_debugging_workflow",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_variable_binding",
+      "to": "pyf_class_definitions_instances",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_variable_binding",
+      "to": "pyf_dictionary_operations",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_variable_binding",
+      "to": "pyf_identifier_rules",
+      "strength": "soft"
+    },
+    {
+      "from": "pyf_variable_binding",
+      "to": "pyf_list_construction",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_variable_binding",
+      "to": "pyf_parameters_arguments",
+      "strength": "hard"
+    },
+    {
+      "from": "pyf_variable_binding",
+      "to": "pyf_variable_scope",
+      "strength": "hard"
     }
   ]
 }

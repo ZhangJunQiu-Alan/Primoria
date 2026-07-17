@@ -223,6 +223,7 @@
       "topic": "t1",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.2211,
       "description": "Information encoded as bit patterns grouped into bytes, with hexadecimal notation used as a compact human-readable representation of the underlying binary machine state.",
       "name_zh": "比特与字节"
     },
@@ -232,6 +233,7 @@
       "topic": "t1",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.4161,
       "description": "How fixed-width integers are encoded in hardware, using unsigned binary for non-negative values and two's complement for signed values, determining the representable ranges.",
       "name_zh": "整数表示",
       "visual": "diagram",
@@ -243,6 +245,7 @@
       "topic": "t1_c1_3",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.4603,
       "description": "Addition, subtraction, and multiplication on fixed-width integers, including modular wraparound and overflow that follow from finite two's-complement and unsigned encodings.",
       "name_zh": "整数运算"
     },
@@ -252,6 +255,7 @@
       "topic": "t1_c1_3",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0459,
       "description": "The IEEE 754 standard encoding real numbers as sign, biased exponent, and fraction fields, supporting normalised, denormalised, infinity, and NaN values.",
       "name_zh": "浮点数表示",
       "visual": "diagram",
@@ -263,6 +267,7 @@
       "topic": "t_float_machine_ops",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Arithmetic on IEEE 754 values, where results are rounded to representable numbers, making operations non-associative and introducing rounding error and special-case behaviour.",
       "name_zh": "浮点运算"
     },
@@ -272,6 +277,7 @@
       "topic": "t_float_machine_ops",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.5124,
       "description": "x86-64 instructions that move data between registers and memory, using addressing modes and operand sizes to load, store, and copy machine words.",
       "name_zh": "x86-64数据传输"
     },
@@ -281,6 +287,7 @@
       "topic": "t_float_machine_ops_c2_2",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1923,
       "description": "x86-64 instructions performing integer arithmetic, bitwise logic, and shifts on registers and memory, updating condition-code flags used by later conditional instructions.",
       "name_zh": "算术与逻辑运算"
     },
@@ -290,6 +297,7 @@
       "topic": "t_float_machine_ops_c2_2",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.1971,
       "description": "Implementing conditionals and loops in assembly using condition-code flags, conditional jumps, and comparison instructions to direct the processor's instruction stream.",
       "name_zh": "控制流"
     },
@@ -299,6 +307,7 @@
       "topic": "t_procedures_arch",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1029,
       "description": "How procedures are called using the runtime stack to pass arguments, save return addresses, allocate local storage, and follow register-saving conventions.",
       "name_zh": "过程与调用栈",
       "visual": "diagram",
@@ -310,6 +319,7 @@
       "topic": "t_procedures_arch",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The memory layout of arrays and structures, including element addressing arithmetic, field offsets, and alignment requirements imposed by the architecture.",
       "name_zh": "数组与结构体",
       "visual": "diagram",
@@ -321,6 +331,7 @@
       "topic": "t_procedures_arch_c3_1",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.2087,
       "description": "The Y86-64 instruction set, a simplified teaching ISA defining registers, instruction encodings, and semantics used to study processor implementation.",
       "name_zh": "指令集体系结构"
     },
@@ -330,6 +341,7 @@
       "topic": "t_procedures_arch_c3_1",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.2163,
       "description": "A sequential processor design executing each instruction through fetch, decode, execute, memory, and write-back stages within a single clock cycle.",
       "name_zh": "顺序CPU实现"
     },
@@ -339,6 +351,7 @@
       "topic": "t3",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.2253,
       "description": "Overlapping the execution of multiple instructions across pipeline stages to increase instruction throughput, ideally completing one instruction per clock cycle.",
       "name_zh": "流水线原理",
       "visual": "diagram",
@@ -350,6 +363,7 @@
       "topic": "t3",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.2235,
       "description": "Data, control, and structural hazards that stall pipelines, and forwarding techniques that resolve data dependencies without waiting for write-back.",
       "name_zh": "流水线冒险与转发",
       "visual": "diagram",
@@ -361,6 +375,7 @@
       "topic": "t3",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.2338,
       "description": "Handling exceptions in a pipelined processor, requiring precise state by detecting events in order and squashing partially executed younger instructions.",
       "name_zh": "流水线异常"
     },
@@ -370,6 +385,7 @@
       "topic": "t4",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0998,
       "description": "Reasons compilers cannot fully optimise code, including memory aliasing, function side effects, and conservative assumptions that block otherwise valid transformations.",
       "name_zh": "编译器局限"
     },
@@ -379,6 +395,7 @@
       "topic": "t4",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0564,
       "description": "An optimisation that replicates loop bodies to reduce loop-control overhead and expose more independent instructions for instruction-level parallelism.",
       "name_zh": "循环展开"
     },
@@ -388,6 +405,7 @@
       "topic": "t4",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "Executing independent instructions simultaneously on superscalar, pipelined hardware, limited by data dependencies and the processor's functional-unit latency and throughput.",
       "name_zh": "指令级并行"
     },
@@ -397,6 +415,7 @@
       "topic": "t_optimization_locality",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0318,
       "description": "When two pointers may reference the same memory location, forcing the compiler to preserve memory accesses and preventing certain optimisations.",
       "name_zh": "内存别名"
     },
@@ -406,6 +425,7 @@
       "topic": "t_optimization_locality",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Tools that measure where a program spends time, identifying performance bottlenecks so optimisation effort targets the most costly code paths.",
       "name_zh": "性能分析工具"
     },
@@ -415,6 +435,7 @@
       "topic": "t_optimization_locality_c5_1",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1479,
       "description": "Characteristics and trends of storage technologies such as SRAM, DRAM, disks, and SSDs, differing in speed, capacity, volatility, and cost per byte.",
       "name_zh": "存储技术"
     },
@@ -424,6 +445,7 @@
       "topic": "t_optimization_locality_c5_1",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.1448,
       "description": "Programs tend to reuse recently accessed data (temporal locality) and nearby data (spatial locality), a behaviour that caching exploits to improve performance.",
       "name_zh": "局部性原理"
     },
@@ -433,6 +455,7 @@
       "topic": "t5",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1412,
       "description": "How caches are organised into sets, lines, and blocks with tags, governing the placement, lookup, and replacement of cached memory blocks.",
       "name_zh": "缓存组织",
       "visual": "diagram",
@@ -444,6 +467,7 @@
       "topic": "t5",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0318,
       "description": "Metrics such as hit rate, miss rate, miss penalty, and average memory access time used to evaluate cache effectiveness.",
       "name_zh": "缓存性能指标"
     },
@@ -453,6 +477,7 @@
       "topic": "t5",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "Structuring data access patterns to maximise temporal and spatial locality, improving cache hit rates and overall program performance.",
       "name_zh": "缓存友好代码"
     },
@@ -462,6 +487,7 @@
       "topic": "t6",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0919,
       "description": "Combining relocatable object files at build time into a single executable by resolving symbols and merging sections into the final image.",
       "name_zh": "静态链接"
     },
@@ -471,6 +497,7 @@
       "topic": "t6",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.079,
       "description": "The Executable and Linkable Format that structures object files into sections and symbol tables used by linkers and loaders.",
       "name_zh": "目标文件(ELF)"
     },
@@ -480,6 +507,7 @@
       "topic": "t6",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0638,
       "description": "The linker step associating each symbol reference with exactly one symbol definition across object files and libraries, detecting duplicates.",
       "name_zh": "符号解析"
     },
@@ -489,6 +517,7 @@
       "topic": "t_linking_processes",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "The linker step that assigns final run-time addresses to merged sections and patches symbol references to point at those addresses.",
       "name_zh": "重定位"
     },
@@ -498,6 +527,7 @@
       "topic": "t_linking_processes",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Deferring symbol resolution to load or run time by linking against shared libraries, reducing executable size and enabling code sharing.",
       "name_zh": "动态链接"
     },
@@ -507,6 +537,7 @@
       "topic": "t_linking_processes_c7_1",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.2459,
       "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel.",
       "name_zh": "异常"
     },
@@ -516,6 +547,7 @@
       "topic": "t_linking_processes_c7_1",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.2602,
       "description": "The process abstraction giving each program a private address space and logical control flow, switched by the kernel saving and restoring context.",
       "name_zh": "进程与上下文切换",
       "visual": "diagram",
@@ -527,6 +559,7 @@
       "topic": "t7",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1827,
       "description": "System calls that create processes with fork, load new programs with execve, and reap children with wait, managing the process lifecycle.",
       "name_zh": "进程控制"
     },
@@ -536,6 +569,7 @@
       "topic": "t7",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0459,
       "description": "A mechanism delivering asynchronous notifications to processes, with handlers that interrupt normal control flow to respond to events.",
       "name_zh": "信号与信号处理"
     },
@@ -545,6 +579,7 @@
       "topic": "t7",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "Transferring control across function boundaries using setjmp and longjmp, bypassing the normal call-return discipline for error recovery.",
       "name_zh": "非局部跳转"
     },
@@ -554,6 +589,7 @@
       "topic": "t8",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0969,
       "description": "Hardware mapping of virtual addresses to physical addresses via the MMU and page tables, giving each process its own address space.",
       "name_zh": "地址转换",
       "visual": "diagram",
@@ -565,6 +601,7 @@
       "topic": "t8",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0848,
       "description": "Multi-level data structures mapping virtual pages to physical frames, storing permission and presence bits used during address translation.",
       "name_zh": "页表",
       "visual": "diagram",
@@ -576,6 +613,7 @@
       "topic": "t8",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "A small hardware cache of recent virtual-to-physical translations that accelerates address translation by avoiding repeated page-table walks.",
       "name_zh": "地址转换后备缓冲器（TLB）"
     },
@@ -585,6 +623,7 @@
       "topic": "t_memmgmt_unixio",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "Managing heap memory at run time with allocators like malloc and free, balancing throughput, fragmentation, and memory utilisation.",
       "name_zh": "动态内存分配"
     },
@@ -594,6 +633,7 @@
       "topic": "t_memmgmt_unixio",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Automatic reclamation of unreachable heap memory by tracing or counting references, freeing the programmer from explicit deallocation.",
       "name_zh": "垃圾回收基础"
     },
@@ -603,6 +643,7 @@
       "topic": "t_memmgmt_unixio_c9_1",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1399,
       "description": "The Unix model treating files, devices, and sockets uniformly through descriptors and the open, read, write, and close system calls.",
       "name_zh": "Unix 输入输出"
     },
@@ -612,6 +653,7 @@
       "topic": "t_memmgmt_unixio_c9_1",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0638,
       "description": "Information about a file stored separately from its contents, such as size, permissions, and timestamps, accessed via the stat system call.",
       "name_zh": "文件元数据"
     },
@@ -621,6 +663,7 @@
       "topic": "t9",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "A buffered, portable I/O library layered over Unix system calls that reduces system-call overhead through stream buffering.",
       "name_zh": "标准I/O库"
     },
@@ -630,6 +673,7 @@
       "topic": "t9",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0459,
       "description": "How descriptors, open-file table entries, and inodes interact so processes can share open files and offsets, especially after fork.",
       "name_zh": "文件共享"
     },
@@ -639,6 +683,7 @@
       "topic": "t9",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "Redirecting a process's standard input or output to files using dup2 to duplicate descriptors onto the standard descriptor numbers.",
       "name_zh": "I/O重定向"
     },
@@ -648,6 +693,7 @@
       "topic": "t10",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0468,
       "description": "A networking model where client processes request services and server processes provide them, communicating over a transport-layer connection.",
       "name_zh": "客户端-服务器模型"
     },
@@ -657,6 +703,7 @@
       "topic": "t10",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0519,
       "description": "The network-layer protocol providing best-effort, connectionless delivery of packets across interconnected networks using hierarchical IP addressing.",
       "name_zh": "IP协议"
     },
@@ -666,6 +713,7 @@
       "topic": "t10",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0638,
       "description": "The transport protocol providing reliable, ordered, connection-oriented byte streams over IP using acknowledgements, retransmission, and flow control.",
       "name_zh": "TCP协议"
     },
@@ -675,6 +723,7 @@
       "topic": "t_network_concurrency",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "The API for network programming that abstracts connections as file descriptors, with calls such as socket, bind, listen, connect, and accept.",
       "name_zh": "套接字接口"
     },
@@ -684,6 +733,7 @@
       "topic": "t_network_concurrency",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The application-layer request-response protocol underlying the web, using methods, headers, and status codes to transfer resources over TCP.",
       "name_zh": "HTTP协议基础"
     },
@@ -693,6 +743,7 @@
       "topic": "t_network_concurrency_c11_1",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0942,
       "description": "Threads as independent logical flows sharing a process's address space, created and joined to achieve concurrency within a single process.",
       "name_zh": "线程基础"
     },
@@ -702,6 +753,7 @@
       "topic": "t_network_concurrency_c11_1",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0817,
       "description": "How threads share global and heap variables, and the memory model determining when one thread's writes become visible to others.",
       "name_zh": "共享变量"
     },
@@ -711,6 +763,7 @@
       "topic": "t11",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0669,
       "description": "Coordinating threads using semaphores, counting primitives whose P and V operations enforce mutual exclusion and scheduling constraints.",
       "name_zh": "同步（信号量）",
       "visual": "diagram",
@@ -722,6 +775,7 @@
       "topic": "t11",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Properties making functions safe to call concurrently, including reentrancy and avoiding unsynchronised access to shared mutable state.",
       "name_zh": "线程安全"
     },
@@ -731,6 +785,7 @@
       "topic": "t11",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "A state where threads are permanently blocked, each waiting for resources held by others, arising when the four Coffman conditions hold.",
       "name_zh": "死锁",
       "visual": "diagram",

@@ -2,8 +2,8 @@
   "graphId": "web_applications",
   "subject": "Web Applications",
   "generatedFrom": "data/knowledge-graphs/source/web_applications.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "web_foundations",
@@ -16,6 +16,7 @@
           "name": "HTTP Protocol",
           "nameZh": "HTTP 协议",
           "defaultOrder": 1,
+          "centrality": 0.0947,
           "visual": "diagram",
           "visualHint": "Sequence diagram of an HTTP request-response exchange."
         },
@@ -23,13 +24,15 @@
           "conceptId": "web_url_dns",
           "name": "URLs and DNS",
           "nameZh": "URL 与 DNS",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "web_client_server",
           "name": "Client-Server Model",
           "nameZh": "客户端-服务器模型",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram the browser-client and server request flow."
         }
@@ -53,19 +56,22 @@
           "conceptId": "web_html",
           "name": "HTML",
           "nameZh": "HTML",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1065
         },
         {
           "conceptId": "web_css",
           "name": "CSS",
           "nameZh": "CSS",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0962
         },
         {
           "conceptId": "web_javascript",
           "name": "JavaScript",
           "nameZh": "JavaScript",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.168
         }
       ],
       "successors": [
@@ -92,6 +98,7 @@
           "name": "DOM Manipulation",
           "nameZh": "DOM 操作",
           "defaultOrder": 1,
+          "centrality": 0.0976,
           "visual": "diagram",
           "visualHint": "Tree diagram of the DOM nodes of a web page."
         },
@@ -100,6 +107,7 @@
           "name": "React Components",
           "nameZh": "React 组件",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Component-tree diagram of nested React components."
         },
@@ -108,6 +116,7 @@
           "name": "State and Props",
           "nameZh": "状态与属性",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram props flowing down and state updates re-rendering a component tree."
         }
@@ -133,13 +142,15 @@
           "conceptId": "web_node",
           "name": "Node.js",
           "nameZh": "Node.js",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0708
         },
         {
           "conceptId": "web_express",
           "name": "Express and Routing",
           "nameZh": "Express 与路由",
           "defaultOrder": 2,
+          "centrality": 0.0542,
           "visual": "diagram",
           "visualHint": "Diagram an Express request passing through routing and middleware."
         }
@@ -166,6 +177,7 @@
           "name": "REST APIs",
           "nameZh": "REST API",
           "defaultOrder": 1,
+          "centrality": 0.0692,
           "visual": "diagram",
           "visualHint": "Diagram REST resources and their HTTP-method operations."
         },
@@ -174,6 +186,7 @@
           "name": "Authentication and Sessions",
           "nameZh": "认证与会话",
           "defaultOrder": 2,
+          "centrality": 0.0398,
           "visual": "diagram",
           "visualHint": "Sequence diagram of authentication establishing a session."
         }
@@ -204,19 +217,22 @@
           "conceptId": "web_relational",
           "name": "Relational Databases",
           "nameZh": "关系型数据库",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0638
         },
         {
           "conceptId": "web_sql",
           "name": "SQL",
           "nameZh": "SQL",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "web_nosql",
           "name": "NoSQL and MongoDB",
           "nameZh": "NoSQL 与 MongoDB",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -240,19 +256,22 @@
           "conceptId": "web_xss",
           "name": "Cross-Site Scripting (XSS)",
           "nameZh": "跨站脚本攻击（XSS）",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0398
         },
         {
           "conceptId": "web_csrf",
           "name": "Cross-Site Request Forgery (CSRF)",
           "nameZh": "跨站请求伪造（CSRF）",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "web_sql_injection",
           "name": "SQL Injection",
           "nameZh": "SQL 注入",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -262,6 +281,113 @@
         "web_data"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "web_auth",
+      "to": "web_csrf",
+      "strength": "hard"
+    },
+    {
+      "from": "web_csrf",
+      "to": "web_sql_injection",
+      "strength": "soft"
+    },
+    {
+      "from": "web_css",
+      "to": "web_javascript",
+      "strength": "soft"
+    },
+    {
+      "from": "web_dom",
+      "to": "web_react",
+      "strength": "hard"
+    },
+    {
+      "from": "web_dom",
+      "to": "web_xss",
+      "strength": "hard"
+    },
+    {
+      "from": "web_express",
+      "to": "web_rest",
+      "strength": "hard"
+    },
+    {
+      "from": "web_html",
+      "to": "web_css",
+      "strength": "hard"
+    },
+    {
+      "from": "web_http",
+      "to": "web_client_server",
+      "strength": "hard"
+    },
+    {
+      "from": "web_http",
+      "to": "web_rest",
+      "strength": "hard"
+    },
+    {
+      "from": "web_http",
+      "to": "web_url_dns",
+      "strength": "soft"
+    },
+    {
+      "from": "web_javascript",
+      "to": "web_dom",
+      "strength": "hard"
+    },
+    {
+      "from": "web_javascript",
+      "to": "web_node",
+      "strength": "hard"
+    },
+    {
+      "from": "web_node",
+      "to": "web_express",
+      "strength": "hard"
+    },
+    {
+      "from": "web_react",
+      "to": "web_state_props",
+      "strength": "hard"
+    },
+    {
+      "from": "web_relational",
+      "to": "web_sql",
+      "strength": "hard"
+    },
+    {
+      "from": "web_rest",
+      "to": "web_auth",
+      "strength": "hard"
+    },
+    {
+      "from": "web_rest",
+      "to": "web_nosql",
+      "strength": "soft"
+    },
+    {
+      "from": "web_sql",
+      "to": "web_nosql",
+      "strength": "soft"
+    },
+    {
+      "from": "web_sql",
+      "to": "web_sql_injection",
+      "strength": "hard"
+    },
+    {
+      "from": "web_url_dns",
+      "to": "web_client_server",
+      "strength": "soft"
+    },
+    {
+      "from": "web_xss",
+      "to": "web_csrf",
+      "strength": "soft"
     }
   ]
 }

@@ -81,6 +81,7 @@
       "topic": "web_foundations",
       "description": "The stateless application-layer protocol underlying the web, where clients issue requests with methods and headers and servers reply with status codes and bodies.",
       "default_order": 1,
+      "centrality": 0.0947,
       "name_zh": "HTTP 协议",
       "visual": "diagram",
       "visual_hint": "Sequence diagram of an HTTP request-response exchange."
@@ -92,6 +93,7 @@
       "topic": "web_foundations",
       "description": "How web resources are named by URLs and located by resolving the hostname through DNS into an IP address before connecting.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "URL 与 DNS"
     },
     {
@@ -101,6 +103,7 @@
       "topic": "web_foundations",
       "description": "The web's architecture where browser clients request resources and servers respond, dividing responsibilities between front-end presentation and back-end logic.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "客户端-服务器模型",
       "visual": "diagram",
       "visual_hint": "Diagram the browser-client and server request flow."
@@ -112,6 +115,7 @@
       "topic": "web_frontend_part1",
       "description": "HyperText Markup Language structuring web page content as a tree of nested elements with semantic tags that browsers parse and render.",
       "default_order": 1,
+      "centrality": 0.1065,
       "name_zh": "HTML"
     },
     {
@@ -121,6 +125,7 @@
       "topic": "web_frontend_part1",
       "description": "Cascading Style Sheets describing the presentation of HTML, controlling layout, colour, and typography through selectors, the box model, and cascading rules.",
       "default_order": 2,
+      "centrality": 0.0962,
       "name_zh": "CSS"
     },
     {
@@ -130,6 +135,7 @@
       "topic": "web_frontend_part1",
       "description": "The browser's scripting language adding interactivity to pages, manipulating content and responding to events with an event-driven, single-threaded model.",
       "default_order": 3,
+      "centrality": 0.168,
       "name_zh": "JavaScript"
     },
     {
@@ -139,6 +145,7 @@
       "topic": "web_frontend_part2",
       "description": "The Document Object Model representing a page as a live tree of objects that scripts traverse and mutate to update content dynamically.",
       "default_order": 1,
+      "centrality": 0.0976,
       "name_zh": "DOM 操作",
       "visual": "diagram",
       "visual_hint": "Tree diagram of the DOM nodes of a web page."
@@ -150,6 +157,7 @@
       "topic": "web_frontend_part2",
       "description": "A component-based JavaScript library building user interfaces from reusable components that render declaratively from data, reconciled through a virtual DOM.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "React 组件",
       "visual": "diagram",
       "visual_hint": "Component-tree diagram of nested React components."
@@ -161,6 +169,7 @@
       "topic": "web_frontend_part2",
       "description": "React's data-flow model where props pass data down to child components and state holds local mutable data that triggers re-rendering when changed.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "状态与属性",
       "visual": "diagram",
       "visual_hint": "Diagram props flowing down and state updates re-rendering a component tree."
@@ -172,6 +181,7 @@
       "topic": "web_backend",
       "description": "A server-side JavaScript runtime built on the V8 engine, using an event-driven, non-blocking I/O model to build scalable network applications.",
       "default_order": 1,
+      "centrality": 0.0708,
       "name_zh": "Node.js"
     },
     {
@@ -181,6 +191,7 @@
       "topic": "web_backend",
       "description": "A minimal Node.js web framework providing routing and middleware to handle HTTP requests, compose request processing, and build server-side APIs.",
       "default_order": 2,
+      "centrality": 0.0542,
       "name_zh": "Express 与路由",
       "visual": "diagram",
       "visual_hint": "Diagram an Express request passing through routing and middleware."
@@ -192,6 +203,7 @@
       "topic": "web_backend_web_rest",
       "description": "An architectural style for web APIs modelling functionality as resources addressed by URLs and manipulated through standard HTTP methods and status codes.",
       "default_order": 1,
+      "centrality": 0.0692,
       "name_zh": "REST API",
       "visual": "diagram",
       "visual_hint": "Diagram REST resources and their HTTP-method operations."
@@ -203,6 +215,7 @@
       "topic": "web_backend_web_rest",
       "description": "Mechanisms verifying user identity and maintaining logged-in state across stateless HTTP using sessions, cookies, and tokens such as JWTs.",
       "default_order": 2,
+      "centrality": 0.0398,
       "name_zh": "认证与会话",
       "visual": "diagram",
       "visual_hint": "Sequence diagram of authentication establishing a session."
@@ -214,6 +227,7 @@
       "topic": "web_data",
       "description": "Databases organising data into tables of rows and columns, with primary and foreign keys expressing relationships, queried using SQL.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "关系型数据库"
     },
     {
@@ -223,6 +237,7 @@
       "topic": "web_data",
       "description": "Structured Query Language for defining and manipulating relational data, expressing selection, filtering, joining, and aggregation declaratively.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "SQL"
     },
     {
@@ -232,6 +247,7 @@
       "topic": "web_data",
       "description": "Non-relational document stores like MongoDB holding schema-flexible JSON-like documents, trading relational guarantees for scalability and flexibility.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "NoSQL 与 MongoDB"
     },
     {
@@ -241,6 +257,7 @@
       "topic": "web_security",
       "description": "Cross-site scripting, a vulnerability where attacker-supplied scripts execute in victims' browsers, mitigated by escaping output and content security policies.",
       "default_order": 1,
+      "centrality": 0.0398,
       "name_zh": "跨站脚本攻击（XSS）"
     },
     {
@@ -250,6 +267,7 @@
       "topic": "web_security",
       "description": "Cross-site request forgery, an attack tricking an authenticated browser into sending unintended requests, defended with anti-CSRF tokens and SameSite cookies.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "跨站请求伪造（CSRF）"
     },
     {
@@ -259,6 +277,7 @@
       "topic": "web_security",
       "description": "An attack inserting malicious SQL through unsanitised input to manipulate database queries, prevented with parameterised queries and input validation.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "SQL 注入"
     }
   ],

@@ -2,8 +2,8 @@
   "graphId": "computer_architecture",
   "subject": "Great Ideas in Computer Architecture",
   "generatedFrom": "data/knowledge-graphs/source/computer_architecture.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "topic_data_rep",
@@ -15,13 +15,15 @@
           "conceptId": "concept_binary_hex",
           "name": "Binary and Hexadecimal",
           "nameZh": "二进制与十六进制",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2476
         },
         {
           "conceptId": "concept_integer_rep",
           "name": "Two's Complement & Integer Rep",
           "nameZh": "补码与整数表示",
           "defaultOrder": 2,
+          "centrality": 0.2294,
           "visual": "diagram",
           "visualHint": "Diagram two's-complement encoding of signed integers."
         }
@@ -46,6 +48,7 @@
           "name": "IEEE 754 Floating Point",
           "nameZh": "IEEE 754浮点数",
           "defaultOrder": 1,
+          "centrality": 0.0654,
           "visual": "diagram",
           "visualHint": "Diagram the IEEE 754 sign, exponent, and mantissa fields."
         },
@@ -53,7 +56,8 @@
           "conceptId": "concept_endianness",
           "name": "Endianness and Memory Layout",
           "nameZh": "字节序与内存布局",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -72,13 +76,15 @@
           "conceptId": "concept_c_basics",
           "name": "C Basics & Control Flow",
           "nameZh": "C基础与控制流",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0803
         },
         {
           "conceptId": "concept_pointers_arrays",
           "name": "Pointers and Arrays",
           "nameZh": "指针与数组",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0654
         }
       ],
       "successors": [
@@ -100,13 +106,15 @@
           "conceptId": "concept_memory_management",
           "name": "Dynamic Memory Management",
           "nameZh": "动态内存管理",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0353
         },
         {
           "conceptId": "concept_structs_unions",
           "name": "Structs, Unions, and Typedefs",
           "nameZh": "结构体、联合体与typedef",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -125,19 +133,22 @@
           "conceptId": "concept_riscv_basics",
           "name": "Registers & Basic Instructions",
           "nameZh": "寄存器与基本指令",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0931
         },
         {
           "conceptId": "concept_riscv_control",
           "name": "Control Flow & Branches",
           "nameZh": "控制流与分支",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0803
         },
         {
           "conceptId": "concept_riscv_functions",
           "name": "Function Calling Convention",
           "nameZh": "函数调用约定",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0654
         }
       ],
       "successors": [
@@ -159,13 +170,15 @@
           "conceptId": "concept_riscv_formats",
           "name": "Instruction Formats",
           "nameZh": "指令格式",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0353
         },
         {
           "conceptId": "concept_call_pipeline",
           "name": "Compiler, Assembler, Linker, Loader",
           "nameZh": "编译器、汇编器、链接器、加载器",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -185,6 +198,7 @@
           "name": "Boolean Algebra & Logic Gates",
           "nameZh": "布尔代数与逻辑门",
           "defaultOrder": 1,
+          "centrality": 0.0919,
           "visual": "diagram",
           "visualHint": "Logic-gate diagram of AND, OR, and NOT circuits."
         },
@@ -192,7 +206,8 @@
           "conceptId": "concept_combinational_logic",
           "name": "Combinational Logic Blocks",
           "nameZh": "组合逻辑块",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.079
         }
       ],
       "successors": [
@@ -214,19 +229,22 @@
           "conceptId": "concept_state_elements",
           "name": "State Elements (Flip-Flops)",
           "nameZh": "状态元件（触发器）",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0638
         },
         {
           "conceptId": "concept_sequential_logic",
           "name": "Sequential Logic & Timing",
           "nameZh": "时序逻辑与时序",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "concept_fsm",
           "name": "Finite State Machines",
           "nameZh": "有限状态机",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "State-transition diagram of a finite state machine."
         }
@@ -248,6 +266,7 @@
           "name": "Single-Cycle Datapath",
           "nameZh": "单周期数据通路",
           "defaultOrder": 1,
+          "centrality": 0.096,
           "visual": "diagram",
           "visualHint": "Datapath diagram of a single-cycle processor."
         },
@@ -255,13 +274,15 @@
           "conceptId": "concept_cpu_control",
           "name": "CPU Control Logic",
           "nameZh": "CPU控制逻辑",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0519
         },
         {
           "conceptId": "concept_pipelining",
           "name": "Pipelining Principles",
           "nameZh": "流水线原理",
           "defaultOrder": 3,
+          "centrality": 0.0638,
           "visual": "diagram",
           "visualHint": "Pipeline stage diagram of overlapping instructions over cycles."
         }
@@ -286,6 +307,7 @@
           "name": "Pipeline Hazards & Forwarding",
           "nameZh": "流水线冒险与转发",
           "defaultOrder": 1,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Diagram a data hazard and forwarding in the pipeline."
         },
@@ -293,7 +315,8 @@
           "conceptId": "concept_branch_prediction",
           "name": "Branch Prediction",
           "nameZh": "分支预测",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -313,6 +336,7 @@
           "name": "Cache Basics & Direct Mapped",
           "nameZh": "缓存基础与直接映射",
           "defaultOrder": 1,
+          "centrality": 0.0973,
           "visual": "diagram",
           "visualHint": "Diagram a direct-mapped cache indexing blocks by address bits."
         },
@@ -320,7 +344,8 @@
           "conceptId": "concept_associative_caches",
           "name": "Associative Caches",
           "nameZh": "关联缓存",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0624
         }
       ],
       "successors": [
@@ -342,13 +367,15 @@
           "conceptId": "concept_cache_performance",
           "name": "AMAT & Cache Misses",
           "nameZh": "AMAT与缓存未命中",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0443
         },
         {
           "conceptId": "concept_virtual_memory",
           "name": "Virtual Memory & Page Tables",
           "nameZh": "虚拟内存与页表",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Diagram virtual-to-physical address translation through page tables."
         },
@@ -356,7 +383,8 @@
           "conceptId": "concept_tlb",
           "name": "Translation Lookaside Buffer (TLB)",
           "nameZh": "地址转换后备缓冲器（TLB）",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -376,6 +404,7 @@
           "name": "Amdahl's Law",
           "nameZh": "Amdahl定律",
           "defaultOrder": 1,
+          "centrality": 0.0919,
           "visual": "function",
           "visualHint": "Plot Amdahl's-law speedup against the parallel fraction."
         },
@@ -383,13 +412,15 @@
           "conceptId": "concept_simd",
           "name": "Data-Level Parallelism (SIMD)",
           "nameZh": "数据级并行(SIMD)",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.079
         },
         {
           "conceptId": "concept_multithreading",
           "name": "Thread-Level Parallelism (OpenMP)",
           "nameZh": "线程级并行(OpenMP)",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -411,13 +442,15 @@
           "conceptId": "concept_cache_coherence",
           "name": "Cache Coherence & False Sharing",
           "nameZh": "缓存一致性与伪共享",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "concept_warehouse_scale",
           "name": "Warehouse-Scale Computing",
           "nameZh": "仓库级计算",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -436,13 +469,15 @@
           "conceptId": "concept_memory_mapped_io",
           "name": "Memory-Mapped I/O",
           "nameZh": "内存映射I/O",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0919
         },
         {
           "conceptId": "concept_polling_interrupts",
           "name": "Polling and Interrupts",
           "nameZh": "轮询与中断",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.079
         }
       ],
       "successors": [
@@ -464,19 +499,22 @@
           "conceptId": "concept_dma",
           "name": "Direct Memory Access (DMA)",
           "nameZh": "直接内存访问（DMA）",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0638
         },
         {
           "conceptId": "concept_ecc_parity",
           "name": "Error Correction Codes",
           "nameZh": "纠错码",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "concept_raid",
           "name": "RAID and Dependability",
           "nameZh": "RAID与可靠性",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -484,6 +522,183 @@
         "topic_parallel_io_memory_mapped_io"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "concept_amdahls_law",
+      "to": "concept_simd",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_associative_caches",
+      "to": "concept_cache_performance",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_binary_hex",
+      "to": "concept_floating_point",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_binary_hex",
+      "to": "concept_integer_rep",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_boolean_algebra",
+      "to": "concept_combinational_logic",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_c_basics",
+      "to": "concept_pointers_arrays",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_cache_basics",
+      "to": "concept_associative_caches",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_cache_basics",
+      "to": "concept_virtual_memory",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_cache_coherence",
+      "to": "concept_warehouse_scale",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_cache_performance",
+      "to": "concept_virtual_memory",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_combinational_logic",
+      "to": "concept_state_elements",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_cpu_control",
+      "to": "concept_pipelining",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_dma",
+      "to": "concept_ecc_parity",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_ecc_parity",
+      "to": "concept_raid",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_floating_point",
+      "to": "concept_endianness",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_integer_rep",
+      "to": "concept_floating_point",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_memory_management",
+      "to": "concept_structs_unions",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_memory_mapped_io",
+      "to": "concept_polling_interrupts",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_multithreading",
+      "to": "concept_cache_coherence",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_pipeline_hazards",
+      "to": "concept_branch_prediction",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_pipelining",
+      "to": "concept_pipeline_hazards",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_pointers_arrays",
+      "to": "concept_memory_management",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_pointers_arrays",
+      "to": "concept_structs_unions",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_polling_interrupts",
+      "to": "concept_dma",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_riscv_basics",
+      "to": "concept_riscv_control",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_riscv_control",
+      "to": "concept_riscv_functions",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_riscv_formats",
+      "to": "concept_call_pipeline",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_riscv_functions",
+      "to": "concept_call_pipeline",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_riscv_functions",
+      "to": "concept_riscv_formats",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_sequential_logic",
+      "to": "concept_fsm",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_simd",
+      "to": "concept_multithreading",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_single_cycle",
+      "to": "concept_cpu_control",
+      "strength": "soft"
+    },
+    {
+      "from": "concept_single_cycle",
+      "to": "concept_pipelining",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_state_elements",
+      "to": "concept_sequential_logic",
+      "strength": "hard"
+    },
+    {
+      "from": "concept_virtual_memory",
+      "to": "concept_tlb",
+      "strength": "hard"
     }
   ]
 }

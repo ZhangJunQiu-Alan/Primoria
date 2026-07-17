@@ -2,8 +2,8 @@
   "graphId": "numerical_analysis",
   "subject": "Introduction to Numerical Analysis",
   "generatedFrom": "data/knowledge-graphs/source/numerical_analysis.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "t_mit18330_errors",
@@ -15,19 +15,22 @@
           "conceptId": "c_mit18330_floating_point",
           "name": "Floating Point Representation",
           "nameZh": "浮点表示",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1243
         },
         {
           "conceptId": "c_mit18330_error_analysis",
           "name": "Error Analysis",
           "nameZh": "误差分析",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.2342
         },
         {
           "conceptId": "c_mit18330_conditioning",
           "name": "Conditioning",
           "nameZh": "条件数",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0577
         }
       ],
       "successors": [
@@ -62,6 +65,7 @@
           "name": "Bisection Method",
           "nameZh": "二分法",
           "defaultOrder": 1,
+          "centrality": 0.0443,
           "visual": "function",
           "visualHint": "Halve a bracketing interval each step converging on a root."
         },
@@ -70,6 +74,7 @@
           "name": "Newton's Method",
           "nameZh": "牛顿法",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "function",
           "visualHint": "Step Newton's method following tangents to a root."
         },
@@ -78,6 +83,7 @@
           "name": "Secant Method",
           "nameZh": "割线法",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Step the secant method using a chord to approach a root."
         }
@@ -98,19 +104,22 @@
           "conceptId": "c_mit18330_lu",
           "name": "LU Factorization",
           "nameZh": "LU 分解",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0775
         },
         {
           "conceptId": "c_mit18330_cholesky",
           "name": "Cholesky Factorization",
           "nameZh": "Cholesky 分解",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_mit18330_iterative_linear",
           "name": "Iterative Methods",
           "nameZh": "迭代法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -135,6 +144,7 @@
           "name": "Polynomial Interpolation",
           "nameZh": "多项式插值",
           "defaultOrder": 1,
+          "centrality": 0.0775,
           "visual": "function",
           "visualHint": "Fit an interpolating polynomial through given data points."
         },
@@ -143,6 +153,7 @@
           "name": "Spline Interpolation",
           "nameZh": "样条插值",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Fit a smooth piecewise spline through knots without oscillation."
         },
@@ -151,6 +162,7 @@
           "name": "Least Squares Approximation",
           "nameZh": "最小二乘逼近",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Fit a least-squares line minimising the squared residuals."
         }
@@ -178,6 +190,7 @@
           "name": "Newton-Cotes Formulas",
           "nameZh": "Newton-Cotes 公式",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Approximate an integral with trapezoidal and Simpson's-rule strips."
         },
@@ -185,7 +198,8 @@
           "conceptId": "c_mit18330_gaussian_quad",
           "name": "Gaussian Quadrature",
           "nameZh": "高斯求积",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -205,6 +219,7 @@
           "name": "Euler's Method",
           "nameZh": "欧拉法",
           "defaultOrder": 1,
+          "centrality": 0.0669,
           "visual": "function",
           "visualHint": "Step Euler's method along a slope field approximating an ODE solution."
         },
@@ -213,6 +228,7 @@
           "name": "Runge-Kutta Methods",
           "nameZh": "Runge-Kutta 法",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Compare RK4 against Euler approximating an ODE solution."
         },
@@ -220,7 +236,8 @@
           "conceptId": "c_mit18330_ode_stability",
           "name": "Stability of ODE Methods",
           "nameZh": "ODE 稳定性",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -228,6 +245,88 @@
         "t_mit18330_errors"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "c_mit18330_bisection",
+      "to": "c_mit18330_newton",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_conditioning",
+      "to": "c_mit18330_lu",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_error_analysis",
+      "to": "c_mit18330_bisection",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit18330_error_analysis",
+      "to": "c_mit18330_conditioning",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_error_analysis",
+      "to": "c_mit18330_euler",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_error_analysis",
+      "to": "c_mit18330_polynomial_interp",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_euler",
+      "to": "c_mit18330_ode_stability",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_euler",
+      "to": "c_mit18330_runge_kutta",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_floating_point",
+      "to": "c_mit18330_error_analysis",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_lu",
+      "to": "c_mit18330_cholesky",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_lu",
+      "to": "c_mit18330_iterative_linear",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit18330_lu",
+      "to": "c_mit18330_least_squares",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_newton",
+      "to": "c_mit18330_secant",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_polynomial_interp",
+      "to": "c_mit18330_gaussian_quad",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_polynomial_interp",
+      "to": "c_mit18330_newton_cotes",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit18330_polynomial_interp",
+      "to": "c_mit18330_splines",
+      "strength": "hard"
     }
   ]
 }

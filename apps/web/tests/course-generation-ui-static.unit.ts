@@ -74,7 +74,7 @@ async function main() {
   assert(courseStore.includes("description: lesson.description ?? \"\""), "course store persists lesson descriptions");
   assert(courseStore.includes("description: row.description ?? \"\""), "course store reads lesson descriptions");
   assert(courseGenerator.includes("plannedLessonDescription"), "course outline generation produces lesson descriptions");
-  assert(courseGenerator.includes("conceptIds.map((concept) => lessonConceptName"), "lesson descriptions are derived from KG concept names");
+  assert(courseGenerator.includes("lessonConceptName(concept, language)"), "lesson titles/descriptions are derived from KG concept names");
   assert(lessonDescriptionMigration.includes('ADD COLUMN "description" text DEFAULT \'\''), "database migration adds persisted lesson descriptions");
   assert(courseOutlinePage.includes("CourseOutlineView"), "course outline route delegates to the shared outline view");
   assert(!courseDetailClient.includes("CourseOutlineView"), "course detail reader no longer embeds the shared upcoming outline");

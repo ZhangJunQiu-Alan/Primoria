@@ -14,11 +14,20 @@ export type CourseContextConcept = {
   // planner's per-concept visual requirement (absent = no forced visual).
   visual?: ConceptVisual;
   visualHint?: string;
+  // Global reverse-PageRank importance (0..1, max-normalized) over the whole KG.
+  // High = many later concepts depend on this one; signals the planner to teach
+  // it thoroughly. Absent = uncomputed. Distinct from defaultOrder (sequence).
+  centrality?: number;
   // Learner's prior mastery of this concept (from user_concept_mastery). Absent
   // = no record yet → treat as first-time learning. Shapes teaching DEPTH only;
   // coverage and mandated visual/quiz blocks are unaffected.
   mastery?: MasteryStatus;
 };
+
+// A concept at/above this max-normalized centrality is "core": load-bearing
+// across the KG (~top 6% of concepts). Marked in the planner prompt so
+// foundational concepts get thorough teaching. Tunable single source.
+export const KG_CORE_CENTRALITY = 0.3;
 
 export type CourseContextTopic = {
   topicId: string;
@@ -64,9 +73,11 @@ export function languageDirective(language?: string | null): string {
 // one lesson for the start topic; later topics remain lazy outline nodes.
 export function buildKgContextPrompt(kg?: CourseContext): string {
   if (!kg?.startTopic) return "";
+  const isCore = (c: CourseContextConcept) =>
+    typeof c.centrality === "number" && c.centrality >= KG_CORE_CENTRALITY;
   const fmtTopic = (t: CourseContextTopic) => {
     const list = (t.concepts ?? [])
-      .map((c) => `${c.defaultOrder}. ${c.name} (${c.conceptId})`)
+      .map((c) => `${c.defaultOrder}. ${c.name} (${c.conceptId})${isCore(c) ? " [core]" : ""}`)
       .join("; ");
     return `${t.name} (${t.topicId})${list ? ` — concepts: ${list}` : ""}`;
   };
@@ -75,6 +86,11 @@ export function buildKgContextPrompt(kg?: CourseContext): string {
     "Knowledge graph linear learning path (follow it exactly):",
     `Start topic: ${fmtTopic(kg.startTopic)}`,
   ];
+  if ((kg.startTopic.concepts ?? []).some(isCore)) {
+    lines.push(
+      "Concepts marked [core] are foundational — many later concepts depend on them; teach them thoroughly and do not rush.",
+    );
+  }
   if (kg.targetConceptId) {
     lines.push(`The learner is aiming at concept ${kg.targetConceptId} — make the first lesson center on it.`);
   }

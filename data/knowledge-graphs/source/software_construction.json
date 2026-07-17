@@ -80,6 +80,7 @@
       "topic": "t_mit6031_foundations_specs",
       "description": "Catching errors before run time through static type checking, contrasted with dynamic checking, to make bugs visible early and cheaply.",
       "default_order": 1,
+      "centrality": 0.1973,
       "name_zh": "静态检查"
     },
     {
@@ -89,6 +90,7 @@
       "topic": "t_mit6031_foundations_specs",
       "description": "Designing types whose values cannot change after construction, eliminating aliasing bugs and making code easier to reason about and share safely.",
       "default_order": 2,
+      "centrality": 0.0804,
       "name_zh": "不可变性"
     },
     {
@@ -98,6 +100,7 @@
       "topic": "t_mit6031_foundations_specs_mit6031_specs",
       "description": "Contracts defining a method's behaviour through preconditions that clients must satisfy and postconditions the implementation guarantees in return.",
       "default_order": 1,
+      "centrality": 0.1226,
       "name_zh": "规格",
       "visual": "diagram",
       "visual_hint": "Diagram preconditions and postconditions as a contract boundary."
@@ -109,6 +112,7 @@
       "topic": "t_mit6031_foundations_specs_mit6031_specs",
       "description": "Designing test suites systematically by partitioning the input space into equivalence classes and probing boundary values to expose defects.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "测试策略",
       "visual": "diagram",
       "visual_hint": "Diagram partitioning the input space into equivalence classes."
@@ -120,6 +124,7 @@
       "topic": "t_mit6031_foundations_specs_mit6031_specs",
       "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "异常"
     },
     {
@@ -129,6 +134,7 @@
       "topic": "t_mit6031_adt",
       "description": "Abstract data types defined by their operations—creators, producers, observers, and mutators—rather than by their internal representation.",
       "default_order": 1,
+      "centrality": 0.1964,
       "name_zh": "ADT 概念"
     },
     {
@@ -138,6 +144,7 @@
       "topic": "t_mit6031_adt",
       "description": "Designing an ADT so clients depend only on its abstract specification, allowing the internal representation to change without breaking them.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "表示独立性"
     },
     {
@@ -147,6 +154,7 @@
       "topic": "t_mit6031_adt_mit6031_rep_invariant",
       "description": "A condition every valid object of a type must satisfy, checked to ensure the internal representation stays consistent.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "表示不变量"
     },
     {
@@ -156,6 +164,7 @@
       "topic": "t_mit6031_adt_mit6031_rep_invariant",
       "description": "A mapping from an ADT's concrete representation to the abstract value it represents, defining the meaning of the implementation.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "抽象函数",
       "visual": "diagram",
       "visual_hint": "Diagram the abstraction function mapping representation to abstract value."
@@ -167,6 +176,7 @@
       "topic": "t_mit6031_oop",
       "description": "Interfaces specifying behaviour that multiple implementations provide, enabling subtype polymorphism where subtypes are substitutable for supertypes.",
       "default_order": 1,
+      "centrality": 0.0564,
       "name_zh": "接口与子类型"
     },
     {
@@ -176,6 +186,7 @@
       "topic": "t_mit6031_oop",
       "description": "Defining when two objects are equal, distinguishing observational equality of abstract values from reference identity, subject to consistency requirements.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "相等性"
     },
     {
@@ -185,6 +196,7 @@
       "topic": "t_mit6031_oop",
       "description": "Recursive data types defined in terms of themselves, such as immutable lists or trees, processed by recursion over their cases.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "递归数据类型",
       "visual": "diagram",
       "visual_hint": "Diagram a recursive data type such as an immutable list."
@@ -196,6 +208,7 @@
       "topic": "t_mit6031_concurrency",
       "description": "Concurrent execution via threads or processes, introducing interleaving, race conditions, and the central challenge of shared mutable state.",
       "default_order": 1,
+      "centrality": 0.0817,
       "name_zh": "并发基础"
     },
     {
@@ -205,6 +218,7 @@
       "topic": "t_mit6031_concurrency",
       "description": "Strategies ensuring correct behaviour under concurrent access, including confinement, immutability, and synchronisation of shared data.",
       "default_order": 2,
+      "centrality": 0.0669,
       "name_zh": "线程安全"
     },
     {
@@ -214,6 +228,7 @@
       "topic": "t_mit6031_concurrency_mit6031_locks",
       "description": "Coordinating threads with locks for mutual exclusion, and the risk of deadlock when threads acquire multiple locks in conflicting orders.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "锁与同步",
       "visual": "diagram",
       "visual_hint": "State diagram of threads acquiring locks and a deadlock cycle."
@@ -225,6 +240,7 @@
       "topic": "t_mit6031_concurrency_mit6031_locks",
       "description": "Concurrency where components communicate by sending messages through channels or queues instead of sharing mutable memory.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "消息传递",
       "visual": "diagram",
       "visual_hint": "Diagram components communicating by messages over channels."

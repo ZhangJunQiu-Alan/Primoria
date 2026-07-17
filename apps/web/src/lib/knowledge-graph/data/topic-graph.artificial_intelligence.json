@@ -2,8 +2,8 @@
   "graphId": "artificial_intelligence",
   "subject": "Introduction to Artificial Intelligence",
   "generatedFrom": "data/knowledge-graphs/source/artificial_intelligence.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "ai_search_part1",
@@ -15,13 +15,15 @@
           "conceptId": "ai_search_problem",
           "name": "Search Problem Formulation",
           "nameZh": "搜索问题建模",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1327
         },
         {
           "conceptId": "ai_uninformed",
           "name": "Uninformed Search",
           "nameZh": "无信息搜索",
           "defaultOrder": 2,
+          "centrality": 0.096,
           "visual": "algorithm",
           "visualHint": "Animate BFS and DFS exploring a search tree/graph with the frontier."
         },
@@ -29,7 +31,8 @@
           "conceptId": "ai_heuristics",
           "name": "Heuristics and Admissibility",
           "nameZh": "启发式与可容性",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0519
         }
       ],
       "successors": [
@@ -56,6 +59,7 @@
           "name": "Informed Search (A*)",
           "nameZh": "有信息搜索（A*）",
           "defaultOrder": 1,
+          "centrality": 0.0638,
           "visual": "algorithm",
           "visualHint": "Animate A* expanding nodes by f = g + h on a grid."
         },
@@ -64,6 +68,7 @@
           "name": "Adversarial Search (Minimax)",
           "nameZh": "对抗搜索（Minimax）",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "algorithm",
           "visualHint": "Step a minimax game tree backing up values from the leaves."
         },
@@ -72,6 +77,7 @@
           "name": "Alpha-Beta Pruning",
           "nameZh": "Alpha-Beta剪枝",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Step minimax with alpha-beta pruning, showing cut branches."
         }
@@ -92,13 +98,15 @@
           "conceptId": "ai_csp_def",
           "name": "Constraint Satisfaction Problems",
           "nameZh": "约束满足问题",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.079
         },
         {
           "conceptId": "ai_backtracking",
           "name": "Backtracking Search",
           "nameZh": "回溯搜索",
           "defaultOrder": 2,
+          "centrality": 0.0638,
           "visual": "algorithm",
           "visualHint": "Animate backtracking search assigning CSP variables and backing up on failure."
         }
@@ -124,13 +132,15 @@
           "conceptId": "ai_arc_consistency",
           "name": "Constraint Propagation",
           "nameZh": "约束传播",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "ai_local_search",
           "name": "Local Search",
           "nameZh": "局部搜索",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -149,13 +159,15 @@
           "conceptId": "ai_mdp_def",
           "name": "Markov Decision Processes",
           "nameZh": "马尔可夫决策过程",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1595
         },
         {
           "conceptId": "ai_bellman",
           "name": "Bellman Equations",
           "nameZh": "Bellman方程",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0654
         }
       ],
       "successors": [
@@ -182,6 +194,7 @@
           "name": "Value Iteration",
           "nameZh": "价值迭代",
           "defaultOrder": 1,
+          "centrality": 0.0353,
           "visual": "algorithm",
           "visualHint": "Iterate MDP state values on a grid until convergence."
         },
@@ -189,7 +202,8 @@
           "conceptId": "ai_policy_iteration",
           "name": "Policy Iteration",
           "nameZh": "策略迭代",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -208,13 +222,15 @@
           "conceptId": "ai_rl_framework",
           "name": "Reinforcement Learning Framework",
           "nameZh": "强化学习框架",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0931
         },
         {
           "conceptId": "ai_td",
           "name": "Temporal Difference Learning",
           "nameZh": "时序差分学习",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0803
         }
       ],
       "successors": [
@@ -239,6 +255,7 @@
           "name": "Q-Learning",
           "nameZh": "Q学习",
           "defaultOrder": 1,
+          "centrality": 0.0654,
           "visual": "algorithm",
           "visualHint": "Update a Q-table as an agent moves through a gridworld."
         },
@@ -246,13 +263,15 @@
           "conceptId": "ai_exploration",
           "name": "Exploration vs Exploitation",
           "nameZh": "探索与利用",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "ai_approx_q",
           "name": "Approximate Q-Learning",
           "nameZh": "近似Q学习",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -271,13 +290,15 @@
           "conceptId": "ai_prob",
           "name": "Probability Fundamentals",
           "nameZh": "概率基础",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1063
         },
         {
           "conceptId": "ai_bayes_rule",
           "name": "Bayes Rule",
           "nameZh": "贝叶斯规则",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0973
         }
       ],
       "successors": [
@@ -308,6 +329,7 @@
           "name": "Bayesian Networks",
           "nameZh": "贝叶斯网络",
           "defaultOrder": 1,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Directed acyclic graph of a Bayesian network with conditional dependencies."
         },
@@ -315,7 +337,8 @@
           "conceptId": "ai_bn_inference",
           "name": "Inference in Bayes Nets",
           "nameZh": "贝叶斯网络推理",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -334,13 +357,15 @@
           "conceptId": "ai_markov_chain",
           "name": "Markov Models",
           "nameZh": "马尔可夫模型",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0944
         },
         {
           "conceptId": "ai_hmm",
           "name": "Hidden Markov Models",
           "nameZh": "隐马尔可夫模型",
           "defaultOrder": 2,
+          "centrality": 0.0819,
           "visual": "diagram",
           "visualHint": "Trellis diagram of hidden states and observations over time."
         },
@@ -348,7 +373,8 @@
           "conceptId": "ai_forward",
           "name": "Forward Algorithm",
           "nameZh": "前向算法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0548
         }
       ],
       "successors": [
@@ -373,6 +399,7 @@
           "name": "Viterbi Algorithm",
           "nameZh": "维特比算法",
           "defaultOrder": 1,
+          "centrality": 0.0353,
           "visual": "algorithm",
           "visualHint": "Step the Viterbi trellis selecting the most likely hidden-state path."
         },
@@ -380,13 +407,15 @@
           "conceptId": "ai_particle",
           "name": "Particle Filtering",
           "nameZh": "粒子滤波",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "ai_naive_bayes",
           "name": "Naive Bayes",
           "nameZh": "朴素贝叶斯",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.079
         }
       ],
       "successors": [
@@ -412,6 +441,7 @@
           "name": "Perceptron",
           "nameZh": "感知机",
           "defaultOrder": 1,
+          "centrality": 0.0638,
           "visual": "function",
           "visualHint": "Plot a linear decision boundary updating as the perceptron learns."
         },
@@ -420,6 +450,7 @@
           "name": "Neural Networks",
           "nameZh": "神经网络",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Diagram a multilayer network of weighted connections and activations."
         },
@@ -427,7 +458,8 @@
           "conceptId": "ai_generalization",
           "name": "Generalization and Overfitting",
           "nameZh": "泛化与过拟合",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -435,6 +467,173 @@
         "ai_inference_naive_bayes"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "ai_arc_consistency",
+      "to": "ai_local_search",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_backtracking",
+      "to": "ai_arc_consistency",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_bayes_nets",
+      "to": "ai_bn_inference",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_bayes_rule",
+      "to": "ai_bayes_nets",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_bayes_rule",
+      "to": "ai_naive_bayes",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_bellman",
+      "to": "ai_policy_iteration",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_bellman",
+      "to": "ai_value_iteration",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_csp_def",
+      "to": "ai_backtracking",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_exploration",
+      "to": "ai_approx_q",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_forward",
+      "to": "ai_viterbi",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_heuristics",
+      "to": "ai_informed",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_hmm",
+      "to": "ai_forward",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_hmm",
+      "to": "ai_particle",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_informed",
+      "to": "ai_minimax",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_markov_chain",
+      "to": "ai_hmm",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_mdp_def",
+      "to": "ai_bellman",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_mdp_def",
+      "to": "ai_rl_framework",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_minimax",
+      "to": "ai_alphabeta",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_naive_bayes",
+      "to": "ai_perceptron",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_neural_nets",
+      "to": "ai_generalization",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_perceptron",
+      "to": "ai_neural_nets",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_prob",
+      "to": "ai_bayes_rule",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_prob",
+      "to": "ai_markov_chain",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_qlearning",
+      "to": "ai_approx_q",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_qlearning",
+      "to": "ai_exploration",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_rl_framework",
+      "to": "ai_td",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_search_problem",
+      "to": "ai_csp_def",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_search_problem",
+      "to": "ai_uninformed",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_td",
+      "to": "ai_qlearning",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_uninformed",
+      "to": "ai_heuristics",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_uninformed",
+      "to": "ai_informed",
+      "strength": "hard"
+    },
+    {
+      "from": "ai_value_iteration",
+      "to": "ai_policy_iteration",
+      "strength": "soft"
+    },
+    {
+      "from": "ai_viterbi",
+      "to": "ai_particle",
+      "strength": "soft"
     }
   ]
 }

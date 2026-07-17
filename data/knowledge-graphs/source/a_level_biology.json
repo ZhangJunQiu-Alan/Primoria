@@ -217,6 +217,7 @@
       "topic": "bio_cell_structure",
       "description": "The use of light and electron microscopes to view cells, where resolution—the ability to distinguish two close points—and magnification determine the detail observable.",
       "default_order": 1,
+      "centrality": 0.1233,
       "name_zh": "显微镜"
     },
     {
@@ -226,6 +227,7 @@
       "topic": "bio_cell_structure",
       "description": "Membrane-bound and non-membrane structures within eukaryotic cells, such as the nucleus, mitochondria, and endoplasmic reticulum, each performing specialised functions.",
       "default_order": 2,
+      "centrality": 0.1159,
       "name_zh": "真核细胞器"
     },
     {
@@ -235,6 +237,7 @@
       "topic": "bio_cell_structure_bio_prokaryotes",
       "description": "Bacterial cells lacking a nucleus and membrane-bound organelles, with circular DNA, smaller ribosomes, and a cell wall, contrasted with eukaryotic cells.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "原核细胞"
     },
     {
@@ -244,6 +247,7 @@
       "topic": "bio_cell_structure_bio_prokaryotes",
       "description": "Calculating actual cell size, magnification, and image size using the relationship that magnification equals image size divided by actual size, with consistent units.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "细胞大小与放大"
     },
     {
@@ -253,6 +257,7 @@
       "topic": "bio_molecules",
       "description": "The properties of water arising from its polarity and hydrogen bonding, including its role as a solvent, high specific heat capacity, and cohesion important to life.",
       "default_order": 1,
+      "centrality": 0.1373,
       "name_zh": "水"
     },
     {
@@ -262,6 +267,7 @@
       "topic": "bio_molecules",
       "description": "Sugars and polysaccharides built from monosaccharides via glycosidic bonds, including glucose, starch, glycogen, and cellulose, serving energy and structural roles.",
       "default_order": 2,
+      "centrality": 0.2648,
       "name_zh": "碳水化合物"
     },
     {
@@ -271,6 +277,7 @@
       "topic": "bio_molecules_bio_lipids",
       "description": "Hydrophobic molecules including triglycerides for energy storage and phospholipids whose amphipathic structure forms the bilayer of cell membranes.",
       "default_order": 1,
+      "centrality": 0.27,
       "name_zh": "脂质"
     },
     {
@@ -280,6 +287,7 @@
       "topic": "bio_molecules_bio_lipids",
       "description": "Polymers of amino acids joined by peptide bonds, folding through primary, secondary, tertiary, and quaternary structure that determines their biological function.",
       "default_order": 2,
+      "centrality": 0.3728,
       "name_zh": "蛋白质"
     },
     {
@@ -289,6 +297,7 @@
       "topic": "bio_molecules_bio_lipids",
       "description": "Qualitative biochemical tests identifying biological molecules, such as Benedict's for reducing sugars, iodine for starch, biuret for protein, and the emulsion test for lipids.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "生化检测"
     },
     {
@@ -298,6 +307,7 @@
       "topic": "bio_enzymes",
       "description": "Enzymes as biological catalysts lowering activation energy, binding substrates at their active site according to the induced-fit model to form products.",
       "default_order": 1,
+      "centrality": 0.1392,
       "name_zh": "酶作用",
       "visual": "interactive",
       "visual_hint": "Drag a substrate into the active site; show activation energy lowered on a reaction profile."
@@ -309,6 +319,7 @@
       "topic": "bio_enzymes",
       "description": "How temperature, pH, substrate concentration, and enzyme concentration affect the rate of enzyme-catalysed reactions, including denaturation at extremes.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "影响酶活性的因素",
       "visual": "function",
       "visual_hint": "Plot enzyme activity against temperature, pH, and substrate concentration."
@@ -320,6 +331,7 @@
       "topic": "bio_enzymes",
       "description": "Reduction of enzyme activity by inhibitors, with competitive inhibitors binding the active site and non-competitive inhibitors binding elsewhere to alter it.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "酶抑制"
     },
     {
@@ -329,6 +341,7 @@
       "topic": "bio_membranes",
       "description": "The fluid mosaic model describing the cell membrane as a phospholipid bilayer with embedded proteins, cholesterol, and glycoproteins controlling exchange.",
       "default_order": 1,
+      "centrality": 0.2042,
       "name_zh": "膜结构",
       "visual": "diagram",
       "visual_hint": "Labelled fluid-mosaic diagram of the phospholipid bilayer and membrane proteins."
@@ -340,6 +353,7 @@
       "topic": "bio_membranes",
       "description": "Movement of substances down a concentration gradient without energy, by diffusion and facilitated diffusion, and the osmosis of water across membranes.",
       "default_order": 2,
+      "centrality": 0.1662,
       "name_zh": "扩散与渗透",
       "visual": "interactive",
       "visual_hint": "Animate particles diffusing down a concentration gradient across a membrane."
@@ -351,6 +365,7 @@
       "topic": "bio_membranes",
       "description": "Movement of substances against a concentration gradient using ATP and carrier proteins, including bulk transport by endocytosis and exocytosis.",
       "default_order": 3,
+      "centrality": 0.0779,
       "name_zh": "主动运输"
     },
     {
@@ -360,6 +375,7 @@
       "topic": "bio_chromosomes_dna",
       "description": "The structure of chromosomes as DNA wound around histone proteins, and their replication and condensation in preparation for nuclear division.",
       "default_order": 1,
+      "centrality": 0.0769,
       "name_zh": "染色体行为"
     },
     {
@@ -369,6 +385,7 @@
       "topic": "bio_chromosomes_dna",
       "description": "Nuclear division producing two genetically identical daughter cells through prophase, metaphase, anaphase, and telophase, underlying growth and repair.",
       "default_order": 2,
+      "centrality": 0.1227,
       "name_zh": "有丝分裂",
       "visual": "diagram",
       "visual_hint": "Diagram the stages of mitosis."
@@ -380,6 +397,7 @@
       "topic": "bio_chromosomes_dna_bio_dna_structure",
       "description": "DNA as a double helix of two antiparallel nucleotide strands held together by complementary base pairing between adenine-thymine and guanine-cytosine.",
       "default_order": 1,
+      "centrality": 0.19,
       "name_zh": "DNA结构",
       "visual": "interactive",
       "visual_hint": "Interactive double helix showing antiparallel strands and complementary base pairing."
@@ -391,6 +409,7 @@
       "topic": "bio_chromosomes_dna_bio_dna_structure",
       "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
       "default_order": 2,
+      "centrality": 0.1034,
       "name_zh": "DNA复制",
       "visual": "diagram",
       "visual_hint": "Diagram semi-conservative replication unwinding and templating each strand."
@@ -402,6 +421,7 @@
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a messenger RNA copy of a gene by RNA polymerase, using one DNA strand as a template in the nucleus.",
       "default_order": 1,
+      "centrality": 0.0812,
       "name_zh": "转录",
       "visual": "diagram",
       "visual_hint": "Diagram RNA polymerase synthesising mRNA from the template strand."
@@ -413,6 +433,7 @@
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a polypeptide at the ribosome, where transfer RNA matches anticodons to mRNA codons to assemble amino acids in sequence.",
       "default_order": 2,
+      "centrality": 0.0539,
       "name_zh": "翻译",
       "visual": "diagram",
       "visual_hint": "Diagram the ribosome matching tRNA anticodons to mRNA codons to build a polypeptide."
@@ -424,6 +445,7 @@
       "topic": "bio_nucleic_acids",
       "description": "Changes to the DNA base sequence, such as substitutions, insertions, and deletions, which may alter the resulting protein and the phenotype.",
       "default_order": 3,
+      "centrality": 0.0685,
       "name_zh": "基因突变"
     },
     {
@@ -433,6 +455,7 @@
       "topic": "bio_transport_plants",
       "description": "The transport of water and mineral ions upward through dead, lignified xylem vessels, driven by transpiration pull via the cohesion-tension mechanism.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "木质部与水分运输"
     },
     {
@@ -442,6 +465,7 @@
       "topic": "bio_transport_plants",
       "description": "The loss of water vapour from leaves through stomata, and the effect of light, temperature, humidity, and air movement on its rate.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "蒸腾作用"
     },
     {
@@ -451,6 +475,7 @@
       "topic": "bio_transport_plants",
       "description": "The translocation of sucrose and other assimilates through living phloem sieve tubes from sources to sinks by pressure flow.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "韧皮部与转运"
     },
     {
@@ -460,6 +485,7 @@
       "topic": "bio_circulation_gas_exchange",
       "description": "The structure of the mammalian heart and the cardiac cycle of atrial and ventricular systole and diastole, coordinated to pump blood.",
       "default_order": 1,
+      "centrality": 0.0548,
       "name_zh": "心脏",
       "visual": "diagram",
       "visual_hint": "Labelled heart diagram showing the flow of the cardiac cycle."
@@ -471,6 +497,7 @@
       "topic": "bio_circulation_gas_exchange",
       "description": "The structure and function of arteries, veins, and capillaries, whose walls suit carrying blood at different pressures and exchanging materials.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "血管"
     },
     {
@@ -480,6 +507,7 @@
       "topic": "bio_circulation_gas_exchange_bio_haemoglobin",
       "description": "Haemoglobin's reversible binding of oxygen described by the sigmoid dissociation curve, and the Bohr effect that shifts it with carbon dioxide.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "血红蛋白与氧气运输",
       "visual": "function",
       "visual_hint": "Plot the sigmoid oxygen dissociation curve and the Bohr shift."
@@ -491,6 +519,7 @@
       "topic": "bio_circulation_gas_exchange_bio_haemoglobin",
       "description": "Gas exchange in the alveoli, whose large, thin, moist surface and rich blood supply maximise diffusion of oxygen and carbon dioxide.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "肺部气体交换"
     },
     {
@@ -500,6 +529,7 @@
       "topic": "bio_disease",
       "description": "Diseases caused by pathogens such as bacteria, viruses, fungi, and protoctists, and the ways they are transmitted between hosts.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "传染病"
     },
     {
@@ -509,6 +539,7 @@
       "topic": "bio_disease",
       "description": "The body's defence against pathogens through phagocytes engulfing invaders and lymphocytes mounting specific cell-mediated and humoral responses.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "免疫应答"
     },
     {
@@ -518,6 +549,7 @@
       "topic": "bio_disease",
       "description": "Antibodies as proteins binding specific antigens to neutralise pathogens, and vaccination conferring active immunity through memory cells.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "抗体与疫苗接种"
     },
     {
@@ -527,6 +559,7 @@
       "topic": "bio_respiration",
       "description": "The cytoplasmic breakdown of glucose into pyruvate, producing a small net yield of ATP and reduced NAD without requiring oxygen.",
       "default_order": 1,
+      "centrality": 0.0887,
       "name_zh": "糖酵解",
       "visual": "diagram",
       "visual_hint": "Flow diagram of glycolysis from glucose to pyruvate."
@@ -538,6 +571,7 @@
       "topic": "bio_respiration",
       "description": "The link reaction converting pyruvate to acetyl coenzyme A, and the Krebs cycle oxidising it to release carbon dioxide and reduced coenzymes.",
       "default_order": 2,
+      "centrality": 0.0628,
       "name_zh": "连接反应与Krebs循环",
       "visual": "diagram",
       "visual_hint": "Cycle diagram of the link reaction and Krebs cycle."
@@ -549,6 +583,7 @@
       "topic": "bio_respiration_bio_oxidative",
       "description": "Oxidative phosphorylation using the electron transport chain and chemiosmosis across the inner mitochondrial membrane to synthesise most ATP.",
       "default_order": 1,
+      "centrality": 0.0895,
       "name_zh": "氧化磷酸化",
       "visual": "diagram",
       "visual_hint": "Diagram the electron transport chain and chemiosmosis."
@@ -560,6 +595,7 @@
       "topic": "bio_respiration_bio_oxidative",
       "description": "Respiration without oxygen, regenerating NAD through lactate fermentation in animals or ethanol fermentation in yeast and plants, yielding little ATP.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "无氧呼吸"
     },
     {
@@ -569,6 +605,7 @@
       "topic": "bio_photosynthesis",
       "description": "The light-dependent reactions in the thylakoids capturing light to produce ATP and reduced NADP while splitting water to release oxygen.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "光依赖反应",
       "visual": "diagram",
       "visual_hint": "Diagram the light-dependent reactions in the thylakoid."
@@ -580,6 +617,7 @@
       "topic": "bio_photosynthesis",
       "description": "The Calvin cycle in the stroma fixing carbon dioxide using ATP and reduced NADP to synthesise carbohydrate via the enzyme RuBisCO.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "Calvin循环",
       "visual": "diagram",
       "visual_hint": "Cycle diagram of the Calvin cycle fixing carbon dioxide."
@@ -591,6 +629,7 @@
       "topic": "bio_photosynthesis",
       "description": "Environmental factors such as light intensity, carbon dioxide concentration, and temperature that limit the overall rate of photosynthesis.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "限制因素"
     },
     {
@@ -600,6 +639,7 @@
       "topic": "bio_homeostasis",
       "description": "The maintenance of a stable internal environment through negative feedback, where deviations from set points trigger corrective responses.",
       "default_order": 1,
+      "centrality": 0.0848,
       "name_zh": "体内平衡原理"
     },
     {
@@ -609,6 +649,7 @@
       "topic": "bio_homeostasis",
       "description": "Ultrafiltration and selective reabsorption in the nephron forming urine, and the osmoregulation of water balance through the action of ADH.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "肾脏与渗透压调节",
       "visual": "diagram",
       "visual_hint": "Labelled nephron diagram showing ultrafiltration and reabsorption."
@@ -620,6 +661,7 @@
       "topic": "bio_homeostasis",
       "description": "Regulation of blood glucose by insulin and glucagon from the pancreas, and the disruption of this control in diabetes mellitus.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "血糖控制"
     },
     {
@@ -629,6 +671,7 @@
       "topic": "bio_coordination",
       "description": "The transmission of nerve impulses as action potentials, generated by the movement of sodium and potassium ions across the neurone membrane.",
       "default_order": 1,
+      "centrality": 0.0624,
       "name_zh": "神经传导",
       "visual": "function",
       "visual_hint": "Plot the action-potential membrane voltage over time."
@@ -640,6 +683,7 @@
       "topic": "bio_coordination",
       "description": "Chemical transmission across synapses, where neurotransmitter released from the presynaptic neurone diffuses to receptors on the postsynaptic membrane.",
       "default_order": 2,
+      "centrality": 0.0443,
       "name_zh": "突触",
       "visual": "diagram",
       "visual_hint": "Diagram neurotransmitter release and receptor binding at a synapse."
@@ -651,6 +695,7 @@
       "topic": "bio_coordination_bio_hormonal",
       "description": "Endocrine coordination in which hormones secreted by glands travel in the blood to target cells, producing slower, longer-lasting responses.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "激素控制"
     },
     {
@@ -660,6 +705,7 @@
       "topic": "bio_coordination_bio_hormonal",
       "description": "Plant responses to stimuli, including tropisms controlled by auxin and other growth regulators that direct growth toward or away from stimuli.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "植物响应"
     },
     {
@@ -669,6 +715,7 @@
       "topic": "bio_inheritance",
       "description": "Reduction division producing four genetically varied haploid gametes, with crossing over and independent assortment generating genetic variation.",
       "default_order": 1,
+      "centrality": 0.1151,
       "name_zh": "减数分裂",
       "visual": "diagram",
       "visual_hint": "Diagram meiosis producing four haploid gametes, including crossing over."
@@ -680,6 +727,7 @@
       "topic": "bio_inheritance",
       "description": "Predicting inheritance using monohybrid and dihybrid crosses, applying dominance, codominance, and the characteristic ratios of Mendelian genetics.",
       "default_order": 2,
+      "centrality": 0.0548,
       "name_zh": "遗传杂交",
       "visual": "diagram",
       "visual_hint": "Punnett-square diagram predicting offspring genotype ratios."
@@ -691,6 +739,7 @@
       "topic": "bio_inheritance_bio_linkage",
       "description": "Genes on the same chromosome inherited together as linked genes, with crossing over producing recombinants at a frequency reflecting their distance.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "基因连锁与交换"
     },
     {
@@ -700,6 +749,7 @@
       "topic": "bio_inheritance_bio_linkage",
       "description": "The regulation of gene expression in eukaryotes, including transcriptional control and the role of regulatory proteins in switching genes on and off.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "基因表达控制"
     },
     {
@@ -709,6 +759,7 @@
       "topic": "bio_evolution",
       "description": "Genetic and environmental variation among individuals, with continuous and discontinuous variation arising from genes, environment, and their interaction.",
       "default_order": 1,
+      "centrality": 0.1029,
       "name_zh": "变异"
     },
     {
@@ -718,6 +769,7 @@
       "topic": "bio_evolution",
       "description": "Differential survival and reproduction of individuals with advantageous alleles, changing allele frequencies in a population over generations.",
       "default_order": 2,
+      "centrality": 0.0919,
       "name_zh": "自然选择"
     },
     {
@@ -727,6 +779,7 @@
       "topic": "bio_evolution",
       "description": "The formation of new species when populations become reproductively isolated, allowing them to diverge through allopatric or sympatric mechanisms.",
       "default_order": 3,
+      "centrality": 0.079,
       "name_zh": "物种形成"
     },
     {
@@ -736,6 +789,7 @@
       "topic": "bio_biodiversity",
       "description": "The hierarchical classification of organisms into taxa and the three-domain system, reflecting their evolutionary relationships.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "分类",
       "visual": "diagram",
       "visual_hint": "Hierarchical taxonomy tree of the classification taxa."
@@ -747,6 +801,7 @@
       "topic": "bio_biodiversity",
       "description": "Measuring biodiversity using random sampling and indices such as Simpson's index to quantify species richness and evenness in a habitat.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "生物多样性调查"
     },
     {
@@ -756,6 +811,7 @@
       "topic": "bio_biodiversity",
       "description": "Methods of maintaining biodiversity and ecosystems, balancing human activity with the protection of species and their habitats.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "保护"
     },
     {
@@ -765,6 +821,7 @@
       "topic": "bio_genetic_tech",
       "description": "Recombinant DNA technology cutting and joining DNA with enzymes to insert genes into vectors, enabling gene cloning and expression.",
       "default_order": 1,
+      "centrality": 0.0503,
       "name_zh": "基因技术"
     },
     {
@@ -774,6 +831,7 @@
       "topic": "bio_genetic_tech",
       "description": "The polymerase chain reaction amplifying DNA in vitro, and gel electrophoresis separating DNA fragments by size for analysis.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "PCR与电泳"
     },
     {
@@ -783,6 +841,7 @@
       "topic": "bio_genetic_tech",
       "description": "Applications of genetic technology in medicine and agriculture, including genetically modified organisms, gene therapy, and genetic screening.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "遗传技术应用"
     }
   ],

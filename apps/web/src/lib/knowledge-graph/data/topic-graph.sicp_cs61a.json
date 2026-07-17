@@ -2,8 +2,8 @@
   "graphId": "sicp_cs61a",
   "subject": "Structure and Interpretation of Computer Programs (CS61A)",
   "generatedFrom": "data/knowledge-graphs/source/sicp_cs61a.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "topic_intro",
@@ -15,13 +15,15 @@
           "conceptId": "expr_stmt",
           "name": "Expressions and Statements",
           "nameZh": "表达式与语句",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.786
         },
         {
           "conceptId": "control",
           "name": "Control Structures",
           "nameZh": "控制结构",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0913
         }
       ],
       "successors": [
@@ -63,13 +65,15 @@
           "conceptId": "pure_func",
           "name": "Pure vs Non-Pure Functions",
           "nameZh": "纯函数与副作用函数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1498
         },
         {
           "conceptId": "env_diag",
           "name": "Environment Diagrams",
           "nameZh": "环境图",
           "defaultOrder": 2,
+          "centrality": 0.1471,
           "visual": "diagram",
           "visualHint": "Diagram execution frames, variable bindings, and parent-environment links."
         }
@@ -93,19 +97,22 @@
           "conceptId": "func_arg",
           "name": "Functions as Arguments",
           "nameZh": "函数作参数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1439
         },
         {
           "conceptId": "func_ret",
           "name": "Functions as Return Values",
           "nameZh": "函数作返回值",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0848
         },
         {
           "conceptId": "lambda",
           "name": "Lambda Expressions",
           "nameZh": "Lambda 表达式",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0459
         }
       ],
       "successors": [
@@ -133,13 +140,15 @@
           "conceptId": "currying",
           "name": "Currying",
           "nameZh": "柯里化",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "decorators",
           "name": "Decorators",
           "nameZh": "装饰器",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -158,13 +167,15 @@
           "conceptId": "seq",
           "name": "Sequences and Slicing",
           "nameZh": "序列与切片",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.6472
         },
         {
           "conceptId": "list_comp",
           "name": "List Comprehensions",
           "nameZh": "列表推导式",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -188,19 +199,22 @@
           "conceptId": "data_abs",
           "name": "Data Abstraction",
           "nameZh": "数据抽象",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.3292
         },
         {
           "conceptId": "dict",
           "name": "Dictionaries",
           "nameZh": "字典",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.1891
         },
         {
           "conceptId": "box_pointer",
           "name": "Box-and-Pointer Diagrams",
           "nameZh": "箱指针图",
           "defaultOrder": 3,
+          "centrality": 0.1891,
           "visual": "diagram",
           "visualHint": "Box-and-pointer diagram of lists and pairs as boxes holding pointers."
         }
@@ -231,6 +245,7 @@
           "name": "Recursion",
           "nameZh": "递归",
           "defaultOrder": 1,
+          "centrality": 0.1105,
           "visual": "algorithm",
           "visualHint": "Step through recursive calls accumulating and unwinding on the call stack."
         },
@@ -239,6 +254,7 @@
           "name": "Tree Recursion",
           "nameZh": "树递归",
           "defaultOrder": 2,
+          "centrality": 0.0737,
           "visual": "algorithm",
           "visualHint": "Draw the branching recursive calls as a recursion tree."
         }
@@ -269,13 +285,15 @@
           "conceptId": "tree_abs",
           "name": "Tree Data Abstraction",
           "nameZh": "树数据抽象",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1151
         },
         {
           "conceptId": "tree_trav",
           "name": "Tree Traversal",
           "nameZh": "树遍历",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Animate visiting tree nodes in pre-order, in-order, and post-order."
         }
@@ -310,13 +328,15 @@
           "conceptId": "mutability",
           "name": "Mutability",
           "nameZh": "可变性",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.3866
         },
         {
           "conceptId": "oop",
           "name": "Object-Oriented Programming",
           "nameZh": "面向对象编程",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.4028
         }
       ],
       "successors": [
@@ -348,19 +368,22 @@
           "conceptId": "inherit_comp",
           "name": "Inheritance and Composition",
           "nameZh": "继承与组合",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "class_attr",
           "name": "Class and Instance Attributes",
           "nameZh": "类与实例属性",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "string_rep",
           "name": "String Representation",
           "nameZh": "字符串表示",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -380,6 +403,7 @@
           "name": "Linked Lists",
           "nameZh": "链表",
           "defaultOrder": 1,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Box-and-pointer chain of nodes linked by next references."
         },
@@ -387,7 +411,8 @@
           "conceptId": "mut_trees",
           "name": "Mutable Trees",
           "nameZh": "可变树",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -412,13 +437,15 @@
           "conceptId": "iterators",
           "name": "Iterators",
           "nameZh": "迭代器",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "generators",
           "name": "Generators",
           "nameZh": "生成器",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -438,13 +465,15 @@
           "conceptId": "scheme_syntax",
           "name": "Scheme Syntax",
           "nameZh": "Scheme 语法",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0864
         },
         {
           "conceptId": "scheme_lists",
           "name": "Scheme Lists and Pairs",
           "nameZh": "Scheme 列表与序对",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -473,13 +502,15 @@
           "conceptId": "tail_calls",
           "name": "Tail Calls and Optimization",
           "nameZh": "尾调用与优化",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "macros",
           "name": "Macros",
           "nameZh": "宏",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -499,13 +530,15 @@
           "conceptId": "parsing",
           "name": "Lexical Analysis and Parsing",
           "nameZh": "词法分析与解析",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0443
         },
         {
           "conceptId": "eval",
           "name": "Evaluation Process",
           "nameZh": "求值过程",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         }
       ],
       "successors": [
@@ -530,13 +563,15 @@
           "conceptId": "apply",
           "name": "Application Process",
           "nameZh": "应用过程",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "exceptions",
           "name": "Exceptions",
           "nameZh": "异常",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -555,13 +590,15 @@
           "conceptId": "regex",
           "name": "Regular Expressions",
           "nameZh": "正则表达式",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "bnf",
           "name": "BNF Context-Free Grammars",
           "nameZh": "BNF 上下文无关文法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -581,13 +618,15 @@
           "conceptId": "sql_queries",
           "name": "SQL Tables and Queries",
           "nameZh": "SQL 表与查询",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "sql_joins",
           "name": "SQL Joins and Aggregation",
           "nameZh": "SQL 连接与聚合",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -595,6 +634,233 @@
         "topic_intro"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "box_pointer",
+      "to": "mutability",
+      "strength": "hard"
+    },
+    {
+      "from": "control",
+      "to": "iterators",
+      "strength": "hard"
+    },
+    {
+      "from": "control",
+      "to": "recursion",
+      "strength": "hard"
+    },
+    {
+      "from": "data_abs",
+      "to": "tree_abs",
+      "strength": "hard"
+    },
+    {
+      "from": "dict",
+      "to": "mutability",
+      "strength": "soft"
+    },
+    {
+      "from": "env_diag",
+      "to": "func_arg",
+      "strength": "hard"
+    },
+    {
+      "from": "eval",
+      "to": "apply",
+      "strength": "hard"
+    },
+    {
+      "from": "expr_stmt",
+      "to": "control",
+      "strength": "hard"
+    },
+    {
+      "from": "expr_stmt",
+      "to": "regex",
+      "strength": "soft"
+    },
+    {
+      "from": "expr_stmt",
+      "to": "scheme_syntax",
+      "strength": "hard"
+    },
+    {
+      "from": "expr_stmt",
+      "to": "seq",
+      "strength": "hard"
+    },
+    {
+      "from": "expr_stmt",
+      "to": "sql_queries",
+      "strength": "soft"
+    },
+    {
+      "from": "func_arg",
+      "to": "func_ret",
+      "strength": "hard"
+    },
+    {
+      "from": "func_arg",
+      "to": "recursion",
+      "strength": "soft"
+    },
+    {
+      "from": "func_ret",
+      "to": "decorators",
+      "strength": "hard"
+    },
+    {
+      "from": "func_ret",
+      "to": "lambda",
+      "strength": "hard"
+    },
+    {
+      "from": "iterators",
+      "to": "generators",
+      "strength": "hard"
+    },
+    {
+      "from": "lambda",
+      "to": "currying",
+      "strength": "soft"
+    },
+    {
+      "from": "linked_lists",
+      "to": "mut_trees",
+      "strength": "hard"
+    },
+    {
+      "from": "linked_lists",
+      "to": "scheme_lists",
+      "strength": "soft"
+    },
+    {
+      "from": "mutability",
+      "to": "linked_lists",
+      "strength": "hard"
+    },
+    {
+      "from": "mutability",
+      "to": "oop",
+      "strength": "hard"
+    },
+    {
+      "from": "oop",
+      "to": "class_attr",
+      "strength": "hard"
+    },
+    {
+      "from": "oop",
+      "to": "inherit_comp",
+      "strength": "hard"
+    },
+    {
+      "from": "oop",
+      "to": "iterators",
+      "strength": "hard"
+    },
+    {
+      "from": "oop",
+      "to": "linked_lists",
+      "strength": "hard"
+    },
+    {
+      "from": "oop",
+      "to": "string_rep",
+      "strength": "soft"
+    },
+    {
+      "from": "parsing",
+      "to": "eval",
+      "strength": "hard"
+    },
+    {
+      "from": "pure_func",
+      "to": "env_diag",
+      "strength": "soft"
+    },
+    {
+      "from": "recursion",
+      "to": "tail_calls",
+      "strength": "hard"
+    },
+    {
+      "from": "recursion",
+      "to": "tree_recur",
+      "strength": "hard"
+    },
+    {
+      "from": "scheme_syntax",
+      "to": "eval",
+      "strength": "hard"
+    },
+    {
+      "from": "scheme_syntax",
+      "to": "macros",
+      "strength": "hard"
+    },
+    {
+      "from": "scheme_syntax",
+      "to": "scheme_lists",
+      "strength": "hard"
+    },
+    {
+      "from": "scheme_syntax",
+      "to": "tail_calls",
+      "strength": "hard"
+    },
+    {
+      "from": "seq",
+      "to": "box_pointer",
+      "strength": "hard"
+    },
+    {
+      "from": "seq",
+      "to": "data_abs",
+      "strength": "hard"
+    },
+    {
+      "from": "seq",
+      "to": "dict",
+      "strength": "soft"
+    },
+    {
+      "from": "seq",
+      "to": "list_comp",
+      "strength": "hard"
+    },
+    {
+      "from": "sql_queries",
+      "to": "sql_joins",
+      "strength": "hard"
+    },
+    {
+      "from": "tree_abs",
+      "to": "bnf",
+      "strength": "soft"
+    },
+    {
+      "from": "tree_abs",
+      "to": "mut_trees",
+      "strength": "hard"
+    },
+    {
+      "from": "tree_abs",
+      "to": "parsing",
+      "strength": "soft"
+    },
+    {
+      "from": "tree_abs",
+      "to": "tree_trav",
+      "strength": "hard"
+    },
+    {
+      "from": "tree_recur",
+      "to": "tree_abs",
+      "strength": "hard"
     }
   ]
 }

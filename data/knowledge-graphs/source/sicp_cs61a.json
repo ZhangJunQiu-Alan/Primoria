@@ -160,6 +160,7 @@
       "name": "Expressions and Statements",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.786,
       "description": "The distinction between expressions that evaluate to values and statements that perform actions, including assignment that binds names to values in a frame.",
       "name_zh": "表达式与语句"
     },
@@ -169,6 +170,7 @@
       "name": "Control Structures",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0913,
       "description": "Conditional statements and loops that direct which code executes and how often, controlling a program's flow based on boolean tests.",
       "name_zh": "控制结构"
     },
@@ -178,6 +180,7 @@
       "name": "Pure vs Non-Pure Functions",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1498,
       "description": "Pure functions that depend only on their arguments and return values without side effects, contrasted with non-pure functions that alter state or perform I/O.",
       "name_zh": "纯函数与副作用函数"
     },
@@ -187,6 +190,7 @@
       "name": "Environment Diagrams",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.1471,
       "description": "A model of execution tracking frames, bindings, and parent environments to explain how names resolve and how functions create local scopes.",
       "name_zh": "环境图",
       "visual": "diagram",
@@ -198,6 +202,7 @@
       "name": "Functions as Arguments",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1439,
       "description": "Treating functions as first-class values by passing them as arguments, enabling higher-order functions that abstract over computational patterns.",
       "name_zh": "函数作参数"
     },
@@ -207,6 +212,7 @@
       "name": "Functions as Return Values",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0848,
       "description": "Returning functions from other functions, creating closures that capture enclosing variables to build configurable, stateful behaviour.",
       "name_zh": "函数作返回值"
     },
@@ -216,6 +222,7 @@
       "name": "Lambda Expressions",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0459,
       "description": "Anonymous function expressions created with lambda, producing function values inline without binding them to a name.",
       "name_zh": "Lambda 表达式"
     },
@@ -225,6 +232,7 @@
       "name": "Currying",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Transforming a multi-argument function into a chain of single-argument functions, each returning another function until all arguments are supplied.",
       "name_zh": "柯里化"
     },
@@ -234,6 +242,7 @@
       "name": "Decorators",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Higher-order functions applied with @ syntax that wrap another function to extend or modify its behaviour without changing its source.",
       "name_zh": "装饰器"
     },
@@ -243,6 +252,7 @@
       "name": "Sequences and Slicing",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.6472,
       "description": "Ordered collections such as lists and strings supporting indexing and slicing to extract individual elements and subsequences by position.",
       "name_zh": "序列与切片"
     },
@@ -252,6 +262,7 @@
       "name": "List Comprehensions",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable.",
       "name_zh": "列表推导式"
     },
@@ -261,6 +272,7 @@
       "name": "Data Abstraction",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.3292,
       "description": "Separating how data is used from how it is represented by defining constructors and selectors, isolating clients from representation changes.",
       "name_zh": "数据抽象"
     },
@@ -270,6 +282,7 @@
       "name": "Dictionaries",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.1891,
       "description": "A mutable mapping from unique keys to values supporting efficient lookup, insertion, and deletion by key rather than by position.",
       "name_zh": "字典"
     },
@@ -279,6 +292,7 @@
       "name": "Box-and-Pointer Diagrams",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.1891,
       "description": "A diagram depicting lists and pairs as boxes containing pointers, visualising the structure, sharing, and mutation of compound data.",
       "name_zh": "箱指针图",
       "visual": "diagram",
@@ -290,6 +304,7 @@
       "name": "Recursion",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1105,
       "description": "A technique where a function calls itself on smaller subproblems, combining base cases and recursive cases so the computation terminates correctly.",
       "name_zh": "递归",
       "visual": "algorithm",
@@ -301,6 +316,7 @@
       "name": "Tree Recursion",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0737,
       "description": "Recursion making multiple recursive calls per invocation, branching like a tree, as in computing Fibonacci numbers or counting partitions.",
       "name_zh": "树递归",
       "visual": "algorithm",
@@ -312,6 +328,7 @@
       "name": "Tree Data Abstraction",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1151,
       "description": "Representing tree structures using constructor and selector functions, hiding the underlying representation behind a data abstraction.",
       "name_zh": "树数据抽象"
     },
@@ -321,6 +338,7 @@
       "name": "Tree Traversal",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Systematically visiting every node of a tree, typically via recursion, to process or aggregate the data the tree contains.",
       "name_zh": "树遍历",
       "visual": "algorithm",
@@ -332,6 +350,7 @@
       "name": "Mutability",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.3866,
       "description": "The property of objects whose state can change after creation, introducing aliasing where multiple names refer to the same mutable object.",
       "name_zh": "可变性"
     },
@@ -341,6 +360,7 @@
       "name": "Object-Oriented Programming",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.4028,
       "description": "A paradigm organising programs around objects that bundle state and behaviour, defined by classes with attributes and methods.",
       "name_zh": "面向对象编程"
     },
@@ -350,6 +370,7 @@
       "name": "Inheritance and Composition",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Two reuse mechanisms: inheritance deriving subclasses that specialise a base class, and composition assembling objects from other objects.",
       "name_zh": "继承与组合"
     },
@@ -359,6 +380,7 @@
       "name": "Class and Instance Attributes",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The difference between class attributes shared by all instances of a class and instance attributes stored separately on each object.",
       "name_zh": "类与实例属性"
     },
@@ -368,6 +390,7 @@
       "name": "String Representation",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "Defining how objects display through __str__ for readable output and __repr__ for unambiguous, often reconstructable representations.",
       "name_zh": "字符串表示"
     },
@@ -377,6 +400,7 @@
       "name": "Linked Lists",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "A recursive structure of nodes each holding a value and a reference to the next, supporting sequential access and structural sharing.",
       "name_zh": "链表",
       "visual": "diagram",
@@ -388,6 +412,7 @@
       "name": "Mutable Trees",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Tree structures whose nodes can be modified in place, allowing branches and values to change after the tree is constructed.",
       "name_zh": "可变树"
     },
@@ -397,6 +422,7 @@
       "name": "Iterators",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "Objects implementing the iterator protocol with __iter__ and __next__, producing elements one at a time and raising StopIteration when exhausted.",
       "name_zh": "迭代器"
     },
@@ -406,6 +432,7 @@
       "name": "Generators",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Functions using yield to lazily produce a sequence of values on demand, suspending and resuming their state between successive calls.",
       "name_zh": "生成器"
     },
@@ -415,6 +442,7 @@
       "name": "Scheme Syntax",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0864,
       "description": "Scheme's parenthesised prefix notation, where every expression is an atom or a list whose first element names the operator or special form.",
       "name_zh": "Scheme 语法"
     },
@@ -424,6 +452,7 @@
       "name": "Scheme Lists and Pairs",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Scheme's fundamental pairs built with cons and accessed by car and cdr, composed to form lists and other recursive structures.",
       "name_zh": "Scheme 列表与序对"
     },
@@ -433,6 +462,7 @@
       "name": "Tail Calls and Optimization",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Calls in tail position whose results are returned directly, letting interpreters reuse stack frames so recursion runs in constant space.",
       "name_zh": "尾调用与优化"
     },
@@ -442,6 +472,7 @@
       "name": "Macros",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Scheme macros that transform unevaluated source expressions into new code before evaluation, extending the language with new syntactic forms.",
       "name_zh": "宏"
     },
@@ -451,6 +482,7 @@
       "name": "Lexical Analysis and Parsing",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0443,
       "description": "Converting program text into structured form by lexical analysis into tokens followed by parsing into an abstract syntax tree.",
       "name_zh": "词法分析与解析"
     },
@@ -460,6 +492,7 @@
       "name": "Evaluation Process",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0459,
       "description": "The interpreter step that evaluates an expression in an environment, recursively reducing it to a value according to evaluation rules.",
       "name_zh": "求值过程"
     },
@@ -469,6 +502,7 @@
       "name": "Application Process",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "The interpreter step that applies a procedure to evaluated arguments by binding parameters in a new frame and evaluating the body.",
       "name_zh": "应用过程"
     },
@@ -478,6 +512,7 @@
       "name": "Exceptions",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler.",
       "name_zh": "异常"
     },
@@ -487,6 +522,7 @@
       "name": "Regular Expressions",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "A notation describing text patterns used to search, match, and extract substrings using character classes, quantifiers, and grouping.",
       "name_zh": "正则表达式"
     },
@@ -496,6 +532,7 @@
       "name": "BNF Context-Free Grammars",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Backus-Naur Form, a notation for context-free grammars that specifies a language's syntax through production rules over terminals and non-terminals.",
       "name_zh": "BNF 上下文无关文法"
     },
@@ -505,6 +542,7 @@
       "name": "SQL Tables and Queries",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "Declarative SQL queries that select, filter, and order rows from tables to retrieve data without specifying procedural steps.",
       "name_zh": "SQL 表与查询"
     },
@@ -514,6 +552,7 @@
       "name": "SQL Joins and Aggregation",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Combining rows from multiple tables on related columns and summarising groups with aggregate functions such as count, sum, and average.",
       "name_zh": "SQL 连接与聚合"
     }

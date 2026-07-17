@@ -15,7 +15,8 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
 - Postgres-backed chat threads and New chat lifecycle.
 - KG positioning across library graphs with generated-graph coverage fallback
   and explicit infrastructure-failure handling.
-- Course outline initialization, background description enrichment, lazy lesson
+- Concept-frontier course outline initialization (mastery-aware 2–3 concept
+  lesson bundles), background title/description enrichment, lazy lesson
   generation, job recovery, and Jump ahead generation.
 - One-block-at-a-time lesson reader plus course-aware Tutor rail.
 - Text, analogy, image, visual, quiz, code, transfer, mind-map, slide, and

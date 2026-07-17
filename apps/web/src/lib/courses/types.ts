@@ -218,6 +218,10 @@ export type Lesson = {
   status: LessonStatus;
   sortKey: number;
   topicId?: string | null;
+  /** Concept subset this lesson teaches, in teaching order (concept-frontier
+   * outline). Empty on historical/freeform lessons — consumers fall back to the
+   * whole authored topic. */
+  conceptIds?: string[];
   triggeredFrom?: string | null;
   /** Null while the lesson is a planned outline node (LazyGeneration). */
   blocks: CourseBlock[] | null;

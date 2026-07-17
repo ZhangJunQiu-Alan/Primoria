@@ -2,8 +2,8 @@
   "graphId": "introduction_to_computer_science",
   "subject": "Introduction to Computer Science",
   "generatedFrom": "data/knowledge-graphs/source/introduction_to_computer_science.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "topic_week0",
@@ -15,19 +15,22 @@
           "conceptId": "c_functions",
           "name": "Functions",
           "nameZh": "函数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.3471
         },
         {
           "conceptId": "c_events",
           "name": "Events",
           "nameZh": "事件",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_conditions",
           "name": "Conditionals",
           "nameZh": "条件语句",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.3081
         }
       ],
       "successors": [
@@ -53,19 +56,22 @@
           "conceptId": "c_loops",
           "name": "Loops",
           "nameZh": "循环",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.3081
         },
         {
           "conceptId": "c_abstraction",
           "name": "Abstraction",
           "nameZh": "抽象",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_c_syntax",
           "name": "C Syntax",
           "nameZh": "C 语法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 1
         }
       ],
       "successors": [
@@ -97,19 +103,22 @@
           "conceptId": "c_data_types",
           "name": "Data Types",
           "nameZh": "数据类型",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.3899
         },
         {
           "conceptId": "c_operators",
           "name": "Operators",
           "nameZh": "运算符",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_compilation",
           "name": "Compilation Process",
           "nameZh": "编译过程",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -137,13 +146,15 @@
           "conceptId": "c_debugging",
           "name": "Debugging",
           "nameZh": "调试",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_arrays",
           "name": "Arrays",
           "nameZh": "数组",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.3033
         }
       ],
       "successors": [
@@ -184,13 +195,15 @@
           "conceptId": "c_strings",
           "name": "Strings",
           "nameZh": "字符串",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_cli_args",
           "name": "Command-line Arguments",
           "nameZh": "命令行参数",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -210,6 +223,7 @@
           "name": "Linear Search",
           "nameZh": "线性搜索",
           "defaultOrder": 1,
+          "centrality": 0.0459,
           "visual": "algorithm",
           "visualHint": "Scan an array element by element highlighting the comparison until found."
         },
@@ -218,6 +232,7 @@
           "name": "Binary Search",
           "nameZh": "二分搜索",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Halve a sorted array each step, narrowing the search interval."
         },
@@ -226,6 +241,7 @@
           "name": "Sorting Algorithms",
           "nameZh": "排序算法",
           "defaultOrder": 3,
+          "centrality": 0.0459,
           "visual": "algorithm",
           "visualHint": "Animate bubble, selection, and merge sort rearranging an array."
         }
@@ -252,6 +268,7 @@
           "name": "Recursion",
           "nameZh": "递归",
           "defaultOrder": 1,
+          "centrality": 0.0459,
           "visual": "algorithm",
           "visualHint": "Step recursive calls building up and unwinding on the call stack."
         },
@@ -260,6 +277,7 @@
           "name": "Big O Notation",
           "nameZh": "大O表示法",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "chart",
           "visualHint": "Plot growth of constant, log, linear, n-log-n, and quadratic complexity."
         },
@@ -268,6 +286,7 @@
           "name": "Pointers",
           "nameZh": "指针",
           "defaultOrder": 3,
+          "centrality": 0.2531,
           "visual": "diagram",
           "visualHint": "Box-and-pointer diagram of variables holding memory addresses."
         }
@@ -299,13 +318,15 @@
           "conceptId": "c_malloc",
           "name": "Dynamic Memory Allocation",
           "nameZh": "动态内存分配",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0604
         },
         {
           "conceptId": "c_call_stack",
           "name": "Call Stack",
           "nameZh": "调用栈",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram stack frames pushed and popped as functions are called."
         },
@@ -313,7 +334,8 @@
           "conceptId": "c_file_io",
           "name": "File I/O",
           "nameZh": "文件I/O",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -338,6 +360,7 @@
           "name": "Linked Lists",
           "nameZh": "链表",
           "defaultOrder": 1,
+          "centrality": 0.0839,
           "visual": "diagram",
           "visualHint": "Box-and-pointer chain of nodes linked by next pointers."
         },
@@ -346,6 +369,7 @@
           "name": "Hash Tables",
           "nameZh": "哈希表",
           "defaultOrder": 2,
+          "centrality": 0.1391,
           "visual": "algorithm",
           "visualHint": "Hash keys into buckets and resolve a collision."
         },
@@ -354,6 +378,7 @@
           "name": "Trees",
           "nameZh": "树",
           "defaultOrder": 3,
+          "centrality": 0.1414,
           "visual": "algorithm",
           "visualHint": "Insert and search nodes in a binary search tree."
         }
@@ -385,13 +410,15 @@
           "conceptId": "c_tries",
           "name": "Tries",
           "nameZh": "字典树",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_queues_stacks",
           "name": "Queues and Stacks",
           "nameZh": "队列与栈",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Animate push/pop on a stack and enqueue/dequeue on a queue."
         },
@@ -399,7 +426,8 @@
           "conceptId": "c_python_syntax",
           "name": "Python Syntax",
           "nameZh": "Python 语法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.581
         }
       ],
       "successors": [
@@ -433,19 +461,22 @@
           "conceptId": "c_lists_dicts",
           "name": "Lists and Dictionaries",
           "nameZh": "列表和字典",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1841
         },
         {
           "conceptId": "c_oop",
           "name": "Object-Oriented Programming",
           "nameZh": "OOP",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_exceptions",
           "name": "Exceptions",
           "nameZh": "异常",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -471,13 +502,15 @@
           "conceptId": "c_relational_db",
           "name": "Relational Databases",
           "nameZh": "关系数据库",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1359
         },
         {
           "conceptId": "c_sql_queries",
           "name": "SQL Queries",
           "nameZh": "SQL查询",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0669
         }
       ],
       "successors": [
@@ -501,13 +534,15 @@
           "conceptId": "c_joins",
           "name": "SQL Joins",
           "nameZh": "SQL连接",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_indexes",
           "name": "SQL Indexes",
           "nameZh": "SQL索引",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -526,13 +561,15 @@
           "conceptId": "c_html",
           "name": "HTML",
           "nameZh": "HTML",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2737
         },
         {
           "conceptId": "c_css",
           "name": "CSS",
           "nameZh": "CSS",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -558,13 +595,15 @@
           "conceptId": "c_js",
           "name": "JavaScript",
           "nameZh": "JavaScript",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1067
         },
         {
           "conceptId": "c_dom",
           "name": "DOM Manipulation",
           "nameZh": "DOM 操作",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Tree diagram of the DOM nodes of a web page."
         }
@@ -586,19 +625,22 @@
           "conceptId": "c_http",
           "name": "HTTP Protocol",
           "nameZh": "HTTP 协议",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1491
         },
         {
           "conceptId": "c_flask",
           "name": "Flask Framework",
           "nameZh": "Flask 框架",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0669
         },
         {
           "conceptId": "c_mvc",
           "name": "MVC Architecture",
           "nameZh": "MVC 架构",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -623,19 +665,22 @@
           "conceptId": "c_sessions",
           "name": "Sessions and Cookies",
           "nameZh": "会话与 Cookie",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_apis",
           "name": "APIs",
           "nameZh": "API",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_cybersecurity",
           "name": "Cybersecurity Basics",
           "nameZh": "网络安全基础",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.088
         }
       ],
       "successors": [
@@ -659,19 +704,22 @@
           "conceptId": "c_encryption",
           "name": "Encryption",
           "nameZh": "加密",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_authentication",
           "name": "Authentication",
           "nameZh": "身份认证",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_vulnerabilities",
           "name": "Vulnerabilities",
           "nameZh": "安全漏洞",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -679,6 +727,253 @@
         "topic_web_state_security"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "c_arrays",
+      "to": "c_cli_args",
+      "strength": "hard"
+    },
+    {
+      "from": "c_arrays",
+      "to": "c_hash_tables",
+      "strength": "hard"
+    },
+    {
+      "from": "c_arrays",
+      "to": "c_linear_search",
+      "strength": "hard"
+    },
+    {
+      "from": "c_arrays",
+      "to": "c_lists_dicts",
+      "strength": "hard"
+    },
+    {
+      "from": "c_arrays",
+      "to": "c_queues_stacks",
+      "strength": "hard"
+    },
+    {
+      "from": "c_arrays",
+      "to": "c_sorting",
+      "strength": "hard"
+    },
+    {
+      "from": "c_arrays",
+      "to": "c_strings",
+      "strength": "hard"
+    },
+    {
+      "from": "c_c_syntax",
+      "to": "c_arrays",
+      "strength": "hard"
+    },
+    {
+      "from": "c_c_syntax",
+      "to": "c_compilation",
+      "strength": "hard"
+    },
+    {
+      "from": "c_c_syntax",
+      "to": "c_data_types",
+      "strength": "hard"
+    },
+    {
+      "from": "c_c_syntax",
+      "to": "c_python_syntax",
+      "strength": "hard"
+    },
+    {
+      "from": "c_conditions",
+      "to": "c_c_syntax",
+      "strength": "hard"
+    },
+    {
+      "from": "c_cybersecurity",
+      "to": "c_authentication",
+      "strength": "hard"
+    },
+    {
+      "from": "c_cybersecurity",
+      "to": "c_encryption",
+      "strength": "hard"
+    },
+    {
+      "from": "c_cybersecurity",
+      "to": "c_vulnerabilities",
+      "strength": "hard"
+    },
+    {
+      "from": "c_data_types",
+      "to": "c_arrays",
+      "strength": "hard"
+    },
+    {
+      "from": "c_data_types",
+      "to": "c_operators",
+      "strength": "hard"
+    },
+    {
+      "from": "c_data_types",
+      "to": "c_pointers",
+      "strength": "hard"
+    },
+    {
+      "from": "c_flask",
+      "to": "c_mvc",
+      "strength": "hard"
+    },
+    {
+      "from": "c_flask",
+      "to": "c_sessions",
+      "strength": "hard"
+    },
+    {
+      "from": "c_functions",
+      "to": "c_c_syntax",
+      "strength": "hard"
+    },
+    {
+      "from": "c_functions",
+      "to": "c_recursion",
+      "strength": "hard"
+    },
+    {
+      "from": "c_hash_tables",
+      "to": "c_lists_dicts",
+      "strength": "hard"
+    },
+    {
+      "from": "c_html",
+      "to": "c_css",
+      "strength": "hard"
+    },
+    {
+      "from": "c_html",
+      "to": "c_dom",
+      "strength": "hard"
+    },
+    {
+      "from": "c_html",
+      "to": "c_http",
+      "strength": "hard"
+    },
+    {
+      "from": "c_http",
+      "to": "c_apis",
+      "strength": "hard"
+    },
+    {
+      "from": "c_http",
+      "to": "c_cybersecurity",
+      "strength": "hard"
+    },
+    {
+      "from": "c_http",
+      "to": "c_flask",
+      "strength": "hard"
+    },
+    {
+      "from": "c_js",
+      "to": "c_dom",
+      "strength": "hard"
+    },
+    {
+      "from": "c_linear_search",
+      "to": "c_binary_search",
+      "strength": "hard"
+    },
+    {
+      "from": "c_linked_lists",
+      "to": "c_hash_tables",
+      "strength": "hard"
+    },
+    {
+      "from": "c_lists_dicts",
+      "to": "c_relational_db",
+      "strength": "hard"
+    },
+    {
+      "from": "c_loops",
+      "to": "c_c_syntax",
+      "strength": "hard"
+    },
+    {
+      "from": "c_malloc",
+      "to": "c_linked_lists",
+      "strength": "hard"
+    },
+    {
+      "from": "c_pointers",
+      "to": "c_file_io",
+      "strength": "hard"
+    },
+    {
+      "from": "c_pointers",
+      "to": "c_linked_lists",
+      "strength": "hard"
+    },
+    {
+      "from": "c_pointers",
+      "to": "c_malloc",
+      "strength": "hard"
+    },
+    {
+      "from": "c_pointers",
+      "to": "c_trees",
+      "strength": "hard"
+    },
+    {
+      "from": "c_python_syntax",
+      "to": "c_exceptions",
+      "strength": "hard"
+    },
+    {
+      "from": "c_python_syntax",
+      "to": "c_flask",
+      "strength": "hard"
+    },
+    {
+      "from": "c_python_syntax",
+      "to": "c_js",
+      "strength": "hard"
+    },
+    {
+      "from": "c_python_syntax",
+      "to": "c_oop",
+      "strength": "hard"
+    },
+    {
+      "from": "c_recursion",
+      "to": "c_call_stack",
+      "strength": "hard"
+    },
+    {
+      "from": "c_relational_db",
+      "to": "c_sql_queries",
+      "strength": "hard"
+    },
+    {
+      "from": "c_sorting",
+      "to": "c_big_o",
+      "strength": "hard"
+    },
+    {
+      "from": "c_sql_queries",
+      "to": "c_indexes",
+      "strength": "hard"
+    },
+    {
+      "from": "c_sql_queries",
+      "to": "c_joins",
+      "strength": "hard"
+    },
+    {
+      "from": "c_trees",
+      "to": "c_tries",
+      "strength": "hard"
     }
   ]
 }

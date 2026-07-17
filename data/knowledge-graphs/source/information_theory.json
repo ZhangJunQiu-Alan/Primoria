@@ -64,6 +64,7 @@
       "topic": "t_infotheory_basics",
       "description": "Shannon entropy, the average number of bits needed to describe a random variable's outcome, quantifying its inherent uncertainty.",
       "default_order": 1,
+      "centrality": 0.1534,
       "name_zh": "香农熵",
       "visual": "function",
       "visual_hint": "Plot binary entropy H(p) against the probability p."
@@ -75,6 +76,7 @@
       "topic": "t_infotheory_basics",
       "description": "Joint entropy measuring the uncertainty of several variables together, and conditional entropy measuring remaining uncertainty given another variable.",
       "default_order": 2,
+      "centrality": 0.0765,
       "name_zh": "联合与条件熵"
     },
     {
@@ -84,6 +86,7 @@
       "topic": "t_infotheory_basics",
       "description": "Mutual information quantifying the reduction in uncertainty about one variable gained from observing another, the information they share.",
       "default_order": 3,
+      "centrality": 0.0609,
       "name_zh": "互信息",
       "visual": "diagram",
       "visual_hint": "Venn-style diagram of entropies, joint entropy, and mutual information."
@@ -95,6 +98,7 @@
       "topic": "t_infotheory_measures_typicality",
       "description": "Kullback-Leibler divergence, the relative entropy measuring the inefficiency of assuming one distribution when another is true; non-negative and asymmetric.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "KL 散度"
     },
     {
@@ -104,6 +108,7 @@
       "topic": "t_infotheory_measures_typicality",
       "description": "The data-processing inequality stating that processing a signal cannot increase the mutual information it carries about a source.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "数据处理不等式"
     },
     {
@@ -113,6 +118,7 @@
       "topic": "t_infotheory_measures_typicality",
       "description": "The asymptotic equipartition property, showing long sequences fall into a typical set of nearly equal probability, underpinning the coding theorems.",
       "default_order": 3,
+      "centrality": 0.0564,
       "name_zh": "渐近等分特性"
     },
     {
@@ -122,6 +128,7 @@
       "topic": "t_infotheory_source_coding",
       "description": "The Kraft inequality giving the necessary and sufficient condition on codeword lengths for a uniquely decodable prefix code to exist.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "Kraft 不等式"
     },
     {
@@ -131,6 +138,7 @@
       "topic": "t_infotheory_source_coding",
       "description": "Shannon's source coding theorem establishing entropy as the fundamental limit on the average rate of lossless data compression.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "香农信源编码定理"
     },
     {
@@ -140,6 +148,7 @@
       "topic": "t_infotheory_source_coding",
       "description": "Huffman coding, a greedy algorithm building optimal prefix-free codes that minimise expected codeword length for known symbol probabilities.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "Huffman 编码",
       "visual": "algorithm",
       "visual_hint": "Build a Huffman tree by merging the two lowest-frequency symbols."
@@ -151,6 +160,7 @@
       "topic": "t_infotheory_channel_capacity",
       "description": "Discrete memoryless channels modelling noisy transmission where each output depends only on the current input via fixed transition probabilities.",
       "default_order": 1,
+      "centrality": 0.0398,
       "name_zh": "离散无记忆信道"
     },
     {
@@ -160,6 +170,7 @@
       "topic": "t_infotheory_channel_capacity",
       "description": "Channel capacity, the maximum mutual information over input distributions, defining the highest rate of reliable communication.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "信道容量定义"
     },
     {
@@ -169,6 +180,7 @@
       "topic": "t_infotheory_channel_capacity",
       "description": "Shannon's channel coding theorem proving that reliable communication is achievable below capacity and impossible above it.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "香农信道编码定理"
     },
     {
@@ -178,6 +190,7 @@
       "topic": "t_infotheory_continuous",
       "description": "Differential entropy extending entropy to continuous random variables as an integral, with properties differing from the discrete case.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "微分熵"
     },
     {
@@ -187,6 +200,7 @@
       "topic": "t_infotheory_continuous",
       "description": "The additive white Gaussian noise channel, a continuous model where transmitted signals are corrupted by independent Gaussian noise.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "AWGN 信道"
     },
     {
@@ -196,6 +210,7 @@
       "topic": "t_infotheory_continuous",
       "description": "The Shannon-Hartley theorem giving the capacity of a bandlimited AWGN channel as a function of bandwidth and signal-to-noise ratio.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "香农-哈特利定理",
       "visual": "function",
       "visual_hint": "Plot channel capacity against bandwidth and signal-to-noise ratio."

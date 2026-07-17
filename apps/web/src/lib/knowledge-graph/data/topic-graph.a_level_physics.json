@@ -2,8 +2,8 @@
   "graphId": "a_level_physics",
   "subject": "Physics",
   "generatedFrom": "data/knowledge-graphs/source/a_level_physics.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "phy_measurement",
@@ -15,19 +15,22 @@
           "conceptId": "phy_si_units",
           "name": "SI Base Units",
           "nameZh": "SI基本单位",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1494
         },
         {
           "conceptId": "phy_homogeneity",
           "name": "Homogeneity of Equations",
           "nameZh": "方程齐次性",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.1466
         },
         {
           "conceptId": "phy_scalars_vectors",
           "name": "Scalars and Vectors",
           "nameZh": "标量与矢量",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.4299
         }
       ],
       "successors": [
@@ -53,13 +56,15 @@
           "conceptId": "phy_uncertainty",
           "name": "Errors and Uncertainties",
           "nameZh": "误差与不确定度",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "phy_combine_uncertainty",
           "name": "Combining Uncertainties",
           "nameZh": "不确定度合成",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -78,13 +83,15 @@
           "conceptId": "phy_motion_quantities",
           "name": "Displacement Velocity Acceleration",
           "nameZh": "位移速度加速度",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.4308
         },
         {
           "conceptId": "phy_suvat",
           "name": "Equations of Motion",
           "nameZh": "运动方程",
           "defaultOrder": 2,
+          "centrality": 0.4776,
           "visual": "simulation",
           "visualHint": "Animate uniform-acceleration motion with adjustable acceleration and initial velocity."
         }
@@ -119,6 +126,7 @@
           "name": "Motion Graphs",
           "nameZh": "运动图像",
           "defaultOrder": 1,
+          "centrality": 0.0548,
           "visual": "function",
           "visualHint": "Plot displacement-time and velocity-time graphs, relating gradients and areas."
         },
@@ -127,6 +135,7 @@
           "name": "Free Fall",
           "nameZh": "自由落体",
           "defaultOrder": 2,
+          "centrality": 0.0353,
           "visual": "simulation",
           "visualHint": "Drop an object under gravity showing constant acceleration g."
         },
@@ -135,6 +144,7 @@
           "name": "Projectile Motion",
           "nameZh": "抛体运动",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "simulation",
           "visualHint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
         }
@@ -156,6 +166,7 @@
           "name": "Newton's Laws of Motion",
           "nameZh": "牛顿运动定律",
           "defaultOrder": 1,
+          "centrality": 0.391,
           "visual": "simulation",
           "visualHint": "Apply a force to a mass and watch the resulting acceleration."
         },
@@ -163,13 +174,15 @@
           "conceptId": "phy_mass_weight",
           "name": "Mass and Weight",
           "nameZh": "质量与重量",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0717
         },
         {
           "conceptId": "phy_momentum",
           "name": "Linear Momentum",
           "nameZh": "线性动量",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.1104
         }
       ],
       "successors": [
@@ -206,6 +219,7 @@
           "name": "Conservation of Momentum",
           "nameZh": "动量守恒",
           "defaultOrder": 1,
+          "centrality": 0.1007,
           "visual": "simulation",
           "visualHint": "Animate a collision conserving total momentum."
         },
@@ -213,7 +227,8 @@
           "conceptId": "phy_impulse",
           "name": "Impulse and Collisions",
           "nameZh": "冲量与碰撞",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -237,13 +252,15 @@
           "conceptId": "phy_force_types",
           "name": "Types of Force",
           "nameZh": "力的类型",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1567
         },
         {
           "conceptId": "phy_moments",
           "name": "Moments and Couples",
           "nameZh": "力矩与力偶",
           "defaultOrder": 2,
+          "centrality": 0.0519,
           "visual": "interactive",
           "visualHint": "Balance a beam by adjusting forces and distances (moments)."
         }
@@ -273,19 +290,22 @@
           "conceptId": "phy_equilibrium",
           "name": "Equilibrium of Forces",
           "nameZh": "力的平衡",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0638
         },
         {
           "conceptId": "phy_density_pressure",
           "name": "Density and Pressure",
           "nameZh": "密度与压强",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "phy_upthrust",
           "name": "Upthrust and Archimedes",
           "nameZh": "浮力与阿基米德",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "simulation",
           "visualHint": "Float or sink an object showing upthrust versus weight."
         }
@@ -306,13 +326,15 @@
           "conceptId": "phy_work",
           "name": "Work Done",
           "nameZh": "做功",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1075
         },
         {
           "conceptId": "phy_ke_pe",
           "name": "Kinetic and Potential Energy",
           "nameZh": "动能与势能",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0973
         }
       ],
       "successors": [
@@ -340,13 +362,15 @@
           "conceptId": "phy_energy_conservation",
           "name": "Conservation of Energy",
           "nameZh": "能量守恒",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.073
         },
         {
           "conceptId": "phy_power_efficiency",
           "name": "Power and Efficiency",
           "nameZh": "功率与效率",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -371,6 +395,7 @@
           "name": "Hooke's Law",
           "nameZh": "胡克定律",
           "defaultOrder": 1,
+          "centrality": 0.0714,
           "visual": "function",
           "visualHint": "Plot force against extension for a spring with a slider for stiffness."
         },
@@ -379,6 +404,7 @@
           "name": "Stress, Strain and Young Modulus",
           "nameZh": "应力、应变与杨氏模量",
           "defaultOrder": 2,
+          "centrality": 0.0548,
           "visual": "function",
           "visualHint": "Plot a stress-strain curve up to fracture."
         }
@@ -404,13 +430,15 @@
           "conceptId": "phy_elastic_plastic",
           "name": "Elastic and Plastic Behaviour",
           "nameZh": "弹性与塑性行为",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0353
         },
         {
           "conceptId": "phy_strain_energy",
           "name": "Elastic Strain Energy",
           "nameZh": "弹性势能",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -431,6 +459,7 @@
           "name": "Progressive Waves",
           "nameZh": "行波",
           "defaultOrder": 1,
+          "centrality": 0.3608,
           "visual": "function",
           "visualHint": "Animate a progressive wave with sliders for amplitude, wavelength, and frequency."
         },
@@ -439,6 +468,7 @@
           "name": "Transverse and Longitudinal Waves",
           "nameZh": "横波与纵波",
           "defaultOrder": 2,
+          "centrality": 0.3034,
           "visual": "interactive",
           "visualHint": "Animate transverse versus longitudinal wave oscillation."
         },
@@ -446,7 +476,8 @@
           "conceptId": "phy_intensity",
           "name": "Wave Intensity",
           "nameZh": "波强度",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.3277
         }
       ],
       "successors": [
@@ -477,6 +508,7 @@
           "name": "Electromagnetic Spectrum",
           "nameZh": "电磁波谱",
           "defaultOrder": 1,
+          "centrality": 0.3045,
           "visual": "diagram",
           "visualHint": "Labelled electromagnetic spectrum ordered by wavelength and frequency."
         },
@@ -485,6 +517,7 @@
           "name": "Doppler Effect",
           "nameZh": "多普勒效应",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "simulation",
           "visualHint": "Move a wave source and show the observed frequency shift (Doppler effect)."
         }
@@ -510,13 +543,15 @@
           "conceptId": "phy_superposition_principle",
           "name": "Principle of Superposition",
           "nameZh": "叠加原理",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0919
         },
         {
           "conceptId": "phy_interference",
           "name": "Two-Source Interference",
           "nameZh": "双源干涉",
           "defaultOrder": 2,
+          "centrality": 0.079,
           "visual": "function",
           "visualHint": "Two-source interference producing constructive and destructive fringes."
         }
@@ -542,19 +577,22 @@
           "conceptId": "phy_diffraction",
           "name": "Diffraction",
           "nameZh": "衍射",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0638
         },
         {
           "conceptId": "phy_diffraction_grating",
           "name": "Diffraction Grating",
           "nameZh": "衍射光栅",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "phy_stationary_waves",
           "name": "Stationary Waves",
           "nameZh": "驻波",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Animate a standing wave with nodes and antinodes; slider for the harmonic."
         }
@@ -575,19 +613,22 @@
           "conceptId": "phy_current_charge",
           "name": "Electric Current and Charge",
           "nameZh": "电流与电荷",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2021
         },
         {
           "conceptId": "phy_pd_emf",
           "name": "Potential Difference and EMF",
           "nameZh": "电势差与EMF",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.1767
         },
         {
           "conceptId": "phy_resistance_ohm",
           "name": "Resistance and Ohm's Law",
           "nameZh": "电阻与欧姆定律",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.1325
         }
       ],
       "successors": [
@@ -617,13 +658,15 @@
           "conceptId": "phy_resistivity",
           "name": "Resistivity",
           "nameZh": "电阻率",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0353
         },
         {
           "conceptId": "phy_iv_characteristics",
           "name": "I-V Characteristics",
           "nameZh": "I-V特性",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot I-V characteristics for a resistor, filament lamp, and diode."
         },
@@ -632,6 +675,7 @@
           "name": "Kirchhoff's Laws",
           "nameZh": "基尔霍夫定律",
           "defaultOrder": 3,
+          "centrality": 0.079,
           "visual": "diagram",
           "visualHint": "Circuit diagram applying Kirchhoff's current and voltage laws."
         }
@@ -658,6 +702,7 @@
           "name": "Series and Parallel Resistors",
           "nameZh": "串并联电阻",
           "defaultOrder": 1,
+          "centrality": 0.0638,
           "visual": "interactive",
           "visualHint": "Build series and parallel resistor networks and compute total resistance."
         },
@@ -666,6 +711,7 @@
           "name": "Potential Dividers",
           "nameZh": "分压器",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "interactive",
           "visualHint": "Slider on a potential divider showing the output voltage."
         },
@@ -673,7 +719,8 @@
           "conceptId": "phy_internal_resistance",
           "name": "Internal Resistance",
           "nameZh": "内阻",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -692,19 +739,22 @@
           "conceptId": "phy_angular_speed",
           "name": "Radian Measure and Angular Speed",
           "nameZh": "弧度与角速度",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0746
         },
         {
           "conceptId": "phy_centripetal_accel",
           "name": "Centripetal Acceleration",
           "nameZh": "向心加速度",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0586
         },
         {
           "conceptId": "phy_centripetal_force",
           "name": "Centripetal Force",
           "nameZh": "向心力",
           "defaultOrder": 3,
+          "centrality": 0.0794,
           "visual": "simulation",
           "visualHint": "Swing a mass in a circle, varying speed and radius for centripetal force."
         }
@@ -735,13 +785,15 @@
           "conceptId": "phy_newton_gravitation",
           "name": "Newton's Law of Gravitation",
           "nameZh": "牛顿引力定律",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0774
         },
         {
           "conceptId": "phy_grav_field_strength",
           "name": "Gravitational Field Strength",
           "nameZh": "引力场强度",
           "defaultOrder": 2,
+          "centrality": 0.0618,
           "visual": "function",
           "visualHint": "Plot gravitational field strength against distance (inverse square)."
         }
@@ -769,13 +821,15 @@
           "conceptId": "phy_grav_potential",
           "name": "Gravitational Potential",
           "nameZh": "引力势",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0353
         },
         {
           "conceptId": "phy_orbits",
           "name": "Orbital Motion",
           "nameZh": "轨道运动",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "simulation",
           "visualHint": "Orbit a satellite where gravity provides the centripetal force."
         }
@@ -798,6 +852,7 @@
           "name": "Simple Harmonic Motion",
           "nameZh": "简谐运动",
           "defaultOrder": 1,
+          "centrality": 0.0519,
           "visual": "simulation",
           "visualHint": "Animate a pendulum or spring in simple harmonic motion and plot displacement."
         },
@@ -806,6 +861,7 @@
           "name": "SHM Energy",
           "nameZh": "SHM能量",
           "defaultOrder": 2,
+          "centrality": 0.0638,
           "visual": "function",
           "visualHint": "Plot the kinetic and potential energy interchange in SHM."
         }
@@ -832,13 +888,15 @@
           "conceptId": "phy_damping",
           "name": "Damping",
           "nameZh": "阻尼",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "phy_resonance",
           "name": "Resonance",
           "nameZh": "共振",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot amplitude against driving frequency showing a resonance peak."
         }
@@ -859,13 +917,15 @@
           "conceptId": "phy_temperature",
           "name": "Temperature and Thermal Equilibrium",
           "nameZh": "温度与热平衡",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0925
         },
         {
           "conceptId": "phy_heat_capacity",
           "name": "Specific Heat and Latent Heat",
           "nameZh": "比热与潜热",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0796
         }
       ],
       "successors": [
@@ -888,6 +948,7 @@
           "name": "Kinetic Theory of Gases",
           "nameZh": "气体动理论",
           "defaultOrder": 1,
+          "centrality": 0.129,
           "visual": "simulation",
           "visualHint": "Animate gas particles in random motion inside a box."
         },
@@ -896,6 +957,7 @@
           "name": "Ideal Gas Law",
           "nameZh": "理想气体定律",
           "defaultOrder": 2,
+          "centrality": 0.0872,
           "visual": "function",
           "visualHint": "Plot pV = nRT relationships between pressure, volume, and temperature."
         },
@@ -903,7 +965,8 @@
           "conceptId": "phy_internal_energy",
           "name": "Internal Energy and First Law",
           "nameZh": "内能与第一定律",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0735
         }
       ],
       "successors": [],
@@ -924,6 +987,7 @@
           "name": "Coulomb's Law",
           "nameZh": "库仑定律",
           "defaultOrder": 1,
+          "centrality": 0.0852,
           "visual": "function",
           "visualHint": "Plot the Coulomb force against separation (inverse square)."
         },
@@ -932,6 +996,7 @@
           "name": "Electric Field Strength",
           "nameZh": "电场强度",
           "defaultOrder": 2,
+          "centrality": 0.0711,
           "visual": "interactive",
           "visualHint": "Show electric field lines around point charges."
         }
@@ -955,13 +1020,15 @@
           "conceptId": "phy_e_potential",
           "name": "Electric Potential",
           "nameZh": "电势",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0925
         },
         {
           "conceptId": "phy_field_analogy",
           "name": "Gravitational and Electric Field Analogy",
           "nameZh": "引力场与电场类比",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -987,13 +1054,15 @@
           "conceptId": "phy_capacitance_def",
           "name": "Capacitance",
           "nameZh": "电容",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0714
         },
         {
           "conceptId": "phy_capacitor_networks",
           "name": "Capacitors in Series and Parallel",
           "nameZh": "串并联电容",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0548
         }
       ],
       "successors": [
@@ -1017,13 +1086,15 @@
           "conceptId": "phy_capacitor_energy",
           "name": "Energy Stored in a Capacitor",
           "nameZh": "电容储能",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0353
         },
         {
           "conceptId": "phy_capacitor_discharge",
           "name": "Charging and Discharging",
           "nameZh": "充放电",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot exponential capacitor charge and discharge against time."
         }
@@ -1044,13 +1115,15 @@
           "conceptId": "phy_flux_density",
           "name": "Magnetic Flux Density",
           "nameZh": "磁通密度",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1202
         },
         {
           "conceptId": "phy_force_conductor",
           "name": "Force on a Current-Carrying Conductor",
           "nameZh": "载流导线受力",
           "defaultOrder": 2,
+          "centrality": 0.0638,
           "visual": "interactive",
           "visualHint": "Show the motor-effect force on a current-carrying conductor (Fleming's left hand)."
         }
@@ -1080,13 +1153,15 @@
           "conceptId": "phy_force_charge",
           "name": "Force on a Moving Charge",
           "nameZh": "运动电荷受力",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "phy_fields_currents",
           "name": "Magnetic Fields Due to Currents",
           "nameZh": "电流磁场",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -1105,13 +1180,15 @@
           "conceptId": "phy_flux_linkage",
           "name": "Magnetic Flux and Flux Linkage",
           "nameZh": "磁通与磁链",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0803
         },
         {
           "conceptId": "phy_faraday",
           "name": "Faraday's Law",
           "nameZh": "法拉第定律",
           "defaultOrder": 2,
+          "centrality": 0.0654,
           "visual": "interactive",
           "visualHint": "Move a magnet through a coil to induce an EMF (Faraday and Lenz)."
         },
@@ -1119,7 +1196,8 @@
           "conceptId": "phy_lenz",
           "name": "Lenz's Law",
           "nameZh": "楞次定律",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -1144,6 +1222,7 @@
           "name": "AC and RMS Values",
           "nameZh": "交流电与RMS值",
           "defaultOrder": 1,
+          "centrality": 0.0443,
           "visual": "function",
           "visualHint": "Plot a sinusoidal AC waveform and its RMS value."
         },
@@ -1152,6 +1231,7 @@
           "name": "Transformers",
           "nameZh": "变压器",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Transformer diagram relating the turns ratio to the voltage ratio."
         },
@@ -1159,7 +1239,8 @@
           "conceptId": "phy_rectification",
           "name": "Rectification",
           "nameZh": "整流",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -1178,13 +1259,15 @@
           "conceptId": "phy_photon",
           "name": "Photon Energy",
           "nameZh": "光子能量",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.3043
         },
         {
           "conceptId": "phy_photoelectric",
           "name": "Photoelectric Effect",
           "nameZh": "光电效应",
           "defaultOrder": 2,
+          "centrality": 0.1646,
           "visual": "function",
           "visualHint": "Plot photoelectric stopping voltage against frequency."
         }
@@ -1210,13 +1293,15 @@
           "conceptId": "phy_wave_particle",
           "name": "Wave-Particle Duality",
           "nameZh": "波粒二象性",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1644
         },
         {
           "conceptId": "phy_energy_levels",
           "name": "Energy Levels and Line Spectra",
           "nameZh": "能级与线光谱",
           "defaultOrder": 2,
+          "centrality": 0.3286,
           "visual": "diagram",
           "visualHint": "Energy-level diagram with photon emission producing line spectra."
         }
@@ -1242,19 +1327,22 @@
           "conceptId": "phy_nuclear_structure",
           "name": "Atomic and Nuclear Structure",
           "nameZh": "原子核结构",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.3444
         },
         {
           "conceptId": "phy_fundamental_particles",
           "name": "Fundamental Particles and Quarks",
           "nameZh": "基本粒子与夸克",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.057
         },
         {
           "conceptId": "phy_binding_energy",
           "name": "Mass Defect and Binding Energy",
           "nameZh": "质量亏损与结合能",
           "defaultOrder": 3,
+          "centrality": 0.0759,
           "visual": "function",
           "visualHint": "Plot binding energy per nucleon against nucleon number."
         }
@@ -1278,13 +1366,15 @@
           "conceptId": "phy_fission_fusion",
           "name": "Nuclear Fission and Fusion",
           "nameZh": "核裂变与核聚变",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "phy_radioactive_decay",
           "name": "Radioactive Decay",
           "nameZh": "放射性衰变",
           "defaultOrder": 2,
+          "centrality": 0.0353,
           "visual": "function",
           "visualHint": "Plot exponential radioactive decay with a slider for half-life."
         },
@@ -1292,7 +1382,8 @@
           "conceptId": "phy_half_life",
           "name": "Half-Life",
           "nameZh": "半衰期",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -1311,13 +1402,15 @@
           "conceptId": "phy_luminosity",
           "name": "Luminosity and Radiant Flux Intensity",
           "nameZh": "亮度与辐射通量",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0519
         },
         {
           "conceptId": "phy_standard_candles",
           "name": "Standard Candles",
           "nameZh": "标准烛光",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -1342,13 +1435,15 @@
           "conceptId": "phy_stellar_radii",
           "name": "Stellar Radii",
           "nameZh": "恒星半径",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "phy_hubble",
           "name": "Hubble's Law and the Big Bang",
           "nameZh": "哈勃定律与大爆炸",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot recession speed against distance (Hubble's law)."
         }
@@ -1358,6 +1453,523 @@
         "phy_astro"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "phy_ac_rms",
+      "to": "phy_transformers",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_angular_speed",
+      "to": "phy_centripetal_accel",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_binding_energy",
+      "to": "phy_fission_fusion",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_binding_energy",
+      "to": "phy_radioactive_decay",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_capacitance_def",
+      "to": "phy_capacitor_networks",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_capacitor_energy",
+      "to": "phy_capacitor_discharge",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_capacitor_networks",
+      "to": "phy_capacitor_energy",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_centripetal_accel",
+      "to": "phy_centripetal_force",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_centripetal_force",
+      "to": "phy_orbits",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_centripetal_force",
+      "to": "phy_shm",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_coulomb",
+      "to": "phy_e_field_strength",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_current_charge",
+      "to": "phy_force_conductor",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_current_charge",
+      "to": "phy_pd_emf",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_damping",
+      "to": "phy_resonance",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_density_pressure",
+      "to": "phy_upthrust",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_diffraction",
+      "to": "phy_diffraction_grating",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_diffraction_grating",
+      "to": "phy_stationary_waves",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_e_field_strength",
+      "to": "phy_e_potential",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_e_field_strength",
+      "to": "phy_field_analogy",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_e_potential",
+      "to": "phy_capacitance_def",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_e_potential",
+      "to": "phy_field_analogy",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_elastic_plastic",
+      "to": "phy_strain_energy",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_em_spectrum",
+      "to": "phy_doppler",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_em_spectrum",
+      "to": "phy_photon",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_energy_conservation",
+      "to": "phy_power_efficiency",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_energy_conservation",
+      "to": "phy_shm_energy",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_energy_levels",
+      "to": "phy_standard_candles",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_equilibrium",
+      "to": "phy_density_pressure",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_faraday",
+      "to": "phy_lenz",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_faraday",
+      "to": "phy_transformers",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_flux_density",
+      "to": "phy_flux_linkage",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_flux_density",
+      "to": "phy_force_conductor",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_flux_linkage",
+      "to": "phy_faraday",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_force_charge",
+      "to": "phy_fields_currents",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_force_conductor",
+      "to": "phy_force_charge",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_force_types",
+      "to": "phy_equilibrium",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_force_types",
+      "to": "phy_hookes_law",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_force_types",
+      "to": "phy_moments",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_free_fall",
+      "to": "phy_projectile",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_fundamental_particles",
+      "to": "phy_binding_energy",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_grav_field_strength",
+      "to": "phy_field_analogy",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_grav_field_strength",
+      "to": "phy_grav_potential",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_grav_potential",
+      "to": "phy_orbits",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_heat_capacity",
+      "to": "phy_kinetic_theory",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_homogeneity",
+      "to": "phy_scalars_vectors",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_hookes_law",
+      "to": "phy_stress_strain",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_ideal_gas",
+      "to": "phy_internal_energy",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_intensity",
+      "to": "phy_em_spectrum",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_intensity",
+      "to": "phy_luminosity",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_interference",
+      "to": "phy_diffraction",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_ke_pe",
+      "to": "phy_energy_conservation",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_ke_pe",
+      "to": "phy_strain_energy",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_kinetic_theory",
+      "to": "phy_ideal_gas",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_kirchhoff",
+      "to": "phy_series_parallel",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_luminosity",
+      "to": "phy_standard_candles",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_mass_weight",
+      "to": "phy_momentum",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_moments",
+      "to": "phy_equilibrium",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_momentum",
+      "to": "phy_momentum_conservation",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_momentum_conservation",
+      "to": "phy_impulse",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_momentum_conservation",
+      "to": "phy_kinetic_theory",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_motion_graphs",
+      "to": "phy_free_fall",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_motion_quantities",
+      "to": "phy_suvat",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_newton_gravitation",
+      "to": "phy_grav_field_strength",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_newton_laws",
+      "to": "phy_centripetal_force",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_newton_laws",
+      "to": "phy_force_types",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_newton_laws",
+      "to": "phy_mass_weight",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_newton_laws",
+      "to": "phy_momentum",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_newton_laws",
+      "to": "phy_work",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_nuclear_structure",
+      "to": "phy_binding_energy",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_nuclear_structure",
+      "to": "phy_fundamental_particles",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_pd_emf",
+      "to": "phy_e_potential",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_pd_emf",
+      "to": "phy_resistance_ohm",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_photoelectric",
+      "to": "phy_wave_particle",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_photon",
+      "to": "phy_energy_levels",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_photon",
+      "to": "phy_photoelectric",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_potential_divider",
+      "to": "phy_internal_resistance",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_progressive_waves",
+      "to": "phy_superposition_principle",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_progressive_waves",
+      "to": "phy_wave_types",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_radioactive_decay",
+      "to": "phy_half_life",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_resistance_ohm",
+      "to": "phy_iv_characteristics",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_resistance_ohm",
+      "to": "phy_kirchhoff",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_resistance_ohm",
+      "to": "phy_resistivity",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_resistivity",
+      "to": "phy_iv_characteristics",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_scalars_vectors",
+      "to": "phy_motion_quantities",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_scalars_vectors",
+      "to": "phy_uncertainty",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_series_parallel",
+      "to": "phy_potential_divider",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_shm",
+      "to": "phy_shm_energy",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_shm_energy",
+      "to": "phy_damping",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_si_units",
+      "to": "phy_homogeneity",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_standard_candles",
+      "to": "phy_stellar_radii",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_stellar_radii",
+      "to": "phy_hubble",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_stress_strain",
+      "to": "phy_elastic_plastic",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_superposition_principle",
+      "to": "phy_interference",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_suvat",
+      "to": "phy_angular_speed",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_suvat",
+      "to": "phy_motion_graphs",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_suvat",
+      "to": "phy_newton_laws",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_suvat",
+      "to": "phy_projectile",
+      "strength": "hard"
+    },
+    {
+      "from": "phy_temperature",
+      "to": "phy_heat_capacity",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_transformers",
+      "to": "phy_rectification",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_uncertainty",
+      "to": "phy_combine_uncertainty",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_wave_particle",
+      "to": "phy_energy_levels",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_wave_types",
+      "to": "phy_intensity",
+      "strength": "soft"
+    },
+    {
+      "from": "phy_work",
+      "to": "phy_ke_pe",
+      "strength": "hard"
     }
   ]
 }

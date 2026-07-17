@@ -145,6 +145,7 @@
       "topic": "dl_foundations_part1",
       "description": "The perceptron, a single linear threshold unit computing a weighted sum passed through a step function, the historical building block of neural networks.",
       "default_order": 1,
+      "centrality": 0.2146,
       "name_zh": "感知机"
     },
     {
@@ -154,6 +155,7 @@
       "topic": "dl_foundations_part1",
       "description": "A multilayer perceptron stacking fully connected layers with nonlinear activations, a universal approximator able to represent complex input-output mappings.",
       "default_order": 2,
+      "centrality": 0.4466,
       "name_zh": "多层感知机"
     },
     {
@@ -163,6 +165,7 @@
       "topic": "dl_foundations_part1",
       "description": "Activation functions such as ReLU, sigmoid, and tanh introducing nonlinearity between layers, enabling networks to represent non-linear functions.",
       "default_order": 3,
+      "centrality": 0.138,
       "name_zh": "激活函数",
       "visual": "function",
       "visual_hint": "Plot ReLU, sigmoid, and tanh activation functions."
@@ -174,6 +177,7 @@
       "topic": "dl_foundations_part2",
       "description": "Forward propagation computing a network's output by passing inputs through successive layers, applying weights, biases, and activations stage by stage.",
       "default_order": 1,
+      "centrality": 0.1332,
       "name_zh": "前向传播"
     },
     {
@@ -183,6 +187,7 @@
       "topic": "dl_foundations_part2",
       "description": "A computational graph representing a computation as nodes and edges, enabling automatic differentiation by systematically propagating derivatives.",
       "default_order": 2,
+      "centrality": 0.072,
       "name_zh": "计算图",
       "visual": "diagram",
       "visual_hint": "Diagram a computation as a graph of nodes and edges for autodiff."
@@ -194,6 +199,7 @@
       "topic": "dl_foundations_part2",
       "description": "Backpropagation computing loss gradients with respect to every parameter by applying the chain rule in reverse through the computational graph.",
       "default_order": 3,
+      "centrality": 0.1666,
       "name_zh": "反向传播",
       "visual": "diagram",
       "visual_hint": "Diagram gradients flowing backward through the computational graph."
@@ -205,6 +211,7 @@
       "topic": "dl_optim",
       "description": "Loss functions quantifying prediction error, such as cross-entropy for classification and mean squared error for regression, that guide optimisation.",
       "default_order": 1,
+      "centrality": 0.0666,
       "name_zh": "损失函数",
       "visual": "function",
       "visual_hint": "Plot cross-entropy and squared-error loss against the prediction."
@@ -216,6 +223,7 @@
       "topic": "dl_optim",
       "description": "Stochastic gradient descent updating network parameters from mini-batch gradient estimates, the core optimisation procedure for training deep networks.",
       "default_order": 2,
+      "centrality": 0.0985,
       "name_zh": "梯度下降优化",
       "visual": "function",
       "visual_hint": "Animate gradient descent stepping down a loss surface."
@@ -227,6 +235,7 @@
       "topic": "dl_optim",
       "description": "Momentum accumulating an exponentially decaying average of past gradients to accelerate descent along consistent directions and dampen oscillation.",
       "default_order": 3,
+      "centrality": 0.0638,
       "name_zh": "动量法"
     },
     {
@@ -236,6 +245,7 @@
       "topic": "dl_optim_stability",
       "description": "Adaptive optimisers like Adam and RMSProp scaling per-parameter learning rates from gradient statistics, often speeding and stabilising training.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "高级优化器"
     },
     {
@@ -245,6 +255,7 @@
       "topic": "dl_optim_stability",
       "description": "Learning-rate schedules varying the step size during training, such as warmup and decay, to improve convergence speed and final performance.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "学习率衰减策略"
     },
     {
@@ -254,6 +265,7 @@
       "topic": "dl_optim_stability_dl_vanishing_grad",
       "description": "The vanishing and exploding gradient problem, where gradients shrink or grow across many layers, hampering the training of deep networks.",
       "default_order": 1,
+      "centrality": 0.1002,
       "name_zh": "梯度消失与梯度爆炸",
       "visual": "function",
       "visual_hint": "Plot how gradients shrink or grow across many layers."
@@ -265,6 +277,7 @@
       "topic": "dl_optim_stability_dl_vanishing_grad",
       "description": "Weight initialisation schemes such as Xavier and He setting initial parameter scales to preserve signal variance and ease optimisation.",
       "default_order": 2,
+      "centrality": 0.0436,
       "name_zh": "权重初始化"
     },
     {
@@ -274,6 +287,7 @@
       "topic": "dl_training",
       "description": "Batch normalisation standardising layer activations per mini-batch with learnable scale and shift, accelerating and stabilising deep-network training.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "批归一化"
     },
     {
@@ -283,6 +297,7 @@
       "topic": "dl_training",
       "description": "Regularisation techniques like weight decay and early stopping that constrain model complexity to reduce overfitting and improve generalisation.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "正则化"
     },
     {
@@ -292,6 +307,7 @@
       "topic": "dl_training",
       "description": "Dropout randomly deactivating units during training, preventing co-adaptation and acting as an implicit ensemble to improve generalisation.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "暂退法 (Dropout)"
     },
     {
@@ -301,6 +317,7 @@
       "topic": "dl_cnn",
       "description": "Convolutional layers applying learnable filters across spatial positions, exploiting locality and weight sharing to extract translation-equivariant features.",
       "default_order": 1,
+      "centrality": 0.091,
       "name_zh": "卷积",
       "visual": "interactive",
       "visual_hint": "Slide a filter across an image grid producing a feature map."
@@ -312,6 +329,7 @@
       "topic": "dl_cnn",
       "description": "Padding adding border values and stride setting the filter step size, jointly controlling the spatial dimensions of convolutional outputs.",
       "default_order": 2,
+      "centrality": 0.0779,
       "name_zh": "填充与步幅"
     },
     {
@@ -321,6 +339,7 @@
       "topic": "dl_cnn",
       "description": "Pooling layers downsampling feature maps by summarising local regions with maximum or average operations, reducing resolution and adding invariance.",
       "default_order": 3,
+      "centrality": 0.0624,
       "name_zh": "池化",
       "visual": "interactive",
       "visual_hint": "Downsample a feature map with max and average pooling windows."
@@ -332,6 +351,7 @@
       "topic": "dl_architectures_transfer",
       "description": "Classic convolutional architectures such as LeNet, AlexNet, and VGG, stacking convolution, activation, and pooling blocks for image recognition.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "CNN 架构",
       "visual": "diagram",
       "visual_hint": "Diagram stacked convolution and pooling layers of a CNN."
@@ -343,6 +363,7 @@
       "topic": "dl_architectures_transfer",
       "description": "Residual networks adding skip connections that let layers learn residual functions, enabling stable training of very deep networks.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "残差网络 (ResNet)",
       "visual": "diagram",
       "visual_hint": "Diagram a residual block with its skip connection."
@@ -354,6 +375,7 @@
       "topic": "dl_architectures_transfer_dl_transfer_learning",
       "description": "Transfer learning reusing features from a network pretrained on a large dataset, fine-tuning them for a related task with limited data.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "迁移学习"
     },
     {
@@ -363,6 +385,7 @@
       "topic": "dl_architectures_transfer_dl_transfer_learning",
       "description": "Recurrent neural networks processing sequences by maintaining a hidden state updated at each step and sharing parameters across time.",
       "default_order": 2,
+      "centrality": 0.1812,
       "name_zh": "循环神经网络",
       "visual": "diagram",
       "visual_hint": "Diagram a recurrent cell unrolled over a sequence."
@@ -374,6 +397,7 @@
       "topic": "dl_rnn_seq",
       "description": "Backpropagation through time unrolling a recurrent network over the sequence and applying backpropagation to compute gradients across time steps.",
       "default_order": 1,
+      "centrality": 0.079,
       "name_zh": "时间反向传播"
     },
     {
@@ -383,6 +407,7 @@
       "topic": "dl_rnn_seq",
       "description": "The difficulty recurrent networks face learning long-range dependencies, because gradients vanish or explode when propagated over many time steps.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "长期依赖问题"
     },
     {
@@ -392,6 +417,7 @@
       "topic": "dl_rnn_seq_dl_lstm",
       "description": "Long short-term memory units using input, forget, and output gates with a cell state to preserve information over long sequences.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "LSTM/GRU 循环网络",
       "visual": "diagram",
       "visual_hint": "Diagram the LSTM input, forget, and output gates and cell state."
@@ -403,6 +429,7 @@
       "topic": "dl_rnn_seq_dl_lstm",
       "description": "Gated recurrent units, a streamlined gating mechanism with fewer parameters than LSTMs, mitigating vanishing gradients in recurrent models.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "门控循环单元 (GRU)"
     },
     {
@@ -412,6 +439,7 @@
       "topic": "dl_attn_part1",
       "description": "Attention mechanisms computing a weighted combination of values, where the weights reflect the relevance of each input to the current query.",
       "default_order": 1,
+      "centrality": 0.1051,
       "name_zh": "注意力机制"
     },
     {
@@ -421,6 +449,7 @@
       "topic": "dl_attn_part1",
       "description": "Self-attention relating all positions in a single sequence to one another, letting each element aggregate context from the whole sequence.",
       "default_order": 2,
+      "centrality": 0.0944,
       "name_zh": "自注意力",
       "visual": "interactive",
       "visual_hint": "Visualise attention weights linking positions in a sequence."
@@ -432,6 +461,7 @@
       "topic": "dl_attn_part1",
       "description": "Multi-head attention running several attention operations in parallel subspaces, letting the model jointly attend to different representation aspects.",
       "default_order": 3,
+      "centrality": 0.0819,
       "name_zh": "多头注意力机制"
     },
     {
@@ -441,6 +471,7 @@
       "topic": "dl_attn_part2",
       "description": "Positional encoding injecting token-order information into otherwise permutation-invariant attention through fixed or learned position representations.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "位置编码"
     },
     {
@@ -450,6 +481,7 @@
       "topic": "dl_attn_part2",
       "description": "The Transformer, an attention-only encoder-decoder architecture that processes sequences in parallel, underpinning modern language and vision models.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "Transformer",
       "visual": "diagram",
       "visual_hint": "Diagram the Transformer encoder-decoder with attention blocks."
@@ -461,6 +493,7 @@
       "topic": "dl_attn_part2",
       "description": "Pretraining on large unlabelled corpora with self-supervised objectives, then fine-tuning on downstream tasks, the dominant paradigm for transformers.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "预训练与微调"
     },
     {
@@ -470,6 +503,7 @@
       "topic": "dl_generative_part1",
       "description": "Autoencoders learning compressed representations by training a network to reconstruct its input through a low-dimensional bottleneck.",
       "default_order": 1,
+      "centrality": 0.0549,
       "name_zh": "自编码器"
     },
     {
@@ -479,6 +513,7 @@
       "topic": "dl_generative_part1",
       "description": "Variational autoencoders, probabilistic generative models learning a latent distribution via a variational objective to generate new samples.",
       "default_order": 2,
+      "centrality": 0.0708,
       "name_zh": "变分自编码器"
     },
     {
@@ -488,6 +523,7 @@
       "topic": "dl_generative_part1",
       "description": "Generative adversarial networks pitting a generator against a discriminator in a minimax game, learning to synthesise realistic data.",
       "default_order": 3,
+      "centrality": 0.0624,
       "name_zh": "生成对抗网络（GAN）"
     },
     {
@@ -497,6 +533,7 @@
       "topic": "dl_generative_part2",
       "description": "The dynamics and difficulties of training GANs, including instability and mode collapse, addressed by careful loss design and training techniques.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "GAN 训练动态"
     },
     {
@@ -506,6 +543,7 @@
       "topic": "dl_generative_part2",
       "description": "Diffusion models generating data by learning to reverse a gradual noising process, denoising random noise into samples step by step.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "扩散模型"
     },
     {
@@ -515,6 +553,7 @@
       "topic": "dl_generative_part2",
       "description": "Normalizing flows transforming a simple base distribution through invertible mappings, enabling exact likelihood evaluation and sampling.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "流模型 (Normalizing Flows)"
     }
   ],

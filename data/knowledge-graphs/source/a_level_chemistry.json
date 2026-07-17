@@ -257,6 +257,7 @@
       "topic": "che_atomic",
       "description": "Protons, neutrons, and electrons making up the atom, whose relative masses and charges determine atomic number, mass number, and chemical behaviour.",
       "default_order": 1,
+      "centrality": 0.281,
       "name_zh": "亚原子粒子"
     },
     {
@@ -266,6 +267,7 @@
       "topic": "che_atomic",
       "description": "Atoms of the same element with equal protons but different numbers of neutrons, giving different mass numbers but identical chemical properties.",
       "default_order": 2,
+      "centrality": 0.3014,
       "name_zh": "同位素"
     },
     {
@@ -275,6 +277,7 @@
       "topic": "che_atomic_che_electron_config",
       "description": "The arrangement of electrons in shells, subshells, and orbitals following the Aufbau principle, Hund's rule, and the Pauli exclusion principle.",
       "default_order": 1,
+      "centrality": 0.651,
       "name_zh": "电子排布",
       "visual": "diagram",
       "visual_hint": "Orbital filling diagram across shells and subshells."
@@ -286,6 +289,7 @@
       "topic": "che_atomic_che_electron_config",
       "description": "The energy required to remove electrons from gaseous atoms, whose successive values and periodic trends provide evidence for electronic structure.",
       "default_order": 2,
+      "centrality": 0.1021,
       "name_zh": "电离能",
       "visual": "chart",
       "visual_hint": "Plot successive ionisation energies revealing shell structure."
@@ -297,6 +301,7 @@
       "topic": "che_stoichiometry",
       "description": "The mole as the amount containing Avogadro's number of particles, linking number of particles, mass, and molar quantities in calculations.",
       "default_order": 1,
+      "centrality": 0.1799,
       "name_zh": "摩尔与阿伏伽德罗常数"
     },
     {
@@ -306,6 +311,7 @@
       "topic": "che_stoichiometry",
       "description": "Empirical formulae giving the simplest whole-number ratio of atoms and molecular formulae giving the actual numbers, determined from composition data.",
       "default_order": 2,
+      "centrality": 0.0686,
       "name_zh": "实验式与分子式"
     },
     {
@@ -315,6 +321,7 @@
       "topic": "che_stoichiometry_che_reacting_masses",
       "description": "Using balanced equations and the mole concept to calculate reacting masses, gas volumes, and theoretical yields in stoichiometric problems.",
       "default_order": 1,
+      "centrality": 0.103,
       "name_zh": "反应质量与气体体积"
     },
     {
@@ -324,6 +331,7 @@
       "topic": "che_stoichiometry_che_reacting_masses",
       "description": "Determining unknown concentrations by titration, using the mole ratio in a balanced equation and an indicated end point to calculate the result.",
       "default_order": 2,
+      "centrality": 0.0348,
       "name_zh": "浓度与滴定"
     },
     {
@@ -333,6 +341,7 @@
       "topic": "che_bonding_part1",
       "description": "Bonding by electrostatic attraction between oppositely charged ions formed by electron transfer, producing giant ionic lattices with high melting points.",
       "default_order": 1,
+      "centrality": 0.2939,
       "name_zh": "离子键",
       "visual": "diagram",
       "visual_hint": "Dot-and-cross diagram of electron transfer forming ions."
@@ -344,6 +353,7 @@
       "topic": "che_bonding_part1",
       "description": "Bonding by shared pairs of electrons between non-metal atoms, including single, double, triple, and dative (coordinate) covalent bonds.",
       "default_order": 2,
+      "centrality": 0.5537,
       "name_zh": "共价键",
       "visual": "diagram",
       "visual_hint": "Dot-and-cross diagram of shared electron pairs."
@@ -355,6 +365,7 @@
       "topic": "che_bonding_part1",
       "description": "Bonding in metals as a lattice of positive ions in a sea of delocalised electrons, explaining conductivity, malleability, and high melting points.",
       "default_order": 3,
+      "centrality": 0.0615,
       "name_zh": "金属键"
     },
     {
@@ -364,6 +375,7 @@
       "topic": "che_bonding_part2",
       "description": "Predicting molecular shapes and bond angles using valence-shell electron-pair repulsion, where electron pairs arrange to minimise mutual repulsion.",
       "default_order": 1,
+      "centrality": 0.0865,
       "name_zh": "VSEPR 分子形状",
       "visual": "interactive",
       "visual_hint": "Rotate 3D molecular shapes showing bond angles for each electron-pair geometry."
@@ -375,6 +387,7 @@
       "topic": "che_bonding_part2",
       "description": "The tendency of an atom to attract a shared electron pair, whose differences create bond polarity and overall molecular dipoles.",
       "default_order": 2,
+      "centrality": 0.1451,
       "name_zh": "电负性与极性"
     },
     {
@@ -384,6 +397,7 @@
       "topic": "che_bonding_part2",
       "description": "Forces between molecules—van der Waals, permanent dipole-dipole, and hydrogen bonding—that determine physical properties such as boiling point.",
       "default_order": 3,
+      "centrality": 0.1415,
       "name_zh": "分子间作用力"
     },
     {
@@ -393,6 +407,7 @@
       "topic": "che_states_enthalpy",
       "description": "The behaviour of ideal gases described by the equation pV equals nRT, relating pressure, volume, temperature, and amount of gas.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "理想气体",
       "visual": "function",
       "visual_hint": "Plot pV = nRT relationships between pressure, volume, and temperature."
@@ -404,6 +419,7 @@
       "topic": "che_states_enthalpy",
       "description": "Giant ionic, giant covalent, simple molecular, and metallic solid structures, whose bonding and arrangement determine their physical properties.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "固体结构"
     },
     {
@@ -413,6 +429,7 @@
       "topic": "che_states_enthalpy",
       "description": "Enthalpy changes of reactions measured at constant pressure, including standard enthalpies of formation, combustion, and reaction.",
       "default_order": 3,
+      "centrality": 0.1145,
       "name_zh": "焓变",
       "visual": "diagram",
       "visual_hint": "Energy-profile diagram of enthalpy change with activation energy."
@@ -424,6 +441,7 @@
       "topic": "che_energetics",
       "description": "Hess's law stating that the enthalpy change of a reaction is independent of the route taken, allowing indirect calculation via energy cycles.",
       "default_order": 1,
+      "centrality": 0.0631,
       "name_zh": "盖斯定律",
       "visual": "diagram",
       "visual_hint": "Hess-cycle diagram of alternative reaction routes."
@@ -435,6 +453,7 @@
       "topic": "che_energetics",
       "description": "The average energy needed to break one mole of a given bond in the gas phase, used to estimate reaction enthalpy changes.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "键能"
     },
     {
@@ -444,6 +463,7 @@
       "topic": "che_energetics",
       "description": "Measuring enthalpy changes experimentally from temperature changes using the relationship q equals mcΔT in a calorimeter.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "量热法"
     },
     {
@@ -453,6 +473,7 @@
       "topic": "che_kinetics_part1",
       "description": "The rate of reaction as the change in concentration of a reactant or product per unit time, and the factors that affect it.",
       "default_order": 1,
+      "centrality": 0.1523,
       "name_zh": "反应速率"
     },
     {
@@ -462,6 +483,7 @@
       "topic": "che_kinetics_part1",
       "description": "Collision theory explaining rates through the frequency of collisions and the proportion exceeding the activation energy with correct orientation.",
       "default_order": 2,
+      "centrality": 0.1347,
       "name_zh": "碰撞理论"
     },
     {
@@ -471,6 +493,7 @@
       "topic": "che_kinetics_part1",
       "description": "The Maxwell-Boltzmann distribution of molecular energies, used to explain the effect of temperature and catalysts on reaction rate.",
       "default_order": 3,
+      "centrality": 0.0408,
       "name_zh": "Maxwell-Boltzmann分布",
       "visual": "function",
       "visual_hint": "Plot the Maxwell-Boltzmann energy distribution and the effect of temperature and catalyst."
@@ -482,6 +505,7 @@
       "topic": "che_kinetics_part2",
       "description": "Catalysts increasing reaction rate by providing an alternative pathway of lower activation energy, classified as homogeneous or heterogeneous.",
       "default_order": 1,
+      "centrality": 0.0378,
       "name_zh": "催化"
     },
     {
@@ -491,6 +515,7 @@
       "topic": "che_kinetics_part2",
       "description": "Rate equations relating rate to reactant concentrations raised to their orders, with the rate constant determined experimentally.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "速率方程与反应级数",
       "visual": "function",
       "visual_hint": "Plot reaction rate against concentration for zero, first, and second order."
@@ -502,6 +527,7 @@
       "topic": "che_kinetics_part2",
       "description": "The rate-determining step as the slowest step in a mechanism, whose reactants appear in the experimentally determined rate equation.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "速控步"
     },
     {
@@ -511,6 +537,7 @@
       "topic": "che_equilibria_acidbase",
       "description": "Dynamic equilibrium in a closed system where the forward and reverse reactions proceed at equal rates and concentrations remain constant.",
       "default_order": 1,
+      "centrality": 0.1202,
       "name_zh": "动态平衡"
     },
     {
@@ -520,6 +547,7 @@
       "topic": "che_equilibria_acidbase",
       "description": "Le Chatelier's principle predicting how an equilibrium position shifts to oppose changes in concentration, pressure, or temperature.",
       "default_order": 2,
+      "centrality": 0.0348,
       "name_zh": "勒夏特列原理",
       "visual": "interactive",
       "visual_hint": "Shift an equilibrium with sliders for concentration, pressure, and temperature."
@@ -531,6 +559,7 @@
       "topic": "che_equilibria_acidbase_che_kc_kp",
       "description": "Equilibrium constants Kc and Kp expressing the position of equilibrium in terms of concentrations or partial pressures at a given temperature.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "平衡常数 Kc 与 Kp"
     },
     {
@@ -540,6 +569,7 @@
       "topic": "che_equilibria_acidbase_che_kc_kp",
       "description": "The Brønsted-Lowry theory defining acids as proton donors and bases as proton acceptors, related through conjugate acid-base pairs.",
       "default_order": 2,
+      "centrality": 0.0657,
       "name_zh": "布朗斯特-洛瑞理论"
     },
     {
@@ -549,6 +579,7 @@
       "topic": "che_acids",
       "description": "The distinction between strong acids that fully dissociate and weak acids that only partially dissociate in aqueous solution.",
       "default_order": 1,
+      "centrality": 0.0481,
       "name_zh": "强酸与弱酸"
     },
     {
@@ -558,6 +589,7 @@
       "topic": "che_acids",
       "description": "The pH scale measuring hydrogen-ion concentration and the acid dissociation constant Ka quantifying the strength of a weak acid.",
       "default_order": 2,
+      "centrality": 0.0548,
       "name_zh": "pH 与酸解离常数",
       "visual": "function",
       "visual_hint": "Plot a titration pH curve and locate the equivalence point."
@@ -569,6 +601,7 @@
       "topic": "che_acids_che_buffers",
       "description": "Buffer solutions resisting pH change on adding small amounts of acid or base, formed from a weak acid and its conjugate base.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "缓冲剂"
     },
     {
@@ -578,6 +611,7 @@
       "topic": "che_acids_che_buffers",
       "description": "The solubility product Ksp as the equilibrium constant for a sparingly soluble salt dissolving, predicting precipitation and the common-ion effect.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "溶度积"
     },
     {
@@ -587,6 +621,7 @@
       "topic": "che_redox",
       "description": "Oxidation numbers assigned by rules to track electron transfer, identifying which species are oxidised and reduced in a redox reaction.",
       "default_order": 1,
+      "centrality": 0.1074,
       "name_zh": "氧化数"
     },
     {
@@ -596,6 +631,7 @@
       "topic": "che_redox",
       "description": "Constructing balanced redox equations by combining oxidation and reduction half-equations so that electrons gained equal electrons lost.",
       "default_order": 2,
+      "centrality": 0.0819,
       "name_zh": "氧化还原方程"
     },
     {
@@ -605,6 +641,7 @@
       "topic": "che_redox",
       "description": "Standard electrode potentials measuring a half-cell's tendency to gain electrons relative to the standard hydrogen electrode.",
       "default_order": 3,
+      "centrality": 0.0548,
       "name_zh": "电极电势"
     },
     {
@@ -614,6 +651,7 @@
       "topic": "che_electrochem_thermo",
       "description": "Electrochemical cells generating an EMF from two half-cells, with the cell potential calculated from standard electrode potentials.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "电化学电池"
     },
     {
@@ -623,6 +661,7 @@
       "topic": "che_electrochem_thermo",
       "description": "The decomposition of molten or aqueous compounds by passing electricity, with products predicted from electrode reactions and Faraday's laws.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "电解"
     },
     {
@@ -632,6 +671,7 @@
       "topic": "che_electrochem_thermo_che_born_haber",
       "description": "Born-Haber cycles applying Hess's law to determine lattice energy from enthalpies of formation, atomisation, ionisation, and electron affinity.",
       "default_order": 1,
+      "centrality": 0.0548,
       "name_zh": "晶格能与玻恩-哈伯循环",
       "visual": "diagram",
       "visual_hint": "Born-Haber cycle diagram of the lattice-energy enthalpy steps."
@@ -643,6 +683,7 @@
       "topic": "che_electrochem_thermo_che_born_haber",
       "description": "Entropy as a measure of the disorder of a system, with spontaneous change tending toward increased total entropy.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "熵"
     },
     {
@@ -652,6 +693,7 @@
       "topic": "che_free_energy_periodicity",
       "description": "Gibbs free energy combining enthalpy and entropy, where a negative value of ΔG indicates a thermodynamically feasible reaction.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "吉布斯自由能"
     },
     {
@@ -661,6 +703,7 @@
       "topic": "che_free_energy_periodicity",
       "description": "Trends across periods and down groups in atomic radius, ionisation energy, and electronegativity, explained by nuclear charge and shielding.",
       "default_order": 2,
+      "centrality": 0.091,
       "name_zh": "周期趋势",
       "visual": "chart",
       "visual_hint": "Plot periodic trends in atomic radius and ionisation energy across a period."
@@ -672,6 +715,7 @@
       "topic": "che_free_energy_periodicity",
       "description": "The properties of Period 3 elements and their oxides and chlorides, showing the trend from metallic to covalent character.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "第3周期元素与氧化物"
     },
     {
@@ -681,6 +725,7 @@
       "topic": "che_groups",
       "description": "The chemistry of Group 2 metals, including reactions with water and oxygen and trends in reactivity and thermal stability of compounds.",
       "default_order": 1,
+      "centrality": 0.0378,
       "name_zh": "第2族元素化学"
     },
     {
@@ -690,6 +735,7 @@
       "topic": "che_groups",
       "description": "The chemistry of Group 17 halogens, including trends in volatility and oxidising power and their displacement reactions.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "第17族卤素"
     },
     {
@@ -699,6 +745,7 @@
       "topic": "che_groups",
       "description": "The chemistry of nitrogen and sulfur, including ammonia, the oxides of nitrogen and sulfur, and their environmental significance.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "氮和硫"
     },
     {
@@ -708,6 +755,7 @@
       "topic": "che_transition",
       "description": "Characteristic properties of transition elements, including variable oxidation states, catalytic activity, coloured ions, and complex formation.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "过渡金属性质"
     },
     {
@@ -717,6 +765,7 @@
       "topic": "che_transition",
       "description": "Complex ions formed by a central metal ion bonded to ligands through dative covalent bonds, with characteristic coordination numbers and shapes.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "配位离子与配体"
     },
     {
@@ -726,6 +775,7 @@
       "topic": "che_transition",
       "description": "The origin of colour in transition-metal complexes from d-orbital splitting, and their use as homogeneous and heterogeneous catalysts.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "颜色与催化"
     },
     {
@@ -735,6 +785,7 @@
       "topic": "che_organic_basics",
       "description": "The systematic IUPAC naming of organic compounds based on chain length, functional groups, and the positions of substituents.",
       "default_order": 1,
+      "centrality": 0.2772,
       "name_zh": "命名法"
     },
     {
@@ -744,6 +795,7 @@
       "topic": "che_organic_basics",
       "description": "Structural isomerism and stereoisomerism, including cis-trans and optical isomers, arising from different arrangements of the same atoms.",
       "default_order": 2,
+      "centrality": 0.1693,
       "name_zh": "同分异构"
     },
     {
@@ -753,6 +805,7 @@
       "topic": "che_organic_basics_che_bond_fission",
       "description": "Homolytic and heterolytic bond fission producing free radicals or ions respectively, generating the reactive species in organic mechanisms.",
       "default_order": 1,
+      "centrality": 0.147,
       "name_zh": "键断裂与反应物种"
     },
     {
@@ -762,6 +815,7 @@
       "topic": "che_organic_basics_che_bond_fission",
       "description": "Classifying organic reactions as substitution, addition, and elimination, with curly-arrow notation representing the movement of electron pairs.",
       "default_order": 2,
+      "centrality": 0.1438,
       "name_zh": "反应机理类型"
     },
     {
@@ -771,6 +825,7 @@
       "topic": "che_hydrocarbons",
       "description": "Saturated hydrocarbons with single carbon-carbon bonds, their relative unreactivity, combustion, and free-radical substitution with halogens.",
       "default_order": 1,
+      "centrality": 0.2553,
       "name_zh": "烷烃"
     },
     {
@@ -780,6 +835,7 @@
       "topic": "che_hydrocarbons",
       "description": "Unsaturated hydrocarbons containing a carbon-carbon double bond, undergoing electrophilic addition and characterised by their greater reactivity.",
       "default_order": 2,
+      "centrality": 0.2712,
       "name_zh": "烯烃"
     },
     {
@@ -789,6 +845,7 @@
       "topic": "che_hydrocarbons",
       "description": "Addition polymerisation joining many alkene monomers into long-chain polymers, and the environmental issues surrounding their disposal.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "加聚反应"
     },
     {
@@ -798,6 +855,7 @@
       "topic": "che_halogenoalkanes_alcohols",
       "description": "Nucleophilic substitution of halogenoalkanes, proceeding by SN1 or SN2 mechanisms in which a nucleophile replaces the halogen.",
       "default_order": 1,
+      "centrality": 0.2651,
       "name_zh": "亲核取代"
     },
     {
@@ -807,6 +865,7 @@
       "topic": "che_halogenoalkanes_alcohols",
       "description": "Elimination reactions of halogenoalkanes removing a hydrogen halide to form an alkene, competing with nucleophilic substitution.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "消去反应"
     },
     {
@@ -816,6 +875,7 @@
       "topic": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
       "description": "The reactions of alcohols, including combustion, substitution to halogenoalkanes, dehydration to alkenes, and esterification.",
       "default_order": 1,
+      "centrality": 0.1453,
       "name_zh": "醇的反应"
     },
     {
@@ -825,6 +885,7 @@
       "topic": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
       "description": "The oxidation of primary alcohols to aldehydes and carboxylic acids and secondary alcohols to ketones, with tertiary alcohols resistant.",
       "default_order": 2,
+      "centrality": 0.1417,
       "name_zh": "醇的氧化"
     },
     {
@@ -834,6 +895,7 @@
       "topic": "che_carbonyls",
       "description": "Carbonyl compounds containing a C=O group, undergoing nucleophilic addition and distinguished by oxidation and characteristic tests.",
       "default_order": 1,
+      "centrality": 0.1376,
       "name_zh": "醛和酮"
     },
     {
@@ -843,6 +905,7 @@
       "topic": "che_carbonyls",
       "description": "Organic acids containing the carboxyl group, showing acidic behaviour and reactions forming salts, esters, and acyl derivatives.",
       "default_order": 2,
+      "centrality": 0.1327,
       "name_zh": "羧酸"
     },
     {
@@ -852,6 +915,7 @@
       "topic": "che_carbonyls",
       "description": "Esters formed by condensation of acids and alcohols, their hydrolysis, and the more reactive acyl chlorides used as acylating agents.",
       "default_order": 3,
+      "centrality": 0.0318,
       "name_zh": "酯和酰氯"
     },
     {
@@ -861,6 +925,7 @@
       "topic": "che_nitrogen_org",
       "description": "Organic bases derived from ammonia, whose basicity arises from the nitrogen lone pair, along with their formation and reactions.",
       "default_order": 1,
+      "centrality": 0.1127,
       "name_zh": "胺"
     },
     {
@@ -870,6 +935,7 @@
       "topic": "che_nitrogen_org",
       "description": "Amino acids bearing both amino and carboxyl groups, their zwitterion behaviour, and condensation into peptides and proteins.",
       "default_order": 2,
+      "centrality": 0.1902,
       "name_zh": "氨基酸与蛋白质"
     },
     {
@@ -879,6 +945,7 @@
       "topic": "che_nitrogen_org",
       "description": "Condensation polymers such as polyesters and polyamides formed by joining monomers with loss of a small molecule like water.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "缩聚反应"
     },
     {
@@ -888,6 +955,7 @@
       "topic": "che_arenes_mass_spec",
       "description": "The structure of benzene as a planar ring with delocalised pi electrons, explaining its stability and resistance to addition reactions.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "苯的结构"
     },
     {
@@ -897,6 +965,7 @@
       "topic": "che_arenes_mass_spec",
       "description": "Electrophilic substitution of arenes, including nitration and halogenation, in which an electrophile replaces a ring hydrogen.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "亲电取代"
     },
     {
@@ -906,6 +975,7 @@
       "topic": "che_arenes_mass_spec",
       "description": "Mass spectrometry determining relative molecular mass and structure from the mass-to-charge ratios of ionised molecular fragments.",
       "default_order": 3,
+      "centrality": 0.0624,
       "name_zh": "质谱分析",
       "visual": "chart",
       "visual_hint": "Plot a mass spectrum of m/z peaks."
@@ -917,6 +987,7 @@
       "topic": "che_analysis",
       "description": "Infrared spectroscopy identifying functional groups from the characteristic absorption of bonds vibrating at specific frequencies.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "红外光谱"
     },
     {
@@ -926,6 +997,7 @@
       "topic": "che_analysis",
       "description": "Nuclear magnetic resonance spectroscopy determining molecular structure from the chemical environments of hydrogen or carbon nuclei.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "NMR光谱",
       "visual": "chart",
       "visual_hint": "Plot an NMR spectrum of chemical-shift peaks."
@@ -937,6 +1009,7 @@
       "topic": "che_analysis",
       "description": "Chromatography separating mixtures by differential partition between a stationary and a mobile phase, characterised by Rf values or retention times.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "色谱法"
     }
   ],
