@@ -286,6 +286,35 @@ export async function updateLessonDescriptionIfUnchanged(input: {
   return rows.length > 0;
 }
 
+/** Outline-enrichment write fence for concept-frontier bundle naming: replace
+ * BOTH title and description only if each still matches the value the enrichment
+ * run read. If either changed (learner edit, concurrent write), nothing is
+ * overwritten. Returns true when the row was updated. */
+export async function updateLessonTitleAndDescriptionIfUnchanged(input: {
+  lessonId: string;
+  courseId: string;
+  ownerId: string;
+  expectedTitle: string;
+  title: string;
+  expectedDescription: string;
+  description: string;
+}): Promise<boolean> {
+  const rows = await getDb()
+    .update(lessonsTable)
+    .set({ title: input.title, description: input.description, updatedAt: new Date() })
+    .where(
+      and(
+        eq(lessonsTable.id, input.lessonId),
+        eq(lessonsTable.courseId, input.courseId),
+        eq(lessonsTable.ownerId, input.ownerId),
+        eq(lessonsTable.title, input.expectedTitle),
+        eq(lessonsTable.description, input.expectedDescription),
+      ),
+    )
+    .returning({ id: lessonsTable.id });
+  return rows.length > 0;
+}
+
 async function saveCourseToDb(course: Course, ownerId: string) {
   const courseRow = courseToRow(course, ownerId);
   const lessonRows = course.lessons.map((lesson) => lessonToRow(lesson, course.id, ownerId));
@@ -324,6 +353,7 @@ async function saveCourseToDb(course: Course, ownerId: string) {
             courseId: row.courseId,
             ownerId: row.ownerId,
             topicId: row.topicId,
+            conceptIds: row.conceptIds,
             title: row.title,
             // Description has dedicated create/insert and fenced enrichment
             // writes. Aggregate saves must not restore a stale snapshot.
@@ -400,6 +430,7 @@ export function lessonToRow(lesson: Lesson, courseId: string, ownerId: string) {
     courseId,
     ownerId,
     topicId: lesson.topicId ?? null,
+    conceptIds: lesson.conceptIds ?? [],
     title: lesson.title,
     description: lesson.description ?? "",
     role: lesson.role,
@@ -443,6 +474,7 @@ function rowToLesson(row: typeof lessonsTable.$inferSelect): Lesson {
     status: row.status as LessonStatus,
     sortKey: Number(row.sortKey),
     topicId: row.topicId ?? null,
+    conceptIds: (row.conceptIds as string[] | null) ?? [],
     triggeredFrom: row.triggeredFrom ?? null,
     blocks: (row.blocks as CourseBlock[] | null) ?? null,
     estimatedMinutes: row.estimatedMinutes === null ? null : Number(row.estimatedMinutes),

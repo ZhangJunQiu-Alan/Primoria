@@ -289,6 +289,7 @@
       "topic": "mat_algebra_part1",
       "description": "Laws of indices for manipulating powers and the simplification and rationalisation of surds, expressing irrational roots in exact form.",
       "default_order": 1,
+      "centrality": 0.3382,
       "name_zh": "指数与根式"
     },
     {
@@ -298,6 +299,7 @@
       "topic": "mat_algebra_part1",
       "description": "Quadratic functions and their parabolic graphs, completing the square to find the vertex, line of symmetry, and maximum or minimum.",
       "default_order": 2,
+      "centrality": 0.213,
       "name_zh": "二次函数",
       "visual": "function",
       "visual_hint": "Plot a parabola with sliders for the coefficients showing vertex and roots."
@@ -309,6 +311,7 @@
       "topic": "mat_algebra_part1_mat_solve_quadratics",
       "description": "Solving quadratic equations by factorising, completing the square, or the formula, with the discriminant determining the number of real roots.",
       "default_order": 1,
+      "centrality": 0.1895,
       "name_zh": "二次方程求解"
     },
     {
@@ -318,6 +321,7 @@
       "topic": "mat_algebra_part1_mat_solve_quadratics",
       "description": "Solving simultaneous equations, including one linear and one quadratic, by substitution or elimination to find common solutions.",
       "default_order": 2,
+      "centrality": 0.0689,
       "name_zh": "联立方程"
     },
     {
@@ -327,6 +331,7 @@
       "topic": "mat_algebra_part2",
       "description": "Solving linear and quadratic inequalities algebraically and graphically, and representing the solution sets on a number line.",
       "default_order": 1,
+      "centrality": 0.0519,
       "name_zh": "不等式",
       "visual": "function",
       "visual_hint": "Shade the regions satisfying linear and quadratic inequalities."
@@ -338,6 +343,7 @@
       "topic": "mat_algebra_part2",
       "description": "Functions defined by their domain and range, the distinction between one-to-one and many-to-one mappings, and finding inverse functions.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "函数与反函数",
       "visual": "function",
       "visual_hint": "Plot a function and its inverse as reflections in y = x."
@@ -349,6 +355,7 @@
       "topic": "mat_algebra_part2_mat_composite",
       "description": "Composite functions formed by applying one function to the result of another, with attention to domain and the order of composition.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "复合函数"
     },
     {
@@ -358,6 +365,7 @@
       "topic": "mat_algebra_part2_mat_composite",
       "description": "The modulus function giving absolute value, its graph, and solving equations and inequalities involving modulus expressions.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "绝对值函数",
       "visual": "function",
       "visual_hint": "Plot the modulus function and solve |f(x)| = g(x) graphically."
@@ -369,6 +377,7 @@
       "topic": "mat_polynomials",
       "description": "Dividing polynomials by a linear or quadratic divisor using long division or inspection to obtain a quotient and remainder.",
       "default_order": 1,
+      "centrality": 0.0746,
       "name_zh": "多项式除法"
     },
     {
@@ -378,6 +387,7 @@
       "topic": "mat_polynomials",
       "description": "The factor and remainder theorems relating the value of a polynomial at a point to its factors and to the remainder on division.",
       "default_order": 2,
+      "centrality": 0.0586,
       "name_zh": "因式与余式定理"
     },
     {
@@ -387,6 +397,7 @@
       "topic": "mat_polynomials",
       "description": "Decomposing a rational function into a sum of simpler partial fractions, handling linear, repeated, and quadratic factors.",
       "default_order": 3,
+      "centrality": 0.0398,
       "name_zh": "部分分式"
     },
     {
@@ -396,6 +407,7 @@
       "topic": "mat_coord_geom",
       "description": "The equation of a straight line in various forms, with gradient and intercepts found from points or other given conditions.",
       "default_order": 1,
+      "centrality": 0.0654,
       "name_zh": "直线",
       "visual": "function",
       "visual_hint": "Plot a line with sliders for gradient and intercept."
@@ -407,6 +419,7 @@
       "topic": "mat_coord_geom",
       "description": "The gradient conditions for parallel and perpendicular lines, where perpendicular gradients multiply to give negative one.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "平行与垂直直线"
     },
     {
@@ -416,6 +429,7 @@
       "topic": "mat_coord_geom",
       "description": "The equation of a circle from its centre and radius, and finding intersections, tangents, and properties using coordinate geometry.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "圆",
       "visual": "function",
       "visual_hint": "Plot a circle from centre and radius and find line intersections."
@@ -427,6 +441,7 @@
       "topic": "mat_sequences",
       "description": "Arithmetic progressions with a common difference, and the formulae for the nth term and the sum of the first n terms.",
       "default_order": 1,
+      "centrality": 0.0624,
       "name_zh": "等差级数"
     },
     {
@@ -436,6 +451,7 @@
       "topic": "mat_sequences",
       "description": "Geometric progressions with a common ratio, formulae for the nth term and sum, and the sum to infinity of a convergent series.",
       "default_order": 2,
+      "centrality": 0.0443,
       "name_zh": "等比级数",
       "visual": "chart",
       "visual_hint": "Plot geometric-progression terms and the convergence of the sum."
@@ -447,6 +463,7 @@
       "topic": "mat_sequences_mat_binomial_pos",
       "description": "The binomial expansion of an expression raised to a positive integer power using binomial coefficients and Pascal's triangle.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "二项展开（正整数）"
     },
     {
@@ -456,6 +473,7 @@
       "topic": "mat_sequences_mat_binomial_pos",
       "description": "The binomial expansion for a general rational or negative index as an infinite series, valid within its range of convergence.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "二项展开（一般指数）"
     },
     {
@@ -465,6 +483,7 @@
       "topic": "mat_trig_part1",
       "description": "The trigonometric ratios sine, cosine, and tangent, their graphs, periodicity, and exact values for standard angles.",
       "default_order": 1,
+      "centrality": 0.2321,
       "name_zh": "三角函数与图像",
       "visual": "function",
       "visual_hint": "Plot sine, cosine, and tangent with adjustable amplitude and period."
@@ -476,6 +495,7 @@
       "topic": "mat_trig_part1",
       "description": "Radian measure of angles and its use in the arc length and sector area formulae for a circle.",
       "default_order": 2,
+      "centrality": 0.0596,
       "name_zh": "弧度制",
       "visual": "interactive",
       "visual_hint": "Unit circle linking an angle in radians to arc length and sector area."
@@ -487,6 +507,7 @@
       "topic": "mat_trig_part1",
       "description": "Fundamental trigonometric identities, including the Pythagorean identities, used to simplify expressions and prove relationships.",
       "default_order": 3,
+      "centrality": 0.0819,
       "name_zh": "三角恒等式"
     },
     {
@@ -496,6 +517,7 @@
       "topic": "mat_trig_part2",
       "description": "Solving trigonometric equations within a given interval using identities, graphs, and the symmetry of trigonometric functions.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "解三角方程"
     },
     {
@@ -505,6 +527,7 @@
       "topic": "mat_trig_part2",
       "description": "Compound-angle and double-angle formulae expanding trigonometric functions of the sum and of multiples of angles.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "倍角与和差公式"
     },
     {
@@ -514,6 +537,7 @@
       "topic": "mat_trig_part2",
       "description": "Expressing a sin θ plus b cos θ in the form R sin(θ + α), used to solve equations and find maxima and minima.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "R 公式"
     },
     {
@@ -523,6 +547,7 @@
       "topic": "mat_exp_log",
       "description": "Exponential functions and the natural exponential e^x, modelling growth and decay, and the properties of their graphs.",
       "default_order": 1,
+      "centrality": 0.1329,
       "name_zh": "指数函数",
       "visual": "function",
       "visual_hint": "Plot exponential growth and decay with a slider for the rate."
@@ -534,6 +559,7 @@
       "topic": "mat_exp_log",
       "description": "Logarithms as the inverse of exponentials, and the laws of logarithms for manipulating products, quotients, and powers.",
       "default_order": 2,
+      "centrality": 0.0871,
       "name_zh": "对数与法则",
       "visual": "function",
       "visual_hint": "Plot logarithm curves as inverses of exponentials."
@@ -545,6 +571,7 @@
       "topic": "mat_exp_log_mat_solve_exp",
       "description": "Solving exponential and logarithmic equations by applying logarithms and the laws of logarithms to isolate the unknown.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "解指数与对数方程"
     },
     {
@@ -554,6 +581,7 @@
       "topic": "mat_exp_log_mat_solve_exp",
       "description": "Using logarithms to linearise power and exponential relationships, plotting transformed data to determine the model's constants.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "对数线性化"
     },
     {
@@ -563,6 +591,7 @@
       "topic": "mat_differentiation_part1",
       "description": "The derivative defined as the limit of the gradient of a chord, used to differentiate simple functions from first principles.",
       "default_order": 1,
+      "centrality": 0.208,
       "name_zh": "从原理求导",
       "visual": "function",
       "visual_hint": "Slider for h: a secant collapsing to the tangent."
@@ -574,6 +603,7 @@
       "topic": "mat_differentiation_part1",
       "description": "The power rule for differentiating powers of x, extended by linearity to differentiate sums of polynomial terms.",
       "default_order": 2,
+      "centrality": 0.2156,
       "name_zh": "幂法则"
     },
     {
@@ -583,6 +613,7 @@
       "topic": "mat_differentiation_part1",
       "description": "The chain rule differentiating a composite function as the product of the derivatives of its outer and inner functions.",
       "default_order": 3,
+      "centrality": 0.1869,
       "name_zh": "链式法则"
     },
     {
@@ -592,6 +623,7 @@
       "topic": "mat_differentiation_part2",
       "description": "Finding the equations of the tangent and normal to a curve at a point, using the derivative as the gradient.",
       "default_order": 1,
+      "centrality": 0.0398,
       "name_zh": "切线与法线",
       "visual": "function",
       "visual_hint": "Plot a curve with its tangent and normal at a draggable point."
@@ -603,6 +635,7 @@
       "topic": "mat_differentiation_part2",
       "description": "Locating stationary points where the derivative is zero and classifying them as maxima, minima, or points of inflection.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "极值点",
       "visual": "function",
       "visual_hint": "Plot a curve, mark stationary points, and toggle the derivative."
@@ -614,6 +647,7 @@
       "topic": "mat_differentiation_part2",
       "description": "Connected rates of change linking the time derivatives of related quantities through the chain rule.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "相关变化率"
     },
     {
@@ -623,6 +657,7 @@
       "topic": "mat_differentiation_adv",
       "description": "The product and quotient rules for differentiating the product and the quotient of two functions.",
       "default_order": 1,
+      "centrality": 0.1075,
       "name_zh": "积商法则"
     },
     {
@@ -632,6 +667,7 @@
       "topic": "mat_differentiation_adv",
       "description": "Differentiating exponential, logarithmic, and trigonometric functions using their standard derivative results.",
       "default_order": 2,
+      "centrality": 0.0774,
       "name_zh": "特殊函数导数"
     },
     {
@@ -641,6 +677,7 @@
       "topic": "mat_differentiation_adv_mat_implicit",
       "description": "Implicit differentiation finding the derivative of a relation not solved explicitly for y by differentiating both sides.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "隐函数微分",
       "visual": "function",
       "visual_hint": "Plot an implicit relation and show its tangent slope at a point."
@@ -652,6 +689,7 @@
       "topic": "mat_differentiation_adv_mat_implicit",
       "description": "Parametric differentiation finding dy/dx for curves defined parametrically by applying the chain rule through the parameter.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "参数微分",
       "visual": "function",
       "visual_hint": "Trace a parametric curve r(t) with a slider for t."
@@ -663,6 +701,7 @@
       "topic": "mat_integration_part1",
       "description": "Indefinite integration as the reverse of differentiation, finding antiderivatives with an arbitrary constant of integration.",
       "default_order": 1,
+      "centrality": 0.074,
       "name_zh": "不定积分"
     },
     {
@@ -672,6 +711,7 @@
       "topic": "mat_integration_part1",
       "description": "Definite integration evaluating the area under a curve between limits using the fundamental theorem of calculus.",
       "default_order": 2,
+      "centrality": 0.0579,
       "name_zh": "定积分与面积",
       "visual": "interactive",
       "visual_hint": "Shade the area under a curve between draggable limits."
@@ -683,6 +723,7 @@
       "topic": "mat_integration_part1_mat_standard_integrals",
       "description": "Integrating standard functions, including powers, exponentials, and trigonometric functions, from their known antiderivatives.",
       "default_order": 1,
+      "centrality": 0.0531,
       "name_zh": "标准函数积分"
     },
     {
@@ -692,6 +733,7 @@
       "topic": "mat_integration_part1_mat_standard_integrals",
       "description": "Integration by substitution reversing the chain rule by changing the variable to simplify the integrand.",
       "default_order": 2,
+      "centrality": 0.0417,
       "name_zh": "换元积分"
     },
     {
@@ -701,6 +743,7 @@
       "topic": "mat_integration_part2",
       "description": "Integration by parts reversing the product rule to integrate the product of two functions.",
       "default_order": 1,
+      "centrality": 0.0398,
       "name_zh": "分部积分"
     },
     {
@@ -710,6 +753,7 @@
       "topic": "mat_integration_part2",
       "description": "Integrating rational functions by first decomposing them into partial fractions that can be integrated individually.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "部分分式积分"
     },
     {
@@ -719,6 +763,7 @@
       "topic": "mat_integration_part2",
       "description": "Volumes of revolution generated by rotating a region about an axis, computed by integrating the area of circular cross-sections.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "旋转体体积",
       "visual": "interactive",
       "visual_hint": "Rotate a region about an axis to form a solid of revolution."
@@ -730,6 +775,7 @@
       "topic": "mat_numerical_methods",
       "description": "Locating roots of an equation by a sign change over an interval, establishing the existence of a root before iteration.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "根的定位"
     },
     {
@@ -739,6 +785,7 @@
       "topic": "mat_numerical_methods",
       "description": "Iterative methods finding successive approximations to a root using a rearranged iterative formula, and assessing convergence.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "迭代法",
       "visual": "function",
       "visual_hint": "Cobweb diagram of an iterative root-finding sequence."
@@ -750,6 +797,7 @@
       "topic": "mat_numerical_methods_mat_form_de",
       "description": "Forming differential equations from descriptions of rates of change, translating a physical situation into an equation.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "建立微分方程"
     },
     {
@@ -759,6 +807,7 @@
       "topic": "mat_numerical_methods_mat_form_de",
       "description": "Solving first-order differential equations by separating the variables and integrating each side.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "分离变量",
       "visual": "function",
       "visual_hint": "Plot a slope field and a solution curve of a first-order ODE."
@@ -770,6 +819,7 @@
       "topic": "mat_vectors",
       "description": "Vectors in two and three dimensions represented in component and unit-vector form, with addition and scalar multiplication.",
       "default_order": 1,
+      "centrality": 0.206,
       "name_zh": "向量基础",
       "visual": "interactive",
       "visual_hint": "Drag 2D/3D vectors and add them tip-to-tail."
@@ -781,6 +831,7 @@
       "topic": "mat_vectors",
       "description": "The magnitude of a vector from its components using Pythagoras, and finding its direction and corresponding unit vector.",
       "default_order": 2,
+      "centrality": 0.0398,
       "name_zh": "大小与方向"
     },
     {
@@ -790,6 +841,7 @@
       "topic": "mat_vectors_mat_scalar_product",
       "description": "The scalar (dot) product of two vectors, used to find the angle between them and to test for perpendicularity.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "标量积",
       "visual": "interactive",
       "visual_hint": "Drag two vectors and show the dot product and the angle between them."
@@ -801,6 +853,7 @@
       "topic": "mat_vectors_mat_scalar_product",
       "description": "The vector equation of a line through a point with a given direction, and finding intersections and angles between lines.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "直线向量方程"
     },
     {
@@ -810,6 +863,7 @@
       "topic": "mat_complex",
       "description": "Complex numbers in the form a + bi, with addition, subtraction, multiplication, division, and the complex conjugate.",
       "default_order": 1,
+      "centrality": 0.079,
       "name_zh": "复数运算"
     },
     {
@@ -819,6 +873,7 @@
       "topic": "mat_complex",
       "description": "Representing complex numbers as points or vectors on an Argand diagram, illustrating their geometric interpretation.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "阿根图",
       "visual": "interactive",
       "visual_hint": "Plot complex numbers as points and vectors on an Argand diagram."
@@ -830,6 +885,7 @@
       "topic": "mat_complex_mat_mod_arg",
       "description": "The modulus-argument (polar) form of a complex number, with multiplication and division combining moduli and arguments.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "模角形式",
       "visual": "interactive",
       "visual_hint": "Show modulus-argument form and multiplication as rotation and scaling on the Argand plane."
@@ -841,6 +897,7 @@
       "topic": "mat_complex_mat_mod_arg",
       "description": "Complex roots of polynomials occurring in conjugate pairs, and loci in the complex plane defined by modulus and argument conditions.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "复数根与轨迹"
     },
     {
@@ -850,6 +907,7 @@
       "topic": "mat_mech_kinematics",
       "description": "Kinematics of straight-line motion with constant acceleration, using the suvat equations to relate displacement, velocity, and time.",
       "default_order": 1,
+      "centrality": 0.0503,
       "name_zh": "匀加速运动",
       "visual": "function",
       "visual_hint": "Plot displacement-time and velocity-time graphs for constant acceleration."
@@ -861,6 +919,7 @@
       "topic": "mat_mech_kinematics",
       "description": "Kinematics with variable acceleration, using differentiation and integration to relate displacement, velocity, and acceleration over time.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "变加速运动"
     },
     {
@@ -870,6 +929,7 @@
       "topic": "mat_mech_kinematics",
       "description": "Projectile motion analysed by resolving into independent horizontal and vertical components of motion under gravity.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "抛体运动",
       "visual": "simulation",
       "visual_hint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
@@ -881,6 +941,7 @@
       "topic": "mat_mech_forces",
       "description": "Resolving forces into components and applying the conditions for the equilibrium of a particle under coplanar forces.",
       "default_order": 1,
+      "centrality": 0.1138,
       "name_zh": "力与平衡",
       "visual": "interactive",
       "visual_hint": "Resolve forces into components on a free-body diagram."
@@ -892,6 +953,7 @@
       "topic": "mat_mech_forces",
       "description": "The frictional force opposing motion, modelled by the coefficient of friction and limiting equilibrium on a rough surface.",
       "default_order": 2,
+      "centrality": 0.0615,
       "name_zh": "摩擦"
     },
     {
@@ -901,6 +963,7 @@
       "topic": "mat_mech_forces",
       "description": "Newton's laws of motion relating the resultant force acting on a body to its mass and resulting acceleration.",
       "default_order": 3,
+      "centrality": 0.0864,
       "name_zh": "牛顿运动定律"
     },
     {
@@ -910,6 +973,7 @@
       "topic": "mat_mech_energy_momentum",
       "description": "Analysing connected particles, such as those joined by a string over a pulley, by applying Newton's laws to each.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "连接质点"
     },
     {
@@ -919,6 +983,7 @@
       "topic": "mat_mech_energy_momentum",
       "description": "Work done by a force, kinetic and potential energy, the work-energy principle, and power as the rate of doing work.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "功、能、功率"
     },
     {
@@ -928,6 +993,7 @@
       "topic": "mat_mech_energy_momentum",
       "description": "Linear momentum and impulse, and the conservation of momentum applied to collisions between particles.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "动量与冲量",
       "visual": "simulation",
       "visual_hint": "Animate a collision conserving momentum."
@@ -939,6 +1005,7 @@
       "topic": "mat_data_counting_prob",
       "description": "Representing data using histograms, box-and-whisker plots, and cumulative frequency graphs to display its distribution.",
       "default_order": 1,
+      "centrality": 0.1023,
       "name_zh": "数据表示",
       "visual": "chart",
       "visual_hint": "Histogram, box plot, and cumulative-frequency chart of a data set."
@@ -950,6 +1017,7 @@
       "topic": "mat_data_counting_prob",
       "description": "Measures of central tendency and spread, including the mean, median, variance, standard deviation, and quartiles.",
       "default_order": 2,
+      "centrality": 0.0912,
       "name_zh": "中心趋势与离散"
     },
     {
@@ -959,6 +1027,7 @@
       "topic": "mat_data_counting_prob",
       "description": "Permutations and combinations counting ordered arrangements and unordered selections of objects.",
       "default_order": 3,
+      "centrality": 0.1202,
       "name_zh": "排列组合"
     },
     {
@@ -968,6 +1037,7 @@
       "topic": "mat_prob_random_vars",
       "description": "The rules of probability, including the addition and multiplication rules for combined, mutually exclusive, and independent events.",
       "default_order": 1,
+      "centrality": 0.1123,
       "name_zh": "概率法则"
     },
     {
@@ -977,6 +1047,7 @@
       "topic": "mat_prob_random_vars",
       "description": "Conditional probability of an event given another, and the use of tree diagrams with the multiplication rule.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "条件概率"
     },
     {
@@ -986,6 +1057,7 @@
       "topic": "mat_prob_random_vars",
       "description": "Discrete random variables with a probability distribution, and the calculation of their expectation and variance.",
       "default_order": 3,
+      "centrality": 0.1563,
       "name_zh": "离散随机变量"
     },
     {
@@ -995,6 +1067,7 @@
       "topic": "mat_random_vars",
       "description": "The binomial distribution modelling the number of successes in a fixed number of independent trials with constant probability.",
       "default_order": 1,
+      "centrality": 0.0503,
       "name_zh": "二项分布",
       "visual": "chart",
       "visual_hint": "Bar chart of the binomial distribution with sliders for n and p."
@@ -1006,6 +1079,7 @@
       "topic": "mat_random_vars",
       "description": "The geometric distribution modelling the number of independent trials up to and including the first success.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "几何分布"
     },
     {
@@ -1015,6 +1089,7 @@
       "topic": "mat_random_vars",
       "description": "The Poisson distribution modelling the number of random events occurring at a constant average rate in a fixed interval.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "泊松分布",
       "visual": "chart",
       "visual_hint": "Bar chart of the Poisson distribution with a slider for lambda."
@@ -1026,6 +1101,7 @@
       "topic": "mat_normal_inference",
       "description": "The normal distribution, a continuous bell-shaped distribution defined by its mean and variance, standardised using the z-score.",
       "default_order": 1,
+      "centrality": 0.0743,
       "name_zh": "正态分布",
       "visual": "function",
       "visual_hint": "Plot the normal bell curve with sliders for mean and standard deviation."
@@ -1037,6 +1113,7 @@
       "topic": "mat_normal_inference",
       "description": "Using the normal distribution to approximate the binomial or Poisson distribution under suitable conditions, with continuity correction.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "正态近似"
     },
     {
@@ -1046,6 +1123,7 @@
       "topic": "mat_normal_inference_mat_sampling",
       "description": "Sampling concepts including populations, samples, and the sampling distribution of the mean used for statistical inference.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "抽样"
     },
     {
@@ -1055,6 +1133,7 @@
       "topic": "mat_normal_inference_mat_sampling",
       "description": "Hypothesis testing using a test statistic and a significance level to decide between a null and an alternative hypothesis.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "假设检验"
     }
   ],

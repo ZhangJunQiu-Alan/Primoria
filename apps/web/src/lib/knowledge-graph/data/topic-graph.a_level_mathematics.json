@@ -2,8 +2,8 @@
   "graphId": "a_level_mathematics",
   "subject": "Mathematics",
   "generatedFrom": "data/knowledge-graphs/source/a_level_mathematics.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "mat_algebra_part1",
@@ -15,13 +15,15 @@
           "conceptId": "mat_indices_surds",
           "name": "Indices and Surds",
           "nameZh": "指数与根式",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.3382
         },
         {
           "conceptId": "mat_quadratics",
           "name": "Quadratic Functions",
           "nameZh": "二次函数",
           "defaultOrder": 2,
+          "centrality": 0.213,
           "visual": "function",
           "visualHint": "Plot a parabola with sliders for the coefficients showing vertex and roots."
         }
@@ -57,13 +59,15 @@
           "conceptId": "mat_solve_quadratics",
           "name": "Solving Quadratics and Discriminant",
           "nameZh": "二次方程求解",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1895
         },
         {
           "conceptId": "mat_simultaneous",
           "name": "Simultaneous Equations",
           "nameZh": "联立方程",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0689
         }
       ],
       "successors": [
@@ -96,6 +100,7 @@
           "name": "Inequalities",
           "nameZh": "不等式",
           "defaultOrder": 1,
+          "centrality": 0.0519,
           "visual": "function",
           "visualHint": "Shade the regions satisfying linear and quadratic inequalities."
         },
@@ -104,6 +109,7 @@
           "name": "Functions and Inverses",
           "nameZh": "函数与反函数",
           "defaultOrder": 2,
+          "centrality": 0.0638,
           "visual": "function",
           "visualHint": "Plot a function and its inverse as reflections in y = x."
         }
@@ -130,13 +136,15 @@
           "conceptId": "mat_composite",
           "name": "Composite Functions",
           "nameZh": "复合函数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "mat_modulus",
           "name": "Modulus Function",
           "nameZh": "绝对值函数",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot the modulus function and solve |f(x)| = g(x) graphically."
         }
@@ -157,19 +165,22 @@
           "conceptId": "mat_poly_division",
           "name": "Polynomial Division",
           "nameZh": "多项式除法",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0746
         },
         {
           "conceptId": "mat_factor_theorem",
           "name": "Factor and Remainder Theorem",
           "nameZh": "因式与余式定理",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0586
         },
         {
           "conceptId": "mat_partial_fractions",
           "name": "Partial Fractions",
           "nameZh": "部分分式",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0398
         }
       ],
       "successors": [
@@ -192,6 +203,7 @@
           "name": "Straight Lines",
           "nameZh": "直线",
           "defaultOrder": 1,
+          "centrality": 0.0654,
           "visual": "function",
           "visualHint": "Plot a line with sliders for gradient and intercept."
         },
@@ -199,13 +211,15 @@
           "conceptId": "mat_parallel_perp",
           "name": "Parallel and Perpendicular Lines",
           "nameZh": "平行与垂直直线",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "mat_circles",
           "name": "Circles",
           "nameZh": "圆",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot a circle from centre and radius and find line intersections."
         }
@@ -224,13 +238,15 @@
           "conceptId": "mat_arithmetic",
           "name": "Arithmetic Series",
           "nameZh": "等差级数",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0624
         },
         {
           "conceptId": "mat_geometric",
           "name": "Geometric Series",
           "nameZh": "等比级数",
           "defaultOrder": 2,
+          "centrality": 0.0443,
           "visual": "chart",
           "visualHint": "Plot geometric-progression terms and the convergence of the sum."
         }
@@ -254,13 +270,15 @@
           "conceptId": "mat_binomial_pos",
           "name": "Binomial Expansion (positive integer)",
           "nameZh": "二项展开（正整数）",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "mat_binomial_gen",
           "name": "Binomial Expansion (general index)",
           "nameZh": "二项展开（一般指数）",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -281,6 +299,7 @@
           "name": "Trig Ratios and Graphs",
           "nameZh": "三角函数与图像",
           "defaultOrder": 1,
+          "centrality": 0.2321,
           "visual": "function",
           "visualHint": "Plot sine, cosine, and tangent with adjustable amplitude and period."
         },
@@ -289,6 +308,7 @@
           "name": "Radian Measure",
           "nameZh": "弧度制",
           "defaultOrder": 2,
+          "centrality": 0.0596,
           "visual": "interactive",
           "visualHint": "Unit circle linking an angle in radians to arc length and sector area."
         },
@@ -296,7 +316,8 @@
           "conceptId": "mat_trig_identities",
           "name": "Trig Identities",
           "nameZh": "三角恒等式",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0819
         }
       ],
       "successors": [
@@ -318,19 +339,22 @@
           "conceptId": "mat_solve_trig",
           "name": "Solving Trig Equations",
           "nameZh": "解三角方程",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0443
         },
         {
           "conceptId": "mat_double_angle",
           "name": "Compound and Double Angle Formulae",
           "nameZh": "倍角与和差公式",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "mat_rform",
           "name": "R-Formula",
           "nameZh": "R 公式",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -350,6 +374,7 @@
           "name": "Exponential Functions",
           "nameZh": "指数函数",
           "defaultOrder": 1,
+          "centrality": 0.1329,
           "visual": "function",
           "visualHint": "Plot exponential growth and decay with a slider for the rate."
         },
@@ -358,6 +383,7 @@
           "name": "Logarithms and Laws",
           "nameZh": "对数与法则",
           "defaultOrder": 2,
+          "centrality": 0.0871,
           "visual": "function",
           "visualHint": "Plot logarithm curves as inverses of exponentials."
         }
@@ -383,13 +409,15 @@
           "conceptId": "mat_solve_exp",
           "name": "Solving Exponential and Log Equations",
           "nameZh": "解指数与对数方程",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "mat_linearise",
           "name": "Linearising with Logarithms",
           "nameZh": "对数线性化",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -409,6 +437,7 @@
           "name": "Differentiation from First Principles",
           "nameZh": "从原理求导",
           "defaultOrder": 1,
+          "centrality": 0.208,
           "visual": "function",
           "visualHint": "Slider for h: a secant collapsing to the tangent."
         },
@@ -416,13 +445,15 @@
           "conceptId": "mat_power_rule",
           "name": "Power Rule",
           "nameZh": "幂法则",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.2156
         },
         {
           "conceptId": "mat_chain_rule",
           "name": "Chain Rule",
           "nameZh": "链式法则",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.1869
         }
       ],
       "successors": [
@@ -457,6 +488,7 @@
           "name": "Tangents and Normals",
           "nameZh": "切线与法线",
           "defaultOrder": 1,
+          "centrality": 0.0398,
           "visual": "function",
           "visualHint": "Plot a curve with its tangent and normal at a draggable point."
         },
@@ -465,6 +497,7 @@
           "name": "Stationary Points",
           "nameZh": "极值点",
           "defaultOrder": 2,
+          "centrality": 0.0353,
           "visual": "function",
           "visualHint": "Plot a curve, mark stationary points, and toggle the derivative."
         },
@@ -472,7 +505,8 @@
           "conceptId": "mat_rates",
           "name": "Connected Rates of Change",
           "nameZh": "相关变化率",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -491,13 +525,15 @@
           "conceptId": "mat_product_quotient",
           "name": "Product and Quotient Rules",
           "nameZh": "积商法则",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1075
         },
         {
           "conceptId": "mat_special_derivatives",
           "name": "Derivatives of Special Functions",
           "nameZh": "特殊函数导数",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0774
         }
       ],
       "successors": [
@@ -534,6 +570,7 @@
           "name": "Implicit Differentiation",
           "nameZh": "隐函数微分",
           "defaultOrder": 1,
+          "centrality": 0.0353,
           "visual": "function",
           "visualHint": "Plot an implicit relation and show its tangent slope at a point."
         },
@@ -542,6 +579,7 @@
           "name": "Parametric Differentiation",
           "nameZh": "参数微分",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Trace a parametric curve r(t) with a slider for t."
         }
@@ -563,13 +601,15 @@
           "conceptId": "mat_indefinite",
           "name": "Indefinite Integration",
           "nameZh": "不定积分",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.074
         },
         {
           "conceptId": "mat_definite_area",
           "name": "Definite Integration and Area",
           "nameZh": "定积分与面积",
           "defaultOrder": 2,
+          "centrality": 0.0579,
           "visual": "interactive",
           "visualHint": "Shade the area under a curve between draggable limits."
         }
@@ -597,13 +637,15 @@
           "conceptId": "mat_standard_integrals",
           "name": "Integration of Standard Functions",
           "nameZh": "标准函数积分",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0531
         },
         {
           "conceptId": "mat_substitution",
           "name": "Integration by Substitution",
           "nameZh": "换元积分",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0417
         }
       ],
       "successors": [
@@ -633,19 +675,22 @@
           "conceptId": "mat_by_parts",
           "name": "Integration by Parts",
           "nameZh": "分部积分",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0398
         },
         {
           "conceptId": "mat_int_partial",
           "name": "Integration using Partial Fractions",
           "nameZh": "部分分式积分",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "mat_volumes",
           "name": "Volumes of Revolution",
           "nameZh": "旋转体体积",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Rotate a region about an axis to form a solid of revolution."
         }
@@ -669,13 +714,15 @@
           "conceptId": "mat_locate_roots",
           "name": "Locating Roots",
           "nameZh": "根的定位",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "mat_iteration",
           "name": "Iterative Methods",
           "nameZh": "迭代法",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Cobweb diagram of an iterative root-finding sequence."
         }
@@ -696,13 +743,15 @@
           "conceptId": "mat_form_de",
           "name": "Forming Differential Equations",
           "nameZh": "建立微分方程",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0353
         },
         {
           "conceptId": "mat_separation",
           "name": "Separation of Variables",
           "nameZh": "分离变量",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot a slope field and a solution curve of a first-order ODE."
         }
@@ -724,6 +773,7 @@
           "name": "Vectors in 2D and 3D",
           "nameZh": "向量基础",
           "defaultOrder": 1,
+          "centrality": 0.206,
           "visual": "interactive",
           "visualHint": "Drag 2D/3D vectors and add them tip-to-tail."
         },
@@ -731,7 +781,8 @@
           "conceptId": "mat_vector_magnitude",
           "name": "Magnitude and Direction",
           "nameZh": "大小与方向",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0398
         }
       ],
       "successors": [
@@ -754,6 +805,7 @@
           "name": "Scalar Product",
           "nameZh": "标量积",
           "defaultOrder": 1,
+          "centrality": 0.0353,
           "visual": "interactive",
           "visualHint": "Drag two vectors and show the dot product and the angle between them."
         },
@@ -761,7 +813,8 @@
           "conceptId": "mat_vector_lines",
           "name": "Vector Equations of Lines",
           "nameZh": "直线向量方程",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -780,13 +833,15 @@
           "conceptId": "mat_complex_arith",
           "name": "Complex Number Arithmetic",
           "nameZh": "复数运算",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.079
         },
         {
           "conceptId": "mat_argand",
           "name": "Argand Diagram",
           "nameZh": "阿根图",
           "defaultOrder": 2,
+          "centrality": 0.0638,
           "visual": "interactive",
           "visualHint": "Plot complex numbers as points and vectors on an Argand diagram."
         }
@@ -813,6 +868,7 @@
           "name": "Modulus-Argument Form",
           "nameZh": "模角形式",
           "defaultOrder": 1,
+          "centrality": 0.0459,
           "visual": "interactive",
           "visualHint": "Show modulus-argument form and multiplication as rotation and scaling on the Argand plane."
         },
@@ -820,7 +876,8 @@
           "conceptId": "mat_complex_loci",
           "name": "Complex Roots and Loci",
           "nameZh": "复数根与轨迹",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -840,6 +897,7 @@
           "name": "Kinematics with Constant Acceleration",
           "nameZh": "匀加速运动",
           "defaultOrder": 1,
+          "centrality": 0.0503,
           "visual": "function",
           "visualHint": "Plot displacement-time and velocity-time graphs for constant acceleration."
         },
@@ -847,13 +905,15 @@
           "conceptId": "mat_kin_variable",
           "name": "Variable Acceleration",
           "nameZh": "变加速运动",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "mat_projectiles",
           "name": "Projectiles",
           "nameZh": "抛体运动",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "simulation",
           "visualHint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
         }
@@ -875,6 +935,7 @@
           "name": "Forces and Equilibrium",
           "nameZh": "力与平衡",
           "defaultOrder": 1,
+          "centrality": 0.1138,
           "visual": "interactive",
           "visualHint": "Resolve forces into components on a free-body diagram."
         },
@@ -882,13 +943,15 @@
           "conceptId": "mat_friction",
           "name": "Friction",
           "nameZh": "摩擦",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0615
         },
         {
           "conceptId": "mat_newton_laws",
           "name": "Newton's Laws of Motion",
           "nameZh": "牛顿运动定律",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0864
         }
       ],
       "successors": [
@@ -910,19 +973,22 @@
           "conceptId": "mat_connected_particles",
           "name": "Connected Particles",
           "nameZh": "连接质点",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "mat_work_energy_power",
           "name": "Work, Energy and Power",
           "nameZh": "功、能、功率",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "mat_momentum_impulse",
           "name": "Momentum and Impulse",
           "nameZh": "动量与冲量",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "simulation",
           "visualHint": "Animate a collision conserving momentum."
         }
@@ -944,6 +1010,7 @@
           "name": "Representation of Data",
           "nameZh": "数据表示",
           "defaultOrder": 1,
+          "centrality": 0.1023,
           "visual": "chart",
           "visualHint": "Histogram, box plot, and cumulative-frequency chart of a data set."
         },
@@ -951,13 +1018,15 @@
           "conceptId": "mat_central_spread",
           "name": "Central Tendency and Spread",
           "nameZh": "中心趋势与离散",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0912
         },
         {
           "conceptId": "mat_perm_comb",
           "name": "Permutations and Combinations",
           "nameZh": "排列组合",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.1202
         }
       ],
       "successors": [
@@ -979,19 +1048,22 @@
           "conceptId": "mat_prob_rules",
           "name": "Probability Rules",
           "nameZh": "概率法则",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1123
         },
         {
           "conceptId": "mat_conditional",
           "name": "Conditional Probability",
           "nameZh": "条件概率",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "mat_discrete_rv",
           "name": "Discrete Random Variables",
           "nameZh": "离散随机变量",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.1563
         }
       ],
       "successors": [
@@ -1020,6 +1092,7 @@
           "name": "Binomial Distribution",
           "nameZh": "二项分布",
           "defaultOrder": 1,
+          "centrality": 0.0503,
           "visual": "chart",
           "visualHint": "Bar chart of the binomial distribution with sliders for n and p."
         },
@@ -1027,13 +1100,15 @@
           "conceptId": "mat_geometric_dist",
           "name": "Geometric Distribution",
           "nameZh": "几何分布",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "mat_poisson",
           "name": "Poisson Distribution",
           "nameZh": "泊松分布",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "chart",
           "visualHint": "Bar chart of the Poisson distribution with a slider for lambda."
         }
@@ -1060,6 +1135,7 @@
           "name": "Normal Distribution",
           "nameZh": "正态分布",
           "defaultOrder": 1,
+          "centrality": 0.0743,
           "visual": "function",
           "visualHint": "Plot the normal bell curve with sliders for mean and standard deviation."
         },
@@ -1067,7 +1143,8 @@
           "conceptId": "mat_normal_approx",
           "name": "Normal Approximations",
           "nameZh": "正态近似",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -1092,13 +1169,15 @@
           "conceptId": "mat_sampling",
           "name": "Sampling",
           "nameZh": "抽样",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "mat_hypothesis",
           "name": "Hypothesis Testing",
           "nameZh": "假设检验",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -1106,6 +1185,468 @@
         "mat_normal_inference"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "mat_argand",
+      "to": "mat_mod_arg",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_arithmetic",
+      "to": "mat_geometric",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_binomial_dist",
+      "to": "mat_geometric_dist",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_binomial_dist",
+      "to": "mat_normal_approx",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_binomial_pos",
+      "to": "mat_binomial_gen",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_by_parts",
+      "to": "mat_int_partial",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_central_spread",
+      "to": "mat_discrete_rv",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_implicit",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_parametric",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_product_quotient",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_rates",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_substitution",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_chain_rule",
+      "to": "mat_tangent_normal",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_complex_arith",
+      "to": "mat_argand",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_composite",
+      "to": "mat_modulus",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_data_rep",
+      "to": "mat_central_spread",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_definite_area",
+      "to": "mat_standard_integrals",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_definite_area",
+      "to": "mat_volumes",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_binomial_dist",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_geometric_dist",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_normal_dist",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_poisson",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_double_angle",
+      "to": "mat_rform",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "mat_log_laws",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_factor_theorem",
+      "to": "mat_partial_fractions",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_first_principles",
+      "to": "mat_power_rule",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_forces_equilibrium",
+      "to": "mat_friction",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_forces_equilibrium",
+      "to": "mat_newton_laws",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_form_de",
+      "to": "mat_separation",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_friction",
+      "to": "mat_newton_laws",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_functions",
+      "to": "mat_composite",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_geometric",
+      "to": "mat_binomial_pos",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_geometric_dist",
+      "to": "mat_poisson",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_implicit",
+      "to": "mat_parametric",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_indefinite",
+      "to": "mat_definite_area",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_indices_surds",
+      "to": "mat_binomial_pos",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_indices_surds",
+      "to": "mat_exp_func",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_indices_surds",
+      "to": "mat_quadratics",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_inequalities",
+      "to": "mat_functions",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_int_partial",
+      "to": "mat_volumes",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_kin_constant",
+      "to": "mat_kin_variable",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_kin_constant",
+      "to": "mat_projectiles",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_kin_variable",
+      "to": "mat_projectiles",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_locate_roots",
+      "to": "mat_iteration",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_log_laws",
+      "to": "mat_solve_exp",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_mod_arg",
+      "to": "mat_complex_loci",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_newton_laws",
+      "to": "mat_connected_particles",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_newton_laws",
+      "to": "mat_momentum_impulse",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_newton_laws",
+      "to": "mat_work_energy_power",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_normal_dist",
+      "to": "mat_normal_approx",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_normal_dist",
+      "to": "mat_sampling",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_parallel_perp",
+      "to": "mat_circles",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_partial_fractions",
+      "to": "mat_int_partial",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_perm_comb",
+      "to": "mat_prob_rules",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_poly_division",
+      "to": "mat_factor_theorem",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_chain_rule",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_stationary",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_tangent_normal",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_prob_rules",
+      "to": "mat_conditional",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_prob_rules",
+      "to": "mat_discrete_rv",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_product_quotient",
+      "to": "mat_by_parts",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_product_quotient",
+      "to": "mat_special_derivatives",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_quadratics",
+      "to": "mat_functions",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_quadratics",
+      "to": "mat_solve_quadratics",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_radians",
+      "to": "mat_trig_identities",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_sampling",
+      "to": "mat_hypothesis",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_scalar_product",
+      "to": "mat_vector_lines",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_simultaneous",
+      "to": "mat_inequalities",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_solve_exp",
+      "to": "mat_linearise",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_solve_quadratics",
+      "to": "mat_complex_arith",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_solve_quadratics",
+      "to": "mat_locate_roots",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_solve_quadratics",
+      "to": "mat_simultaneous",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_solve_trig",
+      "to": "mat_double_angle",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_special_derivatives",
+      "to": "mat_implicit",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_special_derivatives",
+      "to": "mat_kin_variable",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_special_derivatives",
+      "to": "mat_standard_integrals",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_standard_integrals",
+      "to": "mat_separation",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_standard_integrals",
+      "to": "mat_substitution",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_stationary",
+      "to": "mat_rates",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_straight_lines",
+      "to": "mat_circles",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_straight_lines",
+      "to": "mat_parallel_perp",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_substitution",
+      "to": "mat_by_parts",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_tangent_normal",
+      "to": "mat_stationary",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_trig_identities",
+      "to": "mat_double_angle",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_trig_identities",
+      "to": "mat_solve_trig",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_trig_ratios",
+      "to": "mat_radians",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_trig_ratios",
+      "to": "mat_trig_identities",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "mat_scalar_product",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "mat_vector_lines",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "mat_vector_magnitude",
+      "strength": "hard"
+    },
+    {
+      "from": "mat_vector_magnitude",
+      "to": "mat_scalar_product",
+      "strength": "soft"
+    },
+    {
+      "from": "mat_work_energy_power",
+      "to": "mat_momentum_impulse",
+      "strength": "soft"
     }
   ]
 }

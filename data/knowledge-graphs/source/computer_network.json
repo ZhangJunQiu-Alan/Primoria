@@ -97,6 +97,7 @@
       "topic": "net_arch",
       "description": "Decomposing network functionality into independent protocol layers, each providing services to the layer above and using the layer below, simplifying design and interoperability.",
       "default_order": 1,
+      "centrality": 0.1845,
       "name_zh": "网络分层",
       "visual": "diagram",
       "visual_hint": "Diagram the protocol-layer stack and how layers nest."
@@ -108,6 +109,7 @@
       "topic": "net_arch",
       "description": "The seven-layer OSI reference model—physical, data link, network, transport, session, presentation, application—providing a conceptual framework for describing network protocol functions.",
       "default_order": 2,
+      "centrality": 0.094,
       "name_zh": "OSI模型",
       "visual": "diagram",
       "visual_hint": "Diagram the seven OSI layers and their roles."
@@ -119,6 +121,7 @@
       "topic": "net_arch_net_tcpip",
       "description": "The practical Internet protocol stack of link, internet, transport, and application layers, organising the protocols that actually run the global Internet.",
       "default_order": 1,
+      "centrality": 0.1629,
       "name_zh": "TCP/IP模型",
       "visual": "diagram",
       "visual_hint": "Diagram the four-layer TCP/IP stack."
@@ -130,6 +133,7 @@
       "topic": "net_arch_net_tcpip",
       "description": "The process by which each layer wraps data from the layer above in its own header, building nested protocol data units for transmission.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "封装",
       "visual": "diagram",
       "visual_hint": "Diagram each layer wrapping the layer above with its header."
@@ -141,6 +145,7 @@
       "topic": "net_link",
       "description": "Services the link layer provides over a single hop, including framing bits into packets and detecting transmission errors with checksums.",
       "default_order": 1,
+      "centrality": 0.2065,
       "name_zh": "链路层服务"
     },
     {
@@ -150,6 +155,7 @@
       "topic": "net_link",
       "description": "Media access control assigning hardware addresses to interfaces and arbitrating shared-medium access so multiple stations can transmit without persistent collisions.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "MAC地址"
     },
     {
@@ -159,6 +165,7 @@
       "topic": "net_link_net_ethernet",
       "description": "The dominant wired LAN technology defining frame formats, MAC addressing, and historically CSMA/CD media access over switched links.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "以太网"
     },
     {
@@ -168,6 +175,7 @@
       "topic": "net_link_net_ethernet",
       "description": "Layer-2 switches forwarding frames within a LAN by learning MAC-address-to-port mappings and flooding unknown destinations, building forwarding tables dynamically.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "交换"
     },
     {
@@ -177,6 +185,7 @@
       "topic": "net_network",
       "description": "Hierarchical IP addressing dividing addresses into network and host portions, with subnetting and CIDR enabling flexible allocation and route aggregation.",
       "default_order": 1,
+      "centrality": 0.3001,
       "name_zh": "IP寻址",
       "visual": "diagram",
       "visual_hint": "Diagram an IP address split into network and host portions."
@@ -188,6 +197,7 @@
       "topic": "net_network",
       "description": "The two Internet addressing versions: 32-bit IPv4 with its address exhaustion, and 128-bit IPv6 expanding the space and simplifying headers.",
       "default_order": 2,
+      "centrality": 0.0443,
       "name_zh": "IPv4与IPv6"
     },
     {
@@ -197,6 +207,7 @@
       "topic": "net_network_net_forwarding",
       "description": "How routers forward packets by consulting a forwarding table to select an output interface using the destination address's longest prefix match.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "转发与路由器"
     },
     {
@@ -206,6 +217,7 @@
       "topic": "net_network_net_forwarding",
       "description": "Distributed routing algorithms—link-state and distance-vector—by which routers exchange information to compute the paths that populate their forwarding tables.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "路由算法",
       "visual": "algorithm",
       "visual_hint": "Animate link-state/distance-vector routing building forwarding tables."
@@ -217,6 +229,7 @@
       "topic": "net_transport_part1",
       "description": "End-to-end transport services running on hosts, multiplexing data to applications via ports and providing delivery semantics atop the network layer.",
       "default_order": 1,
+      "centrality": 0.2308,
       "name_zh": "传输层服务"
     },
     {
@@ -226,6 +239,7 @@
       "topic": "net_transport_part1",
       "description": "A connectionless transport protocol offering minimal, unreliable, unordered datagram delivery with low overhead, suited to latency-sensitive applications.",
       "default_order": 2,
+      "centrality": 0.1328,
       "name_zh": "UDP"
     },
     {
@@ -235,6 +249,7 @@
       "topic": "net_transport_part1",
       "description": "A connection-oriented transport protocol providing reliable, ordered byte-stream delivery using handshakes, sequence numbers, acknowledgements, and retransmission.",
       "default_order": 3,
+      "centrality": 0.2189,
       "name_zh": "TCP",
       "visual": "diagram",
       "visual_hint": "Sequence diagram of the TCP three-way handshake."
@@ -246,6 +261,7 @@
       "topic": "net_transport_part2",
       "description": "Principles of reliable data transfer over unreliable channels using sequence numbers, acknowledgements, timeouts, and automatic repeat request (ARQ) protocols.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "可靠数据传输",
       "visual": "diagram",
       "visual_hint": "Sequence diagram of reliable transfer with sequence numbers and acks."
@@ -257,6 +273,7 @@
       "topic": "net_transport_part2",
       "description": "A receiver-driven mechanism using a sliding advertised window to prevent a fast sender from overwhelming a slow receiver's buffer.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "流量控制"
     },
     {
@@ -266,6 +283,7 @@
       "topic": "net_transport_part2",
       "description": "Sender-side algorithms that infer congestion from loss or delay and adjust the sending rate to share capacity fairly and avoid collapse.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "拥塞控制",
       "visual": "function",
       "visual_hint": "Plot the TCP congestion window growing and backing off over time."
@@ -277,6 +295,7 @@
       "topic": "net_application",
       "description": "The application-layer request-response protocol of the web, using methods, headers, and status codes to transfer resources, typically over TCP.",
       "default_order": 1,
+      "centrality": 0.1203,
       "name_zh": "HTTP"
     },
     {
@@ -286,6 +305,7 @@
       "topic": "net_application",
       "description": "The Internet's distributed, hierarchical naming system that resolves human-readable hostnames into IP addresses through recursive and iterative queries.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "DNS",
       "visual": "diagram",
       "visual_hint": "Diagram hierarchical DNS resolution of a hostname."
@@ -297,6 +317,7 @@
       "topic": "net_application",
       "description": "Common application-layer protocols such as SMTP for email and FTP for file transfer, built atop transport services to deliver specific functions.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "其他应用层协议"
     }
   ],

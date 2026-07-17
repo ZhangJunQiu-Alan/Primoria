@@ -1,14 +1,17 @@
 import { z } from "zod";
-import { getCourse, updateLessonDescriptionIfUnchanged } from "@/lib/courses/store";
+import { getCourse, updateLessonTitleAndDescriptionIfUnchanged } from "@/lib/courses/store";
 import { invokeJson } from "./model-json";
 import { fastTierSettings } from "../deepagent/model";
 
-// QA issue 9: planned-lesson descriptions are deterministic templates
-// (plannedLessonDescription). After a NEW course outline is persisted, one
-// best-effort background LLM call rewrites them. Every failure path keeps the
-// template — the course is never blocked or degraded by this step.
+// Concept-frontier outlines name each lesson from a deterministic template (its
+// concept names, e.g. "A 与 B"). After a NEW course outline is persisted, one
+// best-effort background LLM call rewrites each lesson's title and one-line
+// description. Every failure path keeps the template — the course is never
+// blocked or degraded by this step. The LLM only renames; it never changes which
+// concepts a lesson teaches (conceptIds are fixed at outline time).
 
 const MAX_LESSONS = 40;
+const MAX_TITLE_CHARS = 60;
 const MAX_DESCRIPTION_CHARS = 160;
 const ENRICHMENT_TIMEOUT_MS = 30_000;
 
@@ -16,6 +19,7 @@ const ResponseSchema = z.object({
   items: z.array(
     z.object({
       order: z.number().int().min(1),
+      title: z.string().min(1),
       description: z.string().min(1),
     }),
   ),
@@ -25,9 +29,9 @@ export function isOutlineEnrichmentDisabled() {
   return process.env.PRIMORIA_DISABLE_OUTLINE_ENRICHMENT === "1";
 }
 
-function normalizeDescription(value: string): string {
+function clampText(value: string, max: number): string {
   const collapsed = value.replace(/\s+/g, " ").trim();
-  return collapsed.length > MAX_DESCRIPTION_CHARS ? `${collapsed.slice(0, MAX_DESCRIPTION_CHARS - 1)}…` : collapsed;
+  return collapsed.length > max ? `${collapsed.slice(0, max - 1)}…` : collapsed;
 }
 
 function buildPrompts(input: {
@@ -40,19 +44,19 @@ function buildPrompts(input: {
     : input.language
       ? `Write every description in the same language as the lesson titles (course language: ${input.language}).`
       : "Write every description in the same language as the lesson titles.";
-  const system = `You improve the one-line descriptions of lessons in a course outline.
+  const system = `You name lessons in a course outline. Each lesson teaches a small set of concepts; the current title is a placeholder made of those concept names.
 
 Rules:
 - Return one item per lesson, keyed by the lesson's "order" number from the input.
-- Each description is ONE sentence, at most ${MAX_DESCRIPTION_CHARS} characters, concrete about what the learner will understand or be able to do after the lesson.
-- Do not repeat the lesson title verbatim, do not use marketing language, do not number the sentences.
+- title: a natural lesson name of at most ${MAX_TITLE_CHARS} characters that covers the lesson's concepts. Do not invent concepts beyond the ones listed; do not just join them with "and".
+- description: ONE sentence, at most ${MAX_DESCRIPTION_CHARS} characters, concrete about what the learner will understand or be able to do after the lesson. Do not repeat the title verbatim, no marketing language, no numbering.
 - ${languageLine}
 
-Return ONLY JSON: {"items":[{"order":1,"description":"..."}]}.`;
+Return ONLY JSON: {"items":[{"order":1,"title":"...","description":"..."}]}.`;
   const user = `Course subject: ${input.subject}
 
-Lessons:
-${input.lessons.map((lesson, index) => `${index + 1}. ${lesson.title} — current: ${lesson.description}`).join("\n")}`;
+Lessons (concepts to cover are shown as the current title):
+${input.lessons.map((lesson, index) => `${index + 1}. concepts: ${lesson.title} — current description: ${lesson.description}`).join("\n")}`;
   return { system, user };
 }
 
@@ -91,12 +95,15 @@ export async function enrichCourseOutlineDescriptions(input: {
     for (const item of parsed.data.items) {
       const lesson = lessons[item.order - 1];
       if (!lesson) continue;
-      const description = normalizeDescription(item.description);
-      if (!description || description === lesson.description) continue;
-      const applied = await updateLessonDescriptionIfUnchanged({
+      const title = clampText(item.title, MAX_TITLE_CHARS) || lesson.title;
+      const description = clampText(item.description, MAX_DESCRIPTION_CHARS) || lesson.description;
+      if (title === lesson.title && description === lesson.description) continue;
+      const applied = await updateLessonTitleAndDescriptionIfUnchanged({
         lessonId: lesson.id,
         courseId: input.courseId,
         ownerId: input.ownerId,
+        expectedTitle: lesson.title,
+        title,
         expectedDescription: lesson.description,
         description,
       });

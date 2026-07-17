@@ -2,8 +2,8 @@
   "graphId": "a_level_biology",
   "subject": "Biology",
   "generatedFrom": "data/knowledge-graphs/source/a_level_biology.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "bio_cell_structure",
@@ -15,13 +15,15 @@
           "conceptId": "bio_microscopy",
           "name": "Microscopy",
           "nameZh": "显微镜",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1233
         },
         {
           "conceptId": "bio_organelles",
           "name": "Eukaryotic Organelles",
           "nameZh": "真核细胞器",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.1159
         }
       ],
       "successors": [
@@ -47,13 +49,15 @@
           "conceptId": "bio_prokaryotes",
           "name": "Prokaryotic Cells",
           "nameZh": "原核细胞",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "bio_cell_size",
           "name": "Cell Size and Magnification",
           "nameZh": "细胞大小与放大",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -72,13 +76,15 @@
           "conceptId": "bio_water",
           "name": "Water",
           "nameZh": "水",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1373
         },
         {
           "conceptId": "bio_carbohydrates",
           "name": "Carbohydrates",
           "nameZh": "碳水化合物",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.2648
         }
       ],
       "successors": [
@@ -100,19 +106,22 @@
           "conceptId": "bio_lipids",
           "name": "Lipids",
           "nameZh": "脂质",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.27
         },
         {
           "conceptId": "bio_proteins",
           "name": "Proteins",
           "nameZh": "蛋白质",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.3728
         },
         {
           "conceptId": "bio_tests",
           "name": "Biochemical Tests",
           "nameZh": "生化检测",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -153,6 +162,7 @@
           "name": "Enzyme Action",
           "nameZh": "酶作用",
           "defaultOrder": 1,
+          "centrality": 0.1392,
           "visual": "interactive",
           "visualHint": "Drag a substrate into the active site; show activation energy lowered on a reaction profile."
         },
@@ -161,6 +171,7 @@
           "name": "Factors Affecting Enzyme Activity",
           "nameZh": "影响酶活性的因素",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "function",
           "visualHint": "Plot enzyme activity against temperature, pH, and substrate concentration."
         },
@@ -168,7 +179,8 @@
           "conceptId": "bio_enzyme_inhibition",
           "name": "Enzyme Inhibition",
           "nameZh": "酶抑制",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -193,6 +205,7 @@
           "name": "Membrane Structure",
           "nameZh": "膜结构",
           "defaultOrder": 1,
+          "centrality": 0.2042,
           "visual": "diagram",
           "visualHint": "Labelled fluid-mosaic diagram of the phospholipid bilayer and membrane proteins."
         },
@@ -201,6 +214,7 @@
           "name": "Diffusion and Osmosis",
           "nameZh": "扩散与渗透",
           "defaultOrder": 2,
+          "centrality": 0.1662,
           "visual": "interactive",
           "visualHint": "Animate particles diffusing down a concentration gradient across a membrane."
         },
@@ -208,7 +222,8 @@
           "conceptId": "bio_active_transport",
           "name": "Active Transport",
           "nameZh": "主动运输",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0779
         }
       ],
       "successors": [
@@ -244,13 +259,15 @@
           "conceptId": "bio_chromosomes",
           "name": "Chromosome Behaviour",
           "nameZh": "染色体行为",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0769
         },
         {
           "conceptId": "bio_mitosis",
           "name": "Mitosis",
           "nameZh": "有丝分裂",
           "defaultOrder": 2,
+          "centrality": 0.1227,
           "visual": "diagram",
           "visualHint": "Diagram the stages of mitosis."
         }
@@ -277,6 +294,7 @@
           "name": "DNA Structure",
           "nameZh": "DNA结构",
           "defaultOrder": 1,
+          "centrality": 0.19,
           "visual": "interactive",
           "visualHint": "Interactive double helix showing antiparallel strands and complementary base pairing."
         },
@@ -285,6 +303,7 @@
           "name": "DNA Replication",
           "nameZh": "DNA复制",
           "defaultOrder": 2,
+          "centrality": 0.1034,
           "visual": "diagram",
           "visualHint": "Diagram semi-conservative replication unwinding and templating each strand."
         }
@@ -315,6 +334,7 @@
           "name": "Transcription",
           "nameZh": "转录",
           "defaultOrder": 1,
+          "centrality": 0.0812,
           "visual": "diagram",
           "visualHint": "Diagram RNA polymerase synthesising mRNA from the template strand."
         },
@@ -323,6 +343,7 @@
           "name": "Translation",
           "nameZh": "翻译",
           "defaultOrder": 2,
+          "centrality": 0.0539,
           "visual": "diagram",
           "visualHint": "Diagram the ribosome matching tRNA anticodons to mRNA codons to build a polypeptide."
         },
@@ -330,7 +351,8 @@
           "conceptId": "bio_mutation",
           "name": "Gene Mutation",
           "nameZh": "基因突变",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0685
         }
       ],
       "successors": [
@@ -358,19 +380,22 @@
           "conceptId": "bio_xylem",
           "name": "Xylem and Water Transport",
           "nameZh": "木质部与水分运输",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0638
         },
         {
           "conceptId": "bio_transpiration",
           "name": "Transpiration",
           "nameZh": "蒸腾作用",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "bio_phloem",
           "name": "Phloem and Translocation",
           "nameZh": "韧皮部与转运",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -390,6 +415,7 @@
           "name": "The Heart",
           "nameZh": "心脏",
           "defaultOrder": 1,
+          "centrality": 0.0548,
           "visual": "diagram",
           "visualHint": "Labelled heart diagram showing the flow of the cardiac cycle."
         },
@@ -397,7 +423,8 @@
           "conceptId": "bio_blood_vessels",
           "name": "Blood Vessels",
           "nameZh": "血管",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         }
       ],
       "successors": [
@@ -420,6 +447,7 @@
           "name": "Haemoglobin and Oxygen Transport",
           "nameZh": "血红蛋白与氧气运输",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot the sigmoid oxygen dissociation curve and the Bohr shift."
         },
@@ -427,7 +455,8 @@
           "conceptId": "bio_lungs",
           "name": "Gas Exchange in the Lungs",
           "nameZh": "肺部气体交换",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -448,19 +477,22 @@
           "conceptId": "bio_infectious",
           "name": "Infectious Disease",
           "nameZh": "传染病",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0443
         },
         {
           "conceptId": "bio_immune_response",
           "name": "Immune Response",
           "nameZh": "免疫应答",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "bio_antibodies",
           "name": "Antibodies and Vaccination",
           "nameZh": "抗体与疫苗接种",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -480,6 +512,7 @@
           "name": "Glycolysis",
           "nameZh": "糖酵解",
           "defaultOrder": 1,
+          "centrality": 0.0887,
           "visual": "diagram",
           "visualHint": "Flow diagram of glycolysis from glucose to pyruvate."
         },
@@ -488,6 +521,7 @@
           "name": "Link Reaction and Krebs Cycle",
           "nameZh": "连接反应与Krebs循环",
           "defaultOrder": 2,
+          "centrality": 0.0628,
           "visual": "diagram",
           "visualHint": "Cycle diagram of the link reaction and Krebs cycle."
         }
@@ -514,6 +548,7 @@
           "name": "Oxidative Phosphorylation",
           "nameZh": "氧化磷酸化",
           "defaultOrder": 1,
+          "centrality": 0.0895,
           "visual": "diagram",
           "visualHint": "Diagram the electron transport chain and chemiosmosis."
         },
@@ -521,7 +556,8 @@
           "conceptId": "bio_anaerobic",
           "name": "Anaerobic Respiration",
           "nameZh": "无氧呼吸",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -547,6 +583,7 @@
           "name": "Light-Dependent Reactions",
           "nameZh": "光依赖反应",
           "defaultOrder": 1,
+          "centrality": 0.0638,
           "visual": "diagram",
           "visualHint": "Diagram the light-dependent reactions in the thylakoid."
         },
@@ -555,6 +592,7 @@
           "name": "Calvin Cycle",
           "nameZh": "Calvin循环",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Cycle diagram of the Calvin cycle fixing carbon dioxide."
         },
@@ -562,7 +600,8 @@
           "conceptId": "bio_limiting_factors",
           "name": "Limiting Factors",
           "nameZh": "限制因素",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -581,13 +620,15 @@
           "conceptId": "bio_homeostasis_principles",
           "name": "Homeostasis Principles",
           "nameZh": "体内平衡原理",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0848
         },
         {
           "conceptId": "bio_kidney",
           "name": "The Kidney and Osmoregulation",
           "nameZh": "肾脏与渗透压调节",
           "defaultOrder": 2,
+          "centrality": 0.0353,
           "visual": "diagram",
           "visualHint": "Labelled nephron diagram showing ultrafiltration and reabsorption."
         },
@@ -595,7 +636,8 @@
           "conceptId": "bio_glucose_control",
           "name": "Control of Blood Glucose",
           "nameZh": "血糖控制",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -618,6 +660,7 @@
           "name": "Nervous Transmission",
           "nameZh": "神经传导",
           "defaultOrder": 1,
+          "centrality": 0.0624,
           "visual": "function",
           "visualHint": "Plot the action-potential membrane voltage over time."
         },
@@ -626,6 +669,7 @@
           "name": "Synapses",
           "nameZh": "突触",
           "defaultOrder": 2,
+          "centrality": 0.0443,
           "visual": "diagram",
           "visualHint": "Diagram neurotransmitter release and receptor binding at a synapse."
         }
@@ -651,13 +695,15 @@
           "conceptId": "bio_hormonal",
           "name": "Hormonal Control",
           "nameZh": "激素控制",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "bio_plant_responses",
           "name": "Plant Responses",
           "nameZh": "植物响应",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -678,6 +724,7 @@
           "name": "Meiosis",
           "nameZh": "减数分裂",
           "defaultOrder": 1,
+          "centrality": 0.1151,
           "visual": "diagram",
           "visualHint": "Diagram meiosis producing four haploid gametes, including crossing over."
         },
@@ -686,6 +733,7 @@
           "name": "Genetic Crosses",
           "nameZh": "遗传杂交",
           "defaultOrder": 2,
+          "centrality": 0.0548,
           "visual": "diagram",
           "visualHint": "Punnett-square diagram predicting offspring genotype ratios."
         }
@@ -715,13 +763,15 @@
           "conceptId": "bio_linkage",
           "name": "Gene Linkage and Crossing Over",
           "nameZh": "基因连锁与交换",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0353
         },
         {
           "conceptId": "bio_gene_control",
           "name": "Control of Gene Expression",
           "nameZh": "基因表达控制",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -741,19 +791,22 @@
           "conceptId": "bio_variation",
           "name": "Variation",
           "nameZh": "变异",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1029
         },
         {
           "conceptId": "bio_natural_selection",
           "name": "Natural Selection",
           "nameZh": "自然选择",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0919
         },
         {
           "conceptId": "bio_speciation",
           "name": "Speciation",
           "nameZh": "物种形成",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.079
         }
       ],
       "successors": [
@@ -779,6 +832,7 @@
           "name": "Classification",
           "nameZh": "分类",
           "defaultOrder": 1,
+          "centrality": 0.0638,
           "visual": "diagram",
           "visualHint": "Hierarchical taxonomy tree of the classification taxa."
         },
@@ -786,13 +840,15 @@
           "conceptId": "bio_biodiversity_sampling",
           "name": "Biodiversity and Sampling",
           "nameZh": "生物多样性调查",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "bio_conservation",
           "name": "Conservation",
           "nameZh": "保护",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -811,19 +867,22 @@
           "conceptId": "bio_gene_tech",
           "name": "Gene Technology",
           "nameZh": "基因技术",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0503
         },
         {
           "conceptId": "bio_pcr_electrophoresis",
           "name": "PCR and Electrophoresis",
           "nameZh": "PCR与电泳",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "bio_gene_applications",
           "name": "Applications of Genetic Technology",
           "nameZh": "遗传技术应用",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -831,6 +890,348 @@
         "bio_chromosomes_dna_bio_dna_structure"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "bio_active_transport",
+      "to": "bio_nervous",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_biodiversity_sampling",
+      "to": "bio_conservation",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_blood_vessels",
+      "to": "bio_haemoglobin",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_calvin",
+      "to": "bio_limiting_factors",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_carbohydrates",
+      "to": "bio_lipids",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_carbohydrates",
+      "to": "bio_tests",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_chromosomes",
+      "to": "bio_mitosis",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_classification",
+      "to": "bio_biodiversity_sampling",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_dna_replication",
+      "to": "bio_mutation",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_dna_replication",
+      "to": "bio_pcr_electrophoresis",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_dna_replication",
+      "to": "bio_transcription",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_dna_structure",
+      "to": "bio_dna_replication",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_dna_structure",
+      "to": "bio_gene_tech",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_dna_structure",
+      "to": "bio_transcription",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_enzyme_action",
+      "to": "bio_enzyme_factors",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_enzyme_action",
+      "to": "bio_glycolysis",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_enzyme_factors",
+      "to": "bio_enzyme_inhibition",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_gene_tech",
+      "to": "bio_gene_applications",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_gene_tech",
+      "to": "bio_pcr_electrophoresis",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_genetic_crosses",
+      "to": "bio_linkage",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_glycolysis",
+      "to": "bio_anaerobic",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_glycolysis",
+      "to": "bio_krebs",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_heart",
+      "to": "bio_blood_vessels",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_homeostasis_principles",
+      "to": "bio_glucose_control",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_homeostasis_principles",
+      "to": "bio_hormonal",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_homeostasis_principles",
+      "to": "bio_kidney",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_hormonal",
+      "to": "bio_plant_responses",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_immune_response",
+      "to": "bio_antibodies",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_infectious",
+      "to": "bio_immune_response",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_kidney",
+      "to": "bio_glucose_control",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_krebs",
+      "to": "bio_oxidative",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_light_dependent",
+      "to": "bio_calvin",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_linkage",
+      "to": "bio_gene_control",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_lipids",
+      "to": "bio_membrane_structure",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_lipids",
+      "to": "bio_proteins",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_meiosis",
+      "to": "bio_genetic_crosses",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_meiosis",
+      "to": "bio_variation",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_membrane_structure",
+      "to": "bio_oxidative",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_membrane_structure",
+      "to": "bio_passive_transport",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_microscopy",
+      "to": "bio_organelles",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_mitosis",
+      "to": "bio_meiosis",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_mutation",
+      "to": "bio_variation",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_natural_selection",
+      "to": "bio_speciation",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_nervous",
+      "to": "bio_synapses",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_organelles",
+      "to": "bio_mitosis",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_organelles",
+      "to": "bio_prokaryotes",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_oxidative",
+      "to": "bio_anaerobic",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_oxidative",
+      "to": "bio_light_dependent",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_passive_transport",
+      "to": "bio_active_transport",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_passive_transport",
+      "to": "bio_lungs",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_passive_transport",
+      "to": "bio_xylem",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_pcr_electrophoresis",
+      "to": "bio_gene_applications",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_prokaryotes",
+      "to": "bio_cell_size",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_dna_structure",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_enzyme_action",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_haemoglobin",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_immune_response",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_membrane_structure",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_tests",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_speciation",
+      "to": "bio_classification",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_synapses",
+      "to": "bio_hormonal",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_transcription",
+      "to": "bio_gene_control",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_transcription",
+      "to": "bio_translation",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_translation",
+      "to": "bio_mutation",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_transpiration",
+      "to": "bio_phloem",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_variation",
+      "to": "bio_natural_selection",
+      "strength": "hard"
+    },
+    {
+      "from": "bio_water",
+      "to": "bio_carbohydrates",
+      "strength": "soft"
+    },
+    {
+      "from": "bio_xylem",
+      "to": "bio_transpiration",
+      "strength": "hard"
     }
   ]
 }

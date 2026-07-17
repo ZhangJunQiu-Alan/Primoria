@@ -105,13 +105,23 @@ Course creation:
 
 1. position the goal;
 2. choose the graph, start topic, and optional target concept;
-3. create/reuse the course outline from topic order and prerequisites;
+3. build the outline as concept-frontier bundles: a mastery snapshot is taken
+   once at creation, then the concept prerequisite DAG (in scope) is walked in a
+   stable authored order and grouped into lessons of 2–3 unmastered concepts.
+   Mastered concepts are skipped at build time, so a partially-known subject
+   collapses to fewer/shorter lessons; each lesson persists its `conceptIds`;
 4. enqueue the first lesson-generation job;
 5. keep later lessons planned and generate lazily.
 
-Outline descriptions start as deterministic templates. A best-effort background
-model call may enrich descriptions behind an equality write fence; failures
-keep the template and do not invalidate course creation.
+Ordering is a priority topological sort keyed by authored order
+(topic then concept `default_order`); concept `centrality` is only a full-tie
+break plus a `[core]` depth marker in the generation prompt, never a primary
+sort key. Empty mastery reproduces the authored order exactly.
+
+Lesson titles and descriptions start as deterministic concept-name templates. A
+best-effort background model call may rewrite each lesson's title and
+description behind an equality write fence; failures keep the templates and do
+not invalidate course creation.
 
 The lesson reader at `/course/[id]` renders one block step at a time. Course
 Tutor is a collapsible right rail scoped to the current course, lesson, visible
@@ -214,7 +224,9 @@ reserved private-media channel with no current lesson-image writers.
 ## 4. Knowledge graph contract
 
 - A concept is the smallest independently diagnosable skill/outcome.
-- Topics normally contain a small coherent concept set suitable for one lesson.
+- Topics normally contain a small coherent concept set (authored as 2–3
+  concepts); they order and group concepts but are no longer the lesson unit.
+  Lessons are concept-frontier bundles drawn from the concept prerequisite DAG.
 - Runtime edges are prerequisite edges (`hard` or `soft`) and must form a DAG.
 - Concept ids are globally unique; cross-topic and cross-subject prerequisites are allowed.
 - `default_order` guides a stable topic path but does not override prerequisite correctness.

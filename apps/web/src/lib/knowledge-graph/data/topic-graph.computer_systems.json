@@ -2,8 +2,8 @@
   "graphId": "computer_systems",
   "subject": "Computer Systems",
   "generatedFrom": "data/knowledge-graphs/source/computer_systems.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "t1",
@@ -15,13 +15,15 @@
           "conceptId": "c1_1",
           "name": "Bits and Bytes",
           "nameZh": "比特与字节",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2211
         },
         {
           "conceptId": "c1_2",
           "name": "Integer Representation",
           "nameZh": "整数表示",
           "defaultOrder": 2,
+          "centrality": 0.4161,
           "visual": "diagram",
           "visualHint": "Diagram fixed-width integer encodings including two's complement."
         }
@@ -45,13 +47,15 @@
           "conceptId": "c1_3",
           "name": "Integer Arithmetic",
           "nameZh": "整数运算",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.4603
         },
         {
           "conceptId": "c1_4",
           "name": "Floating Point Representation",
           "nameZh": "浮点数表示",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Diagram the IEEE 754 sign, exponent, and fraction fields."
         }
@@ -77,13 +81,15 @@
           "conceptId": "c1_5",
           "name": "Floating Point Operations",
           "nameZh": "浮点运算",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c2_1",
           "name": "x86-64 Data Movement",
           "nameZh": "x86-64数据传输",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.5124
         }
       ],
       "successors": [
@@ -119,13 +125,15 @@
           "conceptId": "c2_2",
           "name": "Arithmetic and Logical Operations",
           "nameZh": "算术与逻辑运算",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1923
         },
         {
           "conceptId": "c2_3",
           "name": "Control Flow (Conditionals and Loops)",
           "nameZh": "控制流",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.1971
         }
       ],
       "successors": [
@@ -154,6 +162,7 @@
           "name": "Procedures and Call Stack",
           "nameZh": "过程与调用栈",
           "defaultOrder": 1,
+          "centrality": 0.1029,
           "visual": "diagram",
           "visualHint": "Diagram the call stack passing arguments and saving the return address."
         },
@@ -162,6 +171,7 @@
           "name": "Arrays and Structs",
           "nameZh": "数组与结构体",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram array and struct memory layout and element addressing."
         }
@@ -188,13 +198,15 @@
           "conceptId": "c3_1",
           "name": "Instruction Set Architecture (Y86-64)",
           "nameZh": "指令集体系结构",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2087
         },
         {
           "conceptId": "c3_2",
           "name": "Sequential CPU Implementation",
           "nameZh": "顺序CPU实现",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.2163
         }
       ],
       "successors": [
@@ -219,6 +231,7 @@
           "name": "Pipelining Principles",
           "nameZh": "流水线原理",
           "defaultOrder": 1,
+          "centrality": 0.2253,
           "visual": "diagram",
           "visualHint": "Pipeline stage diagram of overlapping instructions."
         },
@@ -227,6 +240,7 @@
           "name": "Pipeline Hazards and Forwarding",
           "nameZh": "流水线冒险与转发",
           "defaultOrder": 2,
+          "centrality": 0.2235,
           "visual": "diagram",
           "visualHint": "Diagram a pipeline hazard resolved by forwarding."
         },
@@ -234,7 +248,8 @@
           "conceptId": "c3_5",
           "name": "Exceptions in Pipelines",
           "nameZh": "流水线异常",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.2338
         }
       ],
       "successors": [
@@ -262,19 +277,22 @@
           "conceptId": "c4_1",
           "name": "Compiler Limitations",
           "nameZh": "编译器局限",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0998
         },
         {
           "conceptId": "c4_2",
           "name": "Loop Unrolling",
           "nameZh": "循环展开",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0564
         },
         {
           "conceptId": "c4_3",
           "name": "Instruction-Level Parallelism",
           "nameZh": "指令级并行",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -299,13 +317,15 @@
           "conceptId": "c4_4",
           "name": "Memory Aliasing",
           "nameZh": "内存别名",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0318
         },
         {
           "conceptId": "c4_5",
           "name": "Profiling Tools",
           "nameZh": "性能分析工具",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -329,13 +349,15 @@
           "conceptId": "c5_1",
           "name": "Storage Technologies",
           "nameZh": "存储技术",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1479
         },
         {
           "conceptId": "c5_2",
           "name": "Principle of Locality",
           "nameZh": "局部性原理",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.1448
         }
       ],
       "successors": [
@@ -360,6 +382,7 @@
           "name": "Cache Memory Organization",
           "nameZh": "缓存组织",
           "defaultOrder": 1,
+          "centrality": 0.1412,
           "visual": "diagram",
           "visualHint": "Diagram cache organisation into sets, lines, and blocks with tags."
         },
@@ -367,13 +390,15 @@
           "conceptId": "c5_4",
           "name": "Cache Performance Metrics",
           "nameZh": "缓存性能指标",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0318
         },
         {
           "conceptId": "c5_5",
           "name": "Writing Cache-Friendly Code",
           "nameZh": "缓存友好代码",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -398,19 +423,22 @@
           "conceptId": "c6_1",
           "name": "Static Linking",
           "nameZh": "静态链接",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0919
         },
         {
           "conceptId": "c6_2",
           "name": "Object Files (ELF)",
           "nameZh": "目标文件(ELF)",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.079
         },
         {
           "conceptId": "c6_3",
           "name": "Symbol Resolution",
           "nameZh": "符号解析",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -434,13 +462,15 @@
           "conceptId": "c6_4",
           "name": "Relocation",
           "nameZh": "重定位",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "c6_5",
           "name": "Dynamic Linking",
           "nameZh": "动态链接",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -459,13 +489,15 @@
           "conceptId": "c7_1",
           "name": "Exceptions (Traps, Interrupts, Faults)",
           "nameZh": "异常",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2459
         },
         {
           "conceptId": "c7_2",
           "name": "Processes and Context Switches",
           "nameZh": "进程与上下文切换",
           "defaultOrder": 2,
+          "centrality": 0.2602,
           "visual": "diagram",
           "visualHint": "Diagram a context switch between processes."
         }
@@ -495,19 +527,22 @@
           "conceptId": "c7_3",
           "name": "Process Control (fork, execve)",
           "nameZh": "进程控制",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1827
         },
         {
           "conceptId": "c7_4",
           "name": "Signals and Signal Handling",
           "nameZh": "信号与信号处理",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "c7_5",
           "name": "Non-local Jumps",
           "nameZh": "非局部跳转",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -532,6 +567,7 @@
           "name": "Address Translation",
           "nameZh": "地址转换",
           "defaultOrder": 1,
+          "centrality": 0.0969,
           "visual": "diagram",
           "visualHint": "Diagram MMU address translation from virtual to physical."
         },
@@ -540,6 +576,7 @@
           "name": "Page Tables",
           "nameZh": "页表",
           "defaultOrder": 2,
+          "centrality": 0.0848,
           "visual": "diagram",
           "visualHint": "Diagram a multi-level page table mapping pages to frames."
         },
@@ -547,7 +584,8 @@
           "conceptId": "c8_3",
           "name": "Translation Lookaside Buffer (TLB)",
           "nameZh": "地址转换后备缓冲器（TLB）",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -571,13 +609,15 @@
           "conceptId": "c8_4",
           "name": "Dynamic Memory Allocation",
           "nameZh": "动态内存分配",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "c8_5",
           "name": "Garbage Collection Basics",
           "nameZh": "垃圾回收基础",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -596,13 +636,15 @@
           "conceptId": "c9_1",
           "name": "Unix I/O",
           "nameZh": "Unix 输入输出",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1399
         },
         {
           "conceptId": "c9_2",
           "name": "File Metadata",
           "nameZh": "文件元数据",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -630,19 +672,22 @@
           "conceptId": "c9_3",
           "name": "Standard I/O Library",
           "nameZh": "标准I/O库",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c9_4",
           "name": "File Sharing",
           "nameZh": "文件共享",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "c9_5",
           "name": "I/O Redirection",
           "nameZh": "I/O重定向",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -661,19 +706,22 @@
           "conceptId": "c10_1",
           "name": "Client-Server Model",
           "nameZh": "客户端-服务器模型",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0468
         },
         {
           "conceptId": "c10_2",
           "name": "Internet Protocol (IP)",
           "nameZh": "IP协议",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0519
         },
         {
           "conceptId": "c10_3",
           "name": "Transmission Control Protocol (TCP)",
           "nameZh": "TCP协议",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -697,13 +745,15 @@
           "conceptId": "c10_4",
           "name": "Sockets Interface",
           "nameZh": "套接字接口",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "c10_5",
           "name": "HTTP Protocol Basics",
           "nameZh": "HTTP协议基础",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -722,13 +772,15 @@
           "conceptId": "c11_1",
           "name": "Thread Basics",
           "nameZh": "线程基础",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0942
         },
         {
           "conceptId": "c11_2",
           "name": "Shared Variables",
           "nameZh": "共享变量",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0817
         }
       ],
       "successors": [
@@ -753,6 +805,7 @@
           "name": "Synchronization (Semaphores)",
           "nameZh": "同步（信号量）",
           "defaultOrder": 1,
+          "centrality": 0.0669,
           "visual": "diagram",
           "visualHint": "Diagram two threads coordinating with a semaphore's P and V."
         },
@@ -760,13 +813,15 @@
           "conceptId": "c11_4",
           "name": "Thread Safety",
           "nameZh": "线程安全",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c11_5",
           "name": "Deadlocks",
           "nameZh": "死锁",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram a deadlock as a cycle of threads waiting on resources."
         }
@@ -776,6 +831,293 @@
         "t_network_concurrency_c11_1"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "c1_1",
+      "to": "c1_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c1_1",
+      "to": "c1_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c1_2",
+      "to": "c1_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c1_3",
+      "to": "c2_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c1_4",
+      "to": "c1_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c10_1",
+      "to": "c10_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c10_2",
+      "to": "c10_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c10_3",
+      "to": "c10_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c10_4",
+      "to": "c10_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c11_1",
+      "to": "c11_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c11_2",
+      "to": "c11_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c11_3",
+      "to": "c11_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c11_3",
+      "to": "c11_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c2_1",
+      "to": "c2_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c2_1",
+      "to": "c2_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c2_1",
+      "to": "c3_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c2_1",
+      "to": "c5_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c2_2",
+      "to": "c2_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c2_3",
+      "to": "c2_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c2_3",
+      "to": "c4_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c2_4",
+      "to": "c6_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c3_1",
+      "to": "c3_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c3_2",
+      "to": "c3_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c3_3",
+      "to": "c3_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c3_3",
+      "to": "c4_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c3_4",
+      "to": "c3_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c3_5",
+      "to": "c7_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c4_1",
+      "to": "c4_2",
+      "strength": "soft"
+    },
+    {
+      "from": "c4_1",
+      "to": "c4_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c4_2",
+      "to": "c4_3",
+      "strength": "soft"
+    },
+    {
+      "from": "c4_2",
+      "to": "c4_5",
+      "strength": "soft"
+    },
+    {
+      "from": "c4_4",
+      "to": "c5_5",
+      "strength": "soft"
+    },
+    {
+      "from": "c5_1",
+      "to": "c5_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c5_2",
+      "to": "c5_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c5_3",
+      "to": "c5_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c5_3",
+      "to": "c5_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c5_3",
+      "to": "c8_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c5_4",
+      "to": "c5_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c6_1",
+      "to": "c6_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c6_2",
+      "to": "c6_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c6_3",
+      "to": "c6_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c6_4",
+      "to": "c6_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c7_1",
+      "to": "c7_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c7_2",
+      "to": "c11_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c7_2",
+      "to": "c7_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c7_3",
+      "to": "c7_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c7_3",
+      "to": "c9_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c7_4",
+      "to": "c7_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c8_1",
+      "to": "c8_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c8_2",
+      "to": "c8_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c8_2",
+      "to": "c8_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c8_4",
+      "to": "c8_5",
+      "strength": "hard"
+    },
+    {
+      "from": "c9_1",
+      "to": "c10_1",
+      "strength": "hard"
+    },
+    {
+      "from": "c9_1",
+      "to": "c9_2",
+      "strength": "hard"
+    },
+    {
+      "from": "c9_1",
+      "to": "c9_3",
+      "strength": "hard"
+    },
+    {
+      "from": "c9_2",
+      "to": "c9_4",
+      "strength": "hard"
+    },
+    {
+      "from": "c9_4",
+      "to": "c9_5",
+      "strength": "hard"
     }
   ]
 }

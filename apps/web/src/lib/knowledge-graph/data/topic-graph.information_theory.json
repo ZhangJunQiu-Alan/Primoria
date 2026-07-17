@@ -2,8 +2,8 @@
   "graphId": "information_theory",
   "subject": "Information Theory and Entropy",
   "generatedFrom": "data/knowledge-graphs/source/information_theory.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "t_infotheory_basics",
@@ -16,6 +16,7 @@
           "name": "Shannon Entropy",
           "nameZh": "香农熵",
           "defaultOrder": 1,
+          "centrality": 0.1534,
           "visual": "function",
           "visualHint": "Plot binary entropy H(p) against the probability p."
         },
@@ -23,13 +24,15 @@
           "conceptId": "c_infotheory_joint_entropy",
           "name": "Joint and Conditional Entropy",
           "nameZh": "联合与条件熵",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0765
         },
         {
           "conceptId": "c_infotheory_mutual_info",
           "name": "Mutual Information",
           "nameZh": "互信息",
           "defaultOrder": 3,
+          "centrality": 0.0609,
           "visual": "diagram",
           "visualHint": "Venn-style diagram of entropies, joint entropy, and mutual information."
         }
@@ -61,19 +64,22 @@
           "conceptId": "c_infotheory_kl_divergence",
           "name": "Kullback-Leibler Divergence",
           "nameZh": "KL 散度",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_infotheory_data_processing",
           "name": "Data Processing Inequality",
           "nameZh": "数据处理不等式",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_infotheory_aep",
           "name": "Asymptotic Equipartition Property",
           "nameZh": "渐近等分特性",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0564
         }
       ],
       "successors": [
@@ -101,19 +107,22 @@
           "conceptId": "c_infotheory_kraft",
           "name": "Kraft Inequality",
           "nameZh": "Kraft 不等式",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "c_infotheory_shannon_coding",
           "name": "Shannon Source Coding Theorem",
           "nameZh": "香农信源编码定理",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_infotheory_huffman",
           "name": "Huffman Coding",
           "nameZh": "Huffman 编码",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Build a Huffman tree by merging the two lowest-frequency symbols."
         }
@@ -134,19 +143,22 @@
           "conceptId": "c_infotheory_dmc",
           "name": "Discrete Memoryless Channels",
           "nameZh": "离散无记忆信道",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0398
         },
         {
           "conceptId": "c_infotheory_channel_capacity_def",
           "name": "Channel Capacity",
           "nameZh": "信道容量定义",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "c_infotheory_shannon_channel",
           "name": "Shannon Channel Coding Theorem",
           "nameZh": "香农信道编码定理",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -166,19 +178,22 @@
           "conceptId": "c_infotheory_differential_entropy",
           "name": "Differential Entropy",
           "nameZh": "微分熵",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0638
         },
         {
           "conceptId": "c_infotheory_awgn",
           "name": "AWGN Channel",
           "nameZh": "AWGN 信道",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "c_infotheory_shannon_hartley",
           "name": "Shannon-Hartley Theorem",
           "nameZh": "香农-哈特利定理",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot channel capacity against bandwidth and signal-to-noise ratio."
         }
@@ -188,6 +203,78 @@
         "t_infotheory_basics"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "c_infotheory_aep",
+      "to": "c_infotheory_shannon_channel",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_aep",
+      "to": "c_infotheory_shannon_coding",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_awgn",
+      "to": "c_infotheory_shannon_hartley",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_channel_capacity_def",
+      "to": "c_infotheory_shannon_channel",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_differential_entropy",
+      "to": "c_infotheory_awgn",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_dmc",
+      "to": "c_infotheory_channel_capacity_def",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_entropy",
+      "to": "c_infotheory_aep",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_entropy",
+      "to": "c_infotheory_differential_entropy",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_entropy",
+      "to": "c_infotheory_joint_entropy",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_entropy",
+      "to": "c_infotheory_kl_divergence",
+      "strength": "soft"
+    },
+    {
+      "from": "c_infotheory_joint_entropy",
+      "to": "c_infotheory_mutual_info",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_kraft",
+      "to": "c_infotheory_huffman",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_mutual_info",
+      "to": "c_infotheory_channel_capacity_def",
+      "strength": "hard"
+    },
+    {
+      "from": "c_infotheory_mutual_info",
+      "to": "c_infotheory_data_processing",
+      "strength": "hard"
     }
   ]
 }

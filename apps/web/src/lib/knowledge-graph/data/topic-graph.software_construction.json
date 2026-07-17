@@ -2,8 +2,8 @@
   "graphId": "software_construction",
   "subject": "Software Construction",
   "generatedFrom": "data/knowledge-graphs/source/software_construction.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "t_mit6031_foundations_specs",
@@ -15,13 +15,15 @@
           "conceptId": "c_mit6031_static_checking",
           "name": "Static Checking",
           "nameZh": "静态检查",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1973
         },
         {
           "conceptId": "c_mit6031_immutability",
           "name": "Immutability",
           "nameZh": "不可变性",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0804
         }
       ],
       "successors": [
@@ -48,6 +50,7 @@
           "name": "Specifications",
           "nameZh": "规格",
           "defaultOrder": 1,
+          "centrality": 0.1226,
           "visual": "diagram",
           "visualHint": "Diagram preconditions and postconditions as a contract boundary."
         },
@@ -56,6 +59,7 @@
           "name": "Testing Strategies",
           "nameZh": "测试策略",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram partitioning the input space into equivalence classes."
         },
@@ -63,7 +67,8 @@
           "conceptId": "c_mit6031_exceptions",
           "name": "Exceptions",
           "nameZh": "异常",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -87,13 +92,15 @@
           "conceptId": "c_mit6031_adt_basics",
           "name": "ADT Concepts",
           "nameZh": "ADT 概念",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1964
         },
         {
           "conceptId": "c_mit6031_rep_independence",
           "name": "Representation Independence",
           "nameZh": "表示独立性",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -126,13 +133,15 @@
           "conceptId": "c_mit6031_rep_invariant",
           "name": "Rep Invariants",
           "nameZh": "表示不变量",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "c_mit6031_abstraction_function",
           "name": "Abstraction Functions",
           "nameZh": "抽象函数",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram the abstraction function mapping representation to abstract value."
         }
@@ -153,19 +162,22 @@
           "conceptId": "c_mit6031_interfaces",
           "name": "Interfaces and Subtyping",
           "nameZh": "接口与子类型",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0564
         },
         {
           "conceptId": "c_mit6031_equality",
           "name": "Equality",
           "nameZh": "相等性",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_mit6031_recursive_data",
           "name": "Recursive Data Types",
           "nameZh": "递归数据类型",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram a recursive data type such as an immutable list."
         }
@@ -186,13 +198,15 @@
           "conceptId": "c_mit6031_concurrency_intro",
           "name": "Concurrency Basics",
           "nameZh": "并发基础",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0817
         },
         {
           "conceptId": "c_mit6031_thread_safety",
           "name": "Thread Safety",
           "nameZh": "线程安全",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0669
         }
       ],
       "successors": [
@@ -217,6 +231,7 @@
           "name": "Locks and Synchronization",
           "nameZh": "锁与同步",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "State diagram of threads acquiring locks and a deadlock cycle."
         },
@@ -225,6 +240,7 @@
           "name": "Message Passing",
           "nameZh": "消息传递",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram components communicating by messages over channels."
         }
@@ -234,6 +250,88 @@
         "t_mit6031_concurrency"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "c_mit6031_adt_basics",
+      "to": "c_mit6031_concurrency_intro",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_adt_basics",
+      "to": "c_mit6031_interfaces",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_adt_basics",
+      "to": "c_mit6031_rep_independence",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_concurrency_intro",
+      "to": "c_mit6031_thread_safety",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_immutability",
+      "to": "c_mit6031_adt_basics",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_interfaces",
+      "to": "c_mit6031_equality",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_interfaces",
+      "to": "c_mit6031_recursive_data",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit6031_rep_independence",
+      "to": "c_mit6031_rep_invariant",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_rep_invariant",
+      "to": "c_mit6031_abstraction_function",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_specs",
+      "to": "c_mit6031_adt_basics",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_specs",
+      "to": "c_mit6031_exceptions",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit6031_specs",
+      "to": "c_mit6031_testing",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_static_checking",
+      "to": "c_mit6031_immutability",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_static_checking",
+      "to": "c_mit6031_specs",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_thread_safety",
+      "to": "c_mit6031_locks",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit6031_thread_safety",
+      "to": "c_mit6031_message_passing",
+      "strength": "hard"
     }
   ]
 }

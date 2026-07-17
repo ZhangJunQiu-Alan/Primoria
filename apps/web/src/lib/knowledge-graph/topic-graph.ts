@@ -19,6 +19,10 @@ export type TopicConcept = {
   defaultOrder: number;
   visual?: ConceptVisual;
   visualHint?: string;
+  /** Global reverse-PageRank importance (0..1, max-normalized) over the whole KG
+   * prerequisite graph: how load-bearing this concept is (how much depends on it).
+   * Distinct from defaultOrder (local teaching sequence). Absent = uncomputed. */
+  centrality?: number;
 };
 
 export type TopicSuccessor = {
@@ -37,10 +41,21 @@ export type TopicNode = {
   isRoot: boolean;
 };
 
+export type ConceptPrerequisiteEdge = {
+  from: string;
+  to: string;
+  strength: "hard" | "soft";
+};
+
 export type TopicGraph = {
   graphId: string;
   subject: string;
   topics: TopicNode[];
+  // Concept-grain prereq DAG, kept alongside the topic DAG for the concept
+  // frontier outline builder. Present on library artifacts; absent on generated
+  // (gen_*) graphs, where the frontier builder synthesizes linear edges from
+  // topic/concept order.
+  conceptEdges?: ConceptPrerequisiteEdge[];
   // Generated (gen_*) graphs only: the graph-generation LLM judged this subject
   // code-adapted, so lessons may include code blocks without matching the
   // lexical patterns in code-eligibility.ts. Absent on curated library graphs.

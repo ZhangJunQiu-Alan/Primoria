@@ -2,8 +2,8 @@
   "graphId": "computer_network",
   "subject": "Computer Networking",
   "generatedFrom": "data/knowledge-graphs/source/computer_network.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "net_arch",
@@ -16,6 +16,7 @@
           "name": "Network Layering",
           "nameZh": "网络分层",
           "defaultOrder": 1,
+          "centrality": 0.1845,
           "visual": "diagram",
           "visualHint": "Diagram the protocol-layer stack and how layers nest."
         },
@@ -24,6 +25,7 @@
           "name": "OSI Model",
           "nameZh": "OSI模型",
           "defaultOrder": 2,
+          "centrality": 0.094,
           "visual": "diagram",
           "visualHint": "Diagram the seven OSI layers and their roles."
         }
@@ -48,6 +50,7 @@
           "name": "TCP/IP Model",
           "nameZh": "TCP/IP模型",
           "defaultOrder": 1,
+          "centrality": 0.1629,
           "visual": "diagram",
           "visualHint": "Diagram the four-layer TCP/IP stack."
         },
@@ -56,6 +59,7 @@
           "name": "Encapsulation",
           "nameZh": "封装",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram each layer wrapping the layer above with its header."
         }
@@ -81,13 +85,15 @@
           "conceptId": "net_link_services",
           "name": "Link Layer Services",
           "nameZh": "链路层服务",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2065
         },
         {
           "conceptId": "net_mac",
           "name": "MAC Addressing",
           "nameZh": "MAC地址",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -113,13 +119,15 @@
           "conceptId": "net_ethernet",
           "name": "Ethernet",
           "nameZh": "以太网",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "net_switching",
           "name": "Switching",
           "nameZh": "交换",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -139,6 +147,7 @@
           "name": "IP Addressing",
           "nameZh": "IP寻址",
           "defaultOrder": 1,
+          "centrality": 0.3001,
           "visual": "diagram",
           "visualHint": "Diagram an IP address split into network and host portions."
         },
@@ -146,7 +155,8 @@
           "conceptId": "net_ipv4_ipv6",
           "name": "IPv4 and IPv6",
           "nameZh": "IPv4与IPv6",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0443
         }
       ],
       "successors": [
@@ -175,13 +185,15 @@
           "conceptId": "net_forwarding",
           "name": "Forwarding and Routers",
           "nameZh": "转发与路由器",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "net_routing",
           "name": "Routing Algorithms",
           "nameZh": "路由算法",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "algorithm",
           "visualHint": "Animate link-state/distance-vector routing building forwarding tables."
         }
@@ -202,19 +214,22 @@
           "conceptId": "net_transport_services",
           "name": "Transport Layer Services",
           "nameZh": "传输层服务",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2308
         },
         {
           "conceptId": "net_udp",
           "name": "UDP",
           "nameZh": "UDP",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.1328
         },
         {
           "conceptId": "net_tcp",
           "name": "TCP",
           "nameZh": "TCP",
           "defaultOrder": 3,
+          "centrality": 0.2189,
           "visual": "diagram",
           "visualHint": "Sequence diagram of the TCP three-way handshake."
         }
@@ -245,6 +260,7 @@
           "name": "Reliable Data Transfer",
           "nameZh": "可靠数据传输",
           "defaultOrder": 1,
+          "centrality": 0.0638,
           "visual": "diagram",
           "visualHint": "Sequence diagram of reliable transfer with sequence numbers and acks."
         },
@@ -252,13 +268,15 @@
           "conceptId": "net_flow_control",
           "name": "Flow Control",
           "nameZh": "流量控制",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "net_congestion",
           "name": "Congestion Control",
           "nameZh": "拥塞控制",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot the TCP congestion window growing and backing off over time."
         }
@@ -279,13 +297,15 @@
           "conceptId": "net_http",
           "name": "HTTP",
           "nameZh": "HTTP",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1203
         },
         {
           "conceptId": "net_dns",
           "name": "DNS",
           "nameZh": "DNS",
           "defaultOrder": 2,
+          "centrality": 0.0353,
           "visual": "diagram",
           "visualHint": "Diagram hierarchical DNS resolution of a hostname."
         },
@@ -293,7 +313,8 @@
           "conceptId": "net_app_protocols",
           "name": "Other Application Protocols",
           "nameZh": "其他应用层协议",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -301,6 +322,138 @@
         "net_transport_part1"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "net_dns",
+      "to": "net_app_protocols",
+      "strength": "soft"
+    },
+    {
+      "from": "net_ethernet",
+      "to": "net_switching",
+      "strength": "hard"
+    },
+    {
+      "from": "net_flow_control",
+      "to": "net_congestion",
+      "strength": "hard"
+    },
+    {
+      "from": "net_forwarding",
+      "to": "net_routing",
+      "strength": "hard"
+    },
+    {
+      "from": "net_http",
+      "to": "net_dns",
+      "strength": "soft"
+    },
+    {
+      "from": "net_ip_addressing",
+      "to": "net_forwarding",
+      "strength": "hard"
+    },
+    {
+      "from": "net_ip_addressing",
+      "to": "net_ipv4_ipv6",
+      "strength": "hard"
+    },
+    {
+      "from": "net_ip_addressing",
+      "to": "net_transport_services",
+      "strength": "hard"
+    },
+    {
+      "from": "net_ipv4_ipv6",
+      "to": "net_forwarding",
+      "strength": "soft"
+    },
+    {
+      "from": "net_layering",
+      "to": "net_encapsulation",
+      "strength": "hard"
+    },
+    {
+      "from": "net_layering",
+      "to": "net_osi",
+      "strength": "hard"
+    },
+    {
+      "from": "net_layering",
+      "to": "net_tcpip",
+      "strength": "hard"
+    },
+    {
+      "from": "net_link_services",
+      "to": "net_ip_addressing",
+      "strength": "soft"
+    },
+    {
+      "from": "net_link_services",
+      "to": "net_mac",
+      "strength": "hard"
+    },
+    {
+      "from": "net_mac",
+      "to": "net_ethernet",
+      "strength": "hard"
+    },
+    {
+      "from": "net_osi",
+      "to": "net_tcpip",
+      "strength": "soft"
+    },
+    {
+      "from": "net_rdt",
+      "to": "net_flow_control",
+      "strength": "hard"
+    },
+    {
+      "from": "net_tcp",
+      "to": "net_app_protocols",
+      "strength": "soft"
+    },
+    {
+      "from": "net_tcp",
+      "to": "net_http",
+      "strength": "hard"
+    },
+    {
+      "from": "net_tcp",
+      "to": "net_rdt",
+      "strength": "hard"
+    },
+    {
+      "from": "net_tcpip",
+      "to": "net_encapsulation",
+      "strength": "soft"
+    },
+    {
+      "from": "net_tcpip",
+      "to": "net_ip_addressing",
+      "strength": "hard"
+    },
+    {
+      "from": "net_transport_services",
+      "to": "net_tcp",
+      "strength": "hard"
+    },
+    {
+      "from": "net_transport_services",
+      "to": "net_udp",
+      "strength": "hard"
+    },
+    {
+      "from": "net_udp",
+      "to": "net_dns",
+      "strength": "hard"
+    },
+    {
+      "from": "net_udp",
+      "to": "net_tcp",
+      "strength": "soft"
     }
   ]
 }

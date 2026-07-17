@@ -42,6 +42,8 @@ function buildOne(graphId) {
     if (node.kind === "concept") {
       conceptTopic.set(node.id, node.topic);
       const concept = { conceptId: node.id, name: node.name, nameZh: node.name_zh ?? null, defaultOrder: node.default_order };
+      // Global reverse-PageRank importance (0..1, max-normalized) from the KG source; absent = uncomputed.
+      if (typeof node.centrality === "number") concept.centrality = node.centrality;
       // Optional visualization affordance (`visual`/`visual_hint` in the KG source); absent = no forced visual.
       if (node.visual) {
         concept.visual = node.visual;
@@ -80,13 +82,25 @@ function buildOne(graphId) {
 
   const ordered = [...topics.values()].sort((a, b) => a.defaultOrder - b.defaultOrder);
 
+  // Concept-level prereq edges, kept alongside the topic DAG so the concept
+  // frontier outline builder can order and skip at concept grain. Endpoints must
+  // both be concepts present in this graph; cross-subject edges are excluded.
+  const conceptIds = new Set(
+    graph.nodes.filter((n) => n.kind === "concept").map((n) => n.id),
+  );
+  const conceptEdges = graph.edges
+    .filter((e) => e.type === "prereq" && conceptIds.has(e.from) && conceptIds.has(e.to))
+    .map((e) => ({ from: e.from, to: e.to, strength: e.strength === "hard" ? "hard" : "soft" }))
+    .sort((a, b) => (a.from === b.from ? a.to.localeCompare(b.to) : a.from.localeCompare(b.from)));
+
   const artifact = {
     graphId,
     subject: graph.subject,
     generatedFrom: `data/knowledge-graphs/source/${graphId}.json`,
     generatedAt: new Date().toISOString().slice(0, 10),
-    note: "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+    note: "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
     topics: ordered,
+    conceptEdges,
   };
 
   mkdirSync(OUT_DIR, { recursive: true });

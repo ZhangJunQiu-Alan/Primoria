@@ -169,6 +169,7 @@
       "topic": "ml_linear_part1",
       "description": "A supervised model predicting a continuous target as a linear combination of input features, fitted by minimising the squared error between predictions and observations.",
       "default_order": 1,
+      "centrality": 0.1837,
       "name_zh": "线性回归",
       "visual": "function",
       "visual_hint": "Fit a regression line to scattered points; drag the line to see the error."
@@ -180,6 +181,7 @@
       "topic": "ml_linear_part1",
       "description": "The mean squared error cost averaging squared residuals between predictions and targets, a convex objective whose minimisation defines least-squares regression.",
       "default_order": 2,
+      "centrality": 0.068,
       "name_zh": "均方误差代价函数"
     },
     {
@@ -189,6 +191,7 @@
       "topic": "ml_linear_part1",
       "description": "An iterative optimiser updating parameters along the negative gradient of the cost, using the entire training batch to compute each gradient step.",
       "default_order": 3,
+      "centrality": 0.1525,
       "name_zh": "梯度下降",
       "visual": "function",
       "visual_hint": "Animate gradient descent stepping down a cost surface."
@@ -200,6 +203,7 @@
       "topic": "ml_linear_part2",
       "description": "Gradient-descent variants updating parameters from one example (stochastic) or a small subset (mini-batch), trading gradient noise for faster, scalable updates.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "随机与小批量梯度下降"
     },
     {
@@ -209,6 +213,7 @@
       "topic": "ml_linear_part2",
       "description": "A closed-form solution for linear regression obtained by setting the cost's gradient to zero and solving the resulting linear system without iteration.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "正规方程"
     },
     {
@@ -218,6 +223,7 @@
       "topic": "ml_linear_part2",
       "description": "Normalising features to comparable ranges and choosing an appropriate learning rate, both of which speed and stabilise gradient-descent convergence.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "特征缩放与学习率"
     },
     {
@@ -227,6 +233,7 @@
       "topic": "ml_classification_part1",
       "description": "A probabilistic linear classifier modelling the probability of a binary class with the logistic function, fitted by maximising the likelihood of the labels.",
       "default_order": 1,
+      "centrality": 0.1954,
       "name_zh": "逻辑回归",
       "visual": "function",
       "visual_hint": "Plot the logistic decision boundary separating two classes."
@@ -238,6 +245,7 @@
       "topic": "ml_classification_part1",
       "description": "The sigmoid function mapping real scores to probabilities in (0,1), inducing a linear decision boundary where the predicted probability equals one half.",
       "default_order": 2,
+      "centrality": 0.0527,
       "name_zh": "Sigmoid 与决策边界",
       "visual": "function",
       "visual_hint": "Plot the sigmoid mapping scores to probabilities and its decision boundary."
@@ -249,6 +257,7 @@
       "topic": "ml_classification_part1_ml_logistic_mle",
       "description": "Estimating logistic-regression parameters by maximising the log-likelihood of the labels, whose gradient drives the gradient-ascent or descent updates.",
       "default_order": 1,
+      "centrality": 0.0657,
       "name_zh": "逻辑回归极大似然估计与梯度"
     },
     {
@@ -258,6 +267,7 @@
       "topic": "ml_classification_part1_ml_logistic_mle",
       "description": "A second-order optimisation method using the Hessian to take curvature-aware steps, converging in few iterations for logistic regression.",
       "default_order": 2,
+      "centrality": 0.0481,
       "name_zh": "牛顿法"
     },
     {
@@ -267,6 +277,7 @@
       "topic": "ml_classification_part2",
       "description": "Softmax regression generalising logistic regression to multiple classes by producing a normalised probability distribution over the class scores.",
       "default_order": 1,
+      "centrality": 0.0548,
       "name_zh": "Softmax 回归",
       "visual": "interactive",
       "visual_hint": "Show softmax turning class scores into a probability distribution."
@@ -278,6 +289,7 @@
       "topic": "ml_classification_part2",
       "description": "A family of distributions sharing a canonical exponential form, unifying common distributions and providing the foundation for generalised linear models.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "指数族分布"
     },
     {
@@ -287,6 +299,7 @@
       "topic": "ml_classification_part2",
       "description": "Generalised linear models relating a linear predictor to a response from the exponential family through a link function, generalising ordinary regression.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "广义线性模型"
     },
     {
@@ -296,6 +309,7 @@
       "topic": "ml_generative",
       "description": "The contrast between generative models that learn the joint distribution p(x,y) and discriminative models that learn the conditional p(y|x) directly.",
       "default_order": 1,
+      "centrality": 0.0436,
       "name_zh": "生成模型与判别模型"
     },
     {
@@ -305,6 +319,7 @@
       "topic": "ml_generative",
       "description": "Gaussian discriminant analysis, a generative classifier modelling each class's features as a multivariate Gaussian and applying Bayes' rule to classify.",
       "default_order": 2,
+      "centrality": 0.0443,
       "name_zh": "高斯判别分析"
     },
     {
@@ -314,6 +329,7 @@
       "topic": "ml_generative_ml_naive_bayes",
       "description": "A generative classifier assuming features are conditionally independent given the class, enabling simple, scalable estimation popular for text classification.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "朴素贝叶斯"
     },
     {
@@ -323,6 +339,7 @@
       "topic": "ml_generative_ml_naive_bayes",
       "description": "Laplace (add-one) smoothing adding pseudocounts to probability estimates so that unseen feature-class combinations receive nonzero probability.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "拉普拉斯平滑"
     },
     {
@@ -332,6 +349,7 @@
       "topic": "ml_svm_margin",
       "description": "Functional and geometric margins measuring a classifier's confidence and the signed distance from examples to the decision boundary, central to SVMs.",
       "default_order": 1,
+      "centrality": 0.1227,
       "name_zh": "间隔与SVM"
     },
     {
@@ -341,6 +359,7 @@
       "topic": "ml_svm_margin",
       "description": "The optimal margin classifier, a convex primal optimisation finding the hyperplane that maximises the geometric margin to the nearest training points.",
       "default_order": 2,
+      "centrality": 0.1152,
       "name_zh": "最优间隔分类器",
       "visual": "interactive",
       "visual_hint": "Drag points to show the max-margin hyperplane and its support vectors."
@@ -352,6 +371,7 @@
       "topic": "ml_svm_margin_ml_lagrange_duality",
       "description": "Lagrange duality reformulating a constrained optimisation via its dual, with the KKT conditions characterising optimal primal-dual solutions for SVMs.",
       "default_order": 1,
+      "centrality": 0.1064,
       "name_zh": "拉格朗日对偶性与 KKT 条件"
     },
     {
@@ -361,6 +381,7 @@
       "topic": "ml_svm_margin_ml_lagrange_duality",
       "description": "The SVM dual problem expressing the optimisation in terms of inner products between examples, exposing support vectors and enabling kernels.",
       "default_order": 2,
+      "centrality": 0.096,
       "name_zh": "支持向量机对偶问题"
     },
     {
@@ -370,6 +391,7 @@
       "topic": "ml_svm_kernel",
       "description": "The kernel trick computing inner products in a high-dimensional feature space implicitly, letting linear algorithms learn nonlinear decision boundaries.",
       "default_order": 1,
+      "centrality": 0.0714,
       "name_zh": "核方法",
       "visual": "interactive",
       "visual_hint": "Lift non-separable points into a higher dimension where they separate."
@@ -381,6 +403,7 @@
       "topic": "ml_svm_kernel",
       "description": "Mercer's condition characterising valid kernels as functions yielding positive semidefinite Gram matrices, guaranteeing a corresponding feature space.",
       "default_order": 2,
+      "centrality": 0.0548,
       "name_zh": "有效核函数（Mercer 定理）"
     },
     {
@@ -390,6 +413,7 @@
       "topic": "ml_svm_kernel_ml_soft_margin",
       "description": "A soft-margin SVM introducing slack variables and a penalty parameter to tolerate misclassification, balancing margin width against training errors.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "软间隔与松弛变量"
     },
     {
@@ -399,6 +423,7 @@
       "topic": "ml_svm_kernel_ml_soft_margin",
       "description": "Sequential minimal optimisation, a coordinate-ascent algorithm solving the SVM dual by analytically optimising pairs of Lagrange multipliers at a time.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "SMO 算法"
     },
     {
@@ -408,6 +433,7 @@
       "topic": "ml_theory",
       "description": "The bias-variance tradeoff decomposing generalisation error into bias from oversimplification and variance from sensitivity to the training sample.",
       "default_order": 1,
+      "centrality": 0.096,
       "name_zh": "偏差-方差权衡",
       "visual": "function",
       "visual_hint": "Plot training and validation error against model complexity."
@@ -419,6 +445,7 @@
       "topic": "ml_theory",
       "description": "Adding an L1 or L2 penalty on parameters to the cost, discouraging large weights to reduce overfitting and, for L1, inducing sparse solutions.",
       "default_order": 2,
+      "centrality": 0.0519,
       "name_zh": "正则化",
       "visual": "function",
       "visual_hint": "Show L1 and L2 penalties shrinking fitted coefficients."
@@ -430,6 +457,7 @@
       "topic": "ml_theory",
       "description": "Cross-validation estimating generalisation by repeatedly training on subsets and validating on held-out folds, used for model selection and tuning.",
       "default_order": 3,
+      "centrality": 0.0638,
       "name_zh": "交叉验证"
     },
     {
@@ -439,6 +467,7 @@
       "topic": "ml_generalization_nn",
       "description": "The VC dimension measuring a hypothesis class's capacity as the largest set it can shatter, bounding the gap between training and true error.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "VC 维与泛化误差界"
     },
     {
@@ -448,6 +477,7 @@
       "topic": "ml_generalization_nn",
       "description": "Choosing among models and feature subsets to balance fit and complexity, using validation performance and selection procedures to avoid overfitting.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "模型与特征选择"
     },
     {
@@ -457,6 +487,7 @@
       "topic": "ml_generalization_nn_ml_neural_nets",
       "description": "Neural networks composing layers of weighted sums and nonlinear activations to learn flexible, nonlinear mappings from inputs to outputs.",
       "default_order": 1,
+      "centrality": 0.0318,
       "name_zh": "神经网络",
       "visual": "diagram",
       "visual_hint": "Diagram a layered network of weighted sums and activations."
@@ -468,6 +499,7 @@
       "topic": "ml_generalization_nn_ml_neural_nets",
       "description": "Backpropagation efficiently computing gradients of the loss with respect to all weights by applying the chain rule backward through the network.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "反向传播"
     },
     {
@@ -477,6 +509,7 @@
       "topic": "ml_unsupervised",
       "description": "K-means clustering partitioning data into K clusters by alternately assigning points to the nearest centroid and recomputing centroids to minimise inertia.",
       "default_order": 1,
+      "centrality": 0.0779,
       "name_zh": "K均值聚类",
       "visual": "algorithm",
       "visual_hint": "Animate K-means alternating assignment and centroid updates."
@@ -488,6 +521,7 @@
       "topic": "ml_unsupervised",
       "description": "Expectation-maximisation, an iterative method for maximum-likelihood estimation with latent variables, alternating expected-completion and parameter-update steps.",
       "default_order": 2,
+      "centrality": 0.0624,
       "name_zh": "EM 算法 (期望最大化)"
     },
     {
@@ -497,6 +531,7 @@
       "topic": "ml_unsupervised_ml_gmm_em",
       "description": "Gaussian mixture models representing data as a weighted mixture of Gaussians, fitted by expectation-maximisation to perform soft probabilistic clustering.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "高斯混合与EM"
     },
     {
@@ -506,6 +541,7 @@
       "topic": "ml_unsupervised_ml_gmm_em",
       "description": "Principal component analysis reducing dimensionality by projecting data onto orthogonal directions of greatest variance, the leading eigenvectors of the covariance.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "主成分分析",
       "visual": "interactive",
       "visual_hint": "Project a 2-D cloud onto its principal component directions."
@@ -517,6 +553,7 @@
       "topic": "ml_unsupervised_ml_gmm_em",
       "description": "Independent component analysis separating a multivariate signal into statistically independent, non-Gaussian source components, as in blind source separation.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "独立成分分析"
     },
     {
@@ -526,6 +563,7 @@
       "topic": "ml_rl",
       "description": "Markov decision processes formalising sequential decision-making under uncertainty with states, actions, transition probabilities, rewards, and a discount factor.",
       "default_order": 1,
+      "centrality": 0.079,
       "name_zh": "马尔可夫决策过程"
     },
     {
@@ -535,6 +573,7 @@
       "topic": "ml_rl",
       "description": "Value iteration and policy iteration, dynamic-programming algorithms computing optimal policies for a known MDP via the Bellman equations.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "价值与策略迭代",
       "visual": "algorithm",
       "visual_hint": "Iterate values and policy on an MDP gridworld until convergence."
@@ -546,6 +585,7 @@
       "topic": "ml_rl_ml_q_learning",
       "description": "Q-learning, a model-free, off-policy algorithm learning optimal action-value estimates from sampled transitions without knowing the environment's dynamics.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "Q-学习",
       "visual": "algorithm",
       "visual_hint": "Update a Q-table as an agent explores a gridworld."
@@ -557,6 +597,7 @@
       "topic": "ml_rl_ml_q_learning",
       "description": "Value function approximation generalising value estimates across large or continuous state spaces using parameterised functions like linear models or networks.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "价值函数逼近"
     }
   ],

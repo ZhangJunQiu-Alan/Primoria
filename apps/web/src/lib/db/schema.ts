@@ -186,6 +186,9 @@ export const lessons = pgTable(
     courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     topicId: text("topic_id"),
+    // Concept subset this lesson teaches (concept-frontier outline). Empty on
+    // historical/freeform lessons, which fall back to resolving the whole topic.
+    conceptIds: jsonb("concept_ids").$type<string[]>().notNull().default([]),
     title: text("title").notNull(),
     description: text("description").notNull().default(""),
     role: text("role").notNull().default("new"),

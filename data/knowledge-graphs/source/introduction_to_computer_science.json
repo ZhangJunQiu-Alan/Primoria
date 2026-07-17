@@ -160,6 +160,7 @@
       "topic": "topic_week0",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.3471,
       "description": "Reusable named blocks of code that take inputs and produce outputs, letting programs be organised into smaller, composable, repeatable pieces.",
       "name_zh": "函数"
     },
@@ -169,6 +170,7 @@
       "topic": "topic_week0",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Programming constructs that respond to occurrences such as user input or messages, central to event-driven environments like Scratch.",
       "name_zh": "事件"
     },
@@ -178,6 +180,7 @@
       "topic": "topic_week0",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.3081,
       "description": "Conditional statements that execute different code branches depending on whether a boolean expression evaluates to true or false.",
       "name_zh": "条件语句"
     },
@@ -187,6 +190,7 @@
       "topic": "topic_control_flow_c",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.3081,
       "description": "Control structures that repeat a block of code, either a fixed number of times or while a condition holds, to automate repetition.",
       "name_zh": "循环"
     },
@@ -196,6 +200,7 @@
       "topic": "topic_control_flow_c",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Hiding implementation detail behind simpler interfaces so complex systems can be built and reasoned about in manageable layers.",
       "name_zh": "抽象"
     },
@@ -205,6 +210,7 @@
       "topic": "topic_control_flow_c",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 1.0,
       "description": "The grammatical rules of the C language governing how statements, expressions, and declarations are written so the compiler can interpret them.",
       "name_zh": "C 语法"
     },
@@ -214,6 +220,7 @@
       "topic": "topic_week1",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.3899,
       "description": "Categories such as int, char, float, and double specifying how values are stored, their size in memory, and the operations allowed on them.",
       "name_zh": "数据类型"
     },
@@ -223,6 +230,7 @@
       "topic": "topic_week1",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Symbols performing computations on values, including arithmetic, relational, logical, and assignment operators, combined to form expressions.",
       "name_zh": "运算符"
     },
@@ -232,6 +240,7 @@
       "topic": "topic_week1",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "The process translating C source code into an executable through preprocessing, compiling, assembling, and linking stages.",
       "name_zh": "编译过程"
     },
@@ -241,6 +250,7 @@
       "topic": "topic_week2",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "The systematic process of locating and fixing program defects using tools, print statements, and reasoning about expected versus actual behaviour.",
       "name_zh": "调试"
     },
@@ -250,6 +260,7 @@
       "topic": "topic_week2",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.3033,
       "description": "Contiguous, fixed-size collections of same-typed elements accessed by integer index in constant time, the basis of many data structures.",
       "name_zh": "数组"
     },
@@ -259,6 +270,7 @@
       "topic": "topic_week2_strings",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Sequences of characters represented in C as null-terminated arrays of chars, manipulated through library functions and pointer operations.",
       "name_zh": "字符串"
     },
@@ -268,6 +280,7 @@
       "topic": "topic_week2_strings",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Arguments passed to a program at launch, received through argc and argv, letting users configure behaviour from the command line.",
       "name_zh": "命令行参数"
     },
@@ -277,6 +290,7 @@
       "topic": "topic_week3",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "A search algorithm scanning elements one by one until the target is found or the collection is exhausted, running in linear time.",
       "name_zh": "线性搜索",
       "visual": "algorithm",
@@ -288,6 +302,7 @@
       "topic": "topic_week3",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "An efficient search on sorted data that repeatedly halves the search interval by comparing the target to the middle element, running in logarithmic time.",
       "name_zh": "二分搜索",
       "visual": "algorithm",
@@ -299,6 +314,7 @@
       "topic": "topic_week3",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0459,
       "description": "Algorithms arranging elements into order, such as bubble, selection, and merge sort, differing in strategy and time complexity.",
       "name_zh": "排序算法",
       "visual": "algorithm",
@@ -310,6 +326,7 @@
       "topic": "topic_complexity_memory",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate.",
       "name_zh": "递归",
       "visual": "algorithm",
@@ -321,6 +338,7 @@
       "topic": "topic_complexity_memory",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Big O notation describing how an algorithm's running time or space grows with input size, characterising worst-case asymptotic efficiency.",
       "name_zh": "大O表示法",
       "visual": "chart",
@@ -332,6 +350,7 @@
       "topic": "topic_complexity_memory",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.2531,
       "description": "Variables storing memory addresses, enabling indirect access, dynamic data structures, and efficient passing of data by reference in C.",
       "name_zh": "指针",
       "visual": "diagram",
@@ -343,6 +362,7 @@
       "topic": "topic_week4",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0604,
       "description": "Dynamic memory allocation requesting heap memory at run time with malloc and releasing it with free, enabling data sized during execution.",
       "name_zh": "动态内存分配"
     },
@@ -352,6 +372,7 @@
       "topic": "topic_week4",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The region of memory tracking active function calls, storing each call's local variables, parameters, and return address in stack frames.",
       "name_zh": "调用栈",
       "visual": "diagram",
@@ -363,6 +384,7 @@
       "topic": "topic_week4",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "Reading from and writing to files using library functions, enabling programs to persist and retrieve data beyond their execution.",
       "name_zh": "文件I/O"
     },
@@ -372,6 +394,7 @@
       "topic": "topic_week5",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0839,
       "description": "A dynamic data structure of nodes each holding data and a pointer to the next, allowing efficient insertion and deletion without contiguous memory.",
       "name_zh": "链表",
       "visual": "diagram",
@@ -383,6 +406,7 @@
       "topic": "topic_week5",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.1391,
       "description": "A structure mapping keys to values using a hash function to index into buckets, giving average constant-time insertion and lookup.",
       "name_zh": "哈希表",
       "visual": "algorithm",
@@ -394,6 +418,7 @@
       "topic": "topic_week5",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.1414,
       "description": "Hierarchical data structures of nodes linked from a root, such as binary search trees, enabling efficient ordered storage and lookup.",
       "name_zh": "树",
       "visual": "algorithm",
@@ -405,6 +430,7 @@
       "topic": "topic_adv_data_python",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Tree structures indexing strings by their characters along paths, enabling fast prefix-based search and autocomplete at the cost of memory.",
       "name_zh": "字典树"
     },
@@ -414,6 +440,7 @@
       "topic": "topic_adv_data_python",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Two abstract data types: stacks following last-in-first-out order and queues following first-in-first-out order, for managing ordered access.",
       "name_zh": "队列与栈",
       "visual": "algorithm",
@@ -425,6 +452,7 @@
       "topic": "topic_adv_data_python",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.581,
       "description": "The readable, indentation-based syntax of Python, a high-level interpreted language emphasising concise expression of common programming constructs.",
       "name_zh": "Python 语法"
     },
@@ -434,6 +462,7 @@
       "topic": "topic_week6",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1841,
       "description": "Python's core collections: ordered, mutable lists and dictionaries mapping keys to values, supporting flexible data manipulation.",
       "name_zh": "列表和字典"
     },
@@ -443,6 +472,7 @@
       "topic": "topic_week6",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Object-oriented programming in Python organising code into classes that bundle data and methods, supporting encapsulation, inheritance, and reuse.",
       "name_zh": "OOP"
     },
@@ -452,6 +482,7 @@
       "topic": "topic_week6",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic.",
       "name_zh": "异常"
     },
@@ -461,6 +492,7 @@
       "topic": "topic_week7",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1359,
       "description": "Databases storing data in related tables of rows and columns, with keys linking tables, managed through a relational database system.",
       "name_zh": "关系数据库"
     },
@@ -470,6 +502,7 @@
       "topic": "topic_week7",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0669,
       "description": "SQL statements that retrieve and modify data in relational tables, expressing selection, filtering, and ordering declaratively.",
       "name_zh": "SQL查询"
     },
@@ -479,6 +512,7 @@
       "topic": "topic_week7_joins",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "SQL joins combining rows from multiple tables based on related columns, enabling queries that span relationships between tables.",
       "name_zh": "SQL连接"
     },
@@ -488,6 +522,7 @@
       "topic": "topic_week7_joins",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Database indexes, auxiliary structures that speed up lookups on chosen columns at the cost of extra storage and slower writes.",
       "name_zh": "SQL索引"
     },
@@ -497,6 +532,7 @@
       "topic": "topic_week8",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.2737,
       "description": "HyperText Markup Language defining the structure and content of web pages through nested, semantic tags rendered by browsers.",
       "name_zh": "HTML"
     },
@@ -506,6 +542,7 @@
       "topic": "topic_week8",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Cascading Style Sheets controlling the visual presentation of HTML, including layout, colours, fonts, and responsive design via rules.",
       "name_zh": "CSS"
     },
@@ -515,6 +552,7 @@
       "topic": "topic_week8_js",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1067,
       "description": "JavaScript, the browser's programming language adding interactivity and dynamic behaviour to web pages through an event-driven model.",
       "name_zh": "JavaScript"
     },
@@ -524,6 +562,7 @@
       "topic": "topic_week8_js",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The Document Object Model, a tree representation of a web page that JavaScript can read and modify to update content dynamically.",
       "name_zh": "DOM 操作",
       "visual": "diagram",
@@ -535,6 +574,7 @@
       "topic": "topic_week9",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1491,
       "description": "The HyperText Transfer Protocol governing request-response communication between web clients and servers using methods and status codes.",
       "name_zh": "HTTP 协议"
     },
@@ -544,6 +584,7 @@
       "topic": "topic_week9",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0669,
       "description": "Flask, a lightweight Python web framework for building web applications and APIs by mapping URL routes to handler functions.",
       "name_zh": "Flask 框架"
     },
@@ -553,6 +594,7 @@
       "topic": "topic_week9",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "The Model-View-Controller pattern separating data, presentation, and control logic to organise web application code cleanly.",
       "name_zh": "MVC 架构"
     },
@@ -562,6 +604,7 @@
       "topic": "topic_web_state_security",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Sessions and cookies maintaining state across stateless HTTP requests, identifying users and remembering data between page visits.",
       "name_zh": "会话与 Cookie"
     },
@@ -571,6 +614,7 @@
       "topic": "topic_web_state_security",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Application programming interfaces exposing functionality and data over the web, commonly returning JSON for other programs to consume.",
       "name_zh": "API"
     },
@@ -580,6 +624,7 @@
       "topic": "topic_web_state_security",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.088,
       "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information.",
       "name_zh": "网络安全基础"
     },
@@ -589,6 +634,7 @@
       "topic": "topic_week10",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Transforming data into ciphertext using algorithms and keys so that only authorised parties can read it, underpinning secure communication.",
       "name_zh": "加密"
     },
@@ -598,6 +644,7 @@
       "topic": "topic_week10",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Verifying the identity of a user or system, typically through passwords, tokens, or biometrics, before granting access to resources.",
       "name_zh": "身份认证"
     },
@@ -607,6 +654,7 @@
       "topic": "topic_week10",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "Weaknesses in software or systems that attackers can exploit, such as injection or buffer overflows, requiring mitigation and patching.",
       "name_zh": "安全漏洞"
     }

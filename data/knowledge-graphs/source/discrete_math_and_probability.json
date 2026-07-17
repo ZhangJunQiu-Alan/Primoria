@@ -257,6 +257,7 @@
       "name": "Propositional Logic",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.5144,
       "description": "The study of propositions combined with logical connectives such as and, or, not, and implication, with truth tables defining their meaning.",
       "name_zh": "命题逻辑"
     },
@@ -266,6 +267,7 @@
       "name": "Direct Proofs",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.4203,
       "description": "A proof technique establishing an implication by assuming the hypothesis and deducing the conclusion through a chain of valid logical steps.",
       "name_zh": "直接证明"
     },
@@ -275,6 +277,7 @@
       "name": "Proof by Contraposition",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Proving an implication 'p implies q' by instead proving its logically equivalent contrapositive, 'not q implies not p'.",
       "name_zh": "逆否证明"
     },
@@ -284,6 +287,7 @@
       "name": "Proof by Contradiction",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.1309,
       "description": "Proving a statement by assuming its negation and deriving a logical contradiction, forcing the original statement to be true.",
       "name_zh": "反证法"
     },
@@ -293,6 +297,7 @@
       "name": "Simple Induction",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.4653,
       "description": "Mathematical induction proving a statement for all naturals by establishing a base case and an inductive step from n to n+1.",
       "name_zh": "简单归纳",
       "visual": "diagram",
@@ -304,6 +309,7 @@
       "name": "Strong Induction",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0459,
       "description": "A variant of induction whose inductive step may assume the statement for all smaller values, not just the immediate predecessor.",
       "name_zh": "强归纳"
     },
@@ -313,6 +319,7 @@
       "name": "Well-Ordering Principle",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "The principle that every nonempty set of natural numbers contains a least element, equivalent to and underpinning induction.",
       "name_zh": "良序原理"
     },
@@ -322,6 +329,7 @@
       "name": "Structural Induction",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Induction over recursively defined structures, proving a property holds for base cases and is preserved by the construction rules.",
       "name_zh": "结构归纳"
     },
@@ -331,6 +339,7 @@
       "name": "Stable Matching Problem",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.079,
       "description": "The problem of pairing two sides given preferences so that no two unmatched participants both prefer each other over their assigned partners.",
       "name_zh": "稳定匹配问题"
     },
@@ -340,6 +349,7 @@
       "name": "Gale-Shapley Algorithm",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0638,
       "description": "The Gale-Shapley deferred-acceptance algorithm producing a stable matching through rounds of proposals and tentative acceptances.",
       "name_zh": "Gale-Shapley算法",
       "visual": "algorithm",
@@ -351,6 +361,7 @@
       "name": "Matching Optimality",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "The result that Gale-Shapley yields the matching most preferred by every member of the proposing side among all stable matchings.",
       "name_zh": "匹配最优性"
     },
@@ -360,6 +371,7 @@
       "name": "Matching Pessimality",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The corresponding result that the proposing-side-optimal matching is simultaneously the worst stable matching for the receiving side.",
       "name_zh": "匹配最差性"
     },
@@ -369,6 +381,7 @@
       "name": "Graph Basics",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1873,
       "description": "Graphs as sets of vertices joined by edges, with the fundamental notions of degree, paths, connectivity, and cycles.",
       "name_zh": "图基础",
       "visual": "diagram",
@@ -380,6 +393,7 @@
       "name": "Eulerian Tours",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Closed walks traversing every edge exactly once, existing precisely when a graph is connected with all vertices of even degree.",
       "name_zh": "欧拉回路",
       "visual": "algorithm",
@@ -391,6 +405,7 @@
       "name": "Trees",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "Connected acyclic graphs, equivalently graphs with a unique path between any two vertices, having exactly one fewer edge than vertices.",
       "name_zh": "树",
       "visual": "diagram",
@@ -402,6 +417,7 @@
       "name": "Planar Graphs",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Graphs drawable in the plane without edge crossings, constrained by Euler's formula relating vertices, edges, and faces.",
       "name_zh": "平面图",
       "visual": "diagram",
@@ -413,6 +429,7 @@
       "name": "Hypercubes",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "Recursively defined hypercube graphs whose vertices are binary strings, with edges joining strings that differ in a single bit.",
       "name_zh": "超立方体",
       "visual": "diagram",
@@ -424,6 +441,7 @@
       "name": "Euclid's Algorithm",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1818,
       "description": "Euclid's algorithm computing the greatest common divisor of two integers by repeatedly replacing the larger with its remainder modulo the smaller.",
       "name_zh": "欧几里得算法",
       "visual": "algorithm",
@@ -435,6 +453,7 @@
       "name": "Extended Euclid",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.1847,
       "description": "The extended Euclidean algorithm computing Bézout coefficients that express the gcd as an integer combination, yielding modular inverses.",
       "name_zh": "扩展欧几里得"
     },
@@ -444,6 +463,7 @@
       "name": "Chinese Remainder Theorem",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "The Chinese remainder theorem giving a unique solution modulo the product for a system of congruences with pairwise coprime moduli.",
       "name_zh": "中国剩余定理"
     },
@@ -453,6 +473,7 @@
       "name": "Fermat's Little Theorem",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0817,
       "description": "Fermat's little theorem stating that a raised to the power p minus one is congruent to one modulo a prime p not dividing a.",
       "name_zh": "费马小定理"
     },
@@ -462,6 +483,7 @@
       "name": "Symmetric Cryptography",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Encryption schemes where sender and receiver share a single secret key used for both encryption and decryption of messages.",
       "name_zh": "对称密码"
     },
@@ -471,6 +493,7 @@
       "name": "RSA Setup and Encryption",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0669,
       "description": "The RSA public-key scheme generating keys from two large primes and encrypting messages by modular exponentiation with the public exponent.",
       "name_zh": "RSA设置与加密"
     },
@@ -480,6 +503,7 @@
       "name": "RSA Decryption Proof",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "The proof that RSA decryption inverts encryption, relying on Euler's theorem and the relationship between the public and private exponents.",
       "name_zh": "RSA解密证明"
     },
@@ -489,6 +513,7 @@
       "name": "Digital Signatures",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Cryptographic signatures authenticating a message by signing with a private key so that anyone can verify authenticity with the public key.",
       "name_zh": "数字签名"
     },
@@ -498,6 +523,7 @@
       "name": "Polynomial Roots and Degree",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0817,
       "description": "Properties of polynomials over a field, including that a nonzero degree-d polynomial has at most d roots, used throughout the course.",
       "name_zh": "多项式根与次数"
     },
@@ -507,6 +533,7 @@
       "name": "Polynomial Interpolation",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0669,
       "description": "The fact that d+1 points uniquely determine a degree-d polynomial, recovered by Lagrange interpolation over a field.",
       "name_zh": "多项式插值"
     },
@@ -516,6 +543,7 @@
       "name": "Secret Sharing",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Shamir's secret sharing splitting a secret among parties as points on a polynomial so that any sufficient subset can reconstruct it.",
       "name_zh": "秘密分享"
     },
@@ -525,6 +553,7 @@
       "name": "Error Correcting Codes",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Polynomial-based codes such as Reed-Solomon adding redundancy so messages can be recovered despite a bounded number of errors or erasures.",
       "name_zh": "纠错码"
     },
@@ -534,6 +563,7 @@
       "name": "Bijections and Cardinality",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0638,
       "description": "Comparing the sizes of sets using bijections, defining two sets as equinumerous when a one-to-one correspondence exists between them.",
       "name_zh": "双射与基数"
     },
@@ -543,6 +573,7 @@
       "name": "Cantor's Diagonalization",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0459,
       "description": "Cantor's diagonal argument constructing an element differing from every member of a list, proving that certain sets are uncountable.",
       "name_zh": "康托尔对角线法"
     },
@@ -552,6 +583,7 @@
       "name": "Uncountability of Reals",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "The proof, via diagonalization, that the real numbers cannot be put in bijection with the naturals and are therefore uncountable.",
       "name_zh": "实数不可数性"
     },
@@ -561,6 +593,7 @@
       "name": "The Halting Problem",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "The halting problem, the undecidable task of determining whether an arbitrary program halts on a given input, proved by diagonalization.",
       "name_zh": "停机问题"
     },
@@ -570,6 +603,7 @@
       "name": "Undecidability",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The existence of well-defined problems that no algorithm can solve for all inputs, established by reduction from the halting problem.",
       "name_zh": "不可判定性"
     },
@@ -579,6 +613,7 @@
       "name": "Basic Counting Rules",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.8696,
       "description": "The fundamental sum and product rules counting the outcomes of disjoint choices and of sequences of independent choices.",
       "name_zh": "基础计数规则"
     },
@@ -588,6 +623,7 @@
       "name": "Combinations and Permutations",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0669,
       "description": "Counting ordered selections (permutations) and unordered selections (combinations) of items from a set, with their factorial formulas.",
       "name_zh": "组合与排列",
       "visual": "diagram",
@@ -599,6 +635,7 @@
       "name": "Combinatorial Proofs",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Proving identities by counting the same quantity in two different ways, showing that the two expressions must be equal.",
       "name_zh": "组合证明"
     },
@@ -608,6 +645,7 @@
       "name": "Stars and Bars",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The stars-and-bars technique counting the nonnegative integer solutions of an equation, equivalently distributions of identical items into bins.",
       "name_zh": "星号与条形法"
     },
@@ -617,6 +655,7 @@
       "name": "Inclusion-Exclusion",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "The inclusion-exclusion principle counting the size of a union by alternately adding and subtracting the sizes of intersections.",
       "name_zh": "容斥原理",
       "visual": "diagram",
@@ -628,6 +667,7 @@
       "name": "Probability Spaces",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.8897,
       "description": "A probability space comprising a sample space of outcomes, events as subsets, and a probability measure satisfying Kolmogorov's axioms.",
       "name_zh": "概率空间"
     },
@@ -637,6 +677,7 @@
       "name": "Conditional Probability",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.285,
       "description": "The probability of an event given that another has occurred, defined by normalising their joint probability by the conditioning event's probability.",
       "name_zh": "条件概率"
     },
@@ -646,6 +687,7 @@
       "name": "Bayes' Rule",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0662,
       "description": "Bayes' rule inverting conditional probabilities to update the probability of a hypothesis given evidence, combining priors and likelihoods.",
       "name_zh": "贝叶斯法则",
       "visual": "diagram",
@@ -657,6 +699,7 @@
       "name": "Event Independence",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Two events are independent when the occurrence of one does not change the probability of the other, equivalently their joint equals the product.",
       "name_zh": "事件独立性"
     },
@@ -666,6 +709,7 @@
       "name": "Discrete Random Variables",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.4165,
       "description": "Random variables taking values in a discrete set, described by a probability mass function assigning probabilities to each possible value.",
       "name_zh": "离散随机变量"
     },
@@ -675,6 +719,7 @@
       "name": "Expectation",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.2213,
       "description": "The expectation of a random variable, its probability-weighted average value, summarising the centre of its distribution.",
       "name_zh": "期望"
     },
@@ -684,6 +729,7 @@
       "name": "Linearity of Expectation",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "The property that the expectation of a sum equals the sum of expectations, holding even when the variables are dependent.",
       "name_zh": "期望的线性"
     },
@@ -693,6 +739,7 @@
       "name": "Variance and Covariance",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0481,
       "description": "Variance measuring a variable's spread about its mean, and covariance measuring the degree to which two variables vary together.",
       "name_zh": "方差与协方差"
     },
@@ -702,6 +749,7 @@
       "name": "Bernoulli and Binomial Distributions",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "The Bernoulli distribution modelling a single success/failure trial and the binomial modelling the number of successes in independent trials.",
       "name_zh": "伯努利与二项分布",
       "visual": "chart",
@@ -713,6 +761,7 @@
       "name": "Geometric Distribution",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The geometric distribution modelling the number of independent Bernoulli trials until the first success, with its memoryless property.",
       "name_zh": "几何分布",
       "visual": "chart",
@@ -724,6 +773,7 @@
       "name": "Poisson Distribution",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "The Poisson distribution modelling counts of rare independent events in a fixed interval, the limit of the binomial for many trials.",
       "name_zh": "泊松分布",
       "visual": "chart",
@@ -735,6 +785,7 @@
       "name": "Hypergeometric Distribution",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "The hypergeometric distribution modelling the number of successes when sampling without replacement from a finite population.",
       "name_zh": "超几何分布"
     },
@@ -744,6 +795,7 @@
       "name": "Continuous Random Variables",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1404,
       "description": "Random variables taking values over a continuum, described by a probability density rather than a probability mass function.",
       "name_zh": "连续随机变量"
     },
@@ -753,6 +805,7 @@
       "name": "Probability Density Function",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.136,
       "description": "A probability density function whose integral over an interval gives the probability that the continuous variable falls within that interval.",
       "name_zh": "概率密度函数"
     },
@@ -762,6 +815,7 @@
       "name": "Cumulative Distribution Function",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "The cumulative distribution function giving the probability that a random variable is at most a given value, defined for any distribution.",
       "name_zh": "累积分布函数"
     },
@@ -771,6 +825,7 @@
       "name": "Uniform and Exponential Distributions",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "The uniform distribution spreading probability evenly over an interval and the memoryless exponential distribution modelling waiting times.",
       "name_zh": "均匀与指数分布"
     },
@@ -780,6 +835,7 @@
       "name": "Normal Distribution",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0813,
       "description": "The normal (Gaussian) distribution, a symmetric bell-shaped law parametrised by mean and variance, central to statistics and the central limit theorem.",
       "name_zh": "正态分布",
       "visual": "function",
@@ -791,6 +847,7 @@
       "name": "Markov's Inequality",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0692,
       "description": "Markov's inequality bounding the probability that a nonnegative random variable exceeds a value using only its mean.",
       "name_zh": "马尔可夫不等式"
     },
@@ -800,6 +857,7 @@
       "name": "Chebyshev's Inequality",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0548,
       "description": "Chebyshev's inequality bounding the probability that a variable deviates far from its mean using its variance.",
       "name_zh": "切比雪夫不等式"
     },
@@ -809,6 +867,7 @@
       "name": "Chernoff Bounds",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0248,
       "description": "Chernoff bounds giving exponentially decaying tail bounds for sums of independent random variables via the moment-generating function.",
       "name_zh": "Chernoff 不等式"
     },
@@ -818,6 +877,7 @@
       "name": "Weak Law of Large Numbers",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0353,
       "description": "The weak law of large numbers stating the sample mean of independent identically distributed variables converges in probability to the true mean.",
       "name_zh": "弱大数定律"
     },
@@ -827,6 +887,7 @@
       "name": "Central Limit Theorem",
       "kind": "concept",
       "default_order": 3,
+      "centrality": 0.0248,
       "description": "The central limit theorem stating that the normalised sum of many independent variables converges in distribution to a normal distribution.",
       "name_zh": "中心极限定理",
       "visual": "interactive",
@@ -838,6 +899,7 @@
       "name": "Markov Chains Basics",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.1144,
       "description": "Markov chains modelling random processes that transition between states with probabilities depending only on the current state.",
       "name_zh": "马尔可夫链基础",
       "visual": "diagram",
@@ -849,6 +911,7 @@
       "name": "Hitting Times",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "Hitting times, the expected number of steps for a Markov chain to first reach a specified state from a given starting state.",
       "name_zh": "首达时间"
     },
@@ -858,6 +921,7 @@
       "name": "Stationary Distributions",
       "kind": "concept",
       "default_order": 1,
+      "centrality": 0.0459,
       "description": "A stationary distribution unchanged by the chain's transitions, describing the long-run fraction of time spent in each state.",
       "name_zh": "平稳分布"
     },
@@ -867,6 +931,7 @@
       "name": "PageRank Algorithm",
       "kind": "concept",
       "default_order": 2,
+      "centrality": 0.0248,
       "description": "PageRank ranking web pages by the stationary distribution of a random-surfer Markov chain over the hyperlink graph.",
       "name_zh": "PageRank 算法",
       "visual": "algorithm",

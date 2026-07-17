@@ -51,6 +51,28 @@ function main() {
   // Empty when no context.
   assert(buildKgContextPrompt(undefined) === "", "no context -> empty hint");
 
+  // Core-concept marking: centrality >= 0.3 gets a [core] tag + a directive;
+  // a below-threshold concept stays unmarked.
+  const withCore: CourseContext = {
+    learningPathType: "linear",
+    graphId: "g1",
+    startTopic: {
+      topicId: "t1",
+      name: "导数",
+      concepts: [
+        { conceptId: "c1", name: "导数定义", defaultOrder: 1, centrality: 0.9 },
+        { conceptId: "c2", name: "求导法则", defaultOrder: 2, centrality: 0.1 },
+      ],
+    },
+    targetConceptId: null,
+    nextTopic: null,
+  };
+  const p3 = buildKgContextPrompt(withCore);
+  assert(p3.includes("导数定义 (c1) [core]"), "high-centrality concept is marked [core]");
+  assert(!/求导法则 \(c2\) \[core\]/.test(p3), "low-centrality concept is not marked");
+  assert(/marked \[core\] are foundational/.test(p3), "core directive is emitted when a core concept exists");
+  assert(!/marked \[core\] are foundational/.test(p1), "no core directive without centrality data");
+
   console.log("course-kg-context.unit passed");
 }
 

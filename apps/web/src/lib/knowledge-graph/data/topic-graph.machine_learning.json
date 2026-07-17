@@ -2,8 +2,8 @@
   "graphId": "machine_learning",
   "subject": "Machine Learning",
   "generatedFrom": "data/knowledge-graphs/source/machine_learning.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "ml_linear_part1",
@@ -16,6 +16,7 @@
           "name": "Linear Regression Model",
           "nameZh": "线性回归",
           "defaultOrder": 1,
+          "centrality": 0.1837,
           "visual": "function",
           "visualHint": "Fit a regression line to scattered points; drag the line to see the error."
         },
@@ -23,13 +24,15 @@
           "conceptId": "ml_cost_mse",
           "name": "Mean Squared Error Cost",
           "nameZh": "均方误差代价函数",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.068
         },
         {
           "conceptId": "ml_gradient_descent",
           "name": "Batch Gradient Descent",
           "nameZh": "梯度下降",
           "defaultOrder": 3,
+          "centrality": 0.1525,
           "visual": "function",
           "visualHint": "Animate gradient descent stepping down a cost surface."
         }
@@ -65,19 +68,22 @@
           "conceptId": "ml_sgd",
           "name": "Stochastic & Mini-batch GD",
           "nameZh": "随机与小批量梯度下降",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0443
         },
         {
           "conceptId": "ml_normal_eq",
           "name": "Normal Equations",
           "nameZh": "正规方程",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "ml_feature_scaling",
           "name": "Feature Scaling & Learning Rate",
           "nameZh": "特征缩放与学习率",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -97,6 +103,7 @@
           "name": "Logistic Regression",
           "nameZh": "逻辑回归",
           "defaultOrder": 1,
+          "centrality": 0.1954,
           "visual": "function",
           "visualHint": "Plot the logistic decision boundary separating two classes."
         },
@@ -105,6 +112,7 @@
           "name": "Sigmoid & Decision Boundary",
           "nameZh": "Sigmoid 与决策边界",
           "defaultOrder": 2,
+          "centrality": 0.0527,
           "visual": "function",
           "visualHint": "Plot the sigmoid mapping scores to probabilities and its decision boundary."
         }
@@ -142,13 +150,15 @@
           "conceptId": "ml_logistic_mle",
           "name": "Logistic MLE & Gradient",
           "nameZh": "逻辑回归极大似然估计与梯度",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0657
         },
         {
           "conceptId": "ml_newton_method",
           "name": "Newton's Method",
           "nameZh": "牛顿法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0481
         }
       ],
       "successors": [
@@ -173,6 +183,7 @@
           "name": "Softmax Regression",
           "nameZh": "Softmax 回归",
           "defaultOrder": 1,
+          "centrality": 0.0548,
           "visual": "interactive",
           "visualHint": "Show softmax turning class scores into a probability distribution."
         },
@@ -180,13 +191,15 @@
           "conceptId": "ml_exp_family",
           "name": "Exponential Family",
           "nameZh": "指数族分布",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0353
         },
         {
           "conceptId": "ml_glm",
           "name": "Generalized Linear Models",
           "nameZh": "广义线性模型",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -206,13 +219,15 @@
           "conceptId": "ml_generative_vs_disc",
           "name": "Generative vs Discriminative",
           "nameZh": "生成模型与判别模型",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0436
         },
         {
           "conceptId": "ml_gda",
           "name": "Gaussian Discriminant Analysis",
           "nameZh": "高斯判别分析",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0443
         }
       ],
       "successors": [
@@ -236,13 +251,15 @@
           "conceptId": "ml_naive_bayes",
           "name": "Naive Bayes",
           "nameZh": "朴素贝叶斯",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "ml_laplace",
           "name": "Laplace Smoothing",
           "nameZh": "拉普拉斯平滑",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -261,13 +278,15 @@
           "conceptId": "ml_margins",
           "name": "Functional & Geometric Margins",
           "nameZh": "间隔与SVM",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1227
         },
         {
           "conceptId": "ml_optimal_margin",
           "name": "Optimal Margin Classifier",
           "nameZh": "最优间隔分类器",
           "defaultOrder": 2,
+          "centrality": 0.1152,
           "visual": "interactive",
           "visualHint": "Drag points to show the max-margin hyperplane and its support vectors."
         }
@@ -291,13 +310,15 @@
           "conceptId": "ml_lagrange_duality",
           "name": "Lagrange Duality & KKT",
           "nameZh": "拉格朗日对偶性与 KKT 条件",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1064
         },
         {
           "conceptId": "ml_svm_dual",
           "name": "SVM Dual Problem",
           "nameZh": "支持向量机对偶问题",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.096
         }
       ],
       "successors": [
@@ -326,6 +347,7 @@
           "name": "Kernel Trick",
           "nameZh": "核方法",
           "defaultOrder": 1,
+          "centrality": 0.0714,
           "visual": "interactive",
           "visualHint": "Lift non-separable points into a higher dimension where they separate."
         },
@@ -333,7 +355,8 @@
           "conceptId": "ml_mercer",
           "name": "Valid Kernels (Mercer)",
           "nameZh": "有效核函数（Mercer 定理）",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0548
         }
       ],
       "successors": [
@@ -357,13 +380,15 @@
           "conceptId": "ml_soft_margin",
           "name": "Soft Margin & Slack",
           "nameZh": "软间隔与松弛变量",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0353
         },
         {
           "conceptId": "ml_smo",
           "name": "SMO Algorithm",
           "nameZh": "SMO 算法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -384,6 +409,7 @@
           "name": "Bias-Variance Tradeoff",
           "nameZh": "偏差-方差权衡",
           "defaultOrder": 1,
+          "centrality": 0.096,
           "visual": "function",
           "visualHint": "Plot training and validation error against model complexity."
         },
@@ -392,6 +418,7 @@
           "name": "Regularization (L1/L2)",
           "nameZh": "正则化",
           "defaultOrder": 2,
+          "centrality": 0.0519,
           "visual": "function",
           "visualHint": "Show L1 and L2 penalties shrinking fitted coefficients."
         },
@@ -399,7 +426,8 @@
           "conceptId": "ml_cross_val",
           "name": "Cross-Validation",
           "nameZh": "交叉验证",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -423,13 +451,15 @@
           "conceptId": "ml_vc_dimension",
           "name": "VC Dimension & Bounds",
           "nameZh": "VC 维与泛化误差界",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "ml_model_selection",
           "name": "Model & Feature Selection",
           "nameZh": "模型与特征选择",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -449,6 +479,7 @@
           "name": "Neural Networks",
           "nameZh": "神经网络",
           "defaultOrder": 1,
+          "centrality": 0.0318,
           "visual": "diagram",
           "visualHint": "Diagram a layered network of weighted sums and activations."
         },
@@ -456,7 +487,8 @@
           "conceptId": "ml_backprop",
           "name": "Backpropagation",
           "nameZh": "反向传播",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -477,6 +509,7 @@
           "name": "K-Means Clustering",
           "nameZh": "K均值聚类",
           "defaultOrder": 1,
+          "centrality": 0.0779,
           "visual": "algorithm",
           "visualHint": "Animate K-means alternating assignment and centroid updates."
         },
@@ -484,7 +517,8 @@
           "conceptId": "ml_em_algorithm",
           "name": "EM Algorithm",
           "nameZh": "EM 算法 (期望最大化)",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0624
         }
       ],
       "successors": [
@@ -506,13 +540,15 @@
           "conceptId": "ml_gmm_em",
           "name": "Gaussian Mixtures via EM",
           "nameZh": "高斯混合与EM",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0443
         },
         {
           "conceptId": "ml_pca",
           "name": "Principal Component Analysis",
           "nameZh": "主成分分析",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "interactive",
           "visualHint": "Project a 2-D cloud onto its principal component directions."
         },
@@ -520,7 +556,8 @@
           "conceptId": "ml_ica",
           "name": "Independent Component Analysis",
           "nameZh": "独立成分分析",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -539,13 +576,15 @@
           "conceptId": "ml_mdp",
           "name": "Markov Decision Processes",
           "nameZh": "马尔可夫决策过程",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.079
         },
         {
           "conceptId": "ml_value_policy",
           "name": "Value & Policy Iteration",
           "nameZh": "价值与策略迭代",
           "defaultOrder": 2,
+          "centrality": 0.0638,
           "visual": "algorithm",
           "visualHint": "Iterate values and policy on an MDP gridworld until convergence."
         }
@@ -570,6 +609,7 @@
           "name": "Q-Learning",
           "nameZh": "Q-学习",
           "defaultOrder": 1,
+          "centrality": 0.0459,
           "visual": "algorithm",
           "visualHint": "Update a Q-table as an agent explores a gridworld."
         },
@@ -577,7 +617,8 @@
           "conceptId": "ml_value_approx",
           "name": "Value Function Approximation",
           "nameZh": "价值函数逼近",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -585,6 +626,228 @@
         "ml_rl"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "ml_bias_variance",
+      "to": "ml_cross_val",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_bias_variance",
+      "to": "ml_regularization",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_cost_mse",
+      "to": "ml_gradient_descent",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_cross_val",
+      "to": "ml_vc_dimension",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_em_algorithm",
+      "to": "ml_gmm_em",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_exp_family",
+      "to": "ml_glm",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_gda",
+      "to": "ml_naive_bayes",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_generative_vs_disc",
+      "to": "ml_gda",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_gmm_em",
+      "to": "ml_pca",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_gradient_descent",
+      "to": "ml_backprop",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_gradient_descent",
+      "to": "ml_logistic_reg",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_gradient_descent",
+      "to": "ml_sgd",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_kernels",
+      "to": "ml_mercer",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_kmeans",
+      "to": "ml_em_algorithm",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_lagrange_duality",
+      "to": "ml_svm_dual",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_linear_reg",
+      "to": "ml_bias_variance",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_linear_reg",
+      "to": "ml_cost_mse",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_linear_reg",
+      "to": "ml_normal_eq",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_logistic_mle",
+      "to": "ml_newton_method",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_generative_vs_disc",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_glm",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_logistic_mle",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_neural_nets",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_sigmoid",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_logistic_reg",
+      "to": "ml_softmax",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_margins",
+      "to": "ml_optimal_margin",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_mdp",
+      "to": "ml_value_policy",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_mercer",
+      "to": "ml_soft_margin",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_naive_bayes",
+      "to": "ml_laplace",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_neural_nets",
+      "to": "ml_backprop",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_newton_method",
+      "to": "ml_softmax",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_normal_eq",
+      "to": "ml_feature_scaling",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_optimal_margin",
+      "to": "ml_lagrange_duality",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_pca",
+      "to": "ml_ica",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_q_learning",
+      "to": "ml_value_approx",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_regularization",
+      "to": "ml_cross_val",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_sgd",
+      "to": "ml_normal_eq",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_sigmoid",
+      "to": "ml_logistic_mle",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_soft_margin",
+      "to": "ml_smo",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_softmax",
+      "to": "ml_exp_family",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_svm_dual",
+      "to": "ml_kernels",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_svm_dual",
+      "to": "ml_smo",
+      "strength": "hard"
+    },
+    {
+      "from": "ml_value_policy",
+      "to": "ml_q_learning",
+      "strength": "soft"
+    },
+    {
+      "from": "ml_vc_dimension",
+      "to": "ml_model_selection",
+      "strength": "soft"
     }
   ]
 }

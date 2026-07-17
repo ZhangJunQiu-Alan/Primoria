@@ -3,6 +3,8 @@ import { z } from "zod";
 import { enrichCourseOutlineDescriptions } from "@/lib/ai/course-generation/outline-enrichment";
 import { getCourseByGraph, saveCourse } from "@/lib/courses/store";
 import { getTopicGraph, type TopicGraph } from "@/lib/knowledge-graph/topic-graph";
+import { buildConceptFrontierOutline } from "@/lib/knowledge-graph/concept-frontier";
+import { listConceptMasteryByOwner } from "@/lib/mastery/owner-store";
 import type { BlockType, Course, CourseBlock, Lesson } from "@/lib/courses/types";
 import { courseBlocks, summarizeCourse } from "@/lib/courses/types";
 import type { CourseSummary } from "@/lib/courses/types";
@@ -200,9 +202,11 @@ export async function initializeCourseOutline(
   let course = graphId ? await getCourseByGraph(ownerId, graphId) : undefined;
   const isNewCourse = !course;
   if (!course) {
+    const masteredConceptIds = graphId ? await loadMasteredConceptIds(ownerId, graphId) : new Set<string>();
     course = buildOutlineCourse(
       { topic: input.topic, kgContext: input.kgContext, language: input.language, generatedGraph: input.generatedGraph },
       graphId,
+      masteredConceptIds,
     );
   }
 
@@ -252,7 +256,23 @@ function scheduleOutlineEnrichment(courseId: string, ownerId: string) {
 
 function firstLessonForTopic(course: Course, targetTopicId: string | null) {
   const ordered = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
+  // Concept-frontier outlines are strictly prerequisite-ordered, so the first
+  // bundle (lowest sortKey) is always the correct entry — a targetTopicId match
+  // could otherwise jump ahead of the target's prerequisite lessons.
+  if (ordered.some((lesson) => (lesson.conceptIds?.length ?? 0) > 0)) return ordered[0];
   return (targetTopicId ? ordered.find((lesson) => lesson.topicId === targetTopicId) : undefined) ?? ordered[0];
+}
+
+// Mastery snapshot taken once at course creation. A read failure degrades to an
+// empty set (cold outline) — never silently skip content on a DB blip.
+async function loadMasteredConceptIds(ownerId: string, graphId: string): Promise<Set<string>> {
+  try {
+    const rows = await listConceptMasteryByOwner(ownerId, graphId);
+    return new Set(rows.filter((row) => row.status === "mastered").map((row) => row.conceptId));
+  } catch (error) {
+    console.warn(`[course-generator] mastery snapshot failed for owner=${ownerId} graph=${graphId}; building cold outline`, error);
+    return new Set<string>();
+  }
 }
 
 function isOwnerGraphUniqueViolation(error: unknown) {
@@ -269,47 +289,51 @@ function isOwnerGraphUniqueViolation(error: unknown) {
   );
 }
 
-// All KG topics from the entry topic onward, by Topic Order (default_order).
-// Falls back to a single node when the graph/topic is unknown (free-form topics).
-function outlineTopicsFrom(
-  graphId: string,
-  startTopicId: string | null,
-  fallbackName: string,
-  language?: string | null,
-): { topicId: string | null; name: string; description: string; order: number }[] {
-  let graph;
+function tryGetTopicGraph(graphId: string | null): TopicGraph | null {
+  if (!graphId) return null;
   try {
-    graph = getTopicGraph(graphId);
+    return getTopicGraph(graphId);
   } catch {
-    return [{ topicId: startTopicId, name: fallbackName, description: plannedLessonDescription(fallbackName, [], language), order: 1 }];
+    return null;
   }
-  return outlineFromGraphTopics(graph, startTopicId, fallbackName, language);
 }
 
-function outlineFromGraphTopics(
+// Concept-frontier outline: mastery-aware bundles of 2-3 concepts, each a planned
+// lesson. Mastered concepts drop out; an all-mastered scope degrades to a cold
+// (full) outline so the learner still gets a course rather than nothing.
+function conceptFrontierLessons(
   graph: TopicGraph,
   startTopicId: string | null,
-  fallbackName: string,
-  language?: string | null,
-): { topicId: string | null; name: string; description: string; order: number }[] {
-  const start = startTopicId ? graph.topics.find((t) => t.topicId === startTopicId) : undefined;
-  const startOrder = start?.defaultOrder ?? 0;
-  const remaining = graph.topics
-    .filter((t) => t.defaultOrder >= startOrder)
-    .sort((a, b) => a.defaultOrder - b.defaultOrder)
-    .map((t) => ({
-      topicId: t.topicId as string | null,
-      name: t.name,
-      description: plannedLessonDescription(
-        t.name,
-        t.conceptIds.map((concept) => lessonConceptName(concept, language)),
-        language,
-      ),
-      order: t.defaultOrder,
-    }));
-  return remaining.length > 0
-    ? remaining
-    : [{ topicId: startTopicId, name: fallbackName, description: plannedLessonDescription(fallbackName, [], language), order: 1 }];
+  targetConceptId: string | null,
+  masteredConceptIds: ReadonlySet<string>,
+  language: string | null | undefined,
+  now: number,
+): Lesson[] {
+  let bundles = buildConceptFrontierOutline({ graph, startTopicId, targetConceptId, masteredConceptIds });
+  if (bundles.length === 0) {
+    bundles = buildConceptFrontierOutline({ graph, startTopicId, targetConceptId, masteredConceptIds: new Set() });
+  }
+  return bundles.map((bundle, index) => {
+    const names = bundle.concepts.map((concept) => lessonConceptName(concept, language));
+    return {
+      ...plannedLesson(bundle.primaryTopicId, bundleTitle(names, language), bundleDescription(names, language), index + 1, now),
+      conceptIds: bundle.conceptIds,
+    };
+  });
+}
+
+function bundleTitle(names: string[], language?: string | null): string {
+  const isChinese = language?.toLowerCase().startsWith("zh") ?? false;
+  if (names.length <= 1) return names[0] ?? "";
+  const head = names.slice(0, -1);
+  const tail = names[names.length - 1];
+  return isChinese ? `${head.join("、")} 与 ${tail}` : `${head.join(", ")} and ${tail}`;
+}
+
+function bundleDescription(names: string[], language?: string | null): string {
+  const isChinese = language?.toLowerCase().startsWith("zh") ?? false;
+  if (isChinese) return `围绕 ${names.join("、")} 建立核心理解并完成应用。`;
+  return `Build a working understanding of ${names.join(", ")} and apply them.`;
 }
 
 function plannedLesson(topicId: string | null, title: string, description: string, order: number, now: number): Lesson {
@@ -340,17 +364,40 @@ function subjectFor(graphId: string | null, fallback: string): string {
   }
 }
 
-// A fresh Course: subject-level metadata + an outline of planned lessons (one per
-// remaining KG topic, or a single node for free-form topics with no KG).
-function buildOutlineCourse(input: GenerateCourseInput, graphId: string | null): Course {
+// A fresh Course: subject-level metadata + an outline of planned lessons. With a
+// KG (library or generated) the outline is a mastery-aware concept-frontier of
+// 2-3-concept bundles; free-form topics with no KG stay a single planned node.
+function buildOutlineCourse(
+  input: GenerateCourseInput,
+  graphId: string | null,
+  masteredConceptIds: ReadonlySet<string>,
+): Course {
   const now = Date.now();
   const startTopic = input.kgContext?.startTopic ?? null;
   const subject = input.generatedGraph?.subject ?? subjectFor(graphId, input.topic);
-  const outline = input.generatedGraph
-    ? outlineFromGraphTopics(input.generatedGraph, null, input.topic, input.language)
-    : graphId
-      ? outlineTopicsFrom(graphId, startTopic?.topicId ?? null, startTopic?.name ?? input.topic, input.language)
-      : [{ topicId: null as string | null, name: input.topic, description: plannedLessonDescription(input.topic, [], input.language), order: 1 }];
+  const graph = input.generatedGraph ?? tryGetTopicGraph(graphId);
+  const lessons = graph
+    ? conceptFrontierLessons(
+        graph,
+        input.generatedGraph ? null : startTopic?.topicId ?? null,
+        input.kgContext?.targetConceptId ?? null,
+        masteredConceptIds,
+        input.language,
+        now,
+      )
+    : [];
+  const finalLessons =
+    lessons.length > 0
+      ? lessons
+      : [
+          plannedLesson(
+            startTopic?.topicId ?? null,
+            startTopic?.name ?? input.topic,
+            plannedLessonDescription(startTopic?.name ?? input.topic, [], input.language),
+            1,
+            now,
+          ),
+        ];
   return {
     id: input.courseId ?? randomId("crs"),
     title: subject,
@@ -360,7 +407,7 @@ function buildOutlineCourse(input: GenerateCourseInput, graphId: string | null):
     anchorConceptId: input.kgContext?.targetConceptId ?? null,
     graphId,
     language: input.language ?? null,
-    lessons: outline.map((t) => plannedLesson(t.topicId, t.name, t.description, t.order, now)),
+    lessons: finalLessons,
     archivedAt: null,
     version: 1,
     createdAt: now,

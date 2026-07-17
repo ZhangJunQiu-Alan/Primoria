@@ -2,8 +2,8 @@
   "graphId": "linear_algebra",
   "subject": "Linear Algebra",
   "generatedFrom": "data/knowledge-graphs/source/linear_algebra.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "t_mit1806_linear_equations",
@@ -16,6 +16,7 @@
           "name": "Vectors and Linear Combinations",
           "nameZh": "向量与线性组合",
           "defaultOrder": 1,
+          "centrality": 0.5568,
           "visual": "interactive",
           "visualHint": "Drag vectors to show addition, scaling, and linear combinations."
         },
@@ -24,6 +25,7 @@
           "name": "Elimination with Matrices",
           "nameZh": "矩阵消元",
           "defaultOrder": 2,
+          "centrality": 0.6258,
           "visual": "algorithm",
           "visualHint": "Step Gaussian elimination reducing a matrix to triangular form."
         }
@@ -51,13 +53,15 @@
           "conceptId": "c_mit1806_matrix_ops",
           "name": "Matrix Operations and Inverses",
           "nameZh": "矩阵运算与逆矩阵",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.4878
         },
         {
           "conceptId": "c_mit1806_lu_decomp",
           "name": "LU Factorization",
           "nameZh": "LU 分解",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -85,13 +89,15 @@
           "conceptId": "c_mit1806_spaces_subspaces",
           "name": "Vector Spaces and Subspaces",
           "nameZh": "向量空间和子空间",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1588
         },
         {
           "conceptId": "c_mit1806_null_column_space",
           "name": "Null Space and Column Space",
           "nameZh": "零空间与列空间",
           "defaultOrder": 2,
+          "centrality": 0.1577,
           "visual": "interactive",
           "visualHint": "Show the column space and null space as spans in space."
         }
@@ -118,6 +124,7 @@
           "name": "Linear Independence, Basis, and Dimension",
           "nameZh": "线性无关、基与维数",
           "defaultOrder": 1,
+          "centrality": 0.1564,
           "visual": "interactive",
           "visualHint": "Drag vectors to test independence and span a subspace as a basis."
         },
@@ -125,7 +132,8 @@
           "conceptId": "c_mit1806_four_subspaces",
           "name": "The Four Fundamental Subspaces",
           "nameZh": "四个基本子空间",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.1548
         }
       ],
       "successors": [
@@ -149,13 +157,15 @@
           "conceptId": "c_mit1806_orthogonality",
           "name": "Orthogonal Vectors and Subspaces",
           "nameZh": "正交向量与子空间",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.153
         },
         {
           "conceptId": "c_mit1806_projections",
           "name": "Projections onto Subspaces",
           "nameZh": "向子空间的投影",
           "defaultOrder": 2,
+          "centrality": 0.1508,
           "visual": "interactive",
           "visualHint": "Project a vector onto a line or plane and show the residual."
         }
@@ -182,6 +192,7 @@
           "name": "Least Squares Approximations",
           "nameZh": "最小二乘近似",
           "defaultOrder": 1,
+          "centrality": 0.0564,
           "visual": "function",
           "visualHint": "Fit a least-squares line minimising the squared residuals to data."
         },
@@ -190,6 +201,7 @@
           "name": "Orthogonal Bases and Gram-Schmidt",
           "nameZh": "正交基与 Gram-Schmidt",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Orthogonalise a set of vectors step by step (Gram-Schmidt)."
         }
@@ -211,6 +223,7 @@
           "name": "Properties of Determinants",
           "nameZh": "行列式的性质",
           "defaultOrder": 1,
+          "centrality": 0.1806,
           "visual": "interactive",
           "visualHint": "Show the determinant as the signed area/volume scaling of a transform."
         },
@@ -218,7 +231,8 @@
           "conceptId": "c_mit1806_det_formulas",
           "name": "Formulas and Cofactors",
           "nameZh": "行列式公式与余子式",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         }
       ],
       "successors": [
@@ -242,13 +256,15 @@
           "conceptId": "c_mit1806_cramers_rule",
           "name": "Cramer's Rule and Volumes",
           "nameZh": "Cramer 法则与体积",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_mit1806_eigen",
           "name": "Eigenvalues and Eigenvectors",
           "nameZh": "特征值与特征向量",
           "defaultOrder": 2,
+          "centrality": 0.1375,
           "visual": "interactive",
           "visualHint": "Show eigenvectors as directions a transform only stretches, with eigenvalues."
         }
@@ -279,6 +295,7 @@
           "name": "Diagonalization",
           "nameZh": "对角化",
           "defaultOrder": 1,
+          "centrality": 0.0459,
           "visual": "interactive",
           "visualHint": "Decompose a transform along its eigenvector axes."
         },
@@ -286,7 +303,8 @@
           "conceptId": "c_mit1806_diff_eq",
           "name": "Systems of Differential Equations",
           "nameZh": "微分方程组",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -305,13 +323,15 @@
           "conceptId": "c_mit1806_symmetric_matrices",
           "name": "Symmetric Matrices",
           "nameZh": "对称矩阵",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0638
         },
         {
           "conceptId": "c_mit1806_positive_definite",
           "name": "Positive Definite Matrices",
           "nameZh": "正定矩阵",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         }
       ],
       "successors": [
@@ -336,6 +356,7 @@
           "name": "Singular Value Decomposition (SVD)",
           "nameZh": "奇异值分解",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Show SVD as rotate, scale, rotate acting on the unit circle."
         },
@@ -344,6 +365,7 @@
           "name": "Linear Transformations",
           "nameZh": "线性变换",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "interactive",
           "visualHint": "Apply a linear transformation to a grid and watch it deform."
         },
@@ -352,6 +374,7 @@
           "name": "The Matrix of a Linear Transformation",
           "nameZh": "线性变换的矩阵",
           "defaultOrder": 3,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Show how a matrix's columns are the images of the basis vectors."
         }
@@ -362,6 +385,118 @@
         "t_mit1806_eigenvalues_mit1806_symmetric_matrices"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "c_mit1806_det_formulas",
+      "to": "c_mit1806_cramers_rule",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_det_properties",
+      "to": "c_mit1806_det_formulas",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_det_properties",
+      "to": "c_mit1806_eigen",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_diagonalization",
+      "to": "c_mit1806_diff_eq",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_eigen",
+      "to": "c_mit1806_diagonalization",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_eigen",
+      "to": "c_mit1806_symmetric_matrices",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_elimination",
+      "to": "c_mit1806_det_properties",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_elimination",
+      "to": "c_mit1806_matrix_ops",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_four_subspaces",
+      "to": "c_mit1806_orthogonality",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_independence_basis",
+      "to": "c_mit1806_four_subspaces",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_least_squares",
+      "to": "c_mit1806_gram_schmidt",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_linear_transformations",
+      "to": "c_mit1806_matrix_transform",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "c_mit1806_linear_transformations",
+      "strength": "soft"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "c_mit1806_lu_decomp",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "c_mit1806_spaces_subspaces",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_null_column_space",
+      "to": "c_mit1806_independence_basis",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_orthogonality",
+      "to": "c_mit1806_projections",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_positive_definite",
+      "to": "c_mit1806_svd",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_projections",
+      "to": "c_mit1806_least_squares",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_spaces_subspaces",
+      "to": "c_mit1806_null_column_space",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_symmetric_matrices",
+      "to": "c_mit1806_positive_definite",
+      "strength": "hard"
+    },
+    {
+      "from": "c_mit1806_vectors",
+      "to": "c_mit1806_elimination",
+      "strength": "hard"
     }
   ]
 }

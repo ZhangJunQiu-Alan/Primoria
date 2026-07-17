@@ -2,8 +2,8 @@
   "graphId": "deep_learning",
   "subject": "Introduction to Deep Learning",
   "generatedFrom": "data/knowledge-graphs/source/deep_learning.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "dl_foundations_part1",
@@ -15,19 +15,22 @@
           "conceptId": "dl_perceptron",
           "name": "Perceptron",
           "nameZh": "感知机",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.2146
         },
         {
           "conceptId": "dl_mlp",
           "name": "Multilayer Perceptron",
           "nameZh": "多层感知机",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.4466
         },
         {
           "conceptId": "dl_activation",
           "name": "Activation Functions",
           "nameZh": "激活函数",
           "defaultOrder": 3,
+          "centrality": 0.138,
           "visual": "function",
           "visualHint": "Plot ReLU, sigmoid, and tanh activation functions."
         }
@@ -63,13 +66,15 @@
           "conceptId": "dl_forward",
           "name": "Forward Propagation",
           "nameZh": "前向传播",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1332
         },
         {
           "conceptId": "dl_computational_graph",
           "name": "Computational Graphs",
           "nameZh": "计算图",
           "defaultOrder": 2,
+          "centrality": 0.072,
           "visual": "diagram",
           "visualHint": "Diagram a computation as a graph of nodes and edges for autodiff."
         },
@@ -78,6 +83,7 @@
           "name": "Backpropagation",
           "nameZh": "反向传播",
           "defaultOrder": 3,
+          "centrality": 0.1666,
           "visual": "diagram",
           "visualHint": "Diagram gradients flowing backward through the computational graph."
         }
@@ -108,6 +114,7 @@
           "name": "Loss Functions",
           "nameZh": "损失函数",
           "defaultOrder": 1,
+          "centrality": 0.0666,
           "visual": "function",
           "visualHint": "Plot cross-entropy and squared-error loss against the prediction."
         },
@@ -116,6 +123,7 @@
           "name": "Stochastic Gradient Descent",
           "nameZh": "梯度下降优化",
           "defaultOrder": 2,
+          "centrality": 0.0985,
           "visual": "function",
           "visualHint": "Animate gradient descent stepping down a loss surface."
         },
@@ -123,7 +131,8 @@
           "conceptId": "dl_momentum",
           "name": "Momentum",
           "nameZh": "动量法",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -151,13 +160,15 @@
           "conceptId": "dl_optimizers",
           "name": "Adaptive Optimizers",
           "nameZh": "高级优化器",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0459
         },
         {
           "conceptId": "dl_lr_schedule",
           "name": "Learning Rate Schedules",
           "nameZh": "学习率衰减策略",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -177,6 +188,7 @@
           "name": "Vanishing/Exploding Gradients",
           "nameZh": "梯度消失与梯度爆炸",
           "defaultOrder": 1,
+          "centrality": 0.1002,
           "visual": "function",
           "visualHint": "Plot how gradients shrink or grow across many layers."
         },
@@ -184,7 +196,8 @@
           "conceptId": "dl_weight_init",
           "name": "Weight Initialization",
           "nameZh": "权重初始化",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0436
         }
       ],
       "successors": [
@@ -212,19 +225,22 @@
           "conceptId": "dl_batchnorm",
           "name": "Batch Normalization",
           "nameZh": "批归一化",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0443
         },
         {
           "conceptId": "dl_regularization",
           "name": "Regularization",
           "nameZh": "正则化",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "dl_dropout",
           "name": "Dropout",
           "nameZh": "暂退法 (Dropout)",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -245,6 +261,7 @@
           "name": "Convolution",
           "nameZh": "卷积",
           "defaultOrder": 1,
+          "centrality": 0.091,
           "visual": "interactive",
           "visualHint": "Slide a filter across an image grid producing a feature map."
         },
@@ -252,13 +269,15 @@
           "conceptId": "dl_padding_stride",
           "name": "Padding and Stride",
           "nameZh": "填充与步幅",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0779
         },
         {
           "conceptId": "dl_pooling",
           "name": "Pooling",
           "nameZh": "池化",
           "defaultOrder": 3,
+          "centrality": 0.0624,
           "visual": "interactive",
           "visualHint": "Downsample a feature map with max and average pooling windows."
         }
@@ -285,6 +304,7 @@
           "name": "CNN Architectures",
           "nameZh": "CNN 架构",
           "defaultOrder": 1,
+          "centrality": 0.0443,
           "visual": "diagram",
           "visualHint": "Diagram stacked convolution and pooling layers of a CNN."
         },
@@ -293,6 +313,7 @@
           "name": "Residual Networks",
           "nameZh": "残差网络 (ResNet)",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Diagram a residual block with its skip connection."
         }
@@ -319,13 +340,15 @@
           "conceptId": "dl_transfer_learning",
           "name": "Transfer Learning",
           "nameZh": "迁移学习",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "dl_rnn",
           "name": "Recurrent Neural Networks",
           "nameZh": "循环神经网络",
           "defaultOrder": 2,
+          "centrality": 0.1812,
           "visual": "diagram",
           "visualHint": "Diagram a recurrent cell unrolled over a sequence."
         }
@@ -356,13 +379,15 @@
           "conceptId": "dl_bptt",
           "name": "Backpropagation Through Time",
           "nameZh": "时间反向传播",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.079
         },
         {
           "conceptId": "dl_seq_vanishing",
           "name": "Long-Range Dependencies",
           "nameZh": "长期依赖问题",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0638
         }
       ],
       "successors": [
@@ -387,6 +412,7 @@
           "name": "LSTM",
           "nameZh": "LSTM/GRU 循环网络",
           "defaultOrder": 1,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Diagram the LSTM input, forget, and output gates and cell state."
         },
@@ -394,7 +420,8 @@
           "conceptId": "dl_gru",
           "name": "GRU",
           "nameZh": "门控循环单元 (GRU)",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -413,13 +440,15 @@
           "conceptId": "dl_attention",
           "name": "Attention Mechanism",
           "nameZh": "注意力机制",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1051
         },
         {
           "conceptId": "dl_self_attention",
           "name": "Self-Attention",
           "nameZh": "自注意力",
           "defaultOrder": 2,
+          "centrality": 0.0944,
           "visual": "interactive",
           "visualHint": "Visualise attention weights linking positions in a sequence."
         },
@@ -427,7 +456,8 @@
           "conceptId": "dl_multihead",
           "name": "Multi-Head Attention",
           "nameZh": "多头注意力机制",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0819
         }
       ],
       "successors": [
@@ -451,13 +481,15 @@
           "conceptId": "dl_positional",
           "name": "Positional Encoding",
           "nameZh": "位置编码",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0443
         },
         {
           "conceptId": "dl_transformer",
           "name": "Transformer Architecture",
           "nameZh": "Transformer",
           "defaultOrder": 2,
+          "centrality": 0.0459,
           "visual": "diagram",
           "visualHint": "Diagram the Transformer encoder-decoder with attention blocks."
         },
@@ -465,7 +497,8 @@
           "conceptId": "dl_pretraining",
           "name": "Pretraining & Fine-tuning",
           "nameZh": "预训练与微调",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -484,19 +517,22 @@
           "conceptId": "dl_autoencoder",
           "name": "Autoencoders",
           "nameZh": "自编码器",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0549
         },
         {
           "conceptId": "dl_vae",
           "name": "Variational Autoencoders",
           "nameZh": "变分自编码器",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0708
         },
         {
           "conceptId": "dl_gan",
           "name": "Generative Adversarial Networks",
           "nameZh": "生成对抗网络（GAN）",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0624
         }
       ],
       "successors": [
@@ -520,19 +556,22 @@
           "conceptId": "dl_gan_training",
           "name": "GAN Training Dynamics",
           "nameZh": "GAN 训练动态",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0443
         },
         {
           "conceptId": "dl_diffusion",
           "name": "Diffusion Models",
           "nameZh": "扩散模型",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "dl_flow",
           "name": "Normalizing Flows",
           "nameZh": "流模型 (Normalizing Flows)",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -540,6 +579,233 @@
         "dl_generative_part1"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "dl_activation",
+      "to": "dl_forward",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_attention",
+      "to": "dl_self_attention",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_autoencoder",
+      "to": "dl_vae",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_backprop",
+      "to": "dl_loss",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_backprop",
+      "to": "dl_vanishing_grad",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_batchnorm",
+      "to": "dl_regularization",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_bptt",
+      "to": "dl_seq_vanishing",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_cnn_arch",
+      "to": "dl_resnet",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_computational_graph",
+      "to": "dl_backprop",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_convolution",
+      "to": "dl_padding_stride",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_diffusion",
+      "to": "dl_flow",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_forward",
+      "to": "dl_backprop",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_forward",
+      "to": "dl_computational_graph",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_gan",
+      "to": "dl_gan_training",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_gan_training",
+      "to": "dl_diffusion",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_loss",
+      "to": "dl_optimization",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_lstm",
+      "to": "dl_gru",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_activation",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_autoencoder",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_convolution",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_gan",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_mlp",
+      "to": "dl_rnn",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_momentum",
+      "to": "dl_optimizers",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_multihead",
+      "to": "dl_positional",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_multihead",
+      "to": "dl_transformer",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_optimization",
+      "to": "dl_momentum",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_optimization",
+      "to": "dl_regularization",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_optimizers",
+      "to": "dl_lr_schedule",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_padding_stride",
+      "to": "dl_pooling",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_perceptron",
+      "to": "dl_mlp",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_pooling",
+      "to": "dl_cnn_arch",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_positional",
+      "to": "dl_transformer",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_regularization",
+      "to": "dl_dropout",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_resnet",
+      "to": "dl_transfer_learning",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_rnn",
+      "to": "dl_attention",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_rnn",
+      "to": "dl_bptt",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_self_attention",
+      "to": "dl_multihead",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_seq_vanishing",
+      "to": "dl_lstm",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_transformer",
+      "to": "dl_pretraining",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_vae",
+      "to": "dl_diffusion",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_vae",
+      "to": "dl_gan",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_vanishing_grad",
+      "to": "dl_batchnorm",
+      "strength": "hard"
+    },
+    {
+      "from": "dl_vanishing_grad",
+      "to": "dl_resnet",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_vanishing_grad",
+      "to": "dl_weight_init",
+      "strength": "soft"
+    },
+    {
+      "from": "dl_weight_init",
+      "to": "dl_batchnorm",
+      "strength": "soft"
     }
   ]
 }

@@ -2,8 +2,8 @@
   "graphId": "mit_calculus",
   "subject": "Calculus",
   "generatedFrom": "data/knowledge-graphs/source/mit_calculus.json",
-  "generatedAt": "2026-07-11",
-  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic.",
+  "generatedAt": "2026-07-17",
+  "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
       "topicId": "t_1801_differentiation",
@@ -16,6 +16,7 @@
           "name": "Limits and Continuity",
           "nameZh": "极限与连续",
           "defaultOrder": 1,
+          "centrality": 0.783,
           "visual": "function",
           "visualHint": "Plot f(x) with a draggable point approaching a; show the limit value as the point nears a from both sides."
         },
@@ -24,6 +25,7 @@
           "name": "Definition of Derivative",
           "nameZh": "导数定义",
           "defaultOrder": 2,
+          "centrality": 0.4434,
           "visual": "function",
           "visualHint": "Slider for h: draw the secant through (x,f(x)) and (x+h,f(x+h)) collapsing to the tangent as h→0."
         },
@@ -31,7 +33,8 @@
           "conceptId": "c_1801_deriv_rules",
           "name": "Differentiation Rules",
           "nameZh": "微分法则",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.4319
         }
       ],
       "successors": [
@@ -89,13 +92,15 @@
           "conceptId": "c_1801_chain_rule",
           "name": "Chain Rule",
           "nameZh": "链式法则",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.1617
         },
         {
           "conceptId": "c_1801_implicit_diff",
           "name": "Implicit Differentiation",
           "nameZh": "隐函数微分",
           "defaultOrder": 2,
+          "centrality": 0.0353,
           "visual": "function",
           "visualHint": "Plot an implicit relation (e.g. x²+y²=25) and show the tangent slope at a draggable point on the curve."
         },
@@ -103,7 +108,8 @@
           "conceptId": "c_1801_related_rates",
           "name": "Related Rates",
           "nameZh": "相关变化率",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [
@@ -132,6 +138,7 @@
           "name": "Linear Approximation",
           "nameZh": "线性近似",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot f(x) and its tangent line at a; slider for x comparing the true value against the linear approximation."
         },
@@ -140,6 +147,7 @@
           "name": "Curve Sketching",
           "nameZh": "曲线草图",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot f(x) with toggles for f′ and f″; mark extrema, inflection points, and increase/decrease intervals."
         },
@@ -148,6 +156,7 @@
           "name": "Mean Value Theorem",
           "nameZh": "中值定理",
           "defaultOrder": 3,
+          "centrality": 0.0568,
           "visual": "function",
           "visualHint": "Plot f on [a,b] with the secant line and a draggable point c where the tangent is parallel to the secant."
         }
@@ -174,6 +183,7 @@
           "name": "Riemann Sums",
           "nameZh": "黎曼和",
           "defaultOrder": 1,
+          "centrality": 0.1979,
           "visual": "interactive",
           "visualHint": "Slider for rectangle count n; draw left/right/midpoint Riemann rectangles under f(x) and show the sum approaching the area."
         },
@@ -182,6 +192,7 @@
           "name": "Definite Integrals",
           "nameZh": "定积分",
           "defaultOrder": 2,
+          "centrality": 0.2036,
           "visual": "interactive",
           "visualHint": "Shade signed area under f(x) between draggable bounds a,b; colour positive/negative regions and show the integral value."
         }
@@ -220,6 +231,7 @@
           "name": "Fundamental Theorem of Calculus",
           "nameZh": "微积分基本定理",
           "defaultOrder": 1,
+          "centrality": 0.1129,
           "visual": "interactive",
           "visualHint": "Animate the accumulation function A(x)=∫ₐˣ f as x moves, showing A′(x)=f(x)."
         },
@@ -227,7 +239,8 @@
           "conceptId": "c_1801_substitution",
           "name": "Integration by Substitution",
           "nameZh": "换元积分法",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0743
         }
       ],
       "successors": [
@@ -262,19 +275,22 @@
           "conceptId": "c_1801_parts",
           "name": "Integration by Parts",
           "nameZh": "分部积分法",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_1801_trig_integrals",
           "name": "Trigonometric Integrals",
           "nameZh": "三角积分",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0459
         },
         {
           "conceptId": "c_1801_trig_sub",
           "name": "Trigonometric Substitution",
           "nameZh": "三角换元",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -294,13 +310,15 @@
           "conceptId": "c_1801_partial_fractions",
           "name": "Partial Fractions",
           "nameZh": "部分分式",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_1801_improper_int",
           "name": "Improper Integrals",
           "nameZh": "广义积分",
           "defaultOrder": 2,
+          "centrality": 0.0634,
           "visual": "function",
           "visualHint": "Plot f(x) with the upper bound b→∞; show the accumulating area and whether it converges to a finite value."
         },
@@ -309,6 +327,7 @@
           "name": "Area Between Curves",
           "nameZh": "曲线间面积",
           "defaultOrder": 3,
+          "centrality": 0.0459,
           "visual": "interactive",
           "visualHint": "Shade the region between two draggable curves over [a,b] and show the integral of their difference."
         }
@@ -341,6 +360,7 @@
           "name": "Volumes of Solids",
           "nameZh": "立体体积",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Rotate a region about an axis into a solid; slider sweeps a disk/washer cross-section and shows the volume integral."
         },
@@ -349,6 +369,7 @@
           "name": "Arc Length",
           "nameZh": "弧长",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Approximate a curve's length with a slider for the number of straight segments converging to the arc-length integral."
         },
@@ -356,7 +377,8 @@
           "conceptId": "c_1801_work",
           "name": "Work",
           "nameZh": "功",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -377,6 +399,7 @@
           "name": "Sequences and Series",
           "nameZh": "序列与级数",
           "defaultOrder": 1,
+          "centrality": 0.0634,
           "visual": "chart",
           "visualHint": "Plot sequence terms and their partial sums against n to show convergence or divergence."
         },
@@ -385,6 +408,7 @@
           "name": "Convergence Tests",
           "nameZh": "收敛性检验",
           "defaultOrder": 2,
+          "centrality": 0.0908,
           "visual": "diagram",
           "visualHint": "Decision-tree diagram choosing a convergence test (integral / comparison / ratio / root) from the series' form."
         }
@@ -412,6 +436,7 @@
           "name": "Power Series",
           "nameZh": "幂级数",
           "defaultOrder": 1,
+          "centrality": 0.0776,
           "visual": "function",
           "visualHint": "Plot a function against its power-series partial sums; slider for term count and shade the interval of convergence."
         },
@@ -420,6 +445,7 @@
           "name": "Taylor Series",
           "nameZh": "泰勒级数",
           "defaultOrder": 2,
+          "centrality": 0.1243,
           "visual": "function",
           "visualHint": "Plot f(x) and its Taylor polynomial about a; slider for degree n to watch it hug the curve."
         }
@@ -442,6 +468,7 @@
           "name": "Dot Product",
           "nameZh": "点积",
           "defaultOrder": 1,
+          "centrality": 0.1839,
           "visual": "interactive",
           "visualHint": "Drag two vectors; show the dot product, the projection of one onto the other, and the angle between them."
         },
@@ -450,6 +477,7 @@
           "name": "Cross Product",
           "nameZh": "叉积",
           "defaultOrder": 2,
+          "centrality": 0.0526,
           "visual": "interactive",
           "visualHint": "Drag two 3D vectors; show the perpendicular cross-product vector and the parallelogram area its magnitude measures."
         }
@@ -482,6 +510,7 @@
           "name": "Lines and Planes",
           "nameZh": "直线与平面",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Show a line or plane in 3D from a point and a direction/normal; drag to watch its equation update."
         },
@@ -490,6 +519,7 @@
           "name": "Parametric Curves",
           "nameZh": "参数曲线",
           "defaultOrder": 2,
+          "centrality": 0.0946,
           "visual": "function",
           "visualHint": "Trace a parametric curve r(t) with a slider for t showing the position, velocity, and acceleration vectors."
         }
@@ -521,6 +551,7 @@
           "name": "Multivariable Functions",
           "nameZh": "多元函数",
           "defaultOrder": 1,
+          "centrality": 0.1557,
           "visual": "interactive",
           "visualHint": "Show a surface z=f(x,y) with its level curves; drag to rotate and read heights off the contours."
         },
@@ -529,6 +560,7 @@
           "name": "Partial Derivatives",
           "nameZh": "偏导数",
           "defaultOrder": 2,
+          "centrality": 0.178,
           "visual": "interactive",
           "visualHint": "Slice a surface z=f(x,y) along x and y at a point and show the two partial-derivative slopes."
         }
@@ -575,6 +607,7 @@
           "name": "Multivariable Chain Rule",
           "nameZh": "多元链式法则",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Dependency-tree diagram of the variables, showing each path's contribution in the multivariable chain rule."
         },
@@ -583,6 +616,7 @@
           "name": "Gradient and Directional Derivative",
           "nameZh": "梯度与方向导数",
           "defaultOrder": 2,
+          "centrality": 0.15,
           "visual": "interactive",
           "visualHint": "On a contour plot show the gradient pointing to steepest increase; drag a direction to compare the directional derivative."
         }
@@ -619,6 +653,7 @@
           "name": "Tangent Planes",
           "nameZh": "切平面",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Show the tangent plane touching a surface z=f(x,y) at a draggable point."
         },
@@ -627,6 +662,7 @@
           "name": "Local Extrema",
           "nameZh": "局部极值",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Surface with maxima, minima, and saddles marked; apply the second-derivative test at a draggable critical point."
         }
@@ -649,6 +685,7 @@
           "name": "Lagrange Multipliers",
           "nameZh": "拉格朗日乘数",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "interactive",
           "visualHint": "Contour plot with a constraint curve, showing where the objective and constraint gradients align at the optimum."
         },
@@ -656,7 +693,8 @@
           "conceptId": "c_1802_differentials",
           "name": "Differentials",
           "nameZh": "微分",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         }
       ],
       "successors": [],
@@ -677,6 +715,7 @@
           "name": "Double Integrals",
           "nameZh": "二重积分",
           "defaultOrder": 1,
+          "centrality": 0.1299,
           "visual": "interactive",
           "visualHint": "Show a planar region and the volume under z=f(x,y); sweep the integration to build up the double integral."
         },
@@ -685,6 +724,7 @@
           "name": "Polar Integrals",
           "nameZh": "极坐标积分",
           "defaultOrder": 2,
+          "centrality": 0.0353,
           "visual": "interactive",
           "visualHint": "Show a polar region with the r·dr·dθ area element; sweep θ to build the polar double integral."
         },
@@ -692,7 +732,8 @@
           "conceptId": "c_1802_triple_integrals",
           "name": "Triple Integrals",
           "nameZh": "三重积分",
-          "defaultOrder": 3
+          "defaultOrder": 3,
+          "centrality": 0.0424
         }
       ],
       "successors": [
@@ -729,19 +770,22 @@
           "conceptId": "c_1802_cyl_spherical",
           "name": "Cylindrical and Spherical Coordinates",
           "nameZh": "柱面与球坐标",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_1802_jacobians",
           "name": "Change of Variables",
           "nameZh": "变量变换",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0248
         },
         {
           "conceptId": "c_1802_vector_fields",
           "name": "Vector Fields",
           "nameZh": "向量场",
           "defaultOrder": 3,
+          "centrality": 0.0618,
           "visual": "interactive",
           "visualHint": "Plot a 2D vector field; drop a particle to trace its path and accumulate a line integral along a curve."
         }
@@ -770,6 +814,7 @@
           "name": "Fundamental Theorem for Line Integrals",
           "nameZh": "线积分基本定理",
           "defaultOrder": 1,
+          "centrality": 0.0301,
           "visual": "diagram",
           "visualHint": "Diagram contrasting path-dependent integrals with path-independent ones in a conservative field."
         },
@@ -778,6 +823,7 @@
           "name": "Green's Theorem",
           "nameZh": "格林定理",
           "defaultOrder": 2,
+          "centrality": 0.0301,
           "visual": "interactive",
           "visualHint": "Show a closed curve and its enclosed region, relating the circulation line integral to the double integral of curl."
         },
@@ -786,6 +832,7 @@
           "name": "Curl and Divergence",
           "nameZh": "旋度与散度",
           "defaultOrder": 3,
+          "centrality": 0.0371,
           "visual": "interactive",
           "visualHint": "Vector field with a paddlewheel (curl) and a source/sink box (divergence) at a draggable point."
         }
@@ -815,13 +862,15 @@
           "conceptId": "c_1802_parametric_surfaces",
           "name": "Parametric Surfaces",
           "nameZh": "参数曲面",
-          "defaultOrder": 1
+          "defaultOrder": 1,
+          "centrality": 0.0406
         },
         {
           "conceptId": "c_1802_surface_integrals",
           "name": "Surface Integrals",
           "nameZh": "面积分",
-          "defaultOrder": 2
+          "defaultOrder": 2,
+          "centrality": 0.0371
         }
       ],
       "successors": [
@@ -848,6 +897,7 @@
           "name": "Stokes' Theorem",
           "nameZh": "斯托克斯定理",
           "defaultOrder": 1,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram relating the boundary-curve line integral to the surface integral of curl (Stokes)."
         },
@@ -856,6 +906,7 @@
           "name": "Divergence Theorem",
           "nameZh": "散度定理",
           "defaultOrder": 2,
+          "centrality": 0.0248,
           "visual": "diagram",
           "visualHint": "Diagram relating outward flux through a closed surface to the volume integral of divergence."
         }
@@ -867,6 +918,393 @@
         "t_1802_surface_int"
       ],
       "isRoot": false
+    }
+  ],
+  "conceptEdges": [
+    {
+      "from": "c_1801_area_curves",
+      "to": "c_1801_volume",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "c_1801_implicit_diff",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "c_1801_related_rates",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "c_1801_substitution",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "c_1802_multivar_chain",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_conv_tests",
+      "to": "c_1801_power_series",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1801_arc_length",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1801_area_curves",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1801_ftc",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1801_work",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_1802_double_integrals",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_def",
+      "to": "c_1801_deriv_rules",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_def",
+      "to": "c_1801_ftc",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_chain_rule",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_curve_sketching",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_linear_approx",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_mvt",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_parts",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1801_taylor_series",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1802_parametric_curves",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_deriv_rules",
+      "to": "c_1802_partial_derivs",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_ftc",
+      "to": "c_1801_improper_int",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_ftc",
+      "to": "c_1801_partial_fractions",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_ftc",
+      "to": "c_1801_substitution",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_ftc",
+      "to": "c_1802_fundamental_line",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1801_implicit_diff",
+      "to": "c_1801_related_rates",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1801_improper_int",
+      "to": "c_1801_conv_tests",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1801_limits",
+      "to": "c_1801_deriv_def",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_limits",
+      "to": "c_1801_improper_int",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_limits",
+      "to": "c_1801_riemann_sums",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_limits",
+      "to": "c_1801_sequences",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_limits",
+      "to": "c_1802_multivar_functions",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_mvt",
+      "to": "c_1801_ftc",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1801_power_series",
+      "to": "c_1801_taylor_series",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_riemann_sums",
+      "to": "c_1801_definite_integral",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_sequences",
+      "to": "c_1801_conv_tests",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_substitution",
+      "to": "c_1801_parts",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_substitution",
+      "to": "c_1801_trig_integrals",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1801_trig_integrals",
+      "to": "c_1801_trig_sub",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_cross_product",
+      "to": "c_1802_lines_planes",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_cross_product",
+      "to": "c_1802_parametric_surfaces",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_curl_div",
+      "to": "c_1802_divergence_theorem",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_curl_div",
+      "to": "c_1802_stokes_theorem",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_dot_product",
+      "to": "c_1802_cross_product",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_dot_product",
+      "to": "c_1802_gradient",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_dot_product",
+      "to": "c_1802_lines_planes",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_dot_product",
+      "to": "c_1802_parametric_curves",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_greens_theorem",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_jacobians",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_polar_integrals",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_surface_integrals",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_double_integrals",
+      "to": "c_1802_triple_integrals",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_fundamental_line",
+      "to": "c_1802_stokes_theorem",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "c_1802_fundamental_line",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "c_1802_lagrange",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "c_1802_tangent_planes",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_greens_theorem",
+      "to": "c_1802_stokes_theorem",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_multivar_functions",
+      "to": "c_1802_double_integrals",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_multivar_functions",
+      "to": "c_1802_partial_derivs",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_parametric_curves",
+      "to": "c_1802_parametric_surfaces",
+      "strength": "soft"
+    },
+    {
+      "from": "c_1802_parametric_curves",
+      "to": "c_1802_vector_fields",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_parametric_surfaces",
+      "to": "c_1802_surface_integrals",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_curl_div",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_differentials",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_gradient",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_jacobians",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_local_extrema",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_multivar_chain",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_partial_derivs",
+      "to": "c_1802_tangent_planes",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_polar_integrals",
+      "to": "c_1802_cyl_spherical",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_surface_integrals",
+      "to": "c_1802_divergence_theorem",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_surface_integrals",
+      "to": "c_1802_stokes_theorem",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_triple_integrals",
+      "to": "c_1802_cyl_spherical",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_triple_integrals",
+      "to": "c_1802_divergence_theorem",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_vector_fields",
+      "to": "c_1802_curl_div",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_vector_fields",
+      "to": "c_1802_fundamental_line",
+      "strength": "hard"
+    },
+    {
+      "from": "c_1802_vector_fields",
+      "to": "c_1802_greens_theorem",
+      "strength": "hard"
     }
   ]
 }

@@ -192,6 +192,7 @@
       "topic": "t_1801_differentiation",
       "description": "The limit formalising the value a function approaches near a point, made rigorous by the epsilon-delta definition, with continuity meaning the limit equals the function value.",
       "default_order": 1,
+      "centrality": 0.783,
       "name_zh": "极限与连续",
       "visual": "function",
       "visual_hint": "Plot f(x) with a draggable point approaching a; show the limit value as the point nears a from both sides."
@@ -203,6 +204,7 @@
       "topic": "t_1801_differentiation",
       "description": "The derivative defined as the limit of difference quotients, giving the instantaneous rate of change and the slope of the tangent line to a curve.",
       "default_order": 2,
+      "centrality": 0.4434,
       "name_zh": "导数定义",
       "visual": "function",
       "visual_hint": "Slider for h: draw the secant through (x,f(x)) and (x+h,f(x+h)) collapsing to the tangent as h→0."
@@ -214,6 +216,7 @@
       "topic": "t_1801_differentiation",
       "description": "Rules for differentiating combinations of functions, including the power, product, and quotient rules, enabling derivatives without returning to the limit definition.",
       "default_order": 3,
+      "centrality": 0.4319,
       "name_zh": "微分法则"
     },
     {
@@ -223,6 +226,7 @@
       "topic": "t_1801_diff_techniques",
       "description": "The chain rule differentiating a composite function as the derivative of the outer function times the derivative of the inner function.",
       "default_order": 1,
+      "centrality": 0.1617,
       "name_zh": "链式法则"
     },
     {
@@ -232,6 +236,7 @@
       "topic": "t_1801_diff_techniques",
       "description": "Implicit differentiation finding derivatives of relations not solved for one variable by differentiating both sides and solving for the derivative.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "隐函数微分",
       "visual": "function",
       "visual_hint": "Plot an implicit relation (e.g. x²+y²=25) and show the tangent slope at a draggable point on the curve."
@@ -243,6 +248,7 @@
       "topic": "t_1801_diff_techniques",
       "description": "Related-rates problems linking the time derivatives of related quantities through an equation, solving for one unknown rate given the others.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "相关变化率"
     },
     {
@@ -252,6 +258,7 @@
       "topic": "t_1801_apps_diff",
       "description": "Linear approximation using the tangent line to estimate function values near a point, the basis of differentials and Newton's method.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "线性近似",
       "visual": "function",
       "visual_hint": "Plot f(x) and its tangent line at a; slider for x comparing the true value against the linear approximation."
@@ -263,6 +270,7 @@
       "topic": "t_1801_apps_diff",
       "description": "Using first and second derivatives to locate extrema, intervals of increase and decrease, concavity, and inflection points to sketch a curve.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "曲线草图",
       "visual": "function",
       "visual_hint": "Plot f(x) with toggles for f′ and f″; mark extrema, inflection points, and increase/decrease intervals."
@@ -274,6 +282,7 @@
       "topic": "t_1801_apps_diff",
       "description": "The mean value theorem guaranteeing a point where the instantaneous rate of change equals the average rate over an interval, with key consequences.",
       "default_order": 3,
+      "centrality": 0.0568,
       "name_zh": "中值定理",
       "visual": "function",
       "visual_hint": "Plot f on [a,b] with the secant line and a draggable point c where the tangent is parallel to the secant."
@@ -285,6 +294,7 @@
       "topic": "t_1801_integration",
       "description": "Riemann sums approximating the area under a curve by summing the areas of rectangles, whose limit defines the definite integral.",
       "default_order": 1,
+      "centrality": 0.1979,
       "name_zh": "黎曼和",
       "visual": "interactive",
       "visual_hint": "Slider for rectangle count n; draw left/right/midpoint Riemann rectangles under f(x) and show the sum approaching the area."
@@ -296,6 +306,7 @@
       "topic": "t_1801_integration",
       "description": "The definite integral defined as the limit of Riemann sums, giving the signed area under a curve, with linearity and additivity properties.",
       "default_order": 2,
+      "centrality": 0.2036,
       "name_zh": "定积分",
       "visual": "interactive",
       "visual_hint": "Shade signed area under f(x) between draggable bounds a,b; colour positive/negative regions and show the integral value."
@@ -307,6 +318,7 @@
       "topic": "t_1801_integration_1801_ftc",
       "description": "The fundamental theorem of calculus linking differentiation and integration, evaluating definite integrals via antiderivatives and differentiating integral functions.",
       "default_order": 1,
+      "centrality": 0.1129,
       "name_zh": "微积分基本定理",
       "visual": "interactive",
       "visual_hint": "Animate the accumulation function A(x)=∫ₐˣ f as x moves, showing A′(x)=f(x)."
@@ -318,6 +330,7 @@
       "topic": "t_1801_integration_1801_ftc",
       "description": "Integration by substitution reversing the chain rule by changing variables to transform an integral into a simpler, recognisable form.",
       "default_order": 2,
+      "centrality": 0.0743,
       "name_zh": "换元积分法"
     },
     {
@@ -327,6 +340,7 @@
       "topic": "t_1801_tech_int",
       "description": "Integration by parts reversing the product rule to integrate products of functions, trading one integral for an often simpler one.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "分部积分法"
     },
     {
@@ -336,6 +350,7 @@
       "topic": "t_1801_tech_int",
       "description": "Techniques for integrating products and powers of trigonometric functions using identities to reduce them to directly integrable forms.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "三角积分"
     },
     {
@@ -345,6 +360,7 @@
       "topic": "t_1801_tech_int",
       "description": "Trigonometric substitution evaluating integrals containing quadratic radicals by substituting trigonometric functions and applying identities.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "三角换元"
     },
     {
@@ -354,6 +370,7 @@
       "topic": "t_1801_int_techniques_area",
       "description": "Partial-fraction decomposition rewriting a rational function as a sum of simpler fractions that can be integrated term by term.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "部分分式"
     },
     {
@@ -363,6 +380,7 @@
       "topic": "t_1801_int_techniques_area",
       "description": "Improper integrals defined by limits, evaluating integrals over infinite intervals or with unbounded integrands and testing for convergence.",
       "default_order": 2,
+      "centrality": 0.0634,
       "name_zh": "广义积分",
       "visual": "function",
       "visual_hint": "Plot f(x) with the upper bound b→∞; show the accumulating area and whether it converges to a finite value."
@@ -374,6 +392,7 @@
       "topic": "t_1801_int_techniques_area",
       "description": "Computing the area between two curves by integrating the difference of their functions over the interval where they bound a region.",
       "default_order": 3,
+      "centrality": 0.0459,
       "name_zh": "曲线间面积",
       "visual": "interactive",
       "visual_hint": "Shade the region between two draggable curves over [a,b] and show the integral of their difference."
@@ -385,6 +404,7 @@
       "topic": "t_1801_apps_int",
       "description": "Computing volumes of solids of revolution and general solids using slicing, disk, washer, and cylindrical-shell integration methods.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "立体体积",
       "visual": "interactive",
       "visual_hint": "Rotate a region about an axis into a solid; slider sweeps a disk/washer cross-section and shows the volume integral."
@@ -396,6 +416,7 @@
       "topic": "t_1801_apps_int",
       "description": "Computing the length of a plane curve by integrating the arc-length element derived from the Pythagorean relationship of differentials.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "弧长",
       "visual": "function",
       "visual_hint": "Approximate a curve's length with a slider for the number of straight segments converging to the arc-length integral."
@@ -407,6 +428,7 @@
       "topic": "t_1801_apps_int",
       "description": "Computing physical work done by a variable force by integrating force over displacement, applied to springs, pumping, and lifting problems.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "功"
     },
     {
@@ -416,6 +438,7 @@
       "topic": "t_1801_series",
       "description": "Sequences as ordered lists of numbers and series as their sums, with convergence describing whether they approach a finite limit.",
       "default_order": 1,
+      "centrality": 0.0634,
       "name_zh": "序列与级数",
       "visual": "chart",
       "visual_hint": "Plot sequence terms and their partial sums against n to show convergence or divergence."
@@ -427,6 +450,7 @@
       "topic": "t_1801_series",
       "description": "Tests for series convergence, including the integral, comparison, ratio, and root tests, determining whether an infinite series sums to a finite value.",
       "default_order": 2,
+      "centrality": 0.0908,
       "name_zh": "收敛性检验",
       "visual": "diagram",
       "visual_hint": "Decision-tree diagram choosing a convergence test (integral / comparison / ratio / root) from the series' form."
@@ -438,6 +462,7 @@
       "topic": "t_1801_series_1801_power_series",
       "description": "Power series representing functions as infinite polynomials, with a radius and interval of convergence determining where they converge.",
       "default_order": 1,
+      "centrality": 0.0776,
       "name_zh": "幂级数",
       "visual": "function",
       "visual_hint": "Plot a function against its power-series partial sums; slider for term count and shade the interval of convergence."
@@ -449,6 +474,7 @@
       "topic": "t_1801_series_1801_power_series",
       "description": "Taylor and Maclaurin series expanding a function as a power series about a point using its derivatives, approximating functions locally.",
       "default_order": 2,
+      "centrality": 0.1243,
       "name_zh": "泰勒级数",
       "visual": "function",
       "visual_hint": "Plot f(x) and its Taylor polynomial about a; slider for degree n to watch it hug the curve."
@@ -460,6 +486,7 @@
       "topic": "t_1802_vectors",
       "description": "Vectors with magnitude and direction, and the dot product measuring projection and the angle between them, yielding a scalar from two vectors.",
       "default_order": 1,
+      "centrality": 0.1839,
       "name_zh": "点积",
       "visual": "interactive",
       "visual_hint": "Drag two vectors; show the dot product, the projection of one onto the other, and the angle between them."
@@ -471,6 +498,7 @@
       "topic": "t_1802_vectors",
       "description": "The cross product of two vectors producing a vector perpendicular to both, whose magnitude equals the area of the parallelogram they span.",
       "default_order": 2,
+      "centrality": 0.0526,
       "name_zh": "叉积",
       "visual": "interactive",
       "visual_hint": "Drag two 3D vectors; show the perpendicular cross-product vector and the parallelogram area its magnitude measures."
@@ -482,6 +510,7 @@
       "topic": "t_1802_vectors_1802_lines_planes",
       "description": "Equations of lines and planes in three-dimensional space using points, direction vectors, and normal vectors in vector and scalar forms.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "直线与平面",
       "visual": "interactive",
       "visual_hint": "Show a line or plane in 3D from a point and a direction/normal; drag to watch its equation update."
@@ -493,6 +522,7 @@
       "topic": "t_1802_vectors_1802_lines_planes",
       "description": "Vector-valued functions tracing curves in space, whose derivatives give the velocity and acceleration along the parametrised path.",
       "default_order": 2,
+      "centrality": 0.0946,
       "name_zh": "参数曲线",
       "visual": "function",
       "visual_hint": "Trace a parametric curve r(t) with a slider for t showing the position, velocity, and acceleration vectors."
@@ -504,6 +534,7 @@
       "topic": "t_1802_partial_diff",
       "description": "Functions of several variables mapping points to values, visualised through level curves and surfaces, generalising single-variable functions.",
       "default_order": 1,
+      "centrality": 0.1557,
       "name_zh": "多元函数",
       "visual": "interactive",
       "visual_hint": "Show a surface z=f(x,y) with its level curves; drag to rotate and read heights off the contours."
@@ -515,6 +546,7 @@
       "topic": "t_1802_partial_diff",
       "description": "Partial derivatives measuring the rate of change of a multivariable function with respect to one variable while holding the others fixed.",
       "default_order": 2,
+      "centrality": 0.178,
       "name_zh": "偏导数",
       "visual": "interactive",
       "visual_hint": "Slice a surface z=f(x,y) along x and y at a point and show the two partial-derivative slopes."
@@ -526,6 +558,7 @@
       "topic": "t_1802_partial_diff_1802_multivar_chain",
       "description": "The multivariable chain rule differentiating compositions of several-variable functions by summing contributions through each intermediate variable.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "多元链式法则",
       "visual": "diagram",
       "visual_hint": "Dependency-tree diagram of the variables, showing each path's contribution in the multivariable chain rule."
@@ -537,6 +570,7 @@
       "topic": "t_1802_partial_diff_1802_multivar_chain",
       "description": "The gradient vector of partial derivatives pointing in the direction of steepest increase, with directional derivatives giving rates along any direction.",
       "default_order": 2,
+      "centrality": 0.15,
       "name_zh": "梯度与方向导数",
       "visual": "interactive",
       "visual_hint": "On a contour plot show the gradient pointing to steepest increase; drag a direction to compare the directional derivative."
@@ -548,6 +582,7 @@
       "topic": "t_1802_apps_partial",
       "description": "The tangent plane approximating a surface near a point, generalising the tangent line and providing linear approximation in several variables.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "切平面",
       "visual": "interactive",
       "visual_hint": "Show the tangent plane touching a surface z=f(x,y) at a draggable point."
@@ -559,6 +594,7 @@
       "topic": "t_1802_apps_partial",
       "description": "Finding local maxima, minima, and saddle points of multivariable functions using critical points and the second-derivative (Hessian) test.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "局部极值",
       "visual": "interactive",
       "visual_hint": "Surface with maxima, minima, and saddles marked; apply the second-derivative test at a draggable critical point."
@@ -570,6 +606,7 @@
       "topic": "t_1802_apps_partial_1802_lagrange",
       "description": "Lagrange multipliers optimising a function subject to constraints by setting its gradient proportional to the constraint gradients.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "拉格朗日乘数",
       "visual": "interactive",
       "visual_hint": "Contour plot with a constraint curve, showing where the objective and constraint gradients align at the optimum."
@@ -581,6 +618,7 @@
       "topic": "t_1802_apps_partial_1802_lagrange",
       "description": "Differentials approximating small changes in a multivariable function from changes in its inputs, used for linear approximation and error estimation.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "微分"
     },
     {
@@ -590,6 +628,7 @@
       "topic": "t_1802_multiple_int",
       "description": "Double integrals computing volume and accumulated quantities over two-dimensional regions, evaluated as iterated single integrals.",
       "default_order": 1,
+      "centrality": 0.1299,
       "name_zh": "二重积分",
       "visual": "interactive",
       "visual_hint": "Show a planar region and the volume under z=f(x,y); sweep the integration to build up the double integral."
@@ -601,6 +640,7 @@
       "topic": "t_1802_multiple_int",
       "description": "Evaluating double integrals in polar coordinates, where the area element gains a factor of r, simplifying circular and radial regions.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "极坐标积分",
       "visual": "interactive",
       "visual_hint": "Show a polar region with the r·dr·dθ area element; sweep θ to build the polar double integral."
@@ -612,6 +652,7 @@
       "topic": "t_1802_multiple_int",
       "description": "Triple integrals computing volume and accumulated quantities over three-dimensional regions, evaluated as iterated single integrals.",
       "default_order": 3,
+      "centrality": 0.0424,
       "name_zh": "三重积分"
     },
     {
@@ -621,6 +662,7 @@
       "topic": "t_1802_coord_vector_fields",
       "description": "Triple integration in cylindrical and spherical coordinates, with appropriate volume elements simplifying problems with axial or spherical symmetry.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "柱面与球坐标"
     },
     {
@@ -630,6 +672,7 @@
       "topic": "t_1802_coord_vector_fields",
       "description": "Change of variables in multiple integrals using the Jacobian determinant to account for how the transformation scales area or volume.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "变量变换"
     },
     {
@@ -639,6 +682,7 @@
       "topic": "t_1802_coord_vector_fields",
       "description": "Vector fields assigning a vector to each point, and line integrals accumulating a field's effect along a curve, modelling work and flow.",
       "default_order": 3,
+      "centrality": 0.0618,
       "name_zh": "向量场",
       "visual": "interactive",
       "visual_hint": "Plot a 2D vector field; drop a particle to trace its path and accumulate a line integral along a curve."
@@ -650,6 +694,7 @@
       "topic": "t_1802_vector_calc",
       "description": "The fundamental theorem for line integrals showing conservative fields have path-independent integrals computed from a potential function.",
       "default_order": 1,
+      "centrality": 0.0301,
       "name_zh": "线积分基本定理",
       "visual": "diagram",
       "visual_hint": "Diagram contrasting path-dependent integrals with path-independent ones in a conservative field."
@@ -661,6 +706,7 @@
       "topic": "t_1802_vector_calc",
       "description": "Green's theorem relating a line integral around a closed plane curve to a double integral of curl over the enclosed region.",
       "default_order": 2,
+      "centrality": 0.0301,
       "name_zh": "格林定理",
       "visual": "interactive",
       "visual_hint": "Show a closed curve and its enclosed region, relating the circulation line integral to the double integral of curl."
@@ -672,6 +718,7 @@
       "topic": "t_1802_vector_calc",
       "description": "Curl measuring a vector field's local rotation and divergence measuring its net outward flux per unit volume, fundamental differential operators.",
       "default_order": 3,
+      "centrality": 0.0371,
       "name_zh": "旋度与散度",
       "visual": "interactive",
       "visual_hint": "Vector field with a paddlewheel (curl) and a source/sink box (divergence) at a draggable point."
@@ -683,6 +730,7 @@
       "topic": "t_1802_surface_int",
       "description": "Parametric representations of surfaces using two parameters, enabling computation of surface area through the cross product of partial derivatives.",
       "default_order": 1,
+      "centrality": 0.0406,
       "name_zh": "参数曲面"
     },
     {
@@ -692,6 +740,7 @@
       "topic": "t_1802_surface_int",
       "description": "Surface integrals accumulating a scalar field or the flux of a vector field across a surface, generalising double integrals to curved surfaces.",
       "default_order": 2,
+      "centrality": 0.0371,
       "name_zh": "面积分"
     },
     {
@@ -701,6 +750,7 @@
       "topic": "t_1802_surface_int_1802_stokes_theorem",
       "description": "Stokes' theorem relating the line integral of a field around a closed curve to the surface integral of its curl over a bounded surface.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "斯托克斯定理",
       "visual": "diagram",
       "visual_hint": "Diagram relating the boundary-curve line integral to the surface integral of curl (Stokes)."
@@ -712,6 +762,7 @@
       "topic": "t_1802_surface_int_1802_stokes_theorem",
       "description": "The divergence theorem relating the outward flux of a vector field through a closed surface to the triple integral of its divergence inside.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "散度定理",
       "visual": "diagram",
       "visual_hint": "Diagram relating outward flux through a closed surface to the volume integral of divergence."

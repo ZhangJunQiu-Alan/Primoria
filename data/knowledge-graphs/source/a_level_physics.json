@@ -345,6 +345,7 @@
       "topic": "phy_measurement",
       "description": "The seven SI base units from which all other units are derived, used to express physical quantities consistently in measurement and calculation.",
       "default_order": 1,
+      "centrality": 0.1494,
       "name_zh": "SI基本单位"
     },
     {
@@ -354,6 +355,7 @@
       "topic": "phy_measurement",
       "description": "Checking the homogeneity of an equation by ensuring both sides have the same base units, a test of its dimensional consistency.",
       "default_order": 2,
+      "centrality": 0.1466,
       "name_zh": "方程齐次性"
     },
     {
@@ -363,6 +365,7 @@
       "topic": "phy_measurement",
       "description": "The distinction between scalar quantities having only magnitude and vector quantities having both magnitude and direction, with vector addition and resolution.",
       "default_order": 3,
+      "centrality": 0.4299,
       "name_zh": "标量与矢量"
     },
     {
@@ -372,6 +375,7 @@
       "topic": "phy_measurement_motion",
       "description": "Systematic and random errors in measurement, and expressing the uncertainty of a reading as an absolute, fractional, or percentage uncertainty.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "误差与不确定度"
     },
     {
@@ -381,6 +385,7 @@
       "topic": "phy_measurement_motion",
       "description": "Combining uncertainties through calculations by adding absolute uncertainties for sums and fractional uncertainties for products and powers.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "不确定度合成"
     },
     {
@@ -390,6 +395,7 @@
       "topic": "phy_measurement_motion_phy_motion_quantities",
       "description": "Displacement, velocity, and acceleration as related vector quantities describing motion, defined through rates of change of position.",
       "default_order": 1,
+      "centrality": 0.4308,
       "name_zh": "位移速度加速度"
     },
     {
@@ -399,6 +405,7 @@
       "topic": "phy_measurement_motion_phy_motion_quantities",
       "description": "The equations of motion for uniform acceleration relating displacement, initial and final velocity, acceleration, and time.",
       "default_order": 2,
+      "centrality": 0.4776,
       "name_zh": "运动方程",
       "visual": "simulation",
       "visual_hint": "Animate uniform-acceleration motion with adjustable acceleration and initial velocity."
@@ -410,6 +417,7 @@
       "topic": "phy_kinematics",
       "description": "Interpreting displacement-time and velocity-time graphs, where gradients give velocity and acceleration and areas give displacement.",
       "default_order": 1,
+      "centrality": 0.0548,
       "name_zh": "运动图像",
       "visual": "function",
       "visual_hint": "Plot displacement-time and velocity-time graphs, relating gradients and areas."
@@ -421,6 +429,7 @@
       "topic": "phy_kinematics",
       "description": "Motion under gravity alone with constant acceleration g, including the experimental determination of the acceleration of free fall.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "自由落体",
       "visual": "simulation",
       "visual_hint": "Drop an object under gravity showing constant acceleration g."
@@ -432,6 +441,7 @@
       "topic": "phy_kinematics",
       "description": "Projectile motion analysed by treating the horizontal and vertical components independently under constant gravitational acceleration.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "抛体运动",
       "visual": "simulation",
       "visual_hint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
@@ -443,6 +453,7 @@
       "topic": "phy_dynamics",
       "description": "Newton's three laws of motion relating force, mass, and acceleration and describing action-reaction force pairs.",
       "default_order": 1,
+      "centrality": 0.391,
       "name_zh": "牛顿运动定律",
       "visual": "simulation",
       "visual_hint": "Apply a force to a mass and watch the resulting acceleration."
@@ -454,6 +465,7 @@
       "topic": "phy_dynamics",
       "description": "The distinction between mass as the amount of matter and weight as the gravitational force on a mass, related by the field strength g.",
       "default_order": 2,
+      "centrality": 0.0717,
       "name_zh": "质量与重量"
     },
     {
@@ -463,6 +475,7 @@
       "topic": "phy_dynamics",
       "description": "Linear momentum as the product of mass and velocity, a vector quantity central to analysing motion and collisions.",
       "default_order": 3,
+      "centrality": 0.1104,
       "name_zh": "线性动量"
     },
     {
@@ -472,6 +485,7 @@
       "topic": "phy_momentum_forces",
       "description": "The principle of conservation of momentum, where total momentum is conserved in a closed system with no external resultant force.",
       "default_order": 1,
+      "centrality": 0.1007,
       "name_zh": "动量守恒",
       "visual": "simulation",
       "visual_hint": "Animate a collision conserving total momentum."
@@ -483,6 +497,7 @@
       "topic": "phy_momentum_forces",
       "description": "Impulse as the product of force and time, equal to the change in momentum, applied to analyse elastic and inelastic collisions.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "冲量与碰撞"
     },
     {
@@ -492,6 +507,7 @@
       "topic": "phy_momentum_forces_phy_force_types",
       "description": "The types of force acting on bodies, including gravitational, normal contact, friction, tension, and upthrust forces.",
       "default_order": 1,
+      "centrality": 0.1567,
       "name_zh": "力的类型"
     },
     {
@@ -501,6 +517,7 @@
       "topic": "phy_momentum_forces_phy_force_types",
       "description": "The moment of a force as force times perpendicular distance, and couples producing rotation, with the principle of moments for equilibrium.",
       "default_order": 2,
+      "centrality": 0.0519,
       "name_zh": "力矩与力偶",
       "visual": "interactive",
       "visual_hint": "Balance a beam by adjusting forces and distances (moments)."
@@ -512,6 +529,7 @@
       "topic": "phy_forces",
       "description": "The conditions for equilibrium, where both the resultant force and the resultant moment acting on a body are zero.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "力的平衡"
     },
     {
@@ -521,6 +539,7 @@
       "topic": "phy_forces",
       "description": "Density as mass per unit volume and pressure as force per unit area, including the variation of pressure with depth in a fluid.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "密度与压强"
     },
     {
@@ -530,6 +549,7 @@
       "topic": "phy_forces",
       "description": "Upthrust as the buoyant force on a body in a fluid, equal by Archimedes' principle to the weight of fluid displaced.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "浮力与阿基米德",
       "visual": "simulation",
       "visual_hint": "Float or sink an object showing upthrust versus weight."
@@ -541,6 +561,7 @@
       "topic": "phy_work_energy",
       "description": "Work done as the product of force and displacement in the direction of the force, transferring energy to or from a system.",
       "default_order": 1,
+      "centrality": 0.1075,
       "name_zh": "做功"
     },
     {
@@ -550,6 +571,7 @@
       "topic": "phy_work_energy",
       "description": "Kinetic energy of a moving body and gravitational potential energy due to position, with their defining formulae.",
       "default_order": 2,
+      "centrality": 0.0973,
       "name_zh": "动能与势能"
     },
     {
@@ -559,6 +581,7 @@
       "topic": "phy_work_energy_phy_energy_conservation",
       "description": "The principle of conservation of energy, where energy is transferred between forms but the total amount remains constant.",
       "default_order": 1,
+      "centrality": 0.073,
       "name_zh": "能量守恒"
     },
     {
@@ -568,6 +591,7 @@
       "topic": "phy_work_energy_phy_energy_conservation",
       "description": "Power as the rate of doing work or transferring energy, and efficiency as the ratio of useful output to total input energy.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "功率与效率"
     },
     {
@@ -577,6 +601,7 @@
       "topic": "phy_deformation",
       "description": "Hooke's law stating that the extension of a spring is proportional to the applied force up to the limit of proportionality.",
       "default_order": 1,
+      "centrality": 0.0714,
       "name_zh": "胡克定律",
       "visual": "function",
       "visual_hint": "Plot force against extension for a spring with a slider for stiffness."
@@ -588,6 +613,7 @@
       "topic": "phy_deformation",
       "description": "Tensile stress as force per unit area and strain as fractional extension, related by the Young modulus for an elastic material.",
       "default_order": 2,
+      "centrality": 0.0548,
       "name_zh": "应力、应变与杨氏模量",
       "visual": "function",
       "visual_hint": "Plot a stress-strain curve up to fracture."
@@ -599,6 +625,7 @@
       "topic": "phy_deformation_phy_elastic_plastic",
       "description": "Elastic behaviour where a material returns to its original shape and plastic behaviour where deformation is permanent beyond the elastic limit.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "弹性与塑性行为"
     },
     {
@@ -608,6 +635,7 @@
       "topic": "phy_deformation_phy_elastic_plastic",
       "description": "Elastic strain energy stored in a deformed material, equal to the area under its force-extension graph.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "弹性势能"
     },
     {
@@ -617,6 +645,7 @@
       "topic": "phy_waves",
       "description": "Progressive waves transferring energy through a medium, described by displacement, amplitude, wavelength, frequency, and speed.",
       "default_order": 1,
+      "centrality": 0.3608,
       "name_zh": "行波",
       "visual": "function",
       "visual_hint": "Animate a progressive wave with sliders for amplitude, wavelength, and frequency."
@@ -628,6 +657,7 @@
       "topic": "phy_waves",
       "description": "The distinction between transverse waves oscillating perpendicular to the direction of travel and longitudinal waves oscillating parallel to it.",
       "default_order": 2,
+      "centrality": 0.3034,
       "name_zh": "横波与纵波",
       "visual": "interactive",
       "visual_hint": "Animate transverse versus longitudinal wave oscillation."
@@ -639,6 +669,7 @@
       "topic": "phy_waves",
       "description": "Wave intensity as power per unit area, proportional to the square of the amplitude and decreasing with distance from the source.",
       "default_order": 3,
+      "centrality": 0.3277,
       "name_zh": "波强度"
     },
     {
@@ -648,6 +679,7 @@
       "topic": "phy_waves_superposition",
       "description": "The electromagnetic spectrum of transverse waves travelling at the speed of light, ranging from radio waves to gamma rays.",
       "default_order": 1,
+      "centrality": 0.3045,
       "name_zh": "电磁波谱",
       "visual": "diagram",
       "visual_hint": "Labelled electromagnetic spectrum ordered by wavelength and frequency."
@@ -659,6 +691,7 @@
       "topic": "phy_waves_superposition",
       "description": "The Doppler effect, the change in observed frequency when a wave source and observer move relative to one another.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "多普勒效应",
       "visual": "simulation",
       "visual_hint": "Move a wave source and show the observed frequency shift (Doppler effect)."
@@ -670,6 +703,7 @@
       "topic": "phy_waves_superposition_phy_superposition_principle",
       "description": "The principle of superposition stating that when waves meet, the resultant displacement is the vector sum of the individual displacements.",
       "default_order": 1,
+      "centrality": 0.0919,
       "name_zh": "叠加原理"
     },
     {
@@ -679,6 +713,7 @@
       "topic": "phy_waves_superposition_phy_superposition_principle",
       "description": "Two-source interference producing constructive and destructive fringes where coherent waves meet in phase and out of phase.",
       "default_order": 2,
+      "centrality": 0.079,
       "name_zh": "双源干涉",
       "visual": "function",
       "visual_hint": "Two-source interference producing constructive and destructive fringes."
@@ -690,6 +725,7 @@
       "topic": "phy_superposition",
       "description": "The spreading of waves passing through a gap or around an obstacle, most pronounced when the gap is comparable to the wavelength.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "衍射"
     },
     {
@@ -699,6 +735,7 @@
       "topic": "phy_superposition",
       "description": "A diffraction grating producing sharp maxima at angles given by the grating equation, used to measure wavelength accurately.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "衍射光栅"
     },
     {
@@ -708,6 +745,7 @@
       "topic": "phy_superposition",
       "description": "Stationary waves formed by superposition of two opposite progressive waves, with fixed nodes and antinodes and no net energy transfer.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "驻波",
       "visual": "function",
       "visual_hint": "Animate a standing wave with nodes and antinodes; slider for the harmonic."
@@ -719,6 +757,7 @@
       "topic": "phy_electricity",
       "description": "Electric current as the rate of flow of charge, with charge quantised in units of the elementary charge carried by electrons.",
       "default_order": 1,
+      "centrality": 0.2021,
       "name_zh": "电流与电荷"
     },
     {
@@ -728,6 +767,7 @@
       "topic": "phy_electricity",
       "description": "Potential difference as energy transferred per unit charge by a component and electromotive force as energy supplied per unit charge by a source.",
       "default_order": 2,
+      "centrality": 0.1767,
       "name_zh": "电势差与EMF"
     },
     {
@@ -737,6 +777,7 @@
       "topic": "phy_electricity",
       "description": "Resistance as the ratio of potential difference to current, with Ohm's law holding when resistance is constant at fixed temperature.",
       "default_order": 3,
+      "centrality": 0.1325,
       "name_zh": "电阻与欧姆定律"
     },
     {
@@ -746,6 +787,7 @@
       "topic": "phy_circuits_kirchhoff",
       "description": "Resistivity as a material property relating a conductor's resistance to its length and cross-sectional area.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "电阻率"
     },
     {
@@ -755,6 +797,7 @@
       "topic": "phy_circuits_kirchhoff",
       "description": "Current-voltage characteristics of components such as resistors, filament lamps, and diodes, revealing their electrical behaviour.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "I-V特性",
       "visual": "function",
       "visual_hint": "Plot I-V characteristics for a resistor, filament lamp, and diode."
@@ -766,6 +809,7 @@
       "topic": "phy_circuits_kirchhoff",
       "description": "Kirchhoff's first and second laws expressing the conservation of charge at junctions and of energy around circuit loops.",
       "default_order": 3,
+      "centrality": 0.079,
       "name_zh": "基尔霍夫定律",
       "visual": "diagram",
       "visual_hint": "Circuit diagram applying Kirchhoff's current and voltage laws."
@@ -777,6 +821,7 @@
       "topic": "phy_dc_circuits",
       "description": "Combining resistors in series and parallel using the total-resistance rules derived from Kirchhoff's laws.",
       "default_order": 1,
+      "centrality": 0.0638,
       "name_zh": "串并联电阻",
       "visual": "interactive",
       "visual_hint": "Build series and parallel resistor networks and compute total resistance."
@@ -788,6 +833,7 @@
       "topic": "phy_dc_circuits",
       "description": "A potential divider using resistors in series to produce a desired fraction of the supply voltage, including with sensors.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "分压器",
       "visual": "interactive",
       "visual_hint": "Slider on a potential divider showing the output voltage."
@@ -799,6 +845,7 @@
       "topic": "phy_dc_circuits",
       "description": "The internal resistance of a source causing the terminal potential difference to fall below the EMF when current flows.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "内阻"
     },
     {
@@ -808,6 +855,7 @@
       "topic": "phy_circular",
       "description": "Angular displacement in radians and angular speed as the rate of change of angle, related to linear speed by the radius.",
       "default_order": 1,
+      "centrality": 0.0746,
       "name_zh": "弧度与角速度"
     },
     {
@@ -817,6 +865,7 @@
       "topic": "phy_circular",
       "description": "Centripetal acceleration directed toward the centre of a circular path, with magnitude expressed in terms of speed and radius.",
       "default_order": 2,
+      "centrality": 0.0586,
       "name_zh": "向心加速度"
     },
     {
@@ -826,6 +875,7 @@
       "topic": "phy_circular",
       "description": "The resultant centripetal force required for circular motion, directed toward the centre and provided by a real force.",
       "default_order": 3,
+      "centrality": 0.0794,
       "name_zh": "向心力",
       "visual": "simulation",
       "visual_hint": "Swing a mass in a circle, varying speed and radius for centripetal force."
@@ -837,6 +887,7 @@
       "topic": "phy_gravitation",
       "description": "Newton's law of gravitation stating the attractive force between two point masses is proportional to their product and inversely to distance squared.",
       "default_order": 1,
+      "centrality": 0.0774,
       "name_zh": "牛顿引力定律"
     },
     {
@@ -846,6 +897,7 @@
       "topic": "phy_gravitation",
       "description": "Gravitational field strength as the gravitational force per unit mass at a point, a vector directed toward the mass.",
       "default_order": 2,
+      "centrality": 0.0618,
       "name_zh": "引力场强度",
       "visual": "function",
       "visual_hint": "Plot gravitational field strength against distance (inverse square)."
@@ -857,6 +909,7 @@
       "topic": "phy_gravitation_phy_grav_potential",
       "description": "Gravitational potential as the work done per unit mass to bring a mass from infinity to a point, always negative.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "引力势"
     },
     {
@@ -866,6 +919,7 @@
       "topic": "phy_gravitation_phy_grav_potential",
       "description": "Orbital motion where gravitation provides the centripetal force, relating orbital speed, radius, and period as in Kepler's third law.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "轨道运动",
       "visual": "simulation",
       "visual_hint": "Orbit a satellite where gravity provides the centripetal force."
@@ -877,6 +931,7 @@
       "topic": "phy_oscillations",
       "description": "Simple harmonic motion where acceleration is proportional to displacement and directed toward equilibrium, producing sinusoidal motion.",
       "default_order": 1,
+      "centrality": 0.0519,
       "name_zh": "简谐运动",
       "visual": "simulation",
       "visual_hint": "Animate a pendulum or spring in simple harmonic motion and plot displacement."
@@ -888,6 +943,7 @@
       "topic": "phy_oscillations",
       "description": "The interchange between kinetic and potential energy in simple harmonic motion, with total energy constant in the absence of damping.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "SHM能量",
       "visual": "function",
       "visual_hint": "Plot the kinetic and potential energy interchange in SHM."
@@ -899,6 +955,7 @@
       "topic": "phy_oscillations_phy_damping",
       "description": "Damping reducing the amplitude of oscillations through energy loss, classified as light, critical, or heavy damping.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "阻尼"
     },
     {
@@ -908,6 +965,7 @@
       "topic": "phy_oscillations_phy_damping",
       "description": "Resonance where a system driven at its natural frequency oscillates with maximum amplitude, with damping reducing the peak.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "共振",
       "visual": "function",
       "visual_hint": "Plot amplitude against driving frequency showing a resonance peak."
@@ -919,6 +977,7 @@
       "topic": "phy_thermal",
       "description": "Temperature as a measure of the average kinetic energy of particles, with thermal equilibrium reached when no net heat flows.",
       "default_order": 1,
+      "centrality": 0.0925,
       "name_zh": "温度与热平衡"
     },
     {
@@ -928,6 +987,7 @@
       "topic": "phy_thermal",
       "description": "Specific heat capacity for raising temperature and specific latent heat for changes of state, relating energy to mass and temperature.",
       "default_order": 2,
+      "centrality": 0.0796,
       "name_zh": "比热与潜热"
     },
     {
@@ -937,6 +997,7 @@
       "topic": "phy_thermal_phy_kinetic_theory",
       "description": "The kinetic theory modelling a gas as many small particles in random motion, relating pressure to their mean square speed.",
       "default_order": 1,
+      "centrality": 0.129,
       "name_zh": "气体动理论",
       "visual": "simulation",
       "visual_hint": "Animate gas particles in random motion inside a box."
@@ -948,6 +1009,7 @@
       "topic": "phy_thermal_phy_kinetic_theory",
       "description": "The ideal gas equation pV equals nRT relating the pressure, volume, temperature, and amount of an ideal gas.",
       "default_order": 2,
+      "centrality": 0.0872,
       "name_zh": "理想气体定律",
       "visual": "function",
       "visual_hint": "Plot pV = nRT relationships between pressure, volume, and temperature."
@@ -959,6 +1021,7 @@
       "topic": "phy_thermal_phy_kinetic_theory",
       "description": "Internal energy as the sum of the random kinetic and potential energies of particles, and the first law relating it to heat and work.",
       "default_order": 3,
+      "centrality": 0.0735,
       "name_zh": "内能与第一定律"
     },
     {
@@ -968,6 +1031,7 @@
       "topic": "phy_electric_fields",
       "description": "Coulomb's law giving the electrostatic force between two point charges as proportional to their product and inversely to distance squared.",
       "default_order": 1,
+      "centrality": 0.0852,
       "name_zh": "库仑定律",
       "visual": "function",
       "visual_hint": "Plot the Coulomb force against separation (inverse square)."
@@ -979,6 +1043,7 @@
       "topic": "phy_electric_fields",
       "description": "Electric field strength as the force per unit positive charge at a point, a vector quantity directed along the field.",
       "default_order": 2,
+      "centrality": 0.0711,
       "name_zh": "电场强度",
       "visual": "interactive",
       "visual_hint": "Show electric field lines around point charges."
@@ -990,6 +1055,7 @@
       "topic": "phy_electric_fields_phy_e_potential",
       "description": "Electric potential as the work done per unit positive charge to bring a charge from infinity to a point in the field.",
       "default_order": 1,
+      "centrality": 0.0925,
       "name_zh": "电势"
     },
     {
@@ -999,6 +1065,7 @@
       "topic": "phy_electric_fields_phy_e_potential",
       "description": "The analogy between gravitational and electric fields in their inverse-square laws, field strength, and potential, noting key differences.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "引力场与电场类比"
     },
     {
@@ -1008,6 +1075,7 @@
       "topic": "phy_capacitance",
       "description": "Capacitance as the charge stored per unit potential difference, a measure of a capacitor's ability to store charge.",
       "default_order": 1,
+      "centrality": 0.0714,
       "name_zh": "电容"
     },
     {
@@ -1017,6 +1085,7 @@
       "topic": "phy_capacitance",
       "description": "Combining capacitors in series and parallel using the total-capacitance rules, which are opposite to those for resistors.",
       "default_order": 2,
+      "centrality": 0.0548,
       "name_zh": "串并联电容"
     },
     {
@@ -1026,6 +1095,7 @@
       "topic": "phy_capacitance_phy_capacitor_energy",
       "description": "The energy stored in a charged capacitor, equal to the area under its charge-voltage graph.",
       "default_order": 1,
+      "centrality": 0.0353,
       "name_zh": "电容储能"
     },
     {
@@ -1035,6 +1105,7 @@
       "topic": "phy_capacitance_phy_capacitor_energy",
       "description": "The exponential charging and discharging of a capacitor through a resistor, characterised by the time constant RC.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "充放电",
       "visual": "function",
       "visual_hint": "Plot exponential capacitor charge and discharge against time."
@@ -1046,6 +1117,7 @@
       "topic": "phy_magnetic_fields",
       "description": "Magnetic flux density as a measure of the strength of a magnetic field, defined through the force on a current-carrying conductor.",
       "default_order": 1,
+      "centrality": 0.1202,
       "name_zh": "磁通密度"
     },
     {
@@ -1055,6 +1127,7 @@
       "topic": "phy_magnetic_fields",
       "description": "The force on a current-carrying conductor in a magnetic field, given by F equals BIL, with direction from Fleming's left-hand rule.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "载流导线受力",
       "visual": "interactive",
       "visual_hint": "Show the motor-effect force on a current-carrying conductor (Fleming's left hand)."
@@ -1066,6 +1139,7 @@
       "topic": "phy_magnetic_fields_phy_force_charge",
       "description": "The force on a charge moving through a magnetic field, given by F equals Bqv, causing charged particles to follow circular paths.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "运动电荷受力"
     },
     {
@@ -1075,6 +1149,7 @@
       "topic": "phy_magnetic_fields_phy_force_charge",
       "description": "The magnetic fields produced by currents in long straight wires, flat coils, and solenoids, with their characteristic field patterns.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "电流磁场"
     },
     {
@@ -1084,6 +1159,7 @@
       "topic": "phy_induction",
       "description": "Magnetic flux through a coil and flux linkage as the product of flux and the number of turns, central to electromagnetic induction.",
       "default_order": 1,
+      "centrality": 0.0803,
       "name_zh": "磁通与磁链"
     },
     {
@@ -1093,6 +1169,7 @@
       "topic": "phy_induction",
       "description": "Faraday's law stating that the induced EMF is proportional to the rate of change of magnetic flux linkage.",
       "default_order": 2,
+      "centrality": 0.0654,
       "name_zh": "法拉第定律",
       "visual": "interactive",
       "visual_hint": "Move a magnet through a coil to induce an EMF (Faraday and Lenz)."
@@ -1104,6 +1181,7 @@
       "topic": "phy_induction",
       "description": "Lenz's law stating that an induced current opposes the change producing it, a consequence of the conservation of energy.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "楞次定律"
     },
     {
@@ -1113,6 +1191,7 @@
       "topic": "phy_ac",
       "description": "Alternating current varying sinusoidally with time, and root-mean-square values giving the equivalent steady current for power.",
       "default_order": 1,
+      "centrality": 0.0443,
       "name_zh": "交流电与RMS值",
       "visual": "function",
       "visual_hint": "Plot a sinusoidal AC waveform and its RMS value."
@@ -1124,6 +1203,7 @@
       "topic": "phy_ac",
       "description": "Transformers changing alternating voltage using the ratio of turns in the primary and secondary coils, ideally conserving power.",
       "default_order": 2,
+      "centrality": 0.0459,
       "name_zh": "变压器",
       "visual": "diagram",
       "visual_hint": "Transformer diagram relating the turns ratio to the voltage ratio."
@@ -1135,6 +1215,7 @@
       "topic": "phy_ac",
       "description": "Rectification converting alternating current to direct current using diodes, in half-wave and full-wave bridge circuits.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "整流"
     },
     {
@@ -1144,6 +1225,7 @@
       "topic": "phy_quantum",
       "description": "The photon as a quantum of electromagnetic energy, with energy proportional to frequency given by E equals hf.",
       "default_order": 1,
+      "centrality": 0.3043,
       "name_zh": "光子能量"
     },
     {
@@ -1153,6 +1235,7 @@
       "topic": "phy_quantum",
       "description": "The photoelectric effect, the emission of electrons from a metal by incident light above a threshold frequency, evidence for photons.",
       "default_order": 2,
+      "centrality": 0.1646,
       "name_zh": "光电效应",
       "visual": "function",
       "visual_hint": "Plot photoelectric stopping voltage against frequency."
@@ -1164,6 +1247,7 @@
       "topic": "phy_quantum_phy_wave_particle",
       "description": "Wave-particle duality, where matter and radiation exhibit both wave and particle behaviour, with the de Broglie wavelength for particles.",
       "default_order": 1,
+      "centrality": 0.1644,
       "name_zh": "波粒二象性"
     },
     {
@@ -1173,6 +1257,7 @@
       "topic": "phy_quantum_phy_wave_particle",
       "description": "Discrete electron energy levels in atoms, with line spectra arising from photons emitted or absorbed during transitions between levels.",
       "default_order": 2,
+      "centrality": 0.3286,
       "name_zh": "能级与线光谱",
       "visual": "diagram",
       "visual_hint": "Energy-level diagram with photon emission producing line spectra."
@@ -1184,6 +1269,7 @@
       "topic": "phy_nuclear",
       "description": "The nuclear model of the atom with protons and neutrons in a small dense nucleus, described by proton and nucleon numbers.",
       "default_order": 1,
+      "centrality": 0.3444,
       "name_zh": "原子核结构"
     },
     {
@@ -1193,6 +1279,7 @@
       "topic": "phy_nuclear",
       "description": "Fundamental particles classified as quarks and leptons, with hadrons such as protons and neutrons composed of quarks.",
       "default_order": 2,
+      "centrality": 0.057,
       "name_zh": "基本粒子与夸克"
     },
     {
@@ -1202,6 +1289,7 @@
       "topic": "phy_nuclear",
       "description": "Mass defect as the difference between nucleon and nuclear mass, and binding energy as the equivalent energy holding the nucleus together.",
       "default_order": 3,
+      "centrality": 0.0759,
       "name_zh": "质量亏损与结合能",
       "visual": "function",
       "visual_hint": "Plot binding energy per nucleon against nucleon number."
@@ -1213,6 +1301,7 @@
       "topic": "phy_radioactivity",
       "description": "Nuclear fission of heavy nuclei and fusion of light nuclei both release energy by moving towards higher binding energy per nucleon; the basis of nuclear power, reactors, and stellar energy.",
       "default_order": 1,
+      "centrality": 0.0248,
       "name_zh": "核裂变与核聚变"
     },
     {
@@ -1222,6 +1311,7 @@
       "topic": "phy_radioactivity",
       "description": "Spontaneous, random radioactive decay of unstable nuclei by alpha, beta, and gamma emission, modelled by the decay constant.",
       "default_order": 2,
+      "centrality": 0.0353,
       "name_zh": "放射性衰变",
       "visual": "function",
       "visual_hint": "Plot exponential radioactive decay with a slider for half-life."
@@ -1233,6 +1323,7 @@
       "topic": "phy_radioactivity",
       "description": "Half-life as the average time for half the nuclei in a sample to decay, related to the decay constant in exponential decay.",
       "default_order": 3,
+      "centrality": 0.0248,
       "name_zh": "半衰期"
     },
     {
@@ -1242,6 +1333,7 @@
       "topic": "phy_astro",
       "description": "Luminosity as the total power radiated by a star and radiant flux intensity as the power received per unit area at a distance.",
       "default_order": 1,
+      "centrality": 0.0519,
       "name_zh": "亮度与辐射通量"
     },
     {
@@ -1251,6 +1343,7 @@
       "topic": "phy_astro",
       "description": "Standard candles as objects of known luminosity used to determine astronomical distances from their observed brightness.",
       "default_order": 2,
+      "centrality": 0.0638,
       "name_zh": "标准烛光"
     },
     {
@@ -1260,6 +1353,7 @@
       "topic": "phy_astro_phy_stellar_radii",
       "description": "Estimating stellar radii by combining luminosity with surface temperature using the Stefan-Boltzmann law and Wien's law.",
       "default_order": 1,
+      "centrality": 0.0459,
       "name_zh": "恒星半径"
     },
     {
@@ -1269,6 +1363,7 @@
       "topic": "phy_astro_phy_stellar_radii",
       "description": "Hubble's law relating a galaxy's recession speed to its distance, providing evidence for an expanding universe and the Big Bang.",
       "default_order": 2,
+      "centrality": 0.0248,
       "name_zh": "哈勃定律与大爆炸",
       "visual": "function",
       "visual_hint": "Plot recession speed against distance (Hubble's law)."

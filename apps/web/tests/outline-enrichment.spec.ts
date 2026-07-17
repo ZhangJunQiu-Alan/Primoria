@@ -1,14 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-// QA issue 9: outline descriptions are enriched by one best-effort background
-// LLM call after a new course is created. Failures keep the templates; the
-// per-lesson UPDATE is fenced on the description value read at enrich time.
+// Concept-frontier outlines name each lesson from a concept-name template. After
+// a new course is created, one best-effort background LLM call rewrites each
+// lesson's title AND description. Failures keep the templates; the per-lesson
+// UPDATE is fenced on both the title and description read at enrich time.
 
 const mockState = vi.hoisted(() => ({
   getCourse: vi.fn(),
   getCourseByGraph: vi.fn(),
   saveCourse: vi.fn(),
-  updateLessonDescriptionIfUnchanged: vi.fn(),
+  updateLessonTitleAndDescriptionIfUnchanged: vi.fn(),
   invokeJson: vi.fn(),
   afterCallbacks: [] as Array<() => unknown>,
 }));
@@ -17,7 +18,7 @@ vi.mock("@/lib/courses/store", () => ({
   getCourse: mockState.getCourse,
   getCourseByGraph: mockState.getCourseByGraph,
   saveCourse: mockState.saveCourse,
-  updateLessonDescriptionIfUnchanged: mockState.updateLessonDescriptionIfUnchanged,
+  updateLessonTitleAndDescriptionIfUnchanged: mockState.updateLessonTitleAndDescriptionIfUnchanged,
 }));
 
 vi.mock("@/lib/ai/course-generation/model-json", () => ({
@@ -49,7 +50,7 @@ describe("enrichCourseOutlineDescriptions", () => {
     vi.clearAllMocks();
     delete process.env.PRIMORIA_DISABLE_OUTLINE_ENRICHMENT;
     mockState.getCourse.mockResolvedValue(course());
-    mockState.updateLessonDescriptionIfUnchanged.mockResolvedValue(true);
+    mockState.updateLessonTitleAndDescriptionIfUnchanged.mockResolvedValue(true);
     vi.spyOn(console, "error").mockImplementation(() => {});
     vi.spyOn(console, "log").mockImplementation(() => {});
   });
@@ -58,54 +59,60 @@ describe("enrichCourseOutlineDescriptions", () => {
     vi.restoreAllMocks();
   });
 
-  it("applies model descriptions through the fenced per-lesson update", async () => {
+  it("applies model title + description through the fenced per-lesson update", async () => {
     mockState.invokeJson.mockResolvedValue({
       items: [
-        { order: 1, description: "Understand how Python runs a program." },
-        { order: 2, description: "Use variables and types to model data." },
+        { order: 1, title: "Running Python", description: "Understand how Python runs a program." },
+        { order: 2, title: "Values and Variables", description: "Use variables and types to model data." },
       ],
     });
     const { enrichCourseOutlineDescriptions } = await import("../src/lib/ai/course-generation/outline-enrichment");
 
     await enrichCourseOutlineDescriptions({ courseId: "crs_1", ownerId: "u1" });
 
-    expect(mockState.updateLessonDescriptionIfUnchanged).toHaveBeenCalledTimes(2);
-    expect(mockState.updateLessonDescriptionIfUnchanged).toHaveBeenCalledWith({
+    expect(mockState.updateLessonTitleAndDescriptionIfUnchanged).toHaveBeenCalledTimes(2);
+    expect(mockState.updateLessonTitleAndDescriptionIfUnchanged).toHaveBeenCalledWith({
       lessonId: "lsn_1",
       courseId: "crs_1",
       ownerId: "u1",
+      expectedTitle: "Lesson 1",
+      title: "Running Python",
       expectedDescription: "A planned lesson covering the core ideas, examples, and practice for Lesson 1.",
       description: "Understand how Python runs a program.",
     });
   });
 
-  it("skips out-of-range orders and descriptions identical to the template", async () => {
+  it("skips out-of-range orders and lessons unchanged from the template", async () => {
     mockState.invokeJson.mockResolvedValue({
       items: [
-        { order: 99, description: "Dangling item." },
-        { order: 1, description: "A planned lesson covering the core ideas, examples, and practice for Lesson 1." },
-        { order: 2, description: "Use variables and types to model data." },
+        { order: 99, title: "Dangling", description: "Dangling item." },
+        {
+          order: 1,
+          title: "Lesson 1",
+          description: "A planned lesson covering the core ideas, examples, and practice for Lesson 1.",
+        },
+        { order: 2, title: "Values and Variables", description: "Use variables and types to model data." },
       ],
     });
     const { enrichCourseOutlineDescriptions } = await import("../src/lib/ai/course-generation/outline-enrichment");
 
     await enrichCourseOutlineDescriptions({ courseId: "crs_1", ownerId: "u1" });
 
-    expect(mockState.updateLessonDescriptionIfUnchanged).toHaveBeenCalledTimes(1);
-    expect(mockState.updateLessonDescriptionIfUnchanged).toHaveBeenCalledWith(
+    expect(mockState.updateLessonTitleAndDescriptionIfUnchanged).toHaveBeenCalledTimes(1);
+    expect(mockState.updateLessonTitleAndDescriptionIfUnchanged).toHaveBeenCalledWith(
       expect.objectContaining({ lessonId: "lsn_2" }),
     );
   });
 
-  it("collapses whitespace and truncates long descriptions to 160 characters", async () => {
+  it("collapses whitespace and truncates a long description to 160 characters", async () => {
     mockState.invokeJson.mockResolvedValue({
-      items: [{ order: 1, description: `Multi\n line   ${"x".repeat(300)}` }],
+      items: [{ order: 1, title: "Running Python", description: `Multi\n line   ${"x".repeat(300)}` }],
     });
     const { enrichCourseOutlineDescriptions } = await import("../src/lib/ai/course-generation/outline-enrichment");
 
     await enrichCourseOutlineDescriptions({ courseId: "crs_1", ownerId: "u1" });
 
-    const written = mockState.updateLessonDescriptionIfUnchanged.mock.calls[0][0].description as string;
+    const written = mockState.updateLessonTitleAndDescriptionIfUnchanged.mock.calls[0][0].description as string;
     expect(written.length).toBeLessThanOrEqual(160);
     expect(written.startsWith("Multi line x")).toBe(true);
     expect(written.endsWith("…")).toBe(true);
@@ -117,17 +124,17 @@ describe("enrichCourseOutlineDescriptions", () => {
 
     await expect(enrichCourseOutlineDescriptions({ courseId: "crs_1", ownerId: "u1" })).resolves.toBeUndefined();
 
-    expect(mockState.updateLessonDescriptionIfUnchanged).not.toHaveBeenCalled();
+    expect(mockState.updateLessonTitleAndDescriptionIfUnchanged).not.toHaveBeenCalled();
     expect(console.error).toHaveBeenCalled();
   });
 
   it("ignores an unusable response shape", async () => {
-    mockState.invokeJson.mockResolvedValue({ items: [{ order: "one", description: 5 }] });
+    mockState.invokeJson.mockResolvedValue({ items: [{ order: "one", title: 5, description: 5 }] });
     const { enrichCourseOutlineDescriptions } = await import("../src/lib/ai/course-generation/outline-enrichment");
 
     await enrichCourseOutlineDescriptions({ courseId: "crs_1", ownerId: "u1" });
 
-    expect(mockState.updateLessonDescriptionIfUnchanged).not.toHaveBeenCalled();
+    expect(mockState.updateLessonTitleAndDescriptionIfUnchanged).not.toHaveBeenCalled();
   });
 
   it("is a no-op when the kill switch is set", async () => {
@@ -143,15 +150,15 @@ describe("enrichCourseOutlineDescriptions", () => {
   it("caps the prompt at 40 lessons and leaves the tail untouched", async () => {
     mockState.getCourse.mockResolvedValue(course(45));
     mockState.invokeJson.mockImplementation(async (args: { user: string }) => {
-      expect(args.user).toContain("40. Lesson 40");
-      expect(args.user).not.toContain("41. Lesson 41");
-      return { items: [{ order: 41, description: "Should be ignored." }] };
+      expect(args.user).toContain("40. concepts: Lesson 40");
+      expect(args.user).not.toContain("41. concepts: Lesson 41");
+      return { items: [{ order: 41, title: "Ignored", description: "Should be ignored." }] };
     });
     const { enrichCourseOutlineDescriptions } = await import("../src/lib/ai/course-generation/outline-enrichment");
 
     await enrichCourseOutlineDescriptions({ courseId: "crs_1", ownerId: "u1" });
 
-    expect(mockState.updateLessonDescriptionIfUnchanged).not.toHaveBeenCalled();
+    expect(mockState.updateLessonTitleAndDescriptionIfUnchanged).not.toHaveBeenCalled();
   });
 });
 

@@ -1,6 +1,6 @@
 import type { Course, Lesson } from "./types";
 import { getCourse } from "./store";
-import { getTopicGraph, type TopicGraph, type TopicNode } from "../knowledge-graph/topic-graph";
+import { getTopicGraph, type TopicGraph, type TopicConcept } from "../knowledge-graph/topic-graph";
 import { getGeneratedGraphById } from "../knowledge-graph/generated-graph";
 import type { CourseContext, CourseContextTopic } from "../ai/deepagent/course-kg-context";
 import { ContextError } from "../ai/course-generation/generation-errors";
@@ -98,13 +98,31 @@ export async function loadLessonGenerationContext(input: {
     console.warn(`[lesson-generation-context] profile/mastery/facts load failed for owner=${ownerId} graph=${graphId}; teaching all concepts as untested`, error);
   }
 
-  const next: TopicNode | null = orderedTopics.find((entry) => entry.defaultOrder > topic.defaultOrder) ?? null;
+  // Concept-frontier lessons teach a concept subset (lesson.conceptIds); legacy /
+  // freeform lessons carry none and fall back to the whole authored topic. The
+  // "next" preview follows the next planned lesson, not the next authored topic.
+  const conceptById = new Map<string, TopicConcept>();
+  for (const t of graph.topics) for (const c of t.conceptIds) conceptById.set(c.conceptId, c);
+  const resolveLessonConcepts = (conceptIds: string[] | undefined, fallbackTopicId: string | null | undefined): TopicConcept[] => {
+    const resolved = (conceptIds ?? []).map((id) => conceptById.get(id)).filter((c): c is TopicConcept => Boolean(c));
+    if (resolved.length > 0) return resolved;
+    return graph.topics.find((t) => t.topicId === fallbackTopicId)?.conceptIds ?? [];
+  };
+
+  const orderedLessons = [...course.lessons].sort((a, b) => a.sortKey - b.sortKey);
+  const nextLesson = orderedLessons.find((entry) => entry.sortKey > lesson.sortKey) ?? null;
+  const currentConcepts = resolveLessonConcepts(lesson.conceptIds, topic.topicId);
+  const nextConcepts = nextLesson ? resolveLessonConcepts(nextLesson.conceptIds, nextLesson.topicId) : [];
+
   const kg: CourseContext = {
     learningPathType: "linear",
     graphId,
-    startTopic: toContextTopic(topic.topicId, topic.name, withMastery(topic.conceptIds, masteryByConcept)),
+    startTopic: toContextTopic(topic.topicId, lesson.title, withMastery(currentConcepts, masteryByConcept)),
     targetConceptId: null,
-    nextTopic: next ? toContextTopic(next.topicId, next.name, next.conceptIds) : null,
+    nextTopic:
+      nextLesson && nextConcepts.length > 0
+        ? toContextTopic(nextLesson.topicId ?? topic.topicId, nextLesson.title, nextConcepts)
+        : null,
     language: course.language ?? null,
     knowledgeBackground,
     facts,
