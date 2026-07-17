@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { boolean, doublePrecision, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { boolean, check, doublePrecision, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -115,6 +115,48 @@ export const authRateLimits = pgTable(
   }),
 );
 
+export const interactiveComponentQuotas = pgTable(
+  "interactive_component_quotas",
+  {
+    ownerId: text("owner_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
+    windowStartedAt: timestamp("window_started_at", { withTimezone: true }).notNull().defaultNow(),
+    requestCount: integer("request_count").notNull().default(0),
+    inFlight: integer("in_flight").notNull().default(0),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    requestCountCheck: check("interactive_component_quotas_request_count_check", sql`${table.requestCount} >= 0`),
+    inFlightCheck: check("interactive_component_quotas_in_flight_check", sql`${table.inFlight} >= 0`),
+  }),
+);
+
+export const interactiveComponentRequests = pgTable(
+  "interactive_component_requests",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    idempotencyKey: text("idempotency_key").notNull(),
+    requestHash: text("request_hash").notNull(),
+    status: text("status").notNull().default("running"),
+    responseStatus: integer("response_status"),
+    response: jsonb("response"),
+    startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerKeyUnique: uniqueIndex("interactive_component_requests_owner_key_uidx").on(table.ownerId, table.idempotencyKey),
+    ownerStatusIdx: index("interactive_component_requests_owner_status_idx").on(table.ownerId, table.status, table.startedAt),
+    expiresIdx: index("interactive_component_requests_expires_idx").on(table.expiresAt),
+    statusCheck: check("interactive_component_requests_status_check", sql`${table.status} in ('running', 'completed', 'failed')`),
+    responseStatusCheck: check(
+      "interactive_component_requests_response_status_check",
+      sql`${table.responseStatus} is null or (${table.responseStatus} >= 200 and ${table.responseStatus} <= 599)`,
+    ),
+  }),
+);
+
 export const courses = pgTable(
   "courses",
   {
@@ -153,6 +195,8 @@ export const courses = pgTable(
     ownerImportedShareUnique: uniqueIndex("courses_owner_imported_share_uidx")
       .on(table.ownerId, table.importedFromShareId)
       .where(sql`${table.importedFromShareId} IS NOT NULL`),
+    estimatedMinutesCheck: check("courses_estimated_minutes_check", sql`${table.estimatedMinutes} >= 0`),
+    versionCheck: check("courses_version_check", sql`${table.version} >= 1`),
   }),
 );
 
@@ -208,6 +252,11 @@ export const lessons = pgTable(
   (table) => ({
     courseSortIdx: index("lessons_course_sort_idx").on(table.courseId, table.sortKey),
     ownerIdx: index("lessons_owner_idx").on(table.ownerId),
+    roleCheck: check("lessons_role_check", sql`${table.role} in ('new', 'review', 'remediation')`),
+    progressCheck: check("lessons_progress_check", sql`${table.progress} in ('not_started', 'in_progress', 'completed')`),
+    statusCheck: check("lessons_status_check", sql`${table.status} in ('planned', 'generating', 'generated')`),
+    estimatedMinutesCheck: check("lessons_estimated_minutes_check", sql`${table.estimatedMinutes} is null or ${table.estimatedMinutes} >= 0`),
+    versionCheck: check("lessons_version_check", sql`${table.version} >= 1`),
   }),
 );
 
@@ -247,6 +296,16 @@ export const lessonGenerationJobs = pgTable(
     ownerStatusUpdatedIdx: index("lesson_generation_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
     statusLeaseIdx: index("lesson_generation_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
     courseStatusIdx: index("lesson_generation_jobs_course_status_idx").on(table.courseId, table.status),
+    statusCheck: check("lesson_generation_jobs_status_check", sql`${table.status} in ('queued', 'running', 'completed', 'failed')`),
+    stageCheck: check(
+      "lesson_generation_jobs_stage_check",
+      sql`${table.stage} in ('queued', 'planning', 'writing', 'imaging', 'validating', 'saving', 'completed', 'failed')`,
+    ),
+    attemptsCheck: check("lesson_generation_jobs_attempts_check", sql`${table.attempts} >= 0 and ${table.maxAttempts} > 0`),
+    progressCheck: check(
+      "lesson_generation_jobs_progress_check",
+      sql`${table.progressCompleted} >= 0 and ${table.progressTotal} >= 0 and ${table.progressCompleted} <= ${table.progressTotal}`,
+    ),
   }),
 );
 
@@ -272,6 +331,8 @@ export const lessonGenerationCheckpoints = pgTable(
   (table) => ({
     jobCheckpointUnique: uniqueIndex("lesson_generation_checkpoints_job_key_uidx").on(table.jobId, table.checkpointKey),
     jobKindIdx: index("lesson_generation_checkpoints_job_kind_idx").on(table.jobId, table.kind),
+    kindCheck: check("lesson_generation_checkpoints_kind_check", sql`${table.kind} in ('plan', 'batch')`),
+    irVersionCheck: check("lesson_generation_checkpoints_ir_version_check", sql`${table.irVersion} >= 1`),
   }),
 );
 
@@ -357,6 +418,7 @@ export const quizAttempts = pgTable(
       table.blockId,
       table.submissionId,
     ),
+    scoreCheck: check("quiz_attempts_score_check", sql`${table.total} > 0 and ${table.score} >= 0 and ${table.score} <= ${table.total}`),
   }),
 );
 
@@ -378,6 +440,7 @@ export const learningEvents = pgTable(
     ownerCreatedIdx: index("learning_events_owner_created_idx").on(table.ownerId, table.createdAt),
     ownerTypeIdx: index("learning_events_owner_type_idx").on(table.ownerId, table.type),
     ownerConceptIdx: index("learning_events_owner_concept_idx").on(table.ownerId, table.conceptId),
+    typeCreatedIdx: index("learning_events_type_created_idx").on(table.type, table.createdAt),
   }),
 );
 
@@ -422,6 +485,13 @@ export const learningProgressJobs = pgTable(
     ownerStatusUpdatedIdx: index("learning_progress_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
     statusLeaseIdx: index("learning_progress_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
     courseDecisionIdx: index("learning_progress_jobs_course_decision_idx").on(table.courseId, table.decisionStatus),
+    statusCheck: check("learning_progress_jobs_status_check", sql`${table.status} in ('queued', 'running', 'completed', 'failed')`),
+    stageCheck: check("learning_progress_jobs_stage_check", sql`${table.stage} in ('queued', 'mastery', 'deciding', 'completed', 'failed')`),
+    attemptsCheck: check("learning_progress_jobs_attempts_check", sql`${table.attempts} >= 0 and ${table.maxAttempts} > 0`),
+    decisionStatusCheck: check(
+      "learning_progress_jobs_decision_status_check",
+      sql`${table.decisionStatus} in ('none', 'pending', 'accepted', 'dismissed')`,
+    ),
   }),
 );
 
@@ -444,6 +514,8 @@ export const userConceptMastery = pgTable(
   (table) => ({
     pk: uniqueIndex("user_concept_mastery_owner_graph_concept_uidx").on(table.ownerId, table.graphId, table.conceptId),
     ownerGraphIdx: index("user_concept_mastery_owner_graph_idx").on(table.ownerId, table.graphId),
+    statusCheck: check("user_concept_mastery_status_check", sql`${table.status} in ('untested', 'weak', 'learning', 'mastered')`),
+    scoreCheck: check("user_concept_mastery_score_check", sql`${table.score} is null or (${table.score} >= 0 and ${table.score} <= 1)`),
   }),
 );
 
@@ -510,6 +582,10 @@ export const learnerFacts = pgTable(
   (table) => ({
     ownerStatusIdx: index("learner_facts_owner_status_idx").on(table.ownerId, table.status),
     ownerCategoryIdx: index("learner_facts_owner_category_idx").on(table.ownerId, table.category),
+    categoryCheck: check("learner_facts_category_check", sql`${table.category} in ('preference', 'prior_knowledge', 'learning_gap', 'goal')`),
+    statusCheck: check("learner_facts_status_check", sql`${table.status} in ('active', 'dismissed')`),
+    confidenceCheck: check("learner_facts_confidence_check", sql`${table.confidence} is null or (${table.confidence} >= 0 and ${table.confidence} <= 1)`),
+    occurrencesCheck: check("learner_facts_occurrences_check", sql`${table.occurrences} >= 1`),
   }),
 );
 
@@ -546,6 +622,8 @@ export const extractorJobs = pgTable(
     leaseTokenUnique: uniqueIndex("extractor_jobs_lease_token_uidx").on(table.leaseToken),
     ownerStatusUpdatedIdx: index("extractor_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
     statusLeaseIdx: index("extractor_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
+    statusCheck: check("extractor_jobs_status_check", sql`${table.status} in ('queued', 'running', 'completed', 'failed')`),
+    attemptsCheck: check("extractor_jobs_attempts_check", sql`${table.attempts} >= 0 and ${table.maxAttempts} > 0`),
   }),
 );
 
@@ -580,6 +658,8 @@ export const generatedTopicGraphs = pgTable(
   (table) => ({
     topicKeyUnique: uniqueIndex("generated_topic_graphs_topic_key_uidx").on(table.topicKey),
     statusUsageIdx: index("generated_topic_graphs_status_usage_idx").on(table.status, table.usageCount),
+    statusCheck: check("generated_topic_graphs_status_check", sql`${table.status} in ('candidate', 'promoted', 'retired')`),
+    usageCountCheck: check("generated_topic_graphs_usage_count_check", sql`${table.usageCount} >= 1`),
   }),
 );
 
