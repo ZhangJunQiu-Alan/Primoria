@@ -11,12 +11,9 @@ import { reportVisualizationEvent } from "@/lib/telemetry/visualization-client";
 // catalog routing; this card calls the web API with the learner's session to
 // turn the request into a validated config and renders the component.
 //
-// Instance state: a module-level map keyed by componentId holds the latest
-// config for this page session, so a later adjustment request patches the
-// component the learner is looking at, and slider edits and LLM patches write
-// the same object. Generated configs are cached in sessionStorage per
-// (componentId, request) so re-opening a thread does not re-run the LLM for
-// every historical card.
+// Instance state is keyed by the AG-UI tool-call id. Multiple cards can use the
+// same component without sharing config. Adjustment tool calls explicitly name
+// their source instance; the adjusted result receives its own instance id.
 
 type ComponentConfig = Record<string, unknown>;
 
@@ -35,27 +32,52 @@ type CardState =
   | { status: "error"; message: string }
   | { status: "ready"; config: ComponentConfig };
 
-function configCacheKey(componentId: string, request: string) {
-  return `icc:${componentId}:${hashText(request)}`;
+function configCacheKey(instanceId: string) {
+  return `icc:${instanceId}`;
 }
 
-function readCachedConfig(componentId: string, request: string): ComponentConfig | null {
+function legacyInstanceId(componentId: string, request: string) {
+  return `legacy:${componentId}:${hashText(request)}:${crypto.randomUUID()}`;
+}
+
+function readCachedConfig(instanceId: string): ComponentConfig | null {
+  const inMemory = instanceStore.get(instanceId);
+  if (inMemory) return inMemory;
   if (typeof window === "undefined") return null;
   try {
-    const cached = window.sessionStorage.getItem(configCacheKey(componentId, request));
+    const cached = window.sessionStorage.getItem(configCacheKey(instanceId));
     if (!cached) return null;
     const config = JSON.parse(cached) as ComponentConfig;
-    instanceStore.set(componentId, config);
+    instanceStore.set(instanceId, config);
     return config;
   } catch {
     return null;
   }
 }
 
-export function InteractiveComponentCard({ componentId, request }: { componentId: string; request: string }) {
+function writeCachedConfig(instanceId: string, config: ComponentConfig) {
+  instanceStore.set(instanceId, config);
+  try {
+    window.sessionStorage.setItem(configCacheKey(instanceId), JSON.stringify(config));
+  } catch {}
+}
+
+export function InteractiveComponentCard({
+  componentId,
+  request,
+  instanceId: suppliedInstanceId,
+  targetInstanceId = null,
+}: {
+  componentId: string;
+  request: string;
+  instanceId?: string;
+  targetInstanceId?: string | null;
+}) {
   const t = useInteractiveT().card;
+  const [fallbackInstanceId] = useState(() => legacyInstanceId(componentId, request));
+  const instanceId = suppliedInstanceId ?? fallbackInstanceId;
   const [state, setState] = useState<CardState>(() => {
-    const cached = readCachedConfig(componentId, request);
+    const cached = readCachedConfig(instanceId);
     return cached ? { status: "ready", config: cached } : { status: "loading" };
   });
   const fetchStartedRef = useRef(state.status === "ready");
@@ -65,13 +87,13 @@ export function InteractiveComponentCard({ componentId, request }: { componentId
     if (!renderWidget || fetchStartedRef.current) return;
     fetchStartedRef.current = true;
     let cancelled = false;
-    const cacheKey = configCacheKey(componentId, request);
     (async () => {
       try {
+        const current = targetInstanceId ? readCachedConfig(targetInstanceId) : null;
         const response = await fetch("/api/interactive-component", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ componentId, prompt: request, current: instanceStore.get(componentId) ?? null }),
+          body: JSON.stringify({ instanceId, targetInstanceId, componentId, prompt: request, current }),
         });
         const json = (await response.json()) as { ok: boolean; config?: ComponentConfig; error?: string };
         if (cancelled) return;
@@ -86,10 +108,7 @@ export function InteractiveComponentCard({ componentId, request }: { componentId
           });
           return;
         }
-        instanceStore.set(componentId, json.config);
-        try {
-          window.sessionStorage.setItem(cacheKey, JSON.stringify(json.config));
-        } catch {}
+        writeCachedConfig(instanceId, json.config);
         setState({ status: "ready", config: json.config });
         reportVisualizationEvent({ source: "interactive", topic: request, componentId, status: "rendered" });
       } catch (error) {
@@ -101,7 +120,7 @@ export function InteractiveComponentCard({ componentId, request }: { componentId
     return () => {
       cancelled = true;
     };
-  }, [componentId, request, renderWidget, t.configFailed, t.requestFailed]);
+  }, [componentId, instanceId, request, renderWidget, t.configFailed, t.requestFailed, targetInstanceId]);
 
   if (!renderWidget) {
     return (
@@ -139,7 +158,7 @@ export function InteractiveComponentCard({ componentId, request }: { componentId
         {renderWidget({
           config: state.config,
           onChange: (next) => {
-            instanceStore.set(componentId, next);
+            writeCachedConfig(instanceId, next);
             setState({ status: "ready", config: next });
           },
         })}

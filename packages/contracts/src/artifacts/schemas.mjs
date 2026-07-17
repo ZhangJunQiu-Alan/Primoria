@@ -111,6 +111,12 @@ export const OpenInteractiveComponentArgsSchema = z.object({
     .min(1)
     .max(2000)
     .describe("The learner's visualization request or adjustment, verbatim, in the learner's language."),
+  target_instance_id: z
+    .string()
+    .min(1)
+    .max(200)
+    .optional()
+    .describe("For an adjustment only: copy the instanceId from the tool result of the exact component instance being adjusted. Omit for a new component."),
 });
 
 // ── ECharts / Mermaid ───────────────────────────────────────────────────────

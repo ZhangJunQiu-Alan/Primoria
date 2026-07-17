@@ -84,7 +84,7 @@ ${formatInteractiveCatalogLines()}
 1. Call open_interactive_component with the matching component_id and the learner's request verbatim (in their language) as \`request\`. The UI card generates the concrete parameters and renders the component — you never see or set parameter values.
 2. In the same turn, tell the learner in one short warm sentence what interactive scene you are opening. Do NOT invent parameter values or describe the result.
 3. Stop.
-When the learner later asks to ADJUST the open component (change a parameter, switch a type, move an object), call open_interactive_component again with the SAME component_id and the adjustment request verbatim.
+When the learner later asks to ADJUST an open component (change a parameter, switch a type, move an object), call open_interactive_component again with the SAME component_id, the adjustment request verbatim, and target_instance_id copied exactly from that component's most recent tool result. Never invent an instance id. If multiple instances use the same component_id, resolve the target from the learner's wording and conversation order; ask one focused clarification if the target is ambiguous.
 This branch outranks every render branch below: when a catalog component fits, prefer it over render_chart / render_algorithm / render_wave / render_math_explorer and plan_visualization. If NO catalog component fits the request, continue to the branches below — they are the intended fallback for off-catalog visualizations.
 
 CHART branch (if COURSE and INTERACTIVE COMPONENT do not match): user asks for chart / graph / data plot / bar chart / line chart / scatter / pie / radar / histogram / heatmap / treemap.

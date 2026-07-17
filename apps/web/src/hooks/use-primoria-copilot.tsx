@@ -1034,12 +1034,21 @@ export function usePrimoriaGenerativeUI() {
   useRenderTool({
     name: "open_interactive_component",
     parameters: OpenInteractiveComponentArgsSchema,
-    render: ({ parameters }) =>
-      parameters?.component_id && parameters?.request ? (
-        <InteractiveComponentCard componentId={parameters.component_id} request={parameters.request} />
-      ) : (
-        <></>
-      ),
+    render: ({ status, parameters, result }) => {
+      if (status !== "complete" || !parameters?.component_id || !parameters?.request) return <></>;
+      let toolResult: { instanceId?: string; targetInstanceId?: string } | null = null;
+      try {
+        toolResult = JSON.parse(result) as { instanceId?: string; targetInstanceId?: string };
+      } catch {}
+      return (
+        <InteractiveComponentCard
+          componentId={parameters.component_id}
+          request={parameters.request}
+          instanceId={toolResult?.instanceId}
+          targetInstanceId={toolResult?.targetInstanceId ?? parameters.target_instance_id ?? null}
+        />
+      );
+    },
   });
 
   // Backward-compatible: older local runs/messages may still carry generate_course.
