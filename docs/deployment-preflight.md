@@ -39,7 +39,11 @@ must be different high-entropy, URL-safe values:
 ```env
 POSTGRES_MIGRATOR_PASSWORD=...
 POSTGRES_RUNTIME_PASSWORD=...
+PRIMORIA_AGENT_INTERNAL_SECRET=...
 ```
+
+The Agent secret must be a third independent high-entropy value shared only by
+the Web and Agent containers. Production startup fails closed when it is absent.
 
 The owner should not be asked for credentials already present and verifiable in
 the authorized deployment environment. Never print secret values during checks.
@@ -69,6 +73,7 @@ pnpm --filter @primoria/web test
 pnpm --filter @primoria/agent test
 pnpm catalog:validate
 pnpm --filter @primoria/web test:interactive-routing
+bash -n scripts/pg-restore-drill.sh
 pnpm build
 pnpm audit:prod
 docker compose -f docker-compose.prod.yml config --quiet
@@ -91,12 +96,13 @@ capability restrictions in `docker-compose.prod.yml`.
 7. On the first deployment only, initialize KG data and embeddings.
 8. Verify health, authentication, course access, one quiz submission/replay,
    Tutor streaming, Worker queue consumption, email delivery, and public TLS.
-9. In the main Tutor, request one catalog-backed visualization. Confirm
-   `open_interactive_component` selection, card rendering, and a spoken
-   adjustment producing a patch rather than a full replacement.
+9. In the main Tutor, open two instances of the same catalog component. Confirm
+   their configs remain independent, then reference one instance explicitly in
+   a spoken adjustment and confirm only that instance receives a patch.
 10. If internal analytics is enabled, confirm an allowlisted operator can open
     the analysis page and a normal authenticated user receives a denial.
-11. Run `scripts/pg-restore-drill.sh` and retain its JSON success record.
+11. Run `scripts/pg-restore-drill.sh` and retain its JSON success record. The
+    result must report all public and `agent_runtime` run/event/checkpoint tables.
 
 ```bash
 docker compose -f docker-compose.prod.yml up -d --build
