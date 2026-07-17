@@ -1,5 +1,5 @@
 import { and, eq } from "drizzle-orm";
-import { getDb, hasDatabaseUrl } from "../db/client";
+import { getDb, hasDatabaseUrl, type DbOrTx } from "../db/client";
 import { userConceptMastery } from "../db/schema";
 import type { ConceptMastery, MasteryStatus } from "./store";
 
@@ -29,10 +29,11 @@ export async function upsertConceptMasteryByOwner(
   conceptId: string,
   status: MasteryStatus,
   score: number | null = null,
+  db: DbOrTx = getDb(),
 ): Promise<void> {
   if (!ownerId || !hasDatabaseUrl()) return;
   const now = new Date();
-  await getDb()
+  await db
     .insert(userConceptMastery)
     .values({ ownerId, graphId, conceptId, status, score, updatedAt: now })
     .onConflictDoUpdate({

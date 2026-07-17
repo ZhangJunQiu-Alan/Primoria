@@ -20,6 +20,10 @@ use the priority order below and verify behavior against the code.
 - [`long-horizon-learning-principles.md`](long-horizon-learning-principles.md) — stable product principles behind the adaptive loop.
 - [`用户意图.md`](用户意图.md) — current Tutor intent taxonomy and tool-routing expectations.
 
+## User-facing design handoff
+
+- [`../temple/个人主页RPG游戏化设计说明.md`](../temple/个人主页RPG游戏化设计说明.md) — Chinese, learner-facing walkthrough of the implemented guild Profile, exact reward rules, visual system, and safe modification points. This is an editable review artifact; runtime code and the current-state documents above remain authoritative.
+
 ## Interactive visualization
 
 - [`交互组件规范.md`](交互组件规范.md) — canonical production component contract, routing flow, file boundaries, and acceptance gates.

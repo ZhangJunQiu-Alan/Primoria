@@ -40,6 +40,7 @@ vi.mock("@/lib/settings/user-settings", () => ({
   CONTENT_LANGUAGES: ["auto", "zh", "en"],
   getUserPreferences: routeState.getUserPreferences,
   saveUserPreferences: routeState.saveUserPreferences,
+  isValidTimeZone: (value: unknown) => typeof value === "string" && value.length > 0,
 }));
 
 vi.mock("@/lib/learning-events/store", () => ({
