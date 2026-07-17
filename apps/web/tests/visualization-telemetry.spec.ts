@@ -1,7 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { toRow } from "../src/lib/learning-events/store";
+import { sanitizeVisualizationTelemetryText } from "../src/lib/telemetry/visualization-privacy";
 
 describe("visualization.render learning event", () => {
+  it("redacts identifiers before telemetry persistence", () => {
+    expect(
+      sanitizeVisualizationTelemetryText(
+        "Show alice@example.com https://example.com/lesson +65 9123 4567 abcdefghijklmnopqrstuvwxyz123456",
+        160,
+      ),
+    ).toBe("Show [email] [url] [number] [identifier]");
+  });
+
   it("maps telemetry fields into the payload and keeps caller-supplied ids", () => {
     const row = toRow({
       type: "visualization.render",

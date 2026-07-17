@@ -1,3 +1,5 @@
+import { and, eq, lt } from "drizzle-orm";
+
 import { getDb, hasDatabaseUrl, type DbOrTx } from "@/lib/db/client";
 import { learningEvents } from "@/lib/db/schema";
 
@@ -215,4 +217,14 @@ export async function recordLearningEvent(event: LearningEvent, db?: DbOrTx): Pr
   } catch (error) {
     console.error("[learning-events] failed to record", event.type, error);
   }
+}
+
+export async function pruneVisualizationTelemetry(retentionDays: number): Promise<number> {
+  if (!hasDatabaseUrl()) return 0;
+  const cutoff = new Date(Date.now() - Math.max(1, retentionDays) * 24 * 60 * 60 * 1_000);
+  const deleted = await getDb()
+    .delete(learningEvents)
+    .where(and(eq(learningEvents.type, "visualization.render"), lt(learningEvents.createdAt, cutoff)))
+    .returning({ id: learningEvents.id });
+  return deleted.length;
 }
