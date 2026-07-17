@@ -228,6 +228,12 @@ reserved private-media channel with no current lesson-image writers.
   concepts); they order and group concepts but are no longer the lesson unit.
   Lessons are concept-frontier bundles drawn from the concept prerequisite DAG.
 - Runtime edges are prerequisite edges (`hard` or `soft`) and must form a DAG.
+- Optional authored metadata refines generation without changing structure and is
+  always bounded and skippable: concept `centrality` (KG-wide importance, used for
+  `[core]` marking and tie-breaks), a prerequisite edge `reason` (why `to` needs
+  `from`, motivating lesson ordering), and a concept `assessment_hint` (what a quiz
+  should check). Generated `gen_*` graphs emit all three; mastery scoring stays
+  rule-based and never reads them.
 - Concept ids are globally unique; cross-topic and cross-subject prerequisites are allowed.
 - `default_order` guides a stable topic path but does not override prerequisite correctness.
 - Source graphs live under `data/knowledge-graphs/source`; generated candidates live under `data/knowledge-graphs/generated`.
