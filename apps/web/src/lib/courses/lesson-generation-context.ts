@@ -48,6 +48,26 @@ function withMastery(concepts: CourseContextTopic["concepts"], mastery: Map<stri
   });
 }
 
+// Attach each concept's authored prereq rationale from the KG edge that lands on
+// it, restricted to edges whose source is also taught in this lesson so the
+// "why" references a concept the learner sees in the same lesson.
+function withPrereqReason(
+  concepts: CourseContextTopic["concepts"],
+  conceptEdges: TopicGraph["conceptEdges"],
+): CourseContextTopic["concepts"] {
+  if (!conceptEdges?.length) return concepts;
+  const scope = new Set(concepts.map((c) => c.conceptId));
+  const reasonByTo = new Map<string, string>();
+  for (const e of conceptEdges) {
+    if (e.reason && scope.has(e.from) && scope.has(e.to)) reasonByTo.set(e.to, e.reason);
+  }
+  if (reasonByTo.size === 0) return concepts;
+  return concepts.map((c) => {
+    const reason = reasonByTo.get(c.conceptId);
+    return reason ? { ...c, prereqReason: reason } : c;
+  });
+}
+
 export async function loadLessonGenerationContext(input: {
   ownerId: string;
   courseId: string;
@@ -117,7 +137,11 @@ export async function loadLessonGenerationContext(input: {
   const kg: CourseContext = {
     learningPathType: "linear",
     graphId,
-    startTopic: toContextTopic(topic.topicId, lesson.title, withMastery(currentConcepts, masteryByConcept)),
+    startTopic: toContextTopic(
+      topic.topicId,
+      lesson.title,
+      withPrereqReason(withMastery(currentConcepts, masteryByConcept), graph.conceptEdges),
+    ),
     targetConceptId: null,
     nextTopic:
       nextLesson && nextConcepts.length > 0

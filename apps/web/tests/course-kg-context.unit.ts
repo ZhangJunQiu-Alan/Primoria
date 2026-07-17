@@ -73,6 +73,27 @@ function main() {
   assert(/marked \[core\] are foundational/.test(p3), "core directive is emitted when a core concept exists");
   assert(!/marked \[core\] are foundational/.test(p1), "no core directive without centrality data");
 
+  // Prereq rationale: concepts carrying prereqReason produce a "Why this order"
+  // block; absence of any reason emits no such block.
+  const withReason: CourseContext = {
+    learningPathType: "linear",
+    graphId: "g1",
+    startTopic: {
+      topicId: "t1",
+      name: "导数",
+      concepts: [
+        { conceptId: "c1", name: "导数定义", defaultOrder: 1 },
+        { conceptId: "c2", name: "求导法则", defaultOrder: 2, prereqReason: "先理解定义才能推导法则" },
+      ],
+    },
+    targetConceptId: null,
+    nextTopic: null,
+  };
+  const p4 = buildKgContextPrompt(withReason);
+  assert(/Why this order/.test(p4), "prereqReason emits a why-this-order block");
+  assert(p4.includes("求导法则: 先理解定义才能推导法则"), "the reason line is rendered");
+  assert(!/Why this order/.test(p1), "no why-this-order block without any prereqReason");
+
   console.log("course-kg-context.unit passed");
 }
 

@@ -287,6 +287,57 @@ describe("toTopicGraph", () => {
     expect(toTopicGraph(parseGeneratedGraph(rawGraphJson(4, 2, true))!, key).codeAdapted).toBe(true);
     expect(toTopicGraph(parseGeneratedGraph(rawGraphJson(4, 2, false))!, key).codeAdapted).toBeUndefined();
   });
+
+  it("emits a linear concept prereq chain carrying the generator's reasons", () => {
+    const raw = parseGeneratedGraph(
+      JSON.stringify({
+        subject: "S",
+        subjectZh: "",
+        topics: Array.from({ length: 4 }, (_, i) => ({
+          name: `T${i}`,
+          concepts: [
+            { name: `A${i}`, ...(i === 0 ? {} : { reason: `follows previous topic ${i}` }) },
+            { name: `B${i}`, reason: `B${i} needs A${i}` },
+          ],
+        })),
+      }),
+    )!;
+    const graph = toTopicGraph(raw, normalizeTopicKey("reasoned"));
+    const ids = graph.topics.flatMap((t) => t.conceptIds.map((c) => c.conceptId));
+    // one edge per adjacent pair in the flattened linear order
+    expect(graph.conceptEdges).toHaveLength(ids.length - 1);
+    expect(graph.conceptEdges!.every((e) => e.strength === "hard")).toBe(true);
+    // first edge (into the 2nd concept of topic 0) carries its reason; the very
+    // first concept has none, so no edge points at it.
+    expect(graph.conceptEdges![0]).toMatchObject({ from: ids[0], to: ids[1], reason: "B0 needs A0" });
+    expect(graph.conceptEdges!.some((e) => e.to === ids[0])).toBe(false);
+  });
+
+  it("omits conceptEdges entirely when the model supplied no reasons", () => {
+    const graph = toTopicGraph(parseGeneratedGraph(rawGraphJson(4))!, normalizeTopicKey("no-reason"));
+    // edges still emitted (linear chain), just without reason fields
+    expect(graph.conceptEdges!.every((e) => e.reason === undefined)).toBe(true);
+  });
+});
+
+describe("parseGeneratedGraph reason handling", () => {
+  it("keeps a bounded reason string and drops empty ones", () => {
+    const raw = parseGeneratedGraph(
+      JSON.stringify({
+        subject: "S",
+        subjectZh: "",
+        topics: Array.from({ length: 4 }, (_, i) => ({
+          name: `T${i}`,
+          concepts: [
+            { name: `A${i}`, reason: "   " },
+            { name: `B${i}`, reason: "x".repeat(300) },
+          ],
+        })),
+      }),
+    )!;
+    expect(raw.topics[0].concepts[0].reason).toBeUndefined();
+    expect(raw.topics[0].concepts[1].reason).toHaveLength(240);
+  });
 });
 
 describe("code eligibility for generated graphs", () => {

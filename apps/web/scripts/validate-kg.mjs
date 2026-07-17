@@ -65,10 +65,17 @@ function validateGraph(graphId) {
     }
   }
 
-  // edge reference integrity (concept-level prereq edges)
+  // edge reference integrity (concept-level prereq edges) + optional rationale
   for (const edge of graph.edges ?? []) {
     if (!conceptIds.has(edge.from)) errors.push(`edge from missing concept ${edge.from}`);
     if (!conceptIds.has(edge.to)) errors.push(`edge to missing concept ${edge.to}`);
+    if (edge.reason !== undefined) {
+      if (typeof edge.reason !== "string" || edge.reason.trim() === "") {
+        errors.push(`edge ${edge.from}->${edge.to}: reason must be a non-empty string when present`);
+      } else if (edge.reason.length > 240) {
+        errors.push(`edge ${edge.from}->${edge.to}: reason exceeds 240 chars (${edge.reason.length})`);
+      }
+    }
   }
 
   return errors;

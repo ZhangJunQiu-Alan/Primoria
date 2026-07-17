@@ -5,7 +5,7 @@ import { eq, sql } from "drizzle-orm";
 import { createUtilityModel } from "../ai/deepagent/model";
 import { getDb } from "../db/client";
 import { generatedTopicGraphs } from "../db/schema";
-import type { ConceptVisual, TopicConcept, TopicGraph, TopicNode } from "./topic-graph";
+import type { ConceptPrerequisiteEdge, ConceptVisual, TopicConcept, TopicGraph, TopicNode } from "./topic-graph";
 
 // LLM-generated topic graphs for out-of-library learning goals (e.g. "MCP",
 // "Agent 架构"). The generator mirrors the implicit structure of the curated
@@ -64,11 +64,12 @@ const SYSTEM_PROMPT = [
   "The graph is a LINEAR sequence of topics; each topic is one teachable lesson built around 2-3 ordered concepts.",
   "",
   'Reply with ONLY JSON (no prose, no markdown):',
-  '{"subject":"<English subject name>","subjectZh":"<简体中文学科名>","codeAdapted":<true|false>,"topics":[{"name":"<English topic name>","nameZh":"<简体中文>","concepts":[{"name":"<English concept name>","nameZh":"<简体中文>","visual":"<optional>","visualHint":"<optional>"}]}]}',
+  '{"subject":"<English subject name>","subjectZh":"<简体中文学科名>","codeAdapted":<true|false>,"topics":[{"name":"<English topic name>","nameZh":"<简体中文>","concepts":[{"name":"<English concept name>","nameZh":"<简体中文>","visual":"<optional>","visualHint":"<optional>","reason":"<optional>"}]}]}',
   "",
   "STRUCTURE RULES:",
   `- ${MIN_TOPICS}-${MAX_TOPICS} topics, ordered from prerequisites/foundations to applied practice. The first topic must be learnable with no prior knowledge of the subject.`,
   "- EVERY topic has exactly 2 or 3 concepts, ordered so each builds on the previous.",
+  '- For every concept EXCEPT the very first of the whole graph, add "reason": ONE short clause (≤160 chars) stating why it must come after the immediately preceding concept, e.g. "needs vector operations before matrices". Omit it on the first concept.',
   '- A topic\'s name is the conjunction of its concept themes, e.g. concepts "Network Layering" + "OSI Model" → topic "Network Layering and OSI Model".',
   "- Concept names are short noun phrases (≤4 words), each naming ONE idea — never a list or a sentence.",
   "- `name` fields are always English (used for indexing); `nameZh` fields are always Simplified Chinese.",
@@ -115,7 +116,7 @@ function cleanString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-type RawConcept = { name: string; nameZh: string; visual?: ConceptVisual; visualHint?: string };
+type RawConcept = { name: string; nameZh: string; visual?: ConceptVisual; visualHint?: string; reason?: string };
 type RawTopic = { name: string; nameZh: string; concepts: RawConcept[] };
 type RawGraph = { subject: string; subjectZh: string; codeAdapted: boolean; topics: RawTopic[] };
 
@@ -151,11 +152,13 @@ export function parseGeneratedGraph(text: string): RawGraph | null {
       if (!conceptName) continue;
       const visual = cleanString(cc.visual);
       const visualHint = cleanString(cc.visualHint);
+      const reason = cleanString(cc.reason).slice(0, 240);
       concepts.push({
         name: conceptName,
         nameZh: cleanString(cc.nameZh),
         ...(VISUALS.has(visual) ? { visual: visual as ConceptVisual } : {}),
         ...(VISUALS.has(visual) && visualHint ? { visualHint } : {}),
+        ...(reason ? { reason } : {}),
       });
       if (concepts.length >= MAX_CONCEPTS_PER_TOPIC) break;
     }
@@ -172,17 +175,24 @@ export function parseGeneratedGraph(text: string): RawGraph | null {
 // the same graphId (insert races collapse onto one row).
 export function toTopicGraph(raw: RawGraph, topicKey: string): TopicGraph {
   const graphId = `${GENERATED_GRAPH_PREFIX}${slugify(raw.subject, "subject")}_${hash8(topicKey)}`;
+  // Flat concept order across the whole (linear) graph, with each concept's
+  // authored rationale for following its predecessor, to build reasoned edges.
+  const chain: { conceptId: string; reason?: string }[] = [];
   const topics: TopicNode[] = raw.topics.map((topic, index) => {
     const order = index + 1;
     const topicId = `t${order}_${slugify(topic.name, `topic${order}`)}`;
-    const conceptIds: TopicConcept[] = topic.concepts.map((concept, conceptIndex) => ({
-      conceptId: `t${order}c${conceptIndex + 1}_${slugify(concept.name, `concept${conceptIndex + 1}`)}`,
-      name: concept.name,
-      nameZh: concept.nameZh || null,
-      defaultOrder: conceptIndex + 1,
-      ...(concept.visual ? { visual: concept.visual } : {}),
-      ...(concept.visualHint ? { visualHint: concept.visualHint } : {}),
-    }));
+    const conceptIds: TopicConcept[] = topic.concepts.map((concept, conceptIndex) => {
+      const conceptId = `t${order}c${conceptIndex + 1}_${slugify(concept.name, `concept${conceptIndex + 1}`)}`;
+      chain.push({ conceptId, ...(concept.reason ? { reason: concept.reason } : {}) });
+      return {
+        conceptId,
+        name: concept.name,
+        nameZh: concept.nameZh || null,
+        defaultOrder: conceptIndex + 1,
+        ...(concept.visual ? { visual: concept.visual } : {}),
+        ...(concept.visualHint ? { visualHint: concept.visualHint } : {}),
+      };
+    });
     return {
       topicId,
       name: topic.name,
@@ -198,7 +208,23 @@ export function toTopicGraph(raw: RawGraph, topicKey: string): TopicGraph {
     if (i + 1 < topics.length) topics[i].successors = [{ topicId: topics[i + 1].topicId, hard: true }];
     if (i > 0) topics[i].prereqTopics = [topics[i - 1].topicId];
   }
-  return { graphId, subject: raw.subject, topics, ...(raw.codeAdapted ? { codeAdapted: true } : {}) };
+  // Explicit linear concept prereq chain (matches the frontier builder's synthesis
+  // for edgeless gen graphs) but carrying the generator's per-step rationale, so
+  // the outline builder and lesson planner can motivate ordering and reviewers can
+  // audit it.
+  const conceptEdges: ConceptPrerequisiteEdge[] = chain.slice(1).map((c, i) => ({
+    from: chain[i].conceptId,
+    to: c.conceptId,
+    strength: "hard" as const,
+    ...(c.reason ? { reason: c.reason } : {}),
+  }));
+  return {
+    graphId,
+    subject: raw.subject,
+    topics,
+    ...(conceptEdges.length ? { conceptEdges } : {}),
+    ...(raw.codeAdapted ? { codeAdapted: true } : {}),
+  };
 }
 
 export async function generateTopicGraph(

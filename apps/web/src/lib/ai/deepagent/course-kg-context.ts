@@ -22,6 +22,10 @@ export type CourseContextConcept = {
   // = no record yet → treat as first-time learning. Shapes teaching DEPTH only;
   // coverage and mandated visual/quiz blocks are unaffected.
   mastery?: MasteryStatus;
+  // Authored one-line rationale for why this concept follows an earlier concept in
+  // the same lesson (from the KG prereq edge landing on it). Lets the planner
+  // motivate the ordering. Absent = no authored rationale.
+  prereqReason?: string;
 };
 
 // A concept at/above this max-normalized centrality is "core": load-bearing
@@ -90,6 +94,11 @@ export function buildKgContextPrompt(kg?: CourseContext): string {
     lines.push(
       "Concepts marked [core] are foundational — many later concepts depend on them; teach them thoroughly and do not rush.",
     );
+  }
+  const rationale = (kg.startTopic.concepts ?? []).filter((c) => c.prereqReason);
+  if (rationale.length > 0) {
+    lines.push("Why this order (use it to motivate transitions, do not quote verbatim):");
+    for (const c of rationale) lines.push(`- ${c.name}: ${c.prereqReason}`);
   }
   if (kg.targetConceptId) {
     lines.push(`The learner is aiming at concept ${kg.targetConceptId} — make the first lesson center on it.`);
