@@ -31,7 +31,23 @@ function main() {
   const existingMath = "已有公式 $a_{11}=1$ 和 $$A=\\begin{pmatrix}1&0\\end{pmatrix}$$。";
   assert(normalizeCourseMarkdownMath(existingMath) === existingMath, "existing markdown math is not double wrapped");
 
-  const code = "不要处理 `a_{11}=1`。\n```ts\nconst raw = \"\\\\begin{pmatrix}\";\n```";
+  const bracketMath = "我们以 \\(2^{3/2}\\) 为例，根据公式 \\(a^{m/n} = \\sqrt[n]{a^m}\\)。";
+  assert(
+    normalizeCourseMarkdownMath(bracketMath) === "我们以 $2^{3/2}$ 为例，根据公式 $a^{m/n} = \\sqrt[n]{a^m}$。",
+    "LaTeX inline bracket delimiters are converted to remark-math dollar delimiters",
+  );
+
+  const bracketDisplayMath = "推导如下：\n\\[x^2 + y^2 = r^2\\]";
+  assert(
+    normalizeCourseMarkdownMath(bracketDisplayMath) === "推导如下：\n$$x^2 + y^2 = r^2$$",
+    "LaTeX display bracket delimiters are converted to remark-math dollar delimiters",
+  );
+  assert(
+    normalizeCourseMarkdownMath("\\[x^2 + y^2 = r^2\\]", { inlineOnly: true }) === "$x^2 + y^2 = r^2$",
+    "inline renderers keep display bracket formulas inside inline math",
+  );
+
+  const code = "不要处理 `a_{11}=1` 或 `\\(x^2\\)`。\n```ts\nconst raw = \"\\\\begin{pmatrix}\";\n```";
   assert(normalizeCourseMarkdownMath(code) === code, "inline code and fenced code stay unchanged");
 
   process.stdout.write("[course-markdown-latex.unit] ALL CHECKS PASSED\n");
