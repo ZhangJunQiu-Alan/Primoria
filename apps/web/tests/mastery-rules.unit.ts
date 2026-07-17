@@ -31,8 +31,9 @@ function main() {
   assert(only(computeMasteryUpdates(ev({ c1: { correct: 1, total: 3 } }), state({})), "c1").status === "weak", "1/3 → weak");
   assert(only(computeMasteryUpdates(ev({ c1: { correct: 0, total: 2 } }), state({})), "c1").status === "weak", "0/2 → weak");
 
-  // Two correct out of two (allCorrect but <3) still passes the ratio gate → mastered.
-  assert(only(computeMasteryUpdates(ev({ c1: { correct: 2, total: 2 } }), state({})), "c1").status === "mastered", "2/2 → mastered via ratio");
+  // Fewer than three questions never reaches mastered, even when all are correct.
+  assert(only(computeMasteryUpdates(ev({ c1: { correct: 2, total: 2 } }), state({})), "c1").status === "learning", "2/2 → learning until enough evidence");
+  assert(only(computeMasteryUpdates(ev({ c1: { correct: 1, total: 1 } }), state({})), "c1").status === "learning", "1/1 → learning until enough evidence");
 
   // Downgrade rule: previously mastered + any wrong this lesson → learning, even at 0.8.
   assert(

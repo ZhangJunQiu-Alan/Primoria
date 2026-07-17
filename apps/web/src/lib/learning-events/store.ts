@@ -51,6 +51,22 @@ export type LearningEvent =
       graphId?: string | null;
     }
   | {
+      type: "course.completed";
+      ownerId: string;
+      id?: string;
+      courseId: string;
+      graphId?: string | null;
+    }
+  | {
+      type: "mastery.transition";
+      ownerId: string;
+      id?: string;
+      graphId: string;
+      conceptId: string;
+      from: string;
+      to: string;
+    }
+  | {
       type: "course.generated";
       ownerId: string;
       id?: string;
@@ -161,6 +177,20 @@ export function toRow(event: LearningEvent): LearningEventRow {
         lessonId: event.lessonId,
         graphId: event.graphId ?? null,
         payload: {},
+      };
+    case "course.completed":
+      return {
+        ...base,
+        courseId: event.courseId,
+        graphId: event.graphId ?? null,
+        payload: {},
+      };
+    case "mastery.transition":
+      return {
+        ...base,
+        graphId: event.graphId,
+        conceptId: event.conceptId,
+        payload: { from: event.from, to: event.to },
       };
     case "course.generated":
       return {

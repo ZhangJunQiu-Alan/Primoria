@@ -10,6 +10,8 @@ import { enqueueLearningProgressJob } from "@/lib/courses/learning-progress-jobs
 import { enqueueExtractorJob } from "@/lib/courses/extractor-jobs";
 import type { QuizQuestion } from "@/lib/courses/types";
 import { recordLearningEvent, type QuizSelected } from "@/lib/learning-events/store";
+import { applyQuizProgression, currentRewardSnapshot } from "@/lib/gamification/store";
+import { getUserPreferences } from "@/lib/settings/user-settings";
 
 const AnswerSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("single"), questionId: z.string(), selectedId: z.string() }),
@@ -70,7 +72,10 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
 
     // Resolve the quiz block from the owner's course. An attempt is only valid
     // against a real quiz block — unknown course/block never writes anything.
-    const course = await getCourse(courseId, user.id);
+    const [course, preferences] = await Promise.all([
+      getCourse(courseId, user.id),
+      getUserPreferences(user.id),
+    ]);
     if (!course) {
       return NextResponse.json({ error: "Course not found.", code: "not_found" }, { status: 404 });
     }
@@ -105,6 +110,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const total = questions.length;
 
     const attemptId = randomId();
+    const now = new Date();
 
     // One transaction: attempt row, per-question evidence, implicit lesson
     // completion, and the progress-job enqueue commit or roll back together —
@@ -123,6 +129,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
           answers: body.answers,
           score,
           total,
+          createdAt: now,
         })
         .onConflictDoNothing({
           target: [quizAttempts.ownerId, quizAttempts.blockId, quizAttempts.submissionId],
@@ -153,6 +160,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
           attemptId: existing.id,
           score: existing.score,
           total: existing.total,
+          rewards: await currentRewardSnapshot(user.id, tx),
         };
       }
 
@@ -187,6 +195,10 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         .where(and(eq(quizAttempts.ownerId, user.id), eq(quizAttempts.lessonId, lessonId)));
       const answered = new Set(attempted.map((row) => row.blockId));
       const complete = quizBlockIds.every((blockId) => answered.has(blockId));
+      const lessonCompleted = complete && lesson.progress !== "completed";
+      const courseCompleted = lessonCompleted && course.lessons.every(
+        (courseLesson) => courseLesson.id === lessonId || courseLesson.progress === "completed",
+      );
       if (complete) {
         // Advance the resume pointer: a completed lesson is no longer the
         // course's first non-completed lesson, so Continue moves to the next.
@@ -202,6 +214,18 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
           },
           tx,
         );
+        if (courseCompleted) {
+          await recordLearningEvent(
+            {
+              type: "course.completed",
+              ownerId: user.id,
+              id: `course_completed_${courseId}`,
+              courseId,
+              graphId: course.graphId ?? null,
+            },
+            tx,
+          );
+        }
         await enqueueLearningProgressJob(
           {
             ownerId: user.id,
@@ -221,7 +245,23 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
           tx,
         );
       }
-      return { kind: "created" as const, attemptId, score, total, lessonCompleted: complete };
+      const rewards = await applyQuizProgression(tx, {
+        ownerId: user.id,
+        attemptId,
+        blockId: body.blockId,
+        score,
+        total,
+        questionIds: graded.map(({ answer }) => answer.questionId),
+        conceptIds: graded.map(({ answer }) => questionById.get(answer.questionId)?.conceptId ?? null),
+        lessonId,
+        lessonRole: lesson.role ?? "new",
+        lessonCompleted,
+        courseId,
+        courseCompleted,
+        timeZone: preferences.timeZone,
+        now,
+      });
+      return { kind: "created" as const, attemptId, score, total, lessonCompleted, rewards };
     });
 
     if (result.kind === "conflict") {
@@ -239,10 +279,19 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         score: result.score,
         total: result.total,
         deduplicated: true,
+        rewards: result.rewards,
       });
     }
 
-    return NextResponse.json({ ok: true, persisted: true, attemptId: result.attemptId, score, total, deduplicated: false });
+    return NextResponse.json({
+      ok: true,
+      persisted: true,
+      attemptId: result.attemptId,
+      score,
+      total,
+      deduplicated: false,
+      rewards: result.rewards,
+    });
   } catch (error) {
     const safe = toSafeAuthError(error, "courses-quiz", "Failed to save quiz attempt.");
     return NextResponse.json(safe.body, { status: safe.status });

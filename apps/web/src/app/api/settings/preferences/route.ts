@@ -2,13 +2,14 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getOptionalAuthUser } from "@/lib/auth/guard";
 import { isAuthEnabled } from "@/lib/auth/session";
-import { CONTENT_LANGUAGES, getUserPreferences, saveUserPreferences } from "@/lib/settings/user-settings";
+import { CONTENT_LANGUAGES, getUserPreferences, isValidTimeZone, saveUserPreferences } from "@/lib/settings/user-settings";
 import { resolveUiLanguage } from "@/lib/i18n/server";
 import { UI_LANGUAGES, UI_LANGUAGE_COOKIE } from "@/lib/i18n/dictionaries";
 
 const PreferencesSchema = z.object({
   contentLanguage: z.enum(CONTENT_LANGUAGES).optional(),
   uiLanguage: z.enum(UI_LANGUAGES).optional(),
+  timeZone: z.string().refine(isValidTimeZone).optional(),
 });
 
 export async function GET() {
@@ -44,7 +45,7 @@ export async function PUT(request: Request) {
   const { denied, user } = await getOptionalAuthUser("settings-preferences");
   if (denied) return denied;
   if (!user) {
-    if (patch.contentLanguage) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+    if (patch.contentLanguage || patch.timeZone) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
     const preferences = { ...(await getUserPreferences(null)), uiLanguage: patch.uiLanguage ?? await resolveUiLanguage(null) };
     const response = NextResponse.json({ ok: true, authEnabled: true, preferences });
     if (patch.uiLanguage) {

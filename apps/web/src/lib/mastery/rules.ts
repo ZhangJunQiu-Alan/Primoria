@@ -15,7 +15,7 @@ function baseStatus(ev: ConceptEvidence): MasteryStatus {
   const ratio = ev.correct / ev.total;
   const allCorrect = ev.correct === ev.total;
   if (allCorrect && ev.total >= MASTERED_MIN_QUESTIONS) return "mastered";
-  if (ratio >= MASTERED_RATIO) return "mastered";
+  if (ev.total >= MASTERED_MIN_QUESTIONS && ratio >= MASTERED_RATIO) return "mastered";
   if (ratio >= LEARNING_RATIO) return "learning";
   return "weak";
 }

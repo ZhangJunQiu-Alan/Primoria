@@ -3,6 +3,7 @@ import { getDb, hasDatabaseUrl } from "@/lib/db/client";
 import { learningEvents, quizAttempts } from "@/lib/db/schema";
 import { listCourses } from "@/lib/courses/store";
 import type { CourseSummary } from "@/lib/courses/types";
+import { getXpSummary } from "@/lib/gamification/store";
 
 export type ProfileCourseActivity = {
   id: string;
@@ -75,20 +76,6 @@ function formatDisplayName(displayName: string | null | undefined, email: string
 
 function sumPlannedLessonMinutes(courses: CourseSummary[]) {
   return courses.reduce((total, course) => total + (course.estimatedMinutes || 0), 0);
-}
-
-function calculateXp(lessonsCompleted: number, questionsPracticed: number) {
-  return lessonsCompleted * 40 + questionsPracticed * 8;
-}
-
-function countCurrentStreak(activeKeys: Set<string>, today = new Date()) {
-  let streak = 0;
-  let cursor = startOfLocalDay(today);
-  while (activeKeys.has(dayKey(cursor))) {
-    streak += 1;
-    cursor = new Date(cursor.getTime() - DAY_MS);
-  }
-  return streak;
 }
 
 function buildWeekDays(activeCountByDay: Map<string, number>, today = new Date()) {
@@ -195,7 +182,7 @@ export async function getProfileStats(input: {
   const now = new Date();
   const thirtyDaysAgo = new Date(startOfLocalDay(now).getTime() - 29 * DAY_MS);
   const weekStart = startOfWeek(now);
-  const [courses, attemptRows, eventRows] = await Promise.all([
+  const [courses, attemptRows, eventRows, xpSummary] = await Promise.all([
     listCourses(input.ownerId),
     getDb()
       .select({
@@ -215,6 +202,7 @@ export async function getProfileStats(input: {
       .from(learningEvents)
       .where(eq(learningEvents.ownerId, input.ownerId))
       .orderBy(desc(learningEvents.createdAt)),
+    getXpSummary(input.ownerId, now),
   ]);
 
   // Prefer the append-only event stream. Fall back to quiz attempts only for
@@ -222,11 +210,6 @@ export async function getProfileStats(input: {
   const activityRows: ActivityRow[] = eventRows.length
     ? eventRows
     : attemptRows.map((row) => ({ createdAt: row.createdAt, courseId: row.courseId, type: "quiz.attempt", total: row.total }));
-
-  const allActiveKeys = new Set<string>();
-  for (const row of [...activityRows, ...attemptRows]) {
-    allActiveKeys.add(dayKey(row.createdAt));
-  }
 
   const activeCountByDay = new Map<string, number>();
   for (const row of activityRows.filter((row) => isOnOrAfter(row, thirtyDaysAgo))) {
@@ -251,9 +234,9 @@ export async function getProfileStats(input: {
   const weekActiveDays = [...activeCountByDay.keys()].filter((key) => key >= weekStartKey).length;
   const weekDays = buildWeekDays(activeCountByDay, now);
   const heatmapDays = buildHeatmapDays(activeCountByDay, now);
-  const xp = calculateXp(completedLessons, questionsPracticed);
-  const todayXp = calculateXp(todayLessonsCompleted, todayQuestionsPracticed);
-  const weeklyXp = calculateXp(weeklyLessonsCompleted, weeklyQuestionsPracticed);
+  const xp = xpSummary.total;
+  const todayXp = xpSummary.today;
+  const weeklyXp = xpSummary.week;
 
   const questionCountByCourse = new Map<string, number>();
   const weeklyLastActivityByCourse = new Map<string, number>();
@@ -280,7 +263,7 @@ export async function getProfileStats(input: {
     displayName,
     email: input.email,
     initial,
-    streakDays: countCurrentStreak(allActiveKeys, now),
+    streakDays: xpSummary.streak,
     xp,
     todayXp,
     weeklyXp,

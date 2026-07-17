@@ -396,6 +396,84 @@ export const userSettings = pgTable("user_settings", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const playerProgress = pgTable(
+  "player_progress",
+  {
+    ownerId: text("owner_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
+    totalXp: integer("total_xp").notNull().default(0),
+    currentStreak: integer("current_streak").notNull().default(0),
+    longestStreak: integer("longest_streak").notNull().default(0),
+    lastQuestDate: text("last_quest_date"),
+    startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    totalXpCheck: check("player_progress_total_xp_check", sql`${table.totalXp} >= 0`),
+    streakCheck: check(
+      "player_progress_streak_check",
+      sql`${table.currentStreak} >= 0 and ${table.longestStreak} >= ${table.currentStreak}`,
+    ),
+  }),
+);
+
+export const xpAwards = pgTable(
+  "xp_awards",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    ruleCode: text("rule_code").notNull(),
+    dedupeKey: text("dedupe_key").notNull(),
+    sourceType: text("source_type").notNull(),
+    sourceId: text("source_id"),
+    amount: integer("amount").notNull(),
+    metadata: jsonb("metadata").notNull().default({}),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerRuleDedupeUnique: uniqueIndex("xp_awards_owner_rule_dedupe_uidx").on(table.ownerId, table.ruleCode, table.dedupeKey),
+    ownerCreatedIdx: index("xp_awards_owner_created_idx").on(table.ownerId, table.createdAt),
+    amountCheck: check("xp_awards_amount_check", sql`${table.amount} > 0`),
+  }),
+);
+
+export const achievementUnlocks = pgTable(
+  "achievement_unlocks",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    code: text("code").notNull(),
+    sourceId: text("source_id"),
+    metadata: jsonb("metadata").notNull().default({}),
+    unlockedAt: timestamp("unlocked_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerCodeUnique: uniqueIndex("achievement_unlocks_owner_code_uidx").on(table.ownerId, table.code),
+    ownerUnlockedIdx: index("achievement_unlocks_owner_unlocked_idx").on(table.ownerId, table.unlockedAt),
+  }),
+);
+
+export const dailyQuestCompletions = pgTable(
+  "daily_quest_completions",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    localDate: text("local_date").notNull(),
+    questCode: text("quest_code").notNull(),
+    sourceId: text("source_id"),
+    completedAt: timestamp("completed_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    ownerDateQuestUnique: uniqueIndex("daily_quest_completions_owner_date_quest_uidx").on(
+      table.ownerId,
+      table.localDate,
+      table.questCode,
+    ),
+    ownerDateIdx: index("daily_quest_completions_owner_date_idx").on(table.ownerId, table.localDate),
+    localDateCheck: check("daily_quest_completions_local_date_check", sql`${table.localDate} ~ '^\\d{4}-\\d{2}-\\d{2}$'`),
+  }),
+);
+
 export const quizAttempts = pgTable(
   "quiz_attempts",
   {
