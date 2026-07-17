@@ -26,6 +26,9 @@ export type CourseContextConcept = {
   // the same lesson (from the KG prereq edge landing on it). Lets the planner
   // motivate the ordering. Absent = no authored rationale.
   prereqReason?: string;
+  // Authored one-line hint for what a quiz on this concept should check (the
+  // observable skill). Consumed only by quiz-block generation. Absent = none.
+  assessmentHint?: string;
 };
 
 // A concept at/above this max-normalized centrality is "core": load-bearing

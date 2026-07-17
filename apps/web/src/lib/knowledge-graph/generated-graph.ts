@@ -64,12 +64,13 @@ const SYSTEM_PROMPT = [
   "The graph is a LINEAR sequence of topics; each topic is one teachable lesson built around 2-3 ordered concepts.",
   "",
   'Reply with ONLY JSON (no prose, no markdown):',
-  '{"subject":"<English subject name>","subjectZh":"<简体中文学科名>","codeAdapted":<true|false>,"topics":[{"name":"<English topic name>","nameZh":"<简体中文>","concepts":[{"name":"<English concept name>","nameZh":"<简体中文>","visual":"<optional>","visualHint":"<optional>","reason":"<optional>"}]}]}',
+  '{"subject":"<English subject name>","subjectZh":"<简体中文学科名>","codeAdapted":<true|false>,"topics":[{"name":"<English topic name>","nameZh":"<简体中文>","concepts":[{"name":"<English concept name>","nameZh":"<简体中文>","visual":"<optional>","visualHint":"<optional>","reason":"<optional>","assessmentHint":"<optional>"}]}]}',
   "",
   "STRUCTURE RULES:",
   `- ${MIN_TOPICS}-${MAX_TOPICS} topics, ordered from prerequisites/foundations to applied practice. The first topic must be learnable with no prior knowledge of the subject.`,
   "- EVERY topic has exactly 2 or 3 concepts, ordered so each builds on the previous.",
   '- For every concept EXCEPT the very first of the whole graph, add "reason": ONE short clause (≤160 chars) stating why it must come after the immediately preceding concept, e.g. "needs vector operations before matrices". Omit it on the first concept.',
+  '- For each concept, add "assessmentHint": ONE short clause (≤160 chars) naming the observable skill a quiz should check for that concept, e.g. "compute a dot product by hand". This guides quiz writing only.',
   '- A topic\'s name is the conjunction of its concept themes, e.g. concepts "Network Layering" + "OSI Model" → topic "Network Layering and OSI Model".',
   "- Concept names are short noun phrases (≤4 words), each naming ONE idea — never a list or a sentence.",
   "- `name` fields are always English (used for indexing); `nameZh` fields are always Simplified Chinese.",
@@ -116,7 +117,7 @@ function cleanString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-type RawConcept = { name: string; nameZh: string; visual?: ConceptVisual; visualHint?: string; reason?: string };
+type RawConcept = { name: string; nameZh: string; visual?: ConceptVisual; visualHint?: string; reason?: string; assessmentHint?: string };
 type RawTopic = { name: string; nameZh: string; concepts: RawConcept[] };
 type RawGraph = { subject: string; subjectZh: string; codeAdapted: boolean; topics: RawTopic[] };
 
@@ -153,12 +154,14 @@ export function parseGeneratedGraph(text: string): RawGraph | null {
       const visual = cleanString(cc.visual);
       const visualHint = cleanString(cc.visualHint);
       const reason = cleanString(cc.reason).slice(0, 240);
+      const assessmentHint = cleanString(cc.assessmentHint).slice(0, 240);
       concepts.push({
         name: conceptName,
         nameZh: cleanString(cc.nameZh),
         ...(VISUALS.has(visual) ? { visual: visual as ConceptVisual } : {}),
         ...(VISUALS.has(visual) && visualHint ? { visualHint } : {}),
         ...(reason ? { reason } : {}),
+        ...(assessmentHint ? { assessmentHint } : {}),
       });
       if (concepts.length >= MAX_CONCEPTS_PER_TOPIC) break;
     }
@@ -191,6 +194,7 @@ export function toTopicGraph(raw: RawGraph, topicKey: string): TopicGraph {
         defaultOrder: conceptIndex + 1,
         ...(concept.visual ? { visual: concept.visual } : {}),
         ...(concept.visualHint ? { visualHint: concept.visualHint } : {}),
+        ...(concept.assessmentHint ? { assessmentHint: concept.assessmentHint } : {}),
       };
     });
     return {

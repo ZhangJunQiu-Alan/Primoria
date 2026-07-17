@@ -49,6 +49,10 @@ function buildOne(graphId) {
         concept.visual = node.visual;
         if (node.visual_hint) concept.visualHint = node.visual_hint;
       }
+      // Optional quiz-authoring hint (`assessment_hint` in the KG source); consumed only by quiz generation.
+      if (typeof node.assessment_hint === "string" && node.assessment_hint.trim()) {
+        concept.assessmentHint = node.assessment_hint.trim();
+      }
       topics.get(node.topic).conceptIds.push(concept);
     }
   }
