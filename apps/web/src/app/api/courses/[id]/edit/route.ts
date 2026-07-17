@@ -9,6 +9,7 @@ import {
 } from "@/lib/agent-os/ai";
 import { requireAuthUser } from "@/lib/auth/guard";
 import { InvalidMermaidDefinitionError } from "@/lib/courses/mermaid-validation";
+import { CourseEditRejectedError, CourseResourceNotFoundError } from "@/lib/courses/errors";
 
 const GeneratableBlockTypeSchema = z.enum([
   "text",
@@ -112,8 +113,15 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         { status: 422 },
       );
     }
-    const message = error instanceof Error ? error.message : "Edit failed";
-    const status = /not found/i.test(message) ? 404 : 500;
-    return NextResponse.json({ error: message }, { status });
+    if (error instanceof CourseResourceNotFoundError) {
+      return NextResponse.json({ error: error.message, code: error.code }, { status: 404 });
+    }
+    if (error instanceof CourseEditRejectedError) {
+      return NextResponse.json({ error: error.message, code: error.code }, { status: 422 });
+    }
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: "Invalid course edit request", code: "invalid_request" }, { status: 400 });
+    }
+    return NextResponse.json({ error: "Course edit failed. Please retry." }, { status: 500 });
   }
 }

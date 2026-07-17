@@ -155,7 +155,6 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     return NextResponse.json({ reply });
   } catch (error) {
     console.error("[course/chat]", error);
-    const message = error instanceof Error ? error.message : "Course chat failed";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: "Course chat failed. Please retry." }, { status: 500 });
   }
 }

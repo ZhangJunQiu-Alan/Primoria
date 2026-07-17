@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireAuthUser } from "@/lib/auth/guard";
 import { getCourse } from "@/lib/courses/store";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
+import { CourseResourceNotFoundError } from "@/lib/courses/errors";
 
 export const dynamic = "force-dynamic";
 
@@ -38,8 +39,9 @@ export async function POST(_request: Request, context: { params: Promise<{ id: s
     return NextResponse.json({ status: result.kind, lessonId: next.id, job }, { status: 202 });
   } catch (error) {
     console.error("[course/lesson/prewarm-next]", error);
-    const message = error instanceof Error ? error.message : "Prewarm failed";
-    const status = /not found/i.test(message) ? 404 : 500;
-    return NextResponse.json({ error: message }, { status });
+    if (error instanceof CourseResourceNotFoundError) {
+      return NextResponse.json({ error: error.message, code: error.code }, { status: 404 });
+    }
+    return NextResponse.json({ error: "Lesson prewarm failed. Please retry." }, { status: 500 });
   }
 }

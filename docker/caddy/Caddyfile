@@ -4,5 +4,9 @@
 # site is served on plain :80.
 {$PRIMORIA_DOMAIN::80} {
 	encode gzip
+	header {
+		-Server
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	}
 	reverse_proxy web:3000
 }

@@ -25,6 +25,7 @@ async function main() {
   requireIsolatedTestDatabase();
   const now = Date.now();
   const db = getDb();
+  const passwordHash = await hashPassword(PASSWORD);
 
   await db.transaction(async (tx) => {
     await tx.delete(authRateLimits);
@@ -36,7 +37,7 @@ async function main() {
       provider: "email_password",
       providerUserId: EMAIL,
       email: EMAIL,
-      passwordHash: hashPassword(PASSWORD),
+      passwordHash,
       verifiedAt: new Date(),
     });
   });

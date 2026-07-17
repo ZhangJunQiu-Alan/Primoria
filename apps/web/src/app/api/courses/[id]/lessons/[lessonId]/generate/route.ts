@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
 import { requireAuthUser } from "@/lib/auth/guard";
+import { CourseResourceNotFoundError } from "@/lib/courses/errors";
 
 export const dynamic = "force-dynamic";
 
@@ -26,8 +27,9 @@ export async function POST(_request: Request, context: { params: Promise<{ id: s
     return NextResponse.json({ status: result.kind, job: toLessonGenerationJobSummary(result.job) }, { status: 202 });
   } catch (error) {
     console.error("[course/lesson/generate]", error);
-    const message = error instanceof Error ? error.message : "Lesson generation failed";
-    const status = /not found/i.test(message) ? 404 : 500;
-    return NextResponse.json({ error: message }, { status });
+    if (error instanceof CourseResourceNotFoundError) {
+      return NextResponse.json({ error: error.message, code: error.code }, { status: 404 });
+    }
+    return NextResponse.json({ error: "Lesson generation failed. Please retry." }, { status: 500 });
   }
 }
