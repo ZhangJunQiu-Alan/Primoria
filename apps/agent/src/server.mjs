@@ -87,7 +87,6 @@ export async function startAgentServer() {
   const store = createRunStore(DATABASE_URL);
   await store.ping();
   const checkpointer = PostgresSaver.fromConnString(DATABASE_URL, { schema: "agent_runtime" });
-  await checkpointer.setup();
   const graph = createPrimoriaGraph({ checkpointer });
   const worker = createRunWorker({
     store,

@@ -2,7 +2,7 @@
 # set, Caddy provisions and renews Let's Encrypt certificates automatically
 # (ports 80+443 must be open in the server's security group). Without it, the
 # site is served on plain :80.
-{$PRIMORIA_DOMAIN::80} {
+{$PRIMORIA_DOMAIN} {
 	encode gzip
 	header {
 		-Server
