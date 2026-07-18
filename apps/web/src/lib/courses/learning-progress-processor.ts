@@ -8,6 +8,8 @@ import { listConceptMasteryByOwner, upsertConceptMasteryByOwner } from "../maste
 import { computeMasteryUpdates, type ConceptEvidence } from "../mastery/rules";
 import type { MasteryStatus } from "../mastery/store";
 import { decideNextStep } from "./learning-progress-decider";
+import { applyMasteryProgression } from "../gamification/store";
+import { getUserPreferences } from "../settings/user-settings";
 import {
   completeLearningProgressJobWithDecision,
   updateLearningProgressStage,
@@ -63,11 +65,27 @@ export async function processLearningProgressJob(claim: LearningProgressClaim): 
   // ── Stage ①: mastery update ────────────────────────────────────────────────
   await updateLearningProgressStage(fence, "mastery");
   const evidence = await loadQuizEvidence(ownerId, lessonId);
-  const currentList = await listConceptMasteryByOwner(ownerId, graphId);
+  const [currentList, preferences] = await Promise.all([
+    listConceptMasteryByOwner(ownerId, graphId),
+    getUserPreferences(ownerId),
+  ]);
   const currentState = new Map<string, MasteryStatus>(currentList.map((m) => [m.conceptId, m.status]));
   const updates = computeMasteryUpdates(evidence, currentState);
   for (const update of updates) {
-    await upsertConceptMasteryByOwner(ownerId, graphId, update.conceptId, update.status, update.score);
+    const previousStatus = currentState.get(update.conceptId);
+    await getDb().transaction(async (tx) => {
+      await upsertConceptMasteryByOwner(ownerId, graphId, update.conceptId, update.status, update.score, tx);
+      await applyMasteryProgression(tx, {
+        ownerId,
+        graphId,
+        conceptId: update.conceptId,
+        sourceId: jobId,
+        previousStatus,
+        nextStatus: update.status,
+        timeZone: preferences.timeZone,
+        occurredAt: new Date(claim.job.createdAt),
+      });
+    });
   }
 
   // ── Stage ②: diagnosis + decision ──────────────────────────────────────────
