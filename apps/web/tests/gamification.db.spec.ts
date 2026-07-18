@@ -1,16 +1,27 @@
 import { randomUUID } from "node:crypto";
-import { afterAll, describe, expect, it } from "vitest";
-import { eq } from "drizzle-orm";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { getDb } from "@/lib/db/client";
 import { achievementUnlocks, dailyQuestCompletions, playerProgress, users, xpAwards } from "@/lib/db/schema";
+import { resetTestDb, setupTestDb, teardownTestDb, TEST_DB_AVAILABLE } from "./helpers/test-db";
 
-const run = process.env.RUN_GAMIFICATION_DB === "1" && Boolean(process.env.DATABASE_URL);
+const run = process.env.RUN_GAMIFICATION_DB === "1" && TEST_DB_AVAILABLE;
 const suite = run ? describe : describe.skip;
 const ownerId = `gamification_test_${randomUUID()}`;
 
 suite("gamification database invariants", () => {
+  let sql: Awaited<ReturnType<typeof setupTestDb>>;
+
+  beforeAll(async () => {
+    sql = await setupTestDb();
+  });
+
+  beforeEach(async () => {
+    await resetTestDb(sql);
+  });
+
   afterAll(async () => {
-    await getDb().delete(users).where(eq(users.id, ownerId));
+    await resetTestDb(sql);
+    await teardownTestDb(sql);
   });
 
   it("deduplicates XP, achievement, and daily quest writes at the database boundary", async () => {
