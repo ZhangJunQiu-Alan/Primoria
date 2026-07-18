@@ -27,6 +27,9 @@ function validateGraph(graph) {
       if (node.topic !== null) throw new Error(`Topic ${node.id} must have topic=null`);
       topics.add(node.id);
     } else if (node.kind === "concept") {
+      if (!/^pc_[a-f0-9]{32}$/.test(node.canonical_id ?? "")) {
+        throw new Error(`Concept ${node.id} has invalid canonical_id: ${node.canonical_id}`);
+      }
       concepts.add(node.id);
     } else {
       throw new Error(`Unsupported node kind for ${node.id}: ${node.kind}`);
@@ -125,16 +128,25 @@ async function seedGraph(client, graphId) {
         await client.query(
           `
             insert into public.knowledge_graph_concepts
-              (graph_id, concept_id, topic_id, name, description, default_order, created_at, updated_at)
-            values ($1, $2, $3, $4, $5, $6, now(), now())
+              (graph_id, concept_id, canonical_id, topic_id, name, description, default_order, created_at, updated_at)
+            values ($1, $2, $3, $4, $5, $6, $7, now(), now())
             on conflict (graph_id, concept_id) do update set
+              canonical_id = excluded.canonical_id,
               topic_id = excluded.topic_id,
               name = excluded.name,
               description = excluded.description,
               default_order = excluded.default_order,
               updated_at = now()
           `,
-          [graphId, concept.id, concept.topic, concept.name, concept.description, concept.default_order],
+          [
+            graphId,
+            concept.id,
+            concept.canonical_id,
+            concept.topic,
+            concept.name,
+            concept.description,
+            concept.default_order,
+          ],
         );
       }
 
