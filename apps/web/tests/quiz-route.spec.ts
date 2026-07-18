@@ -7,6 +7,9 @@ const routeState = vi.hoisted(() => ({
   recordLearningEvent: vi.fn(),
   enqueueLearningProgressJob: vi.fn(),
   enqueueExtractorJob: vi.fn(),
+  applyQuizProgression: vi.fn(),
+  currentRewardSnapshot: vi.fn(),
+  getUserPreferences: vi.fn(),
   getDb: vi.fn(),
   hasDatabaseUrl: vi.fn(() => true),
 }));
@@ -35,6 +38,15 @@ vi.mock("@/lib/courses/learning-progress-jobs", () => ({
 
 vi.mock("@/lib/courses/extractor-jobs", () => ({
   enqueueExtractorJob: routeState.enqueueExtractorJob,
+}));
+
+vi.mock("@/lib/gamification/store", () => ({
+  applyQuizProgression: routeState.applyQuizProgression,
+  currentRewardSnapshot: routeState.currentRewardSnapshot,
+}));
+
+vi.mock("@/lib/settings/user-settings", () => ({
+  getUserPreferences: routeState.getUserPreferences,
 }));
 
 type TxOptions = {
@@ -135,6 +147,23 @@ describe("quiz route server-authoritative grading", () => {
     routeState.recordLearningEvent.mockResolvedValue(undefined);
     routeState.enqueueLearningProgressJob.mockResolvedValue({ kind: "queued", job: {} });
     routeState.enqueueExtractorJob.mockResolvedValue({ kind: "queued", job: {} });
+    routeState.getUserPreferences.mockResolvedValue({ contentLanguage: "auto", uiLanguage: null, timeZone: "UTC" });
+    routeState.applyQuizProgression.mockResolvedValue({
+      xpAwarded: 16,
+      totalXp: 16,
+      levelCode: "novice_explorer",
+      levelUp: null,
+      unlockedAchievements: [],
+      completedQuests: [],
+    });
+    routeState.currentRewardSnapshot.mockResolvedValue({
+      xpAwarded: 0,
+      totalXp: 16,
+      levelCode: "novice_explorer",
+      levelUp: null,
+      unlockedAchievements: [],
+      completedQuests: [],
+    });
   });
 
   it("recomputes score server-side and ignores client-sent score/total", async () => {
@@ -151,7 +180,13 @@ describe("quiz route server-authoritative grading", () => {
     });
 
     expect(response.status).toBe(200);
-    expect(await response.json()).toMatchObject({ ok: true, persisted: true, score: 1, total: 2 });
+    expect(await response.json()).toMatchObject({
+      ok: true,
+      persisted: true,
+      score: 1,
+      total: 2,
+      rewards: { xpAwarded: 16, totalXp: 16 },
+    });
     expect(inserted).toHaveLength(1);
     expect(inserted[0]).toMatchObject({ blockId: "b1", submissionId: SUBMISSION_ID, score: 1, total: 2, ownerId: "u1" });
     // Per-question evidence carries server-side grading.
@@ -242,11 +277,13 @@ describe("quiz route server-authoritative grading", () => {
       score: 1,
       total: 2,
       deduplicated: true,
+      rewards: { xpAwarded: 0, totalXp: 16 },
     });
     expect(routeState.recordLearningEvent).not.toHaveBeenCalled();
     expect(routeState.markLessonProgress).not.toHaveBeenCalled();
     expect(routeState.enqueueLearningProgressJob).not.toHaveBeenCalled();
     expect(routeState.enqueueExtractorJob).not.toHaveBeenCalled();
+    expect(routeState.currentRewardSnapshot).toHaveBeenCalled();
   });
 
   it("rejects reuse of a submission id with different answers", async () => {
@@ -289,6 +326,12 @@ describe("quiz route server-authoritative grading", () => {
     expect(routeState.enqueueExtractorJob).toHaveBeenCalledWith(
       { ownerId: "u1", courseId: "c1", lessonId: "l1", graphId: "g1" },
       tx,
+    );
+    const courseCompletionEvent = routeState.recordLearningEvent.mock.calls.find(([event]) => event.type === "course.completed");
+    expect(courseCompletionEvent?.[0]).toMatchObject({ id: "course_completed_c1", courseId: "c1" });
+    expect(routeState.applyQuizProgression).toHaveBeenCalledWith(
+      tx,
+      expect.objectContaining({ ownerId: "u1", lessonCompleted: true, courseCompleted: true, timeZone: "UTC" }),
     );
   });
 });
