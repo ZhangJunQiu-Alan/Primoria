@@ -29,7 +29,11 @@ COPY . .
 FROM node:20-bookworm-slim AS runtime
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
-RUN corepack enable
+ENV COREPACK_HOME=/opt/corepack
+RUN mkdir -p "$COREPACK_HOME" \
+  && corepack enable \
+  && corepack prepare pnpm@10.28.1 --activate \
+  && chmod -R a+rX "$COREPACK_HOME"
 WORKDIR /app
 COPY --from=source --chown=node:node /app /app
 USER node
