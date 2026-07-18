@@ -1,11 +1,13 @@
 # 交互组件入库审核报告
 
+状态：2026-07-15 入库证据，已归档。测试数量、延迟和路径记录保留历史语境。
+
 审核对象:《Primoria全学科交互可视化Catalog工作报告》交付的 19 个声明式组件。
-审核标准:审核当时版本的 `docs/交互组件规范.md` 第 10 节；现行门禁见该规范第 9 节。
+审核标准:审核当时版本的 `docs/交互组件规范.md` 第 10 节；[现行门禁](../../交互组件规范.md)见该规范第 9 节。
 审核日期:2026-07-15。
 
 本文保留入库时的审核证据。组件已迁入生产目录并接入主 Tutor；最新路径和
-运行约束以 `docs/交互组件规范.md` 为准，后续事项关闭情况见第 7 节。
+运行约束以 [`docs/交互组件规范.md`](../../交互组件规范.md) 为准，后续事项关闭情况见第 7 节。
 
 ## 结论
 
@@ -47,7 +49,7 @@
 | 3 | G3 | climate-comparison 的 `comparisonFocus` 是死字段:切换后渲染无任何变化 | 焦点高亮对应读数(年温差/年降水),hemisphere 焦点显示南北半球 chip |
 | 4 | G3 | lens-imaging.tsx(参考样板自身)残留 5 处裸 hex(#fff/#f3efe4/#f7f3e9),违反调色板规则 | 全部改为 `WIDGET_COLORS.surface/surfaceSoft/chipBg` |
 | 5 | 测试缺口 | 插入排序无任何断言(规范只强制冒泡/选择,但「任意输入终态有序」未覆盖插入) | 新增插入排序终态 + 已排序输入零交换断言 |
-| 6 | 交付物越界 | `apps/web/public/qa-angle-components.html`(角度组件设计稿)放在 public/,会随生产构建公开发布 | 移至 `docs/角度组件设计稿.html` |
+| 6 | 交付物越界 | `apps/web/public/qa-angle-components.html`(角度组件设计稿)放在 public/,会随生产构建公开发布 | 当时移至 `docs/角度组件设计稿.html`；现归档为 `docs/archive/design-research/angle-component-exploration-2026-07.html` |
 | 7 | 路由质量 | 内容型组件 create 时 fast-tier LLM 输出「待补充」占位文本(实测 source-comparison 首跑复现) | route.ts create 提示增加一条通用约束:文本内容字段必须生成具体教学内容、禁止占位文本;复测生成了恩格斯 vs 尤尔的实质性史料对比 |
 
 另有两处记录在案、不要求返修:客户端示例 prompt 与空态文案已顺手更新为跨学科版本;process-sequence / argument-map / timeline 三个 widget 的 onChange 未使用(其学生交互仅为浏览选择,参数调整全走 LLM patch,符合规范对「学生调的参数必须进 config」的定义)。
