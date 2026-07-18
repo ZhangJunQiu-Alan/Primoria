@@ -18,6 +18,9 @@ const AnchorRequestSchema = z.object({
   graphId: z.string().min(1),
   startTopicId: z.string().min(1),
   targetConceptId: z.string().min(1).nullable().optional(),
+  targetConceptIds: z.array(z.string().min(1)).max(8).optional(),
+  scope: z.enum(["canonical", "goal"]).optional(),
+  learningGoal: z.string().trim().min(1).max(300).nullable().optional(),
   language: z.string().min(1).optional(),
   // Set when this build came from a subject-clarification chip click; carries the
   // original ambiguous query so the server can log a subject-level menu_select.
@@ -84,7 +87,7 @@ export async function POST(request: Request) {
 
       outlineInput = {
         ownerId,
-        topic: courseContext.startTopic.name,
+        topic: courseContext.learningGoal ?? courseContext.startTopic.name,
         kgContext: courseContext,
         source: "cold_start" as const,
         language: anchor.language ?? null,

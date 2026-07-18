@@ -64,9 +64,14 @@ Onboarding captures three explicit signals:
 2. a skippable 2–2000 character self-introduction for Facts intake;
 3. Tutor style (`socratic`, `feynman`, or `euclid`).
 
-The goal is positioned against library KGs. If the subject is outside library
-coverage and infrastructure is healthy, Primoria may create or reuse a
-generated graph. Submitting the introduction only queues durable work and moves
+The goal is positioned against library KGs. A broad covered subject may reuse
+the full authored graph; a precise topic/concept uses its prerequisite closure;
+and a covered subject constrained by an application purpose uses a minimal
+`goal_scoped` subgraph. If named outcomes exceed one graph or the subject is
+outside library coverage while infrastructure is healthy, Primoria may create
+or reuse a generated/hybrid graph. Partial coverage never silently becomes a
+full course merely because one subject keyword matched. Submitting the
+introduction only queues durable work and moves
 the learner directly to Tutor style; it never waits for a model response or
 shows a candidate-review step. First-course preparation begins only after goal
 positioning and Facts intake reaches `completed`, `skipped`, or `failed`.
@@ -103,14 +108,14 @@ Important tool behavior:
 
 ### 3.4 Courses and lessons
 
-A `Course` is an owner-scoped learning path. A `Lesson` belongs to a course,
+A `Course` is an owner-and-scope learning path. A `Lesson` belongs to a course,
 references KG graph/topic/concept ids, and stores ordered blocks as JSONB.
 Courses do not copy the global KG structure.
 
 Course creation:
 
 1. position the goal;
-2. choose the graph, start topic, and optional target concept;
+2. choose the graph, start topic, scope, and zero or more terminal target concepts;
 3. build the outline as concept-frontier bundles: a mastery snapshot is taken
    once at creation, then the concept prerequisite DAG (in scope) is walked in a
    stable authored order and grouped into lessons of 2–3 unmastered concepts.
@@ -118,6 +123,13 @@ Course creation:
    collapses to fewer/shorter lessons; each lesson persists its `conceptIds`;
 4. enqueue the first lesson-generation job;
 5. keep later lessons planned and generate lazily.
+
+Goal-scoped targets may be derived deterministically from approved
+cross-subject prerequisite edges or selected from one curated graph. Their hard
+prerequisites are added automatically; unrelated downstream lessons are not.
+Each course persists a stable `scope_key`, and only the exact owner+scope pair
+is reused. See `docs/knowledge-graph/learning-goal-routing.md` for the routing
+matrix and permanent regression contract.
 
 Ordering is a priority topological sort keyed by authored order
 (topic then concept `default_order`); concept `centrality` is only a full-tie
@@ -328,6 +340,7 @@ pnpm lint
 pnpm --filter @primoria/web test
 pnpm catalog:validate
 pnpm --filter @primoria/web test:interactive-routing
+pnpm test:learning-goal-routing
 pnpm --filter @primoria/agent test
 pnpm --filter @primoria/agent typecheck
 pnpm build

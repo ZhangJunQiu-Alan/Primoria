@@ -47,6 +47,9 @@ export type CourseContext = {
   graphId: string;
   startTopic: CourseContextTopic;
   targetConceptId: string | null;
+  targetConceptIds?: string[];
+  scope?: "canonical" | "goal";
+  learningGoal?: string | null;
   nextTopic: CourseContextTopic | null;
   // Learner's content language (e.g. "zh", "en"), carried from the course so
   // generated lesson prose matches the language of their original topic prompt.
@@ -93,6 +96,12 @@ export function buildKgContextPrompt(kg?: CourseContext): string {
     "Knowledge graph linear learning path (follow it exactly):",
     `Start topic: ${fmtTopic(kg.startTopic)}`,
   ];
+  if (kg.scope === "goal" && kg.learningGoal) {
+    lines.push(`Learner's goal: ${kg.learningGoal}`);
+    lines.push(
+      "Teach only the selected concept scope and connect examples, explanations, and practice directly to this goal. Do not expand back into the full source curriculum.",
+    );
+  }
   if ((kg.startTopic.concepts ?? []).some(isCore)) {
     lines.push(
       "Concepts marked [core] are foundational — many later concepts depend on them; teach them thoroughly and do not rush.",
@@ -103,8 +112,9 @@ export function buildKgContextPrompt(kg?: CourseContext): string {
     lines.push("Why this order (use it to motivate transitions, do not quote verbatim):");
     for (const c of rationale) lines.push(`- ${c.name}: ${c.prereqReason}`);
   }
-  if (kg.targetConceptId) {
-    lines.push(`The learner is aiming at concept ${kg.targetConceptId} — make the first lesson center on it.`);
+  const targets = kg.targetConceptIds?.length ? kg.targetConceptIds : kg.targetConceptId ? [kg.targetConceptId] : [];
+  if (targets.length > 0) {
+    lines.push(`The learner's terminal concept targets are ${targets.join(", ")}.`);
   }
   if (kg.nextTopic) {
     lines.push(`Next topic: ${fmtTopic(kg.nextTopic)}`);

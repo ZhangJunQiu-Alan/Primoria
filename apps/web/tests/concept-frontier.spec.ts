@@ -155,6 +155,28 @@ describe("concept-frontier · behaviour", () => {
     expect(flatten(bundles).sort()).toEqual(["a", "b", "c"]);
   });
 
+  it("unions multiple target closures without adding unrelated downstream concepts", () => {
+    const linearAlgebra = getTopicGraph("linear_algebra");
+    const bundles = buildConceptFrontierOutline({
+      graph: linearAlgebra,
+      startTopicId: null,
+      targetConceptId: null,
+      targetConceptIds: ["c_mit1806_matrix_ops", "c_mit1806_linear_transformations"],
+      masteredConceptIds: NONE,
+    });
+    const ids = flatten(bundles);
+
+    expect(ids).toEqual([
+      "c_mit1806_vectors",
+      "c_mit1806_elimination",
+      "c_mit1806_matrix_ops",
+      "c_mit1806_linear_transformations",
+    ]);
+    expect(ids).not.toContain("c_mit1806_lu_decomp");
+    expect(ids).not.toContain("c_mit1806_cramers_rule");
+    expect(ids).not.toContain("c_mit1806_diff_eq");
+  });
+
   it("all-mastered scope yields no bundles", () => {
     const bundles = buildConceptFrontierOutline({
       graph,

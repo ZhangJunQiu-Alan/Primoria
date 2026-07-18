@@ -14,8 +14,10 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
   extraction after durable enqueue.
 - Main CopilotKit Tutor connected to the durable `primoria_tutor` runtime.
 - Postgres-backed chat threads and New chat lifecycle.
-- KG positioning across library graphs with generated-graph coverage fallback
-  and explicit infrastructure-failure handling.
+- KG positioning across library graphs with canonical, topic/concept closure,
+  and goal-scoped routes; deterministic cross-subject targets where approved;
+  generated/hybrid fallback for missing outcomes; and explicit
+  infrastructure-failure handling.
 - Concept-frontier course outline initialization (mastery-aware 2–3 concept
   lesson bundles), background title/description enrichment, lazy lesson
   generation, job recovery, and Jump ahead generation.
@@ -68,7 +70,10 @@ execution until streaming HTML settles.
 
 PostgreSQL stores App/Auth/Course data, KG/pgvector data, chat history, sharing
 snapshots, learner profile/facts, mastery, the progression ledger and
-achievements, media, and durable jobs. Three Web
+achievements, media, and durable jobs. Goal-scoped onboarding anchors persist
+multiple target concept ids and scope. Courses use `scope_key` for exact
+owner+scope reuse, allowing canonical and goal-specific courses from the same
+KG to coexist. Three Web
 workers consume Postgres queues:
 
 - `worker:lesson-generation`;
@@ -118,6 +123,7 @@ pnpm lint
 pnpm --filter @primoria/web test
 pnpm catalog:validate
 pnpm --filter @primoria/web test:interactive-routing
+pnpm test:learning-goal-routing
 pnpm --filter @primoria/agent typecheck
 pnpm --filter @primoria/agent test
 pnpm --filter @primoria/agent test:integration
@@ -127,6 +133,10 @@ pnpm build
 DB-backed and browser suites remain separate CI gates. The latest local
 catalog-routing run passed all 28 real-model cases; this result is evidence, not
 a permanent guarantee, so rerun the evaluator after catalog or prompt changes.
+Learning-goal routing has a permanent 1,252-case bilingual corpus with a
+1,250-case minimum, gold-policy invariants, deterministic course-scope checks,
+and a CI gate. The two reported production regressions also pass configured
+real-model evaluation. See `docs/knowledge-graph/learning-goal-routing.md`.
 
 ## Remaining hardening
 
@@ -139,3 +149,5 @@ a permanent guarantee, so rerun the evaluator after catalog or prompt changes.
    launch economy; do not add competitive or social progression implicitly.
 6. Keep browser QA representative across text, visual, code, quiz, worksheet,
    course sharing, onboarding, and Tutor patch flows.
+7. Reduce Stage-2 learning-goal routing latency while preserving the fail-closed
+   KG coverage policy.

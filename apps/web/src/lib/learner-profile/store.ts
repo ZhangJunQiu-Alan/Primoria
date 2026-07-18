@@ -28,6 +28,10 @@ function iso(value: Date | string | null | undefined) {
   return value instanceof Date ? value.toISOString() : String(value);
 }
 
+function normalizeStringArray(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((entry): entry is string => typeof entry === "string") : [];
+}
+
 export function rowToLearnerProfile(row: LearnerProfileRow): LearnerProfile {
   return {
     ownerId: row.ownerId,
@@ -35,6 +39,8 @@ export function rowToLearnerProfile(row: LearnerProfileRow): LearnerProfile {
     goalGraphId: row.goalGraphId ?? null,
     goalStartTopicId: row.goalStartTopicId ?? null,
     goalTargetConceptId: row.goalTargetConceptId ?? null,
+    goalTargetConceptIds: normalizeStringArray(row.goalTargetConceptIds),
+    goalScope: row.goalScope === "goal" || row.goalScope === "canonical" ? row.goalScope : null,
     goalSkippedAt: iso(row.goalSkippedAt),
     goalPositioningStatus: isGoalPositioningStatus(row.goalPositioningStatus) ? row.goalPositioningStatus : null,
     goalPositioningMessage: row.goalPositioningMessage ?? null,
@@ -335,6 +341,8 @@ export async function savePendingLearningGoal(ownerId: string, learningGoal: str
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
+    goalTargetConceptIds: null,
+    goalScope: null,
     goalSkippedAt: null,
     goalPositioningStatus: "pending",
     goalPositioningMessage: null,
@@ -356,12 +364,16 @@ export async function saveLearningGoal(input: {
   graphId: string;
   startTopicId: string;
   targetConceptId: string | null;
+  targetConceptIds?: string[];
+  scope?: "canonical" | "goal";
 }) {
   return upsertLearnerProfile(input.ownerId, {
     learningGoal: input.learningGoal,
     goalGraphId: input.graphId,
     goalStartTopicId: input.startTopicId,
     goalTargetConceptId: input.targetConceptId,
+    goalTargetConceptIds: input.targetConceptIds ?? (input.targetConceptId ? [input.targetConceptId] : []),
+    goalScope: input.scope ?? "canonical",
     goalSkippedAt: null,
     goalPositioningStatus: "positioned",
     goalPositioningMessage: null,
@@ -383,11 +395,15 @@ export async function savePositionedLearningGoalIfPending(input: {
   graphId: string;
   startTopicId: string;
   targetConceptId: string | null;
+  targetConceptIds?: string[];
+  scope?: "canonical" | "goal";
 }) {
   return updatePendingLearningGoal(input.ownerId, input.learningGoal, input.attemptId, {
     goalGraphId: input.graphId,
     goalStartTopicId: input.startTopicId,
     goalTargetConceptId: input.targetConceptId,
+    goalTargetConceptIds: input.targetConceptIds ?? (input.targetConceptId ? [input.targetConceptId] : []),
+    goalScope: input.scope ?? "canonical",
     goalSkippedAt: null,
     goalPositioningStatus: "positioned",
     goalPositioningMessage: null,
@@ -412,6 +428,8 @@ export async function saveLearningGoalClarification(input: {
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
+    goalTargetConceptIds: null,
+    goalScope: null,
     goalSkippedAt: null,
     goalPositioningStatus: "clarify",
     goalPositioningMessage: input.message,
@@ -435,6 +453,8 @@ export async function saveLearningGoalPositioningFailure(input: {
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
+    goalTargetConceptIds: null,
+    goalScope: null,
     goalSkippedAt: null,
     goalPositioningStatus: "failed",
     goalPositioningMessage: input.message,
@@ -455,6 +475,8 @@ export async function skipLearningGoal(ownerId: string) {
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
+    goalTargetConceptIds: null,
+    goalScope: null,
     goalSkippedAt: now,
     goalPositioningStatus: null,
     goalPositioningMessage: null,

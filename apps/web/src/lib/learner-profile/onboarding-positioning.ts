@@ -8,9 +8,11 @@ export type OnboardingGoalAnchor = {
   graphId: string;
   startTopicId: string;
   targetConceptId: string | null;
+  targetConceptIds: string[];
+  scope: "canonical" | "goal";
   topicName: string;
   graphSubject: string;
-  branch: "specific" | "subject_start" | "directed" | "generated";
+  branch: "specific" | "subject_start" | "directed" | "goal_scoped" | "generated";
   language: "zh" | "en";
 };
 
@@ -39,6 +41,8 @@ function subjectStartAnchor(graphId: string, language: "zh" | "en"): OnboardingG
     graphId,
     startTopicId: topic.topicId,
     targetConceptId: null,
+    targetConceptIds: [],
+    scope: "canonical",
     topicName: resolveKgDisplayName(topic, language),
     graphSubject: graph.subject,
     branch: "subject_start",
@@ -81,6 +85,8 @@ export async function resolveOnboardingGoalAnchor(
         graphId: generated.graph.graphId,
         startTopicId: root.topicId,
         targetConceptId: null,
+        targetConceptIds: [],
+        scope: "canonical",
         topicName: resolveKgDisplayName(root, language),
         graphSubject: generated.graph.subject,
         branch: "generated",
@@ -104,6 +110,8 @@ export async function resolveOnboardingGoalAnchor(
       graphId: courseContext.graphId,
       startTopicId: courseContext.startTopic.topicId,
       targetConceptId: courseContext.targetConceptId ?? null,
+      targetConceptIds: courseContext.targetConceptIds,
+      scope: courseContext.scope,
       topicName: courseContext.startTopic.name || courseContext.startTopic.topicId,
       graphSubject: graph.subject,
       branch: mode,

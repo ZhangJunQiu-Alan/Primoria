@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockState = vi.hoisted(() => ({
   getCourse: vi.fn(),
-  getCourseByGraph: vi.fn(),
+  getCourseByScopeKey: vi.fn(),
   saveCourse: vi.fn(),
   updateLessonTitleAndDescriptionIfUnchanged: vi.fn(),
   invokeJson: vi.fn(),
@@ -16,7 +16,7 @@ const mockState = vi.hoisted(() => ({
 
 vi.mock("@/lib/courses/store", () => ({
   getCourse: mockState.getCourse,
-  getCourseByGraph: mockState.getCourseByGraph,
+  getCourseByScopeKey: mockState.getCourseByScopeKey,
   saveCourse: mockState.saveCourse,
   updateLessonTitleAndDescriptionIfUnchanged: mockState.updateLessonTitleAndDescriptionIfUnchanged,
 }));
@@ -179,7 +179,7 @@ describe("initializeCourseOutline enrichment scheduling", () => {
   });
 
   it("schedules one background enrichment for a new course", async () => {
-    mockState.getCourseByGraph.mockResolvedValue(undefined);
+    mockState.getCourseByScopeKey.mockResolvedValue(undefined);
     const { initializeCourseOutline } = await import("../src/lib/ai/deepagent/course-generator");
 
     const result = await initializeCourseOutline({ ownerId: "u1", topic: "Quantum Basics" });
@@ -192,7 +192,7 @@ describe("initializeCourseOutline enrichment scheduling", () => {
   });
 
   it("does not schedule enrichment when the course is reused", async () => {
-    mockState.getCourseByGraph.mockResolvedValue({
+    mockState.getCourseByScopeKey.mockResolvedValue({
       ...course(),
       graphId: "python_fundamentals",
       lessons: [

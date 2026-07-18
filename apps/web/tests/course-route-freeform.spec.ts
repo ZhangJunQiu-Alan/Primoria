@@ -113,4 +113,37 @@ describe("learning course route freeform topics", () => {
       lessonId: "lesson_1",
     });
   });
+
+  it("validates and forwards a goal-scoped curated concept set", async () => {
+    const learningGoal = "我想要学习面向深度学习的线性代数";
+    const targetConceptIds = ["c_mit1806_matrix_ops", "c_mit1806_linear_transformations"];
+    const { POST } = await import("../src/app/api/learning/course/route");
+
+    const response = await POST(
+      request({
+        graphId: "linear_algebra",
+        startTopicId: "t_mit1806_linear_equations_mit1806_matrix_ops",
+        targetConceptId: targetConceptIds[0],
+        targetConceptIds,
+        scope: "goal",
+        learningGoal,
+        language: "zh",
+      }),
+    );
+
+    expect(response.status).toBe(202);
+    expect(mockState.initializeCourseOutline).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ownerId: "usr_1",
+        topic: learningGoal,
+        language: "zh",
+        kgContext: expect.objectContaining({
+          graphId: "linear_algebra",
+          scope: "goal",
+          learningGoal,
+          targetConceptIds,
+        }),
+      }),
+    );
+  });
 });

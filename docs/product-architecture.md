@@ -54,7 +54,7 @@ and preserves the original audit trail.
 
 ```text
 learning goal
-→ KG positioning or governed generated graph
+→ canonical KG, goal-scoped subgraph, or governed generated/hybrid graph
 → mastery-aware concept frontier
 → planned course and lazy lesson generation
 → learner interaction and quiz evidence
@@ -67,6 +67,15 @@ mastery snapshot skips only concepts already marked `mastered`; a mastery read
 failure degrades to teaching all concepts. Remaining concepts are grouped into
 lessons of two or three in authored topological order. Each lesson persists its
 concept IDs and is materialized by a background worker when needed.
+
+Positioning treats a purpose-qualified subject as a scope-selection problem,
+not as permission to reuse the whole graph. Goal-scoped anchors carry multiple
+terminal concept ids and the original learning goal. Approved cross-subject
+edges can select targets deterministically; hard-prerequisite closure then
+supplies only required foundations. Partial single-graph coverage routes to a
+generated/hybrid graph. Courses persist a stable scope identity, so two active
+courses may share a source graph without sharing a curriculum. The canonical
+policy is `docs/knowledge-graph/learning-goal-routing.md`.
 
 Lesson titles and descriptions start as deterministic templates. One
 best-effort background enrichment call may rewrite them behind an equality

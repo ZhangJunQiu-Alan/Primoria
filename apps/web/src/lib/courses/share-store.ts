@@ -190,6 +190,7 @@ export function snapshotToImportedCourse(snapshot: CourseShareSnapshot, now = Da
       updatedAt: now,
     })),
     archivedAt: null,
+    scopeKey: null,
     version: 1,
     createdAt: now,
     updatedAt: now,
@@ -214,6 +215,22 @@ export async function importSharedCourse(token: string, ownerId: string): Promis
     .limit(1);
   if (existing[0]) return { ok: true, courseId: existing[0].id, alreadyImported: true };
 
+  const sourceGraphId = share.snapshot.course.graphId;
+  if (sourceGraphId) {
+    const duplicateSubject = await db
+      .select({ id: coursesTable.id })
+      .from(coursesTable)
+      .where(
+        and(
+          eq(coursesTable.ownerId, ownerId),
+          eq(coursesTable.graphId, sourceGraphId),
+          isNull(coursesTable.archivedAt),
+        ),
+      )
+      .limit(1);
+    if (duplicateSubject[0]) return { ok: false, reason: "duplicate_subject" };
+  }
+
   const course = snapshotToImportedCourse(share.snapshot);
   const courseRow = { ...courseToRow(course, ownerId), importedFromShareId: share.id };
   const lessonRows = course.lessons.map((lesson) => lessonToRow(lesson, course.id, ownerId));
@@ -233,9 +250,6 @@ export async function importSharedCourse(token: string, ownerId: string): Promis
         .where(and(eq(coursesTable.ownerId, ownerId), eq(coursesTable.importedFromShareId, share.id)))
         .limit(1);
       if (raced[0]) return { ok: true, courseId: raced[0].id, alreadyImported: true };
-    }
-    if (isUniqueViolation(error, "courses_owner_graph_uidx")) {
-      return { ok: false, reason: "duplicate_subject" };
     }
     throw error;
   }

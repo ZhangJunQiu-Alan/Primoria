@@ -1,0 +1,357 @@
+{
+  "contentVersion": "1.1.0",
+  "generatedFrom": "data/knowledge-graphs/source/cross_subject_edges.json",
+  "note": "Approved cross-subject prerequisite edges used for deterministic learning-goal scope selection.",
+  "edges": [
+    {
+      "from": "che_amino_acids",
+      "to": "bio_proteins",
+      "strength": "hard",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "a_level_biology"
+    },
+    {
+      "from": "che_collision",
+      "to": "bio_enzyme_action",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "a_level_biology"
+    },
+    {
+      "from": "che_covalent",
+      "to": "bio_carbohydrates",
+      "strength": "soft",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "a_level_biology"
+    },
+    {
+      "from": "che_imf",
+      "to": "bio_water",
+      "strength": "hard",
+      "fromGraphId": "a_level_chemistry",
+      "toGraphId": "a_level_biology"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "che_rate_equation",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "a_level_chemistry"
+    },
+    {
+      "from": "mat_log_laws",
+      "to": "che_ph_ka",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "a_level_chemistry"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "phy_capacitor_discharge",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "a_level_physics"
+    },
+    {
+      "from": "mat_exp_func",
+      "to": "phy_half_life",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "a_level_physics"
+    },
+    {
+      "from": "mat_trig_ratios",
+      "to": "phy_scalars_vectors",
+      "strength": "soft",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "a_level_physics"
+    },
+    {
+      "from": "mat_vector_basics",
+      "to": "phy_scalars_vectors",
+      "strength": "hard",
+      "fromGraphId": "a_level_mathematics",
+      "toGraphId": "a_level_physics"
+    },
+    {
+      "from": "phy_energy_levels",
+      "to": "che_electron_config",
+      "strength": "hard",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "a_level_chemistry"
+    },
+    {
+      "from": "phy_internal_energy",
+      "to": "che_enthalpy",
+      "strength": "soft",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "a_level_chemistry"
+    },
+    {
+      "from": "phy_kinetic_theory",
+      "to": "che_gas_laws",
+      "strength": "hard",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "a_level_chemistry"
+    },
+    {
+      "from": "phy_nuclear_structure",
+      "to": "che_subatomic",
+      "strength": "hard",
+      "fromGraphId": "a_level_physics",
+      "toGraphId": "a_level_chemistry"
+    },
+    {
+      "from": "net_ip_addressing",
+      "to": "c10_2",
+      "strength": "soft",
+      "fromGraphId": "computer_network",
+      "toGraphId": "computer_systems"
+    },
+    {
+      "from": "c_ucb61b_bfs",
+      "to": "ai_uninformed",
+      "strength": "hard",
+      "fromGraphId": "data_structures_and_algorithms",
+      "toGraphId": "artificial_intelligence"
+    },
+    {
+      "from": "c_ucb61b_graph_api",
+      "to": "ai_search_problem",
+      "strength": "soft",
+      "fromGraphId": "data_structures_and_algorithms",
+      "toGraphId": "artificial_intelligence"
+    },
+    {
+      "from": "c_ucb61b_classes_objects",
+      "to": "c_mit6031_adt_basics",
+      "strength": "soft",
+      "fromGraphId": "data_structures_and_algorithms",
+      "toGraphId": "software_construction"
+    },
+    {
+      "from": "conditional_probability",
+      "to": "ai_naive_bayes",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "artificial_intelligence"
+    },
+    {
+      "from": "markov_chains_basics",
+      "to": "ai_markov_chain",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "artificial_intelligence"
+    },
+    {
+      "from": "probability_spaces",
+      "to": "ai_prob",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "artificial_intelligence"
+    },
+    {
+      "from": "basic_counting_rules",
+      "to": "c_ucb61b_loop_analysis",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "data_structures_and_algorithms"
+    },
+    {
+      "from": "graph_basics",
+      "to": "c_ucb61b_graph_api",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "data_structures_and_algorithms"
+    },
+    {
+      "from": "simple_induction",
+      "to": "c_ucb61b_recursion_analysis",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "data_structures_and_algorithms"
+    },
+    {
+      "from": "probability_spaces",
+      "to": "dl_vae",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "deep_learning"
+    },
+    {
+      "from": "conditional_probability",
+      "to": "c_infotheory_joint_entropy",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "information_theory"
+    },
+    {
+      "from": "expectation",
+      "to": "c_infotheory_entropy",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "information_theory"
+    },
+    {
+      "from": "normal_distribution",
+      "to": "c_infotheory_differential_entropy",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "information_theory"
+    },
+    {
+      "from": "probability_spaces",
+      "to": "c_infotheory_entropy",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "information_theory"
+    },
+    {
+      "from": "conditional_probability",
+      "to": "ml_naive_bayes",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "machine_learning"
+    },
+    {
+      "from": "normal_distribution",
+      "to": "ml_gda",
+      "strength": "hard",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "machine_learning"
+    },
+    {
+      "from": "probability_spaces",
+      "to": "ml_logistic_reg",
+      "strength": "soft",
+      "fromGraphId": "discrete_math_and_probability",
+      "toGraphId": "machine_learning"
+    },
+    {
+      "from": "c_hash_tables",
+      "to": "c_ucb61b_hash_code",
+      "strength": "soft",
+      "fromGraphId": "introduction_to_computer_science",
+      "toGraphId": "data_structures_and_algorithms"
+    },
+    {
+      "from": "c_lists_dicts",
+      "to": "pyf_dictionary_operations",
+      "strength": "soft",
+      "fromGraphId": "introduction_to_computer_science",
+      "toGraphId": "python_fundamentals"
+    },
+    {
+      "from": "c_python_syntax",
+      "to": "pyf_script_execution",
+      "strength": "soft",
+      "fromGraphId": "introduction_to_computer_science",
+      "toGraphId": "python_fundamentals"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "dl_mlp",
+      "strength": "hard",
+      "fromGraphId": "linear_algebra",
+      "toGraphId": "deep_learning"
+    },
+    {
+      "from": "c_mit1806_eigen",
+      "to": "ml_pca",
+      "strength": "hard",
+      "fromGraphId": "linear_algebra",
+      "toGraphId": "machine_learning"
+    },
+    {
+      "from": "c_mit1806_matrix_ops",
+      "to": "ml_linear_reg",
+      "strength": "hard",
+      "fromGraphId": "linear_algebra",
+      "toGraphId": "machine_learning"
+    },
+    {
+      "from": "c_mit1806_projections",
+      "to": "ml_linear_reg",
+      "strength": "soft",
+      "fromGraphId": "linear_algebra",
+      "toGraphId": "machine_learning"
+    },
+    {
+      "from": "c_mit1806_elimination",
+      "to": "c_mit18330_lu",
+      "strength": "hard",
+      "fromGraphId": "linear_algebra",
+      "toGraphId": "numerical_analysis"
+    },
+    {
+      "from": "c_mit1806_least_squares",
+      "to": "c_mit18330_least_squares",
+      "strength": "hard",
+      "fromGraphId": "linear_algebra",
+      "toGraphId": "numerical_analysis"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "dl_backprop",
+      "strength": "hard",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "deep_learning"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "dl_optimization",
+      "strength": "hard",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "deep_learning"
+    },
+    {
+      "from": "c_1801_chain_rule",
+      "to": "ml_backprop",
+      "strength": "hard",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "machine_learning"
+    },
+    {
+      "from": "c_1802_gradient",
+      "to": "ml_gradient_descent",
+      "strength": "hard",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "machine_learning"
+    },
+    {
+      "from": "c_1801_definite_integral",
+      "to": "c_mit18330_newton_cotes",
+      "strength": "hard",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "numerical_analysis"
+    },
+    {
+      "from": "c_1801_deriv_def",
+      "to": "c_mit18330_newton",
+      "strength": "hard",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "numerical_analysis"
+    },
+    {
+      "from": "c_1801_taylor_series",
+      "to": "c_mit18330_error_analysis",
+      "strength": "soft",
+      "fromGraphId": "mit_calculus",
+      "toGraphId": "numerical_analysis"
+    },
+    {
+      "from": "oop",
+      "to": "c_ucb61b_classes_objects",
+      "strength": "hard",
+      "fromGraphId": "sicp_cs61a",
+      "toGraphId": "data_structures_and_algorithms"
+    },
+    {
+      "from": "recursion",
+      "to": "c_ucb61b_recursion_analysis",
+      "strength": "soft",
+      "fromGraphId": "sicp_cs61a",
+      "toGraphId": "data_structures_and_algorithms"
+    }
+  ]
+}

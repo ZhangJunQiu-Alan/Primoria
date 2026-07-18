@@ -53,6 +53,8 @@ export type LearnerProfile = {
   goalGraphId: string | null;
   goalStartTopicId: string | null;
   goalTargetConceptId: string | null;
+  goalTargetConceptIds: string[];
+  goalScope: "canonical" | "goal" | null;
   goalSkippedAt: string | null;
   goalPositioningStatus: GoalPositioningStatus | null;
   goalPositioningMessage: string | null;

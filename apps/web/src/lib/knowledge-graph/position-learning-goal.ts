@@ -1,5 +1,6 @@
 import {
   finalizeStage2,
+  buildLinearPath,
   resolvePositioningParams,
   safeDefault,
   type FinalizeContext,
@@ -12,6 +13,7 @@ import {
 } from "./positioning";
 import { runStage2Positioning } from "./positioning-llm";
 import { runFreeformGoalGate } from "./freeform-goal-gate";
+import { selectGoalScope } from "./goal-scope-selector";
 import {
   ALL_KG_GRAPHS,
   makeEmptyKnowledgeGraphSearchResponse,
@@ -25,8 +27,15 @@ import {
   KnowledgeGraphUnavailableError,
 } from "./errors";
 import { buildGraphCandidates } from "./graph-router";
-import { detectKgLanguage } from "./display-name";
+import {
+  findExplicitSubjectGraphIds,
+  findPrimarySubjectGraphId,
+  hasCompositionConnector,
+  hasGoalScopeModifier,
+} from "./subject-aliases";
+import { detectKgLanguage, type KgLanguage } from "./display-name";
 import { getTopicGraph, listTopicGraphIds } from "./topic-graph";
+import { selectDeterministicGoalTargets } from "./cross-subject-edges";
 import type { CourseContext, CourseContextTopic } from "./course-context";
 
 export type { CourseContext, CourseContextTopic } from "./course-context";
@@ -57,6 +66,7 @@ export type PositionLearningGoalDeps = {
   searchKnowledgeGraphNodes?: typeof searchKnowledgeGraphNodes;
   runStage2Positioning?: typeof runStage2Positioning;
   runFreeformGoalGate?: typeof runFreeformGoalGate;
+  selectGoalScope?: typeof selectGoalScope;
 };
 
 export type PositioningPlan =
@@ -91,6 +101,81 @@ function buildDiagnostics(
   };
 }
 
+async function resolveGoalScopedResult(
+  result: PositioningResult,
+  input: PositionLearningGoalInput,
+  language: KgLanguage,
+  deps: PositionLearningGoalDeps,
+  deterministicTargetConceptIds: readonly string[],
+): Promise<PositioningResult> {
+  if (result.branch !== "positioned" || result.mode !== "goal_scoped") return result;
+  const selection =
+    deterministicTargetConceptIds.length > 0
+      ? {
+          coverage: "full" as const,
+          targetConceptIds: [...deterministicTargetConceptIds],
+          reason: "approved_cross_subject_prerequisites",
+        }
+      : await (deps.selectGoalScope ?? selectGoalScope)({
+          query: input.query,
+          graphId: result.graphId,
+          language,
+        });
+  if (!selection || selection.coverage === "partial") {
+    return {
+      branch: "out_of_library",
+      graphId: "",
+      params: result.params,
+      freeformTopic: input.query.trim(),
+      diagnostics: result.diagnostics,
+    };
+  }
+
+  const graph = getTopicGraph(result.graphId);
+  const targets = new Set(selection.targetConceptIds);
+  const startTopic = [...graph.topics]
+    .filter((topic) => topic.conceptIds.some((concept) => targets.has(concept.conceptId)))
+    .sort((a, b) => a.defaultOrder - b.defaultOrder)[0];
+  if (!startTopic) {
+    return {
+      branch: "out_of_library",
+      graphId: "",
+      params: result.params,
+      freeformTopic: input.query.trim(),
+      diagnostics: result.diagnostics,
+    };
+  }
+
+  return {
+    ...result,
+    learningGoal: input.query.trim(),
+    ...buildLinearPath(
+      result.graphId,
+      startTopic.topicId,
+      selection.targetConceptIds[0] ?? null,
+      language,
+      selection.targetConceptIds,
+    ),
+  };
+}
+
+function seedGoalScopedResult(
+  graphId: string,
+  base: PositioningResult,
+  language: KgLanguage,
+): PositioningResult {
+  const root = [...getTopicGraph(graphId).topics].sort((a, b) => a.defaultOrder - b.defaultOrder)[0];
+  if (!root) return base;
+  return {
+    branch: "positioned",
+    graphId,
+    params: base.params,
+    mode: "goal_scoped",
+    diagnostics: base.diagnostics,
+    ...buildLinearPath(graphId, root.topicId, null, language, []),
+  };
+}
+
 export async function positionLearningGoal(
   input: PositionLearningGoalInput,
   deps: PositionLearningGoalDeps = {},
@@ -114,7 +199,11 @@ export async function positionLearningGoal(
   const overrides: Partial<PositioningParams> = {};
   if (input.floor !== undefined) overrides.floor = input.floor;
   const params = resolvePositioningParams(overrides);
-  const language = input.language ?? detectKgLanguage(input.query);
+  const language: KgLanguage = input.language?.toLowerCase().startsWith("zh")
+    ? "zh"
+    : input.language
+      ? "en"
+      : detectKgLanguage(input.query);
   const librarySubjects = listLibrarySubjects();
 
   const maxSimilarity = search.results.length ? Math.max(...search.results.map((r) => r.similarity)) : 0;
@@ -150,13 +239,24 @@ export async function positionLearningGoal(
   const candidates = buildGraphCandidates(search.results, undefined, search.encodedQuery.coreQuery).map(
     (c): GraphCandidateLite => ({ graphId: c.graphId, subject: c.subject, bestSimilarity: c.bestSimilarity }),
   );
+  const explicitGraphIds = findExplicitSubjectGraphIds(input.query);
+  const primarySubjectGraphId = findPrimarySubjectGraphId(input.query);
 
   // Margin: if the top subject clearly dominates, position inside it alone;
   // otherwise hand the top-N graphs to Stage 2 to pick + position in one call.
   const dominates =
     candidates.length <= 1 ||
     candidates[0].bestSimilarity - candidates[1].bestSimilarity >= params.marginWindow;
-  const selected = dominates ? candidates.slice(0, 1) : candidates.slice(0, params.maxStage2Graphs);
+  const recalled = dominates ? candidates.slice(0, 1) : candidates.slice(0, params.maxStage2Graphs);
+  const librarySubjectById = new Map(librarySubjects.map((subject) => [subject.graphId, subject]));
+  const explicit = explicitGraphIds
+    .map((graphId) => librarySubjectById.get(graphId))
+    .filter((subject): subject is { graphId: string; subject: string } => Boolean(subject))
+    .map((subject) => ({ ...subject, bestSimilarity: 1 }));
+  const selected = [...explicit, ...recalled.filter((candidate) => !explicitGraphIds.includes(candidate.graphId))].slice(
+    0,
+    params.maxStage2Graphs,
+  );
 
   // Recall-hit topic ids per graph, for the directed guardrail.
   const hitTopicIdsByGraph = new Map<string, Set<string>>();
@@ -186,7 +286,30 @@ export async function positionLearningGoal(
     },
     undefined,
   );
-  const result = decision ? finalizeStage2(decision, ctx) : safeDefault(ctx);
+  let result = decision ? finalizeStage2(decision, ctx) : safeDefault(ctx);
+  if (hasGoalScopeModifier(input.query) && primarySubjectGraphId) {
+    result = seedGoalScopedResult(primarySubjectGraphId, result, language);
+  } else if (
+    hasCompositionConnector(input.query) &&
+    explicitGraphIds.length === 0 &&
+    (result.branch === "positioned" || result.branch === "clarify_subject")
+  ) {
+    const graphId = result.branch === "positioned" ? result.graphId : selected[0]?.graphId;
+    if (graphId) result = seedGoalScopedResult(graphId, result, language);
+  }
+  const deterministicTargetConceptIds = primarySubjectGraphId
+    ? selectDeterministicGoalTargets(
+        primarySubjectGraphId,
+        explicitGraphIds.filter((graphId) => graphId !== primarySubjectGraphId),
+      )
+    : [];
+  result = await resolveGoalScopedResult(
+    result,
+    input,
+    language,
+    deps,
+    deterministicTargetConceptIds,
+  );
   if (result.branch === "out_of_library" && !result.freeformTopic) {
     result.freeformTopic = search.encodedQuery.coreQuery;
   }
@@ -234,6 +357,9 @@ export function planFromPositioning(result: PositioningResult): PositioningPlan 
       graphId: result.graphId,
       startTopic,
       targetConceptId: result.targetConceptId ?? null,
+      targetConceptIds: result.targetConceptIds ?? (result.targetConceptId ? [result.targetConceptId] : []),
+      scope: result.mode === "goal_scoped" ? "goal" : "canonical",
+      learningGoal: result.learningGoal ?? null,
       nextTopic: next ? { topicId: next.topicId, name: next.name, concepts: next.concepts } : null,
     },
   };

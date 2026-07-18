@@ -161,6 +161,9 @@ export async function loadLessonGenerationContext(input: {
       withPrereqReason(withMastery(currentConcepts, masteryByConcept), graph.conceptEdges),
     ),
     targetConceptId: null,
+    targetConceptIds: [],
+    scope: course.scopeKey?.includes(":goal:") ? "goal" : "canonical",
+    learningGoal: course.scopeKey?.includes(":goal:") ? course.topic : null,
     nextTopic:
       nextLesson && nextConcepts.length > 0
         ? toContextTopic(nextLesson.topicId ?? topic.topicId, nextLesson.title, nextConcepts)
@@ -216,6 +219,9 @@ async function loadFreeformContext(
     graphId: "",
     startTopic: freeformTopic(lesson),
     targetConceptId: null,
+    targetConceptIds: [],
+    scope: "canonical",
+    learningGoal: null,
     nextTopic: next ? freeformTopic(next) : null,
     language: course.language ?? null,
     knowledgeBackground,

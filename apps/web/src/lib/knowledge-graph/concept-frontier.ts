@@ -111,10 +111,17 @@ function requiredScope(input: {
   edges: ConceptPrerequisiteEdge[];
   startTopicId: string | null;
   targetConceptId: string | null;
+  targetConceptIds?: string[];
 }): Set<string> {
   const { graph, concepts, edges, startTopicId, targetConceptId } = input;
-  if (targetConceptId && concepts.has(targetConceptId)) {
-    return hardAncestorClosure(targetConceptId, edges, concepts);
+  const targets = input.targetConceptIds?.length ? input.targetConceptIds : targetConceptId ? [targetConceptId] : [];
+  if (targets.length > 0) {
+    const scope = new Set<string>();
+    for (const target of targets) {
+      if (!concepts.has(target)) continue;
+      for (const conceptId of hardAncestorClosure(target, edges, concepts)) scope.add(conceptId);
+    }
+    if (scope.size > 0) return scope;
   }
   const start = startTopicId ? graph.topics.find((t) => t.topicId === startTopicId) : undefined;
   const startOrder = start?.defaultOrder ?? Number.NEGATIVE_INFINITY;
@@ -184,6 +191,7 @@ export function buildConceptFrontierOutline(input: {
   graph: TopicGraph;
   startTopicId: string | null;
   targetConceptId: string | null;
+  targetConceptIds?: string[];
   masteredConceptIds: ReadonlySet<string>;
 }): ConceptBundle[] {
   const { graph, startTopicId, targetConceptId, masteredConceptIds } = input;
@@ -191,7 +199,14 @@ export function buildConceptFrontierOutline(input: {
   if (concepts.size === 0) return [];
   const edges = graph.conceptEdges ?? synthesizeLinearEdges(concepts);
 
-  const required = requiredScope({ graph, concepts, edges, startTopicId, targetConceptId });
+  const required = requiredScope({
+    graph,
+    concepts,
+    edges,
+    startTopicId,
+    targetConceptId,
+    targetConceptIds: input.targetConceptIds,
+  });
   const scope = new Set<string>();
   for (const id of required) {
     if (!masteredConceptIds.has(id)) scope.add(id);

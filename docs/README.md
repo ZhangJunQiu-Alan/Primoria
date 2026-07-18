@@ -29,6 +29,7 @@ use the priority order below and verify behavior against the code.
 
 ## Knowledge graph
 
+- [`knowledge-graph/learning-goal-routing.md`](knowledge-graph/learning-goal-routing.md) — canonical KG-vs-goal-subgraph-vs-generated-course policy, persisted scope identity, and permanent regression corpus.
 - [`knowledge-graph/import-runbook.md`](knowledge-graph/import-runbook.md) — validation, schema, import, cross-graph edges, embeddings, and derived artifacts.
 - [`knowledge-graph/topic-grain-standards.md`](knowledge-graph/topic-grain-standards.md) — concept granularity and prerequisite-edge rules.
 

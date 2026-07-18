@@ -73,6 +73,7 @@ pnpm --filter @primoria/web test
 pnpm --filter @primoria/agent test
 pnpm catalog:validate
 pnpm --filter @primoria/web test:interactive-routing
+pnpm test:learning-goal-routing
 bash -n scripts/pg-restore-drill.sh
 pnpm build
 pnpm audit:prod
