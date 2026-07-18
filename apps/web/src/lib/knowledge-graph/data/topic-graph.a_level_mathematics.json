@@ -2,7 +2,7 @@
   "graphId": "a_level_mathematics",
   "subject": "Mathematics",
   "generatedFrom": "data/knowledge-graphs/source/a_level_mathematics.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -128,8 +128,8 @@
     },
     {
       "topicId": "mat_algebra_part2_mat_composite",
-      "name": "Composite Functions and Modulus Function",
-      "nameZh": "复合函数与绝对值函数",
+      "name": "Composite Functions, Modulus Function and Graph Transformations",
+      "nameZh": "复合函数、绝对值函数与图像变换",
       "defaultOrder": 4,
       "conceptIds": [
         {
@@ -147,6 +147,14 @@
           "centrality": 0.0248,
           "visual": "function",
           "visualHint": "Plot the modulus function and solve |f(x)| = g(x) graphically."
+        },
+        {
+          "conceptId": "mat_graph_transformations",
+          "name": "Graph Transformations of Functions",
+          "nameZh": "函数图像变换",
+          "defaultOrder": 3,
+          "visual": "function",
+          "visualHint": "Transform a function graph with sliders for horizontal and vertical translation and scaling."
         }
       ],
       "successors": [],
@@ -470,7 +478,15 @@
           "hard": true
         },
         {
+          "topicId": "mat_integration_part1",
+          "hard": true
+        },
+        {
           "topicId": "mat_integration_part1_mat_standard_integrals",
+          "hard": true
+        },
+        {
+          "topicId": "mat_numerical_methods_mat_form_de",
           "hard": true
         }
       ],
@@ -612,6 +628,14 @@
           "centrality": 0.0579,
           "visual": "interactive",
           "visualHint": "Shade the area under a curve between draggable limits."
+        },
+        {
+          "conceptId": "mat_trapezium_rule",
+          "name": "Trapezium Rule",
+          "nameZh": "梯形法则",
+          "defaultOrder": 3,
+          "visual": "interactive",
+          "visualHint": "Approximate the area under a curve with adjustable trapezia and compare it with the exact integral."
         }
       ],
       "successors": [
@@ -624,8 +648,10 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "mat_differentiation_part1"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "mat_integration_part1_mat_standard_integrals",
@@ -758,6 +784,7 @@
       ],
       "successors": [],
       "prereqTopics": [
+        "mat_differentiation_part1",
         "mat_integration_part1_mat_standard_integrals"
       ],
       "isRoot": false
@@ -926,8 +953,8 @@
     },
     {
       "topicId": "mat_mech_forces",
-      "name": "Mechanics: Forces and Newton's Laws",
-      "nameZh": "力与牛顿定律",
+      "name": "Mechanics: Forces, Equilibrium and Contact Models",
+      "nameZh": "力、平衡与接触模型",
       "defaultOrder": 27,
       "conceptIds": [
         {
@@ -940,17 +967,45 @@
           "visualHint": "Resolve forces into components on a free-body diagram."
         },
         {
+          "conceptId": "mat_smooth_contact",
+          "name": "Smooth Contact Model",
+          "nameZh": "光滑接触模型",
+          "defaultOrder": 2
+        },
+        {
           "conceptId": "mat_friction",
           "name": "Friction",
           "nameZh": "摩擦",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.0615
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "mat_mech_dynamics",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "mat_mech_dynamics",
+      "name": "Mechanics: Mass, Weight and Newton's Laws",
+      "nameZh": "质量、重量与牛顿定律",
+      "defaultOrder": 28,
+      "conceptIds": [
+        {
+          "conceptId": "mat_mass_weight",
+          "name": "Mass and Weight",
+          "nameZh": "质量与重量",
+          "defaultOrder": 1
         },
         {
           "conceptId": "mat_newton_laws",
           "name": "Newton's Laws of Motion",
           "nameZh": "牛顿运动定律",
-          "defaultOrder": 3,
+          "defaultOrder": 2,
           "centrality": 0.0864
         }
       ],
@@ -960,14 +1015,16 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "mat_mech_forces"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "mat_mech_energy_momentum",
       "name": "Mechanics: Connected Particles, Energy and Momentum",
       "nameZh": "力学：连接体、能量与动量",
-      "defaultOrder": 28,
+      "defaultOrder": 29,
       "conceptIds": [
         {
           "conceptId": "mat_connected_particles",
@@ -995,7 +1052,7 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "mat_mech_forces"
+        "mat_mech_dynamics"
       ],
       "isRoot": false
     },
@@ -1003,7 +1060,7 @@
       "topicId": "mat_data_counting_prob",
       "name": "Data, Counting and Probability",
       "nameZh": "数据、计数与概率",
-      "defaultOrder": 29,
+      "defaultOrder": 30,
       "conceptIds": [
         {
           "conceptId": "mat_data_rep",
@@ -1042,7 +1099,7 @@
       "topicId": "mat_prob_random_vars",
       "name": "Probability and Discrete Random Variables",
       "nameZh": "概率与离散随机变量",
-      "defaultOrder": 30,
+      "defaultOrder": 31,
       "conceptIds": [
         {
           "conceptId": "mat_prob_rules",
@@ -1074,6 +1131,10 @@
         {
           "topicId": "mat_normal_inference",
           "hard": true
+        },
+        {
+          "topicId": "mat_continuous_probability",
+          "hard": false
         }
       ],
       "prereqTopics": [
@@ -1085,7 +1146,7 @@
       "topicId": "mat_random_vars",
       "name": "Random Variables and Distributions",
       "nameZh": "随机变量与分布",
-      "defaultOrder": 31,
+      "defaultOrder": 32,
       "conceptIds": [
         {
           "conceptId": "mat_binomial_dist",
@@ -1128,7 +1189,7 @@
       "topicId": "mat_normal_inference",
       "name": "Normal Distribution and Normal Approximations",
       "nameZh": "正态分布与正态近似",
-      "defaultOrder": 32,
+      "defaultOrder": 33,
       "conceptIds": [
         {
           "conceptId": "mat_normal_dist",
@@ -1160,10 +1221,37 @@
       "isRoot": false
     },
     {
+      "topicId": "mat_continuous_probability",
+      "name": "Continuous Random Variables and Probability Density",
+      "nameZh": "连续随机变量与概率密度",
+      "defaultOrder": 34,
+      "conceptIds": [
+        {
+          "conceptId": "mat_continuous_random_variables",
+          "name": "Continuous Random Variables",
+          "nameZh": "连续随机变量",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "mat_probability_density_function",
+          "name": "Probability Density Function",
+          "nameZh": "概率密度函数",
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Shade areas under a probability density and show the corresponding probability and quantile."
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "mat_prob_random_vars"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "mat_normal_inference_mat_sampling",
-      "name": "Sampling and Hypothesis Testing",
-      "nameZh": "抽样与假设检验",
-      "defaultOrder": 33,
+      "name": "Sampling, Estimation and Hypothesis Testing",
+      "nameZh": "抽样、估计与假设检验",
+      "defaultOrder": 35,
       "conceptIds": [
         {
           "conceptId": "mat_sampling",
@@ -1173,10 +1261,16 @@
           "centrality": 0.0459
         },
         {
+          "conceptId": "mat_statistical_estimation",
+          "name": "Statistical Estimation",
+          "nameZh": "统计估计",
+          "defaultOrder": 2
+        },
+        {
           "conceptId": "mat_hypothesis",
           "name": "Hypothesis Testing",
           "nameZh": "假设检验",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.0248
         }
       ],
@@ -1191,462 +1285,614 @@
     {
       "from": "mat_argand",
       "to": "mat_mod_arg",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“模角形式”需要先掌握“阿根图”的定义、表示或操作方法。"
     },
     {
       "from": "mat_arithmetic",
       "to": "mat_geometric",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“等差级数”为学习“等比级数”提供背景与解题基础。"
     },
     {
       "from": "mat_binomial_dist",
       "to": "mat_geometric_dist",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“二项分布”为学习“几何分布”提供背景与解题基础。"
     },
     {
       "from": "mat_binomial_dist",
       "to": "mat_normal_approx",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“正态近似”需要先掌握“二项分布”的定义、表示或操作方法。"
     },
     {
       "from": "mat_binomial_pos",
       "to": "mat_binomial_gen",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“二项展开（一般指数）”需要先掌握“二项展开（正整数）”的定义、表示或操作方法。"
     },
     {
       "from": "mat_by_parts",
       "to": "mat_int_partial",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“分部积分”为学习“部分分式积分”提供背景与解题基础。"
     },
     {
       "from": "mat_central_spread",
       "to": "mat_discrete_rv",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“中心趋势与离散”为学习“离散随机变量”提供背景与解题基础。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_implicit",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“隐函数微分”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_parametric",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“参数微分”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_product_quotient",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“链式法则”为学习“积商法则”提供背景与解题基础。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_rates",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“相关变化率”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_substitution",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“换元积分”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_tangent_normal",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“链式法则”为学习“切线与法线”提供背景与解题基础。"
     },
     {
       "from": "mat_complex_arith",
       "to": "mat_argand",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“阿根图”需要先掌握“复数运算”的定义、表示或操作方法。"
     },
     {
       "from": "mat_composite",
       "to": "mat_modulus",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“复合函数”为学习“绝对值函数”提供背景与解题基础。"
+    },
+    {
+      "from": "mat_continuous_random_variables",
+      "to": "mat_probability_density_function",
+      "strength": "hard",
+      "reason": "A probability density is the representation used to define probabilities and statistics for a continuous random variable."
     },
     {
       "from": "mat_data_rep",
       "to": "mat_central_spread",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“数据表示”为学习“中心趋势与离散”提供背景与解题基础。"
     },
     {
       "from": "mat_definite_area",
       "to": "mat_standard_integrals",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“定积分与面积”为学习“标准函数积分”提供背景与解题基础。"
+    },
+    {
+      "from": "mat_definite_area",
+      "to": "mat_trapezium_rule",
+      "strength": "hard",
+      "reason": "The trapezium rule approximates a definite integral, so the integral and area interpretation must already be understood."
     },
     {
       "from": "mat_definite_area",
       "to": "mat_volumes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“旋转体体积”需要先掌握“定积分与面积”的定义、表示或操作方法。"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_binomial_dist",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“二项分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_continuous_random_variables",
+      "strength": "soft",
+      "reason": "Contrasting probability masses with densities helps distinguish discrete and continuous random variables, but is not a strict mathematical dependency."
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_geometric_dist",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“几何分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_normal_dist",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“正态分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_poisson",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“泊松分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "mat_double_angle",
       "to": "mat_rform",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“R 公式”需要先掌握“倍角与和差公式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_exp_func",
       "to": "mat_log_laws",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“对数与法则”需要先掌握“指数函数”的定义、表示或操作方法。"
     },
     {
       "from": "mat_factor_theorem",
       "to": "mat_partial_fractions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“部分分式”需要先掌握“因式与余式定理”的定义、表示或操作方法。"
     },
     {
       "from": "mat_first_principles",
       "to": "mat_power_rule",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“幂法则”需要先掌握“从原理求导”的定义、表示或操作方法。"
     },
     {
       "from": "mat_forces_equilibrium",
       "to": "mat_friction",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“摩擦”需要先掌握“力与平衡”的定义、表示或操作方法。"
     },
     {
       "from": "mat_forces_equilibrium",
       "to": "mat_newton_laws",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“牛顿运动定律”需要先掌握“力与平衡”的定义、表示或操作方法。"
+    },
+    {
+      "from": "mat_forces_equilibrium",
+      "to": "mat_smooth_contact",
+      "strength": "hard",
+      "reason": "The smooth-contact model assumes a particular contact-force direction and therefore depends on identifying and resolving forces first."
     },
     {
       "from": "mat_form_de",
       "to": "mat_separation",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“建立微分方程”为学习“分离变量”提供背景与解题基础。"
     },
     {
       "from": "mat_friction",
       "to": "mat_newton_laws",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“摩擦”为学习“牛顿运动定律”提供背景与解题基础。"
     },
     {
       "from": "mat_functions",
       "to": "mat_composite",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“复合函数”需要先掌握“函数与反函数”的定义、表示或操作方法。"
+    },
+    {
+      "from": "mat_functions",
+      "to": "mat_graph_transformations",
+      "strength": "hard",
+      "reason": "Interpreting transformations of f requires prior understanding of function notation, domain, and range."
     },
     {
       "from": "mat_geometric",
       "to": "mat_binomial_pos",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“等比级数”为学习“二项展开（正整数）”提供背景与解题基础。"
     },
     {
       "from": "mat_geometric_dist",
       "to": "mat_poisson",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“几何分布”为学习“泊松分布”提供背景与解题基础。"
     },
     {
       "from": "mat_implicit",
       "to": "mat_parametric",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“隐函数微分”为学习“参数微分”提供背景与解题基础。"
     },
     {
       "from": "mat_indefinite",
       "to": "mat_definite_area",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“定积分与面积”需要先掌握“不定积分”的定义、表示或操作方法。"
     },
     {
       "from": "mat_indices_surds",
       "to": "mat_binomial_pos",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“指数与根式”为学习“二项展开（正整数）”提供背景与解题基础。"
     },
     {
       "from": "mat_indices_surds",
       "to": "mat_exp_func",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“指数函数”需要先掌握“指数与根式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_indices_surds",
       "to": "mat_quadratics",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“指数与根式”为学习“二次函数”提供背景与解题基础。"
     },
     {
       "from": "mat_inequalities",
       "to": "mat_functions",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“不等式”为学习“函数与反函数”提供背景与解题基础。"
     },
     {
       "from": "mat_int_partial",
       "to": "mat_volumes",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“部分分式积分”为学习“旋转体体积”提供背景与解题基础。"
     },
     {
       "from": "mat_kin_constant",
       "to": "mat_kin_variable",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“匀加速运动”为学习“变加速运动”提供背景与解题基础。"
     },
     {
       "from": "mat_kin_constant",
       "to": "mat_projectiles",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“抛体运动”需要先掌握“匀加速运动”的定义、表示或操作方法。"
     },
     {
       "from": "mat_kin_variable",
       "to": "mat_projectiles",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“变加速运动”为学习“抛体运动”提供背景与解题基础。"
     },
     {
       "from": "mat_locate_roots",
       "to": "mat_iteration",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“迭代法”需要先掌握“根的定位”的定义、表示或操作方法。"
     },
     {
       "from": "mat_log_laws",
       "to": "mat_solve_exp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“解指数与对数方程”需要先掌握“对数与法则”的定义、表示或操作方法。"
+    },
+    {
+      "from": "mat_mass_weight",
+      "to": "mat_newton_laws",
+      "strength": "hard",
+      "reason": "Applying Newton's laws in vertical motion requires weight to be represented correctly as the force W = mg."
     },
     {
       "from": "mat_mod_arg",
       "to": "mat_complex_loci",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“复数根与轨迹”需要先掌握“模角形式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_newton_laws",
       "to": "mat_connected_particles",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“连接质点”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
     },
     {
       "from": "mat_newton_laws",
       "to": "mat_momentum_impulse",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“动量与冲量”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
     },
     {
       "from": "mat_newton_laws",
       "to": "mat_work_energy_power",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“功、能、功率”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
     },
     {
       "from": "mat_normal_dist",
       "to": "mat_normal_approx",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“正态近似”需要先掌握“正态分布”的定义、表示或操作方法。"
     },
     {
       "from": "mat_normal_dist",
       "to": "mat_sampling",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“抽样”需要先掌握“正态分布”的定义、表示或操作方法。"
+    },
+    {
+      "from": "mat_normal_dist",
+      "to": "mat_statistical_estimation",
+      "strength": "hard",
+      "reason": "The prescribed confidence intervals for means and large-sample proportions use normal-distribution results or approximations."
     },
     {
       "from": "mat_parallel_perp",
       "to": "mat_circles",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“平行与垂直直线”为学习“圆”提供背景与解题基础。"
     },
     {
       "from": "mat_partial_fractions",
       "to": "mat_int_partial",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“部分分式积分”需要先掌握“部分分式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_perm_comb",
       "to": "mat_prob_rules",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“排列组合”为学习“概率法则”提供背景与解题基础。"
     },
     {
       "from": "mat_poly_division",
       "to": "mat_factor_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“因式与余式定理”需要先掌握“多项式除法”的定义、表示或操作方法。"
     },
     {
       "from": "mat_power_rule",
       "to": "mat_chain_rule",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“链式法则”需要先掌握“幂法则”的定义、表示或操作方法。"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_form_de",
+      "strength": "hard",
+      "reason": "建立微分方程需要先能用导数表示变化率。"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_indefinite",
+      "strength": "hard",
+      "reason": "不定积分以导数和反导函数关系为基础。"
     },
     {
       "from": "mat_power_rule",
       "to": "mat_stationary",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“极值点”需要先掌握“幂法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_power_rule",
       "to": "mat_tangent_normal",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“切线与法线”需要先掌握“幂法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_prob_rules",
       "to": "mat_conditional",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“条件概率”需要先掌握“概率法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_prob_rules",
       "to": "mat_discrete_rv",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“离散随机变量”需要先掌握“概率法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_product_quotient",
       "to": "mat_by_parts",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“分部积分”需要先掌握“积商法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_product_quotient",
       "to": "mat_special_derivatives",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“积商法则”为学习“特殊函数导数”提供背景与解题基础。"
     },
     {
       "from": "mat_quadratics",
       "to": "mat_functions",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“二次函数”为学习“函数与反函数”提供背景与解题基础。"
     },
     {
       "from": "mat_quadratics",
       "to": "mat_solve_quadratics",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“二次方程求解”需要先掌握“二次函数”的定义、表示或操作方法。"
     },
     {
       "from": "mat_radians",
       "to": "mat_trig_identities",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“弧度制”为学习“三角恒等式”提供背景与解题基础。"
     },
     {
       "from": "mat_sampling",
       "to": "mat_hypothesis",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“假设检验”需要先掌握“抽样”的定义、表示或操作方法。"
+    },
+    {
+      "from": "mat_sampling",
+      "to": "mat_statistical_estimation",
+      "strength": "hard",
+      "reason": "Point and interval estimates are calculated from samples and require the distinction between sample and population."
     },
     {
       "from": "mat_scalar_product",
       "to": "mat_vector_lines",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“标量积”为学习“直线向量方程”提供背景与解题基础。"
     },
     {
       "from": "mat_simultaneous",
       "to": "mat_inequalities",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“联立方程”为学习“不等式”提供背景与解题基础。"
     },
     {
       "from": "mat_solve_exp",
       "to": "mat_linearise",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“对数线性化”需要先掌握“解指数与对数方程”的定义、表示或操作方法。"
     },
     {
       "from": "mat_solve_quadratics",
       "to": "mat_complex_arith",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“复数运算”需要先掌握“二次方程求解”的定义、表示或操作方法。"
     },
     {
       "from": "mat_solve_quadratics",
       "to": "mat_locate_roots",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“二次方程求解”为学习“根的定位”提供背景与解题基础。"
     },
     {
       "from": "mat_solve_quadratics",
       "to": "mat_simultaneous",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“二次方程求解”为学习“联立方程”提供背景与解题基础。"
     },
     {
       "from": "mat_solve_trig",
       "to": "mat_double_angle",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“解三角方程”为学习“倍角与和差公式”提供背景与解题基础。"
     },
     {
       "from": "mat_special_derivatives",
       "to": "mat_implicit",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“特殊函数导数”为学习“隐函数微分”提供背景与解题基础。"
     },
     {
       "from": "mat_special_derivatives",
       "to": "mat_kin_variable",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“变加速运动”需要先掌握“特殊函数导数”的定义、表示或操作方法。"
     },
     {
       "from": "mat_special_derivatives",
       "to": "mat_standard_integrals",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“标准函数积分”需要先掌握“特殊函数导数”的定义、表示或操作方法。"
     },
     {
       "from": "mat_standard_integrals",
       "to": "mat_separation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“分离变量”需要先掌握“标准函数积分”的定义、表示或操作方法。"
     },
     {
       "from": "mat_standard_integrals",
       "to": "mat_substitution",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“标准函数积分”为学习“换元积分”提供背景与解题基础。"
     },
     {
       "from": "mat_stationary",
       "to": "mat_rates",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“极值点”为学习“相关变化率”提供背景与解题基础。"
     },
     {
       "from": "mat_straight_lines",
       "to": "mat_circles",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“直线”为学习“圆”提供背景与解题基础。"
     },
     {
       "from": "mat_straight_lines",
       "to": "mat_parallel_perp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“平行与垂直直线”需要先掌握“直线”的定义、表示或操作方法。"
     },
     {
       "from": "mat_substitution",
       "to": "mat_by_parts",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“换元积分”为学习“分部积分”提供背景与解题基础。"
     },
     {
       "from": "mat_tangent_normal",
       "to": "mat_stationary",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“切线与法线”为学习“极值点”提供背景与解题基础。"
     },
     {
       "from": "mat_trig_identities",
       "to": "mat_double_angle",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“倍角与和差公式”需要先掌握“三角恒等式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_trig_identities",
       "to": "mat_solve_trig",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“解三角方程”需要先掌握“三角恒等式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_trig_ratios",
       "to": "mat_radians",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“三角函数与图像”为学习“弧度制”提供背景与解题基础。"
     },
     {
       "from": "mat_trig_ratios",
       "to": "mat_trig_identities",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“三角恒等式”需要先掌握“三角函数与图像”的定义、表示或操作方法。"
     },
     {
       "from": "mat_vector_basics",
       "to": "mat_scalar_product",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“标量积”需要先掌握“向量基础”的定义、表示或操作方法。"
     },
     {
       "from": "mat_vector_basics",
       "to": "mat_vector_lines",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“直线向量方程”需要先掌握“向量基础”的定义、表示或操作方法。"
     },
     {
       "from": "mat_vector_basics",
       "to": "mat_vector_magnitude",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“大小与方向”需要先掌握“向量基础”的定义、表示或操作方法。"
     },
     {
       "from": "mat_vector_magnitude",
       "to": "mat_scalar_product",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“大小与方向”为学习“标量积”提供背景与解题基础。"
     },
     {
       "from": "mat_work_energy_power",
       "to": "mat_momentum_impulse",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“功、能、功率”为学习“动量与冲量”提供背景与解题基础。"
     }
   ]
 }

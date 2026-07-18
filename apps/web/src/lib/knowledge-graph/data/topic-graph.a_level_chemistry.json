@@ -2,7 +2,7 @@
   "graphId": "a_level_chemistry",
   "subject": "Chemistry",
   "generatedFrom": "data/knowledge-graphs/source/a_level_chemistry.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -37,8 +37,8 @@
     },
     {
       "topicId": "che_atomic_che_electron_config",
-      "name": "Electronic Configuration and Ionisation Energy",
-      "nameZh": "电子排布与电离能",
+      "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+      "nameZh": "电子排布、原子轨道与电离能",
       "defaultOrder": 2,
       "conceptIds": [
         {
@@ -51,10 +51,18 @@
           "visualHint": "Orbital filling diagram across shells and subshells."
         },
         {
+          "conceptId": "che_atomic_orbital_shapes",
+          "name": "Atomic Orbital Shapes",
+          "nameZh": "原子轨道形状",
+          "defaultOrder": 2,
+          "visual": "diagram",
+          "visualHint": "Show labelled s, p, 3dxy and 3dz² probability-density shapes and orientations."
+        },
+        {
           "conceptId": "che_ionisation",
           "name": "Ionisation Energy",
           "nameZh": "电离能",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.1021,
           "visual": "chart",
           "visualHint": "Plot successive ionisation energies revealing shell structure."
@@ -81,22 +89,28 @@
     },
     {
       "topicId": "che_stoichiometry",
-      "name": "The Mole and Avogadro Constant and Empirical and Molecular Formulae",
-      "nameZh": "摩尔与阿伏伽德罗常数与实验式与分子式",
+      "name": "Relative Masses, the Mole and Formulae",
+      "nameZh": "相对质量、摩尔与化学式",
       "defaultOrder": 3,
       "conceptIds": [
+        {
+          "conceptId": "che_relative_masses",
+          "name": "Relative Atomic, Molecular and Formula Masses",
+          "nameZh": "相对原子、分子与式量",
+          "defaultOrder": 1
+        },
         {
           "conceptId": "che_mole",
           "name": "The Mole and Avogadro Constant",
           "nameZh": "摩尔与阿伏伽德罗常数",
-          "defaultOrder": 1,
+          "defaultOrder": 2,
           "centrality": 0.1799
         },
         {
           "conceptId": "che_formulae",
           "name": "Empirical and Molecular Formulae",
           "nameZh": "实验式与分子式",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.0686
         }
       ],
@@ -238,7 +252,12 @@
           "centrality": 0.1415
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "che_acids_che_buffers",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
         "che_bonding_part1"
       ],
@@ -252,8 +271,8 @@
       "conceptIds": [
         {
           "conceptId": "che_gas_laws",
-          "name": "Ideal Gas Behaviour",
-          "nameZh": "理想气体",
+          "name": "Kinetic Model and Ideal Gas Behaviour",
+          "nameZh": "气体动理论模型与理想气体行为",
           "defaultOrder": 1,
           "centrality": 0.0353,
           "visual": "function",
@@ -309,8 +328,8 @@
         },
         {
           "conceptId": "che_bond_enthalpy",
-          "name": "Bond Enthalpy",
-          "nameZh": "键能",
+          "name": "Bond Enthalpy and Bond Length",
+          "nameZh": "键能与键长",
           "defaultOrder": 2,
           "centrality": 0.0353
         },
@@ -435,6 +454,10 @@
         {
           "topicId": "che_equilibria_acidbase_che_kc_kp",
           "hard": true
+        },
+        {
+          "topicId": "che_acids_che_buffers",
+          "hard": true
         }
       ],
       "prereqTopics": [],
@@ -513,8 +536,8 @@
     },
     {
       "topicId": "che_acids_che_buffers",
-      "name": "Buffers and Solubility Product",
-      "nameZh": "缓冲剂与溶度积",
+      "name": "Buffers, Solubility Product and Partition Equilibria",
+      "nameZh": "缓冲、溶度积与分配平衡",
       "defaultOrder": 14,
       "conceptIds": [
         {
@@ -530,10 +553,18 @@
           "nameZh": "溶度积",
           "defaultOrder": 2,
           "centrality": 0.0248
+        },
+        {
+          "conceptId": "che_partition_coefficient",
+          "name": "Partition Coefficient",
+          "nameZh": "分配系数",
+          "defaultOrder": 3
         }
       ],
       "successors": [],
       "prereqTopics": [
+        "che_bonding_part2",
+        "che_equilibria_acidbase",
         "che_equilibria_acidbase_che_kc_kp",
         "che_acids"
       ],
@@ -601,7 +632,12 @@
           "centrality": 0.0248
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "che_free_energy_periodicity",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "che_redox"
       ],
@@ -681,6 +717,7 @@
       "prereqTopics": [
         "che_atomic_che_electron_config",
         "che_states_enthalpy",
+        "che_electrochem_thermo",
         "che_electrochem_thermo_che_born_haber"
       ],
       "isRoot": false
@@ -756,22 +793,28 @@
     },
     {
       "topicId": "che_organic_basics",
-      "name": "Nomenclature and Isomerism",
-      "nameZh": "命名法与同分异构",
+      "name": "Organic Representations, Nomenclature and Isomerism",
+      "nameZh": "有机结构表示、命名法与同分异构",
       "defaultOrder": 21,
       "conceptIds": [
+        {
+          "conceptId": "che_organic_representations",
+          "name": "Functional Groups and Organic Representations",
+          "nameZh": "官能团与有机结构表示",
+          "defaultOrder": 1
+        },
         {
           "conceptId": "che_nomenclature",
           "name": "Nomenclature",
           "nameZh": "命名法",
-          "defaultOrder": 1,
+          "defaultOrder": 2,
           "centrality": 0.2772
         },
         {
           "conceptId": "che_isomerism",
           "name": "Isomerism",
           "nameZh": "同分异构",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.1693
         }
       ],
@@ -899,6 +942,10 @@
         {
           "topicId": "che_nitrogen_org",
           "hard": true
+        },
+        {
+          "topicId": "che_nitriles_amides",
+          "hard": true
         }
       ],
       "prereqTopics": [
@@ -908,8 +955,8 @@
     },
     {
       "topicId": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-      "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-      "nameZh": "醇的反应与醇的氧化",
+      "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+      "nameZh": "醇的反应、氧化与碘仿检验",
       "defaultOrder": 25,
       "conceptIds": [
         {
@@ -925,12 +972,22 @@
           "nameZh": "醇的氧化",
           "defaultOrder": 2,
           "centrality": 0.1417
+        },
+        {
+          "conceptId": "che_iodoform_test",
+          "name": "Iodoform Test",
+          "nameZh": "碘仿检验",
+          "defaultOrder": 3
         }
       ],
       "successors": [
         {
           "topicId": "che_carbonyls",
           "hard": true
+        },
+        {
+          "topicId": "che_phenols_diazonium",
+          "hard": false
         }
       ],
       "prereqTopics": [
@@ -970,6 +1027,10 @@
         {
           "topicId": "che_nitrogen_org",
           "hard": true
+        },
+        {
+          "topicId": "che_nitriles_amides",
+          "hard": true
         }
       ],
       "prereqTopics": [
@@ -1005,7 +1066,16 @@
           "centrality": 0.0248
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "che_nitriles_amides",
+          "hard": true
+        },
+        {
+          "topicId": "che_phenols_diazonium",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
         "che_halogenoalkanes_alcohols",
         "che_carbonyls"
@@ -1013,10 +1083,37 @@
       "isRoot": false
     },
     {
+      "topicId": "che_nitriles_amides",
+      "name": "Nitriles and Amides",
+      "nameZh": "腈与酰胺",
+      "defaultOrder": 28,
+      "conceptIds": [
+        {
+          "conceptId": "che_nitriles",
+          "name": "Nitriles and Hydroxynitriles",
+          "nameZh": "腈与羟基腈",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "che_amides",
+          "name": "Amides",
+          "nameZh": "酰胺",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "che_halogenoalkanes_alcohols",
+        "che_carbonyls",
+        "che_nitrogen_org"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "che_arenes_mass_spec",
       "name": "Arenes and Mass Spectrometry",
       "nameZh": "芳香烃与质谱分析",
-      "defaultOrder": 28,
+      "defaultOrder": 29,
       "conceptIds": [
         {
           "conceptId": "che_benzene",
@@ -1044,6 +1141,10 @@
       ],
       "successors": [
         {
+          "topicId": "che_phenols_diazonium",
+          "hard": true
+        },
+        {
           "topicId": "che_analysis",
           "hard": false
         }
@@ -1056,10 +1157,43 @@
       "isRoot": false
     },
     {
+      "topicId": "che_phenols_diazonium",
+      "name": "Phenols, Diazonium Salts and Azo Compounds",
+      "nameZh": "苯酚、重氮盐与偶氮化合物",
+      "defaultOrder": 30,
+      "conceptIds": [
+        {
+          "conceptId": "che_phenol_acid_base",
+          "name": "Phenol Preparation and Acid-Base Chemistry",
+          "nameZh": "苯酚的制备与酸碱性质",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "che_phenol_ring_reactivity",
+          "name": "Phenol Ring Reactivity and Directing Effects",
+          "nameZh": "苯酚芳环反应与定位效应",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "che_diazonium_azo",
+          "name": "Diazonium Salts and Azo Compounds",
+          "nameZh": "重氮盐与偶氮化合物",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "che_halogenoalkanes_alcohols_che_alcohol_reactions",
+        "che_nitrogen_org",
+        "che_arenes_mass_spec"
+      ],
+      "isRoot": false
+    },
+    {
       "topicId": "che_analysis",
       "name": "Analytical Techniques",
       "nameZh": "分析技术",
-      "defaultOrder": 29,
+      "defaultOrder": 31,
       "conceptIds": [
         {
           "conceptId": "che_ir",
@@ -1097,452 +1231,638 @@
     {
       "from": "che_alcohol_oxidation",
       "to": "che_aldehydes_ketones",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“醛和酮”需要先掌握“醇的氧化”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_alcohol_oxidation",
+      "to": "che_iodoform_test",
+      "strength": "hard",
+      "reason": "The alcohol criterion for the iodoform test is understood through oxidation to a methyl carbonyl group."
     },
     {
       "from": "che_alcohol_reactions",
       "to": "che_alcohol_oxidation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“醇的氧化”需要先掌握“醇的反应”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_alcohol_reactions",
+      "to": "che_phenol_acid_base",
+      "strength": "soft",
+      "reason": "Comparing ethanol, water and phenol extends the acid-base treatment of alcohol hydroxyl groups."
     },
     {
       "from": "che_aldehydes_ketones",
       "to": "che_carboxylic_acids",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“羧酸”需要先掌握“醛和酮”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_aldehydes_ketones",
+      "to": "che_nitriles",
+      "strength": "hard",
+      "reason": "Hydroxynitrile formation is nucleophilic addition of HCN to a carbonyl compound."
     },
     {
       "from": "che_alkanes",
       "to": "che_alkenes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“烯烃”需要先掌握“烷烃”的定义、表示或操作方法。"
     },
     {
       "from": "che_alkenes",
       "to": "che_addition_polymer",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“加聚反应”需要先掌握“烯烃”的定义、表示或操作方法。"
     },
     {
       "from": "che_alkenes",
       "to": "che_nucleophilic_sub",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“烯烃”为学习“亲核取代”提供背景与解题基础。"
+    },
+    {
+      "from": "che_amines",
+      "to": "che_amides",
+      "strength": "hard",
+      "reason": "Primary amines act as nucleophiles in amide formation and provide the comparison needed for amide basicity."
     },
     {
       "from": "che_amines",
       "to": "che_amino_acids",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“胺”为学习“氨基酸与蛋白质”提供背景与解题基础。"
     },
     {
       "from": "che_amines",
       "to": "che_condensation_polymer",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“胺”为学习“缩聚反应”提供背景与解题基础。"
+    },
+    {
+      "from": "che_amines",
+      "to": "che_diazonium_azo",
+      "strength": "hard",
+      "reason": "Diazotisation starts from phenylamine and depends on its amine identity and reactions."
     },
     {
       "from": "che_amino_acids",
       "to": "che_condensation_polymer",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“氨基酸与蛋白质”为学习“缩聚反应”提供背景与解题基础。"
     },
     {
       "from": "che_benzene",
       "to": "che_electrophilic_sub",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“亲电取代”需要先掌握“苯的结构”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_benzene",
+      "to": "che_phenol_ring_reactivity",
+      "strength": "hard",
+      "reason": "Phenol ring activation and directing effects are interpreted relative to benzene's delocalised aromatic ring."
     },
     {
       "from": "che_boltzmann",
       "to": "che_catalysis",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“Maxwell-Boltzmann分布”为学习“催化”提供背景与解题基础。"
     },
     {
       "from": "che_bond_enthalpy",
       "to": "che_calorimetry",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“键能与键长”为学习“量热法”提供背景与解题基础。"
     },
     {
       "from": "che_bond_fission",
       "to": "che_mechanism_types",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“键断裂与反应物种”为学习“反应机理类型”提供背景与解题基础。"
     },
     {
       "from": "che_born_haber",
       "to": "che_entropy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“晶格能与玻恩-哈伯循环”为学习“熵”提供背景与解题基础。"
     },
     {
       "from": "che_bronsted",
       "to": "che_strong_weak",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“强酸与弱酸”需要先掌握“布朗斯特-洛瑞理论”的定义、表示或操作方法。"
     },
     {
       "from": "che_buffers",
       "to": "che_ksp",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“缓冲剂”为学习“溶度积”提供背景与解题基础。"
     },
     {
       "from": "che_carboxylic_acids",
       "to": "che_amino_acids",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“氨基酸与蛋白质”需要先掌握“羧酸”的定义、表示或操作方法。"
     },
     {
       "from": "che_carboxylic_acids",
       "to": "che_esters",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“酯和酰氯”需要先掌握“羧酸”的定义、表示或操作方法。"
     },
     {
       "from": "che_catalysis",
       "to": "che_rate_equation",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“催化”为学习“速率方程与反应级数”提供背景与解题基础。"
     },
     {
       "from": "che_cells",
       "to": "che_electrolysis",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电化学电池”为学习“电解”提供背景与解题基础。"
+    },
+    {
+      "from": "che_cells",
+      "to": "che_gibbs",
+      "strength": "soft",
+      "reason": "The equation ΔG° = -nFE°cell connects an electrochemical application to Gibbs energy without making cells a prerequisite for the general Gibbs definition."
     },
     {
       "from": "che_collision",
       "to": "che_boltzmann",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Maxwell-Boltzmann分布”需要先掌握“碰撞理论”的定义、表示或操作方法。"
     },
     {
       "from": "che_collision",
       "to": "che_catalysis",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“催化”需要先掌握“碰撞理论”的定义、表示或操作方法。"
     },
     {
       "from": "che_complex_ions",
       "to": "che_colour_catalysis",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“颜色与催化”需要先掌握“配位离子与配体”的定义、表示或操作方法。"
     },
     {
       "from": "che_covalent",
       "to": "che_benzene",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“苯的结构”需要先掌握“共价键”的定义、表示或操作方法。"
     },
     {
       "from": "che_covalent",
       "to": "che_electronegativity",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“电负性与极性”需要先掌握“共价键”的定义、表示或操作方法。"
     },
     {
       "from": "che_covalent",
       "to": "che_metallic",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“共价键”为学习“金属键”提供背景与解题基础。"
     },
     {
       "from": "che_covalent",
       "to": "che_nomenclature",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“命名法”需要先掌握“共价键”的定义、表示或操作方法。"
     },
     {
       "from": "che_covalent",
       "to": "che_vsepr",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“VSEPR 分子形状”需要先掌握“共价键”的定义、表示或操作方法。"
     },
     {
       "from": "che_dynamic_eq",
       "to": "che_bronsted",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“动态平衡”为学习“布朗斯特-洛瑞理论”提供背景与解题基础。"
     },
     {
       "from": "che_dynamic_eq",
       "to": "che_kc_kp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“平衡常数 Kc 与 Kp”需要先掌握“动态平衡”的定义、表示或操作方法。"
     },
     {
       "from": "che_dynamic_eq",
       "to": "che_le_chatelier",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“勒夏特列原理”需要先掌握“动态平衡”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_dynamic_eq",
+      "to": "che_partition_coefficient",
+      "strength": "hard",
+      "reason": "A partition coefficient is defined only after the solute distribution has reached equilibrium."
     },
     {
       "from": "che_electrode_potential",
       "to": "che_cells",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“电化学电池”需要先掌握“电极电势”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_electron_config",
+      "to": "che_atomic_orbital_shapes",
+      "strength": "hard",
+      "reason": "Orbital shapes are interpreted after shells, subshells and electron occupancy are understood."
     },
     {
       "from": "che_electron_config",
       "to": "che_covalent",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“共价键”需要先掌握“电子排布”的定义、表示或操作方法。"
     },
     {
       "from": "che_electron_config",
       "to": "che_ionic",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“离子键”需要先掌握“电子排布”的定义、表示或操作方法。"
     },
     {
       "from": "che_electron_config",
       "to": "che_ionisation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“电离能”需要先掌握“电子排布”的定义、表示或操作方法。"
     },
     {
       "from": "che_electron_config",
       "to": "che_transition_props",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“过渡金属性质”需要先掌握“电子排布”的定义、表示或操作方法。"
     },
     {
       "from": "che_electronegativity",
       "to": "che_imf",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“分子间作用力”需要先掌握“电负性与极性”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_electrophilic_sub",
+      "to": "che_phenol_ring_reactivity",
+      "strength": "hard",
+      "reason": "Phenol nitration and bromination are electrophilic aromatic substitutions with altered conditions and directing effects."
     },
     {
       "from": "che_enthalpy",
       "to": "che_bond_enthalpy",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“键能与键长”需要先掌握“焓变”的定义、表示或操作方法。"
     },
     {
       "from": "che_enthalpy",
       "to": "che_calorimetry",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“量热法”需要先掌握“焓变”的定义、表示或操作方法。"
     },
     {
       "from": "che_enthalpy",
       "to": "che_gibbs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“吉布斯自由能”需要先掌握“焓变”的定义、表示或操作方法。"
     },
     {
       "from": "che_enthalpy",
       "to": "che_hess",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“盖斯定律”需要先掌握“焓变”的定义、表示或操作方法。"
     },
     {
       "from": "che_entropy",
       "to": "che_gibbs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“吉布斯自由能”需要先掌握“熵”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_esters",
+      "to": "che_amides",
+      "strength": "hard",
+      "reason": "Amide preparation uses the acyl-chloride reactions represented in the esters and acyl chlorides concept."
     },
     {
       "from": "che_esters",
       "to": "che_condensation_polymer",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“缩聚反应”需要先掌握“酯和酰氯”的定义、表示或操作方法。"
     },
     {
       "from": "che_formulae",
       "to": "che_reacting_masses",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“实验式与分子式”为学习“反应质量与气体体积”提供背景与解题基础。"
     },
     {
       "from": "che_gas_laws",
       "to": "che_solids",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“气体动理论模型与理想气体行为”为学习“固体结构”提供背景与解题基础。"
     },
     {
       "from": "che_group17",
       "to": "che_nitrogen_sulfur",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“第17族卤素”为学习“氮和硫”提供背景与解题基础。"
     },
     {
       "from": "che_group2",
       "to": "che_group17",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“第2族元素化学”为学习“第17族卤素”提供背景与解题基础。"
     },
     {
       "from": "che_hess",
       "to": "che_bond_enthalpy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“盖斯定律”为学习“键能与键长”提供背景与解题基础。"
     },
     {
       "from": "che_hess",
       "to": "che_born_haber",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“晶格能与玻恩-哈伯循环”需要先掌握“盖斯定律”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_imf",
+      "to": "che_partition_coefficient",
+      "strength": "hard",
+      "reason": "Explaining partition values through polarity requires solute-solvent intermolecular interactions."
     },
     {
       "from": "che_ionic",
       "to": "che_born_haber",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“晶格能与玻恩-哈伯循环”需要先掌握“离子键”的定义、表示或操作方法。"
     },
     {
       "from": "che_ionic",
       "to": "che_covalent",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“离子键”为学习“共价键”提供背景与解题基础。"
     },
     {
       "from": "che_ionic",
       "to": "che_solids",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“固体结构”需要先掌握“离子键”的定义、表示或操作方法。"
     },
     {
       "from": "che_ionisation",
       "to": "che_periodic_trends",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“周期趋势”需要先掌握“电离能”的定义、表示或操作方法。"
     },
     {
       "from": "che_ir",
       "to": "che_nmr",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“红外光谱”为学习“NMR光谱”提供背景与解题基础。"
     },
     {
       "from": "che_isomerism",
       "to": "che_bond_fission",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“同分异构”为学习“键断裂与反应物种”提供背景与解题基础。"
     },
     {
       "from": "che_isomerism",
       "to": "che_nmr",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“同分异构”为学习“NMR光谱”提供背景与解题基础。"
     },
     {
       "from": "che_isotopes",
       "to": "che_electron_config",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“同位素”为学习“电子排布”提供背景与解题基础。"
     },
     {
       "from": "che_kc_kp",
       "to": "che_ksp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“溶度积”需要先掌握“平衡常数 Kc 与 Kp”的定义、表示或操作方法。"
     },
     {
       "from": "che_le_chatelier",
       "to": "che_kc_kp",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“勒夏特列原理”为学习“平衡常数 Kc 与 Kp”提供背景与解题基础。"
     },
     {
       "from": "che_mass_spec",
       "to": "che_ir",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“质谱分析”为学习“红外光谱”提供背景与解题基础。"
     },
     {
       "from": "che_mechanism_types",
       "to": "che_alkanes",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“反应机理类型”为学习“烷烃”提供背景与解题基础。"
     },
     {
       "from": "che_mechanism_types",
       "to": "che_electrophilic_sub",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“反应机理类型”为学习“亲电取代”提供背景与解题基础。"
     },
     {
       "from": "che_metallic",
       "to": "che_vsepr",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“金属键”为学习“VSEPR 分子形状”提供背景与解题基础。"
     },
     {
       "from": "che_mole",
       "to": "che_formulae",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“实验式与分子式”需要先掌握“摩尔与阿伏伽德罗常数”的定义、表示或操作方法。"
     },
     {
       "from": "che_mole",
       "to": "che_mass_spec",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“摩尔与阿伏伽德罗常数”为学习“质谱分析”提供背景与解题基础。"
     },
     {
       "from": "che_mole",
       "to": "che_reacting_masses",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“反应质量与气体体积”需要先掌握“摩尔与阿伏伽德罗常数”的定义、表示或操作方法。"
     },
     {
       "from": "che_nmr",
       "to": "che_chromatography",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“NMR光谱”为学习“色谱法”提供背景与解题基础。"
     },
     {
       "from": "che_nomenclature",
       "to": "che_alkanes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“烷烃”需要先掌握“命名法”的定义、表示或操作方法。"
     },
     {
       "from": "che_nomenclature",
       "to": "che_isomerism",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“同分异构”需要先掌握“命名法”的定义、表示或操作方法。"
     },
     {
       "from": "che_nucleophilic_sub",
       "to": "che_alcohol_reactions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“醇的反应”需要先掌握“亲核取代”的定义、表示或操作方法。"
     },
     {
       "from": "che_nucleophilic_sub",
       "to": "che_amines",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“胺”需要先掌握“亲核取代”的定义、表示或操作方法。"
     },
     {
       "from": "che_nucleophilic_sub",
       "to": "che_elimination",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“消去反应”需要先掌握“亲核取代”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_nucleophilic_sub",
+      "to": "che_nitriles",
+      "strength": "hard",
+      "reason": "Formation of nitriles from halogenoalkanes is a nucleophilic substitution by cyanide ion."
+    },
+    {
+      "from": "che_organic_representations",
+      "to": "che_nomenclature",
+      "strength": "hard",
+      "reason": "Systematic naming requires recognising the represented carbon skeleton and functional groups first."
     },
     {
       "from": "che_oxidation_number",
       "to": "che_group17",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“氧化数”为学习“第17族卤素”提供背景与解题基础。"
     },
     {
       "from": "che_oxidation_number",
       "to": "che_redox_equations",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“氧化还原方程”需要先掌握“氧化数”的定义、表示或操作方法。"
     },
     {
       "from": "che_periodic_trends",
       "to": "che_group17",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“第17族卤素”需要先掌握“周期趋势”的定义、表示或操作方法。"
     },
     {
       "from": "che_periodic_trends",
       "to": "che_group2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“第2族元素化学”需要先掌握“周期趋势”的定义、表示或操作方法。"
     },
     {
       "from": "che_periodic_trends",
       "to": "che_period3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“第3周期元素与氧化物”需要先掌握“周期趋势”的定义、表示或操作方法。"
     },
     {
       "from": "che_ph_ka",
       "to": "che_buffers",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“缓冲剂”需要先掌握“pH 与酸解离常数”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_phenol_ring_reactivity",
+      "to": "che_diazonium_azo",
+      "strength": "soft",
+      "reason": "Azo coupling with phenol uses its activated aromatic ring, although diazonium formation can be studied independently."
     },
     {
       "from": "che_rate",
       "to": "che_collision",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“碰撞理论”需要先掌握“反应速率”的定义、表示或操作方法。"
     },
     {
       "from": "che_rate",
       "to": "che_rate_equation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“速率方程与反应级数”需要先掌握“反应速率”的定义、表示或操作方法。"
     },
     {
       "from": "che_rate_equation",
       "to": "che_rds",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“速控步”需要先掌握“速率方程与反应级数”的定义、表示或操作方法。"
     },
     {
       "from": "che_reacting_masses",
       "to": "che_enthalpy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“反应质量与气体体积”为学习“焓变”提供背景与解题基础。"
     },
     {
       "from": "che_reacting_masses",
       "to": "che_titration",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“浓度与滴定”需要先掌握“反应质量与气体体积”的定义、表示或操作方法。"
     },
     {
       "from": "che_redox_equations",
       "to": "che_electrode_potential",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“电极电势”需要先掌握“氧化还原方程”的定义、表示或操作方法。"
     },
     {
       "from": "che_redox_equations",
       "to": "che_electrolysis",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“电解”需要先掌握“氧化还原方程”的定义、表示或操作方法。"
+    },
+    {
+      "from": "che_relative_masses",
+      "to": "che_mole",
+      "strength": "hard",
+      "reason": "Molar mass and amount calculations use relative atomic, molecular or formula masses."
     },
     {
       "from": "che_strong_weak",
       "to": "che_ph_ka",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“pH 与酸解离常数”需要先掌握“强酸与弱酸”的定义、表示或操作方法。"
     },
     {
       "from": "che_subatomic",
       "to": "che_isotopes",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“亚原子粒子”为学习“同位素”提供背景与解题基础。"
     },
     {
       "from": "che_titration",
       "to": "che_kc_kp",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“浓度与滴定”为学习“平衡常数 Kc 与 Kp”提供背景与解题基础。"
     },
     {
       "from": "che_transition_props",
       "to": "che_complex_ions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“配位离子与配体”需要先掌握“过渡金属性质”的定义、表示或操作方法。"
     },
     {
       "from": "che_vsepr",
       "to": "che_electronegativity",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“VSEPR 分子形状”为学习“电负性与极性”提供背景与解题基础。"
     }
   ]
 }

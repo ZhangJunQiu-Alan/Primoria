@@ -2,7 +2,7 @@
   "graphId": "a_level_physics",
   "subject": "Physics",
   "generatedFrom": "data/knowledge-graphs/source/a_level_physics.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -75,8 +75,8 @@
     },
     {
       "topicId": "phy_measurement_motion_phy_motion_quantities",
-      "name": "Displacement Velocity Acceleration and Equations of Motion",
-      "nameZh": "位移速度加速度与运动方程",
+      "name": "Displacement, Velocity, Acceleration and Equations of Motion",
+      "nameZh": "位移、速度、加速度与运动方程",
       "defaultOrder": 3,
       "conceptIds": [
         {
@@ -157,8 +157,8 @@
     },
     {
       "topicId": "phy_dynamics",
-      "name": "Dynamics",
-      "nameZh": "动力学",
+      "name": "Newton's Laws, Mass, Weight and Resistive Motion",
+      "nameZh": "牛顿定律、质量、重量与阻力运动",
       "defaultOrder": 5,
       "conceptIds": [
         {
@@ -178,17 +178,18 @@
           "centrality": 0.0717
         },
         {
-          "conceptId": "phy_momentum",
-          "name": "Linear Momentum",
-          "nameZh": "线性动量",
+          "conceptId": "phy_terminal_velocity",
+          "name": "Drag and Terminal Velocity",
+          "nameZh": "阻力与终端速度",
           "defaultOrder": 3,
-          "centrality": 0.1104
+          "visual": "simulation",
+          "visualHint": "Vary drag and weight to show acceleration approaching zero at terminal velocity."
         }
       ],
       "successors": [
         {
           "topicId": "phy_momentum_forces",
-          "hard": false
+          "hard": true
         },
         {
           "topicId": "phy_momentum_forces_phy_force_types",
@@ -210,15 +211,22 @@
     },
     {
       "topicId": "phy_momentum_forces",
-      "name": "Conservation of Momentum and Impulse and Collisions",
-      "nameZh": "动量守恒与冲量与碰撞",
+      "name": "Momentum, Conservation and Impulse",
+      "nameZh": "动量、动量守恒与冲量",
       "defaultOrder": 6,
       "conceptIds": [
+        {
+          "conceptId": "phy_momentum",
+          "name": "Linear Momentum",
+          "nameZh": "线性动量",
+          "defaultOrder": 1,
+          "centrality": 0.1104
+        },
         {
           "conceptId": "phy_momentum_conservation",
           "name": "Conservation of Momentum",
           "nameZh": "动量守恒",
-          "defaultOrder": 1,
+          "defaultOrder": 2,
           "centrality": 0.1007,
           "visual": "simulation",
           "visualHint": "Animate a collision conserving total momentum."
@@ -227,7 +235,7 @@
           "conceptId": "phy_impulse",
           "name": "Impulse and Collisions",
           "nameZh": "冲量与碰撞",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.0248
         }
       ],
@@ -244,8 +252,8 @@
     },
     {
       "topicId": "phy_momentum_forces_phy_force_types",
-      "name": "Types of Force and Moments and Couples",
-      "nameZh": "力的类型与力矩与力偶",
+      "name": "Types of Force, Centre of Gravity, Moments and Couples",
+      "nameZh": "力的类型、重心、力矩与力偶",
       "defaultOrder": 7,
       "conceptIds": [
         {
@@ -256,10 +264,16 @@
           "centrality": 0.1567
         },
         {
+          "conceptId": "phy_centre_of_gravity",
+          "name": "Centre of Gravity",
+          "nameZh": "重心",
+          "defaultOrder": 2
+        },
+        {
           "conceptId": "phy_moments",
           "name": "Moments and Couples",
           "nameZh": "力矩与力偶",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.0519,
           "visual": "interactive",
           "visualHint": "Balance a beam by adjusting forces and distances (moments)."
@@ -483,10 +497,14 @@
       "successors": [
         {
           "topicId": "phy_waves_superposition",
-          "hard": false
+          "hard": true
         },
         {
           "topicId": "phy_waves_superposition_phy_superposition_principle",
+          "hard": true
+        },
+        {
+          "topicId": "phy_medical_ultrasound",
           "hard": true
         },
         {
@@ -499,8 +517,8 @@
     },
     {
       "topicId": "phy_waves_superposition",
-      "name": "Electromagnetic Spectrum and Doppler Effect",
-      "nameZh": "电磁波谱与多普勒效应",
+      "name": "Electromagnetic Spectrum, Polarisation and Doppler Effect",
+      "nameZh": "电磁波谱、偏振与多普勒效应",
       "defaultOrder": 14,
       "conceptIds": [
         {
@@ -513,10 +531,18 @@
           "visualHint": "Labelled electromagnetic spectrum ordered by wavelength and frequency."
         },
         {
+          "conceptId": "phy_polarisation_malus",
+          "name": "Polarisation and Malus's Law",
+          "nameZh": "偏振与 Malus 定律",
+          "defaultOrder": 2,
+          "visual": "interactive",
+          "visualHint": "Rotate an analyser and plot transmitted intensity according to Malus's law."
+        },
+        {
           "conceptId": "phy_doppler",
           "name": "Doppler Effect",
           "nameZh": "多普勒效应",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.0248,
           "visual": "simulation",
           "visualHint": "Move a wave source and show the observed frequency shift (Doppler effect)."
@@ -637,11 +663,19 @@
           "hard": true
         },
         {
+          "topicId": "phy_component_sensors",
+          "hard": true
+        },
+        {
           "topicId": "phy_electric_fields_phy_e_potential",
           "hard": true
         },
         {
           "topicId": "phy_magnetic_fields",
+          "hard": true
+        },
+        {
+          "topicId": "phy_magnetic_fields_phy_force_charge",
           "hard": true
         }
       ],
@@ -650,8 +684,8 @@
     },
     {
       "topicId": "phy_circuits_kirchhoff",
-      "name": "Electrical Characteristics and Kirchhoff's Laws",
-      "nameZh": "电学特性与基尔霍夫定律",
+      "name": "Resistivity, Kirchhoff's Laws and Circuit Combinations",
+      "nameZh": "电阻率、基尔霍夫定律与电路组合",
       "defaultOrder": 18,
       "conceptIds": [
         {
@@ -662,25 +696,29 @@
           "centrality": 0.0353
         },
         {
-          "conceptId": "phy_iv_characteristics",
-          "name": "I-V Characteristics",
-          "nameZh": "I-V特性",
-          "defaultOrder": 2,
-          "centrality": 0.0248,
-          "visual": "function",
-          "visualHint": "Plot I-V characteristics for a resistor, filament lamp, and diode."
-        },
-        {
           "conceptId": "phy_kirchhoff",
           "name": "Kirchhoff's Laws",
           "nameZh": "基尔霍夫定律",
-          "defaultOrder": 3,
+          "defaultOrder": 2,
           "centrality": 0.079,
           "visual": "diagram",
           "visualHint": "Circuit diagram applying Kirchhoff's current and voltage laws."
+        },
+        {
+          "conceptId": "phy_series_parallel",
+          "name": "Series and Parallel Resistors",
+          "nameZh": "串并联电阻",
+          "defaultOrder": 3,
+          "centrality": 0.0638,
+          "visual": "interactive",
+          "visualHint": "Build series and parallel resistor networks and compute total resistance."
         }
       ],
       "successors": [
+        {
+          "topicId": "phy_component_sensors",
+          "hard": false
+        },
         {
           "topicId": "phy_dc_circuits",
           "hard": false
@@ -692,28 +730,61 @@
       "isRoot": false
     },
     {
-      "topicId": "phy_dc_circuits",
-      "name": "DC Circuits",
-      "nameZh": "直流电路",
+      "topicId": "phy_component_sensors",
+      "name": "Component Characteristics and Resistive Sensors",
+      "nameZh": "元件特性与电阻式传感器",
       "defaultOrder": 19,
       "conceptIds": [
         {
-          "conceptId": "phy_series_parallel",
-          "name": "Series and Parallel Resistors",
-          "nameZh": "串并联电阻",
+          "conceptId": "phy_iv_characteristics",
+          "name": "I-V Characteristics",
+          "nameZh": "I-V特性",
           "defaultOrder": 1,
-          "centrality": 0.0638,
-          "visual": "interactive",
-          "visualHint": "Build series and parallel resistor networks and compute total resistance."
+          "centrality": 0.0248,
+          "visual": "function",
+          "visualHint": "Plot I-V characteristics for a resistor, filament lamp, and diode."
         },
+        {
+          "conceptId": "phy_resistive_sensors",
+          "name": "Resistive Sensors",
+          "nameZh": "电阻式传感器",
+          "defaultOrder": 2,
+          "visual": "function",
+          "visualHint": "Compare LDR and NTC resistance curves and their effect on divider output voltage."
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_dc_circuits",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [
+        "phy_electricity",
+        "phy_circuits_kirchhoff"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_dc_circuits",
+      "name": "Potential Dividers, Null Methods and Internal Resistance",
+      "nameZh": "分压器、零示法与内阻",
+      "defaultOrder": 20,
+      "conceptIds": [
         {
           "conceptId": "phy_potential_divider",
           "name": "Potential Dividers",
           "nameZh": "分压器",
-          "defaultOrder": 2,
+          "defaultOrder": 1,
           "centrality": 0.0459,
           "visual": "interactive",
           "visualHint": "Slider on a potential divider showing the output voltage."
+        },
+        {
+          "conceptId": "phy_potentiometer_null_methods",
+          "name": "Potentiometer and Null Methods",
+          "nameZh": "电位计与零示法",
+          "defaultOrder": 2
         },
         {
           "conceptId": "phy_internal_resistance",
@@ -725,7 +796,8 @@
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_circuits_kirchhoff"
+        "phy_circuits_kirchhoff",
+        "phy_component_sensors"
       ],
       "isRoot": false
     },
@@ -733,7 +805,7 @@
       "topicId": "phy_circular",
       "name": "Motion in a Circle",
       "nameZh": "圆周运动",
-      "defaultOrder": 20,
+      "defaultOrder": 21,
       "conceptIds": [
         {
           "conceptId": "phy_angular_speed",
@@ -779,7 +851,7 @@
       "topicId": "phy_gravitation",
       "name": "Newton's Law of Gravitation and Gravitational Field Strength",
       "nameZh": "牛顿引力定律与引力场强度",
-      "defaultOrder": 21,
+      "defaultOrder": 22,
       "conceptIds": [
         {
           "conceptId": "phy_newton_gravitation",
@@ -815,7 +887,7 @@
       "topicId": "phy_gravitation_phy_grav_potential",
       "name": "Gravitational Potential and Orbital Motion",
       "nameZh": "引力势与轨道运动",
-      "defaultOrder": 22,
+      "defaultOrder": 23,
       "conceptIds": [
         {
           "conceptId": "phy_grav_potential",
@@ -845,7 +917,7 @@
       "topicId": "phy_oscillations",
       "name": "Simple Harmonic Motion and SHM Energy",
       "nameZh": "简谐运动与SHM能量",
-      "defaultOrder": 23,
+      "defaultOrder": 24,
       "conceptIds": [
         {
           "conceptId": "phy_shm",
@@ -882,7 +954,7 @@
       "topicId": "phy_oscillations_phy_damping",
       "name": "Damping and Resonance",
       "nameZh": "阻尼与共振",
-      "defaultOrder": 24,
+      "defaultOrder": 25,
       "conceptIds": [
         {
           "conceptId": "phy_damping",
@@ -909,9 +981,9 @@
     },
     {
       "topicId": "phy_thermal",
-      "name": "Temperature and Thermal Equilibrium and Specific Heat and Latent Heat",
-      "nameZh": "温度与热平衡与比热与潜热",
-      "defaultOrder": 25,
+      "name": "Temperature, Thermometry, Specific Heat and Latent Heat",
+      "nameZh": "温度、测温、比热与潜热",
+      "defaultOrder": 26,
       "conceptIds": [
         {
           "conceptId": "phy_temperature",
@@ -921,10 +993,16 @@
           "centrality": 0.0925
         },
         {
+          "conceptId": "phy_thermometry",
+          "name": "Thermometry and the Thermodynamic Scale",
+          "nameZh": "测温与热力学温标",
+          "defaultOrder": 2
+        },
+        {
           "conceptId": "phy_heat_capacity",
           "name": "Specific Heat and Latent Heat",
           "nameZh": "比热与潜热",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.0796
         }
       ],
@@ -939,24 +1017,49 @@
     },
     {
       "topicId": "phy_thermal_phy_kinetic_theory",
-      "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-      "nameZh": "气体动理论、理想气体定律与内能与第一定律",
-      "defaultOrder": 26,
+      "name": "Amount of Substance and Kinetic Theory",
+      "nameZh": "物质的量与气体动理论",
+      "defaultOrder": 27,
       "conceptIds": [
+        {
+          "conceptId": "phy_mole_avogadro",
+          "name": "Mole and Avogadro Constant",
+          "nameZh": "摩尔与阿伏伽德罗常数",
+          "defaultOrder": 1
+        },
         {
           "conceptId": "phy_kinetic_theory",
           "name": "Kinetic Theory of Gases",
           "nameZh": "气体动理论",
-          "defaultOrder": 1,
+          "defaultOrder": 2,
           "centrality": 0.129,
           "visual": "simulation",
           "visualHint": "Animate gas particles in random motion inside a box."
-        },
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_amount_ideal_gas",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_momentum_forces",
+        "phy_thermal"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_amount_ideal_gas",
+      "name": "Ideal Gas Equation, Internal Energy and the First Law",
+      "nameZh": "理想气体状态方程、内能与第一定律",
+      "defaultOrder": 28,
+      "conceptIds": [
         {
           "conceptId": "phy_ideal_gas",
           "name": "Ideal Gas Law",
           "nameZh": "理想气体定律",
-          "defaultOrder": 2,
+          "defaultOrder": 1,
           "centrality": 0.0872,
           "visual": "function",
           "visualHint": "Plot pV = nRT relationships between pressure, volume, and temperature."
@@ -965,14 +1068,13 @@
           "conceptId": "phy_internal_energy",
           "name": "Internal Energy and First Law",
           "nameZh": "内能与第一定律",
-          "defaultOrder": 3,
+          "defaultOrder": 2,
           "centrality": 0.0735
         }
       ],
       "successors": [],
       "prereqTopics": [
-        "phy_momentum_forces",
-        "phy_thermal"
+        "phy_thermal_phy_kinetic_theory"
       ],
       "isRoot": false
     },
@@ -980,7 +1082,7 @@
       "topicId": "phy_electric_fields",
       "name": "Coulomb's Law and Electric Field Strength",
       "nameZh": "库仑定律与电场强度",
-      "defaultOrder": 27,
+      "defaultOrder": 29,
       "conceptIds": [
         {
           "conceptId": "phy_coulomb",
@@ -1014,7 +1116,7 @@
       "topicId": "phy_electric_fields_phy_e_potential",
       "name": "Electric Potential and Gravitational and Electric Field Analogy",
       "nameZh": "电势与引力场与电场类比",
-      "defaultOrder": 28,
+      "defaultOrder": 30,
       "conceptIds": [
         {
           "conceptId": "phy_e_potential",
@@ -1048,7 +1150,7 @@
       "topicId": "phy_capacitance",
       "name": "Capacitance and Capacitors in Series and Parallel",
       "nameZh": "电容与串并联电容",
-      "defaultOrder": 29,
+      "defaultOrder": 31,
       "conceptIds": [
         {
           "conceptId": "phy_capacitance_def",
@@ -1080,7 +1182,7 @@
       "topicId": "phy_capacitance_phy_capacitor_energy",
       "name": "Energy Stored in a Capacitor and Charging and Discharging",
       "nameZh": "电容储能与充放电",
-      "defaultOrder": 30,
+      "defaultOrder": 32,
       "conceptIds": [
         {
           "conceptId": "phy_capacitor_energy",
@@ -1109,7 +1211,7 @@
       "topicId": "phy_magnetic_fields",
       "name": "Magnetic Flux Density and Force on a Current-Carrying Conductor",
       "nameZh": "磁通密度与载流导线受力",
-      "defaultOrder": 31,
+      "defaultOrder": 33,
       "conceptIds": [
         {
           "conceptId": "phy_flux_density",
@@ -1145,9 +1247,9 @@
     },
     {
       "topicId": "phy_magnetic_fields_phy_force_charge",
-      "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
-      "nameZh": "运动电荷受力与电流磁场",
-      "defaultOrder": 32,
+      "name": "Force on Charges, Hall Effect and Magnetic Fields Due to Currents",
+      "nameZh": "运动电荷受力、Hall 效应与电流磁场",
+      "defaultOrder": 34,
       "conceptIds": [
         {
           "conceptId": "phy_force_charge",
@@ -1157,15 +1259,22 @@
           "centrality": 0.0459
         },
         {
+          "conceptId": "phy_hall_effect",
+          "name": "Hall Effect and Hall Voltage",
+          "nameZh": "Hall 效应与 Hall 电压",
+          "defaultOrder": 2
+        },
+        {
           "conceptId": "phy_fields_currents",
           "name": "Magnetic Fields Due to Currents",
           "nameZh": "电流磁场",
-          "defaultOrder": 2,
+          "defaultOrder": 3,
           "centrality": 0.0248
         }
       ],
       "successors": [],
       "prereqTopics": [
+        "phy_electricity",
         "phy_magnetic_fields"
       ],
       "isRoot": false
@@ -1174,7 +1283,7 @@
       "topicId": "phy_induction",
       "name": "Electromagnetic Induction",
       "nameZh": "电磁感应",
-      "defaultOrder": 33,
+      "defaultOrder": 35,
       "conceptIds": [
         {
           "conceptId": "phy_flux_linkage",
@@ -1215,7 +1324,7 @@
       "topicId": "phy_ac",
       "name": "Alternating Currents",
       "nameZh": "交流电",
-      "defaultOrder": 34,
+      "defaultOrder": 36,
       "conceptIds": [
         {
           "conceptId": "phy_ac_rms",
@@ -1253,7 +1362,7 @@
       "topicId": "phy_quantum",
       "name": "Photon Energy and Photoelectric Effect",
       "nameZh": "光子能量与光电效应",
-      "defaultOrder": 35,
+      "defaultOrder": 37,
       "conceptIds": [
         {
           "conceptId": "phy_photon",
@@ -1276,6 +1385,10 @@
         {
           "topicId": "phy_quantum_phy_wave_particle",
           "hard": true
+        },
+        {
+          "topicId": "phy_medical_xray",
+          "hard": true
         }
       ],
       "prereqTopics": [
@@ -1287,7 +1400,7 @@
       "topicId": "phy_quantum_phy_wave_particle",
       "name": "Wave-Particle Duality and Energy Levels and Line Spectra",
       "nameZh": "波粒二象性与能级与线光谱",
-      "defaultOrder": 36,
+      "defaultOrder": 38,
       "conceptIds": [
         {
           "conceptId": "phy_wave_particle",
@@ -1318,10 +1431,10 @@
       "isRoot": false
     },
     {
-      "topicId": "phy_nuclear",
-      "name": "Nuclear Physics",
-      "nameZh": "核物理",
-      "defaultOrder": 37,
+      "topicId": "phy_nuclear_identity",
+      "name": "Nuclear Structure and Isotopes",
+      "nameZh": "原子核结构与同位素",
+      "defaultOrder": 39,
       "conceptIds": [
         {
           "conceptId": "phy_nuclear_structure",
@@ -1331,17 +1444,43 @@
           "centrality": 0.3444
         },
         {
+          "conceptId": "phy_isotopes",
+          "name": "Isotopes",
+          "nameZh": "同位素",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [
+        {
+          "topicId": "phy_nuclear",
+          "hard": true
+        },
+        {
+          "topicId": "phy_radioactivity",
+          "hard": false
+        }
+      ],
+      "prereqTopics": [],
+      "isRoot": true
+    },
+    {
+      "topicId": "phy_nuclear",
+      "name": "Fundamental Particles and Nuclear Binding",
+      "nameZh": "基本粒子与核结合",
+      "defaultOrder": 40,
+      "conceptIds": [
+        {
           "conceptId": "phy_fundamental_particles",
           "name": "Fundamental Particles and Quarks",
           "nameZh": "基本粒子与夸克",
-          "defaultOrder": 2,
+          "defaultOrder": 1,
           "centrality": 0.057
         },
         {
           "conceptId": "phy_binding_energy",
           "name": "Mass Defect and Binding Energy",
           "nameZh": "质量亏损与结合能",
-          "defaultOrder": 3,
+          "defaultOrder": 2,
           "centrality": 0.0759,
           "visual": "function",
           "visualHint": "Plot binding energy per nucleon against nucleon number."
@@ -1351,16 +1490,22 @@
         {
           "topicId": "phy_radioactivity",
           "hard": true
+        },
+        {
+          "topicId": "phy_medical_pet",
+          "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "phy_nuclear_identity"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "phy_radioactivity",
       "name": "Nuclear Reactions and Radioactivity",
       "nameZh": "核反应与放射性",
-      "defaultOrder": 38,
+      "defaultOrder": 41,
       "conceptIds": [
         {
           "conceptId": "phy_fission_fusion",
@@ -1386,9 +1531,103 @@
           "centrality": 0.0248
         }
       ],
+      "successors": [
+        {
+          "topicId": "phy_medical_pet",
+          "hard": true
+        }
+      ],
+      "prereqTopics": [
+        "phy_nuclear_identity",
+        "phy_nuclear"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_medical_ultrasound",
+      "name": "Ultrasound Production, Propagation and Imaging",
+      "nameZh": "超声产生、传播与成像",
+      "defaultOrder": 42,
+      "conceptIds": [
+        {
+          "conceptId": "phy_piezoelectric_transducers",
+          "name": "Piezoelectric Transducers",
+          "nameZh": "压电换能器",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_acoustic_impedance_reflection",
+          "name": "Acoustic Impedance and Reflection",
+          "nameZh": "声阻抗与反射",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_ultrasound_imaging",
+          "name": "Ultrasound Imaging and Attenuation",
+          "nameZh": "超声成像与衰减",
+          "defaultOrder": 3
+        }
+      ],
       "successors": [],
       "prereqTopics": [
-        "phy_nuclear"
+        "phy_waves"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_medical_xray",
+      "name": "X-ray Production, Imaging and CT",
+      "nameZh": "X 射线产生、成像与 CT",
+      "defaultOrder": 43,
+      "conceptIds": [
+        {
+          "conceptId": "phy_xray_production",
+          "name": "X-ray Production",
+          "nameZh": "X 射线产生",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_xray_imaging_attenuation",
+          "name": "X-ray Imaging and Attenuation",
+          "nameZh": "X 射线成像与衰减",
+          "defaultOrder": 2
+        },
+        {
+          "conceptId": "phy_computed_tomography",
+          "name": "Computed Tomography",
+          "nameZh": "计算机断层成像",
+          "defaultOrder": 3
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_quantum"
+      ],
+      "isRoot": false
+    },
+    {
+      "topicId": "phy_medical_pet",
+      "name": "Radioactive Tracers and PET Imaging",
+      "nameZh": "放射性示踪与 PET 成像",
+      "defaultOrder": 44,
+      "conceptIds": [
+        {
+          "conceptId": "phy_particle_antiparticle_annihilation",
+          "name": "Particle-Antiparticle Annihilation",
+          "nameZh": "粒子-反粒子湮灭",
+          "defaultOrder": 1
+        },
+        {
+          "conceptId": "phy_radioactive_tracers_pet",
+          "name": "Radioactive Tracers and PET",
+          "nameZh": "放射性示踪剂与 PET",
+          "defaultOrder": 2
+        }
+      ],
+      "successors": [],
+      "prereqTopics": [
+        "phy_nuclear",
+        "phy_radioactivity"
       ],
       "isRoot": false
     },
@@ -1396,7 +1635,7 @@
       "topicId": "phy_astro",
       "name": "Luminosity and Radiant Flux Intensity and Standard Candles",
       "nameZh": "亮度与辐射通量与标准烛光",
-      "defaultOrder": 39,
+      "defaultOrder": 45,
       "conceptIds": [
         {
           "conceptId": "phy_luminosity",
@@ -1429,7 +1668,7 @@
       "topicId": "phy_astro_phy_stellar_radii",
       "name": "Stellar Radii and Hubble's Law and the Big Bang",
       "nameZh": "恒星半径与哈勃定律与大爆炸",
-      "defaultOrder": 40,
+      "defaultOrder": 46,
       "conceptIds": [
         {
           "conceptId": "phy_stellar_radii",
@@ -1459,517 +1698,758 @@
     {
       "from": "phy_ac_rms",
       "to": "phy_transformers",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“交流电与RMS值”为学习“变压器”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_acoustic_impedance_reflection",
+      "to": "phy_ultrasound_imaging",
+      "strength": "hard",
+      "reason": "Interpreting image echoes requires understanding why tissue boundaries reflect different fractions of incident ultrasound."
     },
     {
       "from": "phy_angular_speed",
       "to": "phy_centripetal_accel",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“弧度与角速度”为学习“向心加速度”提供背景与解题基础。"
     },
     {
       "from": "phy_binding_energy",
       "to": "phy_fission_fusion",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“核裂变与核聚变”需要先掌握“质量亏损与结合能”的定义、表示或操作方法。"
     },
     {
       "from": "phy_binding_energy",
       "to": "phy_radioactive_decay",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“质量亏损与结合能”为学习“放射性衰变”提供背景与解题基础。"
     },
     {
       "from": "phy_capacitance_def",
       "to": "phy_capacitor_networks",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电容”为学习“串并联电容”提供背景与解题基础。"
     },
     {
       "from": "phy_capacitor_energy",
       "to": "phy_capacitor_discharge",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电容储能”为学习“充放电”提供背景与解题基础。"
     },
     {
       "from": "phy_capacitor_networks",
       "to": "phy_capacitor_energy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“串并联电容”为学习“电容储能”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_centre_of_gravity",
+      "to": "phy_moments",
+      "strength": "hard",
+      "reason": "Moments due to an object's weight are calculated using the line of action through its centre of gravity."
     },
     {
       "from": "phy_centripetal_accel",
       "to": "phy_centripetal_force",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“向心加速度”为学习“向心力”提供背景与解题基础。"
     },
     {
       "from": "phy_centripetal_force",
       "to": "phy_orbits",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“轨道运动”需要先掌握“向心力”的定义、表示或操作方法。"
     },
     {
       "from": "phy_centripetal_force",
       "to": "phy_shm",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“简谐运动”需要先掌握“向心力”的定义、表示或操作方法。"
     },
     {
       "from": "phy_coulomb",
       "to": "phy_e_field_strength",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“电场强度”需要先掌握“库仑定律”的定义、表示或操作方法。"
     },
     {
       "from": "phy_current_charge",
       "to": "phy_force_conductor",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“载流导线受力”需要先掌握“电流与电荷”的定义、表示或操作方法。"
+    },
+    {
+      "from": "phy_current_charge",
+      "to": "phy_hall_effect",
+      "strength": "hard",
+      "reason": "The Hall-voltage derivation uses current as charge flow and the carrier charge and number density."
     },
     {
       "from": "phy_current_charge",
       "to": "phy_pd_emf",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电流与电荷”为学习“电势差与EMF”提供背景与解题基础。"
     },
     {
       "from": "phy_damping",
       "to": "phy_resonance",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“阻尼”为学习“共振”提供背景与解题基础。"
     },
     {
       "from": "phy_density_pressure",
       "to": "phy_upthrust",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“密度与压强”为学习“浮力与阿基米德”提供背景与解题基础。"
     },
     {
       "from": "phy_diffraction",
       "to": "phy_diffraction_grating",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“衍射”为学习“衍射光栅”提供背景与解题基础。"
     },
     {
       "from": "phy_diffraction_grating",
       "to": "phy_stationary_waves",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“衍射光栅”为学习“驻波”提供背景与解题基础。"
     },
     {
       "from": "phy_e_field_strength",
       "to": "phy_e_potential",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电场强度”为学习“电势”提供背景与解题基础。"
     },
     {
       "from": "phy_e_field_strength",
       "to": "phy_field_analogy",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“引力场与电场类比”需要先掌握“电场强度”的定义、表示或操作方法。"
     },
     {
       "from": "phy_e_potential",
       "to": "phy_capacitance_def",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“电容”需要先掌握“电势”的定义、表示或操作方法。"
     },
     {
       "from": "phy_e_potential",
       "to": "phy_field_analogy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电势”为学习“引力场与电场类比”提供背景与解题基础。"
     },
     {
       "from": "phy_elastic_plastic",
       "to": "phy_strain_energy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“弹性与塑性行为”为学习“弹性势能”提供背景与解题基础。"
     },
     {
       "from": "phy_em_spectrum",
       "to": "phy_doppler",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电磁波谱”为学习“多普勒效应”提供背景与解题基础。"
     },
     {
       "from": "phy_em_spectrum",
       "to": "phy_photon",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“光子能量”需要先掌握“电磁波谱”的定义、表示或操作方法。"
     },
     {
       "from": "phy_energy_conservation",
       "to": "phy_power_efficiency",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“能量守恒”为学习“功率与效率”提供背景与解题基础。"
     },
     {
       "from": "phy_energy_conservation",
       "to": "phy_shm_energy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“能量守恒”为学习“SHM能量”提供背景与解题基础。"
     },
     {
       "from": "phy_energy_levels",
       "to": "phy_standard_candles",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“能级与线光谱”为学习“标准烛光”提供背景与解题基础。"
     },
     {
       "from": "phy_equilibrium",
       "to": "phy_density_pressure",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“力的平衡”为学习“密度与压强”提供背景与解题基础。"
     },
     {
       "from": "phy_faraday",
       "to": "phy_lenz",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“法拉第定律”为学习“楞次定律”提供背景与解题基础。"
     },
     {
       "from": "phy_faraday",
       "to": "phy_transformers",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“变压器”需要先掌握“法拉第定律”的定义、表示或操作方法。"
     },
     {
       "from": "phy_flux_density",
       "to": "phy_flux_linkage",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“磁通与磁链”需要先掌握“磁通密度”的定义、表示或操作方法。"
     },
     {
       "from": "phy_flux_density",
       "to": "phy_force_conductor",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“磁通密度”为学习“载流导线受力”提供背景与解题基础。"
     },
     {
       "from": "phy_flux_linkage",
       "to": "phy_faraday",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“磁通与磁链”为学习“法拉第定律”提供背景与解题基础。"
     },
     {
       "from": "phy_force_charge",
       "to": "phy_fields_currents",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“运动电荷受力”为学习“电流磁场”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_force_charge",
+      "to": "phy_hall_effect",
+      "strength": "hard",
+      "reason": "Hall charge separation is caused by the magnetic force on moving charge carriers."
     },
     {
       "from": "phy_force_conductor",
       "to": "phy_force_charge",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“载流导线受力”为学习“运动电荷受力”提供背景与解题基础。"
     },
     {
       "from": "phy_force_types",
       "to": "phy_equilibrium",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“力的平衡”需要先掌握“力的类型”的定义、表示或操作方法。"
     },
     {
       "from": "phy_force_types",
       "to": "phy_hookes_law",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“胡克定律”需要先掌握“力的类型”的定义、表示或操作方法。"
     },
     {
       "from": "phy_force_types",
       "to": "phy_moments",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“力的类型”为学习“力矩与力偶”提供背景与解题基础。"
     },
     {
       "from": "phy_free_fall",
       "to": "phy_projectile",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“自由落体”为学习“抛体运动”提供背景与解题基础。"
     },
     {
       "from": "phy_fundamental_particles",
       "to": "phy_binding_energy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“基本粒子与夸克”为学习“质量亏损与结合能”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_fundamental_particles",
+      "to": "phy_particle_antiparticle_annihilation",
+      "strength": "hard",
+      "reason": "Annihilation requires the particle-antiparticle relationship and conservation laws for their interactions."
     },
     {
       "from": "phy_grav_field_strength",
       "to": "phy_field_analogy",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“引力场与电场类比”需要先掌握“引力场强度”的定义、表示或操作方法。"
     },
     {
       "from": "phy_grav_field_strength",
       "to": "phy_grav_potential",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“引力场强度”为学习“引力势”提供背景与解题基础。"
     },
     {
       "from": "phy_grav_potential",
       "to": "phy_orbits",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“引力势”为学习“轨道运动”提供背景与解题基础。"
     },
     {
       "from": "phy_heat_capacity",
       "to": "phy_kinetic_theory",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“比热与潜热”为学习“气体动理论”提供背景与解题基础。"
     },
     {
       "from": "phy_homogeneity",
       "to": "phy_scalars_vectors",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“方程齐次性”为学习“标量与矢量”提供背景与解题基础。"
     },
     {
       "from": "phy_hookes_law",
       "to": "phy_stress_strain",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“胡克定律”为学习“应力、应变与杨氏模量”提供背景与解题基础。"
     },
     {
       "from": "phy_ideal_gas",
       "to": "phy_internal_energy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“理想气体定律”为学习“内能与第一定律”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_intensity",
+      "to": "phy_acoustic_impedance_reflection",
+      "strength": "hard",
+      "reason": "The reflection coefficient is a ratio of reflected to incident wave intensity, requiring intensity first."
     },
     {
       "from": "phy_intensity",
       "to": "phy_em_spectrum",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“波强度”为学习“电磁波谱”提供背景与解题基础。"
     },
     {
       "from": "phy_intensity",
       "to": "phy_luminosity",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“亮度与辐射通量”需要先掌握“波强度”的定义、表示或操作方法。"
     },
     {
       "from": "phy_interference",
       "to": "phy_diffraction",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“双源干涉”为学习“衍射”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_isotopes",
+      "to": "phy_radioactive_decay",
+      "strength": "soft",
+      "reason": "Radioactive decay is described for particular nuclides and isotopes, but its mathematical law can be studied without a full isotope taxonomy."
     },
     {
       "from": "phy_ke_pe",
       "to": "phy_energy_conservation",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“动能与势能”为学习“能量守恒”提供背景与解题基础。"
     },
     {
       "from": "phy_ke_pe",
       "to": "phy_strain_energy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“动能与势能”为学习“弹性势能”提供背景与解题基础。"
     },
     {
       "from": "phy_kinetic_theory",
       "to": "phy_ideal_gas",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“气体动理论”为学习“理想气体定律”提供背景与解题基础。"
     },
     {
       "from": "phy_kirchhoff",
       "to": "phy_series_parallel",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“基尔霍夫定律”为学习“串并联电阻”提供背景与解题基础。"
     },
     {
       "from": "phy_luminosity",
       "to": "phy_standard_candles",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“亮度与辐射通量”为学习“标准烛光”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_mass_weight",
+      "to": "phy_centre_of_gravity",
+      "strength": "hard",
+      "reason": "The centre of gravity represents where an object's weight may be treated as acting, so mass and weight must be distinguished first."
     },
     {
       "from": "phy_mass_weight",
       "to": "phy_momentum",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“质量与重量”为学习“线性动量”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_mole_avogadro",
+      "to": "phy_ideal_gas",
+      "strength": "hard",
+      "reason": "The molar ideal-gas equation uses amount of substance and its particle form uses Avogadro's constant."
     },
     {
       "from": "phy_moments",
       "to": "phy_equilibrium",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“力矩与力偶”为学习“力的平衡”提供背景与解题基础。"
     },
     {
       "from": "phy_momentum",
       "to": "phy_momentum_conservation",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“线性动量”为学习“动量守恒”提供背景与解题基础。"
     },
     {
       "from": "phy_momentum_conservation",
       "to": "phy_impulse",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“动量守恒”为学习“冲量与碰撞”提供背景与解题基础。"
     },
     {
       "from": "phy_momentum_conservation",
       "to": "phy_kinetic_theory",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“动量守恒”为学习“气体动理论”提供背景与解题基础。"
     },
     {
       "from": "phy_motion_graphs",
       "to": "phy_free_fall",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“运动图像”为学习“自由落体”提供背景与解题基础。"
     },
     {
       "from": "phy_motion_quantities",
       "to": "phy_suvat",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“位移速度加速度”为学习“运动方程”提供背景与解题基础。"
     },
     {
       "from": "phy_newton_gravitation",
       "to": "phy_grav_field_strength",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“引力场强度”需要先掌握“牛顿引力定律”的定义、表示或操作方法。"
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_centripetal_force",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“向心力”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_force_types",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“力的类型”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_mass_weight",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“牛顿运动定律”为学习“质量与重量”提供背景与解题基础。"
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_momentum",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线性动量”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
+    },
+    {
+      "from": "phy_newton_laws",
+      "to": "phy_terminal_velocity",
+      "strength": "hard",
+      "reason": "Newton's second law is needed to relate changing drag and resultant force to the acceleration approaching zero."
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_work",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“做功”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
     },
     {
       "from": "phy_nuclear_structure",
       "to": "phy_binding_energy",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“质量亏损与结合能”需要先掌握“原子核结构”的定义、表示或操作方法。"
     },
     {
       "from": "phy_nuclear_structure",
       "to": "phy_fundamental_particles",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“原子核结构”为学习“基本粒子与夸克”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_nuclear_structure",
+      "to": "phy_isotopes",
+      "strength": "hard",
+      "reason": "Defining isotopes requires proton number, neutron number and nucleon number from the nuclear model."
+    },
+    {
+      "from": "phy_particle_antiparticle_annihilation",
+      "to": "phy_radioactive_tracers_pet",
+      "strength": "hard",
+      "reason": "Coincidence detection in PET relies on the two opposite photons produced by electron-positron annihilation."
     },
     {
       "from": "phy_pd_emf",
       "to": "phy_e_potential",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“电势”需要先掌握“电势差与EMF”的定义、表示或操作方法。"
     },
     {
       "from": "phy_pd_emf",
       "to": "phy_resistance_ohm",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电势差与EMF”为学习“电阻与欧姆定律”提供背景与解题基础。"
     },
     {
       "from": "phy_photoelectric",
       "to": "phy_wave_particle",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“光电效应”为学习“波粒二象性”提供背景与解题基础。"
     },
     {
       "from": "phy_photon",
       "to": "phy_energy_levels",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“能级与线光谱”需要先掌握“光子能量”的定义、表示或操作方法。"
     },
     {
       "from": "phy_photon",
       "to": "phy_photoelectric",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“光子能量”为学习“光电效应”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_photon",
+      "to": "phy_xray_production",
+      "strength": "hard",
+      "reason": "The maximum X-ray photon energy and minimum wavelength follow from photon energy E = hf = hc/λ."
+    },
+    {
+      "from": "phy_piezoelectric_transducers",
+      "to": "phy_ultrasound_imaging",
+      "strength": "hard",
+      "reason": "Ultrasound imaging requires a transducer that emits pulses and detects returning echoes."
     },
     {
       "from": "phy_potential_divider",
       "to": "phy_internal_resistance",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“分压器”为学习“内阻”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_potential_divider",
+      "to": "phy_potentiometer_null_methods",
+      "strength": "hard",
+      "reason": "A potentiometer's balance condition extends the potential-divider relationship along a uniform resistance wire."
+    },
+    {
+      "from": "phy_progressive_waves",
+      "to": "phy_piezoelectric_transducers",
+      "strength": "hard",
+      "reason": "Producing and detecting ultrasound pulses requires the frequency, propagation and pulse concepts of progressive waves."
     },
     {
       "from": "phy_progressive_waves",
       "to": "phy_superposition_principle",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“叠加原理”需要先掌握“行波”的定义、表示或操作方法。"
     },
     {
       "from": "phy_progressive_waves",
       "to": "phy_wave_types",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“行波”为学习“横波与纵波”提供背景与解题基础。"
     },
     {
       "from": "phy_radioactive_decay",
       "to": "phy_half_life",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“半衰期”需要先掌握“放射性衰变”的定义、表示或操作方法。"
+    },
+    {
+      "from": "phy_radioactive_decay",
+      "to": "phy_radioactive_tracers_pet",
+      "strength": "hard",
+      "reason": "PET uses a positron-emitting radionuclide, so beta-plus decay and radioactive behaviour must be understood first."
     },
     {
       "from": "phy_resistance_ohm",
       "to": "phy_iv_characteristics",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电阻与欧姆定律”为学习“I-V特性”提供背景与解题基础。"
     },
     {
       "from": "phy_resistance_ohm",
       "to": "phy_kirchhoff",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“基尔霍夫定律”需要先掌握“电阻与欧姆定律”的定义、表示或操作方法。"
+    },
+    {
+      "from": "phy_resistance_ohm",
+      "to": "phy_resistive_sensors",
+      "strength": "hard",
+      "reason": "Interpreting LDR and thermistor behaviour requires resistance and the current-voltage relationship first."
     },
     {
       "from": "phy_resistance_ohm",
       "to": "phy_resistivity",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电阻与欧姆定律”为学习“电阻率”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_resistive_sensors",
+      "to": "phy_potential_divider",
+      "strength": "soft",
+      "reason": "Sensor-dependent resistance is commonly converted into an output voltage with a potential divider, although dividers can be learned independently."
     },
     {
       "from": "phy_resistivity",
       "to": "phy_iv_characteristics",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“电阻率”为学习“I-V特性”提供背景与解题基础。"
     },
     {
       "from": "phy_scalars_vectors",
       "to": "phy_motion_quantities",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“位移速度加速度”需要先掌握“标量与矢量”的定义、表示或操作方法。"
     },
     {
       "from": "phy_scalars_vectors",
       "to": "phy_uncertainty",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“标量与矢量”为学习“误差与不确定度”提供背景与解题基础。"
     },
     {
       "from": "phy_series_parallel",
       "to": "phy_potential_divider",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“串并联电阻”为学习“分压器”提供背景与解题基础。"
     },
     {
       "from": "phy_shm",
       "to": "phy_shm_energy",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“简谐运动”为学习“SHM能量”提供背景与解题基础。"
     },
     {
       "from": "phy_shm_energy",
       "to": "phy_damping",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“SHM能量”为学习“阻尼”提供背景与解题基础。"
     },
     {
       "from": "phy_si_units",
       "to": "phy_homogeneity",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“SI基本单位”为学习“方程齐次性”提供背景与解题基础。"
     },
     {
       "from": "phy_standard_candles",
       "to": "phy_stellar_radii",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“标准烛光”为学习“恒星半径”提供背景与解题基础。"
     },
     {
       "from": "phy_stellar_radii",
       "to": "phy_hubble",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“恒星半径”为学习“哈勃定律与大爆炸”提供背景与解题基础。"
     },
     {
       "from": "phy_stress_strain",
       "to": "phy_elastic_plastic",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“应力、应变与杨氏模量”为学习“弹性与塑性行为”提供背景与解题基础。"
     },
     {
       "from": "phy_superposition_principle",
       "to": "phy_interference",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“叠加原理”为学习“双源干涉”提供背景与解题基础。"
     },
     {
       "from": "phy_suvat",
       "to": "phy_angular_speed",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“弧度与角速度”需要先掌握“运动方程”的定义、表示或操作方法。"
     },
     {
       "from": "phy_suvat",
       "to": "phy_motion_graphs",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“运动方程”为学习“运动图像”提供背景与解题基础。"
     },
     {
       "from": "phy_suvat",
       "to": "phy_newton_laws",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“牛顿运动定律”需要先掌握“运动方程”的定义、表示或操作方法。"
     },
     {
       "from": "phy_suvat",
       "to": "phy_projectile",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“抛体运动”需要先掌握“运动方程”的定义、表示或操作方法。"
     },
     {
       "from": "phy_temperature",
       "to": "phy_heat_capacity",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“温度与热平衡”为学习“比热与潜热”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_temperature",
+      "to": "phy_thermometry",
+      "strength": "hard",
+      "reason": "Thermometry operationalises temperature, so temperature and thermal equilibrium must be understood before selecting a thermometric property."
     },
     {
       "from": "phy_transformers",
       "to": "phy_rectification",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“变压器”为学习“整流”提供背景与解题基础。"
     },
     {
       "from": "phy_uncertainty",
       "to": "phy_combine_uncertainty",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“误差与不确定度”为学习“不确定度合成”提供背景与解题基础。"
     },
     {
       "from": "phy_wave_particle",
       "to": "phy_energy_levels",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“波粒二象性”为学习“能级与线光谱”提供背景与解题基础。"
     },
     {
       "from": "phy_wave_types",
       "to": "phy_intensity",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“横波与纵波”为学习“波强度”提供背景与解题基础。"
+    },
+    {
+      "from": "phy_wave_types",
+      "to": "phy_polarisation_malus",
+      "strength": "hard",
+      "reason": "Polarisation distinguishes transverse from longitudinal waves and therefore depends on the direction of oscillation relative to propagation."
     },
     {
       "from": "phy_work",
       "to": "phy_ke_pe",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“动能与势能”需要先掌握“做功”的定义、表示或操作方法。"
+    },
+    {
+      "from": "phy_xray_imaging_attenuation",
+      "to": "phy_computed_tomography",
+      "strength": "hard",
+      "reason": "CT reconstructs slices from many attenuation projections, so projection contrast and attenuation must be understood first."
+    },
+    {
+      "from": "phy_xray_production",
+      "to": "phy_xray_imaging_attenuation",
+      "strength": "hard",
+      "reason": "Medical attenuation and contrast are applied to the X-ray beam produced by accelerated electrons at a target."
     }
   ]
 }

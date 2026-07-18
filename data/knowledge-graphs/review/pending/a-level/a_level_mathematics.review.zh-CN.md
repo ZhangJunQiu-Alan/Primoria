@@ -5,7 +5,7 @@
 - 来源：`src_cambridge_9709_2026_2027`
 - 状态：`needs_review`，本文件不能作为人工批准记录
 - 官方小节：38；逐项要求：153
-- 自动信号：候选覆盖 53；部分覆盖 91；歧义 0；未解析 0；已核实 Concept 缺口 9；需技能映射 0
+- 自动信号：候选覆盖 62；部分覆盖 91；歧义 0；未解析 0；已核实 Concept 缺口 0；需技能映射 0
 
 > 版权说明：这里只保存小节标题、页码、关键词、文本指纹和 Primoria 候选映射，不复制 Cambridge syllabus 正文。分数只用于排序，不能作为审核结论。
 
@@ -14,20 +14,20 @@
 | 官方小节 | Syllabus 页 | 要求数 | Primoria 候选 Topic | 覆盖 / 部分 / 歧义 / 未解析 / Concept 缺口 / 技能 |
 |---|---:|---:|---|---:|
 | 1.1 Quadratics | 19 | 5 | 二次方程求解与联立方程 (mat_algebra_part1_mat_solve_quadratics)；指数与根式与二次函数 (mat_algebra_part1) | 3 / 2 / 0 / 0 / 0 / 0 |
-| 1.2 Functions | 19 | 5 | 不等式与函数与反函数 (mat_algebra_part2)；复合函数与绝对值函数 (mat_algebra_part2_mat_composite) | 2 / 2 / 0 / 0 / 1 / 0 |
+| 1.2 Functions | 19 | 5 | 不等式与函数与反函数 (mat_algebra_part2)；复合函数、绝对值函数与图像变换 (mat_algebra_part2_mat_composite) | 3 / 2 / 0 / 0 / 0 / 0 |
 | 1.3 Coordinate geometry | 20 | 5 | 坐标几何 (mat_coord_geom)；标量积与直线向量方程 (mat_vectors_mat_scalar_product) | 1 / 4 / 0 / 0 / 0 / 0 |
 | 1.4 Circular measure | 20 | 2 | 三角学：比值与恒等式 (mat_trig_part1)；力学：连接体、能量与动量 (mat_mech_energy_momentum) | 0 / 2 / 0 / 0 / 0 / 0 |
 | 1.5 Trigonometry | 21 | 5 | 三角学：比值与恒等式 (mat_trig_part1)；三角学：方程与公式 (mat_trig_part2) | 2 / 3 / 0 / 0 / 0 / 0 |
 | 1.6 Series | 21 | 4 | 等差级数与等比级数 (mat_sequences)；二项展开（正整数）与二项展开（一般指数） (mat_sequences_mat_binomial_pos) | 1 / 3 / 0 / 0 / 0 / 0 |
 | 1.7 Differentiation | 22 | 4 | 微分：应用 (mat_differentiation_part2)；隐函数微分与参数微分 (mat_differentiation_adv_mat_implicit) | 0 / 4 / 0 / 0 / 0 / 0 |
 | 1.8 Integration | 22 | 4 | 不定积分与定积分与面积 (mat_integration_part1)；积分：进阶技巧 (mat_integration_part2) | 0 / 4 / 0 / 0 / 0 / 0 |
-| 2.1 Algebra | 23 | 3 | 三角学：方程与公式 (mat_trig_part2)；复合函数与绝对值函数 (mat_algebra_part2_mat_composite) | 3 / 0 / 0 / 0 / 0 / 0 |
+| 2.1 Algebra | 23 | 3 | 三角学：方程与公式 (mat_trig_part2)；复合函数、绝对值函数与图像变换 (mat_algebra_part2_mat_composite) | 3 / 0 / 0 / 0 / 0 / 0 |
 | 2.2 Logarithmic and exponential functions | 23 | 4 | 指数函数与对数与法则 (mat_exp_log)；指数与根式与二次函数 (mat_algebra_part1) | 2 / 2 / 0 / 0 / 0 / 0 |
 | 2.3 Trigonometry | 24 | 2 | 三角学：比值与恒等式 (mat_trig_part1)；三角学：方程与公式 (mat_trig_part2) | 1 / 1 / 0 / 0 / 0 / 0 |
 | 2.4 Differentiation | 24 | 3 | 微分：应用 (mat_differentiation_part2)；隐函数微分与参数微分 (mat_differentiation_adv_mat_implicit) | 3 / 0 / 0 / 0 / 0 / 0 |
-| 2.5 Integration | 25 | 3 | 不定积分与定积分与面积 (mat_integration_part1)；标准函数积分与换元积分 (mat_integration_part1_mat_standard_integrals) | 1 / 1 / 0 / 0 / 1 / 0 |
+| 2.5 Integration | 25 | 3 | 不定积分与定积分与面积 (mat_integration_part1)；标准函数积分与换元积分 (mat_integration_part1_mat_standard_integrals) | 2 / 1 / 0 / 0 / 0 / 0 |
 | 2.6 Numerical solution of equations | 25 | 3 | 二次方程求解与联立方程 (mat_algebra_part1_mat_solve_quadratics)；标量积与直线向量方程 (mat_vectors_mat_scalar_product) | 1 / 2 / 0 / 0 / 0 / 0 |
-| 3.1 Algebra | 26 | 5 | 三角学：方程与公式 (mat_trig_part2)；复合函数与绝对值函数 (mat_algebra_part2_mat_composite) | 5 / 0 / 0 / 0 / 0 / 0 |
+| 3.1 Algebra | 26 | 5 | 三角学：方程与公式 (mat_trig_part2)；复合函数、绝对值函数与图像变换 (mat_algebra_part2_mat_composite) | 5 / 0 / 0 / 0 / 0 / 0 |
 | 3.2 Logarithmic and exponential functions | 27 | 4 | 指数函数与对数与法则 (mat_exp_log)；指数与根式与二次函数 (mat_algebra_part1) | 2 / 2 / 0 / 0 / 0 / 0 |
 | 3.3 Trigonometry | 27 | 2 | 三角学：比值与恒等式 (mat_trig_part1)；三角学：方程与公式 (mat_trig_part2) | 1 / 1 / 0 / 0 / 0 / 0 |
 | 3.4 Differentiation | 28 | 3 | 微分：应用 (mat_differentiation_part2)；隐函数微分与参数微分 (mat_differentiation_adv_mat_implicit) | 2 / 1 / 0 / 0 / 0 / 0 |
@@ -36,21 +36,21 @@
 | 3.7 Vectors | 29 | 6 | 向量基础与大小与方向 (mat_vectors)；标准函数积分与换元积分 (mat_integration_part1_mat_standard_integrals) | 2 / 4 / 0 / 0 / 0 / 0 |
 | 3.8 Differential equations | 30 | 4 | 建立微分方程与分离变量 (mat_numerical_methods_mat_form_de)；二次方程求解与联立方程 (mat_algebra_part1_mat_solve_quadratics) | 1 / 3 / 0 / 0 / 0 / 0 |
 | 3.9 Complex numbers | 30 | 8 | 模角形式与复数根与轨迹 (mat_complex_mat_mod_arg)；复数运算与阿根图 (mat_complex) | 5 / 3 / 0 / 0 / 0 / 0 |
-| 4.1 Forces and equilibrium | 31 | 7 | 力与牛顿定律 (mat_mech_forces)；概率与离散随机变量 (mat_prob_random_vars) | 1 / 5 / 0 / 0 / 1 / 0 |
+| 4.1 Forces and equilibrium | 31 | 7 | 力、平衡与接触模型 (mat_mech_forces)；质量、重量与牛顿定律 (mat_mech_dynamics) | 2 / 5 / 0 / 0 / 0 / 0 |
 | 4.2 Kinematics of motion in a straight line | 32 | 4 | 运动学 (mat_mech_kinematics)；坐标几何 (mat_coord_geom) | 2 / 2 / 0 / 0 / 0 / 0 |
 | 4.3 Momentum | 32 | 2 | 力学：连接体、能量与动量 (mat_mech_energy_momentum)；二次方程求解与联立方程 (mat_algebra_part1_mat_solve_quadratics) | 0 / 2 / 0 / 0 / 0 / 0 |
-| 4.4 Newton’s laws of motion | 33 | 4 | 力与牛顿定律 (mat_mech_forces)；指数函数与对数与法则 (mat_exp_log) | 1 / 2 / 0 / 0 / 1 / 0 |
+| 4.4 Newton’s laws of motion | 33 | 4 | 质量、重量与牛顿定律 (mat_mech_dynamics)；指数函数与对数与法则 (mat_exp_log) | 2 / 2 / 0 / 0 / 0 / 0 |
 | 4.5 Energy, work and power | 33 | 5 | 力学：连接体、能量与动量 (mat_mech_energy_momentum)；微分：法则与技巧 (mat_differentiation_part1) | 1 / 4 / 0 / 0 / 0 / 0 |
-| 5.1 Representation of data | 34 | 5 | 数据、计数与概率 (mat_data_counting_prob)；抽样与假设检验 (mat_normal_inference_mat_sampling) | 0 / 5 / 0 / 0 / 0 / 0 |
+| 5.1 Representation of data | 34 | 5 | 数据、计数与概率 (mat_data_counting_prob)；抽样、估计与假设检验 (mat_normal_inference_mat_sampling) | 0 / 5 / 0 / 0 / 0 / 0 |
 | 5.2 Permutations and combinations | 34 | 2 | 数据、计数与概率 (mat_data_counting_prob)；微分：法则与技巧 (mat_differentiation_part1) | 1 / 1 / 0 / 0 / 0 / 0 |
 | 5.3 Probability | 35 | 4 | 概率与离散随机变量 (mat_prob_random_vars)；数据、计数与概率 (mat_data_counting_prob) | 2 / 2 / 0 / 0 / 0 / 0 |
 | 5.4 Discrete random variables | 35 | 3 | 概率与离散随机变量 (mat_prob_random_vars)；随机变量与分布 (mat_random_vars) | 1 / 2 / 0 / 0 / 0 / 0 |
 | 5.5 The normal distribution | 36 | 3 | 正态分布与正态近似 (mat_normal_inference)；随机变量与分布 (mat_random_vars) | 0 / 3 / 0 / 0 / 0 / 0 |
 | 6.1 The Poisson distribution | 37 | 5 | 随机变量与分布 (mat_random_vars)；正态分布与正态近似 (mat_normal_inference) | 1 / 4 / 0 / 0 / 0 / 0 |
 | 6.2 Linear combinations of random variables | 37 | 1 | 随机变量与分布 (mat_random_vars)；概率与离散随机变量 (mat_prob_random_vars) | 0 / 1 / 0 / 0 / 0 / 0 |
-| 6.3 Continuous random variables | 38 | 2 | 随机变量与分布 (mat_random_vars)；概率与离散随机变量 (mat_prob_random_vars) | 0 / 0 / 0 / 0 / 2 / 0 |
-| 6.4 Sampling and estimation | 38 | 8 | 抽样与假设检验 (mat_normal_inference_mat_sampling)；不等式与函数与反函数 (mat_algebra_part2) | 0 / 5 / 0 / 0 / 3 / 0 |
-| 6.5 Hypothesis tests | 39 | 5 | 抽样与假设检验 (mat_normal_inference_mat_sampling)；标量积与直线向量方程 (mat_vectors_mat_scalar_product) | 0 / 5 / 0 / 0 / 0 / 0 |
+| 6.3 Continuous random variables | 38 | 2 | 连续随机变量与概率密度 (mat_continuous_probability)；随机变量与分布 (mat_random_vars) | 2 / 0 / 0 / 0 / 0 / 0 |
+| 6.4 Sampling and estimation | 38 | 8 | 抽样、估计与假设检验 (mat_normal_inference_mat_sampling)；不等式与函数与反函数 (mat_algebra_part2) | 3 / 5 / 0 / 0 / 0 / 0 |
+| 6.5 Hypothesis tests | 39 | 5 | 抽样、估计与假设检验 (mat_normal_inference_mat_sampling)；标量积与直线向量方程 (mat_vectors_mat_scalar_product) | 0 / 5 / 0 / 0 / 0 / 0 |
 
 ## 待人工判断项
 
@@ -60,7 +60,6 @@
 | 1.1 outcome 5 | concept_and_skill | 19 | 5x2, equation, function, quadratic, recognise, solve, some, tan2 | 二次方程求解 (mat_solve_quadratics，已抽样核验) | candidate_partial |
 | 1.2 outcome 2 | concept | 19 | range, function, given, can, cases, composite, composition, condition | 函数与反函数 (mat_functions，已抽样核验) | candidate_partial |
 | 1.2 outcome 4 | concept | 19 | one, between, function, graphical, illustrate, include, indication, inverse | 函数与反函数 (mat_functions，已抽样核验) | candidate_partial |
-| 1.2 outcome 5 | concept | 19 | given, transformations, af, algebraic, ax, combination, describing, features | 无 | candidate_gap |
 | 1.3 outcome 2 | concept | 20 | gradients, any, ax, between, calculations, distances, forms, interpret | 直线 (mat_straight_lines，已抽样核验) | candidate_partial |
 | 1.3 outcome 3 | concept | 20 | 2fy, 2gx, centre, circle, equation, expanded, form, r2 | 圆 (mat_circles，已抽样核验) | candidate_partial |
 | 1.3 outcome 4 | concept_and_skill | 20 | circles, algebraic, angle, differentiation, elementary, geometrical, implicit, included | 直线 (mat_straight_lines，已抽样核验) | candidate_partial |
@@ -85,7 +84,6 @@
 | 2.2 outcome 3 | concept_and_skill | 23 | appears, equation, indices, inequalities, logarithms, solve, unknown, which | 解指数与对数方程 (mat_solve_exp，已抽样核验) | candidate_partial |
 | 2.3 outcome 1 | concept | 24 | functions, angles, any, cosecant, cosine, cotangent, graphs, magnitude | 三角函数与图像 (mat_trig_ratios，已抽样核验) | candidate_partial |
 | 2.5 outcome 1 | concept | 25 | ax, integration, cos, differentiation, eax, extend, general, idea | 标准函数积分 (mat_standard_integrals，已抽样核验) | candidate_partial |
-| 2.5 outcome 3 | concept_and_skill | 25 | estimate, rule, trapezium, cases, definite, gives, graphs, integral | 无 | candidate_gap |
 | 2.6 outcome 2 | concept | 25 | approximations, converges, equation, idea, notation, root, sequence, which | 迭代法 (mat_iteration，已抽样核验) | candidate_partial |
 | 2.6 outcome 3 | concept | 25 | given, iteration, equation, xn, accuracy, based, being, but | 迭代法 (mat_iteration，已抽样核验) | candidate_partial |
 | 3.2 outcome 2 | concept | 27 | both, definition, ekx, ex, functions, graph, graphs, inverse | 指数函数 (mat_exp_func，已抽样核验) | candidate_partial |
@@ -109,7 +107,6 @@
 | 4.1 outcome 1 | concept | 31 | acting, diagram, drawing, force, forces, given, identify, situation | 力与平衡 (mat_forces_equilibrium，已抽样核验) | candidate_partial |
 | 4.1 outcome 2 | concept | 31 | always, approximate, calculations, components, drawing, find, force, nature | 力与平衡 (mat_forces_equilibrium，已抽样核验) | candidate_partial |
 | 4.1 outcome 4 | concept | 31 | component, two, between, can, components, contact, force, frictional | 摩擦 (mat_friction，已抽样核验) | candidate_partial |
-| 4.1 outcome 5 | concept | 31 | model, contact, limitations, smooth | 无 | candidate_gap |
 | 4.1 outcome 6 | concept | 31 | limiting, equilibrium, friction, about, appropriate, coefficient, concepts, definition | 摩擦 (mat_friction，已抽样核验) | candidate_partial |
 | 4.1 outcome 7 | concept | 31 | exerted, force, ground, on, particle, equal, law, newton | 牛顿运动定律 (mat_newton_laws，已抽样核验) | candidate_partial |
 | 4.2 outcome 1 | concept | 32 | quantity, speed, acceleration, concepts, context, deceleration, decreasing, dimension | 匀加速运动 (mat_kin_constant，已抽样核验) | candidate_partial |
@@ -117,7 +114,6 @@
 | 4.3 outcome 1 | concept | 32 | definition, dimension, linear, momentum, motion, nature, one, only | 动量与冲量 (mat_momentum_impulse，已抽样核验) | candidate_partial |
 | 4.3 outcome 2 | concept_and_skill | 32 | bodies, impact, direct, two, coalesce, coefficient, conservation, impulse | 动量与冲量 (mat_momentum_impulse，已抽样核验) | candidate_partial |
 | 4.4 outcome 1 | concept | 33 | motion, constant, forces, action, air, any, connecting, considered | 牛顿运动定律 (mat_newton_laws，已抽样核验) | candidate_partial |
-| 4.4 outcome 2 | concept | 33 | numerical, approximate, between, component, expected, mainly, mass, mg | 无 | candidate_gap |
 | 4.4 outcome 3 | concept_and_skill | 33 | plane, acceleration, moving, motion, on, particle, while, constant | 匀加速运动 (mat_kin_constant，已抽样核验) | candidate_partial |
 | 4.5 outcome 1 | concept_and_skill | 33 | force, done, work, application, calculate, concept, constant, cos | 功、能、功率 (mat_work_energy_power，已抽样核验) | candidate_partial |
 | 4.5 outcome 2 | concept | 33 | energy, appropriate, concepts, formulae, gravitational, kinetic, potential | 功、能、功率 (mat_work_energy_power，已抽样核验) | candidate_partial |
@@ -141,16 +137,11 @@
 | 6.1 outcome 4 | concept | 37 | distribution, appropriate, approximately, approximation, binomial, conditions, known, large | 泊松分布 (mat_poisson，已抽样核验) | candidate_partial |
 | 6.1 outcome 5 | concept | 37 | distribution, appropriate, approximately, approximation, condition, continuity, correction, known | 正态近似 (mat_normal_approx，已抽样核验) | candidate_partial |
 | 6.2 outcome 1 | concept | 37 | ax, var, distribution, has, if, independent, normal, then | 离散随机变量 (mat_discrete_rv，已抽样核验) | candidate_partial |
-| 6.3 outcome 1 | concept | 38 | density, concept, continuous, defined, domain, function, functions, infinite | 无 | candidate_gap |
-| 6.3 outcome 2 | concept_and_skill | 38 | distribution, function, density, probability, area, calculate, consideration, cumulative | 无 | candidate_gap |
 | 6.4 outcome 1 | concept | 38 | appreciate, between, choosing, distinction, necessity, population, randomness, sample | 抽样 (mat_sampling，已抽样核验) | candidate_partial |
 | 6.4 outcome 2 | concept | 38 | sampling, random, elementary, given, knowledge, method, methods, numbers | 抽样 (mat_sampling，已抽样核验) | candidate_partial |
 | 6.4 outcome 3 | concept | 38 | can, facts, mean, random, recognise, regarded, sample, var | 抽样 (mat_sampling，已抽样核验) | candidate_partial |
 | 6.4 outcome 4 | concept | 38 | distribution, has, normal, fact, if | 正态分布 (mat_normal_dist，已抽样核验) | candidate_partial |
 | 6.4 outcome 5 | concept | 38 | central, limit, sample, theorem, appropriate, approximately, clt, distribution | 抽样 (mat_sampling，已抽样核验) | candidate_partial |
-| 6.4 outcome 6 | concept_and_skill | 38 | estimate, unbiased, accurate, although, average, calculate, data, either | 无 | candidate_gap |
-| 6.4 outcome 7 | concept | 38 | population, where, cases, confidence, distributed, interpret, interval, known | 无 | candidate_gap |
-| 6.4 outcome 8 | concept | 38 | approximate, confidence, interval, large, population, proportion, sample | 无 | candidate_gap |
 | 6.5 outcome 1 | concept | 39 | hypothesis, region, tailed, terms, test, tests, acceptance, alternative | 假设检验 (mat_hypothesis，已抽样核验) | candidate_partial |
 | 6.5 outcome 2 | concept | 39 | binomial, distribution, poisson, appropriate, approximation, carry, context, direct | 假设检验 (mat_hypothesis，已抽样核验) | candidate_partial |
 | 6.5 outcome 3 | concept | 39 | population, where, carry, cases, concerning, distributed, formulate, hypotheses | 假设检验 (mat_hypothesis，已抽样核验) | candidate_partial |

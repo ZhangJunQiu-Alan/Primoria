@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.2.0",
   "graph_id": "a_level_biology",
   "subject": "Biology",
   "jurisdictions": [
@@ -9,12 +9,22 @@
   "source_ids": [
     "src_cambridge_9700_2025_2027"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "人工批准并应用 34 项 Concept 缺口和 33 项 Skill 映射：新增 25 个 Concept，定向扩充 3 个旧 Concept，重排为 34 个 Topic。"
+    },
+    {
+      "version": "1.2.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -25,58 +35,210 @@
       "name_zh": "显微镜与真核细胞器",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; syllabus section 1.1 The microscope in cell studies"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15,16; syllabus section 1.2 Cells as the basic units of living organisms"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; syllabus section 10.1 Infectious diseases"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33,34; syllabus section 12.2 Respiration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_cell_structure_bio_prokaryotes",
       "kind": "topic",
-      "name": "Prokaryotic Cells and Cell Size and Magnification",
-      "name_zh": "原核细胞与细胞大小与放大",
+      "name": "Prokaryotic Cells, Viruses and Cell Scale",
+      "name_zh": "原核细胞、病毒与细胞尺度",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; syllabus section 1.1 The microscope in cell studies"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15,16; syllabus section 1.2 Cells as the basic units of living organisms"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21,22; syllabus section 4.2 Movement into and out of cells"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; syllabus section 5.1 Replication and division of nuclei and cells"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_molecules",
       "kind": "topic",
-      "name": "Water and Carbohydrates",
-      "name_zh": "水与碳水化合物",
+      "name": "Water, Monomers and Carbohydrates",
+      "name_zh": "水、单体与碳水化合物",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; syllabus section 2.1 Testing for biological molecules"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17,18; syllabus section 2.2 Carbohydrates and lipids"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.19; syllabus section 2.4 Water"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; syllabus section 17.2 Natural and artificial selection"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_molecules_bio_lipids",
       "kind": "topic",
-      "name": "Lipids, Proteins, and Biochemical Tests",
-      "name_zh": "脂质、蛋白质与生化检测",
+      "name": "Lipids, Proteins and Collagen",
+      "name_zh": "脂质、蛋白质与胶原",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; syllabus section 2.1 Testing for biological molecules"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17,18; syllabus section 2.2 Carbohydrates and lipids"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.3 Proteins"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; syllabus section 4.1 Fluid mosaic membranes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_enzymes",
       "kind": "topic",
-      "name": "Enzymes",
-      "name_zh": "酶",
+      "name": "Biochemical Tests and Enzyme Action",
+      "name_zh": "生化检测与酶作用",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; syllabus section 2.1 Testing for biological molecules"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.1 Mode of action of enzymes"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.2 Factors that affect enzyme action"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; syllabus section 12.1 Energy"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_enzyme_kinetics",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.2 Factors that affect enzyme action"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; syllabus section 10.2 Antibiotics"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.36; syllabus section 13.2 Investigation of limiting factors"
+        }
+      ],
+      "review_status": "approved",
+      "name": "Enzyme Activity, Kinetics and Inhibition",
+      "name_zh": "酶活性、动力学与抑制",
+      "default_order": 6
     },
     {
       "id": "bio_membranes",
       "kind": "topic",
-      "name": "Cell Membranes and Transport",
-      "name_zh": "细胞膜与运输",
+      "name": "Membranes, Passive Transport and Exchange Scale",
+      "name_zh": "膜、被动运输与交换尺度",
       "topic": null,
-      "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 7,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15,16; syllabus section 1.2 Cells as the basic units of living organisms"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; syllabus section 4.1 Fluid mosaic membranes"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21,22; syllabus section 4.2 Movement into and out of cells"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; syllabus section 5.2 Chromosome behaviour in mitosis"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_cell_energy_transport",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; syllabus section 1.1 The microscope in cell studies"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21,22; syllabus section 4.2 Movement into and out of cells"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; syllabus section 7.1 Structure of transport tissues"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; syllabus section 7.2 Transport mechanisms"
+        }
+      ],
+      "review_status": "approved",
+      "name": "ATP and Energy-Dependent Transport",
+      "name_zh": "ATP 与能量依赖运输",
+      "default_order": 8
     },
     {
       "id": "bio_chromosomes_dna",
@@ -84,19 +246,49 @@
       "name": "Chromosome Behaviour and Mitosis",
       "name_zh": "染色体行为与有丝分裂",
       "topic": null,
-      "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 9,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.3 Proteins"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; syllabus section 4.1 Fluid mosaic membranes"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; syllabus section 5.1 Replication and division of nuclei and cells"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; syllabus section 5.2 Chromosome behaviour in mitosis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_chromosomes_dna_bio_dna_structure",
       "kind": "topic",
-      "name": "DNA Structure and DNA Replication",
-      "name_zh": "DNA结构与DNA复制",
+      "name": "DNA, RNA and DNA Replication",
+      "name_zh": "DNA、RNA 与 DNA 复制",
       "topic": null,
-      "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 10,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; syllabus section 5.1 Replication and division of nuclei and cells"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; syllabus section 6.1 Structure of nucleic acids and replication of DNA"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24,25; syllabus section 6.2 Protein synthesis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_nucleic_acids",
@@ -104,9 +296,26 @@
       "name": "Nucleic Acids and Protein Synthesis",
       "name_zh": "核酸与蛋白质合成",
       "topic": null,
-      "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 11,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; syllabus section 6.1 Structure of nucleic acids and replication of DNA"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24,25; syllabus section 6.2 Protein synthesis"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; syllabus section 12.1 Energy"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41,42; syllabus section 16.2 The roles of genes in determining the phenotype"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_transport_plants",
@@ -114,9 +323,26 @@
       "name": "Transport in Plants",
       "name_zh": "植物运输",
       "topic": null,
-      "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 12,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.19; syllabus section 2.4 Water"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; syllabus section 7.1 Structure of transport tissues"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; syllabus section 7.2 Transport mechanisms"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; syllabus section 8.2 Transport of oxygen and carbon dioxide"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_circulation_gas_exchange",
@@ -124,39 +350,118 @@
       "name": "The Heart and Blood Vessels",
       "name_zh": "心脏与血管",
       "topic": null,
-      "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 13,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; syllabus section 8.1 The circulatory system"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; syllabus section 8.3 The heart"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; syllabus section 11.2 Antibodies and vaccination"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35,36; syllabus section 13.1 Photosynthesis as an energy transfer process"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_circulation_gas_exchange_bio_haemoglobin",
       "kind": "topic",
-      "name": "Haemoglobin and Oxygen Transport and Gas Exchange in the Lungs",
-      "name_zh": "血红蛋白与氧气运输与肺部气体交换",
+      "name": "Haemoglobin, Carbon Dioxide Transport and Gas Exchange",
+      "name_zh": "血红蛋白、二氧化碳运输与气体交换",
       "topic": null,
-      "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 14,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; syllabus section 7.2 Transport mechanisms"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; syllabus section 8.2 Transport of oxygen and carbon dioxide"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.29; syllabus section 9.1 The gas exchange system"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.36; syllabus section 13.2 Investigation of limiting factors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_disease",
       "kind": "topic",
-      "name": "Infectious Disease and Immunity",
-      "name_zh": "传染病与免疫",
+      "name": "Infectious Disease and Antibiotics",
+      "name_zh": "传染病与抗生素",
       "topic": null,
-      "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 15,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.1 Mode of action of enzymes"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; syllabus section 10.1 Infectious diseases"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; syllabus section 10.2 Antibiotics"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_immunity",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.1 Mode of action of enzymes"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; syllabus section 10.1 Infectious diseases"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; syllabus section 11.1 The immune system"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; syllabus section 11.2 Antibodies and vaccination"
+        }
+      ],
+      "review_status": "approved",
+      "name": "Immune Responses, Antibodies and Vaccination",
+      "name_zh": "免疫应答、抗体与疫苗接种",
+      "default_order": 16
     },
     {
       "id": "bio_respiration",
       "kind": "topic",
-      "name": "Glycolysis and Link Reaction and Krebs Cycle",
-      "name_zh": "糖酵解与连接反应与Krebs循环",
+      "name": "Respiratory Quotient, Glycolysis and the Krebs Cycle",
+      "name_zh": "呼吸商、糖酵解与 Krebs 循环",
       "topic": null,
-      "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 17,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33,34; syllabus section 12.2 Respiration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_respiration_bio_oxidative",
@@ -164,39 +469,168 @@
       "name": "Oxidative Phosphorylation and Anaerobic Respiration",
       "name_zh": "氧化磷酸化与无氧呼吸",
       "topic": null,
-      "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 18,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33,34; syllabus section 12.2 Respiration"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; syllabus section 17.2 Natural and artificial selection"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.48; syllabus section 19.3 Genetically modified organisms in agriculture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_photosynthesis",
       "kind": "topic",
-      "name": "Photosynthesis",
-      "name_zh": "光合作用",
+      "name": "Photosynthetic Pigments and Light-Dependent Reactions",
+      "name_zh": "光合色素与光依赖反应",
       "topic": null,
-      "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 19,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_photosynthesis_calvin",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.2 Factors that affect enzyme action"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.36; syllabus section 13.2 Investigation of limiting factors"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; syllabus section 14.2 Homeostasis in plants"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; syllabus section 17.1 Variation"
+        }
+      ],
+      "review_status": "approved",
+      "name": "The Calvin Cycle and Limiting Factors",
+      "name_zh": "Calvin 循环与限制因素",
+      "default_order": 20
     },
     {
       "id": "bio_homeostasis",
       "kind": "topic",
-      "name": "Homeostasis",
-      "name_zh": "体内平衡",
+      "name": "Homeostasis, the Kidney and Nitrogen Excretion",
+      "name_zh": "稳态、肾脏与含氮排泄",
       "topic": null,
-      "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 21,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.3 Proteins"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.19; syllabus section 2.4 Water"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; syllabus section 11.1 The immune system"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37,38; syllabus section 14.1 Homeostasis in mammals"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_glucose_homeostasis",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17,18; syllabus section 2.2 Carbohydrates and lipids"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; syllabus section 8.1 The circulatory system"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; syllabus section 15.1 Control and coordination in mammals"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.48; syllabus section 19.2 Genetic technology applied to medicine"
+        }
+      ],
+      "review_status": "approved",
+      "name": "Blood Glucose Control and Biosensing",
+      "name_zh": "血糖调节与生物传感",
+      "default_order": 22
     },
     {
       "id": "bio_coordination",
       "kind": "topic",
-      "name": "Nervous Transmission and Synapses",
-      "name_zh": "神经传导与突触",
+      "name": "Nerve Impulses and Synapses",
+      "name_zh": "神经冲动与突触",
       "topic": null,
-      "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 23,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; syllabus section 11.1 The immune system"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_muscle_contraction",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 11"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 12"
+        }
+      ],
+      "review_status": "approved",
+      "name": "Neuromuscular Activation and Muscle Contraction",
+      "name_zh": "神经肌肉激活与肌肉收缩",
+      "default_order": 24
     },
     {
       "id": "bio_coordination_bio_hormonal",
@@ -204,29 +638,99 @@
       "name": "Hormonal Control and Plant Responses",
       "name_zh": "激素控制与植物响应",
       "topic": null,
-      "default_order": 19,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 25,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; syllabus section 15.1 Control and coordination in mammals"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.40; syllabus section 15.2 Control and coordination in plants"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; syllabus section 18.3 Conservation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_inheritance",
       "kind": "topic",
-      "name": "Meiosis and Genetic Crosses",
-      "name_zh": "减数分裂与遗传杂交",
+      "name": "Meiosis, Genetic Crosses and Linkage",
+      "name_zh": "减数分裂、遗传杂交与连锁",
       "topic": null,
-      "default_order": 20,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 26,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; syllabus section 16.1 Passage of information from parents to offspring"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41,42; syllabus section 16.2 The roles of genes in determining the phenotype"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; syllabus section 17.1 Variation"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.44; syllabus section 17.3 Evolution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_inheritance_bio_linkage",
       "kind": "topic",
-      "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
-      "name_zh": "基因连锁与交换与基因表达控制",
+      "name": "Eukaryotic and Prokaryotic Gene Regulation",
+      "name_zh": "真核与原核基因表达调控",
       "topic": null,
-      "default_order": 21,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 27,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; syllabus section 10.2 Antibiotics"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; syllabus section 15.1 Control and coordination in mammals"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.40; syllabus section 15.2 Control and coordination in plants"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; syllabus section 16.3 Gene control"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_biostatistics",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; 18.2 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "name": "Statistical Inference in Biology",
+      "name_zh": "生物统计推断",
+      "default_order": 29
     },
     {
       "id": "bio_evolution",
@@ -234,19 +738,99 @@
       "name": "Selection and Evolution",
       "name_zh": "选择与进化",
       "topic": null,
-      "default_order": 22,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 28,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; syllabus section 17.1 Variation"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; syllabus section 17.2 Natural and artificial selection"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.44; syllabus section 17.3 Evolution"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; syllabus section 18.3 Conservation"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_population_genetics_breeding",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; syllabus section 16.1 Passage of information from parents to offspring"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41,42; syllabus section 16.2 The roles of genes in determining the phenotype"
+        }
+      ],
+      "review_status": "approved",
+      "name": "Population Genetics and Selective Breeding",
+      "name_zh": "群体遗传与选择育种",
+      "default_order": 30
+    },
+    {
+      "id": "bio_ecology_classification",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; syllabus section 8.1 The circulatory system"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.29; syllabus section 9.1 The gas exchange system"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; syllabus section 18.1 Classification"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45,46; syllabus section 18.2 Biodiversity"
+        }
+      ],
+      "review_status": "approved",
+      "name": "Ecosystems, Niches and Classification",
+      "name_zh": "生态系统、生态位与分类",
+      "default_order": 31
     },
     {
       "id": "bio_biodiversity",
       "kind": "topic",
-      "name": "Biodiversity and Conservation",
-      "name_zh": "生物多样性与保护",
+      "name": "Biodiversity Sampling and Conservation",
+      "name_zh": "生物多样性调查与保护",
       "topic": null,
-      "default_order": 23,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 32,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37,38; syllabus section 14.1 Homeostasis in mammals"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; syllabus section 18.1 Classification"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45,46; syllabus section 18.2 Biodiversity"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; syllabus section 18.3 Conservation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_genetic_tech",
@@ -254,9 +838,45 @@
       "name": "Genetic Technology",
       "name_zh": "遗传技术",
       "topic": null,
-      "default_order": 24,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 33,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24,25; syllabus section 6.2 Protein synthesis"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; syllabus section 16.3 Gene control"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; syllabus section 19.1 Principles of genetic technology"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.48; syllabus section 19.2 Genetic technology applied to medicine"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_genomics_bioinformatics",
+      "kind": "topic",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 11"
+        }
+      ],
+      "review_status": "approved",
+      "name": "Genomic Analysis and Bioinformatics",
+      "name_zh": "基因组分析与生物信息学",
+      "default_order": 34
     },
     {
       "id": "bio_microscopy",
@@ -268,8 +888,25 @@
       "description": "The use of light and electron microscopes to view cells, where resolution—the ability to distinguish two close points—and magnification determine the detail observable.",
       "default_order": 1,
       "centrality": 0.1233,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_organelles",
@@ -281,8 +918,25 @@
       "description": "Membrane-bound and non-membrane structures within eukaryotic cells, such as the nucleus, mitochondria, and endoplasmic reticulum, each performing specialised functions.",
       "default_order": 2,
       "centrality": 0.1159,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 9"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_prokaryotes",
@@ -294,8 +948,21 @@
       "description": "Bacterial cells lacking a nucleus and membrane-bound organelles, with circular DNA, smaller ribosomes, and a cell wall, contrasted with eukaryotic cells.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_cell_size",
@@ -305,10 +972,15 @@
       "name_zh": "细胞大小与放大",
       "topic": "bio_cell_structure_bio_prokaryotes",
       "description": "Calculating actual cell size, magnification, and image size using the relationship that magnification equals image size divided by actual size, with consistent units.",
-      "default_order": 2,
+      "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_water",
@@ -320,8 +992,17 @@
       "description": "The properties of water arising from its polarity and hydrogen bonding, including its role as a solvent, high specific heat capacity, and cohesion important to life.",
       "default_order": 1,
       "centrality": 0.1373,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.19; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_carbohydrates",
@@ -331,10 +1012,27 @@
       "name_zh": "碳水化合物",
       "topic": "bio_molecules",
       "description": "Sugars and polysaccharides built from monosaccharides via glycosidic bonds, including glucose, starch, glycogen, and cellulose, serving energy and structural roles.",
-      "default_order": 2,
+      "default_order": 3,
       "centrality": 0.2648,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_lipids",
@@ -346,8 +1044,25 @@
       "description": "Hydrophobic molecules including triglycerides for energy storage and phospholipids whose amphipathic structure forms the bilayer of cell membranes.",
       "default_order": 1,
       "centrality": 0.27,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 11"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_proteins",
@@ -359,8 +1074,25 @@
       "description": "Polymers of amino acids joined by peptide bonds, folding through primary, secondary, tertiary, and quaternary structure that determines their biological function.",
       "default_order": 2,
       "centrality": 0.3728,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_tests",
@@ -368,12 +1100,29 @@
       "kind": "concept",
       "name": "Biochemical Tests",
       "name_zh": "生化检测",
-      "topic": "bio_molecules_bio_lipids",
+      "topic": "bio_enzymes",
       "description": "Qualitative biochemical tests identifying biological molecules, such as Benedict's for reducing sugars, iodine for starch, biuret for protein, and the emulsion test for lipids.",
-      "default_order": 3,
+      "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_enzyme_action",
@@ -383,12 +1132,29 @@
       "name_zh": "酶作用",
       "topic": "bio_enzymes",
       "description": "Enzymes as biological catalysts lowering activation energy, binding substrates at their active site according to the induced-fit model to form products.",
-      "default_order": 1,
+      "default_order": 2,
       "centrality": 0.1392,
       "visual": "interactive",
       "visual_hint": "Drag a substrate into the active site; show activation energy lowered on a reaction profile.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_enzyme_factors",
@@ -396,14 +1162,19 @@
       "kind": "concept",
       "name": "Factors Affecting Enzyme Activity",
       "name_zh": "影响酶活性的因素",
-      "topic": "bio_enzymes",
+      "topic": "bio_enzyme_kinetics",
       "description": "How temperature, pH, substrate concentration, and enzyme concentration affect the rate of enzyme-catalysed reactions, including denaturation at extremes.",
-      "default_order": 2,
+      "default_order": 1,
       "centrality": 0.0459,
       "visual": "function",
       "visual_hint": "Plot enzyme activity against temperature, pH, and substrate concentration.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_enzyme_inhibition",
@@ -411,12 +1182,17 @@
       "kind": "concept",
       "name": "Enzyme Inhibition",
       "name_zh": "酶抑制",
-      "topic": "bio_enzymes",
+      "topic": "bio_enzyme_kinetics",
       "description": "Reduction of enzyme activity by inhibitors, with competitive inhibitors binding the active site and non-competitive inhibitors binding elsewhere to alter it.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_membrane_structure",
@@ -430,8 +1206,25 @@
       "centrality": 0.2042,
       "visual": "diagram",
       "visual_hint": "Labelled fluid-mosaic diagram of the phospholipid bilayer and membrane proteins.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_passive_transport",
@@ -445,8 +1238,25 @@
       "centrality": 0.1662,
       "visual": "interactive",
       "visual_hint": "Animate particles diffusing down a concentration gradient across a membrane.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.22; 4.2 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_active_transport",
@@ -454,12 +1264,25 @@
       "kind": "concept",
       "name": "Active Transport",
       "name_zh": "主动运输",
-      "topic": "bio_membranes",
+      "topic": "bio_cell_energy_transport",
       "description": "Movement of substances against a concentration gradient using ATP and carrier proteins, including bulk transport by endocytosis and exocytosis.",
-      "default_order": 3,
+      "default_order": 2,
       "centrality": 0.0779,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_chromosomes",
@@ -471,8 +1294,25 @@
       "description": "The structure of chromosomes as DNA wound around histone proteins, and their replication and condensation in preparation for nuclear division.",
       "default_order": 1,
       "centrality": 0.0769,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_mitosis",
@@ -481,13 +1321,30 @@
       "name": "Mitosis",
       "name_zh": "有丝分裂",
       "topic": "bio_chromosomes_dna",
-      "description": "Nuclear division producing two genetically identical daughter cells through prophase, metaphase, anaphase, and telophase, underlying growth and repair.",
+      "description": "Nuclear division producing genetically identical daughter cells through the mitotic cell cycle, supporting growth, repair and asexual reproduction; loss of cell-cycle control can cause repeated division and tumour formation.",
       "default_order": 2,
       "centrality": 0.1227,
       "visual": "diagram",
       "visual_hint": "Diagram the stages of mitosis.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_dna_structure",
@@ -501,8 +1358,21 @@
       "centrality": 0.19,
       "visual": "interactive",
       "visual_hint": "Interactive double helix showing antiparallel strands and complementary base pairing.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_dna_replication",
@@ -512,12 +1382,29 @@
       "name_zh": "DNA复制",
       "topic": "bio_chromosomes_dna_bio_dna_structure",
       "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
-      "default_order": 2,
+      "default_order": 3,
       "centrality": 0.1034,
       "visual": "diagram",
       "visual_hint": "Diagram semi-conservative replication unwinding and templating each strand.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_transcription",
@@ -531,8 +1418,25 @@
       "centrality": 0.0812,
       "visual": "diagram",
       "visual_hint": "Diagram RNA polymerase synthesising mRNA from the template strand.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_translation",
@@ -546,8 +1450,25 @@
       "centrality": 0.0539,
       "visual": "diagram",
       "visual_hint": "Diagram the ribosome matching tRNA anticodons to mRNA codons to build a polypeptide.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_mutation",
@@ -559,8 +1480,21 @@
       "description": "Changes to the DNA base sequence, such as substitutions, insertions, and deletions, which may alter the resulting protein and the phenotype.",
       "default_order": 3,
       "centrality": 0.0685,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.2 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_xylem",
@@ -572,8 +1506,25 @@
       "description": "The transport of water and mineral ions upward through dead, lignified xylem vessels, driven by transpiration pull via the cohesion-tension mechanism.",
       "default_order": 1,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_transpiration",
@@ -585,8 +1536,25 @@
       "description": "The loss of water vapour from leaves through stomata, and the effect of light, temperature, humidity, and air movement on its rate.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.2 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_phloem",
@@ -598,8 +1566,25 @@
       "description": "The translocation of sucrose and other assimilates through living phloem sieve tubes from sources to sinks by pressure flow.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_heart",
@@ -613,8 +1598,25 @@
       "centrality": 0.0548,
       "visual": "diagram",
       "visual_hint": "Labelled heart diagram showing the flow of the cardiac cycle.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.3 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_blood_vessels",
@@ -626,8 +1628,25 @@
       "description": "The structure and function of arteries, veins, and capillaries, whose walls suit carrying blood at different pressures and exchanging materials.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_haemoglobin",
@@ -641,8 +1660,25 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Plot the sigmoid oxygen dissociation curve and the Bohr shift.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_lungs",
@@ -652,10 +1688,27 @@
       "name_zh": "肺部气体交换",
       "topic": "bio_circulation_gas_exchange_bio_haemoglobin",
       "description": "Gas exchange in the alveoli, whose large, thin, moist surface and rich blood supply maximise diffusion of oxygen and carbon dioxide.",
-      "default_order": 2,
+      "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.29; 9.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.29; 9.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.29; 9.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.29; 9.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_infectious",
@@ -667,8 +1720,25 @@
       "description": "Diseases caused by pathogens such as bacteria, viruses, fungi, and protoctists, and the ways they are transmitted between hosts.",
       "default_order": 1,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_immune_response",
@@ -676,12 +1746,29 @@
       "kind": "concept",
       "name": "Immune Response",
       "name_zh": "免疫应答",
-      "topic": "bio_disease",
+      "topic": "bio_immunity",
       "description": "The body's defence against pathogens through phagocytes engulfing invaders and lymphocytes mounting specific cell-mediated and humoral responses.",
-      "default_order": 2,
+      "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_antibodies",
@@ -689,12 +1776,29 @@
       "kind": "concept",
       "name": "Antibodies and Vaccination",
       "name_zh": "抗体与疫苗接种",
-      "topic": "bio_disease",
+      "topic": "bio_immunity",
       "description": "Antibodies as proteins binding specific antigens to neutralise pathogens, and vaccination conferring active immunity through memory cells.",
-      "default_order": 3,
+      "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_glycolysis",
@@ -704,12 +1808,29 @@
       "name_zh": "糖酵解",
       "topic": "bio_respiration",
       "description": "The cytoplasmic breakdown of glucose into pyruvate, producing a small net yield of ATP and reduced NAD without requiring oxygen.",
-      "default_order": 1,
+      "default_order": 2,
       "centrality": 0.0887,
       "visual": "diagram",
       "visual_hint": "Flow diagram of glycolysis from glucose to pyruvate.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.34; 12.2 outcome 13"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_krebs",
@@ -719,12 +1840,29 @@
       "name_zh": "连接反应与Krebs循环",
       "topic": "bio_respiration",
       "description": "The link reaction converting pyruvate to acetyl coenzyme A, and the Krebs cycle oxidising it to release carbon dioxide and reduced coenzymes.",
-      "default_order": 2,
+      "default_order": 3,
       "centrality": 0.0628,
       "visual": "diagram",
       "visual_hint": "Cycle diagram of the link reaction and Krebs cycle.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_oxidative",
@@ -738,8 +1876,25 @@
       "centrality": 0.0895,
       "visual": "diagram",
       "visual_hint": "Diagram the electron transport chain and chemiosmosis.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 8"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_anaerobic",
@@ -751,8 +1906,25 @@
       "description": "Respiration without oxygen, regenerating NAD through lactate fermentation in animals or ethanol fermentation in yeast and plants, yielding little ATP.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.34; 12.2 outcome 11"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.34; 12.2 outcome 12"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.34; 12.2 outcome 13"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_light_dependent",
@@ -762,12 +1934,29 @@
       "name_zh": "光依赖反应",
       "topic": "bio_photosynthesis",
       "description": "The light-dependent reactions in the thylakoids capturing light to produce ATP and reduced NADP while splitting water to release oxygen.",
-      "default_order": 1,
+      "default_order": 2,
       "centrality": 0.0638,
       "visual": "diagram",
       "visual_hint": "Diagram the light-dependent reactions in the thylakoid.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_calvin",
@@ -775,14 +1964,31 @@
       "kind": "concept",
       "name": "Calvin Cycle",
       "name_zh": "Calvin循环",
-      "topic": "bio_photosynthesis",
+      "topic": "bio_photosynthesis_calvin",
       "description": "The Calvin cycle in the stroma fixing carbon dioxide using ATP and reduced NADP to synthesise carbohydrate via the enzyme RuBisCO.",
-      "default_order": 2,
+      "default_order": 1,
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Cycle diagram of the Calvin cycle fixing carbon dioxide.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.36; 13.1 outcome 11"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_limiting_factors",
@@ -790,12 +1996,29 @@
       "kind": "concept",
       "name": "Limiting Factors",
       "name_zh": "限制因素",
-      "topic": "bio_photosynthesis",
+      "topic": "bio_photosynthesis_calvin",
       "description": "Environmental factors such as light intensity, carbon dioxide concentration, and temperature that limit the overall rate of photosynthesis.",
-      "default_order": 3,
+      "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.36; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.36; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.36; 13.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.36; 13.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_homeostasis_principles",
@@ -807,8 +2030,17 @@
       "description": "The maintenance of a stable internal environment through negative feedback, where deviations from set points trigger corrective responses.",
       "default_order": 1,
       "centrality": 0.0848,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_kidney",
@@ -822,8 +2054,25 @@
       "centrality": 0.0353,
       "visual": "diagram",
       "visual_hint": "Labelled nephron diagram showing ultrafiltration and reabsorption.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 7"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_glucose_control",
@@ -831,12 +2080,25 @@
       "kind": "concept",
       "name": "Control of Blood Glucose",
       "name_zh": "血糖控制",
-      "topic": "bio_homeostasis",
+      "topic": "bio_glucose_homeostasis",
       "description": "Regulation of blood glucose by insulin and glucagon from the pancreas, and the disruption of this control in diabetes mellitus.",
-      "default_order": 3,
+      "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.1 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_nervous",
@@ -850,8 +2112,25 @@
       "centrality": 0.0624,
       "visual": "function",
       "visual_hint": "Plot the action-potential membrane voltage over time.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_synapses",
@@ -865,8 +2144,13 @@
       "centrality": 0.0443,
       "visual": "diagram",
       "visual_hint": "Diagram neurotransmitter release and receptor binding at a synapse.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 9"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_hormonal",
@@ -878,8 +2162,25 @@
       "description": "Endocrine coordination in which hormones secreted by glands travel in the blood to target cells, producing slower, longer-lasting responses.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 8"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_plant_responses",
@@ -888,11 +2189,28 @@
       "name": "Plant Responses",
       "name_zh": "植物响应",
       "topic": "bio_coordination_bio_hormonal",
-      "description": "Plant responses to stimuli, including tropisms controlled by auxin and other growth regulators that direct growth toward or away from stimuli.",
+      "description": "Plant responses include auxin-controlled tropisms and gibberellin in barley germination; gibberellin can activate transcription by causing degradation of DELLA repressor proteins.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.40; 15.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.40; 15.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.40; 15.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.2 outcome 7"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_meiosis",
@@ -906,8 +2224,25 @@
       "centrality": 0.1151,
       "visual": "diagram",
       "visual_hint": "Diagram meiosis producing four haploid gametes, including crossing over.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_genetic_crosses",
@@ -921,8 +2256,25 @@
       "centrality": 0.0548,
       "visual": "diagram",
       "visual_hint": "Punnett-square diagram predicting offspring genotype ratios.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_linkage",
@@ -930,12 +2282,25 @@
       "kind": "concept",
       "name": "Gene Linkage and Crossing Over",
       "name_zh": "基因连锁与交换",
-      "topic": "bio_inheritance_bio_linkage",
+      "topic": "bio_inheritance",
       "description": "Genes on the same chromosome inherited together as linked genes, with crossing over producing recombinants at a frequency reflecting their distance.",
-      "default_order": 1,
+      "default_order": 3,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_gene_control",
@@ -945,10 +2310,23 @@
       "name_zh": "基因表达控制",
       "topic": "bio_inheritance_bio_linkage",
       "description": "The regulation of gene expression in eukaryotes, including transcriptional control and the role of regulatory proteins in switching genes on and off.",
-      "default_order": 2,
+      "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.3 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_variation",
@@ -960,8 +2338,25 @@
       "description": "Genetic and environmental variation among individuals, with continuous and discontinuous variation arising from genes, environment, and their interaction.",
       "default_order": 1,
       "centrality": 0.1029,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_natural_selection",
@@ -973,8 +2368,25 @@
       "description": "Differential survival and reproduction of individuals with advantageous alleles, changing allele frequencies in a population over generations.",
       "default_order": 2,
       "centrality": 0.0919,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_speciation",
@@ -986,8 +2398,17 @@
       "description": "The formation of new species when populations become reproductively isolated, allowing them to diverge through allopatric or sympatric mechanisms.",
       "default_order": 3,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.44; 17.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.44; 17.3 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_classification",
@@ -995,14 +2416,31 @@
       "kind": "concept",
       "name": "Classification",
       "name_zh": "分类",
-      "topic": "bio_biodiversity",
+      "topic": "bio_ecology_classification",
       "description": "The hierarchical classification of organisms into taxa and the three-domain system, reflecting their evolutionary relationships.",
-      "default_order": 1,
+      "default_order": 2,
       "centrality": 0.0638,
       "visual": "diagram",
       "visual_hint": "Hierarchical taxonomy tree of the classification taxa.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.44; 17.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_biodiversity_sampling",
@@ -1012,10 +2450,27 @@
       "name_zh": "生物多样性调查",
       "topic": "bio_biodiversity",
       "description": "Measuring biodiversity using random sampling and indices such as Simpson's index to quantify species richness and evenness in a habitat.",
-      "default_order": 2,
+      "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; 18.2 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_conservation",
@@ -1024,11 +2479,28 @@
       "name": "Conservation",
       "name_zh": "保护",
       "topic": "bio_biodiversity",
-      "description": "Methods of maintaining biodiversity and ecosystems, balancing human activity with the protection of species and their habitats.",
-      "default_order": 3,
+      "description": "Conservation maintains biodiversity through habitat and species protection, including assisted reproduction for endangered mammals using IVF, embryo transfer and surrogacy, with practical and genetic limitations.",
+      "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; 18.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; 18.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; 18.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; 18.3 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_gene_tech",
@@ -1040,8 +2512,25 @@
       "description": "Recombinant DNA technology cutting and joining DNA with enzymes to insert genes into vectors, enabling gene cloning and expression.",
       "default_order": 1,
       "centrality": 0.0503,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_pcr_electrophoresis",
@@ -1053,8 +2542,17 @@
       "description": "The polymerase chain reaction amplifying DNA in vitro, and gel electrophoresis separating DNA fragments by size for analysis.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 8"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 9"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bio_gene_applications",
@@ -1066,8 +2564,502 @@
       "description": "Applications of genetic technology in medicine and agriculture, including genetically modified organisms, gene therapy, and genetic screening.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.2 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.48; 19.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.48; 19.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.48; 19.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_atp_energy_currency",
+      "canonical_id": "pc_bd16e15b61962db0c5d04fea198cb45c",
+      "kind": "concept",
+      "name": "ATP and Cellular Energy Coupling",
+      "name_zh": "ATP 与细胞能量耦联",
+      "topic": "bio_cell_energy_transport",
+      "description": "ATP is the universal, immediate energy currency of cells: hydrolysis transfers a phosphate and releases manageable amounts of energy, while phosphorylation couples ATP use to energy-requiring processes and ATP can be rapidly regenerated.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_virus_structure_classification",
+      "canonical_id": "pc_a5f0cc3dc0636e18a4fef67d49bec23e",
+      "kind": "concept",
+      "name": "Virus Structure and Nucleic-Acid Classification",
+      "name_zh": "病毒结构与核酸分类",
+      "topic": "bio_cell_structure_bio_prokaryotes",
+      "description": "Viruses are non-cellular structures with a DNA or RNA core enclosed by a protein capsid, sometimes with a phospholipid envelope, and are classified by nucleic-acid type and whether it is single- or double-stranded.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 6"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_monomers_polymers",
+      "canonical_id": "pc_fa5e5c389a8f790944f2e6049357654b",
+      "kind": "concept",
+      "name": "Monomers, Polymers and Covalent Linking",
+      "name_zh": "单体、聚合物与共价连接",
+      "topic": "bio_molecules",
+      "description": "Monomers are smaller molecular units joined by covalent bonds to form polymers and other macromolecules; the specific covalent linkage depends on the class of biological molecule.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_collagen",
+      "canonical_id": "pc_11471626c86cc0bd6446e054bb89757f",
+      "kind": "concept",
+      "name": "Collagen Structure and Function",
+      "name_zh": "胶原的层级结构与功能",
+      "topic": "bio_molecules_bio_lipids",
+      "description": "Collagen is a fibrous protein whose three polypeptide chains form a rope-like molecule; collagen molecules assemble in an ordered, cross-linked arrangement into fibres with high tensile strength for structural support.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 8"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_michaelis_menten",
+      "canonical_id": "pc_d73e8ae492113d4145d983a48c98a111",
+      "kind": "concept",
+      "name": "Michaelis-Menten Kinetics",
+      "name_zh": "Michaelis–Menten 动力学",
+      "topic": "bio_enzyme_kinetics",
+      "description": "Maximum reaction rate Vmax and the Michaelis-Menten constant Km are derived from enzyme rate against substrate concentration; a lower Km indicates greater substrate affinity when enzymes are compared under equivalent conditions.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_surface_area_volume_ratio",
+      "canonical_id": "pc_a311497a8ada69679cf8442da822748c",
+      "kind": "concept",
+      "name": "Surface Area to Volume Ratio and Exchange",
+      "name_zh": "表面积体积比与交换",
+      "topic": "bio_membranes",
+      "description": "Surface area to volume ratio decreases as geometrically similar objects increase in size, constraining exchange by diffusion and motivating specialised exchange surfaces and transport systems in larger organisms.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_rna_structure",
+      "canonical_id": "pc_7c8644ecf9e964364af575d584241cf8",
+      "kind": "concept",
+      "name": "RNA and mRNA Structure",
+      "name_zh": "RNA 与 mRNA 结构",
+      "topic": "bio_chromosomes_dna_bio_dna_structure",
+      "description": "RNA is usually a single polynucleotide strand of ribose-phosphate nucleotides containing adenine, uracil, cytosine and guanine; messenger RNA presents a linear codon sequence used in protein synthesis.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_carbon_dioxide_transport",
+      "canonical_id": "pc_c9fd444d9acfb11faef011f5755c1418",
+      "kind": "concept",
+      "name": "Carbon Dioxide Transport and the Chloride Shift",
+      "name_zh": "二氧化碳运输与氯离子转移",
+      "topic": "bio_circulation_gas_exchange_bio_haemoglobin",
+      "description": "Carbon dioxide is transported dissolved in plasma, as hydrogencarbonate ions and bound as carbaminohaemoglobin; carbonic anhydrase in red blood cells and the chloride shift support hydrogencarbonate formation and charge balance.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.2 outcome 6"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_antibiotics",
+      "canonical_id": "pc_cd2b7974451c31f7abce21cc90110697",
+      "kind": "concept",
+      "name": "Selective Action of Antibiotics",
+      "name_zh": "抗生素的选择性作用",
+      "topic": "bio_disease",
+      "description": "Penicillin inhibits bacterial peptidoglycan cell-wall formation, whereas viruses lack this target and replicate using host-cell machinery, so antibiotics do not act on viral infections.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_respiratory_quotient",
+      "canonical_id": "pc_ed98208fe11f1d3e0cce7a19f5270c45",
+      "kind": "concept",
+      "name": "Respiratory Quotient",
+      "name_zh": "呼吸商",
+      "topic": "bio_respiration",
+      "description": "Respiratory quotient is the ratio of carbon dioxide molecules produced to oxygen molecules consumed, and can be calculated from respiratory equations to distinguish carbohydrate, lipid and protein substrates.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 7"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_photosynthetic_pigments_spectra",
+      "canonical_id": "pc_977c5f3889a072ba8904338b9ddf03a7",
+      "kind": "concept",
+      "name": "Photosynthetic Pigments and Spectra",
+      "name_zh": "光合色素与光谱",
+      "topic": "bio_photosynthesis",
+      "description": "Absorption spectra show wavelengths absorbed by chloroplast pigments while an action spectrum shows photosynthetic effectiveness by wavelength, allowing the contributions of chlorophylls and accessory pigments to be interpreted.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 6"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_deamination_urea",
+      "canonical_id": "pc_836539cc28f32764f290b41af21471dc",
+      "kind": "concept",
+      "name": "Deamination and Urea Formation",
+      "name_zh": "脱氨与尿素形成",
+      "topic": "bio_homeostasis",
+      "description": "Excess amino acids are deaminated in the liver and their nitrogen is converted into urea, a less toxic soluble compound that is transported to the kidneys for excretion.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_glucose_biosensors",
+      "canonical_id": "pc_741be376203b33aa29b3da95c147223e",
+      "kind": "concept",
+      "name": "Glucose Test Strips and Biosensors",
+      "name_zh": "葡萄糖试纸与生物传感器",
+      "topic": "bio_glucose_homeostasis",
+      "description": "Glucose test strips and biosensors use glucose oxidase and peroxidase to generate a concentration-dependent colour or transduced signal for measuring glucose in blood or urine.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.1 outcome 11"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_aba_stomatal_closure",
+      "canonical_id": "pc_e8352e234d2f8fb344dafcdbd894f99e",
+      "kind": "concept",
+      "name": "ABA Signalling and Stomatal Closure",
+      "name_zh": "ABA 与气孔关闭",
+      "topic": "bio_coordination_bio_hormonal",
+      "description": "During water stress, abscisic acid signalling uses calcium ions as a second messenger to alter guard-cell ion movement, reduce guard-cell turgor and close stomata.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_neuromuscular_activation",
+      "canonical_id": "pc_847c9f7d1469b264070cc3f7651a68b1",
+      "kind": "concept",
+      "name": "Neuromuscular Activation and Excitation-Contraction Coupling",
+      "name_zh": "神经肌肉激活与兴奋—收缩耦联",
+      "topic": "bio_muscle_contraction",
+      "description": "A neuromuscular junction initiates an action potential in the muscle membrane; the impulse travels along the sarcolemma and T-tubules, causing the sarcoplasmic reticulum to release calcium ions.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 11"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_sliding_filament_contraction",
+      "canonical_id": "pc_494276c0931395240447f3ed14ae9315",
+      "kind": "concept",
+      "name": "Sarcomeres and the Sliding Filament Model",
+      "name_zh": "肌节与滑动肌丝模型",
+      "topic": "bio_muscle_contraction",
+      "description": "Striated muscle contracts as actin and myosin filaments slide within sarcomeres; calcium binds troponin, moves tropomyosin and permits ATP-driven cross-bridge cycling.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 11"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 12"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_chi_square_test",
+      "canonical_id": "pc_c19d99d4e72b2403c4a171b6d31c3c94",
+      "kind": "concept",
+      "name": "Chi-Squared Test",
+      "name_zh": "卡方检验",
+      "topic": "bio_biostatistics",
+      "description": "A chi-squared test compares observed and expected categorical frequencies, using the calculated statistic, degrees of freedom and a critical value to judge whether deviations are statistically significant.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 5"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_lac_operon",
+      "canonical_id": "pc_f8f492dd44bddf661b72393796961c7c",
+      "kind": "concept",
+      "name": "The lac Operon",
+      "name_zh": "lac 操纵子",
+      "topic": "bio_inheritance_bio_linkage",
+      "description": "The lac operon illustrates inducible prokaryotic gene control: without lactose a repressor blocks transcription at the operator, while lactose inactivates the repressor and permits structural-gene transcription; cAMP regulation is outside this syllabus scope.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.3 outcome 2"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_t_test",
+      "canonical_id": "pc_6fa5d3f2332e87d78b3cbc7db729e4fc",
+      "kind": "concept",
+      "name": "Two-Sample t-Test",
+      "name_zh": "两独立样本 t 检验",
+      "topic": "bio_biostatistics",
+      "description": "A two-sample t-test compares the means of two independent samples, using the supplied formula, degrees of freedom and critical value to assess whether their difference is statistically significant.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_hardy_weinberg",
+      "canonical_id": "pc_f0a830e611bfffffd41f5757e75d4804",
+      "kind": "concept",
+      "name": "Hardy-Weinberg Principle",
+      "name_zh": "Hardy–Weinberg 原理",
+      "topic": "bio_population_genetics_breeding",
+      "description": "The Hardy-Weinberg equations p + q = 1 and p² + 2pq + q² = 1 relate allele and genotype frequencies when the population is large, mating is random and selection, mutation and migration do not change allele frequencies.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.2 outcome 5"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_selective_breeding",
+      "canonical_id": "pc_0bd550531981771a371395e5a07a3dbd",
+      "kind": "concept",
+      "name": "Selective Breeding",
+      "name_zh": "选择育种",
+      "topic": "bio_population_genetics_breeding",
+      "description": "Selective breeding repeatedly chooses parents with desired phenotypes and uses inbreeding or hybridisation, illustrated by disease-resistant cereals, vigorous uniform maize and increased milk yield in dairy cattle.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.2 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.2 outcome 7"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_ecosystems_niches",
+      "canonical_id": "pc_ecfaff613c7086e0cece6014f44b68ba",
+      "kind": "concept",
+      "name": "Ecosystems and Ecological Niches",
+      "name_zh": "生态系统与生态位",
+      "topic": "bio_ecology_classification",
+      "description": "An ecosystem comprises a community and its interactions with the abiotic environment, while a species' niche is its role, resource use and environmental requirements within that ecosystem.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_correlation_tests",
+      "canonical_id": "pc_36accdd741466f0aec58630c1ae3ea63",
+      "kind": "concept",
+      "name": "Spearman and Pearson Correlation",
+      "name_zh": "Spearman 与 Pearson 相关检验",
+      "topic": "bio_biostatistics",
+      "description": "Spearman's rank correlation and Pearson's linear correlation analyse relationships between two variables, with the sign and magnitude of the coefficient describing correlation direction and strength.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; 18.2 outcome 5"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_microarrays",
+      "canonical_id": "pc_095528b74ad784ace982978c2ca8da1a",
+      "kind": "concept",
+      "name": "DNA Microarrays",
+      "name_zh": "DNA 微阵列",
+      "topic": "bio_genomics_bioinformatics",
+      "description": "DNA microarrays use hybridisation of labelled nucleic acids to probe arrays, with signal patterns supporting genome comparison or detection of messenger RNA in gene-expression studies.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 10"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "bio_bioinformatics_databases",
+      "canonical_id": "pc_4791da912983a17b9474706ebf55d28a",
+      "kind": "concept",
+      "name": "Sequence Databases and Bioinformatics",
+      "name_zh": "序列数据库与生物信息学",
+      "topic": "bio_genomics_bioinformatics",
+      "description": "Databases of gene and genome nucleotide sequences, protein amino-acid sequences and protein structures enable comparison, functional inference, evolutionary analysis and shared access to biological data.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 11"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -1076,544 +3068,2210 @@
       "to": "bio_organelles",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“显微镜”为学习“真核细胞器”提供背景与解题基础。"
     },
     {
       "from": "bio_organelles",
       "to": "bio_prokaryotes",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 9"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“真核细胞器”为学习“原核细胞”提供背景与解题基础。"
     },
     {
       "from": "bio_prokaryotes",
       "to": "bio_cell_size",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“原核细胞”为学习“细胞大小与放大”提供背景与解题基础。"
     },
     {
       "from": "bio_water",
       "to": "bio_carbohydrates",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.19; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“水”为学习“碳水化合物”提供背景与解题基础。"
     },
     {
       "from": "bio_carbohydrates",
       "to": "bio_lipids",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“碳水化合物”为学习“脂质”提供背景与解题基础。"
     },
     {
       "from": "bio_lipids",
       "to": "bio_proteins",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 11"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“脂质”为学习“蛋白质”提供背景与解题基础。"
     },
     {
       "from": "bio_proteins",
       "to": "bio_tests",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“蛋白质”为学习“生化检测”提供背景与解题基础。"
     },
     {
       "from": "bio_enzyme_action",
       "to": "bio_enzyme_factors",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“酶作用”为学习“影响酶活性的因素”提供背景与解题基础。"
     },
     {
       "from": "bio_enzyme_factors",
       "to": "bio_enzyme_inhibition",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.2 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“影响酶活性的因素”为学习“酶抑制”提供背景与解题基础。"
     },
     {
       "from": "bio_membrane_structure",
       "to": "bio_passive_transport",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“扩散与渗透”需要先掌握“膜结构”的定义、表示或操作方法。"
     },
     {
       "from": "bio_passive_transport",
       "to": "bio_active_transport",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.22; 4.2 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“主动运输”需要先掌握“扩散与渗透”的定义、表示或操作方法。"
     },
     {
       "from": "bio_chromosomes",
       "to": "bio_mitosis",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“染色体行为”为学习“有丝分裂”提供背景与解题基础。"
     },
     {
       "from": "bio_dna_structure",
       "to": "bio_dna_replication",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“DNA复制”需要先掌握“DNA结构”的定义、表示或操作方法。"
     },
     {
       "from": "bio_dna_replication",
       "to": "bio_transcription",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“DNA复制”为学习“转录”提供背景与解题基础。"
     },
     {
       "from": "bio_transcription",
       "to": "bio_translation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“翻译”需要先掌握“转录”的定义、表示或操作方法。"
     },
     {
       "from": "bio_translation",
       "to": "bio_mutation",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“翻译”为学习“基因突变”提供背景与解题基础。"
     },
     {
       "from": "bio_xylem",
       "to": "bio_transpiration",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“蒸腾作用”需要先掌握“木质部与水分运输”的定义、表示或操作方法。"
     },
     {
       "from": "bio_transpiration",
       "to": "bio_phloem",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.26; 7.2 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“蒸腾作用”为学习“韧皮部与转运”提供背景与解题基础。"
     },
     {
       "from": "bio_heart",
       "to": "bio_blood_vessels",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.3 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“心脏”为学习“血管”提供背景与解题基础。"
     },
     {
       "from": "bio_blood_vessels",
       "to": "bio_haemoglobin",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“血管”为学习“血红蛋白与氧气运输”提供背景与解题基础。"
     },
     {
       "from": "bio_infectious",
       "to": "bio_immune_response",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“传染病”为学习“免疫应答”提供背景与解题基础。"
     },
     {
       "from": "bio_immune_response",
       "to": "bio_antibodies",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.27; 8.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.31; 11.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“抗体与疫苗接种”需要先掌握“免疫应答”的定义、表示或操作方法。"
     },
     {
       "from": "bio_glycolysis",
       "to": "bio_krebs",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.34; 12.2 outcome 13"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“连接反应与Krebs循环”需要先掌握“糖酵解”的定义、表示或操作方法。"
     },
     {
       "from": "bio_krebs",
       "to": "bio_oxidative",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“氧化磷酸化”需要先掌握“连接反应与Krebs循环”的定义、表示或操作方法。"
     },
     {
       "from": "bio_oxidative",
       "to": "bio_anaerobic",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 8"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“氧化磷酸化”为学习“无氧呼吸”提供背景与解题基础。"
     },
     {
       "from": "bio_light_dependent",
       "to": "bio_calvin",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Calvin循环”需要先掌握“光依赖反应”的定义、表示或操作方法。"
     },
     {
       "from": "bio_calvin",
       "to": "bio_limiting_factors",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.36; 13.1 outcome 11"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“限制因素”需要先掌握“Calvin循环”的定义、表示或操作方法。"
     },
     {
       "from": "bio_homeostasis_principles",
       "to": "bio_kidney",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“肾脏与渗透压调节”需要先掌握“体内平衡原理”的定义、表示或操作方法。"
     },
     {
       "from": "bio_kidney",
       "to": "bio_glucose_control",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 7"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“肾脏与渗透压调节”为学习“血糖控制”提供背景与解题基础。"
     },
     {
       "from": "bio_nervous",
       "to": "bio_synapses",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“突触”需要先掌握“神经传导”的定义、表示或操作方法。"
     },
     {
       "from": "bio_synapses",
       "to": "bio_hormonal",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 8"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“突触”为学习“激素控制”提供背景与解题基础。"
     },
     {
       "from": "bio_hormonal",
       "to": "bio_plant_responses",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 8"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“激素控制”为学习“植物响应”提供背景与解题基础。"
     },
     {
       "from": "bio_meiosis",
       "to": "bio_genetic_crosses",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“遗传杂交”需要先掌握“减数分裂”的定义、表示或操作方法。"
     },
     {
       "from": "bio_genetic_crosses",
       "to": "bio_linkage",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“基因连锁与交换”需要先掌握“遗传杂交”的定义、表示或操作方法。"
     },
     {
       "from": "bio_linkage",
       "to": "bio_gene_control",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.3 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“基因连锁与交换”为学习“基因表达控制”提供背景与解题基础。"
     },
     {
       "from": "bio_variation",
       "to": "bio_natural_selection",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“自然选择”需要先掌握“变异”的定义、表示或操作方法。"
     },
     {
       "from": "bio_natural_selection",
       "to": "bio_speciation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.2 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“物种形成”需要先掌握“自然选择”的定义、表示或操作方法。"
     },
     {
       "from": "bio_classification",
       "to": "bio_biodiversity_sampling",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.44; 17.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“生物多样性调查”需要先掌握“分类”的定义、表示或操作方法。"
     },
     {
       "from": "bio_biodiversity_sampling",
       "to": "bio_conservation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.46; 18.2 outcome 6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“保护”需要先掌握“生物多样性调查”的定义、表示或操作方法。"
     },
     {
       "from": "bio_gene_tech",
       "to": "bio_pcr_electrophoresis",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“基因技术”为学习“PCR与电泳”提供背景与解题基础。"
     },
     {
       "from": "bio_pcr_electrophoresis",
       "to": "bio_gene_applications",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 8"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.2 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.48; 19.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“PCR与电泳”为学习“遗传技术应用”提供背景与解题基础。"
     },
     {
       "from": "bio_proteins",
       "to": "bio_enzyme_action",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“酶作用”需要先掌握“蛋白质”的定义、表示或操作方法。"
     },
     {
       "from": "bio_carbohydrates",
       "to": "bio_tests",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“碳水化合物”为学习“生化检测”提供背景与解题基础。"
     },
     {
       "from": "bio_lipids",
       "to": "bio_membrane_structure",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 11"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“膜结构”需要先掌握“脂质”的定义、表示或操作方法。"
     },
     {
       "from": "bio_proteins",
       "to": "bio_membrane_structure",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“膜结构”需要先掌握“蛋白质”的定义、表示或操作方法。"
     },
     {
       "from": "bio_organelles",
       "to": "bio_mitosis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.15; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 9"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“有丝分裂”需要先掌握“真核细胞器”的定义、表示或操作方法。"
     },
     {
       "from": "bio_proteins",
       "to": "bio_dna_structure",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“蛋白质”为学习“DNA结构”提供背景与解题基础。"
     },
     {
       "from": "bio_dna_structure",
       "to": "bio_transcription",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.2 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“转录”需要先掌握“DNA结构”的定义、表示或操作方法。"
     },
     {
       "from": "bio_dna_replication",
       "to": "bio_mutation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“基因突变”需要先掌握“DNA复制”的定义、表示或操作方法。"
     },
     {
       "from": "bio_passive_transport",
       "to": "bio_xylem",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.22; 4.2 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“木质部与水分运输”需要先掌握“扩散与渗透”的定义、表示或操作方法。"
     },
     {
       "from": "bio_proteins",
       "to": "bio_haemoglobin",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“血红蛋白与氧气运输”需要先掌握“蛋白质”的定义、表示或操作方法。"
     },
     {
       "from": "bio_passive_transport",
       "to": "bio_lungs",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.22; 4.2 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“肺部气体交换”需要先掌握“扩散与渗透”的定义、表示或操作方法。"
     },
     {
       "from": "bio_proteins",
       "to": "bio_immune_response",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“蛋白质”为学习“免疫应答”提供背景与解题基础。"
     },
     {
       "from": "bio_enzyme_action",
       "to": "bio_glycolysis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“糖酵解”需要先掌握“酶作用”的定义、表示或操作方法。"
     },
     {
       "from": "bio_membrane_structure",
       "to": "bio_oxidative",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“氧化磷酸化”需要先掌握“膜结构”的定义、表示或操作方法。"
     },
     {
       "from": "bio_glycolysis",
       "to": "bio_anaerobic",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.34; 12.2 outcome 13"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“无氧呼吸”需要先掌握“糖酵解”的定义、表示或操作方法。"
     },
     {
       "from": "bio_oxidative",
       "to": "bio_light_dependent",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.33; 12.2 outcome 8"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“氧化磷酸化”为学习“光依赖反应”提供背景与解题基础。"
     },
     {
       "from": "bio_homeostasis_principles",
       "to": "bio_glucose_control",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.38; 14.1 outcome 10"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“血糖控制”需要先掌握“体内平衡原理”的定义、表示或操作方法。"
     },
     {
       "from": "bio_active_transport",
       "to": "bio_nervous",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“神经传导”需要先掌握“主动运输”的定义、表示或操作方法。"
     },
     {
       "from": "bio_homeostasis_principles",
       "to": "bio_hormonal",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.21; 4.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.37; 14.1 outcome 8"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“体内平衡原理”为学习“激素控制”提供背景与解题基础。"
     },
     {
       "from": "bio_mitosis",
       "to": "bio_meiosis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“减数分裂”需要先掌握“有丝分裂”的定义、表示或操作方法。"
     },
     {
       "from": "bio_transcription",
       "to": "bio_gene_control",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“基因表达控制”需要先掌握“转录”的定义、表示或操作方法。"
     },
     {
       "from": "bio_mutation",
       "to": "bio_variation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.25; 6.2 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.42; 16.2 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 7"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“变异”需要先掌握“基因突变”的定义、表示或操作方法。"
     },
     {
       "from": "bio_meiosis",
       "to": "bio_variation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“变异”需要先掌握“减数分裂”的定义、表示或操作方法。"
     },
     {
       "from": "bio_speciation",
       "to": "bio_classification",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.44; 17.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.44; 17.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.44; 17.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.45; 18.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“物种形成”为学习“分类”提供背景与解题基础。"
     },
     {
       "from": "bio_dna_replication",
       "to": "bio_pcr_electrophoresis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.32; 12.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“PCR与电泳”需要先掌握“DNA复制”的定义、表示或操作方法。"
     },
     {
       "from": "bio_dna_structure",
       "to": "bio_gene_tech",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.24; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“基因技术”需要先掌握“DNA结构”的定义、表示或操作方法。"
     },
     {
       "from": "bio_gene_tech",
       "to": "bio_gene_applications",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“遗传技术应用”需要先掌握“基因技术”的定义、表示或操作方法。"
+    },
+    {
+      "from": "bio_prokaryotes",
+      "to": "bio_virus_structure_classification",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "Cellular prokaryote structure provides a contrast for understanding why viruses are non-cellular.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.16; 1.2 outcomes 5-7",
+          "note_zh": "以原核细胞作为病毒非细胞性的比较背景。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_monomers_polymers",
+      "to": "bio_carbohydrates",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Specific carbohydrate structures build on the general relationship between monomers, covalent links and polymers.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.17; 2.2 outcomes 2-5",
+          "note_zh": "理解通用单体—聚合物关系后学习糖类聚合。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_monomers_polymers",
+      "to": "bio_proteins",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Protein primary structure applies the general model of covalently linked monomers to amino acids and peptide bonds.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.17-18; 2.2 outcome 3 and 2.3 outcomes 1-2",
+          "note_zh": "蛋白质把单体—聚合物模型应用于氨基酸。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_collagen",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Collagen structure-function reasoning requires the hierarchy of protein structure first.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.18; 2.3 outcomes 2-8",
+          "note_zh": "胶原是蛋白质层级结构的具体应用。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_enzyme_action",
+      "to": "bio_michaelis_menten",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Michaelis-Menten kinetics assumes enzyme-substrate binding and saturation already understood.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.1 outcome 2 and 3.2 outcome 2",
+          "note_zh": "酶底物结合是解释 Vmax 与 Km 的基础。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_enzyme_factors",
+      "to": "bio_michaelis_menten",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Substrate concentration effects provide the rate curve from which Vmax and Km are derived.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.20; 3.2 outcomes 1-2",
+          "note_zh": "底物浓度—速率关系用于推导 Vmax 与 Km。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_cell_size",
+      "to": "bio_surface_area_volume_ratio",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Consistent size measurements are needed before surface area, volume and their ratio can be calculated.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.15, 21; 1.1 outcome 3 and 4.2 outcome 3",
+          "note_zh": "细胞尺度和单位换算是表面积体积比计算的基础。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_atp_energy_currency",
+      "to": "bio_active_transport",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Active transport is an energy-requiring process coupled to ATP hydrolysis.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.16, 21; 1.2 outcome 4 and 4.2 outcome 1",
+          "note_zh": "主动运输依赖 ATP 提供能量。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_rna_structure",
+      "to": "bio_transcription",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Transcription produces an RNA molecule whose nucleotide composition and strand structure must first be understood.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.24-25; 6.1 outcome 5 and 6.2 outcome 4",
+          "note_zh": "理解 RNA 结构后才能解释转录产物。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_blood_vessels",
+      "to": "bio_carbon_dioxide_transport",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "Carbon dioxide transport occurs in blood moving through the circulatory system.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.27-28; 8.1 and 8.2",
+          "note_zh": "二氧化碳运输建立在血液循环背景上。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_haemoglobin",
+      "to": "bio_carbon_dioxide_transport",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Carbon dioxide transport includes carbaminohaemoglobin and red-cell reactions involving haemoglobin.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.28; 8.2 outcomes 1-3",
+          "note_zh": "氨基甲酰血红蛋白是二氧化碳运输的一部分。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_infectious",
+      "to": "bio_antibiotics",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Antibiotic selectivity is interpreted by distinguishing bacterial pathogens from viruses.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.30; 10.1 and 10.2 outcome 1",
+          "note_zh": "抗生素选择性依赖对细菌与病毒的区分。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_atp_energy_currency",
+      "to": "bio_glycolysis",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "ATP investment and yield in glycolysis require ATP energy coupling to be understood first.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.32-33; 12.1 outcomes 2-3 and 12.2 outcomes 1-2",
+          "note_zh": "糖酵解中的 ATP 投入和产出依赖 ATP 概念。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_photosynthetic_pigments_spectra",
+      "to": "bio_light_dependent",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "The light-dependent reactions begin with wavelength-dependent photon absorption by photosynthetic pigments.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.35; 13.1 outcomes 4-9",
+          "note_zh": "光合色素吸收是光依赖反应的起点。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_proteins",
+      "to": "bio_deamination_urea",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Deamination concerns excess amino acids derived from protein metabolism.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.18, 37; 2.3 and 14.1 outcome 3",
+          "note_zh": "脱氨处理的是过量氨基酸。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_glucose_control",
+      "to": "bio_glucose_biosensors",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Biosensor readings are interpreted in the context of regulated blood glucose concentration.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.37-38; 14.1 outcomes 9-11",
+          "note_zh": "血糖调节提供生物传感器的测量背景。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_enzyme_action",
+      "to": "bio_glucose_biosensors",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Glucose biosensors depend on enzyme specificity and catalysis by glucose oxidase and peroxidase.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.20, 38; 3.1 and 14.1 outcome 11",
+          "note_zh": "葡萄糖生物传感器依赖酶的特异性与催化。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_plant_responses",
+      "to": "bio_aba_stomatal_closure",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "ABA-mediated stomatal closure is a specific hormonal plant response to water stress.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.38, 40; 14.2 outcome 4 and 15.2",
+          "note_zh": "ABA 气孔关闭是植物激素响应的具体机制。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_nervous",
+      "to": "bio_neuromuscular_activation",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Neuromuscular activation begins when a motor neurone action potential reaches the muscle.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcomes 3-10",
+          "note_zh": "神经肌肉激活需要运动神经元冲动。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_synapses",
+      "to": "bio_neuromuscular_activation",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "A neuromuscular junction is a specialised chemical synapse.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcomes 9-10",
+          "note_zh": "神经肌肉接头是特化的化学突触。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_neuromuscular_activation",
+      "to": "bio_sliding_filament_contraction",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Calcium release during excitation-contraction coupling exposes binding sites that initiate filament sliding.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.39; 15.1 outcomes 10-12",
+          "note_zh": "兴奋—收缩耦联释放的 Ca2+ 启动滑动肌丝过程。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_atp_energy_currency",
+      "to": "bio_sliding_filament_contraction",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Cross-bridge cycling and detachment require ATP hydrolysis.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.32, 39; 12.1 outcome 2 and 15.1 outcome 12",
+          "note_zh": "横桥循环需要 ATP。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_genetic_crosses",
+      "to": "bio_chi_square_test",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Genetic crosses provide expected categorical ratios tested against observed counts by chi-squared analysis.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.41; 16.2 outcomes 2-5",
+          "note_zh": "遗传杂交提供卡方检验的观察值和期望值。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_transcription",
+      "to": "bio_lac_operon",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "The lac operon regulates whether structural genes are transcribed.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.25, 42; 6.2 and 16.3 outcomes 1-2",
+          "note_zh": "lac 操纵子调控结构基因的转录。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_variation",
+      "to": "bio_t_test",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "A t-test is used to compare sample means when analysing continuous phenotypic variation.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 outcomes 1-4",
+          "note_zh": "连续变异数据的样本均值可用 t 检验比较。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_genetic_crosses",
+      "to": "bio_hardy_weinberg",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Allele and genotype notation from inheritance problems is required for Hardy-Weinberg frequency calculations.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.41, 43; 16.2 and 17.2 outcome 5",
+          "note_zh": "Hardy-Weinberg 频率计算使用遗传学的等位基因和基因型表示。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_variation",
+      "to": "bio_selective_breeding",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Selective breeding depends on choosing heritable variation in the desired phenotype.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.43; 17.1 and 17.2 outcomes 6-7",
+          "note_zh": "选择育种以可遗传变异为选择材料。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_ecosystems_niches",
+      "to": "bio_biodiversity_sampling",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Biodiversity sampling measures organisms and their abundance within defined ecosystems and niches.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.45-46; 18.2 outcomes 1-6",
+          "note_zh": "界定生态系统和生态位后才能解释抽样范围与结果。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_gene_tech",
+      "to": "bio_microarrays",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "Microarrays apply nucleic-acid hybridisation and genetic-technology methods to genomic and expression analysis.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF p.47; 19.1 outcomes 1-10",
+          "note_zh": "微阵列是遗传技术用于基因组和表达分析的应用。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "bio_dna_structure",
+      "to": "bio_bioinformatics_databases",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Sequence databases represent and compare nucleotide sequences and their encoded products.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9700_2025_2027",
+          "locator": "PDF pp.24, 47; 6.1 and 19.1 outcome 11",
+          "note_zh": "序列数据库比较建立在核酸序列结构之上。"
+        }
+      ],
+      "review_status": "approved"
     }
   ]
 }

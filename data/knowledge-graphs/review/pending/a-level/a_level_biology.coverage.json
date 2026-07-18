@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-07-17",
+  "generated_at": "2026-07-18",
   "graph_id": "a_level_biology",
   "syllabus_code": "9700",
   "source_id": "src_cambridge_9700_2025_2027",
@@ -9,19 +9,19 @@
   "summary": {
     "official_sections": 44,
     "official_outcomes": 259,
-    "candidate_covered": 14,
-    "candidate_partial": 178,
-    "ambiguous": 0,
+    "candidate_covered": 48,
+    "candidate_partial": 177,
+    "ambiguous": 1,
     "unresolved_mapping": 0,
-    "candidate_gaps": 34,
+    "candidate_gaps": 0,
     "skill_mapping_required": 33,
     "requirement_types": {
-      "concept": 214,
-      "concept_and_skill": 12,
+      "concept": 211,
+      "concept_and_skill": 15,
       "practical_skill": 33
     },
-    "existing_topics": 24,
-    "existing_concepts": 59
+    "existing_topics": 34,
+    "existing_concepts": 84
   },
   "sections": [
     {
@@ -42,15 +42,15 @@
         },
         {
           "topic_id": "bio_cell_structure_bio_prokaryotes",
-          "name": "Prokaryotic Cells and Cell Size and Magnification",
-          "name_zh": "原核细胞与细胞大小与放大",
-          "score": 0.173
+          "name": "Prokaryotic Cells, Viruses and Cell Scale",
+          "name_zh": "原核细胞、病毒与细胞尺度",
+          "score": 0.175
         },
         {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.138
+          "topic_id": "bio_cell_energy_transport",
+          "name": "ATP and Energy-Dependent Transport",
+          "name_zh": "ATP 与能量依赖运输",
+          "score": 0.016
         }
       ],
       "outcomes": [
@@ -71,7 +71,7 @@
             "temporary"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -103,7 +103,7 @@
             "slides"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -173,7 +173,7 @@
             "millimetre"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -242,21 +242,21 @@
       "candidate_topics": [
         {
           "topic_id": "bio_cell_structure_bio_prokaryotes",
-          "name": "Prokaryotic Cells and Cell Size and Magnification",
-          "name_zh": "原核细胞与细胞大小与放大",
+          "name": "Prokaryotic Cells, Viruses and Cell Scale",
+          "name_zh": "原核细胞、病毒与细胞尺度",
           "score": 0.169
-        },
-        {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.105
         },
         {
           "topic_id": "bio_cell_structure",
           "name": "Microscopy and Eukaryotic Organelles",
           "name_zh": "显微镜与真核细胞器",
           "score": 0.067
+        },
+        {
+          "topic_id": "bio_membranes",
+          "name": "Membranes, Passive Transport and Exchange Scale",
+          "name_zh": "膜、被动运输与交换尺度",
+          "score": 0.015
         }
       ],
       "outcomes": [
@@ -312,7 +312,7 @@
             "typical"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -378,12 +378,23 @@
             "respiration"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“ATP 与细胞能量耦联”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有把 ATP 作为细胞耗能过程通用能量来源的独立概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：ATP 与细胞能量耦联 Concept 覆盖细胞耗能过程的通用能量来源。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_atp_energy_currency",
+              "canonical_id": "pc_bd16e15b61962db0c5d04fea198cb45c",
+              "name": "ATP and Cellular Energy Coupling",
+              "name_zh": "ATP 与细胞能量耦联",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:1.2:5",
@@ -472,12 +483,23 @@
             "either"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“病毒结构与核酸分类”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有病毒的非细胞性、核酸核心、衣壳和磷脂包膜结构概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：病毒结构与核酸分类 Concept 覆盖非细胞性、核心、衣壳和可选包膜。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_virus_structure_classification",
+              "canonical_id": "pc_a5f0cc3dc0636e18a4fef67d49bec23e",
+              "name": "Virus Structure and Nucleic-Acid Classification",
+              "name_zh": "病毒结构与核酸分类",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -492,22 +514,22 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "bio_molecules_bio_lipids",
-          "name": "Lipids, Proteins, and Biochemical Tests",
-          "name_zh": "脂质、蛋白质与生化检测",
+          "topic_id": "bio_enzymes",
+          "name": "Biochemical Tests and Enzyme Action",
+          "name_zh": "生化检测与酶作用",
           "score": 0.158
         },
         {
           "topic_id": "bio_molecules",
-          "name": "Water and Carbohydrates",
-          "name_zh": "水与碳水化合物",
+          "name": "Water, Monomers and Carbohydrates",
+          "name_zh": "水、单体与碳水化合物",
           "score": 0.027
         },
         {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.015
+          "topic_id": "bio_molecules_bio_lipids",
+          "name": "Lipids, Proteins and Collagen",
+          "name_zh": "脂质、蛋白质与胶原",
+          "score": 0.022
         }
       ],
       "outcomes": [
@@ -528,7 +550,7 @@
             "out"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -563,7 +585,7 @@
             "estimate"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -598,7 +620,7 @@
             "presence"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -632,20 +654,20 @@
       "candidate_topics": [
         {
           "topic_id": "bio_molecules_bio_lipids",
-          "name": "Lipids, Proteins, and Biochemical Tests",
-          "name_zh": "脂质、蛋白质与生化检测",
+          "name": "Lipids, Proteins and Collagen",
+          "name_zh": "脂质、蛋白质与胶原",
           "score": 0.346
         },
         {
           "topic_id": "bio_molecules",
-          "name": "Water and Carbohydrates",
-          "name_zh": "水与碳水化合物",
-          "score": 0.345
+          "name": "Water, Monomers and Carbohydrates",
+          "name_zh": "水、单体与碳水化合物",
+          "score": 0.343
         },
         {
-          "topic_id": "bio_homeostasis",
-          "name": "Homeostasis",
-          "name_zh": "体内平衡",
+          "topic_id": "bio_glucose_homeostasis",
+          "name": "Blood Glucose Control and Biosensing",
+          "name_zh": "血糖调节与生物传感",
           "score": 0.027
         }
       ],
@@ -743,12 +765,23 @@
             "smaller"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“单体、聚合物与共价连接”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有以共价键连接单体形成聚合物的通用概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：单体、聚合物与共价连接 Concept 覆盖小分子由共价键连接成聚合物。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_monomers_polymers",
+              "canonical_id": "pc_fa5e5c389a8f790944f2e6049357654b",
+              "name": "Monomers, Polymers and Covalent Linking",
+              "name_zh": "单体、聚合物与共价连接",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:2.2:4",
@@ -1063,21 +1096,21 @@
       "candidate_topics": [
         {
           "topic_id": "bio_molecules_bio_lipids",
-          "name": "Lipids, Proteins, and Biochemical Tests",
-          "name_zh": "脂质、蛋白质与生化检测",
+          "name": "Lipids, Proteins and Collagen",
+          "name_zh": "脂质、蛋白质与胶原",
           "score": 0.696
+        },
+        {
+          "topic_id": "bio_homeostasis",
+          "name": "Homeostasis, the Kidney and Nitrogen Excretion",
+          "name_zh": "稳态、肾脏与含氮排泄",
+          "score": 0.028
         },
         {
           "topic_id": "bio_chromosomes_dna",
           "name": "Chromosome Behaviour and Mitosis",
           "name_zh": "染色体行为与有丝分裂",
-          "score": 0.019
-        },
-        {
-          "topic_id": "bio_circulation_gas_exchange",
-          "name": "The Heart and Blood Vessels",
-          "name_zh": "心脏与血管",
-          "score": 0.017
+          "score": 0.025
         }
       ],
       "outcomes": [
@@ -1328,12 +1361,23 @@
             "molecules"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“胶原的层级结构与功能”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有胶原分子、纤维蛋白或胶原纤维排列概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：胶原 Concept 覆盖胶原分子及其形成纤维的排列。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_collagen",
+              "canonical_id": "pc_11471626c86cc0bd6446e054bb89757f",
+              "name": "Collagen Structure and Function",
+              "name_zh": "胶原的层级结构与功能",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:2.3:8",
@@ -1350,12 +1394,23 @@
             "structures"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“胶原的层级结构与功能”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有胶原分子和胶原纤维结构功能概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：胶原 Concept 覆盖分子和纤维结构与抗张功能的关系。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_collagen",
+              "canonical_id": "pc_11471626c86cc0bd6446e054bb89757f",
+              "name": "Collagen Structure and Function",
+              "name_zh": "胶原的层级结构与功能",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -1371,8 +1426,8 @@
       "candidate_topics": [
         {
           "topic_id": "bio_molecules",
-          "name": "Water and Carbohydrates",
-          "name_zh": "水与碳水化合物",
+          "name": "Water, Monomers and Carbohydrates",
+          "name_zh": "水、单体与碳水化合物",
           "score": 0.767
         },
         {
@@ -1383,8 +1438,8 @@
         },
         {
           "topic_id": "bio_homeostasis",
-          "name": "Homeostasis",
-          "name_zh": "体内平衡",
+          "name": "Homeostasis, the Kidney and Nitrogen Excretion",
+          "name_zh": "稳态、肾脏与含氮排泄",
           "score": 0.022
         }
       ],
@@ -1438,21 +1493,21 @@
       "candidate_topics": [
         {
           "topic_id": "bio_enzymes",
-          "name": "Enzymes",
-          "name_zh": "酶",
-          "score": 0.238
+          "name": "Biochemical Tests and Enzyme Action",
+          "name_zh": "生化检测与酶作用",
+          "score": 0.178
         },
         {
           "topic_id": "bio_disease",
-          "name": "Infectious Disease and Immunity",
-          "name_zh": "传染病与免疫",
-          "score": 0.03
+          "name": "Infectious Disease and Antibiotics",
+          "name_zh": "传染病与抗生素",
+          "score": 0.145
         },
         {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.029
+          "topic_id": "bio_immunity",
+          "name": "Immune Responses, Antibodies and Vaccination",
+          "name_zh": "免疫应答、抗体与疫苗接种",
+          "score": 0.03
         }
       ],
       "outcomes": [
@@ -1529,7 +1584,7 @@
               "canonical_id": "pc_eb22ca391770b29f75a2f022a09e31af",
               "name": "Enzyme Action",
               "name_zh": "酶作用",
-              "score": 0.588,
+              "score": 0.584,
               "keyword_coverage": 0.556,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -1553,7 +1608,7 @@
             "investigate"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -1564,7 +1619,7 @@
               "canonical_id": "pc_eb22ca391770b29f75a2f022a09e31af",
               "name": "Enzyme Action",
               "name_zh": "酶作用",
-              "score": 0.291,
+              "score": 0.286,
               "keyword_coverage": 0.154,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -1588,7 +1643,7 @@
             "outline"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -1619,22 +1674,22 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "bio_enzyme_kinetics",
+          "name": "Enzyme Activity, Kinetics and Inhibition",
+          "name_zh": "酶活性、动力学与抑制",
+          "score": 0.354
+        },
+        {
           "topic_id": "bio_enzymes",
-          "name": "Enzymes",
-          "name_zh": "酶",
-          "score": 0.462
+          "name": "Biochemical Tests and Enzyme Action",
+          "name_zh": "生化检测与酶作用",
+          "score": 0.339
         },
         {
-          "topic_id": "bio_photosynthesis",
-          "name": "Photosynthesis",
-          "name_zh": "光合作用",
+          "topic_id": "bio_photosynthesis_calvin",
+          "name": "The Calvin Cycle and Limiting Factors",
+          "name_zh": "Calvin 循环与限制因素",
           "score": 0.184
-        },
-        {
-          "topic_id": "bio_transport_plants",
-          "name": "Transport in Plants",
-          "name_zh": "植物运输",
-          "score": 0.037
         }
       ],
       "outcomes": [
@@ -1655,7 +1710,7 @@
             "inhibitor"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -1666,7 +1721,7 @@
               "canonical_id": "pc_564bc6d850ae2725515787c450597c10",
               "name": "Factors Affecting Enzyme Activity",
               "name_zh": "影响酶活性的因素",
-              "score": 0.305,
+              "score": 0.297,
               "keyword_coverage": 0.563,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 0.5
@@ -1690,12 +1745,23 @@
             "km"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“Michaelis–Menten 动力学”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有 Vmax、Michaelis-Menten 常数 Km 或酶底物亲和力比较概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：Michaelis-Menten 动力学 Concept 覆盖 Vmax、Km 及亲和力比较。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_michaelis_menten",
+              "canonical_id": "pc_d73e8ae492113d4145d983a48c98a111",
+              "name": "Michaelis-Menten Kinetics",
+              "name_zh": "Michaelis–Menten 动力学",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:3.2:3",
@@ -1749,7 +1815,7 @@
             "enzymes"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -1760,7 +1826,7 @@
               "canonical_id": "pc_eb22ca391770b29f75a2f022a09e31af",
               "name": "Enzyme Action",
               "name_zh": "酶作用",
-              "score": 0.301,
+              "score": 0.3,
               "keyword_coverage": 0.167,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -1781,14 +1847,14 @@
       "candidate_topics": [
         {
           "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.257
+          "name": "Membranes, Passive Transport and Exchange Scale",
+          "name_zh": "膜、被动运输与交换尺度",
+          "score": 0.22
         },
         {
           "topic_id": "bio_molecules_bio_lipids",
-          "name": "Lipids, Proteins, and Biochemical Tests",
-          "name_zh": "脂质、蛋白质与生化检测",
+          "name": "Lipids, Proteins and Collagen",
+          "name_zh": "脂质、蛋白质与胶原",
           "score": 0.04
         },
         {
@@ -1827,7 +1893,7 @@
               "canonical_id": "pc_5ff2cda97c05cbe449e6d6bcff0c0834",
               "name": "Membrane Structure",
               "name_zh": "膜结构",
-              "score": 0.851,
+              "score": 0.849,
               "keyword_coverage": 0.533,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -1861,7 +1927,7 @@
               "canonical_id": "pc_5ff2cda97c05cbe449e6d6bcff0c0834",
               "name": "Membrane Structure",
               "name_zh": "膜结构",
-              "score": 0.111,
+              "score": 0.108,
               "keyword_coverage": 0.429,
               "outcome_name_coverage": 0,
               "combined_name_coverage": 0
@@ -1973,22 +2039,22 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.187
-        },
-        {
           "topic_id": "bio_cell_structure_bio_prokaryotes",
-          "name": "Prokaryotic Cells and Cell Size and Magnification",
-          "name_zh": "原核细胞与细胞大小与放大",
-          "score": 0.139
+          "name": "Prokaryotic Cells, Viruses and Cell Scale",
+          "name_zh": "原核细胞、病毒与细胞尺度",
+          "score": 0.136
         },
         {
-          "topic_id": "bio_circulation_gas_exchange_bio_haemoglobin",
-          "name": "Haemoglobin and Oxygen Transport and Gas Exchange in the Lungs",
-          "name_zh": "血红蛋白与氧气运输与肺部气体交换",
-          "score": 0.018
+          "topic_id": "bio_cell_energy_transport",
+          "name": "ATP and Energy-Dependent Transport",
+          "name_zh": "ATP 与能量依赖运输",
+          "score": 0.078
+        },
+        {
+          "topic_id": "bio_membranes",
+          "name": "Membranes, Passive Transport and Exchange Scale",
+          "name_zh": "膜、被动运输与交换尺度",
+          "score": 0.055
         }
       ],
       "outcomes": [
@@ -2054,7 +2120,7 @@
             "osmosis"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -2065,7 +2131,7 @@
               "canonical_id": "pc_c2e6fec2c47cd86ee9b8726b908a7a8b",
               "name": "Diffusion and Osmosis",
               "name_zh": "扩散与渗透",
-              "score": 0.738,
+              "score": 0.73,
               "keyword_coverage": 0.154,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -2089,12 +2155,23 @@
             "mathematical"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“表面积体积比与交换”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有表面积体积比随尺寸变化及三维形体计算概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：表面积体积比 Concept 覆盖三维形体计算及随尺寸增大的变化规律。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_surface_area_volume_ratio",
+              "canonical_id": "pc_a311497a8ada69679cf8442da822748c",
+              "name": "Surface Area to Volume Ratio and Exchange",
+              "name_zh": "表面积体积比与交换",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:4.2:4",
@@ -2113,17 +2190,27 @@
             "investigate"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：用不同大小琼脂块研究表面积体积比对扩散的影响属于实践技能，扩散概念提供背景。",
+          "machine_audit_note_zh": "人工批准 Skill 映射：不同尺寸琼脂块实验由扩散和表面积体积比共同提供背景。",
           "candidate_concepts": [
             {
               "node_id": "bio_passive_transport",
               "canonical_id": "pc_c2e6fec2c47cd86ee9b8726b908a7a8b",
               "name": "Diffusion and Osmosis",
               "name_zh": "扩散与渗透",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "bio_surface_area_volume_ratio",
+              "canonical_id": "pc_a311497a8ada69679cf8442da822748c",
+              "name": "Surface Area to Volume Ratio and Exchange",
+              "name_zh": "表面积体积比与交换",
               "score": null,
               "keyword_coverage": null,
               "outcome_name_coverage": null,
@@ -2148,7 +2235,7 @@
             "plant"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -2215,21 +2302,21 @@
       "candidate_topics": [
         {
           "topic_id": "bio_chromosomes_dna_bio_dna_structure",
-          "name": "DNA Structure and DNA Replication",
-          "name_zh": "DNA结构与DNA复制",
+          "name": "DNA, RNA and DNA Replication",
+          "name_zh": "DNA、RNA 与 DNA 复制",
           "score": 0.157
         },
         {
           "topic_id": "bio_cell_structure_bio_prokaryotes",
-          "name": "Prokaryotic Cells and Cell Size and Magnification",
-          "name_zh": "原核细胞与细胞大小与放大",
-          "score": 0.149
+          "name": "Prokaryotic Cells, Viruses and Cell Scale",
+          "name_zh": "原核细胞、病毒与细胞尺度",
+          "score": 0.152
         },
         {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.139
+          "topic_id": "bio_chromosomes_dna",
+          "name": "Chromosome Behaviour and Mitosis",
+          "name_zh": "染色体行为与有丝分裂",
+          "score": 0.092
         }
       ],
       "outcomes": [
@@ -2445,12 +2532,23 @@
             "uncontrolled"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“有丝分裂”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有失控细胞分裂或肿瘤形成概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的有丝分裂 Concept 覆盖失控分裂和肿瘤形成。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_mitosis",
+              "canonical_id": "pc_e8a318724c6c8e8096b98fc763ca69c6",
+              "name": "Mitosis",
+              "name_zh": "有丝分裂",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -2468,18 +2566,18 @@
           "topic_id": "bio_chromosomes_dna",
           "name": "Chromosome Behaviour and Mitosis",
           "name_zh": "染色体行为与有丝分裂",
-          "score": 0.731
+          "score": 0.705
         },
         {
           "topic_id": "bio_cell_structure_bio_prokaryotes",
-          "name": "Prokaryotic Cells and Cell Size and Magnification",
-          "name_zh": "原核细胞与细胞大小与放大",
+          "name": "Prokaryotic Cells, Viruses and Cell Scale",
+          "name_zh": "原核细胞、病毒与细胞尺度",
           "score": 0.019
         },
         {
           "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
+          "name": "Membranes, Passive Transport and Exchange Scale",
+          "name_zh": "膜、被动运输与交换尺度",
           "score": 0.019
         }
       ],
@@ -2546,7 +2644,7 @@
             "main"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -2578,9 +2676,9 @@
       "candidate_topics": [
         {
           "topic_id": "bio_chromosomes_dna_bio_dna_structure",
-          "name": "DNA Structure and DNA Replication",
-          "name_zh": "DNA结构与DNA复制",
-          "score": 0.428
+          "name": "DNA, RNA and DNA Replication",
+          "name_zh": "DNA、RNA 与 DNA 复制",
+          "score": 0.292
         },
         {
           "topic_id": "bio_nucleic_acids",
@@ -2589,10 +2687,10 @@
           "score": 0.208
         },
         {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.126
+          "topic_id": "bio_cell_structure_bio_prokaryotes",
+          "name": "Prokaryotic Cells, Viruses and Cell Scale",
+          "name_zh": "原核细胞、病毒与细胞尺度",
+          "score": 0.181
         }
       ],
       "outcomes": [
@@ -2659,7 +2757,7 @@
               "canonical_id": "pc_6a00c0df14c5b18459964bd5ccb5c243",
               "name": "DNA Structure",
               "name_zh": "DNA结构",
-              "score": 0.362,
+              "score": 0.353,
               "keyword_coverage": 0.4,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -2729,7 +2827,7 @@
               "canonical_id": "pc_04b4d91c6cced626ffbf487f19cdfefe",
               "name": "DNA Replication",
               "name_zh": "DNA复制",
-              "score": 0.779,
+              "score": 0.77,
               "keyword_coverage": 0.222,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -2751,12 +2849,23 @@
             "structure"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“RNA 与 mRNA 结构”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有 RNA/mRNA 分子结构概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：RNA 与 mRNA 结构 Concept 覆盖该分子结构要求。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_rna_structure",
+              "canonical_id": "pc_7c8644ecf9e964364af575d584241cf8",
+              "name": "RNA and mRNA Structure",
+              "name_zh": "RNA 与 mRNA 结构",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -2785,10 +2894,10 @@
           "score": 0.033
         },
         {
-          "topic_id": "bio_inheritance_bio_linkage",
-          "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
-          "name_zh": "基因连锁与交换与基因表达控制",
-          "score": 0.017
+          "topic_id": "bio_chromosomes_dna_bio_dna_structure",
+          "name": "DNA, RNA and DNA Replication",
+          "name_zh": "DNA、RNA 与 DNA 复制",
+          "score": 0.033
         }
       ],
       "outcomes": [
@@ -3077,15 +3186,15 @@
         },
         {
           "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.176
+          "name": "Membranes, Passive Transport and Exchange Scale",
+          "name_zh": "膜、被动运输与交换尺度",
+          "score": 0.174
         },
         {
-          "topic_id": "bio_chromosomes_dna_bio_dna_structure",
-          "name": "DNA Structure and DNA Replication",
-          "name_zh": "DNA结构与DNA复制",
-          "score": 0.17
+          "topic_id": "bio_cell_energy_transport",
+          "name": "ATP and Energy-Dependent Transport",
+          "name_zh": "ATP 与能量依赖运输",
+          "score": 0.169
         }
       ],
       "outcomes": [
@@ -3106,7 +3215,7 @@
             "plan"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -3196,7 +3305,7 @@
             "microscope"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -3288,16 +3397,16 @@
           "score": 0.26
         },
         {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.233
+          "topic_id": "bio_cell_energy_transport",
+          "name": "ATP and Energy-Dependent Transport",
+          "name_zh": "ATP 与能量依赖运输",
+          "score": 0.232
         },
         {
           "topic_id": "bio_circulation_gas_exchange_bio_haemoglobin",
-          "name": "Haemoglobin and Oxygen Transport and Gas Exchange in the Lungs",
-          "name_zh": "血红蛋白与氧气运输与肺部气体交换",
-          "score": 0.171
+          "name": "Haemoglobin, Carbon Dioxide Transport and Gas Exchange",
+          "name_zh": "血红蛋白、二氧化碳运输与气体交换",
+          "score": 0.2
         }
       ],
       "outcomes": [
@@ -3468,7 +3577,7 @@
             "plants"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -3610,15 +3719,15 @@
           "score": 0.072
         },
         {
-          "topic_id": "bio_homeostasis",
-          "name": "Homeostasis",
-          "name_zh": "体内平衡",
+          "topic_id": "bio_glucose_homeostasis",
+          "name": "Blood Glucose Control and Biosensing",
+          "name_zh": "血糖调节与生物传感",
           "score": 0.015
         },
         {
-          "topic_id": "bio_biodiversity",
-          "name": "Biodiversity and Conservation",
-          "name_zh": "生物多样性与保护",
+          "topic_id": "bio_ecology_classification",
+          "name": "Ecosystems, Niches and Classification",
+          "name_zh": "生态系统、生态位与分类",
           "score": 0.014
         }
       ],
@@ -3720,7 +3829,7 @@
             "longitudinal"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -3790,7 +3899,7 @@
             "monocytes"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -3900,15 +4009,15 @@
       "candidate_topics": [
         {
           "topic_id": "bio_circulation_gas_exchange_bio_haemoglobin",
-          "name": "Haemoglobin and Oxygen Transport and Gas Exchange in the Lungs",
-          "name_zh": "血红蛋白与氧气运输与肺部气体交换",
-          "score": 0.313
+          "name": "Haemoglobin, Carbon Dioxide Transport and Gas Exchange",
+          "name_zh": "血红蛋白、二氧化碳运输与气体交换",
+          "score": 0.434
         },
         {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.143
+          "topic_id": "bio_cell_energy_transport",
+          "name": "ATP and Energy-Dependent Transport",
+          "name_zh": "ATP 与能量依赖运输",
+          "score": 0.144
         },
         {
           "topic_id": "bio_transport_plants",
@@ -3936,17 +4045,27 @@
           ],
           "requirement_type": "concept",
           "review_status": "needs_review",
-          "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“血红蛋白与氧气运输”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "coverage_signal": "ambiguous",
+          "summary_zh": "候选存在歧义：二氧化碳运输与氯离子转移 / 血红蛋白与氧气运输；需人工核对范围。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
           "candidate_concepts": [
+            {
+              "node_id": "bio_carbon_dioxide_transport",
+              "canonical_id": "pc_c9fd444d9acfb11faef011f5755c1418",
+              "name": "Carbon Dioxide Transport and the Chloride Shift",
+              "name_zh": "二氧化碳运输与氯离子转移",
+              "score": 0.404,
+              "keyword_coverage": 0.529,
+              "outcome_name_coverage": 0.4,
+              "combined_name_coverage": 0.6
+            },
             {
               "node_id": "bio_haemoglobin",
               "canonical_id": "pc_fe4116678178832b32b28ac69f4a3068",
               "name": "Haemoglobin and Oxygen Transport",
               "name_zh": "血红蛋白与氧气运输",
-              "score": 0.388,
+              "score": 0.397,
               "keyword_coverage": 0.235,
               "outcome_name_coverage": 0.667,
               "combined_name_coverage": 1
@@ -3965,12 +4084,23 @@
             "importance"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“二氧化碳运输与氯离子转移”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有氯离子转移或 chloride shift 概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：二氧化碳运输 Concept 覆盖 chloride shift 及其重要性。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_carbon_dioxide_transport",
+              "canonical_id": "pc_c9fd444d9acfb11faef011f5755c1418",
+              "name": "Carbon Dioxide Transport and the Chloride Shift",
+              "name_zh": "二氧化碳运输与氯离子转移",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:8.2:3",
@@ -3986,12 +4116,23 @@
             "transport"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“二氧化碳运输与氯离子转移”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有生物 KG：血红蛋白概念只覆盖氧运输和 Bohr 效应，没有血浆以溶解 CO₂/碳酸氢根运输二氧化碳的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：二氧化碳运输 Concept 覆盖血浆中的溶解态和碳酸氢根运输。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_carbon_dioxide_transport",
+              "canonical_id": "pc_c9fd444d9acfb11faef011f5755c1418",
+              "name": "Carbon Dioxide Transport and the Chloride Shift",
+              "name_zh": "二氧化碳运输与氯离子转移",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:8.2:4",
@@ -4018,7 +4159,7 @@
               "canonical_id": "pc_fe4116678178832b32b28ac69f4a3068",
               "name": "Haemoglobin and Oxygen Transport",
               "name_zh": "血红蛋白与氧气运输",
-              "score": 0.525,
+              "score": 0.53,
               "keyword_coverage": 0.8,
               "outcome_name_coverage": 0.667,
               "combined_name_coverage": 1
@@ -4053,7 +4194,7 @@
               "canonical_id": "pc_fe4116678178832b32b28ac69f4a3068",
               "name": "Haemoglobin and Oxygen Transport",
               "name_zh": "血红蛋白与氧气运输",
-              "score": 0.228,
+              "score": 0.231,
               "keyword_coverage": 0.3,
               "outcome_name_coverage": 0.333,
               "combined_name_coverage": 0.667
@@ -4074,19 +4215,19 @@
           "requirement_type": "concept",
           "review_status": "needs_review",
           "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“血红蛋白与氧气运输”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "summary_zh": "首选候选为“二氧化碳运输与氯离子转移”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
           "candidate_concepts": [
             {
-              "node_id": "bio_haemoglobin",
-              "canonical_id": "pc_fe4116678178832b32b28ac69f4a3068",
-              "name": "Haemoglobin and Oxygen Transport",
-              "name_zh": "血红蛋白与氧气运输",
-              "score": 0.209,
+              "node_id": "bio_carbon_dioxide_transport",
+              "canonical_id": "pc_c9fd444d9acfb11faef011f5755c1418",
+              "name": "Carbon Dioxide Transport and the Chloride Shift",
+              "name_zh": "二氧化碳运输与氯离子转移",
+              "score": 0.274,
               "keyword_coverage": 0.333,
-              "outcome_name_coverage": 0,
-              "combined_name_coverage": 0.667
+              "outcome_name_coverage": 0.2,
+              "combined_name_coverage": 0.8
             }
           ]
         }
@@ -4110,8 +4251,8 @@
         },
         {
           "topic_id": "bio_molecules_bio_lipids",
-          "name": "Lipids, Proteins, and Biochemical Tests",
-          "name_zh": "脂质、蛋白质与生化检测",
+          "name": "Lipids, Proteins and Collagen",
+          "name_zh": "脂质、蛋白质与胶原",
           "score": 0.019
         },
         {
@@ -4273,21 +4414,21 @@
       "candidate_topics": [
         {
           "topic_id": "bio_circulation_gas_exchange_bio_haemoglobin",
-          "name": "Haemoglobin and Oxygen Transport and Gas Exchange in the Lungs",
-          "name_zh": "血红蛋白与氧气运输与肺部气体交换",
+          "name": "Haemoglobin, Carbon Dioxide Transport and Gas Exchange",
+          "name_zh": "血红蛋白、二氧化碳运输与气体交换",
           "score": 0.379
         },
         {
           "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.027
+          "name": "Membranes, Passive Transport and Exchange Scale",
+          "name_zh": "膜、被动运输与交换尺度",
+          "score": 0.12
         },
         {
-          "topic_id": "bio_biodiversity",
-          "name": "Biodiversity and Conservation",
-          "name_zh": "生物多样性与保护",
-          "score": 0.016
+          "topic_id": "bio_ecology_classification",
+          "name": "Ecosystems, Niches and Classification",
+          "name_zh": "生态系统、生态位与分类",
+          "score": 0.015
         }
       ],
       "outcomes": [
@@ -4378,7 +4519,7 @@
             "electron"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -4413,7 +4554,7 @@
             "electron"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -4549,20 +4690,20 @@
       "candidate_topics": [
         {
           "topic_id": "bio_disease",
-          "name": "Infectious Disease and Immunity",
-          "name_zh": "传染病与免疫",
+          "name": "Infectious Disease and Antibiotics",
+          "name_zh": "传染病与抗生素",
           "score": 0.31
+        },
+        {
+          "topic_id": "bio_immunity",
+          "name": "Immune Responses, Antibodies and Vaccination",
+          "name_zh": "免疫应答、抗体与疫苗接种",
+          "score": 0.019
         },
         {
           "topic_id": "bio_cell_structure",
           "name": "Microscopy and Eukaryotic Organelles",
           "name_zh": "显微镜与真核细胞器",
-          "score": 0
-        },
-        {
-          "topic_id": "bio_cell_structure_bio_prokaryotes",
-          "name": "Prokaryotic Cells and Cell Size and Magnification",
-          "name_zh": "原核细胞与细胞大小与放大",
           "score": 0
         }
       ],
@@ -4716,20 +4857,20 @@
       "candidate_topics": [
         {
           "topic_id": "bio_disease",
-          "name": "Infectious Disease and Immunity",
-          "name_zh": "传染病与免疫",
-          "score": 0.03
+          "name": "Infectious Disease and Antibiotics",
+          "name_zh": "传染病与抗生素",
+          "score": 0.277
         },
         {
-          "topic_id": "bio_enzymes",
-          "name": "Enzymes",
-          "name_zh": "酶",
+          "topic_id": "bio_enzyme_kinetics",
+          "name": "Enzyme Activity, Kinetics and Inhibition",
+          "name_zh": "酶活性、动力学与抑制",
           "score": 0.028
         },
         {
           "topic_id": "bio_inheritance_bio_linkage",
-          "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
-          "name_zh": "基因连锁与交换与基因表达控制",
+          "name": "Eukaryotic and Prokaryotic Gene Regulation",
+          "name_zh": "真核与原核基因表达调控",
           "score": 0.015
         }
       ],
@@ -4751,12 +4892,23 @@
             "outline"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“抗生素的选择性作用”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有青霉素作用细菌及抗生素不作用于病毒的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：抗生素选择性作用 Concept 覆盖青霉素对细菌的作用以及对病毒无效。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_antibiotics",
+              "canonical_id": "pc_cd2b7974451c31f7abce21cc90110697",
+              "name": "Selective Action of Antibiotics",
+              "name_zh": "抗生素的选择性作用",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:10.2:2",
@@ -4816,21 +4968,21 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "bio_disease",
-          "name": "Infectious Disease and Immunity",
-          "name_zh": "传染病与免疫",
-          "score": 0.233
+          "topic_id": "bio_immunity",
+          "name": "Immune Responses, Antibodies and Vaccination",
+          "name_zh": "免疫应答、抗体与疫苗接种",
+          "score": 0.239
         },
         {
           "topic_id": "bio_homeostasis",
-          "name": "Homeostasis",
-          "name_zh": "体内平衡",
+          "name": "Homeostasis, the Kidney and Nitrogen Excretion",
+          "name_zh": "稳态、肾脏与含氮排泄",
           "score": 0.021
         },
         {
           "topic_id": "bio_coordination",
-          "name": "Nervous Transmission and Synapses",
-          "name_zh": "神经传导与突触",
+          "name": "Nerve Impulses and Synapses",
+          "name_zh": "神经冲动与突触",
           "score": 0.019
         }
       ],
@@ -5005,10 +5157,10 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "bio_disease",
-          "name": "Infectious Disease and Immunity",
-          "name_zh": "传染病与免疫",
-          "score": 0.669
+          "topic_id": "bio_immunity",
+          "name": "Immune Responses, Antibodies and Vaccination",
+          "name_zh": "免疫应答、抗体与疫苗接种",
+          "score": 0.673
         },
         {
           "topic_id": "bio_circulation_gas_exchange",
@@ -5018,8 +5170,8 @@
         },
         {
           "topic_id": "bio_molecules_bio_lipids",
-          "name": "Lipids, Proteins, and Biochemical Tests",
-          "name_zh": "脂质、蛋白质与生化检测",
+          "name": "Lipids, Proteins and Collagen",
+          "name_zh": "脂质、蛋白质与胶原",
           "score": 0.019
         }
       ],
@@ -5082,7 +5234,7 @@
               "canonical_id": "pc_4e3f76f101debb1e241b0bab776e4cf1",
               "name": "Antibodies and Vaccination",
               "name_zh": "抗体与疫苗接种",
-              "score": 0.346,
+              "score": 0.347,
               "keyword_coverage": 0.167,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -5260,10 +5412,10 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "bio_membranes",
-          "name": "Cell Membranes and Transport",
-          "name_zh": "细胞膜与运输",
-          "score": 0.037
+          "topic_id": "bio_cell_energy_transport",
+          "name": "ATP and Energy-Dependent Transport",
+          "name_zh": "ATP 与能量依赖运输",
+          "score": 0.2
         },
         {
           "topic_id": "bio_nucleic_acids",
@@ -5272,10 +5424,10 @@
           "score": 0.035
         },
         {
-          "topic_id": "bio_genetic_tech",
-          "name": "Genetic Technology",
-          "name_zh": "遗传技术",
-          "score": 0.024
+          "topic_id": "bio_enzymes",
+          "name": "Biochemical Tests and Enzyme Action",
+          "name_zh": "生化检测与酶作用",
+          "score": 0.029
         }
       ],
       "outcomes": [
@@ -5350,12 +5502,23 @@
             "universal"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“ATP 与细胞能量耦联”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有 ATP 作为细胞通用能量货币的结构、磷酸化与水解释能特征概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：ATP Concept 覆盖其适合作为通用能量货币的特征。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_atp_energy_currency",
+              "canonical_id": "pc_bd16e15b61962db0c5d04fea198cb45c",
+              "name": "ATP and Cellular Energy Coupling",
+              "name_zh": "ATP 与细胞能量耦联",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:12.1:3",
@@ -5484,12 +5647,23 @@
             "ratio"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“呼吸商”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有呼吸商 RQ 的定义概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：呼吸商 Concept 覆盖 RQ 定义。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_respiratory_quotient",
+              "canonical_id": "pc_ed98208fe11f1d3e0cce7a19f5270c45",
+              "name": "Respiratory Quotient",
+              "name_zh": "呼吸商",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:12.1:6",
@@ -5508,12 +5682,23 @@
             "values"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“呼吸商”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有生物 KG：没有呼吸商定义或由呼吸方程计算不同底物 RQ 的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：呼吸商 Concept 覆盖由呼吸方程计算不同底物 RQ。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_respiratory_quotient",
+              "canonical_id": "pc_ed98208fe11f1d3e0cce7a19f5270c45",
+              "name": "Respiratory Quotient",
+              "name_zh": "呼吸商",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:12.1:7",
@@ -5532,12 +5717,23 @@
             "respirometers"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：这是使用呼吸计测 RQ 的实践技能；现有 KG 没有可靠的 RQ 概念上下文。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准 Skill 映射：呼吸计测 RQ 的实践技能由呼吸商 Concept 提供背景。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_respiratory_quotient",
+              "canonical_id": "pc_ed98208fe11f1d3e0cce7a19f5270c45",
+              "name": "Respiratory Quotient",
+              "name_zh": "呼吸商",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -5567,8 +5763,8 @@
         },
         {
           "topic_id": "bio_respiration",
-          "name": "Glycolysis and Link Reaction and Krebs Cycle",
-          "name_zh": "糖酵解与连接反应与Krebs循环",
+          "name": "Respiratory Quotient, Glycolysis and the Krebs Cycle",
+          "name_zh": "呼吸商、糖酵解与 Krebs 循环",
           "score": 0.042
         }
       ],
@@ -5890,7 +6086,7 @@
             "structure"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -6050,7 +6246,7 @@
             "methylene"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -6095,7 +6291,7 @@
             "respirometers"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -6138,10 +6334,10 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "bio_photosynthesis",
-          "name": "Photosynthesis",
-          "name_zh": "光合作用",
-          "score": 0.17
+          "topic_id": "bio_cell_energy_transport",
+          "name": "ATP and Energy-Dependent Transport",
+          "name_zh": "ATP 与能量依赖运输",
+          "score": 0.1
         },
         {
           "topic_id": "bio_circulation_gas_exchange",
@@ -6151,8 +6347,8 @@
         },
         {
           "topic_id": "bio_molecules_bio_lipids",
-          "name": "Lipids, Proteins, and Biochemical Tests",
-          "name_zh": "脂质、蛋白质与生化检测",
+          "name": "Lipids, Proteins and Collagen",
+          "name_zh": "脂质、蛋白质与胶原",
           "score": 0.029
         }
       ],
@@ -6174,7 +6370,7 @@
             "shown"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -6240,7 +6436,7 @@
               "canonical_id": "pc_4b41c3d012fb26c23a16100b7cbafcd5",
               "name": "Calvin Cycle",
               "name_zh": "Calvin循环",
-              "score": 0.771,
+              "score": 0.759,
               "keyword_coverage": 0.278,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -6343,12 +6539,23 @@
             "pigments"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“光合色素与光谱”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有光合色素吸收光谱与作用光谱的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：光合色素与光谱 Concept 覆盖吸收光谱和作用光谱解释。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_photosynthetic_pigments_spectra",
+              "canonical_id": "pc_977c5f3889a072ba8904338b9ddf03a7",
+              "name": "Photosynthetic Pigments and Spectra",
+              "name_zh": "光合色素与光谱",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:13.1:6",
@@ -6367,17 +6574,17 @@
             "rf"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：用色谱分离光合色素并计算 Rf 值属于实践技能；光反应概念只提供色素吸光的学科背景。",
+          "machine_audit_note_zh": "人工批准 Skill 映射：色素色谱与 Rf 计算由光合色素 Concept 提供背景。",
           "candidate_concepts": [
             {
-              "node_id": "bio_light_dependent",
-              "canonical_id": "pc_04f61e525cd19d1f02e6846892d426c8",
-              "name": "Light-Dependent Reactions",
-              "name_zh": "光依赖反应",
+              "node_id": "bio_photosynthetic_pigments_spectra",
+              "canonical_id": "pc_977c5f3889a072ba8904338b9ddf03a7",
+              "name": "Photosynthetic Pigments and Spectra",
+              "name_zh": "光合色素与光谱",
               "score": null,
               "keyword_coverage": null,
               "outcome_name_coverage": null,
@@ -6413,7 +6620,7 @@
               "canonical_id": "pc_04f61e525cd19d1f02e6846892d426c8",
               "name": "Light-Dependent Reactions",
               "name_zh": "光依赖反应",
-              "score": 0.382,
+              "score": 0.371,
               "keyword_coverage": 0.222,
               "outcome_name_coverage": 0.667,
               "combined_name_coverage": 0.667
@@ -6553,7 +6760,7 @@
               "canonical_id": "pc_4b41c3d012fb26c23a16100b7cbafcd5",
               "name": "Calvin Cycle",
               "name_zh": "Calvin循环",
-              "score": 0.762,
+              "score": 0.75,
               "keyword_coverage": 0.242,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -6588,7 +6795,7 @@
               "canonical_id": "pc_4b41c3d012fb26c23a16100b7cbafcd5",
               "name": "Calvin Cycle",
               "name_zh": "Calvin循环",
-              "score": 0.73,
+              "score": 0.719,
               "keyword_coverage": 0.133,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -6608,21 +6815,21 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "bio_photosynthesis",
-          "name": "Photosynthesis",
-          "name_zh": "光合作用",
+          "topic_id": "bio_photosynthesis_calvin",
+          "name": "The Calvin Cycle and Limiting Factors",
+          "name_zh": "Calvin 循环与限制因素",
           "score": 0.643
         },
         {
-          "topic_id": "bio_enzymes",
-          "name": "Enzymes",
-          "name_zh": "酶",
+          "topic_id": "bio_enzyme_kinetics",
+          "name": "Enzyme Activity, Kinetics and Inhibition",
+          "name_zh": "酶活性、动力学与抑制",
           "score": 0.154
         },
         {
           "topic_id": "bio_circulation_gas_exchange_bio_haemoglobin",
-          "name": "Haemoglobin and Oxygen Transport and Gas Exchange in the Lungs",
-          "name_zh": "血红蛋白与氧气运输与肺部气体交换",
+          "name": "Haemoglobin, Carbon Dioxide Transport and Gas Exchange",
+          "name_zh": "血红蛋白、二氧化碳运输与气体交换",
           "score": 0.032
         }
       ],
@@ -6714,7 +6921,7 @@
             "intensity"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -6759,7 +6966,7 @@
             "intensity"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -6793,20 +7000,20 @@
       "candidate_topics": [
         {
           "topic_id": "bio_homeostasis",
-          "name": "Homeostasis",
-          "name_zh": "体内平衡",
-          "score": 0.343
+          "name": "Homeostasis, the Kidney and Nitrogen Excretion",
+          "name_zh": "稳态、肾脏与含氮排泄",
+          "score": 0.234
+        },
+        {
+          "topic_id": "bio_biodiversity",
+          "name": "Biodiversity Sampling and Conservation",
+          "name_zh": "生物多样性调查与保护",
+          "score": 0.016
         },
         {
           "topic_id": "bio_cell_structure",
           "name": "Microscopy and Eukaryotic Organelles",
           "name_zh": "显微镜与真核细胞器",
-          "score": 0
-        },
-        {
-          "topic_id": "bio_cell_structure_bio_prokaryotes",
-          "name": "Prokaryotic Cells and Cell Size and Magnification",
-          "name_zh": "原核细胞与细胞大小与放大",
           "score": 0
         }
       ],
@@ -6871,7 +7078,7 @@
               "canonical_id": "pc_2a9c578569ae3d146bdaf824188b711a",
               "name": "Homeostasis Principles",
               "name_zh": "体内平衡原理",
-              "score": 0.519,
+              "score": 0.512,
               "keyword_coverage": 0.294,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -6894,12 +7101,23 @@
             "urea"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“脱氨与尿素形成”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有肝脏中氨基酸脱氨及尿素形成概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：脱氨与尿素形成 Concept 覆盖肝脏处理过量氨基酸。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_deamination_urea",
+              "canonical_id": "pc_836539cc28f32764f290b41af21471dc",
+              "name": "Deamination and Urea Formation",
+              "name_zh": "脱氨与尿素形成",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:14.1:4",
@@ -6953,7 +7171,7 @@
             "collecting"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -7183,12 +7401,23 @@
             "oxidase"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“葡萄糖试纸与生物传感器”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有葡萄糖氧化酶/过氧化物酶试纸和生物传感器原理概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：葡萄糖试纸与生物传感器 Concept 覆盖 glucose oxidase 和 peroxidase 原理。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_glucose_biosensors",
+              "canonical_id": "pc_741be376203b33aa29b3da95c147223e",
+              "name": "Glucose Test Strips and Biosensors",
+              "name_zh": "葡萄糖试纸与生物传感器",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -7203,21 +7432,21 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "bio_homeostasis",
-          "name": "Homeostasis",
-          "name_zh": "体内平衡",
-          "score": 0.343
-        },
-        {
           "topic_id": "bio_transport_plants",
           "name": "Transport in Plants",
           "name_zh": "植物运输",
           "score": 0.262
         },
         {
-          "topic_id": "bio_photosynthesis",
-          "name": "Photosynthesis",
-          "name_zh": "光合作用",
+          "topic_id": "bio_homeostasis",
+          "name": "Homeostasis, the Kidney and Nitrogen Excretion",
+          "name_zh": "稳态、肾脏与含氮排泄",
+          "score": 0.228
+        },
+        {
+          "topic_id": "bio_photosynthesis_calvin",
+          "name": "The Calvin Cycle and Limiting Factors",
+          "name_zh": "Calvin 循环与限制因素",
           "score": 0.034
         }
       ],
@@ -7342,12 +7571,23 @@
             "messenger"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“ABA 与气孔关闭”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有 ABA、气孔关闭和钙离子第二信使的可信概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：ABA 与气孔关闭 Concept 覆盖 Ca2+ 第二信使和水分胁迫反应。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_aba_stomatal_closure",
+              "canonical_id": "pc_e8352e234d2f8fb344dafcdbd894f99e",
+              "name": "ABA Signalling and Stomatal Closure",
+              "name_zh": "ABA 与气孔关闭",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -7365,19 +7605,19 @@
           "topic_id": "bio_coordination_bio_hormonal",
           "name": "Hormonal Control and Plant Responses",
           "name_zh": "激素控制与植物响应",
-          "score": 0.199
+          "score": 0.189
         },
         {
-          "topic_id": "bio_homeostasis",
-          "name": "Homeostasis",
-          "name_zh": "体内平衡",
+          "topic_id": "bio_glucose_homeostasis",
+          "name": "Blood Glucose Control and Biosensing",
+          "name_zh": "血糖调节与生物传感",
           "score": 0.167
         },
         {
           "topic_id": "bio_inheritance_bio_linkage",
-          "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
-          "name_zh": "基因连锁与交换与基因表达控制",
-          "score": 0.139
+          "name": "Eukaryotic and Prokaryotic Gene Regulation",
+          "name_zh": "真核与原核基因表达调控",
+          "score": 0.137
         }
       ],
       "outcomes": [
@@ -7738,12 +7978,23 @@
             "stimulating"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“神经肌肉激活与兴奋—收缩耦联”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有神经肌肉接头、T 管和肌浆网刺激横纹肌收缩的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：神经肌肉激活 Concept 覆盖神经肌肉接头、T 管和肌浆网。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_neuromuscular_activation",
+              "canonical_id": "pc_847c9f7d1469b264070cc3f7651a68b1",
+              "name": "Neuromuscular Activation and Excitation-Contraction Coupling",
+              "name_zh": "神经肌肉激活与兴奋—收缩耦联",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:15.1:11",
@@ -7762,12 +8013,33 @@
             "structure"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：从图示和电子显微图识别横纹肌超微结构属于图像技能；现有 KG 没有肌肉概念可作为可靠背景。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准 Skill 映射：横纹肌超微结构判读由神经肌肉激活与滑动肌丝两个 Concept 提供背景。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_neuromuscular_activation",
+              "canonical_id": "pc_847c9f7d1469b264070cc3f7651a68b1",
+              "name": "Neuromuscular Activation and Excitation-Contraction Coupling",
+              "name_zh": "神经肌肉激活与兴奋—收缩耦联",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "bio_sliding_filament_contraction",
+              "canonical_id": "pc_494276c0931395240447f3ed14ae9315",
+              "name": "Sarcomeres and the Sliding Filament Model",
+              "name_zh": "肌节与滑动肌丝模型",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:15.1:12",
@@ -7786,12 +8058,23 @@
             "roles"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“肌节与滑动肌丝模型”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有滑动肌丝模型及 troponin、tropomyosin、Ca²⁺、ATP 作用概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：滑动肌丝 Concept 覆盖 troponin、tropomyosin、Ca2+ 与 ATP。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_sliding_filament_contraction",
+              "canonical_id": "pc_494276c0931395240447f3ed14ae9315",
+              "name": "Sarcomeres and the Sliding Filament Model",
+              "name_zh": "肌节与滑动肌丝模型",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -7815,13 +8098,13 @@
           "topic_id": "bio_coordination_bio_hormonal",
           "name": "Hormonal Control and Plant Responses",
           "name_zh": "激素控制与植物响应",
-          "score": 0.179
+          "score": 0.178
         },
         {
           "topic_id": "bio_inheritance_bio_linkage",
-          "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
-          "name_zh": "基因连锁与交换与基因表达控制",
-          "score": 0.147
+          "name": "Eukaryotic and Prokaryotic Gene Regulation",
+          "name_zh": "真核与原核基因表达调控",
+          "score": 0.144
         }
       ],
       "outcomes": [
@@ -7909,12 +8192,23 @@
             "see"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“植物响应”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有赤霉素促进大麦萌发的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的植物响应 Concept 覆盖赤霉素参与大麦萌发和 DELLA 调控边界。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_plant_responses",
+              "canonical_id": "pc_ec9ed2577284952c142079dc7a389627",
+              "name": "Plant Responses",
+              "name_zh": "植物响应",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -7930,20 +8224,20 @@
       "candidate_topics": [
         {
           "topic_id": "bio_inheritance",
-          "name": "Meiosis and Genetic Crosses",
-          "name_zh": "减数分裂与遗传杂交",
+          "name": "Meiosis, Genetic Crosses and Linkage",
+          "name_zh": "减数分裂、遗传杂交与连锁",
           "score": 0.017
+        },
+        {
+          "topic_id": "bio_population_genetics_breeding",
+          "name": "Population Genetics and Selective Breeding",
+          "name_zh": "群体遗传与选择育种",
+          "score": 0.007
         },
         {
           "topic_id": "bio_cell_structure",
           "name": "Microscopy and Eukaryotic Organelles",
           "name_zh": "显微镜与真核细胞器",
-          "score": 0
-        },
-        {
-          "topic_id": "bio_cell_structure_bio_prokaryotes",
-          "name": "Prokaryotic Cells and Cell Size and Magnification",
-          "name_zh": "原核细胞与细胞大小与放大",
           "score": 0
         }
       ],
@@ -8108,7 +8402,7 @@
             "main"
           ],
           "requirement_type": "practical_skill",
-          "review_status": "needs_review",
+          "review_status": "approved",
           "coverage_signal": "skill_mapping_required",
           "summary_zh": "该要求主要属于实践技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
@@ -8221,22 +8515,22 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "bio_inheritance_bio_linkage",
-          "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
-          "name_zh": "基因连锁与交换与基因表达控制",
-          "score": 0.024
-        },
-        {
           "topic_id": "bio_nucleic_acids",
           "name": "Nucleic Acids and Protein Synthesis",
           "name_zh": "核酸与蛋白质合成",
           "score": 0.024
         },
         {
-          "topic_id": "bio_genetic_tech",
-          "name": "Genetic Technology",
-          "name_zh": "遗传技术",
-          "score": 0.013
+          "topic_id": "bio_inheritance",
+          "name": "Meiosis, Genetic Crosses and Linkage",
+          "name_zh": "减数分裂、遗传杂交与连锁",
+          "score": 0.023
+        },
+        {
+          "topic_id": "bio_population_genetics_breeding",
+          "name": "Population Genetics and Selective Breeding",
+          "name_zh": "群体遗传与选择育种",
+          "score": 0.02
         }
       ],
       "outcomes": [
@@ -8426,13 +8720,24 @@
             "formula",
             "mathematical"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“卡方检验”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有卡方检验概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：卡方检验 Concept 覆盖观察值与期望值差异的显著性检验。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_chi_square_test",
+              "canonical_id": "pc_c19d99d4e72b2403c4a171b6d31c3c94",
+              "name": "Chi-Squared Test",
+              "name_zh": "卡方检验",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:16.2:6",
@@ -8538,9 +8843,9 @@
       "candidate_topics": [
         {
           "topic_id": "bio_inheritance_bio_linkage",
-          "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
-          "name_zh": "基因连锁与交换与基因表达控制",
-          "score": 0.476
+          "name": "Eukaryotic and Prokaryotic Gene Regulation",
+          "name_zh": "真核与原核基因表达调控",
+          "score": 0.489
         },
         {
           "topic_id": "bio_genetic_tech",
@@ -8549,10 +8854,10 @@
           "score": 0.252
         },
         {
-          "topic_id": "bio_coordination_bio_hormonal",
-          "name": "Hormonal Control and Plant Responses",
-          "name_zh": "激素控制与植物响应",
-          "score": 0.226
+          "topic_id": "bio_nucleic_acids",
+          "name": "Nucleic Acids and Protein Synthesis",
+          "name_zh": "核酸与蛋白质合成",
+          "score": 0.224
         }
       ],
       "outcomes": [
@@ -8608,12 +8913,23 @@
             "production"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“lac 操纵子”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有基因表达控制概念限定为真核转录调控，没有原核 lac 操纵子概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：lac 操纵子 Concept 覆盖原核诱导调控并排除不要求的 cAMP 机制。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_lac_operon",
+              "canonical_id": "pc_f8f492dd44bddf661b72393796961c7c",
+              "name": "The lac Operon",
+              "name_zh": "lac 操纵子",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:16.3:3",
@@ -8714,15 +9030,15 @@
           "score": 0.716
         },
         {
-          "topic_id": "bio_photosynthesis",
-          "name": "Photosynthesis",
-          "name_zh": "光合作用",
+          "topic_id": "bio_photosynthesis_calvin",
+          "name": "The Calvin Cycle and Limiting Factors",
+          "name_zh": "Calvin 循环与限制因素",
           "score": 0.035
         },
         {
           "topic_id": "bio_inheritance",
-          "name": "Meiosis and Genetic Crosses",
-          "name_zh": "减数分裂与遗传杂交",
+          "name": "Meiosis, Genetic Crosses and Linkage",
+          "name_zh": "减数分裂、遗传杂交与连锁",
           "score": 0.032
         }
       ],
@@ -8842,13 +9158,24 @@
             "provided",
             "requirements"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“两独立样本 t 检验”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有生物 KG：没有双样本均值 t 检验概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：两独立样本 t 检验 Concept 覆盖均值比较和显著性判断。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_t_test",
+              "canonical_id": "pc_6fa5d3f2332e87d78b3cbc7db729e4fc",
+              "name": "Two-Sample t-Test",
+              "name_zh": "两独立样本 t 检验",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -8869,15 +9196,15 @@
           "score": 0.472
         },
         {
+          "topic_id": "bio_molecules",
+          "name": "Water, Monomers and Carbohydrates",
+          "name_zh": "水、单体与碳水化合物",
+          "score": 0.01
+        },
+        {
           "topic_id": "bio_respiration_bio_oxidative",
           "name": "Oxidative Phosphorylation and Anaerobic Respiration",
           "name_zh": "氧化磷酸化与无氧呼吸",
-          "score": 0.009
-        },
-        {
-          "topic_id": "bio_inheritance_bio_linkage",
-          "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
-          "name_zh": "基因连锁与交换与基因表达控制",
           "score": 0.009
         }
       ],
@@ -9039,12 +9366,23 @@
             "conditions"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“Hardy–Weinberg 原理”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有 Hardy-Weinberg 原理、等位基因频率计算及其成立条件。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：Hardy-Weinberg Concept 覆盖频率计算及成立条件。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_hardy_weinberg",
+              "canonical_id": "pc_f0a830e611bfffffd41f5757e75d4804",
+              "name": "Hardy-Weinberg Principle",
+              "name_zh": "Hardy–Weinberg 原理",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:17.2:6",
@@ -9060,12 +9398,23 @@
             "selective"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“选择育种”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有生物 KG：自然选择概念不能代替人为选择；当前没有选择育种原则概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：选择育种 Concept 覆盖人工选择、近交和杂交原则。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_selective_breeding",
+              "canonical_id": "pc_0bd550531981771a371395e5a07a3dbd",
+              "name": "Selective Breeding",
+              "name_zh": "选择育种",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:17.2:7",
@@ -9084,12 +9433,23 @@
             "hybridisation"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“选择育种”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有生物 KG：没有人工选择或选择育种及所列作物、奶牛实例概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：选择育种 Concept 覆盖官方指定的谷物、玉米和奶牛实例。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_selective_breeding",
+              "canonical_id": "pc_0bd550531981771a371395e5a07a3dbd",
+              "name": "Selective Breeding",
+              "name_zh": "选择育种",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -9116,9 +9476,9 @@
           "score": 0.023
         },
         {
-          "topic_id": "bio_inheritance_bio_linkage",
-          "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
-          "name_zh": "基因连锁与交换与基因表达控制",
+          "topic_id": "bio_inheritance",
+          "name": "Meiosis, Genetic Crosses and Linkage",
+          "name_zh": "减数分裂、遗传杂交与连锁",
           "score": 0.022
         }
       ],
@@ -9251,22 +9611,22 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "bio_ecology_classification",
+          "name": "Ecosystems, Niches and Classification",
+          "name_zh": "生态系统、生态位与分类",
+          "score": 0.681
+        },
+        {
+          "topic_id": "bio_cell_structure_bio_prokaryotes",
+          "name": "Prokaryotic Cells, Viruses and Cell Scale",
+          "name_zh": "原核细胞、病毒与细胞尺度",
+          "score": 0.136
+        },
+        {
           "topic_id": "bio_biodiversity",
-          "name": "Biodiversity and Conservation",
-          "name_zh": "生物多样性与保护",
-          "score": 0.668
-        },
-        {
-          "topic_id": "bio_evolution",
-          "name": "Selection and Evolution",
-          "name_zh": "选择与进化",
-          "score": 0.015
-        },
-        {
-          "topic_id": "bio_molecules_bio_lipids",
-          "name": "Lipids, Proteins, and Biochemical Tests",
-          "name_zh": "脂质、蛋白质与生化检测",
-          "score": 0.014
+          "name": "Biodiversity Sampling and Conservation",
+          "name_zh": "生物多样性调查与保护",
+          "score": 0.017
         }
       ],
       "outcomes": [
@@ -9472,12 +9832,23 @@
             "nucleic"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“病毒结构与核酸分类”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有生物 KG：感染病概念仅提到病毒是病原体，没有按 RNA/DNA 及单双链分类病毒的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：病毒结构与核酸分类 Concept 覆盖 DNA/RNA 及单双链分类。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_virus_structure_classification",
+              "canonical_id": "pc_a5f0cc3dc0636e18a4fef67d49bec23e",
+              "name": "Virus Structure and Nucleic-Acid Classification",
+              "name_zh": "病毒结构与核酸分类",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -9495,20 +9866,20 @@
       "candidate_topics": [
         {
           "topic_id": "bio_biodiversity",
-          "name": "Biodiversity and Conservation",
-          "name_zh": "生物多样性与保护",
-          "score": 0.334
+          "name": "Biodiversity Sampling and Conservation",
+          "name_zh": "生物多样性调查与保护",
+          "score": 0.336
+        },
+        {
+          "topic_id": "bio_ecology_classification",
+          "name": "Ecosystems, Niches and Classification",
+          "name_zh": "生态系统、生态位与分类",
+          "score": 0.039
         },
         {
           "topic_id": "bio_cell_structure",
           "name": "Microscopy and Eukaryotic Organelles",
           "name_zh": "显微镜与真核细胞器",
-          "score": 0
-        },
-        {
-          "topic_id": "bio_cell_structure_bio_prokaryotes",
-          "name": "Prokaryotic Cells and Cell Size and Magnification",
-          "name_zh": "原核细胞与细胞大小与放大",
           "score": 0
         }
       ],
@@ -9526,12 +9897,23 @@
             "terms"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“生态系统与生态位”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有 ecosystem 和 niche 的定义概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：生态系统与生态位 Concept 覆盖两个术语定义。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_ecosystems_niches",
+              "canonical_id": "pc_ecfaff613c7086e0cece6014f44b68ba",
+              "name": "Ecosystems and Ecological Niches",
+              "name_zh": "生态系统与生态位",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:18.2:2",
@@ -9652,13 +10034,24 @@
             "biotic",
             "correlations"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“Spearman 与 Pearson 相关检验”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有 Spearman 等级相关或 Pearson 线性相关的选择、计算和解释概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：Spearman 与 Pearson 相关检验 Concept 覆盖两个变量关系分析。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_correlation_tests",
+              "canonical_id": "pc_36accdd741466f0aec58630c1ae3ea63",
+              "name": "Spearman and Pearson Correlation",
+              "name_zh": "Spearman 与 Pearson 相关检验",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:18.2:6",
@@ -9709,9 +10102,9 @@
       "candidate_topics": [
         {
           "topic_id": "bio_biodiversity",
-          "name": "Biodiversity and Conservation",
-          "name_zh": "生物多样性与保护",
-          "score": 0.679
+          "name": "Biodiversity Sampling and Conservation",
+          "name_zh": "生物多样性调查与保护",
+          "score": 0.667
         },
         {
           "topic_id": "bio_evolution",
@@ -9720,10 +10113,10 @@
           "score": 0.037
         },
         {
-          "topic_id": "bio_transport_plants",
-          "name": "Transport in Plants",
-          "name_zh": "植物运输",
-          "score": 0.012
+          "topic_id": "bio_coordination_bio_hormonal",
+          "name": "Hormonal Control and Plant Responses",
+          "name_zh": "激素控制与植物响应",
+          "score": 0.023
         }
       ],
       "outcomes": [
@@ -9846,12 +10239,23 @@
             "methods"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“保护”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有人工授精、体外受精、胚胎移植等辅助生殖在保护中的应用概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的保护 Concept 覆盖 IVF、胚胎移植和代孕，不包含人工授精。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_conservation",
+              "canonical_id": "pc_aa24b4324d962f7ab29f0ddeb0f63405",
+              "name": "Conservation",
+              "name_zh": "保护",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:18.3:5",
@@ -9940,15 +10344,15 @@
         },
         {
           "topic_id": "bio_inheritance",
-          "name": "Meiosis and Genetic Crosses",
-          "name_zh": "减数分裂与遗传杂交",
-          "score": 0.173
+          "name": "Meiosis, Genetic Crosses and Linkage",
+          "name_zh": "减数分裂、遗传杂交与连锁",
+          "score": 0.17
         },
         {
           "topic_id": "bio_homeostasis",
-          "name": "Homeostasis",
-          "name_zh": "体内平衡",
-          "score": 0.17
+          "name": "Homeostasis, the Kidney and Nitrogen Excretion",
+          "name_zh": "稳态、肾脏与含氮排泄",
+          "score": 0.169
         }
       ],
       "outcomes": [
@@ -10280,12 +10684,23 @@
             "mrna"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“DNA 微阵列”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有微阵列分析基因表达或基因组比较概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：DNA 微阵列 Concept 覆盖基因组分析和 mRNA 表达检测。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_microarrays",
+              "canonical_id": "pc_095528b74ad784ace982978c2ca8da1a",
+              "name": "DNA Microarrays",
+              "name_zh": "DNA 微阵列",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9700:19.1:11",
@@ -10304,12 +10719,23 @@
             "genomes"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“序列数据库与生物信息学”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有生物 KG 没有核苷酸和氨基酸序列数据库及生物信息学比较的用途概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：序列数据库与生物信息学 Concept 覆盖数据库的用途和收益。",
+          "candidate_concepts": [
+            {
+              "node_id": "bio_bioinformatics_databases",
+              "canonical_id": "pc_4791da912983a17b9474706ebf55d28a",
+              "name": "Sequence Databases and Bioinformatics",
+              "name_zh": "序列数据库与生物信息学",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -10331,14 +10757,14 @@
         },
         {
           "topic_id": "bio_inheritance",
-          "name": "Meiosis and Genetic Crosses",
-          "name_zh": "减数分裂与遗传杂交",
-          "score": 0.138
+          "name": "Meiosis, Genetic Crosses and Linkage",
+          "name_zh": "减数分裂、遗传杂交与连锁",
+          "score": 0.136
         },
         {
-          "topic_id": "bio_homeostasis",
-          "name": "Homeostasis",
-          "name_zh": "体内平衡",
+          "topic_id": "bio_glucose_homeostasis",
+          "name": "Blood Glucose Control and Biosensing",
+          "name_zh": "血糖调节与生物传感",
           "score": 0.017
         }
       ],
@@ -10508,10 +10934,10 @@
           "score": 0.019
         },
         {
-          "topic_id": "bio_inheritance",
-          "name": "Meiosis and Genetic Crosses",
-          "name_zh": "减数分裂与遗传杂交",
-          "score": 0.013
+          "topic_id": "bio_evolution",
+          "name": "Selection and Evolution",
+          "name_zh": "选择与进化",
+          "score": 0.011
         }
       ],
       "outcomes": [
@@ -10694,14 +11120,6 @@
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },
     {
-      "node_id": "bio_mitosis",
-      "canonical_id": "pc_e8a318724c6c8e8096b98fc763ca69c6",
-      "name": "Mitosis",
-      "name_zh": "有丝分裂",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
       "node_id": "bio_dna_structure",
       "canonical_id": "pc_6a00c0df14c5b18459964bd5ccb5c243",
       "name": "DNA Structure",
@@ -10854,14 +11272,6 @@
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },
     {
-      "node_id": "bio_plant_responses",
-      "canonical_id": "pc_ec9ed2577284952c142079dc7a389627",
-      "name": "Plant Responses",
-      "name_zh": "植物响应",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
       "node_id": "bio_genetic_crosses",
       "canonical_id": "pc_0a20187ab8711d84834ffc5e887d019b",
       "name": "Genetic Crosses",
@@ -10922,14 +11332,6 @@
       "canonical_id": "pc_ff6c4a398294b049cadd95acd7c8ace2",
       "name": "Biodiversity and Sampling",
       "name_zh": "生物多样性调查",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
-      "node_id": "bio_conservation",
-      "canonical_id": "pc_aa24b4324d962f7ab29f0ddeb0f63405",
-      "name": "Conservation",
-      "name_zh": "保护",
       "review_status": "needs_review",
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },
