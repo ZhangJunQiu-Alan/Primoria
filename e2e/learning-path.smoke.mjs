@@ -11,7 +11,7 @@ const requireFromWeb = createRequire(new URL("../apps/web/package.json", import.
 const postgres = requireFromWeb("postgres");
 
 const PORT = process.env.PORT || "3120";
-const BASE_URL = `http://127.0.0.1:${PORT}`;
+const BASE_URL = `http://localhost:${PORT}`;
 const COURSE_ID = "crs_ci_learning_smoke";
 const LESSON_ID = "lsn_ci_learning_smoke";
 const EMAIL = "ci-learning-smoke@example.com";
@@ -42,6 +42,21 @@ async function waitForServer(server) {
     await delay(750);
   }
   throw new Error(`server did not become ready at ${BASE_URL}`);
+}
+
+async function fillPasswordAfterHydration(page, value) {
+  const input = page.locator('input[type="password"]');
+  const visibilityButton = page.locator(".auth-password-control button");
+  const deadline = Date.now() + 30_000;
+
+  while (Date.now() < deadline) {
+    await input.fill("");
+    await input.fill(value);
+    if (await visibilityButton.isEnabled()) return input;
+    await delay(100);
+  }
+
+  throw new Error("authentication form did not hydrate");
 }
 
 async function verifyPersistence() {
@@ -82,8 +97,9 @@ try {
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
   await page.goto(`${BASE_URL}/auth/sign-in?next=/course/${COURSE_ID}`, { waitUntil: "domcontentloaded" });
+  const passwordInput = await fillPasswordAfterHydration(page, PASSWORD);
   await page.locator('input[type="email"]').fill(EMAIL);
-  await page.locator('input[type="password"]').fill(PASSWORD);
+  await passwordInput.fill(PASSWORD);
   const [signInResponse] = await Promise.all([
     page.waitForResponse((response) => response.url().endsWith("/api/auth/sign-in") && response.request().method() === "POST"),
     page.locator('button[type="submit"]').click(),
