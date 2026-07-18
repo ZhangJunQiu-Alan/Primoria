@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.2.0",
   "graph_id": "a_level_chemistry",
   "subject": "Chemistry",
   "jurisdictions": [
@@ -9,12 +9,22 @@
   "source_ids": [
     "src_cambridge_9701_2025_2027"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "经项目所有者批准，补齐 Cambridge 9701 的 38 项化学缺口：新增 10 个 Concept、扩充 12 个现有 Concept、建立 4 项技能映射并新增 16 条有证据的先修边。"
+    },
+    {
+      "version": "1.2.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -25,28 +35,79 @@
       "name_zh": "亚原子粒子与同位素",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; syllabus section 1.1 Particles in the atom and atomic radius"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; syllabus section 1.2 Isotopes"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.3 Formulas"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; syllabus section 3.1 Electronegativity and bonding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_atomic_che_electron_config",
       "kind": "topic",
-      "name": "Electronic Configuration and Ionisation Energy",
-      "name_zh": "电子排布与电离能",
+      "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+      "name_zh": "电子排布、原子轨道与电离能",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; syllabus section 1.1 Particles in the atom and atomic radius"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; syllabus section 1.3 Electrons, energy levels and atomic orbitals"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; syllabus section 1.4 Ionisation energy"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; syllabus section 3.5 Shapes of molecules"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_stoichiometry",
       "kind": "topic",
-      "name": "The Mole and Avogadro Constant and Empirical and Molecular Formulae",
-      "name_zh": "摩尔与阿伏伽德罗常数与实验式与分子式",
+      "name": "Relative Masses, the Mole and Formulae",
+      "name_zh": "相对质量、摩尔与化学式",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; syllabus section 1.1 Particles in the atom and atomic radius"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.1 Relative masses of atoms and molecules"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.2 The mole and the Avogadro constant"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; syllabus section 2.4 Reacting masses and volumes (of solutions and gases)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_stoichiometry_che_reacting_masses",
@@ -55,8 +116,21 @@
       "name_zh": "反应质量与气体体积与浓度与滴定",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; syllabus section 2.4 Reacting masses and volumes (of solutions and gases)"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; syllabus section 22.2 Mass spectrometry"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; syllabus section 37.2 Gas/liquid chromatography"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_bonding_part1",
@@ -65,8 +139,25 @@
       "name_zh": "化学键：成键类型",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; syllabus section 3.1 Electronegativity and bonding"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; syllabus section 3.2 Ionic bonding"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.3 Metallic bonding"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.4 Covalent bonding and coordinate (dative covalent) bonding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_bonding_part2",
@@ -75,8 +166,25 @@
       "name_zh": "化学键：分子形状与分子间作用力",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.1 Relative masses of atoms and molecules"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; syllabus section 3.1 Electronegativity and bonding"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; syllabus section 3.2 Ionic bonding"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.3 Metallic bonding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_states_enthalpy",
@@ -85,8 +193,25 @@
       "name_zh": "物态与焓变",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; syllabus section 3.2 Ionic bonding"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; syllabus section 3.7 Dot-and-cross diagrams"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; syllabus section 4.1 The gaseous state: ideal and real gases and pV = nRT"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; syllabus section 5.1 Enthalpy change, ΔH"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_energetics",
@@ -95,8 +220,25 @@
       "name_zh": "化学能",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; syllabus section 3.5 Shapes of molecules"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; syllabus section 3.6 Intermolecular forces, electronegativity and bond properties"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; syllabus section 4.1 The gaseous state: ideal and real gases and pV = nRT"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; syllabus section 5.1 Enthalpy change, ΔH"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_kinetics_part1",
@@ -105,8 +247,25 @@
       "name_zh": "反应动力学：速率与碰撞理论",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; syllabus section 7.1 Chemical equilibria: reversible reactions, dynamic equilibrium"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; syllabus section 7.2 Brønsted–Lowry theory of acids and bases"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; syllabus section 8.1 Rate of reaction"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; syllabus section 8.2 Effect of temperature on reaction rates and the concept of activation energy"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_kinetics_part2",
@@ -115,8 +274,25 @@
       "name_zh": "反应动力学：速率方程与催化",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.2 The mole and the Avogadro constant"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; syllabus section 8.1 Rate of reaction"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; syllabus section 8.3 Homogeneous and heterogeneous catalysts"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; syllabus section 26.1 Simple rate equations, orders of reaction and rate constants"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_equilibria_acidbase",
@@ -125,8 +301,21 @@
       "name_zh": "动态平衡与勒夏特列原理",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; syllabus section 7.1 Chemical equilibria: reversible reactions, dynamic equilibrium"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; syllabus section 24.1 Electrolysis"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.53; syllabus section 35.2 Predicting the type of polymerisation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_equilibria_acidbase_che_kc_kp",
@@ -135,8 +324,25 @@
       "name_zh": "平衡常数 Kc 与 Kp与布朗斯特-洛瑞理论",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; syllabus section 1.2 Isotopes"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; syllabus section 7.2 Brønsted–Lowry theory of acids and bases"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; syllabus section 28.3 Colour of complexes"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.46; syllabus section 28.5 Stability constants, Kstab"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_acids",
@@ -145,18 +351,44 @@
       "name_zh": "强酸与弱酸与pH 与酸解离常数",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.2 The mole and the Avogadro constant"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; syllabus section 18.1 Carboxylic acids"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; syllabus section 24.1 Electrolysis"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; syllabus section 25.1 Acids and bases"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_acids_che_buffers",
       "kind": "topic",
-      "name": "Buffers and Solubility Product",
-      "name_zh": "缓冲剂与溶度积",
+      "name": "Buffers, Solubility Product and Partition Equilibria",
+      "name_zh": "缓冲、溶度积与分配平衡",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; syllabus section 25.2 Partition coefficients"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.46; syllabus section 28.5 Stability constants, Kstab"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_redox",
@@ -165,8 +397,25 @@
       "name_zh": "氧化还原与电化学",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; syllabus section 1.2 Isotopes"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; syllabus section 3.7 Dot-and-cross diagrams"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; syllabus section 6.1 Redox processes: electron transfer and changes in oxidation number (oxidation state)"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; syllabus section 17.1 Aldehydes and ketones"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_electrochem_thermo",
@@ -175,8 +424,17 @@
       "name_zh": "电化学电池与电解",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; syllabus section 24.1 Electrolysis"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; syllabus section 24.2 Standard electrode potentials E ⦵"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_electrochem_thermo_che_born_haber",
@@ -185,8 +443,25 @@
       "name_zh": "晶格能与玻恩-哈伯循环与熵",
       "topic": null,
       "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; syllabus section 1.3 Electrons, energy levels and atomic orbitals"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; syllabus section 1.4 Ionisation energy"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; syllabus section 5.2 Hess’s law"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; syllabus section 23.1 Lattice energy and Born-Haber cycles"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_free_energy_periodicity",
@@ -195,8 +470,25 @@
       "name_zh": "自由能与周期性",
       "topic": null,
       "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; syllabus section 1.3 Electrons, energy levels and atomic orbitals"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; syllabus section 1.4 Ionisation energy"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; syllabus section 5.1 Enthalpy change, ΔH"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.26; syllabus section 9.1 Periodicity of physical properties of the elements in Period 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_groups",
@@ -205,8 +497,25 @@
       "name_zh": "无机元素族化学",
       "topic": null,
       "default_order": 19,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.4 Covalent bonding and coordinate (dative covalent) bonding"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; syllabus section 10.1 Similarities and trends in the properties of the Group 2 metals, magnesium to barium, and their compounds"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; syllabus section 11.1 Physical properties of the Group 17 elements"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; syllabus section 11.2 The chemical properties of the halogen elements and the hydrogen halides"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_transition",
@@ -215,18 +524,52 @@
       "name_zh": "过渡金属元素",
       "topic": null,
       "default_order": 20,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.3 Formulas"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; syllabus section 3.6 Intermolecular forces, electronegativity and bond properties"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; syllabus section 8.3 Homogeneous and heterogeneous catalysts"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.26; syllabus section 9.1 Periodicity of physical properties of the elements in Period 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_organic_basics",
       "kind": "topic",
-      "name": "Nomenclature and Isomerism",
-      "name_zh": "命名法与同分异构",
+      "name": "Organic Representations, Nomenclature and Isomerism",
+      "name_zh": "有机结构表示、命名法与同分异构",
       "topic": null,
       "default_order": 21,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; syllabus section 13.1 Formulas, functional groups and the naming of organic compounds"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; syllabus section 13.3 Shapes of organic molecules; σ and π bonds"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; syllabus section 13.4 Isomerism: structural isomerism and stereoisomerism"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; syllabus section 19.2 Nitriles and hydroxynitriles"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_organic_basics_che_bond_fission",
@@ -235,8 +578,17 @@
       "name_zh": "键断裂与反应物种与反应机理类型",
       "topic": null,
       "default_order": 22,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; syllabus section 13.2 Characteristic organic reactions"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; syllabus section 29.2 Characteristic organic reactions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_hydrocarbons",
@@ -245,8 +597,25 @@
       "name_zh": "烃",
       "topic": null,
       "default_order": 23,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; syllabus section 12.1 Nitrogen and sulfur"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; syllabus section 13.4 Isomerism: structural isomerism and stereoisomerism"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.33; syllabus section 14.1 Alkanes"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.33,34; syllabus section 14.2 Alkenes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_halogenoalkanes_alcohols",
@@ -255,18 +624,52 @@
       "name_zh": "亲核取代与消去反应",
       "topic": null,
       "default_order": 24,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; syllabus section 7.1 Chemical equilibria: reversible reactions, dynamic equilibrium"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; syllabus section 8.1 Rate of reaction"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; syllabus section 8.2 Effect of temperature on reaction rates and the concept of activation energy"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; syllabus section 11.3 Some reactions of the halide ions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
       "kind": "topic",
-      "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-      "name_zh": "醇的反应与醇的氧化",
+      "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+      "name_zh": "醇的反应、氧化与碘仿检验",
       "topic": null,
       "default_order": 25,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; syllabus section 6.1 Redox processes: electron transfer and changes in oxidation number (oxidation state)"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; syllabus section 11.3 Some reactions of the halide ions"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; syllabus section 11.4 The reactions of chlorine"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; syllabus section 13.2 Characteristic organic reactions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_carbonyls",
@@ -275,8 +678,25 @@
       "name_zh": "羰基化合物",
       "topic": null,
       "default_order": 26,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.3 Formulas"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; syllabus section 7.2 Brønsted–Lowry theory of acids and bases"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; syllabus section 10.1 Similarities and trends in the properties of the Group 2 metals, magnesium to barium, and their compounds"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; syllabus section 13.1 Formulas, functional groups and the naming of organic compounds"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_nitrogen_org",
@@ -285,8 +705,52 @@
       "name_zh": "含氮化合物",
       "topic": null,
       "default_order": 27,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; syllabus section 12.1 Nitrogen and sulfur"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; syllabus section 13.1 Formulas, functional groups and the naming of organic compounds"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; syllabus section 18.1 Carboxylic acids"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; syllabus section 19.1 Primary amines"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_nitriles_amides",
+      "kind": "topic",
+      "name": "Nitriles and Amides",
+      "name_zh": "腈与酰胺",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.33,34; syllabus section 14.2 Alkenes"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; syllabus section 16.1 Alcohols"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; syllabus section 19.1 Primary amines"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; syllabus section 19.2 Nitriles and hydroxynitriles"
+        }
+      ],
+      "review_status": "approved",
+      "default_order": 28
     },
     {
       "id": "che_arenes_mass_spec",
@@ -294,9 +758,53 @@
       "name": "Arenes and Mass Spectrometry",
       "name_zh": "芳香烃与质谱分析",
       "topic": null,
-      "default_order": 28,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 29,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; syllabus section 2.1 Relative masses of atoms and molecules"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; syllabus section 2.4 Reacting masses and volumes (of solutions and gases)"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; syllabus section 3.3 Metallic bonding"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; syllabus section 4.2 Bonding and structure"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_phenols_diazonium",
+      "kind": "topic",
+      "name": "Phenols, Diazonium Salts and Azo Compounds",
+      "name_zh": "苯酚、重氮盐与偶氮化合物",
+      "topic": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; syllabus section 18.2 Esters"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; syllabus section 29.1 Formulas, functional groups and the naming of organic compounds"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.49; syllabus section 30.1 Arenes"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; syllabus section 32.2 Phenol"
+        }
+      ],
+      "review_status": "approved",
+      "default_order": 30
     },
     {
       "id": "che_analysis",
@@ -304,9 +812,26 @@
       "name": "Analytical Techniques",
       "name_zh": "分析技术",
       "topic": null,
-      "default_order": 29,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 31,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; syllabus section 21.1 Organic synthesis"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; syllabus section 22.1 Infrared spectroscopy"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; syllabus section 25.2 Partition coefficients"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.53; syllabus section 36.1 Organic synthesis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_subatomic",
@@ -318,8 +843,25 @@
       "description": "Protons, neutrons, and electrons making up the atom, whose relative masses and charges determine atomic number, mass number, and chemical behaviour.",
       "default_order": 1,
       "centrality": 0.281,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_isotopes",
@@ -331,8 +873,25 @@
       "description": "Atoms of the same element with equal protons but different numbers of neutrons, giving different mass numbers but identical chemical properties.",
       "default_order": 2,
       "centrality": 0.3014,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_electron_config",
@@ -346,8 +905,48 @@
       "centrality": 0.651,
       "visual": "diagram",
       "visual_hint": "Orbital filling diagram across shells and subshells.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 4"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_atomic_orbital_shapes",
+      "canonical_id": "pc_c68d18c005adce683dffeb83cd4cb895",
+      "kind": "concept",
+      "name": "Atomic Orbital Shapes",
+      "name_zh": "原子轨道形状",
+      "topic": "che_atomic_che_electron_config",
+      "description": "The shapes and orientations of atomic orbitals, including spherical s orbitals, directional p orbitals and the prescribed 3dxy and 3dz² orbitals, represented as probability regions rather than electron paths.",
+      "default_order": 2,
+      "visual": "diagram",
+      "visual_hint": "Show labelled s, p, 3dxy and 3dz² probability-density shapes and orientations.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 8"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_ionisation",
@@ -357,12 +956,50 @@
       "name_zh": "电离能",
       "topic": "che_atomic_che_electron_config",
       "description": "The energy required to remove electrons from gaseous atoms, whose successive values and periodic trends provide evidence for electronic structure.",
-      "default_order": 2,
+      "default_order": 3,
       "centrality": 0.1021,
       "visual": "chart",
       "visual_hint": "Plot successive ionisation energies revealing shell structure.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 5"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_relative_masses",
+      "canonical_id": "pc_7dba846520d7d616e9cf39e1d16905b3",
+      "kind": "concept",
+      "name": "Relative Atomic, Molecular and Formula Masses",
+      "name_zh": "相对原子、分子与式量",
+      "topic": "che_stoichiometry",
+      "description": "The unified atomic mass unit is one twelfth of a carbon-12 atom's mass; relative isotopic, atomic, molecular and formula masses compare the relevant mass with this reference and are dimensionless.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_mole",
@@ -372,10 +1009,27 @@
       "name_zh": "摩尔与阿伏伽德罗常数",
       "topic": "che_stoichiometry",
       "description": "The mole as the amount containing Avogadro's number of particles, linking number of particles, mass, and molar quantities in calculations.",
-      "default_order": 1,
+      "default_order": 2,
       "centrality": 0.1799,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 10"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_formulae",
@@ -384,11 +1038,28 @@
       "name": "Empirical and Molecular Formulae",
       "name_zh": "实验式与分子式",
       "topic": "che_stoichiometry",
-      "description": "Empirical formulae giving the simplest whole-number ratio of atoms and molecular formulae giving the actual numbers, determined from composition data.",
-      "default_order": 2,
+      "description": "Empirical formulae give the simplest whole-number atom ratio and molecular formulae give the actual numbers. Formula notation also distinguishes anhydrous and hydrated salts and records water of crystallisation in a hydrate.",
+      "default_order": 3,
       "centrality": 0.0686,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_reacting_masses",
@@ -400,8 +1071,17 @@
       "description": "Using balanced equations and the mole concept to calculate reacting masses, gas volumes, and theoretical yields in stoichiometric problems.",
       "default_order": 1,
       "centrality": 0.103,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 2.4 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_titration",
@@ -413,8 +1093,17 @@
       "description": "Determining unknown concentrations by titration, using the mole ratio in a balanced equation and an indicated end point to calculate the result.",
       "default_order": 2,
       "centrality": 0.0348,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 10"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_ionic",
@@ -428,8 +1117,25 @@
       "centrality": 0.2939,
       "visual": "diagram",
       "visual_hint": "Dot-and-cross diagram of electron transfer forming ions.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_covalent",
@@ -438,13 +1144,30 @@
       "name": "Covalent Bonding",
       "name_zh": "共价键",
       "topic": "che_bonding_part1",
-      "description": "Bonding by shared pairs of electrons between non-metal atoms, including single, double, triple, and dative (coordinate) covalent bonds.",
+      "description": "Covalent bonding is electrostatic attraction involving shared electron pairs, including single, double, triple and dative bonds. Direct orbital overlap forms σ bonds, sideways p-orbital overlap forms π bonds, and sp, sp² and sp³ hybridisation explains bond arrangement and molecular shape.",
       "default_order": 2,
       "centrality": 0.5537,
       "visual": "diagram",
       "visual_hint": "Dot-and-cross diagram of shared electron pairs.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_metallic",
@@ -456,8 +1179,21 @@
       "description": "Bonding in metals as a lattice of positive ions in a sea of delocalised electrons, explaining conductivity, malleability, and high melting points.",
       "default_order": 3,
       "centrality": 0.0615,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.26; 9.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_vsepr",
@@ -471,8 +1207,25 @@
       "centrality": 0.0865,
       "visual": "interactive",
       "visual_hint": "Rotate 3D molecular shapes showing bond angles for each electron-pair geometry.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_electronegativity",
@@ -484,8 +1237,25 @@
       "description": "The tendency of an atom to attract a shared electron pair, whose differences create bond polarity and overall molecular dipoles.",
       "default_order": 2,
       "centrality": 0.1451,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.46; 28.4 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_imf",
@@ -497,23 +1267,49 @@
       "description": "Forces between molecules—van der Waals, permanent dipole-dipole, and hydrogen bonding—that determine physical properties such as boiling point.",
       "default_order": 3,
       "centrality": 0.1415,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_gas_laws",
       "canonical_id": "pc_18388a54522ee3202a5121faa939f897",
       "kind": "concept",
-      "name": "Ideal Gas Behaviour",
-      "name_zh": "理想气体",
+      "name": "Kinetic Model and Ideal Gas Behaviour",
+      "name_zh": "气体动理论模型与理想气体行为",
       "topic": "che_states_enthalpy",
-      "description": "The behaviour of ideal gases described by the equation pV equals nRT, relating pressure, volume, temperature, and amount of gas.",
+      "description": "Gas pressure arises from molecular collisions with container walls and the associated momentum changes. Ideal-gas particles have negligible volume and no intermolecular attraction, leading to the equation pV = nRT.",
       "default_order": 1,
       "centrality": 0.0353,
       "visual": "function",
       "visual_hint": "Plot pV = nRT relationships between pressure, volume, and temperature.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_solids",
@@ -525,8 +1321,21 @@
       "description": "Giant ionic, giant covalent, simple molecular, and metallic solid structures, whose bonding and arrangement determine their physical properties.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_enthalpy",
@@ -540,8 +1349,25 @@
       "centrality": 0.1145,
       "visual": "diagram",
       "visual_hint": "Energy-profile diagram of enthalpy change with activation energy.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_hess",
@@ -555,21 +1381,51 @@
       "centrality": 0.0631,
       "visual": "diagram",
       "visual_hint": "Hess-cycle diagram of alternative reaction routes.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_bond_enthalpy",
       "canonical_id": "pc_b35d6548b40342a4e7e95af4650c7349",
       "kind": "concept",
-      "name": "Bond Enthalpy",
-      "name_zh": "键能",
+      "name": "Bond Enthalpy and Bond Length",
+      "name_zh": "键能与键长",
       "topic": "che_energetics",
-      "description": "The average energy needed to break one mole of a given bond in the gas phase, used to estimate reaction enthalpy changes.",
+      "description": "Bond enthalpy is the energy required to break one mole of a particular covalent bond in gaseous molecules, while bond length is the internuclear distance between bonded atoms; shorter, stronger bonds are generally harder to break and help explain differences in molecular reactivity.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_calorimetry",
@@ -581,8 +1437,13 @@
       "description": "Measuring enthalpy changes experimentally from temperature changes using the relationship q equals mcΔT in a calorimeter.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 7"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_rate",
@@ -594,8 +1455,25 @@
       "description": "The rate of reaction as the change in concentration of a reactant or product per unit time, and the factors that affect it.",
       "default_order": 1,
       "centrality": 0.1523,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_collision",
@@ -607,8 +1485,25 @@
       "description": "Collision theory explaining rates through the frequency of collisions and the proportion exceeding the activation energy with correct orientation.",
       "default_order": 2,
       "centrality": 0.1347,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_boltzmann",
@@ -622,8 +1517,21 @@
       "centrality": 0.0408,
       "visual": "function",
       "visual_hint": "Plot the Maxwell-Boltzmann energy distribution and the effect of temperature and catalyst.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_catalysis",
@@ -635,8 +1543,25 @@
       "description": "Catalysts increasing reaction rate by providing an alternative pathway of lower activation energy, classified as homogeneous or heterogeneous.",
       "default_order": 1,
       "centrality": 0.0378,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_rate_equation",
@@ -650,8 +1575,25 @@
       "centrality": 0.0459,
       "visual": "function",
       "visual_hint": "Plot reaction rate against concentration for zero, first, and second order.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_rds",
@@ -663,8 +1605,17 @@
       "description": "The rate-determining step as the slowest step in a mechanism, whose reactants appear in the experimentally determined rate equation.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_dynamic_eq",
@@ -676,8 +1627,21 @@
       "description": "Dynamic equilibrium in a closed system where the forward and reverse reactions proceed at equal rates and concentrations remain constant.",
       "default_order": 1,
       "centrality": 0.1202,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 9"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_le_chatelier",
@@ -691,8 +1655,21 @@
       "centrality": 0.0348,
       "visual": "interactive",
       "visual_hint": "Shift an equilibrium with sliders for concentration, pressure, and temperature.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 10"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_kc_kp",
@@ -704,8 +1681,25 @@
       "description": "Equilibrium constants Kc and Kp expressing the position of equilibrium in terms of concentrations or partial pressures at a given temperature.",
       "default_order": 1,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 7"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_bronsted",
@@ -717,8 +1711,25 @@
       "description": "The Brønsted-Lowry theory defining acids as proton donors and bases as proton acceptors, related through conjugate acid-base pairs.",
       "default_order": 2,
       "centrality": 0.0657,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 7"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_strong_weak",
@@ -730,8 +1741,25 @@
       "description": "The distinction between strong acids that fully dissociate and weak acids that only partially dissociate in aqueous solution.",
       "default_order": 1,
       "centrality": 0.0481,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_ph_ka",
@@ -745,8 +1773,25 @@
       "centrality": 0.0548,
       "visual": "function",
       "visual_hint": "Plot a titration pH curve and locate the equivalence point.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_buffers",
@@ -758,8 +1803,17 @@
       "description": "Buffer solutions resisting pH change on adding small amounts of acid or base, formed from a weak acid and its conjugate base.",
       "default_order": 1,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_ksp",
@@ -771,8 +1825,50 @@
       "description": "The solubility product Ksp as the equilibrium constant for a sparingly soluble salt dissolving, predicting precipitation and the common-ion effect.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 8"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 10"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_partition_coefficient",
+      "canonical_id": "pc_a57bbd08c3a0bfb6af4a73b3266e3be6",
+      "kind": "concept",
+      "name": "Partition Coefficient",
+      "name_zh": "分配系数",
+      "topic": "che_acids_che_buffers",
+      "description": "At equilibrium, a partition coefficient is the specified ratio of concentrations of the same physical-state solute in two immiscible solvents; it is calculated using a consistent ratio and explained by solute-solvent polarity.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_oxidation_number",
@@ -784,8 +1880,25 @@
       "description": "Oxidation numbers assigned by rules to track electron transfer, identifying which species are oxidised and reduced in a redox reaction.",
       "default_order": 1,
       "centrality": 0.1074,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_redox_equations",
@@ -797,8 +1910,25 @@
       "description": "Constructing balanced redox equations by combining oxidation and reduction half-equations so that electrons gained equal electrons lost.",
       "default_order": 2,
       "centrality": 0.0819,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 9"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_electrode_potential",
@@ -810,8 +1940,25 @@
       "description": "Standard electrode potentials measuring a half-cell's tendency to gain electrons relative to the standard hydrogen electrode.",
       "default_order": 3,
       "centrality": 0.0548,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_cells",
@@ -823,8 +1970,21 @@
       "description": "Electrochemical cells generating an EMF from two half-cells, with the cell potential calculated from standard electrode potentials.",
       "default_order": 1,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 10"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_electrolysis",
@@ -836,8 +1996,25 @@
       "description": "The decomposition of molten or aqueous compounds by passing electricity, with products predicted from electrode reactions and Faraday's laws.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_born_haber",
@@ -851,8 +2028,25 @@
       "centrality": 0.0548,
       "visual": "diagram",
       "visual_hint": "Born-Haber cycle diagram of the lattice-energy enthalpy steps.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_entropy",
@@ -864,8 +2058,21 @@
       "description": "Entropy as a measure of the disorder of a system, with spontaneous change tending toward increased total entropy.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.3 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_gibbs",
@@ -874,11 +2081,28 @@
       "name": "Gibbs Free Energy",
       "name_zh": "吉布斯自由能",
       "topic": "che_free_energy_periodicity",
-      "description": "Gibbs free energy combining enthalpy and entropy, where a negative value of ΔG indicates a thermodynamically feasible reaction.",
+      "description": "Gibbs free energy combines enthalpy and entropy, with negative ΔG indicating thermodynamic feasibility. For an electrochemical reaction, standard free energy and standard cell potential are connected by ΔG° = -nFE°cell.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.4 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_periodic_trends",
@@ -892,8 +2116,25 @@
       "centrality": 0.091,
       "visual": "chart",
       "visual_hint": "Plot periodic trends in atomic radius and ionisation energy across a period.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_period3",
@@ -905,8 +2146,25 @@
       "description": "The properties of Period 3 elements and their oxides and chlorides, showing the trend from metallic to covalent character.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.26; 9.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.26; 9.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.26; 9.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.26; 9.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_group2",
@@ -918,8 +2176,25 @@
       "description": "The chemistry of Group 2 metals, including reactions with water and oxygen and trends in reactivity and thermal stability of compounds.",
       "default_order": 1,
       "centrality": 0.0378,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 10.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 10.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 10.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 10.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_group17",
@@ -928,11 +2203,28 @@
       "name": "Group 17 Halogens",
       "name_zh": "第17族卤素",
       "topic": "che_groups",
-      "description": "The chemistry of Group 17 halogens, including trends in volatility and oxidising power and their displacement reactions.",
+      "description": "The chemistry of Group 17 halogens includes trends in volatility and oxidising power, displacement reactions, and chlorine water purification, where chlorine forms the active species HOCl and ClO− that kill bacteria.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 11.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 11.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 11.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 11.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_nitrogen_sulfur",
@@ -944,8 +2236,25 @@
       "description": "The chemistry of nitrogen and sulfur, including ammonia, the oxides of nitrogen and sulfur, and their environmental significance.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; 12.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; 12.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; 12.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; 12.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_transition_props",
@@ -957,8 +2266,25 @@
       "description": "Characteristic properties of transition elements, including variable oxidation states, catalytic activity, coloured ions, and complex formation.",
       "default_order": 1,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_complex_ions",
@@ -970,8 +2296,25 @@
       "description": "Complex ions formed by a central metal ion bonded to ligands through dative covalent bonds, with characteristic coordination numbers and shapes.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; 11.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_colour_catalysis",
@@ -983,8 +2326,54 @@
       "description": "The origin of colour in transition-metal complexes from d-orbital splitting, and their use as homogeneous and heterogeneous catalysts.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.3 outcome 3"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_organic_representations",
+      "canonical_id": "pc_b7cf8d670e2f37db41a760a401141534",
+      "kind": "concept",
+      "name": "Functional Groups and Organic Representations",
+      "name_zh": "官能团与有机结构表示",
+      "topic": "che_organic_basics",
+      "description": "Functional groups determine characteristic physical and chemical properties and reactions; the same organic structure can be interpreted and converted among general, structural, displayed and skeletal formulae.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 21.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.53; 36.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_nomenclature",
@@ -994,10 +2383,27 @@
       "name_zh": "命名法",
       "topic": "che_organic_basics",
       "description": "The systematic IUPAC naming of organic compounds based on chain length, functional groups, and the positions of substituents.",
-      "default_order": 1,
+      "default_order": 2,
       "centrality": 0.2772,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_isomerism",
@@ -1007,10 +2413,27 @@
       "name_zh": "同分异构",
       "topic": "che_organic_basics",
       "description": "Structural isomerism and stereoisomerism, including cis-trans and optical isomers, arising from different arrangements of the same atoms.",
-      "default_order": 2,
+      "default_order": 3,
       "centrality": 0.1693,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_bond_fission",
@@ -1019,11 +2442,16 @@
       "name": "Bond Fission and Reactive Species",
       "name_zh": "键断裂与反应物种",
       "topic": "che_organic_basics_che_bond_fission",
-      "description": "Homolytic and heterolytic bond fission producing free radicals or ions respectively, generating the reactive species in organic mechanisms.",
+      "description": "Homolytic bond fission produces free radicals, species with one or more unpaired electrons, while heterolytic bond fission produces ions; both generate reactive species in organic mechanisms.",
       "default_order": 1,
       "centrality": 0.147,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 9"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_mechanism_types",
@@ -1035,8 +2463,25 @@
       "description": "Classifying organic reactions as substitution, addition, and elimination, with curly-arrow notation representing the movement of electron pairs.",
       "default_order": 2,
       "centrality": 0.1438,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 21.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_alkanes",
@@ -1045,11 +2490,28 @@
       "name": "Alkanes",
       "name_zh": "烷烃",
       "topic": "che_hydrocarbons",
-      "description": "Saturated hydrocarbons with single carbon-carbon bonds, their relative unreactivity, combustion, and free-radical substitution with halogens.",
+      "description": "Alkanes are saturated hydrocarbons with single carbon-carbon bonds. Their chemistry includes combustion, free-radical halogen substitution and catalytic cracking of heavy fractions into lower-Mr alkanes and alkenes.",
       "default_order": 1,
       "centrality": 0.2553,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.33; 14.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_alkenes",
@@ -1061,8 +2523,25 @@
       "description": "Unsaturated hydrocarbons containing a carbon-carbon double bond, undergoing electrophilic addition and characterised by their greater reactivity.",
       "default_order": 2,
       "centrality": 0.2712,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_addition_polymer",
@@ -1071,11 +2550,28 @@
       "name": "Addition Polymerisation",
       "name_zh": "加聚反应",
       "topic": "che_hydrocarbons",
-      "description": "Addition polymerisation joining many alkene monomers into long-chain polymers, and the environmental issues surrounding their disposal.",
+      "description": "Addition polymerisation joins alkene monomers into carbon-chain polymers. Poly(alkenes) are difficult to biodegrade because their backbones are chemically inert, while some polymers can be designed or modified to undergo light-initiated chain scission and fragmentation.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.33; 14.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; 20.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; 20.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; 20.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_nucleophilic_sub",
@@ -1084,11 +2580,28 @@
       "name": "Nucleophilic Substitution",
       "name_zh": "亲核取代",
       "topic": "che_halogenoalkanes_alcohols",
-      "description": "Nucleophilic substitution of halogenoalkanes, proceeding by SN1 or SN2 mechanisms in which a nucleophile replaces the halogen.",
+      "description": "Halogenoalkanes are classified as primary, secondary or tertiary by the carbon bearing the halogen. Nucleophilic substitution replaces the halogen through SN2, SN1 or mixed pathways whose tendency depends on that structure.",
       "default_order": 1,
       "centrality": 0.2651,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_elimination",
@@ -1100,8 +2613,13 @@
       "description": "Elimination reactions of halogenoalkanes removing a hydrogen halide to form an alkene, competing with nucleophilic substitution.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_alcohol_reactions",
@@ -1110,11 +2628,28 @@
       "name": "Alcohols and Their Reactions",
       "name_zh": "醇的反应",
       "topic": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-      "description": "The reactions of alcohols, including combustion, substitution to halogenoalkanes, dehydration to alkenes, and esterification.",
+      "description": "Alcohol reactions include combustion, substitution to halogenoalkanes, dehydration to alkenes and esterification. Alcohols are generally weaker acids than water because alkyl electron donation destabilises the alkoxide conjugate base relative to hydroxide.",
       "default_order": 1,
       "centrality": 0.1453,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.33; 14.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_alcohol_oxidation",
@@ -1126,8 +2661,46 @@
       "description": "The oxidation of primary alcohols to aldehydes and carboxylic acids and secondary alcohols to ketones, with tertiary alcohols resistant.",
       "default_order": 2,
       "centrality": 0.1417,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_iodoform_test",
+      "canonical_id": "pc_e98424171f151c698ea7358b432dc4e2",
+      "kind": "concept",
+      "name": "Iodoform Test",
+      "name_zh": "碘仿检验",
+      "topic": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
+      "description": "Alcohols containing CH3CH(OH)- and carbonyl compounds containing CH3CO- give a yellow CHI3 precipitate with alkaline iodine, allowing the relevant structural group to be deduced from formulae or observations.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_aldehydes_ketones",
@@ -1139,8 +2712,25 @@
       "description": "Carbonyl compounds containing a C=O group, undergoing nucleophilic addition and distinguished by oxidation and characteristic tests.",
       "default_order": 1,
       "centrality": 0.1376,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_carboxylic_acids",
@@ -1152,8 +2742,25 @@
       "description": "Organic acids containing the carboxyl group, showing acidic behaviour and reactions forming salts, esters, and acyl derivatives.",
       "default_order": 2,
       "centrality": 0.1327,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 18.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 18.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 33.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_esters",
@@ -1162,11 +2769,28 @@
       "name": "Esters and Acyl Chlorides",
       "name_zh": "酯和酰氯",
       "topic": "che_carbonyls",
-      "description": "Esters formed by condensation of acids and alcohols, their hydrolysis, and the more reactive acyl chlorides used as acylating agents.",
+      "description": "Esters form by condensation of acids and alcohols and can be hydrolysed. More reactive acyl chlorides undergo nucleophilic addition-elimination with water, alcohols, phenols, ammonia and amines through a tetrahedral intermediate.",
       "default_order": 3,
       "centrality": 0.0318,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; 18.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 32.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 33.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_amines",
@@ -1178,8 +2802,25 @@
       "description": "Organic bases derived from ammonia, whose basicity arises from the nitrogen lone pair, along with their formation and reactions.",
       "default_order": 1,
       "centrality": 0.1127,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; 19.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 34.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 34.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 34.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_amino_acids",
@@ -1191,8 +2832,25 @@
       "description": "Amino acids bearing both amino and carboxyl groups, their zwitterion behaviour, and condensation into peptides and proteins.",
       "default_order": 2,
       "centrality": 0.1902,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.53; 35.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_condensation_polymer",
@@ -1204,8 +2862,63 @@
       "description": "Condensation polymers such as polyesters and polyamides formed by joining monomers with loss of a small molecule like water.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.53; 35.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.53; 35.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.53; 35.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_nitriles",
+      "canonical_id": "pc_823cebac5cc9eb243690a3fd84a6fda0",
+      "kind": "concept",
+      "name": "Nitriles and Hydroxynitriles",
+      "name_zh": "腈与羟基腈",
+      "topic": "che_nitriles_amides",
+      "description": "Nitriles form from halogenoalkanes and ethanolic KCN, hydroxynitriles form by HCN addition to carbonyl compounds, and nitriles hydrolyse under heated dilute acid or alkali followed by acidification to give carboxylic acids.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; 19.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_amides",
+      "canonical_id": "pc_54969456882eab85ca38b2957992a4aa",
+      "kind": "concept",
+      "name": "Amides",
+      "name_zh": "酰胺",
+      "topic": "che_nitriles_amides",
+      "description": "Amides form when acyl chlorides react with ammonia or primary amines, hydrolyse in aqueous acid or alkali and can be reduced by LiAlH4; delocalisation of the nitrogen lone pair into the carbonyl makes amides much weaker bases than amines.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.3 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_benzene",
@@ -1217,8 +2930,25 @@
       "description": "The structure of benzene as a planar ring with delocalised pi electrons, explaining its stability and resistance to addition reactions.",
       "default_order": 1,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.49; 30.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.49; 31.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_electrophilic_sub",
@@ -1230,8 +2960,25 @@
       "description": "Electrophilic substitution of arenes, including nitration and halogenation, in which an electrophile replaces a ring hydrogen.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.49; 30.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.49; 30.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.49; 30.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_mass_spec",
@@ -1245,8 +2992,100 @@
       "centrality": 0.0624,
       "visual": "chart",
       "visual_hint": "Plot a mass spectrum of m/z peaks.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_phenol_acid_base",
+      "canonical_id": "pc_306df7f024993644203ea5a1f13ff904",
+      "kind": "concept",
+      "name": "Phenol Preparation and Acid-Base Chemistry",
+      "name_zh": "苯酚的制备与酸碱性质",
+      "topic": "che_phenols_diazonium",
+      "description": "Phenol can be prepared by hydrolysing a diazonium salt, reacts with sodium and aqueous sodium hydroxide to form phenoxide, and is more acidic than water and ethanol because the phenoxide conjugate base is resonance-stabilised.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 32.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 32.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 32.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 32.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_phenol_ring_reactivity",
+      "canonical_id": "pc_1a0fc6f9c22a749712e97711b0fdd625",
+      "kind": "concept",
+      "name": "Phenol Ring Reactivity and Directing Effects",
+      "name_zh": "苯酚芳环反应与定位效应",
+      "topic": "che_phenols_diazonium",
+      "description": "The hydroxyl group activates the aromatic ring and directs electrophilic substitution to the 2-, 4- and 6-positions, so phenol nitrates and brominates under milder conditions than benzene; the same principles extend to phenolic compounds such as naphthol.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 32.2 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 32.2 outcome 7"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "che_diazonium_azo",
+      "canonical_id": "pc_c5af15dfcdc42e1427ccb6272309fbb1",
+      "kind": "concept",
+      "name": "Diazonium Salts and Azo Compounds",
+      "name_zh": "重氮盐与偶氮化合物",
+      "topic": "che_phenols_diazonium",
+      "description": "Phenylamine forms a diazonium salt with nitrous acid below 10°C; the salt can hydrolyse to phenol or couple with phenol in alkaline solution to form compounds containing the -N=N- azo group, many of which are dyes.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 32.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_ir",
@@ -1258,8 +3097,13 @@
       "description": "Infrared spectroscopy identifying functional groups from the characteristic absorption of bonds vibrating at specific frequencies.",
       "default_order": 1,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_nmr",
@@ -1273,8 +3117,25 @@
       "centrality": 0.0459,
       "visual": "chart",
       "visual_hint": "Plot an NMR spectrum of chemical-shift peaks.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.55; 37.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.55; 37.4 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "che_chromatography",
@@ -1286,8 +3147,25 @@
       "description": "Chromatography separating mixtures by differential partition between a stationary and a mobile phase, characterised by Rf values or retention times.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -1296,720 +3174,2580 @@
       "to": "che_isotopes",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“亚原子粒子”为学习“同位素”提供背景与解题基础。"
     },
     {
       "from": "che_isotopes",
       "to": "che_electron_config",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.16; 1.2 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“同位素”为学习“电子排布”提供背景与解题基础。"
     },
     {
       "from": "che_electron_config",
       "to": "che_ionisation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“电离能”需要先掌握“电子排布”的定义、表示或操作方法。"
     },
     {
       "from": "che_mole",
       "to": "che_formulae",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 10"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“实验式与分子式”需要先掌握“摩尔与阿伏伽德罗常数”的定义、表示或操作方法。"
     },
     {
       "from": "che_formulae",
       "to": "che_reacting_masses",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“实验式与分子式”为学习“反应质量与气体体积”提供背景与解题基础。"
     },
     {
       "from": "che_reacting_masses",
       "to": "che_titration",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 10"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“浓度与滴定”需要先掌握“反应质量与气体体积”的定义、表示或操作方法。"
     },
     {
       "from": "che_ionic",
       "to": "che_covalent",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“离子键”为学习“共价键”提供背景与解题基础。"
     },
     {
       "from": "che_covalent",
       "to": "che_metallic",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“共价键”为学习“金属键”提供背景与解题基础。"
     },
     {
       "from": "che_metallic",
       "to": "che_vsepr",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.26; 9.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.5 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“金属键”为学习“VSEPR 分子形状”提供背景与解题基础。"
     },
     {
       "from": "che_vsepr",
       "to": "che_electronegativity",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“VSEPR 分子形状”为学习“电负性与极性”提供背景与解题基础。"
     },
     {
       "from": "che_electronegativity",
       "to": "che_imf",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.46; 28.4 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“分子间作用力”需要先掌握“电负性与极性”的定义、表示或操作方法。"
     },
     {
       "from": "che_gas_laws",
       "to": "che_solids",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“气体动理论模型与理想气体行为”为学习“固体结构”提供背景与解题基础。"
     },
     {
       "from": "che_enthalpy",
       "to": "che_hess",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“盖斯定律”需要先掌握“焓变”的定义、表示或操作方法。"
     },
     {
       "from": "che_hess",
       "to": "che_bond_enthalpy",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“盖斯定律”为学习“键能与键长”提供背景与解题基础。"
     },
     {
       "from": "che_bond_enthalpy",
       "to": "che_calorimetry",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“键能与键长”为学习“量热法”提供背景与解题基础。"
     },
     {
       "from": "che_rate",
       "to": "che_collision",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.2 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“碰撞理论”需要先掌握“反应速率”的定义、表示或操作方法。"
     },
     {
       "from": "che_collision",
       "to": "che_boltzmann",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.2 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Maxwell-Boltzmann分布”需要先掌握“碰撞理论”的定义、表示或操作方法。"
     },
     {
       "from": "che_boltzmann",
       "to": "che_catalysis",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“Maxwell-Boltzmann分布”为学习“催化”提供背景与解题基础。"
     },
     {
       "from": "che_catalysis",
       "to": "che_rate_equation",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“催化”为学习“速率方程与反应级数”提供背景与解题基础。"
     },
     {
       "from": "che_rate_equation",
       "to": "che_rds",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“速控步”需要先掌握“速率方程与反应级数”的定义、表示或操作方法。"
     },
     {
       "from": "che_dynamic_eq",
       "to": "che_le_chatelier",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“勒夏特列原理”需要先掌握“动态平衡”的定义、表示或操作方法。"
     },
     {
       "from": "che_le_chatelier",
       "to": "che_kc_kp",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“勒夏特列原理”为学习“平衡常数 Kc 与 Kp”提供背景与解题基础。"
     },
     {
       "from": "che_bronsted",
       "to": "che_strong_weak",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 7"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“强酸与弱酸”需要先掌握“布朗斯特-洛瑞理论”的定义、表示或操作方法。"
     },
     {
       "from": "che_strong_weak",
       "to": "che_ph_ka",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“pH 与酸解离常数”需要先掌握“强酸与弱酸”的定义、表示或操作方法。"
     },
     {
       "from": "che_ph_ka",
       "to": "che_buffers",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“缓冲剂”需要先掌握“pH 与酸解离常数”的定义、表示或操作方法。"
     },
     {
       "from": "che_buffers",
       "to": "che_ksp",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.42; 25.1 outcome 8"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“缓冲剂”为学习“溶度积”提供背景与解题基础。"
     },
     {
       "from": "che_oxidation_number",
       "to": "che_redox_equations",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“氧化还原方程”需要先掌握“氧化数”的定义、表示或操作方法。"
     },
     {
       "from": "che_redox_equations",
       "to": "che_electrode_potential",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 9"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“电极电势”需要先掌握“氧化还原方程”的定义、表示或操作方法。"
     },
     {
       "from": "che_electrode_potential",
       "to": "che_cells",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“电化学电池”需要先掌握“电极电势”的定义、表示或操作方法。"
     },
     {
       "from": "che_cells",
       "to": "che_electrolysis",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“电化学电池”为学习“电解”提供背景与解题基础。"
     },
     {
       "from": "che_born_haber",
       "to": "che_entropy",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“晶格能与玻恩-哈伯循环”为学习“熵”提供背景与解题基础。"
     },
     {
       "from": "che_entropy",
       "to": "che_gibbs",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 23.4 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“吉布斯自由能”需要先掌握“熵”的定义、表示或操作方法。"
     },
     {
       "from": "che_periodic_trends",
       "to": "che_period3",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“第3周期元素与氧化物”需要先掌握“周期趋势”的定义、表示或操作方法。"
     },
     {
       "from": "che_group2",
       "to": "che_group17",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 10.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 10.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 10.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 10.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“第2族元素化学”为学习“第17族卤素”提供背景与解题基础。"
     },
     {
       "from": "che_group17",
       "to": "che_nitrogen_sulfur",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 11.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 11.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 11.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.27; 11.2 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“第17族卤素”为学习“氮和硫”提供背景与解题基础。"
     },
     {
       "from": "che_transition_props",
       "to": "che_complex_ions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“配位离子与配体”需要先掌握“过渡金属性质”的定义、表示或操作方法。"
     },
     {
       "from": "che_complex_ions",
       "to": "che_colour_catalysis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.28; 11.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.44; 28.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“颜色与催化”需要先掌握“配位离子与配体”的定义、表示或操作方法。"
     },
     {
       "from": "che_nomenclature",
       "to": "che_isomerism",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“同分异构”需要先掌握“命名法”的定义、表示或操作方法。"
     },
     {
       "from": "che_isomerism",
       "to": "che_bond_fission",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“同分异构”为学习“键断裂与反应物种”提供背景与解题基础。"
     },
     {
       "from": "che_bond_fission",
       "to": "che_mechanism_types",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“键断裂与反应物种”为学习“反应机理类型”提供背景与解题基础。"
     },
     {
       "from": "che_alkanes",
       "to": "che_alkenes",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.33; 14.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“烯烃”需要先掌握“烷烃”的定义、表示或操作方法。"
     },
     {
       "from": "che_alkenes",
       "to": "che_addition_polymer",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“加聚反应”需要先掌握“烯烃”的定义、表示或操作方法。"
     },
     {
       "from": "che_nucleophilic_sub",
       "to": "che_elimination",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“消去反应”需要先掌握“亲核取代”的定义、表示或操作方法。"
     },
     {
       "from": "che_alcohol_reactions",
       "to": "che_alcohol_oxidation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.33; 14.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“醇的氧化”需要先掌握“醇的反应”的定义、表示或操作方法。"
     },
     {
       "from": "che_aldehydes_ketones",
       "to": "che_carboxylic_acids",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“羧酸”需要先掌握“醛和酮”的定义、表示或操作方法。"
     },
     {
       "from": "che_carboxylic_acids",
       "to": "che_esters",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 18.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 18.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 33.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“酯和酰氯”需要先掌握“羧酸”的定义、表示或操作方法。"
     },
     {
       "from": "che_amines",
       "to": "che_amino_acids",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; 19.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 34.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 34.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 34.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“胺”为学习“氨基酸与蛋白质”提供背景与解题基础。"
     },
     {
       "from": "che_amino_acids",
       "to": "che_condensation_polymer",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.53; 35.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“氨基酸与蛋白质”为学习“缩聚反应”提供背景与解题基础。"
     },
     {
       "from": "che_benzene",
       "to": "che_electrophilic_sub",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.49; 30.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.49; 31.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“亲电取代”需要先掌握“苯的结构”的定义、表示或操作方法。"
     },
     {
       "from": "che_mass_spec",
       "to": "che_ir",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.2 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“质谱分析”为学习“红外光谱”提供背景与解题基础。"
     },
     {
       "from": "che_ir",
       "to": "che_nmr",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 22.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.55; 37.4 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“红外光谱”为学习“NMR光谱”提供背景与解题基础。"
     },
     {
       "from": "che_nmr",
       "to": "che_chromatography",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.54; 37.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.55; 37.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.55; 37.4 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“NMR光谱”为学习“色谱法”提供背景与解题基础。"
     },
     {
       "from": "che_electron_config",
       "to": "che_ionic",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“离子键”需要先掌握“电子排布”的定义、表示或操作方法。"
     },
     {
       "from": "che_electron_config",
       "to": "che_covalent",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“共价键”需要先掌握“电子排布”的定义、表示或操作方法。"
     },
     {
       "from": "che_covalent",
       "to": "che_vsepr",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“VSEPR 分子形状”需要先掌握“共价键”的定义、表示或操作方法。"
     },
     {
       "from": "che_covalent",
       "to": "che_electronegativity",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“电负性与极性”需要先掌握“共价键”的定义、表示或操作方法。"
     },
     {
       "from": "che_mole",
       "to": "che_reacting_masses",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 10"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“反应质量与气体体积”需要先掌握“摩尔与阿伏伽德罗常数”的定义、表示或操作方法。"
     },
     {
       "from": "che_ionic",
       "to": "che_solids",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“固体结构”需要先掌握“离子键”的定义、表示或操作方法。"
     },
     {
       "from": "che_reacting_masses",
       "to": "che_enthalpy",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“反应质量与气体体积”为学习“焓变”提供背景与解题基础。"
     },
     {
       "from": "che_enthalpy",
       "to": "che_bond_enthalpy",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“键能与键长”需要先掌握“焓变”的定义、表示或操作方法。"
     },
     {
       "from": "che_enthalpy",
       "to": "che_calorimetry",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“量热法”需要先掌握“焓变”的定义、表示或操作方法。"
     },
     {
       "from": "che_collision",
       "to": "che_catalysis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.2 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“催化”需要先掌握“碰撞理论”的定义、表示或操作方法。"
     },
     {
       "from": "che_rate",
       "to": "che_rate_equation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.2 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“速率方程与反应级数”需要先掌握“反应速率”的定义、表示或操作方法。"
     },
     {
       "from": "che_dynamic_eq",
       "to": "che_kc_kp",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“平衡常数 Kc 与 Kp”需要先掌握“动态平衡”的定义、表示或操作方法。"
     },
     {
       "from": "che_titration",
       "to": "che_kc_kp",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 10"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“浓度与滴定”为学习“平衡常数 Kc 与 Kp”提供背景与解题基础。"
     },
     {
       "from": "che_dynamic_eq",
       "to": "che_bronsted",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 9"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.2 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“动态平衡”为学习“布朗斯特-洛瑞理论”提供背景与解题基础。"
     },
     {
       "from": "che_kc_kp",
       "to": "che_ksp",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.24; 7.1 outcome 7"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“溶度积”需要先掌握“平衡常数 Kc 与 Kp”的定义、表示或操作方法。"
     },
     {
       "from": "che_redox_equations",
       "to": "che_electrolysis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.41; 24.2 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 9"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“电解”需要先掌握“氧化还原方程”的定义、表示或操作方法。"
     },
     {
       "from": "che_hess",
       "to": "che_born_haber",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.39; 23.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“晶格能与玻恩-哈伯循环”需要先掌握“盖斯定律”的定义、表示或操作方法。"
     },
     {
       "from": "che_ionic",
       "to": "che_born_haber",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“晶格能与玻恩-哈伯循环”需要先掌握“离子键”的定义、表示或操作方法。"
     },
     {
       "from": "che_enthalpy",
       "to": "che_gibbs",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“吉布斯自由能”需要先掌握“焓变”的定义、表示或操作方法。"
     },
     {
       "from": "che_ionisation",
       "to": "che_periodic_trends",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“周期趋势”需要先掌握“电离能”的定义、表示或操作方法。"
     },
     {
       "from": "che_periodic_trends",
       "to": "che_group2",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“第2族元素化学”需要先掌握“周期趋势”的定义、表示或操作方法。"
     },
     {
       "from": "che_periodic_trends",
       "to": "che_group17",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.4 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“第17族卤素”需要先掌握“周期趋势”的定义、表示或操作方法。"
     },
     {
       "from": "che_oxidation_number",
       "to": "che_group17",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 6.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“氧化数”为学习“第17族卤素”提供背景与解题基础。"
     },
     {
       "from": "che_electron_config",
       "to": "che_transition_props",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17; 1.3 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“过渡金属性质”需要先掌握“电子排布”的定义、表示或操作方法。"
     },
     {
       "from": "che_covalent",
       "to": "che_nomenclature",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“命名法”需要先掌握“共价键”的定义、表示或操作方法。"
     },
     {
       "from": "che_nomenclature",
       "to": "che_alkanes",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.48; 29.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“烷烃”需要先掌握“命名法”的定义、表示或操作方法。"
     },
     {
       "from": "che_mechanism_types",
       "to": "che_alkanes",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 21.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“反应机理类型”为学习“烷烃”提供背景与解题基础。"
     },
     {
       "from": "che_alkenes",
       "to": "che_nucleophilic_sub",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.3 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“烯烃”为学习“亲核取代”提供背景与解题基础。"
     },
     {
       "from": "che_nucleophilic_sub",
       "to": "che_alcohol_reactions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“醇的反应”需要先掌握“亲核取代”的定义、表示或操作方法。"
     },
     {
       "from": "che_alcohol_oxidation",
       "to": "che_aldehydes_ketones",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“醛和酮”需要先掌握“醇的氧化”的定义、表示或操作方法。"
     },
     {
       "from": "che_nucleophilic_sub",
       "to": "che_amines",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.34; 15.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“胺”需要先掌握“亲核取代”的定义、表示或操作方法。"
     },
     {
       "from": "che_carboxylic_acids",
       "to": "che_amino_acids",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.35; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 18.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 18.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 33.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“氨基酸与蛋白质”需要先掌握“羧酸”的定义、表示或操作方法。"
     },
     {
       "from": "che_esters",
       "to": "che_condensation_polymer",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; 18.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.50; 32.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 33.2 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“缩聚反应”需要先掌握“酯和酰氯”的定义、表示或操作方法。"
     },
     {
       "from": "che_amines",
       "to": "che_condensation_polymer",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.37; 19.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 34.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 34.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.51; 34.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“胺”为学习“缩聚反应”提供背景与解题基础。"
     },
     {
       "from": "che_covalent",
       "to": "che_benzene",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“苯的结构”需要先掌握“共价键”的定义、表示或操作方法。"
     },
     {
       "from": "che_mechanism_types",
       "to": "che_electrophilic_sub",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.31; 13.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.36; 17.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.38; 21.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“反应机理类型”为学习“亲电取代”提供背景与解题基础。"
     },
     {
       "from": "che_isomerism",
       "to": "che_nmr",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.32; 13.4 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“同分异构”为学习“NMR光谱”提供背景与解题基础。"
     },
     {
       "from": "che_mole",
       "to": "che_mass_spec",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.40; 24.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.45; 28.2 outcome 10"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“摩尔与阿伏伽德罗常数”为学习“质谱分析”提供背景与解题基础。"
+    },
+    {
+      "from": "che_electron_config",
+      "to": "che_atomic_orbital_shapes",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Orbital shapes are interpreted after shells, subshells and electron occupancy are understood.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.17, 1.3 outcomes 1-8",
+          "note_zh": "轨道形状建立在电子层、亚层和轨道占据概念之上。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_relative_masses",
+      "to": "che_mole",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Molar mass and amount calculations use relative atomic, molecular or formula masses.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.18, 2.1-2.2",
+          "note_zh": "摩尔质量与物质的量计算使用相对原子、分子或式量。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_organic_representations",
+      "to": "che_nomenclature",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Systematic naming requires recognising the represented carbon skeleton and functional groups first.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.29-31, organic functional-group table and 13.1 outcomes 3-5",
+          "note_zh": "系统命名前需先识别碳骨架、官能团和结构表示。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_alcohol_oxidation",
+      "to": "che_iodoform_test",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "The alcohol criterion for the iodoform test is understood through oxidation to a methyl carbonyl group.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.35-36, 16.1 outcomes 3-4 and 17.1 outcome 6",
+          "note_zh": "醇的碘仿结构判据可通过氧化生成甲基羰基理解。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_dynamic_eq",
+      "to": "che_partition_coefficient",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "A partition coefficient is defined only after the solute distribution has reached equilibrium.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.24, 42; 7.1 outcome 1 and 25.2 outcomes 1-3",
+          "note_zh": "分配系数描述溶质在两相达到平衡后的浓度比。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_imf",
+      "to": "che_partition_coefficient",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Explaining partition values through polarity requires solute-solvent intermolecular interactions.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.21, 42; 3.5 and 25.2 outcome 3",
+          "note_zh": "用极性解释分配系数需要分子间作用力背景。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_nucleophilic_sub",
+      "to": "che_nitriles",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Formation of nitriles from halogenoalkanes is a nucleophilic substitution by cyanide ion.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.34, 37; 15.1 outcome 3 and 19.2 outcome 1",
+          "note_zh": "卤代烷生成腈属于氰离子亲核取代。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_aldehydes_ketones",
+      "to": "che_nitriles",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Hydroxynitrile formation is nucleophilic addition of HCN to a carbonyl compound.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.36-37; 17.1 outcomes 2-3 and 19.2 outcome 2",
+          "note_zh": "羟基腈由 HCN 对羰基化合物亲核加成形成。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_esters",
+      "to": "che_amides",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Amide preparation uses the acyl-chloride reactions represented in the esters and acyl chlorides concept.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.51-52; 33.3 outcome 2 and 34.3 outcome 1",
+          "note_zh": "酰胺制备依赖酰氯的亲核酰基取代。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_amines",
+      "to": "che_amides",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Primary amines act as nucleophiles in amide formation and provide the comparison needed for amide basicity.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.51-52; 34.1 outcomes 2-3 and 34.3 outcomes 1 and 3",
+          "note_zh": "胺参与酰胺形成，并为比较酰胺弱碱性提供基础。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_alcohol_reactions",
+      "to": "che_phenol_acid_base",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "Comparing ethanol, water and phenol extends the acid-base treatment of alcohol hydroxyl groups.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.35, 50; 16.1 outcome 5 and 32.2 outcomes 3-4",
+          "note_zh": "醇羟基酸性为比较水、乙醇和苯酚提供教学起点。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_benzene",
+      "to": "che_phenol_ring_reactivity",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Phenol ring activation and directing effects are interpreted relative to benzene's delocalised aromatic ring.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.47, 50; 30.1 and 32.2 outcomes 5-7",
+          "note_zh": "苯酚芳环活化和定位效应以苯的离域结构为前提。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_electrophilic_sub",
+      "to": "che_phenol_ring_reactivity",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Phenol nitration and bromination are electrophilic aromatic substitutions with altered conditions and directing effects.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.47, 50; 30.1 outcomes 2-4 and 32.2 outcomes 5-7",
+          "note_zh": "苯酚硝化和溴化是条件与定位发生变化的芳香亲电取代。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_amines",
+      "to": "che_diazonium_azo",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Diazotisation starts from phenylamine and depends on its amine identity and reactions.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.51-52; 34.1 and 34.2 outcomes 1-4",
+          "note_zh": "重氮化以苯胺为起始物。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_phenol_ring_reactivity",
+      "to": "che_diazonium_azo",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "Azo coupling with phenol uses its activated aromatic ring, although diazonium formation can be studied independently.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.50, 52; 32.2 outcomes 5-7 and 34.2 outcome 4",
+          "note_zh": "偶氮偶联利用苯酚活化芳环，但重氮盐形成可独立学习。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "che_cells",
+      "to": "che_gibbs",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "The equation ΔG° = -nFE°cell connects an electrochemical application to Gibbs energy without making cells a prerequisite for the general Gibbs definition.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF pp.40-41; 24.1 and 24.2 outcome 10",
+          "note_zh": "以 soft 边表达电池电势与 Gibbs 自由能的应用连接。"
+        }
+      ],
+      "review_status": "approved"
     }
   ]
 }

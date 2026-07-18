@@ -7,8 +7,10 @@ import { pathToFileURL } from "node:url";
 
 import { REPO_ROOT, graphPath, readJson } from "./kg-db-common.mjs";
 
-const GENERATED_AT = "2026-07-17";
-const inputDirArgument = process.argv.slice(2).find((argument) => argument !== "--");
+const GENERATED_AT = "2026-07-18";
+const cliArguments = process.argv.slice(2).filter((argument) => argument !== "--");
+const inputDirArgument = cliArguments.find((argument) => !argument.startsWith("--"));
+const graphIdArgument = cliArguments.find((argument) => argument.startsWith("--graph="))?.slice("--graph=".length);
 const INPUT_DIR = resolve(REPO_ROOT, inputDirArgument ?? "tmp/pdfs");
 const OUTPUT_DIR = resolve(REPO_ROOT, "data/knowledge-graphs/review/pending/a-level");
 const STOP_WORDS = new Set([
@@ -83,6 +85,153 @@ export const SUBJECTS = [
     labelZh: "A-Level 物理"
   }
 ];
+
+const APPROVED_OUTCOME_IDS = new Set([
+  "9709:1.2:5",
+  "9709:2.5:3",
+  "9709:4.1:5",
+  "9709:4.4:2",
+  "9709:6.3:1",
+  "9709:6.3:2",
+  "9709:6.4:6",
+  "9709:6.4:7",
+  "9709:6.4:8",
+  "9702:3.2:3",
+  "9702:4.1:1",
+  "9702:7.1:3",
+  "9702:7.5:2",
+  "9702:9.3:7",
+  "9702:9.3:8",
+  "9702:10.1:1",
+  "9702:10.3:3",
+  "9702:11.1:4",
+  "9702:11.1:6",
+  "9702:11.1:10",
+  "9702:11.1:12",
+  "9702:14.2:1",
+  "9702:14.2:2",
+  "9702:15.1:2",
+  "9702:15.2:3",
+  "9702:20.3:3",
+  "9702:24.1:1",
+  "9702:24.1:2",
+  "9702:24.1:3",
+  "9702:24.1:4",
+  "9702:24.1:5",
+  "9702:24.1:6",
+  "9702:24.2:1",
+  "9702:24.2:2",
+  "9702:24.2:3",
+  "9702:24.2:4",
+  "9702:24.3:1",
+  "9702:24.3:3",
+  "9702:24.3:4",
+  "9701:1.3:8",
+  "9701:1.3:9",
+  "9701:2.1:1",
+  "9701:2.1:2",
+  "9701:2.3:4",
+  "9701:3.4:3",
+  "9701:4.1:1",
+  "9701:7.2:1",
+  "9701:7.2:2",
+  "9701:11.4:2",
+  "9701:13.1:3",
+  "9701:13.1:4",
+  "9701:13.3:3",
+  "9701:14.1:4",
+  "9701:15.1:2",
+  "9701:16.1:4",
+  "9701:16.1:5",
+  "9701:17.1:6",
+  "9701:19.2:3",
+  "9701:21.1:2",
+  "9701:24.2:10",
+  "9701:25.2:1",
+  "9701:25.2:2",
+  "9701:25.2:3",
+  "9701:28.1:2",
+  "9701:32.2:1",
+  "9701:32.2:2",
+  "9701:32.2:3",
+  "9701:32.2:4",
+  "9701:32.2:6",
+  "9701:32.2:7",
+  "9701:33.3:3",
+  "9701:34.2:2",
+  "9701:34.2:4",
+  "9701:34.3:2",
+  "9701:34.3:3",
+  "9701:35.3:2",
+  "9701:36.1:2",
+  "9700:1.1:1",
+  "9700:1.1:2",
+  "9700:1.1:4",
+  "9700:1.2:2",
+  "9700:1.2:4",
+  "9700:1.2:7",
+  "9700:2.1:1",
+  "9700:2.1:2",
+  "9700:2.1:3",
+  "9700:2.2:3",
+  "9700:2.3:7",
+  "9700:2.3:8",
+  "9700:3.1:3",
+  "9700:3.1:4",
+  "9700:3.2:1",
+  "9700:3.2:2",
+  "9700:3.2:4",
+  "9700:4.2:2",
+  "9700:4.2:3",
+  "9700:4.2:4",
+  "9700:4.2:5",
+  "9700:5.1:6",
+  "9700:5.2:2",
+  "9700:6.1:5",
+  "9700:7.1:1",
+  "9700:7.1:3",
+  "9700:7.2:5",
+  "9700:8.1:3",
+  "9700:8.1:5",
+  "9700:8.2:2",
+  "9700:8.2:3",
+  "9700:9.1:3",
+  "9700:9.1:4",
+  "9700:10.2:1",
+  "9700:12.1:2",
+  "9700:12.1:5",
+  "9700:12.1:6",
+  "9700:12.1:7",
+  "9700:12.2:9",
+  "9700:12.2:13",
+  "9700:12.2:14",
+  "9700:13.1:1",
+  "9700:13.1:5",
+  "9700:13.1:6",
+  "9700:13.2:3",
+  "9700:13.2:4",
+  "9700:14.1:3",
+  "9700:14.1:5",
+  "9700:14.1:11",
+  "9700:14.2:4",
+  "9700:15.1:10",
+  "9700:15.1:11",
+  "9700:15.1:12",
+  "9700:15.2:3",
+  "9700:16.1:5",
+  "9700:16.2:5",
+  "9700:16.3:2",
+  "9700:17.1:4",
+  "9700:17.2:5",
+  "9700:17.2:6",
+  "9700:17.2:7",
+  "9700:18.1:6",
+  "9700:18.2:1",
+  "9700:18.2:5",
+  "9700:18.3:4",
+  "9700:19.1:10",
+  "9700:19.1:11"
+]);
 
 const AUDITED_OUTCOME_OVERRIDES = new Map([
   ["9700:1.1:3", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["bio_cell_size"], noteZh: "逐条复核：细胞尺寸与放大概念明确覆盖由图像计算放大倍数和实际尺寸。" }],
@@ -191,7 +340,7 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
   ["9700:18.2:6", { coverageSignal: "candidate_covered", candidateIds: ["bio_biodiversity_sampling"], noteZh: "逐条复核：生物多样性取样概念明确包含 Simpson 指数以及物种丰富度和均匀度的量化。" }],
   ["9700:18.3:1", { coverageSignal: "candidate_partial", candidateIds: ["bio_conservation"], noteZh: "逐条复核：保护概念覆盖物种与栖息地保护，但未系统列出造成灭绝和生物多样性下降的因素。" }],
   ["9700:18.3:3", { coverageSignal: "candidate_partial", candidateIds: ["bio_conservation"], noteZh: "逐条复核：保护概念涵盖保护方法，但未具体说明动物园、植物园、种子库和保护区的作用。" }],
-  ["9700:18.3:4", { coverageSignal: "candidate_gap", candidateIds: [], noteZh: "逐条复核：现有生物 KG 没有人工授精、体外受精、胚胎移植等辅助生殖在保护中的应用概念。" }],
+  ["9700:18.3:4", { coverageSignal: "candidate_gap", candidateIds: [], noteZh: "视觉复核修正：官方限定为体外受精（IVF）、胚胎移植和代孕；现有保护 Concept 未覆盖这些辅助生殖方法。" }],
   ["9700:18.3:5", { coverageSignal: "candidate_partial", candidateIds: ["bio_conservation"], noteZh: "逐条复核：保护概念可作为外来入侵种管理背景，但未描述控制措施及其生态权衡。" }],
   ["9700:19.1:2", { coverageSignal: "candidate_covered", candidateIds: ["bio_gene_tech"], noteZh: "逐条复核：基因技术概念明确覆盖通过重组 DNA 切接和插入基因来有意改变遗传物质。" }],
   ["9700:19.1:9", { coverageSignal: "candidate_covered", candidateIds: ["bio_pcr_electrophoresis"], noteZh: "逐条复核：PCR 与电泳概念明确说明凝胶电泳按 DNA 片段大小分离并用于分析。" }],
@@ -203,7 +352,7 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
   ["9709:1.1:2", { coverageSignal: "candidate_covered", candidateIds: ["mat_solve_quadratics"], noteZh: "逐条复核：二次方程概念明确用判别式确定实根数量。" }],
   ["9709:1.1:5", { coverageSignal: "candidate_partial", candidateIds: ["mat_solve_quadratics"], noteZh: "逐条复核：现有概念覆盖二次方程求解，但未明确把关于某函数的方程换元为二次式。" }],
   ["9709:1.2:2", { coverageSignal: "candidate_covered", candidateIds: ["mat_functions", "mat_composite"], noteZh: "逐条复核：函数与复合函数概念共同覆盖值域、复合及值域必须落入定义域的条件。" }],
-  ["9709:1.2:5", { coverageSignal: "candidate_gap", candidateIds: [], noteZh: "逐条复核：现有数学 KG 没有函数图像平移、反射和伸缩变换概念。" }],
+  ["9709:1.2:5", { coverageSignal: "candidate_covered", candidateIds: ["mat_graph_transformations"], noteZh: "人工批准：函数图像变换 Concept 完整覆盖平移、反射、伸缩及组合变换。" }],
   ["9709:1.3:1", { coverageSignal: "candidate_covered", candidateIds: ["mat_straight_lines"], noteZh: "逐条复核：直线概念明确覆盖由点和梯度等条件求直线方程。" }],
   ["9709:1.3:3", { coverageSignal: "candidate_covered", candidateIds: ["mat_circles"], noteZh: "逐条复核：圆概念覆盖圆心、半径、标准式与坐标几何形式。" }],
   ["9709:1.5:3", { coverageSignal: "candidate_partial", candidateIds: ["mat_functions", "mat_trig_ratios"], noteZh: "逐条复核：反函数与三角函数概念提供背景，但未明确三种反三角关系的主值记号。" }],
@@ -216,7 +365,7 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
   ["9709:2.2:1", { coverageSignal: "candidate_covered", candidateIds: ["mat_log_laws"], noteZh: "逐条复核：对数概念明确覆盖对数与指数互逆以及积、商、幂法则。" }],
   ["9709:2.2:2", { coverageSignal: "candidate_partial", candidateIds: ["mat_exp_func", "mat_log_laws"], noteZh: "逐条复核：指数函数和对数概念覆盖互逆与指数图像，但未完整描述 ln x 的性质和图像。" }],
   ["9709:2.4:1", { coverageSignal: "candidate_covered", candidateIds: ["mat_special_derivatives", "mat_chain_rule"], noteZh: "逐条复核：特殊函数导数与链式法则共同覆盖指数、对数、三角函数及复合函数求导。" }],
-  ["9709:2.5:3", { coverageSignal: "candidate_gap", candidateIds: [], noteZh: "逐条复核：现有数学 KG 没有梯形法则、误差方向或数值积分概念。" }],
+  ["9709:2.5:3", { coverageSignal: "candidate_covered", candidateIds: ["mat_trapezium_rule"], noteZh: "人工批准：梯形法则 Concept 覆盖定积分近似及由图像判断高估或低估。" }],
   ["9709:2.6:1", { coverageSignal: "candidate_covered", candidateIds: ["mat_locate_roots"], noteZh: "逐条复核：定位根概念明确覆盖图像判断和区间符号变化。" }],
   ["9709:2.6:2", { coverageSignal: "candidate_covered", candidateIds: ["mat_iteration"], noteZh: "逐条复核：迭代法概念覆盖逐次近似序列及收敛判断。" }],
   ["9709:2.6:3", { coverageSignal: "candidate_covered", candidateIds: ["mat_iteration"], noteZh: "逐条复核：迭代法概念覆盖由重排公式产生逐次近似并判断可能不收敛。" }],
@@ -242,7 +391,7 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
   ["9709:4.2:1", { coverageSignal: "candidate_partial", candidateIds: ["mat_kin_constant", "mat_kin_variable"], noteZh: "逐条复核：两类运动学概念覆盖位移、速度、加速度，但未明确标量与向量术语对照。" }],
   ["9709:4.2:3", { coverageSignal: "candidate_covered", candidateIds: ["mat_kin_variable"], noteZh: "逐条复核：变加速运动概念直接覆盖对时间微积分联系位移、速度和加速度。" }],
   ["9709:4.4:1", { coverageSignal: "candidate_covered", candidateIds: ["mat_newton_laws", "mat_friction", "mat_connected_particles"], noteZh: "逐条复核：牛顿定律、摩擦和连接质点概念共同覆盖恒力下直线运动及绳张力、连杆推力。" }],
-  ["9709:4.4:2", { coverageSignal: "candidate_gap", candidateIds: [], noteZh: "逐条复核：现有数学 KG 没有质量与重量关系 W=mg 的概念。" }],
+  ["9709:4.4:2", { coverageSignal: "candidate_covered", candidateIds: ["mat_mass_weight"], noteZh: "人工批准：质量与重量 Concept 覆盖 W=mg 及力学题中的重力加速度约定。" }],
   ["9709:4.4:3", { coverageSignal: "candidate_covered", candidateIds: ["mat_kin_constant", "mat_forces_equilibrium", "mat_friction"], noteZh: "逐条复核：匀加速运动、力平衡与摩擦概念共同覆盖竖直或粗糙斜面上的质点运动。" }],
   ["9709:4.5:1", { coverageSignal: "candidate_partial", candidateIds: ["mat_work_energy_power"], noteZh: "逐条复核：功、能、功率概念覆盖恒力做功，但描述未明确非平行位移下 W=Fd cosθ。" }],
   ["9709:4.5:3", { coverageSignal: "candidate_covered", candidateIds: ["mat_work_energy_power"], noteZh: "逐条复核：功、能、功率概念明确包含功-能原理与系统能量变化。" }],
@@ -252,8 +401,8 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
   ["9709:5.3:3", { coverageSignal: "candidate_covered", candidateIds: ["mat_prob_rules"], noteZh: "逐条复核：概率法则概念明确覆盖互斥与独立事件及相应加乘规则。" }],
   ["9709:5.5:3", { coverageSignal: "candidate_covered", candidateIds: ["mat_normal_approx"], noteZh: "逐条复核：正态近似概念明确覆盖二项分布近似条件和连续性修正。" }],
   ["9709:6.2:1", { coverageSignal: "candidate_partial", candidateIds: ["mat_discrete_rv", "mat_normal_dist", "mat_poisson"], noteZh: "逐条复核：三个概念覆盖期望方差、正态及泊松背景，但未列出线性组合的全部期望与方差结果。" }],
-  ["9709:6.3:1", { coverageSignal: "candidate_gap", candidateIds: [], noteZh: "逐条复核：现有数学 KG 没有连续随机变量或概率密度函数概念。" }],
-  ["9709:6.4:7", { coverageSignal: "candidate_gap", candidateIds: [], noteZh: "逐条复核：现有数学 KG 没有总体均值置信区间概念。" }],
+  ["9709:6.3:1", { coverageSignal: "candidate_covered", candidateIds: ["mat_continuous_random_variables", "mat_probability_density_function"], noteZh: "人工批准：连续随机变量和概率密度函数共同覆盖连续取值域及密度性质。" }],
+  ["9709:6.4:7", { coverageSignal: "candidate_covered", candidateIds: ["mat_statistical_estimation"], noteZh: "人工批准：统计估计 Concept 覆盖总体均值置信区间。" }],
   ["9709:6.5:3", { coverageSignal: "candidate_partial", candidateIds: ["mat_hypothesis", "mat_normal_dist"], noteZh: "逐条复核：假设检验和正态分布概念提供基础，但未明确已知方差或大样本的总体均值检验流程。" }],
   ["9709:3.8:4", {
     coverageSignal: "candidate_partial",
@@ -975,9 +1124,9 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
     noteZh: "已对照官方页：乘积与商法则概念直接覆盖乘积和商的求导。"
   }],
   ["9709:6.3:2", {
-    coverageSignal: "candidate_gap",
-    candidateIds: [],
-    noteZh: "已对照官方页并检索现有数学 KG：没有连续随机变量概率密度函数、均值、方差和百分位数概念。"
+    coverageSignal: "candidate_covered",
+    candidateIds: ["mat_probability_density_function"],
+    noteZh: "人工批准：概率密度函数 Concept 覆盖概率、均值、方差、中位数和百分位数计算。"
   }],
   ["9700:7.1:4", {
     coverageSignal: "candidate_partial",
@@ -1030,9 +1179,9 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
     noteZh: "已对照官方页：参数微分、隐函数微分及切线法线三个现有概念共同覆盖该要求。"
   }],
   ["9709:6.4:8", {
-    coverageSignal: "candidate_gap",
-    candidateIds: [],
-    noteZh: "已对照官方页：现有 KG 没有总体比例置信区间概念。"
+    coverageSignal: "candidate_covered",
+    candidateIds: ["mat_statistical_estimation"],
+    noteZh: "人工批准：统计估计 Concept 覆盖大样本总体比例的近似置信区间。"
   }],
   ["9709:3.7:6", {
     coverageSignal: "candidate_covered",
@@ -1075,9 +1224,9 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
     noteZh: "已对照官方页：正态分布概念覆盖均值方差参数和 z 分数标准化，可支撑所列概率问题。"
   }],
   ["9709:6.4:6", {
-    coverageSignal: "candidate_gap",
-    candidateIds: [],
-    noteZh: "已对照官方页：现有 KG 没有样本均值和方差的无偏估计概念。"
+    coverageSignal: "candidate_covered",
+    candidateIds: ["mat_statistical_estimation"],
+    noteZh: "人工批准：统计估计 Concept 覆盖由原始或汇总样本计算总体均值和方差的无偏估计。"
   }],
   ["9709:5.3:4", {
     coverageSignal: "candidate_covered",
@@ -1195,9 +1344,9 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
     noteZh: "已对照官方页：向量直线概念覆盖直线方程和相交，但现有描述未明确平行、异面及完整判定流程。"
   }],
   ["9709:4.1:5", {
-    coverageSignal: "candidate_gap",
-    candidateIds: [],
-    noteZh: "已对照官方页：现有 KG 没有光滑接触模型及其局限概念。"
+    coverageSignal: "candidate_covered",
+    candidateIds: ["mat_smooth_contact"],
+    noteZh: "人工批准：光滑接触模型 Concept 覆盖理想化接触假设及其局限。"
   }],
   ["9709:5.1:4", {
     coverageSignal: "candidate_partial",
@@ -2130,7 +2279,37 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
   ["9702:24.3:1", { coverageSignal: "candidate_gap", candidateIds: [], noteZh: "逐条复核：现有物理 KG 没有放射性示踪剂在身体组织中选择性吸收的概念。" }],
   ["9702:24.3:4", { coverageSignal: "candidate_gap", candidateIds: [], noteZh: "逐条复核：现有物理 KG 没有 PET 中正电子与电子湮灭产生反向双光子的概念。" }],
   ["9702:24.3:5", { requirementType: "concept_and_skill", coverageSignal: "candidate_partial", candidateIds: ["phy_binding_energy", "phy_photon"], noteZh: "逐条复核：质能关系与光子能量概念可计算湮灭光子能量，但现有 KG 没有 PET 湮灭过程概念。" }],
-  ["9702:25.3:2", { coverageSignal: "candidate_partial", candidateIds: ["phy_doppler", "phy_hubble"], noteZh: "逐条复核：Doppler 效应与 Hubble 定律提供相对运动和红移背景，但未明确宇宙学红移的波长定义式。" }]
+  ["9702:25.3:2", { coverageSignal: "candidate_partial", candidateIds: ["phy_doppler", "phy_hubble"], noteZh: "逐条复核：Doppler 效应与 Hubble 定律提供相对运动和红移背景，但未明确宇宙学红移的波长定义式。" }],
+  ["9702:3.2:3", { coverageSignal: "candidate_covered", candidateIds: ["phy_terminal_velocity"], noteZh: "人工批准：阻力与终端速度 Concept 覆盖阻力随速度变化、合力趋零和终端速度。" }],
+  ["9702:4.1:1", { coverageSignal: "candidate_covered", candidateIds: ["phy_centre_of_gravity"], noteZh: "人工批准：重心 Concept 覆盖物体总重量的等效作用点。" }],
+  ["9702:7.1:3", { requirementType: "concept_and_skill", coverageSignal: "skill_mapping_required", candidateIds: ["phy_progressive_waves"], noteZh: "人工批准：CRO 时基、Y 增益及波形读数属于仪器操作技能，行波 Concept 提供周期、频率和振幅背景。" }],
+  ["9702:7.5:2", { coverageSignal: "candidate_covered", candidateIds: ["phy_polarisation_malus"], noteZh: "人工批准：偏振与 Malus 定律 Concept 覆盖透射强度计算。" }],
+  ["9702:9.3:7", { coverageSignal: "candidate_covered", candidateIds: ["phy_resistive_sensors"], noteZh: "人工批准：电阻式传感器 Concept 覆盖 LDR 的光强响应。" }],
+  ["9702:9.3:8", { coverageSignal: "candidate_covered", candidateIds: ["phy_resistive_sensors"], noteZh: "人工批准：电阻式传感器 Concept 覆盖 NTC 热敏电阻的温度响应。" }],
+  ["9702:10.1:1", { requirementType: "concept_and_skill", coverageSignal: "skill_mapping_required", candidateIds: ["phy_series_parallel"], noteZh: "人工批准：标准电路符号属于受控资料和图示识读技能，串并联电路 Concept 提供电路背景。" }],
+  ["9702:10.3:3", { coverageSignal: "candidate_covered", candidateIds: ["phy_potentiometer_null_methods"], noteZh: "人工批准：电位计与零示法 Concept 覆盖电流计零读数和平衡判据。" }],
+  ["9702:11.1:4", { coverageSignal: "candidate_covered", candidateIds: ["phy_isotopes"], noteZh: "人工批准：物理图复用同位素 canonical concept。" }],
+  ["9702:11.1:6", { coverageSignal: "candidate_covered", candidateIds: ["phy_radioactive_decay"], noteZh: "人工批准：扩充后的放射性衰变 Concept 覆盖核子数和电荷守恒。" }],
+  ["9702:11.1:10", { coverageSignal: "candidate_covered", candidateIds: ["phy_radioactive_decay"], noteZh: "人工批准：扩充后的放射性衰变 Concept 用（反）中微子分能解释连续 β 能谱。" }],
+  ["9702:11.1:12", { coverageSignal: "candidate_covered", candidateIds: ["phy_binding_energy"], noteZh: "人工批准：扩充后的质量亏损与结合能 Concept 覆盖统一原子质量单位 u。" }],
+  ["9702:14.2:1", { coverageSignal: "candidate_covered", candidateIds: ["phy_thermometry"], noteZh: "人工批准：测温与热力学温标 Concept 覆盖随温度变化的测温属性。" }],
+  ["9702:14.2:2", { coverageSignal: "candidate_covered", candidateIds: ["phy_thermometry"], noteZh: "人工批准：测温与热力学温标 Concept 覆盖温标不依赖特定物质属性。" }],
+  ["9702:15.1:2", { coverageSignal: "candidate_covered", candidateIds: ["phy_mole_avogadro"], noteZh: "人工批准：物理图复用摩尔与阿伏伽德罗常数 canonical concept。" }],
+  ["9702:15.2:3", { coverageSignal: "candidate_covered", candidateIds: ["phy_ideal_gas"], noteZh: "人工批准：扩充后的理想气体 Concept 覆盖 pV=NkT 与 k=R/NA。" }],
+  ["9702:20.3:3", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["phy_hall_effect"], noteZh: "人工批准：Hall 效应 Concept 覆盖 Hall 电压来源、公式和推导。" }],
+  ["9702:24.1:1", { coverageSignal: "candidate_covered", candidateIds: ["phy_piezoelectric_transducers"], noteZh: "人工批准：压电换能器 Concept 覆盖正逆压电效应。" }],
+  ["9702:24.1:2", { coverageSignal: "candidate_covered", candidateIds: ["phy_piezoelectric_transducers"], noteZh: "人工批准：压电换能器 Concept 覆盖超声的产生和探测。" }],
+  ["9702:24.1:3", { coverageSignal: "candidate_covered", candidateIds: ["phy_ultrasound_imaging"], noteZh: "人工批准：超声成像与衰减 Concept 覆盖组织边界回波。" }],
+  ["9702:24.1:4", { coverageSignal: "candidate_covered", candidateIds: ["phy_acoustic_impedance_reflection"], noteZh: "人工批准：声阻抗与反射 Concept 覆盖 Z=ρc。" }],
+  ["9702:24.1:5", { coverageSignal: "candidate_covered", candidateIds: ["phy_acoustic_impedance_reflection"], noteZh: "人工批准：声阻抗与反射 Concept 覆盖强度反射系数。" }],
+  ["9702:24.1:6", { coverageSignal: "candidate_covered", candidateIds: ["phy_ultrasound_imaging"], noteZh: "人工批准：超声成像与衰减 Concept 覆盖超声指数衰减。" }],
+  ["9702:24.2:1", { coverageSignal: "candidate_covered", candidateIds: ["phy_xray_production"], noteZh: "人工批准：X 射线产生 Concept 覆盖电子轰击金属靶及最短波长。" }],
+  ["9702:24.2:2", { coverageSignal: "candidate_covered", candidateIds: ["phy_xray_imaging_attenuation"], noteZh: "人工批准：X 射线成像与衰减 Concept 覆盖组织吸收差异和造影剂。" }],
+  ["9702:24.2:3", { coverageSignal: "candidate_covered", candidateIds: ["phy_xray_imaging_attenuation"], noteZh: "人工批准：X 射线成像与衰减 Concept 覆盖指数衰减。" }],
+  ["9702:24.2:4", { coverageSignal: "candidate_covered", candidateIds: ["phy_computed_tomography"], noteZh: "人工批准：CT Concept 覆盖二维切片重建和三维图像组合。" }],
+  ["9702:24.3:1", { coverageSignal: "candidate_covered", candidateIds: ["phy_radioactive_tracers_pet"], noteZh: "人工批准：放射性示踪剂与 PET Concept 覆盖示踪剂选择性吸收。" }],
+  ["9702:24.3:3", { coverageSignal: "candidate_covered", candidateIds: ["phy_particle_antiparticle_annihilation"], noteZh: "人工批准：粒子-反粒子湮灭 Concept 覆盖电子与正电子湮灭。" }],
+  ["9702:24.3:4", { coverageSignal: "candidate_covered", candidateIds: ["phy_particle_antiparticle_annihilation", "phy_radioactive_tracers_pet"], noteZh: "人工批准：湮灭与 PET 两个 Concept 共同覆盖反向双光子和符合探测链路。" }]
   ,
   ["9700:6.2:4", { coverageSignal: "candidate_partial", candidateIds: ["bio_transcription"], noteZh: "第五批高风险复核修正：转录概念覆盖以 DNA 为模板合成 RNA，但未明确区分转录链（模板链）和非转录链及二者序列关系。" }],
   ["9700:16.3:3", { coverageSignal: "candidate_partial", candidateIds: ["bio_gene_control"], noteZh: "第五批高风险复核修正：基因表达调控概念覆盖转录调节背景，但未明确转录因子与 DNA 结合后可提高或降低基因转录。" }],
@@ -2156,7 +2335,83 @@ const AUDITED_OUTCOME_OVERRIDES = new Map([
   ["9700:18.1:2", { coverageSignal: "candidate_partial", candidateIds: ["bio_classification"], noteZh: "第六批抽样修正：分类概念提到三域系统，但未明确列出 Archaea、Bacteria 和 Eukarya。" }],
   ["9701:1.2:2", { coverageSignal: "candidate_partial", candidateIds: ["che_isotopes"], noteZh: "第六批抽样修正：同位素概念覆盖质子、中子和质量数，但未明确核素符号中质量数与原子序数的上下标记法。" }],
   ["9701:28.2:4", { coverageSignal: "candidate_partial", candidateIds: ["che_complex_ions"], noteZh: "第六批抽样修正：配位离子概念覆盖中心金属离子与配体，但未完整覆盖中心原子或离子以及中性配合物的定义范围。" }],
-  ["9702:4.2:2", { coverageSignal: "candidate_covered", candidateIds: ["phy_equilibrium"], noteZh: "第六批抽样修正：力的平衡概念明确说明合力和合力矩均为零时物体处于平衡，完整覆盖该要求。" }]
+  ["9702:4.2:2", { coverageSignal: "candidate_covered", candidateIds: ["phy_equilibrium"], noteZh: "第六批抽样修正：力的平衡概念明确说明合力和合力矩均为零时物体处于平衡，完整覆盖该要求。" }],
+  ["9701:1.3:8", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["che_atomic_orbital_shapes"], noteZh: "人工批准：原子轨道形状 Concept 覆盖 s、p 轨道的描述与绘制。" }],
+  ["9701:1.3:9", { coverageSignal: "candidate_covered", candidateIds: ["che_bond_fission"], noteZh: "人工批准：扩充后的键断裂与反应物种 Concept 明确定义自由基含一个或多个未成对电子。" }],
+  ["9701:2.1:1", { coverageSignal: "candidate_covered", candidateIds: ["che_relative_masses"], noteZh: "人工批准：相对质量 Concept 定义统一原子质量单位为碳-12 原子质量的十二分之一。" }],
+  ["9701:2.1:2", { coverageSignal: "candidate_covered", candidateIds: ["che_relative_masses"], noteZh: "人工批准：相对质量 Concept 区分相对同位素、原子、分子和式量。" }],
+  ["9701:2.3:4", { coverageSignal: "candidate_covered", candidateIds: ["che_formulae"], noteZh: "人工批准：扩充后的化学式 Concept 覆盖无水盐、水合盐和结晶水。" }],
+  ["9701:3.4:3", { coverageSignal: "candidate_covered", candidateIds: ["che_bond_enthalpy"], noteZh: "人工批准：扩充后的键能与键长 Concept 覆盖定义和反应性比较。" }],
+  ["9701:4.1:1", { coverageSignal: "candidate_covered", candidateIds: ["che_gas_laws"], noteZh: "人工批准：扩充后的理想气体行为 Concept 用分子碰撞解释气体压强。" }],
+  ["9701:7.2:1", { requirementType: "concept_and_skill", coverageSignal: "skill_mapping_required", candidateIds: ["che_bronsted", "che_strong_weak"], noteZh: "人工批准：常见酸的名称与化学式属于受控词表识读，酸碱理论 Concept 提供背景。" }],
+  ["9701:7.2:2", { requirementType: "concept_and_skill", coverageSignal: "skill_mapping_required", candidateIds: ["che_bronsted", "che_strong_weak"], noteZh: "人工批准：常见碱和碱液的名称与化学式属于受控词表识读。" }],
+  ["9701:11.4:2", { coverageSignal: "candidate_covered", candidateIds: ["che_group17"], noteZh: "人工批准：扩充后的第 17 族 Concept 覆盖氯净水及 HOCl、ClO− 活性物种。" }],
+  ["9701:13.1:3", { coverageSignal: "candidate_covered", candidateIds: ["che_organic_representations"], noteZh: "人工批准：有机结构表示 Concept 覆盖官能团决定特征性质和反应。" }],
+  ["9701:13.1:4", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["che_organic_representations"], noteZh: "人工批准：有机结构表示 Concept 覆盖通式、结构式、显示式和骨架式。" }],
+  ["9701:13.3:3", { coverageSignal: "candidate_covered", candidateIds: ["che_covalent"], noteZh: "人工批准：扩充后的共价键 Concept 覆盖 sp、sp²、sp³ 杂化原子中的 σ/π 键排列。" }],
+  ["9701:14.1:4", { coverageSignal: "candidate_covered", candidateIds: ["che_alkanes"], noteZh: "人工批准：扩充后的烷烃 Concept 覆盖重质馏分裂化。" }],
+  ["9701:15.1:2", { coverageSignal: "candidate_covered", candidateIds: ["che_nucleophilic_sub"], noteZh: "人工批准：扩充后的亲核取代 Concept 覆盖卤代烷的一、二、三级分类。" }],
+  ["9701:16.1:4", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["che_iodoform_test"], noteZh: "人工批准：碘仿检验 Concept 覆盖可发生反应的醇结构和黄色沉淀。" }],
+  ["9701:16.1:5", { coverageSignal: "candidate_covered", candidateIds: ["che_alcohol_reactions"], noteZh: "人工批准：扩充后的醇反应 Concept 覆盖醇与水的相对酸性。" }],
+  ["9701:17.1:6", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["che_iodoform_test"], noteZh: "人工批准：碘仿检验 Concept 覆盖甲基羰基结构判据。" }],
+  ["9701:19.2:3", { coverageSignal: "candidate_covered", candidateIds: ["che_nitriles"], noteZh: "人工批准：腈与羟基腈 Concept 覆盖酸性或碱性水解为羧酸。" }],
+  ["9701:21.1:2", { requirementType: "concept_and_skill", coverageSignal: "skill_mapping_required", candidateIds: ["che_organic_representations", "che_mechanism_types"], noteZh: "人工批准：设计多步有机合成路线属于综合规划技能，不新增伪 Concept。" }],
+  ["9701:24.2:10", { coverageSignal: "candidate_covered", candidateIds: ["che_gibbs", "che_cells"], noteZh: "人工批准：扩充后的 Gibbs 自由能与电池 Concept 共同覆盖 ΔG°=-nFE°cell。" }],
+  ["9701:25.2:1", { coverageSignal: "candidate_covered", candidateIds: ["che_partition_coefficient"], noteZh: "人工批准：分配系数 Concept 覆盖平衡浓度比定义。" }],
+  ["9701:25.2:2", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["che_partition_coefficient"], noteZh: "人工批准：分配系数 Concept 覆盖同一物态溶质在两种溶剂间的计算。" }],
+  ["9701:25.2:3", { coverageSignal: "candidate_covered", candidateIds: ["che_partition_coefficient"], noteZh: "人工批准：分配系数 Concept 覆盖溶质和溶剂极性解释。" }],
+  ["9701:28.1:2", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["che_atomic_orbital_shapes"], noteZh: "人工批准：原子轨道形状 Concept 覆盖 3dxy 和 3dz² 轨道绘制。" }],
+  ["9701:32.2:1", { coverageSignal: "candidate_covered", candidateIds: ["che_diazonium_azo", "che_phenol_acid_base"], noteZh: "人工批准：重氮盐与苯酚 Concept 共同覆盖苯胺经重氮盐制苯酚。" }],
+  ["9701:32.2:2", { coverageSignal: "candidate_covered", candidateIds: ["che_phenol_acid_base"], noteZh: "人工批准：苯酚酸碱 Concept 覆盖与 NaOH 生成苯氧负离子。" }],
+  ["9701:32.2:3", { coverageSignal: "candidate_covered", candidateIds: ["che_phenol_acid_base"], noteZh: "人工批准：苯酚酸碱 Concept 覆盖苯酚酸性和共轭碱共振稳定。" }],
+  ["9701:32.2:4", { coverageSignal: "candidate_covered", candidateIds: ["che_phenol_acid_base"], noteZh: "人工批准：苯酚酸碱 Concept 覆盖水、苯酚和乙醇的相对酸性。" }],
+  ["9701:32.2:6", { coverageSignal: "candidate_covered", candidateIds: ["che_phenol_ring_reactivity"], noteZh: "人工批准：苯酚芳环反应 Concept 覆盖羟基对 2、4、6 位的定位效应。" }],
+  ["9701:32.2:7", { coverageSignal: "candidate_covered", candidateIds: ["che_phenol_ring_reactivity"], noteZh: "人工批准：苯酚芳环反应 Concept 覆盖将规律迁移到萘酚等酚类。" }],
+  ["9701:33.3:3", { coverageSignal: "candidate_covered", candidateIds: ["che_esters"], noteZh: "人工批准：扩充后的酯与酰氯 Concept 覆盖加成-消去机理。" }],
+  ["9701:34.2:2", { coverageSignal: "candidate_covered", candidateIds: ["che_diazonium_azo"], noteZh: "人工批准：重氮盐与偶氮化合物 Concept 覆盖苯胺低温重氮化。" }],
+  ["9701:34.2:4", { coverageSignal: "candidate_covered", candidateIds: ["che_diazonium_azo"], noteZh: "人工批准：重氮盐与偶氮化合物 Concept 覆盖偶氮偶联和染料。" }],
+  ["9701:34.3:2", { coverageSignal: "candidate_covered", candidateIds: ["che_amides"], noteZh: "人工批准：酰胺 Concept 覆盖酸性或碱性水解。" }],
+  ["9701:34.3:3", { coverageSignal: "candidate_covered", candidateIds: ["che_amides"], noteZh: "人工批准：酰胺 Concept 覆盖弱碱性及孤对电子离域解释。" }],
+  ["9701:35.3:2", { coverageSignal: "candidate_covered", candidateIds: ["che_addition_polymer"], noteZh: "人工批准：扩充后的加聚物 Concept 覆盖某些聚合物的光降解。" }],
+  ["9701:36.1:2", { requirementType: "concept_and_skill", coverageSignal: "skill_mapping_required", candidateIds: ["che_organic_representations", "che_mechanism_types"], noteZh: "人工批准：高级多步合成路线设计仍作为综合规划技能映射。" }],
+  ["9700:1.2:4", { coverageSignal: "candidate_covered", candidateIds: ["bio_atp_energy_currency"], noteZh: "人工批准：ATP 与细胞能量耦联 Concept 覆盖细胞耗能过程的通用能量来源。" }],
+  ["9700:1.2:7", { coverageSignal: "candidate_covered", candidateIds: ["bio_virus_structure_classification"], noteZh: "人工批准：病毒结构与核酸分类 Concept 覆盖非细胞性、核心、衣壳和可选包膜。" }],
+  ["9700:2.2:3", { coverageSignal: "candidate_covered", candidateIds: ["bio_monomers_polymers"], noteZh: "人工批准：单体、聚合物与共价连接 Concept 覆盖小分子由共价键连接成聚合物。" }],
+  ["9700:2.3:7", { coverageSignal: "candidate_covered", candidateIds: ["bio_collagen"], noteZh: "人工批准：胶原 Concept 覆盖胶原分子及其形成纤维的排列。" }],
+  ["9700:2.3:8", { coverageSignal: "candidate_covered", candidateIds: ["bio_collagen"], noteZh: "人工批准：胶原 Concept 覆盖分子和纤维结构与抗张功能的关系。" }],
+  ["9700:3.2:2", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["bio_michaelis_menten"], noteZh: "人工批准：Michaelis-Menten 动力学 Concept 覆盖 Vmax、Km 及亲和力比较。" }],
+  ["9700:4.2:3", { coverageSignal: "candidate_covered", candidateIds: ["bio_surface_area_volume_ratio"], noteZh: "人工批准：表面积体积比 Concept 覆盖三维形体计算及随尺寸增大的变化规律。" }],
+  ["9700:5.1:6", { coverageSignal: "candidate_covered", candidateIds: ["bio_mitosis"], noteZh: "人工批准：扩充后的有丝分裂 Concept 覆盖失控分裂和肿瘤形成。" }],
+  ["9700:6.1:5", { coverageSignal: "candidate_covered", candidateIds: ["bio_rna_structure"], noteZh: "人工批准：RNA 与 mRNA 结构 Concept 覆盖该分子结构要求。" }],
+  ["9700:8.2:2", { coverageSignal: "candidate_covered", candidateIds: ["bio_carbon_dioxide_transport"], noteZh: "人工批准：二氧化碳运输 Concept 覆盖 chloride shift 及其重要性。" }],
+  ["9700:8.2:3", { coverageSignal: "candidate_covered", candidateIds: ["bio_carbon_dioxide_transport"], noteZh: "人工批准：二氧化碳运输 Concept 覆盖血浆中的溶解态和碳酸氢根运输。" }],
+  ["9700:10.2:1", { coverageSignal: "candidate_covered", candidateIds: ["bio_antibiotics"], noteZh: "人工批准：抗生素选择性作用 Concept 覆盖青霉素对细菌的作用以及对病毒无效。" }],
+  ["9700:12.1:2", { coverageSignal: "candidate_covered", candidateIds: ["bio_atp_energy_currency"], noteZh: "人工批准：ATP Concept 覆盖其适合作为通用能量货币的特征。" }],
+  ["9700:12.1:5", { coverageSignal: "candidate_covered", candidateIds: ["bio_respiratory_quotient"], noteZh: "人工批准：呼吸商 Concept 覆盖 RQ 定义。" }],
+  ["9700:12.1:6", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["bio_respiratory_quotient"], noteZh: "人工批准：呼吸商 Concept 覆盖由呼吸方程计算不同底物 RQ。" }],
+  ["9700:13.1:5", { coverageSignal: "candidate_covered", candidateIds: ["bio_photosynthetic_pigments_spectra"], noteZh: "人工批准：光合色素与光谱 Concept 覆盖吸收光谱和作用光谱解释。" }],
+  ["9700:14.1:3", { coverageSignal: "candidate_covered", candidateIds: ["bio_deamination_urea"], noteZh: "人工批准：脱氨与尿素形成 Concept 覆盖肝脏处理过量氨基酸。" }],
+  ["9700:14.1:11", { coverageSignal: "candidate_covered", candidateIds: ["bio_glucose_biosensors"], noteZh: "人工批准：葡萄糖试纸与生物传感器 Concept 覆盖 glucose oxidase 和 peroxidase 原理。" }],
+  ["9700:14.2:4", { coverageSignal: "candidate_covered", candidateIds: ["bio_aba_stomatal_closure"], noteZh: "人工批准：ABA 与气孔关闭 Concept 覆盖 Ca2+ 第二信使和水分胁迫反应。" }],
+  ["9700:15.1:10", { coverageSignal: "candidate_covered", candidateIds: ["bio_neuromuscular_activation"], noteZh: "人工批准：神经肌肉激活 Concept 覆盖神经肌肉接头、T 管和肌浆网。" }],
+  ["9700:15.1:12", { coverageSignal: "candidate_covered", candidateIds: ["bio_sliding_filament_contraction"], noteZh: "人工批准：滑动肌丝 Concept 覆盖 troponin、tropomyosin、Ca2+ 与 ATP。" }],
+  ["9700:15.2:3", { coverageSignal: "candidate_covered", candidateIds: ["bio_plant_responses"], noteZh: "人工批准：扩充后的植物响应 Concept 覆盖赤霉素参与大麦萌发和 DELLA 调控边界。" }],
+  ["9700:16.2:5", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["bio_chi_square_test"], noteZh: "人工批准：卡方检验 Concept 覆盖观察值与期望值差异的显著性检验。" }],
+  ["9700:16.3:2", { coverageSignal: "candidate_covered", candidateIds: ["bio_lac_operon"], noteZh: "人工批准：lac 操纵子 Concept 覆盖原核诱导调控并排除不要求的 cAMP 机制。" }],
+  ["9700:17.1:4", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["bio_t_test"], noteZh: "人工批准：两独立样本 t 检验 Concept 覆盖均值比较和显著性判断。" }],
+  ["9700:17.2:5", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["bio_hardy_weinberg"], noteZh: "人工批准：Hardy-Weinberg Concept 覆盖频率计算及成立条件。" }],
+  ["9700:17.2:6", { coverageSignal: "candidate_covered", candidateIds: ["bio_selective_breeding"], noteZh: "人工批准：选择育种 Concept 覆盖人工选择、近交和杂交原则。" }],
+  ["9700:17.2:7", { coverageSignal: "candidate_covered", candidateIds: ["bio_selective_breeding"], noteZh: "人工批准：选择育种 Concept 覆盖官方指定的谷物、玉米和奶牛实例。" }],
+  ["9700:18.1:6", { coverageSignal: "candidate_covered", candidateIds: ["bio_virus_structure_classification"], noteZh: "人工批准：病毒结构与核酸分类 Concept 覆盖 DNA/RNA 及单双链分类。" }],
+  ["9700:18.2:1", { coverageSignal: "candidate_covered", candidateIds: ["bio_ecosystems_niches"], noteZh: "人工批准：生态系统与生态位 Concept 覆盖两个术语定义。" }],
+  ["9700:18.2:5", { requirementType: "concept_and_skill", coverageSignal: "candidate_covered", candidateIds: ["bio_correlation_tests"], noteZh: "人工批准：Spearman 与 Pearson 相关检验 Concept 覆盖两个变量关系分析。" }],
+  ["9700:18.3:4", { coverageSignal: "candidate_covered", candidateIds: ["bio_conservation"], noteZh: "人工批准：扩充后的保护 Concept 覆盖 IVF、胚胎移植和代孕，不包含人工授精。" }],
+  ["9700:19.1:10", { coverageSignal: "candidate_covered", candidateIds: ["bio_microarrays"], noteZh: "人工批准：DNA 微阵列 Concept 覆盖基因组分析和 mRNA 表达检测。" }],
+  ["9700:19.1:11", { coverageSignal: "candidate_covered", candidateIds: ["bio_bioinformatics_databases"], noteZh: "人工批准：序列数据库与生物信息学 Concept 覆盖数据库的用途和收益。" }],
+  ["9700:4.2:4", { requirementType: "practical_skill", coverageSignal: "skill_mapping_required", candidateIds: ["bio_passive_transport", "bio_surface_area_volume_ratio"], noteZh: "人工批准 Skill 映射：不同尺寸琼脂块实验由扩散和表面积体积比共同提供背景。" }],
+  ["9700:12.1:7", { requirementType: "practical_skill", coverageSignal: "skill_mapping_required", candidateIds: ["bio_respiratory_quotient"], noteZh: "人工批准 Skill 映射：呼吸计测 RQ 的实践技能由呼吸商 Concept 提供背景。" }],
+  ["9700:13.1:6", { requirementType: "practical_skill", coverageSignal: "skill_mapping_required", candidateIds: ["bio_photosynthetic_pigments_spectra"], noteZh: "人工批准 Skill 映射：色素色谱与 Rf 计算由光合色素 Concept 提供背景。" }],
+  ["9700:15.1:11", { requirementType: "practical_skill", coverageSignal: "skill_mapping_required", candidateIds: ["bio_neuromuscular_activation", "bio_sliding_filament_contraction"], noteZh: "人工批准 Skill 映射：横纹肌超微结构判读由神经肌肉激活与滑动肌丝两个 Concept 提供背景。" }]
 ]);
 
 const AUDITED_COVERAGE_DOWNGRADES = new Map([
@@ -2830,7 +3085,7 @@ function buildReview(subject) {
         text_sha256: createHash("sha256").update(normalize(outcome.text)).digest("hex"),
         keywords: topKeywords(outcome.text),
         requirement_type: requirementType,
-        review_status: "needs_review",
+        review_status: APPROVED_OUTCOME_IDS.has(outcomeId) ? "approved" : "needs_review",
         coverage_signal: signal,
         summary_zh: summaryZh(signal, requirementType, selectedRanked),
         machine_audit_override: Boolean(auditOverride || auditedAsIs),
@@ -2962,7 +3217,9 @@ function markdown(review, subject) {
 function main() {
   mkdirSync(OUTPUT_DIR, { recursive: true });
   const index = [];
-  for (const subject of SUBJECTS) {
+  const subjects = graphIdArgument ? SUBJECTS.filter((subject) => subject.graphId === graphIdArgument) : SUBJECTS;
+  if (subjects.length === 0) throw new Error(`Unknown A-Level graph: ${graphIdArgument}`);
+  for (const subject of subjects) {
     const review = buildReview(subject);
     const jsonPath = resolve(OUTPUT_DIR, `${subject.graphId}.coverage.json`);
     const markdownPath = resolve(OUTPUT_DIR, `${subject.graphId}.review.zh-CN.md`);
@@ -2973,9 +3230,10 @@ function main() {
       `[build-a-level-review-packs] ${subject.graphId}: ${review.summary.official_outcomes} outcomes, ${review.summary.candidate_gaps} candidate gaps\n`
     );
   }
-  writeFileSync(
-    resolve(OUTPUT_DIR, "README.md"),
-    [
+  if (!graphIdArgument) {
+    writeFileSync(
+      resolve(OUTPUT_DIR, "README.md"),
+      [
       "# A-Level KG 待审核包",
       "",
       "这些文件是官方 syllabus 与当前 KG 的候选映射，不是批准结果。",
@@ -2991,8 +3249,9 @@ function main() {
       "3. 运行 `pnpm --filter @primoria/web build:kg-review-packs -- <文本目录>`。",
       "4. 生成物只含页码、定位、关键词、文本指纹和候选映射；不得提交 Cambridge PDF 或正文。",
       ""
-    ].join("\n")
-  );
+      ].join("\n")
+    );
+  }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) main();

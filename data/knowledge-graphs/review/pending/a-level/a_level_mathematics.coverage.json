@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-07-17",
+  "generated_at": "2026-07-18",
   "graph_id": "a_level_mathematics",
   "syllabus_code": "9709",
   "source_id": "src_cambridge_9709_2026_2027",
@@ -9,18 +9,18 @@
   "summary": {
     "official_sections": 38,
     "official_outcomes": 153,
-    "candidate_covered": 53,
+    "candidate_covered": 62,
     "candidate_partial": 91,
     "ambiguous": 0,
     "unresolved_mapping": 0,
-    "candidate_gaps": 9,
+    "candidate_gaps": 0,
     "skill_mapping_required": 0,
     "requirement_types": {
       "concept": 116,
       "concept_and_skill": 37
     },
-    "existing_topics": 33,
-    "existing_concepts": 79
+    "existing_topics": 35,
+    "existing_concepts": 86
   },
   "sections": [
     {
@@ -258,8 +258,8 @@
         },
         {
           "topic_id": "mat_algebra_part2_mat_composite",
-          "name": "Composite Functions and Modulus Function",
-          "name_zh": "复合函数与绝对值函数",
+          "name": "Composite Functions, Modulus Function and Graph Transformations",
+          "name_zh": "复合函数、绝对值函数与图像变换",
           "score": 0.442
         },
         {
@@ -447,12 +447,23 @@
             "features"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“函数图像变换”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有数学 KG 没有函数图像平移、反射和伸缩变换概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：函数图像变换 Concept 完整覆盖平移、反射、伸缩及组合变换。",
+          "candidate_concepts": [
+            {
+              "node_id": "mat_graph_transformations",
+              "canonical_id": "pc_1aaf98f8144a2f3b3fae833eb1370db8",
+              "name": "Graph Transformations of Functions",
+              "name_zh": "函数图像变换",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -727,8 +738,8 @@
         },
         {
           "topic_id": "mat_normal_inference_mat_sampling",
-          "name": "Sampling and Hypothesis Testing",
-          "name_zh": "抽样与假设检验",
+          "name": "Sampling, Estimation and Hypothesis Testing",
+          "name_zh": "抽样、估计与假设检验",
           "score": 0.023
         }
       ],
@@ -1609,9 +1620,9 @@
         },
         {
           "topic_id": "mat_algebra_part2_mat_composite",
-          "name": "Composite Functions and Modulus Function",
-          "name_zh": "复合函数与绝对值函数",
-          "score": 0.054
+          "name": "Composite Functions, Modulus Function and Graph Transformations",
+          "name_zh": "复合函数、绝对值函数与图像变换",
+          "score": 0.056
         },
         {
           "topic_id": "mat_algebra_part1_mat_solve_quadratics",
@@ -2334,12 +2345,23 @@
             "integral"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“梯形法则”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有数学 KG 没有梯形法则、误差方向或数值积分概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：梯形法则 Concept 覆盖定积分近似及由图像判断高估或低估。",
+          "candidate_concepts": [
+            {
+              "node_id": "mat_trapezium_rule",
+              "canonical_id": "pc_eee05d840b05cd617b46eb6beb86630d",
+              "name": "Trapezium Rule",
+              "name_zh": "梯形法则",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -2498,9 +2520,9 @@
         },
         {
           "topic_id": "mat_algebra_part2_mat_composite",
-          "name": "Composite Functions and Modulus Function",
-          "name_zh": "复合函数与绝对值函数",
-          "score": 0.054
+          "name": "Composite Functions, Modulus Function and Graph Transformations",
+          "name_zh": "复合函数、绝对值函数与图像变换",
+          "score": 0.056
         },
         {
           "topic_id": "mat_algebra_part1_mat_solve_quadratics",
@@ -4348,21 +4370,21 @@
       "candidate_topics": [
         {
           "topic_id": "mat_mech_forces",
-          "name": "Mechanics: Forces and Newton's Laws",
-          "name_zh": "力与牛顿定律",
-          "score": 0.689
+          "name": "Mechanics: Forces, Equilibrium and Contact Models",
+          "name_zh": "力、平衡与接触模型",
+          "score": 0.676
+        },
+        {
+          "topic_id": "mat_mech_dynamics",
+          "name": "Mechanics: Mass, Weight and Newton's Laws",
+          "name_zh": "质量、重量与牛顿定律",
+          "score": 0.039
         },
         {
           "topic_id": "mat_prob_random_vars",
           "name": "Probability and Discrete Random Variables",
           "name_zh": "概率与离散随机变量",
           "score": 0.022
-        },
-        {
-          "topic_id": "mat_trig_part2",
-          "name": "Trigonometry: Equations and Formulae",
-          "name_zh": "三角学：方程与公式",
-          "score": 0.021
         }
       ],
       "outcomes": [
@@ -4394,7 +4416,7 @@
               "canonical_id": "pc_02a4f5aead93480710f006ddbe4904ff",
               "name": "Forces and Equilibrium",
               "name_zh": "力与平衡",
-              "score": 0.338,
+              "score": 0.337,
               "keyword_coverage": 0.125,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -4519,12 +4541,23 @@
             "smooth"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“光滑接触模型”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有光滑接触模型及其局限概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：光滑接触模型 Concept 覆盖理想化接触假设及其局限。",
+          "candidate_concepts": [
+            {
+              "node_id": "mat_smooth_contact",
+              "canonical_id": "pc_25cce3124e597a28882fe769fb413cad",
+              "name": "Smooth Contact Model",
+              "name_zh": "光滑接触模型",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9709:4.1:6",
@@ -4621,9 +4654,9 @@
           "score": 0.151
         },
         {
-          "topic_id": "mat_mech_forces",
-          "name": "Mechanics: Forces and Newton's Laws",
-          "name_zh": "力与牛顿定律",
+          "topic_id": "mat_mech_dynamics",
+          "name": "Mechanics: Mass, Weight and Newton's Laws",
+          "name_zh": "质量、重量与牛顿定律",
           "score": 0.132
         }
       ],
@@ -4903,10 +4936,10 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "mat_mech_forces",
-          "name": "Mechanics: Forces and Newton's Laws",
-          "name_zh": "力与牛顿定律",
-          "score": 0.704
+          "topic_id": "mat_mech_dynamics",
+          "name": "Mechanics: Mass, Weight and Newton's Laws",
+          "name_zh": "质量、重量与牛顿定律",
+          "score": 0.688
         },
         {
           "topic_id": "mat_exp_log",
@@ -4994,12 +5027,23 @@
             "mg"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“质量与重量”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有数学 KG 没有质量与重量关系 W=mg 的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：质量与重量 Concept 覆盖 W=mg 及力学题中的重力加速度约定。",
+          "candidate_concepts": [
+            {
+              "node_id": "mat_mass_weight",
+              "canonical_id": "pc_e89c4895cbf9c4d6568f7dfad6ffb5eb",
+              "name": "Mass and Weight",
+              "name_zh": "质量与重量",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9709:4.4:3",
@@ -5337,9 +5381,9 @@
         },
         {
           "topic_id": "mat_normal_inference_mat_sampling",
-          "name": "Sampling and Hypothesis Testing",
-          "name_zh": "抽样与假设检验",
-          "score": 0.017
+          "name": "Sampling, Estimation and Hypothesis Testing",
+          "name_zh": "抽样、估计与假设检验",
+          "score": 0.028
         },
         {
           "topic_id": "mat_exp_log_mat_solve_exp",
@@ -5550,8 +5594,8 @@
         },
         {
           "topic_id": "mat_algebra_part2_mat_composite",
-          "name": "Composite Functions and Modulus Function",
-          "name_zh": "复合函数与绝对值函数",
+          "name": "Composite Functions, Modulus Function and Graph Transformations",
+          "name_zh": "复合函数、绝对值函数与图像变换",
           "score": 0.019
         }
       ],
@@ -5651,10 +5695,10 @@
           "score": 0.238
         },
         {
-          "topic_id": "mat_random_vars",
-          "name": "Random Variables and Distributions",
-          "name_zh": "随机变量与分布",
-          "score": 0.03
+          "topic_id": "mat_continuous_probability",
+          "name": "Continuous Random Variables and Probability Density",
+          "name_zh": "连续随机变量与概率密度",
+          "score": 0.235
         }
       ],
       "outcomes": [
@@ -5833,10 +5877,10 @@
           "score": 0.376
         },
         {
-          "topic_id": "mat_numerical_methods_mat_form_de",
-          "name": "Forming Differential Equations and Separation of Variables",
-          "name_zh": "建立微分方程与分离变量",
-          "score": 0.184
+          "topic_id": "mat_continuous_probability",
+          "name": "Continuous Random Variables and Probability Density",
+          "name_zh": "连续随机变量与概率密度",
+          "score": 0.365
         }
       ],
       "outcomes": [
@@ -6339,10 +6383,10 @@
           "score": 0.29
         },
         {
-          "topic_id": "mat_numerical_methods_mat_form_de",
-          "name": "Forming Differential Equations and Separation of Variables",
-          "name_zh": "建立微分方程与分离变量",
-          "score": 0.146
+          "topic_id": "mat_continuous_probability",
+          "name": "Continuous Random Variables and Probability Density",
+          "name_zh": "连续随机变量与概率密度",
+          "score": 0.278
         }
       ],
       "outcomes": [
@@ -6414,6 +6458,12 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "mat_continuous_probability",
+          "name": "Continuous Random Variables and Probability Density",
+          "name_zh": "连续随机变量与概率密度",
+          "score": 0.767
+        },
+        {
           "topic_id": "mat_random_vars",
           "name": "Random Variables and Distributions",
           "name_zh": "随机变量与分布",
@@ -6424,12 +6474,6 @@
           "name": "Probability and Discrete Random Variables",
           "name_zh": "概率与离散随机变量",
           "score": 0.357
-        },
-        {
-          "topic_id": "mat_numerical_methods_mat_form_de",
-          "name": "Forming Differential Equations and Separation of Variables",
-          "name_zh": "建立微分方程与分离变量",
-          "score": 0.173
         }
       ],
       "outcomes": [
@@ -6450,12 +6494,33 @@
             "infinite"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“连续随机变量”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有数学 KG 没有连续随机变量或概率密度函数概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：连续随机变量和概率密度函数共同覆盖连续取值域及密度性质。",
+          "candidate_concepts": [
+            {
+              "node_id": "mat_continuous_random_variables",
+              "canonical_id": "pc_5f55e60931935e299996e34826f1a0e9",
+              "name": "Continuous Random Variables",
+              "name_zh": "连续随机变量",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "mat_probability_density_function",
+              "canonical_id": "pc_e21f9bf6f3f146e8a0b6e61e0b0adf33",
+              "name": "Probability Density Function",
+              "name_zh": "概率密度函数",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9709:6.3:2",
@@ -6474,12 +6539,23 @@
             "cumulative"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“概率密度函数”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有数学 KG：没有连续随机变量概率密度函数、均值、方差和百分位数概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：概率密度函数 Concept 覆盖概率、均值、方差、中位数和百分位数计算。",
+          "candidate_concepts": [
+            {
+              "node_id": "mat_probability_density_function",
+              "canonical_id": "pc_e21f9bf6f3f146e8a0b6e61e0b0adf33",
+              "name": "Probability Density Function",
+              "name_zh": "概率密度函数",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -6495,9 +6571,9 @@
       "candidate_topics": [
         {
           "topic_id": "mat_normal_inference_mat_sampling",
-          "name": "Sampling and Hypothesis Testing",
-          "name_zh": "抽样与假设检验",
-          "score": 0.364
+          "name": "Sampling, Estimation and Hypothesis Testing",
+          "name_zh": "抽样、估计与假设检验",
+          "score": 0.385
         },
         {
           "topic_id": "mat_algebra_part2",
@@ -6506,10 +6582,10 @@
           "score": 0.037
         },
         {
-          "topic_id": "mat_mech_energy_momentum",
-          "name": "Mechanics: Connected Particles, Energy and Momentum",
-          "name_zh": "力学：连接体、能量与动量",
-          "score": 0.022
+          "topic_id": "mat_mech_dynamics",
+          "name": "Mechanics: Mass, Weight and Newton's Laws",
+          "name_zh": "质量、重量与牛顿定律",
+          "score": 0.033
         }
       ],
       "outcomes": [
@@ -6712,12 +6788,23 @@
             "either"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“统计估计”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有样本均值和方差的无偏估计概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：统计估计 Concept 覆盖由原始或汇总样本计算总体均值和方差的无偏估计。",
+          "candidate_concepts": [
+            {
+              "node_id": "mat_statistical_estimation",
+              "canonical_id": "pc_327828115364d07966390e1866528270",
+              "name": "Statistical Estimation",
+              "name_zh": "统计估计",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9709:6.4:7",
@@ -6736,12 +6823,23 @@
             "known"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“统计估计”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有数学 KG 没有总体均值置信区间概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：统计估计 Concept 覆盖总体均值置信区间。",
+          "candidate_concepts": [
+            {
+              "node_id": "mat_statistical_estimation",
+              "canonical_id": "pc_327828115364d07966390e1866528270",
+              "name": "Statistical Estimation",
+              "name_zh": "统计估计",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9709:6.4:8",
@@ -6759,12 +6857,23 @@
             "sample"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“统计估计”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有总体比例置信区间概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：统计估计 Concept 覆盖大样本总体比例的近似置信区间。",
+          "candidate_concepts": [
+            {
+              "node_id": "mat_statistical_estimation",
+              "canonical_id": "pc_327828115364d07966390e1866528270",
+              "name": "Statistical Estimation",
+              "name_zh": "统计估计",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -6780,8 +6889,8 @@
       "candidate_topics": [
         {
           "topic_id": "mat_normal_inference_mat_sampling",
-          "name": "Sampling and Hypothesis Testing",
-          "name_zh": "抽样与假设检验",
+          "name": "Sampling, Estimation and Hypothesis Testing",
+          "name_zh": "抽样、估计与假设检验",
           "score": 0.317
         },
         {

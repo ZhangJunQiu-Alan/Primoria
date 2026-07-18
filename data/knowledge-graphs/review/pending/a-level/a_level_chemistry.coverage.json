@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-07-17",
+  "generated_at": "2026-07-18",
   "graph_id": "a_level_chemistry",
   "syllabus_code": "9701",
   "source_id": "src_cambridge_9701_2025_2027",
@@ -9,19 +9,19 @@
   "summary": {
     "official_sections": 90,
     "official_outcomes": 351,
-    "candidate_covered": 30,
-    "candidate_partial": 282,
-    "ambiguous": 0,
-    "unresolved_mapping": 0,
-    "candidate_gaps": 38,
-    "skill_mapping_required": 1,
+    "candidate_covered": 65,
+    "candidate_partial": 277,
+    "ambiguous": 1,
+    "unresolved_mapping": 3,
+    "candidate_gaps": 0,
+    "skill_mapping_required": 5,
     "requirement_types": {
-      "concept": 314,
-      "concept_and_skill": 36,
+      "concept": 307,
+      "concept_and_skill": 43,
       "practical_skill": 1
     },
-    "existing_topics": 29,
-    "existing_concepts": 73
+    "existing_topics": 31,
+    "existing_concepts": 83
   },
   "sections": [
     {
@@ -42,15 +42,15 @@
         },
         {
           "topic_id": "che_atomic_che_electron_config",
-          "name": "Electronic Configuration and Ionisation Energy",
-          "name_zh": "电子排布与电离能",
-          "score": 0.025
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
+          "score": 0.133
         },
         {
-          "topic_id": "che_bonding_part1",
-          "name": "Chemical Bonding: Types of Bonds",
-          "name_zh": "化学键：成键类型",
-          "score": 0.024
+          "topic_id": "che_stoichiometry",
+          "name": "Relative Masses, the Mole and Formulae",
+          "name_zh": "相对质量、摩尔与化学式",
+          "score": 0.098
         }
       ],
       "outcomes": [
@@ -276,22 +276,11 @@
           ],
           "requirement_type": "concept",
           "review_status": "needs_review",
-          "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“周期趋势”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "coverage_signal": "unresolved_mapping",
+          "summary_zh": "自动证据不足，尚不能判断现有 KG 是部分覆盖还是真实缺口；不展示低分候选，需人工定位。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
-          "candidate_concepts": [
-            {
-              "node_id": "che_periodic_trends",
-              "canonical_id": "pc_d8222e150de1d5b8d93389c00a07fabe",
-              "name": "Periodic Trends",
-              "name_zh": "周期趋势",
-              "score": 0.111,
-              "keyword_coverage": 0.444,
-              "outcome_name_coverage": 0,
-              "combined_name_coverage": 0
-            }
-          ]
+          "candidate_concepts": []
         }
       ]
     },
@@ -318,9 +307,9 @@
           "score": 0.021
         },
         {
-          "topic_id": "che_stoichiometry",
-          "name": "The Mole and Avogadro Constant and Empirical and Molecular Formulae",
-          "name_zh": "摩尔与阿伏伽德罗常数与实验式与分子式",
+          "topic_id": "che_redox",
+          "name": "Redox and Electrochemistry",
+          "name_zh": "氧化还原与电化学",
           "score": 0.017
         }
       ],
@@ -477,15 +466,15 @@
       "candidate_topics": [
         {
           "topic_id": "che_atomic_che_electron_config",
-          "name": "Electronic Configuration and Ionisation Energy",
-          "name_zh": "电子排布与电离能",
-          "score": 0.175
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
+          "score": 0.31
         },
         {
           "topic_id": "che_free_energy_periodicity",
           "name": "Free Energy and Periodicity",
           "name_zh": "自由能与周期性",
-          "score": 0.106
+          "score": 0.105
         },
         {
           "topic_id": "che_electrochem_thermo_che_born_haber",
@@ -523,7 +512,7 @@
               "canonical_id": "pc_4ee1addaa1bb88db1bc738c8909840bb",
               "name": "Electronic Configuration",
               "name_zh": "电子排布",
-              "score": 0.795,
+              "score": 0.804,
               "keyword_coverage": 0.364,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -628,7 +617,7 @@
               "canonical_id": "pc_4ee1addaa1bb88db1bc738c8909840bb",
               "name": "Electronic Configuration",
               "name_zh": "电子排布",
-              "score": 0.328,
+              "score": 0.338,
               "keyword_coverage": 0.222,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 0.5
@@ -697,7 +686,7 @@
               "canonical_id": "pc_4ee1addaa1bb88db1bc738c8909840bb",
               "name": "Electronic Configuration",
               "name_zh": "电子排布",
-              "score": 0.734,
+              "score": 0.744,
               "keyword_coverage": 0.13,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -748,12 +737,23 @@
             "sketch"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“原子轨道形状”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有 s、p 轨道形状及其绘制概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：原子轨道形状 Concept 覆盖 s、p 轨道的描述与绘制。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_atomic_orbital_shapes",
+              "canonical_id": "pc_c68d18c005adce683dffeb83cd4cb895",
+              "name": "Atomic Orbital Shapes",
+              "name_zh": "原子轨道形状",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:1.3:9",
@@ -771,12 +771,23 @@
             "unpaired"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“键断裂与反应物种”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有以未成对电子定义自由基的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的键断裂与反应物种 Concept 明确定义自由基含一个或多个未成对电子。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_bond_fission",
+              "canonical_id": "pc_f04539036aca6084074f399276e5f01d",
+              "name": "Bond Fission and Reactive Species",
+              "name_zh": "键断裂与反应物种",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -792,8 +803,8 @@
       "candidate_topics": [
         {
           "topic_id": "che_atomic_che_electron_config",
-          "name": "Electronic Configuration and Ionisation Energy",
-          "name_zh": "电子排布与电离能",
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
           "score": 0.685
         },
         {
@@ -1119,6 +1130,12 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "che_stoichiometry",
+          "name": "Relative Masses, the Mole and Formulae",
+          "name_zh": "相对质量、摩尔与化学式",
+          "score": 0.392
+        },
+        {
           "topic_id": "che_arenes_mass_spec",
           "name": "Arenes and Mass Spectrometry",
           "name_zh": "芳香烃与质谱分析",
@@ -1129,12 +1146,6 @@
           "name": "Chemical Bonding: Shapes and Intermolecular Forces",
           "name_zh": "化学键：分子形状与分子间作用力",
           "score": 0.123
-        },
-        {
-          "topic_id": "che_stoichiometry_che_reacting_masses",
-          "name": "Reacting Masses and Gas Volumes and Concentration and Titration",
-          "name_zh": "反应质量与气体体积与浓度与滴定",
-          "score": 0.109
         }
       ],
       "outcomes": [
@@ -1155,12 +1166,23 @@
             "unified"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“相对原子、分子与式量”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有统一原子质量单位为碳-12 原子质量十二分之一的定义。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：相对质量 Concept 定义统一原子质量单位为碳-12 原子质量的十二分之一。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_relative_masses",
+              "canonical_id": "pc_7dba846520d7d616e9cf39e1d16905b3",
+              "name": "Relative Atomic, Molecular and Formula Masses",
+              "name_zh": "相对原子、分子与式量",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:2.1:2",
@@ -1179,12 +1201,23 @@
             "molecular"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“相对原子、分子与式量”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有相对同位素质量、相对原子质量、相对分子质量和相对式量的系统定义。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：相对质量 Concept 区分相对同位素、原子、分子和式量。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_relative_masses",
+              "canonical_id": "pc_7dba846520d7d616e9cf39e1d16905b3",
+              "name": "Relative Atomic, Molecular and Formula Masses",
+              "name_zh": "相对原子、分子与式量",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -1200,8 +1233,8 @@
       "candidate_topics": [
         {
           "topic_id": "che_stoichiometry",
-          "name": "The Mole and Avogadro Constant and Empirical and Molecular Formulae",
-          "name_zh": "摩尔与阿伏伽德罗常数与实验式与分子式",
+          "name": "Relative Masses, the Mole and Formulae",
+          "name_zh": "相对质量、摩尔与化学式",
           "score": 0.72
         },
         {
@@ -1378,8 +1411,8 @@
               "canonical_id": "pc_f143886b125448b751d8adcc1cc7aaa9",
               "name": "Empirical and Molecular Formulae",
               "name_zh": "实验式与分子式",
-              "score": 0.421,
-              "keyword_coverage": 0.4,
+              "score": 0.453,
+              "keyword_coverage": 0.6,
               "outcome_name_coverage": 0.667,
               "combined_name_coverage": 0.667
             }
@@ -1399,12 +1432,23 @@
             "water"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“实验式与分子式”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有结晶水、无水盐和水合盐概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的化学式 Concept 覆盖无水盐、水合盐和结晶水。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_formulae",
+              "canonical_id": "pc_f143886b125448b751d8adcc1cc7aaa9",
+              "name": "Empirical and Molecular Formulae",
+              "name_zh": "实验式与分子式",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:2.3:5",
@@ -1432,8 +1476,8 @@
               "canonical_id": "pc_f143886b125448b751d8adcc1cc7aaa9",
               "name": "Empirical and Molecular Formulae",
               "name_zh": "实验式与分子式",
-              "score": 0.446,
-              "keyword_coverage": 0.5,
+              "score": 0.405,
+              "keyword_coverage": 0.333,
               "outcome_name_coverage": 0.667,
               "combined_name_coverage": 0.667
             }
@@ -1465,9 +1509,9 @@
         },
         {
           "topic_id": "che_stoichiometry",
-          "name": "The Mole and Avogadro Constant and Empirical and Molecular Formulae",
-          "name_zh": "摩尔与阿伏伽德罗常数与实验式与分子式",
-          "score": 0.023
+          "name": "Relative Masses, the Mole and Formulae",
+          "name_zh": "相对质量、摩尔与化学式",
+          "score": 0.105
         }
       ],
       "outcomes": [
@@ -1882,7 +1926,7 @@
           "topic_id": "che_bonding_part1",
           "name": "Chemical Bonding: Types of Bonds",
           "name_zh": "化学键：成键类型",
-          "score": 0.369
+          "score": 0.356
         },
         {
           "topic_id": "che_bonding_part2",
@@ -1894,7 +1938,7 @@
           "topic_id": "che_groups",
           "name": "Inorganic Group Chemistry",
           "name_zh": "无机元素族化学",
-          "score": 0.032
+          "score": 0.028
         }
       ],
       "outcomes": [
@@ -1926,8 +1970,8 @@
               "canonical_id": "pc_76c78ee2b35eca2b943816eb56dbac2a",
               "name": "Covalent Bonding",
               "name_zh": "共价键",
-              "score": 0.761,
-              "keyword_coverage": 0.136,
+              "score": 0.74,
+              "keyword_coverage": 0.119,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
             }
@@ -1951,8 +1995,8 @@
           ],
           "requirement_type": "concept",
           "review_status": "needs_review",
-          "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“共价键”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“共价键”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
           "candidate_concepts": [
@@ -1961,8 +2005,8 @@
               "canonical_id": "pc_76c78ee2b35eca2b943816eb56dbac2a",
               "name": "Covalent Bonding",
               "name_zh": "共价键",
-              "score": 0.5,
-              "keyword_coverage": 0.167,
+              "score": 0.547,
+              "keyword_coverage": 0.4,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
             }
@@ -1985,12 +2029,23 @@
             "compare"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“键能与键长”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有键能、键长及其与共价分子反应性关系的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的键能与键长 Concept 覆盖定义和反应性比较。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_bond_enthalpy",
+              "canonical_id": "pc_b35d6548b40342a4e7e95af4650c7349",
+              "name": "Bond Enthalpy and Bond Length",
+              "name_zh": "键能与键长",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -2011,16 +2066,16 @@
           "score": 0.476
         },
         {
-          "topic_id": "che_arenes_mass_spec",
-          "name": "Arenes and Mass Spectrometry",
-          "name_zh": "芳香烃与质谱分析",
-          "score": 0.009
+          "topic_id": "che_atomic_che_electron_config",
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
+          "score": 0.17
         },
         {
-          "topic_id": "che_states_enthalpy",
-          "name": "States of Matter and Enthalpy",
-          "name_zh": "物态与焓变",
-          "score": 0.009
+          "topic_id": "che_energetics",
+          "name": "Chemical Energetics",
+          "name_zh": "化学能",
+          "score": 0.013
         }
       ],
       "outcomes": [
@@ -2113,15 +2168,15 @@
           "score": 0.308
         },
         {
-          "topic_id": "che_energetics",
-          "name": "Chemical Energetics",
-          "name_zh": "化学能",
-          "score": 0.114
-        },
-        {
           "topic_id": "che_transition",
           "name": "Transition Elements",
           "name_zh": "过渡金属元素",
+          "score": 0.102
+        },
+        {
+          "topic_id": "che_energetics",
+          "name": "Chemical Energetics",
+          "name_zh": "化学能",
           "score": 0.102
         }
       ],
@@ -2308,12 +2363,6 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "che_bonding_part1",
-          "name": "Chemical Bonding: Types of Bonds",
-          "name_zh": "化学键：成键类型",
-          "score": 0.055
-        },
-        {
           "topic_id": "che_states_enthalpy",
           "name": "States of Matter and Enthalpy",
           "name_zh": "物态与焓变",
@@ -2324,6 +2373,12 @@
           "name": "Redox and Electrochemistry",
           "name_zh": "氧化还原与电化学",
           "score": 0.032
+        },
+        {
+          "topic_id": "che_bonding_part1",
+          "name": "Chemical Bonding: Types of Bonds",
+          "name_zh": "化学键：成键类型",
+          "score": 0.029
         }
       ],
       "outcomes": [
@@ -2388,7 +2443,7 @@
           "topic_id": "che_states_enthalpy",
           "name": "States of Matter and Enthalpy",
           "name_zh": "物态与焓变",
-          "score": 0.125
+          "score": 0.112
         },
         {
           "topic_id": "che_bonding_part2",
@@ -2397,10 +2452,10 @@
           "score": 0.03
         },
         {
-          "topic_id": "che_acids",
-          "name": "Strong and Weak Acids and pH and Acid Dissociation Constant",
-          "name_zh": "强酸与弱酸与pH 与酸解离常数",
-          "score": 0.018
+          "topic_id": "che_energetics",
+          "name": "Chemical Energetics",
+          "name_zh": "化学能",
+          "score": 0.021
         }
       ],
       "outcomes": [
@@ -2421,12 +2476,23 @@
             "terms"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“气体动理论模型与理想气体行为”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 有理想气体方程，但没有由分子碰撞解释气体压强的动理论概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的理想气体行为 Concept 用分子碰撞解释气体压强。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_gas_laws",
+              "canonical_id": "pc_18388a54522ee3202a5121faa939f897",
+              "name": "Kinetic Model and Ideal Gas Behaviour",
+              "name_zh": "气体动理论模型与理想气体行为",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:4.1:2",
@@ -2482,19 +2548,19 @@
           "requirement_type": "concept",
           "review_status": "needs_review",
           "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“理想气体”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "summary_zh": "首选候选为“气体动理论模型与理想气体行为”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "第七批完整覆盖全量复核修正：理想气体概念覆盖 pV=nRT，但未明确由该式进行 Mr 测定。",
           "candidate_concepts": [
             {
               "node_id": "che_gas_laws",
               "canonical_id": "pc_18388a54522ee3202a5121faa939f897",
-              "name": "Ideal Gas Behaviour",
-              "name_zh": "理想气体",
-              "score": 0.494,
+              "name": "Kinetic Model and Ideal Gas Behaviour",
+              "name_zh": "气体动理论模型与理想气体行为",
+              "score": 0.223,
               "keyword_coverage": 0.625,
-              "outcome_name_coverage": 0.667,
-              "combined_name_coverage": 0.667
+              "outcome_name_coverage": 0.4,
+              "combined_name_coverage": 0.4
             }
           ]
         }
@@ -2514,7 +2580,7 @@
           "topic_id": "che_bonding_part1",
           "name": "Chemical Bonding: Types of Bonds",
           "name_zh": "化学键：成键类型",
-          "score": 0.246
+          "score": 0.247
         },
         {
           "topic_id": "che_arenes_mass_spec",
@@ -2657,13 +2723,13 @@
           "topic_id": "che_energetics",
           "name": "Chemical Energetics",
           "name_zh": "化学能",
-          "score": 0.206
+          "score": 0.165
         },
         {
           "topic_id": "che_free_energy_periodicity",
           "name": "Free Energy and Periodicity",
           "name_zh": "自由能与周期性",
-          "score": 0.046
+          "score": 0.039
         }
       ],
       "outcomes": [
@@ -2801,15 +2867,15 @@
           "requirement_type": "concept",
           "review_status": "needs_review",
           "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“键能”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "summary_zh": "首选候选为“键能与键长”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "已对照官方页：键焓概念覆盖断键能量和反应焓估算，但现有描述未直接说明断键吸能、成键放能造成反应能量转移。",
           "candidate_concepts": [
             {
               "node_id": "che_bond_enthalpy",
               "canonical_id": "pc_b35d6548b40342a4e7e95af4650c7349",
-              "name": "Bond Enthalpy",
-              "name_zh": "键能",
+              "name": "Bond Enthalpy and Bond Length",
+              "name_zh": "键能与键长",
               "score": null,
               "keyword_coverage": null,
               "outcome_name_coverage": null,
@@ -2836,15 +2902,15 @@
           "requirement_type": "concept_and_skill",
           "review_status": "needs_review",
           "coverage_signal": "candidate_covered",
-          "summary_zh": "候选映射为“键能”；仍需核对完整范围和页码证据。",
+          "summary_zh": "候选映射为“键能与键长”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "逐条复核：键焓概念明确覆盖用断键吸热与成键放热估算反应焓。",
           "candidate_concepts": [
             {
               "node_id": "che_bond_enthalpy",
               "canonical_id": "pc_b35d6548b40342a4e7e95af4650c7349",
-              "name": "Bond Enthalpy",
-              "name_zh": "键能",
+              "name": "Bond Enthalpy and Bond Length",
+              "name_zh": "键能与键长",
               "score": null,
               "keyword_coverage": null,
               "outcome_name_coverage": null,
@@ -2867,22 +2933,11 @@
           ],
           "requirement_type": "concept",
           "review_status": "needs_review",
-          "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“键能”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "coverage_signal": "unresolved_mapping",
+          "summary_zh": "自动证据不足，尚不能判断现有 KG 是部分覆盖还是真实缺口；不展示低分候选，需人工定位。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
-          "candidate_concepts": [
-            {
-              "node_id": "che_bond_enthalpy",
-              "canonical_id": "pc_b35d6548b40342a4e7e95af4650c7349",
-              "name": "Bond Enthalpy",
-              "name_zh": "键能",
-              "score": 0.306,
-              "keyword_coverage": 0.2,
-              "outcome_name_coverage": 0.5,
-              "combined_name_coverage": 1
-            }
-          ]
+          "candidate_concepts": []
         },
         {
           "outcome_id": "9701:5.1:7",
@@ -3030,8 +3085,8 @@
             {
               "node_id": "che_bond_enthalpy",
               "canonical_id": "pc_b35d6548b40342a4e7e95af4650c7349",
-              "name": "Bond Enthalpy",
-              "name_zh": "键能",
+              "name": "Bond Enthalpy and Bond Length",
+              "name_zh": "键能与键长",
               "score": null,
               "keyword_coverage": null,
               "outcome_name_coverage": null,
@@ -3059,15 +3114,15 @@
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
           "score": 0.105
         },
         {
           "topic_id": "che_states_enthalpy",
           "name": "States of Matter and Enthalpy",
           "name_zh": "物态与焓变",
-          "score": 0.088
+          "score": 0.087
         }
       ],
       "outcomes": [
@@ -3283,10 +3338,10 @@
           "score": 0.128
         },
         {
-          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.105
+          "topic_id": "che_halogenoalkanes_alcohols",
+          "name": "Nucleophilic Substitution and Elimination Reactions",
+          "name_zh": "亲核取代与消去反应",
+          "score": 0.104
         }
       ],
       "outcomes": [
@@ -3688,7 +3743,7 @@
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.121
+          "score": 0.12
         },
         {
           "topic_id": "che_kinetics_part1",
@@ -3714,13 +3769,34 @@
             "formulas",
             "h2"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "skill_mapping_required",
+          "summary_zh": "该要求主要属于通用技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 有酸碱理论，但没有 syllabus 所列常见酸名称与化学式的资料概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：常见酸的名称与化学式属于受控词表识读，酸碱理论 Concept 提供背景。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_bronsted",
+              "canonical_id": "pc_e0e23323fa5580b7eaff3277d809f5b1",
+              "name": "Brønsted-Lowry Theory",
+              "name_zh": "布朗斯特-洛瑞理论",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "che_strong_weak",
+              "canonical_id": "pc_f6b7711a788cbc8c837f448c591f0fa4",
+              "name": "Strong and Weak Acids",
+              "name_zh": "强酸与弱酸",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:7.2:2",
@@ -3738,13 +3814,34 @@
             "limited",
             "names"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "skill_mapping_required",
+          "summary_zh": "该要求主要属于通用技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有 syllabus 所列常见碱和碱液的名称与化学式资料概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：常见碱和碱液的名称与化学式属于受控词表识读。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_bronsted",
+              "canonical_id": "pc_e0e23323fa5580b7eaff3277d809f5b1",
+              "name": "Brønsted-Lowry Theory",
+              "name_zh": "布朗斯特-洛瑞理论",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "che_strong_weak",
+              "canonical_id": "pc_f6b7711a788cbc8c837f448c591f0fa4",
+              "name": "Strong and Weak Acids",
+              "name_zh": "强酸与弱酸",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:7.2:3",
@@ -4054,10 +4151,10 @@
           "score": 0.297
         },
         {
-          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.242
+          "topic_id": "che_halogenoalkanes_alcohols",
+          "name": "Nucleophilic Substitution and Elimination Reactions",
+          "name_zh": "亲核取代与消去反应",
+          "score": 0.237
         }
       ],
       "outcomes": [
@@ -4202,14 +4299,14 @@
         },
         {
           "topic_id": "che_atomic_che_electron_config",
-          "name": "Electronic Configuration and Ionisation Energy",
-          "name_zh": "电子排布与电离能",
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
           "score": 0.104
         },
         {
-          "topic_id": "che_kinetics_part2",
-          "name": "Reaction Kinetics: Rate Equations and Catalysis",
-          "name_zh": "反应动力学：速率方程与催化",
+          "topic_id": "che_halogenoalkanes_alcohols",
+          "name": "Nucleophilic Substitution and Elimination Reactions",
+          "name_zh": "亲核取代与消去反应",
           "score": 0.089
         }
       ],
@@ -4400,7 +4497,7 @@
           "topic_id": "che_free_energy_periodicity",
           "name": "Free Energy and Periodicity",
           "name_zh": "自由能与周期性",
-          "score": 0.26
+          "score": 0.257
         },
         {
           "topic_id": "che_transition",
@@ -4512,7 +4609,7 @@
           "topic_id": "che_free_energy_periodicity",
           "name": "Free Energy and Periodicity",
           "name_zh": "自由能与周期性",
-          "score": 0.246
+          "score": 0.244
         },
         {
           "topic_id": "che_transition",
@@ -4524,7 +4621,7 @@
           "topic_id": "che_energetics",
           "name": "Chemical Energetics",
           "name_zh": "化学能",
-          "score": 0.12
+          "score": 0.118
         }
       ],
       "outcomes": [
@@ -4802,13 +4899,13 @@
           "topic_id": "che_energetics",
           "name": "Chemical Energetics",
           "name_zh": "化学能",
-          "score": 0.145
+          "score": 0.136
         },
         {
           "topic_id": "che_free_energy_periodicity",
           "name": "Free Energy and Periodicity",
           "name_zh": "自由能与周期性",
-          "score": 0.131
+          "score": 0.129
         }
       ],
       "outcomes": [
@@ -4898,19 +4995,19 @@
           "topic_id": "che_groups",
           "name": "Inorganic Group Chemistry",
           "name_zh": "无机元素族化学",
-          "score": 0.142
+          "score": 0.131
         },
         {
           "topic_id": "che_free_energy_periodicity",
           "name": "Free Energy and Periodicity",
           "name_zh": "自由能与周期性",
-          "score": 0.099
+          "score": 0.097
         },
         {
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.095
+          "score": 0.096
         }
       ],
       "outcomes": [
@@ -4942,7 +5039,7 @@
               "canonical_id": "pc_a6e7944a78479506d087a525f81e2e58",
               "name": "Group 2 Chemistry",
               "name_zh": "第2族元素化学",
-              "score": 0.147,
+              "score": 0.146,
               "keyword_coverage": 0.3,
               "outcome_name_coverage": 0,
               "combined_name_coverage": 0.5
@@ -5101,7 +5198,7 @@
           "topic_id": "che_groups",
           "name": "Inorganic Group Chemistry",
           "name_zh": "无机元素族化学",
-          "score": 0.267
+          "score": 0.251
         },
         {
           "topic_id": "che_transition",
@@ -5143,7 +5240,7 @@
               "canonical_id": "pc_89785b3e05b48942229592971697422a",
               "name": "Group 17 Halogens",
               "name_zh": "第17族卤素",
-              "score": 0.321,
+              "score": 0.305,
               "keyword_coverage": 0.333,
               "outcome_name_coverage": 0.333,
               "combined_name_coverage": 1
@@ -5240,16 +5337,16 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "che_groups",
-          "name": "Inorganic Group Chemistry",
-          "name_zh": "无机元素族化学",
-          "score": 0.115
-        },
-        {
           "topic_id": "che_transition",
           "name": "Transition Elements",
           "name_zh": "过渡金属元素",
           "score": 0.112
+        },
+        {
+          "topic_id": "che_groups",
+          "name": "Inorganic Group Chemistry",
+          "name_zh": "无机元素族化学",
+          "score": 0.107
         },
         {
           "topic_id": "che_free_energy_periodicity",
@@ -5375,13 +5472,13 @@
           "topic_id": "che_halogenoalkanes_alcohols",
           "name": "Nucleophilic Substitution and Elimination Reactions",
           "name_zh": "亲核取代与消去反应",
-          "score": 0.158
+          "score": 0.152
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.145
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
+          "score": 0.142
         },
         {
           "topic_id": "che_kinetics_part1",
@@ -5483,15 +5580,15 @@
       "candidate_topics": [
         {
           "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.24
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
+          "score": 0.235
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols",
           "name": "Nucleophilic Substitution and Elimination Reactions",
           "name_zh": "亲核取代与消去反应",
-          "score": 0.239
+          "score": 0.233
         },
         {
           "topic_id": "che_kinetics_part1",
@@ -5563,12 +5660,23 @@
             "kill"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“第17族卤素”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有第17族概念未覆盖氯净水、HOCl 和 ClO− 活性物种。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的第 17 族 Concept 覆盖氯净水及 HOCl、ClO− 活性物种。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_group17",
+              "canonical_id": "pc_89785b3e05b48942229592971697422a",
+              "name": "Group 17 Halogens",
+              "name_zh": "第17族卤素",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -5586,7 +5694,7 @@
           "topic_id": "che_groups",
           "name": "Inorganic Group Chemistry",
           "name_zh": "无机元素族化学",
-          "score": 0.685
+          "score": 0.676
         },
         {
           "topic_id": "che_nitrogen_org",
@@ -5630,7 +5738,7 @@
               "canonical_id": "pc_c48d9a41a4f7fd5a7ddc4ca53ba4a7ac",
               "name": "Nitrogen and Sulfur",
               "name_zh": "氮和硫",
-              "score": 0.346,
+              "score": 0.345,
               "keyword_coverage": 0.125,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -5800,6 +5908,12 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "che_organic_basics",
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
+          "score": 0.321
+        },
+        {
           "topic_id": "che_nitrogen_org",
           "name": "Nitrogen Compounds and Polymers",
           "name_zh": "含氮化合物",
@@ -5809,13 +5923,7 @@
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.096
-        },
-        {
-          "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
-          "score": 0.062
+          "score": 0.094
         }
       ],
       "outcomes": [
@@ -5914,12 +6022,23 @@
             "pages"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“官能团与有机结构表示”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有统摄各有机官能团并说明其决定特征反应的一般概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：有机结构表示 Concept 覆盖官能团决定特征性质和反应。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_organic_representations",
+              "canonical_id": "pc_b7cf8d670e2f37db41a760a401141534",
+              "name": "Functional Groups and Organic Representations",
+              "name_zh": "官能团与有机结构表示",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:13.1:4",
@@ -5937,13 +6056,24 @@
             "on",
             "pages"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“官能团与有机结构表示”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有有机物通式、结构式、显示式和骨架式的表示概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：有机结构表示 Concept 覆盖通式、结构式、显示式和骨架式。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_organic_representations",
+              "canonical_id": "pc_b7cf8d670e2f37db41a760a401141534",
+              "name": "Functional Groups and Organic Representations",
+              "name_zh": "官能团与有机结构表示",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:13.1:5",
@@ -6031,19 +6161,19 @@
           "topic_id": "che_halogenoalkanes_alcohols",
           "name": "Nucleophilic Substitution and Elimination Reactions",
           "name_zh": "亲核取代与消去反应",
-          "score": 0.199
+          "score": 0.198
         },
         {
           "topic_id": "che_organic_basics_che_bond_fission",
           "name": "Bond Fission and Reactive Species and Reaction Mechanism Types",
           "name_zh": "键断裂与反应物种与反应机理类型",
-          "score": 0.186
+          "score": 0.188
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.18
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
+          "score": 0.177
         }
       ],
       "outcomes": [
@@ -6206,16 +6336,16 @@
           "score": 0.276
         },
         {
-          "topic_id": "che_bonding_part1",
-          "name": "Chemical Bonding: Types of Bonds",
-          "name_zh": "化学键：成键类型",
-          "score": 0.1
+          "topic_id": "che_atomic_che_electron_config",
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
+          "score": 0.115
         },
         {
           "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
-          "score": 0.017
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
+          "score": 0.11
         }
       ],
       "outcomes": [
@@ -6305,12 +6435,23 @@
             "sp2"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“共价键”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有化学 KG：共价键概念只到单、双、三键，没有 sp、sp²、sp³ 杂化原子中的 σ/π 键排列概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的共价键 Concept 覆盖 sp、sp²、sp³ 杂化原子中的 σ/π 键排列。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_covalent",
+              "canonical_id": "pc_76c78ee2b35eca2b943816eb56dbac2a",
+              "name": "Covalent Bonding",
+              "name_zh": "共价键",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:13.3:4",
@@ -6371,20 +6512,20 @@
       "candidate_topics": [
         {
           "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
-          "score": 0.275
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
+          "score": 0.256
+        },
+        {
+          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
+          "score": 0.026
         },
         {
           "topic_id": "che_hydrocarbons",
           "name": "Hydrocarbons",
           "name_zh": "烃",
-          "score": 0.035
-        },
-        {
-          "topic_id": "che_groups",
-          "name": "Inorganic Group Chemistry",
-          "name_zh": "无机元素族化学",
           "score": 0.021
         }
       ],
@@ -6625,13 +6766,13 @@
           "topic_id": "che_hydrocarbons",
           "name": "Hydrocarbons",
           "name_zh": "烃",
-          "score": 0.682
+          "score": 0.681
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols",
           "name": "Nucleophilic Substitution and Elimination Reactions",
           "name_zh": "亲核取代与消去反应",
-          "score": 0.038
+          "score": 0.035
         },
         {
           "topic_id": "che_arenes_mass_spec",
@@ -6704,7 +6845,7 @@
               "canonical_id": "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
               "name": "Alkanes",
               "name_zh": "烷烃",
-              "score": 0.55,
+              "score": 0.537,
               "keyword_coverage": 0.333,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -6739,7 +6880,7 @@
               "canonical_id": "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
               "name": "Alkanes",
               "name_zh": "烷烃",
-              "score": 0.294,
+              "score": 0.284,
               "keyword_coverage": 0.333,
               "outcome_name_coverage": 0,
               "combined_name_coverage": 1
@@ -6763,12 +6904,23 @@
             "how"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“烷烃”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有重质原油馏分裂化得到较低 Mr 烷烃和烯烃的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的烷烃 Concept 覆盖重质馏分裂化。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_alkanes",
+              "canonical_id": "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
+              "name": "Alkanes",
+              "name_zh": "烷烃",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:14.1:5",
@@ -6789,21 +6941,10 @@
           "requirement_type": "concept",
           "review_status": "needs_review",
           "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“烷烃”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "summary_zh": "首选候选为“无”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "第七批完整覆盖全量复核修正：烷烃概念陈述相对不活泼，但未用 C-H 键强度和低极性解释对极性试剂不活泼。",
-          "candidate_concepts": [
-            {
-              "node_id": "che_alkanes",
-              "canonical_id": "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
-              "name": "Alkanes",
-              "name_zh": "烷烃",
-              "score": 0.547,
-              "keyword_coverage": 0.333,
-              "outcome_name_coverage": 1,
-              "combined_name_coverage": 1
-            }
-          ]
+          "candidate_concepts": []
         },
         {
           "outcome_id": "9701:14.1:6",
@@ -6868,18 +7009,18 @@
           "topic_id": "che_hydrocarbons",
           "name": "Hydrocarbons",
           "name_zh": "烃",
-          "score": 0.661
+          "score": 0.671
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.033
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
+          "score": 0.029
         },
         {
-          "topic_id": "che_halogenoalkanes_alcohols",
-          "name": "Nucleophilic Substitution and Elimination Reactions",
-          "name_zh": "亲核取代与消去反应",
+          "topic_id": "che_nitriles_amides",
+          "name": "Nitriles and Amides",
+          "name_zh": "腈与酰胺",
           "score": 0.024
         }
       ],
@@ -6980,13 +7121,13 @@
           "topic_id": "che_halogenoalkanes_alcohols",
           "name": "Nucleophilic Substitution and Elimination Reactions",
           "name_zh": "亲核取代与消去反应",
-          "score": 0.055
+          "score": 0.047
         },
         {
           "topic_id": "che_hydrocarbons",
           "name": "Hydrocarbons",
           "name_zh": "烃",
-          "score": 0.041
+          "score": 0.042
         },
         {
           "topic_id": "che_arenes_mass_spec",
@@ -7066,12 +7207,23 @@
             "tertiary"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“亲核取代”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有卤代烷一级、二级和三级分类概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的亲核取代 Concept 覆盖卤代烷的一、二、三级分类。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_nucleophilic_sub",
+              "canonical_id": "pc_0d3043e5274fde266129817ca29a57f7",
+              "name": "Nucleophilic Substitution",
+              "name_zh": "亲核取代",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:15.1:3",
@@ -7101,7 +7253,7 @@
               "canonical_id": "pc_0d3043e5274fde266129817ca29a57f7",
               "name": "Nucleophilic Substitution",
               "name_zh": "亲核取代",
-              "score": 0.722,
+              "score": 0.715,
               "keyword_coverage": 0.115,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -7249,8 +7401,8 @@
             {
               "node_id": "che_bond_enthalpy",
               "canonical_id": "pc_b35d6548b40342a4e7e95af4650c7349",
-              "name": "Bond Enthalpy",
-              "name_zh": "键能",
+              "name": "Bond Enthalpy and Bond Length",
+              "name_zh": "键能与键长",
               "score": null,
               "keyword_coverage": null,
               "outcome_name_coverage": null,
@@ -7272,21 +7424,21 @@
       "candidate_topics": [
         {
           "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.359
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
+          "score": 0.348
+        },
+        {
+          "topic_id": "che_nitriles_amides",
+          "name": "Nitriles and Amides",
+          "name_zh": "腈与酰胺",
+          "score": 0.04
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols",
           "name": "Nucleophilic Substitution and Elimination Reactions",
           "name_zh": "亲核取代与消去反应",
-          "score": 0.033
-        },
-        {
-          "topic_id": "che_arenes_mass_spec",
-          "name": "Arenes and Mass Spectrometry",
-          "name_zh": "芳香烃与质谱分析",
-          "score": 0.027
+          "score": 0.03
         }
       ],
       "outcomes": [
@@ -7408,8 +7560,8 @@
           ],
           "requirement_type": "concept",
           "review_status": "needs_review",
-          "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“醇的氧化”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "coverage_signal": "ambiguous",
+          "summary_zh": "候选存在歧义：醇的氧化 / 醇的反应；需人工核对范围。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
           "candidate_concepts": [
@@ -7419,6 +7571,16 @@
               "name": "Oxidation of Alcohols",
               "name_zh": "醇的氧化",
               "score": 0.502,
+              "keyword_coverage": 0.2,
+              "outcome_name_coverage": 1,
+              "combined_name_coverage": 1
+            },
+            {
+              "node_id": "che_alcohol_reactions",
+              "canonical_id": "pc_42ea5b997cbab553b5f29d052a9d06aa",
+              "name": "Alcohols and Their Reactions",
+              "name_zh": "醇的反应",
+              "score": 0.489,
               "keyword_coverage": 0.2,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -7441,13 +7603,24 @@
             "deduce",
             "form"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“碘仿检验”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有碘仿反应及可发生反应的醇结构概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：碘仿检验 Concept 覆盖可发生反应的醇结构和黄色沉淀。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_iodoform_test",
+              "canonical_id": "pc_e98424171f151c698ea7358b432dc4e2",
+              "name": "Iodoform Test",
+              "name_zh": "碘仿检验",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:16.1:5",
@@ -7462,12 +7635,23 @@
             "water"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“醇的反应”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有比较醇与水酸性的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的醇反应 Concept 覆盖醇与水的相对酸性。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_alcohol_reactions",
+              "canonical_id": "pc_42ea5b997cbab553b5f29d052a9d06aa",
+              "name": "Alcohols and Their Reactions",
+              "name_zh": "醇的反应",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -7485,12 +7669,12 @@
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.686
+          "score": 0.688
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
           "score": 0.091
         },
         {
@@ -7711,13 +7895,24 @@
             "form",
             "group"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“碘仿检验”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有羰基化合物的碘仿反应结构判据。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：碘仿检验 Concept 覆盖甲基羰基结构判据。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_iodoform_test",
+              "canonical_id": "pc_e98424171f151c698ea7358b432dc4e2",
+              "name": "Iodoform Test",
+              "name_zh": "碘仿检验",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -7735,7 +7930,7 @@
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.703
+          "score": 0.697
         },
         {
           "topic_id": "che_acids",
@@ -7779,7 +7974,7 @@
               "canonical_id": "pc_3f37112bc196b1765029aad7952026ca",
               "name": "Carboxylic Acids",
               "name_zh": "羧酸",
-              "score": 0.783,
+              "score": 0.782,
               "keyword_coverage": 0.16,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -7840,16 +8035,16 @@
           "score": 0.256
         },
         {
+          "topic_id": "che_phenols_diazonium",
+          "name": "Phenols, Diazonium Salts and Azo Compounds",
+          "name_zh": "苯酚、重氮盐与偶氮化合物",
+          "score": 0.03
+        },
+        {
           "topic_id": "che_redox",
           "name": "Redox and Electrochemistry",
           "name_zh": "氧化还原与电化学",
           "score": 0.026
-        },
-        {
-          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.023
         }
       ],
       "outcomes": [
@@ -7904,22 +8099,11 @@
           ],
           "requirement_type": "concept",
           "review_status": "needs_review",
-          "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“酯和酰氯”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "coverage_signal": "unresolved_mapping",
+          "summary_zh": "自动证据不足，尚不能判断现有 KG 是部分覆盖还是真实缺口；不展示低分候选，需人工定位。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
-          "candidate_concepts": [
-            {
-              "node_id": "che_esters",
-              "canonical_id": "pc_c9da2c88a8c94e76a31e705076b2a010",
-              "name": "Esters and Acyl Chlorides",
-              "name_zh": "酯和酰氯",
-              "score": 0.155,
-              "keyword_coverage": 0.333,
-              "outcome_name_coverage": 0.333,
-              "combined_name_coverage": 0.333
-            }
-          ]
+          "candidate_concepts": []
         }
       ]
     },
@@ -7946,10 +8130,10 @@
           "score": 0.046
         },
         {
-          "topic_id": "che_equilibria_acidbase",
-          "name": "Dynamic Equilibrium and Le Chatelier's Principle",
-          "name_zh": "动态平衡与勒夏特列原理",
-          "score": 0.026
+          "topic_id": "che_nitriles_amides",
+          "name": "Nitriles and Amides",
+          "name_zh": "腈与酰胺",
+          "score": 0.033
         }
       ],
       "outcomes": [
@@ -8001,22 +8185,22 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "che_nitriles_amides",
+          "name": "Nitriles and Amides",
+          "name_zh": "腈与酰胺",
+          "score": 0.679
+        },
+        {
           "topic_id": "che_redox",
           "name": "Redox and Electrochemistry",
           "name_zh": "氧化还原与电化学",
           "score": 0.033
         },
         {
-          "topic_id": "che_halogenoalkanes_alcohols",
-          "name": "Nucleophilic Substitution and Elimination Reactions",
-          "name_zh": "亲核取代与消去反应",
+          "topic_id": "che_organic_basics",
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
           "score": 0.026
-        },
-        {
-          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.022
         }
       ],
       "outcomes": [
@@ -8107,12 +8291,23 @@
             "nitriles"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“腈与羟基腈”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有腈在酸或碱条件下水解为羧酸的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：腈与羟基腈 Concept 覆盖酸性或碱性水解为羧酸。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_nitriles",
+              "canonical_id": "pc_823cebac5cc9eb243690a3fd84a6fda0",
+              "name": "Nitriles and Hydroxynitriles",
+              "name_zh": "腈与羟基腈",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -8130,7 +8325,7 @@
           "topic_id": "che_hydrocarbons",
           "name": "Hydrocarbons",
           "name_zh": "烃",
-          "score": 0.687
+          "score": 0.684
         },
         {
           "topic_id": "che_arenes_mass_spec",
@@ -8173,8 +8368,8 @@
               "canonical_id": "pc_cd9220ccd4a94d9511b50e51680a585c",
               "name": "Addition Polymerisation",
               "name_zh": "加聚反应",
-              "score": 0.831,
-              "keyword_coverage": 0.286,
+              "score": 0.845,
+              "keyword_coverage": 0.429,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
             }
@@ -8208,7 +8403,7 @@
               "canonical_id": "pc_cd9220ccd4a94d9511b50e51680a585c",
               "name": "Addition Polymerisation",
               "name_zh": "加聚反应",
-              "score": 0.33,
+              "score": 0.322,
               "keyword_coverage": 0.125,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -8243,7 +8438,7 @@
               "canonical_id": "pc_cd9220ccd4a94d9511b50e51680a585c",
               "name": "Addition Polymerisation",
               "name_zh": "加聚反应",
-              "score": 0.33,
+              "score": 0.322,
               "keyword_coverage": 0.125,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -8299,9 +8494,9 @@
       "candidate_topics": [
         {
           "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
-          "score": 0.048
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
+          "score": 0.197
         },
         {
           "topic_id": "che_carbonyls",
@@ -8368,13 +8563,34 @@
             "routes",
             "step"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "skill_mapping_required",
+          "summary_zh": "该要求主要属于通用技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有化学 KG：已有分散的有机反应概念，但没有设计多步有机合成路线的整合概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：设计多步有机合成路线属于综合规划技能，不新增伪 Concept。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_organic_representations",
+              "canonical_id": "pc_b7cf8d670e2f37db41a760a401141534",
+              "name": "Functional Groups and Organic Representations",
+              "name_zh": "官能团与有机结构表示",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "che_mechanism_types",
+              "canonical_id": "pc_9826358783352bf325f9299146a78a37",
+              "name": "Reaction Mechanism Types",
+              "name_zh": "反应机理类型",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:21.1:3",
@@ -8431,8 +8647,8 @@
         },
         {
           "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
           "score": 0.029
         },
         {
@@ -8497,16 +8713,16 @@
           "score": 0.667
         },
         {
+          "topic_id": "che_stoichiometry",
+          "name": "Relative Masses, the Mole and Formulae",
+          "name_zh": "相对质量、摩尔与化学式",
+          "score": 0.157
+        },
+        {
           "topic_id": "che_stoichiometry_che_reacting_masses",
           "name": "Reacting Masses and Gas Volumes and Concentration and Titration",
           "name_zh": "反应质量与气体体积与浓度与滴定",
           "score": 0.145
-        },
-        {
-          "topic_id": "che_atomic_che_electron_config",
-          "name": "Electronic Configuration and Ionisation Energy",
-          "name_zh": "电子排布与电离能",
-          "score": 0.028
         }
       ],
       "outcomes": [
@@ -8758,16 +8974,16 @@
           "score": 0.724
         },
         {
-          "topic_id": "che_free_energy_periodicity",
-          "name": "Free Energy and Periodicity",
-          "name_zh": "自由能与周期性",
+          "topic_id": "che_atomic_che_electron_config",
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
           "score": 0.121
         },
         {
-          "topic_id": "che_atomic_che_electron_config",
-          "name": "Electronic Configuration and Ionisation Energy",
-          "name_zh": "电子排布与电离能",
-          "score": 0.121
+          "topic_id": "che_free_energy_periodicity",
+          "name": "Free Energy and Periodicity",
+          "name_zh": "自由能与周期性",
+          "score": 0.117
         }
       ],
       "outcomes": [
@@ -9155,15 +9371,15 @@
         },
         {
           "topic_id": "che_stoichiometry",
-          "name": "The Mole and Avogadro Constant and Empirical and Molecular Formulae",
-          "name_zh": "摩尔与阿伏伽德罗常数与实验式与分子式",
+          "name": "Relative Masses, the Mole and Formulae",
+          "name_zh": "相对质量、摩尔与化学式",
           "score": 0.035
         },
         {
-          "topic_id": "che_free_energy_periodicity",
-          "name": "Free Energy and Periodicity",
-          "name_zh": "自由能与周期性",
-          "score": 0.032
+          "topic_id": "che_atomic",
+          "name": "Subatomic Particles and Isotopes",
+          "name_zh": "亚原子粒子与同位素",
+          "score": 0.029
         }
       ],
       "outcomes": [
@@ -9288,13 +9504,13 @@
           "topic_id": "che_free_energy_periodicity",
           "name": "Free Energy and Periodicity",
           "name_zh": "自由能与周期性",
-          "score": 0.431
+          "score": 0.423
         },
         {
           "topic_id": "che_atomic_che_electron_config",
-          "name": "Electronic Configuration and Ionisation Energy",
-          "name_zh": "电子排布与电离能",
-          "score": 0.118
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
+          "score": 0.115
         },
         {
           "topic_id": "che_electrochem_thermo_che_born_haber",
@@ -9329,7 +9545,7 @@
               "canonical_id": "pc_c912d7aa7e95cc5c77a18f6f5aae0a0c",
               "name": "Gibbs Free Energy",
               "name_zh": "吉布斯自由能",
-              "score": 0.363,
+              "score": 0.355,
               "keyword_coverage": 0.4,
               "outcome_name_coverage": 0.333,
               "combined_name_coverage": 1
@@ -9652,10 +9868,10 @@
           "score": 0.1
         },
         {
-          "topic_id": "che_states_enthalpy",
-          "name": "States of Matter and Enthalpy",
-          "name_zh": "物态与焓变",
-          "score": 0.021
+          "topic_id": "che_free_energy_periodicity",
+          "name": "Free Energy and Periodicity",
+          "name_zh": "自由能与周期性",
+          "score": 0.048
         }
       ],
       "outcomes": [
@@ -9998,12 +10214,33 @@
             "δg"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“吉布斯自由能”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有 KG 分别有 Gibbs 自由能和电化学电池，但没有 ΔG=-nFE 的连接关系。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的 Gibbs 自由能与电池 Concept 共同覆盖 ΔG°=-nFE°cell。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_gibbs",
+              "canonical_id": "pc_c912d7aa7e95cc5c77a18f6f5aae0a0c",
+              "name": "Gibbs Free Energy",
+              "name_zh": "吉布斯自由能",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "che_cells",
+              "canonical_id": "pc_ddaa179ab823ea748d4ad05e53ee9187",
+              "name": "Electrochemical Cells",
+              "name_zh": "电化学电池",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -10021,7 +10258,7 @@
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.225
+          "score": 0.224
         },
         {
           "topic_id": "che_acids",
@@ -10403,6 +10640,12 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "che_acids_che_buffers",
+          "name": "Buffers, Solubility Product and Partition Equilibria",
+          "name_zh": "缓冲、溶度积与分配平衡",
+          "score": 0.248
+        },
+        {
           "topic_id": "che_analysis",
           "name": "Analytical Techniques",
           "name_zh": "分析技术",
@@ -10412,12 +10655,6 @@
           "topic_id": "che_atomic",
           "name": "Subatomic Particles and Isotopes",
           "name_zh": "亚原子粒子与同位素",
-          "score": 0
-        },
-        {
-          "topic_id": "che_atomic_che_electron_config",
-          "name": "Electronic Configuration and Ionisation Energy",
-          "name_zh": "电子排布与电离能",
           "score": 0
         }
       ],
@@ -10437,12 +10674,23 @@
             "what"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“分配系数”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有分配系数定义。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：分配系数 Concept 覆盖平衡浓度比定义。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_partition_coefficient",
+              "canonical_id": "pc_a57bbd08c3a0bfb6af4a73b3266e3be6",
+              "name": "Partition Coefficient",
+              "name_zh": "分配系数",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:25.2:2",
@@ -10461,12 +10709,23 @@
             "system"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“分配系数”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有同一溶质在两种溶剂间的分配系数计算。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：分配系数 Concept 覆盖同一物态溶质在两种溶剂间的计算。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_partition_coefficient",
+              "canonical_id": "pc_a57bbd08c3a0bfb6af4a73b3266e3be6",
+              "name": "Partition Coefficient",
+              "name_zh": "分配系数",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:25.2:3",
@@ -10485,12 +10744,23 @@
             "solvents"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“分配系数”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有由溶质和溶剂极性解释分配系数的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：分配系数 Concept 覆盖溶质和溶剂极性解释。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_partition_coefficient",
+              "canonical_id": "pc_a57bbd08c3a0bfb6af4a73b3266e3be6",
+              "name": "Partition Coefficient",
+              "name_zh": "分配系数",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -10923,19 +11193,19 @@
           "topic_id": "che_groups",
           "name": "Inorganic Group Chemistry",
           "name_zh": "无机元素族化学",
-          "score": 0.126
+          "score": 0.115
         },
         {
           "topic_id": "che_free_energy_periodicity",
           "name": "Free Energy and Periodicity",
           "name_zh": "自由能与周期性",
-          "score": 0.097
+          "score": 0.096
         },
         {
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.078
+          "score": 0.076
         }
       ],
       "outcomes": [
@@ -11041,13 +11311,13 @@
           "topic_id": "che_energetics",
           "name": "Chemical Energetics",
           "name_zh": "化学能",
-          "score": 0.073
+          "score": 0.069
         },
         {
           "topic_id": "che_free_energy_periodicity",
           "name": "Free Energy and Periodicity",
           "name_zh": "自由能与周期性",
-          "score": 0.066
+          "score": 0.065
         }
       ],
       "outcomes": [
@@ -11110,12 +11380,23 @@
             "sketch"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“原子轨道形状”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有 3dxy 和 3dz² 轨道形状概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：原子轨道形状 Concept 覆盖 3dxy 和 3dz² 轨道绘制。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_atomic_orbital_shapes",
+              "canonical_id": "pc_c68d18c005adce683dffeb83cd4cb895",
+              "name": "Atomic Orbital Shapes",
+              "name_zh": "原子轨道形状",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:28.1:3",
@@ -11286,15 +11567,15 @@
           "score": 0.179
         },
         {
-          "topic_id": "che_free_energy_periodicity",
-          "name": "Free Energy and Periodicity",
-          "name_zh": "自由能与周期性",
-          "score": 0.072
-        },
-        {
           "topic_id": "che_energetics",
           "name": "Chemical Energetics",
           "name_zh": "化学能",
+          "score": 0.074
+        },
+        {
+          "topic_id": "che_free_energy_periodicity",
+          "name": "Free Energy and Periodicity",
+          "name_zh": "自由能与周期性",
           "score": 0.071
         }
       ],
@@ -11353,19 +11634,19 @@
           "requirement_type": "concept",
           "review_status": "needs_review",
           "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“配位离子与配体”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "summary_zh": "首选候选为“共价键”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
           "candidate_concepts": [
             {
-              "node_id": "che_complex_ions",
-              "canonical_id": "pc_1701653e84db7e3257e7e55c4b77abdc",
-              "name": "Complex Ions and Ligands",
-              "name_zh": "配位离子与配体",
-              "score": 0.143,
+              "node_id": "che_covalent",
+              "canonical_id": "pc_76c78ee2b35eca2b943816eb56dbac2a",
+              "name": "Covalent Bonding",
+              "name_zh": "共价键",
+              "score": 0.179,
               "keyword_coverage": 0.313,
-              "outcome_name_coverage": 0.333,
-              "combined_name_coverage": 0.333
+              "outcome_name_coverage": 0.5,
+              "combined_name_coverage": 0.5
             }
           ]
         },
@@ -11695,8 +11976,8 @@
         },
         {
           "topic_id": "che_atomic_che_electron_config",
-          "name": "Electronic Configuration and Ionisation Energy",
-          "name_zh": "电子排布与电离能",
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
           "score": 0.019
         }
       ],
@@ -11903,8 +12184,8 @@
         },
         {
           "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
           "score": 0.053
         },
         {
@@ -12024,8 +12305,8 @@
         },
         {
           "topic_id": "che_acids_che_buffers",
-          "name": "Buffers and Solubility Product",
-          "name_zh": "缓冲剂与溶度积",
+          "name": "Buffers, Solubility Product and Partition Equilibria",
+          "name_zh": "缓冲、溶度积与分配平衡",
           "score": 0.048
         },
         {
@@ -12183,22 +12464,22 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "che_organic_basics",
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
+          "score": 0.343
+        },
+        {
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
           "score": 0.11
         },
         {
-          "topic_id": "che_nitrogen_org",
-          "name": "Nitrogen Compounds and Polymers",
-          "name_zh": "含氮化合物",
-          "score": 0.101
-        },
-        {
-          "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
-          "score": 0.057
+          "topic_id": "che_phenols_diazonium",
+          "name": "Phenols, Diazonium Salts and Azo Compounds",
+          "name_zh": "苯酚、重氮盐与偶氮化合物",
+          "score": 0.104
         }
       ],
       "outcomes": [
@@ -12374,13 +12655,13 @@
           "topic_id": "che_halogenoalkanes_alcohols",
           "name": "Nucleophilic Substitution and Elimination Reactions",
           "name_zh": "亲核取代与消去反应",
-          "score": 0.214
+          "score": 0.199
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.188
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
+          "score": 0.174
         }
       ],
       "outcomes": [
@@ -12451,13 +12732,13 @@
           "topic_id": "che_bonding_part1",
           "name": "Chemical Bonding: Types of Bonds",
           "name_zh": "化学键：成键类型",
-          "score": 0.095
+          "score": 0.122
         },
         {
-          "topic_id": "che_arenes_mass_spec",
-          "name": "Arenes and Mass Spectrometry",
-          "name_zh": "芳香烃与质谱分析",
-          "score": 0.033
+          "topic_id": "che_atomic_che_electron_config",
+          "name": "Electronic Configuration, Atomic Orbitals and Ionisation Energy",
+          "name_zh": "电子排布、原子轨道与电离能",
+          "score": 0.099
         }
       ],
       "outcomes": [
@@ -12510,9 +12791,9 @@
       "candidate_topics": [
         {
           "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
-          "score": 0.342
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
+          "score": 0.358
         },
         {
           "topic_id": "che_atomic",
@@ -12684,16 +12965,16 @@
           "score": 0.244
         },
         {
+          "topic_id": "che_phenols_diazonium",
+          "name": "Phenols, Diazonium Salts and Azo Compounds",
+          "name_zh": "苯酚、重氮盐与偶氮化合物",
+          "score": 0.022
+        },
+        {
           "topic_id": "che_halogenoalkanes_alcohols",
           "name": "Nucleophilic Substitution and Elimination Reactions",
           "name_zh": "亲核取代与消去反应",
           "score": 0.017
-        },
-        {
-          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.016
         }
       ],
       "outcomes": [
@@ -12870,16 +13151,16 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "che_groups",
-          "name": "Inorganic Group Chemistry",
-          "name_zh": "无机元素族化学",
-          "score": 0.187
-        },
-        {
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.175
+          "score": 0.185
+        },
+        {
+          "topic_id": "che_groups",
+          "name": "Inorganic Group Chemistry",
+          "name_zh": "无机元素族化学",
+          "score": 0.182
         },
         {
           "topic_id": "che_nitrogen_org",
@@ -12983,15 +13264,15 @@
       "candidate_topics": [
         {
           "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.355
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
+          "score": 0.337
         },
         {
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.062
+          "score": 0.056
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols",
@@ -13028,8 +13309,8 @@
               "canonical_id": "pc_c9da2c88a8c94e76a31e705076b2a010",
               "name": "Esters and Acyl Chlorides",
               "name_zh": "酯和酰氯",
-              "score": 0.557,
-              "keyword_coverage": 0.429,
+              "score": 0.574,
+              "keyword_coverage": 0.571,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
             }
@@ -13048,22 +13329,22 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "che_phenols_diazonium",
+          "name": "Phenols, Diazonium Salts and Azo Compounds",
+          "name_zh": "苯酚、重氮盐与偶氮化合物",
+          "score": 0.223
+        },
+        {
           "topic_id": "che_redox",
           "name": "Redox and Electrochemistry",
           "name_zh": "氧化还原与电化学",
           "score": 0.022
         },
         {
-          "topic_id": "che_halogenoalkanes_alcohols",
-          "name": "Nucleophilic Substitution and Elimination Reactions",
-          "name_zh": "亲核取代与消去反应",
-          "score": 0.019
-        },
-        {
-          "topic_id": "che_acids_che_buffers",
-          "name": "Buffers and Solubility Product",
-          "name_zh": "缓冲剂与溶度积",
-          "score": 0.015
+          "topic_id": "che_organic_basics",
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
+          "score": 0.018
         }
       ],
       "outcomes": [
@@ -13084,12 +13365,33 @@
             "conditions"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“重氮盐与偶氮化合物”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有化学 KG：没有苯酚概念，也没有苯胺重氮化后水解制苯酚的路线。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：重氮盐与苯酚 Concept 共同覆盖苯胺经重氮盐制苯酚。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_diazonium_azo",
+              "canonical_id": "pc_c5af15dfcdc42e1427ccb6272309fbb1",
+              "name": "Diazonium Salts and Azo Compounds",
+              "name_zh": "重氮盐与偶氮化合物",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "che_phenol_acid_base",
+              "canonical_id": "pc_306df7f024993644203ea5a1f13ff904",
+              "name": "Phenol Preparation and Acid-Base Chemistry",
+              "name_zh": "苯酚的制备与酸碱性质",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:32.2:2",
@@ -13108,12 +13410,23 @@
             "sodium"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“苯酚的制备与酸碱性质”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有苯酚与氢氧化钠生成苯氧负离子的反应概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：苯酚酸碱 Concept 覆盖与 NaOH 生成苯氧负离子。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_phenol_acid_base",
+              "canonical_id": "pc_306df7f024993644203ea5a1f13ff904",
+              "name": "Phenol Preparation and Acid-Base Chemistry",
+              "name_zh": "苯酚的制备与酸碱性质",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:32.2:3",
@@ -13126,12 +13439,23 @@
             "phenol"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“苯酚的制备与酸碱性质”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有苯酚酸性及其共轭碱稳定性的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：苯酚酸碱 Concept 覆盖苯酚酸性和共轭碱共振稳定。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_phenol_acid_base",
+              "canonical_id": "pc_306df7f024993644203ea5a1f13ff904",
+              "name": "Phenol Preparation and Acid-Base Chemistry",
+              "name_zh": "苯酚的制备与酸碱性质",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:32.2:4",
@@ -13147,12 +13471,23 @@
             "water"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“苯酚的制备与酸碱性质”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有水、苯酚和乙醇相对酸性及解释概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：苯酚酸碱 Concept 覆盖水、苯酚和乙醇的相对酸性。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_phenol_acid_base",
+              "canonical_id": "pc_306df7f024993644203ea5a1f13ff904",
+              "name": "Phenol Preparation and Acid-Base Chemistry",
+              "name_zh": "苯酚的制备与酸碱性质",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:32.2:5",
@@ -13203,12 +13538,23 @@
             "positions"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“苯酚芳环反应与定位效应”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有化学 KG：没有苯酚或羟基对 2、4、6 位定向效应概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：苯酚芳环反应 Concept 覆盖羟基对 2、4、6 位的定位效应。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_phenol_ring_reactivity",
+              "canonical_id": "pc_1a0fc6f9c22a749712e97711b0fdd625",
+              "name": "Phenol Ring Reactivity and Directing Effects",
+              "name_zh": "苯酚芳环反应与定位效应",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:32.2:7",
@@ -13227,12 +13573,23 @@
             "those"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“苯酚芳环反应与定位效应”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有萘酚等其他酚类化合物的反应概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：苯酚芳环反应 Concept 覆盖将规律迁移到萘酚等酚类。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_phenol_ring_reactivity",
+              "canonical_id": "pc_1a0fc6f9c22a749712e97711b0fdd625",
+              "name": "Phenol Ring Reactivity and Directing Effects",
+              "name_zh": "苯酚芳环反应与定位效应",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -13250,7 +13607,7 @@
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.671
+          "score": 0.675
         },
         {
           "topic_id": "che_acids",
@@ -13463,19 +13820,19 @@
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.278
-        },
-        {
-          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.035
+          "score": 0.273
         },
         {
           "topic_id": "che_states_enthalpy",
           "name": "States of Matter and Enthalpy",
           "name_zh": "物态与焓变",
           "score": 0.03
+        },
+        {
+          "topic_id": "che_nitriles_amides",
+          "name": "Nitriles and Amides",
+          "name_zh": "腈与酰胺",
+          "score": 0.028
         }
       ],
       "outcomes": [
@@ -13533,16 +13890,16 @@
           "score": 0.489
         },
         {
-          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.037
+          "topic_id": "che_nitriles_amides",
+          "name": "Nitriles and Amides",
+          "name_zh": "腈与酰胺",
+          "score": 0.034
         },
         {
-          "topic_id": "che_redox",
-          "name": "Redox and Electrochemistry",
-          "name_zh": "氧化还原与电化学",
-          "score": 0.027
+          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
+          "name": "Alcohol Reactions, Oxidation and the Iodoform Test",
+          "name_zh": "醇的反应、氧化与碘仿检验",
+          "score": 0.032
         }
       ],
       "outcomes": [
@@ -13619,8 +13976,8 @@
               "canonical_id": "pc_c9da2c88a8c94e76a31e705076b2a010",
               "name": "Esters and Acyl Chlorides",
               "name_zh": "酯和酰氯",
-              "score": 0.269,
-              "keyword_coverage": 0.13,
+              "score": 0.282,
+              "keyword_coverage": 0.217,
               "outcome_name_coverage": 0.667,
               "combined_name_coverage": 0.667
             }
@@ -13641,12 +13998,23 @@
             "reaction"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“酯和酰氯”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有酰氯的加成-消去机理概念；卤代烷消去不是相关候选。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的酯与酰氯 Concept 覆盖加成-消去机理。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_esters",
+              "canonical_id": "pc_c9da2c88a8c94e76a31e705076b2a010",
+              "name": "Esters and Acyl Chlorides",
+              "name_zh": "酯和酰氯",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:33.3:4",
@@ -13676,8 +14044,8 @@
               "canonical_id": "pc_c9da2c88a8c94e76a31e705076b2a010",
               "name": "Esters and Acyl Chlorides",
               "name_zh": "酯和酰氯",
-              "score": 0.339,
-              "keyword_coverage": 0.375,
+              "score": 0.299,
+              "keyword_coverage": 0.25,
               "outcome_name_coverage": 0.667,
               "combined_name_coverage": 0.667
             }
@@ -13702,16 +14070,16 @@
           "score": 0.237
         },
         {
-          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.04
+          "topic_id": "che_nitriles_amides",
+          "name": "Nitriles and Amides",
+          "name_zh": "腈与酰胺",
+          "score": 0.05
         },
         {
           "topic_id": "che_halogenoalkanes_alcohols",
           "name": "Nucleophilic Substitution and Elimination Reactions",
           "name_zh": "亲核取代与消去反应",
-          "score": 0.028
+          "score": 0.03
         }
       ],
       "outcomes": [
@@ -13839,22 +14207,22 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "che_phenols_diazonium",
+          "name": "Phenols, Diazonium Salts and Azo Compounds",
+          "name_zh": "苯酚、重氮盐与偶氮化合物",
+          "score": 0.287
+        },
+        {
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.137
+          "score": 0.142
         },
         {
           "topic_id": "che_nitrogen_org",
           "name": "Nitrogen Compounds and Polymers",
           "name_zh": "含氮化合物",
           "score": 0.136
-        },
-        {
-          "topic_id": "che_arenes_mass_spec",
-          "name": "Arenes and Mass Spectrometry",
-          "name_zh": "芳香烃与质谱分析",
-          "score": 0.016
         }
       ],
       "outcomes": [
@@ -13920,12 +14288,23 @@
             "below"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“重氮盐与偶氮化合物”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有苯胺重氮化生成重氮盐的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：重氮盐与偶氮化合物 Concept 覆盖苯胺低温重氮化。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_diazonium_azo",
+              "canonical_id": "pc_c5af15dfcdc42e1427ccb6272309fbb1",
+              "name": "Diazonium Salts and Azo Compounds",
+              "name_zh": "重氮盐与偶氮化合物",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:34.2:3",
@@ -13977,12 +14356,23 @@
             "chloride"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“重氮盐与偶氮化合物”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有重氮盐偶联生成偶氮染料的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：重氮盐与偶氮化合物 Concept 覆盖偶氮偶联和染料。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_diazonium_azo",
+              "canonical_id": "pc_c5af15dfcdc42e1427ccb6272309fbb1",
+              "name": "Diazonium Salts and Azo Compounds",
+              "name_zh": "重氮盐与偶氮化合物",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -13997,6 +14387,12 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "che_nitriles_amides",
+          "name": "Nitriles and Amides",
+          "name_zh": "腈与酰胺",
+          "score": 0.687
+        },
+        {
           "topic_id": "che_states_enthalpy",
           "name": "States of Matter and Enthalpy",
           "name_zh": "物态与焓变",
@@ -14007,12 +14403,6 @@
           "name": "Reaction Kinetics: Rates and Collision Theory",
           "name_zh": "反应动力学：速率与碰撞理论",
           "score": 0.028
-        },
-        {
-          "topic_id": "che_equilibria_acidbase",
-          "name": "Dynamic Equilibrium and Le Chatelier's Principle",
-          "name_zh": "动态平衡与勒夏特列原理",
-          "score": 0.027
         }
       ],
       "outcomes": [
@@ -14078,12 +14468,23 @@
             "group"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“酰胺”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有酰胺在酸或碱中水解的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：酰胺 Concept 覆盖酸性或碱性水解。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_amides",
+              "canonical_id": "pc_54969456882eab85ca38b2957992a4aa",
+              "name": "Amides",
+              "name_zh": "酰胺",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:34.3:3",
@@ -14101,12 +14502,23 @@
             "why"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“酰胺”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有酰胺碱性弱于胺及共振解释概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：酰胺 Concept 覆盖弱碱性及孤对电子离域解释。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_amides",
+              "canonical_id": "pc_54969456882eab85ca38b2957992a4aa",
+              "name": "Amides",
+              "name_zh": "酰胺",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -14130,7 +14542,7 @@
           "topic_id": "che_carbonyls",
           "name": "Carbonyl and Carboxylic Compounds",
           "name_zh": "羰基化合物",
-          "score": 0.233
+          "score": 0.231
         },
         {
           "topic_id": "che_acids",
@@ -14267,7 +14679,7 @@
           "topic_id": "che_hydrocarbons",
           "name": "Hydrocarbons",
           "name_zh": "烃",
-          "score": 0.224
+          "score": 0.222
         },
         {
           "topic_id": "che_states_enthalpy",
@@ -14453,7 +14865,7 @@
           "topic_id": "che_hydrocarbons",
           "name": "Hydrocarbons",
           "name_zh": "烃",
-          "score": 0.198
+          "score": 0.184
         },
         {
           "topic_id": "che_nitrogen_org",
@@ -14462,10 +14874,10 @@
           "score": 0.035
         },
         {
-          "topic_id": "che_energetics",
-          "name": "Chemical Energetics",
-          "name_zh": "化学能",
-          "score": 0.033
+          "topic_id": "che_equilibria_acidbase",
+          "name": "Dynamic Equilibrium and Le Chatelier's Principle",
+          "name_zh": "动态平衡与勒夏特列原理",
+          "score": 0.021
         }
       ],
       "outcomes": [
@@ -14578,16 +14990,16 @@
           "score": 0.224
         },
         {
-          "topic_id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
-          "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
-          "name_zh": "醇的反应与醇的氧化",
-          "score": 0.022
-        },
-        {
           "topic_id": "che_hydrocarbons",
           "name": "Hydrocarbons",
           "name_zh": "烃",
-          "score": 0.017
+          "score": 0.084
+        },
+        {
+          "topic_id": "che_organic_basics",
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
+          "score": 0.012
         }
       ],
       "outcomes": [
@@ -14642,12 +15054,23 @@
             "some"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“加聚反应”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有聚合物光降解概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的加聚物 Concept 覆盖某些聚合物的光降解。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_addition_polymer",
+              "canonical_id": "pc_cd9220ccd4a94d9511b50e51680a585c",
+              "name": "Addition Polymerisation",
+              "name_zh": "加聚反应",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:35.3:3",
@@ -14707,9 +15130,9 @@
       "candidate_topics": [
         {
           "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
-          "score": 0.048
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
+          "score": 0.197
         },
         {
           "topic_id": "che_carbonyls",
@@ -14776,13 +15199,34 @@
             "routes",
             "step"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "skill_mapping_required",
+          "summary_zh": "该要求主要属于通用技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有化学 KG 没有整合全部高级有机反应的多步合成路线设计概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：高级多步合成路线设计仍作为综合规划技能映射。",
+          "candidate_concepts": [
+            {
+              "node_id": "che_organic_representations",
+              "canonical_id": "pc_b7cf8d670e2f37db41a760a401141534",
+              "name": "Functional Groups and Organic Representations",
+              "name_zh": "官能团与有机结构表示",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "che_mechanism_types",
+              "canonical_id": "pc_9826358783352bf325f9299146a78a37",
+              "name": "Reaction Mechanism Types",
+              "name_zh": "反应机理类型",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9701:36.1:3",
@@ -14970,16 +15414,16 @@
           "score": 0.269
         },
         {
-          "topic_id": "che_states_enthalpy",
-          "name": "States of Matter and Enthalpy",
-          "name_zh": "物态与焓变",
-          "score": 0.143
-        },
-        {
           "topic_id": "che_stoichiometry_che_reacting_masses",
           "name": "Reacting Masses and Gas Volumes and Concentration and Titration",
           "name_zh": "反应质量与气体体积与浓度与滴定",
           "score": 0.126
+        },
+        {
+          "topic_id": "che_states_enthalpy",
+          "name": "States of Matter and Enthalpy",
+          "name_zh": "物态与焓变",
+          "score": 0.105
         }
       ],
       "outcomes": [
@@ -15106,8 +15550,8 @@
         },
         {
           "topic_id": "che_organic_basics",
-          "name": "Nomenclature and Isomerism",
-          "name_zh": "命名法与同分异构",
+          "name": "Organic Representations, Nomenclature and Isomerism",
+          "name_zh": "有机结构表示、命名法与同分异构",
           "score": 0.028
         },
         {
@@ -15213,10 +15657,10 @@
           "score": 0.04
         },
         {
-          "topic_id": "che_redox",
-          "name": "Redox and Electrochemistry",
-          "name_zh": "氧化还原与电化学",
-          "score": 0.014
+          "topic_id": "che_stoichiometry",
+          "name": "Relative Masses, the Mole and Formulae",
+          "name_zh": "相对质量、摩尔与化学式",
+          "score": 0.026
         }
       ],
       "outcomes": [
@@ -15434,14 +15878,6 @@
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },
     {
-      "node_id": "che_covalent",
-      "canonical_id": "pc_76c78ee2b35eca2b943816eb56dbac2a",
-      "name": "Covalent Bonding",
-      "name_zh": "共价键",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
       "node_id": "che_vsepr",
       "canonical_id": "pc_efe51eb9f4ef6303c37411a09a459344",
       "name": "Shapes of Molecules (VSEPR)",
@@ -15454,14 +15890,6 @@
       "canonical_id": "pc_614f3b0e205dabe62760af3243c960e1",
       "name": "Intermolecular Forces",
       "name_zh": "分子间作用力",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
-      "node_id": "che_gas_laws",
-      "canonical_id": "pc_18388a54522ee3202a5121faa939f897",
-      "name": "Ideal Gas Behaviour",
-      "name_zh": "理想气体",
       "review_status": "needs_review",
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },
@@ -15642,26 +16070,10 @@
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },
     {
-      "node_id": "che_bond_fission",
-      "canonical_id": "pc_f04539036aca6084074f399276e5f01d",
-      "name": "Bond Fission and Reactive Species",
-      "name_zh": "键断裂与反应物种",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
       "node_id": "che_mechanism_types",
       "canonical_id": "pc_9826358783352bf325f9299146a78a37",
       "name": "Reaction Mechanism Types",
       "name_zh": "反应机理类型",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
-      "node_id": "che_alkanes",
-      "canonical_id": "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
-      "name": "Alkanes",
-      "name_zh": "烷烃",
       "review_status": "needs_review",
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },
@@ -15674,34 +16086,10 @@
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },
     {
-      "node_id": "che_addition_polymer",
-      "canonical_id": "pc_cd9220ccd4a94d9511b50e51680a585c",
-      "name": "Addition Polymerisation",
-      "name_zh": "加聚反应",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
-      "node_id": "che_nucleophilic_sub",
-      "canonical_id": "pc_0d3043e5274fde266129817ca29a57f7",
-      "name": "Nucleophilic Substitution",
-      "name_zh": "亲核取代",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
       "node_id": "che_elimination",
       "canonical_id": "pc_aa4bce8524adca25c22fe40ce6e9f542",
       "name": "Elimination Reactions",
       "name_zh": "消去反应",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
-      "node_id": "che_alcohol_reactions",
-      "canonical_id": "pc_42ea5b997cbab553b5f29d052a9d06aa",
-      "name": "Alcohols and Their Reactions",
-      "name_zh": "醇的反应",
       "review_status": "needs_review",
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },
@@ -15726,14 +16114,6 @@
       "canonical_id": "pc_3f37112bc196b1765029aad7952026ca",
       "name": "Carboxylic Acids",
       "name_zh": "羧酸",
-      "review_status": "needs_review",
-      "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
-    },
-    {
-      "node_id": "che_esters",
-      "canonical_id": "pc_c9da2c88a8c94e76a31e705076b2a010",
-      "name": "Esters and Acyl Chlorides",
-      "name_zh": "酯和酰氯",
       "review_status": "needs_review",
       "note_zh": "自动映射未将其列为任何高置信 outcome 的首选概念；需人工判断是否超纲、粒度过细或只是词汇不匹配。"
     },

@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.2.0",
   "graph_id": "a_level_mathematics",
   "subject": "Mathematics",
   "jurisdictions": [
@@ -10,12 +10,22 @@
     "src_cambridge_9709_2026_2027",
     "src_cambridge_9709_2026_2027_update"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "经人工批准补齐 9709 syllabus 的 9 项 Concept 缺口，新增 7 个数学图节点、2 个 Topic 和 8 条有依据的先修边。"
+    },
+    {
+      "version": "1.2.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -26,8 +36,21 @@
       "name_zh": "指数与根式与二次函数",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.1 Quadratics"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; syllabus section 3.2 Logarithmic and exponential functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_algebra_part1_mat_solve_quadratics",
@@ -36,8 +59,25 @@
       "name_zh": "二次方程求解与联立方程",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.1 Quadratics"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; syllabus section 1.3 Coordinate geometry"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.1 Algebra"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; syllabus section 2.6 Numerical solution of equations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_algebra_part2",
@@ -46,18 +86,52 @@
       "name_zh": "不等式与函数与反函数",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.2 Functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; syllabus section 3.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; syllabus section 4.3 Momentum"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_algebra_part2_mat_composite",
       "kind": "topic",
-      "name": "Composite Functions and Modulus Function",
-      "name_zh": "复合函数与绝对值函数",
+      "name": "Composite Functions, Modulus Function and Graph Transformations",
+      "name_zh": "复合函数、绝对值函数与图像变换",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.2 Functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.1 Algebra"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; syllabus section 3.1 Algebra"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; syllabus section 5.2 Permutations and combinations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_polynomials",
@@ -66,8 +140,13 @@
       "name_zh": "多项式与部分分式",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.1 Quadratics"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_coord_geom",
@@ -76,8 +155,17 @@
       "name_zh": "坐标几何",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; syllabus section 1.3 Coordinate geometry"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; syllabus section 4.2 Kinematics of motion in a straight line"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_sequences",
@@ -86,8 +174,17 @@
       "name_zh": "等差级数与等比级数",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; syllabus section 1.6 Series"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; syllabus section 6.5 Hypothesis tests"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_sequences_mat_binomial_pos",
@@ -96,8 +193,13 @@
       "name_zh": "二项展开（正整数）与二项展开（一般指数）",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; syllabus section 1.6 Series"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_trig_part1",
@@ -106,8 +208,25 @@
       "name_zh": "三角学：比值与恒等式",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; syllabus section 1.4 Circular measure"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; syllabus section 1.5 Trigonometry"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; syllabus section 2.3 Trigonometry"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; syllabus section 3.3 Trigonometry"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_trig_part2",
@@ -116,8 +235,25 @@
       "name_zh": "三角学：方程与公式",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; syllabus section 1.5 Trigonometry"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.1 Algebra"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; syllabus section 2.3 Trigonometry"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; syllabus section 3.1 Algebra"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_exp_log",
@@ -126,8 +262,25 @@
       "name_zh": "指数函数与对数与法则",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.2 Functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; syllabus section 1.5 Trigonometry"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; syllabus section 1.6 Series"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.2 Logarithmic and exponential functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_exp_log_mat_solve_exp",
@@ -136,8 +289,13 @@
       "name_zh": "解指数与对数方程与对数线性化",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; syllabus section 5.1 Representation of data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_differentiation_part1",
@@ -146,8 +304,25 @@
       "name_zh": "微分：法则与技巧",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; syllabus section 1.7 Differentiation"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; syllabus section 2.4 Differentiation"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; syllabus section 3.4 Differentiation"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; syllabus section 4.5 Energy, work and power"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_differentiation_part2",
@@ -156,8 +331,21 @@
       "name_zh": "微分：应用",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; syllabus section 1.7 Differentiation"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; syllabus section 2.4 Differentiation"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; syllabus section 3.4 Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_differentiation_adv",
@@ -166,8 +354,13 @@
       "name_zh": "积商法则与特殊函数导数",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; syllabus section 3.7 Vectors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_differentiation_adv_mat_implicit",
@@ -176,8 +369,21 @@
       "name_zh": "隐函数微分与参数微分",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; syllabus section 1.7 Differentiation"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; syllabus section 2.4 Differentiation"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; syllabus section 3.4 Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_integration_part1",
@@ -186,8 +392,21 @@
       "name_zh": "不定积分与定积分与面积",
       "topic": null,
       "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; syllabus section 1.8 Integration"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; syllabus section 2.5 Integration"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; syllabus section 3.5 Integration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_integration_part1_mat_standard_integrals",
@@ -196,8 +415,25 @@
       "name_zh": "标准函数积分与换元积分",
       "topic": null,
       "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; syllabus section 1.8 Integration"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; syllabus section 2.5 Integration"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; syllabus section 3.5 Integration"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; syllabus section 3.7 Vectors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_integration_part2",
@@ -206,8 +442,25 @@
       "name_zh": "积分：进阶技巧",
       "topic": null,
       "default_order": 19,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; syllabus section 1.8 Integration"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; syllabus section 2.5 Integration"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; syllabus section 3.5 Integration"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; syllabus section 3.9 Complex numbers"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_numerical_methods",
@@ -216,8 +469,25 @@
       "name_zh": "根的定位与迭代法",
       "topic": null,
       "default_order": 20,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.6 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.6 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.6 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_numerical_methods_mat_form_de",
@@ -226,8 +496,21 @@
       "name_zh": "建立微分方程与分离变量",
       "topic": null,
       "default_order": 21,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; syllabus section 2.6 Numerical solution of equations"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; syllabus section 3.6 Numerical solution of equations"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; syllabus section 3.8 Differential equations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_vectors",
@@ -236,8 +519,13 @@
       "name_zh": "向量基础与大小与方向",
       "topic": null,
       "default_order": 22,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; syllabus section 3.7 Vectors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_vectors_mat_scalar_product",
@@ -246,8 +534,25 @@
       "name_zh": "标量积与直线向量方程",
       "topic": null,
       "default_order": 23,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; syllabus section 1.3 Coordinate geometry"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; syllabus section 2.6 Numerical solution of equations"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; syllabus section 3.6 Numerical solution of equations"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; syllabus section 4.5 Energy, work and power"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_complex",
@@ -256,8 +561,13 @@
       "name_zh": "复数运算与阿根图",
       "topic": null,
       "default_order": 24,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; syllabus section 3.9 Complex numbers"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_complex_mat_mod_arg",
@@ -266,8 +576,13 @@
       "name_zh": "模角形式与复数根与轨迹",
       "topic": null,
       "default_order": 25,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; syllabus section 3.9 Complex numbers"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_mech_kinematics",
@@ -276,18 +591,55 @@
       "name_zh": "运动学",
       "topic": null,
       "default_order": 26,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; syllabus section 4.2 Kinematics of motion in a straight line"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_mech_forces",
       "kind": "topic",
-      "name": "Mechanics: Forces and Newton's Laws",
-      "name_zh": "力与牛顿定律",
+      "name": "Mechanics: Forces, Equilibrium and Contact Models",
+      "name_zh": "力、平衡与接触模型",
       "topic": null,
       "default_order": 27,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; syllabus section 4.1 Forces and equilibrium"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "mat_mech_dynamics",
+      "kind": "topic",
+      "name": "Mechanics: Mass, Weight and Newton's Laws",
+      "name_zh": "质量、重量与牛顿定律",
+      "topic": null,
+      "default_order": 28,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; syllabus section 4.1 Forces and equilibrium"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; syllabus section 4.2 Kinematics of motion in a straight line"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; syllabus section 4.4 Newton’s laws of motion"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; syllabus section 6.4 Sampling and estimation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_mech_energy_momentum",
@@ -295,9 +647,26 @@
       "name": "Mechanics: Connected Particles, Energy and Momentum",
       "name_zh": "力学：连接体、能量与动量",
       "topic": null,
-      "default_order": 28,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 29,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; syllabus section 1.4 Circular measure"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; syllabus section 4.3 Momentum"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; syllabus section 4.4 Newton’s laws of motion"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; syllabus section 4.5 Energy, work and power"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_data_counting_prob",
@@ -305,9 +674,22 @@
       "name": "Data, Counting and Probability",
       "name_zh": "数据、计数与概率",
       "topic": null,
-      "default_order": 29,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 30,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; syllabus section 5.1 Representation of data"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; syllabus section 5.2 Permutations and combinations"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; syllabus section 5.3 Probability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_prob_random_vars",
@@ -315,9 +697,26 @@
       "name": "Probability and Discrete Random Variables",
       "name_zh": "概率与离散随机变量",
       "topic": null,
-      "default_order": 30,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 31,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; syllabus section 4.1 Forces and equilibrium"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; syllabus section 5.3 Probability"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; syllabus section 5.4 Discrete random variables"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; syllabus section 5.5 The normal distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_random_vars",
@@ -325,9 +724,26 @@
       "name": "Random Variables and Distributions",
       "name_zh": "随机变量与分布",
       "topic": null,
-      "default_order": 31,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 32,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; syllabus section 5.4 Discrete random variables"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; syllabus section 5.5 The normal distribution"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; syllabus section 6.1 The Poisson distribution"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; syllabus section 6.2 Linear combinations of random variables"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_normal_inference",
@@ -335,19 +751,72 @@
       "name": "Normal Distribution and Normal Approximations",
       "name_zh": "正态分布与正态近似",
       "topic": null,
-      "default_order": 32,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 33,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; syllabus section 5.5 The normal distribution"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; syllabus section 6.1 The Poisson distribution"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "mat_continuous_probability",
+      "kind": "topic",
+      "name": "Continuous Random Variables and Probability Density",
+      "name_zh": "连续随机变量与概率密度",
+      "topic": null,
+      "default_order": 34,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; syllabus section 5.3 Probability"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; syllabus section 5.4 Discrete random variables"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; syllabus section 6.2 Linear combinations of random variables"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; syllabus section 6.3 Continuous random variables"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_normal_inference_mat_sampling",
       "kind": "topic",
-      "name": "Sampling and Hypothesis Testing",
-      "name_zh": "抽样与假设检验",
+      "name": "Sampling, Estimation and Hypothesis Testing",
+      "name_zh": "抽样、估计与假设检验",
       "topic": null,
-      "default_order": 33,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "default_order": 35,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; syllabus section 1.4 Circular measure"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; syllabus section 5.1 Representation of data"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; syllabus section 6.4 Sampling and estimation"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; syllabus section 6.5 Hypothesis tests"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_indices_surds",
@@ -359,8 +828,21 @@
       "description": "Laws of indices for manipulating powers and the simplification and rationalisation of surds, expressing irrational roots in exact form.",
       "default_order": 1,
       "centrality": 0.3382,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.1 Quadratics"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; syllabus section 3.2 Logarithmic and exponential functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_quadratics",
@@ -374,8 +856,13 @@
       "centrality": 0.213,
       "visual": "function",
       "visual_hint": "Plot a parabola with sliders for the coefficients showing vertex and roots.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_solve_quadratics",
@@ -387,8 +874,25 @@
       "description": "Solving quadratic equations by factorising, completing the square, or the formula, with the discriminant determining the number of real roots.",
       "default_order": 1,
       "centrality": 0.1895,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_simultaneous",
@@ -400,8 +904,17 @@
       "description": "Solving simultaneous equations, including one linear and one quadratic, by substitution or elimination to find common solutions.",
       "default_order": 2,
       "centrality": 0.0689,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_inequalities",
@@ -415,8 +928,13 @@
       "centrality": 0.0519,
       "visual": "function",
       "visual_hint": "Shade the regions satisfying linear and quadratic inequalities.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_functions",
@@ -430,8 +948,25 @@
       "centrality": 0.0638,
       "visual": "function",
       "visual_hint": "Plot a function and its inverse as reflections in y = x.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_composite",
@@ -443,8 +978,17 @@
       "description": "Composite functions formed by applying one function to the result of another, with attention to domain and the order of composition.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_modulus",
@@ -458,8 +1002,36 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Plot the modulus function and solve |f(x)| = g(x) graphically.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 1"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "mat_graph_transformations",
+      "canonical_id": "pc_1aaf98f8144a2f3b3fae833eb1370db8",
+      "kind": "concept",
+      "name": "Graph Transformations of Functions",
+      "name_zh": "函数图像变换",
+      "topic": "mat_algebra_part2_mat_composite",
+      "description": "Transformations of function graphs generated by f(x) + a, f(x + a), af(x), and f(ax), including translations, reflections, stretches, and their combinations.",
+      "default_order": 3,
+      "visual": "function",
+      "visual_hint": "Transform a function graph with sliders for horizontal and vertical translation and scaling.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_poly_division",
@@ -471,8 +1043,17 @@
       "description": "Dividing polynomials by a linear or quadratic divisor using long division or inspection to obtain a quotient and remainder.",
       "default_order": 1,
       "centrality": 0.0746,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_factor_theorem",
@@ -484,8 +1065,17 @@
       "description": "The factor and remainder theorems relating the value of a polynomial at a point to its factors and to the remainder on division.",
       "default_order": 2,
       "centrality": 0.0586,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_partial_fractions",
@@ -497,8 +1087,13 @@
       "description": "Decomposing a rational function into a sum of simpler partial fractions, handling linear, repeated, and quadratic factors.",
       "default_order": 3,
       "centrality": 0.0398,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_straight_lines",
@@ -512,8 +1107,21 @@
       "centrality": 0.0654,
       "visual": "function",
       "visual_hint": "Plot a line with sliders for gradient and intercept.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_parallel_perp",
@@ -525,8 +1133,17 @@
       "description": "The gradient conditions for parallel and perpendicular lines, where perpendicular gradients multiply to give negative one.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_circles",
@@ -540,8 +1157,17 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Plot a circle from centre and radius and find line intersections.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_arithmetic",
@@ -553,8 +1179,17 @@
       "description": "Arithmetic progressions with a common difference, and the formulae for the nth term and the sum of the first n terms.",
       "default_order": 1,
       "centrality": 0.0624,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_geometric",
@@ -568,8 +1203,21 @@
       "centrality": 0.0443,
       "visual": "chart",
       "visual_hint": "Plot geometric-progression terms and the convergence of the sum.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_binomial_pos",
@@ -581,8 +1229,13 @@
       "description": "The binomial expansion of an expression raised to a positive integer power using binomial coefficients and Pascal's triangle.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_binomial_gen",
@@ -594,8 +1247,13 @@
       "description": "The binomial expansion for a general rational or negative index as an infinite series, valid within its range of convergence.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_trig_ratios",
@@ -609,8 +1267,25 @@
       "centrality": 0.2321,
       "visual": "function",
       "visual_hint": "Plot sine, cosine, and tangent with adjustable amplitude and period.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_radians",
@@ -624,8 +1299,17 @@
       "centrality": 0.0596,
       "visual": "interactive",
       "visual_hint": "Unit circle linking an angle in radians to arc length and sector area.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.4 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_trig_identities",
@@ -637,8 +1321,21 @@
       "description": "Fundamental trigonometric identities, including the Pythagorean identities, used to simplify expressions and prove relationships.",
       "default_order": 3,
       "centrality": 0.0819,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.3 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_solve_trig",
@@ -650,8 +1347,21 @@
       "description": "Solving trigonometric equations within a given interval using identities, graphs, and the symmetry of trigonometric functions.",
       "default_order": 1,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.3 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_double_angle",
@@ -663,8 +1373,25 @@
       "description": "Compound-angle and double-angle formulae expanding trigonometric functions of the sum and of multiples of angles.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_rform",
@@ -676,8 +1403,17 @@
       "description": "Expressing a sin θ plus b cos θ in the form R sin(θ + α), used to solve equations and find maxima and minima.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.3 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_exp_func",
@@ -691,8 +1427,17 @@
       "centrality": 0.1329,
       "visual": "function",
       "visual_hint": "Plot exponential growth and decay with a slider for the rate.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_log_laws",
@@ -706,8 +1451,25 @@
       "centrality": 0.0871,
       "visual": "function",
       "visual_hint": "Plot logarithm curves as inverses of exponentials.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_solve_exp",
@@ -719,8 +1481,17 @@
       "description": "Solving exponential and logarithmic equations by applying logarithms and the laws of logarithms to isolate the unknown.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_linearise",
@@ -732,8 +1503,17 @@
       "description": "Using logarithms to linearise power and exponential relationships, plotting transformed data to determine the model's constants.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_first_principles",
@@ -747,8 +1527,13 @@
       "centrality": 0.208,
       "visual": "function",
       "visual_hint": "Slider for h: a secant collapsing to the tangent.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_power_rule",
@@ -760,8 +1545,13 @@
       "description": "The power rule for differentiating powers of x, extended by linearity to differentiate sums of polynomial terms.",
       "default_order": 2,
       "centrality": 0.2156,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_chain_rule",
@@ -773,8 +1563,21 @@
       "description": "The chain rule differentiating a composite function as the product of the derivatives of its outer and inner functions.",
       "default_order": 3,
       "centrality": 0.1869,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_tangent_normal",
@@ -788,8 +1591,21 @@
       "centrality": 0.0398,
       "visual": "function",
       "visual_hint": "Plot a curve with its tangent and normal at a draggable point.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_stationary",
@@ -803,8 +1619,13 @@
       "centrality": 0.0353,
       "visual": "function",
       "visual_hint": "Plot a curve, mark stationary points, and toggle the derivative.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_rates",
@@ -816,8 +1637,13 @@
       "description": "Connected rates of change linking the time derivatives of related quantities through the chain rule.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_product_quotient",
@@ -829,8 +1655,17 @@
       "description": "The product and quotient rules for differentiating the product and the quotient of two functions.",
       "default_order": 1,
       "centrality": 0.1075,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_special_derivatives",
@@ -842,8 +1677,17 @@
       "description": "Differentiating exponential, logarithmic, and trigonometric functions using their standard derivative results.",
       "default_order": 2,
       "centrality": 0.0774,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_implicit",
@@ -857,8 +1701,17 @@
       "centrality": 0.0353,
       "visual": "function",
       "visual_hint": "Plot an implicit relation and show its tangent slope at a point.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_parametric",
@@ -872,8 +1725,17 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Trace a parametric curve r(t) with a slider for t.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_indefinite",
@@ -885,8 +1747,17 @@
       "description": "Indefinite integration as the reverse of differentiation, finding antiderivatives with an arbitrary constant of integration.",
       "default_order": 1,
       "centrality": 0.074,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_definite_area",
@@ -900,8 +1771,36 @@
       "centrality": 0.0579,
       "visual": "interactive",
       "visual_hint": "Shade the area under a curve between draggable limits.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 4"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "mat_trapezium_rule",
+      "canonical_id": "pc_eee05d840b05cd617b46eb6beb86630d",
+      "kind": "concept",
+      "name": "Trapezium Rule",
+      "name_zh": "梯形法则",
+      "topic": "mat_integration_part1",
+      "description": "Using the trapezium rule to approximate a definite integral and interpreting a graph to determine whether the approximation is an overestimate or an underestimate.",
+      "default_order": 3,
+      "visual": "interactive",
+      "visual_hint": "Approximate the area under a curve with adjustable trapezia and compare it with the exact integral.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_standard_integrals",
@@ -913,8 +1812,25 @@
       "description": "Integrating standard functions, including powers, exponentials, and trigonometric functions, from their known antiderivatives.",
       "default_order": 1,
       "centrality": 0.0531,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_substitution",
@@ -926,8 +1842,17 @@
       "description": "Integration by substitution reversing the chain rule by changing the variable to simplify the integrand.",
       "default_order": 2,
       "centrality": 0.0417,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_by_parts",
@@ -939,8 +1864,13 @@
       "description": "Integration by parts reversing the product rule to integrate the product of two functions.",
       "default_order": 1,
       "centrality": 0.0398,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_int_partial",
@@ -952,8 +1882,13 @@
       "description": "Integrating rational functions by first decomposing them into partial fractions that can be integrated individually.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_volumes",
@@ -967,8 +1902,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Rotate a region about an axis to form a solid of revolution.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_locate_roots",
@@ -980,8 +1920,17 @@
       "description": "Locating roots of an equation by a sign change over an interval, establishing the existence of a root before iteration.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.6 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.6 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_iteration",
@@ -995,8 +1944,25 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Cobweb diagram of an iterative root-finding sequence.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.6 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.6 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_form_de",
@@ -1008,8 +1974,17 @@
       "description": "Forming differential equations from descriptions of rates of change, translating a physical situation into an equation.",
       "default_order": 1,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_separation",
@@ -1023,8 +1998,21 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Plot a slope field and a solution curve of a first-order ODE.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_vector_basics",
@@ -1038,8 +2026,21 @@
       "centrality": 0.206,
       "visual": "interactive",
       "visual_hint": "Drag 2D/3D vectors and add them tip-to-tail.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_vector_magnitude",
@@ -1051,8 +2052,13 @@
       "description": "The magnitude of a vector from its components using Pythagoras, and finding its direction and corresponding unit vector.",
       "default_order": 2,
       "centrality": 0.0398,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_scalar_product",
@@ -1066,8 +2072,13 @@
       "centrality": 0.0353,
       "visual": "interactive",
       "visual_hint": "Drag two vectors and show the dot product and the angle between them.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_vector_lines",
@@ -1079,8 +2090,17 @@
       "description": "The vector equation of a line through a point with a given direction, and finding intersections and angles between lines.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_complex_arith",
@@ -1092,8 +2112,25 @@
       "description": "Complex numbers in the form a + bi, with addition, subtraction, multiplication, division, and the complex conjugate.",
       "default_order": 1,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 7"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_argand",
@@ -1107,8 +2144,21 @@
       "centrality": 0.0638,
       "visual": "interactive",
       "visual_hint": "Plot complex numbers as points and vectors on an Argand diagram.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 8"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_mod_arg",
@@ -1122,8 +2172,17 @@
       "centrality": 0.0459,
       "visual": "interactive",
       "visual_hint": "Show modulus-argument form and multiplication as rotation and scaling on the Argand plane.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_complex_loci",
@@ -1135,8 +2194,17 @@
       "description": "Complex roots of polynomials occurring in conjugate pairs, and loci in the complex plane defined by modulus and argument conditions.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 8"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_kin_constant",
@@ -1150,8 +2218,25 @@
       "centrality": 0.0503,
       "visual": "function",
       "visual_hint": "Plot displacement-time and velocity-time graphs for constant acceleration.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_kin_variable",
@@ -1163,8 +2248,21 @@
       "description": "Kinematics with variable acceleration, using differentiation and integration to relate displacement, velocity, and acceleration over time.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_projectiles",
@@ -1178,8 +2276,13 @@
       "centrality": 0.0248,
       "visual": "simulation",
       "visual_hint": "Launch a projectile with sliders for speed and angle showing the parabolic path.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; syllabus section 4.2 Kinematics of motion in a straight line"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_forces_equilibrium",
@@ -1193,8 +2296,42 @@
       "centrality": 0.1138,
       "visual": "interactive",
       "visual_hint": "Resolve forces into components on a free-body diagram.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 3"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "mat_smooth_contact",
+      "canonical_id": "pc_25cce3124e597a28882fe769fb413cad",
+      "kind": "concept",
+      "name": "Smooth Contact Model",
+      "name_zh": "光滑接触模型",
+      "topic": "mat_mech_forces",
+      "description": "The smooth-contact idealisation in which the contact force is normal to the surface and tangential friction is neglected, together with the limitations of this model for real surfaces.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_friction",
@@ -1204,10 +2341,44 @@
       "name_zh": "摩擦",
       "topic": "mat_mech_forces",
       "description": "The frictional force opposing motion, modelled by the coefficient of friction and limiting equilibrium on a rough surface.",
-      "default_order": 2,
+      "default_order": 3,
       "centrality": 0.0615,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 3"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "mat_mass_weight",
+      "canonical_id": "pc_e89c4895cbf9c4d6568f7dfad6ffb5eb",
+      "kind": "concept",
+      "name": "Mass and Weight",
+      "name_zh": "质量与重量",
+      "topic": "mat_mech_dynamics",
+      "description": "The distinction between mass and weight, with weight treated as the gravitational force W = mg, including its direction and the stipulated approximation for gravitational acceleration in mechanics problems.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_newton_laws",
@@ -1215,12 +2386,25 @@
       "kind": "concept",
       "name": "Newton's Laws of Motion",
       "name_zh": "牛顿运动定律",
-      "topic": "mat_mech_forces",
+      "topic": "mat_mech_dynamics",
       "description": "Newton's laws of motion relating the resultant force acting on a body to its mass and resulting acceleration.",
-      "default_order": 3,
+      "default_order": 2,
       "centrality": 0.0864,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_connected_particles",
@@ -1232,8 +2416,17 @@
       "description": "Analysing connected particles, such as those joined by a string over a pulley, by applying Newton's laws to each.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_work_energy_power",
@@ -1245,8 +2438,25 @@
       "description": "Work done by a force, kinetic and potential energy, the work-energy principle, and power as the rate of doing work.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_momentum_impulse",
@@ -1260,8 +2470,17 @@
       "centrality": 0.0248,
       "visual": "simulation",
       "visual_hint": "Animate a collision conserving momentum.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.3 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_data_rep",
@@ -1275,8 +2494,21 @@
       "centrality": 0.1023,
       "visual": "chart",
       "visual_hint": "Histogram, box plot, and cumulative-frequency chart of a data set.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_central_spread",
@@ -1288,8 +2520,17 @@
       "description": "Measures of central tendency and spread, including the mean, median, variance, standard deviation, and quartiles.",
       "default_order": 2,
       "centrality": 0.0912,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_perm_comb",
@@ -1301,8 +2542,21 @@
       "description": "Permutations and combinations counting ordered arrangements and unordered selections of objects.",
       "default_order": 3,
       "centrality": 0.1202,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_prob_rules",
@@ -1314,8 +2568,21 @@
       "description": "The rules of probability, including the addition and multiplication rules for combined, mutually exclusive, and independent events.",
       "default_order": 1,
       "centrality": 0.1123,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_conditional",
@@ -1327,8 +2594,13 @@
       "description": "Conditional probability of an event given another, and the use of tree diagrams with the multiplication rule.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_discrete_rv",
@@ -1340,8 +2612,17 @@
       "description": "Discrete random variables with a probability distribution, and the calculation of their expectation and variance.",
       "default_order": 3,
       "centrality": 0.1563,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_binomial_dist",
@@ -1355,8 +2636,25 @@
       "centrality": 0.0503,
       "visual": "chart",
       "visual_hint": "Bar chart of the binomial distribution with sliders for n and p.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; 6.5 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_geometric_dist",
@@ -1368,8 +2666,17 @@
       "description": "The geometric distribution modelling the number of independent trials up to and including the first success.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 3"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_poisson",
@@ -1383,8 +2690,25 @@
       "centrality": 0.0248,
       "visual": "chart",
       "visual_hint": "Bar chart of the Poisson distribution with a slider for lambda.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_normal_dist",
@@ -1398,8 +2722,25 @@
       "centrality": 0.0743,
       "visual": "function",
       "visual_hint": "Plot the normal bell curve with sliders for mean and standard deviation.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; 5.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; 5.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_normal_approx",
@@ -1411,8 +2752,61 @@
       "description": "Using the normal distribution to approximate the binomial or Poisson distribution under suitable conditions, with continuity correction.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; 5.5 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; 6.5 outcome 2"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "mat_continuous_random_variables",
+      "canonical_id": "pc_5f55e60931935e299996e34826f1a0e9",
+      "kind": "concept",
+      "name": "Continuous Random Variables",
+      "name_zh": "连续随机变量",
+      "topic": "mat_continuous_probability",
+      "description": "Continuous random variables taking values over a finite or infinite interval and described by a probability density rather than a probability mass function.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.3 outcome 1"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "mat_probability_density_function",
+      "canonical_id": "pc_e21f9bf6f3f146e8a0b6e61e0b0adf33",
+      "kind": "concept",
+      "name": "Probability Density Function",
+      "name_zh": "概率密度函数",
+      "topic": "mat_continuous_probability",
+      "description": "A non-negative probability density with unit total area, used through integration to calculate probabilities, mean, variance, median, and percentiles without requiring an explicit cumulative distribution function.",
+      "default_order": 2,
+      "visual": "function",
+      "visual_hint": "Shade areas under a probability density and show the corresponding probability and quantile.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.3 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_sampling",
@@ -1424,8 +2818,50 @@
       "description": "Sampling concepts including populations, samples, and the sampling distribution of the mean used for statistical inference.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 5"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "id": "mat_statistical_estimation",
+      "canonical_id": "pc_327828115364d07966390e1866528270",
+      "kind": "concept",
+      "name": "Statistical Estimation",
+      "name_zh": "统计估计",
+      "topic": "mat_normal_inference_mat_sampling",
+      "description": "Unbiased estimation of population mean and variance from raw or summarised samples, and confidence intervals for a population mean or, for a large sample, a population proportion.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 8"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mat_hypothesis",
@@ -1435,10 +2871,27 @@
       "name_zh": "假设检验",
       "topic": "mat_normal_inference_mat_sampling",
       "description": "Hypothesis testing using a test statistic and a significance level to decide between a null and an alternative hypothesis.",
-      "default_order": 2,
+      "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; 6.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; 6.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; 6.5 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; 6.5 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -1447,736 +2900,2436 @@
       "to": "mat_quadratics",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.1 Quadratics"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; syllabus section 3.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“指数与根式”为学习“二次函数”提供背景与解题基础。"
     },
     {
       "from": "mat_quadratics",
       "to": "mat_solve_quadratics",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“二次方程求解”需要先掌握“二次函数”的定义、表示或操作方法。"
     },
     {
       "from": "mat_solve_quadratics",
       "to": "mat_simultaneous",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“二次方程求解”为学习“联立方程”提供背景与解题基础。"
     },
     {
       "from": "mat_simultaneous",
       "to": "mat_inequalities",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“联立方程”为学习“不等式”提供背景与解题基础。"
     },
     {
       "from": "mat_inequalities",
       "to": "mat_functions",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“不等式”为学习“函数与反函数”提供背景与解题基础。"
     },
     {
       "from": "mat_functions",
       "to": "mat_composite",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“复合函数”需要先掌握“函数与反函数”的定义、表示或操作方法。"
     },
     {
       "from": "mat_composite",
       "to": "mat_modulus",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“复合函数”为学习“绝对值函数”提供背景与解题基础。"
     },
     {
       "from": "mat_poly_division",
       "to": "mat_factor_theorem",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“因式与余式定理”需要先掌握“多项式除法”的定义、表示或操作方法。"
     },
     {
       "from": "mat_factor_theorem",
       "to": "mat_partial_fractions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“部分分式”需要先掌握“因式与余式定理”的定义、表示或操作方法。"
     },
     {
       "from": "mat_straight_lines",
       "to": "mat_parallel_perp",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“平行与垂直直线”需要先掌握“直线”的定义、表示或操作方法。"
     },
     {
       "from": "mat_parallel_perp",
       "to": "mat_circles",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“平行与垂直直线”为学习“圆”提供背景与解题基础。"
     },
     {
       "from": "mat_arithmetic",
       "to": "mat_geometric",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“等差级数”为学习“等比级数”提供背景与解题基础。"
     },
     {
       "from": "mat_geometric",
       "to": "mat_binomial_pos",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“等比级数”为学习“二项展开（正整数）”提供背景与解题基础。"
     },
     {
       "from": "mat_binomial_pos",
       "to": "mat_binomial_gen",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“二项展开（一般指数）”需要先掌握“二项展开（正整数）”的定义、表示或操作方法。"
     },
     {
       "from": "mat_trig_ratios",
       "to": "mat_radians",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“三角函数与图像”为学习“弧度制”提供背景与解题基础。"
     },
     {
       "from": "mat_radians",
       "to": "mat_trig_identities",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“弧度制”为学习“三角恒等式”提供背景与解题基础。"
     },
     {
       "from": "mat_trig_identities",
       "to": "mat_solve_trig",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“解三角方程”需要先掌握“三角恒等式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_solve_trig",
       "to": "mat_double_angle",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“解三角方程”为学习“倍角与和差公式”提供背景与解题基础。"
     },
     {
       "from": "mat_double_angle",
       "to": "mat_rform",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“R 公式”需要先掌握“倍角与和差公式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_exp_func",
       "to": "mat_log_laws",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“对数与法则”需要先掌握“指数函数”的定义、表示或操作方法。"
     },
     {
       "from": "mat_log_laws",
       "to": "mat_solve_exp",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“解指数与对数方程”需要先掌握“对数与法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_solve_exp",
       "to": "mat_linearise",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“对数线性化”需要先掌握“解指数与对数方程”的定义、表示或操作方法。"
     },
     {
       "from": "mat_first_principles",
       "to": "mat_power_rule",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“幂法则”需要先掌握“从原理求导”的定义、表示或操作方法。"
     },
     {
       "from": "mat_power_rule",
       "to": "mat_chain_rule",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“链式法则”需要先掌握“幂法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_tangent_normal",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“链式法则”为学习“切线与法线”提供背景与解题基础。"
     },
     {
       "from": "mat_tangent_normal",
       "to": "mat_stationary",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“切线与法线”为学习“极值点”提供背景与解题基础。"
     },
     {
       "from": "mat_stationary",
       "to": "mat_rates",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“极值点”为学习“相关变化率”提供背景与解题基础。"
     },
     {
       "from": "mat_product_quotient",
       "to": "mat_special_derivatives",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“积商法则”为学习“特殊函数导数”提供背景与解题基础。"
     },
     {
       "from": "mat_special_derivatives",
       "to": "mat_implicit",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“特殊函数导数”为学习“隐函数微分”提供背景与解题基础。"
     },
     {
       "from": "mat_implicit",
       "to": "mat_parametric",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“隐函数微分”为学习“参数微分”提供背景与解题基础。"
     },
     {
       "from": "mat_indefinite",
       "to": "mat_definite_area",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“定积分与面积”需要先掌握“不定积分”的定义、表示或操作方法。"
     },
     {
       "from": "mat_definite_area",
       "to": "mat_standard_integrals",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“定积分与面积”为学习“标准函数积分”提供背景与解题基础。"
     },
     {
       "from": "mat_standard_integrals",
       "to": "mat_substitution",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“标准函数积分”为学习“换元积分”提供背景与解题基础。"
     },
     {
       "from": "mat_substitution",
       "to": "mat_by_parts",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“换元积分”为学习“分部积分”提供背景与解题基础。"
     },
     {
       "from": "mat_by_parts",
       "to": "mat_int_partial",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“分部积分”为学习“部分分式积分”提供背景与解题基础。"
     },
     {
       "from": "mat_int_partial",
       "to": "mat_volumes",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“部分分式积分”为学习“旋转体体积”提供背景与解题基础。"
     },
     {
       "from": "mat_locate_roots",
       "to": "mat_iteration",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.6 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.6 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.6 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.6 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“迭代法”需要先掌握“根的定位”的定义、表示或操作方法。"
     },
     {
       "from": "mat_form_de",
       "to": "mat_separation",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“建立微分方程”为学习“分离变量”提供背景与解题基础。"
     },
     {
       "from": "mat_vector_basics",
       "to": "mat_vector_magnitude",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“大小与方向”需要先掌握“向量基础”的定义、表示或操作方法。"
     },
     {
       "from": "mat_vector_magnitude",
       "to": "mat_scalar_product",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“大小与方向”为学习“标量积”提供背景与解题基础。"
     },
     {
       "from": "mat_scalar_product",
       "to": "mat_vector_lines",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“标量积”为学习“直线向量方程”提供背景与解题基础。"
     },
     {
       "from": "mat_complex_arith",
       "to": "mat_argand",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 7"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“阿根图”需要先掌握“复数运算”的定义、表示或操作方法。"
     },
     {
       "from": "mat_argand",
       "to": "mat_mod_arg",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 8"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“模角形式”需要先掌握“阿根图”的定义、表示或操作方法。"
     },
     {
       "from": "mat_mod_arg",
       "to": "mat_complex_loci",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.9 outcome 8"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“复数根与轨迹”需要先掌握“模角形式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_kin_constant",
       "to": "mat_kin_variable",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“匀加速运动”为学习“变加速运动”提供背景与解题基础。"
     },
     {
       "from": "mat_kin_variable",
       "to": "mat_projectiles",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; syllabus section 4.2 Kinematics of motion in a straight line"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“变加速运动”为学习“抛体运动”提供背景与解题基础。"
     },
     {
       "from": "mat_forces_equilibrium",
       "to": "mat_friction",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“摩擦”需要先掌握“力与平衡”的定义、表示或操作方法。"
     },
     {
       "from": "mat_friction",
       "to": "mat_newton_laws",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 6"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“摩擦”为学习“牛顿运动定律”提供背景与解题基础。"
     },
     {
       "from": "mat_newton_laws",
       "to": "mat_connected_particles",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“连接质点”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
     },
     {
       "from": "mat_work_energy_power",
       "to": "mat_momentum_impulse",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“功、能、功率”为学习“动量与冲量”提供背景与解题基础。"
     },
     {
       "from": "mat_data_rep",
       "to": "mat_central_spread",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“数据表示”为学习“中心趋势与离散”提供背景与解题基础。"
     },
     {
       "from": "mat_perm_comb",
       "to": "mat_prob_rules",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“排列组合”为学习“概率法则”提供背景与解题基础。"
     },
     {
       "from": "mat_prob_rules",
       "to": "mat_conditional",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“条件概率”需要先掌握“概率法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_binomial_dist",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“二项分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "mat_binomial_dist",
       "to": "mat_geometric_dist",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; 6.5 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“二项分布”为学习“几何分布”提供背景与解题基础。"
     },
     {
       "from": "mat_geometric_dist",
       "to": "mat_poisson",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“几何分布”为学习“泊松分布”提供背景与解题基础。"
     },
     {
       "from": "mat_normal_dist",
       "to": "mat_normal_approx",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; 5.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; 5.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“正态近似”需要先掌握“正态分布”的定义、表示或操作方法。"
     },
     {
       "from": "mat_sampling",
       "to": "mat_hypothesis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“假设检验”需要先掌握“抽样”的定义、表示或操作方法。"
     },
     {
       "from": "mat_quadratics",
       "to": "mat_functions",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.2 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“二次函数”为学习“函数与反函数”提供背景与解题基础。"
     },
     {
       "from": "mat_straight_lines",
       "to": "mat_circles",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“直线”为学习“圆”提供背景与解题基础。"
     },
     {
       "from": "mat_indices_surds",
       "to": "mat_binomial_pos",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.1 Quadratics"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; syllabus section 3.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.6 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“指数与根式”为学习“二项展开（正整数）”提供背景与解题基础。"
     },
     {
       "from": "mat_trig_ratios",
       "to": "mat_trig_identities",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“三角恒等式”需要先掌握“三角函数与图像”的定义、表示或操作方法。"
     },
     {
       "from": "mat_trig_identities",
       "to": "mat_double_angle",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“倍角与和差公式”需要先掌握“三角恒等式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_indices_surds",
       "to": "mat_exp_func",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; syllabus section 1.1 Quadratics"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; syllabus section 2.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; syllabus section 3.2 Logarithmic and exponential functions"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“指数函数”需要先掌握“指数与根式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_product_quotient",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“链式法则”为学习“积商法则”提供背景与解题基础。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_implicit",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“隐函数微分”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_parametric",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“参数微分”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_rates",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“相关变化率”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_power_rule",
       "to": "mat_stationary",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“极值点”需要先掌握“幂法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_power_rule",
       "to": "mat_tangent_normal",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“切线与法线”需要先掌握“幂法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_substitution",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“换元积分”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_product_quotient",
       "to": "mat_by_parts",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“分部积分”需要先掌握“积商法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_partial_fractions",
       "to": "mat_int_partial",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.26; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“部分分式积分”需要先掌握“部分分式”的定义、表示或操作方法。"
     },
     {
       "from": "mat_definite_area",
       "to": "mat_volumes",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“旋转体体积”需要先掌握“定积分与面积”的定义、表示或操作方法。"
     },
     {
       "from": "mat_special_derivatives",
       "to": "mat_standard_integrals",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“标准函数积分”需要先掌握“特殊函数导数”的定义、表示或操作方法。"
     },
     {
       "from": "mat_solve_quadratics",
       "to": "mat_locate_roots",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“二次方程求解”为学习“根的定位”提供背景与解题基础。"
     },
     {
       "from": "mat_standard_integrals",
       "to": "mat_separation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.25; 2.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.5 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“分离变量”需要先掌握“标准函数积分”的定义、表示或操作方法。"
     },
     {
       "from": "mat_vector_basics",
       "to": "mat_scalar_product",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“标量积”需要先掌握“向量基础”的定义、表示或操作方法。"
     },
     {
       "from": "mat_vector_basics",
       "to": "mat_vector_lines",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“直线向量方程”需要先掌握“向量基础”的定义、表示或操作方法。"
     },
     {
       "from": "mat_solve_quadratics",
       "to": "mat_complex_arith",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19; 1.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.20; 1.3 outcome 5"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“复数运算”需要先掌握“二次方程求解”的定义、表示或操作方法。"
     },
     {
       "from": "mat_kin_constant",
       "to": "mat_projectiles",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“抛体运动”需要先掌握“匀加速运动”的定义、表示或操作方法。"
     },
     {
       "from": "mat_special_derivatives",
       "to": "mat_kin_variable",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.28; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.2 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“变加速运动”需要先掌握“特殊函数导数”的定义、表示或操作方法。"
     },
     {
       "from": "mat_forces_equilibrium",
       "to": "mat_newton_laws",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“牛顿运动定律”需要先掌握“力与平衡”的定义、表示或操作方法。"
     },
     {
       "from": "mat_newton_laws",
       "to": "mat_work_energy_power",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“功、能、功率”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
     },
     {
       "from": "mat_newton_laws",
       "to": "mat_momentum_impulse",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31; 4.1 outcome 7"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33; 4.5 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.32; 4.3 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“动量与冲量”需要先掌握“牛顿运动定律”的定义、表示或操作方法。"
     },
     {
       "from": "mat_central_spread",
       "to": "mat_discrete_rv",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.34; 5.1 outcome 5"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.2 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“中心趋势与离散”为学习“离散随机变量”提供背景与解题基础。"
     },
     {
       "from": "mat_prob_rules",
       "to": "mat_discrete_rv",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 1"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“离散随机变量”需要先掌握“概率法则”的定义、表示或操作方法。"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_geometric_dist",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 3"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“几何分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_poisson",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“泊松分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_normal_dist",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; 5.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; 5.5 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“正态分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "mat_binomial_dist",
       "to": "mat_normal_approx",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.35; 5.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.39; 6.5 outcome 2"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“正态近似”需要先掌握“二项分布”的定义、表示或操作方法。"
     },
     {
       "from": "mat_normal_dist",
       "to": "mat_sampling",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; 5.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.36; 5.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.37; 6.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38; 6.4 outcome 4"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“抽样”需要先掌握“正态分布”的定义、表示或操作方法。"
+    },
+    {
+      "from": "mat_functions",
+      "to": "mat_graph_transformations",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Interpreting transformations of f requires prior understanding of function notation, domain, and range.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.19, 1.2 outcomes 1-5",
+          "note_zh": "函数基础位于图像变换之前，并为其提供函数表示与定义域背景。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "mat_definite_area",
+      "to": "mat_trapezium_rule",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "The trapezium rule approximates a definite integral, so the integral and area interpretation must already be understood.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF pp.22, 25; 1.8 outcomes 3-4 and 2.5 outcome 3",
+          "note_zh": "定积分与面积解释是梯形法近似的直接概念前提。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "mat_forces_equilibrium",
+      "to": "mat_smooth_contact",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "The smooth-contact model assumes a particular contact-force direction and therefore depends on identifying and resolving forces first.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.31, 4.1 outcomes 1-5",
+          "note_zh": "光滑接触模型建立在受力识别、合力和接触力分解基础上。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "mat_mass_weight",
+      "to": "mat_newton_laws",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Applying Newton's laws in vertical motion requires weight to be represented correctly as the force W = mg.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.33, 4.4 outcomes 1-3",
+          "note_zh": "牛顿定律的竖直运动计算直接使用重量 W=mg。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "mat_discrete_rv",
+      "to": "mat_continuous_random_variables",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "Contrasting probability masses with densities helps distinguish discrete and continuous random variables, but is not a strict mathematical dependency.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF pp.35, 38; 5.4 and 6.3 outcome 1",
+          "note_zh": "离散分布与连续密度的课程对照有助于区分两类随机变量。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "mat_continuous_random_variables",
+      "to": "mat_probability_density_function",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "A probability density is the representation used to define probabilities and statistics for a continuous random variable.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38, 6.3 outcomes 1-2",
+          "note_zh": "概率密度函数是描述连续随机变量并计算其概率和统计量的方法。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "mat_sampling",
+      "to": "mat_statistical_estimation",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "Point and interval estimates are calculated from samples and require the distinction between sample and population.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.38, 6.4 outcomes 1-8",
+          "note_zh": "点估计和区间估计以总体、样本及抽样分布为前提。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "mat_normal_dist",
+      "to": "mat_statistical_estimation",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "The prescribed confidence intervals for means and large-sample proportions use normal-distribution results or approximations.",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF pp.36, 38; 5.5 and 6.4 outcomes 4, 7-8",
+          "note_zh": "总体均值和大样本比例置信区间使用正态分布或正态近似。"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_indefinite",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "不定积分以导数和反导函数关系为基础。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.8 outcome 2"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "mat_power_rule",
+      "to": "mat_form_de",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "建立微分方程需要先能用导数表示变化率。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.22; 1.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.30; 3.8 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     }
   ]
 }

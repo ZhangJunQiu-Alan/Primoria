@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-07-17",
+  "generated_at": "2026-07-18",
   "graph_id": "a_level_physics",
   "syllabus_code": "9702",
   "source_id": "src_cambridge_9702_2025_2027",
@@ -9,20 +9,20 @@
   "summary": {
     "official_sections": 76,
     "official_outcomes": 299,
-    "candidate_covered": 86,
-    "candidate_partial": 175,
+    "candidate_covered": 115,
+    "candidate_partial": 174,
     "ambiguous": 0,
     "unresolved_mapping": 0,
-    "candidate_gaps": 30,
-    "skill_mapping_required": 8,
+    "candidate_gaps": 0,
+    "skill_mapping_required": 10,
     "requirement_types": {
-      "concept": 258,
-      "concept_and_skill": 33,
+      "concept": 256,
+      "concept_and_skill": 35,
       "general_skill": 1,
       "practical_skill": 7
     },
-    "existing_topics": 40,
-    "existing_concepts": 95
+    "existing_topics": 47,
+    "existing_concepts": 112
   },
   "sections": [
     {
@@ -42,16 +42,16 @@
           "score": 0.495
         },
         {
+          "topic_id": "phy_measurement_motion_phy_motion_quantities",
+          "name": "Motion Quantities, Equations of Motion and Resistive Motion",
+          "name_zh": "运动量、运动方程与阻力运动",
+          "score": 0.149
+        },
+        {
           "topic_id": "phy_electric_fields",
           "name": "Coulomb's Law and Electric Field Strength",
           "name_zh": "库仑定律与电场强度",
           "score": 0.039
-        },
-        {
-          "topic_id": "phy_electricity",
-          "name": "Current of Electricity",
-          "name_zh": "电流",
-          "score": 0.023
         }
       ],
       "outcomes": [
@@ -137,8 +137,8 @@
         },
         {
           "topic_id": "phy_thermal",
-          "name": "Temperature and Thermal Equilibrium and Specific Heat and Latent Heat",
-          "name_zh": "温度与热平衡与比热与潜热",
+          "name": "Temperature, Thermometry, Specific Heat and Latent Heat",
+          "name_zh": "温度、测温、比热与潜热",
           "score": 0.037
         }
       ],
@@ -317,10 +317,10 @@
           "score": 0.021
         },
         {
-          "topic_id": "phy_radioactivity",
-          "name": "Nuclear Reactions and Radioactivity",
-          "name_zh": "核反应与放射性",
-          "score": 0.021
+          "topic_id": "phy_thermal_phy_kinetic_theory",
+          "name": "Kinetic Theory, Internal Energy and the First Law",
+          "name_zh": "气体动理论、内能与第一定律",
+          "score": 0.019
         }
       ],
       "outcomes": [
@@ -413,10 +413,10 @@
           "score": 0.041
         },
         {
-          "topic_id": "phy_nuclear",
-          "name": "Nuclear Physics",
-          "name_zh": "核物理",
-          "score": 0.039
+          "topic_id": "phy_measurement_motion_phy_motion_quantities",
+          "name": "Motion Quantities, Equations of Motion and Resistive Motion",
+          "name_zh": "运动量、运动方程与阻力运动",
+          "score": 0.037
         }
       ],
       "outcomes": [
@@ -532,8 +532,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_measurement_motion_phy_motion_quantities",
-          "name": "Displacement Velocity Acceleration and Equations of Motion",
-          "name_zh": "位移速度加速度与运动方程",
+          "name": "Motion Quantities, Equations of Motion and Resistive Motion",
+          "name_zh": "运动量、运动方程与阻力运动",
           "score": 0.731
         },
         {
@@ -611,7 +611,7 @@
               "canonical_id": "pc_b1d5952208604e883f66b4659242fea1",
               "name": "Displacement Velocity Acceleration",
               "name_zh": "位移速度加速度",
-              "score": 0.583,
+              "score": 0.582,
               "keyword_coverage": 0.375,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -889,8 +889,8 @@
         },
         {
           "topic_id": "phy_measurement_motion_phy_motion_quantities",
-          "name": "Displacement Velocity Acceleration and Equations of Motion",
-          "name_zh": "位移速度加速度与运动方程",
+          "name": "Motion Quantities, Equations of Motion and Resistive Motion",
+          "name_zh": "运动量、运动方程与阻力运动",
           "score": 0.171
         }
       ],
@@ -1117,6 +1117,12 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "phy_measurement_motion_phy_motion_quantities",
+          "name": "Motion Quantities, Equations of Motion and Resistive Motion",
+          "name_zh": "运动量、运动方程与阻力运动",
+          "score": 0.203
+        },
+        {
           "topic_id": "phy_circular",
           "name": "Motion in a Circle",
           "name_zh": "圆周运动",
@@ -1127,12 +1133,6 @@
           "name": "Gravitational Potential and Orbital Motion",
           "name_zh": "引力势与轨道运动",
           "score": 0.184
-        },
-        {
-          "topic_id": "phy_measurement_motion_phy_motion_quantities",
-          "name": "Displacement Velocity Acceleration and Equations of Motion",
-          "name_zh": "位移速度加速度与运动方程",
-          "score": 0.179
         }
       ],
       "outcomes": [
@@ -1233,12 +1233,23 @@
             "terminal"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“阻力与终端速度”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有物理 KG：没有阻力下达到终端速度的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：阻力与终端速度 Concept 覆盖阻力随速度变化、合力趋零和终端速度。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_terminal_velocity",
+              "canonical_id": "pc_1ad3a12473bd85820c3de1fd0ab09289",
+              "name": "Drag and Terminal Velocity",
+              "name_zh": "阻力与终端速度",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -1426,16 +1437,16 @@
           "score": 0.189
         },
         {
+          "topic_id": "phy_momentum_forces_phy_force_types",
+          "name": "Types of Force, Centre of Gravity, Moments and Couples",
+          "name_zh": "力的类型、重心、力矩与力偶",
+          "score": 0.095
+        },
+        {
           "topic_id": "phy_gravitation",
           "name": "Newton's Law of Gravitation and Gravitational Field Strength",
           "name_zh": "牛顿引力定律与引力场强度",
           "score": 0.035
-        },
-        {
-          "topic_id": "phy_electric_fields",
-          "name": "Coulomb's Law and Electric Field Strength",
-          "name_zh": "库仑定律与电场强度",
-          "score": 0.032
         }
       ],
       "outcomes": [
@@ -1456,12 +1467,23 @@
             "single"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“重心”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有物理 KG：没有重心及把重量视为作用于单点的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：重心 Concept 覆盖物体总重量的等效作用点。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_centre_of_gravity",
+              "canonical_id": "pc_54e1fdd3b99c063adf13824a8a30e859",
+              "name": "Centre of Gravity",
+              "name_zh": "重心",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:4.1:2",
@@ -1577,14 +1599,14 @@
         },
         {
           "topic_id": "phy_thermal",
-          "name": "Temperature and Thermal Equilibrium and Specific Heat and Latent Heat",
-          "name_zh": "温度与热平衡与比热与潜热",
-          "score": 0.177
+          "name": "Temperature, Thermometry, Specific Heat and Latent Heat",
+          "name_zh": "温度、测温、比热与潜热",
+          "score": 0.17
         },
         {
           "topic_id": "phy_momentum_forces_phy_force_types",
-          "name": "Types of Force and Moments and Couples",
-          "name_zh": "力的类型与力矩与力偶",
+          "name": "Types of Force, Centre of Gravity, Moments and Couples",
+          "name_zh": "力的类型、重心、力矩与力偶",
           "score": 0.064
         }
       ],
@@ -1711,10 +1733,10 @@
           "score": 0.188
         },
         {
-          "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
-          "score": 0.01
+          "topic_id": "phy_thermal",
+          "name": "Temperature, Thermometry, Specific Heat and Latent Heat",
+          "name_zh": "温度、测温、比热与潜热",
+          "score": 0.016
         }
       ],
       "outcomes": [
@@ -2389,8 +2411,8 @@
         },
         {
           "topic_id": "phy_momentum_forces_phy_force_types",
-          "name": "Types of Force and Moments and Couples",
-          "name_zh": "力的类型与力矩与力偶",
+          "name": "Types of Force, Centre of Gravity, Moments and Couples",
+          "name_zh": "力的类型、重心、力矩与力偶",
           "score": 0.017
         }
       ],
@@ -2792,10 +2814,10 @@
           "score": 0.232
         },
         {
-          "topic_id": "phy_waves_superposition",
-          "name": "Electromagnetic Spectrum and Doppler Effect",
-          "name_zh": "电磁波谱与多普勒效应",
-          "score": 0.02
+          "topic_id": "phy_measurement_motion_phy_motion_quantities",
+          "name": "Motion Quantities, Equations of Motion and Resistive Motion",
+          "name_zh": "运动量、运动方程与阻力运动",
+          "score": 0.018
         }
       ],
       "outcomes": [
@@ -2885,13 +2907,24 @@
             "oscilloscope",
             "ray"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "skill_mapping_required",
+          "summary_zh": "该要求主要属于通用技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页并检索现有物理 KG：没有阴极射线示波器的时基、Y 增益及频率/振幅测量概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：CRO 时基、Y 增益及波形读数属于仪器操作技能，行波 Concept 提供周期、频率和振幅背景。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_progressive_waves",
+              "canonical_id": "pc_e2ba314d63487e951e37fee09f09b8f3",
+              "name": "Progressive Waves",
+              "name_zh": "行波",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:7.1:4",
@@ -3046,8 +3079,8 @@
         },
         {
           "topic_id": "phy_waves_superposition",
-          "name": "Electromagnetic Spectrum and Doppler Effect",
-          "name_zh": "电磁波谱与多普勒效应",
+          "name": "Electromagnetic Spectrum, Polarisation and Doppler Effect",
+          "name_zh": "电磁波谱、偏振与多普勒效应",
           "score": 0.05
         }
       ],
@@ -3131,8 +3164,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_waves_superposition",
-          "name": "Electromagnetic Spectrum and Doppler Effect",
-          "name_zh": "电磁波谱与多普勒效应",
+          "name": "Electromagnetic Spectrum, Polarisation and Doppler Effect",
+          "name_zh": "电磁波谱、偏振与多普勒效应",
           "score": 0.458
         },
         {
@@ -3233,8 +3266,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_waves_superposition",
-          "name": "Electromagnetic Spectrum and Doppler Effect",
-          "name_zh": "电磁波谱与多普勒效应",
+          "name": "Electromagnetic Spectrum, Polarisation and Doppler Effect",
+          "name_zh": "电磁波谱、偏振与多普勒效应",
           "score": 0.738
         },
         {
@@ -3369,16 +3402,16 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "phy_waves_superposition",
+          "name": "Electromagnetic Spectrum, Polarisation and Doppler Effect",
+          "name_zh": "电磁波谱、偏振与多普勒效应",
+          "score": 0.269
+        },
+        {
           "topic_id": "phy_waves",
           "name": "Waves",
           "name_zh": "波动",
           "score": 0.054
-        },
-        {
-          "topic_id": "phy_waves_superposition",
-          "name": "Electromagnetic Spectrum and Doppler Effect",
-          "name_zh": "电磁波谱与多普勒效应",
-          "score": 0.047
         },
         {
           "topic_id": "phy_waves_superposition_phy_superposition_principle",
@@ -3437,12 +3470,23 @@
             "cos2"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“偏振与 Malus 定律”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有偏振和 Malus 定律概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：偏振与 Malus 定律 Concept 覆盖透射强度计算。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_polarisation_malus",
+              "canonical_id": "pc_41715b915f7a8d30aed7d80079b4bdf9",
+              "name": "Polarisation and Malus's Law",
+              "name_zh": "偏振与 Malus 定律",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -4259,14 +4303,14 @@
       "candidate_topics": [
         {
           "topic_id": "phy_circuits_kirchhoff",
-          "name": "Electrical Characteristics and Kirchhoff's Laws",
-          "name_zh": "电学特性与基尔霍夫定律",
+          "name": "Resistivity and Kirchhoff's Laws",
+          "name_zh": "电阻率与基尔霍夫定律",
           "score": 0.357
         },
         {
           "topic_id": "phy_dc_circuits",
-          "name": "DC Circuits",
-          "name_zh": "直流电路",
+          "name": "Series and Parallel Circuits and Internal Resistance",
+          "name_zh": "串并联电路与内阻",
           "score": 0.248
         },
         {
@@ -4477,12 +4521,23 @@
             "resistor"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“电阻式传感器”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有 LDR 电阻随光强增加而下降的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：电阻式传感器 Concept 覆盖 LDR 的光强响应。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_resistive_sensors",
+              "canonical_id": "pc_59edde8ba6869a6d649ea0bead7ef1d5",
+              "name": "Resistive Sensors",
+              "name_zh": "电阻式传感器",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:9.3:8",
@@ -4501,12 +4556,23 @@
             "resistance"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“电阻式传感器”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有负温度系数热敏电阻及其电阻随温度下降的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：电阻式传感器 Concept 覆盖 NTC 热敏电阻的温度响应。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_resistive_sensors",
+              "canonical_id": "pc_59edde8ba6869a6d649ea0bead7ef1d5",
+              "name": "Resistive Sensors",
+              "name_zh": "电阻式传感器",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -4522,20 +4588,20 @@
       "candidate_topics": [
         {
           "topic_id": "phy_dc_circuits",
-          "name": "DC Circuits",
-          "name_zh": "直流电路",
-          "score": 0.226
+          "name": "Series and Parallel Circuits and Internal Resistance",
+          "name_zh": "串并联电路与内阻",
+          "score": 0.12
         },
         {
           "topic_id": "phy_circuits_kirchhoff",
-          "name": "Electrical Characteristics and Kirchhoff's Laws",
-          "name_zh": "电学特性与基尔霍夫定律",
+          "name": "Resistivity and Kirchhoff's Laws",
+          "name_zh": "电阻率与基尔霍夫定律",
           "score": 0.021
         },
         {
-          "topic_id": "phy_ac",
-          "name": "Alternating Currents",
-          "name_zh": "交流电",
+          "topic_id": "phy_component_sensors",
+          "name": "Component Characteristics and Resistive Sensors",
+          "name_zh": "元件特性与电阻式传感器",
           "score": 0.009
         }
       ],
@@ -4553,13 +4619,24 @@
             "syllabus",
             "symbols"
           ],
-          "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "requirement_type": "concept_and_skill",
+          "review_status": "approved",
+          "coverage_signal": "skill_mapping_required",
+          "summary_zh": "该要求主要属于通用技能；应进入技能覆盖表，不应直接计为 Concept 缺口。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有 syllabus 指定电路符号的集中资料概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：标准电路符号属于受控资料和图示识读技能，串并联电路 Concept 提供电路背景。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_series_parallel",
+              "canonical_id": "pc_bca889f92c123c04cec219d0a9311714",
+              "name": "Series and Parallel Resistors",
+              "name_zh": "串并联电阻",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:10.1:2",
@@ -4703,7 +4780,7 @@
               "canonical_id": "pc_182d374b27a6ff4f7176260222560fcf",
               "name": "Internal Resistance",
               "name_zh": "内阻",
-              "score": 0.897,
+              "score": 0.89,
               "keyword_coverage": 0.75,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -4724,8 +4801,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_circuits_kirchhoff",
-          "name": "Electrical Characteristics and Kirchhoff's Laws",
-          "name_zh": "电学特性与基尔霍夫定律",
+          "name": "Resistivity and Kirchhoff's Laws",
+          "name_zh": "电阻率与基尔霍夫定律",
           "score": 0.775
         },
         {
@@ -5012,9 +5089,9 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "phy_dc_circuits",
-          "name": "DC Circuits",
-          "name_zh": "直流电路",
+          "topic_id": "phy_potential_divider_methods",
+          "name": "Potential Dividers and Null Methods",
+          "name_zh": "分压器与零示法",
           "score": 0.704
         },
         {
@@ -5088,7 +5165,7 @@
               "canonical_id": "pc_1930b8c847023ca24d637697d9313a1f",
               "name": "Potential Dividers",
               "name_zh": "分压器",
-              "score": 0.351,
+              "score": 0.353,
               "keyword_coverage": 0.167,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -5107,12 +5184,23 @@
             "null"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“电位计与零示法”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有电流计零示法概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：电位计与零示法 Concept 覆盖电流计零读数和平衡判据。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_potentiometer_null_methods",
+              "canonical_id": "pc_0c51811f60a36b85bf85a979c93ee3b9",
+              "name": "Potentiometer and Null Methods",
+              "name_zh": "电位计与零示法",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:10.3:4",
@@ -5162,15 +5250,15 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "phy_nuclear",
-          "name": "Nuclear Physics",
-          "name_zh": "核物理",
+          "topic_id": "phy_nuclear_identity",
+          "name": "Nuclear Structure and Isotopes",
+          "name_zh": "原子核结构与同位素",
           "score": 0.035
         },
         {
           "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
+          "name": "Kinetic Theory, Internal Energy and the First Law",
+          "name_zh": "气体动理论、内能与第一定律",
           "score": 0.032
         },
         {
@@ -5300,12 +5388,23 @@
             "same"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“同位素”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有同位素为同元素不同中子数的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：物理图复用同位素 canonical concept。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_isotopes",
+              "canonical_id": "pc_6a27f090d384dbc6be61017193c58dae",
+              "name": "Isotopes",
+              "name_zh": "同位素",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:11.1:5",
@@ -5352,12 +5451,23 @@
             "processes"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“放射性衰变”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有核过程中核子数和电荷守恒概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的放射性衰变 Concept 覆盖核子数和电荷守恒。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_radioactive_decay",
+              "canonical_id": "pc_3e8b875dc1b24a5df264e9dc062a1087",
+              "name": "Radioactive Decay",
+              "name_zh": "放射性衰变",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:11.1:7",
@@ -5499,12 +5609,23 @@
             "decay"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“放射性衰变”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有用中微子分能解释 β 粒子连续能谱的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的放射性衰变 Concept 用（反）中微子分能解释连续 β 能谱。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_radioactive_decay",
+              "canonical_id": "pc_3e8b875dc1b24a5df264e9dc062a1087",
+              "name": "Radioactive Decay",
+              "name_zh": "放射性衰变",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:11.1:11",
@@ -5522,8 +5643,8 @@
           ],
           "requirement_type": "concept",
           "review_status": "needs_review",
-          "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“放射性衰变”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“放射性衰变”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
           "candidate_concepts": [
@@ -5532,8 +5653,8 @@
               "canonical_id": "pc_3e8b875dc1b24a5df264e9dc062a1087",
               "name": "Radioactive Decay",
               "name_zh": "放射性衰变",
-              "score": 0.746,
-              "keyword_coverage": 0.2,
+              "score": 0.757,
+              "keyword_coverage": 0.3,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
             }
@@ -5552,12 +5673,23 @@
             "unified"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“质量亏损与结合能”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有统一原子质量单位 u 的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的质量亏损与结合能 Concept 覆盖统一原子质量单位 u。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_binding_energy",
+              "canonical_id": "pc_9f2be083a041085b002a4e3208749f17",
+              "name": "Mass Defect and Binding Energy",
+              "name_zh": "质量亏损与结合能",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -5573,8 +5705,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_nuclear",
-          "name": "Nuclear Physics",
-          "name_zh": "核物理",
+          "name": "Fundamental Particles and Nuclear Binding",
+          "name_zh": "基本粒子与核结合",
           "score": 0.467
         },
         {
@@ -5584,10 +5716,10 @@
           "score": 0.177
         },
         {
-          "topic_id": "phy_deformation",
-          "name": "Hooke's Law and Stress, Strain and Young Modulus",
-          "name_zh": "胡克定律与应力、应变与杨氏模量",
-          "score": 0.015
+          "topic_id": "phy_medical_pet",
+          "name": "Radioactive Tracers and PET Imaging",
+          "name_zh": "放射性示踪与 PET 成像",
+          "score": 0.174
         }
       ],
       "outcomes": [
@@ -5833,9 +5965,9 @@
         },
         {
           "topic_id": "phy_measurement_motion_phy_motion_quantities",
-          "name": "Displacement Velocity Acceleration and Equations of Motion",
-          "name_zh": "位移速度加速度与运动方程",
-          "score": 0.17
+          "name": "Motion Quantities, Equations of Motion and Resistive Motion",
+          "name_zh": "运动量、运动方程与阻力运动",
+          "score": 0.156
         }
       ],
       "outcomes": [
@@ -5951,9 +6083,9 @@
         },
         {
           "topic_id": "phy_measurement_motion_phy_motion_quantities",
-          "name": "Displacement Velocity Acceleration and Equations of Motion",
-          "name_zh": "位移速度加速度与运动方程",
-          "score": 0.201
+          "name": "Motion Quantities, Equations of Motion and Resistive Motion",
+          "name_zh": "运动量、运动方程与阻力运动",
+          "score": 0.206
         },
         {
           "topic_id": "phy_kinematics",
@@ -6219,16 +6351,16 @@
           "score": 0.165
         },
         {
+          "topic_id": "phy_momentum_forces_phy_force_types",
+          "name": "Types of Force, Centre of Gravity, Moments and Couples",
+          "name_zh": "力的类型、重心、力矩与力偶",
+          "score": 0.154
+        },
+        {
           "topic_id": "phy_gravitation_phy_grav_potential",
           "name": "Gravitational Potential and Orbital Motion",
           "name_zh": "引力势与轨道运动",
           "score": 0.151
-        },
-        {
-          "topic_id": "phy_dynamics",
-          "name": "Dynamics",
-          "name_zh": "动力学",
-          "score": 0.144
         }
       ],
       "outcomes": [
@@ -6251,19 +6383,19 @@
           "requirement_type": "concept",
           "review_status": "needs_review",
           "coverage_signal": "candidate_partial",
-          "summary_zh": "首选候选为“引力场强度”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
+          "summary_zh": "首选候选为“重心”，但当前 KG 只覆盖部分要求；需人工确认扩充范围或记录缺口。",
           "machine_audit_override": true,
           "machine_audit_note_zh": "人工逐条复核：原候选及覆盖结论无需调整。",
           "candidate_concepts": [
             {
-              "node_id": "phy_grav_field_strength",
-              "canonical_id": "pc_8132f2ed61568084c95301dcc5de1540",
-              "name": "Gravitational Field Strength",
-              "name_zh": "引力场强度",
-              "score": 0.147,
+              "node_id": "phy_centre_of_gravity",
+              "canonical_id": "pc_54e1fdd3b99c063adf13824a8a30e859",
+              "name": "Centre of Gravity",
+              "name_zh": "重心",
+              "score": 0.203,
               "keyword_coverage": 0.375,
-              "outcome_name_coverage": 0,
-              "combined_name_coverage": 0.333
+              "outcome_name_coverage": 0.5,
+              "combined_name_coverage": 0.5
             }
           ]
         },
@@ -6693,8 +6825,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_thermal",
-          "name": "Temperature and Thermal Equilibrium and Specific Heat and Latent Heat",
-          "name_zh": "温度与热平衡与比热与潜热",
+          "name": "Temperature, Thermometry, Specific Heat and Latent Heat",
+          "name_zh": "温度、测温、比热与潜热",
           "score": 0.492
         },
         {
@@ -6791,21 +6923,21 @@
       "candidate_topics": [
         {
           "topic_id": "phy_thermal",
-          "name": "Temperature and Thermal Equilibrium and Specific Heat and Latent Heat",
-          "name_zh": "温度与热平衡与比热与潜热",
-          "score": 0.175
-        },
-        {
-          "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
-          "score": 0.052
+          "name": "Temperature, Thermometry, Specific Heat and Latent Heat",
+          "name_zh": "温度、测温、比热与潜热",
+          "score": 0.331
         },
         {
           "topic_id": "phy_electricity",
           "name": "Current of Electricity",
           "name_zh": "电流",
           "score": 0.05
+        },
+        {
+          "topic_id": "phy_forces",
+          "name": "Forces, Density and Pressure",
+          "name_zh": "力、密度与压强",
+          "score": 0.039
         }
       ],
       "outcomes": [
@@ -6826,12 +6958,23 @@
             "measurement"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“测温与热力学温标”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有利用随温度变化的物理属性测温及所列测温属性概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：测温与热力学温标 Concept 覆盖随温度变化的测温属性。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_thermometry",
+              "canonical_id": "pc_7c00ff3302b6021a295db1e9a2329b32",
+              "name": "Thermometry and the Thermodynamic Scale",
+              "name_zh": "测温与热力学温标",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:14.2:2",
@@ -6850,12 +6993,23 @@
             "substance"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“测温与热力学温标”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有热力学温标独立于测温物质性质的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：测温与热力学温标 Concept 覆盖温标不依赖特定物质属性。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_thermometry",
+              "canonical_id": "pc_7c00ff3302b6021a295db1e9a2329b32",
+              "name": "Thermometry and the Thermodynamic Scale",
+              "name_zh": "测温与热力学温标",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:14.2:3",
@@ -6939,14 +7093,14 @@
       "candidate_topics": [
         {
           "topic_id": "phy_thermal",
-          "name": "Temperature and Thermal Equilibrium and Specific Heat and Latent Heat",
-          "name_zh": "温度与热平衡与比热与潜热",
+          "name": "Temperature, Thermometry, Specific Heat and Latent Heat",
+          "name_zh": "温度、测温、比热与潜热",
           "score": 0.583
         },
         {
           "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
+          "name": "Kinetic Theory, Internal Energy and the First Law",
+          "name_zh": "气体动理论、内能与第一定律",
           "score": 0.022
         },
         {
@@ -7036,6 +7190,12 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "phy_amount_ideal_gas",
+          "name": "Amount of Substance and the Ideal Gas Equation",
+          "name_zh": "物质的量与理想气体状态方程",
+          "score": 0.256
+        },
+        {
           "topic_id": "phy_measurement",
           "name": "Physical Quantities and Units",
           "name_zh": "物理量与单位",
@@ -7046,12 +7206,6 @@
           "name": "Coulomb's Law and Electric Field Strength",
           "name_zh": "库仑定律与电场强度",
           "score": 0.037
-        },
-        {
-          "topic_id": "phy_electricity",
-          "name": "Current of Electricity",
-          "name_zh": "电流",
-          "score": 0.022
         }
       ],
       "outcomes": [
@@ -7106,12 +7260,23 @@
             "molar"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“摩尔与阿伏伽德罗常数”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有 Avogadro 常数及一摩尔所含粒子数的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：物理图复用摩尔与阿伏伽德罗常数 canonical concept。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_mole_avogadro",
+              "canonical_id": "pc_df12800116ac8b3b4f1232118ed6a5e6",
+              "name": "Mole and Avogadro Constant",
+              "name_zh": "摩尔与阿伏伽德罗常数",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -7127,9 +7292,9 @@
       "candidate_topics": [
         {
           "topic_id": "phy_measurement_motion_phy_motion_quantities",
-          "name": "Displacement Velocity Acceleration and Equations of Motion",
-          "name_zh": "位移速度加速度与运动方程",
-          "score": 0.338
+          "name": "Motion Quantities, Equations of Motion and Resistive Motion",
+          "name_zh": "运动量、运动方程与阻力运动",
+          "score": 0.333
         },
         {
           "topic_id": "phy_measurement",
@@ -7138,10 +7303,10 @@
           "score": 0.333
         },
         {
-          "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
-          "score": 0.087
+          "topic_id": "phy_amount_ideal_gas",
+          "name": "Amount of Substance and the Ideal Gas Equation",
+          "name_zh": "物质的量与理想气体状态方程",
+          "score": 0.2
         }
       ],
       "outcomes": [
@@ -7173,8 +7338,8 @@
               "canonical_id": "pc_5cccaa716cd0dc884949fd601339e85a",
               "name": "Ideal Gas Law",
               "name_zh": "理想气体定律",
-              "score": 0.453,
-              "keyword_coverage": 0.5,
+              "score": 0.469,
+              "keyword_coverage": 0.625,
               "outcome_name_coverage": 0.667,
               "combined_name_coverage": 0.667
             }
@@ -7208,8 +7373,8 @@
               "canonical_id": "pc_5cccaa716cd0dc884949fd601339e85a",
               "name": "Ideal Gas Law",
               "name_zh": "理想气体定律",
-              "score": 0.45,
-              "keyword_coverage": 0.462,
+              "score": 0.496,
+              "keyword_coverage": 0.692,
               "outcome_name_coverage": 0.667,
               "combined_name_coverage": 0.667
             }
@@ -7228,12 +7393,23 @@
             "na"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“理想气体定律”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有 Boltzmann 常数及 k=R/NA 的关系。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：扩充后的理想气体 Concept 覆盖 pV=NkT 与 k=R/NA。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_ideal_gas",
+              "canonical_id": "pc_5cccaa716cd0dc884949fd601339e85a",
+              "name": "Ideal Gas Law",
+              "name_zh": "理想气体定律",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -7249,8 +7425,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
+          "name": "Kinetic Theory, Internal Energy and the First Law",
+          "name_zh": "气体动理论、内能与第一定律",
           "score": 0.712
         },
         {
@@ -7360,7 +7536,7 @@
               "canonical_id": "pc_4acc9b751e6be25c2980eb631eb901b0",
               "name": "Kinetic Theory of Gases",
               "name_zh": "气体动理论",
-              "score": 0.366,
+              "score": 0.367,
               "keyword_coverage": 0.5,
               "outcome_name_coverage": 0,
               "combined_name_coverage": 1
@@ -7426,8 +7602,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
+          "name": "Kinetic Theory, Internal Energy and the First Law",
+          "name_zh": "气体动理论、内能与第一定律",
           "score": 0.448
         },
         {
@@ -7438,8 +7614,8 @@
         },
         {
           "topic_id": "phy_dc_circuits",
-          "name": "DC Circuits",
-          "name_zh": "直流电路",
+          "name": "Series and Parallel Circuits and Internal Resistance",
+          "name_zh": "串并联电路与内阻",
           "score": 0.245
         }
       ],
@@ -7527,8 +7703,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
+          "name": "Kinetic Theory, Internal Energy and the First Law",
+          "name_zh": "气体动理论、内能与第一定律",
           "score": 0.311
         },
         {
@@ -7538,10 +7714,10 @@
           "score": 0.197
         },
         {
-          "topic_id": "phy_electric_fields",
-          "name": "Coulomb's Law and Electric Field Strength",
-          "name_zh": "库仑定律与电场强度",
-          "score": 0.191
+          "topic_id": "phy_circuits_kirchhoff",
+          "name": "Resistivity and Kirchhoff's Laws",
+          "name_zh": "电阻率与基尔霍夫定律",
+          "score": 0.193
         }
       ],
       "outcomes": [
@@ -7938,8 +8114,8 @@
         },
         {
           "topic_id": "phy_momentum_forces_phy_force_types",
-          "name": "Types of Force and Moments and Couples",
-          "name_zh": "力的类型与力矩与力偶",
+          "name": "Types of Force, Centre of Gravity, Moments and Couples",
+          "name_zh": "力的类型、重心、力矩与力偶",
           "score": 0.062
         },
         {
@@ -8213,8 +8389,8 @@
         },
         {
           "topic_id": "phy_magnetic_fields_phy_force_charge",
-          "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
-          "name_zh": "运动电荷受力与电流磁场",
+          "name": "Force on Charges, Hall Effect and Magnetic Fields Due to Currents",
+          "name_zh": "运动电荷受力、Hall 效应与电流磁场",
           "score": 0.14
         }
       ],
@@ -8319,8 +8495,8 @@
         },
         {
           "topic_id": "phy_magnetic_fields_phy_force_charge",
-          "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
-          "name_zh": "运动电荷受力与电流磁场",
+          "name": "Force on Charges, Hall Effect and Magnetic Fields Due to Currents",
+          "name_zh": "运动电荷受力、Hall 效应与电流磁场",
           "score": 0.215
         },
         {
@@ -8695,8 +8871,8 @@
         },
         {
           "topic_id": "phy_dc_circuits",
-          "name": "DC Circuits",
-          "name_zh": "直流电路",
+          "name": "Series and Parallel Circuits and Internal Resistance",
+          "name_zh": "串并联电路与内阻",
           "score": 0.018
         }
       ],
@@ -9074,8 +9250,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_magnetic_fields_phy_force_charge",
-          "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
-          "name_zh": "运动电荷受力与电流磁场",
+          "name": "Force on Charges, Hall Effect and Magnetic Fields Due to Currents",
+          "name_zh": "运动电荷受力、Hall 效应与电流磁场",
           "score": 0.192
         },
         {
@@ -9188,14 +9364,14 @@
         },
         {
           "topic_id": "phy_magnetic_fields_phy_force_charge",
-          "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
-          "name_zh": "运动电荷受力与电流磁场",
+          "name": "Force on Charges, Hall Effect and Magnetic Fields Due to Currents",
+          "name_zh": "运动电荷受力、Hall 效应与电流磁场",
           "score": 0.249
         },
         {
           "topic_id": "phy_momentum_forces_phy_force_types",
-          "name": "Types of Force and Moments and Couples",
-          "name_zh": "力的类型与力矩与力偶",
+          "name": "Types of Force, Centre of Gravity, Moments and Couples",
+          "name_zh": "力的类型、重心、力矩与力偶",
           "score": 0.143
         }
       ],
@@ -9319,8 +9495,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_magnetic_fields_phy_force_charge",
-          "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
-          "name_zh": "运动电荷受力与电流磁场",
+          "name": "Force on Charges, Hall Effect and Magnetic Fields Due to Currents",
+          "name_zh": "运动电荷受力、Hall 效应与电流磁场",
           "score": 0.774
         },
         {
@@ -9331,8 +9507,8 @@
         },
         {
           "topic_id": "phy_momentum_forces_phy_force_types",
-          "name": "Types of Force and Moments and Couples",
-          "name_zh": "力的类型与力矩与力偶",
+          "name": "Types of Force, Centre of Gravity, Moments and Couples",
+          "name_zh": "力的类型、重心、力矩与力偶",
           "score": 0.171
         }
       ],
@@ -9393,7 +9569,7 @@
               "canonical_id": "pc_1ca0904b6ae91d6ca3fc8e304aaf7ed2",
               "name": "Force on a Moving Charge",
               "name_zh": "运动电荷受力",
-              "score": 0.404,
+              "score": 0.402,
               "keyword_coverage": 0.5,
               "outcome_name_coverage": 0,
               "combined_name_coverage": 1
@@ -9417,12 +9593,23 @@
             "vh"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“Hall 效应与 Hall 电压”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有 Hall 电压的起源与 VH=BI/ntq 推导概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：Hall 效应 Concept 覆盖 Hall 电压来源、公式和推导。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_hall_effect",
+              "canonical_id": "pc_0ac1a9b423ea23707f535871282ddf9d",
+              "name": "Hall Effect and Hall Voltage",
+              "name_zh": "Hall 效应与 Hall 电压",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:20.3:4",
@@ -9551,8 +9738,8 @@
       "candidate_topics": [
         {
           "topic_id": "phy_magnetic_fields_phy_force_charge",
-          "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
-          "name_zh": "运动电荷受力与电流磁场",
+          "name": "Force on Charges, Hall Effect and Magnetic Fields Due to Currents",
+          "name_zh": "运动电荷受力、Hall 效应与电流磁场",
           "score": 0.797
         },
         {
@@ -9693,14 +9880,14 @@
         },
         {
           "topic_id": "phy_waves_superposition",
-          "name": "Electromagnetic Spectrum and Doppler Effect",
-          "name_zh": "电磁波谱与多普勒效应",
-          "score": 0.226
+          "name": "Electromagnetic Spectrum, Polarisation and Doppler Effect",
+          "name_zh": "电磁波谱、偏振与多普勒效应",
+          "score": 0.224
         },
         {
           "topic_id": "phy_circuits_kirchhoff",
-          "name": "Electrical Characteristics and Kirchhoff's Laws",
-          "name_zh": "电学特性与基尔霍夫定律",
+          "name": "Resistivity and Kirchhoff's Laws",
+          "name_zh": "电阻率与基尔霍夫定律",
           "score": 0.062
         }
       ],
@@ -9895,16 +10082,16 @@
           "score": 0.472
         },
         {
-          "topic_id": "phy_circuits_kirchhoff",
-          "name": "Electrical Characteristics and Kirchhoff's Laws",
-          "name_zh": "电学特性与基尔霍夫定律",
+          "topic_id": "phy_component_sensors",
+          "name": "Component Characteristics and Resistive Sensors",
+          "name_zh": "元件特性与电阻式传感器",
           "score": 0.254
         },
         {
           "topic_id": "phy_magnetic_fields_phy_force_charge",
-          "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
-          "name_zh": "运动电荷受力与电流磁场",
-          "score": 0.118
+          "name": "Force on Charges, Hall Effect and Magnetic Fields Due to Currents",
+          "name_zh": "运动电荷受力、Hall 效应与电流磁场",
+          "score": 0.131
         }
       ],
       "outcomes": [
@@ -10443,15 +10630,15 @@
         },
         {
           "topic_id": "phy_waves_superposition",
-          "name": "Electromagnetic Spectrum and Doppler Effect",
-          "name_zh": "电磁波谱与多普勒效应",
-          "score": 0.249
+          "name": "Electromagnetic Spectrum, Polarisation and Doppler Effect",
+          "name_zh": "电磁波谱、偏振与多普勒效应",
+          "score": 0.247
         },
         {
-          "topic_id": "phy_quantum_phy_wave_particle",
-          "name": "Wave-Particle Duality and Energy Levels and Line Spectra",
-          "name_zh": "波粒二象性与能级与线光谱",
-          "score": 0.021
+          "topic_id": "phy_magnetic_fields_phy_force_charge",
+          "name": "Force on Charges, Hall Effect and Magnetic Fields Due to Currents",
+          "name_zh": "运动电荷受力、Hall 效应与电流磁场",
+          "score": 0.169
         }
       ],
       "outcomes": [
@@ -10665,9 +10852,9 @@
         },
         {
           "topic_id": "phy_nuclear",
-          "name": "Nuclear Physics",
-          "name_zh": "核物理",
-          "score": 0.145
+          "name": "Fundamental Particles and Nuclear Binding",
+          "name_zh": "基本粒子与核结合",
+          "score": 0.147
         }
       ],
       "outcomes": [
@@ -10954,9 +11141,9 @@
       "candidate_topics": [
         {
           "topic_id": "phy_nuclear",
-          "name": "Nuclear Physics",
-          "name_zh": "核物理",
-          "score": 0.586
+          "name": "Fundamental Particles and Nuclear Binding",
+          "name_zh": "基本粒子与核结合",
+          "score": 0.59
         },
         {
           "topic_id": "phy_dynamics",
@@ -10999,7 +11186,7 @@
               "canonical_id": "pc_9f2be083a041085b002a4e3208749f17",
               "name": "Mass Defect and Binding Energy",
               "name_zh": "质量亏损与结合能",
-              "score": 0.439,
+              "score": 0.426,
               "keyword_coverage": 0.429,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -11076,7 +11263,7 @@
               "canonical_id": "pc_9f2be083a041085b002a4e3208749f17",
               "name": "Mass Defect and Binding Energy",
               "name_zh": "质量亏损与结合能",
-              "score": 0.975,
+              "score": 0.956,
               "keyword_coverage": 0.667,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -11110,7 +11297,7 @@
               "canonical_id": "pc_9f2be083a041085b002a4e3208749f17",
               "name": "Mass Defect and Binding Energy",
               "name_zh": "质量亏损与结合能",
-              "score": 0.439,
+              "score": 0.426,
               "keyword_coverage": 0.429,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
@@ -11210,7 +11397,7 @@
               "canonical_id": "pc_9f2be083a041085b002a4e3208749f17",
               "name": "Mass Defect and Binding Energy",
               "name_zh": "质量亏损与结合能",
-              "score": 0.374,
+              "score": 0.363,
               "keyword_coverage": 0.333,
               "outcome_name_coverage": 0.25,
               "combined_name_coverage": 1
@@ -11233,19 +11420,19 @@
           "topic_id": "phy_radioactivity",
           "name": "Nuclear Reactions and Radioactivity",
           "name_zh": "核反应与放射性",
-          "score": 0.708
+          "score": 0.684
+        },
+        {
+          "topic_id": "phy_medical_pet",
+          "name": "Radioactive Tracers and PET Imaging",
+          "name_zh": "放射性示踪与 PET 成像",
+          "score": 0.176
         },
         {
           "topic_id": "phy_electricity",
           "name": "Current of Electricity",
           "name_zh": "电流",
           "score": 0.019
-        },
-        {
-          "topic_id": "phy_measurement_motion",
-          "name": "Errors and Uncertainties and Combining Uncertainties",
-          "name_zh": "误差与不确定度与不确定度合成",
-          "score": 0.018
         }
       ],
       "outcomes": [
@@ -11309,7 +11496,7 @@
               "canonical_id": "pc_3e8b875dc1b24a5df264e9dc062a1087",
               "name": "Radioactive Decay",
               "name_zh": "放射性衰变",
-              "score": 0.963,
+              "score": 0.929,
               "keyword_coverage": 0.8,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
@@ -11341,8 +11528,8 @@
               "canonical_id": "pc_3e8b875dc1b24a5df264e9dc062a1087",
               "name": "Radioactive Decay",
               "name_zh": "放射性衰变",
-              "score": 0.405,
-              "keyword_coverage": 0.4,
+              "score": 0.353,
+              "keyword_coverage": 0.2,
               "outcome_name_coverage": 0.5,
               "combined_name_coverage": 1
             }
@@ -11443,7 +11630,7 @@
               "name": "Radioactive Decay",
               "name_zh": "放射性衰变",
               "score": 0.79,
-              "keyword_coverage": 0.167,
+              "keyword_coverage": 0.222,
               "outcome_name_coverage": 1,
               "combined_name_coverage": 1
             }
@@ -11462,22 +11649,22 @@
       ],
       "candidate_topics": [
         {
-          "topic_id": "phy_thermal",
-          "name": "Temperature and Thermal Equilibrium and Specific Heat and Latent Heat",
-          "name_zh": "温度与热平衡与比热与潜热",
-          "score": 0.023
+          "topic_id": "phy_medical_ultrasound",
+          "name": "Ultrasound Production, Propagation and Imaging",
+          "name_zh": "超声产生、传播与成像",
+          "score": 0.371
+        },
+        {
+          "topic_id": "phy_medical_xray",
+          "name": "X-ray Production, Imaging and CT",
+          "name_zh": "X 射线产生、成像与 CT",
+          "score": 0.222
         },
         {
           "topic_id": "phy_electricity",
           "name": "Current of Electricity",
           "name_zh": "电流",
           "score": 0.019
-        },
-        {
-          "topic_id": "phy_deformation",
-          "name": "Hooke's Law and Stress, Strain and Young Modulus",
-          "name_zh": "胡克定律与应力、应变与杨氏模量",
-          "score": 0.018
         }
       ],
       "outcomes": [
@@ -11498,12 +11685,23 @@
             "generates"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“压电换能器”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有压电晶体在外加电场下形变及受压生电的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：压电换能器 Concept 覆盖正逆压电效应。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_piezoelectric_transducers",
+              "canonical_id": "pc_9bfa90f4f0e62f22164bf8d5f49cef3b",
+              "name": "Piezoelectric Transducers",
+              "name_zh": "压电换能器",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.1:2",
@@ -11521,12 +11719,23 @@
             "waves"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“压电换能器”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有压电换能器产生和探测超声波的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：压电换能器 Concept 覆盖超声的产生和探测。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_piezoelectric_transducers",
+              "canonical_id": "pc_9bfa90f4f0e62f22164bf8d5f49cef3b",
+              "name": "Piezoelectric Transducers",
+              "name_zh": "压电换能器",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.1:3",
@@ -11545,12 +11754,23 @@
             "information"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“超声成像与衰减”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有超声波在组织边界反射形成诊断信息的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：超声成像与衰减 Concept 覆盖组织边界回波。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_ultrasound_imaging",
+              "canonical_id": "pc_38daec8da1eb00994cb6759fb4c2a5a3",
+              "name": "Ultrasound Imaging and Attenuation",
+              "name_zh": "超声成像与衰减",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.1:4",
@@ -11569,12 +11789,23 @@
             "where"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“声阻抗与反射”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有声阻抗 Z=ρc 的定义。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：声阻抗与反射 Concept 覆盖 Z=ρc。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_acoustic_impedance_reflection",
+              "canonical_id": "pc_8283fc122c0dcdf70d1539881fc664e5",
+              "name": "Acoustic Impedance and Reflection",
+              "name_zh": "声阻抗与反射",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.1:5",
@@ -11593,12 +11824,23 @@
             "ir"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“声阻抗与反射”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有由两介质声阻抗计算超声强度反射系数的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：声阻抗与反射 Concept 覆盖强度反射系数。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_acoustic_impedance_reflection",
+              "canonical_id": "pc_8283fc122c0dcdf70d1539881fc664e5",
+              "name": "Acoustic Impedance and Reflection",
+              "name_zh": "声阻抗与反射",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.1:6",
@@ -11614,12 +11856,23 @@
             "μx"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“超声成像与衰减”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有超声在物质中指数衰减 I=I₀e^-μx 的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：超声成像与衰减 Concept 覆盖超声指数衰减。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_ultrasound_imaging",
+              "canonical_id": "pc_38daec8da1eb00994cb6759fb4c2a5a3",
+              "name": "Ultrasound Imaging and Attenuation",
+              "name_zh": "超声成像与衰减",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -11634,22 +11887,22 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "phy_medical_xray",
+          "name": "X-ray Production, Imaging and CT",
+          "name_zh": "X 射线产生、成像与 CT",
+          "score": 0.312
+        },
+        {
+          "topic_id": "phy_medical_ultrasound",
+          "name": "Ultrasound Production, Propagation and Imaging",
+          "name_zh": "超声产生、传播与成像",
+          "score": 0.136
+        },
+        {
           "topic_id": "phy_quantum",
           "name": "Photon Energy and Photoelectric Effect",
           "name_zh": "光子能量与光电效应",
           "score": 0.035
-        },
-        {
-          "topic_id": "phy_quantum_phy_wave_particle",
-          "name": "Wave-Particle Duality and Energy Levels and Line Spectra",
-          "name_zh": "波粒二象性与能级与线光谱",
-          "score": 0.02
-        },
-        {
-          "topic_id": "phy_electricity",
-          "name": "Current of Electricity",
-          "name_zh": "电流",
-          "score": 0.018
         }
       ],
       "outcomes": [
@@ -11670,12 +11923,23 @@
             "minimum"
           ],
           "requirement_type": "concept_and_skill",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“X 射线产生”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有 X 射线产生机制概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：X 射线产生 Concept 覆盖电子轰击金属靶及最短波长。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_xray_production",
+              "canonical_id": "pc_cd3dcc59f05bc0705c28765075f69b15",
+              "name": "X-ray Production",
+              "name_zh": "X 射线产生",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.2:2",
@@ -11694,12 +11958,23 @@
             "term"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“X 射线成像与衰减”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有 X 射线医学成像中组织吸收差异和造影剂的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：X 射线成像与衰减 Concept 覆盖组织吸收差异和造影剂。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_xray_imaging_attenuation",
+              "canonical_id": "pc_eb39193da24e5800cd02924bbf38278d",
+              "name": "X-ray Imaging and Attenuation",
+              "name_zh": "X 射线成像与衰减",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.2:3",
@@ -11715,12 +11990,23 @@
             "μx"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“X 射线成像与衰减”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有 X 射线在物质中指数衰减 I=I₀e^-μx 的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：X 射线成像与衰减 Concept 覆盖指数衰减。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_xray_imaging_attenuation",
+              "canonical_id": "pc_eb39193da24e5800cd02924bbf38278d",
+              "name": "X-ray Imaging and Attenuation",
+              "name_zh": "X 射线成像与衰减",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.2:4",
@@ -11739,12 +12025,23 @@
             "along"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“计算机断层成像”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有 CT 多角度 X 射线断层重建概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：CT Concept 覆盖二维切片重建和三维图像组合。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_computed_tomography",
+              "canonical_id": "pc_bc17c9604ad1de7da9815958b6e7c248",
+              "name": "Computed Tomography",
+              "name_zh": "计算机断层成像",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         }
       ]
     },
@@ -11759,21 +12056,21 @@
       ],
       "candidate_topics": [
         {
+          "topic_id": "phy_medical_pet",
+          "name": "Radioactive Tracers and PET Imaging",
+          "name_zh": "放射性示踪与 PET 成像",
+          "score": 0.201
+        },
+        {
           "topic_id": "phy_radioactivity",
           "name": "Nuclear Reactions and Radioactivity",
           "name_zh": "核反应与放射性",
-          "score": 0.029
+          "score": 0.019
         },
         {
           "topic_id": "phy_work_energy",
           "name": "Work Done and Kinetic and Potential Energy",
           "name_zh": "做功与动能与势能",
-          "score": 0.015
-        },
-        {
-          "topic_id": "phy_forces",
-          "name": "Forces, Density and Pressure",
-          "name_zh": "力、密度与压强",
           "score": 0.015
         }
       ],
@@ -11795,12 +12092,23 @@
             "nuclei"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“放射性示踪剂与 PET”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有放射性示踪剂在身体组织中选择性吸收的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：放射性示踪剂与 PET Concept 覆盖示踪剂选择性吸收。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_radioactive_tracers_pet",
+              "canonical_id": "pc_d38fd0bbafba10df5e4e54ab9a52c0fb",
+              "name": "Radioactive Tracers and PET",
+              "name_zh": "放射性示踪剂与 PET",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.3:2",
@@ -11854,12 +12162,23 @@
             "occurs"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“粒子-反粒子湮灭”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "已对照官方页：现有 KG 没有粒子-反粒子湮灭及质量能量、动量守恒概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：粒子-反粒子湮灭 Concept 覆盖电子与正电子湮灭。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_particle_antiparticle_annihilation",
+              "canonical_id": "pc_5bb43a47a36ea2115f39947aa3de5f98",
+              "name": "Particle-Antiparticle Annihilation",
+              "name_zh": "粒子-反粒子湮灭",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.3:4",
@@ -11878,12 +12197,33 @@
             "opposite"
           ],
           "requirement_type": "concept",
-          "review_status": "needs_review",
-          "coverage_signal": "candidate_gap",
-          "summary_zh": "未找到可信 Concept 候选；需由人工从官方小节重新定位，不展示低分候选。",
+          "review_status": "approved",
+          "coverage_signal": "candidate_covered",
+          "summary_zh": "候选映射为“粒子-反粒子湮灭”；仍需核对完整范围和页码证据。",
           "machine_audit_override": true,
-          "machine_audit_note_zh": "逐条复核：现有物理 KG 没有 PET 中正电子与电子湮灭产生反向双光子的概念。",
-          "candidate_concepts": []
+          "machine_audit_note_zh": "人工批准：湮灭与 PET 两个 Concept 共同覆盖反向双光子和符合探测链路。",
+          "candidate_concepts": [
+            {
+              "node_id": "phy_particle_antiparticle_annihilation",
+              "canonical_id": "pc_5bb43a47a36ea2115f39947aa3de5f98",
+              "name": "Particle-Antiparticle Annihilation",
+              "name_zh": "粒子-反粒子湮灭",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            },
+            {
+              "node_id": "phy_radioactive_tracers_pet",
+              "canonical_id": "pc_d38fd0bbafba10df5e4e54ab9a52c0fb",
+              "name": "Radioactive Tracers and PET",
+              "name_zh": "放射性示踪剂与 PET",
+              "score": null,
+              "keyword_coverage": null,
+              "outcome_name_coverage": null,
+              "combined_name_coverage": null
+            }
+          ]
         },
         {
           "outcome_id": "9702:24.3:5",
@@ -12001,8 +12341,8 @@
         },
         {
           "topic_id": "phy_dc_circuits",
-          "name": "DC Circuits",
-          "name_zh": "直流电路",
+          "name": "Series and Parallel Circuits and Internal Resistance",
+          "name_zh": "串并联电路与内阻",
           "score": 0.022
         }
       ],
@@ -12159,16 +12499,16 @@
           "score": 0.738
         },
         {
-          "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
-          "score": 0.037
-        },
-        {
           "topic_id": "phy_electricity",
           "name": "Current of Electricity",
           "name_zh": "电流",
           "score": 0.035
+        },
+        {
+          "topic_id": "phy_amount_ideal_gas",
+          "name": "Amount of Substance and the Ideal Gas Equation",
+          "name_zh": "物质的量与理想气体状态方程",
+          "score": 0.024
         }
       ],
       "outcomes": [
@@ -12294,9 +12634,9 @@
         },
         {
           "topic_id": "phy_thermal_phy_kinetic_theory",
-          "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
-          "name_zh": "气体动理论、理想气体定律与内能与第一定律",
-          "score": 0.124
+          "name": "Kinetic Theory, Internal Energy and the First Law",
+          "name_zh": "气体动理论、内能与第一定律",
+          "score": 0.163
         },
         {
           "topic_id": "phy_deformation",
