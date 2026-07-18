@@ -62,6 +62,8 @@ async function positionLearningGoalInBackground(ownerId: string, learningGoal: s
         graphId: anchor.graphId,
         startTopicId: anchor.startTopicId,
         targetConceptId: anchor.targetConceptId,
+        targetConceptIds: anchor.targetConceptIds,
+        scope: anchor.scope,
       }),
     );
     if (profile) await timing.time("build_course", () => buildOnboardingCourseIfReady(ownerId, profile));
@@ -135,6 +137,8 @@ export async function POST(request: Request) {
         graphId: anchor.graphId,
         startTopicId: anchor.startTopicId,
         targetConceptId: anchor.targetConceptId,
+        targetConceptIds: anchor.targetConceptIds,
+        scope: anchor.scope,
       }),
     );
     await timing.time("sync_fact", () =>

@@ -111,19 +111,22 @@ function main() {
   assert(factsRoute.includes("skipFactsIntake"), "facts route supports step skip");
 
   const courseGenerator = src("lib/ai/deepagent/course-generator.ts");
-  assert(courseGenerator.includes("isOwnerGraphUniqueViolation"), "course init recovers from owner+graph race");
-  assert(courseGenerator.includes("courses_owner_graph_uidx"), "course init targets owner+graph unique constraint");
-  assert(courseGenerator.includes("getCourseByGraph(ownerId, graphId)"), "course init reloads winning course after race");
+  assert(courseGenerator.includes("isOwnerScopeUniqueViolation"), "course init recovers from owner+scope race");
+  assert(courseGenerator.includes("courses_owner_scope_uidx"), "course init targets owner+scope unique constraint");
+  assert(courseGenerator.includes("getCourseByScopeKey(ownerId, scopeKey)"), "course init reloads winning scoped course after race");
 
   const courseStore = src("lib/courses/store.ts");
-  assert(courseStore.includes("eq(coursesTable.graphId, graphId), isNull(coursesTable.archivedAt)"), "course graph reuse ignores archived courses");
+  assert(courseStore.includes("eq(coursesTable.scopeKey, scopeKey), isNull(coursesTable.archivedAt)"), "course scope reuse ignores archived courses");
 
   const schema = src("lib/db/schema.ts");
-  assert(schema.includes(".where(sql`${table.archivedAt} IS NULL`)"), "course graph uniqueness only applies to active courses");
+  assert(schema.includes(".where(sql`${table.archivedAt} IS NULL and ${table.scopeKey} IS NOT NULL`)"), "course scope uniqueness only applies to active scoped courses");
 
   const activeCourseGraphMigration = app("drizzle/0030_active_course_graph_unique.sql");
   assert(activeCourseGraphMigration.includes('DROP INDEX IF EXISTS "courses_owner_graph_uidx"'), "migration removes global course graph uniqueness");
   assert(activeCourseGraphMigration.includes('WHERE "archived_at" IS NULL'), "migration creates active-only course graph uniqueness");
+
+  const scopedCourseMigration = app("drizzle/0049_quick_malcolm_colcord.sql");
+  assert(scopedCourseMigration.includes('CREATE UNIQUE INDEX "courses_owner_scope_uidx"'), "migration creates active-only course scope uniqueness");
 
   const styleRoute = src("app/api/onboarding/style/route.ts");
   assert(styleRoute.includes("saveTutorStyle"), "style route saves tutor style");

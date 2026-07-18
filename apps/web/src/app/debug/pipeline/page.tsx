@@ -213,6 +213,9 @@ export default function PipelineDebugPage() {
           graphId: courseContext.graphId,
           startTopicId: courseContext.startTopic.topicId,
           targetConceptId: courseContext.targetConceptId,
+          targetConceptIds: courseContext.targetConceptIds,
+          scope: courseContext.scope,
+          learningGoal: courseContext.learningGoal,
         });
         const courseId = build.courseId as string | undefined;
         if (!courseId) {

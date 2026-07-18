@@ -38,6 +38,9 @@ jobs:
       - name: Web lint
         run: pnpm --filter @primoria/web lint
 
+      - name: Learning-goal routing regression corpus
+        run: pnpm test:learning-goal-routing
+
       - name: Web unit tests
         run: pnpm --filter @primoria/web test
 

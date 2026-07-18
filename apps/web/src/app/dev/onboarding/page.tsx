@@ -12,6 +12,8 @@ const DEBUG_ONBOARDING_STATE: LearnerOnboardingState = {
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
+    goalTargetConceptIds: [],
+    goalScope: null,
     goalSkippedAt: null,
     goalPositioningStatus: null,
     goalPositioningMessage: null,

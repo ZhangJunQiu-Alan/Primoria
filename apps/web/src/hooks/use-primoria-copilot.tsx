@@ -439,6 +439,9 @@ type CourseTopicAnchor = {
   graphId: string;
   startTopicId: string;
   targetConceptId: string | null;
+  targetConceptIds: string[];
+  scope: "canonical" | "goal";
+  learningGoal: string | null;
   // Set when the build came from a subject-clarification chip click.
   clarifySourceQuery?: string;
 };
@@ -516,7 +519,7 @@ class LearningGoalTask {
   }
 
   startCourseBuild(anchor: CourseTopicAnchor) {
-    const anchorKey = `${anchor.graphId}:${anchor.startTopicId}:${anchor.targetConceptId ?? ""}`;
+    const anchorKey = `${anchor.graphId}:${anchor.startTopicId}:${anchor.targetConceptIds.join(",")}:${anchor.learningGoal ?? ""}`;
     if (this.buildAnchorKey === anchorKey && (this.snapshot.phase === "building" || this.snapshot.phase === "ready")) return;
     this.buildAnchorKey = anchorKey;
     beginPendingCourseBuild({ id: this.pendingBuildId, topic: this.query });
@@ -578,6 +581,9 @@ class LearningGoalTask {
         graphId?: unknown;
         startTopic?: { topicId?: unknown };
         targetConceptId?: unknown;
+        targetConceptIds?: unknown;
+        scope?: unknown;
+        learningGoal?: unknown;
       };
       if (typeof courseContext.graphId !== "string" || typeof courseContext.startTopic?.topicId !== "string") {
         throw new Error("positioning result did not include a valid topic anchor");
@@ -586,6 +592,11 @@ class LearningGoalTask {
         graphId: courseContext.graphId,
         startTopicId: courseContext.startTopic.topicId,
         targetConceptId: typeof courseContext.targetConceptId === "string" ? courseContext.targetConceptId : null,
+        targetConceptIds: Array.isArray(courseContext.targetConceptIds)
+          ? courseContext.targetConceptIds.filter((id): id is string => typeof id === "string")
+          : [],
+        scope: courseContext.scope === "goal" ? "goal" : "canonical",
+        learningGoal: typeof courseContext.learningGoal === "string" ? courseContext.learningGoal : null,
       });
     } catch (error) {
       const errorCode = error instanceof RequestTimeoutError ? "positioning_timeout" : "positioning_failed";
@@ -603,6 +614,9 @@ class LearningGoalTask {
       graphId: anchor.graphId,
       startTopicId: anchor.startTopicId,
       targetConceptId: anchor.targetConceptId,
+      targetConceptIds: anchor.targetConceptIds,
+      scope: anchor.scope,
+      learningGoal: anchor.learningGoal,
       language: detectKgLanguage(this.query),
       ...(anchor.clarifySourceQuery ? { clarifySourceQuery: anchor.clarifySourceQuery } : {}),
     });
@@ -889,6 +903,9 @@ function LearningGoalCard({ query, graphId }: { query?: string; graphId?: string
                       graphId: item.graphId,
                       startTopicId: item.startTopicId,
                       targetConceptId: null,
+                      targetConceptIds: [],
+                      scope: "canonical",
+                      learningGoal: null,
                       clarifySourceQuery: query,
                     })}
                   >

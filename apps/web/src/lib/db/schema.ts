@@ -56,6 +56,8 @@ export const learnerProfiles = pgTable(
     goalGraphId: text("goal_graph_id"),
     goalStartTopicId: text("goal_start_topic_id"),
     goalTargetConceptId: text("goal_target_concept_id"),
+    goalTargetConceptIds: jsonb("goal_target_concept_ids"),
+    goalScope: text("goal_scope"),
     goalSkippedAt: timestamp("goal_skipped_at", { withTimezone: true }),
     goalPositioningStatus: text("goal_positioning_status"),
     goalPositioningMessage: text("goal_positioning_message"),
@@ -173,6 +175,9 @@ export const courses = pgTable(
     estimatedMinutes: integer("estimated_minutes").notNull(),
     anchorConceptId: text("anchor_concept_id"),
     graphId: text("graph_id"),
+    // Stable identity of the requested scope. Multiple active courses may use
+    // the same source KG when their goal-specific concept scopes differ.
+    scopeKey: text("scope_key"),
     // Learner's content language (e.g. "zh", "en"), detected from their original
     // topic prompt. Drives the language of generated lesson content; KG topic/
     // concept names stay English for indexing.
@@ -189,13 +194,12 @@ export const courses = pgTable(
   (table) => ({
     ownerUpdatedIdx: index("courses_owner_updated_idx").on(table.ownerId, table.updatedAt),
     ownerArchivedUpdatedIdx: index("courses_owner_archived_updated_idx").on(table.ownerId, table.archivedAt, table.updatedAt),
-    // At most one active Course instance per user per subject KG. Archived
-    // courses are historical records and should not block a clean restart.
-    // graph_id NULL (free-form courses with no KG) is exempt because Postgres
-    // treats NULLs as distinct.
-    ownerGraphUnique: uniqueIndex("courses_owner_graph_uidx")
-      .on(table.ownerId, table.graphId)
-      .where(sql`${table.archivedAt} IS NULL`),
+    // At most one active Course per learner and exact scope. A source KG may
+    // back several active courses (for example canonical linear algebra and a
+    // goal-scoped linear-algebra-for-deep-learning course).
+    ownerScopeUnique: uniqueIndex("courses_owner_scope_uidx")
+      .on(table.ownerId, table.scopeKey)
+      .where(sql`${table.archivedAt} IS NULL and ${table.scopeKey} IS NOT NULL`),
     // Importing the same share twice is a no-op that returns the first copy.
     ownerImportedShareUnique: uniqueIndex("courses_owner_imported_share_uidx")
       .on(table.ownerId, table.importedFromShareId)

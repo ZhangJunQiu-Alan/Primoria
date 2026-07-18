@@ -1,6 +1,6 @@
-import { initializeCourseOutline } from "@/lib/ai/deepagent/course-generator";
+import { buildCourseScopeKey, initializeCourseOutline } from "@/lib/ai/deepagent/course-generator";
 import { enqueueLessonGenerationJob, toLessonGenerationJobSummary } from "@/lib/courses/lesson-generation-jobs";
-import { getCourseByGraph } from "@/lib/courses/store";
+import { getCourseByScopeKey } from "@/lib/courses/store";
 import { resolveCourseContextFromTopicAnchor } from "@/lib/knowledge-graph/course-context";
 import { detectKgLanguage } from "@/lib/knowledge-graph/display-name";
 import { GENERATED_GRAPH_PREFIX, getGeneratedGraphById } from "@/lib/knowledge-graph/generated-graph";
@@ -31,11 +31,14 @@ export async function buildOnboardingCourse(ownerId: string, profile: LearnerPro
       graphId: profile.goalGraphId,
       startTopicId: profile.goalStartTopicId,
       targetConceptId: profile.goalTargetConceptId,
+      targetConceptIds: profile.goalTargetConceptIds,
+      scope: profile.goalScope ?? "canonical",
+      learningGoal: profile.goalScope === "goal" ? profile.learningGoal : null,
       language,
     });
     outlineInput = {
       ownerId,
-      topic: courseContext.startTopic.name,
+      topic: courseContext.learningGoal ?? courseContext.startTopic.name,
       kgContext: courseContext,
       source: "cold_start" as const,
       language,
@@ -51,6 +54,14 @@ export async function buildOnboardingCourse(ownerId: string, profile: LearnerPro
 
 export async function getOnboardingCourseId(ownerId: string, profile: LearnerProfile | null) {
   if (!profile?.goalGraphId) return null;
-  const course = await getCourseByGraph(ownerId, profile.goalGraphId);
+  const scopeKey = buildCourseScopeKey({
+    graphId: profile.goalGraphId,
+    startTopicId: profile.goalStartTopicId,
+    targetConceptIds: profile.goalTargetConceptIds,
+    scope: profile.goalScope ?? "canonical",
+    learningGoal: profile.goalScope === "goal" ? profile.learningGoal : null,
+  });
+  if (!scopeKey) return null;
+  const course = await getCourseByScopeKey(ownerId, scopeKey);
   return course?.id ?? null;
 }

@@ -239,6 +239,7 @@ export type Course = {
   estimatedMinutes: number;
   anchorConceptId?: string | null;
   graphId?: string | null;
+  scopeKey?: string | null;
   language?: string | null;
   lessons: Lesson[];
   archivedAt?: number | null;

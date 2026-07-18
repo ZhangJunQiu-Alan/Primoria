@@ -28,7 +28,7 @@ export type PositioningParams = {
   maxStage2Graphs: number;
 };
 
-export type PositioningMode = "specific" | "subject_start" | "directed";
+export type PositioningMode = "specific" | "subject_start" | "directed" | "goal_scoped";
 export type PositioningBranch = "positioned" | "clarify_subject" | "fallback" | "out_of_library";
 
 export type LessonPlan = {
@@ -57,6 +57,8 @@ export type PositioningResult = {
   mode?: PositioningMode;
   startTopicId?: string;
   targetConceptId?: string | null;
+  targetConceptIds?: string[];
+  learningGoal?: string;
   linear?: boolean;
   path?: LessonPlan[];
   // clarify_subject
@@ -77,6 +79,7 @@ export type Stage2Decision =
       mode: PositioningMode;
       startTopicId: string;
       targetConceptId?: string | null;
+      targetConceptIds?: string[];
       reason?: string;
     }
   | { outcome: "clarify_subject"; message?: string; candidateGraphIds: string[] }
@@ -138,9 +141,11 @@ export function buildLinearPath(
   startTopicId: string,
   targetConceptId: string | null,
   language: KgLanguage,
+  targetConceptIds: string[] = targetConceptId ? [targetConceptId] : [],
 ): {
   startTopicId: string;
   targetConceptId: string | null;
+  targetConceptIds: string[];
   linear: boolean;
   path: LessonPlan[];
 } {
@@ -163,7 +168,7 @@ export function buildLinearPath(
       });
     }
   }
-  return { startTopicId, targetConceptId, linear: path.length > 1, path };
+  return { startTopicId, targetConceptId, targetConceptIds, linear: path.length > 1, path };
 }
 
 function subjectChips(list: LibrarySubject[]): SubjectCandidate[] {
@@ -274,20 +279,24 @@ export function finalizeStage2(decision: Stage2Decision | null, ctx: FinalizeCon
 
   // Stage 2 saw full topic lists only for recall candidates; a pick from the
   // wider library list can only start the subject from its root.
-  let mode: PositioningMode = inCandidates ? decision.mode : "subject_start";
+  let mode: PositioningMode = inCandidates || decision.mode === "goal_scoped" ? decision.mode : "subject_start";
   let startTopicId = decision.startTopicId;
   let targetConceptId: string | null = decision.targetConceptId ?? null;
+  let targetConceptIds = decision.targetConceptIds ?? [];
 
   const startTopic = getTopic(graphId, startTopicId);
   if (!startTopic) {
-    // hallucinated topic id → degrade to subject_start at root.
-    mode = "subject_start";
+    // A goal-scoped library pick may come from the subject-only list, where the
+    // model was instructed to emit "root". Keep the mode so the bounded scope
+    // selector can resolve real concept ids in a second grounded call.
+    if (mode !== "goal_scoped") mode = "subject_start";
     startTopicId = root.topicId;
   }
 
   if (mode === "subject_start") {
     startTopicId = root.topicId;
     targetConceptId = null;
+    targetConceptIds = [];
   } else if (mode === "directed") {
     const topic = getTopic(graphId, startTopicId)!;
     const earliest = earliestHitOrder(graphId, ctx.hitTopicIdsByGraph.get(graphId));
@@ -297,11 +306,23 @@ export function finalizeStage2(decision: Stage2Decision | null, ctx: FinalizeCon
       startTopicId = root.topicId;
     }
     targetConceptId = null;
+    const hitTopic =
+      mode === "directed"
+        ? [...getTopicGraph(graphId).topics]
+            .filter((candidate) => ctx.hitTopicIdsByGraph.get(graphId)?.has(candidate.topicId))
+            .sort((a, b) => a.defaultOrder - b.defaultOrder)[0]
+        : null;
+    targetConceptIds = hitTopic?.conceptIds.map((concept) => concept.conceptId) ?? [];
+  } else if (mode === "goal_scoped") {
+    const validConceptIds = new Set(getTopicGraph(graphId).topics.flatMap((topic) => topic.conceptIds.map((c) => c.conceptId)));
+    targetConceptIds = [...new Set(targetConceptIds.filter((id) => validConceptIds.has(id)))];
+    targetConceptId = targetConceptIds[0] ?? null;
   } else {
     // specific: keep targetConceptId only if it belongs to the start topic.
     const topic = getTopic(graphId, startTopicId)!;
     const owns = targetConceptId && topic.conceptIds.some((c) => c.conceptId === targetConceptId);
     targetConceptId = owns ? targetConceptId : null;
+    targetConceptIds = targetConceptId ? [targetConceptId] : [];
   }
 
   return {
@@ -310,7 +331,7 @@ export function finalizeStage2(decision: Stage2Decision | null, ctx: FinalizeCon
     params: ctx.params,
     mode,
     diagnostics: ctx.diagnostics,
-    ...buildLinearPath(graphId, startTopicId, targetConceptId, ctx.language),
+    ...buildLinearPath(graphId, startTopicId, targetConceptId, ctx.language, targetConceptIds),
   };
 }
 

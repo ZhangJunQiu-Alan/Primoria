@@ -1,7 +1,8 @@
+import { createHash } from "node:crypto";
 import { after } from "next/server";
 import { z } from "zod";
 import { enrichCourseOutlineDescriptions } from "@/lib/ai/course-generation/outline-enrichment";
-import { getCourseByGraph, saveCourse } from "@/lib/courses/store";
+import { getCourseByScopeKey, saveCourse } from "@/lib/courses/store";
 import { getTopicGraph, type TopicGraph } from "@/lib/knowledge-graph/topic-graph";
 import { buildConceptFrontierOutline } from "@/lib/knowledge-graph/concept-frontier";
 import { listConceptMasteryByOwner } from "@/lib/mastery/owner-store";
@@ -184,6 +185,32 @@ export type InitializeCourseOutlineResult = {
   isNewCourse: boolean;
 };
 
+export function buildCourseScopeKey(input: {
+  graphId: string | null;
+  startTopicId?: string | null;
+  targetConceptIds?: string[];
+  scope?: "canonical" | "goal";
+  learningGoal?: string | null;
+}) {
+  if (!input.graphId) return null;
+  const targets = [...new Set(input.targetConceptIds ?? [])].sort();
+  if (input.scope === "goal") {
+    const normalizedGoal = (input.learningGoal ?? "").normalize("NFKC").toLocaleLowerCase().replace(/\s+/g, " ").trim();
+    const digest = createHash("sha256")
+      .update(JSON.stringify({ graphId: input.graphId, normalizedGoal, targets }))
+      .digest("hex")
+      .slice(0, 20);
+    return `graph:${input.graphId}:goal:${digest}`;
+  }
+  if (targets.length > 0) return `graph:${input.graphId}:concepts:${targets.join(",")}`;
+  if (input.startTopicId) {
+    const graph = tryGetTopicGraph(input.graphId);
+    const root = graph ? [...graph.topics].sort((a, b) => a.defaultOrder - b.defaultOrder)[0] : null;
+    if (root && input.startTopicId !== root.topicId) return `graph:${input.graphId}:topic:${input.startTopicId}`;
+  }
+  return `graph:${input.graphId}:full`;
+}
+
 // Course-creation entry for the recoverable job path (engineering doc §12.1):
 // build/reuse the Course outline of planned lessons WITHOUT calling the model,
 // persist it, and return the first lesson to enqueue. No content is generated
@@ -196,16 +223,24 @@ export async function initializeCourseOutline(
   if (!ownerId) throw new Error("You must sign in to create a course.");
   const graphId = input.kgContext?.graphId ?? input.generatedGraph?.graphId ?? null;
   const targetTopicId = input.kgContext?.startTopic?.topicId ?? null;
+  const scopeKey = buildCourseScopeKey({
+    graphId,
+    startTopicId: targetTopicId,
+    targetConceptIds: input.kgContext?.targetConceptIds,
+    scope: input.kgContext?.scope,
+    learningGoal: input.kgContext?.learningGoal,
+  });
 
-  // Reuse the learner's existing Course for this subject KG (library or
-  // generated), otherwise build a fresh outline of planned (lazy) lessons.
-  let course = graphId ? await getCourseByGraph(ownerId, graphId) : undefined;
+  // Reuse the learner's existing Course for this exact learning scope,
+  // otherwise build a fresh outline of planned (lazy) lessons.
+  let course = scopeKey ? await getCourseByScopeKey(ownerId, scopeKey) : undefined;
   const isNewCourse = !course;
   if (!course) {
     const masteredConceptIds = graphId ? await loadMasteredConceptIds(ownerId, graphId) : new Set<string>();
     course = buildOutlineCourse(
       { topic: input.topic, kgContext: input.kgContext, language: input.language, generatedGraph: input.generatedGraph },
       graphId,
+      scopeKey,
       masteredConceptIds,
     );
   }
@@ -222,12 +257,12 @@ export async function initializeCourseOutline(
   try {
     await saveCourse(course, ownerId);
   } catch (error) {
-    if (!graphId || !isOwnerGraphUniqueViolation(error)) throw error;
+    if (!scopeKey || !isOwnerScopeUniqueViolation(error)) throw error;
 
-    // Concurrent cold-start requests can both miss getCourseByGraph(), build
-    // different random course ids, then race on courses_owner_graph_uidx. The
-    // winner already created the canonical owner+graph course; reuse it.
-    const existingCourse = await getCourseByGraph(ownerId, graphId);
+    // Concurrent cold-start requests can both miss getCourseByScopeKey(), build
+    // different random course ids, then race on courses_owner_scope_uidx. The
+    // winner already created the canonical owner+scope course; reuse it.
+    const existingCourse = await getCourseByScopeKey(ownerId, scopeKey);
     if (!existingCourse) throw error;
 
     const existingFirstLesson = firstLessonForTopic(existingCourse, targetTopicId);
@@ -275,7 +310,7 @@ async function loadMasteredConceptIds(ownerId: string, graphId: string): Promise
   }
 }
 
-function isOwnerGraphUniqueViolation(error: unknown) {
+function isOwnerScopeUniqueViolation(error: unknown) {
   if (!error || typeof error !== "object") return false;
   const record = error as Record<string, unknown>;
   const message = error instanceof Error ? error.message : "";
@@ -283,9 +318,9 @@ function isOwnerGraphUniqueViolation(error: unknown) {
   const constraint = typeof record.constraint === "string" ? record.constraint : "";
   return (
     record.code === "23505" &&
-    (constraint === "courses_owner_graph_uidx" ||
-      message.includes("courses_owner_graph_uidx") ||
-      detail.includes("courses_owner_graph_uidx"))
+    (constraint === "courses_owner_scope_uidx" ||
+      message.includes("courses_owner_scope_uidx") ||
+      detail.includes("courses_owner_scope_uidx"))
   );
 }
 
@@ -305,13 +340,20 @@ function conceptFrontierLessons(
   graph: TopicGraph,
   startTopicId: string | null,
   targetConceptId: string | null,
+  targetConceptIds: string[],
   masteredConceptIds: ReadonlySet<string>,
   language: string | null | undefined,
   now: number,
 ): Lesson[] {
-  let bundles = buildConceptFrontierOutline({ graph, startTopicId, targetConceptId, masteredConceptIds });
+  let bundles = buildConceptFrontierOutline({ graph, startTopicId, targetConceptId, targetConceptIds, masteredConceptIds });
   if (bundles.length === 0) {
-    bundles = buildConceptFrontierOutline({ graph, startTopicId, targetConceptId, masteredConceptIds: new Set() });
+    bundles = buildConceptFrontierOutline({
+      graph,
+      startTopicId,
+      targetConceptId,
+      targetConceptIds,
+      masteredConceptIds: new Set(),
+    });
   }
   return bundles.map((bundle, index) => {
     const names = bundle.concepts.map((concept) => lessonConceptName(concept, language));
@@ -370,6 +412,7 @@ function subjectFor(graphId: string | null, fallback: string): string {
 function buildOutlineCourse(
   input: GenerateCourseInput,
   graphId: string | null,
+  scopeKey: string | null,
   masteredConceptIds: ReadonlySet<string>,
 ): Course {
   const now = Date.now();
@@ -381,6 +424,7 @@ function buildOutlineCourse(
         graph,
         input.generatedGraph ? null : startTopic?.topicId ?? null,
         input.kgContext?.targetConceptId ?? null,
+        input.kgContext?.targetConceptIds ?? [],
         masteredConceptIds,
         input.language,
         now,
@@ -401,11 +445,16 @@ function buildOutlineCourse(
   return {
     id: input.courseId ?? randomId("crs"),
     title: subject,
-    topic: subject,
-    summary: graphId ? `${subject}的个性化学习路径` : input.topic,
+    topic: input.kgContext?.learningGoal ?? subject,
+    summary: input.kgContext?.learningGoal
+      ? `${subject}：围绕「${input.kgContext.learningGoal}」的定制学习路径`
+      : graphId
+        ? `${subject}的个性化学习路径`
+        : input.topic,
     estimatedMinutes: 0,
-    anchorConceptId: input.kgContext?.targetConceptId ?? null,
+    anchorConceptId: input.kgContext?.targetConceptIds?.[0] ?? input.kgContext?.targetConceptId ?? null,
     graphId,
+    scopeKey,
     language: input.language ?? null,
     lessons: finalLessons,
     archivedAt: null,

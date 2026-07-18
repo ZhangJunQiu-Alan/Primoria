@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockState = vi.hoisted(() => ({
-  getCourseByGraph: vi.fn(),
+  getCourseByScopeKey: vi.fn(),
   saveCourse: vi.fn(),
   enrichCourseOutlineDescriptions: vi.fn(),
   afterCallbacks: [] as Array<() => unknown>,
 }));
 
 vi.mock("@/lib/courses/store", () => ({
-  getCourseByGraph: mockState.getCourseByGraph,
+  getCourseByScopeKey: mockState.getCourseByScopeKey,
   saveCourse: mockState.saveCourse,
 }));
 
@@ -66,7 +66,7 @@ describe("initializeCourseOutline reuse persistence", () => {
 
   it("returns an unchanged reused course without aggregate persistence", async () => {
     const existing = reusedCourse();
-    mockState.getCourseByGraph.mockResolvedValue(existing);
+    mockState.getCourseByScopeKey.mockResolvedValue(existing);
     const { initializeCourseOutline } = await import("../src/lib/ai/deepagent/course-generator");
 
     const result = await initializeCourseOutline({
@@ -97,5 +97,26 @@ describe("initializeCourseOutline reuse persistence", () => {
     expect(result.isNewCourse).toBe(true);
     expect(mockState.saveCourse).toHaveBeenCalledTimes(1);
     expect(mockState.afterCallbacks).toHaveLength(1);
+  });
+
+  it("uses distinct stable identities for canonical and goal-scoped courses on the same KG", async () => {
+    const { buildCourseScopeKey } = await import("../src/lib/ai/deepagent/course-generator");
+    const canonical = buildCourseScopeKey({ graphId: "linear_algebra" });
+    const tailored = buildCourseScopeKey({
+      graphId: "linear_algebra",
+      targetConceptIds: ["c_mit1806_linear_transformations", "c_mit1806_matrix_ops"],
+      scope: "goal",
+      learningGoal: "linear algebra for deep learning",
+    });
+    const reordered = buildCourseScopeKey({
+      graphId: "linear_algebra",
+      targetConceptIds: ["c_mit1806_matrix_ops", "c_mit1806_linear_transformations"],
+      scope: "goal",
+      learningGoal: "linear algebra for deep learning",
+    });
+
+    expect(canonical).toBe("graph:linear_algebra:full");
+    expect(tailored).toBe(reordered);
+    expect(tailored).not.toBe(canonical);
   });
 });

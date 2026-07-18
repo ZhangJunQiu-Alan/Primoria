@@ -17,9 +17,9 @@ export async function getCourse(id: string, ownerId?: string | null): Promise<Co
   return getCourseFromDb(id, resolvedOwnerId);
 }
 
-/** The user's active Course instance for a subject KG, if one exists (uniqueness
- * enforced by courses_owner_graph_uidx where archived_at is null). Archived
- * courses are historical records and should not be reused for a clean restart. */
+/** The newest active Course instance for a subject KG, if one exists. Subject
+ * lookup is intentionally non-unique because exact reuse is keyed by scopeKey.
+ * Archived courses are historical records and are never returned here. */
 export async function getCourseByGraph(ownerId: string | null | undefined, graphId: string): Promise<Course | undefined> {
   const resolvedOwnerId = await resolveOwnerId(ownerId);
   if (!resolvedOwnerId) return undefined;
@@ -27,6 +27,24 @@ export async function getCourseByGraph(ownerId: string | null | undefined, graph
     .select()
     .from(coursesTable)
     .where(and(eq(coursesTable.ownerId, resolvedOwnerId), eq(coursesTable.graphId, graphId), isNull(coursesTable.archivedAt)))
+    .orderBy(desc(coursesTable.updatedAt))
+    .limit(1);
+  const row = rows[0];
+  if (!row) return undefined;
+  const lessonRows = await getDb().select().from(lessonsTable).where(eq(lessonsTable.courseId, row.id));
+  return rowToCourse(row, lessonRows);
+}
+
+export async function getCourseByScopeKey(
+  ownerId: string | null | undefined,
+  scopeKey: string,
+): Promise<Course | undefined> {
+  const resolvedOwnerId = await resolveOwnerId(ownerId);
+  if (!resolvedOwnerId) return undefined;
+  const rows = await getDb()
+    .select()
+    .from(coursesTable)
+    .where(and(eq(coursesTable.ownerId, resolvedOwnerId), eq(coursesTable.scopeKey, scopeKey), isNull(coursesTable.archivedAt)))
     .limit(1);
   const row = rows[0];
   if (!row) return undefined;
@@ -332,6 +350,7 @@ async function saveCourseToDb(course: Course, ownerId: string) {
           estimatedMinutes: courseRow.estimatedMinutes,
           anchorConceptId: courseRow.anchorConceptId,
           graphId: courseRow.graphId,
+          scopeKey: courseRow.scopeKey,
           language: courseRow.language,
           archivedAt: courseRow.archivedAt,
           version: courseRow.version,
@@ -416,6 +435,7 @@ export function courseToRow(course: Course, ownerId: string) {
     estimatedMinutes: course.estimatedMinutes,
     anchorConceptId: course.anchorConceptId ?? null,
     graphId: course.graphId ?? null,
+    scopeKey: course.scopeKey ?? null,
     language: course.language ?? null,
     archivedAt: course.archivedAt ? new Date(course.archivedAt) : null,
     version: course.version ?? 1,
@@ -455,6 +475,7 @@ function rowToCourse(row: typeof coursesTable.$inferSelect, lessonRows: (typeof 
     estimatedMinutes: Number(row.estimatedMinutes),
     anchorConceptId: row.anchorConceptId ?? null,
     graphId: row.graphId ?? null,
+    scopeKey: row.scopeKey ?? null,
     language: row.language ?? null,
     lessons: sortLessons(lessonRows.map(rowToLesson)),
     archivedAt: row.archivedAt?.getTime() ?? null,

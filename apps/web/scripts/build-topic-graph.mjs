@@ -16,6 +16,10 @@ import { REPO_ROOT, graphPath, listGraphIds, DEFAULT_GRAPH_ID } from "./kg-db-co
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = resolve(__dirname, "../src/lib/knowledge-graph/data");
+const CROSS_SUBJECT_SOURCE = resolve(
+  REPO_ROOT,
+  "data/knowledge-graphs/source/cross_subject_edges.json",
+);
 
 function buildOne(graphId) {
   const source = graphPath(graphId);
@@ -145,7 +149,40 @@ ${mapLines.join("\n")}
   process.stdout.write(`[build-topic-graph] barrel -> ${relative(REPO_ROOT, out)} (${ids.length} graphs)\n`);
 }
 
+function writeCrossSubjectEdges() {
+  const source = JSON.parse(readFileSync(CROSS_SUBJECT_SOURCE, "utf8"));
+  const artifact = {
+    contentVersion: source.content_version,
+    generatedFrom: "data/knowledge-graphs/source/cross_subject_edges.json",
+    note: "Approved cross-subject prerequisite edges used for deterministic learning-goal scope selection.",
+    edges: source.edges
+      .filter((edge) => edge.type === "prereq" && edge.review_status === "approved")
+      .map((edge) => ({
+        from: edge.from,
+        to: edge.to,
+        strength: edge.strength === "hard" ? "hard" : "soft",
+        fromGraphId: edge.from_graph.replace(/\.json$/, ""),
+        toGraphId: edge.to_graph.replace(/\.json$/, ""),
+      }))
+      .sort((a, b) =>
+        a.fromGraphId === b.fromGraphId
+          ? a.toGraphId === b.toGraphId
+            ? a.from === b.from
+              ? a.to.localeCompare(b.to)
+              : a.from.localeCompare(b.from)
+            : a.toGraphId.localeCompare(b.toGraphId)
+          : a.fromGraphId.localeCompare(b.fromGraphId),
+      ),
+  };
+  const out = resolve(OUT_DIR, "cross-subject-edges.generated.json");
+  writeFileSync(out, JSON.stringify(artifact, null, 2) + "\n");
+  process.stdout.write(
+    `[build-topic-graph] cross-subject edges -> ${relative(REPO_ROOT, out)} (${artifact.edges.length} edges)\n`,
+  );
+}
+
 const arg = process.argv[2] || DEFAULT_GRAPH_ID;
 const ids = arg === "all" ? listGraphIds() : [arg];
 for (const id of ids) buildOne(id);
+writeCrossSubjectEdges();
 writeBarrel();

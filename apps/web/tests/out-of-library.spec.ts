@@ -181,6 +181,79 @@ describe("positionLearningGoal out-of-library orchestration", () => {
   });
 });
 
+describe("positionLearningGoal goal-scoped orchestration", () => {
+  const query = "我想要学习面向深度学习的线性代数";
+  const result = searchResult({
+    graphId: "linear_algebra",
+    kind: "concept",
+    nodeId: "c_mit1806_matrix_ops",
+    name: "Matrix Operations and Inverses",
+    topicId: "t_mit1806_linear_equations_mit1806_matrix_ops",
+    topicName: "Matrix Operations",
+    similarity: 0.82,
+  });
+
+  it("turns a contextual subject goal into bounded concept targets", async () => {
+    const selectGoalScope = vi.fn(async () => ({
+      coverage: "full" as const,
+      targetConceptIds: ["c_mit1806_matrix_ops", "c_mit1806_linear_transformations"],
+      reason: "Only the matrix foundations needed for deep learning",
+    }));
+    const { result: positioned } = await positionLearningGoal(
+      { query, language: "zh" },
+      {
+        searchKnowledgeGraphNodes: vi.fn(async () => searchResponse(query, [result])),
+        runStage2Positioning: vi.fn(async () => ({
+          outcome: "positioned" as const,
+          graphId: "linear_algebra",
+          mode: "goal_scoped" as const,
+          startTopicId: "root",
+          targetConceptIds: [],
+        })),
+        selectGoalScope,
+      },
+    );
+
+    expect(positioned).toMatchObject({
+      branch: "positioned",
+      graphId: "linear_algebra",
+      mode: "goal_scoped",
+      targetConceptIds: ["c_mit1806_matrix_ops", "c_mit1806_linear_transformations"],
+      learningGoal: query,
+    });
+    const plan = planFromPositioning(positioned);
+    expect(plan).toMatchObject({
+      branch: "positioned",
+      courseContext: {
+        scope: "goal",
+        learningGoal: query,
+        targetConceptIds: ["c_mit1806_matrix_ops", "c_mit1806_linear_transformations"],
+      },
+    });
+    expect(selectGoalScope).not.toHaveBeenCalled();
+  });
+
+  it("routes partial coverage to generated-course creation instead of a full KG", async () => {
+    const uncoveredQuery = "我想要学习面向机器人运动学的线性代数";
+    const { result: positioned } = await positionLearningGoal(
+      { query: uncoveredQuery, language: "zh" },
+      {
+        searchKnowledgeGraphNodes: vi.fn(async () => searchResponse(uncoveredQuery, [result])),
+        runStage2Positioning: vi.fn(async () => ({
+          outcome: "positioned" as const,
+          graphId: "linear_algebra",
+          mode: "goal_scoped" as const,
+          startTopicId: "root",
+          targetConceptIds: [],
+        })),
+        selectGoalScope: vi.fn(async () => ({ coverage: "partial" as const, targetConceptIds: [], reason: "Missing outcome" })),
+      },
+    );
+
+    expect(positioned).toMatchObject({ branch: "out_of_library", freeformTopic: uncoveredQuery });
+  });
+});
+
 function rawGraphJson(topicCount: number, conceptsPerTopic = 2, codeAdapted?: boolean) {
   return JSON.stringify({
     subject: "Model Context Protocol",

@@ -27,7 +27,10 @@ The core loop is:
 
 Primoria is aimed at students and self-directed learners across all subjects.
 Library knowledge graphs provide structured paths where coverage exists;
-generated graphs and the freeform path cover out-of-library goals. Interactive
+goal-scoped paths select only the concepts needed for a stated purpose, while
+generated/hybrid graphs cover missing outcomes and out-of-library goals. A
+keyword match never silently turns partial coverage into a full canonical
+course. Interactive
 components are likewise cross-disciplinary: STEM simulations sit alongside
 timelines, source comparison, close reading, argument maps, language, music,
 geography, policy, art, and experiment design.
@@ -358,6 +361,12 @@ pnpm --filter @primoria/web test:interactive-routing
 
 # Run the same routing fixture against the configured real model
 pnpm --filter @primoria/web eval:interactive-routing
+
+# Validate the permanent learning-goal routing corpus and course-scope goldens
+pnpm test:learning-goal-routing
+
+# Run selected learning-goal cases against the configured real model
+pnpm eval:learning-goal-routing --case=<case-id>
 ```
 
 ## Tests and Verification
@@ -536,6 +545,19 @@ tool orchestration and structured interaction. In the main course-creation path,
 the agent expresses intent through `position_learning_goal`; the browser/web
 side performs KG positioning, creates the course, persists records, and enqueues
 generation jobs.
+
+Learning-goal routing distinguishes full-graph, topic/concept closure,
+goal-scoped, hybrid/generated, clarification, and fallback outcomes. A
+goal-scoped route carries multiple terminal `targetConceptIds`; the outline adds
+their hard prerequisites instead of teaching the remainder of the source KG.
+Approved cross-subject edges provide deterministic scope when available, while
+partial single-graph coverage fails closed into generated/hybrid creation.
+
+Courses persist a `scope_key` and active-course reuse is unique by owner plus
+exact scope, not merely owner plus graph. Canonical and goal-specific courses
+from the same KG can therefore coexist. The complete policy and its permanent
+1,252-case regression contract are documented in
+[`docs/knowledge-graph/learning-goal-routing.md`](docs/knowledge-graph/learning-goal-routing.md).
 
 The agent may read persisted course data for bounded tool behavior such as restoring a course card, but new state-changing behavior should be implemented through web-owned APIs, workers, or repositories rather than direct agent-side database mutation.
 

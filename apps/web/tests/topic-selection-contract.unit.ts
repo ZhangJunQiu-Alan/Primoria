@@ -36,6 +36,7 @@ function main() {
   assert(context.startTopic.topicId !== "mat_differentiation_adv", "selection never drifts to Advanced differentiation");
   assert(context.nextTopic?.topicId === "mat_differentiation_part2", "next topic follows the curriculum after the selected topic");
   assert(context.targetConceptId === targetConceptId, "valid target concept is preserved");
+  assert(context.targetConceptIds.length === 1 && context.targetConceptIds[0] === targetConceptId, "target array is normalized");
   assert(context.startTopic.concepts.length === selected.conceptIds.length, "concepts are resolved from the server graph");
 
   // Chinese locale resolves nameZh into the course context (topic + concepts)
@@ -49,6 +50,16 @@ function main() {
     () => resolveCourseContextFromTopicAnchor({ graphId, startTopicId: "mat_differentiation_adv_typo" }),
     "unknown topic is rejected",
   );
+  const goalContext = resolveCourseContextFromTopicAnchor({
+    graphId,
+    startTopicId: selectedTopicId,
+    targetConceptIds: [targetConceptId, "mat_indices_surds"],
+    scope: "goal",
+    learningGoal: "calculus for mechanics",
+  });
+  assert(goalContext.targetConceptIds.length === 2, "goal scope accepts validated targets across topics");
+  assert(goalContext.scope === "goal", "goal scope is preserved");
+  assert(goalContext.learningGoal === "calculus for mechanics", "learning goal is preserved");
   assertInvalidAnchor(
     () => resolveCourseContextFromTopicAnchor({ graphId, startTopicId: selectedTopicId, targetConceptId: "mat_integration_by_parts" }),
     "target concept outside the selected topic is rejected",

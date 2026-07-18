@@ -13,7 +13,7 @@ import type { PositioningMode, Stage2Decision } from "./positioning";
 // cheap subject router. Returns an untrusted Stage2Decision (validated by
 // finalizeStage2) or null on error/parse failure (caller degrades to subject_start).
 
-const MODES: PositioningMode[] = ["specific", "subject_start", "directed"];
+const MODES: PositioningMode[] = ["specific", "subject_start", "directed", "goal_scoped"];
 
 export type Stage2Graph = { graphId: string; subject: string };
 
@@ -33,20 +33,22 @@ const SYSTEM_PROMPT = [
   "You are given: (a) one or more candidate subjects with their full ordered topic lists, and (b) the complete list of every library subject (id + name only).",
   "Decide ONE of four outcomes and reply with ONLY JSON (no prose, no markdown):",
   "",
-  '1. {"outcome":"positioned","graphId":"<id>","mode":"specific|subject_start|directed","startTopicId":"<id>","targetConceptId":"<id|null>","reason":"<short>"}',
+  '1. {"outcome":"positioned","graphId":"<id>","mode":"specific|subject_start|directed|goal_scoped","startTopicId":"<id>","targetConceptId":"<id|null>","targetConceptIds":["<id>",...],"reason":"<short>"}',
   '   - subject_start: the goal is just the bare subject with no direction → start at the FIRST topic (smallest order).',
   '   - directed: the goal names a sub-area / a level / says "review" / "I already know the basics" → start at the UPSTREAM topic of that region (do NOT start at topic 1, do NOT skip past the named region).',
   '   - specific: the goal clearly targets one concept → start at that concept\'s topic and set targetConceptId to it.',
-  '   - If the right subject is in the library list but its topics are NOT shown, still return positioned with that graphId, mode "subject_start", and startTopicId "root".',
+  '   - goal_scoped: the learner names a primary subject but qualifies it by a purpose, application, audience, or desired outcome (for example "linear algebra for deep learning"). Select only concepts needed for that goal, not the whole subject. Set targetConceptIds when the graph is shown.',
+  '   - If a goal-scoped subject is in the library list but its topics are NOT shown, return goal_scoped with that graphId, startTopicId "root", and an empty targetConceptIds array; a second grounded selector will resolve the concepts.',
   '2. {"outcome":"clarify_subject","candidateGraphIds":["<id>",...],"message":"<warm message in the learner\'s language listing the subjects and asking which to start>"}',
   "   - use ONLY when several library subjects are genuinely plausible and none clearly wins.",
   '3. {"outcome":"out_of_library","topic":"<concise course topic in the learner\'s language>","message":"<one warm sentence, in the learner\'s language, saying a custom course will be designed for this topic>"}',
-  "   - use when the goal is a real, teachable topic that NO library subject covers (e.g. a technology, framework, or field absent from the list). Do NOT force such a goal into a subject that merely sounds related.",
+  "   - use when no ONE library subject covers every named learning outcome. A conjunction such as LLM architecture AND building AI applications is out of library when the library covers architecture but not application building. Do NOT force partial coverage into the closest subject.",
   '4. {"outcome":"fallback","message":"<ask for a more specific goal, in the learner\'s language>"}',
   "   - use only when the goal is too vague or is not a learning topic at all.",
   "",
   "Rules: graphId and every topic/concept id MUST be copied verbatim from the provided data — never invent ids.",
   "Match on meaning across languages, not surface words. Prefer a dedicated subject over a broad one that merely mentions the topic.",
+  "Distinguish a purpose from a second outcome: 'linear algebra for deep learning' is goal_scoped linear algebra; 'deep learning and production AI application engineering' is out_of_library when application engineering is absent.",
 ].join("\n");
 
 function buildGraphBlock(graphId: string, subject: string, language: KgLanguage): string {
@@ -123,6 +125,9 @@ function parseDecision(text: string, validGraphIds: Set<string>): Stage2Decision
       mode,
       startTopicId,
       targetConceptId: typeof obj.targetConceptId === "string" ? obj.targetConceptId : null,
+      targetConceptIds: Array.isArray(obj.targetConceptIds)
+        ? obj.targetConceptIds.filter((id): id is string => typeof id === "string")
+        : [],
       reason: typeof obj.reason === "string" ? obj.reason : undefined,
     };
   }

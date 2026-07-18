@@ -15,7 +15,7 @@ import {
 type GoalAnchorSummary = {
   graphSubject: string;
   topicName: string;
-  branch: "specific" | "subject_start" | "directed" | "generated";
+  branch: "specific" | "subject_start" | "directed" | "goal_scoped" | "generated";
 };
 
 type GoalClarify = {
@@ -157,6 +157,8 @@ function debugOnboardingResponse(
     goalGraphId: null,
     goalStartTopicId: null,
     goalTargetConceptId: null,
+    goalTargetConceptIds: [],
+    goalScope: null,
     goalSkippedAt: null,
     goalPositioningStatus: null,
     goalPositioningMessage: null,
@@ -194,6 +196,8 @@ function debugOnboardingResponse(
         goalGraphId: "data_structures_and_algorithms",
         goalStartTopicId: "arrays_and_strings",
         goalTargetConceptId: null,
+        goalTargetConceptIds: [],
+        goalScope: "canonical",
         goalSkippedAt: null,
         goalPositioningStatus: "positioned",
         goalPositioningMessage: null,
