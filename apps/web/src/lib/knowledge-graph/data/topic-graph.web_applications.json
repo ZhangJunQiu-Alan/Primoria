@@ -2,7 +2,7 @@
   "graphId": "web_applications",
   "subject": "Web Applications",
   "generatedFrom": "data/knowledge-graphs/source/web_applications.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -287,107 +287,128 @@
     {
       "from": "web_auth",
       "to": "web_csrf",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“跨站请求伪造（CSRF）”需要先掌握“认证与会话”的定义、表示或操作方法。"
     },
     {
       "from": "web_csrf",
       "to": "web_sql_injection",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“跨站请求伪造（CSRF）”为学习“SQL 注入”提供背景与解题基础。"
     },
     {
       "from": "web_css",
       "to": "web_javascript",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“CSS”为学习“JavaScript”提供背景与解题基础。"
     },
     {
       "from": "web_dom",
       "to": "web_react",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“React 组件”需要先掌握“DOM 操作”的定义、表示或操作方法。"
     },
     {
       "from": "web_dom",
       "to": "web_xss",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“跨站脚本攻击（XSS）”需要先掌握“DOM 操作”的定义、表示或操作方法。"
     },
     {
       "from": "web_express",
       "to": "web_rest",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“REST API”需要先掌握“Express 与路由”的定义、表示或操作方法。"
     },
     {
       "from": "web_html",
       "to": "web_css",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“CSS”需要先掌握“HTML”的定义、表示或操作方法。"
     },
     {
       "from": "web_http",
       "to": "web_client_server",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“客户端-服务器模型”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "from": "web_http",
       "to": "web_rest",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“REST API”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "from": "web_http",
       "to": "web_url_dns",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“HTTP 协议”为学习“URL 与 DNS”提供背景与解题基础。"
     },
     {
       "from": "web_javascript",
       "to": "web_dom",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“DOM 操作”需要先掌握“JavaScript”的定义、表示或操作方法。"
     },
     {
       "from": "web_javascript",
       "to": "web_node",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Node.js”需要先掌握“JavaScript”的定义、表示或操作方法。"
     },
     {
       "from": "web_node",
       "to": "web_express",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Express 与路由”需要先掌握“Node.js”的定义、表示或操作方法。"
     },
     {
       "from": "web_react",
       "to": "web_state_props",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“状态与属性”需要先掌握“React 组件”的定义、表示或操作方法。"
     },
     {
       "from": "web_relational",
       "to": "web_sql",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“SQL”需要先掌握“关系型数据库”的定义、表示或操作方法。"
     },
     {
       "from": "web_rest",
       "to": "web_auth",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“认证与会话”需要先掌握“REST API”的定义、表示或操作方法。"
     },
     {
       "from": "web_rest",
       "to": "web_nosql",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“REST API”为学习“NoSQL 与 MongoDB”提供背景与解题基础。"
     },
     {
       "from": "web_sql",
       "to": "web_nosql",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“SQL”为学习“NoSQL 与 MongoDB”提供背景与解题基础。"
     },
     {
       "from": "web_sql",
       "to": "web_sql_injection",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“SQL 注入”需要先掌握“SQL”的定义、表示或操作方法。"
     },
     {
       "from": "web_url_dns",
       "to": "web_client_server",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“URL 与 DNS”为学习“客户端-服务器模型”提供背景与解题基础。"
     },
     {
       "from": "web_xss",
       "to": "web_csrf",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“跨站脚本攻击（XSS）”为学习“跨站请求伪造（CSRF）”提供背景与解题基础。"
     }
   ]
 }

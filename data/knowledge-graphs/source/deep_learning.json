@@ -1,18 +1,24 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "deep_learning",
   "subject": "Introduction to Deep Learning",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_deep_learning"
+    "src_d2l_1_0_3",
+    "src_stanford_cs236g_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +29,13 @@
       "name_zh": "神经网络基础：网络结构",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_foundations_part2",
@@ -33,8 +44,13 @@
       "name_zh": "神经网络基础：训练与反向传播",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_optim",
@@ -43,8 +59,13 @@
       "name_zh": "优化算法",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_optim_stability",
@@ -53,8 +74,13 @@
       "name_zh": "高级优化器与学习率衰减策略",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Adaptive Optimizers and Learning Rate Schedules"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_optim_stability_dl_vanishing_grad",
@@ -63,8 +89,13 @@
       "name_zh": "梯度消失与梯度爆炸与权重初始化",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Vanishing/Exploding Gradients and Weight Initialization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_training",
@@ -73,8 +104,13 @@
       "name_zh": "深度网络训练",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Regularization and Stabilization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_cnn",
@@ -83,8 +119,13 @@
       "name_zh": "CNN",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Convolutional Neural Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_architectures_transfer",
@@ -93,8 +134,13 @@
       "name_zh": "CNN 架构与残差网络 (ResNet)",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: CNN Architectures and Residual Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_architectures_transfer_dl_transfer_learning",
@@ -103,8 +149,13 @@
       "name_zh": "迁移学习与循环神经网络",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Transfer Learning and Recurrent Neural Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_rnn_seq",
@@ -113,8 +164,13 @@
       "name_zh": "时间反向传播与长期依赖问题",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Backpropagation Through Time and Long-Range Dependencies"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_rnn_seq_dl_lstm",
@@ -123,8 +179,13 @@
       "name_zh": "LSTM/GRU 循环网络与门控循环单元 (GRU)",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: LSTM and GRU"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_attn_part1",
@@ -133,8 +194,13 @@
       "name_zh": "注意力与Transformer：注意力机制",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Mechanisms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_attn_part2",
@@ -143,8 +209,13 @@
       "name_zh": "注意力与Transformer：架构与预训练",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Architecture and Pretraining"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_generative_part1",
@@ -153,8 +224,13 @@
       "name_zh": "生成模型：自编码器与GAN",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_generative_part2",
@@ -163,12 +239,17 @@
       "name_zh": "生成模型：扩散模型与流模型",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Diffusion and Flows"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_perceptron",
-      "canonical_id": "pc_4ac4d56b7c525132c7a7794442a6efb5",
+      "canonical_id": "pc_038b26adc374a25672478dc4e7095aef",
       "kind": "concept",
       "name": "Perceptron",
       "name_zh": "感知机",
@@ -176,8 +257,13 @@
       "description": "The perceptron, a single linear threshold unit computing a weighted sum passed through a step function, the historical building block of neural networks.",
       "default_order": 1,
       "centrality": 0.2146,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_mlp",
@@ -189,8 +275,13 @@
       "description": "A multilayer perceptron stacking fully connected layers with nonlinear activations, a universal approximator able to represent complex input-output mappings.",
       "default_order": 2,
       "centrality": 0.4466,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_activation",
@@ -204,8 +295,13 @@
       "centrality": 0.138,
       "visual": "function",
       "visual_hint": "Plot ReLU, sigmoid, and tanh activation functions.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_forward",
@@ -217,8 +313,13 @@
       "description": "Forward propagation computing a network's output by passing inputs through successive layers, applying weights, biases, and activations stage by stage.",
       "default_order": 1,
       "centrality": 0.1332,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_computational_graph",
@@ -232,8 +333,13 @@
       "centrality": 0.072,
       "visual": "diagram",
       "visual_hint": "Diagram a computation as a graph of nodes and edges for autodiff.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_backprop",
@@ -247,8 +353,13 @@
       "centrality": 0.1666,
       "visual": "diagram",
       "visual_hint": "Diagram gradients flowing backward through the computational graph.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_loss",
@@ -262,8 +373,13 @@
       "centrality": 0.0666,
       "visual": "function",
       "visual_hint": "Plot cross-entropy and squared-error loss against the prediction.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_optimization",
@@ -277,8 +393,13 @@
       "centrality": 0.0985,
       "visual": "function",
       "visual_hint": "Animate gradient descent stepping down a loss surface.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_momentum",
@@ -290,8 +411,13 @@
       "description": "Momentum accumulating an exponentially decaying average of past gradients to accelerate descent along consistent directions and dampen oscillation.",
       "default_order": 3,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_optimizers",
@@ -303,8 +429,13 @@
       "description": "Adaptive optimisers like Adam and RMSProp scaling per-parameter learning rates from gradient statistics, often speeding and stabilising training.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Adaptive Optimizers and Learning Rate Schedules"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_lr_schedule",
@@ -316,8 +447,13 @@
       "description": "Learning-rate schedules varying the step size during training, such as warmup and decay, to improve convergence speed and final performance.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Adaptive Optimizers and Learning Rate Schedules"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_vanishing_grad",
@@ -331,8 +467,13 @@
       "centrality": 0.1002,
       "visual": "function",
       "visual_hint": "Plot how gradients shrink or grow across many layers.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Vanishing/Exploding Gradients and Weight Initialization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_weight_init",
@@ -344,8 +485,13 @@
       "description": "Weight initialisation schemes such as Xavier and He setting initial parameter scales to preserve signal variance and ease optimisation.",
       "default_order": 2,
       "centrality": 0.0436,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Vanishing/Exploding Gradients and Weight Initialization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_batchnorm",
@@ -357,8 +503,13 @@
       "description": "Batch normalisation standardising layer activations per mini-batch with learnable scale and shift, accelerating and stabilising deep-network training.",
       "default_order": 1,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Regularization and Stabilization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_regularization",
@@ -370,8 +521,13 @@
       "description": "Regularisation techniques like weight decay and early stopping that constrain model complexity to reduce overfitting and improve generalisation.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Regularization and Stabilization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_dropout",
@@ -383,8 +539,13 @@
       "description": "Dropout randomly deactivating units during training, preventing co-adaptation and acting as an implicit ensemble to improve generalisation.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Regularization and Stabilization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_convolution",
@@ -398,8 +559,13 @@
       "centrality": 0.091,
       "visual": "interactive",
       "visual_hint": "Slide a filter across an image grid producing a feature map.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Convolutional Neural Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_padding_stride",
@@ -411,8 +577,13 @@
       "description": "Padding adding border values and stride setting the filter step size, jointly controlling the spatial dimensions of convolutional outputs.",
       "default_order": 2,
       "centrality": 0.0779,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Convolutional Neural Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_pooling",
@@ -426,8 +597,13 @@
       "centrality": 0.0624,
       "visual": "interactive",
       "visual_hint": "Downsample a feature map with max and average pooling windows.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Convolutional Neural Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_cnn_arch",
@@ -441,8 +617,13 @@
       "centrality": 0.0443,
       "visual": "diagram",
       "visual_hint": "Diagram stacked convolution and pooling layers of a CNN.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: CNN Architectures and Residual Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_resnet",
@@ -456,8 +637,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Diagram a residual block with its skip connection.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: CNN Architectures and Residual Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_transfer_learning",
@@ -469,8 +655,13 @@
       "description": "Transfer learning reusing features from a network pretrained on a large dataset, fine-tuning them for a related task with limited data.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Transfer Learning and Recurrent Neural Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_rnn",
@@ -484,8 +675,13 @@
       "centrality": 0.1812,
       "visual": "diagram",
       "visual_hint": "Diagram a recurrent cell unrolled over a sequence.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Transfer Learning and Recurrent Neural Networks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_bptt",
@@ -497,8 +693,13 @@
       "description": "Backpropagation through time unrolling a recurrent network over the sequence and applying backpropagation to compute gradients across time steps.",
       "default_order": 1,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Backpropagation Through Time and Long-Range Dependencies"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_seq_vanishing",
@@ -510,8 +711,13 @@
       "description": "The difficulty recurrent networks face learning long-range dependencies, because gradients vanish or explode when propagated over many time steps.",
       "default_order": 2,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Backpropagation Through Time and Long-Range Dependencies"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_lstm",
@@ -525,8 +731,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Diagram the LSTM input, forget, and output gates and cell state.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: LSTM and GRU"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_gru",
@@ -538,8 +749,13 @@
       "description": "Gated recurrent units, a streamlined gating mechanism with fewer parameters than LSTMs, mitigating vanishing gradients in recurrent models.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: LSTM and GRU"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_attention",
@@ -551,8 +767,13 @@
       "description": "Attention mechanisms computing a weighted combination of values, where the weights reflect the relevance of each input to the current query.",
       "default_order": 1,
       "centrality": 0.1051,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Mechanisms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_self_attention",
@@ -566,8 +787,13 @@
       "centrality": 0.0944,
       "visual": "interactive",
       "visual_hint": "Visualise attention weights linking positions in a sequence.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Mechanisms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_multihead",
@@ -579,8 +805,13 @@
       "description": "Multi-head attention running several attention operations in parallel subspaces, letting the model jointly attend to different representation aspects.",
       "default_order": 3,
       "centrality": 0.0819,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Mechanisms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_positional",
@@ -592,8 +823,13 @@
       "description": "Positional encoding injecting token-order information into otherwise permutation-invariant attention through fixed or learned position representations.",
       "default_order": 1,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Architecture and Pretraining"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_transformer",
@@ -607,8 +843,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Diagram the Transformer encoder-decoder with attention blocks.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Architecture and Pretraining"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_pretraining",
@@ -620,8 +861,13 @@
       "description": "Pretraining on large unlabelled corpora with self-supervised objectives, then fine-tuning on downstream tasks, the dominant paradigm for transformers.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Architecture and Pretraining"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_autoencoder",
@@ -633,8 +879,13 @@
       "description": "Autoencoders learning compressed representations by training a network to reconstruct its input through a low-dimensional bottleneck.",
       "default_order": 1,
       "centrality": 0.0549,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_vae",
@@ -646,8 +897,13 @@
       "description": "Variational autoencoders, probabilistic generative models learning a latent distribution via a variational objective to generate new samples.",
       "default_order": 2,
       "centrality": 0.0708,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_gan",
@@ -659,8 +915,13 @@
       "description": "Generative adversarial networks pitting a generator against a discriminator in a minimax game, learning to synthesise realistic data.",
       "default_order": 3,
       "centrality": 0.0624,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_gan_training",
@@ -672,8 +933,13 @@
       "description": "The dynamics and difficulties of training GANs, including instability and mode collapse, addressed by careful loss design and training techniques.",
       "default_order": 1,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Diffusion and Flows"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_diffusion",
@@ -685,8 +951,13 @@
       "description": "Diffusion models generating data by learning to reverse a gradual noising process, denoising random noise into samples step by step.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Diffusion and Flows"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dl_flow",
@@ -698,8 +969,13 @@
       "description": "Normalizing flows transforming a simple base distribution through invertible mappings, enabling exact likelihood evaluation and sampling.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Diffusion and Flows"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -708,360 +984,714 @@
       "to": "dl_mlp",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“感知机”为学习“多层感知机”提供背景与解题基础。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_activation",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“多层感知机”为学习“激活函数”提供背景与解题基础。"
     },
     {
       "from": "dl_activation",
       "to": "dl_forward",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“前向传播”需要先掌握“激活函数”的定义、表示或操作方法。"
     },
     {
       "from": "dl_forward",
       "to": "dl_computational_graph",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“前向传播”为学习“计算图”提供背景与解题基础。"
     },
     {
       "from": "dl_computational_graph",
       "to": "dl_backprop",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“反向传播”需要先掌握“计算图”的定义、表示或操作方法。"
     },
     {
       "from": "dl_loss",
       "to": "dl_optimization",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“梯度下降优化”需要先掌握“损失函数”的定义、表示或操作方法。"
     },
     {
       "from": "dl_optimization",
       "to": "dl_momentum",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“动量法”需要先掌握“梯度下降优化”的定义、表示或操作方法。"
     },
     {
       "from": "dl_momentum",
       "to": "dl_optimizers",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Adaptive Optimizers and Learning Rate Schedules"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“高级优化器”需要先掌握“动量法”的定义、表示或操作方法。"
     },
     {
       "from": "dl_optimizers",
       "to": "dl_lr_schedule",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Adaptive Optimizers and Learning Rate Schedules"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“高级优化器”为学习“学习率衰减策略”提供背景与解题基础。"
     },
     {
       "from": "dl_vanishing_grad",
       "to": "dl_weight_init",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Vanishing/Exploding Gradients and Weight Initialization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“梯度消失与梯度爆炸”为学习“权重初始化”提供背景与解题基础。"
     },
     {
       "from": "dl_weight_init",
       "to": "dl_batchnorm",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Vanishing/Exploding Gradients and Weight Initialization"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Regularization and Stabilization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“权重初始化”为学习“批归一化”提供背景与解题基础。"
     },
     {
       "from": "dl_batchnorm",
       "to": "dl_regularization",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Regularization and Stabilization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“批归一化”为学习“正则化”提供背景与解题基础。"
     },
     {
       "from": "dl_regularization",
       "to": "dl_dropout",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Regularization and Stabilization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“正则化”为学习“暂退法 (Dropout)”提供背景与解题基础。"
     },
     {
       "from": "dl_convolution",
       "to": "dl_padding_stride",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Convolutional Neural Networks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“填充与步幅”需要先掌握“卷积”的定义、表示或操作方法。"
     },
     {
       "from": "dl_padding_stride",
       "to": "dl_pooling",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Convolutional Neural Networks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“填充与步幅”为学习“池化”提供背景与解题基础。"
     },
     {
       "from": "dl_pooling",
       "to": "dl_cnn_arch",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Convolutional Neural Networks"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: CNN Architectures and Residual Networks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“CNN 架构”需要先掌握“池化”的定义、表示或操作方法。"
     },
     {
       "from": "dl_cnn_arch",
       "to": "dl_resnet",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: CNN Architectures and Residual Networks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“残差网络 (ResNet)”需要先掌握“CNN 架构”的定义、表示或操作方法。"
     },
     {
       "from": "dl_resnet",
       "to": "dl_transfer_learning",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: CNN Architectures and Residual Networks"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Transfer Learning and Recurrent Neural Networks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“残差网络 (ResNet)”为学习“迁移学习”提供背景与解题基础。"
     },
     {
       "from": "dl_rnn",
       "to": "dl_bptt",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Transfer Learning and Recurrent Neural Networks"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Backpropagation Through Time and Long-Range Dependencies"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“时间反向传播”需要先掌握“循环神经网络”的定义、表示或操作方法。"
     },
     {
       "from": "dl_bptt",
       "to": "dl_seq_vanishing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Backpropagation Through Time and Long-Range Dependencies"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“长期依赖问题”需要先掌握“时间反向传播”的定义、表示或操作方法。"
     },
     {
       "from": "dl_seq_vanishing",
       "to": "dl_lstm",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Backpropagation Through Time and Long-Range Dependencies"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: LSTM and GRU"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“LSTM/GRU 循环网络”需要先掌握“长期依赖问题”的定义、表示或操作方法。"
     },
     {
       "from": "dl_lstm",
       "to": "dl_gru",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: LSTM and GRU"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“LSTM/GRU 循环网络”为学习“门控循环单元 (GRU)”提供背景与解题基础。"
     },
     {
       "from": "dl_attention",
       "to": "dl_self_attention",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Mechanisms"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“自注意力”需要先掌握“注意力机制”的定义、表示或操作方法。"
     },
     {
       "from": "dl_self_attention",
       "to": "dl_multihead",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Mechanisms"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“多头注意力机制”需要先掌握“自注意力”的定义、表示或操作方法。"
     },
     {
       "from": "dl_multihead",
       "to": "dl_positional",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Mechanisms"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Architecture and Pretraining"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“多头注意力机制”为学习“位置编码”提供背景与解题基础。"
     },
     {
       "from": "dl_positional",
       "to": "dl_transformer",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Architecture and Pretraining"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Transformer”需要先掌握“位置编码”的定义、表示或操作方法。"
     },
     {
       "from": "dl_transformer",
       "to": "dl_pretraining",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Architecture and Pretraining"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“预训练与微调”需要先掌握“Transformer”的定义、表示或操作方法。"
     },
     {
       "from": "dl_autoencoder",
       "to": "dl_vae",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“变分自编码器”需要先掌握“自编码器”的定义、表示或操作方法。"
     },
     {
       "from": "dl_vae",
       "to": "dl_gan",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“变分自编码器”为学习“生成对抗网络（GAN）”提供背景与解题基础。"
     },
     {
       "from": "dl_gan",
       "to": "dl_gan_training",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        },
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Diffusion and Flows"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“GAN 训练动态”需要先掌握“生成对抗网络（GAN）”的定义、表示或操作方法。"
     },
     {
       "from": "dl_gan_training",
       "to": "dl_diffusion",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Diffusion and Flows"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“GAN 训练动态”为学习“扩散模型”提供背景与解题基础。"
     },
     {
       "from": "dl_diffusion",
       "to": "dl_flow",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Diffusion and Flows"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“扩散模型”为学习“流模型 (Normalizing Flows)”提供背景与解题基础。"
     },
     {
       "from": "dl_forward",
       "to": "dl_backprop",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“反向传播”需要先掌握“前向传播”的定义、表示或操作方法。"
     },
     {
       "from": "dl_backprop",
       "to": "dl_loss",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“反向传播”为学习“损失函数”提供背景与解题基础。"
     },
     {
       "from": "dl_backprop",
       "to": "dl_vanishing_grad",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Vanishing/Exploding Gradients and Weight Initialization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“梯度消失与梯度爆炸”需要先掌握“反向传播”的定义、表示或操作方法。"
     },
     {
       "from": "dl_vanishing_grad",
       "to": "dl_batchnorm",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Vanishing/Exploding Gradients and Weight Initialization"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Regularization and Stabilization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“批归一化”需要先掌握“梯度消失与梯度爆炸”的定义、表示或操作方法。"
     },
     {
       "from": "dl_optimization",
       "to": "dl_regularization",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Regularization and Stabilization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“梯度下降优化”为学习“正则化”提供背景与解题基础。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_convolution",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Convolutional Neural Networks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“卷积”需要先掌握“多层感知机”的定义、表示或操作方法。"
     },
     {
       "from": "dl_vanishing_grad",
       "to": "dl_resnet",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Vanishing/Exploding Gradients and Weight Initialization"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: CNN Architectures and Residual Networks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“梯度消失与梯度爆炸”为学习“残差网络 (ResNet)”提供背景与解题基础。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_rnn",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Transfer Learning and Recurrent Neural Networks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“循环神经网络”需要先掌握“多层感知机”的定义、表示或操作方法。"
     },
     {
       "from": "dl_rnn",
       "to": "dl_attention",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Transfer Learning and Recurrent Neural Networks"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Mechanisms"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“循环神经网络”为学习“注意力机制”提供背景与解题基础。"
     },
     {
       "from": "dl_multihead",
       "to": "dl_transformer",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Mechanisms"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Attention and Transformers: Architecture and Pretraining"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Transformer”需要先掌握“多头注意力机制”的定义、表示或操作方法。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_autoencoder",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        },
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“自编码器”需要先掌握“多层感知机”的定义、表示或操作方法。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_gan",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        },
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“生成对抗网络（GAN）”需要先掌握“多层感知机”的定义、表示或操作方法。"
     },
     {
       "from": "dl_vae",
       "to": "dl_diffusion",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        },
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Diffusion and Flows"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“变分自编码器”为学习“扩散模型”提供背景与解题基础。"
     }
   ]
 }

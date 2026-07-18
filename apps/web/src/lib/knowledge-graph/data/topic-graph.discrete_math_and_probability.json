@@ -2,7 +2,7 @@
   "graphId": "discrete_math_and_probability",
   "subject": "Discrete Math and Probability Theory",
   "generatedFrom": "data/knowledge-graphs/source/discrete_math_and_probability.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -1031,327 +1031,392 @@
     {
       "from": "basic_counting_rules",
       "to": "combinations_permutations",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“组合与排列”需要先掌握“基础计数规则”的定义、表示或操作方法。"
     },
     {
       "from": "basic_counting_rules",
       "to": "inclusion_exclusion",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“容斥原理”需要先掌握“基础计数规则”的定义、表示或操作方法。"
     },
     {
       "from": "basic_counting_rules",
       "to": "probability_spaces",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“概率空间”需要先掌握“基础计数规则”的定义、表示或操作方法。"
     },
     {
       "from": "bijections_and_cardinality",
       "to": "cantors_diagonalization",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“康托尔对角线法”需要先掌握“双射与基数”的定义、表示或操作方法。"
     },
     {
       "from": "cantors_diagonalization",
       "to": "uncountability_of_reals",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“实数不可数性”需要先掌握“康托尔对角线法”的定义、表示或操作方法。"
     },
     {
       "from": "chebyshevs_inequality",
       "to": "weak_law_of_large_numbers",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“弱大数定律”需要先掌握“切比雪夫不等式”的定义、表示或操作方法。"
     },
     {
       "from": "combinations_permutations",
       "to": "combinatorial_proofs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“组合证明”需要先掌握“组合与排列”的定义、表示或操作方法。"
     },
     {
       "from": "combinations_permutations",
       "to": "stars_and_bars",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“星号与条形法”需要先掌握“组合与排列”的定义、表示或操作方法。"
     },
     {
       "from": "conditional_probability",
       "to": "bayes_rule",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“贝叶斯法则”需要先掌握“条件概率”的定义、表示或操作方法。"
     },
     {
       "from": "conditional_probability",
       "to": "event_independence",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“事件独立性”需要先掌握“条件概率”的定义、表示或操作方法。"
     },
     {
       "from": "conditional_probability",
       "to": "markov_chains_basics",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“马尔可夫链基础”需要先掌握“条件概率”的定义、表示或操作方法。"
     },
     {
       "from": "continuous_random_variables",
       "to": "probability_density_function",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“概率密度函数”需要先掌握“连续随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "direct_proofs",
       "to": "simple_induction",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“简单归纳”需要先掌握“直接证明”的定义、表示或操作方法。"
     },
     {
       "from": "discrete_random_variables",
       "to": "bernoulli_binomial_distributions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“伯努利与二项分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "discrete_random_variables",
       "to": "continuous_random_variables",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“连续随机变量”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "discrete_random_variables",
       "to": "expectation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“期望”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "discrete_random_variables",
       "to": "geometric_distribution",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“几何分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "discrete_random_variables",
       "to": "hypergeometric_distribution",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“离散随机变量”为学习“超几何分布”提供背景与解题基础。"
     },
     {
       "from": "discrete_random_variables",
       "to": "poisson_distribution",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“泊松分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "from": "euclids_algorithm",
       "to": "extended_euclid",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“扩展欧几里得”需要先掌握“欧几里得算法”的定义、表示或操作方法。"
     },
     {
       "from": "expectation",
       "to": "hitting_times",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“首达时间”需要先掌握“期望”的定义、表示或操作方法。"
     },
     {
       "from": "expectation",
       "to": "linearity_of_expectation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“期望的线性”需要先掌握“期望”的定义、表示或操作方法。"
     },
     {
       "from": "expectation",
       "to": "markovs_inequality",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“马尔可夫不等式”需要先掌握“期望”的定义、表示或操作方法。"
     },
     {
       "from": "expectation",
       "to": "variance_and_covariance",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“方差与协方差”需要先掌握“期望”的定义、表示或操作方法。"
     },
     {
       "from": "extended_euclid",
       "to": "chinese_remainder_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“中国剩余定理”需要先掌握“扩展欧几里得”的定义、表示或操作方法。"
     },
     {
       "from": "extended_euclid",
       "to": "fermats_little_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“费马小定理”需要先掌握“扩展欧几里得”的定义、表示或操作方法。"
     },
     {
       "from": "extended_euclid",
       "to": "polynomial_roots_and_degree",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“扩展欧几里得”为学习“多项式根与次数”提供背景与解题基础。"
     },
     {
       "from": "fermats_little_theorem",
       "to": "rsa_setup_and_encryption",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“RSA设置与加密”需要先掌握“费马小定理”的定义、表示或操作方法。"
     },
     {
       "from": "gale_shapley_algorithm",
       "to": "matching_optimality",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“匹配最优性”需要先掌握“Gale-Shapley算法”的定义、表示或操作方法。"
     },
     {
       "from": "graph_basics",
       "to": "eulerian_tours",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“欧拉回路”需要先掌握“图基础”的定义、表示或操作方法。"
     },
     {
       "from": "graph_basics",
       "to": "hypercubes",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“图基础”为学习“超立方体”提供背景与解题基础。"
     },
     {
       "from": "graph_basics",
       "to": "trees",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“树”需要先掌握“图基础”的定义、表示或操作方法。"
     },
     {
       "from": "markov_chains_basics",
       "to": "hitting_times",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“首达时间”需要先掌握“马尔可夫链基础”的定义、表示或操作方法。"
     },
     {
       "from": "markov_chains_basics",
       "to": "stationary_distributions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“平稳分布”需要先掌握“马尔可夫链基础”的定义、表示或操作方法。"
     },
     {
       "from": "markovs_inequality",
       "to": "chebyshevs_inequality",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“切比雪夫不等式”需要先掌握“马尔可夫不等式”的定义、表示或操作方法。"
     },
     {
       "from": "markovs_inequality",
       "to": "chernoff_bounds",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“马尔可夫不等式”为学习“Chernoff 不等式”提供背景与解题基础。"
     },
     {
       "from": "matching_optimality",
       "to": "matching_pessimality",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“匹配最差性”需要先掌握“匹配最优性”的定义、表示或操作方法。"
     },
     {
       "from": "normal_distribution",
       "to": "central_limit_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“中心极限定理”需要先掌握“正态分布”的定义、表示或操作方法。"
     },
     {
       "from": "polynomial_interpolation",
       "to": "error_correcting_codes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“纠错码”需要先掌握“多项式插值”的定义、表示或操作方法。"
     },
     {
       "from": "polynomial_interpolation",
       "to": "secret_sharing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“秘密分享”需要先掌握“多项式插值”的定义、表示或操作方法。"
     },
     {
       "from": "polynomial_roots_and_degree",
       "to": "polynomial_interpolation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“多项式插值”需要先掌握“多项式根与次数”的定义、表示或操作方法。"
     },
     {
       "from": "probability_density_function",
       "to": "cumulative_distribution_function",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“累积分布函数”需要先掌握“概率密度函数”的定义、表示或操作方法。"
     },
     {
       "from": "probability_density_function",
       "to": "normal_distribution",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“正态分布”需要先掌握“概率密度函数”的定义、表示或操作方法。"
     },
     {
       "from": "probability_density_function",
       "to": "uniform_exponential_distributions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“均匀与指数分布”需要先掌握“概率密度函数”的定义、表示或操作方法。"
     },
     {
       "from": "probability_spaces",
       "to": "conditional_probability",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“条件概率”需要先掌握“概率空间”的定义、表示或操作方法。"
     },
     {
       "from": "probability_spaces",
       "to": "discrete_random_variables",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“离散随机变量”需要先掌握“概率空间”的定义、表示或操作方法。"
     },
     {
       "from": "proof_by_contradiction",
       "to": "stable_matching_problem",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“反证法”为学习“稳定匹配问题”提供背景与解题基础。"
     },
     {
       "from": "proof_by_contradiction",
       "to": "the_halting_problem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“停机问题”需要先掌握“反证法”的定义、表示或操作方法。"
     },
     {
       "from": "propositional_logic",
       "to": "direct_proofs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“直接证明”需要先掌握“命题逻辑”的定义、表示或操作方法。"
     },
     {
       "from": "propositional_logic",
       "to": "proof_by_contradiction",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“反证法”需要先掌握“命题逻辑”的定义、表示或操作方法。"
     },
     {
       "from": "propositional_logic",
       "to": "proof_by_contraposition",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“逆否证明”需要先掌握“命题逻辑”的定义、表示或操作方法。"
     },
     {
       "from": "rsa_setup_and_encryption",
       "to": "digital_signatures",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“RSA设置与加密”为学习“数字签名”提供背景与解题基础。"
     },
     {
       "from": "rsa_setup_and_encryption",
       "to": "rsa_decryption_proof",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“RSA解密证明”需要先掌握“RSA设置与加密”的定义、表示或操作方法。"
     },
     {
       "from": "simple_induction",
       "to": "bijections_and_cardinality",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“简单归纳”为学习“双射与基数”提供背景与解题基础。"
     },
     {
       "from": "simple_induction",
       "to": "euclids_algorithm",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“欧几里得算法”需要先掌握“简单归纳”的定义、表示或操作方法。"
     },
     {
       "from": "simple_induction",
       "to": "graph_basics",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“图基础”需要先掌握“简单归纳”的定义、表示或操作方法。"
     },
     {
       "from": "simple_induction",
       "to": "strong_induction",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“强归纳”需要先掌握“简单归纳”的定义、表示或操作方法。"
     },
     {
       "from": "simple_induction",
       "to": "structural_induction",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“简单归纳”为学习“结构归纳”提供背景与解题基础。"
     },
     {
       "from": "stable_matching_problem",
       "to": "gale_shapley_algorithm",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Gale-Shapley算法”需要先掌握“稳定匹配问题”的定义、表示或操作方法。"
     },
     {
       "from": "stationary_distributions",
       "to": "page_rank_algorithm",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“平稳分布”为学习“PageRank 算法”提供背景与解题基础。"
     },
     {
       "from": "strong_induction",
       "to": "well_ordering_principle",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“良序原理”需要先掌握“强归纳”的定义、表示或操作方法。"
     },
     {
       "from": "the_halting_problem",
       "to": "undecidability",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“不可判定性”需要先掌握“停机问题”的定义、表示或操作方法。"
     },
     {
       "from": "trees",
       "to": "planar_graphs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“平面图”需要先掌握“树”的定义、表示或操作方法。"
     },
     {
       "from": "variance_and_covariance",
       "to": "chebyshevs_inequality",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“切比雪夫不等式”需要先掌握“方差与协方差”的定义、表示或操作方法。"
     },
     {
       "from": "weak_law_of_large_numbers",
       "to": "central_limit_theorem",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“弱大数定律”为学习“中心极限定理”提供背景与解题基础。"
     }
   ]
 }

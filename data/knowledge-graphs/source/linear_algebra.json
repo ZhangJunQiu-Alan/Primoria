@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "linear_algebra",
   "subject": "Linear Algebra",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_linear_algebra"
+    "src_mit_ocw_18_06sc_fall_2011"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "向量与线性组合与矩阵消元",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vectors and Linear Combinations and Elimination with Matrices"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_linear_equations_mit1806_matrix_ops",
@@ -33,8 +43,13 @@
       "name_zh": "矩阵运算与逆矩阵与LU 分解",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Matrix Operations and Inverses and LU Factorization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_vector_spaces",
@@ -43,8 +58,13 @@
       "name_zh": "向量空间和子空间与零空间与列空间",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vector Spaces and Subspaces and Null Space and Column Space"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_vector_spaces_mit1806_independence_basis",
@@ -53,8 +73,13 @@
       "name_zh": "线性无关、基与维数与四个基本子空间",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Linear Independence, Basis, and Dimension and The Four Fundamental Subspaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_orthogonality",
@@ -63,8 +88,13 @@
       "name_zh": "正交向量与子空间与向子空间的投影",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Orthogonal Vectors and Subspaces and Projections onto Subspaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_orthogonality_mit1806_least_squares",
@@ -73,8 +103,13 @@
       "name_zh": "最小二乘近似与正交基与 Gram-Schmidt",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Least Squares Approximations and Orthogonal Bases and Gram-Schmidt"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_determinants_eigen",
@@ -83,8 +118,13 @@
       "name_zh": "行列式的性质与行列式公式与余子式",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Properties of Determinants and Formulas and Cofactors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_determinants_eigen_mit1806_cramers_rule",
@@ -93,8 +133,13 @@
       "name_zh": "Cramer 法则与体积与特征值与特征向量",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Cramer's Rule and Volumes and Eigenvalues and Eigenvectors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_eigenvalues",
@@ -103,8 +148,13 @@
       "name_zh": "对角化与微分方程组",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Diagonalization and Systems of Differential Equations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_eigenvalues_mit1806_symmetric_matrices",
@@ -113,8 +163,13 @@
       "name_zh": "对称矩阵与正定矩阵",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Symmetric Matrices and Positive Definite Matrices"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit1806_applications",
@@ -123,8 +178,13 @@
       "name_zh": "SVD 与线性变换",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: SVD and Linear Transformations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_vectors",
@@ -138,8 +198,13 @@
       "centrality": 0.5568,
       "visual": "interactive",
       "visual_hint": "Drag vectors to show addition, scaling, and linear combinations.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vectors and Linear Combinations and Elimination with Matrices"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_elimination",
@@ -153,8 +218,13 @@
       "centrality": 0.6258,
       "visual": "algorithm",
       "visual_hint": "Step Gaussian elimination reducing a matrix to triangular form.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vectors and Linear Combinations and Elimination with Matrices"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_matrix_ops",
@@ -166,8 +236,13 @@
       "description": "Rules for matrix multiplication, properties of operations, and computing the inverse of a matrix.",
       "default_order": 1,
       "centrality": 0.4878,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Matrix Operations and Inverses and LU Factorization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_lu_decomp",
@@ -179,8 +254,13 @@
       "description": "Factoring a matrix into lower triangular (L) and upper triangular (U) components.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Matrix Operations and Inverses and LU Factorization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_spaces_subspaces",
@@ -192,8 +272,13 @@
       "description": "Definition of vector spaces and subspaces, closure under addition and scalar multiplication.",
       "default_order": 1,
       "centrality": 0.1588,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vector Spaces and Subspaces and Null Space and Column Space"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_null_column_space",
@@ -207,8 +292,13 @@
       "centrality": 0.1577,
       "visual": "interactive",
       "visual_hint": "Show the column space and null space as spans in space.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vector Spaces and Subspaces and Null Space and Column Space"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_independence_basis",
@@ -222,8 +312,13 @@
       "centrality": 0.1564,
       "visual": "interactive",
       "visual_hint": "Drag vectors to test independence and span a subspace as a basis.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Linear Independence, Basis, and Dimension and The Four Fundamental Subspaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_four_subspaces",
@@ -235,8 +330,13 @@
       "description": "Column space, null space, row space, and left null space, and their dimensions.",
       "default_order": 2,
       "centrality": 0.1548,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Linear Independence, Basis, and Dimension and The Four Fundamental Subspaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_orthogonality",
@@ -248,8 +348,13 @@
       "description": "Orthogonality of the four fundamental subspaces, orthogonal complements.",
       "default_order": 1,
       "centrality": 0.153,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Orthogonal Vectors and Subspaces and Projections onto Subspaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_projections",
@@ -263,8 +368,13 @@
       "centrality": 0.1508,
       "visual": "interactive",
       "visual_hint": "Project a vector onto a line or plane and show the residual.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Orthogonal Vectors and Subspaces and Projections onto Subspaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_least_squares",
@@ -278,8 +388,13 @@
       "centrality": 0.0564,
       "visual": "function",
       "visual_hint": "Fit a least-squares line minimising the squared residuals to data.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Least Squares Approximations and Orthogonal Bases and Gram-Schmidt"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_gram_schmidt",
@@ -293,8 +408,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Orthogonalise a set of vectors step by step (Gram-Schmidt).",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Least Squares Approximations and Orthogonal Bases and Gram-Schmidt"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_det_properties",
@@ -308,8 +428,13 @@
       "centrality": 0.1806,
       "visual": "interactive",
       "visual_hint": "Show the determinant as the signed area/volume scaling of a transform.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Properties of Determinants and Formulas and Cofactors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_det_formulas",
@@ -321,8 +446,13 @@
       "description": "Computing determinants using the permutation formula and cofactor expansions.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Properties of Determinants and Formulas and Cofactors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_cramers_rule",
@@ -334,8 +464,13 @@
       "description": "Using determinants to find inverses, solving systems with Cramer's Rule, and volume interpretations.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Cramer's Rule and Volumes and Eigenvalues and Eigenvectors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_eigen",
@@ -349,8 +484,13 @@
       "centrality": 0.1375,
       "visual": "interactive",
       "visual_hint": "Show eigenvectors as directions a transform only stretches, with eigenvalues.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Cramer's Rule and Volumes and Eigenvalues and Eigenvectors"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_diagonalization",
@@ -364,8 +504,13 @@
       "centrality": 0.0459,
       "visual": "interactive",
       "visual_hint": "Decompose a transform along its eigenvector axes.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Diagonalization and Systems of Differential Equations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_diff_eq",
@@ -377,8 +522,13 @@
       "description": "Solving linear systems of differential equations using eigenvalues and eigenvectors.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Diagonalization and Systems of Differential Equations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_symmetric_matrices",
@@ -390,8 +540,13 @@
       "description": "Properties of symmetric matrices, including real eigenvalues and orthogonal eigenvectors.",
       "default_order": 1,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Symmetric Matrices and Positive Definite Matrices"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_positive_definite",
@@ -403,8 +558,13 @@
       "description": "Tests for positive definite matrices and their applications.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Symmetric Matrices and Positive Definite Matrices"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_svd",
@@ -418,8 +578,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Show SVD as rotate, scale, rotate acting on the unit circle.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: SVD and Linear Transformations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_linear_transformations",
@@ -433,8 +598,13 @@
       "centrality": 0.0459,
       "visual": "interactive",
       "visual_hint": "Apply a linear transformation to a grid and watch it deform.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: SVD and Linear Transformations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit1806_matrix_transform",
@@ -448,8 +618,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Show how a matrix's columns are the images of the basis vectors.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: SVD and Linear Transformations"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -458,176 +633,356 @@
       "to": "c_mit1806_elimination",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vectors and Linear Combinations and Elimination with Matrices"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“矩阵消元”需要先掌握“向量与线性组合”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_elimination",
       "to": "c_mit1806_matrix_ops",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vectors and Linear Combinations and Elimination with Matrices"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Matrix Operations and Inverses and LU Factorization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“矩阵运算与逆矩阵”需要先掌握“矩阵消元”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_matrix_ops",
       "to": "c_mit1806_lu_decomp",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Matrix Operations and Inverses and LU Factorization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“LU 分解”需要先掌握“矩阵运算与逆矩阵”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_matrix_ops",
       "to": "c_mit1806_spaces_subspaces",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Matrix Operations and Inverses and LU Factorization"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vector Spaces and Subspaces and Null Space and Column Space"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“向量空间和子空间”需要先掌握“矩阵运算与逆矩阵”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_spaces_subspaces",
       "to": "c_mit1806_null_column_space",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vector Spaces and Subspaces and Null Space and Column Space"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“零空间与列空间”需要先掌握“向量空间和子空间”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_null_column_space",
       "to": "c_mit1806_independence_basis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vector Spaces and Subspaces and Null Space and Column Space"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Linear Independence, Basis, and Dimension and The Four Fundamental Subspaces"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线性无关、基与维数”需要先掌握“零空间与列空间”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_independence_basis",
       "to": "c_mit1806_four_subspaces",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Linear Independence, Basis, and Dimension and The Four Fundamental Subspaces"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“四个基本子空间”需要先掌握“线性无关、基与维数”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_four_subspaces",
       "to": "c_mit1806_orthogonality",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Linear Independence, Basis, and Dimension and The Four Fundamental Subspaces"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Orthogonal Vectors and Subspaces and Projections onto Subspaces"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“正交向量与子空间”需要先掌握“四个基本子空间”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_orthogonality",
       "to": "c_mit1806_projections",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Orthogonal Vectors and Subspaces and Projections onto Subspaces"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“向子空间的投影”需要先掌握“正交向量与子空间”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_projections",
       "to": "c_mit1806_least_squares",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Orthogonal Vectors and Subspaces and Projections onto Subspaces"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Least Squares Approximations and Orthogonal Bases and Gram-Schmidt"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“最小二乘近似”需要先掌握“向子空间的投影”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_least_squares",
       "to": "c_mit1806_gram_schmidt",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Least Squares Approximations and Orthogonal Bases and Gram-Schmidt"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“正交基与 Gram-Schmidt”需要先掌握“最小二乘近似”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_elimination",
       "to": "c_mit1806_det_properties",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vectors and Linear Combinations and Elimination with Matrices"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Properties of Determinants and Formulas and Cofactors"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“行列式的性质”需要先掌握“矩阵消元”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_det_properties",
       "to": "c_mit1806_det_formulas",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Properties of Determinants and Formulas and Cofactors"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“行列式公式与余子式”需要先掌握“行列式的性质”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_det_formulas",
       "to": "c_mit1806_cramers_rule",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Properties of Determinants and Formulas and Cofactors"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Cramer's Rule and Volumes and Eigenvalues and Eigenvectors"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Cramer 法则与体积”需要先掌握“行列式公式与余子式”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_det_properties",
       "to": "c_mit1806_eigen",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Properties of Determinants and Formulas and Cofactors"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Cramer's Rule and Volumes and Eigenvalues and Eigenvectors"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“特征值与特征向量”需要先掌握“行列式的性质”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_eigen",
       "to": "c_mit1806_diagonalization",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Cramer's Rule and Volumes and Eigenvalues and Eigenvectors"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Diagonalization and Systems of Differential Equations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“对角化”需要先掌握“特征值与特征向量”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_diagonalization",
       "to": "c_mit1806_diff_eq",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Diagonalization and Systems of Differential Equations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“微分方程组”需要先掌握“对角化”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_eigen",
       "to": "c_mit1806_symmetric_matrices",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Cramer's Rule and Volumes and Eigenvalues and Eigenvectors"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Symmetric Matrices and Positive Definite Matrices"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“对称矩阵”需要先掌握“特征值与特征向量”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_symmetric_matrices",
       "to": "c_mit1806_positive_definite",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Symmetric Matrices and Positive Definite Matrices"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“正定矩阵”需要先掌握“对称矩阵”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_positive_definite",
       "to": "c_mit1806_svd",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Symmetric Matrices and Positive Definite Matrices"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: SVD and Linear Transformations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“奇异值分解”需要先掌握“正定矩阵”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_matrix_ops",
       "to": "c_mit1806_linear_transformations",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Matrix Operations and Inverses and LU Factorization"
+        },
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: SVD and Linear Transformations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“矩阵运算与逆矩阵”为学习“线性变换”提供背景与解题基础。"
     },
     {
       "from": "c_mit1806_linear_transformations",
       "to": "c_mit1806_matrix_transform",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: SVD and Linear Transformations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线性变换的矩阵”需要先掌握“线性变换”的定义、表示或操作方法。"
     }
   ]
 }

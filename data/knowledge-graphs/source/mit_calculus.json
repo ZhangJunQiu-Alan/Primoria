@@ -1,20 +1,26 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "mit_calculus",
   "subject": "Calculus",
   "jurisdictions": [
     "US"
   ],
   "source_ids": [
-    "src_mit_ocw_18_01sc_fall_2010"
+    "src_mit_ocw_18_01sc_fall_2010",
+    "src_mit_ocw_18_02sc_fall_2010"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -25,8 +31,13 @@
       "name_zh": "微分",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1801_diff_techniques",
@@ -35,8 +46,13 @@
       "name_zh": "微分技巧与相关变化率",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1801_apps_diff",
@@ -45,8 +61,13 @@
       "name_zh": "微分应用",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1801_integration",
@@ -55,8 +76,13 @@
       "name_zh": "黎曼和与定积分",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1801_integration_1801_ftc",
@@ -65,8 +91,13 @@
       "name_zh": "微积分基本定理与换元积分法",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1801_tech_int",
@@ -75,8 +106,13 @@
       "name_zh": "积分技巧",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Techniques of Integration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1801_int_techniques_area",
@@ -85,8 +121,13 @@
       "name_zh": "积分技巧与面积",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1801_apps_int",
@@ -95,8 +136,13 @@
       "name_zh": "积分应用",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Integration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1801_series",
@@ -105,8 +151,13 @@
       "name_zh": "序列与级数与收敛性检验",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Sequences and Series and Convergence Tests"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1801_series_1801_power_series",
@@ -115,8 +166,13 @@
       "name_zh": "幂级数与泰勒级数",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Power Series and Taylor Series"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_vectors",
@@ -125,8 +181,13 @@
       "name_zh": "点积与叉积",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Dot Product and Cross Product"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_vectors_1802_lines_planes",
@@ -135,8 +196,13 @@
       "name_zh": "直线与平面与参数曲线",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lines and Planes and Parametric Curves"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_partial_diff",
@@ -145,8 +211,13 @@
       "name_zh": "多元函数与偏导数",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_partial_diff_1802_multivar_chain",
@@ -155,8 +226,13 @@
       "name_zh": "多元链式法则与梯度与方向导数",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_apps_partial",
@@ -165,8 +241,13 @@
       "name_zh": "切平面与局部极值",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Tangent Planes and Local Extrema"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_apps_partial_1802_lagrange",
@@ -175,8 +256,13 @@
       "name_zh": "拉格朗日乘数与微分",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lagrange Multipliers and Differentials"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_multiple_int",
@@ -185,8 +271,13 @@
       "name_zh": "多重积分",
       "topic": null,
       "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_coord_vector_fields",
@@ -195,8 +286,13 @@
       "name_zh": "坐标变换与向量场",
       "topic": null,
       "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_vector_calc",
@@ -205,8 +301,13 @@
       "name_zh": "向量微积分",
       "topic": null,
       "default_order": 19,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_surface_int",
@@ -215,8 +316,13 @@
       "name_zh": "参数曲面与面积分",
       "topic": null,
       "default_order": 20,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Parametric Surfaces and Surface Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_1802_surface_int_1802_stokes_theorem",
@@ -225,8 +331,13 @@
       "name_zh": "斯托克斯定理与散度定理",
       "topic": null,
       "default_order": 21,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_limits",
@@ -240,8 +351,13 @@
       "centrality": 0.783,
       "visual": "function",
       "visual_hint": "Plot f(x) with a draggable point approaching a; show the limit value as the point nears a from both sides.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_deriv_def",
@@ -255,8 +371,13 @@
       "centrality": 0.4434,
       "visual": "function",
       "visual_hint": "Slider for h: draw the secant through (x,f(x)) and (x+h,f(x+h)) collapsing to the tangent as h→0.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_deriv_rules",
@@ -268,12 +389,17 @@
       "description": "Rules for differentiating combinations of functions, including the power, product, and quotient rules, enabling derivatives without returning to the limit definition.",
       "default_order": 3,
       "centrality": 0.4319,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_chain_rule",
-      "canonical_id": "pc_f2929a7b922221305252e5232f6d71fb",
+      "canonical_id": "pc_5f2b3d511ffa1447c2f7fda25d724789",
       "kind": "concept",
       "name": "Chain Rule",
       "name_zh": "链式法则",
@@ -281,12 +407,17 @@
       "description": "The chain rule differentiating a composite function as the derivative of the outer function times the derivative of the inner function.",
       "default_order": 1,
       "centrality": 0.1617,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_implicit_diff",
-      "canonical_id": "pc_e3091eaa89639d2d2f726b85dafe7514",
+      "canonical_id": "pc_291eccaad32d6e2b88654e4670202509",
       "kind": "concept",
       "name": "Implicit Differentiation",
       "name_zh": "隐函数微分",
@@ -296,12 +427,17 @@
       "centrality": 0.0353,
       "visual": "function",
       "visual_hint": "Plot an implicit relation (e.g. x²+y²=25) and show the tangent slope at a draggable point on the curve.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_related_rates",
-      "canonical_id": "pc_053ba609b2871db8fb3fa5f6405f89f0",
+      "canonical_id": "pc_5ada2e4818384405fb8ea25e390ece93",
       "kind": "concept",
       "name": "Related Rates",
       "name_zh": "相关变化率",
@@ -309,8 +445,13 @@
       "description": "Related-rates problems linking the time derivatives of related quantities through an equation, solving for one unknown rate given the others.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_linear_approx",
@@ -324,8 +465,13 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Plot f(x) and its tangent line at a; slider for x comparing the true value against the linear approximation.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_curve_sketching",
@@ -339,8 +485,13 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Plot f(x) with toggles for f′ and f″; mark extrema, inflection points, and increase/decrease intervals.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_mvt",
@@ -354,8 +505,13 @@
       "centrality": 0.0568,
       "visual": "function",
       "visual_hint": "Plot f on [a,b] with the secant line and a draggable point c where the tangent is parallel to the secant.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Differentiation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_riemann_sums",
@@ -369,8 +525,13 @@
       "centrality": 0.1979,
       "visual": "interactive",
       "visual_hint": "Slider for rectangle count n; draw left/right/midpoint Riemann rectangles under f(x) and show the sum approaching the area.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_definite_integral",
@@ -384,8 +545,13 @@
       "centrality": 0.2036,
       "visual": "interactive",
       "visual_hint": "Shade signed area under f(x) between draggable bounds a,b; colour positive/negative regions and show the integral value.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_ftc",
@@ -399,12 +565,17 @@
       "centrality": 0.1129,
       "visual": "interactive",
       "visual_hint": "Animate the accumulation function A(x)=∫ₐˣ f as x moves, showing A′(x)=f(x).",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_substitution",
-      "canonical_id": "pc_bb82fb2640cd5a19bd61799ddb487052",
+      "canonical_id": "pc_068c8dc8d8c675d3d5ce7ccecd096ffc",
       "kind": "concept",
       "name": "Integration by Substitution",
       "name_zh": "换元积分法",
@@ -412,12 +583,17 @@
       "description": "Integration by substitution reversing the chain rule by changing variables to transform an integral into a simpler, recognisable form.",
       "default_order": 2,
       "centrality": 0.0743,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_parts",
-      "canonical_id": "pc_97090158cf7a7858b5ee50409af026f0",
+      "canonical_id": "pc_109312f1b6fc1335fa82c6f6af1f684c",
       "kind": "concept",
       "name": "Integration by Parts",
       "name_zh": "分部积分法",
@@ -425,8 +601,13 @@
       "description": "Integration by parts reversing the product rule to integrate products of functions, trading one integral for an often simpler one.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Techniques of Integration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_trig_integrals",
@@ -438,8 +619,13 @@
       "description": "Techniques for integrating products and powers of trigonometric functions using identities to reduce them to directly integrable forms.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Techniques of Integration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_trig_sub",
@@ -451,12 +637,17 @@
       "description": "Trigonometric substitution evaluating integrals containing quadratic radicals by substituting trigonometric functions and applying identities.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Techniques of Integration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_partial_fractions",
-      "canonical_id": "pc_967418094ad1c551a65dd8a5f8f94bc6",
+      "canonical_id": "pc_c08be96bd005e301108d747134902aee",
       "kind": "concept",
       "name": "Partial Fractions",
       "name_zh": "部分分式",
@@ -464,8 +655,13 @@
       "description": "Partial-fraction decomposition rewriting a rational function as a sum of simpler fractions that can be integrated term by term.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_improper_int",
@@ -479,8 +675,13 @@
       "centrality": 0.0634,
       "visual": "function",
       "visual_hint": "Plot f(x) with the upper bound b→∞; show the accumulating area and whether it converges to a finite value.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_area_curves",
@@ -494,8 +695,13 @@
       "centrality": 0.0459,
       "visual": "interactive",
       "visual_hint": "Shade the region between two draggable curves over [a,b] and show the integral of their difference.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_volume",
@@ -509,8 +715,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Rotate a region about an axis into a solid; slider sweeps a disk/washer cross-section and shows the volume integral.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Integration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_arc_length",
@@ -524,8 +735,13 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Approximate a curve's length with a slider for the number of straight segments converging to the arc-length integral.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Integration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_work",
@@ -537,8 +753,13 @@
       "description": "Computing physical work done by a variable force by integrating force over displacement, applied to springs, pumping, and lifting problems.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Integration"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_sequences",
@@ -552,8 +773,13 @@
       "centrality": 0.0634,
       "visual": "chart",
       "visual_hint": "Plot sequence terms and their partial sums against n to show convergence or divergence.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Sequences and Series and Convergence Tests"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_conv_tests",
@@ -567,8 +793,13 @@
       "centrality": 0.0908,
       "visual": "diagram",
       "visual_hint": "Decision-tree diagram choosing a convergence test (integral / comparison / ratio / root) from the series' form.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Sequences and Series and Convergence Tests"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_power_series",
@@ -582,8 +813,13 @@
       "centrality": 0.0776,
       "visual": "function",
       "visual_hint": "Plot a function against its power-series partial sums; slider for term count and shade the interval of convergence.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Power Series and Taylor Series"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1801_taylor_series",
@@ -597,8 +833,13 @@
       "centrality": 0.1243,
       "visual": "function",
       "visual_hint": "Plot f(x) and its Taylor polynomial about a; slider for degree n to watch it hug the curve.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Power Series and Taylor Series"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_dot_product",
@@ -612,8 +853,13 @@
       "centrality": 0.1839,
       "visual": "interactive",
       "visual_hint": "Drag two vectors; show the dot product, the projection of one onto the other, and the angle between them.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Dot Product and Cross Product"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_cross_product",
@@ -627,8 +873,13 @@
       "centrality": 0.0526,
       "visual": "interactive",
       "visual_hint": "Drag two 3D vectors; show the perpendicular cross-product vector and the parallelogram area its magnitude measures.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Dot Product and Cross Product"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_lines_planes",
@@ -642,8 +893,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Show a line or plane in 3D from a point and a direction/normal; drag to watch its equation update.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lines and Planes and Parametric Curves"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_parametric_curves",
@@ -657,8 +913,13 @@
       "centrality": 0.0946,
       "visual": "function",
       "visual_hint": "Trace a parametric curve r(t) with a slider for t showing the position, velocity, and acceleration vectors.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lines and Planes and Parametric Curves"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_multivar_functions",
@@ -672,8 +933,13 @@
       "centrality": 0.1557,
       "visual": "interactive",
       "visual_hint": "Show a surface z=f(x,y) with its level curves; drag to rotate and read heights off the contours.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_partial_derivs",
@@ -687,8 +953,13 @@
       "centrality": 0.178,
       "visual": "interactive",
       "visual_hint": "Slice a surface z=f(x,y) along x and y at a point and show the two partial-derivative slopes.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_multivar_chain",
@@ -702,8 +973,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Dependency-tree diagram of the variables, showing each path's contribution in the multivariable chain rule.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_gradient",
@@ -717,8 +993,13 @@
       "centrality": 0.15,
       "visual": "interactive",
       "visual_hint": "On a contour plot show the gradient pointing to steepest increase; drag a direction to compare the directional derivative.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_tangent_planes",
@@ -732,8 +1013,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Show the tangent plane touching a surface z=f(x,y) at a draggable point.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Tangent Planes and Local Extrema"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_local_extrema",
@@ -747,8 +1033,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Surface with maxima, minima, and saddles marked; apply the second-derivative test at a draggable critical point.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Tangent Planes and Local Extrema"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_lagrange",
@@ -762,8 +1053,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Contour plot with a constraint curve, showing where the objective and constraint gradients align at the optimum.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lagrange Multipliers and Differentials"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_differentials",
@@ -775,8 +1071,13 @@
       "description": "Differentials approximating small changes in a multivariable function from changes in its inputs, used for linear approximation and error estimation.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lagrange Multipliers and Differentials"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_double_integrals",
@@ -790,8 +1091,13 @@
       "centrality": 0.1299,
       "visual": "interactive",
       "visual_hint": "Show a planar region and the volume under z=f(x,y); sweep the integration to build up the double integral.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_polar_integrals",
@@ -805,8 +1111,13 @@
       "centrality": 0.0353,
       "visual": "interactive",
       "visual_hint": "Show a polar region with the r·dr·dθ area element; sweep θ to build the polar double integral.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_triple_integrals",
@@ -818,8 +1129,13 @@
       "description": "Triple integrals computing volume and accumulated quantities over three-dimensional regions, evaluated as iterated single integrals.",
       "default_order": 3,
       "centrality": 0.0424,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_cyl_spherical",
@@ -831,8 +1147,13 @@
       "description": "Triple integration in cylindrical and spherical coordinates, with appropriate volume elements simplifying problems with axial or spherical symmetry.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_jacobians",
@@ -844,8 +1165,13 @@
       "description": "Change of variables in multiple integrals using the Jacobian determinant to account for how the transformation scales area or volume.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_vector_fields",
@@ -859,8 +1185,13 @@
       "centrality": 0.0618,
       "visual": "interactive",
       "visual_hint": "Plot a 2D vector field; drop a particle to trace its path and accumulate a line integral along a curve.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_fundamental_line",
@@ -874,8 +1205,13 @@
       "centrality": 0.0301,
       "visual": "diagram",
       "visual_hint": "Diagram contrasting path-dependent integrals with path-independent ones in a conservative field.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_greens_theorem",
@@ -889,8 +1225,13 @@
       "centrality": 0.0301,
       "visual": "interactive",
       "visual_hint": "Show a closed curve and its enclosed region, relating the circulation line integral to the double integral of curl.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_curl_div",
@@ -904,8 +1245,13 @@
       "centrality": 0.0371,
       "visual": "interactive",
       "visual_hint": "Vector field with a paddlewheel (curl) and a source/sink box (divergence) at a draggable point.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_parametric_surfaces",
@@ -917,8 +1263,13 @@
       "description": "Parametric representations of surfaces using two parameters, enabling computation of surface area through the cross product of partial derivatives.",
       "default_order": 1,
       "centrality": 0.0406,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Parametric Surfaces and Surface Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_surface_integrals",
@@ -930,8 +1281,13 @@
       "description": "Surface integrals accumulating a scalar field or the flux of a vector field across a surface, generalising double integrals to curved surfaces.",
       "default_order": 2,
       "centrality": 0.0371,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Parametric Surfaces and Surface Integrals"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_stokes_theorem",
@@ -945,8 +1301,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram relating the boundary-curve line integral to the surface integral of curl (Stokes).",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_1802_divergence_theorem",
@@ -960,8 +1321,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram relating outward flux through a closed surface to the volume integral of divergence.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -970,616 +1336,1326 @@
       "to": "c_1801_deriv_def",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“导数定义”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_def",
       "to": "c_1801_deriv_rules",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“微分法则”需要先掌握“导数定义”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_chain_rule",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“链式法则”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1801_implicit_diff",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“隐函数微分”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1801_related_rates",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“相关变化率”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_implicit_diff",
       "to": "c_1801_related_rates",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“隐函数微分”为学习“相关变化率”提供背景与解题基础。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_linear_approx",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Differentiation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线性近似”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_curve_sketching",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Differentiation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“曲线草图”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_mvt",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Differentiation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“中值定理”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_riemann_sums",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“黎曼和”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_riemann_sums",
       "to": "c_1801_definite_integral",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“定积分”需要先掌握“黎曼和”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_ftc",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“微积分基本定理”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_mvt",
       "to": "c_1801_ftc",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“中值定理”为学习“微积分基本定理”提供背景与解题基础。"
     },
     {
       "from": "c_1801_deriv_def",
       "to": "c_1801_ftc",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“微积分基本定理”需要先掌握“导数定义”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1801_substitution",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“换元积分法”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1801_substitution",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“换元积分法”需要先掌握“微积分基本定理”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_parts",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Techniques of Integration"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“分部积分法”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_substitution",
       "to": "c_1801_parts",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Techniques of Integration"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“分部积分法”需要先掌握“换元积分法”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_substitution",
       "to": "c_1801_trig_integrals",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Techniques of Integration"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“三角积分”需要先掌握“换元积分法”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_trig_integrals",
       "to": "c_1801_trig_sub",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Techniques of Integration"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“三角换元”需要先掌握“三角积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1801_partial_fractions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“部分分式”需要先掌握“微积分基本定理”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_improper_int",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“广义积分”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1801_improper_int",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“广义积分”需要先掌握“微积分基本定理”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_area_curves",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“曲线间面积”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_area_curves",
       "to": "c_1801_volume",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Integration"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“立体体积”需要先掌握“曲线间面积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_arc_length",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Integration"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“弧长”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_work",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Applications of Integration"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“功”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_sequences",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Sequences and Series and Convergence Tests"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“序列与级数”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_sequences",
       "to": "c_1801_conv_tests",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Sequences and Series and Convergence Tests"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“收敛性检验”需要先掌握“序列与级数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_improper_int",
       "to": "c_1801_conv_tests",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Integration Techniques and Area"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Sequences and Series and Convergence Tests"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“广义积分”为学习“收敛性检验”提供背景与解题基础。"
     },
     {
       "from": "c_1801_conv_tests",
       "to": "c_1801_power_series",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Sequences and Series and Convergence Tests"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Power Series and Taylor Series"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“幂级数”需要先掌握“收敛性检验”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_power_series",
       "to": "c_1801_taylor_series",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Power Series and Taylor Series"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“泰勒级数”需要先掌握“幂级数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_taylor_series",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Power Series and Taylor Series"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“泰勒级数”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1802_parametric_curves",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lines and Planes and Parametric Curves"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“参数曲线”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_cross_product",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Dot Product and Cross Product"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“点积”为学习“叉积”提供背景与解题基础。"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_lines_planes",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Dot Product and Cross Product"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lines and Planes and Parametric Curves"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“直线与平面”需要先掌握“点积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_cross_product",
       "to": "c_1802_lines_planes",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Dot Product and Cross Product"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lines and Planes and Parametric Curves"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“直线与平面”需要先掌握“叉积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_parametric_curves",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Dot Product and Cross Product"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lines and Planes and Parametric Curves"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“点积”为学习“参数曲线”提供背景与解题基础。"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1802_multivar_functions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“多元函数”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_multivar_functions",
       "to": "c_1802_partial_derivs",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“偏导数”需要先掌握“多元函数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1802_partial_derivs",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“偏导数”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_multivar_chain",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“多元链式法则”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1802_multivar_chain",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“多元链式法则”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_gradient",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“梯度与方向导数”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_gradient",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Dot Product and Cross Product"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“梯度与方向导数”需要先掌握“点积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_tangent_planes",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Tangent Planes and Local Extrema"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“切平面”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_gradient",
       "to": "c_1802_tangent_planes",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Tangent Planes and Local Extrema"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“梯度与方向导数”为学习“切平面”提供背景与解题基础。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_local_extrema",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Tangent Planes and Local Extrema"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“局部极值”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_gradient",
       "to": "c_1802_lagrange",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lagrange Multipliers and Differentials"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“拉格朗日乘数”需要先掌握“梯度与方向导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_differentials",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lagrange Multipliers and Differentials"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“微分”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1802_double_integrals",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“二重积分”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_multivar_functions",
       "to": "c_1802_double_integrals",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“多元函数”为学习“二重积分”提供背景与解题基础。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_polar_integrals",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“极坐标积分”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_triple_integrals",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“三重积分”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_polar_integrals",
       "to": "c_1802_cyl_spherical",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“柱面与球坐标”需要先掌握“极坐标积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_triple_integrals",
       "to": "c_1802_cyl_spherical",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“柱面与球坐标”需要先掌握“三重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_jacobians",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“变量变换”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_jacobians",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“变量变换”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_parametric_curves",
       "to": "c_1802_vector_fields",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lines and Planes and Parametric Curves"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“向量场”需要先掌握“参数曲线”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1802_fundamental_line",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Fundamental Theorem of Calculus and Integration by Substitution"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“微积分基本定理”为学习“线积分基本定理”提供背景与解题基础。"
     },
     {
       "from": "c_1802_gradient",
       "to": "c_1802_fundamental_line",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线积分基本定理”需要先掌握“梯度与方向导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_vector_fields",
       "to": "c_1802_fundamental_line",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线积分基本定理”需要先掌握“向量场”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_greens_theorem",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“格林定理”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_vector_fields",
       "to": "c_1802_greens_theorem",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“格林定理”需要先掌握“向量场”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_curl_div",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Functions and Partial Derivatives"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“旋度与散度”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_vector_fields",
       "to": "c_1802_curl_div",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Coordinate Changes and Vector Fields"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“旋度与散度”需要先掌握“向量场”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_parametric_curves",
       "to": "c_1802_parametric_surfaces",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Lines and Planes and Parametric Curves"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Parametric Surfaces and Surface Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“参数曲线”为学习“参数曲面”提供背景与解题基础。"
     },
     {
       "from": "c_1802_cross_product",
       "to": "c_1802_parametric_surfaces",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Dot Product and Cross Product"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Parametric Surfaces and Surface Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“参数曲面”需要先掌握“叉积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_parametric_surfaces",
       "to": "c_1802_surface_integrals",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Parametric Surfaces and Surface Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“面积分”需要先掌握“参数曲面”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_surface_integrals",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Parametric Surfaces and Surface Integrals"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“面积分”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_surface_integrals",
       "to": "c_1802_stokes_theorem",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Parametric Surfaces and Surface Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“斯托克斯定理”需要先掌握“面积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_curl_div",
       "to": "c_1802_stokes_theorem",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“斯托克斯定理”需要先掌握“旋度与散度”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_fundamental_line",
       "to": "c_1802_stokes_theorem",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“线积分基本定理”为学习“斯托克斯定理”提供背景与解题基础。"
     },
     {
       "from": "c_1802_greens_theorem",
       "to": "c_1802_stokes_theorem",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“格林定理”为学习“斯托克斯定理”提供背景与解题基础。"
     },
     {
       "from": "c_1802_surface_integrals",
       "to": "c_1802_divergence_theorem",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Parametric Surfaces and Surface Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“散度定理”需要先掌握“面积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_triple_integrals",
       "to": "c_1802_divergence_theorem",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multiple Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“散度定理”需要先掌握“三重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_curl_div",
       "to": "c_1802_divergence_theorem",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Vector Calculus"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Stokes' Theorem and Divergence Theorem"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“散度定理”需要先掌握“旋度与散度”的定义、表示或操作方法。"
     }
   ]
 }

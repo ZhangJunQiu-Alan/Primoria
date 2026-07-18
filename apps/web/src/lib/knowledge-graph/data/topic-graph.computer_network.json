@@ -2,7 +2,7 @@
   "graphId": "computer_network",
   "subject": "Computer Networking",
   "generatedFrom": "data/knowledge-graphs/source/computer_network.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -328,132 +328,158 @@
     {
       "from": "net_dns",
       "to": "net_app_protocols",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“DNS”为学习“其他应用层协议”提供背景与解题基础。"
     },
     {
       "from": "net_ethernet",
       "to": "net_switching",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“交换”需要先掌握“以太网”的定义、表示或操作方法。"
     },
     {
       "from": "net_flow_control",
       "to": "net_congestion",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“拥塞控制”需要先掌握“流量控制”的定义、表示或操作方法。"
     },
     {
       "from": "net_forwarding",
       "to": "net_routing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“路由算法”需要先掌握“转发与路由器”的定义、表示或操作方法。"
     },
     {
       "from": "net_http",
       "to": "net_dns",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“HTTP”为学习“DNS”提供背景与解题基础。"
     },
     {
       "from": "net_ip_addressing",
       "to": "net_forwarding",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“转发与路由器”需要先掌握“IP寻址”的定义、表示或操作方法。"
     },
     {
       "from": "net_ip_addressing",
       "to": "net_ipv4_ipv6",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“IPv4与IPv6”需要先掌握“IP寻址”的定义、表示或操作方法。"
     },
     {
       "from": "net_ip_addressing",
       "to": "net_transport_services",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“传输层服务”需要先掌握“IP寻址”的定义、表示或操作方法。"
     },
     {
       "from": "net_ipv4_ipv6",
       "to": "net_forwarding",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“IPv4与IPv6”为学习“转发与路由器”提供背景与解题基础。"
     },
     {
       "from": "net_layering",
       "to": "net_encapsulation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“封装”需要先掌握“网络分层”的定义、表示或操作方法。"
     },
     {
       "from": "net_layering",
       "to": "net_osi",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“OSI模型”需要先掌握“网络分层”的定义、表示或操作方法。"
     },
     {
       "from": "net_layering",
       "to": "net_tcpip",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“TCP/IP模型”需要先掌握“网络分层”的定义、表示或操作方法。"
     },
     {
       "from": "net_link_services",
       "to": "net_ip_addressing",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“链路层服务”为学习“IP寻址”提供背景与解题基础。"
     },
     {
       "from": "net_link_services",
       "to": "net_mac",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“MAC地址”需要先掌握“链路层服务”的定义、表示或操作方法。"
     },
     {
       "from": "net_mac",
       "to": "net_ethernet",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“以太网”需要先掌握“MAC地址”的定义、表示或操作方法。"
     },
     {
       "from": "net_osi",
       "to": "net_tcpip",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“OSI模型”为学习“TCP/IP模型”提供背景与解题基础。"
     },
     {
       "from": "net_rdt",
       "to": "net_flow_control",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“流量控制”需要先掌握“可靠数据传输”的定义、表示或操作方法。"
     },
     {
       "from": "net_tcp",
       "to": "net_app_protocols",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“TCP”为学习“其他应用层协议”提供背景与解题基础。"
     },
     {
       "from": "net_tcp",
       "to": "net_http",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“HTTP”需要先掌握“TCP”的定义、表示或操作方法。"
     },
     {
       "from": "net_tcp",
       "to": "net_rdt",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“可靠数据传输”需要先掌握“TCP”的定义、表示或操作方法。"
     },
     {
       "from": "net_tcpip",
       "to": "net_encapsulation",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“TCP/IP模型”为学习“封装”提供背景与解题基础。"
     },
     {
       "from": "net_tcpip",
       "to": "net_ip_addressing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“IP寻址”需要先掌握“TCP/IP模型”的定义、表示或操作方法。"
     },
     {
       "from": "net_transport_services",
       "to": "net_tcp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“TCP”需要先掌握“传输层服务”的定义、表示或操作方法。"
     },
     {
       "from": "net_transport_services",
       "to": "net_udp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“UDP”需要先掌握“传输层服务”的定义、表示或操作方法。"
     },
     {
       "from": "net_udp",
       "to": "net_dns",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“DNS”需要先掌握“UDP”的定义、表示或操作方法。"
     },
     {
       "from": "net_udp",
       "to": "net_tcp",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“UDP”为学习“TCP”提供背景与解题基础。"
     }
   ]
 }

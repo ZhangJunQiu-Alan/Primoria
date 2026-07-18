@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "sicp_cs61a",
   "subject": "Structure and Interpretation of Computer Programs (CS61A)",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_sicp_cs61a"
+    "src_berkeley_cs61a_summer_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "表达式与语句与控制结构",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_intro_pure_func",
@@ -33,8 +43,13 @@
       "name_zh": "纯函数与副作用函数与环境图",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Pure vs Non-Pure Functions and Environment Diagrams"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_hof",
@@ -43,8 +58,13 @@
       "name_zh": "高阶函数",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_func_data_processing",
@@ -53,8 +73,13 @@
       "name_zh": "柯里化与装饰器",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Currying and Decorators"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_func_data_processing_seq",
@@ -63,8 +88,13 @@
       "name_zh": "序列与切片与列表推导式",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Sequences and Slicing and List Comprehensions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_data",
@@ -73,8 +103,13 @@
       "name_zh": "数据抽象与序列",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_recursion",
@@ -83,8 +118,13 @@
       "name_zh": "递归与树递归",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Recursion and Tree Recursion"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_recursion_tree_abs",
@@ -93,8 +133,13 @@
       "name_zh": "树数据抽象与树遍历",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tree Data Abstraction and Tree Traversal"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_mut_oop",
@@ -103,8 +148,13 @@
       "name_zh": "可变性与面向对象编程",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_mut_oop_inherit_comp",
@@ -113,8 +163,13 @@
       "name_zh": "继承与组合、类与实例属性与字符串表示",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Inheritance and Composition, Class and Instance Attributes, and String Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_adv_data",
@@ -123,8 +178,13 @@
       "name_zh": "链表与可变树",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Linked Lists and Mutable Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_adv_data_iterators",
@@ -133,8 +193,13 @@
       "name_zh": "迭代器与生成器",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Iterators and Generators"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_scheme",
@@ -143,8 +208,13 @@
       "name_zh": "Scheme 语法与Scheme 列表与序对",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Scheme Syntax and Scheme Lists and Pairs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_scheme_tail_calls",
@@ -153,8 +223,13 @@
       "name_zh": "尾调用与优化与宏",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tail Calls and Optimization and Macros"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_interp",
@@ -163,8 +238,13 @@
       "name_zh": "词法分析与解析与求值过程",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Lexical Analysis and Parsing and Evaluation Process"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_interp_apply",
@@ -173,8 +253,13 @@
       "name_zh": "应用过程与异常",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Application Process and Exceptions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_declarative",
@@ -183,8 +268,13 @@
       "name_zh": "正则表达式与BNF 上下文无关文法",
       "topic": null,
       "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Regular Expressions and BNF Context-Free Grammars"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_declarative_sql_queries",
@@ -193,8 +283,13 @@
       "name_zh": "SQL 表与查询与SQL 连接与聚合",
       "topic": null,
       "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: SQL Tables and Queries and SQL Joins and Aggregation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "expr_stmt",
@@ -206,8 +301,13 @@
       "description": "The distinction between expressions that evaluate to values and statements that perform actions, including assignment that binds names to values in a frame.",
       "default_order": 1,
       "centrality": 0.786,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "control",
@@ -219,8 +319,13 @@
       "description": "Conditional statements and loops that direct which code executes and how often, controlling a program's flow based on boolean tests.",
       "default_order": 2,
       "centrality": 0.0913,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pure_func",
@@ -232,8 +337,13 @@
       "description": "Pure functions that depend only on their arguments and return values without side effects, contrasted with non-pure functions that alter state or perform I/O.",
       "default_order": 1,
       "centrality": 0.1498,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Pure vs Non-Pure Functions and Environment Diagrams"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "env_diag",
@@ -247,8 +357,13 @@
       "centrality": 0.1471,
       "visual": "diagram",
       "visual_hint": "Diagram execution frames, variable bindings, and parent-environment links.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Pure vs Non-Pure Functions and Environment Diagrams"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "func_arg",
@@ -260,8 +375,13 @@
       "description": "Treating functions as first-class values by passing them as arguments, enabling higher-order functions that abstract over computational patterns.",
       "default_order": 1,
       "centrality": 0.1439,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "func_ret",
@@ -273,8 +393,13 @@
       "description": "Returning functions from other functions, creating closures that capture enclosing variables to build configurable, stateful behaviour.",
       "default_order": 2,
       "centrality": 0.0848,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "lambda",
@@ -286,8 +411,13 @@
       "description": "Anonymous function expressions created with lambda, producing function values inline without binding them to a name.",
       "default_order": 3,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "currying",
@@ -299,8 +429,13 @@
       "description": "Transforming a multi-argument function into a chain of single-argument functions, each returning another function until all arguments are supplied.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Currying and Decorators"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "decorators",
@@ -312,8 +447,13 @@
       "description": "Higher-order functions applied with @ syntax that wrap another function to extend or modify its behaviour without changing its source.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Currying and Decorators"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "seq",
@@ -325,12 +465,17 @@
       "description": "Ordered collections such as lists and strings supporting indexing and slicing to extract individual elements and subsequences by position.",
       "default_order": 1,
       "centrality": 0.6472,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Sequences and Slicing and List Comprehensions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "list_comp",
-      "canonical_id": "pc_a533b9e69b9b341de441de120c5dd7c7",
+      "canonical_id": "pc_53b74d887875e65f1b101a6ec4c64b5c",
       "kind": "concept",
       "name": "List Comprehensions",
       "name_zh": "列表推导式",
@@ -338,8 +483,13 @@
       "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Sequences and Slicing and List Comprehensions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "data_abs",
@@ -351,8 +501,13 @@
       "description": "Separating how data is used from how it is represented by defining constructors and selectors, isolating clients from representation changes.",
       "default_order": 1,
       "centrality": 0.3292,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "dict",
@@ -364,8 +519,13 @@
       "description": "A mutable mapping from unique keys to values supporting efficient lookup, insertion, and deletion by key rather than by position.",
       "default_order": 2,
       "centrality": 0.1891,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "box_pointer",
@@ -379,12 +539,17 @@
       "centrality": 0.1891,
       "visual": "diagram",
       "visual_hint": "Box-and-pointer diagram of lists and pairs as boxes holding pointers.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "recursion",
-      "canonical_id": "pc_3d5dc10768df0b601d8ef58a3971fbb4",
+      "canonical_id": "pc_ffbd24b1208266d5151223c8fcf43282",
       "kind": "concept",
       "name": "Recursion",
       "name_zh": "递归",
@@ -394,8 +559,13 @@
       "centrality": 0.1105,
       "visual": "algorithm",
       "visual_hint": "Step through recursive calls accumulating and unwinding on the call stack.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Recursion and Tree Recursion"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "tree_recur",
@@ -409,8 +579,13 @@
       "centrality": 0.0737,
       "visual": "algorithm",
       "visual_hint": "Draw the branching recursive calls as a recursion tree.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Recursion and Tree Recursion"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "tree_abs",
@@ -422,8 +597,13 @@
       "description": "Representing tree structures using constructor and selector functions, hiding the underlying representation behind a data abstraction.",
       "default_order": 1,
       "centrality": 0.1151,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tree Data Abstraction and Tree Traversal"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "tree_trav",
@@ -437,8 +617,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Animate visiting tree nodes in pre-order, in-order, and post-order.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tree Data Abstraction and Tree Traversal"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mutability",
@@ -450,12 +635,17 @@
       "description": "The property of objects whose state can change after creation, introducing aliasing where multiple names refer to the same mutable object.",
       "default_order": 1,
       "centrality": 0.3866,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "oop",
-      "canonical_id": "pc_686b508d38906d53f40416fd520fe62b",
+      "canonical_id": "pc_1b4e5a90172024de46045002ae8c80cf",
       "kind": "concept",
       "name": "Object-Oriented Programming",
       "name_zh": "面向对象编程",
@@ -463,8 +653,13 @@
       "description": "A paradigm organising programs around objects that bundle state and behaviour, defined by classes with attributes and methods.",
       "default_order": 2,
       "centrality": 0.4028,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "inherit_comp",
@@ -476,8 +671,13 @@
       "description": "Two reuse mechanisms: inheritance deriving subclasses that specialise a base class, and composition assembling objects from other objects.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Inheritance and Composition, Class and Instance Attributes, and String Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "class_attr",
@@ -489,8 +689,13 @@
       "description": "The difference between class attributes shared by all instances of a class and instance attributes stored separately on each object.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Inheritance and Composition, Class and Instance Attributes, and String Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "string_rep",
@@ -502,12 +707,17 @@
       "description": "Defining how objects display through __str__ for readable output and __repr__ for unambiguous, often reconstructable representations.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Inheritance and Composition, Class and Instance Attributes, and String Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "linked_lists",
-      "canonical_id": "pc_a5524799d8afaf0212874c01094d6f65",
+      "canonical_id": "pc_b9e1b092531d5a8cabd6adc046b49059",
       "kind": "concept",
       "name": "Linked Lists",
       "name_zh": "链表",
@@ -517,8 +727,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Box-and-pointer chain of nodes linked by next references.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Linked Lists and Mutable Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "mut_trees",
@@ -530,8 +745,13 @@
       "description": "Tree structures whose nodes can be modified in place, allowing branches and values to change after the tree is constructed.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Linked Lists and Mutable Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "iterators",
@@ -543,8 +763,13 @@
       "description": "Objects implementing the iterator protocol with __iter__ and __next__, producing elements one at a time and raising StopIteration when exhausted.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Iterators and Generators"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "generators",
@@ -556,8 +781,13 @@
       "description": "Functions using yield to lazily produce a sequence of values on demand, suspending and resuming their state between successive calls.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Iterators and Generators"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "scheme_syntax",
@@ -569,8 +799,13 @@
       "description": "Scheme's parenthesised prefix notation, where every expression is an atom or a list whose first element names the operator or special form.",
       "default_order": 1,
       "centrality": 0.0864,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Scheme Syntax and Scheme Lists and Pairs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "scheme_lists",
@@ -582,8 +817,13 @@
       "description": "Scheme's fundamental pairs built with cons and accessed by car and cdr, composed to form lists and other recursive structures.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Scheme Syntax and Scheme Lists and Pairs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "tail_calls",
@@ -595,8 +835,13 @@
       "description": "Calls in tail position whose results are returned directly, letting interpreters reuse stack frames so recursion runs in constant space.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tail Calls and Optimization and Macros"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "macros",
@@ -608,8 +853,13 @@
       "description": "Scheme macros that transform unevaluated source expressions into new code before evaluation, extending the language with new syntactic forms.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tail Calls and Optimization and Macros"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "parsing",
@@ -621,8 +871,13 @@
       "description": "Converting program text into structured form by lexical analysis into tokens followed by parsing into an abstract syntax tree.",
       "default_order": 1,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Lexical Analysis and Parsing and Evaluation Process"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "eval",
@@ -634,8 +889,13 @@
       "description": "The interpreter step that evaluates an expression in an environment, recursively reducing it to a value according to evaluation rules.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Lexical Analysis and Parsing and Evaluation Process"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "apply",
@@ -647,12 +907,17 @@
       "description": "The interpreter step that applies a procedure to evaluated arguments by binding parameters in a new frame and evaluating the body.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Application Process and Exceptions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "exceptions",
-      "canonical_id": "pc_15115642e6932bf3ca41a482937692ad",
+      "canonical_id": "pc_8dab11c0374fd5cac3b9c36296a00ab8",
       "kind": "concept",
       "name": "Exceptions",
       "name_zh": "异常",
@@ -660,8 +925,13 @@
       "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Application Process and Exceptions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "regex",
@@ -673,8 +943,13 @@
       "description": "A notation describing text patterns used to search, match, and extract substrings using character classes, quantifiers, and grouping.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Regular Expressions and BNF Context-Free Grammars"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bnf",
@@ -686,8 +961,13 @@
       "description": "Backus-Naur Form, a notation for context-free grammars that specifies a language's syntax through production rules over terminals and non-terminals.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Regular Expressions and BNF Context-Free Grammars"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "sql_queries",
@@ -699,8 +979,13 @@
       "description": "Declarative SQL queries that select, filter, and order rows from tables to retrieve data without specifying procedural steps.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: SQL Tables and Queries and SQL Joins and Aggregation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "sql_joins",
@@ -712,8 +997,13 @@
       "description": "Combining rows from multiple tables on related columns and summarising groups with aggregate functions such as count, sum, and average.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: SQL Tables and Queries and SQL Joins and Aggregation"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -722,360 +1012,758 @@
       "strength": "hard",
       "from": "expr_stmt",
       "to": "control",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“控制结构”需要先掌握“表达式与语句”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "pure_func",
       "to": "env_diag",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Pure vs Non-Pure Functions and Environment Diagrams"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“纯函数与副作用函数”为学习“环境图”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "env_diag",
       "to": "func_arg",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Pure vs Non-Pure Functions and Environment Diagrams"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“函数作参数”需要先掌握“环境图”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "func_arg",
       "to": "func_ret",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“函数作返回值”需要先掌握“函数作参数”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "func_ret",
       "to": "lambda",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Lambda 表达式”需要先掌握“函数作返回值”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "lambda",
       "to": "currying",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Currying and Decorators"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“Lambda 表达式”为学习“柯里化”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "func_ret",
       "to": "decorators",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Currying and Decorators"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“装饰器”需要先掌握“函数作返回值”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "control",
       "to": "recursion",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Recursion and Tree Recursion"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“递归”需要先掌握“控制结构”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "func_arg",
       "to": "recursion",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Higher-Order Functions"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Recursion and Tree Recursion"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“函数作参数”为学习“递归”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "recursion",
       "to": "tree_recur",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Recursion and Tree Recursion"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“树递归”需要先掌握“递归”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "expr_stmt",
       "to": "seq",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Sequences and Slicing and List Comprehensions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“序列与切片”需要先掌握“表达式与语句”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "seq",
       "to": "list_comp",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Sequences and Slicing and List Comprehensions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“列表推导式”需要先掌握“序列与切片”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "seq",
       "to": "data_abs",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Sequences and Slicing and List Comprehensions"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“数据抽象”需要先掌握“序列与切片”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "seq",
       "to": "dict",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Sequences and Slicing and List Comprehensions"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“序列与切片”为学习“字典”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "seq",
       "to": "box_pointer",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Sequences and Slicing and List Comprehensions"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“箱指针图”需要先掌握“序列与切片”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "data_abs",
       "to": "tree_abs",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tree Data Abstraction and Tree Traversal"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“树数据抽象”需要先掌握“数据抽象”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "tree_recur",
       "to": "tree_abs",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Recursion and Tree Recursion"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tree Data Abstraction and Tree Traversal"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“树数据抽象”需要先掌握“树递归”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "tree_abs",
       "to": "tree_trav",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tree Data Abstraction and Tree Traversal"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“树遍历”需要先掌握“树数据抽象”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "box_pointer",
       "to": "mutability",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“可变性”需要先掌握“箱指针图”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "dict",
       "to": "mutability",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Data Abstraction and Sequences"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“字典”为学习“可变性”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "mutability",
       "to": "oop",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“面向对象编程”需要先掌握“可变性”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "oop",
       "to": "inherit_comp",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Inheritance and Composition, Class and Instance Attributes, and String Representation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“继承与组合”需要先掌握“面向对象编程”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "oop",
       "to": "class_attr",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Inheritance and Composition, Class and Instance Attributes, and String Representation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“类与实例属性”需要先掌握“面向对象编程”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "oop",
       "to": "string_rep",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Inheritance and Composition, Class and Instance Attributes, and String Representation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“面向对象编程”为学习“字符串表示”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "mutability",
       "to": "linked_lists",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Linked Lists and Mutable Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“链表”需要先掌握“可变性”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "oop",
       "to": "linked_lists",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Linked Lists and Mutable Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“链表”需要先掌握“面向对象编程”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "linked_lists",
       "to": "mut_trees",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Linked Lists and Mutable Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“可变树”需要先掌握“链表”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "tree_abs",
       "to": "mut_trees",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tree Data Abstraction and Tree Traversal"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Linked Lists and Mutable Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“可变树”需要先掌握“树数据抽象”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "control",
       "to": "iterators",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Iterators and Generators"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“迭代器”需要先掌握“控制结构”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "oop",
       "to": "iterators",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Iterators and Generators"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“迭代器”需要先掌握“面向对象编程”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "iterators",
       "to": "generators",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Iterators and Generators"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“生成器”需要先掌握“迭代器”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "expr_stmt",
       "to": "scheme_syntax",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Scheme Syntax and Scheme Lists and Pairs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Scheme 语法”需要先掌握“表达式与语句”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "linked_lists",
       "to": "scheme_lists",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Linked Lists and Mutable Trees"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Scheme Syntax and Scheme Lists and Pairs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“链表”为学习“Scheme 列表与序对”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "scheme_syntax",
       "to": "scheme_lists",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Scheme Syntax and Scheme Lists and Pairs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Scheme 列表与序对”需要先掌握“Scheme 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "recursion",
       "to": "tail_calls",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Recursion and Tree Recursion"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tail Calls and Optimization and Macros"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“尾调用与优化”需要先掌握“递归”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "scheme_syntax",
       "to": "tail_calls",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Scheme Syntax and Scheme Lists and Pairs"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tail Calls and Optimization and Macros"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“尾调用与优化”需要先掌握“Scheme 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "scheme_syntax",
       "to": "macros",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Scheme Syntax and Scheme Lists and Pairs"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tail Calls and Optimization and Macros"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“宏”需要先掌握“Scheme 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "tree_abs",
       "to": "parsing",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tree Data Abstraction and Tree Traversal"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Lexical Analysis and Parsing and Evaluation Process"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“树数据抽象”为学习“词法分析与解析”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "parsing",
       "to": "eval",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Lexical Analysis and Parsing and Evaluation Process"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“求值过程”需要先掌握“词法分析与解析”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "eval",
       "to": "apply",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Lexical Analysis and Parsing and Evaluation Process"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Application Process and Exceptions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“应用过程”需要先掌握“求值过程”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "scheme_syntax",
       "to": "eval",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Scheme Syntax and Scheme Lists and Pairs"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Lexical Analysis and Parsing and Evaluation Process"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“求值过程”需要先掌握“Scheme 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "expr_stmt",
       "to": "regex",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Regular Expressions and BNF Context-Free Grammars"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“表达式与语句”为学习“正则表达式”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "tree_abs",
       "to": "bnf",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Tree Data Abstraction and Tree Traversal"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Regular Expressions and BNF Context-Free Grammars"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“树数据抽象”为学习“BNF 上下文无关文法”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "expr_stmt",
       "to": "sql_queries",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Expressions and Statements and Control Structures"
+        },
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: SQL Tables and Queries and SQL Joins and Aggregation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“表达式与语句”为学习“SQL 表与查询”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "sql_queries",
       "to": "sql_joins",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: SQL Tables and Queries and SQL Joins and Aggregation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“SQL 连接与聚合”需要先掌握“SQL 表与查询”的定义、表示或操作方法。"
     }
   ]
 }

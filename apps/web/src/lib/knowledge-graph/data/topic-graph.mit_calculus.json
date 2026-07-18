@@ -924,387 +924,464 @@
     {
       "from": "c_1801_area_curves",
       "to": "c_1801_volume",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“立体体积”需要先掌握“曲线间面积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1801_implicit_diff",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“隐函数微分”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1801_related_rates",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“相关变化率”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1801_substitution",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“换元积分法”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1802_multivar_chain",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“多元链式法则”需要先掌握“链式法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_conv_tests",
       "to": "c_1801_power_series",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“幂级数”需要先掌握“收敛性检验”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_arc_length",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“弧长”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_area_curves",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“曲线间面积”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_ftc",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“微积分基本定理”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_work",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“功”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1802_double_integrals",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“二重积分”需要先掌握“定积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_def",
       "to": "c_1801_deriv_rules",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“微分法则”需要先掌握“导数定义”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_def",
       "to": "c_1801_ftc",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“微积分基本定理”需要先掌握“导数定义”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_chain_rule",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“链式法则”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_curve_sketching",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“曲线草图”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_linear_approx",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线性近似”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_mvt",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“中值定理”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_parts",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“分部积分法”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_taylor_series",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“泰勒级数”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1802_parametric_curves",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“参数曲线”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1802_partial_derivs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“偏导数”需要先掌握“微分法则”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1801_improper_int",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“广义积分”需要先掌握“微积分基本定理”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1801_partial_fractions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“部分分式”需要先掌握“微积分基本定理”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1801_substitution",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“换元积分法”需要先掌握“微积分基本定理”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1802_fundamental_line",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“微积分基本定理”为学习“线积分基本定理”提供背景与解题基础。"
     },
     {
       "from": "c_1801_implicit_diff",
       "to": "c_1801_related_rates",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“隐函数微分”为学习“相关变化率”提供背景与解题基础。"
     },
     {
       "from": "c_1801_improper_int",
       "to": "c_1801_conv_tests",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“广义积分”为学习“收敛性检验”提供背景与解题基础。"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_deriv_def",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“导数定义”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_improper_int",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“广义积分”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_riemann_sums",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“黎曼和”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_sequences",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“序列与级数”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1802_multivar_functions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“多元函数”需要先掌握“极限与连续”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_mvt",
       "to": "c_1801_ftc",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“中值定理”为学习“微积分基本定理”提供背景与解题基础。"
     },
     {
       "from": "c_1801_power_series",
       "to": "c_1801_taylor_series",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“泰勒级数”需要先掌握“幂级数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_riemann_sums",
       "to": "c_1801_definite_integral",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“定积分”需要先掌握“黎曼和”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_sequences",
       "to": "c_1801_conv_tests",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“收敛性检验”需要先掌握“序列与级数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_substitution",
       "to": "c_1801_parts",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“分部积分法”需要先掌握“换元积分法”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_substitution",
       "to": "c_1801_trig_integrals",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“三角积分”需要先掌握“换元积分法”的定义、表示或操作方法。"
     },
     {
       "from": "c_1801_trig_integrals",
       "to": "c_1801_trig_sub",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“三角换元”需要先掌握“三角积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_cross_product",
       "to": "c_1802_lines_planes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“直线与平面”需要先掌握“叉积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_cross_product",
       "to": "c_1802_parametric_surfaces",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“参数曲面”需要先掌握“叉积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_curl_div",
       "to": "c_1802_divergence_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“散度定理”需要先掌握“旋度与散度”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_curl_div",
       "to": "c_1802_stokes_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“斯托克斯定理”需要先掌握“旋度与散度”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_cross_product",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“点积”为学习“叉积”提供背景与解题基础。"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_gradient",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“梯度与方向导数”需要先掌握“点积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_lines_planes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“直线与平面”需要先掌握“点积”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_parametric_curves",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“点积”为学习“参数曲线”提供背景与解题基础。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_greens_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“格林定理”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_jacobians",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“变量变换”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_polar_integrals",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“极坐标积分”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_surface_integrals",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“面积分”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_triple_integrals",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“三重积分”需要先掌握“二重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_fundamental_line",
       "to": "c_1802_stokes_theorem",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“线积分基本定理”为学习“斯托克斯定理”提供背景与解题基础。"
     },
     {
       "from": "c_1802_gradient",
       "to": "c_1802_fundamental_line",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线积分基本定理”需要先掌握“梯度与方向导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_gradient",
       "to": "c_1802_lagrange",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“拉格朗日乘数”需要先掌握“梯度与方向导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_gradient",
       "to": "c_1802_tangent_planes",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“梯度与方向导数”为学习“切平面”提供背景与解题基础。"
     },
     {
       "from": "c_1802_greens_theorem",
       "to": "c_1802_stokes_theorem",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“格林定理”为学习“斯托克斯定理”提供背景与解题基础。"
     },
     {
       "from": "c_1802_multivar_functions",
       "to": "c_1802_double_integrals",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“多元函数”为学习“二重积分”提供背景与解题基础。"
     },
     {
       "from": "c_1802_multivar_functions",
       "to": "c_1802_partial_derivs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“偏导数”需要先掌握“多元函数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_parametric_curves",
       "to": "c_1802_parametric_surfaces",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“参数曲线”为学习“参数曲面”提供背景与解题基础。"
     },
     {
       "from": "c_1802_parametric_curves",
       "to": "c_1802_vector_fields",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“向量场”需要先掌握“参数曲线”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_parametric_surfaces",
       "to": "c_1802_surface_integrals",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“面积分”需要先掌握“参数曲面”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_curl_div",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“旋度与散度”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_differentials",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“微分”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_gradient",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“梯度与方向导数”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_jacobians",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“变量变换”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_local_extrema",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“局部极值”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_multivar_chain",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“多元链式法则”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_tangent_planes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“切平面”需要先掌握“偏导数”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_polar_integrals",
       "to": "c_1802_cyl_spherical",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“柱面与球坐标”需要先掌握“极坐标积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_surface_integrals",
       "to": "c_1802_divergence_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“散度定理”需要先掌握“面积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_surface_integrals",
       "to": "c_1802_stokes_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“斯托克斯定理”需要先掌握“面积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_triple_integrals",
       "to": "c_1802_cyl_spherical",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“柱面与球坐标”需要先掌握“三重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_triple_integrals",
       "to": "c_1802_divergence_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“散度定理”需要先掌握“三重积分”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_vector_fields",
       "to": "c_1802_curl_div",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“旋度与散度”需要先掌握“向量场”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_vector_fields",
       "to": "c_1802_fundamental_line",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线积分基本定理”需要先掌握“向量场”的定义、表示或操作方法。"
     },
     {
       "from": "c_1802_vector_fields",
       "to": "c_1802_greens_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“格林定理”需要先掌握“向量场”的定义、表示或操作方法。"
     }
   ]
 }

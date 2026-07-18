@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "data_structures_and_algorithms",
   "subject": "Data Structures and Algorithms",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_data_structures_and_algorithms"
+    "src_berkeley_cs61b_fall_2024"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "Java基础与语法",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_lists_arrays",
@@ -33,8 +43,13 @@
       "name_zh": "单向链表 (SLList)与带头哨兵的双向链表",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Singly Linked Lists (SLList) and Doubly Linked Lists with Sentinels"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_lists_arrays_ucb61b_arrays",
@@ -43,8 +58,13 @@
       "name_zh": "定长数组与动态数组 (ArrayList)",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_oop",
@@ -53,8 +73,13 @@
       "name_zh": "JUnit 单元测试与接口与重写",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Unit Testing with JUnit and Interfaces and Overriding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_oop_ucb61b_inheritance",
@@ -63,8 +88,13 @@
       "name_zh": "实现继承 (Extends)、子类型多态与动态分派与迭代器与可迭代",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_disjoint_sets",
@@ -73,8 +103,13 @@
       "name_zh": "快速查找与快速合并",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quick Find and Quick Union"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_disjoint_sets_ucb61b_wqu",
@@ -83,8 +118,13 @@
       "name_zh": "加权快速合并与路径压缩",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Weighted Quick Union and Path Compression"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_asymptotics",
@@ -93,8 +133,13 @@
       "name_zh": "渐近分析与算法分析",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_bst",
@@ -103,8 +148,13 @@
       "name_zh": "树与二叉搜索树",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_balanced_trees",
@@ -113,8 +163,13 @@
       "name_zh": "平衡搜索树",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Balanced Search Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_hashing",
@@ -123,8 +178,13 @@
       "name_zh": "哈希函数与Object.hashCode()与分离链接",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Hash Functions and Object.hashCode() and Separate Chaining"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_hashing_ucb61b_linear_probing",
@@ -133,8 +193,13 @@
       "name_zh": "线性探测与负载因子与扩容",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Linear Probing and Load Factor and Resizing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_priority_queues",
@@ -143,8 +208,13 @@
       "name_zh": "优先队列 ADT与二叉最小/最大堆",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Priority Queue ADT and Binary Min/Max Heaps"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_priority_queues_ucb61b_heap_operations",
@@ -153,8 +223,13 @@
       "name_zh": "上浮、下沉、插入/删除与堆的数组表示",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Swim, Sink, and Insert/Delete and Array Representation of Heaps"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_graphs",
@@ -163,8 +238,13 @@
       "name_zh": "图 API 与邻接表与深度优先搜索 (DFS)",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_graphs_ucb61b_bfs",
@@ -173,8 +253,13 @@
       "name_zh": "广度优先搜索 (BFS)与拓扑排序",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Breadth-First Search (BFS) and Topological Sort"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_shortest_paths",
@@ -183,8 +268,13 @@
       "name_zh": "最短路径",
       "topic": null,
       "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Shortest Paths"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_mst",
@@ -193,8 +283,13 @@
       "name_zh": "最小生成树",
       "topic": null,
       "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_spatial_string_indexes",
@@ -203,8 +298,13 @@
       "name_zh": "一维范围查询与K-D 树",
       "topic": null,
       "default_order": 19,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: 1D Range Searching and K-D Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_spatial_string_indexes_ucb61b_trie_basics",
@@ -213,8 +313,13 @@
       "name_zh": "Trie 结构与Trie 字符串操作",
       "topic": null,
       "default_order": 20,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trie Structure and Trie String Operations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_sorting",
@@ -223,8 +328,13 @@
       "name_zh": "选择与插入排序与归并排序",
       "topic": null,
       "default_order": 21,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Selection and Insertion Sort and Merge Sort"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_sorting_ucb61b_quick_sort",
@@ -233,8 +343,13 @@
       "name_zh": "快速排序与排序下界",
       "topic": null,
       "default_order": 22,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quicksort and Lower Bounds of Comparison Sorting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_ucb61b_radix_sorting",
@@ -243,8 +358,13 @@
       "name_zh": "基数排序",
       "topic": null,
       "default_order": 23,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Radix Sorting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_java_basics",
@@ -256,8 +376,13 @@
       "description": "Basic syntax of Java including static typing, loops, conditionals, and defining static methods.",
       "default_order": 1,
       "centrality": 0.3006,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_classes_objects",
@@ -269,8 +394,13 @@
       "description": "Creating classes, instance variables, constructors, and instantiating objects using the 'new' keyword.",
       "default_order": 2,
       "centrality": 0.6489,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_references",
@@ -282,8 +412,13 @@
       "description": "Understanding how primitive types store values directly while reference types store memory addresses (pointers).",
       "default_order": 3,
       "centrality": 0.5084,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_sllist",
@@ -297,8 +432,13 @@
       "centrality": 0.1272,
       "visual": "diagram",
       "visual_hint": "Box-and-pointer singly linked list of nodes with forward pointers.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Singly Linked Lists (SLList) and Doubly Linked Lists with Sentinels"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_dllist",
@@ -312,8 +452,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Doubly linked list with backward pointers and a sentinel node.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Singly Linked Lists (SLList) and Doubly Linked Lists with Sentinels"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_arrays",
@@ -325,8 +470,13 @@
       "description": "Contiguous memory structures with constant time indexing and fixed capacity.",
       "default_order": 1,
       "centrality": 0.3294,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_alist",
@@ -340,12 +490,17 @@
       "centrality": 0.0353,
       "visual": "algorithm",
       "visual_hint": "Geometrically resize an array on overflow (amortised growth).",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_testing",
-      "canonical_id": "pc_f2a124ac86f469384536095bc9e5b8f7",
+      "canonical_id": "pc_56ee112d8b853eda9fb834f57e4ff1b6",
       "kind": "concept",
       "name": "Unit Testing with JUnit",
       "name_zh": "JUnit 单元测试",
@@ -353,8 +508,13 @@
       "description": "Writing automated tests using JUnit assertions to verify component behaviors in isolation.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Unit Testing with JUnit and Interfaces and Overriding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_interfaces",
@@ -366,8 +526,13 @@
       "description": "Defining strict behavioral contracts (APIs) and implementing them via method overriding.",
       "default_order": 2,
       "centrality": 0.1356,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Unit Testing with JUnit and Interfaces and Overriding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_inheritance",
@@ -379,8 +544,13 @@
       "description": "Reusing code by inheriting fields and methods from a superclass using the 'extends' keyword.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_polymorphism",
@@ -392,8 +562,13 @@
       "description": "Using supertype variables to hold subtype objects, relying on dynamic method selection at runtime.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_iterators",
@@ -405,8 +580,13 @@
       "description": "Implementing the Iterable and Iterator interfaces to allow standard 'for-each' loop functionality.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_quick_find",
@@ -418,8 +598,13 @@
       "description": "An array-based approach to the Union-Find problem optimizing for constant-time connectivity checks.",
       "default_order": 1,
       "centrality": 0.0866,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quick Find and Quick Union"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_quick_union",
@@ -433,8 +618,13 @@
       "centrality": 0.0727,
       "visual": "algorithm",
       "visual_hint": "Union-Find as a parent-link forest; union and find operations.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quick Find and Quick Union"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_wqu",
@@ -448,8 +638,13 @@
       "centrality": 0.0564,
       "visual": "algorithm",
       "visual_hint": "Weighted quick-union linking the smaller tree under the larger.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Weighted Quick Union and Path Compression"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_path_compression",
@@ -463,8 +658,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Flatten the union-find tree during find via path compression.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Weighted Quick Union and Path Compression"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_big_theta",
@@ -478,8 +678,13 @@
       "centrality": 0.131,
       "visual": "chart",
       "visual_hint": "Plot O, Omega, and Theta bounds sandwiching a running time.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_loop_analysis",
@@ -491,8 +696,13 @@
       "description": "Analyzing nested loops by translating them into mathematical summations and resolving bounds.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_recursion_analysis",
@@ -504,12 +714,17 @@
       "description": "Determining the time complexity of recursive functions through recurrence trees and geometric series.",
       "default_order": 3,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_trees_intro",
-      "canonical_id": "pc_14a07c675e876398cd60700d6a8f5a68",
+      "canonical_id": "pc_c991091347a5056a142b5d38cb07fe1e",
       "kind": "concept",
       "name": "Tree Definitions and Traversals",
       "name_zh": "树的定义与遍历",
@@ -519,8 +734,13 @@
       "centrality": 0.2247,
       "visual": "algorithm",
       "visual_hint": "Animate pre-order, in-order, and post-order tree traversals.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_bst_property",
@@ -532,8 +752,13 @@
       "description": "The rule that all left descendants are strictly less than the node, and all right descendants are strictly greater.",
       "default_order": 2,
       "centrality": 0.139,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_bst_operations",
@@ -547,8 +772,13 @@
       "centrality": 0.1344,
       "visual": "algorithm",
       "visual_hint": "Search, insert, and Hibbard-delete in a binary search tree.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_tree_rotation",
@@ -562,8 +792,13 @@
       "centrality": 0.0353,
       "visual": "algorithm",
       "visual_hint": "Rotate a BST node left and right preserving the search order.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Balanced Search Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_b_trees",
@@ -575,8 +810,13 @@
       "description": "Perfectly balanced search trees with overstuffed nodes and splitting mechanics to maintain O(log N) heights.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Balanced Search Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_llrb",
@@ -590,8 +830,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Insert into a left-leaning red-black tree with rotations and colour flips.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Balanced Search Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_hash_code",
@@ -603,8 +848,13 @@
       "description": "Mapping arbitrary data types to integers deterministically while minimizing collisions.",
       "default_order": 1,
       "centrality": 0.0848,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Hash Functions and Object.hashCode() and Separate Chaining"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_separate_chaining",
@@ -618,8 +868,13 @@
       "centrality": 0.0459,
       "visual": "algorithm",
       "visual_hint": "Resolve hash collisions by chaining entries in buckets.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Hash Functions and Object.hashCode() and Separate Chaining"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_linear_probing",
@@ -633,8 +888,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Resolve collisions by linear probing to the next open slot.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Linear Probing and Load Factor and Resizing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_load_factor",
@@ -646,8 +906,13 @@
       "description": "Monitoring the items-to-buckets ratio and dynamically doubling array size when it crosses a threshold.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Linear Probing and Load Factor and Resizing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_pq_interface",
@@ -659,8 +924,13 @@
       "description": "An Abstract Data Type enabling efficient insertion and removal of the 'smallest' or 'largest' elements.",
       "default_order": 1,
       "centrality": 0.0721,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Priority Queue ADT and Binary Min/Max Heaps"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_binary_heap",
@@ -674,8 +944,13 @@
       "centrality": 0.0548,
       "visual": "algorithm",
       "visual_hint": "Swim and sink nodes to maintain a binary heap.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Priority Queue ADT and Binary Min/Max Heaps"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_heap_operations",
@@ -687,8 +962,13 @@
       "description": "Promoting or demoting nodes to restore heap invariants after insertion or deletion of the root.",
       "default_order": 1,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Swim, Sink, and Insert/Delete and Array Representation of Heaps"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_array_heap",
@@ -702,8 +982,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Map a complete binary heap onto an array by index arithmetic.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Swim, Sink, and Insert/Delete and Array Representation of Heaps"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_graph_api",
@@ -715,8 +1000,13 @@
       "description": "Modeling networks using vertices and edges, predominantly mapped in memory using Adjacency Lists.",
       "default_order": 1,
       "centrality": 0.2871,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_dfs",
@@ -730,8 +1020,13 @@
       "centrality": 0.0459,
       "visual": "algorithm",
       "visual_hint": "Animate depth-first search exploring a graph with backtracking.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_bfs",
@@ -745,8 +1040,13 @@
       "centrality": 0.107,
       "visual": "algorithm",
       "visual_hint": "Animate breadth-first search exploring a graph layer by layer with a queue.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Breadth-First Search (BFS) and Topological Sort"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_topological_sort",
@@ -760,8 +1060,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Linearise a DAG by post-order DFS into a topological order.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Breadth-First Search (BFS) and Topological Sort"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_edge_relaxation",
@@ -773,8 +1078,13 @@
       "description": "Updating the shortest known distance to a vertex if passing through an intermediate vertex yields a better path.",
       "default_order": 1,
       "centrality": 0.0488,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Shortest Paths"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_dijkstra",
@@ -788,8 +1098,13 @@
       "centrality": 0.0564,
       "visual": "algorithm",
       "visual_hint": "Run Dijkstra's algorithm relaxing edges with a priority queue.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Shortest Paths"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_a_star",
@@ -803,8 +1118,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Run A* search biasing exploration with a heuristic on a grid.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Shortest Paths"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_mst_property",
@@ -816,8 +1136,13 @@
       "description": "The foundational theorem proving that the minimum weight crossing edge in any cut belongs to the MST.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_prim",
@@ -831,8 +1156,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Grow a minimum spanning tree outward with Prim's algorithm.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_kruskal",
@@ -846,8 +1176,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Build an MST by adding sorted edges that avoid cycles (Kruskal).",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_1d_range_search",
@@ -859,8 +1194,13 @@
       "description": "Finding all points within a 1-dimensional bounded range efficiently using a standard BST.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: 1D Range Searching and K-D Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_kd_trees",
@@ -874,8 +1214,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Partition the plane recursively with a 2-D tree.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: 1D Range Searching and K-D Trees"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_trie_basics",
@@ -889,8 +1234,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Prefix tree (trie) branching strings by character.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trie Structure and Trie String Operations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_trie_string_ops",
@@ -902,8 +1252,13 @@
       "description": "Algorithms traversing the trie for operations like longest prefix matching and auto-complete collection.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trie Structure and Trie String Operations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_selection_insertion_sort",
@@ -917,8 +1272,13 @@
       "centrality": 0.0443,
       "visual": "algorithm",
       "visual_hint": "Animate selection and insertion sort rearranging an array.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Selection and Insertion Sort and Merge Sort"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_merge_sort",
@@ -932,8 +1292,13 @@
       "centrality": 0.0459,
       "visual": "algorithm",
       "visual_hint": "Recursively split and merge an array (merge sort).",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Selection and Insertion Sort and Merge Sort"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_quick_sort",
@@ -947,8 +1312,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Partition around a pivot and recurse (quicksort).",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quicksort and Lower Bounds of Comparison Sorting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_sort_bounds",
@@ -960,8 +1330,13 @@
       "description": "Mathematical proof establishing that comparison-based sorting algorithms cannot be faster than Omega(N log N).",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quicksort and Lower Bounds of Comparison Sorting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_counting_sort",
@@ -975,8 +1350,13 @@
       "centrality": 0.0638,
       "visual": "algorithm",
       "visual_hint": "Tally counts and place keys for counting sort.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Radix Sorting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_lsd_radix",
@@ -990,8 +1370,13 @@
       "centrality": 0.0459,
       "visual": "algorithm",
       "visual_hint": "Sort keys digit by digit from the least significant digit.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Radix Sorting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_ucb61b_msd_radix",
@@ -1003,8 +1388,13 @@
       "description": "Sorting by Most Significant Digit first, recursively subdividing inputs into buckets like a Trie.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Radix Sorting"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -1013,504 +1403,1030 @@
       "to": "c_ucb61b_classes_objects",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“类与对象实例化”需要先掌握“类型、控制流与函数”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_classes_objects",
       "to": "c_ucb61b_references",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“引用类型与基本类型”需要先掌握“类与对象实例化”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_references",
       "to": "c_ucb61b_sllist",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Singly Linked Lists (SLList) and Doubly Linked Lists with Sentinels"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“单向链表 (SLList)”需要先掌握“引用类型与基本类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_sllist",
       "to": "c_ucb61b_dllist",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Singly Linked Lists (SLList) and Doubly Linked Lists with Sentinels"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“带头哨兵的双向链表”需要先掌握“单向链表 (SLList)”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_references",
       "to": "c_ucb61b_arrays",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“定长数组”需要先掌握“引用类型与基本类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_alist",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“动态数组 (ArrayList)”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_classes_objects",
       "to": "c_ucb61b_testing",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Unit Testing with JUnit and Interfaces and Overriding"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“类与对象实例化”为学习“JUnit 单元测试”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_classes_objects",
       "to": "c_ucb61b_interfaces",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Unit Testing with JUnit and Interfaces and Overriding"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“接口与重写”需要先掌握“类与对象实例化”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_interfaces",
       "to": "c_ucb61b_inheritance",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Unit Testing with JUnit and Interfaces and Overriding"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“实现继承 (Extends)”需要先掌握“接口与重写”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_inheritance",
       "to": "c_ucb61b_polymorphism",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“子类型多态与动态分派”需要先掌握“实现继承 (Extends)”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_interfaces",
       "to": "c_ucb61b_iterators",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Unit Testing with JUnit and Interfaces and Overriding"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“迭代器与可迭代”需要先掌握“接口与重写”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_alist",
       "to": "c_ucb61b_iterators",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“动态数组 (ArrayList)”为学习“迭代器与可迭代”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_quick_find",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quick Find and Quick Union"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“快速查找”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_quick_find",
       "to": "c_ucb61b_quick_union",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quick Find and Quick Union"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“快速合并”需要先掌握“快速查找”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_quick_union",
       "to": "c_ucb61b_wqu",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quick Find and Quick Union"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Weighted Quick Union and Path Compression"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“加权快速合并”需要先掌握“快速合并”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_wqu",
       "to": "c_ucb61b_path_compression",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Weighted Quick Union and Path Compression"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“路径压缩”需要先掌握“加权快速合并”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_loop_analysis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“循环与求和分析”需要先掌握“大Θ、大O、大Ω”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_recursion_analysis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“递归时间复杂度分析”需要先掌握“大Θ、大O、大Ω”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_references",
       "to": "c_ucb61b_trees_intro",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“树的定义与遍历”需要先掌握“引用类型与基本类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_bst_property",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“二叉搜索树不变量”需要先掌握“树的定义与遍历”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bst_property",
       "to": "c_ucb61b_bst_operations",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“BST 查找、插入与删除”需要先掌握“二叉搜索树不变量”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bst_operations",
       "to": "c_ucb61b_tree_rotation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Balanced Search Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“树旋转”需要先掌握“BST 查找、插入与删除”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bst_operations",
       "to": "c_ucb61b_b_trees",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Balanced Search Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“B树 (2-3树)”需要先掌握“BST 查找、插入与删除”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_tree_rotation",
       "to": "c_ucb61b_llrb",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Balanced Search Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“左倾红黑树”需要先掌握“树旋转”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_b_trees",
       "to": "c_ucb61b_llrb",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Balanced Search Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“左倾红黑树”需要先掌握“B树 (2-3树)”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_hash_code",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Hash Functions and Object.hashCode() and Separate Chaining"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“哈希函数与Object.hashCode()”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_hash_code",
       "to": "c_ucb61b_separate_chaining",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Hash Functions and Object.hashCode() and Separate Chaining"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“分离链接”需要先掌握“哈希函数与Object.hashCode()”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_hash_code",
       "to": "c_ucb61b_linear_probing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Hash Functions and Object.hashCode() and Separate Chaining"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Linear Probing and Load Factor and Resizing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线性探测”需要先掌握“哈希函数与Object.hashCode()”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_separate_chaining",
       "to": "c_ucb61b_load_factor",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Hash Functions and Object.hashCode() and Separate Chaining"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Linear Probing and Load Factor and Resizing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“负载因子与扩容”需要先掌握“分离链接”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_interfaces",
       "to": "c_ucb61b_pq_interface",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Unit Testing with JUnit and Interfaces and Overriding"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Priority Queue ADT and Binary Min/Max Heaps"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“优先队列 ADT”需要先掌握“接口与重写”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_binary_heap",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Priority Queue ADT and Binary Min/Max Heaps"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“二叉最小/最大堆”需要先掌握“树的定义与遍历”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_pq_interface",
       "to": "c_ucb61b_binary_heap",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Priority Queue ADT and Binary Min/Max Heaps"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“二叉最小/最大堆”需要先掌握“优先队列 ADT”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_binary_heap",
       "to": "c_ucb61b_heap_operations",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Priority Queue ADT and Binary Min/Max Heaps"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Swim, Sink, and Insert/Delete and Array Representation of Heaps"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“上浮、下沉、插入/删除”需要先掌握“二叉最小/最大堆”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_heap_operations",
       "to": "c_ucb61b_array_heap",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Swim, Sink, and Insert/Delete and Array Representation of Heaps"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“堆的数组表示”需要先掌握“上浮、下沉、插入/删除”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_array_heap",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Swim, Sink, and Insert/Delete and Array Representation of Heaps"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“堆的数组表示”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_graph_api",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“图 API 与邻接表”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_sllist",
       "to": "c_ucb61b_graph_api",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Singly Linked Lists (SLList) and Doubly Linked Lists with Sentinels"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“单向链表 (SLList)”为学习“图 API 与邻接表”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_graph_api",
       "to": "c_ucb61b_dfs",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“深度优先搜索 (DFS)”需要先掌握“图 API 与邻接表”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_graph_api",
       "to": "c_ucb61b_bfs",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Breadth-First Search (BFS) and Topological Sort"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“广度优先搜索 (BFS)”需要先掌握“图 API 与邻接表”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_dfs",
       "to": "c_ucb61b_topological_sort",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Breadth-First Search (BFS) and Topological Sort"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“拓扑排序”需要先掌握“深度优先搜索 (DFS)”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bfs",
       "to": "c_ucb61b_edge_relaxation",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Breadth-First Search (BFS) and Topological Sort"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Shortest Paths"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“广度优先搜索 (BFS)”为学习“边松弛”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_edge_relaxation",
       "to": "c_ucb61b_dijkstra",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Shortest Paths"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Dijkstra 算法”需要先掌握“边松弛”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_pq_interface",
       "to": "c_ucb61b_dijkstra",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Priority Queue ADT and Binary Min/Max Heaps"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Shortest Paths"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Dijkstra 算法”需要先掌握“优先队列 ADT”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_dijkstra",
       "to": "c_ucb61b_a_star",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Shortest Paths"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“A* 搜索算法”需要先掌握“Dijkstra 算法”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_mst_property",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“树的定义与遍历”为学习“割性质”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_graph_api",
       "to": "c_ucb61b_mst_property",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“割性质”需要先掌握“图 API 与邻接表”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_mst_property",
       "to": "c_ucb61b_prim",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Prim 算法”需要先掌握“割性质”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_dijkstra",
       "to": "c_ucb61b_prim",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Shortest Paths"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“Dijkstra 算法”为学习“Prim 算法”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_mst_property",
       "to": "c_ucb61b_kruskal",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Kruskal 算法”需要先掌握“割性质”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_wqu",
       "to": "c_ucb61b_kruskal",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Weighted Quick Union and Path Compression"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Minimum Spanning Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Kruskal 算法”需要先掌握“加权快速合并”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bst_operations",
       "to": "c_ucb61b_1d_range_search",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: 1D Range Searching and K-D Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“一维范围查询”需要先掌握“BST 查找、插入与删除”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_1d_range_search",
       "to": "c_ucb61b_kd_trees",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: 1D Range Searching and K-D Trees"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“K-D 树”需要先掌握“一维范围查询”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_selection_insertion_sort",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Selection and Insertion Sort and Merge Sort"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“选择与插入排序”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_selection_insertion_sort",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Selection and Insertion Sort and Merge Sort"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“大Θ、大O、大Ω”为学习“选择与插入排序”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_selection_insertion_sort",
       "to": "c_ucb61b_merge_sort",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Selection and Insertion Sort and Merge Sort"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“选择与插入排序”为学习“归并排序”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_recursion_analysis",
       "to": "c_ucb61b_merge_sort",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Selection and Insertion Sort and Merge Sort"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“归并排序”需要先掌握“递归时间复杂度分析”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_merge_sort",
       "to": "c_ucb61b_quick_sort",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Selection and Insertion Sort and Merge Sort"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quicksort and Lower Bounds of Comparison Sorting"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“归并排序”为学习“快速排序”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_sort_bounds",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Quicksort and Lower Bounds of Comparison Sorting"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“排序下界”需要先掌握“大Θ、大O、大Ω”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_counting_sort",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Fixed-Size Arrays and Resizing Arrays (ArrayList)"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Radix Sorting"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“计数排序”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_counting_sort",
       "to": "c_ucb61b_lsd_radix",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Radix Sorting"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“LSD 基数排序”需要先掌握“计数排序”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_lsd_radix",
       "to": "c_ucb61b_msd_radix",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Radix Sorting"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“MSD 基数排序”需要先掌握“LSD 基数排序”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_trie_basics",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trees and Binary Search Trees"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trie Structure and Trie String Operations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Trie 结构”需要先掌握“树的定义与遍历”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_trie_basics",
       "to": "c_ucb61b_trie_string_ops",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Trie Structure and Trie String Operations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Trie 字符串操作”需要先掌握“Trie 结构”的定义、表示或操作方法。"
     }
   ]
 }

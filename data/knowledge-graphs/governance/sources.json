@@ -2,6 +2,161 @@
   "schema_version": "1.0.0",
   "sources": [
     {
+      "source_id": "src_berkeley_cs188_textbook_2026",
+      "title": "UC Berkeley CS188 Introduction to Artificial Intelligence textbook",
+      "publisher": "University of California, Berkeley",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://inst.eecs.berkeley.edu/~cs188/textbook/",
+      "document_url": null,
+      "document_version": "online textbook snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "86d0254f703d8bcfd392dccc1d9dc968bc1819e2c3e92c0a4cb39907662f179d",
+      "license_expression": "LicenseRef-University-of-California-Berkeley-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_berkeley_cs61a_summer_2026",
+      "title": "UC Berkeley CS61A Structure and Interpretation of Computer Programs",
+      "publisher": "University of California, Berkeley",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://cs61a.org/",
+      "document_url": null,
+      "document_version": "Summer 2026",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "ce3c8e24a93966ac43a3ecb1548dab546ca4174802b64d92a19b1abdba3f57c0",
+      "license_expression": "LicenseRef-University-of-California-Berkeley-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_berkeley_cs61b_fall_2024",
+      "title": "UC Berkeley CS61B Data Structures",
+      "publisher": "University of California, Berkeley",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://fa24.datastructur.es/",
+      "document_url": null,
+      "document_version": "Fall 2024",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "30a7bc82b236ec6816c48230360f5d9ce58834bd88243ab3fbf3ca3f4266f1eb",
+      "license_expression": "LicenseRef-University-of-California-Berkeley-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_berkeley_cs61c_summer_2026",
+      "title": "UC Berkeley CS61C Great Ideas in Computer Architecture",
+      "publisher": "University of California, Berkeley",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://cs61c.org/su26/",
+      "document_url": null,
+      "document_version": "Summer 2026",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "a7358d15417aa07b064a4629d91dffca1047c167392d54cc5517779f8ee1de10",
+      "license_expression": "LicenseRef-University-of-California-Berkeley-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_berkeley_cs70_summer_2026",
+      "title": "UC Berkeley CS70 Discrete Mathematics and Probability Theory",
+      "publisher": "University of California, Berkeley",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://www.eecs70.org/",
+      "document_url": null,
+      "document_version": "Summer 2026",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "92ade96ecd2e484761c789c7e241316da3ee0777ac6b914ba05a01ff207dd916",
+      "license_expression": "LicenseRef-University-of-California-Berkeley-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
       "source_id": "src_cambridge_9700_2025_2027",
       "title": "Cambridge International AS & A Level Biology (9700) syllabus",
       "publisher": "Cambridge University Press & Assessment",
@@ -157,6 +312,192 @@
       "notes_zh": "数学 syllabus 的官方更新页，必须与主 syllabus 一并审核。"
     },
     {
+      "source_id": "src_cmu_15213_2026",
+      "title": "CMU 15-213/15-503 Introduction to Computer Systems",
+      "publisher": "Carnegie Mellon University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://www.cs.cmu.edu/~213/",
+      "document_url": null,
+      "document_version": "course site snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "1df5f1a91aa7bba939f1cfea2f524b9e46b46ec84ce53290feafc87d8e7f02dd",
+      "license_expression": "LicenseRef-Carnegie-Mellon-University-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_d2l_1_0_3",
+      "title": "Dive into Deep Learning",
+      "publisher": "D2L.ai / Cambridge University Press",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "textbook",
+      "landing_page_url": "https://d2l.ai/",
+      "document_url": null,
+      "document_version": "1.0.3",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "418caf1a726b3fc0de37d5a5691668fdcbdb0fe5bcd268814b35b034a2768d88",
+      "license_expression": "CC-BY-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": true
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验 D2L 1.0.3 目录及官方仓库 CC BY-SA 4.0 许可。"
+    },
+    {
+      "source_id": "src_express_docs_2026",
+      "title": "Express documentation",
+      "publisher": "OpenJS Foundation",
+      "authority_tier": "C",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://expressjs.com/en/starter/basic-routing.html",
+      "document_url": null,
+      "document_version": "documentation snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "0a6a8b804c8bc0c8a8969ea9aec4f610a44dae58fef233346a797ea63aecf725",
+      "license_expression": "LicenseRef-OpenJS-Foundation-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_harvard_cs50x_2026",
+      "title": "Harvard CS50x Introduction to Computer Science",
+      "publisher": "Harvard University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://cs50.harvard.edu/x/2026/",
+      "document_url": null,
+      "document_version": "2026",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "0e125337c55fa7220dcac0bc1989901a985c9c530c6c17db29e9a1f3e8524093",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": false
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验 2026 syllabus 与官方 License 页面；课程材料采用 CC BY-NC-SA 4.0。"
+    },
+    {
+      "source_id": "src_mdn_curriculum_2025",
+      "title": "MDN Curriculum",
+      "publisher": "Mozilla",
+      "authority_tier": "C",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://developer.mozilla.org/en-US/curriculum/",
+      "document_url": null,
+      "document_version": "October 2025",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "ce576c4fe3067d0ceddea3a5dda00019875dcf01a4099d633618f1af7c3fcdc7",
+      "license_expression": "CC-BY-SA-2.5",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": true
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_mit_6_031_spring_2018",
+      "title": "MIT 6.031 Software Construction",
+      "publisher": "Massachusetts Institute of Technology",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://web.mit.edu/6.031/www/sp18/",
+      "document_url": null,
+      "document_version": "Spring 2018",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "d5c89c29af01013ca3f95bbc0269c1df2e54c918eb6baf714c22357403da5a20",
+      "license_expression": "LicenseRef-Massachusetts-Institute-of-Technology-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
       "source_id": "src_mit_ocw_18_01sc_fall_2010",
       "title": "MIT OpenCourseWare 18.01SC Single Variable Calculus, Fall 2010",
       "publisher": "Massachusetts Institute of Technology",
@@ -186,6 +527,378 @@
       },
       "storage_policy": "licensed_fulltext",
       "notes_zh": "Browser 已核验课程页的 Creative Commons BY-NC-SA 4.0 标识；商业用途仍受 NC 限制。"
+    },
+    {
+      "source_id": "src_mit_ocw_18_02sc_fall_2010",
+      "title": "MIT OpenCourseWare 18.02SC Multivariable Calculus",
+      "publisher": "Massachusetts Institute of Technology",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/",
+      "document_url": null,
+      "document_version": "Fall 2010",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "a105d0eab3c3d95e80cc9a4206a416a8c9b78fa38a5c277504fd40bab208a750",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": false
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_mit_ocw_18_06sc_fall_2011",
+      "title": "MIT OpenCourseWare 18.06SC Linear Algebra",
+      "publisher": "Massachusetts Institute of Technology",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/",
+      "document_url": null,
+      "document_version": "Fall 2011",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "d743549088f2926f8b0f3cc733590dbfbaf78a6f95281d7541fbaf8d6bd2172c",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": false
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_mit_ocw_18_330_spring_2012",
+      "title": "MIT OpenCourseWare 18.330 Introduction to Numerical Analysis",
+      "publisher": "Massachusetts Institute of Technology",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://ocw.mit.edu/courses/18-330-introduction-to-numerical-analysis-spring-2012/",
+      "document_url": null,
+      "document_version": "Spring 2012",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "0c640dae60370f8bc3b3f8c3cc6f38e05d69246610803e71dc9eed5c839b6a9f",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": false
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_mit_ocw_6_441_spring_2010",
+      "title": "MIT OpenCourseWare 6.441 Information Theory",
+      "publisher": "Massachusetts Institute of Technology",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://ocw.mit.edu/courses/6-441-information-theory-spring-2010/",
+      "document_url": null,
+      "document_version": "Spring 2010",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "301432566e4664a80dadf220f2244783db841156fa36d84a8622237cd28c23be",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": false
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_mongodb_manual_2026",
+      "title": "MongoDB Manual",
+      "publisher": "MongoDB, Inc.",
+      "authority_tier": "C",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://www.mongodb.com/docs/manual/",
+      "document_url": null,
+      "document_version": "documentation snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "9e9a928859f4e2bce055c170d194c591a4bad7e1161c6b86ab0e15c70029c79d",
+      "license_expression": "LicenseRef-MongoDB-Inc--Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_node_learn_2026",
+      "title": "Node.js Learn",
+      "publisher": "OpenJS Foundation",
+      "authority_tier": "C",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://nodejs.org/en/learn",
+      "document_url": null,
+      "document_version": "documentation snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "87b64568a9efa87e8c31fc0fbea87a1a0916ce6f42cd2f849865eb3bd64df3f5",
+      "license_expression": "LicenseRef-OpenJS-Foundation-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_owasp_wstg_2026",
+      "title": "OWASP Web Security Testing Guide",
+      "publisher": "OWASP Foundation",
+      "authority_tier": "C",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://owasp.org/www-project-web-security-testing-guide/",
+      "document_url": null,
+      "document_version": "project snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "8bdfd64c49915dbcf951ee3aab3f0ab1561b4aa2332a0377681446b991abf6be",
+      "license_expression": "LicenseRef-OWASP-Foundation-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_python_docs_3_14",
+      "title": "Python 3.14 documentation",
+      "publisher": "Python Software Foundation",
+      "authority_tier": "C",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://docs.python.org/3.14/",
+      "document_url": null,
+      "document_version": "Python 3.14",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "63f1390e07fa526034b42bda2fae9ce2acd118d55013feec2a5714dd7bca0f99",
+      "license_expression": "PSF-2.0",
+      "rights": {
+        "metadata": true,
+        "fulltext": true,
+        "excerpts": true,
+        "derivatives": true,
+        "redistribution": true,
+        "commercial_use": true
+      },
+      "storage_policy": "licensed_fulltext",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_react_learn_2026",
+      "title": "React Learn",
+      "publisher": "Meta Open Source",
+      "authority_tier": "C",
+      "verification_status": "verified",
+      "jurisdiction": "international",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "reference",
+      "landing_page_url": "https://react.dev/learn",
+      "document_url": null,
+      "document_version": "documentation snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "983b84d7884dc7ec599badc669d29f60ef99843cddda4dbc79a0bf84ebf8c2ea",
+      "license_expression": "LicenseRef-Meta-Open-Source-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_stanford_cs144_2026",
+      "title": "Stanford CS144 Introduction to Computer Networking",
+      "publisher": "Stanford University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://cs144.github.io/",
+      "document_url": null,
+      "document_version": "course site snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "31941604343df116a6dd4fcf14b968fa4ed1572688affeb2e0212ca36d51731f",
+      "license_expression": "LicenseRef-Stanford-University-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_stanford_cs229_2026",
+      "title": "Stanford CS229 Machine Learning syllabus and course schedule",
+      "publisher": "Stanford University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://cs229.stanford.edu/syllabus-new.html",
+      "document_url": null,
+      "document_version": "course schedule snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "65538d73a4fc701c1e6df9ff08c7e7574cc0b1c5a200d3c65bbd23642fcf74d1",
+      "license_expression": "LicenseRef-Stanford-University-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
+    },
+    {
+      "source_id": "src_stanford_cs236g_2026",
+      "title": "Stanford CS236G Generative AI syllabus",
+      "publisher": "Stanford University",
+      "authority_tier": "B",
+      "verification_status": "verified",
+      "jurisdiction": "US",
+      "languages": [
+        "en"
+      ],
+      "resource_type": "course_material",
+      "landing_page_url": "https://cs236g.stanford.edu/syllabus/",
+      "document_url": null,
+      "document_version": "syllabus snapshot 2026-07-18",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-18",
+      "sha256": "4ce3a063564abf7024eee55987b6b25a3d4cb78ea30ec0d72222ad91ace02bcb",
+      "license_expression": "LicenseRef-Stanford-University-Copyrighted-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "已核验官方课程或文档入口、版本标识和页面校验值；许可不明时只保存元数据与知识映射。"
     },
     {
       "source_id": "src_unverified_artificial_intelligence",
@@ -314,6 +1027,38 @@
       },
       "storage_policy": "metadata_only",
       "notes_zh": "只作为现有图的来源占位。未确认原始资料、版本和许可前，不得提升审核状态或保存正文。"
+    },
+    {
+      "source_id": "src_unverified_cross_subject_prerequisites",
+      "title": "跨学科先修关系来源待确认",
+      "publisher": "来源待确认",
+      "authority_tier": "D",
+      "verification_status": "unverified",
+      "jurisdiction": "unknown",
+      "languages": [
+        "en",
+        "zh"
+      ],
+      "resource_type": "unverified_origin",
+      "landing_page_url": null,
+      "document_url": null,
+      "document_version": "baseline-unverified-2026-07-17",
+      "issued_at": null,
+      "valid_from": null,
+      "valid_to": null,
+      "retrieved_at": "2026-07-17",
+      "sha256": null,
+      "license_expression": "LicenseRef-Unverified-MetadataOnly",
+      "rights": {
+        "metadata": true,
+        "fulltext": false,
+        "excerpts": false,
+        "derivatives": false,
+        "redistribution": false,
+        "commercial_use": false
+      },
+      "storage_policy": "metadata_only",
+      "notes_zh": "跨学科边未经逐条来源审核，不能提升为 approved。"
     },
     {
       "source_id": "src_unverified_data_structures_and_algorithms",
@@ -698,38 +1443,6 @@
       },
       "storage_policy": "metadata_only",
       "notes_zh": "只作为现有图的来源占位。未确认原始资料、版本和许可前，不得提升审核状态或保存正文。"
-    },
-    {
-      "source_id": "src_unverified_cross_subject_prerequisites",
-      "title": "跨学科先修关系来源待确认",
-      "publisher": "来源待确认",
-      "authority_tier": "D",
-      "verification_status": "unverified",
-      "jurisdiction": "unknown",
-      "languages": [
-        "en",
-        "zh"
-      ],
-      "resource_type": "unverified_origin",
-      "landing_page_url": null,
-      "document_url": null,
-      "document_version": "baseline-unverified-2026-07-17",
-      "issued_at": null,
-      "valid_from": null,
-      "valid_to": null,
-      "retrieved_at": "2026-07-17",
-      "sha256": null,
-      "license_expression": "LicenseRef-Unverified-MetadataOnly",
-      "rights": {
-        "metadata": true,
-        "fulltext": false,
-        "excerpts": false,
-        "derivatives": false,
-        "redistribution": false,
-        "commercial_use": false
-      },
-      "storage_policy": "metadata_only",
-      "notes_zh": "跨学科边未经逐条来源审核，不能提升为 approved。"
     }
   ]
 }

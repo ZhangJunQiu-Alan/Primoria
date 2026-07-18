@@ -2,7 +2,7 @@
   "graphId": "linear_algebra",
   "subject": "Linear Algebra",
   "generatedFrom": "data/knowledge-graphs/source/linear_algebra.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -391,112 +391,134 @@
     {
       "from": "c_mit1806_det_formulas",
       "to": "c_mit1806_cramers_rule",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Cramer 法则与体积”需要先掌握“行列式公式与余子式”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_det_properties",
       "to": "c_mit1806_det_formulas",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“行列式公式与余子式”需要先掌握“行列式的性质”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_det_properties",
       "to": "c_mit1806_eigen",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“特征值与特征向量”需要先掌握“行列式的性质”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_diagonalization",
       "to": "c_mit1806_diff_eq",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“微分方程组”需要先掌握“对角化”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_eigen",
       "to": "c_mit1806_diagonalization",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“对角化”需要先掌握“特征值与特征向量”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_eigen",
       "to": "c_mit1806_symmetric_matrices",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“对称矩阵”需要先掌握“特征值与特征向量”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_elimination",
       "to": "c_mit1806_det_properties",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“行列式的性质”需要先掌握“矩阵消元”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_elimination",
       "to": "c_mit1806_matrix_ops",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“矩阵运算与逆矩阵”需要先掌握“矩阵消元”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_four_subspaces",
       "to": "c_mit1806_orthogonality",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“正交向量与子空间”需要先掌握“四个基本子空间”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_independence_basis",
       "to": "c_mit1806_four_subspaces",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“四个基本子空间”需要先掌握“线性无关、基与维数”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_least_squares",
       "to": "c_mit1806_gram_schmidt",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“正交基与 Gram-Schmidt”需要先掌握“最小二乘近似”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_linear_transformations",
       "to": "c_mit1806_matrix_transform",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线性变换的矩阵”需要先掌握“线性变换”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_matrix_ops",
       "to": "c_mit1806_linear_transformations",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“矩阵运算与逆矩阵”为学习“线性变换”提供背景与解题基础。"
     },
     {
       "from": "c_mit1806_matrix_ops",
       "to": "c_mit1806_lu_decomp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“LU 分解”需要先掌握“矩阵运算与逆矩阵”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_matrix_ops",
       "to": "c_mit1806_spaces_subspaces",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“向量空间和子空间”需要先掌握“矩阵运算与逆矩阵”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_null_column_space",
       "to": "c_mit1806_independence_basis",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线性无关、基与维数”需要先掌握“零空间与列空间”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_orthogonality",
       "to": "c_mit1806_projections",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“向子空间的投影”需要先掌握“正交向量与子空间”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_positive_definite",
       "to": "c_mit1806_svd",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“奇异值分解”需要先掌握“正定矩阵”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_projections",
       "to": "c_mit1806_least_squares",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“最小二乘近似”需要先掌握“向子空间的投影”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_spaces_subspaces",
       "to": "c_mit1806_null_column_space",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“零空间与列空间”需要先掌握“向量空间和子空间”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_symmetric_matrices",
       "to": "c_mit1806_positive_definite",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“正定矩阵”需要先掌握“对称矩阵”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit1806_vectors",
       "to": "c_mit1806_elimination",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“矩阵消元”需要先掌握“向量与线性组合”的定义、表示或操作方法。"
     }
   ]
 }

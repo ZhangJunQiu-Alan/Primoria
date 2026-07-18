@@ -2,7 +2,7 @@
   "graphId": "introduction_to_computer_science",
   "subject": "Introduction to Computer Science",
   "generatedFrom": "data/knowledge-graphs/source/introduction_to_computer_science.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -733,247 +733,296 @@
     {
       "from": "c_arrays",
       "to": "c_cli_args",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“命令行参数”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_arrays",
       "to": "c_hash_tables",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“哈希表”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_arrays",
       "to": "c_linear_search",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线性搜索”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_arrays",
       "to": "c_lists_dicts",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“列表和字典”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_arrays",
       "to": "c_queues_stacks",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“队列与栈”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_arrays",
       "to": "c_sorting",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“排序算法”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_arrays",
       "to": "c_strings",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“字符串”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_c_syntax",
       "to": "c_arrays",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“数组”需要先掌握“C 语法”的定义、表示或操作方法。"
     },
     {
       "from": "c_c_syntax",
       "to": "c_compilation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“编译过程”需要先掌握“C 语法”的定义、表示或操作方法。"
     },
     {
       "from": "c_c_syntax",
       "to": "c_data_types",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“数据类型”需要先掌握“C 语法”的定义、表示或操作方法。"
     },
     {
       "from": "c_c_syntax",
       "to": "c_python_syntax",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Python 语法”需要先掌握“C 语法”的定义、表示或操作方法。"
     },
     {
       "from": "c_conditions",
       "to": "c_c_syntax",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“C 语法”需要先掌握“条件语句”的定义、表示或操作方法。"
     },
     {
       "from": "c_cybersecurity",
       "to": "c_authentication",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“身份认证”需要先掌握“网络安全基础”的定义、表示或操作方法。"
     },
     {
       "from": "c_cybersecurity",
       "to": "c_encryption",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“加密”需要先掌握“网络安全基础”的定义、表示或操作方法。"
     },
     {
       "from": "c_cybersecurity",
       "to": "c_vulnerabilities",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“安全漏洞”需要先掌握“网络安全基础”的定义、表示或操作方法。"
     },
     {
       "from": "c_data_types",
       "to": "c_arrays",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“数组”需要先掌握“数据类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_data_types",
       "to": "c_operators",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“运算符”需要先掌握“数据类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_data_types",
       "to": "c_pointers",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“指针”需要先掌握“数据类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_flask",
       "to": "c_mvc",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“MVC 架构”需要先掌握“Flask 框架”的定义、表示或操作方法。"
     },
     {
       "from": "c_flask",
       "to": "c_sessions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“会话与 Cookie”需要先掌握“Flask 框架”的定义、表示或操作方法。"
     },
     {
       "from": "c_functions",
       "to": "c_c_syntax",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“C 语法”需要先掌握“函数”的定义、表示或操作方法。"
     },
     {
       "from": "c_functions",
       "to": "c_recursion",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“递归”需要先掌握“函数”的定义、表示或操作方法。"
     },
     {
       "from": "c_hash_tables",
       "to": "c_lists_dicts",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“列表和字典”需要先掌握“哈希表”的定义、表示或操作方法。"
     },
     {
       "from": "c_html",
       "to": "c_css",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“CSS”需要先掌握“HTML”的定义、表示或操作方法。"
     },
     {
       "from": "c_html",
       "to": "c_dom",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“DOM 操作”需要先掌握“HTML”的定义、表示或操作方法。"
     },
     {
       "from": "c_html",
       "to": "c_http",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“HTTP 协议”需要先掌握“HTML”的定义、表示或操作方法。"
     },
     {
       "from": "c_http",
       "to": "c_apis",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“API”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "from": "c_http",
       "to": "c_cybersecurity",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“网络安全基础”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "from": "c_http",
       "to": "c_flask",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Flask 框架”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "from": "c_js",
       "to": "c_dom",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“DOM 操作”需要先掌握“JavaScript”的定义、表示或操作方法。"
     },
     {
       "from": "c_linear_search",
       "to": "c_binary_search",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“二分搜索”需要先掌握“线性搜索”的定义、表示或操作方法。"
     },
     {
       "from": "c_linked_lists",
       "to": "c_hash_tables",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“哈希表”需要先掌握“链表”的定义、表示或操作方法。"
     },
     {
       "from": "c_lists_dicts",
       "to": "c_relational_db",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“关系数据库”需要先掌握“列表和字典”的定义、表示或操作方法。"
     },
     {
       "from": "c_loops",
       "to": "c_c_syntax",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“C 语法”需要先掌握“循环”的定义、表示或操作方法。"
     },
     {
       "from": "c_malloc",
       "to": "c_linked_lists",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“链表”需要先掌握“动态内存分配”的定义、表示或操作方法。"
     },
     {
       "from": "c_pointers",
       "to": "c_file_io",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“文件I/O”需要先掌握“指针”的定义、表示或操作方法。"
     },
     {
       "from": "c_pointers",
       "to": "c_linked_lists",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“链表”需要先掌握“指针”的定义、表示或操作方法。"
     },
     {
       "from": "c_pointers",
       "to": "c_malloc",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“动态内存分配”需要先掌握“指针”的定义、表示或操作方法。"
     },
     {
       "from": "c_pointers",
       "to": "c_trees",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“树”需要先掌握“指针”的定义、表示或操作方法。"
     },
     {
       "from": "c_python_syntax",
       "to": "c_exceptions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“异常”需要先掌握“Python 语法”的定义、表示或操作方法。"
     },
     {
       "from": "c_python_syntax",
       "to": "c_flask",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Flask 框架”需要先掌握“Python 语法”的定义、表示或操作方法。"
     },
     {
       "from": "c_python_syntax",
       "to": "c_js",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“JavaScript”需要先掌握“Python 语法”的定义、表示或操作方法。"
     },
     {
       "from": "c_python_syntax",
       "to": "c_oop",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“OOP”需要先掌握“Python 语法”的定义、表示或操作方法。"
     },
     {
       "from": "c_recursion",
       "to": "c_call_stack",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“调用栈”需要先掌握“递归”的定义、表示或操作方法。"
     },
     {
       "from": "c_relational_db",
       "to": "c_sql_queries",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“SQL查询”需要先掌握“关系数据库”的定义、表示或操作方法。"
     },
     {
       "from": "c_sorting",
       "to": "c_big_o",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“大O表示法”需要先掌握“排序算法”的定义、表示或操作方法。"
     },
     {
       "from": "c_sql_queries",
       "to": "c_indexes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“SQL索引”需要先掌握“SQL查询”的定义、表示或操作方法。"
     },
     {
       "from": "c_sql_queries",
       "to": "c_joins",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“SQL连接”需要先掌握“SQL查询”的定义、表示或操作方法。"
     },
     {
       "from": "c_trees",
       "to": "c_tries",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“字典树”需要先掌握“树”的定义、表示或操作方法。"
     }
   ]
 }

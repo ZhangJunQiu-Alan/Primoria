@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "computer_architecture",
   "subject": "Great Ideas in Computer Architecture",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_computer_architecture"
+    "src_berkeley_cs61c_summer_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "二进制与十六进制与补码与整数表示",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Binary and Hexadecimal and Two's Complement & Integer Rep"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_data_rep_floating_point",
@@ -33,8 +43,13 @@
       "name_zh": "IEEE 754浮点数与字节序与内存布局",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: IEEE 754 Floating Point and Endianness and Memory Layout"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_c_prog",
@@ -43,8 +58,13 @@
       "name_zh": "C基础与控制流与指针与数组",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: C Basics & Control Flow and Pointers and Arrays"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_c_prog_memory_management",
@@ -53,8 +73,13 @@
       "name_zh": "动态内存管理与结构体、联合体与typedef",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Dynamic Memory Management and Structs, Unions, and Typedefs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_riscv",
@@ -63,8 +88,13 @@
       "name_zh": "RISC-V汇编",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: RISC-V Assembly"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_riscv_logic",
@@ -73,8 +103,13 @@
       "name_zh": "指令格式与编译器、汇编器、链接器、加载器",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Instruction Formats and Compiler, Assembler, Linker, Loader"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_riscv_logic_boolean_algebra",
@@ -83,8 +118,13 @@
       "name_zh": "布尔代数与逻辑门与组合逻辑块",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Boolean Algebra & Logic Gates and Combinational Logic Blocks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_sds",
@@ -93,8 +133,13 @@
       "name_zh": "同步数字系统",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Synchronous Digital Systems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_cpu",
@@ -103,8 +148,13 @@
       "name_zh": "CPU架构与数据通路",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_pipeline_cache",
@@ -113,8 +163,13 @@
       "name_zh": "流水线冒险与转发与分支预测",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Pipeline Hazards & Forwarding and Branch Prediction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_pipeline_cache_cache_basics",
@@ -123,8 +178,13 @@
       "name_zh": "缓存基础与直接映射与关联缓存",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Basics & Direct Mapped and Associative Caches"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_memory",
@@ -133,8 +193,13 @@
       "name_zh": "存储层次",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory Hierarchy"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_parallelism",
@@ -143,8 +208,13 @@
       "name_zh": "并行计算",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Parallel Computing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_parallel_io",
@@ -153,8 +223,13 @@
       "name_zh": "缓存一致性与伪共享与仓库级计算",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Coherence & False Sharing and Warehouse-Scale Computing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_parallel_io_memory_mapped_io",
@@ -163,8 +238,13 @@
       "name_zh": "内存映射I/O与轮询与中断",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory-Mapped I/O and Polling and Interrupts"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_io_dep",
@@ -173,8 +253,13 @@
       "name_zh": "I/O与可靠性",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: I/O and Dependability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_binary_hex",
@@ -186,8 +271,13 @@
       "description": "Representing numbers in base-2 binary and base-16 hexadecimal and converting among them and decimal, as the basis for digital data encoding.",
       "default_order": 1,
       "centrality": 0.2476,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Binary and Hexadecimal and Two's Complement & Integer Rep"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_integer_rep",
@@ -201,8 +291,13 @@
       "centrality": 0.2294,
       "visual": "diagram",
       "visual_hint": "Diagram two's-complement encoding of signed integers.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Binary and Hexadecimal and Two's Complement & Integer Rep"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_floating_point",
@@ -216,8 +311,13 @@
       "centrality": 0.0654,
       "visual": "diagram",
       "visual_hint": "Diagram the IEEE 754 sign, exponent, and mantissa fields.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: IEEE 754 Floating Point and Endianness and Memory Layout"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_endianness",
@@ -229,8 +329,13 @@
       "description": "The byte-ordering convention, big-endian or little-endian, determining how multi-byte values are laid out across consecutive memory addresses.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: IEEE 754 Floating Point and Endianness and Memory Layout"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_c_basics",
@@ -242,8 +347,13 @@
       "description": "C language fundamentals including variables, types, operators, and control-flow constructs such as conditionals and loops for writing imperative programs.",
       "default_order": 1,
       "centrality": 0.0803,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: C Basics & Control Flow and Pointers and Arrays"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_pointers_arrays",
@@ -255,8 +365,13 @@
       "description": "Pointers holding memory addresses and their close relationship to arrays, where array indexing is defined through pointer arithmetic.",
       "default_order": 2,
       "centrality": 0.0654,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: C Basics & Control Flow and Pointers and Arrays"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_memory_management",
@@ -268,8 +383,13 @@
       "description": "Manual heap management in C with malloc and free, requiring the programmer to allocate and release memory and avoid leaks and dangling pointers.",
       "default_order": 1,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Dynamic Memory Management and Structs, Unions, and Typedefs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_structs_unions",
@@ -281,8 +401,13 @@
       "description": "Aggregating data with structs that group named fields, unions that overlay fields in shared storage, and typedefs that name types.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Dynamic Memory Management and Structs, Unions, and Typedefs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_riscv_basics",
@@ -294,8 +419,13 @@
       "description": "The RISC-V register file and basic instructions for arithmetic, logic, and memory access in a load-store reduced instruction set architecture.",
       "default_order": 1,
       "centrality": 0.0931,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: RISC-V Assembly"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_riscv_control",
@@ -307,8 +437,13 @@
       "description": "RISC-V branch and jump instructions that implement conditionals and loops by comparing registers and altering the program counter.",
       "default_order": 2,
       "centrality": 0.0803,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: RISC-V Assembly"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_riscv_functions",
@@ -320,8 +455,13 @@
       "description": "The RISC-V calling convention governing argument passing, return values, and caller- and callee-saved registers, using the stack for nested calls.",
       "default_order": 3,
       "centrality": 0.0654,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: RISC-V Assembly"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_riscv_formats",
@@ -333,8 +473,13 @@
       "description": "The fixed-width RISC-V instruction encoding formats specifying how opcodes, registers, and immediate values are packed into instruction bits.",
       "default_order": 1,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Instruction Formats and Compiler, Assembler, Linker, Loader"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_call_pipeline",
@@ -346,8 +491,13 @@
       "description": "The toolchain transforming source into a running program: compiler to assembly, assembler to object code, linker to executable, loader into memory.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Instruction Formats and Compiler, Assembler, Linker, Loader"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_boolean_algebra",
@@ -361,8 +511,13 @@
       "centrality": 0.0919,
       "visual": "diagram",
       "visual_hint": "Logic-gate diagram of AND, OR, and NOT circuits.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Boolean Algebra & Logic Gates and Combinational Logic Blocks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_combinational_logic",
@@ -374,8 +529,13 @@
       "description": "Logic circuits whose outputs depend only on current inputs, built from gates to implement functions like adders, multiplexers, and decoders.",
       "default_order": 2,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Boolean Algebra & Logic Gates and Combinational Logic Blocks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_state_elements",
@@ -387,8 +547,13 @@
       "description": "Memory elements such as flip-flops and registers that store bits and update synchronously with the clock, holding circuit state between cycles.",
       "default_order": 1,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Synchronous Digital Systems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_sequential_logic",
@@ -400,8 +565,13 @@
       "description": "Circuits whose outputs depend on input history through stored state, governed by clock timing constraints such as setup and hold times.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Synchronous Digital Systems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_fsm",
@@ -415,8 +585,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "State-transition diagram of a finite state machine.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Synchronous Digital Systems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_single_cycle",
@@ -430,8 +605,13 @@
       "centrality": 0.096,
       "visual": "diagram",
       "visual_hint": "Datapath diagram of a single-cycle processor.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_cpu_control",
@@ -443,8 +623,13 @@
       "description": "The control unit generating signals from the instruction opcode to steer the datapath's multiplexers, ALU operations, and register and memory writes.",
       "default_order": 2,
       "centrality": 0.0519,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_pipelining",
@@ -458,8 +643,13 @@
       "centrality": 0.0638,
       "visual": "diagram",
       "visual_hint": "Pipeline stage diagram of overlapping instructions over cycles.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_pipeline_hazards",
@@ -473,8 +663,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Diagram a data hazard and forwarding in the pipeline.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Pipeline Hazards & Forwarding and Branch Prediction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_branch_prediction",
@@ -486,8 +681,13 @@
       "description": "Guessing the outcome and target of branches to keep the pipeline full, with mispredictions costing flushed instructions and recovery.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Pipeline Hazards & Forwarding and Branch Prediction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_cache_basics",
@@ -501,8 +701,13 @@
       "centrality": 0.0973,
       "visual": "diagram",
       "visual_hint": "Diagram a direct-mapped cache indexing blocks by address bits.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Basics & Direct Mapped and Associative Caches"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_associative_caches",
@@ -514,8 +719,13 @@
       "description": "Set-associative and fully associative caches giving blocks multiple placement options, reducing conflict misses at the cost of more comparison hardware.",
       "default_order": 2,
       "centrality": 0.0624,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Basics & Direct Mapped and Associative Caches"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_cache_performance",
@@ -527,8 +737,13 @@
       "description": "Analysing cache effectiveness via average memory access time and the classification of compulsory, conflict, and capacity misses.",
       "default_order": 1,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory Hierarchy"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_virtual_memory",
@@ -542,8 +757,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Diagram virtual-to-physical address translation through page tables.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory Hierarchy"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_tlb",
@@ -555,8 +775,13 @@
       "description": "A hardware cache of recent page-table translations that speeds virtual-to-physical address mapping by avoiding full page-table walks.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory Hierarchy"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_amdahls_law",
@@ -570,8 +795,13 @@
       "centrality": 0.0919,
       "visual": "function",
       "visual_hint": "Plot Amdahl's-law speedup against the parallel fraction.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Parallel Computing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_simd",
@@ -583,8 +813,13 @@
       "description": "Single-instruction, multiple-data parallelism applying one operation across vectors of data elements simultaneously for data-parallel workloads.",
       "default_order": 2,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Parallel Computing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_multithreading",
@@ -596,8 +831,13 @@
       "description": "Thread-level parallelism running multiple threads across cores, often expressed with OpenMP directives to share work over shared memory.",
       "default_order": 3,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Parallel Computing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_cache_coherence",
@@ -609,8 +849,13 @@
       "description": "Keeping per-core cached copies of shared data consistent, and false sharing where unrelated variables on one line cause coherence traffic.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Coherence & False Sharing and Warehouse-Scale Computing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_warehouse_scale",
@@ -622,8 +867,13 @@
       "description": "Datacenter-scale computing treating thousands of servers as one machine, emphasising parallelism, energy efficiency, and dependability at scale.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Coherence & False Sharing and Warehouse-Scale Computing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_memory_mapped_io",
@@ -635,8 +885,13 @@
       "description": "Accessing device registers through ordinary load and store instructions by mapping them into the processor's physical address space.",
       "default_order": 1,
       "centrality": 0.0919,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory-Mapped I/O and Polling and Interrupts"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_polling_interrupts",
@@ -648,8 +903,13 @@
       "description": "Two ways software learns of device events: polling repeatedly checks status, while interrupts let devices asynchronously signal the processor.",
       "default_order": 2,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory-Mapped I/O and Polling and Interrupts"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_dma",
@@ -661,8 +921,13 @@
       "description": "Direct memory access letting devices transfer data to and from memory without processor involvement, freeing the CPU during bulk transfers.",
       "default_order": 1,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: I/O and Dependability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_ecc_parity",
@@ -674,8 +939,13 @@
       "description": "Error-detecting and error-correcting codes adding redundant bits so hardware can detect, and sometimes correct, corrupted stored or transmitted data.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: I/O and Dependability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "concept_raid",
@@ -687,8 +957,13 @@
       "description": "Redundant arrays of independent disks combining drives for performance and fault tolerance through striping, mirroring, and parity schemes.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: I/O and Dependability"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -697,280 +972,610 @@
       "from": "concept_binary_hex",
       "to": "concept_integer_rep",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Binary and Hexadecimal and Two's Complement & Integer Rep"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“补码与整数表示”需要先掌握“二进制与十六进制”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_binary_hex",
       "to": "concept_floating_point",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Binary and Hexadecimal and Two's Complement & Integer Rep"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: IEEE 754 Floating Point and Endianness and Memory Layout"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“IEEE 754浮点数”需要先掌握“二进制与十六进制”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_c_basics",
       "to": "concept_pointers_arrays",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: C Basics & Control Flow and Pointers and Arrays"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“指针与数组”需要先掌握“C基础与控制流”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_pointers_arrays",
       "to": "concept_memory_management",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: C Basics & Control Flow and Pointers and Arrays"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Dynamic Memory Management and Structs, Unions, and Typedefs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“动态内存管理”需要先掌握“指针与数组”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_pointers_arrays",
       "to": "concept_structs_unions",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: C Basics & Control Flow and Pointers and Arrays"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Dynamic Memory Management and Structs, Unions, and Typedefs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“结构体、联合体与typedef”需要先掌握“指针与数组”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_riscv_basics",
       "to": "concept_riscv_control",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: RISC-V Assembly"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“控制流与分支”需要先掌握“寄存器与基本指令”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_riscv_control",
       "to": "concept_riscv_functions",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: RISC-V Assembly"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“函数调用约定”需要先掌握“控制流与分支”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_riscv_functions",
       "to": "concept_call_pipeline",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: RISC-V Assembly"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Instruction Formats and Compiler, Assembler, Linker, Loader"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“编译器、汇编器、链接器、加载器”需要先掌握“函数调用约定”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_boolean_algebra",
       "to": "concept_combinational_logic",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Boolean Algebra & Logic Gates and Combinational Logic Blocks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“组合逻辑块”需要先掌握“布尔代数与逻辑门”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_combinational_logic",
       "to": "concept_state_elements",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Boolean Algebra & Logic Gates and Combinational Logic Blocks"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Synchronous Digital Systems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“状态元件（触发器）”需要先掌握“组合逻辑块”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_state_elements",
       "to": "concept_sequential_logic",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Synchronous Digital Systems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“时序逻辑与时序”需要先掌握“状态元件（触发器）”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_sequential_logic",
       "to": "concept_fsm",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Synchronous Digital Systems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“有限状态机”需要先掌握“时序逻辑与时序”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_single_cycle",
       "to": "concept_pipelining",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“流水线原理”需要先掌握“单周期数据通路”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_pipelining",
       "to": "concept_pipeline_hazards",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Pipeline Hazards & Forwarding and Branch Prediction"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“流水线冒险与转发”需要先掌握“流水线原理”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_pipeline_hazards",
       "to": "concept_branch_prediction",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Pipeline Hazards & Forwarding and Branch Prediction"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“分支预测”需要先掌握“流水线冒险与转发”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_cache_basics",
       "to": "concept_associative_caches",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Basics & Direct Mapped and Associative Caches"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“关联缓存”需要先掌握“缓存基础与直接映射”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_associative_caches",
       "to": "concept_cache_performance",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Basics & Direct Mapped and Associative Caches"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory Hierarchy"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“AMAT与缓存未命中”需要先掌握“关联缓存”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_cache_basics",
       "to": "concept_virtual_memory",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Basics & Direct Mapped and Associative Caches"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory Hierarchy"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“虚拟内存与页表”需要先掌握“缓存基础与直接映射”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_virtual_memory",
       "to": "concept_tlb",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory Hierarchy"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“地址转换后备缓冲器（TLB）”需要先掌握“虚拟内存与页表”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_multithreading",
       "to": "concept_cache_coherence",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Parallel Computing"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Coherence & False Sharing and Warehouse-Scale Computing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“缓存一致性与伪共享”需要先掌握“线程级并行(OpenMP)”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_polling_interrupts",
       "to": "concept_dma",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory-Mapped I/O and Polling and Interrupts"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: I/O and Dependability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“直接内存访问（DMA）”需要先掌握“轮询与中断”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "concept_ecc_parity",
       "to": "concept_raid",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: I/O and Dependability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“RAID与可靠性”需要先掌握“纠错码”的定义、表示或操作方法。"
     },
     {
       "from": "concept_integer_rep",
       "to": "concept_floating_point",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Binary and Hexadecimal and Two's Complement & Integer Rep"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: IEEE 754 Floating Point and Endianness and Memory Layout"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“补码与整数表示”为学习“IEEE 754浮点数”提供背景与解题基础。"
     },
     {
       "from": "concept_floating_point",
       "to": "concept_endianness",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: IEEE 754 Floating Point and Endianness and Memory Layout"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“IEEE 754浮点数”为学习“字节序与内存布局”提供背景与解题基础。"
     },
     {
       "from": "concept_memory_management",
       "to": "concept_structs_unions",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Dynamic Memory Management and Structs, Unions, and Typedefs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“动态内存管理”为学习“结构体、联合体与typedef”提供背景与解题基础。"
     },
     {
       "from": "concept_riscv_functions",
       "to": "concept_riscv_formats",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: RISC-V Assembly"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Instruction Formats and Compiler, Assembler, Linker, Loader"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“函数调用约定”为学习“指令格式”提供背景与解题基础。"
     },
     {
       "from": "concept_riscv_formats",
       "to": "concept_call_pipeline",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Instruction Formats and Compiler, Assembler, Linker, Loader"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“指令格式”为学习“编译器、汇编器、链接器、加载器”提供背景与解题基础。"
     },
     {
       "from": "concept_single_cycle",
       "to": "concept_cpu_control",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“单周期数据通路”为学习“CPU控制逻辑”提供背景与解题基础。"
     },
     {
       "from": "concept_cpu_control",
       "to": "concept_pipelining",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“CPU控制逻辑”为学习“流水线原理”提供背景与解题基础。"
     },
     {
       "from": "concept_cache_performance",
       "to": "concept_virtual_memory",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory Hierarchy"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“AMAT与缓存未命中”为学习“虚拟内存与页表”提供背景与解题基础。"
     },
     {
       "from": "concept_amdahls_law",
       "to": "concept_simd",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Parallel Computing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“Amdahl定律”为学习“数据级并行(SIMD)”提供背景与解题基础。"
     },
     {
       "from": "concept_simd",
       "to": "concept_multithreading",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Parallel Computing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“数据级并行(SIMD)”为学习“线程级并行(OpenMP)”提供背景与解题基础。"
     },
     {
       "from": "concept_cache_coherence",
       "to": "concept_warehouse_scale",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Coherence & False Sharing and Warehouse-Scale Computing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“缓存一致性与伪共享”为学习“仓库级计算”提供背景与解题基础。"
     },
     {
       "from": "concept_memory_mapped_io",
       "to": "concept_polling_interrupts",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory-Mapped I/O and Polling and Interrupts"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“内存映射I/O”为学习“轮询与中断”提供背景与解题基础。"
     },
     {
       "from": "concept_dma",
       "to": "concept_ecc_parity",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: I/O and Dependability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“直接内存访问（DMA）”为学习“纠错码”提供背景与解题基础。"
+    },
+    {
+      "from": "concept_riscv_formats",
+      "to": "concept_single_cycle",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "单周期数据通路按 RISC-V 指令格式拆分并传递字段。",
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Instruction Formats and Compiler, Assembler, Linker, Loader"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "concept_fsm",
+      "to": "concept_single_cycle",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "有限状态与同步控制知识帮助理解处理器控制逻辑。",
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Synchronous Digital Systems"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: CPU Architecture & Datapath"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "concept_binary_hex",
+      "to": "concept_cache_basics",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "直接映射缓存的 tag、index 和 offset 需要二进制地址分解。",
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Binary and Hexadecimal and Two's Complement & Integer Rep"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Cache Basics & Direct Mapped and Associative Caches"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "from": "concept_riscv_basics",
+      "to": "concept_memory_mapped_io",
+      "type": "prereq",
+      "strength": "hard",
+      "reason": "内存映射 I/O 通过处理器的加载和存储指令访问设备寄存器。",
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: RISC-V Assembly"
+        },
+        {
+          "source_id": "src_berkeley_cs61c_summer_2026",
+          "locator": "Summer 2026 schedule and course notes: Memory-Mapped I/O and Polling and Interrupts"
+        }
+      ],
+      "review_status": "approved"
     }
   ]
 }

@@ -2,7 +2,7 @@
   "graphId": "data_structures_and_algorithms",
   "subject": "Data Structures and Algorithms",
   "generatedFrom": "data/knowledge-graphs/source/data_structures_and_algorithms.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -889,317 +889,380 @@
     {
       "from": "c_ucb61b_1d_range_search",
       "to": "c_ucb61b_kd_trees",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“K-D 树”需要先掌握“一维范围查询”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_alist",
       "to": "c_ucb61b_iterators",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“动态数组 (ArrayList)”为学习“迭代器与可迭代”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_alist",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“动态数组 (ArrayList)”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_array_heap",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“堆的数组表示”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_counting_sort",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“计数排序”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_graph_api",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“图 API 与邻接表”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_hash_code",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“哈希函数与Object.hashCode()”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_quick_find",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“快速查找”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_selection_insertion_sort",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“选择与插入排序”需要先掌握“定长数组”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_b_trees",
       "to": "c_ucb61b_llrb",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“左倾红黑树”需要先掌握“B树 (2-3树)”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bfs",
       "to": "c_ucb61b_edge_relaxation",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“广度优先搜索 (BFS)”为学习“边松弛”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_loop_analysis",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“循环与求和分析”需要先掌握“大Θ、大O、大Ω”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_recursion_analysis",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“递归时间复杂度分析”需要先掌握“大Θ、大O、大Ω”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_selection_insertion_sort",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“大Θ、大O、大Ω”为学习“选择与插入排序”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_sort_bounds",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“排序下界”需要先掌握“大Θ、大O、大Ω”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_binary_heap",
       "to": "c_ucb61b_heap_operations",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“上浮、下沉、插入/删除”需要先掌握“二叉最小/最大堆”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bst_operations",
       "to": "c_ucb61b_1d_range_search",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“一维范围查询”需要先掌握“BST 查找、插入与删除”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bst_operations",
       "to": "c_ucb61b_b_trees",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“B树 (2-3树)”需要先掌握“BST 查找、插入与删除”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bst_operations",
       "to": "c_ucb61b_tree_rotation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“树旋转”需要先掌握“BST 查找、插入与删除”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_bst_property",
       "to": "c_ucb61b_bst_operations",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“BST 查找、插入与删除”需要先掌握“二叉搜索树不变量”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_classes_objects",
       "to": "c_ucb61b_interfaces",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“接口与重写”需要先掌握“类与对象实例化”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_classes_objects",
       "to": "c_ucb61b_references",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“引用类型与基本类型”需要先掌握“类与对象实例化”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_classes_objects",
       "to": "c_ucb61b_testing",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“类与对象实例化”为学习“JUnit 单元测试”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_counting_sort",
       "to": "c_ucb61b_lsd_radix",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“LSD 基数排序”需要先掌握“计数排序”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_dfs",
       "to": "c_ucb61b_topological_sort",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“拓扑排序”需要先掌握“深度优先搜索 (DFS)”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_dijkstra",
       "to": "c_ucb61b_a_star",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“A* 搜索算法”需要先掌握“Dijkstra 算法”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_dijkstra",
       "to": "c_ucb61b_prim",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“Dijkstra 算法”为学习“Prim 算法”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_edge_relaxation",
       "to": "c_ucb61b_dijkstra",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Dijkstra 算法”需要先掌握“边松弛”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_graph_api",
       "to": "c_ucb61b_bfs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“广度优先搜索 (BFS)”需要先掌握“图 API 与邻接表”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_graph_api",
       "to": "c_ucb61b_dfs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“深度优先搜索 (DFS)”需要先掌握“图 API 与邻接表”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_graph_api",
       "to": "c_ucb61b_mst_property",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“割性质”需要先掌握“图 API 与邻接表”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_hash_code",
       "to": "c_ucb61b_linear_probing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线性探测”需要先掌握“哈希函数与Object.hashCode()”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_hash_code",
       "to": "c_ucb61b_separate_chaining",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“分离链接”需要先掌握“哈希函数与Object.hashCode()”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_heap_operations",
       "to": "c_ucb61b_array_heap",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“堆的数组表示”需要先掌握“上浮、下沉、插入/删除”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_inheritance",
       "to": "c_ucb61b_polymorphism",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“子类型多态与动态分派”需要先掌握“实现继承 (Extends)”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_interfaces",
       "to": "c_ucb61b_inheritance",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“实现继承 (Extends)”需要先掌握“接口与重写”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_interfaces",
       "to": "c_ucb61b_iterators",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“迭代器与可迭代”需要先掌握“接口与重写”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_interfaces",
       "to": "c_ucb61b_pq_interface",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“优先队列 ADT”需要先掌握“接口与重写”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_java_basics",
       "to": "c_ucb61b_classes_objects",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“类与对象实例化”需要先掌握“类型、控制流与函数”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_lsd_radix",
       "to": "c_ucb61b_msd_radix",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“MSD 基数排序”需要先掌握“LSD 基数排序”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_merge_sort",
       "to": "c_ucb61b_quick_sort",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“归并排序”为学习“快速排序”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_mst_property",
       "to": "c_ucb61b_kruskal",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Kruskal 算法”需要先掌握“割性质”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_mst_property",
       "to": "c_ucb61b_prim",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Prim 算法”需要先掌握“割性质”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_pq_interface",
       "to": "c_ucb61b_binary_heap",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“二叉最小/最大堆”需要先掌握“优先队列 ADT”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_pq_interface",
       "to": "c_ucb61b_dijkstra",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Dijkstra 算法”需要先掌握“优先队列 ADT”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_quick_find",
       "to": "c_ucb61b_quick_union",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“快速合并”需要先掌握“快速查找”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_quick_union",
       "to": "c_ucb61b_wqu",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“加权快速合并”需要先掌握“快速合并”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_recursion_analysis",
       "to": "c_ucb61b_merge_sort",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“归并排序”需要先掌握“递归时间复杂度分析”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_references",
       "to": "c_ucb61b_arrays",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“定长数组”需要先掌握“引用类型与基本类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_references",
       "to": "c_ucb61b_sllist",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“单向链表 (SLList)”需要先掌握“引用类型与基本类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_references",
       "to": "c_ucb61b_trees_intro",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“树的定义与遍历”需要先掌握“引用类型与基本类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_selection_insertion_sort",
       "to": "c_ucb61b_merge_sort",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“选择与插入排序”为学习“归并排序”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_separate_chaining",
       "to": "c_ucb61b_load_factor",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“负载因子与扩容”需要先掌握“分离链接”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_sllist",
       "to": "c_ucb61b_dllist",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“带头哨兵的双向链表”需要先掌握“单向链表 (SLList)”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_sllist",
       "to": "c_ucb61b_graph_api",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“单向链表 (SLList)”为学习“图 API 与邻接表”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_tree_rotation",
       "to": "c_ucb61b_llrb",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“左倾红黑树”需要先掌握“树旋转”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_binary_heap",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“二叉最小/最大堆”需要先掌握“树的定义与遍历”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_bst_property",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“二叉搜索树不变量”需要先掌握“树的定义与遍历”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_mst_property",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“树的定义与遍历”为学习“割性质”提供背景与解题基础。"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_trie_basics",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Trie 结构”需要先掌握“树的定义与遍历”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_trie_basics",
       "to": "c_ucb61b_trie_string_ops",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Trie 字符串操作”需要先掌握“Trie 结构”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_wqu",
       "to": "c_ucb61b_kruskal",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Kruskal 算法”需要先掌握“加权快速合并”的定义、表示或操作方法。"
     },
     {
       "from": "c_ucb61b_wqu",
       "to": "c_ucb61b_path_compression",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“路径压缩”需要先掌握“加权快速合并”的定义、表示或操作方法。"
     }
   ]
 }

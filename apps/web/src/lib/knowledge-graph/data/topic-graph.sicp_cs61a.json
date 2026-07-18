@@ -2,7 +2,7 @@
   "graphId": "sicp_cs61a",
   "subject": "Structure and Interpretation of Computer Programs (CS61A)",
   "generatedFrom": "data/knowledge-graphs/source/sicp_cs61a.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -640,227 +640,272 @@
     {
       "from": "box_pointer",
       "to": "mutability",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“可变性”需要先掌握“箱指针图”的定义、表示或操作方法。"
     },
     {
       "from": "control",
       "to": "iterators",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“迭代器”需要先掌握“控制结构”的定义、表示或操作方法。"
     },
     {
       "from": "control",
       "to": "recursion",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“递归”需要先掌握“控制结构”的定义、表示或操作方法。"
     },
     {
       "from": "data_abs",
       "to": "tree_abs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“树数据抽象”需要先掌握“数据抽象”的定义、表示或操作方法。"
     },
     {
       "from": "dict",
       "to": "mutability",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“字典”为学习“可变性”提供背景与解题基础。"
     },
     {
       "from": "env_diag",
       "to": "func_arg",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“函数作参数”需要先掌握“环境图”的定义、表示或操作方法。"
     },
     {
       "from": "eval",
       "to": "apply",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“应用过程”需要先掌握“求值过程”的定义、表示或操作方法。"
     },
     {
       "from": "expr_stmt",
       "to": "control",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“控制结构”需要先掌握“表达式与语句”的定义、表示或操作方法。"
     },
     {
       "from": "expr_stmt",
       "to": "regex",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“表达式与语句”为学习“正则表达式”提供背景与解题基础。"
     },
     {
       "from": "expr_stmt",
       "to": "scheme_syntax",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Scheme 语法”需要先掌握“表达式与语句”的定义、表示或操作方法。"
     },
     {
       "from": "expr_stmt",
       "to": "seq",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“序列与切片”需要先掌握“表达式与语句”的定义、表示或操作方法。"
     },
     {
       "from": "expr_stmt",
       "to": "sql_queries",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“表达式与语句”为学习“SQL 表与查询”提供背景与解题基础。"
     },
     {
       "from": "func_arg",
       "to": "func_ret",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“函数作返回值”需要先掌握“函数作参数”的定义、表示或操作方法。"
     },
     {
       "from": "func_arg",
       "to": "recursion",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“函数作参数”为学习“递归”提供背景与解题基础。"
     },
     {
       "from": "func_ret",
       "to": "decorators",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“装饰器”需要先掌握“函数作返回值”的定义、表示或操作方法。"
     },
     {
       "from": "func_ret",
       "to": "lambda",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Lambda 表达式”需要先掌握“函数作返回值”的定义、表示或操作方法。"
     },
     {
       "from": "iterators",
       "to": "generators",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“生成器”需要先掌握“迭代器”的定义、表示或操作方法。"
     },
     {
       "from": "lambda",
       "to": "currying",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“Lambda 表达式”为学习“柯里化”提供背景与解题基础。"
     },
     {
       "from": "linked_lists",
       "to": "mut_trees",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“可变树”需要先掌握“链表”的定义、表示或操作方法。"
     },
     {
       "from": "linked_lists",
       "to": "scheme_lists",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“链表”为学习“Scheme 列表与序对”提供背景与解题基础。"
     },
     {
       "from": "mutability",
       "to": "linked_lists",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“链表”需要先掌握“可变性”的定义、表示或操作方法。"
     },
     {
       "from": "mutability",
       "to": "oop",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“面向对象编程”需要先掌握“可变性”的定义、表示或操作方法。"
     },
     {
       "from": "oop",
       "to": "class_attr",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“类与实例属性”需要先掌握“面向对象编程”的定义、表示或操作方法。"
     },
     {
       "from": "oop",
       "to": "inherit_comp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“继承与组合”需要先掌握“面向对象编程”的定义、表示或操作方法。"
     },
     {
       "from": "oop",
       "to": "iterators",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“迭代器”需要先掌握“面向对象编程”的定义、表示或操作方法。"
     },
     {
       "from": "oop",
       "to": "linked_lists",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“链表”需要先掌握“面向对象编程”的定义、表示或操作方法。"
     },
     {
       "from": "oop",
       "to": "string_rep",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“面向对象编程”为学习“字符串表示”提供背景与解题基础。"
     },
     {
       "from": "parsing",
       "to": "eval",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“求值过程”需要先掌握“词法分析与解析”的定义、表示或操作方法。"
     },
     {
       "from": "pure_func",
       "to": "env_diag",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“纯函数与副作用函数”为学习“环境图”提供背景与解题基础。"
     },
     {
       "from": "recursion",
       "to": "tail_calls",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“尾调用与优化”需要先掌握“递归”的定义、表示或操作方法。"
     },
     {
       "from": "recursion",
       "to": "tree_recur",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“树递归”需要先掌握“递归”的定义、表示或操作方法。"
     },
     {
       "from": "scheme_syntax",
       "to": "eval",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“求值过程”需要先掌握“Scheme 语法”的定义、表示或操作方法。"
     },
     {
       "from": "scheme_syntax",
       "to": "macros",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“宏”需要先掌握“Scheme 语法”的定义、表示或操作方法。"
     },
     {
       "from": "scheme_syntax",
       "to": "scheme_lists",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Scheme 列表与序对”需要先掌握“Scheme 语法”的定义、表示或操作方法。"
     },
     {
       "from": "scheme_syntax",
       "to": "tail_calls",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“尾调用与优化”需要先掌握“Scheme 语法”的定义、表示或操作方法。"
     },
     {
       "from": "seq",
       "to": "box_pointer",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“箱指针图”需要先掌握“序列与切片”的定义、表示或操作方法。"
     },
     {
       "from": "seq",
       "to": "data_abs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“数据抽象”需要先掌握“序列与切片”的定义、表示或操作方法。"
     },
     {
       "from": "seq",
       "to": "dict",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“序列与切片”为学习“字典”提供背景与解题基础。"
     },
     {
       "from": "seq",
       "to": "list_comp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“列表推导式”需要先掌握“序列与切片”的定义、表示或操作方法。"
     },
     {
       "from": "sql_queries",
       "to": "sql_joins",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“SQL 连接与聚合”需要先掌握“SQL 表与查询”的定义、表示或操作方法。"
     },
     {
       "from": "tree_abs",
       "to": "bnf",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“树数据抽象”为学习“BNF 上下文无关文法”提供背景与解题基础。"
     },
     {
       "from": "tree_abs",
       "to": "mut_trees",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“可变树”需要先掌握“树数据抽象”的定义、表示或操作方法。"
     },
     {
       "from": "tree_abs",
       "to": "parsing",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“树数据抽象”为学习“词法分析与解析”提供背景与解题基础。"
     },
     {
       "from": "tree_abs",
       "to": "tree_trav",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“树遍历”需要先掌握“树数据抽象”的定义、表示或操作方法。"
     },
     {
       "from": "tree_recur",
       "to": "tree_abs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“树数据抽象”需要先掌握“树递归”的定义、表示或操作方法。"
     }
   ]
 }

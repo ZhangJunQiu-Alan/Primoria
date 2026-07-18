@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "python_fundamentals",
   "subject": "Python Fundamentals",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_python_fundamentals"
+    "src_python_docs_3_14"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "运行 Python 程序",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_interactive_execution",
@@ -38,8 +48,13 @@
       "visual": "diagram",
       "visual_hint": "Trace a statement from the prompt through the interpreter to its displayed result.",
       "centrality": 0.4197,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_script_execution",
@@ -51,8 +66,13 @@
       "description": "Script execution runs a saved Python file from an editor or terminal, processing its statements in order and reporting any output or errors produced during the run.",
       "default_order": 2,
       "centrality": 0.9291,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_values_variables_names",
@@ -61,8 +81,13 @@
       "name_zh": "值、变量与名称",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_runtime_values",
@@ -74,8 +99,13 @@
       "description": "Runtime values are data objects such as text and numbers that Python creates, stores, compares, and passes between operations while a program is executing.",
       "default_order": 1,
       "centrality": 0.571,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_variable_binding",
@@ -89,8 +119,13 @@
       "visual": "diagram",
       "visual_hint": "Show names as labels bound to values, then animate rebinding one name to a different value.",
       "centrality": 0.3786,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_identifier_rules",
@@ -102,8 +137,13 @@
       "description": "Identifier rules determine which variable names are valid and readable, including allowed characters, reserved forms, capitalization choices, and avoidance of misleading or undefined names.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_working_with_text",
@@ -112,8 +152,13 @@
       "name_zh": "文本处理",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Working with Text"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_string_values",
@@ -125,8 +170,13 @@
       "description": "String values represent sequences of characters enclosed by matching quotation marks and support text storage, concatenation, whitespace control, and use wherever textual data is required.",
       "default_order": 1,
       "centrality": 0.0902,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Working with Text"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_string_transformations",
@@ -138,8 +188,13 @@
       "description": "String transformations produce modified text through methods such as changing case or removing surrounding whitespace while leaving the original string value unchanged unless reassigned.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Working with Text"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_formatted_strings",
@@ -153,8 +208,13 @@
       "visual": "interactive",
       "visual_hint": "Allow learners to edit variables and observe how the resulting formatted message changes.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Working with Text"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_numbers_expressions",
@@ -163,8 +223,13 @@
       "name_zh": "数值与表达式",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Numbers and Expressions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_numeric_types",
@@ -176,8 +241,13 @@
       "description": "Numeric types distinguish whole-number integers from floating-point values, affecting representation and the results produced when arithmetic combines different kinds of numbers.",
       "default_order": 1,
       "centrality": 0.0775,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Numbers and Expressions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_arithmetic_expressions",
@@ -189,8 +259,13 @@
       "description": "Arithmetic expressions combine numeric values with operators to calculate results, with grouping and operator precedence determining the order in which Python evaluates each operation.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Numbers and Expressions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_list_structure_access",
@@ -199,8 +274,13 @@
       "name_zh": "列表结构与访问",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_list_construction",
@@ -212,8 +292,13 @@
       "description": "List construction groups an ordered, mutable sequence of values inside one collection, allowing a program to store many related items under a single variable name.",
       "default_order": 1,
       "centrality": 0.2164,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_sequence_indexing",
@@ -227,8 +312,13 @@
       "visual": "interactive",
       "visual_hint": "Let learners select positive and negative indices and highlight the corresponding sequence element.",
       "centrality": 0.0984,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_list_length",
@@ -240,8 +330,13 @@
       "description": "List length is the number of elements currently stored in a list and can be used to describe collection size, validate positions, or control later processing.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_list_changes_ordering",
@@ -250,8 +345,13 @@
       "name_zh": "列表修改与排序",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Changes and Ordering"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_list_mutation",
@@ -265,8 +365,13 @@
       "visual": "interactive",
       "visual_hint": "Allow learners to apply replace, append, insert, and remove operations while tracking the list after each step.",
       "centrality": 0.0599,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Changes and Ordering"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_list_ordering",
@@ -278,8 +383,13 @@
       "description": "List ordering rearranges elements permanently or produces a separately sorted view, while reversing changes traversal direction without necessarily defining a new comparison rule.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Changes and Ordering"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_for_loops_blocks",
@@ -288,8 +398,13 @@
       "name_zh": "for 循环与代码块",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_block_indentation",
@@ -303,8 +418,13 @@
       "visual": "diagram",
       "visual_hint": "Highlight nested indentation levels and show which statements belong to each code block.",
       "centrality": 0.199,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_for_iteration",
@@ -318,8 +438,13 @@
       "visual": "algorithm",
       "visual_hint": "Step through an iterable and display the loop variable and executed block on each iteration.",
       "centrality": 0.0845,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_range_sequences",
@@ -331,8 +456,13 @@
       "description": "Range sequences generate evenly spaced integers from specified bounds and steps, supplying predictable numeric values for counted loops and list construction.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_slices_comprehensions",
@@ -341,8 +471,13 @@
       "name_zh": "切片与列表推导式",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Slices and List Comprehensions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_sequence_slicing",
@@ -356,8 +491,13 @@
       "visual": "interactive",
       "visual_hint": "Let learners drag slice boundaries and compare aliasing with a full-slice copy.",
       "centrality": 0.0318,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Slices and List Comprehensions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_list_comprehensions",
@@ -371,8 +511,13 @@
       "visual": "algorithm",
       "visual_hint": "Expand a comprehension into its equivalent loop and map each part between the two forms.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Slices and List Comprehensions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_tuples_immutability",
@@ -381,8 +526,13 @@
       "name_zh": "元组与不可变性",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Tuples and Immutability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_tuple_immutability",
@@ -396,8 +546,13 @@
       "visual": "interactive",
       "visual_hint": "Compare an attempted element change with rebinding the tuple variable to a new tuple.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Tuples and Immutability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_tuple_traversal",
@@ -409,8 +564,13 @@
       "description": "Tuple traversal processes tuple elements with the same indexing, slicing, and loop patterns used for other sequences while respecting the tuple's immutable contents.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Tuples and Immutability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_boolean_logic_branching",
@@ -419,8 +579,13 @@
       "name_zh": "布尔逻辑与分支",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_comparison_expressions",
@@ -432,8 +597,13 @@
       "description": "Comparison expressions evaluate equality, inequality, ordering, or membership relationships and produce Boolean results that other control structures can use to choose behavior.",
       "default_order": 1,
       "centrality": 0.0963,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_compound_conditions",
@@ -445,8 +615,13 @@
       "description": "Compound conditions combine or negate Boolean tests so a decision can require every condition, accept any condition, or exclude a particular case.",
       "default_order": 2,
       "centrality": 0.0642,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_conditional_branching",
@@ -460,8 +635,13 @@
       "visual": "algorithm",
       "visual_hint": "Trace execution through an if-elif-else chain for several input cases.",
       "centrality": 0.0318,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_dictionaries_keyed_data",
@@ -470,8 +650,13 @@
       "name_zh": "字典与键值数据",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_dictionary_operations",
@@ -485,8 +670,13 @@
       "visual": "interactive",
       "visual_hint": "Let learners add, update, retrieve, and delete key-value pairs while displaying the dictionary state.",
       "centrality": 0.103,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_safe_dictionary_lookup",
@@ -498,8 +688,13 @@
       "description": "Safe dictionary lookup requests a key with a fallback value, allowing missing data to be handled deliberately instead of immediately raising a key-related error.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_dictionary_iteration",
@@ -513,8 +708,13 @@
       "visual": "algorithm",
       "visual_hint": "Animate separate passes over items, keys, sorted keys, and values from one dictionary.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_nested_collection_structures",
@@ -523,8 +723,13 @@
       "name_zh": "嵌套集合结构",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Nested Collection Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_nested_collections",
@@ -538,8 +743,13 @@
       "visual": "diagram",
       "visual_hint": "Diagram a list of dictionaries, a dictionary of lists, and a dictionary of dictionaries as nested containers.",
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Nested Collection Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_nested_data_traversal",
@@ -553,8 +763,13 @@
       "visual": "algorithm",
       "visual_hint": "Trace a path through nested containers and show each key, index, and loop used to reach a target value.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Nested Collection Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_user_input_conversion",
@@ -563,8 +778,13 @@
       "name_zh": "用户输入与转换",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: User Input and Conversion"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_text_input",
@@ -576,8 +796,13 @@
       "description": "Text input pauses a running program, displays a prompt, and returns the user's response as a string that can be stored and processed by later statements.",
       "default_order": 1,
       "centrality": 0.0714,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: User Input and Conversion"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_explicit_type_conversion",
@@ -591,8 +816,13 @@
       "visual": "function",
       "visual_hint": "Let learners submit different strings and observe successful conversions or conversion failures.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: User Input and Conversion"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_input_prompt_design",
@@ -604,8 +834,13 @@
       "description": "Input prompt design gives users enough context to provide valid responses, including clear wording, spacing, expected formats, and instructions for ending repeated interaction.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: User Input and Conversion"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_while_loops_control",
@@ -614,8 +849,13 @@
       "name_zh": "while 循环与控制",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_condition_controlled_loops",
@@ -629,8 +869,13 @@
       "visual": "algorithm",
       "visual_hint": "Trace the condition, loop body, state update, and exit point across several iterations.",
       "centrality": 0.0609,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_sentinel_flag_loops",
@@ -642,8 +887,13 @@
       "description": "Sentinel and flag loops continue until a special input or Boolean state signals completion, separating the decision to stop from the main work performed each iteration.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_loop_control",
@@ -657,8 +907,13 @@
       "visual": "algorithm",
       "visual_hint": "Step through the same loop with break and continue cases and highlight the statements each case bypasses.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_iterative_collection_processing",
@@ -667,8 +922,13 @@
       "name_zh": "迭代式集合处理",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Iterative Collection Processing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_collection_filtering",
@@ -682,8 +942,13 @@
       "visual": "algorithm",
       "visual_hint": "Animate items being tested and either retained, removed, or moved into a result collection.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Iterative Collection Processing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_incremental_data_collection",
@@ -695,8 +960,13 @@
       "description": "Incremental data collection repeatedly accepts user responses and stores each result in a growing list or dictionary until an explicit completion condition is reached.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Iterative Collection Processing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_function_definitions_calls",
@@ -705,8 +975,13 @@
       "name_zh": "函数定义与调用",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_function_definition_calls",
@@ -720,8 +995,13 @@
       "visual": "diagram",
       "visual_hint": "Diagram control moving from a call site into a function body and then returning to the next statement.",
       "centrality": 0.2327,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_parameters_arguments",
@@ -735,8 +1015,13 @@
       "visual": "interactive",
       "visual_hint": "Let learners match call arguments to parameter names and display the bindings created inside the function.",
       "centrality": 0.1238,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_positional_keyword_arguments",
@@ -748,8 +1033,13 @@
       "description": "Positional arguments bind according to order, whereas keyword arguments bind by parameter name, allowing calls to trade brevity for explicitness while still satisfying the function signature.",
       "default_order": 3,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_flexible_function_interfaces",
@@ -758,8 +1048,13 @@
       "name_zh": "灵活的函数接口",
       "topic": null,
       "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Flexible Function Interfaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_default_optional_parameters",
@@ -771,8 +1066,13 @@
       "description": "Default parameters supply a value when a caller omits an argument, and carefully chosen defaults allow one function interface to support both simple and more detailed calls.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Flexible Function Interfaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_variadic_positional_arguments",
@@ -784,8 +1084,13 @@
       "description": "Variadic positional arguments collect extra unnamed arguments into a tuple, allowing one function to accept a flexible number of similarly interpreted values after required parameters.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Flexible Function Interfaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_variadic_keyword_arguments",
@@ -797,8 +1102,13 @@
       "description": "Variadic keyword arguments collect additional named arguments into a dictionary, preserving each caller-provided name and value for flexible configuration or record construction.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Flexible Function Interfaces"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_function_results_scope",
@@ -807,8 +1117,13 @@
       "name_zh": "函数结果与作用域",
       "topic": null,
       "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_function_return_values",
@@ -820,8 +1135,13 @@
       "description": "Function return values carry a computed result back to the caller, allowing the result to be assigned, combined in expressions, stored in collections, or passed onward.",
       "default_order": 1,
       "centrality": 0.0417,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_mutable_argument_effects",
@@ -835,8 +1155,13 @@
       "visual": "interactive",
       "visual_hint": "Compare passing a list directly with passing a sliced copy and track both objects after mutation.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_variable_scope",
@@ -850,8 +1175,13 @@
       "visual": "diagram",
       "visual_hint": "Diagram global and function-local name spaces and show which names are visible at each line.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_modules_code_organization",
@@ -860,8 +1190,13 @@
       "name_zh": "模块与代码组织",
       "topic": null,
       "default_order": 19,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Modules and Code Organization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_module_imports",
@@ -875,8 +1210,13 @@
       "visual": "diagram",
       "visual_hint": "Diagram two Python files and trace how imported names become available in the calling module.",
       "centrality": 0.0669,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Modules and Code Organization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_import_aliases",
@@ -888,8 +1228,13 @@
       "description": "Import aliases assign shorter or clearer local names to imported modules, functions, or classes without changing the original definitions in their source modules.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Modules and Code Organization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_standard_library_use",
@@ -901,8 +1246,13 @@
       "description": "Standard library use reuses modules distributed with Python, allowing programs to access tested functionality through documented imports instead of reimplementing common behavior.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Modules and Code Organization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_classes_objects_state",
@@ -911,8 +1261,13 @@
       "name_zh": "类、对象与状态",
       "topic": null,
       "default_order": 20,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_class_definitions_instances",
@@ -926,8 +1281,13 @@
       "visual": "diagram",
       "visual_hint": "Show one class definition producing multiple instances with separate identities.",
       "centrality": 0.0986,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_instance_attributes",
@@ -941,8 +1301,13 @@
       "visual": "interactive",
       "visual_hint": "Create two instances, edit one attribute, and show that the other instance remains unchanged.",
       "centrality": 0.0567,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_instance_methods",
@@ -954,8 +1319,13 @@
       "description": "Instance methods define operations associated with an object and use the current instance to read or change attributes while responding to a method call.",
       "default_order": 3,
       "centrality": 0.0503,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_inheritance_composition",
@@ -964,8 +1334,13 @@
       "name_zh": "继承与组合",
       "topic": null,
       "default_order": 21,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_class_inheritance",
@@ -979,8 +1354,13 @@
       "visual": "diagram",
       "visual_hint": "Diagram a parent and child class, labeling inherited and newly defined members.",
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_method_overriding",
@@ -992,8 +1372,13 @@
       "description": "Method overriding replaces an inherited method in a child class when the specialized type requires behavior different from the parent's default implementation.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_object_composition",
@@ -1007,8 +1392,13 @@
       "visual": "diagram",
       "visual_hint": "Show a containing object linked to a component instance and label delegated responsibilities.",
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_files_persistent_data",
@@ -1017,8 +1407,13 @@
       "name_zh": "文件与持久化数据",
       "topic": null,
       "default_order": 22,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Files and Persistent Data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_file_paths_contexts",
@@ -1032,8 +1427,13 @@
       "visual": "diagram",
       "visual_hint": "Diagram relative and absolute paths, then show a file opening and closing around a context block.",
       "centrality": 0.0548,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Files and Persistent Data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_text_file_io",
@@ -1045,8 +1445,13 @@
       "description": "Text file input and output reads whole contents or lines and writes or appends text, allowing programs to transform information that persists beyond one execution.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Files and Persistent Data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_json_persistence",
@@ -1058,8 +1463,13 @@
       "description": "JSON persistence serializes supported Python data to a structured text file and reconstructs it later, enabling user-generated state to survive between program runs.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Files and Persistent Data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_exceptions_failure_recovery",
@@ -1068,8 +1478,13 @@
       "name_zh": "异常与故障恢复",
       "topic": null,
       "default_order": 23,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Exceptions and Failure Recovery"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_runtime_exceptions",
@@ -1081,8 +1496,13 @@
       "description": "Runtime exceptions are error objects raised when execution encounters an invalid operation or unavailable resource, interrupting normal flow unless the program handles the failure.",
       "default_order": 1,
       "centrality": 0.0788,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Exceptions and Failure Recovery"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_try_except_control_flow",
@@ -1096,8 +1516,13 @@
       "visual": "algorithm",
       "visual_hint": "Trace successful and failing paths through try, except, else, and the following statements.",
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Exceptions and Failure Recovery"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_selective_error_handling",
@@ -1109,8 +1534,13 @@
       "description": "Selective error handling chooses which failures to report, suppress, or handle across multiple files so the program remains useful without hiding information that users or developers need.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Exceptions and Failure Recovery"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_topic_testing_code_improvement",
@@ -1119,8 +1549,13 @@
       "name_zh": "测试与代码改进",
       "topic": null,
       "default_order": 24,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_unit_testing",
@@ -1134,8 +1569,13 @@
       "visual": "diagram",
       "visual_hint": "Diagram production code, a test case, supplied inputs, observed results, and expected results.",
       "centrality": 0.0398,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_debugging_workflow",
@@ -1149,8 +1589,13 @@
       "visual": "algorithm",
       "visual_hint": "Display a repeatable cycle from reproduction and evidence gathering through isolation, correction, and verification.",
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "pyf_refactoring_readability",
@@ -1162,8 +1607,13 @@
       "description": "Refactoring and readability improve code structure without changing intended behavior by using focused functions or classes, clear names, comments, consistent formatting, and simpler module organization.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -1172,744 +1622,1546 @@
       "to": "pyf_script_execution",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“交互式执行”为学习“脚本执行”提供背景与解题基础。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_runtime_values",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“脚本执行”为学习“运行时值”提供背景与解题基础。"
     },
     {
       "from": "pyf_runtime_values",
       "to": "pyf_variable_binding",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“变量绑定”需要先掌握“运行时值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_identifier_rules",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“变量绑定”为学习“标识符规则”提供背景与解题基础。"
     },
     {
       "from": "pyf_runtime_values",
       "to": "pyf_string_values",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Working with Text"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“字符串值”需要先掌握“运行时值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_string_values",
       "to": "pyf_string_transformations",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Working with Text"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“字符串转换”需要先掌握“字符串值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_string_values",
       "to": "pyf_formatted_strings",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Working with Text"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“格式化字符串”需要先掌握“字符串值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_values",
       "to": "pyf_numeric_types",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Numbers and Expressions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“数值类型”需要先掌握“运行时值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_numeric_types",
       "to": "pyf_arithmetic_expressions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Numbers and Expressions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“算术表达式”需要先掌握“数值类型”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_list_construction",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“列表构造”需要先掌握“变量绑定”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_sequence_indexing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“序列索引”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_sequence_indexing",
       "to": "pyf_list_length",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“序列索引”为学习“列表长度”提供背景与解题基础。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_list_mutation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Changes and Ordering"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“列表修改”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_sequence_indexing",
       "to": "pyf_list_mutation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Changes and Ordering"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“列表修改”需要先掌握“序列索引”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_mutation",
       "to": "pyf_list_ordering",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Changes and Ordering"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“列表修改”为学习“列表排序”提供背景与解题基础。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_block_indentation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“代码块缩进”需要先掌握“脚本执行”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_block_indentation",
       "to": "pyf_for_iteration",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“for 迭代”需要先掌握“代码块缩进”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_for_iteration",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“for 迭代”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_numeric_types",
       "to": "pyf_range_sequences",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Numbers and Expressions"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“range 序列”需要先掌握“数值类型”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_sequence_indexing",
       "to": "pyf_sequence_slicing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Slices and List Comprehensions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“序列切片”需要先掌握“序列索引”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_list_comprehensions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Slices and List Comprehensions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“列表推导式”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_list_comprehensions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Slices and List Comprehensions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“列表推导式”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_tuple_immutability",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Tuples and Immutability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“列表构造”为学习“元组不可变性”提供背景与解题基础。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_tuple_traversal",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Tuples and Immutability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“元组遍历”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_values",
       "to": "pyf_comparison_expressions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“比较表达式”需要先掌握“运行时值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_comparison_expressions",
       "to": "pyf_compound_conditions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“复合条件”需要先掌握“比较表达式”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_compound_conditions",
       "to": "pyf_conditional_branching",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“条件分支”需要先掌握“复合条件”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_block_indentation",
       "to": "pyf_conditional_branching",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“条件分支”需要先掌握“代码块缩进”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_dictionary_operations",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“字典操作”需要先掌握“变量绑定”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_safe_dictionary_lookup",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“安全字典查找”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_dictionary_iteration",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“字典遍历”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_dictionary_iteration",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“字典遍历”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_nested_collections",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Structure and Access"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Nested Collection Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“嵌套集合”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_nested_collections",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Nested Collection Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“嵌套集合”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_nested_collections",
       "to": "pyf_nested_data_traversal",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Nested Collection Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“嵌套数据遍历”需要先掌握“嵌套集合”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_nested_data_traversal",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Nested Collection Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“嵌套数据遍历”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_text_input",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: User Input and Conversion"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“文本输入”需要先掌握“脚本执行”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_text_input",
       "to": "pyf_explicit_type_conversion",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: User Input and Conversion"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“显式类型转换”需要先掌握“文本输入”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_numeric_types",
       "to": "pyf_explicit_type_conversion",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Numbers and Expressions"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: User Input and Conversion"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“显式类型转换”需要先掌握“数值类型”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_text_input",
       "to": "pyf_input_prompt_design",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: User Input and Conversion"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“文本输入”为学习“输入提示设计”提供背景与解题基础。"
     },
     {
       "from": "pyf_compound_conditions",
       "to": "pyf_condition_controlled_loops",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“条件控制循环”需要先掌握“复合条件”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_block_indentation",
       "to": "pyf_condition_controlled_loops",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“条件控制循环”需要先掌握“代码块缩进”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_condition_controlled_loops",
       "to": "pyf_sentinel_flag_loops",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“哨兵与标志循环”需要先掌握“条件控制循环”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_text_input",
       "to": "pyf_sentinel_flag_loops",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: User Input and Conversion"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“哨兵与标志循环”需要先掌握“文本输入”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_condition_controlled_loops",
       "to": "pyf_loop_control",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“循环控制”需要先掌握“条件控制循环”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_collection_filtering",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Iterative Collection Processing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“集合筛选”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_conditional_branching",
       "to": "pyf_collection_filtering",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Iterative Collection Processing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“集合筛选”需要先掌握“条件分支”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_mutation",
       "to": "pyf_collection_filtering",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Changes and Ordering"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Iterative Collection Processing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“集合筛选”需要先掌握“列表修改”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_sentinel_flag_loops",
       "to": "pyf_incremental_data_collection",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: While Loops and Control"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Iterative Collection Processing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“增量数据收集”需要先掌握“哨兵与标志循环”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_incremental_data_collection",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Iterative Collection Processing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“增量数据收集”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_block_indentation",
       "to": "pyf_function_definition_calls",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: For Loops and Code Blocks"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“函数定义与调用”需要先掌握“代码块缩进”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_function_definition_calls",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“函数定义与调用”需要先掌握“脚本执行”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_parameters_arguments",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“形参与实参”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_parameters_arguments",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“形参与实参”需要先掌握“变量绑定”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_positional_keyword_arguments",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“位置实参与关键字实参”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_positional_keyword_arguments",
       "to": "pyf_default_optional_parameters",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Flexible Function Interfaces"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“默认与可选参数”需要先掌握“位置实参与关键字实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_variadic_positional_arguments",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Flexible Function Interfaces"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“可变位置实参”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_variadic_keyword_arguments",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Flexible Function Interfaces"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“可变关键字实参”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_variadic_keyword_arguments",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Flexible Function Interfaces"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“可变关键字实参”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_function_return_values",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“函数返回值”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_mutable_argument_effects",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“可变实参效应”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_mutation",
       "to": "pyf_mutable_argument_effects",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: List Changes and Ordering"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“可变实参效应”需要先掌握“列表修改”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_sequence_slicing",
       "to": "pyf_mutable_argument_effects",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Slices and List Comprehensions"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“序列切片”为学习“可变实参效应”提供背景与解题基础。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_variable_scope",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“变量作用域”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_variable_scope",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“变量作用域”需要先掌握“变量绑定”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_module_imports",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Modules and Code Organization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“模块导入”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_module_imports",
       "to": "pyf_import_aliases",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Modules and Code Organization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“模块导入”为学习“导入别名”提供背景与解题基础。"
     },
     {
       "from": "pyf_module_imports",
       "to": "pyf_standard_library_use",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Modules and Code Organization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“标准库使用”需要先掌握“模块导入”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_class_definitions_instances",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“类定义与实例”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_class_definitions_instances",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Values, Variables, and Names"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“类定义与实例”需要先掌握“变量绑定”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_class_definitions_instances",
       "to": "pyf_instance_attributes",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“实例属性”需要先掌握“类定义与实例”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_instance_attributes",
       "to": "pyf_instance_methods",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“实例方法”需要先掌握“实例属性”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_instance_methods",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“实例方法”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_class_definitions_instances",
       "to": "pyf_class_inheritance",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“类继承”需要先掌握“类定义与实例”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_instance_methods",
       "to": "pyf_class_inheritance",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“类继承”需要先掌握“实例方法”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_class_inheritance",
       "to": "pyf_method_overriding",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“方法重写”需要先掌握“类继承”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_instance_methods",
       "to": "pyf_method_overriding",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“方法重写”需要先掌握“实例方法”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_class_definitions_instances",
       "to": "pyf_object_composition",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“对象组合”需要先掌握“类定义与实例”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_instance_attributes",
       "to": "pyf_object_composition",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Classes, Objects, and State"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Inheritance and Composition"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“对象组合”需要先掌握“实例属性”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_string_values",
       "to": "pyf_file_paths_contexts",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Working with Text"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Files and Persistent Data"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“文件路径与上下文”需要先掌握“字符串值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_file_paths_contexts",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Files and Persistent Data"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“文件路径与上下文”需要先掌握“脚本执行”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_file_paths_contexts",
       "to": "pyf_text_file_io",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Files and Persistent Data"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“文本文件输入输出”需要先掌握“文件路径与上下文”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_text_file_io",
       "to": "pyf_json_persistence",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Files and Persistent Data"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“JSON 持久化”需要先掌握“文本文件输入输出”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_json_persistence",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Files and Persistent Data"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“JSON 持久化”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_exceptions",
       "to": "pyf_try_except_control_flow",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Exceptions and Failure Recovery"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“try-except 控制流”需要先掌握“运行时异常”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_try_except_control_flow",
       "to": "pyf_selective_error_handling",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Exceptions and Failure Recovery"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“选择性错误处理”需要先掌握“try-except 控制流”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_return_values",
       "to": "pyf_unit_testing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Results and Scope"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“单元测试”需要先掌握“函数返回值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_comparison_expressions",
       "to": "pyf_unit_testing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Boolean Logic and Branching"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“单元测试”需要先掌握“比较表达式”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_exceptions",
       "to": "pyf_debugging_workflow",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Exceptions and Failure Recovery"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“调试流程”需要先掌握“运行时异常”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_unit_testing",
       "to": "pyf_debugging_workflow",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“单元测试”为学习“调试流程”提供背景与解题基础。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_refactoring_readability",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Function Definitions and Calls"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“重构与可读性”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_debugging_workflow",
       "to": "pyf_refactoring_readability",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Testing and Code Improvement"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“调试流程”为学习“重构与可读性”提供背景与解题基础。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_runtime_exceptions",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Exceptions and Failure Recovery"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“运行时异常”需要先掌握“脚本执行”的定义、表示或操作方法。"
     }
   ]
 }

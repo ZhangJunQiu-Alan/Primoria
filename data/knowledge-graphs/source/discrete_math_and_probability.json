@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "discrete_math_and_probability",
   "subject": "Discrete Math and Probability Theory",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_discrete_math_and_probability"
+    "src_berkeley_cs70_summer_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "命题逻辑与直接证明",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Propositional Logic and Direct Proofs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_logic_proof_by_contraposition",
@@ -33,8 +43,13 @@
       "name_zh": "逆否证明与反证法",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Proof by Contraposition and Proof by Contradiction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_induction",
@@ -43,8 +58,13 @@
       "name_zh": "简单归纳与强归纳",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_induction_well_ordering_principle",
@@ -53,8 +73,13 @@
       "name_zh": "良序原理与结构归纳",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Well-Ordering Principle and Structural Induction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_matching",
@@ -63,8 +88,13 @@
       "name_zh": "稳定匹配问题与Gale-Shapley算法",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stable Matching Problem and Gale-Shapley Algorithm"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_matching_matching_optimality",
@@ -73,8 +103,13 @@
       "name_zh": "匹配最优性与匹配最差性",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Matching Optimality and Matching Pessimality"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_graphs",
@@ -83,8 +118,13 @@
       "name_zh": "图基础与欧拉回路",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Graph Basics and Eulerian Tours"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_graphs_trees",
@@ -93,8 +133,13 @@
       "name_zh": "树、平面图与超立方体",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Trees, Planar Graphs, and Hypercubes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_modular_arithmetic",
@@ -103,8 +148,13 @@
       "name_zh": "欧几里得算法与扩展欧几里得",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Euclid's Algorithm and Extended Euclid"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_modular_arithmetic_chinese_remainder_theorem",
@@ -113,8 +163,13 @@
       "name_zh": "中国剩余定理与费马小定理",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Chinese Remainder Theorem and Fermat's Little Theorem"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_crypto",
@@ -123,8 +178,13 @@
       "name_zh": "对称密码与RSA设置与加密",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Symmetric Cryptography and RSA Setup and Encryption"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_crypto_rsa_decryption_proof",
@@ -133,8 +193,13 @@
       "name_zh": "RSA解密证明与数字签名",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: RSA Decryption Proof and Digital Signatures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_polynomials",
@@ -143,8 +208,13 @@
       "name_zh": "多项式根与次数与多项式插值",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Polynomial Roots and Degree and Polynomial Interpolation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_polynomials_secret_sharing",
@@ -153,8 +223,13 @@
       "name_zh": "秘密分享与纠错码",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Secret Sharing and Error Correcting Codes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_countability_computability",
@@ -163,8 +238,13 @@
       "name_zh": "可数性与可计算性",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Countability and Computability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_computability_counting",
@@ -173,8 +253,13 @@
       "name_zh": "停机问题与不可判定性",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: The Halting Problem and Undecidability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_computability_counting_basic_counting_rules",
@@ -183,8 +268,13 @@
       "name_zh": "基础计数规则与组合与排列",
       "topic": null,
       "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Basic Counting Rules and Combinations and Permutations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_counting",
@@ -193,8 +283,13 @@
       "name_zh": "计数",
       "topic": null,
       "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Counting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_discrete_prob",
@@ -203,8 +298,13 @@
       "name_zh": "概率空间与条件概率",
       "topic": null,
       "default_order": 19,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_discrete_prob_bayes_rule",
@@ -213,8 +313,13 @@
       "name_zh": "贝叶斯法则与事件独立性",
       "topic": null,
       "default_order": 20,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bayes' Rule and Event Independence"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_random_vars",
@@ -223,8 +328,13 @@
       "name_zh": "离散随机变量与期望",
       "topic": null,
       "default_order": 21,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_random_vars_linearity_of_expectation",
@@ -233,8 +343,13 @@
       "name_zh": "期望的线性与方差与协方差",
       "topic": null,
       "default_order": 22,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Linearity of Expectation and Variance and Covariance"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_discrete_dists",
@@ -243,8 +358,13 @@
       "name_zh": "伯努利与二项分布与几何分布",
       "topic": null,
       "default_order": 23,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bernoulli and Binomial Distributions and Geometric Distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_discrete_dists_poisson_distribution",
@@ -253,8 +373,13 @@
       "name_zh": "泊松分布与超几何分布",
       "topic": null,
       "default_order": 24,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Poisson Distribution and Hypergeometric Distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_continuous_prob",
@@ -263,8 +388,13 @@
       "name_zh": "连续概率",
       "topic": null,
       "default_order": 25,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Continuous Probability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_continuous_concentration",
@@ -273,8 +403,13 @@
       "name_zh": "均匀与指数分布与正态分布",
       "topic": null,
       "default_order": 26,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Uniform and Exponential Distributions and Normal Distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_continuous_concentration_markovs_inequality",
@@ -283,8 +418,13 @@
       "name_zh": "马尔可夫不等式与切比雪夫不等式",
       "topic": null,
       "default_order": 27,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov's Inequality and Chebyshev's Inequality"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_concentration",
@@ -293,8 +433,13 @@
       "name_zh": "集中不等式",
       "topic": null,
       "default_order": 28,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Concentration Inequalities"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_markov",
@@ -303,8 +448,13 @@
       "name_zh": "马尔可夫链基础与首达时间",
       "topic": null,
       "default_order": 29,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov Chains Basics and Hitting Times"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_markov_stationary_distributions",
@@ -313,8 +463,13 @@
       "name_zh": "平稳分布与PageRank 算法",
       "topic": null,
       "default_order": 30,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stationary Distributions and PageRank Algorithm"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "propositional_logic",
@@ -326,8 +481,13 @@
       "description": "The study of propositions combined with logical connectives such as and, or, not, and implication, with truth tables defining their meaning.",
       "default_order": 1,
       "centrality": 0.5144,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Propositional Logic and Direct Proofs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "direct_proofs",
@@ -339,8 +499,13 @@
       "description": "A proof technique establishing an implication by assuming the hypothesis and deducing the conclusion through a chain of valid logical steps.",
       "default_order": 2,
       "centrality": 0.4203,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Propositional Logic and Direct Proofs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "proof_by_contraposition",
@@ -352,8 +517,13 @@
       "description": "Proving an implication 'p implies q' by instead proving its logically equivalent contrapositive, 'not q implies not p'.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Proof by Contraposition and Proof by Contradiction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "proof_by_contradiction",
@@ -365,8 +535,13 @@
       "description": "Proving a statement by assuming its negation and deriving a logical contradiction, forcing the original statement to be true.",
       "default_order": 2,
       "centrality": 0.1309,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Proof by Contraposition and Proof by Contradiction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "simple_induction",
@@ -380,8 +555,13 @@
       "centrality": 0.4653,
       "visual": "diagram",
       "visual_hint": "Domino-chain diagram of the induction base case and inductive step.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "strong_induction",
@@ -393,8 +573,13 @@
       "description": "A variant of induction whose inductive step may assume the statement for all smaller values, not just the immediate predecessor.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "well_ordering_principle",
@@ -406,8 +591,13 @@
       "description": "The principle that every nonempty set of natural numbers contains a least element, equivalent to and underpinning induction.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Well-Ordering Principle and Structural Induction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "structural_induction",
@@ -419,8 +609,13 @@
       "description": "Induction over recursively defined structures, proving a property holds for base cases and is preserved by the construction rules.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Well-Ordering Principle and Structural Induction"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "stable_matching_problem",
@@ -432,8 +627,13 @@
       "description": "The problem of pairing two sides given preferences so that no two unmatched participants both prefer each other over their assigned partners.",
       "default_order": 1,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stable Matching Problem and Gale-Shapley Algorithm"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "gale_shapley_algorithm",
@@ -447,8 +647,13 @@
       "centrality": 0.0638,
       "visual": "algorithm",
       "visual_hint": "Step the Gale-Shapley deferred-acceptance proposals to a stable matching.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stable Matching Problem and Gale-Shapley Algorithm"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "matching_optimality",
@@ -460,8 +665,13 @@
       "description": "The result that Gale-Shapley yields the matching most preferred by every member of the proposing side among all stable matchings.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Matching Optimality and Matching Pessimality"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "matching_pessimality",
@@ -473,8 +683,13 @@
       "description": "The corresponding result that the proposing-side-optimal matching is simultaneously the worst stable matching for the receiving side.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Matching Optimality and Matching Pessimality"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "graph_basics",
@@ -488,8 +703,13 @@
       "centrality": 0.1873,
       "visual": "diagram",
       "visual_hint": "Diagram vertices and edges with degree and adjacency.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Graph Basics and Eulerian Tours"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "eulerian_tours",
@@ -503,8 +723,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Trace an Eulerian tour visiting every edge once.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Graph Basics and Eulerian Tours"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "trees",
@@ -518,8 +743,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Diagram a tree as a connected acyclic graph with a unique path between nodes.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Trees, Planar Graphs, and Hypercubes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "planar_graphs",
@@ -533,8 +763,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Draw a planar graph without edge crossings and check Euler's formula.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Trees, Planar Graphs, and Hypercubes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "hypercubes",
@@ -548,8 +783,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram the recursive construction of hypercube graphs.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Trees, Planar Graphs, and Hypercubes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "euclids_algorithm",
@@ -563,8 +803,13 @@
       "centrality": 0.1818,
       "visual": "algorithm",
       "visual_hint": "Step Euclid's algorithm reducing the pair until the GCD remains.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Euclid's Algorithm and Extended Euclid"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "extended_euclid",
@@ -576,8 +821,13 @@
       "description": "The extended Euclidean algorithm computing Bézout coefficients that express the gcd as an integer combination, yielding modular inverses.",
       "default_order": 2,
       "centrality": 0.1847,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Euclid's Algorithm and Extended Euclid"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "chinese_remainder_theorem",
@@ -589,8 +839,13 @@
       "description": "The Chinese remainder theorem giving a unique solution modulo the product for a system of congruences with pairwise coprime moduli.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Chinese Remainder Theorem and Fermat's Little Theorem"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "fermats_little_theorem",
@@ -602,8 +857,13 @@
       "description": "Fermat's little theorem stating that a raised to the power p minus one is congruent to one modulo a prime p not dividing a.",
       "default_order": 2,
       "centrality": 0.0817,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Chinese Remainder Theorem and Fermat's Little Theorem"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "symmetric_cryptography",
@@ -615,8 +875,13 @@
       "description": "Encryption schemes where sender and receiver share a single secret key used for both encryption and decryption of messages.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Symmetric Cryptography and RSA Setup and Encryption"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "rsa_setup_and_encryption",
@@ -628,8 +893,13 @@
       "description": "The RSA public-key scheme generating keys from two large primes and encrypting messages by modular exponentiation with the public exponent.",
       "default_order": 2,
       "centrality": 0.0669,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Symmetric Cryptography and RSA Setup and Encryption"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "rsa_decryption_proof",
@@ -641,8 +911,13 @@
       "description": "The proof that RSA decryption inverts encryption, relying on Euler's theorem and the relationship between the public and private exponents.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: RSA Decryption Proof and Digital Signatures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "digital_signatures",
@@ -654,8 +929,13 @@
       "description": "Cryptographic signatures authenticating a message by signing with a private key so that anyone can verify authenticity with the public key.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: RSA Decryption Proof and Digital Signatures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "polynomial_roots_and_degree",
@@ -667,8 +947,13 @@
       "description": "Properties of polynomials over a field, including that a nonzero degree-d polynomial has at most d roots, used throughout the course.",
       "default_order": 1,
       "centrality": 0.0817,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Polynomial Roots and Degree and Polynomial Interpolation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "polynomial_interpolation",
@@ -680,8 +965,13 @@
       "description": "The fact that d+1 points uniquely determine a degree-d polynomial, recovered by Lagrange interpolation over a field.",
       "default_order": 2,
       "centrality": 0.0669,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Polynomial Roots and Degree and Polynomial Interpolation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "secret_sharing",
@@ -693,12 +983,17 @@
       "description": "Shamir's secret sharing splitting a secret among parties as points on a polynomial so that any sufficient subset can reconstruct it.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Secret Sharing and Error Correcting Codes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "error_correcting_codes",
-      "canonical_id": "pc_a15a8a6a41428eb1b5a7fcf1bdcdd9e5",
+      "canonical_id": "pc_a3dab7d153fe55d5f7ea76d09f4e10c1",
       "kind": "concept",
       "name": "Error Correcting Codes",
       "name_zh": "纠错码",
@@ -706,8 +1001,13 @@
       "description": "Polynomial-based codes such as Reed-Solomon adding redundancy so messages can be recovered despite a bounded number of errors or erasures.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Secret Sharing and Error Correcting Codes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bijections_and_cardinality",
@@ -719,8 +1019,13 @@
       "description": "Comparing the sizes of sets using bijections, defining two sets as equinumerous when a one-to-one correspondence exists between them.",
       "default_order": 1,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Countability and Computability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "cantors_diagonalization",
@@ -732,8 +1037,13 @@
       "description": "Cantor's diagonal argument constructing an element differing from every member of a list, proving that certain sets are uncountable.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Countability and Computability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "uncountability_of_reals",
@@ -745,8 +1055,13 @@
       "description": "The proof, via diagonalization, that the real numbers cannot be put in bijection with the naturals and are therefore uncountable.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Countability and Computability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "the_halting_problem",
@@ -758,8 +1073,13 @@
       "description": "The halting problem, the undecidable task of determining whether an arbitrary program halts on a given input, proved by diagonalization.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: The Halting Problem and Undecidability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "undecidability",
@@ -771,8 +1091,13 @@
       "description": "The existence of well-defined problems that no algorithm can solve for all inputs, established by reduction from the halting problem.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: The Halting Problem and Undecidability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "basic_counting_rules",
@@ -784,12 +1109,17 @@
       "description": "The fundamental sum and product rules counting the outcomes of disjoint choices and of sequences of independent choices.",
       "default_order": 1,
       "centrality": 0.8696,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Basic Counting Rules and Combinations and Permutations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "combinations_permutations",
-      "canonical_id": "pc_4fc75b6c1b1cfa0437d46dbc1908097c",
+      "canonical_id": "pc_72b8e1a7b680bd575ff6d93a1e2c592b",
       "kind": "concept",
       "name": "Combinations and Permutations",
       "name_zh": "组合与排列",
@@ -799,8 +1129,13 @@
       "centrality": 0.0669,
       "visual": "diagram",
       "visual_hint": "Decision-tree diagram of ordered and unordered selections.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Basic Counting Rules and Combinations and Permutations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "combinatorial_proofs",
@@ -812,8 +1147,13 @@
       "description": "Proving identities by counting the same quantity in two different ways, showing that the two expressions must be equal.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Counting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "stars_and_bars",
@@ -825,8 +1165,13 @@
       "description": "The stars-and-bars technique counting the nonnegative integer solutions of an equation, equivalently distributions of identical items into bins.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Counting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "inclusion_exclusion",
@@ -840,8 +1185,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Venn-style diagram of the alternating inclusion-exclusion sum.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Counting"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "probability_spaces",
@@ -853,12 +1203,17 @@
       "description": "A probability space comprising a sample space of outcomes, events as subsets, and a probability measure satisfying Kolmogorov's axioms.",
       "default_order": 1,
       "centrality": 0.8897,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "conditional_probability",
-      "canonical_id": "pc_41665cc8086f7dedb65c12adb4dc9ca6",
+      "canonical_id": "pc_cf8dbc5bcf596f0c4db74ea9886540a1",
       "kind": "concept",
       "name": "Conditional Probability",
       "name_zh": "条件概率",
@@ -866,12 +1221,17 @@
       "description": "The probability of an event given that another has occurred, defined by normalising their joint probability by the conditioning event's probability.",
       "default_order": 2,
       "centrality": 0.285,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bayes_rule",
-      "canonical_id": "pc_0d586d859f7281e0164ef0443e297633",
+      "canonical_id": "pc_8da482016bf0b39c87a24d36add87c8f",
       "kind": "concept",
       "name": "Bayes' Rule",
       "name_zh": "贝叶斯法则",
@@ -881,8 +1241,13 @@
       "centrality": 0.0662,
       "visual": "diagram",
       "visual_hint": "Tree diagram inverting conditional probabilities with Bayes' rule.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bayes' Rule and Event Independence"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "event_independence",
@@ -894,12 +1259,17 @@
       "description": "Two events are independent when the occurrence of one does not change the probability of the other, equivalently their joint equals the product.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bayes' Rule and Event Independence"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "discrete_random_variables",
-      "canonical_id": "pc_5820b8687540b56f80968bdb114b5afe",
+      "canonical_id": "pc_bd3e94ad62025e9a58ab6e2016182924",
       "kind": "concept",
       "name": "Discrete Random Variables",
       "name_zh": "离散随机变量",
@@ -907,8 +1277,13 @@
       "description": "Random variables taking values in a discrete set, described by a probability mass function assigning probabilities to each possible value.",
       "default_order": 1,
       "centrality": 0.4165,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "expectation",
@@ -920,8 +1295,13 @@
       "description": "The expectation of a random variable, its probability-weighted average value, summarising the centre of its distribution.",
       "default_order": 2,
       "centrality": 0.2213,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "linearity_of_expectation",
@@ -933,8 +1313,13 @@
       "description": "The property that the expectation of a sum equals the sum of expectations, holding even when the variables are dependent.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Linearity of Expectation and Variance and Covariance"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "variance_and_covariance",
@@ -946,8 +1331,13 @@
       "description": "Variance measuring a variable's spread about its mean, and covariance measuring the degree to which two variables vary together.",
       "default_order": 2,
       "centrality": 0.0481,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Linearity of Expectation and Variance and Covariance"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "bernoulli_binomial_distributions",
@@ -961,12 +1351,17 @@
       "centrality": 0.0248,
       "visual": "chart",
       "visual_hint": "Bar chart of the binomial distribution with sliders for n and p.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bernoulli and Binomial Distributions and Geometric Distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "geometric_distribution",
-      "canonical_id": "pc_6cfd2d4ead9cfe1bee0c6681f41206be",
+      "canonical_id": "pc_1523f7f20f12daa7a7c313af9fcc7710",
       "kind": "concept",
       "name": "Geometric Distribution",
       "name_zh": "几何分布",
@@ -976,12 +1371,17 @@
       "centrality": 0.0248,
       "visual": "chart",
       "visual_hint": "Bar chart of the geometric distribution.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bernoulli and Binomial Distributions and Geometric Distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "poisson_distribution",
-      "canonical_id": "pc_d3e1d025e365c8dfa8abca60e870ca6b",
+      "canonical_id": "pc_a3b1410477a36f1726cbbd9242140395",
       "kind": "concept",
       "name": "Poisson Distribution",
       "name_zh": "泊松分布",
@@ -991,8 +1391,13 @@
       "centrality": 0.0248,
       "visual": "chart",
       "visual_hint": "Bar chart of the Poisson distribution with a slider for lambda.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Poisson Distribution and Hypergeometric Distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "hypergeometric_distribution",
@@ -1004,8 +1409,13 @@
       "description": "The hypergeometric distribution modelling the number of successes when sampling without replacement from a finite population.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Poisson Distribution and Hypergeometric Distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "continuous_random_variables",
@@ -1017,8 +1427,13 @@
       "description": "Random variables taking values over a continuum, described by a probability density rather than a probability mass function.",
       "default_order": 1,
       "centrality": 0.1404,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Continuous Probability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "probability_density_function",
@@ -1030,8 +1445,13 @@
       "description": "A probability density function whose integral over an interval gives the probability that the continuous variable falls within that interval.",
       "default_order": 2,
       "centrality": 0.136,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Continuous Probability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "cumulative_distribution_function",
@@ -1043,8 +1463,13 @@
       "description": "The cumulative distribution function giving the probability that a random variable is at most a given value, defined for any distribution.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Continuous Probability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "uniform_exponential_distributions",
@@ -1056,12 +1481,17 @@
       "description": "The uniform distribution spreading probability evenly over an interval and the memoryless exponential distribution modelling waiting times.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Uniform and Exponential Distributions and Normal Distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "normal_distribution",
-      "canonical_id": "pc_e5893aa094f52cda17b10c07964cf9cc",
+      "canonical_id": "pc_23858effd2dd68284bd0c6b645607386",
       "kind": "concept",
       "name": "Normal Distribution",
       "name_zh": "正态分布",
@@ -1071,8 +1501,13 @@
       "centrality": 0.0813,
       "visual": "function",
       "visual_hint": "Plot the normal bell curve with sliders for mean and standard deviation.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Uniform and Exponential Distributions and Normal Distribution"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "markovs_inequality",
@@ -1084,8 +1519,13 @@
       "description": "Markov's inequality bounding the probability that a nonnegative random variable exceeds a value using only its mean.",
       "default_order": 1,
       "centrality": 0.0692,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov's Inequality and Chebyshev's Inequality"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "chebyshevs_inequality",
@@ -1097,8 +1537,13 @@
       "description": "Chebyshev's inequality bounding the probability that a variable deviates far from its mean using its variance.",
       "default_order": 2,
       "centrality": 0.0548,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov's Inequality and Chebyshev's Inequality"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "chernoff_bounds",
@@ -1110,8 +1555,13 @@
       "description": "Chernoff bounds giving exponentially decaying tail bounds for sums of independent random variables via the moment-generating function.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Concentration Inequalities"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "weak_law_of_large_numbers",
@@ -1123,8 +1573,13 @@
       "description": "The weak law of large numbers stating the sample mean of independent identically distributed variables converges in probability to the true mean.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Concentration Inequalities"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "central_limit_theorem",
@@ -1138,8 +1593,13 @@
       "centrality": 0.0248,
       "visual": "interactive",
       "visual_hint": "Resample means and watch the sampling distribution approach a normal curve.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Concentration Inequalities"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "markov_chains_basics",
@@ -1153,8 +1613,13 @@
       "centrality": 0.1144,
       "visual": "diagram",
       "visual_hint": "State-transition diagram of a Markov chain with edge probabilities.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov Chains Basics and Hitting Times"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "hitting_times",
@@ -1166,8 +1631,13 @@
       "description": "Hitting times, the expected number of steps for a Markov chain to first reach a specified state from a given starting state.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov Chains Basics and Hitting Times"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "stationary_distributions",
@@ -1179,8 +1649,13 @@
       "description": "A stationary distribution unchanged by the chain's transitions, describing the long-run fraction of time spent in each state.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stationary Distributions and PageRank Algorithm"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "page_rank_algorithm",
@@ -1194,8 +1669,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Iterate PageRank over a small web graph until the ranks converge.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stationary Distributions and PageRank Algorithm"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -1204,520 +1684,1090 @@
       "from": "propositional_logic",
       "to": "direct_proofs",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Propositional Logic and Direct Proofs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“直接证明”需要先掌握“命题逻辑”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "propositional_logic",
       "to": "proof_by_contraposition",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Propositional Logic and Direct Proofs"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Proof by Contraposition and Proof by Contradiction"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“逆否证明”需要先掌握“命题逻辑”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "propositional_logic",
       "to": "proof_by_contradiction",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Propositional Logic and Direct Proofs"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Proof by Contraposition and Proof by Contradiction"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“反证法”需要先掌握“命题逻辑”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "direct_proofs",
       "to": "simple_induction",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Propositional Logic and Direct Proofs"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“简单归纳”需要先掌握“直接证明”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "strong_induction",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“强归纳”需要先掌握“简单归纳”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "strong_induction",
       "to": "well_ordering_principle",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Well-Ordering Principle and Structural Induction"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“良序原理”需要先掌握“强归纳”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "structural_induction",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Well-Ordering Principle and Structural Induction"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“简单归纳”为学习“结构归纳”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "proof_by_contradiction",
       "to": "stable_matching_problem",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Proof by Contraposition and Proof by Contradiction"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stable Matching Problem and Gale-Shapley Algorithm"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“反证法”为学习“稳定匹配问题”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "stable_matching_problem",
       "to": "gale_shapley_algorithm",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stable Matching Problem and Gale-Shapley Algorithm"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Gale-Shapley算法”需要先掌握“稳定匹配问题”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "gale_shapley_algorithm",
       "to": "matching_optimality",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stable Matching Problem and Gale-Shapley Algorithm"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Matching Optimality and Matching Pessimality"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“匹配最优性”需要先掌握“Gale-Shapley算法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "matching_optimality",
       "to": "matching_pessimality",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Matching Optimality and Matching Pessimality"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“匹配最差性”需要先掌握“匹配最优性”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "graph_basics",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Graph Basics and Eulerian Tours"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“图基础”需要先掌握“简单归纳”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "graph_basics",
       "to": "eulerian_tours",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Graph Basics and Eulerian Tours"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“欧拉回路”需要先掌握“图基础”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "graph_basics",
       "to": "trees",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Graph Basics and Eulerian Tours"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Trees, Planar Graphs, and Hypercubes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“树”需要先掌握“图基础”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "trees",
       "to": "planar_graphs",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Trees, Planar Graphs, and Hypercubes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“平面图”需要先掌握“树”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "graph_basics",
       "to": "hypercubes",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Graph Basics and Eulerian Tours"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Trees, Planar Graphs, and Hypercubes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“图基础”为学习“超立方体”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "euclids_algorithm",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Euclid's Algorithm and Extended Euclid"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“欧几里得算法”需要先掌握“简单归纳”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "euclids_algorithm",
       "to": "extended_euclid",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Euclid's Algorithm and Extended Euclid"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“扩展欧几里得”需要先掌握“欧几里得算法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "extended_euclid",
       "to": "chinese_remainder_theorem",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Euclid's Algorithm and Extended Euclid"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Chinese Remainder Theorem and Fermat's Little Theorem"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“中国剩余定理”需要先掌握“扩展欧几里得”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "extended_euclid",
       "to": "fermats_little_theorem",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Euclid's Algorithm and Extended Euclid"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Chinese Remainder Theorem and Fermat's Little Theorem"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“费马小定理”需要先掌握“扩展欧几里得”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "fermats_little_theorem",
       "to": "rsa_setup_and_encryption",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Chinese Remainder Theorem and Fermat's Little Theorem"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Symmetric Cryptography and RSA Setup and Encryption"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“RSA设置与加密”需要先掌握“费马小定理”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "rsa_setup_and_encryption",
       "to": "rsa_decryption_proof",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Symmetric Cryptography and RSA Setup and Encryption"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: RSA Decryption Proof and Digital Signatures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“RSA解密证明”需要先掌握“RSA设置与加密”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "rsa_setup_and_encryption",
       "to": "digital_signatures",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Symmetric Cryptography and RSA Setup and Encryption"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: RSA Decryption Proof and Digital Signatures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“RSA设置与加密”为学习“数字签名”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "extended_euclid",
       "to": "polynomial_roots_and_degree",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Euclid's Algorithm and Extended Euclid"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Polynomial Roots and Degree and Polynomial Interpolation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“扩展欧几里得”为学习“多项式根与次数”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "polynomial_roots_and_degree",
       "to": "polynomial_interpolation",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Polynomial Roots and Degree and Polynomial Interpolation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“多项式插值”需要先掌握“多项式根与次数”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "polynomial_interpolation",
       "to": "secret_sharing",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Polynomial Roots and Degree and Polynomial Interpolation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Secret Sharing and Error Correcting Codes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“秘密分享”需要先掌握“多项式插值”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "polynomial_interpolation",
       "to": "error_correcting_codes",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Polynomial Roots and Degree and Polynomial Interpolation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Secret Sharing and Error Correcting Codes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“纠错码”需要先掌握“多项式插值”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "bijections_and_cardinality",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Countability and Computability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“简单归纳”为学习“双射与基数”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "bijections_and_cardinality",
       "to": "cantors_diagonalization",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Countability and Computability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“康托尔对角线法”需要先掌握“双射与基数”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "cantors_diagonalization",
       "to": "uncountability_of_reals",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Countability and Computability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“实数不可数性”需要先掌握“康托尔对角线法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "proof_by_contradiction",
       "to": "the_halting_problem",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Proof by Contraposition and Proof by Contradiction"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: The Halting Problem and Undecidability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“停机问题”需要先掌握“反证法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "the_halting_problem",
       "to": "undecidability",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: The Halting Problem and Undecidability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“不可判定性”需要先掌握“停机问题”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "basic_counting_rules",
       "to": "combinations_permutations",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Basic Counting Rules and Combinations and Permutations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“组合与排列”需要先掌握“基础计数规则”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "combinations_permutations",
       "to": "combinatorial_proofs",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Basic Counting Rules and Combinations and Permutations"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Counting"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“组合证明”需要先掌握“组合与排列”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "combinations_permutations",
       "to": "stars_and_bars",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Basic Counting Rules and Combinations and Permutations"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Counting"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“星号与条形法”需要先掌握“组合与排列”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "basic_counting_rules",
       "to": "inclusion_exclusion",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Basic Counting Rules and Combinations and Permutations"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Counting"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“容斥原理”需要先掌握“基础计数规则”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "basic_counting_rules",
       "to": "probability_spaces",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Basic Counting Rules and Combinations and Permutations"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“概率空间”需要先掌握“基础计数规则”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "probability_spaces",
       "to": "conditional_probability",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“条件概率”需要先掌握“概率空间”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "conditional_probability",
       "to": "bayes_rule",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bayes' Rule and Event Independence"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“贝叶斯法则”需要先掌握“条件概率”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "conditional_probability",
       "to": "event_independence",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bayes' Rule and Event Independence"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“事件独立性”需要先掌握“条件概率”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "probability_spaces",
       "to": "discrete_random_variables",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“离散随机变量”需要先掌握“概率空间”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "expectation",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“期望”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "expectation",
       "to": "linearity_of_expectation",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Linearity of Expectation and Variance and Covariance"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“期望的线性”需要先掌握“期望”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "expectation",
       "to": "variance_and_covariance",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Linearity of Expectation and Variance and Covariance"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“方差与协方差”需要先掌握“期望”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "bernoulli_binomial_distributions",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bernoulli and Binomial Distributions and Geometric Distribution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“伯努利与二项分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "geometric_distribution",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Bernoulli and Binomial Distributions and Geometric Distribution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“几何分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "poisson_distribution",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Poisson Distribution and Hypergeometric Distribution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“泊松分布”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "hypergeometric_distribution",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Poisson Distribution and Hypergeometric Distribution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“离散随机变量”为学习“超几何分布”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "continuous_random_variables",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Continuous Probability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“连续随机变量”需要先掌握“离散随机变量”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "continuous_random_variables",
       "to": "probability_density_function",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Continuous Probability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“概率密度函数”需要先掌握“连续随机变量”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "probability_density_function",
       "to": "cumulative_distribution_function",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Continuous Probability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“累积分布函数”需要先掌握“概率密度函数”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "probability_density_function",
       "to": "uniform_exponential_distributions",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Continuous Probability"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Uniform and Exponential Distributions and Normal Distribution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“均匀与指数分布”需要先掌握“概率密度函数”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "probability_density_function",
       "to": "normal_distribution",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Continuous Probability"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Uniform and Exponential Distributions and Normal Distribution"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“正态分布”需要先掌握“概率密度函数”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "expectation",
       "to": "markovs_inequality",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov's Inequality and Chebyshev's Inequality"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“马尔可夫不等式”需要先掌握“期望”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "markovs_inequality",
       "to": "chebyshevs_inequality",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov's Inequality and Chebyshev's Inequality"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“切比雪夫不等式”需要先掌握“马尔可夫不等式”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "variance_and_covariance",
       "to": "chebyshevs_inequality",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Linearity of Expectation and Variance and Covariance"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov's Inequality and Chebyshev's Inequality"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“切比雪夫不等式”需要先掌握“方差与协方差”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "markovs_inequality",
       "to": "chernoff_bounds",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov's Inequality and Chebyshev's Inequality"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Concentration Inequalities"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“马尔可夫不等式”为学习“Chernoff 不等式”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "chebyshevs_inequality",
       "to": "weak_law_of_large_numbers",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov's Inequality and Chebyshev's Inequality"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Concentration Inequalities"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“弱大数定律”需要先掌握“切比雪夫不等式”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "normal_distribution",
       "to": "central_limit_theorem",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Uniform and Exponential Distributions and Normal Distribution"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Concentration Inequalities"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“中心极限定理”需要先掌握“正态分布”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "weak_law_of_large_numbers",
       "to": "central_limit_theorem",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Concentration Inequalities"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“弱大数定律”为学习“中心极限定理”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "conditional_probability",
       "to": "markov_chains_basics",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov Chains Basics and Hitting Times"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“马尔可夫链基础”需要先掌握“条件概率”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "markov_chains_basics",
       "to": "hitting_times",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov Chains Basics and Hitting Times"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“首达时间”需要先掌握“马尔可夫链基础”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "expectation",
       "to": "hitting_times",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov Chains Basics and Hitting Times"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“首达时间”需要先掌握“期望”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "markov_chains_basics",
       "to": "stationary_distributions",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov Chains Basics and Hitting Times"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stationary Distributions and PageRank Algorithm"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“平稳分布”需要先掌握“马尔可夫链基础”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "stationary_distributions",
       "to": "page_rank_algorithm",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Stationary Distributions and PageRank Algorithm"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“平稳分布”为学习“PageRank 算法”提供背景与解题基础。"
     }
   ]
 }

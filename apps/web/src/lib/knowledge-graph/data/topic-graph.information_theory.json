@@ -2,7 +2,7 @@
   "graphId": "information_theory",
   "subject": "Information Theory and Entropy",
   "generatedFrom": "data/knowledge-graphs/source/information_theory.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -209,72 +209,86 @@
     {
       "from": "c_infotheory_aep",
       "to": "c_infotheory_shannon_channel",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“香农信道编码定理”需要先掌握“渐近等分特性”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_aep",
       "to": "c_infotheory_shannon_coding",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“香农信源编码定理”需要先掌握“渐近等分特性”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_awgn",
       "to": "c_infotheory_shannon_hartley",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“香农-哈特利定理”需要先掌握“AWGN 信道”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_channel_capacity_def",
       "to": "c_infotheory_shannon_channel",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“香农信道编码定理”需要先掌握“信道容量定义”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_differential_entropy",
       "to": "c_infotheory_awgn",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“AWGN 信道”需要先掌握“微分熵”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_dmc",
       "to": "c_infotheory_channel_capacity_def",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“信道容量定义”需要先掌握“离散无记忆信道”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_entropy",
       "to": "c_infotheory_aep",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“渐近等分特性”需要先掌握“香农熵”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_entropy",
       "to": "c_infotheory_differential_entropy",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“微分熵”需要先掌握“香农熵”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_entropy",
       "to": "c_infotheory_joint_entropy",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“联合与条件熵”需要先掌握“香农熵”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_entropy",
       "to": "c_infotheory_kl_divergence",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“香农熵”为学习“KL 散度”提供背景与解题基础。"
     },
     {
       "from": "c_infotheory_joint_entropy",
       "to": "c_infotheory_mutual_info",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“互信息”需要先掌握“联合与条件熵”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_kraft",
       "to": "c_infotheory_huffman",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Huffman 编码”需要先掌握“Kraft 不等式”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_mutual_info",
       "to": "c_infotheory_channel_capacity_def",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“信道容量定义”需要先掌握“互信息”的定义、表示或操作方法。"
     },
     {
       "from": "c_infotheory_mutual_info",
       "to": "c_infotheory_data_processing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“数据处理不等式”需要先掌握“互信息”的定义、表示或操作方法。"
     }
   ]
 }

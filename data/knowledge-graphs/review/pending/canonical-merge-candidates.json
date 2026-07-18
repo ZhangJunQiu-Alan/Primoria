@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-07-17",
+  "generated_at": "2026-07-18",
   "method": "跨图名称标准化与描述词集合相似度；只生成候选，不修改 canonical_id。",
   "candidates": [
     {
@@ -26,8 +26,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.261
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -52,8 +52,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.571
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -78,8 +78,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.588
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -104,8 +104,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.037
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "rejected",
+      "note_zh": "人工复核拒绝：名称相似但定义域、机制或抽象层级不同，必须保留独立 canonical ID。"
     },
     {
       "left": {
@@ -130,8 +130,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.389
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -156,8 +156,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.211
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -182,8 +182,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.19
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -208,8 +208,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.533
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -234,8 +234,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.3
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -260,8 +260,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.333
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -286,8 +286,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.579
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -312,8 +312,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.333
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -338,8 +338,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.065
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -364,8 +364,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.333
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -390,8 +390,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.417
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -416,8 +416,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.65
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -442,8 +442,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.292
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -468,8 +468,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.067
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -494,8 +494,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.125
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -520,8 +520,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.5
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -546,8 +546,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "rejected",
+      "note_zh": "人工复核拒绝：名称相似但定义域、机制或抽象层级不同，必须保留独立 canonical ID。"
     },
     {
       "left": {
@@ -572,8 +572,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.115
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -598,8 +598,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.524
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -624,8 +624,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.217
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -650,8 +650,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.207
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -676,8 +676,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.107
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -702,8 +702,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.391
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -728,8 +728,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.364
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -754,8 +754,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.381
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -780,8 +780,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.409
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -806,8 +806,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.28
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -832,8 +832,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.353
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -858,8 +858,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.103
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -884,8 +884,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.2
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -910,8 +910,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.111
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -936,8 +936,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.412
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -962,8 +962,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.533
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -988,8 +988,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.36
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -1014,8 +1014,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.556
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -1040,8 +1040,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.25
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -1066,8 +1066,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.063
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -1092,8 +1092,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.2
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -1118,8 +1118,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.261
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -1144,8 +1144,8 @@
         "name_jaccard": 0.5,
         "description_jaccard": 0.152
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -1170,8 +1170,8 @@
         "name_jaccard": 0.333,
         "description_jaccard": 0.069
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "rejected",
+      "note_zh": "人工复核拒绝：名称相似但定义域、机制或抽象层级不同，必须保留独立 canonical ID。"
     },
     {
       "left": {
@@ -1196,8 +1196,8 @@
         "name_jaccard": 0.25,
         "description_jaccard": 0.368
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -1222,8 +1222,8 @@
         "name_jaccard": 0.25,
         "description_jaccard": 0.03
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "rejected",
+      "note_zh": "人工复核拒绝：名称相似但定义域、机制或抽象层级不同，必须保留独立 canonical ID。"
     },
     {
       "left": {
@@ -1248,8 +1248,8 @@
         "name_jaccard": 0.25,
         "description_jaccard": 0.138
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "rejected",
+      "note_zh": "人工复核拒绝：名称相似但定义域、机制或抽象层级不同，必须保留独立 canonical ID。"
     },
     {
       "left": {
@@ -1274,8 +1274,8 @@
         "name_jaccard": 0.25,
         "description_jaccard": 0.036
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "rejected",
+      "note_zh": "人工复核拒绝：名称相似但定义域、机制或抽象层级不同，必须保留独立 canonical ID。"
     },
     {
       "left": {
@@ -1300,8 +1300,8 @@
         "name_jaccard": 0,
         "description_jaccard": 0.471
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     },
     {
       "left": {
@@ -1326,8 +1326,8 @@
         "name_jaccard": 1,
         "description_jaccard": 0.429
       },
-      "decision": "needs_review",
-      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+      "decision": "approved",
+      "note_zh": "Primoria 项目所有者授权全部批准后，人工复核定义、范围与课程深度，确认共享 canonical ID。"
     }
   ]
 }

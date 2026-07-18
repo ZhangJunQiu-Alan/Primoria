@@ -65,9 +65,235 @@ const graphFiles = readdirSync(sourceDir)
 const graphs = graphFiles.map((name) => readJson<GraphSource>(`${sourceDir}/${name}`));
 const conceptRegistry = readJson<ConceptRegistry>(`${governanceDir}/concept-registry.json`);
 const sourceRegistry = readJson<SourceRegistry>(`${governanceDir}/sources.json`);
+const approvedMathOutcomeMappings = new Map<string, string[]>([
+  ["9709:1.2:5", ["mat_graph_transformations"]],
+  ["9709:2.5:3", ["mat_trapezium_rule"]],
+  ["9709:4.1:5", ["mat_smooth_contact"]],
+  ["9709:4.4:2", ["mat_mass_weight"]],
+  ["9709:6.3:1", ["mat_continuous_random_variables", "mat_probability_density_function"]],
+  ["9709:6.3:2", ["mat_probability_density_function"]],
+  ["9709:6.4:6", ["mat_statistical_estimation"]],
+  ["9709:6.4:7", ["mat_statistical_estimation"]],
+  ["9709:6.4:8", ["mat_statistical_estimation"]],
+]);
+const approvedMathConceptIds = new Set([...approvedMathOutcomeMappings.values()].flat());
+const approvedPhysicsOutcomeMappings = new Map<string, string[]>([
+  ["9702:3.2:3", ["phy_terminal_velocity"]],
+  ["9702:4.1:1", ["phy_centre_of_gravity"]],
+  ["9702:7.1:3", ["phy_progressive_waves"]],
+  ["9702:7.5:2", ["phy_polarisation_malus"]],
+  ["9702:9.3:7", ["phy_resistive_sensors"]],
+  ["9702:9.3:8", ["phy_resistive_sensors"]],
+  ["9702:10.1:1", ["phy_series_parallel"]],
+  ["9702:10.3:3", ["phy_potentiometer_null_methods"]],
+  ["9702:11.1:4", ["phy_isotopes"]],
+  ["9702:11.1:6", ["phy_radioactive_decay"]],
+  ["9702:11.1:10", ["phy_radioactive_decay"]],
+  ["9702:11.1:12", ["phy_binding_energy"]],
+  ["9702:14.2:1", ["phy_thermometry"]],
+  ["9702:14.2:2", ["phy_thermometry"]],
+  ["9702:15.1:2", ["phy_mole_avogadro"]],
+  ["9702:15.2:3", ["phy_ideal_gas"]],
+  ["9702:20.3:3", ["phy_hall_effect"]],
+  ["9702:24.1:1", ["phy_piezoelectric_transducers"]],
+  ["9702:24.1:2", ["phy_piezoelectric_transducers"]],
+  ["9702:24.1:3", ["phy_ultrasound_imaging"]],
+  ["9702:24.1:4", ["phy_acoustic_impedance_reflection"]],
+  ["9702:24.1:5", ["phy_acoustic_impedance_reflection"]],
+  ["9702:24.1:6", ["phy_ultrasound_imaging"]],
+  ["9702:24.2:1", ["phy_xray_production"]],
+  ["9702:24.2:2", ["phy_xray_imaging_attenuation"]],
+  ["9702:24.2:3", ["phy_xray_imaging_attenuation"]],
+  ["9702:24.2:4", ["phy_computed_tomography"]],
+  ["9702:24.3:1", ["phy_radioactive_tracers_pet"]],
+  ["9702:24.3:3", ["phy_particle_antiparticle_annihilation"]],
+  ["9702:24.3:4", ["phy_particle_antiparticle_annihilation", "phy_radioactive_tracers_pet"]],
+]);
+const approvedPhysicsConceptIds = new Set([
+  "phy_terminal_velocity",
+  "phy_centre_of_gravity",
+  "phy_polarisation_malus",
+  "phy_resistive_sensors",
+  "phy_potentiometer_null_methods",
+  "phy_isotopes",
+  "phy_thermometry",
+  "phy_mole_avogadro",
+  "phy_hall_effect",
+  "phy_piezoelectric_transducers",
+  "phy_acoustic_impedance_reflection",
+  "phy_ultrasound_imaging",
+  "phy_xray_production",
+  "phy_xray_imaging_attenuation",
+  "phy_computed_tomography",
+  "phy_particle_antiparticle_annihilation",
+  "phy_radioactive_tracers_pet",
+]);
+const approvedChemistryOutcomeMappings = new Map<string, string[]>([
+  ["9701:1.3:8", ["che_atomic_orbital_shapes"]],
+  ["9701:1.3:9", ["che_bond_fission"]],
+  ["9701:2.1:1", ["che_relative_masses"]],
+  ["9701:2.1:2", ["che_relative_masses"]],
+  ["9701:2.3:4", ["che_formulae"]],
+  ["9701:3.4:3", ["che_bond_enthalpy"]],
+  ["9701:4.1:1", ["che_gas_laws"]],
+  ["9701:7.2:1", ["che_bronsted", "che_strong_weak"]],
+  ["9701:7.2:2", ["che_bronsted", "che_strong_weak"]],
+  ["9701:11.4:2", ["che_group17"]],
+  ["9701:13.1:3", ["che_organic_representations"]],
+  ["9701:13.1:4", ["che_organic_representations"]],
+  ["9701:13.3:3", ["che_covalent"]],
+  ["9701:14.1:4", ["che_alkanes"]],
+  ["9701:15.1:2", ["che_nucleophilic_sub"]],
+  ["9701:16.1:4", ["che_iodoform_test"]],
+  ["9701:16.1:5", ["che_alcohol_reactions"]],
+  ["9701:17.1:6", ["che_iodoform_test"]],
+  ["9701:19.2:3", ["che_nitriles"]],
+  ["9701:21.1:2", ["che_organic_representations", "che_mechanism_types"]],
+  ["9701:24.2:10", ["che_gibbs", "che_cells"]],
+  ["9701:25.2:1", ["che_partition_coefficient"]],
+  ["9701:25.2:2", ["che_partition_coefficient"]],
+  ["9701:25.2:3", ["che_partition_coefficient"]],
+  ["9701:28.1:2", ["che_atomic_orbital_shapes"]],
+  ["9701:32.2:1", ["che_diazonium_azo", "che_phenol_acid_base"]],
+  ["9701:32.2:2", ["che_phenol_acid_base"]],
+  ["9701:32.2:3", ["che_phenol_acid_base"]],
+  ["9701:32.2:4", ["che_phenol_acid_base"]],
+  ["9701:32.2:6", ["che_phenol_ring_reactivity"]],
+  ["9701:32.2:7", ["che_phenol_ring_reactivity"]],
+  ["9701:33.3:3", ["che_esters"]],
+  ["9701:34.2:2", ["che_diazonium_azo"]],
+  ["9701:34.2:4", ["che_diazonium_azo"]],
+  ["9701:34.3:2", ["che_amides"]],
+  ["9701:34.3:3", ["che_amides"]],
+  ["9701:35.3:2", ["che_addition_polymer"]],
+  ["9701:36.1:2", ["che_organic_representations", "che_mechanism_types"]],
+]);
+const approvedChemistryConceptIds = new Set([
+  "che_atomic_orbital_shapes",
+  "che_relative_masses",
+  "che_partition_coefficient",
+  "che_organic_representations",
+  "che_iodoform_test",
+  "che_nitriles",
+  "che_amides",
+  "che_phenol_acid_base",
+  "che_phenol_ring_reactivity",
+  "che_diazonium_azo",
+]);
+const approvedBiologyConceptOutcomeMappings = new Map<string, string[]>([
+  ["9700:1.2:4", ["bio_atp_energy_currency"]],
+  ["9700:1.2:7", ["bio_virus_structure_classification"]],
+  ["9700:2.2:3", ["bio_monomers_polymers"]],
+  ["9700:2.3:7", ["bio_collagen"]],
+  ["9700:2.3:8", ["bio_collagen"]],
+  ["9700:3.2:2", ["bio_michaelis_menten"]],
+  ["9700:4.2:3", ["bio_surface_area_volume_ratio"]],
+  ["9700:5.1:6", ["bio_mitosis"]],
+  ["9700:6.1:5", ["bio_rna_structure"]],
+  ["9700:8.2:2", ["bio_carbon_dioxide_transport"]],
+  ["9700:8.2:3", ["bio_carbon_dioxide_transport"]],
+  ["9700:10.2:1", ["bio_antibiotics"]],
+  ["9700:12.1:2", ["bio_atp_energy_currency"]],
+  ["9700:12.1:5", ["bio_respiratory_quotient"]],
+  ["9700:12.1:6", ["bio_respiratory_quotient"]],
+  ["9700:13.1:5", ["bio_photosynthetic_pigments_spectra"]],
+  ["9700:14.1:3", ["bio_deamination_urea"]],
+  ["9700:14.1:11", ["bio_glucose_biosensors"]],
+  ["9700:14.2:4", ["bio_aba_stomatal_closure"]],
+  ["9700:15.1:10", ["bio_neuromuscular_activation"]],
+  ["9700:15.1:12", ["bio_sliding_filament_contraction"]],
+  ["9700:15.2:3", ["bio_plant_responses"]],
+  ["9700:16.2:5", ["bio_chi_square_test"]],
+  ["9700:16.3:2", ["bio_lac_operon"]],
+  ["9700:17.1:4", ["bio_t_test"]],
+  ["9700:17.2:5", ["bio_hardy_weinberg"]],
+  ["9700:17.2:6", ["bio_selective_breeding"]],
+  ["9700:17.2:7", ["bio_selective_breeding"]],
+  ["9700:18.1:6", ["bio_virus_structure_classification"]],
+  ["9700:18.2:1", ["bio_ecosystems_niches"]],
+  ["9700:18.2:5", ["bio_correlation_tests"]],
+  ["9700:18.3:4", ["bio_conservation"]],
+  ["9700:19.1:10", ["bio_microarrays"]],
+  ["9700:19.1:11", ["bio_bioinformatics_databases"]],
+]);
+const approvedBiologySkillOutcomeMappings = new Map<string, string[]>([
+  ["9700:1.1:1", ["bio_microscopy"]],
+  ["9700:1.1:2", ["bio_microscopy"]],
+  ["9700:1.1:4", ["bio_microscopy"]],
+  ["9700:1.2:2", ["bio_organelles"]],
+  ["9700:2.1:1", ["bio_tests"]],
+  ["9700:2.1:2", ["bio_tests"]],
+  ["9700:2.1:3", ["bio_tests"]],
+  ["9700:3.1:3", ["bio_enzyme_action"]],
+  ["9700:3.1:4", ["bio_enzyme_action"]],
+  ["9700:3.2:1", ["bio_enzyme_factors"]],
+  ["9700:3.2:4", ["bio_enzyme_action"]],
+  ["9700:4.2:2", ["bio_passive_transport"]],
+  ["9700:4.2:4", ["bio_passive_transport", "bio_surface_area_volume_ratio"]],
+  ["9700:4.2:5", ["bio_passive_transport"]],
+  ["9700:5.2:2", ["bio_mitosis"]],
+  ["9700:7.1:1", ["bio_xylem", "bio_phloem"]],
+  ["9700:7.1:3", ["bio_xylem", "bio_phloem"]],
+  ["9700:7.2:5", ["bio_transpiration"]],
+  ["9700:8.1:3", ["bio_blood_vessels"]],
+  ["9700:8.1:5", ["bio_haemoglobin", "bio_immune_response"]],
+  ["9700:9.1:3", ["bio_lungs"]],
+  ["9700:9.1:4", ["bio_lungs"]],
+  ["9700:12.1:7", ["bio_respiratory_quotient"]],
+  ["9700:12.2:9", ["bio_organelles", "bio_oxidative"]],
+  ["9700:12.2:13", ["bio_glycolysis", "bio_anaerobic"]],
+  ["9700:12.2:14", ["bio_glycolysis", "bio_oxidative"]],
+  ["9700:13.1:1", ["bio_organelles", "bio_light_dependent", "bio_calvin"]],
+  ["9700:13.1:6", ["bio_photosynthetic_pigments_spectra"]],
+  ["9700:13.2:3", ["bio_light_dependent", "bio_limiting_factors"]],
+  ["9700:13.2:4", ["bio_limiting_factors"]],
+  ["9700:14.1:5", ["bio_kidney"]],
+  ["9700:15.1:11", ["bio_neuromuscular_activation", "bio_sliding_filament_contraction"]],
+  ["9700:16.1:5", ["bio_meiosis"]],
+]);
+const approvedBiologyConceptIds = new Set([
+  "bio_atp_energy_currency",
+  "bio_virus_structure_classification",
+  "bio_monomers_polymers",
+  "bio_collagen",
+  "bio_michaelis_menten",
+  "bio_surface_area_volume_ratio",
+  "bio_rna_structure",
+  "bio_carbon_dioxide_transport",
+  "bio_antibiotics",
+  "bio_respiratory_quotient",
+  "bio_photosynthetic_pigments_spectra",
+  "bio_deamination_urea",
+  "bio_glucose_biosensors",
+  "bio_aba_stomatal_closure",
+  "bio_neuromuscular_activation",
+  "bio_sliding_filament_contraction",
+  "bio_chi_square_test",
+  "bio_lac_operon",
+  "bio_t_test",
+  "bio_hardy_weinberg",
+  "bio_selective_breeding",
+  "bio_ecosystems_niches",
+  "bio_correlation_tests",
+  "bio_microarrays",
+  "bio_bioinformatics_databases",
+]);
+const approvedOutcomeIds = new Set([
+  ...approvedMathOutcomeMappings.keys(),
+  ...approvedPhysicsOutcomeMappings.keys(),
+  ...approvedChemistryOutcomeMappings.keys(),
+  ...approvedBiologyConceptOutcomeMappings.keys(),
+  ...approvedBiologySkillOutcomeMappings.keys(),
+]);
+const approvedAddedConceptKeys = new Set([
+  ...[...approvedMathConceptIds].map((id) => `a_level_mathematics:${id}`),
+  ...[...approvedPhysicsConceptIds].map((id) => `a_level_physics:${id}`),
+  ...[...approvedChemistryConceptIds].map((id) => `a_level_chemistry:${id}`),
+  ...[...approvedBiologyConceptIds].map((id) => `a_level_biology:${id}`),
+]);
 
 describe("KG governance baseline", () => {
-  it("keeps all 21 graphs and all 944 legacy concept aliases", () => {
+  it("keeps all 21 graphs and 944 legacy aliases while adding 59 approved A-Level concepts", () => {
     const conceptNodes = graphs.flatMap((graph) =>
       graph.nodes
         .filter((node) => node.kind === "concept")
@@ -78,10 +304,11 @@ describe("KG governance baseline", () => {
     );
 
     expect(graphs).toHaveLength(21);
-    expect(conceptNodes).toHaveLength(944);
-    expect(aliases).toHaveLength(944);
-    expect(new Set(conceptNodes.map((node) => `${node.graph_id}:${node.node_id}`)).size).toBe(944);
-    expect(new Set(aliases.map((alias) => `${alias.graph_id}:${alias.node_id}`)).size).toBe(944);
+    expect(conceptNodes).toHaveLength(1003);
+    expect(aliases).toHaveLength(1003);
+    expect(conceptNodes.filter((node) => !approvedAddedConceptKeys.has(`${node.graph_id}:${node.node_id}`))).toHaveLength(944);
+    expect(new Set(conceptNodes.map((node) => `${node.graph_id}:${node.node_id}`)).size).toBe(1003);
+    expect(new Set(aliases.map((alias) => `${alias.graph_id}:${alias.node_id}`)).size).toBe(1003);
     expect(
       aliases
         .map((alias) => `${alias.graph_id}:${alias.node_id}:${alias.canonical_id}`)
@@ -134,7 +361,9 @@ describe("A-Level pending review packs", () => {
         expect(outcome.pdf_page, outcome.outcome_id).toBeGreaterThan(0);
         expect(outcome.printed_page, outcome.outcome_id).toBeGreaterThan(0);
         expect(outcome.text_sha256, outcome.outcome_id).toMatch(/^[a-f0-9]{64}$/);
-        expect(outcome.review_status, outcome.outcome_id).toBe("needs_review");
+        expect(outcome.review_status, outcome.outcome_id).toBe(
+          approvedOutcomeIds.has(outcome.outcome_id) ? "approved" : "needs_review",
+        );
       }
     }
   });
@@ -154,11 +383,6 @@ describe("A-Level pending review packs", () => {
       coverage_signal: "candidate_partial",
     });
     expect(outcome("a_level_chemistry", "9701:1.1:2")?.candidate_concepts[0]?.node_id).toBe("che_subatomic");
-    expect(outcome("a_level_chemistry", "9701:11.4:2")).toMatchObject({
-      coverage_signal: "candidate_gap",
-    });
-    expect(outcome("a_level_chemistry", "9701:11.4:2")?.candidate_concepts).toEqual([]);
-    expect(outcome("a_level_chemistry", "9701:11.4:2")?.summary_zh).not.toContain("醇的反应");
     expect(outcome("a_level_physics", "9702:1.1:2")).toMatchObject({
       requirement_type: "general_skill",
       coverage_signal: "skill_mapping_required",
@@ -171,11 +395,6 @@ describe("A-Level pending review packs", () => {
       "mat_complex_loci",
       "mat_argand",
     ]);
-    expect(outcome("a_level_biology", "9700:14.2:4")).toMatchObject({
-      coverage_signal: "candidate_gap",
-      candidate_concepts: [],
-      machine_audit_override: true,
-    });
     expect(outcome("a_level_physics", "9702:22.2:4")).toMatchObject({
       coverage_signal: "candidate_partial",
       machine_audit_override: true,
@@ -242,10 +461,6 @@ describe("A-Level pending review packs", () => {
     expect(outcome("a_level_mathematics", "9709:2.4:3")?.candidate_concepts[0]?.node_id).toBe("mat_parametric");
     expect(outcome("a_level_physics", "9702:2.1:3")?.candidate_concepts[0]?.node_id).toBe("phy_motion_graphs");
     expect(outcome("a_level_mathematics", "9709:4.4:4")?.coverage_signal).toBe("candidate_covered");
-    expect(outcome("a_level_biology", "9700:14.1:11")).toMatchObject({
-      coverage_signal: "candidate_gap",
-      candidate_concepts: [],
-    });
     expect(outcome("a_level_physics", "9702:18.1:2")?.candidate_concepts[0]?.node_id).toBe("phy_e_field_strength");
     expect(outcome("a_level_biology", "9700:5.2:2")?.candidate_concepts[0]?.node_id).toBe("bio_mitosis");
     expect(outcome("a_level_mathematics", "9709:1.6:2")?.candidate_concepts.map(({ node_id }) => node_id)).toEqual([
@@ -257,7 +472,7 @@ describe("A-Level pending review packs", () => {
       "bio_transcription",
       "bio_translation",
     ]);
-    expect(outcome("a_level_physics", "9702:11.1:4")?.coverage_signal).toBe("candidate_gap");
+    expect(outcome("a_level_physics", "9702:11.1:4")?.candidate_concepts[0]?.node_id).toBe("phy_isotopes");
     expect(outcome("a_level_mathematics", "9709:2.2:4")).toMatchObject({
       coverage_signal: "candidate_covered",
       machine_audit_override: true,
@@ -268,11 +483,58 @@ describe("A-Level pending review packs", () => {
       machine_audit_override: true,
     });
     expect(outcome("a_level_mathematics", "9709:3.7:5")?.candidate_concepts[0]?.node_id).toBe("mat_vector_lines");
-    expect(outcome("a_level_mathematics", "9709:6.3:2")).toMatchObject({
-      coverage_signal: "candidate_gap",
-      candidate_concepts: [],
-      machine_audit_override: true,
-    });
+    for (const [outcomeId, conceptIds] of approvedMathOutcomeMappings) {
+      expect(outcome("a_level_mathematics", outcomeId)).toMatchObject({
+        review_status: "approved",
+        coverage_signal: "candidate_covered",
+        machine_audit_override: true,
+      });
+      expect(
+        outcome("a_level_mathematics", outcomeId)?.candidate_concepts.map(({ node_id }) => node_id),
+      ).toEqual(conceptIds);
+    }
+    for (const [outcomeId, conceptIds] of approvedPhysicsOutcomeMappings) {
+      const skillMapping = ["9702:7.1:3", "9702:10.1:1"].includes(outcomeId);
+      expect(outcome("a_level_physics", outcomeId)).toMatchObject({
+        review_status: "approved",
+        coverage_signal: skillMapping ? "skill_mapping_required" : "candidate_covered",
+        machine_audit_override: true,
+      });
+      expect(outcome("a_level_physics", outcomeId)?.candidate_concepts.map(({ node_id }) => node_id)).toEqual(
+        conceptIds,
+      );
+    }
+    for (const [outcomeId, conceptIds] of approvedChemistryOutcomeMappings) {
+      const skillMapping = ["9701:7.2:1", "9701:7.2:2", "9701:21.1:2", "9701:36.1:2"].includes(outcomeId);
+      expect(outcome("a_level_chemistry", outcomeId)).toMatchObject({
+        review_status: "approved",
+        coverage_signal: skillMapping ? "skill_mapping_required" : "candidate_covered",
+        machine_audit_override: true,
+      });
+      expect(outcome("a_level_chemistry", outcomeId)?.candidate_concepts.map(({ node_id }) => node_id)).toEqual(
+        conceptIds,
+      );
+    }
+    for (const [outcomeId, conceptIds] of approvedBiologyConceptOutcomeMappings) {
+      expect(outcome("a_level_biology", outcomeId)).toMatchObject({
+        review_status: "approved",
+        coverage_signal: "candidate_covered",
+        machine_audit_override: true,
+      });
+      expect(outcome("a_level_biology", outcomeId)?.candidate_concepts.map(({ node_id }) => node_id)).toEqual(
+        conceptIds,
+      );
+    }
+    for (const [outcomeId, conceptIds] of approvedBiologySkillOutcomeMappings) {
+      expect(outcome("a_level_biology", outcomeId)).toMatchObject({
+        review_status: "approved",
+        coverage_signal: "skill_mapping_required",
+        machine_audit_override: true,
+      });
+      expect(outcome("a_level_biology", outcomeId)?.candidate_concepts.map(({ node_id }) => node_id)).toEqual(
+        conceptIds,
+      );
+    }
     expect(outcome("a_level_chemistry", "9701:1.2:1")?.candidate_concepts[0]?.node_id).toBe("che_isotopes");
     expect(outcome("a_level_chemistry", "9701:3.1:2")?.coverage_signal).toBe("candidate_covered");
     expect(outcome("a_level_physics", "9702:7.4:2")?.coverage_signal).toBe("candidate_partial");
@@ -341,18 +603,13 @@ describe("A-Level pending review packs", () => {
       "che_rate_equation",
       "che_rds",
     ]);
-    expect(outcome("a_level_physics", "9702:3.2:3")).toMatchObject({
-      coverage_signal: "candidate_gap",
-      candidate_concepts: [],
-    });
+    expect(outcome("a_level_physics", "9702:3.2:3")?.candidate_concepts[0]?.node_id).toBe(
+      "phy_terminal_velocity",
+    );
     expect(outcome("a_level_physics", "9702:10.2:3")?.candidate_concepts.map(({ node_id }) => node_id)).toEqual([
       "phy_kirchhoff",
       "phy_series_parallel",
     ]);
-    expect(outcome("a_level_biology", "9700:17.2:7")).toMatchObject({
-      coverage_signal: "candidate_gap",
-      candidate_concepts: [],
-    });
     expect(outcome("a_level_biology", "9700:18.3:6")?.candidate_concepts[0]?.node_id).toBe("bio_conservation");
     expect(outcome("a_level_chemistry", "9701:37.1:1")?.candidate_concepts[0]?.node_id).toBe("che_chromatography");
     expect(outcome("a_level_physics", "9702:14.2:3")).toMatchObject({
@@ -380,10 +637,6 @@ describe("A-Level pending review packs", () => {
       "mat_special_derivatives",
       "mat_chain_rule",
     ]);
-    expect(outcome("a_level_chemistry", "9701:21.1:2")).toMatchObject({
-      coverage_signal: "candidate_gap",
-      candidate_concepts: [],
-    });
     expect(outcome("a_level_physics", "9702:5.1:3")?.candidate_concepts.map(({ node_id }) => node_id)).toEqual([
       "phy_power_efficiency",
     ]);
@@ -391,8 +644,6 @@ describe("A-Level pending review packs", () => {
       "phy_kinetic_theory",
       "phy_ideal_gas",
     ]);
-    expect(outcome("a_level_biology", "9700:17.1:4")?.coverage_signal).toBe("candidate_gap");
-    expect(outcome("a_level_biology", "9700:18.1:6")?.coverage_signal).toBe("candidate_gap");
     expect(outcome("a_level_chemistry", "9701:25.1:6")?.candidate_concepts.map(({ node_id }) => node_id)).toEqual([
       "che_buffers",
       "che_ph_ka",
@@ -414,10 +665,6 @@ describe("A-Level pending review packs", () => {
       "che_complex_ions",
       "che_colour_catalysis",
     ]);
-    expect(outcome("a_level_biology", "9700:8.2:3")).toMatchObject({
-      coverage_signal: "candidate_gap",
-      candidate_concepts: [],
-    });
     expect(outcome("a_level_biology", "9700:12.2:11")?.candidate_concepts.map(({ node_id }) => node_id)).toEqual([
       "bio_oxidative",
       "bio_anaerobic",
@@ -426,20 +673,20 @@ describe("A-Level pending review packs", () => {
     expect(outcome("a_level_physics", "9702:1.3:2")?.candidate_concepts.map(({ node_id }) => node_id)).not.toContain(
       "phy_wave_types",
     );
-    expect(outcome("a_level_physics", "9702:7.1:3")?.coverage_signal).toBe("candidate_gap");
+    expect(outcome("a_level_physics", "9702:7.1:3")).toMatchObject({
+      requirement_type: "concept_and_skill",
+      coverage_signal: "skill_mapping_required",
+    });
     expect(outcome("a_level_biology", "9700:3.2:3")?.candidate_concepts.map(({ node_id }) => node_id)).toEqual([
       "bio_enzyme_inhibition",
     ]);
-    expect(outcome("a_level_biology", "9700:17.2:6")?.coverage_signal).toBe("candidate_gap");
     expect(outcome("a_level_chemistry", "9701:34.2:1")).toMatchObject({
       requirement_type: "concept",
       coverage_signal: "candidate_partial",
     });
     expect(outcome("a_level_chemistry", "9701:4.2:2")?.candidate_concepts[0]?.node_id).toBe("che_solids");
     expect(outcome("a_level_physics", "9702:22.4:2")?.coverage_signal).toBe("candidate_covered");
-    expect(outcome("a_level_biology", "9700:12.1:6")?.coverage_signal).toBe("candidate_gap");
     expect(outcome("a_level_chemistry", "9701:3.5:1")?.coverage_signal).toBe("candidate_partial");
-    expect(outcome("a_level_chemistry", "9701:32.2:6")?.coverage_signal).toBe("candidate_gap");
     expect(outcome("a_level_physics", "9702:25.3:1")?.candidate_concepts.map(({ node_id }) => node_id)).toEqual([
       "phy_energy_levels",
       "phy_hubble",
@@ -493,7 +740,6 @@ describe("A-Level pending review packs", () => {
       "mat_solve_trig",
     ]);
     expect(outcome("a_level_biology", "9700:15.1:7")?.candidate_concepts[0]?.node_id).toBe("bio_nervous");
-    expect(outcome("a_level_chemistry", "9701:13.3:3")?.coverage_signal).toBe("candidate_gap");
     expect(outcome("a_level_physics", "9702:10.2:5")?.candidate_concepts.map(({ node_id }) => node_id)).toEqual([
       "phy_kirchhoff",
       "phy_series_parallel",
@@ -514,14 +760,8 @@ describe("A-Level pending review packs", () => {
       return pack?.sections.flatMap((section) => section.outcomes).find((item) => item.outcome_id === outcomeId);
     };
 
-    for (const [graphId, outcomeId] of [
-      ["a_level_chemistry", "9701:25.2:1"],
-      ["a_level_physics", "9702:24.2:1"],
-    ]) {
-      expect(outcome(graphId, outcomeId)).toMatchObject({
-        coverage_signal: "candidate_gap",
-        candidate_concepts: [],
-      });
-    }
+    expect(outcome("a_level_physics", "9702:24.2:1")?.candidate_concepts[0]?.node_id).toBe(
+      "phy_xray_production",
+    );
   });
 });
