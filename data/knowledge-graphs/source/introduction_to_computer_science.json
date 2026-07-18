@@ -1,662 +1,848 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "introduction_to_computer_science",
   "subject": "Introduction to Computer Science",
-  "schema": {
-    "node_types": [
-      "topic",
-      "concept"
-    ],
-    "edge_types": [
-      "prereq"
-    ]
-  },
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_introduction_to_computer_science"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "topic_week0",
       "kind": "topic",
       "name": "Scratch",
+      "name_zh": "Scratch",
       "topic": null,
       "default_order": 1,
-      "name_zh": "Scratch"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_control_flow_c",
       "kind": "topic",
       "name": "Control Flow and C Foundations",
+      "name_zh": "控制流与 C 语言基础",
       "topic": null,
       "default_order": 2,
-      "name_zh": "控制流与 C 语言基础"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week1",
       "kind": "topic",
       "name": "C Programming",
+      "name_zh": "C 语言",
       "topic": null,
       "default_order": 3,
-      "name_zh": "C 语言"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week2",
       "kind": "topic",
       "name": "Debugging and Arrays",
+      "name_zh": "调试与数组",
       "topic": null,
       "default_order": 4,
-      "name_zh": "调试与数组"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week2_strings",
       "kind": "topic",
       "name": "Strings and Command-line Arguments",
+      "name_zh": "字符串与命令行参数",
       "topic": null,
       "default_order": 5,
-      "name_zh": "字符串与命令行参数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week3",
       "kind": "topic",
       "name": "Algorithms",
+      "name_zh": "算法",
       "topic": null,
       "default_order": 6,
-      "name_zh": "算法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_complexity_memory",
       "kind": "topic",
       "name": "Algorithmic Complexity and Memory",
+      "name_zh": "算法复杂度与内存",
       "topic": null,
       "default_order": 7,
-      "name_zh": "算法复杂度与内存"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week4",
       "kind": "topic",
       "name": "Memory",
+      "name_zh": "内存",
       "topic": null,
       "default_order": 8,
-      "name_zh": "内存"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week5",
       "kind": "topic",
       "name": "Data Structures",
+      "name_zh": "数据结构",
       "topic": null,
       "default_order": 9,
-      "name_zh": "数据结构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_adv_data_python",
       "kind": "topic",
       "name": "Advanced Data Structures and Python",
+      "name_zh": "高级数据结构与 Python",
       "topic": null,
       "default_order": 10,
-      "name_zh": "高级数据结构与 Python"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week6",
       "kind": "topic",
       "name": "Python",
+      "name_zh": "Python",
       "topic": null,
       "default_order": 11,
-      "name_zh": "Python"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week7",
       "kind": "topic",
       "name": "Relational Databases and SQL Queries",
+      "name_zh": "关系数据库与SQL查询",
       "topic": null,
       "default_order": 12,
-      "name_zh": "关系数据库与SQL查询"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week7_joins",
       "kind": "topic",
       "name": "SQL Joins and SQL Indexes",
+      "name_zh": "SQL连接与SQL索引",
       "topic": null,
       "default_order": 13,
-      "name_zh": "SQL连接与SQL索引"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week8",
       "kind": "topic",
       "name": "HTML and CSS",
+      "name_zh": "HTML与CSS",
       "topic": null,
       "default_order": 14,
-      "name_zh": "HTML与CSS"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week8_js",
       "kind": "topic",
       "name": "JavaScript and DOM Manipulation",
+      "name_zh": "JavaScript与DOM 操作",
       "topic": null,
       "default_order": 15,
-      "name_zh": "JavaScript与DOM 操作"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week9",
       "kind": "topic",
       "name": "Flask",
+      "name_zh": "Flask",
       "topic": null,
       "default_order": 16,
-      "name_zh": "Flask"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_web_state_security",
       "kind": "topic",
       "name": "Web State, APIs and Security",
+      "name_zh": "Web 状态、API 与安全",
       "topic": null,
       "default_order": 17,
-      "name_zh": "Web 状态、API 与安全"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_week10",
       "kind": "topic",
       "name": "Cybersecurity",
+      "name_zh": "网络安全",
       "topic": null,
       "default_order": 18,
-      "name_zh": "网络安全"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_functions",
-      "name": "Functions",
-      "topic": "topic_week0",
+      "canonical_id": "pc_85e1042b57c072a1a606734970fa30ba",
       "kind": "concept",
+      "name": "Functions",
+      "name_zh": "函数",
+      "topic": "topic_week0",
+      "description": "Reusable named blocks of code that take inputs and produce outputs, letting programs be organised into smaller, composable, repeatable pieces.",
       "default_order": 1,
       "centrality": 0.3471,
-      "description": "Reusable named blocks of code that take inputs and produce outputs, letting programs be organised into smaller, composable, repeatable pieces.",
-      "name_zh": "函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_events",
-      "name": "Events",
-      "topic": "topic_week0",
+      "canonical_id": "pc_ff24211eda71afe407bf8ab6d5dd6fa7",
       "kind": "concept",
+      "name": "Events",
+      "name_zh": "事件",
+      "topic": "topic_week0",
+      "description": "Programming constructs that respond to occurrences such as user input or messages, central to event-driven environments like Scratch.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Programming constructs that respond to occurrences such as user input or messages, central to event-driven environments like Scratch.",
-      "name_zh": "事件"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_conditions",
-      "name": "Conditionals",
-      "topic": "topic_week0",
+      "canonical_id": "pc_195487dba37efcbba36b48af9d4d9a22",
       "kind": "concept",
+      "name": "Conditionals",
+      "name_zh": "条件语句",
+      "topic": "topic_week0",
+      "description": "Conditional statements that execute different code branches depending on whether a boolean expression evaluates to true or false.",
       "default_order": 3,
       "centrality": 0.3081,
-      "description": "Conditional statements that execute different code branches depending on whether a boolean expression evaluates to true or false.",
-      "name_zh": "条件语句"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_loops",
-      "name": "Loops",
-      "topic": "topic_control_flow_c",
+      "canonical_id": "pc_3093f2ae9772651d9483f8ee7ef39f18",
       "kind": "concept",
+      "name": "Loops",
+      "name_zh": "循环",
+      "topic": "topic_control_flow_c",
+      "description": "Control structures that repeat a block of code, either a fixed number of times or while a condition holds, to automate repetition.",
       "default_order": 1,
       "centrality": 0.3081,
-      "description": "Control structures that repeat a block of code, either a fixed number of times or while a condition holds, to automate repetition.",
-      "name_zh": "循环"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_abstraction",
-      "name": "Abstraction",
-      "topic": "topic_control_flow_c",
+      "canonical_id": "pc_cf72546f68c224dc129917cb946a3fe9",
       "kind": "concept",
+      "name": "Abstraction",
+      "name_zh": "抽象",
+      "topic": "topic_control_flow_c",
+      "description": "Hiding implementation detail behind simpler interfaces so complex systems can be built and reasoned about in manageable layers.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Hiding implementation detail behind simpler interfaces so complex systems can be built and reasoned about in manageable layers.",
-      "name_zh": "抽象"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_c_syntax",
-      "name": "C Syntax",
-      "topic": "topic_control_flow_c",
+      "canonical_id": "pc_b4924679370b33527ba6a5dadc096df0",
       "kind": "concept",
-      "default_order": 3,
-      "centrality": 1.0,
+      "name": "C Syntax",
+      "name_zh": "C 语法",
+      "topic": "topic_control_flow_c",
       "description": "The grammatical rules of the C language governing how statements, expressions, and declarations are written so the compiler can interpret them.",
-      "name_zh": "C 语法"
+      "default_order": 3,
+      "centrality": 1,
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_data_types",
-      "name": "Data Types",
-      "topic": "topic_week1",
+      "canonical_id": "pc_8ea42dcab7ad646dd366208bfcdc715f",
       "kind": "concept",
+      "name": "Data Types",
+      "name_zh": "数据类型",
+      "topic": "topic_week1",
+      "description": "Categories such as int, char, float, and double specifying how values are stored, their size in memory, and the operations allowed on them.",
       "default_order": 1,
       "centrality": 0.3899,
-      "description": "Categories such as int, char, float, and double specifying how values are stored, their size in memory, and the operations allowed on them.",
-      "name_zh": "数据类型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_operators",
-      "name": "Operators",
-      "topic": "topic_week1",
+      "canonical_id": "pc_b4cde6bb447c8585a921e7ce23160f09",
       "kind": "concept",
+      "name": "Operators",
+      "name_zh": "运算符",
+      "topic": "topic_week1",
+      "description": "Symbols performing computations on values, including arithmetic, relational, logical, and assignment operators, combined to form expressions.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Symbols performing computations on values, including arithmetic, relational, logical, and assignment operators, combined to form expressions.",
-      "name_zh": "运算符"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_compilation",
-      "name": "Compilation Process",
-      "topic": "topic_week1",
+      "canonical_id": "pc_596add23679cc489e72ee850d5457925",
       "kind": "concept",
+      "name": "Compilation Process",
+      "name_zh": "编译过程",
+      "topic": "topic_week1",
+      "description": "The process translating C source code into an executable through preprocessing, compiling, assembling, and linking stages.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "The process translating C source code into an executable through preprocessing, compiling, assembling, and linking stages.",
-      "name_zh": "编译过程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_debugging",
-      "name": "Debugging",
-      "topic": "topic_week2",
+      "canonical_id": "pc_de17d290e5793ba2dbd6a5b160adbdee",
       "kind": "concept",
+      "name": "Debugging",
+      "name_zh": "调试",
+      "topic": "topic_week2",
+      "description": "The systematic process of locating and fixing program defects using tools, print statements, and reasoning about expected versus actual behaviour.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "The systematic process of locating and fixing program defects using tools, print statements, and reasoning about expected versus actual behaviour.",
-      "name_zh": "调试"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_arrays",
-      "name": "Arrays",
-      "topic": "topic_week2",
+      "canonical_id": "pc_6dfc227cfbc4f3670974d33b71b287f2",
       "kind": "concept",
+      "name": "Arrays",
+      "name_zh": "数组",
+      "topic": "topic_week2",
+      "description": "Contiguous, fixed-size collections of same-typed elements accessed by integer index in constant time, the basis of many data structures.",
       "default_order": 2,
       "centrality": 0.3033,
-      "description": "Contiguous, fixed-size collections of same-typed elements accessed by integer index in constant time, the basis of many data structures.",
-      "name_zh": "数组"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_strings",
-      "name": "Strings",
-      "topic": "topic_week2_strings",
+      "canonical_id": "pc_165b9b7c1b70edf85ec8fa5c7dcde90d",
       "kind": "concept",
+      "name": "Strings",
+      "name_zh": "字符串",
+      "topic": "topic_week2_strings",
+      "description": "Sequences of characters represented in C as null-terminated arrays of chars, manipulated through library functions and pointer operations.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Sequences of characters represented in C as null-terminated arrays of chars, manipulated through library functions and pointer operations.",
-      "name_zh": "字符串"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_cli_args",
-      "name": "Command-line Arguments",
-      "topic": "topic_week2_strings",
+      "canonical_id": "pc_d5ec775fb1ecdda74febf237f82d038f",
       "kind": "concept",
+      "name": "Command-line Arguments",
+      "name_zh": "命令行参数",
+      "topic": "topic_week2_strings",
+      "description": "Arguments passed to a program at launch, received through argc and argv, letting users configure behaviour from the command line.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Arguments passed to a program at launch, received through argc and argv, letting users configure behaviour from the command line.",
-      "name_zh": "命令行参数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_linear_search",
-      "name": "Linear Search",
-      "topic": "topic_week3",
+      "canonical_id": "pc_1e79735dfab85ed6fee5c40d36f19b82",
       "kind": "concept",
+      "name": "Linear Search",
+      "name_zh": "线性搜索",
+      "topic": "topic_week3",
+      "description": "A search algorithm scanning elements one by one until the target is found or the collection is exhausted, running in linear time.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "A search algorithm scanning elements one by one until the target is found or the collection is exhausted, running in linear time.",
-      "name_zh": "线性搜索",
       "visual": "algorithm",
-      "visual_hint": "Scan an array element by element highlighting the comparison until found."
+      "visual_hint": "Scan an array element by element highlighting the comparison until found.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_binary_search",
-      "name": "Binary Search",
-      "topic": "topic_week3",
+      "canonical_id": "pc_085b7cfd4307c1b811a44a0f86b1106a",
       "kind": "concept",
+      "name": "Binary Search",
+      "name_zh": "二分搜索",
+      "topic": "topic_week3",
+      "description": "An efficient search on sorted data that repeatedly halves the search interval by comparing the target to the middle element, running in logarithmic time.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "An efficient search on sorted data that repeatedly halves the search interval by comparing the target to the middle element, running in logarithmic time.",
-      "name_zh": "二分搜索",
       "visual": "algorithm",
-      "visual_hint": "Halve a sorted array each step, narrowing the search interval."
+      "visual_hint": "Halve a sorted array each step, narrowing the search interval.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_sorting",
-      "name": "Sorting Algorithms",
-      "topic": "topic_week3",
+      "canonical_id": "pc_4cf5b2e8fe45a33253ff21f4541dc6f3",
       "kind": "concept",
+      "name": "Sorting Algorithms",
+      "name_zh": "排序算法",
+      "topic": "topic_week3",
+      "description": "Algorithms arranging elements into order, such as bubble, selection, and merge sort, differing in strategy and time complexity.",
       "default_order": 3,
       "centrality": 0.0459,
-      "description": "Algorithms arranging elements into order, such as bubble, selection, and merge sort, differing in strategy and time complexity.",
-      "name_zh": "排序算法",
       "visual": "algorithm",
-      "visual_hint": "Animate bubble, selection, and merge sort rearranging an array."
+      "visual_hint": "Animate bubble, selection, and merge sort rearranging an array.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_recursion",
-      "name": "Recursion",
-      "topic": "topic_complexity_memory",
+      "canonical_id": "pc_ffbd24b1208266d5151223c8fcf43282",
       "kind": "concept",
+      "name": "Recursion",
+      "name_zh": "递归",
+      "topic": "topic_complexity_memory",
+      "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate.",
-      "name_zh": "递归",
       "visual": "algorithm",
-      "visual_hint": "Step recursive calls building up and unwinding on the call stack."
+      "visual_hint": "Step recursive calls building up and unwinding on the call stack.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_big_o",
-      "name": "Big O Notation",
-      "topic": "topic_complexity_memory",
+      "canonical_id": "pc_ce1e809b06f3572add745d9f0d2cd499",
       "kind": "concept",
+      "name": "Big O Notation",
+      "name_zh": "大O表示法",
+      "topic": "topic_complexity_memory",
+      "description": "Big O notation describing how an algorithm's running time or space grows with input size, characterising worst-case asymptotic efficiency.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Big O notation describing how an algorithm's running time or space grows with input size, characterising worst-case asymptotic efficiency.",
-      "name_zh": "大O表示法",
       "visual": "chart",
-      "visual_hint": "Plot growth of constant, log, linear, n-log-n, and quadratic complexity."
+      "visual_hint": "Plot growth of constant, log, linear, n-log-n, and quadratic complexity.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_pointers",
-      "name": "Pointers",
-      "topic": "topic_complexity_memory",
+      "canonical_id": "pc_b5c278dfa5939c2cd00be766def2767c",
       "kind": "concept",
+      "name": "Pointers",
+      "name_zh": "指针",
+      "topic": "topic_complexity_memory",
+      "description": "Variables storing memory addresses, enabling indirect access, dynamic data structures, and efficient passing of data by reference in C.",
       "default_order": 3,
       "centrality": 0.2531,
-      "description": "Variables storing memory addresses, enabling indirect access, dynamic data structures, and efficient passing of data by reference in C.",
-      "name_zh": "指针",
       "visual": "diagram",
-      "visual_hint": "Box-and-pointer diagram of variables holding memory addresses."
+      "visual_hint": "Box-and-pointer diagram of variables holding memory addresses.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_malloc",
-      "name": "Dynamic Memory Allocation",
-      "topic": "topic_week4",
+      "canonical_id": "pc_a84ae49584a745b90c9015a431c2be65",
       "kind": "concept",
+      "name": "Dynamic Memory Allocation",
+      "name_zh": "动态内存分配",
+      "topic": "topic_week4",
+      "description": "Dynamic memory allocation requesting heap memory at run time with malloc and releasing it with free, enabling data sized during execution.",
       "default_order": 1,
       "centrality": 0.0604,
-      "description": "Dynamic memory allocation requesting heap memory at run time with malloc and releasing it with free, enabling data sized during execution.",
-      "name_zh": "动态内存分配"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_call_stack",
-      "name": "Call Stack",
-      "topic": "topic_week4",
+      "canonical_id": "pc_80fd0744c4c62168ba85c866bceff050",
       "kind": "concept",
+      "name": "Call Stack",
+      "name_zh": "调用栈",
+      "topic": "topic_week4",
+      "description": "The region of memory tracking active function calls, storing each call's local variables, parameters, and return address in stack frames.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The region of memory tracking active function calls, storing each call's local variables, parameters, and return address in stack frames.",
-      "name_zh": "调用栈",
       "visual": "diagram",
-      "visual_hint": "Diagram stack frames pushed and popped as functions are called."
+      "visual_hint": "Diagram stack frames pushed and popped as functions are called.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_file_io",
-      "name": "File I/O",
-      "topic": "topic_week4",
+      "canonical_id": "pc_236d95a4cc41069b9c59aeab67074eb9",
       "kind": "concept",
+      "name": "File I/O",
+      "name_zh": "文件I/O",
+      "topic": "topic_week4",
+      "description": "Reading from and writing to files using library functions, enabling programs to persist and retrieve data beyond their execution.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Reading from and writing to files using library functions, enabling programs to persist and retrieve data beyond their execution.",
-      "name_zh": "文件I/O"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_linked_lists",
-      "name": "Linked Lists",
-      "topic": "topic_week5",
+      "canonical_id": "pc_b9e1b092531d5a8cabd6adc046b49059",
       "kind": "concept",
+      "name": "Linked Lists",
+      "name_zh": "链表",
+      "topic": "topic_week5",
+      "description": "A dynamic data structure of nodes each holding data and a pointer to the next, allowing efficient insertion and deletion without contiguous memory.",
       "default_order": 1,
       "centrality": 0.0839,
-      "description": "A dynamic data structure of nodes each holding data and a pointer to the next, allowing efficient insertion and deletion without contiguous memory.",
-      "name_zh": "链表",
       "visual": "diagram",
-      "visual_hint": "Box-and-pointer chain of nodes linked by next pointers."
+      "visual_hint": "Box-and-pointer chain of nodes linked by next pointers.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_hash_tables",
-      "name": "Hash Tables",
-      "topic": "topic_week5",
+      "canonical_id": "pc_6379952bc629bb02f40dd9c9cd906fd8",
       "kind": "concept",
+      "name": "Hash Tables",
+      "name_zh": "哈希表",
+      "topic": "topic_week5",
+      "description": "A structure mapping keys to values using a hash function to index into buckets, giving average constant-time insertion and lookup.",
       "default_order": 2,
       "centrality": 0.1391,
-      "description": "A structure mapping keys to values using a hash function to index into buckets, giving average constant-time insertion and lookup.",
-      "name_zh": "哈希表",
       "visual": "algorithm",
-      "visual_hint": "Hash keys into buckets and resolve a collision."
+      "visual_hint": "Hash keys into buckets and resolve a collision.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_trees",
-      "name": "Trees",
-      "topic": "topic_week5",
+      "canonical_id": "pc_c991091347a5056a142b5d38cb07fe1e",
       "kind": "concept",
+      "name": "Trees",
+      "name_zh": "树",
+      "topic": "topic_week5",
+      "description": "Hierarchical data structures of nodes linked from a root, such as binary search trees, enabling efficient ordered storage and lookup.",
       "default_order": 3,
       "centrality": 0.1414,
-      "description": "Hierarchical data structures of nodes linked from a root, such as binary search trees, enabling efficient ordered storage and lookup.",
-      "name_zh": "树",
       "visual": "algorithm",
-      "visual_hint": "Insert and search nodes in a binary search tree."
+      "visual_hint": "Insert and search nodes in a binary search tree.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_tries",
-      "name": "Tries",
-      "topic": "topic_adv_data_python",
+      "canonical_id": "pc_7b5449c1e47e29f2a8b11e5e75086642",
       "kind": "concept",
+      "name": "Tries",
+      "name_zh": "字典树",
+      "topic": "topic_adv_data_python",
+      "description": "Tree structures indexing strings by their characters along paths, enabling fast prefix-based search and autocomplete at the cost of memory.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Tree structures indexing strings by their characters along paths, enabling fast prefix-based search and autocomplete at the cost of memory.",
-      "name_zh": "字典树"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_queues_stacks",
-      "name": "Queues and Stacks",
-      "topic": "topic_adv_data_python",
+      "canonical_id": "pc_f950552d9f820aef1ab4d5020ee46bb6",
       "kind": "concept",
+      "name": "Queues and Stacks",
+      "name_zh": "队列与栈",
+      "topic": "topic_adv_data_python",
+      "description": "Two abstract data types: stacks following last-in-first-out order and queues following first-in-first-out order, for managing ordered access.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Two abstract data types: stacks following last-in-first-out order and queues following first-in-first-out order, for managing ordered access.",
-      "name_zh": "队列与栈",
       "visual": "algorithm",
-      "visual_hint": "Animate push/pop on a stack and enqueue/dequeue on a queue."
+      "visual_hint": "Animate push/pop on a stack and enqueue/dequeue on a queue.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_python_syntax",
-      "name": "Python Syntax",
-      "topic": "topic_adv_data_python",
+      "canonical_id": "pc_45656a4f179af6e5eaa44eaeb281837d",
       "kind": "concept",
+      "name": "Python Syntax",
+      "name_zh": "Python 语法",
+      "topic": "topic_adv_data_python",
+      "description": "The readable, indentation-based syntax of Python, a high-level interpreted language emphasising concise expression of common programming constructs.",
       "default_order": 3,
       "centrality": 0.581,
-      "description": "The readable, indentation-based syntax of Python, a high-level interpreted language emphasising concise expression of common programming constructs.",
-      "name_zh": "Python 语法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_lists_dicts",
-      "name": "Lists and Dictionaries",
-      "topic": "topic_week6",
+      "canonical_id": "pc_11fba365ff6eb80d38ecafb705d91795",
       "kind": "concept",
+      "name": "Lists and Dictionaries",
+      "name_zh": "列表和字典",
+      "topic": "topic_week6",
+      "description": "Python's core collections: ordered, mutable lists and dictionaries mapping keys to values, supporting flexible data manipulation.",
       "default_order": 1,
       "centrality": 0.1841,
-      "description": "Python's core collections: ordered, mutable lists and dictionaries mapping keys to values, supporting flexible data manipulation.",
-      "name_zh": "列表和字典"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_oop",
-      "name": "Object-Oriented Programming",
-      "topic": "topic_week6",
+      "canonical_id": "pc_1b4e5a90172024de46045002ae8c80cf",
       "kind": "concept",
+      "name": "Object-Oriented Programming",
+      "name_zh": "OOP",
+      "topic": "topic_week6",
+      "description": "Object-oriented programming in Python organising code into classes that bundle data and methods, supporting encapsulation, inheritance, and reuse.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Object-oriented programming in Python organising code into classes that bundle data and methods, supporting encapsulation, inheritance, and reuse.",
-      "name_zh": "OOP"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_exceptions",
-      "name": "Exceptions",
-      "topic": "topic_week6",
+      "canonical_id": "pc_d81d4c1556aa0164bed1ed9dc3b7d6f1",
       "kind": "concept",
+      "name": "Exceptions",
+      "name_zh": "异常",
+      "topic": "topic_week6",
+      "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic.",
-      "name_zh": "异常"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_relational_db",
-      "name": "Relational Databases",
-      "topic": "topic_week7",
+      "canonical_id": "pc_da5b2a9ed513849fe40cac6e84f54b58",
       "kind": "concept",
+      "name": "Relational Databases",
+      "name_zh": "关系数据库",
+      "topic": "topic_week7",
+      "description": "Databases storing data in related tables of rows and columns, with keys linking tables, managed through a relational database system.",
       "default_order": 1,
       "centrality": 0.1359,
-      "description": "Databases storing data in related tables of rows and columns, with keys linking tables, managed through a relational database system.",
-      "name_zh": "关系数据库"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_sql_queries",
-      "name": "SQL Queries",
-      "topic": "topic_week7",
+      "canonical_id": "pc_6e5c6d0bf54f9e21f681198d1a10e22b",
       "kind": "concept",
+      "name": "SQL Queries",
+      "name_zh": "SQL查询",
+      "topic": "topic_week7",
+      "description": "SQL statements that retrieve and modify data in relational tables, expressing selection, filtering, and ordering declaratively.",
       "default_order": 2,
       "centrality": 0.0669,
-      "description": "SQL statements that retrieve and modify data in relational tables, expressing selection, filtering, and ordering declaratively.",
-      "name_zh": "SQL查询"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_joins",
-      "name": "SQL Joins",
-      "topic": "topic_week7_joins",
+      "canonical_id": "pc_2422f86e66cd7be6eee7705083afc3a1",
       "kind": "concept",
+      "name": "SQL Joins",
+      "name_zh": "SQL连接",
+      "topic": "topic_week7_joins",
+      "description": "SQL joins combining rows from multiple tables based on related columns, enabling queries that span relationships between tables.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "SQL joins combining rows from multiple tables based on related columns, enabling queries that span relationships between tables.",
-      "name_zh": "SQL连接"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_indexes",
-      "name": "SQL Indexes",
-      "topic": "topic_week7_joins",
+      "canonical_id": "pc_7bbd3b63592f82bab9ae3381aea0ac89",
       "kind": "concept",
+      "name": "SQL Indexes",
+      "name_zh": "SQL索引",
+      "topic": "topic_week7_joins",
+      "description": "Database indexes, auxiliary structures that speed up lookups on chosen columns at the cost of extra storage and slower writes.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Database indexes, auxiliary structures that speed up lookups on chosen columns at the cost of extra storage and slower writes.",
-      "name_zh": "SQL索引"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_html",
-      "name": "HTML",
-      "topic": "topic_week8",
+      "canonical_id": "pc_f5321e408c25b62f8f2ff4a412d644a5",
       "kind": "concept",
+      "name": "HTML",
+      "name_zh": "HTML",
+      "topic": "topic_week8",
+      "description": "HyperText Markup Language defining the structure and content of web pages through nested, semantic tags rendered by browsers.",
       "default_order": 1,
       "centrality": 0.2737,
-      "description": "HyperText Markup Language defining the structure and content of web pages through nested, semantic tags rendered by browsers.",
-      "name_zh": "HTML"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_css",
-      "name": "CSS",
-      "topic": "topic_week8",
+      "canonical_id": "pc_b0a282c9627b592fb3dc02a81fb4de95",
       "kind": "concept",
+      "name": "CSS",
+      "name_zh": "CSS",
+      "topic": "topic_week8",
+      "description": "Cascading Style Sheets controlling the visual presentation of HTML, including layout, colours, fonts, and responsive design via rules.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Cascading Style Sheets controlling the visual presentation of HTML, including layout, colours, fonts, and responsive design via rules.",
-      "name_zh": "CSS"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_js",
-      "name": "JavaScript",
-      "topic": "topic_week8_js",
+      "canonical_id": "pc_59b5064f2521bf1b820e003b03084bbb",
       "kind": "concept",
+      "name": "JavaScript",
+      "name_zh": "JavaScript",
+      "topic": "topic_week8_js",
+      "description": "JavaScript, the browser's programming language adding interactivity and dynamic behaviour to web pages through an event-driven model.",
       "default_order": 1,
       "centrality": 0.1067,
-      "description": "JavaScript, the browser's programming language adding interactivity and dynamic behaviour to web pages through an event-driven model.",
-      "name_zh": "JavaScript"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_dom",
-      "name": "DOM Manipulation",
-      "topic": "topic_week8_js",
+      "canonical_id": "pc_8ee6058763ed99be5ed1743f86fbb627",
       "kind": "concept",
+      "name": "DOM Manipulation",
+      "name_zh": "DOM 操作",
+      "topic": "topic_week8_js",
+      "description": "The Document Object Model, a tree representation of a web page that JavaScript can read and modify to update content dynamically.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The Document Object Model, a tree representation of a web page that JavaScript can read and modify to update content dynamically.",
-      "name_zh": "DOM 操作",
       "visual": "diagram",
-      "visual_hint": "Tree diagram of the DOM nodes of a web page."
+      "visual_hint": "Tree diagram of the DOM nodes of a web page.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_http",
-      "name": "HTTP Protocol",
-      "topic": "topic_week9",
+      "canonical_id": "pc_87fc4cc9f262094f52a3a6de85339208",
       "kind": "concept",
+      "name": "HTTP Protocol",
+      "name_zh": "HTTP 协议",
+      "topic": "topic_week9",
+      "description": "The HyperText Transfer Protocol governing request-response communication between web clients and servers using methods and status codes.",
       "default_order": 1,
       "centrality": 0.1491,
-      "description": "The HyperText Transfer Protocol governing request-response communication between web clients and servers using methods and status codes.",
-      "name_zh": "HTTP 协议"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_flask",
-      "name": "Flask Framework",
-      "topic": "topic_week9",
+      "canonical_id": "pc_2e5158a7094f9b663ca49cdbdca5a523",
       "kind": "concept",
+      "name": "Flask Framework",
+      "name_zh": "Flask 框架",
+      "topic": "topic_week9",
+      "description": "Flask, a lightweight Python web framework for building web applications and APIs by mapping URL routes to handler functions.",
       "default_order": 2,
       "centrality": 0.0669,
-      "description": "Flask, a lightweight Python web framework for building web applications and APIs by mapping URL routes to handler functions.",
-      "name_zh": "Flask 框架"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mvc",
-      "name": "MVC Architecture",
-      "topic": "topic_week9",
+      "canonical_id": "pc_aaec8a92812308ccd0400f35d15b231f",
       "kind": "concept",
+      "name": "MVC Architecture",
+      "name_zh": "MVC 架构",
+      "topic": "topic_week9",
+      "description": "The Model-View-Controller pattern separating data, presentation, and control logic to organise web application code cleanly.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "The Model-View-Controller pattern separating data, presentation, and control logic to organise web application code cleanly.",
-      "name_zh": "MVC 架构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_sessions",
-      "name": "Sessions and Cookies",
-      "topic": "topic_web_state_security",
+      "canonical_id": "pc_0b6aa152559855767621b54931080114",
       "kind": "concept",
+      "name": "Sessions and Cookies",
+      "name_zh": "会话与 Cookie",
+      "topic": "topic_web_state_security",
+      "description": "Sessions and cookies maintaining state across stateless HTTP requests, identifying users and remembering data between page visits.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Sessions and cookies maintaining state across stateless HTTP requests, identifying users and remembering data between page visits.",
-      "name_zh": "会话与 Cookie"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_apis",
-      "name": "APIs",
-      "topic": "topic_web_state_security",
+      "canonical_id": "pc_ca4eb76d41bc2824941c377991e375e4",
       "kind": "concept",
+      "name": "APIs",
+      "name_zh": "API",
+      "topic": "topic_web_state_security",
+      "description": "Application programming interfaces exposing functionality and data over the web, commonly returning JSON for other programs to consume.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Application programming interfaces exposing functionality and data over the web, commonly returning JSON for other programs to consume.",
-      "name_zh": "API"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_cybersecurity",
-      "name": "Cybersecurity Basics",
-      "topic": "topic_web_state_security",
+      "canonical_id": "pc_a250ea1946f428879784878015a02fbc",
       "kind": "concept",
+      "name": "Cybersecurity Basics",
+      "name_zh": "网络安全基础",
+      "topic": "topic_web_state_security",
+      "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information.",
       "default_order": 3,
       "centrality": 0.088,
-      "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information.",
-      "name_zh": "网络安全基础"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_encryption",
-      "name": "Encryption",
-      "topic": "topic_week10",
+      "canonical_id": "pc_8aa707b43be37b57900fb193156c15b1",
       "kind": "concept",
+      "name": "Encryption",
+      "name_zh": "加密",
+      "topic": "topic_week10",
+      "description": "Transforming data into ciphertext using algorithms and keys so that only authorised parties can read it, underpinning secure communication.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Transforming data into ciphertext using algorithms and keys so that only authorised parties can read it, underpinning secure communication.",
-      "name_zh": "加密"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_authentication",
-      "name": "Authentication",
-      "topic": "topic_week10",
+      "canonical_id": "pc_a6f3fa500f2727582139b1c36767c364",
       "kind": "concept",
+      "name": "Authentication",
+      "name_zh": "身份认证",
+      "topic": "topic_week10",
+      "description": "Verifying the identity of a user or system, typically through passwords, tokens, or biometrics, before granting access to resources.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Verifying the identity of a user or system, typically through passwords, tokens, or biometrics, before granting access to resources.",
-      "name_zh": "身份认证"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_vulnerabilities",
-      "name": "Vulnerabilities",
-      "topic": "topic_week10",
+      "canonical_id": "pc_652265d815acba3e0f930cea73700b61",
       "kind": "concept",
+      "name": "Vulnerabilities",
+      "name_zh": "安全漏洞",
+      "topic": "topic_week10",
+      "description": "Weaknesses in software or systems that attackers can exploit, such as injection or buffer overflows, requiring mitigation and patching.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Weaknesses in software or systems that attackers can exploit, such as injection or buffer overflows, requiring mitigation and patching.",
-      "name_zh": "安全漏洞"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -664,295 +850,393 @@
       "type": "prereq",
       "from": "c_functions",
       "to": "c_c_syntax",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_loops",
       "to": "c_c_syntax",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_conditions",
       "to": "c_c_syntax",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_c_syntax",
       "to": "c_data_types",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_data_types",
       "to": "c_operators",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_c_syntax",
       "to": "c_compilation",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_c_syntax",
       "to": "c_arrays",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_data_types",
       "to": "c_arrays",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_strings",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_cli_args",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_linear_search",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_linear_search",
       "to": "c_binary_search",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_sorting",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_functions",
       "to": "c_recursion",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_sorting",
       "to": "c_big_o",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_data_types",
       "to": "c_pointers",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_pointers",
       "to": "c_malloc",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_recursion",
       "to": "c_call_stack",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_pointers",
       "to": "c_file_io",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_pointers",
       "to": "c_linked_lists",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_malloc",
       "to": "c_linked_lists",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_linked_lists",
       "to": "c_hash_tables",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_hash_tables",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_pointers",
       "to": "c_trees",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_trees",
       "to": "c_tries",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_queues_stacks",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_c_syntax",
       "to": "c_python_syntax",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_lists_dicts",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_hash_tables",
       "to": "c_lists_dicts",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_python_syntax",
       "to": "c_oop",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_python_syntax",
       "to": "c_exceptions",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_lists_dicts",
       "to": "c_relational_db",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_relational_db",
       "to": "c_sql_queries",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_sql_queries",
       "to": "c_joins",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_sql_queries",
       "to": "c_indexes",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_python_syntax",
       "to": "c_js",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_html",
       "to": "c_dom",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_js",
       "to": "c_dom",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_html",
       "to": "c_css",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_html",
       "to": "c_http",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_python_syntax",
       "to": "c_flask",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_http",
       "to": "c_flask",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_flask",
       "to": "c_mvc",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_flask",
       "to": "c_sessions",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_http",
       "to": "c_apis",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_http",
       "to": "c_cybersecurity",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_cybersecurity",
       "to": "c_encryption",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_cybersecurity",
       "to": "c_authentication",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c_cybersecurity",
       "to": "c_vulnerabilities",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

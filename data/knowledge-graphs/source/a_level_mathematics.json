@@ -1,1140 +1,1444 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "a_level_mathematics",
   "subject": "Mathematics",
-  "schema": {
-    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
-    "node_fields": {
-      "id": "globally unique id",
-      "kind": "topic | concept",
-      "name": "concept name",
-      "topic": "owning topic id; null for topic nodes",
-      "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "from must be learned before to; strength=hard|soft"
-    },
-    "concept_node_definition": "concept = smallest independently quiz-testable skill"
-  },
+  "jurisdictions": [
+    "international"
+  ],
+  "source_ids": [
+    "src_cambridge_9709_2026_2027",
+    "src_cambridge_9709_2026_2027_update"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "mat_algebra_part1",
       "kind": "topic",
       "name": "Indices and Surds and Quadratic Functions",
+      "name_zh": "指数与根式与二次函数",
       "topic": null,
       "default_order": 1,
-      "name_zh": "指数与根式与二次函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_algebra_part1_mat_solve_quadratics",
       "kind": "topic",
       "name": "Solving Quadratics and Discriminant and Simultaneous Equations",
+      "name_zh": "二次方程求解与联立方程",
       "topic": null,
       "default_order": 2,
-      "name_zh": "二次方程求解与联立方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_algebra_part2",
       "kind": "topic",
       "name": "Inequalities and Functions and Inverses",
+      "name_zh": "不等式与函数与反函数",
       "topic": null,
       "default_order": 3,
-      "name_zh": "不等式与函数与反函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_algebra_part2_mat_composite",
       "kind": "topic",
       "name": "Composite Functions and Modulus Function",
+      "name_zh": "复合函数与绝对值函数",
       "topic": null,
       "default_order": 4,
-      "name_zh": "复合函数与绝对值函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_polynomials",
       "kind": "topic",
       "name": "Polynomials and Partial Fractions",
+      "name_zh": "多项式与部分分式",
       "topic": null,
       "default_order": 5,
-      "name_zh": "多项式与部分分式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_coord_geom",
       "kind": "topic",
       "name": "Coordinate Geometry",
+      "name_zh": "坐标几何",
       "topic": null,
       "default_order": 6,
-      "name_zh": "坐标几何"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_sequences",
       "kind": "topic",
       "name": "Arithmetic Series and Geometric Series",
+      "name_zh": "等差级数与等比级数",
       "topic": null,
       "default_order": 7,
-      "name_zh": "等差级数与等比级数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_sequences_mat_binomial_pos",
       "kind": "topic",
       "name": "Binomial Expansion (positive integer) and Binomial Expansion (general index)",
+      "name_zh": "二项展开（正整数）与二项展开（一般指数）",
       "topic": null,
       "default_order": 8,
-      "name_zh": "二项展开（正整数）与二项展开（一般指数）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_trig_part1",
       "kind": "topic",
       "name": "Trigonometry: Ratios and Identities",
+      "name_zh": "三角学：比值与恒等式",
       "topic": null,
       "default_order": 9,
-      "name_zh": "三角学：比值与恒等式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_trig_part2",
       "kind": "topic",
       "name": "Trigonometry: Equations and Formulae",
+      "name_zh": "三角学：方程与公式",
       "topic": null,
       "default_order": 10,
-      "name_zh": "三角学：方程与公式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_exp_log",
       "kind": "topic",
       "name": "Exponential Functions and Logarithms and Laws",
+      "name_zh": "指数函数与对数与法则",
       "topic": null,
       "default_order": 11,
-      "name_zh": "指数函数与对数与法则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_exp_log_mat_solve_exp",
       "kind": "topic",
       "name": "Solving Exponential and Log Equations and Linearising with Logarithms",
+      "name_zh": "解指数与对数方程与对数线性化",
       "topic": null,
       "default_order": 12,
-      "name_zh": "解指数与对数方程与对数线性化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_differentiation_part1",
       "kind": "topic",
       "name": "Differentiation: Rules and Techniques",
+      "name_zh": "微分：法则与技巧",
       "topic": null,
       "default_order": 13,
-      "name_zh": "微分：法则与技巧"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_differentiation_part2",
       "kind": "topic",
       "name": "Differentiation: Applications",
+      "name_zh": "微分：应用",
       "topic": null,
       "default_order": 14,
-      "name_zh": "微分：应用"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_differentiation_adv",
       "kind": "topic",
       "name": "Product and Quotient Rules and Derivatives of Special Functions",
+      "name_zh": "积商法则与特殊函数导数",
       "topic": null,
       "default_order": 15,
-      "name_zh": "积商法则与特殊函数导数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_differentiation_adv_mat_implicit",
       "kind": "topic",
       "name": "Implicit Differentiation and Parametric Differentiation",
+      "name_zh": "隐函数微分与参数微分",
       "topic": null,
       "default_order": 16,
-      "name_zh": "隐函数微分与参数微分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_integration_part1",
       "kind": "topic",
       "name": "Indefinite Integration and Definite Integration and Area",
+      "name_zh": "不定积分与定积分与面积",
       "topic": null,
       "default_order": 17,
-      "name_zh": "不定积分与定积分与面积"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_integration_part1_mat_standard_integrals",
       "kind": "topic",
       "name": "Integration of Standard Functions and Integration by Substitution",
+      "name_zh": "标准函数积分与换元积分",
       "topic": null,
       "default_order": 18,
-      "name_zh": "标准函数积分与换元积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_integration_part2",
       "kind": "topic",
       "name": "Integration: Advanced Techniques",
+      "name_zh": "积分：进阶技巧",
       "topic": null,
       "default_order": 19,
-      "name_zh": "积分：进阶技巧"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_numerical_methods",
       "kind": "topic",
       "name": "Locating Roots and Iterative Methods",
+      "name_zh": "根的定位与迭代法",
       "topic": null,
       "default_order": 20,
-      "name_zh": "根的定位与迭代法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_numerical_methods_mat_form_de",
       "kind": "topic",
       "name": "Forming Differential Equations and Separation of Variables",
+      "name_zh": "建立微分方程与分离变量",
       "topic": null,
       "default_order": 21,
-      "name_zh": "建立微分方程与分离变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_vectors",
       "kind": "topic",
       "name": "Vectors in 2D and 3D and Magnitude and Direction",
+      "name_zh": "向量基础与大小与方向",
       "topic": null,
       "default_order": 22,
-      "name_zh": "向量基础与大小与方向"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_vectors_mat_scalar_product",
       "kind": "topic",
       "name": "Scalar Product and Vector Equations of Lines",
+      "name_zh": "标量积与直线向量方程",
       "topic": null,
       "default_order": 23,
-      "name_zh": "标量积与直线向量方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_complex",
       "kind": "topic",
       "name": "Complex Number Arithmetic and Argand Diagram",
+      "name_zh": "复数运算与阿根图",
       "topic": null,
       "default_order": 24,
-      "name_zh": "复数运算与阿根图"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_complex_mat_mod_arg",
       "kind": "topic",
       "name": "Modulus-Argument Form and Complex Roots and Loci",
+      "name_zh": "模角形式与复数根与轨迹",
       "topic": null,
       "default_order": 25,
-      "name_zh": "模角形式与复数根与轨迹"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_mech_kinematics",
       "kind": "topic",
       "name": "Mechanics: Kinematics",
+      "name_zh": "运动学",
       "topic": null,
       "default_order": 26,
-      "name_zh": "运动学"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_mech_forces",
       "kind": "topic",
       "name": "Mechanics: Forces and Newton's Laws",
+      "name_zh": "力与牛顿定律",
       "topic": null,
       "default_order": 27,
-      "name_zh": "力与牛顿定律"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_mech_energy_momentum",
       "kind": "topic",
       "name": "Mechanics: Connected Particles, Energy and Momentum",
+      "name_zh": "力学：连接体、能量与动量",
       "topic": null,
       "default_order": 28,
-      "name_zh": "力学：连接体、能量与动量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_data_counting_prob",
       "kind": "topic",
       "name": "Data, Counting and Probability",
+      "name_zh": "数据、计数与概率",
       "topic": null,
       "default_order": 29,
-      "name_zh": "数据、计数与概率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_prob_random_vars",
       "kind": "topic",
       "name": "Probability and Discrete Random Variables",
+      "name_zh": "概率与离散随机变量",
       "topic": null,
       "default_order": 30,
-      "name_zh": "概率与离散随机变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_random_vars",
       "kind": "topic",
       "name": "Random Variables and Distributions",
+      "name_zh": "随机变量与分布",
       "topic": null,
       "default_order": 31,
-      "name_zh": "随机变量与分布"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_normal_inference",
       "kind": "topic",
       "name": "Normal Distribution and Normal Approximations",
+      "name_zh": "正态分布与正态近似",
       "topic": null,
       "default_order": 32,
-      "name_zh": "正态分布与正态近似"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_normal_inference_mat_sampling",
       "kind": "topic",
       "name": "Sampling and Hypothesis Testing",
+      "name_zh": "抽样与假设检验",
       "topic": null,
       "default_order": 33,
-      "name_zh": "抽样与假设检验"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_indices_surds",
+      "canonical_id": "pc_1f926799e78750b6c592c57aa427bbdc",
       "kind": "concept",
       "name": "Indices and Surds",
+      "name_zh": "指数与根式",
       "topic": "mat_algebra_part1",
       "description": "Laws of indices for manipulating powers and the simplification and rationalisation of surds, expressing irrational roots in exact form.",
       "default_order": 1,
       "centrality": 0.3382,
-      "name_zh": "指数与根式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_quadratics",
+      "canonical_id": "pc_133d40fa0e72c29c5eb6ec7a9852c80c",
       "kind": "concept",
       "name": "Quadratic Functions",
+      "name_zh": "二次函数",
       "topic": "mat_algebra_part1",
       "description": "Quadratic functions and their parabolic graphs, completing the square to find the vertex, line of symmetry, and maximum or minimum.",
       "default_order": 2,
       "centrality": 0.213,
-      "name_zh": "二次函数",
       "visual": "function",
-      "visual_hint": "Plot a parabola with sliders for the coefficients showing vertex and roots."
+      "visual_hint": "Plot a parabola with sliders for the coefficients showing vertex and roots.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_solve_quadratics",
+      "canonical_id": "pc_2d2287436b31a462805b82876a1bc513",
       "kind": "concept",
       "name": "Solving Quadratics and Discriminant",
+      "name_zh": "二次方程求解",
       "topic": "mat_algebra_part1_mat_solve_quadratics",
       "description": "Solving quadratic equations by factorising, completing the square, or the formula, with the discriminant determining the number of real roots.",
       "default_order": 1,
       "centrality": 0.1895,
-      "name_zh": "二次方程求解"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_simultaneous",
+      "canonical_id": "pc_204206c0b72ea40b72d3055124b579af",
       "kind": "concept",
       "name": "Simultaneous Equations",
+      "name_zh": "联立方程",
       "topic": "mat_algebra_part1_mat_solve_quadratics",
       "description": "Solving simultaneous equations, including one linear and one quadratic, by substitution or elimination to find common solutions.",
       "default_order": 2,
       "centrality": 0.0689,
-      "name_zh": "联立方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_inequalities",
+      "canonical_id": "pc_4307437065fb6fce9aa3b4c05e7ed82d",
       "kind": "concept",
       "name": "Inequalities",
+      "name_zh": "不等式",
       "topic": "mat_algebra_part2",
       "description": "Solving linear and quadratic inequalities algebraically and graphically, and representing the solution sets on a number line.",
       "default_order": 1,
       "centrality": 0.0519,
-      "name_zh": "不等式",
       "visual": "function",
-      "visual_hint": "Shade the regions satisfying linear and quadratic inequalities."
+      "visual_hint": "Shade the regions satisfying linear and quadratic inequalities.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_functions",
+      "canonical_id": "pc_d547d8eb03df4b28cc0357c7cae1d164",
       "kind": "concept",
       "name": "Functions and Inverses",
+      "name_zh": "函数与反函数",
       "topic": "mat_algebra_part2",
       "description": "Functions defined by their domain and range, the distinction between one-to-one and many-to-one mappings, and finding inverse functions.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "函数与反函数",
       "visual": "function",
-      "visual_hint": "Plot a function and its inverse as reflections in y = x."
+      "visual_hint": "Plot a function and its inverse as reflections in y = x.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_composite",
+      "canonical_id": "pc_6a6936f09677fca363b23f40f12d946d",
       "kind": "concept",
       "name": "Composite Functions",
+      "name_zh": "复合函数",
       "topic": "mat_algebra_part2_mat_composite",
       "description": "Composite functions formed by applying one function to the result of another, with attention to domain and the order of composition.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "复合函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_modulus",
+      "canonical_id": "pc_bbf60fbe4b8e3e3bd3bd64a1b5fc3475",
       "kind": "concept",
       "name": "Modulus Function",
+      "name_zh": "绝对值函数",
       "topic": "mat_algebra_part2_mat_composite",
       "description": "The modulus function giving absolute value, its graph, and solving equations and inequalities involving modulus expressions.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "绝对值函数",
       "visual": "function",
-      "visual_hint": "Plot the modulus function and solve |f(x)| = g(x) graphically."
+      "visual_hint": "Plot the modulus function and solve |f(x)| = g(x) graphically.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_poly_division",
+      "canonical_id": "pc_dc9d610f912bfe8e7245757c013f0d56",
       "kind": "concept",
       "name": "Polynomial Division",
+      "name_zh": "多项式除法",
       "topic": "mat_polynomials",
       "description": "Dividing polynomials by a linear or quadratic divisor using long division or inspection to obtain a quotient and remainder.",
       "default_order": 1,
       "centrality": 0.0746,
-      "name_zh": "多项式除法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_factor_theorem",
+      "canonical_id": "pc_25a4d1b7b2e82048bf51bf1fa4f1e09b",
       "kind": "concept",
       "name": "Factor and Remainder Theorem",
+      "name_zh": "因式与余式定理",
       "topic": "mat_polynomials",
       "description": "The factor and remainder theorems relating the value of a polynomial at a point to its factors and to the remainder on division.",
       "default_order": 2,
       "centrality": 0.0586,
-      "name_zh": "因式与余式定理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_partial_fractions",
+      "canonical_id": "pc_c08be96bd005e301108d747134902aee",
       "kind": "concept",
       "name": "Partial Fractions",
+      "name_zh": "部分分式",
       "topic": "mat_polynomials",
       "description": "Decomposing a rational function into a sum of simpler partial fractions, handling linear, repeated, and quadratic factors.",
       "default_order": 3,
       "centrality": 0.0398,
-      "name_zh": "部分分式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_straight_lines",
+      "canonical_id": "pc_2fd09e919b7e73069c83ce49007f17d2",
       "kind": "concept",
       "name": "Straight Lines",
+      "name_zh": "直线",
       "topic": "mat_coord_geom",
       "description": "The equation of a straight line in various forms, with gradient and intercepts found from points or other given conditions.",
       "default_order": 1,
       "centrality": 0.0654,
-      "name_zh": "直线",
       "visual": "function",
-      "visual_hint": "Plot a line with sliders for gradient and intercept."
+      "visual_hint": "Plot a line with sliders for gradient and intercept.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_parallel_perp",
+      "canonical_id": "pc_2a20781f550c684afa2cda1e4dde847d",
       "kind": "concept",
       "name": "Parallel and Perpendicular Lines",
+      "name_zh": "平行与垂直直线",
       "topic": "mat_coord_geom",
       "description": "The gradient conditions for parallel and perpendicular lines, where perpendicular gradients multiply to give negative one.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "平行与垂直直线"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_circles",
+      "canonical_id": "pc_3d12d114d1630b545655de686dae4630",
       "kind": "concept",
       "name": "Circles",
+      "name_zh": "圆",
       "topic": "mat_coord_geom",
       "description": "The equation of a circle from its centre and radius, and finding intersections, tangents, and properties using coordinate geometry.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "圆",
       "visual": "function",
-      "visual_hint": "Plot a circle from centre and radius and find line intersections."
+      "visual_hint": "Plot a circle from centre and radius and find line intersections.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_arithmetic",
+      "canonical_id": "pc_9e401fe846a8c086510b3ea2102be253",
       "kind": "concept",
       "name": "Arithmetic Series",
+      "name_zh": "等差级数",
       "topic": "mat_sequences",
       "description": "Arithmetic progressions with a common difference, and the formulae for the nth term and the sum of the first n terms.",
       "default_order": 1,
       "centrality": 0.0624,
-      "name_zh": "等差级数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_geometric",
+      "canonical_id": "pc_ced3271242c9a0d6fe67d9a446214543",
       "kind": "concept",
       "name": "Geometric Series",
+      "name_zh": "等比级数",
       "topic": "mat_sequences",
       "description": "Geometric progressions with a common ratio, formulae for the nth term and sum, and the sum to infinity of a convergent series.",
       "default_order": 2,
       "centrality": 0.0443,
-      "name_zh": "等比级数",
       "visual": "chart",
-      "visual_hint": "Plot geometric-progression terms and the convergence of the sum."
+      "visual_hint": "Plot geometric-progression terms and the convergence of the sum.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_binomial_pos",
+      "canonical_id": "pc_57ca5674eaf8c8ddc02a9fd067f2bc9d",
       "kind": "concept",
       "name": "Binomial Expansion (positive integer)",
+      "name_zh": "二项展开（正整数）",
       "topic": "mat_sequences_mat_binomial_pos",
       "description": "The binomial expansion of an expression raised to a positive integer power using binomial coefficients and Pascal's triangle.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "二项展开（正整数）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_binomial_gen",
+      "canonical_id": "pc_93b5706c3b9618a6eca55734dd477cb7",
       "kind": "concept",
       "name": "Binomial Expansion (general index)",
+      "name_zh": "二项展开（一般指数）",
       "topic": "mat_sequences_mat_binomial_pos",
       "description": "The binomial expansion for a general rational or negative index as an infinite series, valid within its range of convergence.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "二项展开（一般指数）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_trig_ratios",
+      "canonical_id": "pc_c756deb603e99d7fbb680d46214248e8",
       "kind": "concept",
       "name": "Trig Ratios and Graphs",
+      "name_zh": "三角函数与图像",
       "topic": "mat_trig_part1",
       "description": "The trigonometric ratios sine, cosine, and tangent, their graphs, periodicity, and exact values for standard angles.",
       "default_order": 1,
       "centrality": 0.2321,
-      "name_zh": "三角函数与图像",
       "visual": "function",
-      "visual_hint": "Plot sine, cosine, and tangent with adjustable amplitude and period."
+      "visual_hint": "Plot sine, cosine, and tangent with adjustable amplitude and period.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_radians",
+      "canonical_id": "pc_249bb1a239e11b22bde8356cc52a08a0",
       "kind": "concept",
       "name": "Radian Measure",
+      "name_zh": "弧度制",
       "topic": "mat_trig_part1",
       "description": "Radian measure of angles and its use in the arc length and sector area formulae for a circle.",
       "default_order": 2,
       "centrality": 0.0596,
-      "name_zh": "弧度制",
       "visual": "interactive",
-      "visual_hint": "Unit circle linking an angle in radians to arc length and sector area."
+      "visual_hint": "Unit circle linking an angle in radians to arc length and sector area.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_trig_identities",
+      "canonical_id": "pc_deafae3a3962b29dc66b867691e8957e",
       "kind": "concept",
       "name": "Trig Identities",
+      "name_zh": "三角恒等式",
       "topic": "mat_trig_part1",
       "description": "Fundamental trigonometric identities, including the Pythagorean identities, used to simplify expressions and prove relationships.",
       "default_order": 3,
       "centrality": 0.0819,
-      "name_zh": "三角恒等式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_solve_trig",
+      "canonical_id": "pc_ff8fc44580c50798ce8689e9774790ec",
       "kind": "concept",
       "name": "Solving Trig Equations",
+      "name_zh": "解三角方程",
       "topic": "mat_trig_part2",
       "description": "Solving trigonometric equations within a given interval using identities, graphs, and the symmetry of trigonometric functions.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "解三角方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_double_angle",
+      "canonical_id": "pc_abd2410d819fd0126e356cacadbbe4ac",
       "kind": "concept",
       "name": "Compound and Double Angle Formulae",
+      "name_zh": "倍角与和差公式",
       "topic": "mat_trig_part2",
       "description": "Compound-angle and double-angle formulae expanding trigonometric functions of the sum and of multiples of angles.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "倍角与和差公式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_rform",
+      "canonical_id": "pc_f9a16263794fa7273443ad72a84c3b23",
       "kind": "concept",
       "name": "R-Formula",
+      "name_zh": "R 公式",
       "topic": "mat_trig_part2",
       "description": "Expressing a sin θ plus b cos θ in the form R sin(θ + α), used to solve equations and find maxima and minima.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "R 公式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_exp_func",
+      "canonical_id": "pc_81e5444941a3e64858bae20e97e58cf8",
       "kind": "concept",
       "name": "Exponential Functions",
+      "name_zh": "指数函数",
       "topic": "mat_exp_log",
       "description": "Exponential functions and the natural exponential e^x, modelling growth and decay, and the properties of their graphs.",
       "default_order": 1,
       "centrality": 0.1329,
-      "name_zh": "指数函数",
       "visual": "function",
-      "visual_hint": "Plot exponential growth and decay with a slider for the rate."
+      "visual_hint": "Plot exponential growth and decay with a slider for the rate.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_log_laws",
+      "canonical_id": "pc_3845a20537e66fc1506222d98752aa3d",
       "kind": "concept",
       "name": "Logarithms and Laws",
+      "name_zh": "对数与法则",
       "topic": "mat_exp_log",
       "description": "Logarithms as the inverse of exponentials, and the laws of logarithms for manipulating products, quotients, and powers.",
       "default_order": 2,
       "centrality": 0.0871,
-      "name_zh": "对数与法则",
       "visual": "function",
-      "visual_hint": "Plot logarithm curves as inverses of exponentials."
+      "visual_hint": "Plot logarithm curves as inverses of exponentials.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_solve_exp",
+      "canonical_id": "pc_6f7f45d6caa0f1b2ef2954812125da30",
       "kind": "concept",
       "name": "Solving Exponential and Log Equations",
+      "name_zh": "解指数与对数方程",
       "topic": "mat_exp_log_mat_solve_exp",
       "description": "Solving exponential and logarithmic equations by applying logarithms and the laws of logarithms to isolate the unknown.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "解指数与对数方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_linearise",
+      "canonical_id": "pc_1ea1ea6ee0e270c4aad9c97a380db664",
       "kind": "concept",
       "name": "Linearising with Logarithms",
+      "name_zh": "对数线性化",
       "topic": "mat_exp_log_mat_solve_exp",
       "description": "Using logarithms to linearise power and exponential relationships, plotting transformed data to determine the model's constants.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "对数线性化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_first_principles",
+      "canonical_id": "pc_10673fbc68b0db5d92e2eccb2616c7a6",
       "kind": "concept",
       "name": "Differentiation from First Principles",
+      "name_zh": "从原理求导",
       "topic": "mat_differentiation_part1",
       "description": "The derivative defined as the limit of the gradient of a chord, used to differentiate simple functions from first principles.",
       "default_order": 1,
       "centrality": 0.208,
-      "name_zh": "从原理求导",
       "visual": "function",
-      "visual_hint": "Slider for h: a secant collapsing to the tangent."
+      "visual_hint": "Slider for h: a secant collapsing to the tangent.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_power_rule",
+      "canonical_id": "pc_d35baa6e4598b25c22ba867ed2a4f82f",
       "kind": "concept",
       "name": "Power Rule",
+      "name_zh": "幂法则",
       "topic": "mat_differentiation_part1",
       "description": "The power rule for differentiating powers of x, extended by linearity to differentiate sums of polynomial terms.",
       "default_order": 2,
       "centrality": 0.2156,
-      "name_zh": "幂法则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_chain_rule",
+      "canonical_id": "pc_5f2b3d511ffa1447c2f7fda25d724789",
       "kind": "concept",
       "name": "Chain Rule",
+      "name_zh": "链式法则",
       "topic": "mat_differentiation_part1",
       "description": "The chain rule differentiating a composite function as the product of the derivatives of its outer and inner functions.",
       "default_order": 3,
       "centrality": 0.1869,
-      "name_zh": "链式法则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_tangent_normal",
+      "canonical_id": "pc_e48516f32ed219bfab284968f67ba2b4",
       "kind": "concept",
       "name": "Tangents and Normals",
+      "name_zh": "切线与法线",
       "topic": "mat_differentiation_part2",
       "description": "Finding the equations of the tangent and normal to a curve at a point, using the derivative as the gradient.",
       "default_order": 1,
       "centrality": 0.0398,
-      "name_zh": "切线与法线",
       "visual": "function",
-      "visual_hint": "Plot a curve with its tangent and normal at a draggable point."
+      "visual_hint": "Plot a curve with its tangent and normal at a draggable point.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_stationary",
+      "canonical_id": "pc_61dadf3e646d2fed3a3b5b81630b2563",
       "kind": "concept",
       "name": "Stationary Points",
+      "name_zh": "极值点",
       "topic": "mat_differentiation_part2",
       "description": "Locating stationary points where the derivative is zero and classifying them as maxima, minima, or points of inflection.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "极值点",
       "visual": "function",
-      "visual_hint": "Plot a curve, mark stationary points, and toggle the derivative."
+      "visual_hint": "Plot a curve, mark stationary points, and toggle the derivative.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_rates",
+      "canonical_id": "pc_5ada2e4818384405fb8ea25e390ece93",
       "kind": "concept",
       "name": "Connected Rates of Change",
+      "name_zh": "相关变化率",
       "topic": "mat_differentiation_part2",
       "description": "Connected rates of change linking the time derivatives of related quantities through the chain rule.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "相关变化率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_product_quotient",
+      "canonical_id": "pc_4536621b5e542d2b820ea7b67abd0bb3",
       "kind": "concept",
       "name": "Product and Quotient Rules",
+      "name_zh": "积商法则",
       "topic": "mat_differentiation_adv",
       "description": "The product and quotient rules for differentiating the product and the quotient of two functions.",
       "default_order": 1,
       "centrality": 0.1075,
-      "name_zh": "积商法则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_special_derivatives",
+      "canonical_id": "pc_31bfe71fa0fb4cdd31cba73b08b409b8",
       "kind": "concept",
       "name": "Derivatives of Special Functions",
+      "name_zh": "特殊函数导数",
       "topic": "mat_differentiation_adv",
       "description": "Differentiating exponential, logarithmic, and trigonometric functions using their standard derivative results.",
       "default_order": 2,
       "centrality": 0.0774,
-      "name_zh": "特殊函数导数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_implicit",
+      "canonical_id": "pc_291eccaad32d6e2b88654e4670202509",
       "kind": "concept",
       "name": "Implicit Differentiation",
+      "name_zh": "隐函数微分",
       "topic": "mat_differentiation_adv_mat_implicit",
       "description": "Implicit differentiation finding the derivative of a relation not solved explicitly for y by differentiating both sides.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "隐函数微分",
       "visual": "function",
-      "visual_hint": "Plot an implicit relation and show its tangent slope at a point."
+      "visual_hint": "Plot an implicit relation and show its tangent slope at a point.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_parametric",
+      "canonical_id": "pc_7430a9a6308a8998f2a18d7a50c51616",
       "kind": "concept",
       "name": "Parametric Differentiation",
+      "name_zh": "参数微分",
       "topic": "mat_differentiation_adv_mat_implicit",
       "description": "Parametric differentiation finding dy/dx for curves defined parametrically by applying the chain rule through the parameter.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "参数微分",
       "visual": "function",
-      "visual_hint": "Trace a parametric curve r(t) with a slider for t."
+      "visual_hint": "Trace a parametric curve r(t) with a slider for t.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_indefinite",
+      "canonical_id": "pc_d84e12e0aab825375aeaf1dbefe02723",
       "kind": "concept",
       "name": "Indefinite Integration",
+      "name_zh": "不定积分",
       "topic": "mat_integration_part1",
       "description": "Indefinite integration as the reverse of differentiation, finding antiderivatives with an arbitrary constant of integration.",
       "default_order": 1,
       "centrality": 0.074,
-      "name_zh": "不定积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_definite_area",
+      "canonical_id": "pc_70ca4e3f9288a539a0658a8bfc5fd30e",
       "kind": "concept",
       "name": "Definite Integration and Area",
+      "name_zh": "定积分与面积",
       "topic": "mat_integration_part1",
       "description": "Definite integration evaluating the area under a curve between limits using the fundamental theorem of calculus.",
       "default_order": 2,
       "centrality": 0.0579,
-      "name_zh": "定积分与面积",
       "visual": "interactive",
-      "visual_hint": "Shade the area under a curve between draggable limits."
+      "visual_hint": "Shade the area under a curve between draggable limits.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_standard_integrals",
+      "canonical_id": "pc_ccdbe5629abf3bd57a2af7fed2325222",
       "kind": "concept",
       "name": "Integration of Standard Functions",
+      "name_zh": "标准函数积分",
       "topic": "mat_integration_part1_mat_standard_integrals",
       "description": "Integrating standard functions, including powers, exponentials, and trigonometric functions, from their known antiderivatives.",
       "default_order": 1,
       "centrality": 0.0531,
-      "name_zh": "标准函数积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_substitution",
+      "canonical_id": "pc_068c8dc8d8c675d3d5ce7ccecd096ffc",
       "kind": "concept",
       "name": "Integration by Substitution",
+      "name_zh": "换元积分",
       "topic": "mat_integration_part1_mat_standard_integrals",
       "description": "Integration by substitution reversing the chain rule by changing the variable to simplify the integrand.",
       "default_order": 2,
       "centrality": 0.0417,
-      "name_zh": "换元积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_by_parts",
+      "canonical_id": "pc_109312f1b6fc1335fa82c6f6af1f684c",
       "kind": "concept",
       "name": "Integration by Parts",
+      "name_zh": "分部积分",
       "topic": "mat_integration_part2",
       "description": "Integration by parts reversing the product rule to integrate the product of two functions.",
       "default_order": 1,
       "centrality": 0.0398,
-      "name_zh": "分部积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_int_partial",
+      "canonical_id": "pc_dd2a5e93fb4971bf2e2eecc0425260cc",
       "kind": "concept",
       "name": "Integration using Partial Fractions",
+      "name_zh": "部分分式积分",
       "topic": "mat_integration_part2",
       "description": "Integrating rational functions by first decomposing them into partial fractions that can be integrated individually.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "部分分式积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_volumes",
+      "canonical_id": "pc_976815608b52b80566be2966aa010743",
       "kind": "concept",
       "name": "Volumes of Revolution",
+      "name_zh": "旋转体体积",
       "topic": "mat_integration_part2",
       "description": "Volumes of revolution generated by rotating a region about an axis, computed by integrating the area of circular cross-sections.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "旋转体体积",
       "visual": "interactive",
-      "visual_hint": "Rotate a region about an axis to form a solid of revolution."
+      "visual_hint": "Rotate a region about an axis to form a solid of revolution.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_locate_roots",
+      "canonical_id": "pc_e1ed93beb5e81e2b78ce90172be70927",
       "kind": "concept",
       "name": "Locating Roots",
+      "name_zh": "根的定位",
       "topic": "mat_numerical_methods",
       "description": "Locating roots of an equation by a sign change over an interval, establishing the existence of a root before iteration.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "根的定位"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_iteration",
+      "canonical_id": "pc_a5686136f2f67beb1cea540ee5200bc5",
       "kind": "concept",
       "name": "Iterative Methods",
+      "name_zh": "迭代法",
       "topic": "mat_numerical_methods",
       "description": "Iterative methods finding successive approximations to a root using a rearranged iterative formula, and assessing convergence.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "迭代法",
       "visual": "function",
-      "visual_hint": "Cobweb diagram of an iterative root-finding sequence."
+      "visual_hint": "Cobweb diagram of an iterative root-finding sequence.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_form_de",
+      "canonical_id": "pc_1c40f01e7df9a2f35a81598b9edf2a2a",
       "kind": "concept",
       "name": "Forming Differential Equations",
+      "name_zh": "建立微分方程",
       "topic": "mat_numerical_methods_mat_form_de",
       "description": "Forming differential equations from descriptions of rates of change, translating a physical situation into an equation.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "建立微分方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_separation",
+      "canonical_id": "pc_19b4d23ab3a52e66c899dbf16e583835",
       "kind": "concept",
       "name": "Separation of Variables",
+      "name_zh": "分离变量",
       "topic": "mat_numerical_methods_mat_form_de",
       "description": "Solving first-order differential equations by separating the variables and integrating each side.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "分离变量",
       "visual": "function",
-      "visual_hint": "Plot a slope field and a solution curve of a first-order ODE."
+      "visual_hint": "Plot a slope field and a solution curve of a first-order ODE.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_vector_basics",
+      "canonical_id": "pc_9ae5f17312ee21050edf3e4bd9b005a2",
       "kind": "concept",
       "name": "Vectors in 2D and 3D",
+      "name_zh": "向量基础",
       "topic": "mat_vectors",
       "description": "Vectors in two and three dimensions represented in component and unit-vector form, with addition and scalar multiplication.",
       "default_order": 1,
       "centrality": 0.206,
-      "name_zh": "向量基础",
       "visual": "interactive",
-      "visual_hint": "Drag 2D/3D vectors and add them tip-to-tail."
+      "visual_hint": "Drag 2D/3D vectors and add them tip-to-tail.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_vector_magnitude",
+      "canonical_id": "pc_64e61e1cee5471619fa54db48800b916",
       "kind": "concept",
       "name": "Magnitude and Direction",
+      "name_zh": "大小与方向",
       "topic": "mat_vectors",
       "description": "The magnitude of a vector from its components using Pythagoras, and finding its direction and corresponding unit vector.",
       "default_order": 2,
       "centrality": 0.0398,
-      "name_zh": "大小与方向"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_scalar_product",
+      "canonical_id": "pc_3e68cc383e695a3ae1773f286b5221f3",
       "kind": "concept",
       "name": "Scalar Product",
+      "name_zh": "标量积",
       "topic": "mat_vectors_mat_scalar_product",
       "description": "The scalar (dot) product of two vectors, used to find the angle between them and to test for perpendicularity.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "标量积",
       "visual": "interactive",
-      "visual_hint": "Drag two vectors and show the dot product and the angle between them."
+      "visual_hint": "Drag two vectors and show the dot product and the angle between them.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_vector_lines",
+      "canonical_id": "pc_0c3c2f35769f38762a59705783e03824",
       "kind": "concept",
       "name": "Vector Equations of Lines",
+      "name_zh": "直线向量方程",
       "topic": "mat_vectors_mat_scalar_product",
       "description": "The vector equation of a line through a point with a given direction, and finding intersections and angles between lines.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "直线向量方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_complex_arith",
+      "canonical_id": "pc_84fa9a959816d2fd778aec459c7e0020",
       "kind": "concept",
       "name": "Complex Number Arithmetic",
+      "name_zh": "复数运算",
       "topic": "mat_complex",
       "description": "Complex numbers in the form a + bi, with addition, subtraction, multiplication, division, and the complex conjugate.",
       "default_order": 1,
       "centrality": 0.079,
-      "name_zh": "复数运算"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_argand",
+      "canonical_id": "pc_8b0b34fcb52404046ccbf41b402895fd",
       "kind": "concept",
       "name": "Argand Diagram",
+      "name_zh": "阿根图",
       "topic": "mat_complex",
       "description": "Representing complex numbers as points or vectors on an Argand diagram, illustrating their geometric interpretation.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "阿根图",
       "visual": "interactive",
-      "visual_hint": "Plot complex numbers as points and vectors on an Argand diagram."
+      "visual_hint": "Plot complex numbers as points and vectors on an Argand diagram.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_mod_arg",
+      "canonical_id": "pc_ff5c62fb22ac2a9c7252c1ff65727a41",
       "kind": "concept",
       "name": "Modulus-Argument Form",
+      "name_zh": "模角形式",
       "topic": "mat_complex_mat_mod_arg",
       "description": "The modulus-argument (polar) form of a complex number, with multiplication and division combining moduli and arguments.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "模角形式",
       "visual": "interactive",
-      "visual_hint": "Show modulus-argument form and multiplication as rotation and scaling on the Argand plane."
+      "visual_hint": "Show modulus-argument form and multiplication as rotation and scaling on the Argand plane.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_complex_loci",
+      "canonical_id": "pc_fc9bb3961ffd0d45670252b69c41d19c",
       "kind": "concept",
       "name": "Complex Roots and Loci",
+      "name_zh": "复数根与轨迹",
       "topic": "mat_complex_mat_mod_arg",
       "description": "Complex roots of polynomials occurring in conjugate pairs, and loci in the complex plane defined by modulus and argument conditions.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "复数根与轨迹"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_kin_constant",
+      "canonical_id": "pc_491328cc75730ec969f81842438e2f24",
       "kind": "concept",
       "name": "Kinematics with Constant Acceleration",
+      "name_zh": "匀加速运动",
       "topic": "mat_mech_kinematics",
       "description": "Kinematics of straight-line motion with constant acceleration, using the suvat equations to relate displacement, velocity, and time.",
       "default_order": 1,
       "centrality": 0.0503,
-      "name_zh": "匀加速运动",
       "visual": "function",
-      "visual_hint": "Plot displacement-time and velocity-time graphs for constant acceleration."
+      "visual_hint": "Plot displacement-time and velocity-time graphs for constant acceleration.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_kin_variable",
+      "canonical_id": "pc_85a3db392a849af54a3d8b8aa0c80ad0",
       "kind": "concept",
       "name": "Variable Acceleration",
+      "name_zh": "变加速运动",
       "topic": "mat_mech_kinematics",
       "description": "Kinematics with variable acceleration, using differentiation and integration to relate displacement, velocity, and acceleration over time.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "变加速运动"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_projectiles",
+      "canonical_id": "pc_6127d5b7a479fb2563498a8b785982e6",
       "kind": "concept",
       "name": "Projectiles",
+      "name_zh": "抛体运动",
       "topic": "mat_mech_kinematics",
       "description": "Projectile motion analysed by resolving into independent horizontal and vertical components of motion under gravity.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "抛体运动",
       "visual": "simulation",
-      "visual_hint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
+      "visual_hint": "Launch a projectile with sliders for speed and angle showing the parabolic path.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_forces_equilibrium",
+      "canonical_id": "pc_02a4f5aead93480710f006ddbe4904ff",
       "kind": "concept",
       "name": "Forces and Equilibrium",
+      "name_zh": "力与平衡",
       "topic": "mat_mech_forces",
       "description": "Resolving forces into components and applying the conditions for the equilibrium of a particle under coplanar forces.",
       "default_order": 1,
       "centrality": 0.1138,
-      "name_zh": "力与平衡",
       "visual": "interactive",
-      "visual_hint": "Resolve forces into components on a free-body diagram."
+      "visual_hint": "Resolve forces into components on a free-body diagram.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_friction",
+      "canonical_id": "pc_76170aefb77bd172907edb4566118a64",
       "kind": "concept",
       "name": "Friction",
+      "name_zh": "摩擦",
       "topic": "mat_mech_forces",
       "description": "The frictional force opposing motion, modelled by the coefficient of friction and limiting equilibrium on a rough surface.",
       "default_order": 2,
       "centrality": 0.0615,
-      "name_zh": "摩擦"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_newton_laws",
+      "canonical_id": "pc_b2063844cb1a96c55e14253c14719d9f",
       "kind": "concept",
       "name": "Newton's Laws of Motion",
+      "name_zh": "牛顿运动定律",
       "topic": "mat_mech_forces",
       "description": "Newton's laws of motion relating the resultant force acting on a body to its mass and resulting acceleration.",
       "default_order": 3,
       "centrality": 0.0864,
-      "name_zh": "牛顿运动定律"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_connected_particles",
+      "canonical_id": "pc_fefdc923d1af9c5a4b3d26d862b6878e",
       "kind": "concept",
       "name": "Connected Particles",
+      "name_zh": "连接质点",
       "topic": "mat_mech_energy_momentum",
       "description": "Analysing connected particles, such as those joined by a string over a pulley, by applying Newton's laws to each.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "连接质点"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_work_energy_power",
+      "canonical_id": "pc_bee6700394a024edad7ebf0b509f5860",
       "kind": "concept",
       "name": "Work, Energy and Power",
+      "name_zh": "功、能、功率",
       "topic": "mat_mech_energy_momentum",
       "description": "Work done by a force, kinetic and potential energy, the work-energy principle, and power as the rate of doing work.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "功、能、功率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_momentum_impulse",
+      "canonical_id": "pc_a7aaeeae5792340742dba7da8ca0b350",
       "kind": "concept",
       "name": "Momentum and Impulse",
+      "name_zh": "动量与冲量",
       "topic": "mat_mech_energy_momentum",
       "description": "Linear momentum and impulse, and the conservation of momentum applied to collisions between particles.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "动量与冲量",
       "visual": "simulation",
-      "visual_hint": "Animate a collision conserving momentum."
+      "visual_hint": "Animate a collision conserving momentum.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_data_rep",
+      "canonical_id": "pc_9b449c02257babd62cc775a79704c117",
       "kind": "concept",
       "name": "Representation of Data",
+      "name_zh": "数据表示",
       "topic": "mat_data_counting_prob",
       "description": "Representing data using histograms, box-and-whisker plots, and cumulative frequency graphs to display its distribution.",
       "default_order": 1,
       "centrality": 0.1023,
-      "name_zh": "数据表示",
       "visual": "chart",
-      "visual_hint": "Histogram, box plot, and cumulative-frequency chart of a data set."
+      "visual_hint": "Histogram, box plot, and cumulative-frequency chart of a data set.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_central_spread",
+      "canonical_id": "pc_35cb6bdf58ea092953596fd77759caf6",
       "kind": "concept",
       "name": "Central Tendency and Spread",
+      "name_zh": "中心趋势与离散",
       "topic": "mat_data_counting_prob",
       "description": "Measures of central tendency and spread, including the mean, median, variance, standard deviation, and quartiles.",
       "default_order": 2,
       "centrality": 0.0912,
-      "name_zh": "中心趋势与离散"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_perm_comb",
+      "canonical_id": "pc_72b8e1a7b680bd575ff6d93a1e2c592b",
       "kind": "concept",
       "name": "Permutations and Combinations",
+      "name_zh": "排列组合",
       "topic": "mat_data_counting_prob",
       "description": "Permutations and combinations counting ordered arrangements and unordered selections of objects.",
       "default_order": 3,
       "centrality": 0.1202,
-      "name_zh": "排列组合"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_prob_rules",
+      "canonical_id": "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a",
       "kind": "concept",
       "name": "Probability Rules",
+      "name_zh": "概率法则",
       "topic": "mat_prob_random_vars",
       "description": "The rules of probability, including the addition and multiplication rules for combined, mutually exclusive, and independent events.",
       "default_order": 1,
       "centrality": 0.1123,
-      "name_zh": "概率法则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_conditional",
+      "canonical_id": "pc_cf8dbc5bcf596f0c4db74ea9886540a1",
       "kind": "concept",
       "name": "Conditional Probability",
+      "name_zh": "条件概率",
       "topic": "mat_prob_random_vars",
       "description": "Conditional probability of an event given another, and the use of tree diagrams with the multiplication rule.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "条件概率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_discrete_rv",
+      "canonical_id": "pc_bd3e94ad62025e9a58ab6e2016182924",
       "kind": "concept",
       "name": "Discrete Random Variables",
+      "name_zh": "离散随机变量",
       "topic": "mat_prob_random_vars",
       "description": "Discrete random variables with a probability distribution, and the calculation of their expectation and variance.",
       "default_order": 3,
       "centrality": 0.1563,
-      "name_zh": "离散随机变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_binomial_dist",
+      "canonical_id": "pc_dab02572a5e34659342ea1fb544803f8",
       "kind": "concept",
       "name": "Binomial Distribution",
+      "name_zh": "二项分布",
       "topic": "mat_random_vars",
       "description": "The binomial distribution modelling the number of successes in a fixed number of independent trials with constant probability.",
       "default_order": 1,
       "centrality": 0.0503,
-      "name_zh": "二项分布",
       "visual": "chart",
-      "visual_hint": "Bar chart of the binomial distribution with sliders for n and p."
+      "visual_hint": "Bar chart of the binomial distribution with sliders for n and p.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_geometric_dist",
+      "canonical_id": "pc_1523f7f20f12daa7a7c313af9fcc7710",
       "kind": "concept",
       "name": "Geometric Distribution",
+      "name_zh": "几何分布",
       "topic": "mat_random_vars",
       "description": "The geometric distribution modelling the number of independent trials up to and including the first success.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "几何分布"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_poisson",
+      "canonical_id": "pc_a3b1410477a36f1726cbbd9242140395",
       "kind": "concept",
       "name": "Poisson Distribution",
+      "name_zh": "泊松分布",
       "topic": "mat_random_vars",
       "description": "The Poisson distribution modelling the number of random events occurring at a constant average rate in a fixed interval.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "泊松分布",
       "visual": "chart",
-      "visual_hint": "Bar chart of the Poisson distribution with a slider for lambda."
+      "visual_hint": "Bar chart of the Poisson distribution with a slider for lambda.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_normal_dist",
+      "canonical_id": "pc_23858effd2dd68284bd0c6b645607386",
       "kind": "concept",
       "name": "Normal Distribution",
+      "name_zh": "正态分布",
       "topic": "mat_normal_inference",
       "description": "The normal distribution, a continuous bell-shaped distribution defined by its mean and variance, standardised using the z-score.",
       "default_order": 1,
       "centrality": 0.0743,
-      "name_zh": "正态分布",
       "visual": "function",
-      "visual_hint": "Plot the normal bell curve with sliders for mean and standard deviation."
+      "visual_hint": "Plot the normal bell curve with sliders for mean and standard deviation.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_normal_approx",
+      "canonical_id": "pc_4a777b42acfb49f7b9e295353a221e62",
       "kind": "concept",
       "name": "Normal Approximations",
+      "name_zh": "正态近似",
       "topic": "mat_normal_inference",
       "description": "Using the normal distribution to approximate the binomial or Poisson distribution under suitable conditions, with continuity correction.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "正态近似"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_sampling",
+      "canonical_id": "pc_14be091db45947021ec317ac23ac5401",
       "kind": "concept",
       "name": "Sampling",
+      "name_zh": "抽样",
       "topic": "mat_normal_inference_mat_sampling",
       "description": "Sampling concepts including populations, samples, and the sampling distribution of the mean used for statistical inference.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "抽样"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mat_hypothesis",
+      "canonical_id": "pc_5e8204fe2f43100f3de7f78a5824d321",
       "kind": "concept",
       "name": "Hypothesis Testing",
+      "name_zh": "假设检验",
       "topic": "mat_normal_inference_mat_sampling",
       "description": "Hypothesis testing using a test statistic and a significance level to decide between a null and an alternative hypothesis.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "假设检验"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -1142,553 +1446,737 @@
       "from": "mat_indices_surds",
       "to": "mat_quadratics",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_quadratics",
       "to": "mat_solve_quadratics",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_solve_quadratics",
       "to": "mat_simultaneous",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_simultaneous",
       "to": "mat_inequalities",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_inequalities",
       "to": "mat_functions",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_functions",
       "to": "mat_composite",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_composite",
       "to": "mat_modulus",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_poly_division",
       "to": "mat_factor_theorem",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_factor_theorem",
       "to": "mat_partial_fractions",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_straight_lines",
       "to": "mat_parallel_perp",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_parallel_perp",
       "to": "mat_circles",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_arithmetic",
       "to": "mat_geometric",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_geometric",
       "to": "mat_binomial_pos",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_binomial_pos",
       "to": "mat_binomial_gen",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_trig_ratios",
       "to": "mat_radians",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_radians",
       "to": "mat_trig_identities",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_trig_identities",
       "to": "mat_solve_trig",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_solve_trig",
       "to": "mat_double_angle",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_double_angle",
       "to": "mat_rform",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_exp_func",
       "to": "mat_log_laws",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_log_laws",
       "to": "mat_solve_exp",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_solve_exp",
       "to": "mat_linearise",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_first_principles",
       "to": "mat_power_rule",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_power_rule",
       "to": "mat_chain_rule",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_tangent_normal",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_tangent_normal",
       "to": "mat_stationary",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_stationary",
       "to": "mat_rates",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_product_quotient",
       "to": "mat_special_derivatives",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_special_derivatives",
       "to": "mat_implicit",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_implicit",
       "to": "mat_parametric",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_indefinite",
       "to": "mat_definite_area",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_definite_area",
       "to": "mat_standard_integrals",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_standard_integrals",
       "to": "mat_substitution",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_substitution",
       "to": "mat_by_parts",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_by_parts",
       "to": "mat_int_partial",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_int_partial",
       "to": "mat_volumes",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_locate_roots",
       "to": "mat_iteration",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_form_de",
       "to": "mat_separation",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_vector_basics",
       "to": "mat_vector_magnitude",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_vector_magnitude",
       "to": "mat_scalar_product",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_scalar_product",
       "to": "mat_vector_lines",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_complex_arith",
       "to": "mat_argand",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_argand",
       "to": "mat_mod_arg",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_mod_arg",
       "to": "mat_complex_loci",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_kin_constant",
       "to": "mat_kin_variable",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_kin_variable",
       "to": "mat_projectiles",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_forces_equilibrium",
       "to": "mat_friction",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_friction",
       "to": "mat_newton_laws",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_newton_laws",
       "to": "mat_connected_particles",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_work_energy_power",
       "to": "mat_momentum_impulse",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_data_rep",
       "to": "mat_central_spread",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_perm_comb",
       "to": "mat_prob_rules",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_prob_rules",
       "to": "mat_conditional",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_binomial_dist",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_binomial_dist",
       "to": "mat_geometric_dist",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_geometric_dist",
       "to": "mat_poisson",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_normal_dist",
       "to": "mat_normal_approx",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_sampling",
       "to": "mat_hypothesis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_quadratics",
       "to": "mat_functions",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_straight_lines",
       "to": "mat_circles",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_indices_surds",
       "to": "mat_binomial_pos",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_trig_ratios",
       "to": "mat_trig_identities",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_trig_identities",
       "to": "mat_double_angle",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_indices_surds",
       "to": "mat_exp_func",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_product_quotient",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_implicit",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_parametric",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_rates",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_power_rule",
       "to": "mat_stationary",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_power_rule",
       "to": "mat_tangent_normal",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_chain_rule",
       "to": "mat_substitution",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_product_quotient",
       "to": "mat_by_parts",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_partial_fractions",
       "to": "mat_int_partial",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_definite_area",
       "to": "mat_volumes",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_special_derivatives",
       "to": "mat_standard_integrals",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_solve_quadratics",
       "to": "mat_locate_roots",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_standard_integrals",
       "to": "mat_separation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_vector_basics",
       "to": "mat_scalar_product",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_vector_basics",
       "to": "mat_vector_lines",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_solve_quadratics",
       "to": "mat_complex_arith",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_kin_constant",
       "to": "mat_projectiles",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_special_derivatives",
       "to": "mat_kin_variable",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_forces_equilibrium",
       "to": "mat_newton_laws",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_newton_laws",
       "to": "mat_work_energy_power",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_newton_laws",
       "to": "mat_momentum_impulse",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_central_spread",
       "to": "mat_discrete_rv",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_prob_rules",
       "to": "mat_discrete_rv",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_geometric_dist",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_poisson",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_discrete_rv",
       "to": "mat_normal_dist",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_binomial_dist",
       "to": "mat_normal_approx",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_normal_dist",
       "to": "mat_sampling",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

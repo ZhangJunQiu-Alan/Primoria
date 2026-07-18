@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://primoria.local/schemas/graph-source-v2.schema.json",
+  "title": "Primoria GraphSourceV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "content_version",
+    "graph_id",
+    "subject",
+    "jurisdictions",
+    "source_ids",
+    "review_status",
+    "changelog",
+    "nodes",
+    "edges"
+  ],
+  "properties": {
+    "schema_version": { "const": "2.0.0" },
+    "content_version": { "$ref": "#/$defs/semver" },
+    "graph_id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+    "subject": { "type": "string", "minLength": 1 },
+    "jurisdictions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "source_ids": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourceId" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "review_status": { "$ref": "#/$defs/reviewStatus" },
+    "changelog": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["version", "date", "summary_zh"],
+        "properties": {
+          "version": { "$ref": "#/$defs/semver" },
+          "date": { "type": "string", "format": "date" },
+          "summary_zh": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "sourceId": {
+      "type": "string",
+      "pattern": "^src_[a-z0-9_]+$"
+    },
+    "canonicalId": {
+      "type": "string",
+      "pattern": "^pc_[a-f0-9]{32}$"
+    },
+    "reviewStatus": {
+      "enum": ["unreviewed", "needs_review", "approved", "rejected", "superseded"]
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "locator"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/sourceId" },
+        "locator": { "type": "string", "minLength": 1 },
+        "note_zh": { "type": "string", "minLength": 1 }
+      }
+    },
+    "nodeBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "name", "name_zh", "topic", "default_order", "evidence_refs", "review_status"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["topic", "concept"] },
+        "name": { "type": "string", "minLength": 1 },
+        "name_zh": { "type": "string", "minLength": 1 },
+        "topic": { "type": ["string", "null"] },
+        "description": { "type": "string", "minLength": 1 },
+        "default_order": { "type": "integer", "minimum": 1 },
+        "canonical_id": { "$ref": "#/$defs/canonicalId" },
+        "centrality": { "type": "number", "minimum": 0, "maximum": 1 },
+        "visual": {
+          "enum": ["interactive", "simulation", "algorithm", "function", "chart", "diagram", "none"]
+        },
+        "visual_hint": { "type": "string", "minLength": 1 },
+        "assessment_hint": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "evidence_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceRef" }
+        },
+        "review_status": { "$ref": "#/$defs/reviewStatus" }
+      }
+    },
+    "topicNode": {
+      "allOf": [
+        { "$ref": "#/$defs/nodeBase" },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "const": "topic" },
+            "topic": { "type": "null" },
+            "canonical_id": false
+          }
+        }
+      ]
+    },
+    "conceptNode": {
+      "allOf": [
+        { "$ref": "#/$defs/nodeBase" },
+        {
+          "type": "object",
+          "required": ["canonical_id", "description"],
+          "properties": {
+            "kind": { "const": "concept" },
+            "topic": { "type": "string", "minLength": 1 },
+            "canonical_id": { "$ref": "#/$defs/canonicalId" },
+            "description": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "node": {
+      "oneOf": [
+        { "$ref": "#/$defs/topicNode" },
+        { "$ref": "#/$defs/conceptNode" }
+      ]
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "type", "strength", "evidence_refs", "review_status"],
+      "properties": {
+        "from": { "type": "string", "minLength": 1 },
+        "to": { "type": "string", "minLength": 1 },
+        "type": { "const": "prereq" },
+        "strength": { "enum": ["hard", "soft"] },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "evidence_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceRef" }
+        },
+        "review_status": { "$ref": "#/$defs/reviewStatus" }
+      }
+    }
+  }
+}

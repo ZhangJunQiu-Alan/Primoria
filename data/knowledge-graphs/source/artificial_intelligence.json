@@ -1,470 +1,590 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "artificial_intelligence",
   "subject": "Introduction to Artificial Intelligence",
-  "schema": {
-    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
-    "node_fields": {
-      "id": "globally unique id",
-      "kind": "topic | concept",
-      "name": "concept name",
-      "topic": "owning topic id; null for topic nodes",
-      "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "from must be learned before to; strength=hard|soft"
-    },
-    "concept_node_definition": "concept = smallest independently quiz-testable skill"
-  },
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_artificial_intelligence"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "ai_search_part1",
       "kind": "topic",
       "name": "Search: Uninformed and Heuristics",
+      "name_zh": "搜索：无信息搜索与启发式",
       "topic": null,
       "default_order": 1,
-      "name_zh": "搜索：无信息搜索与启发式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_search_part2",
       "kind": "topic",
       "name": "Search: Informed and Adversarial",
+      "name_zh": "搜索：有信息与对抗搜索",
       "topic": null,
       "default_order": 2,
-      "name_zh": "搜索：有信息与对抗搜索"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_csp",
       "kind": "topic",
       "name": "Constraint Satisfaction Problems and Backtracking Search",
+      "name_zh": "约束满足问题与回溯搜索",
       "topic": null,
       "default_order": 3,
-      "name_zh": "约束满足问题与回溯搜索"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_csp_ai_arc_consistency",
       "kind": "topic",
       "name": "Constraint Propagation and Local Search",
+      "name_zh": "约束传播与局部搜索",
       "topic": null,
       "default_order": 4,
-      "name_zh": "约束传播与局部搜索"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_mdp",
       "kind": "topic",
       "name": "Markov Decision Processes and Bellman Equations",
+      "name_zh": "马尔可夫决策过程与Bellman方程",
       "topic": null,
       "default_order": 5,
-      "name_zh": "马尔可夫决策过程与Bellman方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_mdp_ai_value_iteration",
       "kind": "topic",
       "name": "Value Iteration and Policy Iteration",
+      "name_zh": "价值迭代与策略迭代",
       "topic": null,
       "default_order": 6,
-      "name_zh": "价值迭代与策略迭代"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_rl",
       "kind": "topic",
       "name": "Reinforcement Learning Framework and Temporal Difference Learning",
+      "name_zh": "强化学习框架与时序差分学习",
       "topic": null,
       "default_order": 7,
-      "name_zh": "强化学习框架与时序差分学习"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_rl_ai_qlearning",
       "kind": "topic",
       "name": "Q-Learning, Exploration vs Exploitation, and Approximate Q-Learning",
+      "name_zh": "Q学习、探索与利用与近似Q学习",
       "topic": null,
       "default_order": 8,
-      "name_zh": "Q学习、探索与利用与近似Q学习"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_probability",
       "kind": "topic",
       "name": "Probability Fundamentals and Bayes Rule",
+      "name_zh": "概率基础与贝叶斯规则",
       "topic": null,
       "default_order": 9,
-      "name_zh": "概率基础与贝叶斯规则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_probability_ai_bayes_nets",
       "kind": "topic",
       "name": "Bayesian Networks and Inference in Bayes Nets",
+      "name_zh": "贝叶斯网络与贝叶斯网络推理",
       "topic": null,
       "default_order": 10,
-      "name_zh": "贝叶斯网络与贝叶斯网络推理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_markov_models",
       "kind": "topic",
       "name": "Markov Models and HMMs",
+      "name_zh": "马尔可夫模型与HMM",
       "topic": null,
       "default_order": 11,
-      "name_zh": "马尔可夫模型与HMM"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_inference_naive_bayes",
       "kind": "topic",
       "name": "Probabilistic Inference and Naive Bayes",
+      "name_zh": "概率推断与朴素贝叶斯",
       "topic": null,
       "default_order": 12,
-      "name_zh": "概率推断与朴素贝叶斯"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_ml",
       "kind": "topic",
       "name": "Machine Learning",
+      "name_zh": "机器学习",
       "topic": null,
       "default_order": 13,
-      "name_zh": "机器学习"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_search_problem",
+      "canonical_id": "pc_fd1fd2e70e4729dc9009bb10b3e88b11",
       "kind": "concept",
       "name": "Search Problem Formulation",
+      "name_zh": "搜索问题建模",
       "topic": "ai_search_part1",
       "description": "Formulating a problem for search as states, actions, a transition model, a goal test, and path costs, enabling systematic solution finding.",
       "default_order": 1,
       "centrality": 0.1327,
-      "name_zh": "搜索问题建模"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_uninformed",
+      "canonical_id": "pc_0e0d26f4aa8250ecb52c1083a0f1cd03",
       "kind": "concept",
       "name": "Uninformed Search",
+      "name_zh": "无信息搜索",
       "topic": "ai_search_part1",
       "description": "Search strategies using no domain knowledge, including breadth-first, depth-first, and uniform-cost search, differing in completeness, optimality, and complexity.",
       "default_order": 2,
       "centrality": 0.096,
-      "name_zh": "无信息搜索",
       "visual": "algorithm",
-      "visual_hint": "Animate BFS and DFS exploring a search tree/graph with the frontier."
+      "visual_hint": "Animate BFS and DFS exploring a search tree/graph with the frontier.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_heuristics",
+      "canonical_id": "pc_49c26209513828e3711819089375c036",
       "kind": "concept",
       "name": "Heuristics and Admissibility",
+      "name_zh": "启发式与可容性",
       "topic": "ai_search_part1",
       "description": "Heuristic functions estimating the cost to reach the goal, where admissibility (never overestimating) and consistency guarantee optimal informed search.",
       "default_order": 3,
       "centrality": 0.0519,
-      "name_zh": "启发式与可容性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_informed",
+      "canonical_id": "pc_080f432581d378638bec51b09d54804f",
       "kind": "concept",
       "name": "Informed Search (A*)",
+      "name_zh": "有信息搜索（A*）",
       "topic": "ai_search_part2",
       "description": "Informed search using heuristics to guide exploration, including greedy best-first and A*, which expands nodes by estimated total path cost.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "有信息搜索（A*）",
       "visual": "algorithm",
-      "visual_hint": "Animate A* expanding nodes by f = g + h on a grid."
+      "visual_hint": "Animate A* expanding nodes by f = g + h on a grid.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_minimax",
+      "canonical_id": "pc_faf9706fea53a682b1e89397ce78aeca",
       "kind": "concept",
       "name": "Adversarial Search (Minimax)",
+      "name_zh": "对抗搜索（Minimax）",
       "topic": "ai_search_part2",
       "description": "Adversarial search computing optimal play in zero-sum games by recursively assuming each player maximises its own outcome against an optimal opponent.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "对抗搜索（Minimax）",
       "visual": "algorithm",
-      "visual_hint": "Step a minimax game tree backing up values from the leaves."
+      "visual_hint": "Step a minimax game tree backing up values from the leaves.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_alphabeta",
+      "canonical_id": "pc_a7f732ab28282e2d0853ac63638c82f4",
       "kind": "concept",
       "name": "Alpha-Beta Pruning",
+      "name_zh": "Alpha-Beta剪枝",
       "topic": "ai_search_part2",
       "description": "An optimisation of minimax that prunes branches which cannot affect the final decision, allowing deeper search within the same time budget.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "Alpha-Beta剪枝",
       "visual": "algorithm",
-      "visual_hint": "Step minimax with alpha-beta pruning, showing cut branches."
+      "visual_hint": "Step minimax with alpha-beta pruning, showing cut branches.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_csp_def",
+      "canonical_id": "pc_103e1b1c4855856c2d4cce06526b90c7",
       "kind": "concept",
       "name": "Constraint Satisfaction Problems",
+      "name_zh": "约束满足问题",
       "topic": "ai_csp",
       "description": "Constraint satisfaction problems defined by variables, domains, and constraints, seeking assignments that satisfy all constraints simultaneously.",
       "default_order": 1,
       "centrality": 0.079,
-      "name_zh": "约束满足问题"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_backtracking",
+      "canonical_id": "pc_932858fc086385913f0a28401b04e94c",
       "kind": "concept",
       "name": "Backtracking Search",
+      "name_zh": "回溯搜索",
       "topic": "ai_csp",
       "description": "A depth-first search for CSPs that assigns variables one at a time and backtracks when a constraint is violated, pruning the search tree.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "回溯搜索",
       "visual": "algorithm",
-      "visual_hint": "Animate backtracking search assigning CSP variables and backing up on failure."
+      "visual_hint": "Animate backtracking search assigning CSP variables and backing up on failure.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_arc_consistency",
+      "canonical_id": "pc_f05449b37db9c6a073cd832a5220fad6",
       "kind": "concept",
       "name": "Constraint Propagation",
+      "name_zh": "约束传播",
       "topic": "ai_csp_ai_arc_consistency",
       "description": "Constraint propagation that prunes domain values inconsistent with constraints, with arc consistency and forward checking reducing search effort.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "约束传播"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_local_search",
+      "canonical_id": "pc_8bfa5363307bb229532e46e75cd57451",
       "kind": "concept",
       "name": "Local Search",
+      "name_zh": "局部搜索",
       "topic": "ai_csp_ai_arc_consistency",
       "description": "Search that iteratively improves a complete assignment using local moves, such as hill climbing and min-conflicts, trading completeness for scalability.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "局部搜索"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_mdp_def",
+      "canonical_id": "pc_c48ec93143c9775d7d8d148ea100b738",
       "kind": "concept",
       "name": "Markov Decision Processes",
+      "name_zh": "马尔可夫决策过程",
       "topic": "ai_mdp",
       "description": "Markov decision processes modelling sequential decisions under uncertainty with states, actions, stochastic transitions, rewards, and a discount factor.",
       "default_order": 1,
       "centrality": 0.1595,
-      "name_zh": "马尔可夫决策过程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_bellman",
+      "canonical_id": "pc_ed74af1232c04e8372f0e1c9406f5ac3",
       "kind": "concept",
       "name": "Bellman Equations",
+      "name_zh": "Bellman方程",
       "topic": "ai_mdp",
       "description": "The Bellman equations recursively expressing the optimal value of a state as the best expected immediate reward plus discounted future value.",
       "default_order": 2,
       "centrality": 0.0654,
-      "name_zh": "Bellman方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_value_iteration",
+      "canonical_id": "pc_a8cf930ea520200bd8a4c278afcefad2",
       "kind": "concept",
       "name": "Value Iteration",
+      "name_zh": "价值迭代",
       "topic": "ai_mdp_ai_value_iteration",
       "description": "A dynamic-programming algorithm computing optimal MDP values by iteratively applying the Bellman update until the value function converges.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "价值迭代",
       "visual": "algorithm",
-      "visual_hint": "Iterate MDP state values on a grid until convergence."
+      "visual_hint": "Iterate MDP state values on a grid until convergence.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_policy_iteration",
+      "canonical_id": "pc_1235efd8363f4038d185a9a9ff7053a5",
       "kind": "concept",
       "name": "Policy Iteration",
+      "name_zh": "策略迭代",
       "topic": "ai_mdp_ai_value_iteration",
       "description": "An MDP algorithm alternating policy evaluation, computing a policy's values, with policy improvement, acting greedily, until the policy stabilises.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "策略迭代"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_rl_framework",
+      "canonical_id": "pc_e06002fbf6b06b8adcfcbb8697792a24",
       "kind": "concept",
       "name": "Reinforcement Learning Framework",
+      "name_zh": "强化学习框架",
       "topic": "ai_rl",
       "description": "Reinforcement learning, where an agent learns optimal behaviour by interacting with an unknown environment and receiving rewards, without a transition model.",
       "default_order": 1,
       "centrality": 0.0931,
-      "name_zh": "强化学习框架"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_td",
+      "canonical_id": "pc_bbc3f870e04d011fdec68432c0f59dfe",
       "kind": "concept",
       "name": "Temporal Difference Learning",
+      "name_zh": "时序差分学习",
       "topic": "ai_rl",
       "description": "Temporal-difference learning updating value estimates from successive observations, bootstrapping from later estimates without waiting for final outcomes.",
       "default_order": 2,
       "centrality": 0.0803,
-      "name_zh": "时序差分学习"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_qlearning",
+      "canonical_id": "pc_0002db43c693eeb840c94674038a8dfb",
       "kind": "concept",
       "name": "Q-Learning",
+      "name_zh": "Q学习",
       "topic": "ai_rl_ai_qlearning",
       "description": "A model-free, off-policy reinforcement-learning algorithm that learns optimal action values directly from experience, independent of the policy followed.",
       "default_order": 1,
       "centrality": 0.0654,
-      "name_zh": "Q学习",
       "visual": "algorithm",
-      "visual_hint": "Update a Q-table as an agent moves through a gridworld."
+      "visual_hint": "Update a Q-table as an agent moves through a gridworld.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_exploration",
+      "canonical_id": "pc_8b9c74f6b362274c3d190d70b091048a",
       "kind": "concept",
       "name": "Exploration vs Exploitation",
+      "name_zh": "探索与利用",
       "topic": "ai_rl_ai_qlearning",
       "description": "The exploration-exploitation tradeoff balancing trying new actions to gain information against choosing currently best actions to maximise reward.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "探索与利用"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_approx_q",
+      "canonical_id": "pc_5ba64121a5cd183f7aa6a179866b081e",
       "kind": "concept",
       "name": "Approximate Q-Learning",
+      "name_zh": "近似Q学习",
       "topic": "ai_rl_ai_qlearning",
       "description": "Approximate Q-learning representing the value function with features and weights, generalising across states too numerous to store in a table.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "近似Q学习"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_prob",
+      "canonical_id": "pc_b8d5720ccf68022f15e24275e67f5ded",
       "kind": "concept",
       "name": "Probability Fundamentals",
+      "name_zh": "概率基础",
       "topic": "ai_probability",
       "description": "Probability fundamentals for AI, including random variables, joint and marginal distributions, and independence, used to reason under uncertainty.",
       "default_order": 1,
       "centrality": 0.1063,
-      "name_zh": "概率基础"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_bayes_rule",
+      "canonical_id": "pc_8da482016bf0b39c87a24d36add87c8f",
       "kind": "concept",
       "name": "Bayes Rule",
+      "name_zh": "贝叶斯规则",
       "topic": "ai_probability",
       "description": "Bayes' rule inverting conditional probabilities to update beliefs about hypotheses given observed evidence, combining prior probabilities with likelihoods.",
       "default_order": 2,
       "centrality": 0.0973,
-      "name_zh": "贝叶斯规则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_bayes_nets",
+      "canonical_id": "pc_34bdfc8802b1ed109971ea0b3f4a4aa9",
       "kind": "concept",
       "name": "Bayesian Networks",
+      "name_zh": "贝叶斯网络",
       "topic": "ai_probability_ai_bayes_nets",
       "description": "Bayesian networks compactly representing a joint distribution as a directed acyclic graph that encodes conditional independence among variables.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "贝叶斯网络",
       "visual": "diagram",
-      "visual_hint": "Directed acyclic graph of a Bayesian network with conditional dependencies."
+      "visual_hint": "Directed acyclic graph of a Bayesian network with conditional dependencies.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_bn_inference",
+      "canonical_id": "pc_fe51dfa18e261031cfba2d1ab72f6662",
       "kind": "concept",
       "name": "Inference in Bayes Nets",
+      "name_zh": "贝叶斯网络推理",
       "topic": "ai_probability_ai_bayes_nets",
       "description": "Inference in Bayesian networks computing posterior probabilities via exact methods like variable elimination or approximate sampling techniques.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "贝叶斯网络推理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_markov_chain",
+      "canonical_id": "pc_eb578bce27625d11bb2249ce6e43008c",
       "kind": "concept",
       "name": "Markov Models",
+      "name_zh": "马尔可夫模型",
       "topic": "ai_markov_models",
       "description": "Markov models representing stochastic state sequences satisfying the Markov property, where the next state depends only on the current state.",
       "default_order": 1,
       "centrality": 0.0944,
-      "name_zh": "马尔可夫模型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_hmm",
+      "canonical_id": "pc_f97dd6739221c067f33aa85c80ab916b",
       "kind": "concept",
       "name": "Hidden Markov Models",
+      "name_zh": "隐马尔可夫模型",
       "topic": "ai_markov_models",
       "description": "Hidden Markov models pairing an unobserved Markov state sequence with observations, used to infer hidden states from noisy evidence.",
       "default_order": 2,
       "centrality": 0.0819,
-      "name_zh": "隐马尔可夫模型",
       "visual": "diagram",
-      "visual_hint": "Trellis diagram of hidden states and observations over time."
+      "visual_hint": "Trellis diagram of hidden states and observations over time.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_forward",
+      "canonical_id": "pc_b7bcc048c3ca4442cce43808b31c0862",
       "kind": "concept",
       "name": "Forward Algorithm",
+      "name_zh": "前向算法",
       "topic": "ai_markov_models",
       "description": "The forward algorithm computing the filtered belief over hidden states given the observations seen so far, via recursive probability updates.",
       "default_order": 3,
       "centrality": 0.0548,
-      "name_zh": "前向算法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_viterbi",
+      "canonical_id": "pc_8d2c7ff28c78a60e3e3d3a259aec7961",
       "kind": "concept",
       "name": "Viterbi Algorithm",
+      "name_zh": "维特比算法",
       "topic": "ai_inference_naive_bayes",
       "description": "The Viterbi algorithm using dynamic programming to find the single most likely sequence of hidden states given an observation sequence.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "维特比算法",
       "visual": "algorithm",
-      "visual_hint": "Step the Viterbi trellis selecting the most likely hidden-state path."
+      "visual_hint": "Step the Viterbi trellis selecting the most likely hidden-state path.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_particle",
+      "canonical_id": "pc_ebe205e76dc77b40b035149b0a21448d",
       "kind": "concept",
       "name": "Particle Filtering",
+      "name_zh": "粒子滤波",
       "topic": "ai_inference_naive_bayes",
       "description": "Particle filtering approximating the belief over states with weighted samples, propagated and resampled to track distributions in large state spaces.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "粒子滤波"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_naive_bayes",
+      "canonical_id": "pc_35cd1ee318d941e16a204ccca1946f5c",
       "kind": "concept",
       "name": "Naive Bayes",
+      "name_zh": "朴素贝叶斯",
       "topic": "ai_inference_naive_bayes",
       "description": "A simple probabilistic classifier applying Bayes' rule under the assumption that features are conditionally independent given the class label.",
       "default_order": 3,
       "centrality": 0.079,
-      "name_zh": "朴素贝叶斯"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_perceptron",
+      "canonical_id": "pc_038b26adc374a25672478dc4e7095aef",
       "kind": "concept",
       "name": "Perceptron",
+      "name_zh": "感知机",
       "topic": "ai_ml",
       "description": "A linear classifier that learns a separating hyperplane by updating weights on misclassified examples via the perceptron learning rule.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "感知机",
       "visual": "function",
-      "visual_hint": "Plot a linear decision boundary updating as the perceptron learns."
+      "visual_hint": "Plot a linear decision boundary updating as the perceptron learns.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_neural_nets",
+      "canonical_id": "pc_74e60418a60087564604cbc145090976",
       "kind": "concept",
       "name": "Neural Networks",
+      "name_zh": "神经网络",
       "topic": "ai_ml",
       "description": "Multilayer neural networks composing linear transformations with nonlinear activations to learn complex, nonlinear decision functions from data.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "神经网络",
       "visual": "diagram",
-      "visual_hint": "Diagram a multilayer network of weighted connections and activations."
+      "visual_hint": "Diagram a multilayer network of weighted connections and activations.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ai_generalization",
+      "canonical_id": "pc_4e675d6f72c9bb199261bb588effe03c",
       "kind": "concept",
       "name": "Generalization and Overfitting",
+      "name_zh": "泛化与过拟合",
       "topic": "ai_ml",
       "description": "Generalisation describing how well a model performs on unseen data, with overfitting and model capacity governing the gap between training and test error.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "泛化与过拟合"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -472,199 +592,265 @@
       "from": "ai_search_problem",
       "to": "ai_uninformed",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_uninformed",
       "to": "ai_heuristics",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_heuristics",
       "to": "ai_informed",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_informed",
       "to": "ai_minimax",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_minimax",
       "to": "ai_alphabeta",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_csp_def",
       "to": "ai_backtracking",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_backtracking",
       "to": "ai_arc_consistency",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_arc_consistency",
       "to": "ai_local_search",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_mdp_def",
       "to": "ai_bellman",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_bellman",
       "to": "ai_value_iteration",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_value_iteration",
       "to": "ai_policy_iteration",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_rl_framework",
       "to": "ai_td",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_td",
       "to": "ai_qlearning",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_qlearning",
       "to": "ai_exploration",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_exploration",
       "to": "ai_approx_q",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_prob",
       "to": "ai_bayes_rule",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_bayes_rule",
       "to": "ai_bayes_nets",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_bayes_nets",
       "to": "ai_bn_inference",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_markov_chain",
       "to": "ai_hmm",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_hmm",
       "to": "ai_forward",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_forward",
       "to": "ai_viterbi",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_viterbi",
       "to": "ai_particle",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_naive_bayes",
       "to": "ai_perceptron",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_perceptron",
       "to": "ai_neural_nets",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_neural_nets",
       "to": "ai_generalization",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_uninformed",
       "to": "ai_informed",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_search_problem",
       "to": "ai_csp_def",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_bellman",
       "to": "ai_policy_iteration",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_mdp_def",
       "to": "ai_rl_framework",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_qlearning",
       "to": "ai_approx_q",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_prob",
       "to": "ai_markov_chain",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_hmm",
       "to": "ai_particle",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ai_bayes_rule",
       "to": "ai_naive_bayes",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

@@ -1,771 +1,967 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "mit_calculus",
   "subject": "Calculus",
-  "schema": {
-    "description": "Knowledge graph mapping the detailed syllabus and topics of Calculus",
-    "node_fields": {
-      "id": "unique id",
-      "kind": "topic | concept",
-      "name": "node name",
-      "topic": "parent topic id or null",
-      "description": "concept description",
-      "default_order": 1,
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "hard or soft"
+  "jurisdictions": [
+    "US"
+  ],
+  "source_ids": [
+    "src_mit_ocw_18_01sc_fall_2010"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
     }
-  },
+  ],
   "nodes": [
     {
       "id": "t_1801_differentiation",
       "kind": "topic",
       "name": "Differentiation",
+      "name_zh": "微分",
       "topic": null,
       "default_order": 1,
-      "name_zh": "微分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1801_diff_techniques",
       "kind": "topic",
       "name": "Differentiation Techniques and Related Rates",
+      "name_zh": "微分技巧与相关变化率",
       "topic": null,
       "default_order": 2,
-      "name_zh": "微分技巧与相关变化率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1801_apps_diff",
       "kind": "topic",
       "name": "Applications of Differentiation",
+      "name_zh": "微分应用",
       "topic": null,
       "default_order": 3,
-      "name_zh": "微分应用"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1801_integration",
       "kind": "topic",
       "name": "Riemann Sums and Definite Integrals",
+      "name_zh": "黎曼和与定积分",
       "topic": null,
       "default_order": 4,
-      "name_zh": "黎曼和与定积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1801_integration_1801_ftc",
       "kind": "topic",
       "name": "Fundamental Theorem of Calculus and Integration by Substitution",
+      "name_zh": "微积分基本定理与换元积分法",
       "topic": null,
       "default_order": 5,
-      "name_zh": "微积分基本定理与换元积分法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1801_tech_int",
       "kind": "topic",
       "name": "Techniques of Integration",
+      "name_zh": "积分技巧",
       "topic": null,
       "default_order": 6,
-      "name_zh": "积分技巧"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1801_int_techniques_area",
       "kind": "topic",
       "name": "Integration Techniques and Area",
+      "name_zh": "积分技巧与面积",
       "topic": null,
       "default_order": 7,
-      "name_zh": "积分技巧与面积"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1801_apps_int",
       "kind": "topic",
       "name": "Applications of Integration",
+      "name_zh": "积分应用",
       "topic": null,
       "default_order": 8,
-      "name_zh": "积分应用"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1801_series",
       "kind": "topic",
       "name": "Sequences and Series and Convergence Tests",
+      "name_zh": "序列与级数与收敛性检验",
       "topic": null,
       "default_order": 9,
-      "name_zh": "序列与级数与收敛性检验"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1801_series_1801_power_series",
       "kind": "topic",
       "name": "Power Series and Taylor Series",
+      "name_zh": "幂级数与泰勒级数",
       "topic": null,
       "default_order": 10,
-      "name_zh": "幂级数与泰勒级数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_vectors",
       "kind": "topic",
       "name": "Dot Product and Cross Product",
+      "name_zh": "点积与叉积",
       "topic": null,
       "default_order": 11,
-      "name_zh": "点积与叉积"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_vectors_1802_lines_planes",
       "kind": "topic",
       "name": "Lines and Planes and Parametric Curves",
+      "name_zh": "直线与平面与参数曲线",
       "topic": null,
       "default_order": 12,
-      "name_zh": "直线与平面与参数曲线"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_partial_diff",
       "kind": "topic",
       "name": "Multivariable Functions and Partial Derivatives",
+      "name_zh": "多元函数与偏导数",
       "topic": null,
       "default_order": 13,
-      "name_zh": "多元函数与偏导数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_partial_diff_1802_multivar_chain",
       "kind": "topic",
       "name": "Multivariable Chain Rule and Gradient and Directional Derivative",
+      "name_zh": "多元链式法则与梯度与方向导数",
       "topic": null,
       "default_order": 14,
-      "name_zh": "多元链式法则与梯度与方向导数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_apps_partial",
       "kind": "topic",
       "name": "Tangent Planes and Local Extrema",
+      "name_zh": "切平面与局部极值",
       "topic": null,
       "default_order": 15,
-      "name_zh": "切平面与局部极值"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_apps_partial_1802_lagrange",
       "kind": "topic",
       "name": "Lagrange Multipliers and Differentials",
+      "name_zh": "拉格朗日乘数与微分",
       "topic": null,
       "default_order": 16,
-      "name_zh": "拉格朗日乘数与微分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_multiple_int",
       "kind": "topic",
       "name": "Multiple Integrals",
+      "name_zh": "多重积分",
       "topic": null,
       "default_order": 17,
-      "name_zh": "多重积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_coord_vector_fields",
       "kind": "topic",
       "name": "Coordinate Changes and Vector Fields",
+      "name_zh": "坐标变换与向量场",
       "topic": null,
       "default_order": 18,
-      "name_zh": "坐标变换与向量场"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_vector_calc",
       "kind": "topic",
       "name": "Vector Calculus",
+      "name_zh": "向量微积分",
       "topic": null,
       "default_order": 19,
-      "name_zh": "向量微积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_surface_int",
       "kind": "topic",
       "name": "Parametric Surfaces and Surface Integrals",
+      "name_zh": "参数曲面与面积分",
       "topic": null,
       "default_order": 20,
-      "name_zh": "参数曲面与面积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_1802_surface_int_1802_stokes_theorem",
       "kind": "topic",
       "name": "Stokes' Theorem and Divergence Theorem",
+      "name_zh": "斯托克斯定理与散度定理",
       "topic": null,
       "default_order": 21,
-      "name_zh": "斯托克斯定理与散度定理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_limits",
+      "canonical_id": "pc_699a1e539f0125f96ea8b3cf4310dcd5",
       "kind": "concept",
       "name": "Limits and Continuity",
+      "name_zh": "极限与连续",
       "topic": "t_1801_differentiation",
       "description": "The limit formalising the value a function approaches near a point, made rigorous by the epsilon-delta definition, with continuity meaning the limit equals the function value.",
       "default_order": 1,
       "centrality": 0.783,
-      "name_zh": "极限与连续",
       "visual": "function",
-      "visual_hint": "Plot f(x) with a draggable point approaching a; show the limit value as the point nears a from both sides."
+      "visual_hint": "Plot f(x) with a draggable point approaching a; show the limit value as the point nears a from both sides.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_deriv_def",
+      "canonical_id": "pc_30962a9bea6ad49ace59c1ad3e902c12",
       "kind": "concept",
       "name": "Definition of Derivative",
+      "name_zh": "导数定义",
       "topic": "t_1801_differentiation",
       "description": "The derivative defined as the limit of difference quotients, giving the instantaneous rate of change and the slope of the tangent line to a curve.",
       "default_order": 2,
       "centrality": 0.4434,
-      "name_zh": "导数定义",
       "visual": "function",
-      "visual_hint": "Slider for h: draw the secant through (x,f(x)) and (x+h,f(x+h)) collapsing to the tangent as h→0."
+      "visual_hint": "Slider for h: draw the secant through (x,f(x)) and (x+h,f(x+h)) collapsing to the tangent as h→0.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_deriv_rules",
+      "canonical_id": "pc_b197d964393df5705bac724071409feb",
       "kind": "concept",
       "name": "Differentiation Rules",
+      "name_zh": "微分法则",
       "topic": "t_1801_differentiation",
       "description": "Rules for differentiating combinations of functions, including the power, product, and quotient rules, enabling derivatives without returning to the limit definition.",
       "default_order": 3,
       "centrality": 0.4319,
-      "name_zh": "微分法则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_chain_rule",
+      "canonical_id": "pc_f2929a7b922221305252e5232f6d71fb",
       "kind": "concept",
       "name": "Chain Rule",
+      "name_zh": "链式法则",
       "topic": "t_1801_diff_techniques",
       "description": "The chain rule differentiating a composite function as the derivative of the outer function times the derivative of the inner function.",
       "default_order": 1,
       "centrality": 0.1617,
-      "name_zh": "链式法则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_implicit_diff",
+      "canonical_id": "pc_e3091eaa89639d2d2f726b85dafe7514",
       "kind": "concept",
       "name": "Implicit Differentiation",
+      "name_zh": "隐函数微分",
       "topic": "t_1801_diff_techniques",
       "description": "Implicit differentiation finding derivatives of relations not solved for one variable by differentiating both sides and solving for the derivative.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "隐函数微分",
       "visual": "function",
-      "visual_hint": "Plot an implicit relation (e.g. x²+y²=25) and show the tangent slope at a draggable point on the curve."
+      "visual_hint": "Plot an implicit relation (e.g. x²+y²=25) and show the tangent slope at a draggable point on the curve.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_related_rates",
+      "canonical_id": "pc_053ba609b2871db8fb3fa5f6405f89f0",
       "kind": "concept",
       "name": "Related Rates",
+      "name_zh": "相关变化率",
       "topic": "t_1801_diff_techniques",
       "description": "Related-rates problems linking the time derivatives of related quantities through an equation, solving for one unknown rate given the others.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "相关变化率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_linear_approx",
+      "canonical_id": "pc_c5e14ab8042d8fbd792333d727c7d61e",
       "kind": "concept",
       "name": "Linear Approximation",
+      "name_zh": "线性近似",
       "topic": "t_1801_apps_diff",
       "description": "Linear approximation using the tangent line to estimate function values near a point, the basis of differentials and Newton's method.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "线性近似",
       "visual": "function",
-      "visual_hint": "Plot f(x) and its tangent line at a; slider for x comparing the true value against the linear approximation."
+      "visual_hint": "Plot f(x) and its tangent line at a; slider for x comparing the true value against the linear approximation.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_curve_sketching",
+      "canonical_id": "pc_f9249fb783344fbbcfe32c05267ebcb8",
       "kind": "concept",
       "name": "Curve Sketching",
+      "name_zh": "曲线草图",
       "topic": "t_1801_apps_diff",
       "description": "Using first and second derivatives to locate extrema, intervals of increase and decrease, concavity, and inflection points to sketch a curve.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "曲线草图",
       "visual": "function",
-      "visual_hint": "Plot f(x) with toggles for f′ and f″; mark extrema, inflection points, and increase/decrease intervals."
+      "visual_hint": "Plot f(x) with toggles for f′ and f″; mark extrema, inflection points, and increase/decrease intervals.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_mvt",
+      "canonical_id": "pc_516c104969c5528d0b4372b8dd6060fe",
       "kind": "concept",
       "name": "Mean Value Theorem",
+      "name_zh": "中值定理",
       "topic": "t_1801_apps_diff",
       "description": "The mean value theorem guaranteeing a point where the instantaneous rate of change equals the average rate over an interval, with key consequences.",
       "default_order": 3,
       "centrality": 0.0568,
-      "name_zh": "中值定理",
       "visual": "function",
-      "visual_hint": "Plot f on [a,b] with the secant line and a draggable point c where the tangent is parallel to the secant."
+      "visual_hint": "Plot f on [a,b] with the secant line and a draggable point c where the tangent is parallel to the secant.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_riemann_sums",
+      "canonical_id": "pc_35359bf30bdc8b7b4bf309cbe629af14",
       "kind": "concept",
       "name": "Riemann Sums",
+      "name_zh": "黎曼和",
       "topic": "t_1801_integration",
       "description": "Riemann sums approximating the area under a curve by summing the areas of rectangles, whose limit defines the definite integral.",
       "default_order": 1,
       "centrality": 0.1979,
-      "name_zh": "黎曼和",
       "visual": "interactive",
-      "visual_hint": "Slider for rectangle count n; draw left/right/midpoint Riemann rectangles under f(x) and show the sum approaching the area."
+      "visual_hint": "Slider for rectangle count n; draw left/right/midpoint Riemann rectangles under f(x) and show the sum approaching the area.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_definite_integral",
+      "canonical_id": "pc_440f4c4a56ad058d19d3aab4c136729d",
       "kind": "concept",
       "name": "Definite Integrals",
+      "name_zh": "定积分",
       "topic": "t_1801_integration",
       "description": "The definite integral defined as the limit of Riemann sums, giving the signed area under a curve, with linearity and additivity properties.",
       "default_order": 2,
       "centrality": 0.2036,
-      "name_zh": "定积分",
       "visual": "interactive",
-      "visual_hint": "Shade signed area under f(x) between draggable bounds a,b; colour positive/negative regions and show the integral value."
+      "visual_hint": "Shade signed area under f(x) between draggable bounds a,b; colour positive/negative regions and show the integral value.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_ftc",
+      "canonical_id": "pc_e4dd673bc3f6493a9c015cdd12c0f6f6",
       "kind": "concept",
       "name": "Fundamental Theorem of Calculus",
+      "name_zh": "微积分基本定理",
       "topic": "t_1801_integration_1801_ftc",
       "description": "The fundamental theorem of calculus linking differentiation and integration, evaluating definite integrals via antiderivatives and differentiating integral functions.",
       "default_order": 1,
       "centrality": 0.1129,
-      "name_zh": "微积分基本定理",
       "visual": "interactive",
-      "visual_hint": "Animate the accumulation function A(x)=∫ₐˣ f as x moves, showing A′(x)=f(x)."
+      "visual_hint": "Animate the accumulation function A(x)=∫ₐˣ f as x moves, showing A′(x)=f(x).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_substitution",
+      "canonical_id": "pc_bb82fb2640cd5a19bd61799ddb487052",
       "kind": "concept",
       "name": "Integration by Substitution",
+      "name_zh": "换元积分法",
       "topic": "t_1801_integration_1801_ftc",
       "description": "Integration by substitution reversing the chain rule by changing variables to transform an integral into a simpler, recognisable form.",
       "default_order": 2,
       "centrality": 0.0743,
-      "name_zh": "换元积分法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_parts",
+      "canonical_id": "pc_97090158cf7a7858b5ee50409af026f0",
       "kind": "concept",
       "name": "Integration by Parts",
+      "name_zh": "分部积分法",
       "topic": "t_1801_tech_int",
       "description": "Integration by parts reversing the product rule to integrate products of functions, trading one integral for an often simpler one.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "分部积分法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_trig_integrals",
+      "canonical_id": "pc_a2af13f4710d4ac472d1d41eb67e9347",
       "kind": "concept",
       "name": "Trigonometric Integrals",
+      "name_zh": "三角积分",
       "topic": "t_1801_tech_int",
       "description": "Techniques for integrating products and powers of trigonometric functions using identities to reduce them to directly integrable forms.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "三角积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_trig_sub",
+      "canonical_id": "pc_bc8b24da06ec5d3b8e25ec612a249293",
       "kind": "concept",
       "name": "Trigonometric Substitution",
+      "name_zh": "三角换元",
       "topic": "t_1801_tech_int",
       "description": "Trigonometric substitution evaluating integrals containing quadratic radicals by substituting trigonometric functions and applying identities.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "三角换元"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_partial_fractions",
+      "canonical_id": "pc_967418094ad1c551a65dd8a5f8f94bc6",
       "kind": "concept",
       "name": "Partial Fractions",
+      "name_zh": "部分分式",
       "topic": "t_1801_int_techniques_area",
       "description": "Partial-fraction decomposition rewriting a rational function as a sum of simpler fractions that can be integrated term by term.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "部分分式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_improper_int",
+      "canonical_id": "pc_74f745245a2a829015c9e3ec42099084",
       "kind": "concept",
       "name": "Improper Integrals",
+      "name_zh": "广义积分",
       "topic": "t_1801_int_techniques_area",
       "description": "Improper integrals defined by limits, evaluating integrals over infinite intervals or with unbounded integrands and testing for convergence.",
       "default_order": 2,
       "centrality": 0.0634,
-      "name_zh": "广义积分",
       "visual": "function",
-      "visual_hint": "Plot f(x) with the upper bound b→∞; show the accumulating area and whether it converges to a finite value."
+      "visual_hint": "Plot f(x) with the upper bound b→∞; show the accumulating area and whether it converges to a finite value.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_area_curves",
+      "canonical_id": "pc_fdb8e34b296a1710202568026f99cc54",
       "kind": "concept",
       "name": "Area Between Curves",
+      "name_zh": "曲线间面积",
       "topic": "t_1801_int_techniques_area",
       "description": "Computing the area between two curves by integrating the difference of their functions over the interval where they bound a region.",
       "default_order": 3,
       "centrality": 0.0459,
-      "name_zh": "曲线间面积",
       "visual": "interactive",
-      "visual_hint": "Shade the region between two draggable curves over [a,b] and show the integral of their difference."
+      "visual_hint": "Shade the region between two draggable curves over [a,b] and show the integral of their difference.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_volume",
+      "canonical_id": "pc_dda74af8bd9c175681f07fd3790014e1",
       "kind": "concept",
       "name": "Volumes of Solids",
+      "name_zh": "立体体积",
       "topic": "t_1801_apps_int",
       "description": "Computing volumes of solids of revolution and general solids using slicing, disk, washer, and cylindrical-shell integration methods.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "立体体积",
       "visual": "interactive",
-      "visual_hint": "Rotate a region about an axis into a solid; slider sweeps a disk/washer cross-section and shows the volume integral."
+      "visual_hint": "Rotate a region about an axis into a solid; slider sweeps a disk/washer cross-section and shows the volume integral.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_arc_length",
+      "canonical_id": "pc_c3a6e025d8fc89e23a83234d91bdf1af",
       "kind": "concept",
       "name": "Arc Length",
+      "name_zh": "弧长",
       "topic": "t_1801_apps_int",
       "description": "Computing the length of a plane curve by integrating the arc-length element derived from the Pythagorean relationship of differentials.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "弧长",
       "visual": "function",
-      "visual_hint": "Approximate a curve's length with a slider for the number of straight segments converging to the arc-length integral."
+      "visual_hint": "Approximate a curve's length with a slider for the number of straight segments converging to the arc-length integral.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_work",
+      "canonical_id": "pc_8d4c272323bad38caf3079731dd2f3b8",
       "kind": "concept",
       "name": "Work",
+      "name_zh": "功",
       "topic": "t_1801_apps_int",
       "description": "Computing physical work done by a variable force by integrating force over displacement, applied to springs, pumping, and lifting problems.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "功"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_sequences",
+      "canonical_id": "pc_105655e3b7f36e0d0c2488e7d3e47a3a",
       "kind": "concept",
       "name": "Sequences and Series",
+      "name_zh": "序列与级数",
       "topic": "t_1801_series",
       "description": "Sequences as ordered lists of numbers and series as their sums, with convergence describing whether they approach a finite limit.",
       "default_order": 1,
       "centrality": 0.0634,
-      "name_zh": "序列与级数",
       "visual": "chart",
-      "visual_hint": "Plot sequence terms and their partial sums against n to show convergence or divergence."
+      "visual_hint": "Plot sequence terms and their partial sums against n to show convergence or divergence.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_conv_tests",
+      "canonical_id": "pc_bc00faac9032233389a500fe3a2d1d5d",
       "kind": "concept",
       "name": "Convergence Tests",
+      "name_zh": "收敛性检验",
       "topic": "t_1801_series",
       "description": "Tests for series convergence, including the integral, comparison, ratio, and root tests, determining whether an infinite series sums to a finite value.",
       "default_order": 2,
       "centrality": 0.0908,
-      "name_zh": "收敛性检验",
       "visual": "diagram",
-      "visual_hint": "Decision-tree diagram choosing a convergence test (integral / comparison / ratio / root) from the series' form."
+      "visual_hint": "Decision-tree diagram choosing a convergence test (integral / comparison / ratio / root) from the series' form.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_power_series",
+      "canonical_id": "pc_b4706d8b591bf0b18ba7aefbab523c9c",
       "kind": "concept",
       "name": "Power Series",
+      "name_zh": "幂级数",
       "topic": "t_1801_series_1801_power_series",
       "description": "Power series representing functions as infinite polynomials, with a radius and interval of convergence determining where they converge.",
       "default_order": 1,
       "centrality": 0.0776,
-      "name_zh": "幂级数",
       "visual": "function",
-      "visual_hint": "Plot a function against its power-series partial sums; slider for term count and shade the interval of convergence."
+      "visual_hint": "Plot a function against its power-series partial sums; slider for term count and shade the interval of convergence.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1801_taylor_series",
+      "canonical_id": "pc_c1be934889ced7140179984f36bd37cf",
       "kind": "concept",
       "name": "Taylor Series",
+      "name_zh": "泰勒级数",
       "topic": "t_1801_series_1801_power_series",
       "description": "Taylor and Maclaurin series expanding a function as a power series about a point using its derivatives, approximating functions locally.",
       "default_order": 2,
       "centrality": 0.1243,
-      "name_zh": "泰勒级数",
       "visual": "function",
-      "visual_hint": "Plot f(x) and its Taylor polynomial about a; slider for degree n to watch it hug the curve."
+      "visual_hint": "Plot f(x) and its Taylor polynomial about a; slider for degree n to watch it hug the curve.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_dot_product",
+      "canonical_id": "pc_eeab1dd3f28fca6d00f67117aa4ff736",
       "kind": "concept",
       "name": "Dot Product",
+      "name_zh": "点积",
       "topic": "t_1802_vectors",
       "description": "Vectors with magnitude and direction, and the dot product measuring projection and the angle between them, yielding a scalar from two vectors.",
       "default_order": 1,
       "centrality": 0.1839,
-      "name_zh": "点积",
       "visual": "interactive",
-      "visual_hint": "Drag two vectors; show the dot product, the projection of one onto the other, and the angle between them."
+      "visual_hint": "Drag two vectors; show the dot product, the projection of one onto the other, and the angle between them.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_cross_product",
+      "canonical_id": "pc_909ca9d8010cb1a841ee03551e2afc16",
       "kind": "concept",
       "name": "Cross Product",
+      "name_zh": "叉积",
       "topic": "t_1802_vectors",
       "description": "The cross product of two vectors producing a vector perpendicular to both, whose magnitude equals the area of the parallelogram they span.",
       "default_order": 2,
       "centrality": 0.0526,
-      "name_zh": "叉积",
       "visual": "interactive",
-      "visual_hint": "Drag two 3D vectors; show the perpendicular cross-product vector and the parallelogram area its magnitude measures."
+      "visual_hint": "Drag two 3D vectors; show the perpendicular cross-product vector and the parallelogram area its magnitude measures.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_lines_planes",
+      "canonical_id": "pc_8386363188df11ab28ae08ef72342a47",
       "kind": "concept",
       "name": "Lines and Planes",
+      "name_zh": "直线与平面",
       "topic": "t_1802_vectors_1802_lines_planes",
       "description": "Equations of lines and planes in three-dimensional space using points, direction vectors, and normal vectors in vector and scalar forms.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "直线与平面",
       "visual": "interactive",
-      "visual_hint": "Show a line or plane in 3D from a point and a direction/normal; drag to watch its equation update."
+      "visual_hint": "Show a line or plane in 3D from a point and a direction/normal; drag to watch its equation update.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_parametric_curves",
+      "canonical_id": "pc_c3fef9612a4b4d9db4cfdfa2ee171f9a",
       "kind": "concept",
       "name": "Parametric Curves",
+      "name_zh": "参数曲线",
       "topic": "t_1802_vectors_1802_lines_planes",
       "description": "Vector-valued functions tracing curves in space, whose derivatives give the velocity and acceleration along the parametrised path.",
       "default_order": 2,
       "centrality": 0.0946,
-      "name_zh": "参数曲线",
       "visual": "function",
-      "visual_hint": "Trace a parametric curve r(t) with a slider for t showing the position, velocity, and acceleration vectors."
+      "visual_hint": "Trace a parametric curve r(t) with a slider for t showing the position, velocity, and acceleration vectors.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_multivar_functions",
+      "canonical_id": "pc_a41bd32314d40402b74de839f2880ad9",
       "kind": "concept",
       "name": "Multivariable Functions",
+      "name_zh": "多元函数",
       "topic": "t_1802_partial_diff",
       "description": "Functions of several variables mapping points to values, visualised through level curves and surfaces, generalising single-variable functions.",
       "default_order": 1,
       "centrality": 0.1557,
-      "name_zh": "多元函数",
       "visual": "interactive",
-      "visual_hint": "Show a surface z=f(x,y) with its level curves; drag to rotate and read heights off the contours."
+      "visual_hint": "Show a surface z=f(x,y) with its level curves; drag to rotate and read heights off the contours.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_partial_derivs",
+      "canonical_id": "pc_df971f7fe8af96aa32a72e4e472729ca",
       "kind": "concept",
       "name": "Partial Derivatives",
+      "name_zh": "偏导数",
       "topic": "t_1802_partial_diff",
       "description": "Partial derivatives measuring the rate of change of a multivariable function with respect to one variable while holding the others fixed.",
       "default_order": 2,
       "centrality": 0.178,
-      "name_zh": "偏导数",
       "visual": "interactive",
-      "visual_hint": "Slice a surface z=f(x,y) along x and y at a point and show the two partial-derivative slopes."
+      "visual_hint": "Slice a surface z=f(x,y) along x and y at a point and show the two partial-derivative slopes.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_multivar_chain",
+      "canonical_id": "pc_a58b53bc7ee8978692991b718c5e8337",
       "kind": "concept",
       "name": "Multivariable Chain Rule",
+      "name_zh": "多元链式法则",
       "topic": "t_1802_partial_diff_1802_multivar_chain",
       "description": "The multivariable chain rule differentiating compositions of several-variable functions by summing contributions through each intermediate variable.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "多元链式法则",
       "visual": "diagram",
-      "visual_hint": "Dependency-tree diagram of the variables, showing each path's contribution in the multivariable chain rule."
+      "visual_hint": "Dependency-tree diagram of the variables, showing each path's contribution in the multivariable chain rule.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_gradient",
+      "canonical_id": "pc_d455f037953e1688922394cd763fb40e",
       "kind": "concept",
       "name": "Gradient and Directional Derivative",
+      "name_zh": "梯度与方向导数",
       "topic": "t_1802_partial_diff_1802_multivar_chain",
       "description": "The gradient vector of partial derivatives pointing in the direction of steepest increase, with directional derivatives giving rates along any direction.",
       "default_order": 2,
       "centrality": 0.15,
-      "name_zh": "梯度与方向导数",
       "visual": "interactive",
-      "visual_hint": "On a contour plot show the gradient pointing to steepest increase; drag a direction to compare the directional derivative."
+      "visual_hint": "On a contour plot show the gradient pointing to steepest increase; drag a direction to compare the directional derivative.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_tangent_planes",
+      "canonical_id": "pc_a34eba2649eac76c32aba431cab02957",
       "kind": "concept",
       "name": "Tangent Planes",
+      "name_zh": "切平面",
       "topic": "t_1802_apps_partial",
       "description": "The tangent plane approximating a surface near a point, generalising the tangent line and providing linear approximation in several variables.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "切平面",
       "visual": "interactive",
-      "visual_hint": "Show the tangent plane touching a surface z=f(x,y) at a draggable point."
+      "visual_hint": "Show the tangent plane touching a surface z=f(x,y) at a draggable point.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_local_extrema",
+      "canonical_id": "pc_3ba8174bd7aea33d62512fb6b904c90e",
       "kind": "concept",
       "name": "Local Extrema",
+      "name_zh": "局部极值",
       "topic": "t_1802_apps_partial",
       "description": "Finding local maxima, minima, and saddle points of multivariable functions using critical points and the second-derivative (Hessian) test.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "局部极值",
       "visual": "interactive",
-      "visual_hint": "Surface with maxima, minima, and saddles marked; apply the second-derivative test at a draggable critical point."
+      "visual_hint": "Surface with maxima, minima, and saddles marked; apply the second-derivative test at a draggable critical point.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_lagrange",
+      "canonical_id": "pc_0fae0ae184566512ad0049a080167275",
       "kind": "concept",
       "name": "Lagrange Multipliers",
+      "name_zh": "拉格朗日乘数",
       "topic": "t_1802_apps_partial_1802_lagrange",
       "description": "Lagrange multipliers optimising a function subject to constraints by setting its gradient proportional to the constraint gradients.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "拉格朗日乘数",
       "visual": "interactive",
-      "visual_hint": "Contour plot with a constraint curve, showing where the objective and constraint gradients align at the optimum."
+      "visual_hint": "Contour plot with a constraint curve, showing where the objective and constraint gradients align at the optimum.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_differentials",
+      "canonical_id": "pc_d036185afaf649e6e42d0c43234ede6d",
       "kind": "concept",
       "name": "Differentials",
+      "name_zh": "微分",
       "topic": "t_1802_apps_partial_1802_lagrange",
       "description": "Differentials approximating small changes in a multivariable function from changes in its inputs, used for linear approximation and error estimation.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "微分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_double_integrals",
+      "canonical_id": "pc_e3dbfe2cf96a6296d2743074327c04d0",
       "kind": "concept",
       "name": "Double Integrals",
+      "name_zh": "二重积分",
       "topic": "t_1802_multiple_int",
       "description": "Double integrals computing volume and accumulated quantities over two-dimensional regions, evaluated as iterated single integrals.",
       "default_order": 1,
       "centrality": 0.1299,
-      "name_zh": "二重积分",
       "visual": "interactive",
-      "visual_hint": "Show a planar region and the volume under z=f(x,y); sweep the integration to build up the double integral."
+      "visual_hint": "Show a planar region and the volume under z=f(x,y); sweep the integration to build up the double integral.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_polar_integrals",
+      "canonical_id": "pc_5d47cc70915a87bad7bf20d9851c9004",
       "kind": "concept",
       "name": "Polar Integrals",
+      "name_zh": "极坐标积分",
       "topic": "t_1802_multiple_int",
       "description": "Evaluating double integrals in polar coordinates, where the area element gains a factor of r, simplifying circular and radial regions.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "极坐标积分",
       "visual": "interactive",
-      "visual_hint": "Show a polar region with the r·dr·dθ area element; sweep θ to build the polar double integral."
+      "visual_hint": "Show a polar region with the r·dr·dθ area element; sweep θ to build the polar double integral.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_triple_integrals",
+      "canonical_id": "pc_b5da9f247d33cf6f57ec214b5c4fc7f7",
       "kind": "concept",
       "name": "Triple Integrals",
+      "name_zh": "三重积分",
       "topic": "t_1802_multiple_int",
       "description": "Triple integrals computing volume and accumulated quantities over three-dimensional regions, evaluated as iterated single integrals.",
       "default_order": 3,
       "centrality": 0.0424,
-      "name_zh": "三重积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_cyl_spherical",
+      "canonical_id": "pc_51215e5648d291e154d0659c0a98a7b9",
       "kind": "concept",
       "name": "Cylindrical and Spherical Coordinates",
+      "name_zh": "柱面与球坐标",
       "topic": "t_1802_coord_vector_fields",
       "description": "Triple integration in cylindrical and spherical coordinates, with appropriate volume elements simplifying problems with axial or spherical symmetry.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "柱面与球坐标"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_jacobians",
+      "canonical_id": "pc_de16d1c3ea45c6704b416b1441480888",
       "kind": "concept",
       "name": "Change of Variables",
+      "name_zh": "变量变换",
       "topic": "t_1802_coord_vector_fields",
       "description": "Change of variables in multiple integrals using the Jacobian determinant to account for how the transformation scales area or volume.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "变量变换"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_vector_fields",
+      "canonical_id": "pc_6353fd321470903e1ae07f59704f5b17",
       "kind": "concept",
       "name": "Vector Fields",
+      "name_zh": "向量场",
       "topic": "t_1802_coord_vector_fields",
       "description": "Vector fields assigning a vector to each point, and line integrals accumulating a field's effect along a curve, modelling work and flow.",
       "default_order": 3,
       "centrality": 0.0618,
-      "name_zh": "向量场",
       "visual": "interactive",
-      "visual_hint": "Plot a 2D vector field; drop a particle to trace its path and accumulate a line integral along a curve."
+      "visual_hint": "Plot a 2D vector field; drop a particle to trace its path and accumulate a line integral along a curve.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_fundamental_line",
+      "canonical_id": "pc_2f3c38009195f363c6f9694b1b9ef0fd",
       "kind": "concept",
       "name": "Fundamental Theorem for Line Integrals",
+      "name_zh": "线积分基本定理",
       "topic": "t_1802_vector_calc",
       "description": "The fundamental theorem for line integrals showing conservative fields have path-independent integrals computed from a potential function.",
       "default_order": 1,
       "centrality": 0.0301,
-      "name_zh": "线积分基本定理",
       "visual": "diagram",
-      "visual_hint": "Diagram contrasting path-dependent integrals with path-independent ones in a conservative field."
+      "visual_hint": "Diagram contrasting path-dependent integrals with path-independent ones in a conservative field.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_greens_theorem",
+      "canonical_id": "pc_edb6d9da8dc375409de27679d4b9dc1b",
       "kind": "concept",
       "name": "Green's Theorem",
+      "name_zh": "格林定理",
       "topic": "t_1802_vector_calc",
       "description": "Green's theorem relating a line integral around a closed plane curve to a double integral of curl over the enclosed region.",
       "default_order": 2,
       "centrality": 0.0301,
-      "name_zh": "格林定理",
       "visual": "interactive",
-      "visual_hint": "Show a closed curve and its enclosed region, relating the circulation line integral to the double integral of curl."
+      "visual_hint": "Show a closed curve and its enclosed region, relating the circulation line integral to the double integral of curl.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_curl_div",
+      "canonical_id": "pc_8725571cd2a28199f7fa25c57ab41a34",
       "kind": "concept",
       "name": "Curl and Divergence",
+      "name_zh": "旋度与散度",
       "topic": "t_1802_vector_calc",
       "description": "Curl measuring a vector field's local rotation and divergence measuring its net outward flux per unit volume, fundamental differential operators.",
       "default_order": 3,
       "centrality": 0.0371,
-      "name_zh": "旋度与散度",
       "visual": "interactive",
-      "visual_hint": "Vector field with a paddlewheel (curl) and a source/sink box (divergence) at a draggable point."
+      "visual_hint": "Vector field with a paddlewheel (curl) and a source/sink box (divergence) at a draggable point.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_parametric_surfaces",
+      "canonical_id": "pc_b67579476446294d04db3e7a03c42aa4",
       "kind": "concept",
       "name": "Parametric Surfaces",
+      "name_zh": "参数曲面",
       "topic": "t_1802_surface_int",
       "description": "Parametric representations of surfaces using two parameters, enabling computation of surface area through the cross product of partial derivatives.",
       "default_order": 1,
       "centrality": 0.0406,
-      "name_zh": "参数曲面"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_surface_integrals",
+      "canonical_id": "pc_ea02e80ab4fb21a24fe33c25bcb2a7f1",
       "kind": "concept",
       "name": "Surface Integrals",
+      "name_zh": "面积分",
       "topic": "t_1802_surface_int",
       "description": "Surface integrals accumulating a scalar field or the flux of a vector field across a surface, generalising double integrals to curved surfaces.",
       "default_order": 2,
       "centrality": 0.0371,
-      "name_zh": "面积分"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_stokes_theorem",
+      "canonical_id": "pc_51b8aeb47ed7651e785a0d8232f8439a",
       "kind": "concept",
       "name": "Stokes' Theorem",
+      "name_zh": "斯托克斯定理",
       "topic": "t_1802_surface_int_1802_stokes_theorem",
       "description": "Stokes' theorem relating the line integral of a field around a closed curve to the surface integral of its curl over a bounded surface.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "斯托克斯定理",
       "visual": "diagram",
-      "visual_hint": "Diagram relating the boundary-curve line integral to the surface integral of curl (Stokes)."
+      "visual_hint": "Diagram relating the boundary-curve line integral to the surface integral of curl (Stokes).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_1802_divergence_theorem",
+      "canonical_id": "pc_75939f3ca0e8be7f71ea576cdb64dbb1",
       "kind": "concept",
       "name": "Divergence Theorem",
+      "name_zh": "散度定理",
       "topic": "t_1802_surface_int_1802_stokes_theorem",
       "description": "The divergence theorem relating the outward flux of a vector field through a closed surface to the triple integral of its divergence inside.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "散度定理",
       "visual": "diagram",
-      "visual_hint": "Diagram relating outward flux through a closed surface to the volume integral of divergence."
+      "visual_hint": "Diagram relating outward flux through a closed surface to the volume integral of divergence.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -773,463 +969,617 @@
       "from": "c_1801_limits",
       "to": "c_1801_deriv_def",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_def",
       "to": "c_1801_deriv_rules",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_chain_rule",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1801_implicit_diff",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1801_related_rates",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_implicit_diff",
       "to": "c_1801_related_rates",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_linear_approx",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_curve_sketching",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_mvt",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_riemann_sums",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_riemann_sums",
       "to": "c_1801_definite_integral",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_ftc",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_mvt",
       "to": "c_1801_ftc",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_def",
       "to": "c_1801_ftc",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1801_substitution",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1801_substitution",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_parts",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_substitution",
       "to": "c_1801_parts",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_substitution",
       "to": "c_1801_trig_integrals",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_trig_integrals",
       "to": "c_1801_trig_sub",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1801_partial_fractions",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_improper_int",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1801_improper_int",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_area_curves",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_area_curves",
       "to": "c_1801_volume",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_arc_length",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1801_work",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1801_sequences",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_sequences",
       "to": "c_1801_conv_tests",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_improper_int",
       "to": "c_1801_conv_tests",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_conv_tests",
       "to": "c_1801_power_series",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_power_series",
       "to": "c_1801_taylor_series",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1801_taylor_series",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1802_parametric_curves",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_cross_product",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_lines_planes",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_cross_product",
       "to": "c_1802_lines_planes",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_parametric_curves",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_limits",
       "to": "c_1802_multivar_functions",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_multivar_functions",
       "to": "c_1802_partial_derivs",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_rules",
       "to": "c_1802_partial_derivs",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_multivar_chain",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_chain_rule",
       "to": "c_1802_multivar_chain",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_gradient",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_dot_product",
       "to": "c_1802_gradient",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_tangent_planes",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_gradient",
       "to": "c_1802_tangent_planes",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_local_extrema",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_gradient",
       "to": "c_1802_lagrange",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_differentials",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_definite_integral",
       "to": "c_1802_double_integrals",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_multivar_functions",
       "to": "c_1802_double_integrals",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_polar_integrals",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_triple_integrals",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_polar_integrals",
       "to": "c_1802_cyl_spherical",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_triple_integrals",
       "to": "c_1802_cyl_spherical",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_jacobians",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_jacobians",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_parametric_curves",
       "to": "c_1802_vector_fields",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_ftc",
       "to": "c_1802_fundamental_line",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_gradient",
       "to": "c_1802_fundamental_line",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_vector_fields",
       "to": "c_1802_fundamental_line",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_greens_theorem",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_vector_fields",
       "to": "c_1802_greens_theorem",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_partial_derivs",
       "to": "c_1802_curl_div",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_vector_fields",
       "to": "c_1802_curl_div",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_parametric_curves",
       "to": "c_1802_parametric_surfaces",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_cross_product",
       "to": "c_1802_parametric_surfaces",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_parametric_surfaces",
       "to": "c_1802_surface_integrals",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_double_integrals",
       "to": "c_1802_surface_integrals",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_surface_integrals",
       "to": "c_1802_stokes_theorem",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_curl_div",
       "to": "c_1802_stokes_theorem",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_fundamental_line",
       "to": "c_1802_stokes_theorem",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_greens_theorem",
       "to": "c_1802_stokes_theorem",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_surface_integrals",
       "to": "c_1802_divergence_theorem",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_triple_integrals",
       "to": "c_1802_divergence_theorem",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_curl_div",
       "to": "c_1802_divergence_theorem",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

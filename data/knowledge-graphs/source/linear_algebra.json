@@ -1,367 +1,455 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "linear_algebra",
   "subject": "Linear Algebra",
-  "schema": {
-    "nodes": [
-      {
-        "type": "topic",
-        "description": "A broad module containing 4-5 concepts."
-      },
-      {
-        "type": "concept",
-        "description": "A minimal testable concept."
-      }
-    ],
-    "edges": [
-      {
-        "type": "prereq",
-        "description": "Indicates that one concept or topic is a prerequisite for another. Must form a DAG."
-      }
-    ]
-  },
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_linear_algebra"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "t_mit1806_linear_equations",
       "kind": "topic",
       "name": "Vectors and Linear Combinations and Elimination with Matrices",
+      "name_zh": "向量与线性组合与矩阵消元",
       "topic": null,
       "default_order": 1,
-      "name_zh": "向量与线性组合与矩阵消元"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_linear_equations_mit1806_matrix_ops",
       "kind": "topic",
       "name": "Matrix Operations and Inverses and LU Factorization",
+      "name_zh": "矩阵运算与逆矩阵与LU 分解",
       "topic": null,
       "default_order": 2,
-      "name_zh": "矩阵运算与逆矩阵与LU 分解"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_vector_spaces",
       "kind": "topic",
       "name": "Vector Spaces and Subspaces and Null Space and Column Space",
+      "name_zh": "向量空间和子空间与零空间与列空间",
       "topic": null,
       "default_order": 3,
-      "name_zh": "向量空间和子空间与零空间与列空间"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_vector_spaces_mit1806_independence_basis",
       "kind": "topic",
       "name": "Linear Independence, Basis, and Dimension and The Four Fundamental Subspaces",
+      "name_zh": "线性无关、基与维数与四个基本子空间",
       "topic": null,
       "default_order": 4,
-      "name_zh": "线性无关、基与维数与四个基本子空间"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_orthogonality",
       "kind": "topic",
       "name": "Orthogonal Vectors and Subspaces and Projections onto Subspaces",
+      "name_zh": "正交向量与子空间与向子空间的投影",
       "topic": null,
       "default_order": 5,
-      "name_zh": "正交向量与子空间与向子空间的投影"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_orthogonality_mit1806_least_squares",
       "kind": "topic",
       "name": "Least Squares Approximations and Orthogonal Bases and Gram-Schmidt",
+      "name_zh": "最小二乘近似与正交基与 Gram-Schmidt",
       "topic": null,
       "default_order": 6,
-      "name_zh": "最小二乘近似与正交基与 Gram-Schmidt"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_determinants_eigen",
       "kind": "topic",
       "name": "Properties of Determinants and Formulas and Cofactors",
+      "name_zh": "行列式的性质与行列式公式与余子式",
       "topic": null,
       "default_order": 7,
-      "name_zh": "行列式的性质与行列式公式与余子式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_determinants_eigen_mit1806_cramers_rule",
       "kind": "topic",
       "name": "Cramer's Rule and Volumes and Eigenvalues and Eigenvectors",
+      "name_zh": "Cramer 法则与体积与特征值与特征向量",
       "topic": null,
       "default_order": 8,
-      "name_zh": "Cramer 法则与体积与特征值与特征向量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_eigenvalues",
       "kind": "topic",
       "name": "Diagonalization and Systems of Differential Equations",
+      "name_zh": "对角化与微分方程组",
       "topic": null,
       "default_order": 9,
-      "name_zh": "对角化与微分方程组"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_eigenvalues_mit1806_symmetric_matrices",
       "kind": "topic",
       "name": "Symmetric Matrices and Positive Definite Matrices",
+      "name_zh": "对称矩阵与正定矩阵",
       "topic": null,
       "default_order": 10,
-      "name_zh": "对称矩阵与正定矩阵"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit1806_applications",
       "kind": "topic",
       "name": "SVD and Linear Transformations",
+      "name_zh": "SVD 与线性变换",
       "topic": null,
       "default_order": 11,
-      "name_zh": "SVD 与线性变换"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_vectors",
+      "canonical_id": "pc_05ce5edca3cf46092264ec57a0170a55",
       "kind": "concept",
       "name": "Vectors and Linear Combinations",
+      "name_zh": "向量与线性组合",
       "topic": "t_mit1806_linear_equations",
       "description": "Addition, scalar multiplication, dot products, and linear combinations of vectors.",
       "default_order": 1,
       "centrality": 0.5568,
-      "name_zh": "向量与线性组合",
       "visual": "interactive",
-      "visual_hint": "Drag vectors to show addition, scaling, and linear combinations."
+      "visual_hint": "Drag vectors to show addition, scaling, and linear combinations.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_elimination",
+      "canonical_id": "pc_d586f1b03b9b13ceb36b230c5f64e45e",
       "kind": "concept",
       "name": "Elimination with Matrices",
+      "name_zh": "矩阵消元",
       "topic": "t_mit1806_linear_equations",
       "description": "Solving systems of linear equations using Gaussian elimination, pivot variables, and multipliers.",
       "default_order": 2,
       "centrality": 0.6258,
-      "name_zh": "矩阵消元",
       "visual": "algorithm",
-      "visual_hint": "Step Gaussian elimination reducing a matrix to triangular form."
+      "visual_hint": "Step Gaussian elimination reducing a matrix to triangular form.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_matrix_ops",
+      "canonical_id": "pc_2611e45b4d477c48a6d90293fa4f2784",
       "kind": "concept",
       "name": "Matrix Operations and Inverses",
+      "name_zh": "矩阵运算与逆矩阵",
       "topic": "t_mit1806_linear_equations_mit1806_matrix_ops",
       "description": "Rules for matrix multiplication, properties of operations, and computing the inverse of a matrix.",
       "default_order": 1,
       "centrality": 0.4878,
-      "name_zh": "矩阵运算与逆矩阵"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_lu_decomp",
+      "canonical_id": "pc_d4cb5f921745c636b7472b931132f611",
       "kind": "concept",
       "name": "LU Factorization",
+      "name_zh": "LU 分解",
       "topic": "t_mit1806_linear_equations_mit1806_matrix_ops",
       "description": "Factoring a matrix into lower triangular (L) and upper triangular (U) components.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "LU 分解"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_spaces_subspaces",
+      "canonical_id": "pc_6da668cf89c0f0f9959f06481b48244a",
       "kind": "concept",
       "name": "Vector Spaces and Subspaces",
+      "name_zh": "向量空间和子空间",
       "topic": "t_mit1806_vector_spaces",
       "description": "Definition of vector spaces and subspaces, closure under addition and scalar multiplication.",
       "default_order": 1,
       "centrality": 0.1588,
-      "name_zh": "向量空间和子空间"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_null_column_space",
+      "canonical_id": "pc_df1699b35798d25b74d83cc9db025326",
       "kind": "concept",
       "name": "Null Space and Column Space",
+      "name_zh": "零空间与列空间",
       "topic": "t_mit1806_vector_spaces",
       "description": "Understanding the null space (solutions to Ax=0) and column space (combinations of columns).",
       "default_order": 2,
       "centrality": 0.1577,
-      "name_zh": "零空间与列空间",
       "visual": "interactive",
-      "visual_hint": "Show the column space and null space as spans in space."
+      "visual_hint": "Show the column space and null space as spans in space.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_independence_basis",
+      "canonical_id": "pc_2713e81e52eae93ad1a3985c090b7652",
       "kind": "concept",
       "name": "Linear Independence, Basis, and Dimension",
+      "name_zh": "线性无关、基与维数",
       "topic": "t_mit1806_vector_spaces_mit1806_independence_basis",
       "description": "Linear independence of vectors, spanning sets, defining a basis, and the dimension of a vector space.",
       "default_order": 1,
       "centrality": 0.1564,
-      "name_zh": "线性无关、基与维数",
       "visual": "interactive",
-      "visual_hint": "Drag vectors to test independence and span a subspace as a basis."
+      "visual_hint": "Drag vectors to test independence and span a subspace as a basis.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_four_subspaces",
+      "canonical_id": "pc_a031127bb97a542e5c9139b103302dc8",
       "kind": "concept",
       "name": "The Four Fundamental Subspaces",
+      "name_zh": "四个基本子空间",
       "topic": "t_mit1806_vector_spaces_mit1806_independence_basis",
       "description": "Column space, null space, row space, and left null space, and their dimensions.",
       "default_order": 2,
       "centrality": 0.1548,
-      "name_zh": "四个基本子空间"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_orthogonality",
+      "canonical_id": "pc_e68980d15850f4946632ef773e1f09b0",
       "kind": "concept",
       "name": "Orthogonal Vectors and Subspaces",
+      "name_zh": "正交向量与子空间",
       "topic": "t_mit1806_orthogonality",
       "description": "Orthogonality of the four fundamental subspaces, orthogonal complements.",
       "default_order": 1,
       "centrality": 0.153,
-      "name_zh": "正交向量与子空间"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_projections",
+      "canonical_id": "pc_2cf9a5595c439f79d75b38b3a111737f",
       "kind": "concept",
       "name": "Projections onto Subspaces",
+      "name_zh": "向子空间的投影",
       "topic": "t_mit1806_orthogonality",
       "description": "Projection matrices and projecting vectors onto lines or general subspaces.",
       "default_order": 2,
       "centrality": 0.1508,
-      "name_zh": "向子空间的投影",
       "visual": "interactive",
-      "visual_hint": "Project a vector onto a line or plane and show the residual."
+      "visual_hint": "Project a vector onto a line or plane and show the residual.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_least_squares",
+      "canonical_id": "pc_46a7a236cca2998136031ed26b07bb53",
       "kind": "concept",
       "name": "Least Squares Approximations",
+      "name_zh": "最小二乘近似",
       "topic": "t_mit1806_orthogonality_mit1806_least_squares",
       "description": "Solving overdetermined systems using normal equations and finding the best fit line.",
       "default_order": 1,
       "centrality": 0.0564,
-      "name_zh": "最小二乘近似",
       "visual": "function",
-      "visual_hint": "Fit a least-squares line minimising the squared residuals to data."
+      "visual_hint": "Fit a least-squares line minimising the squared residuals to data.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_gram_schmidt",
+      "canonical_id": "pc_66fc646f094ebe9bb72e9428fb68ccd3",
       "kind": "concept",
       "name": "Orthogonal Bases and Gram-Schmidt",
+      "name_zh": "正交基与 Gram-Schmidt",
       "topic": "t_mit1806_orthogonality_mit1806_least_squares",
       "description": "Orthonormal vectors, orthogonal matrices, and the Gram-Schmidt orthogonalization process.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "正交基与 Gram-Schmidt",
       "visual": "interactive",
-      "visual_hint": "Orthogonalise a set of vectors step by step (Gram-Schmidt)."
+      "visual_hint": "Orthogonalise a set of vectors step by step (Gram-Schmidt).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_det_properties",
+      "canonical_id": "pc_177578cd0c60b41f427c93f6076b02f0",
       "kind": "concept",
       "name": "Properties of Determinants",
+      "name_zh": "行列式的性质",
       "topic": "t_mit1806_determinants_eigen",
       "description": "The fundamental properties that define the determinant of a square matrix.",
       "default_order": 1,
       "centrality": 0.1806,
-      "name_zh": "行列式的性质",
       "visual": "interactive",
-      "visual_hint": "Show the determinant as the signed area/volume scaling of a transform."
+      "visual_hint": "Show the determinant as the signed area/volume scaling of a transform.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_det_formulas",
+      "canonical_id": "pc_21428834a462f257a1839fe92eb43100",
       "kind": "concept",
       "name": "Formulas and Cofactors",
+      "name_zh": "行列式公式与余子式",
       "topic": "t_mit1806_determinants_eigen",
       "description": "Computing determinants using the permutation formula and cofactor expansions.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "行列式公式与余子式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_cramers_rule",
+      "canonical_id": "pc_1ffcfe9fb6c711795114d6d437abe56e",
       "kind": "concept",
       "name": "Cramer's Rule and Volumes",
+      "name_zh": "Cramer 法则与体积",
       "topic": "t_mit1806_determinants_eigen_mit1806_cramers_rule",
       "description": "Using determinants to find inverses, solving systems with Cramer's Rule, and volume interpretations.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "Cramer 法则与体积"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_eigen",
+      "canonical_id": "pc_01a994cab9c008d87892a67342e033a1",
       "kind": "concept",
       "name": "Eigenvalues and Eigenvectors",
+      "name_zh": "特征值与特征向量",
       "topic": "t_mit1806_determinants_eigen_mit1806_cramers_rule",
       "description": "Definition of eigenvalues and eigenvectors, and finding them using characteristic equations.",
       "default_order": 2,
       "centrality": 0.1375,
-      "name_zh": "特征值与特征向量",
       "visual": "interactive",
-      "visual_hint": "Show eigenvectors as directions a transform only stretches, with eigenvalues."
+      "visual_hint": "Show eigenvectors as directions a transform only stretches, with eigenvalues.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_diagonalization",
+      "canonical_id": "pc_1eaf13e8f4c1cc954bea11b1356f0409",
       "kind": "concept",
       "name": "Diagonalization",
+      "name_zh": "对角化",
       "topic": "t_mit1806_eigenvalues",
       "description": "Diagonalizing a matrix using its eigenvectors, computing powers of matrices.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "对角化",
       "visual": "interactive",
-      "visual_hint": "Decompose a transform along its eigenvector axes."
+      "visual_hint": "Decompose a transform along its eigenvector axes.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_diff_eq",
+      "canonical_id": "pc_dcbc328a42c2fd8aa95fc76a9ccad011",
       "kind": "concept",
       "name": "Systems of Differential Equations",
+      "name_zh": "微分方程组",
       "topic": "t_mit1806_eigenvalues",
       "description": "Solving linear systems of differential equations using eigenvalues and eigenvectors.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "微分方程组"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_symmetric_matrices",
+      "canonical_id": "pc_56c2b29758cbaf8219656be504107edc",
       "kind": "concept",
       "name": "Symmetric Matrices",
+      "name_zh": "对称矩阵",
       "topic": "t_mit1806_eigenvalues_mit1806_symmetric_matrices",
       "description": "Properties of symmetric matrices, including real eigenvalues and orthogonal eigenvectors.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "对称矩阵"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_positive_definite",
+      "canonical_id": "pc_6a000add8bffb6add7431b69bfa89142",
       "kind": "concept",
       "name": "Positive Definite Matrices",
+      "name_zh": "正定矩阵",
       "topic": "t_mit1806_eigenvalues_mit1806_symmetric_matrices",
       "description": "Tests for positive definite matrices and their applications.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "正定矩阵"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_svd",
+      "canonical_id": "pc_0c5a5c2dde218558775874d07d973b3b",
       "kind": "concept",
       "name": "Singular Value Decomposition (SVD)",
+      "name_zh": "奇异值分解",
       "topic": "t_mit1806_applications",
       "description": "Factoring any matrix into orthogonal and diagonal matrices.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "奇异值分解",
       "visual": "interactive",
-      "visual_hint": "Show SVD as rotate, scale, rotate acting on the unit circle."
+      "visual_hint": "Show SVD as rotate, scale, rotate acting on the unit circle.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_linear_transformations",
+      "canonical_id": "pc_3cfe5926716df5e8bb2ce53dca18f255",
       "kind": "concept",
       "name": "Linear Transformations",
+      "name_zh": "线性变换",
       "topic": "t_mit1806_applications",
       "description": "Maps between vector spaces that preserve addition and scalar multiplication, characterised by their action on a basis and represented by matrices.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "线性变换",
       "visual": "interactive",
-      "visual_hint": "Apply a linear transformation to a grid and watch it deform."
+      "visual_hint": "Apply a linear transformation to a grid and watch it deform.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit1806_matrix_transform",
+      "canonical_id": "pc_0ec1bd0fab16064345d11c85fcc874b1",
       "kind": "concept",
       "name": "The Matrix of a Linear Transformation",
+      "name_zh": "线性变换的矩阵",
       "topic": "t_mit1806_applications",
       "description": "Representing linear transformations with matrices and changing basis.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "线性变换的矩阵",
       "visual": "interactive",
-      "visual_hint": "Show how a matrix's columns are the images of the basis vectors."
+      "visual_hint": "Show how a matrix's columns are the images of the basis vectors.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -369,133 +457,177 @@
       "from": "c_mit1806_vectors",
       "to": "c_mit1806_elimination",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_elimination",
       "to": "c_mit1806_matrix_ops",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_matrix_ops",
       "to": "c_mit1806_lu_decomp",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_matrix_ops",
       "to": "c_mit1806_spaces_subspaces",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_spaces_subspaces",
       "to": "c_mit1806_null_column_space",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_null_column_space",
       "to": "c_mit1806_independence_basis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_independence_basis",
       "to": "c_mit1806_four_subspaces",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_four_subspaces",
       "to": "c_mit1806_orthogonality",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_orthogonality",
       "to": "c_mit1806_projections",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_projections",
       "to": "c_mit1806_least_squares",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_least_squares",
       "to": "c_mit1806_gram_schmidt",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_elimination",
       "to": "c_mit1806_det_properties",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_det_properties",
       "to": "c_mit1806_det_formulas",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_det_formulas",
       "to": "c_mit1806_cramers_rule",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_det_properties",
       "to": "c_mit1806_eigen",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_eigen",
       "to": "c_mit1806_diagonalization",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_diagonalization",
       "to": "c_mit1806_diff_eq",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_eigen",
       "to": "c_mit1806_symmetric_matrices",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_symmetric_matrices",
       "to": "c_mit1806_positive_definite",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_positive_definite",
       "to": "c_mit1806_svd",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_matrix_ops",
       "to": "c_mit1806_linear_transformations",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_linear_transformations",
       "to": "c_mit1806_matrix_transform",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

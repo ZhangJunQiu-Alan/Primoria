@@ -1,776 +1,976 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "computer_architecture",
   "subject": "Great Ideas in Computer Architecture",
-  "schema": {
-    "nodeTypes": {
-      "topic": "A broad module containing 4-5 concepts",
-      "concept": "A minimal testable concept"
-    },
-    "edgeTypes": {
-      "prereq": "Prerequisite relationship, can be hard or soft"
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_computer_architecture"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
     }
-  },
+  ],
   "nodes": [
     {
       "id": "topic_data_rep",
       "kind": "topic",
       "name": "Binary and Hexadecimal and Two's Complement & Integer Rep",
+      "name_zh": "二进制与十六进制与补码与整数表示",
       "topic": null,
       "default_order": 1,
-      "name_zh": "二进制与十六进制与补码与整数表示"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_data_rep_floating_point",
       "kind": "topic",
       "name": "IEEE 754 Floating Point and Endianness and Memory Layout",
+      "name_zh": "IEEE 754浮点数与字节序与内存布局",
       "topic": null,
       "default_order": 2,
-      "name_zh": "IEEE 754浮点数与字节序与内存布局"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_c_prog",
       "kind": "topic",
       "name": "C Basics & Control Flow and Pointers and Arrays",
+      "name_zh": "C基础与控制流与指针与数组",
       "topic": null,
       "default_order": 3,
-      "name_zh": "C基础与控制流与指针与数组"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_c_prog_memory_management",
       "kind": "topic",
       "name": "Dynamic Memory Management and Structs, Unions, and Typedefs",
+      "name_zh": "动态内存管理与结构体、联合体与typedef",
       "topic": null,
       "default_order": 4,
-      "name_zh": "动态内存管理与结构体、联合体与typedef"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_riscv",
       "kind": "topic",
       "name": "RISC-V Assembly",
+      "name_zh": "RISC-V汇编",
       "topic": null,
       "default_order": 5,
-      "name_zh": "RISC-V汇编"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_riscv_logic",
       "kind": "topic",
       "name": "Instruction Formats and Compiler, Assembler, Linker, Loader",
+      "name_zh": "指令格式与编译器、汇编器、链接器、加载器",
       "topic": null,
       "default_order": 6,
-      "name_zh": "指令格式与编译器、汇编器、链接器、加载器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_riscv_logic_boolean_algebra",
       "kind": "topic",
       "name": "Boolean Algebra & Logic Gates and Combinational Logic Blocks",
+      "name_zh": "布尔代数与逻辑门与组合逻辑块",
       "topic": null,
       "default_order": 7,
-      "name_zh": "布尔代数与逻辑门与组合逻辑块"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_sds",
       "kind": "topic",
       "name": "Synchronous Digital Systems",
+      "name_zh": "同步数字系统",
       "topic": null,
       "default_order": 8,
-      "name_zh": "同步数字系统"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_cpu",
       "kind": "topic",
       "name": "CPU Architecture & Datapath",
+      "name_zh": "CPU架构与数据通路",
       "topic": null,
       "default_order": 9,
-      "name_zh": "CPU架构与数据通路"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_pipeline_cache",
       "kind": "topic",
       "name": "Pipeline Hazards & Forwarding and Branch Prediction",
+      "name_zh": "流水线冒险与转发与分支预测",
       "topic": null,
       "default_order": 10,
-      "name_zh": "流水线冒险与转发与分支预测"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_pipeline_cache_cache_basics",
       "kind": "topic",
       "name": "Cache Basics & Direct Mapped and Associative Caches",
+      "name_zh": "缓存基础与直接映射与关联缓存",
       "topic": null,
       "default_order": 11,
-      "name_zh": "缓存基础与直接映射与关联缓存"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_memory",
       "kind": "topic",
       "name": "Memory Hierarchy",
+      "name_zh": "存储层次",
       "topic": null,
       "default_order": 12,
-      "name_zh": "存储层次"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_parallelism",
       "kind": "topic",
       "name": "Parallel Computing",
+      "name_zh": "并行计算",
       "topic": null,
       "default_order": 13,
-      "name_zh": "并行计算"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_parallel_io",
       "kind": "topic",
       "name": "Cache Coherence & False Sharing and Warehouse-Scale Computing",
+      "name_zh": "缓存一致性与伪共享与仓库级计算",
       "topic": null,
       "default_order": 14,
-      "name_zh": "缓存一致性与伪共享与仓库级计算"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_parallel_io_memory_mapped_io",
       "kind": "topic",
       "name": "Memory-Mapped I/O and Polling and Interrupts",
+      "name_zh": "内存映射I/O与轮询与中断",
       "topic": null,
       "default_order": 15,
-      "name_zh": "内存映射I/O与轮询与中断"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_io_dep",
       "kind": "topic",
       "name": "I/O and Dependability",
+      "name_zh": "I/O与可靠性",
       "topic": null,
       "default_order": 16,
-      "name_zh": "I/O与可靠性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_binary_hex",
-      "topic": "topic_data_rep",
-      "name": "Binary and Hexadecimal",
+      "canonical_id": "pc_ca8a2a8ef1192e1feac02ad39868baa3",
       "kind": "concept",
+      "name": "Binary and Hexadecimal",
+      "name_zh": "二进制与十六进制",
+      "topic": "topic_data_rep",
+      "description": "Representing numbers in base-2 binary and base-16 hexadecimal and converting among them and decimal, as the basis for digital data encoding.",
       "default_order": 1,
       "centrality": 0.2476,
-      "description": "Representing numbers in base-2 binary and base-16 hexadecimal and converting among them and decimal, as the basis for digital data encoding.",
-      "name_zh": "二进制与十六进制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_integer_rep",
-      "topic": "topic_data_rep",
-      "name": "Two's Complement & Integer Rep",
+      "canonical_id": "pc_4b1450986e2eb588329ebce0b5865084",
       "kind": "concept",
+      "name": "Two's Complement & Integer Rep",
+      "name_zh": "补码与整数表示",
+      "topic": "topic_data_rep",
+      "description": "Encoding signed integers in two's complement, representing negatives by complementing and adding one, giving a single zero and simple hardware arithmetic.",
       "default_order": 2,
       "centrality": 0.2294,
-      "description": "Encoding signed integers in two's complement, representing negatives by complementing and adding one, giving a single zero and simple hardware arithmetic.",
-      "name_zh": "补码与整数表示",
       "visual": "diagram",
-      "visual_hint": "Diagram two's-complement encoding of signed integers."
+      "visual_hint": "Diagram two's-complement encoding of signed integers.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_floating_point",
-      "topic": "topic_data_rep_floating_point",
-      "name": "IEEE 754 Floating Point",
+      "canonical_id": "pc_ebeceaa256b9a24b42b1ef0234b977bd",
       "kind": "concept",
+      "name": "IEEE 754 Floating Point",
+      "name_zh": "IEEE 754浮点数",
+      "topic": "topic_data_rep_floating_point",
+      "description": "The IEEE 754 standard representing reals with sign, biased exponent, and mantissa fields, trading precision for range across many orders of magnitude.",
       "default_order": 1,
       "centrality": 0.0654,
-      "description": "The IEEE 754 standard representing reals with sign, biased exponent, and mantissa fields, trading precision for range across many orders of magnitude.",
-      "name_zh": "IEEE 754浮点数",
       "visual": "diagram",
-      "visual_hint": "Diagram the IEEE 754 sign, exponent, and mantissa fields."
+      "visual_hint": "Diagram the IEEE 754 sign, exponent, and mantissa fields.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_endianness",
-      "topic": "topic_data_rep_floating_point",
-      "name": "Endianness and Memory Layout",
+      "canonical_id": "pc_1e35bc0c89e774d41dea23bd1a3b6041",
       "kind": "concept",
+      "name": "Endianness and Memory Layout",
+      "name_zh": "字节序与内存布局",
+      "topic": "topic_data_rep_floating_point",
+      "description": "The byte-ordering convention, big-endian or little-endian, determining how multi-byte values are laid out across consecutive memory addresses.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The byte-ordering convention, big-endian or little-endian, determining how multi-byte values are laid out across consecutive memory addresses.",
-      "name_zh": "字节序与内存布局"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_c_basics",
-      "topic": "topic_c_prog",
-      "name": "C Basics & Control Flow",
+      "canonical_id": "pc_2d99ff09e3288517e6edad7e9bd0a573",
       "kind": "concept",
+      "name": "C Basics & Control Flow",
+      "name_zh": "C基础与控制流",
+      "topic": "topic_c_prog",
+      "description": "C language fundamentals including variables, types, operators, and control-flow constructs such as conditionals and loops for writing imperative programs.",
       "default_order": 1,
       "centrality": 0.0803,
-      "description": "C language fundamentals including variables, types, operators, and control-flow constructs such as conditionals and loops for writing imperative programs.",
-      "name_zh": "C基础与控制流"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_pointers_arrays",
-      "topic": "topic_c_prog",
-      "name": "Pointers and Arrays",
+      "canonical_id": "pc_3fb40595fac23fefdf60f7bb0df7020b",
       "kind": "concept",
+      "name": "Pointers and Arrays",
+      "name_zh": "指针与数组",
+      "topic": "topic_c_prog",
+      "description": "Pointers holding memory addresses and their close relationship to arrays, where array indexing is defined through pointer arithmetic.",
       "default_order": 2,
       "centrality": 0.0654,
-      "description": "Pointers holding memory addresses and their close relationship to arrays, where array indexing is defined through pointer arithmetic.",
-      "name_zh": "指针与数组"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_memory_management",
-      "topic": "topic_c_prog_memory_management",
-      "name": "Dynamic Memory Management",
+      "canonical_id": "pc_a2dea58123f44969ada092750810ceb2",
       "kind": "concept",
+      "name": "Dynamic Memory Management",
+      "name_zh": "动态内存管理",
+      "topic": "topic_c_prog_memory_management",
+      "description": "Manual heap management in C with malloc and free, requiring the programmer to allocate and release memory and avoid leaks and dangling pointers.",
       "default_order": 1,
       "centrality": 0.0353,
-      "description": "Manual heap management in C with malloc and free, requiring the programmer to allocate and release memory and avoid leaks and dangling pointers.",
-      "name_zh": "动态内存管理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_structs_unions",
-      "topic": "topic_c_prog_memory_management",
-      "name": "Structs, Unions, and Typedefs",
+      "canonical_id": "pc_869b2cbf19ad43646ec7096a09dfa8b0",
       "kind": "concept",
+      "name": "Structs, Unions, and Typedefs",
+      "name_zh": "结构体、联合体与typedef",
+      "topic": "topic_c_prog_memory_management",
+      "description": "Aggregating data with structs that group named fields, unions that overlay fields in shared storage, and typedefs that name types.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Aggregating data with structs that group named fields, unions that overlay fields in shared storage, and typedefs that name types.",
-      "name_zh": "结构体、联合体与typedef"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_riscv_basics",
-      "topic": "topic_riscv",
-      "name": "Registers & Basic Instructions",
+      "canonical_id": "pc_f873fd78ed13dccd85b7afcf7fe6d597",
       "kind": "concept",
+      "name": "Registers & Basic Instructions",
+      "name_zh": "寄存器与基本指令",
+      "topic": "topic_riscv",
+      "description": "The RISC-V register file and basic instructions for arithmetic, logic, and memory access in a load-store reduced instruction set architecture.",
       "default_order": 1,
       "centrality": 0.0931,
-      "description": "The RISC-V register file and basic instructions for arithmetic, logic, and memory access in a load-store reduced instruction set architecture.",
-      "name_zh": "寄存器与基本指令"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_riscv_control",
-      "topic": "topic_riscv",
-      "name": "Control Flow & Branches",
+      "canonical_id": "pc_e817f6453c7f0bc1a34ec8ec7f1f8050",
       "kind": "concept",
+      "name": "Control Flow & Branches",
+      "name_zh": "控制流与分支",
+      "topic": "topic_riscv",
+      "description": "RISC-V branch and jump instructions that implement conditionals and loops by comparing registers and altering the program counter.",
       "default_order": 2,
       "centrality": 0.0803,
-      "description": "RISC-V branch and jump instructions that implement conditionals and loops by comparing registers and altering the program counter.",
-      "name_zh": "控制流与分支"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_riscv_functions",
-      "topic": "topic_riscv",
-      "name": "Function Calling Convention",
+      "canonical_id": "pc_a8271e33087de3a5af286686e8cf0460",
       "kind": "concept",
+      "name": "Function Calling Convention",
+      "name_zh": "函数调用约定",
+      "topic": "topic_riscv",
+      "description": "The RISC-V calling convention governing argument passing, return values, and caller- and callee-saved registers, using the stack for nested calls.",
       "default_order": 3,
       "centrality": 0.0654,
-      "description": "The RISC-V calling convention governing argument passing, return values, and caller- and callee-saved registers, using the stack for nested calls.",
-      "name_zh": "函数调用约定"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_riscv_formats",
-      "topic": "topic_riscv_logic",
-      "name": "Instruction Formats",
+      "canonical_id": "pc_8a256fdfbca1061357be1ec13acb3477",
       "kind": "concept",
+      "name": "Instruction Formats",
+      "name_zh": "指令格式",
+      "topic": "topic_riscv_logic",
+      "description": "The fixed-width RISC-V instruction encoding formats specifying how opcodes, registers, and immediate values are packed into instruction bits.",
       "default_order": 1,
       "centrality": 0.0353,
-      "description": "The fixed-width RISC-V instruction encoding formats specifying how opcodes, registers, and immediate values are packed into instruction bits.",
-      "name_zh": "指令格式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_call_pipeline",
-      "topic": "topic_riscv_logic",
-      "name": "Compiler, Assembler, Linker, Loader",
+      "canonical_id": "pc_c12e636954d143b85752d5e75442827c",
       "kind": "concept",
+      "name": "Compiler, Assembler, Linker, Loader",
+      "name_zh": "编译器、汇编器、链接器、加载器",
+      "topic": "topic_riscv_logic",
+      "description": "The toolchain transforming source into a running program: compiler to assembly, assembler to object code, linker to executable, loader into memory.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The toolchain transforming source into a running program: compiler to assembly, assembler to object code, linker to executable, loader into memory.",
-      "name_zh": "编译器、汇编器、链接器、加载器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_boolean_algebra",
-      "topic": "topic_riscv_logic_boolean_algebra",
-      "name": "Boolean Algebra & Logic Gates",
+      "canonical_id": "pc_304bf5fc10cb02bb1470f636ea10e5c0",
       "kind": "concept",
+      "name": "Boolean Algebra & Logic Gates",
+      "name_zh": "布尔代数与逻辑门",
+      "topic": "topic_riscv_logic_boolean_algebra",
+      "description": "The algebra of binary values with AND, OR, and NOT operations, realised physically as logic gates that form digital circuits.",
       "default_order": 1,
       "centrality": 0.0919,
-      "description": "The algebra of binary values with AND, OR, and NOT operations, realised physically as logic gates that form digital circuits.",
-      "name_zh": "布尔代数与逻辑门",
       "visual": "diagram",
-      "visual_hint": "Logic-gate diagram of AND, OR, and NOT circuits."
+      "visual_hint": "Logic-gate diagram of AND, OR, and NOT circuits.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_combinational_logic",
-      "topic": "topic_riscv_logic_boolean_algebra",
-      "name": "Combinational Logic Blocks",
+      "canonical_id": "pc_bb0db3b562c1c8fd1b0f23bcbff763c3",
       "kind": "concept",
+      "name": "Combinational Logic Blocks",
+      "name_zh": "组合逻辑块",
+      "topic": "topic_riscv_logic_boolean_algebra",
+      "description": "Logic circuits whose outputs depend only on current inputs, built from gates to implement functions like adders, multiplexers, and decoders.",
       "default_order": 2,
       "centrality": 0.079,
-      "description": "Logic circuits whose outputs depend only on current inputs, built from gates to implement functions like adders, multiplexers, and decoders.",
-      "name_zh": "组合逻辑块"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_state_elements",
-      "topic": "topic_sds",
-      "name": "State Elements (Flip-Flops)",
+      "canonical_id": "pc_166c30beccb87aab816321b71b7acd37",
       "kind": "concept",
+      "name": "State Elements (Flip-Flops)",
+      "name_zh": "状态元件（触发器）",
+      "topic": "topic_sds",
+      "description": "Memory elements such as flip-flops and registers that store bits and update synchronously with the clock, holding circuit state between cycles.",
       "default_order": 1,
       "centrality": 0.0638,
-      "description": "Memory elements such as flip-flops and registers that store bits and update synchronously with the clock, holding circuit state between cycles.",
-      "name_zh": "状态元件（触发器）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_sequential_logic",
-      "topic": "topic_sds",
-      "name": "Sequential Logic & Timing",
+      "canonical_id": "pc_8357a668a5341bb2f6fcd289277280ce",
       "kind": "concept",
+      "name": "Sequential Logic & Timing",
+      "name_zh": "时序逻辑与时序",
+      "topic": "topic_sds",
+      "description": "Circuits whose outputs depend on input history through stored state, governed by clock timing constraints such as setup and hold times.",
       "default_order": 2,
       "centrality": 0.0459,
-      "description": "Circuits whose outputs depend on input history through stored state, governed by clock timing constraints such as setup and hold times.",
-      "name_zh": "时序逻辑与时序"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_fsm",
-      "topic": "topic_sds",
-      "name": "Finite State Machines",
+      "canonical_id": "pc_9c32ed1d835e326c9af9a0dff90f991f",
       "kind": "concept",
+      "name": "Finite State Machines",
+      "name_zh": "有限状态机",
+      "topic": "topic_sds",
+      "description": "Finite state machines modelling sequential behaviour as states and transitions, implemented with state registers and combinational next-state logic.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Finite state machines modelling sequential behaviour as states and transitions, implemented with state registers and combinational next-state logic.",
-      "name_zh": "有限状态机",
       "visual": "diagram",
-      "visual_hint": "State-transition diagram of a finite state machine."
+      "visual_hint": "State-transition diagram of a finite state machine.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_single_cycle",
-      "topic": "topic_cpu",
-      "name": "Single-Cycle Datapath",
+      "canonical_id": "pc_189412b91d87cc0e820bb2ec876a979c",
       "kind": "concept",
+      "name": "Single-Cycle Datapath",
+      "name_zh": "单周期数据通路",
+      "topic": "topic_cpu",
+      "description": "A datapath executing each instruction completely in one clock cycle, connecting register file, ALU, and memory through controlled multiplexers.",
       "default_order": 1,
       "centrality": 0.096,
-      "description": "A datapath executing each instruction completely in one clock cycle, connecting register file, ALU, and memory through controlled multiplexers.",
-      "name_zh": "单周期数据通路",
       "visual": "diagram",
-      "visual_hint": "Datapath diagram of a single-cycle processor."
+      "visual_hint": "Datapath diagram of a single-cycle processor.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_cpu_control",
-      "topic": "topic_cpu",
-      "name": "CPU Control Logic",
+      "canonical_id": "pc_266efc5cb7b959d9757c94af2040c3eb",
       "kind": "concept",
+      "name": "CPU Control Logic",
+      "name_zh": "CPU控制逻辑",
+      "topic": "topic_cpu",
+      "description": "The control unit generating signals from the instruction opcode to steer the datapath's multiplexers, ALU operations, and register and memory writes.",
       "default_order": 2,
       "centrality": 0.0519,
-      "description": "The control unit generating signals from the instruction opcode to steer the datapath's multiplexers, ALU operations, and register and memory writes.",
-      "name_zh": "CPU控制逻辑"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_pipelining",
-      "topic": "topic_cpu",
-      "name": "Pipelining Principles",
+      "canonical_id": "pc_97f69843c3d9b62a3ecc1529fc063cb1",
       "kind": "concept",
+      "name": "Pipelining Principles",
+      "name_zh": "流水线原理",
+      "topic": "topic_cpu",
+      "description": "Dividing instruction execution into stages so multiple instructions overlap, increasing throughput by ideally finishing one instruction each clock cycle.",
       "default_order": 3,
       "centrality": 0.0638,
-      "description": "Dividing instruction execution into stages so multiple instructions overlap, increasing throughput by ideally finishing one instruction each clock cycle.",
-      "name_zh": "流水线原理",
       "visual": "diagram",
-      "visual_hint": "Pipeline stage diagram of overlapping instructions over cycles."
+      "visual_hint": "Pipeline stage diagram of overlapping instructions over cycles.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_pipeline_hazards",
-      "topic": "topic_pipeline_cache",
-      "name": "Pipeline Hazards & Forwarding",
+      "canonical_id": "pc_a83b891c43ca1b7636adc077e56a0114",
       "kind": "concept",
+      "name": "Pipeline Hazards & Forwarding",
+      "name_zh": "流水线冒险与转发",
+      "topic": "topic_pipeline_cache",
+      "description": "Structural, data, and control hazards that disrupt pipelined execution, mitigated by forwarding, stalling, and careful instruction scheduling.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "Structural, data, and control hazards that disrupt pipelined execution, mitigated by forwarding, stalling, and careful instruction scheduling.",
-      "name_zh": "流水线冒险与转发",
       "visual": "diagram",
-      "visual_hint": "Diagram a data hazard and forwarding in the pipeline."
+      "visual_hint": "Diagram a data hazard and forwarding in the pipeline.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_branch_prediction",
-      "topic": "topic_pipeline_cache",
-      "name": "Branch Prediction",
+      "canonical_id": "pc_0442342bc61ace964192750c873dda28",
       "kind": "concept",
+      "name": "Branch Prediction",
+      "name_zh": "分支预测",
+      "topic": "topic_pipeline_cache",
+      "description": "Guessing the outcome and target of branches to keep the pipeline full, with mispredictions costing flushed instructions and recovery.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Guessing the outcome and target of branches to keep the pipeline full, with mispredictions costing flushed instructions and recovery.",
-      "name_zh": "分支预测"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_cache_basics",
-      "topic": "topic_pipeline_cache_cache_basics",
-      "name": "Cache Basics & Direct Mapped",
+      "canonical_id": "pc_661d6be57e8578886e16c589b97f5bb1",
       "kind": "concept",
+      "name": "Cache Basics & Direct Mapped",
+      "name_zh": "缓存基础与直接映射",
+      "topic": "topic_pipeline_cache_cache_basics",
+      "description": "Direct-mapped caches storing recently used blocks indexed by address bits, exploiting locality to reduce average memory access latency.",
       "default_order": 1,
       "centrality": 0.0973,
-      "description": "Direct-mapped caches storing recently used blocks indexed by address bits, exploiting locality to reduce average memory access latency.",
-      "name_zh": "缓存基础与直接映射",
       "visual": "diagram",
-      "visual_hint": "Diagram a direct-mapped cache indexing blocks by address bits."
+      "visual_hint": "Diagram a direct-mapped cache indexing blocks by address bits.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_associative_caches",
-      "topic": "topic_pipeline_cache_cache_basics",
-      "name": "Associative Caches",
+      "canonical_id": "pc_f0623e891ecb5dd25c33ac4dc8042880",
       "kind": "concept",
+      "name": "Associative Caches",
+      "name_zh": "关联缓存",
+      "topic": "topic_pipeline_cache_cache_basics",
+      "description": "Set-associative and fully associative caches giving blocks multiple placement options, reducing conflict misses at the cost of more comparison hardware.",
       "default_order": 2,
       "centrality": 0.0624,
-      "description": "Set-associative and fully associative caches giving blocks multiple placement options, reducing conflict misses at the cost of more comparison hardware.",
-      "name_zh": "关联缓存"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_cache_performance",
-      "topic": "topic_memory",
-      "name": "AMAT & Cache Misses",
+      "canonical_id": "pc_d1fb1f1419a0acdc8b8c971e0c349e6b",
       "kind": "concept",
+      "name": "AMAT & Cache Misses",
+      "name_zh": "AMAT与缓存未命中",
+      "topic": "topic_memory",
+      "description": "Analysing cache effectiveness via average memory access time and the classification of compulsory, conflict, and capacity misses.",
       "default_order": 1,
       "centrality": 0.0443,
-      "description": "Analysing cache effectiveness via average memory access time and the classification of compulsory, conflict, and capacity misses.",
-      "name_zh": "AMAT与缓存未命中"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_virtual_memory",
-      "topic": "topic_memory",
-      "name": "Virtual Memory & Page Tables",
+      "canonical_id": "pc_e75d4d022d48bbd0c11bd3c2324e16f1",
       "kind": "concept",
+      "name": "Virtual Memory & Page Tables",
+      "name_zh": "虚拟内存与页表",
+      "topic": "topic_memory",
+      "description": "Giving each process a large private address space mapped to physical memory through page tables, providing isolation and demand paging.",
       "default_order": 2,
       "centrality": 0.0459,
-      "description": "Giving each process a large private address space mapped to physical memory through page tables, providing isolation and demand paging.",
-      "name_zh": "虚拟内存与页表",
       "visual": "diagram",
-      "visual_hint": "Diagram virtual-to-physical address translation through page tables."
+      "visual_hint": "Diagram virtual-to-physical address translation through page tables.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_tlb",
-      "topic": "topic_memory",
-      "name": "Translation Lookaside Buffer (TLB)",
+      "canonical_id": "pc_7c3aac7db19c521b97172ca9c914c7f3",
       "kind": "concept",
+      "name": "Translation Lookaside Buffer (TLB)",
+      "name_zh": "地址转换后备缓冲器（TLB）",
+      "topic": "topic_memory",
+      "description": "A hardware cache of recent page-table translations that speeds virtual-to-physical address mapping by avoiding full page-table walks.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "A hardware cache of recent page-table translations that speeds virtual-to-physical address mapping by avoiding full page-table walks.",
-      "name_zh": "地址转换后备缓冲器（TLB）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_amdahls_law",
-      "topic": "topic_parallelism",
-      "name": "Amdahl's Law",
+      "canonical_id": "pc_45264c001d0bb2ed17e4c96eccb794b3",
       "kind": "concept",
+      "name": "Amdahl's Law",
+      "name_zh": "Amdahl定律",
+      "topic": "topic_parallelism",
+      "description": "A formula bounding overall speedup from optimising part of a program, showing that the unimproved fraction limits achievable performance gains.",
       "default_order": 1,
       "centrality": 0.0919,
-      "description": "A formula bounding overall speedup from optimising part of a program, showing that the unimproved fraction limits achievable performance gains.",
-      "name_zh": "Amdahl定律",
       "visual": "function",
-      "visual_hint": "Plot Amdahl's-law speedup against the parallel fraction."
+      "visual_hint": "Plot Amdahl's-law speedup against the parallel fraction.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_simd",
-      "topic": "topic_parallelism",
-      "name": "Data-Level Parallelism (SIMD)",
+      "canonical_id": "pc_a14ca381491156655a69d22f10b8f416",
       "kind": "concept",
+      "name": "Data-Level Parallelism (SIMD)",
+      "name_zh": "数据级并行(SIMD)",
+      "topic": "topic_parallelism",
+      "description": "Single-instruction, multiple-data parallelism applying one operation across vectors of data elements simultaneously for data-parallel workloads.",
       "default_order": 2,
       "centrality": 0.079,
-      "description": "Single-instruction, multiple-data parallelism applying one operation across vectors of data elements simultaneously for data-parallel workloads.",
-      "name_zh": "数据级并行(SIMD)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_multithreading",
-      "topic": "topic_parallelism",
-      "name": "Thread-Level Parallelism (OpenMP)",
+      "canonical_id": "pc_379b6311fbb0f5fcc46dc2d919ad266c",
       "kind": "concept",
+      "name": "Thread-Level Parallelism (OpenMP)",
+      "name_zh": "线程级并行(OpenMP)",
+      "topic": "topic_parallelism",
+      "description": "Thread-level parallelism running multiple threads across cores, often expressed with OpenMP directives to share work over shared memory.",
       "default_order": 3,
       "centrality": 0.0638,
-      "description": "Thread-level parallelism running multiple threads across cores, often expressed with OpenMP directives to share work over shared memory.",
-      "name_zh": "线程级并行(OpenMP)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_cache_coherence",
-      "topic": "topic_parallel_io",
-      "name": "Cache Coherence & False Sharing",
+      "canonical_id": "pc_befba3c6e71a0da8a33cde3cdc8d2395",
       "kind": "concept",
+      "name": "Cache Coherence & False Sharing",
+      "name_zh": "缓存一致性与伪共享",
+      "topic": "topic_parallel_io",
+      "description": "Keeping per-core cached copies of shared data consistent, and false sharing where unrelated variables on one line cause coherence traffic.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "Keeping per-core cached copies of shared data consistent, and false sharing where unrelated variables on one line cause coherence traffic.",
-      "name_zh": "缓存一致性与伪共享"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_warehouse_scale",
-      "topic": "topic_parallel_io",
-      "name": "Warehouse-Scale Computing",
+      "canonical_id": "pc_2859f9b32c6b07fdbd11f3231fae3ddd",
       "kind": "concept",
+      "name": "Warehouse-Scale Computing",
+      "name_zh": "仓库级计算",
+      "topic": "topic_parallel_io",
+      "description": "Datacenter-scale computing treating thousands of servers as one machine, emphasising parallelism, energy efficiency, and dependability at scale.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Datacenter-scale computing treating thousands of servers as one machine, emphasising parallelism, energy efficiency, and dependability at scale.",
-      "name_zh": "仓库级计算"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_memory_mapped_io",
-      "topic": "topic_parallel_io_memory_mapped_io",
-      "name": "Memory-Mapped I/O",
+      "canonical_id": "pc_0f44fe51c3b23fb5018a190e601aac97",
       "kind": "concept",
+      "name": "Memory-Mapped I/O",
+      "name_zh": "内存映射I/O",
+      "topic": "topic_parallel_io_memory_mapped_io",
+      "description": "Accessing device registers through ordinary load and store instructions by mapping them into the processor's physical address space.",
       "default_order": 1,
       "centrality": 0.0919,
-      "description": "Accessing device registers through ordinary load and store instructions by mapping them into the processor's physical address space.",
-      "name_zh": "内存映射I/O"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_polling_interrupts",
-      "topic": "topic_parallel_io_memory_mapped_io",
-      "name": "Polling and Interrupts",
+      "canonical_id": "pc_8993d243a4aa62d95f8a30e34eb55eee",
       "kind": "concept",
+      "name": "Polling and Interrupts",
+      "name_zh": "轮询与中断",
+      "topic": "topic_parallel_io_memory_mapped_io",
+      "description": "Two ways software learns of device events: polling repeatedly checks status, while interrupts let devices asynchronously signal the processor.",
       "default_order": 2,
       "centrality": 0.079,
-      "description": "Two ways software learns of device events: polling repeatedly checks status, while interrupts let devices asynchronously signal the processor.",
-      "name_zh": "轮询与中断"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_dma",
-      "topic": "topic_io_dep",
-      "name": "Direct Memory Access (DMA)",
+      "canonical_id": "pc_fe19ea13f12604dc764cc0996d1a52c0",
       "kind": "concept",
+      "name": "Direct Memory Access (DMA)",
+      "name_zh": "直接内存访问（DMA）",
+      "topic": "topic_io_dep",
+      "description": "Direct memory access letting devices transfer data to and from memory without processor involvement, freeing the CPU during bulk transfers.",
       "default_order": 1,
       "centrality": 0.0638,
-      "description": "Direct memory access letting devices transfer data to and from memory without processor involvement, freeing the CPU during bulk transfers.",
-      "name_zh": "直接内存访问（DMA）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_ecc_parity",
-      "topic": "topic_io_dep",
-      "name": "Error Correction Codes",
+      "canonical_id": "pc_a3dab7d153fe55d5f7ea76d09f4e10c1",
       "kind": "concept",
+      "name": "Error Correction Codes",
+      "name_zh": "纠错码",
+      "topic": "topic_io_dep",
+      "description": "Error-detecting and error-correcting codes adding redundant bits so hardware can detect, and sometimes correct, corrupted stored or transmitted data.",
       "default_order": 2,
       "centrality": 0.0459,
-      "description": "Error-detecting and error-correcting codes adding redundant bits so hardware can detect, and sometimes correct, corrupted stored or transmitted data.",
-      "name_zh": "纠错码"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "concept_raid",
-      "topic": "topic_io_dep",
-      "name": "RAID and Dependability",
+      "canonical_id": "pc_23afdabe5cb02436e7912bc0dcdb5dfd",
       "kind": "concept",
+      "name": "RAID and Dependability",
+      "name_zh": "RAID与可靠性",
+      "topic": "topic_io_dep",
+      "description": "Redundant arrays of independent disks combining drives for performance and fault tolerance through striping, mirroring, and parity schemes.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Redundant arrays of independent disks combining drives for performance and fault tolerance through striping, mirroring, and parity schemes.",
-      "name_zh": "RAID与可靠性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_binary_hex",
       "to": "concept_integer_rep",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_binary_hex",
       "to": "concept_floating_point",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_c_basics",
       "to": "concept_pointers_arrays",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_pointers_arrays",
       "to": "concept_memory_management",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "soft",
       "from": "concept_pointers_arrays",
       "to": "concept_structs_unions",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_riscv_basics",
       "to": "concept_riscv_control",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_riscv_control",
       "to": "concept_riscv_functions",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "soft",
       "from": "concept_riscv_functions",
       "to": "concept_call_pipeline",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_boolean_algebra",
       "to": "concept_combinational_logic",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_combinational_logic",
       "to": "concept_state_elements",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_state_elements",
       "to": "concept_sequential_logic",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_sequential_logic",
       "to": "concept_fsm",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_single_cycle",
       "to": "concept_pipelining",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_pipelining",
       "to": "concept_pipeline_hazards",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "soft",
       "from": "concept_pipeline_hazards",
       "to": "concept_branch_prediction",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_cache_basics",
       "to": "concept_associative_caches",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_associative_caches",
       "to": "concept_cache_performance",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_cache_basics",
       "to": "concept_virtual_memory",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_virtual_memory",
       "to": "concept_tlb",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "hard",
       "from": "concept_multithreading",
       "to": "concept_cache_coherence",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "soft",
       "from": "concept_polling_interrupts",
       "to": "concept_dma",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
-      "weight": "soft",
       "from": "concept_ecc_parity",
       "to": "concept_raid",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_integer_rep",
       "to": "concept_floating_point",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_floating_point",
       "to": "concept_endianness",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_memory_management",
       "to": "concept_structs_unions",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_riscv_functions",
       "to": "concept_riscv_formats",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_riscv_formats",
       "to": "concept_call_pipeline",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_single_cycle",
       "to": "concept_cpu_control",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_cpu_control",
       "to": "concept_pipelining",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_cache_performance",
       "to": "concept_virtual_memory",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_amdahls_law",
       "to": "concept_simd",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_simd",
       "to": "concept_multithreading",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_cache_coherence",
       "to": "concept_warehouse_scale",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_memory_mapped_io",
       "to": "concept_polling_interrupts",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_dma",
       "to": "concept_ecc_parity",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

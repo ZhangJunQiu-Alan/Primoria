@@ -1,249 +1,310 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "software_construction",
   "subject": "Software Construction",
-  "schema": {
-    "description": "Knowledge graph for Software Construction",
-    "node_fields": {
-      "id": "unique id",
-      "kind": "topic | concept",
-      "name": "node name",
-      "topic": "parent topic id or null",
-      "description": "concept description",
-      "default_order": "integer",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "hard or soft"
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_software_construction"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
     }
-  },
+  ],
   "nodes": [
     {
       "id": "t_mit6031_foundations_specs",
       "kind": "topic",
       "name": "Static Checking and Immutability",
+      "name_zh": "静态检查与不可变性",
       "topic": null,
       "default_order": 1,
-      "name_zh": "静态检查与不可变性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit6031_foundations_specs_mit6031_specs",
       "kind": "topic",
       "name": "Specifications, Testing Strategies, and Exceptions",
+      "name_zh": "规格、测试策略与异常",
       "topic": null,
       "default_order": 2,
-      "name_zh": "规格、测试策略与异常"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit6031_adt",
       "kind": "topic",
       "name": "ADT Concepts and Representation Independence",
+      "name_zh": "ADT 概念与表示独立性",
       "topic": null,
       "default_order": 3,
-      "name_zh": "ADT 概念与表示独立性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit6031_adt_mit6031_rep_invariant",
       "kind": "topic",
       "name": "Rep Invariants and Abstraction Functions",
+      "name_zh": "表示不变量与抽象函数",
       "topic": null,
       "default_order": 4,
-      "name_zh": "表示不变量与抽象函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit6031_oop",
       "kind": "topic",
       "name": "Object-Oriented Programming",
+      "name_zh": "面向对象编程",
       "topic": null,
       "default_order": 5,
-      "name_zh": "面向对象编程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit6031_concurrency",
       "kind": "topic",
       "name": "Concurrency Basics and Thread Safety",
+      "name_zh": "并发基础与线程安全",
       "topic": null,
       "default_order": 6,
-      "name_zh": "并发基础与线程安全"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit6031_concurrency_mit6031_locks",
       "kind": "topic",
       "name": "Locks and Synchronization and Message Passing",
+      "name_zh": "锁与同步与消息传递",
       "topic": null,
       "default_order": 7,
-      "name_zh": "锁与同步与消息传递"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_static_checking",
+      "canonical_id": "pc_2759ba3a33ab401ab0ad13b67d5675e0",
       "kind": "concept",
       "name": "Static Checking",
+      "name_zh": "静态检查",
       "topic": "t_mit6031_foundations_specs",
       "description": "Catching errors before run time through static type checking, contrasted with dynamic checking, to make bugs visible early and cheaply.",
       "default_order": 1,
       "centrality": 0.1973,
-      "name_zh": "静态检查"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_immutability",
+      "canonical_id": "pc_0b4208b3244a5ec30ea433d3b108309a",
       "kind": "concept",
       "name": "Immutability",
+      "name_zh": "不可变性",
       "topic": "t_mit6031_foundations_specs",
       "description": "Designing types whose values cannot change after construction, eliminating aliasing bugs and making code easier to reason about and share safely.",
       "default_order": 2,
       "centrality": 0.0804,
-      "name_zh": "不可变性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_specs",
+      "canonical_id": "pc_4260c496024a5938e749d20489cebd6c",
       "kind": "concept",
       "name": "Specifications",
+      "name_zh": "规格",
       "topic": "t_mit6031_foundations_specs_mit6031_specs",
       "description": "Contracts defining a method's behaviour through preconditions that clients must satisfy and postconditions the implementation guarantees in return.",
       "default_order": 1,
       "centrality": 0.1226,
-      "name_zh": "规格",
       "visual": "diagram",
-      "visual_hint": "Diagram preconditions and postconditions as a contract boundary."
+      "visual_hint": "Diagram preconditions and postconditions as a contract boundary.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_testing",
+      "canonical_id": "pc_66092b0475218dfe80a6b8c175b94940",
       "kind": "concept",
       "name": "Testing Strategies",
+      "name_zh": "测试策略",
       "topic": "t_mit6031_foundations_specs_mit6031_specs",
       "description": "Designing test suites systematically by partitioning the input space into equivalence classes and probing boundary values to expose defects.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "测试策略",
       "visual": "diagram",
-      "visual_hint": "Diagram partitioning the input space into equivalence classes."
+      "visual_hint": "Diagram partitioning the input space into equivalence classes.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_exceptions",
+      "canonical_id": "pc_46fdf9b38393a0e7c4b645226a8c694b",
       "kind": "concept",
       "name": "Exceptions",
+      "name_zh": "异常",
       "topic": "t_mit6031_foundations_specs_mit6031_specs",
       "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "异常"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_adt_basics",
+      "canonical_id": "pc_fd3f865754e9e43323043e883f9e90ae",
       "kind": "concept",
       "name": "ADT Concepts",
+      "name_zh": "ADT 概念",
       "topic": "t_mit6031_adt",
       "description": "Abstract data types defined by their operations—creators, producers, observers, and mutators—rather than by their internal representation.",
       "default_order": 1,
       "centrality": 0.1964,
-      "name_zh": "ADT 概念"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_rep_independence",
+      "canonical_id": "pc_d9c27be3ac89aee4e1f274cfd702193d",
       "kind": "concept",
       "name": "Representation Independence",
+      "name_zh": "表示独立性",
       "topic": "t_mit6031_adt",
       "description": "Designing an ADT so clients depend only on its abstract specification, allowing the internal representation to change without breaking them.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "表示独立性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_rep_invariant",
+      "canonical_id": "pc_5efebf288236b9b2adb20bbbc2b22ed6",
       "kind": "concept",
       "name": "Rep Invariants",
+      "name_zh": "表示不变量",
       "topic": "t_mit6031_adt_mit6031_rep_invariant",
       "description": "A condition every valid object of a type must satisfy, checked to ensure the internal representation stays consistent.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "表示不变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_abstraction_function",
+      "canonical_id": "pc_99fa7ee714289b80fa7b77ed860104e3",
       "kind": "concept",
       "name": "Abstraction Functions",
+      "name_zh": "抽象函数",
       "topic": "t_mit6031_adt_mit6031_rep_invariant",
       "description": "A mapping from an ADT's concrete representation to the abstract value it represents, defining the meaning of the implementation.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "抽象函数",
       "visual": "diagram",
-      "visual_hint": "Diagram the abstraction function mapping representation to abstract value."
+      "visual_hint": "Diagram the abstraction function mapping representation to abstract value.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_interfaces",
+      "canonical_id": "pc_6addb4cc343961e705a88631be8e28c4",
       "kind": "concept",
       "name": "Interfaces and Subtyping",
+      "name_zh": "接口与子类型",
       "topic": "t_mit6031_oop",
       "description": "Interfaces specifying behaviour that multiple implementations provide, enabling subtype polymorphism where subtypes are substitutable for supertypes.",
       "default_order": 1,
       "centrality": 0.0564,
-      "name_zh": "接口与子类型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_equality",
+      "canonical_id": "pc_f03f458ecf58d3e1b9492de020d3d06b",
       "kind": "concept",
       "name": "Equality",
+      "name_zh": "相等性",
       "topic": "t_mit6031_oop",
       "description": "Defining when two objects are equal, distinguishing observational equality of abstract values from reference identity, subject to consistency requirements.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "相等性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_recursive_data",
+      "canonical_id": "pc_71d6a44fbeb2487362cce11e2ae4eddc",
       "kind": "concept",
       "name": "Recursive Data Types",
+      "name_zh": "递归数据类型",
       "topic": "t_mit6031_oop",
       "description": "Recursive data types defined in terms of themselves, such as immutable lists or trees, processed by recursion over their cases.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "递归数据类型",
       "visual": "diagram",
-      "visual_hint": "Diagram a recursive data type such as an immutable list."
+      "visual_hint": "Diagram a recursive data type such as an immutable list.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_concurrency_intro",
+      "canonical_id": "pc_8028e6ea37e991128428d3c7e11c106e",
       "kind": "concept",
       "name": "Concurrency Basics",
+      "name_zh": "并发基础",
       "topic": "t_mit6031_concurrency",
       "description": "Concurrent execution via threads or processes, introducing interleaving, race conditions, and the central challenge of shared mutable state.",
       "default_order": 1,
       "centrality": 0.0817,
-      "name_zh": "并发基础"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_thread_safety",
+      "canonical_id": "pc_fd2933b36279e1e27022d995939d3b3b",
       "kind": "concept",
       "name": "Thread Safety",
+      "name_zh": "线程安全",
       "topic": "t_mit6031_concurrency",
       "description": "Strategies ensuring correct behaviour under concurrent access, including confinement, immutability, and synchronisation of shared data.",
       "default_order": 2,
       "centrality": 0.0669,
-      "name_zh": "线程安全"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_locks",
+      "canonical_id": "pc_0eb420e4b6c0b3c88591b214d93eed1b",
       "kind": "concept",
       "name": "Locks and Synchronization",
+      "name_zh": "锁与同步",
       "topic": "t_mit6031_concurrency_mit6031_locks",
       "description": "Coordinating threads with locks for mutual exclusion, and the risk of deadlock when threads acquire multiple locks in conflicting orders.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "锁与同步",
       "visual": "diagram",
-      "visual_hint": "State diagram of threads acquiring locks and a deadlock cycle."
+      "visual_hint": "State diagram of threads acquiring locks and a deadlock cycle.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit6031_message_passing",
+      "canonical_id": "pc_c4cf0a03da52f2cae08b155bbff71fc9",
       "kind": "concept",
       "name": "Message Passing",
+      "name_zh": "消息传递",
       "topic": "t_mit6031_concurrency_mit6031_locks",
       "description": "Concurrency where components communicate by sending messages through channels or queues instead of sharing mutable memory.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "消息传递",
       "visual": "diagram",
-      "visual_hint": "Diagram components communicating by messages over channels."
+      "visual_hint": "Diagram components communicating by messages over channels.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -251,97 +312,129 @@
       "from": "c_mit6031_static_checking",
       "to": "c_mit6031_immutability",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_static_checking",
       "to": "c_mit6031_specs",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_specs",
       "to": "c_mit6031_testing",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_specs",
       "to": "c_mit6031_exceptions",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_specs",
       "to": "c_mit6031_adt_basics",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_immutability",
       "to": "c_mit6031_adt_basics",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_adt_basics",
       "to": "c_mit6031_rep_independence",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_rep_independence",
       "to": "c_mit6031_rep_invariant",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_rep_invariant",
       "to": "c_mit6031_abstraction_function",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_adt_basics",
       "to": "c_mit6031_interfaces",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_interfaces",
       "to": "c_mit6031_equality",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_interfaces",
       "to": "c_mit6031_recursive_data",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_adt_basics",
       "to": "c_mit6031_concurrency_intro",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_concurrency_intro",
       "to": "c_mit6031_thread_safety",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_thread_safety",
       "to": "c_mit6031_locks",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit6031_thread_safety",
       "to": "c_mit6031_message_passing",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

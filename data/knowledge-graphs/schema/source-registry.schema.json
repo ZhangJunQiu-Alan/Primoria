@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://primoria.local/schemas/source-registry.schema.json",
+  "title": "Primoria KG Source Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "sources"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/source" },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "title",
+        "publisher",
+        "authority_tier",
+        "verification_status",
+        "jurisdiction",
+        "languages",
+        "resource_type",
+        "landing_page_url",
+        "document_url",
+        "document_version",
+        "issued_at",
+        "valid_from",
+        "valid_to",
+        "retrieved_at",
+        "sha256",
+        "license_expression",
+        "rights",
+        "storage_policy",
+        "notes_zh"
+      ],
+      "properties": {
+        "source_id": { "type": "string", "pattern": "^src_[a-z0-9_]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "publisher": { "type": "string", "minLength": 1 },
+        "authority_tier": { "enum": ["A", "B", "C", "D"] },
+        "verification_status": { "enum": ["verified", "unverified"] },
+        "jurisdiction": { "type": "string", "minLength": 1 },
+        "languages": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 2 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "resource_type": {
+          "enum": ["curriculum_standard", "course_material", "textbook", "reference", "dataset", "unverified_origin"]
+        },
+        "landing_page_url": { "type": ["string", "null"], "format": "uri" },
+        "document_url": { "type": ["string", "null"], "format": "uri" },
+        "document_version": { "type": "string", "minLength": 1 },
+        "issued_at": { "type": ["string", "null"], "format": "date" },
+        "valid_from": { "type": ["string", "null"], "format": "date" },
+        "valid_to": { "type": ["string", "null"], "format": "date" },
+        "retrieved_at": { "type": "string", "format": "date" },
+        "sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "license_expression": { "type": "string", "minLength": 1 },
+        "rights": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["metadata", "fulltext", "excerpts", "derivatives", "redistribution", "commercial_use"],
+          "properties": {
+            "metadata": { "type": "boolean" },
+            "fulltext": { "type": "boolean" },
+            "excerpts": { "type": "boolean" },
+            "derivatives": { "type": "boolean" },
+            "redistribution": { "type": "boolean" },
+            "commercial_use": { "type": "boolean" }
+          }
+        },
+        "storage_policy": { "enum": ["metadata_only", "licensed_fulltext"] },
+        "notes_zh": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

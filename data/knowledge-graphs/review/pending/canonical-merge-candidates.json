@@ -1,0 +1,1333 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-17",
+  "method": "跨图名称标准化与描述词集合相似度；只生成候选，不修改 canonical_id。",
+  "candidates": [
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_partial_fractions",
+        "canonical_id": "pc_c08be96bd005e301108d747134902aee",
+        "name": "Partial Fractions",
+        "name_zh": "部分分式",
+        "description": "Decomposing a rational function into a sum of simpler partial fractions, handling linear, repeated, and quadratic factors."
+      },
+      "right": {
+        "graph_id": "mit_calculus",
+        "node_id": "c_1801_partial_fractions",
+        "canonical_id": "pc_967418094ad1c551a65dd8a5f8f94bc6",
+        "name": "Partial Fractions",
+        "name_zh": "部分分式",
+        "description": "Partial-fraction decomposition rewriting a rational function as a sum of simpler fractions that can be integrated term by term."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.261
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_chain_rule",
+        "canonical_id": "pc_5f2b3d511ffa1447c2f7fda25d724789",
+        "name": "Chain Rule",
+        "name_zh": "链式法则",
+        "description": "The chain rule differentiating a composite function as the product of the derivatives of its outer and inner functions."
+      },
+      "right": {
+        "graph_id": "mit_calculus",
+        "node_id": "c_1801_chain_rule",
+        "canonical_id": "pc_f2929a7b922221305252e5232f6d71fb",
+        "name": "Chain Rule",
+        "name_zh": "链式法则",
+        "description": "The chain rule differentiating a composite function as the derivative of the outer function times the derivative of the inner function."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.571
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_implicit",
+        "canonical_id": "pc_291eccaad32d6e2b88654e4670202509",
+        "name": "Implicit Differentiation",
+        "name_zh": "隐函数微分",
+        "description": "Implicit differentiation finding the derivative of a relation not solved explicitly for y by differentiating both sides."
+      },
+      "right": {
+        "graph_id": "mit_calculus",
+        "node_id": "c_1801_implicit_diff",
+        "canonical_id": "pc_e3091eaa89639d2d2f726b85dafe7514",
+        "name": "Implicit Differentiation",
+        "name_zh": "隐函数微分",
+        "description": "Implicit differentiation finding derivatives of relations not solved for one variable by differentiating both sides and solving for the derivative."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.588
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_iteration",
+        "canonical_id": "pc_a5686136f2f67beb1cea540ee5200bc5",
+        "name": "Iterative Methods",
+        "name_zh": "迭代法",
+        "description": "Iterative methods finding successive approximations to a root using a rearranged iterative formula, and assessing convergence."
+      },
+      "right": {
+        "graph_id": "numerical_analysis",
+        "node_id": "c_mit18330_iterative_linear",
+        "canonical_id": "pc_5a75ee05f145d9e223726b6f0fc59be7",
+        "name": "Iterative Methods",
+        "name_zh": "迭代法",
+        "description": "Iterative solvers such as Jacobi and Gauss-Seidel that refine an approximate solution to a linear system, suited to large sparse matrices."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.037
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_newton_laws",
+        "canonical_id": "pc_b2063844cb1a96c55e14253c14719d9f",
+        "name": "Newton's Laws of Motion",
+        "name_zh": "牛顿运动定律",
+        "description": "Newton's laws of motion relating the resultant force acting on a body to its mass and resulting acceleration."
+      },
+      "right": {
+        "graph_id": "a_level_physics",
+        "node_id": "phy_newton_laws",
+        "canonical_id": "pc_4ab1f5ee000e0ffbdff106fdebd1bb17",
+        "name": "Newton's Laws of Motion",
+        "name_zh": "牛顿运动定律",
+        "description": "Newton's three laws of motion relating force, mass, and acceleration and describing action-reaction force pairs."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.389
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_conditional",
+        "canonical_id": "pc_cf8dbc5bcf596f0c4db74ea9886540a1",
+        "name": "Conditional Probability",
+        "name_zh": "条件概率",
+        "description": "Conditional probability of an event given another, and the use of tree diagrams with the multiplication rule."
+      },
+      "right": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "conditional_probability",
+        "canonical_id": "pc_41665cc8086f7dedb65c12adb4dc9ca6",
+        "name": "Conditional Probability",
+        "name_zh": "条件概率",
+        "description": "The probability of an event given that another has occurred, defined by normalising their joint probability by the conditioning event's probability."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.211
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_discrete_rv",
+        "canonical_id": "pc_bd3e94ad62025e9a58ab6e2016182924",
+        "name": "Discrete Random Variables",
+        "name_zh": "离散随机变量",
+        "description": "Discrete random variables with a probability distribution, and the calculation of their expectation and variance."
+      },
+      "right": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "discrete_random_variables",
+        "canonical_id": "pc_5820b8687540b56f80968bdb114b5afe",
+        "name": "Discrete Random Variables",
+        "name_zh": "离散随机变量",
+        "description": "Random variables taking values in a discrete set, described by a probability mass function assigning probabilities to each possible value."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.19
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_geometric_dist",
+        "canonical_id": "pc_1523f7f20f12daa7a7c313af9fcc7710",
+        "name": "Geometric Distribution",
+        "name_zh": "几何分布",
+        "description": "The geometric distribution modelling the number of independent trials up to and including the first success."
+      },
+      "right": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "geometric_distribution",
+        "canonical_id": "pc_6cfd2d4ead9cfe1bee0c6681f41206be",
+        "name": "Geometric Distribution",
+        "name_zh": "几何分布",
+        "description": "The geometric distribution modelling the number of independent Bernoulli trials until the first success, with its memoryless property."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.533
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_poisson",
+        "canonical_id": "pc_a3b1410477a36f1726cbbd9242140395",
+        "name": "Poisson Distribution",
+        "name_zh": "泊松分布",
+        "description": "The Poisson distribution modelling the number of random events occurring at a constant average rate in a fixed interval."
+      },
+      "right": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "poisson_distribution",
+        "canonical_id": "pc_d3e1d025e365c8dfa8abca60e870ca6b",
+        "name": "Poisson Distribution",
+        "name_zh": "泊松分布",
+        "description": "The Poisson distribution modelling counts of rare independent events in a fixed interval, the limit of the binomial for many trials."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.3
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_normal_dist",
+        "canonical_id": "pc_23858effd2dd68284bd0c6b645607386",
+        "name": "Normal Distribution",
+        "name_zh": "正态分布",
+        "description": "The normal distribution, a continuous bell-shaped distribution defined by its mean and variance, standardised using the z-score."
+      },
+      "right": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "normal_distribution",
+        "canonical_id": "pc_e5893aa094f52cda17b10c07964cf9cc",
+        "name": "Normal Distribution",
+        "name_zh": "正态分布",
+        "description": "The normal (Gaussian) distribution, a symmetric bell-shaped law parametrised by mean and variance, central to statistics and the central limit theorem."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.333
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "artificial_intelligence",
+        "node_id": "ai_mdp_def",
+        "canonical_id": "pc_c48ec93143c9775d7d8d148ea100b738",
+        "name": "Markov Decision Processes",
+        "name_zh": "马尔可夫决策过程",
+        "description": "Markov decision processes modelling sequential decisions under uncertainty with states, actions, stochastic transitions, rewards, and a discount factor."
+      },
+      "right": {
+        "graph_id": "machine_learning",
+        "node_id": "ml_mdp",
+        "canonical_id": "pc_a0b94d6e9524a91138fdc6a76b5479a1",
+        "name": "Markov Decision Processes",
+        "name_zh": "马尔可夫决策过程",
+        "description": "Markov decision processes formalising sequential decision-making under uncertainty with states, actions, transition probabilities, rewards, and a discount factor."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.579
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "artificial_intelligence",
+        "node_id": "ai_naive_bayes",
+        "canonical_id": "pc_35cd1ee318d941e16a204ccca1946f5c",
+        "name": "Naive Bayes",
+        "name_zh": "朴素贝叶斯",
+        "description": "A simple probabilistic classifier applying Bayes' rule under the assumption that features are conditionally independent given the class label."
+      },
+      "right": {
+        "graph_id": "machine_learning",
+        "node_id": "ml_naive_bayes",
+        "canonical_id": "pc_45c1a0e365841fb764b85b59457f3270",
+        "name": "Naive Bayes",
+        "name_zh": "朴素贝叶斯",
+        "description": "A generative classifier assuming features are conditionally independent given the class, enabling simple, scalable estimation popular for text classification."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.333
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "artificial_intelligence",
+        "node_id": "ai_perceptron",
+        "canonical_id": "pc_038b26adc374a25672478dc4e7095aef",
+        "name": "Perceptron",
+        "name_zh": "感知机",
+        "description": "A linear classifier that learns a separating hyperplane by updating weights on misclassified examples via the perceptron learning rule."
+      },
+      "right": {
+        "graph_id": "deep_learning",
+        "node_id": "dl_perceptron",
+        "canonical_id": "pc_4ac4d56b7c525132c7a7794442a6efb5",
+        "name": "Perceptron",
+        "name_zh": "感知机",
+        "description": "The perceptron, a single linear threshold unit computing a weighted sum passed through a step function, the historical building block of neural networks."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.065
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "artificial_intelligence",
+        "node_id": "ai_neural_nets",
+        "canonical_id": "pc_74e60418a60087564604cbc145090976",
+        "name": "Neural Networks",
+        "name_zh": "神经网络",
+        "description": "Multilayer neural networks composing linear transformations with nonlinear activations to learn complex, nonlinear decision functions from data."
+      },
+      "right": {
+        "graph_id": "machine_learning",
+        "node_id": "ml_neural_nets",
+        "canonical_id": "pc_b2ab97b39e262f28f15880f92ce9e173",
+        "name": "Neural Networks",
+        "name_zh": "神经网络",
+        "description": "Neural networks composing layers of weighted sums and nonlinear activations to learn flexible, nonlinear mappings from inputs to outputs."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.333
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_architecture",
+        "node_id": "concept_pipelining",
+        "canonical_id": "pc_97f69843c3d9b62a3ecc1529fc063cb1",
+        "name": "Pipelining Principles",
+        "name_zh": "流水线原理",
+        "description": "Dividing instruction execution into stages so multiple instructions overlap, increasing throughput by ideally finishing one instruction each clock cycle."
+      },
+      "right": {
+        "graph_id": "computer_systems",
+        "node_id": "c3_3",
+        "canonical_id": "pc_f5cd74edf2f8774a3009082b89fe88b7",
+        "name": "Pipelining Principles",
+        "name_zh": "流水线原理",
+        "description": "Overlapping the execution of multiple instructions across pipeline stages to increase instruction throughput, ideally completing one instruction per clock cycle."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.417
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_architecture",
+        "node_id": "concept_tlb",
+        "canonical_id": "pc_7c3aac7db19c521b97172ca9c914c7f3",
+        "name": "Translation Lookaside Buffer (TLB)",
+        "name_zh": "地址转换后备缓冲器（TLB）",
+        "description": "A hardware cache of recent page-table translations that speeds virtual-to-physical address mapping by avoiding full page-table walks."
+      },
+      "right": {
+        "graph_id": "computer_systems",
+        "node_id": "c8_3",
+        "canonical_id": "pc_ad68c66b5ea959eee0738d75ee26324d",
+        "name": "Translation Lookaside Buffer (TLB)",
+        "name_zh": "地址转换后备缓冲器（TLB）",
+        "description": "A small hardware cache of recent virtual-to-physical translations that accelerates address translation by avoiding repeated page-table walks."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.65
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_systems",
+        "node_id": "c8_4",
+        "canonical_id": "pc_402b5f3e7a405462d2dbc62cae584314",
+        "name": "Dynamic Memory Allocation",
+        "name_zh": "动态内存分配",
+        "description": "Managing heap memory at run time with allocators like malloc and free, balancing throughput, fragmentation, and memory utilisation."
+      },
+      "right": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_malloc",
+        "canonical_id": "pc_a84ae49584a745b90c9015a431c2be65",
+        "name": "Dynamic Memory Allocation",
+        "name_zh": "动态内存分配",
+        "description": "Dynamic memory allocation requesting heap memory at run time with malloc and releasing it with free, enabling data sized during execution."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.292
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_systems",
+        "node_id": "c10_1",
+        "canonical_id": "pc_dc84a27e32610ced0216df6b639bb740",
+        "name": "Client-Server Model",
+        "name_zh": "客户端-服务器模型",
+        "description": "A networking model where client processes request services and server processes provide them, communicating over a transport-layer connection."
+      },
+      "right": {
+        "graph_id": "web_applications",
+        "node_id": "web_client_server",
+        "canonical_id": "pc_bf23f1d17bb91d608dd0ca67b2ffddb7",
+        "name": "Client-Server Model",
+        "name_zh": "客户端-服务器模型",
+        "description": "The web's architecture where browser clients request resources and servers respond, dividing responsibilities between front-end presentation and back-end logic."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.067
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_systems",
+        "node_id": "c11_4",
+        "canonical_id": "pc_d3f8414aadf19541f98d0e657b1cea68",
+        "name": "Thread Safety",
+        "name_zh": "线程安全",
+        "description": "Properties making functions safe to call concurrently, including reentrancy and avoiding unsynchronised access to shared mutable state."
+      },
+      "right": {
+        "graph_id": "software_construction",
+        "node_id": "c_mit6031_thread_safety",
+        "canonical_id": "pc_fd2933b36279e1e27022d995939d3b3b",
+        "name": "Thread Safety",
+        "name_zh": "线程安全",
+        "description": "Strategies ensuring correct behaviour under concurrent access, including confinement, immutability, and synchronisation of shared data."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.125
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "deep_learning",
+        "node_id": "dl_backprop",
+        "canonical_id": "pc_4e11259278b69fb2d7b40dbb8177f88f",
+        "name": "Backpropagation",
+        "name_zh": "反向传播",
+        "description": "Backpropagation computing loss gradients with respect to every parameter by applying the chain rule in reverse through the computational graph."
+      },
+      "right": {
+        "graph_id": "machine_learning",
+        "node_id": "ml_backprop",
+        "canonical_id": "pc_f6522a5189adcc826fbc1eff7b44d185",
+        "name": "Backpropagation",
+        "name_zh": "反向传播",
+        "description": "Backpropagation efficiently computing gradients of the loss with respect to all weights by applying the chain rule backward through the network."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.5
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "trees",
+        "canonical_id": "pc_66d2f94ec12953d388c8e69a7dc2c689",
+        "name": "Trees",
+        "name_zh": "树",
+        "description": "Connected acyclic graphs, equivalently graphs with a unique path between any two vertices, having exactly one fewer edge than vertices."
+      },
+      "right": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_trees",
+        "canonical_id": "pc_c991091347a5056a142b5d38cb07fe1e",
+        "name": "Trees",
+        "name_zh": "树",
+        "description": "Hierarchical data structures of nodes linked from a root, such as binary search trees, enabling efficient ordered storage and lookup."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "polynomial_interpolation",
+        "canonical_id": "pc_256b19aeee3d4707363b64510c81960d",
+        "name": "Polynomial Interpolation",
+        "name_zh": "多项式插值",
+        "description": "The fact that d+1 points uniquely determine a degree-d polynomial, recovered by Lagrange interpolation over a field."
+      },
+      "right": {
+        "graph_id": "numerical_analysis",
+        "node_id": "c_mit18330_polynomial_interp",
+        "canonical_id": "pc_4034145337bdaae9379481a7abc44369",
+        "name": "Polynomial Interpolation",
+        "name_zh": "多项式插值",
+        "description": "Constructing a polynomial passing through given data points, expressed in Lagrange or Newton form, to approximate functions between samples."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.115
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_recursion",
+        "canonical_id": "pc_ffbd24b1208266d5151223c8fcf43282",
+        "name": "Recursion",
+        "name_zh": "递归",
+        "description": "A technique where a function solves a problem by calling itself on smaller subproblems, combining base and recursive cases to terminate."
+      },
+      "right": {
+        "graph_id": "sicp_cs61a",
+        "node_id": "recursion",
+        "canonical_id": "pc_3d5dc10768df0b601d8ef58a3971fbb4",
+        "name": "Recursion",
+        "name_zh": "递归",
+        "description": "A technique where a function calls itself on smaller subproblems, combining base cases and recursive cases so the computation terminates correctly."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.524
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_linked_lists",
+        "canonical_id": "pc_b9e1b092531d5a8cabd6adc046b49059",
+        "name": "Linked Lists",
+        "name_zh": "链表",
+        "description": "A dynamic data structure of nodes each holding data and a pointer to the next, allowing efficient insertion and deletion without contiguous memory."
+      },
+      "right": {
+        "graph_id": "sicp_cs61a",
+        "node_id": "linked_lists",
+        "canonical_id": "pc_a5524799d8afaf0212874c01094d6f65",
+        "name": "Linked Lists",
+        "name_zh": "链表",
+        "description": "A recursive structure of nodes each holding a value and a reference to the next, supporting sequential access and structural sharing."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.217
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_exceptions",
+        "canonical_id": "pc_d81d4c1556aa0164bed1ed9dc3b7d6f1",
+        "name": "Exceptions",
+        "name_zh": "异常",
+        "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic."
+      },
+      "right": {
+        "graph_id": "sicp_cs61a",
+        "node_id": "exceptions",
+        "canonical_id": "pc_15115642e6932bf3ca41a482937692ad",
+        "name": "Exceptions",
+        "name_zh": "异常",
+        "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.207
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_exceptions",
+        "canonical_id": "pc_d81d4c1556aa0164bed1ed9dc3b7d6f1",
+        "name": "Exceptions",
+        "name_zh": "异常",
+        "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic."
+      },
+      "right": {
+        "graph_id": "software_construction",
+        "node_id": "c_mit6031_exceptions",
+        "canonical_id": "pc_46fdf9b38393a0e7c4b645226a8c694b",
+        "name": "Exceptions",
+        "name_zh": "异常",
+        "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.107
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_html",
+        "canonical_id": "pc_f5321e408c25b62f8f2ff4a412d644a5",
+        "name": "HTML",
+        "name_zh": "HTML",
+        "description": "HyperText Markup Language defining the structure and content of web pages through nested, semantic tags rendered by browsers."
+      },
+      "right": {
+        "graph_id": "web_applications",
+        "node_id": "web_html",
+        "canonical_id": "pc_3ca716076188568a6ec860858e52b9e5",
+        "name": "HTML",
+        "name_zh": "HTML",
+        "description": "HyperText Markup Language structuring web page content as a tree of nested elements with semantic tags that browsers parse and render."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.391
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_css",
+        "canonical_id": "pc_b0a282c9627b592fb3dc02a81fb4de95",
+        "name": "CSS",
+        "name_zh": "CSS",
+        "description": "Cascading Style Sheets controlling the visual presentation of HTML, including layout, colours, fonts, and responsive design via rules."
+      },
+      "right": {
+        "graph_id": "web_applications",
+        "node_id": "web_css",
+        "canonical_id": "pc_ed2825b00d85ac8aa84bf96e4f3883c3",
+        "name": "CSS",
+        "name_zh": "CSS",
+        "description": "Cascading Style Sheets describing the presentation of HTML, controlling layout, colour, and typography through selectors, the box model, and cascading rules."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.364
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_js",
+        "canonical_id": "pc_59b5064f2521bf1b820e003b03084bbb",
+        "name": "JavaScript",
+        "name_zh": "JavaScript",
+        "description": "JavaScript, the browser's programming language adding interactivity and dynamic behaviour to web pages through an event-driven model."
+      },
+      "right": {
+        "graph_id": "web_applications",
+        "node_id": "web_javascript",
+        "canonical_id": "pc_7832e0602308da46c87fd49e91f9ed8e",
+        "name": "JavaScript",
+        "name_zh": "JavaScript",
+        "description": "The browser's scripting language adding interactivity to pages, manipulating content and responding to events with an event-driven, single-threaded model."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.381
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_dom",
+        "canonical_id": "pc_8ee6058763ed99be5ed1743f86fbb627",
+        "name": "DOM Manipulation",
+        "name_zh": "DOM 操作",
+        "description": "The Document Object Model, a tree representation of a web page that JavaScript can read and modify to update content dynamically."
+      },
+      "right": {
+        "graph_id": "web_applications",
+        "node_id": "web_dom",
+        "canonical_id": "pc_b93c0c7239cd774426d888d252796a73",
+        "name": "DOM Manipulation",
+        "name_zh": "DOM 操作",
+        "description": "The Document Object Model representing a page as a live tree of objects that scripts traverse and mutate to update content dynamically."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.409
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_http",
+        "canonical_id": "pc_87fc4cc9f262094f52a3a6de85339208",
+        "name": "HTTP Protocol",
+        "name_zh": "HTTP 协议",
+        "description": "The HyperText Transfer Protocol governing request-response communication between web clients and servers using methods and status codes."
+      },
+      "right": {
+        "graph_id": "web_applications",
+        "node_id": "web_http",
+        "canonical_id": "pc_ea66b2ba94e6834dee11a1bc83ddcb6b",
+        "name": "HTTP Protocol",
+        "name_zh": "HTTP 协议",
+        "description": "The stateless application-layer protocol underlying the web, where clients issue requests with methods and headers and servers reply with status codes and bodies."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.28
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "linear_algebra",
+        "node_id": "c_mit1806_lu_decomp",
+        "canonical_id": "pc_d4cb5f921745c636b7472b931132f611",
+        "name": "LU Factorization",
+        "name_zh": "LU 分解",
+        "description": "Factoring a matrix into lower triangular (L) and upper triangular (U) components."
+      },
+      "right": {
+        "graph_id": "numerical_analysis",
+        "node_id": "c_mit18330_lu",
+        "canonical_id": "pc_365b937d8328d40e691e22d713152492",
+        "name": "LU Factorization",
+        "name_zh": "LU 分解",
+        "description": "Factoring a matrix into lower and upper triangular factors via Gaussian elimination, enabling efficient repeated solution of linear systems."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.353
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "machine_learning",
+        "node_id": "ml_newton_method",
+        "canonical_id": "pc_46ef33ef787a8de0a55c2125d6918ec6",
+        "name": "Newton's Method",
+        "name_zh": "牛顿法",
+        "description": "A second-order optimisation method using the Hessian to take curvature-aware steps, converging in few iterations for logistic regression."
+      },
+      "right": {
+        "graph_id": "numerical_analysis",
+        "node_id": "c_mit18330_newton",
+        "canonical_id": "pc_ff4e9538f80554892ba2e2b3c1047a99",
+        "name": "Newton's Method",
+        "name_zh": "牛顿法",
+        "description": "An iterative root-finding method using the function and its derivative, converging quadratically near simple roots from a good initial guess."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.103
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "python_fundamentals",
+        "node_id": "pyf_list_comprehensions",
+        "canonical_id": "pc_53b74d887875e65f1b101a6ec4c64b5c",
+        "name": "List Comprehensions",
+        "name_zh": "列表推导式",
+        "description": "List comprehensions construct a new list by applying an expression to each value from an iterable in a compact form equivalent to a simple accumulation loop."
+      },
+      "right": {
+        "graph_id": "sicp_cs61a",
+        "node_id": "list_comp",
+        "canonical_id": "pc_a533b9e69b9b341de441de120c5dd7c7",
+        "name": "List Comprehensions",
+        "name_zh": "列表推导式",
+        "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.2
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "sicp_cs61a",
+        "node_id": "exceptions",
+        "canonical_id": "pc_15115642e6932bf3ca41a482937692ad",
+        "name": "Exceptions",
+        "name_zh": "异常",
+        "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler."
+      },
+      "right": {
+        "graph_id": "software_construction",
+        "node_id": "c_mit6031_exceptions",
+        "canonical_id": "pc_46fdf9b38393a0e7c4b645226a8c694b",
+        "name": "Exceptions",
+        "name_zh": "异常",
+        "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.111
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_substitution",
+        "canonical_id": "pc_068c8dc8d8c675d3d5ce7ccecd096ffc",
+        "name": "Integration by Substitution",
+        "name_zh": "换元积分",
+        "description": "Integration by substitution reversing the chain rule by changing the variable to simplify the integrand."
+      },
+      "right": {
+        "graph_id": "mit_calculus",
+        "node_id": "c_1801_substitution",
+        "canonical_id": "pc_bb82fb2640cd5a19bd61799ddb487052",
+        "name": "Integration by Substitution",
+        "name_zh": "换元积分法",
+        "description": "Integration by substitution reversing the chain rule by changing variables to transform an integral into a simpler, recognisable form."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": false,
+        "name_jaccard": 1,
+        "description_jaccard": 0.412
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_by_parts",
+        "canonical_id": "pc_109312f1b6fc1335fa82c6f6af1f684c",
+        "name": "Integration by Parts",
+        "name_zh": "分部积分",
+        "description": "Integration by parts reversing the product rule to integrate the product of two functions."
+      },
+      "right": {
+        "graph_id": "mit_calculus",
+        "node_id": "c_1801_parts",
+        "canonical_id": "pc_97090158cf7a7858b5ee50409af026f0",
+        "name": "Integration by Parts",
+        "name_zh": "分部积分法",
+        "description": "Integration by parts reversing the product rule to integrate products of functions, trading one integral for an often simpler one."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": false,
+        "name_jaccard": 1,
+        "description_jaccard": 0.533
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "artificial_intelligence",
+        "node_id": "ai_qlearning",
+        "canonical_id": "pc_0002db43c693eeb840c94674038a8dfb",
+        "name": "Q-Learning",
+        "name_zh": "Q学习",
+        "description": "A model-free, off-policy reinforcement-learning algorithm that learns optimal action values directly from experience, independent of the policy followed."
+      },
+      "right": {
+        "graph_id": "machine_learning",
+        "node_id": "ml_q_learning",
+        "canonical_id": "pc_68634bdda9516ed34e11dde61c7313ec",
+        "name": "Q-Learning",
+        "name_zh": "Q-学习",
+        "description": "Q-learning, a model-free, off-policy algorithm learning optimal action-value estimates from sampled transitions without knowing the environment's dynamics."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": false,
+        "name_jaccard": 1,
+        "description_jaccard": 0.36
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "artificial_intelligence",
+        "node_id": "ai_bayes_rule",
+        "canonical_id": "pc_8da482016bf0b39c87a24d36add87c8f",
+        "name": "Bayes Rule",
+        "name_zh": "贝叶斯规则",
+        "description": "Bayes' rule inverting conditional probabilities to update beliefs about hypotheses given observed evidence, combining prior probabilities with likelihoods."
+      },
+      "right": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "bayes_rule",
+        "canonical_id": "pc_0d586d859f7281e0164ef0443e297633",
+        "name": "Bayes' Rule",
+        "name_zh": "贝叶斯法则",
+        "description": "Bayes' rule inverting conditional probabilities to update the probability of a hypothesis given evidence, combining priors and likelihoods."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": false,
+        "name_jaccard": 1,
+        "description_jaccard": 0.556
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_architecture",
+        "node_id": "concept_pipeline_hazards",
+        "canonical_id": "pc_a83b891c43ca1b7636adc077e56a0114",
+        "name": "Pipeline Hazards & Forwarding",
+        "name_zh": "流水线冒险与转发",
+        "description": "Structural, data, and control hazards that disrupt pipelined execution, mitigated by forwarding, stalling, and careful instruction scheduling."
+      },
+      "right": {
+        "graph_id": "computer_systems",
+        "node_id": "c3_4",
+        "canonical_id": "pc_22a8f2ff69723129d2fafb6fb09b9069",
+        "name": "Pipeline Hazards and Forwarding",
+        "name_zh": "流水线冒险与转发",
+        "description": "Data, control, and structural hazards that stall pipelines, and forwarding techniques that resolve data dependencies without waiting for write-back."
+      },
+      "signals": {
+        "exact_english_name": false,
+        "exact_chinese_name": true,
+        "name_jaccard": 1,
+        "description_jaccard": 0.25
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_systems",
+        "node_id": "c1_4",
+        "canonical_id": "pc_8918cca1ec876db0fee0e831889860ae",
+        "name": "Floating Point Representation",
+        "name_zh": "浮点数表示",
+        "description": "The IEEE 754 standard encoding real numbers as sign, biased exponent, and fraction fields, supporting normalised, denormalised, infinity, and NaN values."
+      },
+      "right": {
+        "graph_id": "numerical_analysis",
+        "node_id": "c_mit18330_floating_point",
+        "canonical_id": "pc_004e3ffa7a8d3ee909a189f585e86e27",
+        "name": "Floating Point Representation",
+        "name_zh": "浮点表示",
+        "description": "Finite-precision IEEE 754 representation of reals, introducing machine epsilon and rounding error that limit the accuracy of numerical computation."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": false,
+        "name_jaccard": 1,
+        "description_jaccard": 0.063
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_oop",
+        "canonical_id": "pc_1b4e5a90172024de46045002ae8c80cf",
+        "name": "Object-Oriented Programming",
+        "name_zh": "OOP",
+        "description": "Object-oriented programming in Python organising code into classes that bundle data and methods, supporting encapsulation, inheritance, and reuse."
+      },
+      "right": {
+        "graph_id": "sicp_cs61a",
+        "node_id": "oop",
+        "canonical_id": "pc_686b508d38906d53f40416fd520fe62b",
+        "name": "Object-Oriented Programming",
+        "name_zh": "面向对象编程",
+        "description": "A paradigm organising programs around objects that bundle state and behaviour, defined by classes with attributes and methods."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": false,
+        "name_jaccard": 1,
+        "description_jaccard": 0.2
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_relational_db",
+        "canonical_id": "pc_da5b2a9ed513849fe40cac6e84f54b58",
+        "name": "Relational Databases",
+        "name_zh": "关系数据库",
+        "description": "Databases storing data in related tables of rows and columns, with keys linking tables, managed through a relational database system."
+      },
+      "right": {
+        "graph_id": "web_applications",
+        "node_id": "web_relational",
+        "canonical_id": "pc_219618e56bb81367b92a389c7f283d22",
+        "name": "Relational Databases",
+        "name_zh": "关系型数据库",
+        "description": "Databases organising data into tables of rows and columns, with primary and foreign keys expressing relationships, queried using SQL."
+      },
+      "signals": {
+        "exact_english_name": true,
+        "exact_chinese_name": false,
+        "name_jaccard": 1,
+        "description_jaccard": 0.261
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_architecture",
+        "node_id": "concept_ecc_parity",
+        "canonical_id": "pc_a3dab7d153fe55d5f7ea76d09f4e10c1",
+        "name": "Error Correction Codes",
+        "name_zh": "纠错码",
+        "description": "Error-detecting and error-correcting codes adding redundant bits so hardware can detect, and sometimes correct, corrupted stored or transmitted data."
+      },
+      "right": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "error_correcting_codes",
+        "canonical_id": "pc_a15a8a6a41428eb1b5a7fcf1bdcdd9e5",
+        "name": "Error Correcting Codes",
+        "name_zh": "纠错码",
+        "description": "Polynomial-based codes such as Reed-Solomon adding redundancy so messages can be recovered despite a bounded number of errors or erasures."
+      },
+      "signals": {
+        "exact_english_name": false,
+        "exact_chinese_name": true,
+        "name_jaccard": 0.5,
+        "description_jaccard": 0.152
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "deep_learning",
+        "node_id": "dl_regularization",
+        "canonical_id": "pc_18fbf1e867f1b86c93be3fab0af23e9d",
+        "name": "Regularization",
+        "name_zh": "正则化",
+        "description": "Regularisation techniques like weight decay and early stopping that constrain model complexity to reduce overfitting and improve generalisation."
+      },
+      "right": {
+        "graph_id": "machine_learning",
+        "node_id": "ml_regularization",
+        "canonical_id": "pc_202c9e63b8b11b6d699061e9dd8db8e7",
+        "name": "Regularization (L1/L2)",
+        "name_zh": "正则化",
+        "description": "Adding an L1 or L2 penalty on parameters to the cost, discouraging large weights to reduce overfitting and, for L1, inducing sparse solutions."
+      },
+      "signals": {
+        "exact_english_name": false,
+        "exact_chinese_name": true,
+        "name_jaccard": 0.333,
+        "description_jaccard": 0.069
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_rates",
+        "canonical_id": "pc_5ada2e4818384405fb8ea25e390ece93",
+        "name": "Connected Rates of Change",
+        "name_zh": "相关变化率",
+        "description": "Connected rates of change linking the time derivatives of related quantities through the chain rule."
+      },
+      "right": {
+        "graph_id": "mit_calculus",
+        "node_id": "c_1801_related_rates",
+        "canonical_id": "pc_053ba609b2871db8fb3fa5f6405f89f0",
+        "name": "Related Rates",
+        "name_zh": "相关变化率",
+        "description": "Related-rates problems linking the time derivatives of related quantities through an equation, solving for one unknown rate given the others."
+      },
+      "signals": {
+        "exact_english_name": false,
+        "exact_chinese_name": true,
+        "name_jaccard": 0.25,
+        "description_jaccard": 0.368
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_systems",
+        "node_id": "c7_1",
+        "canonical_id": "pc_8bfe2667c4fbdecc2589f9b5c104999a",
+        "name": "Exceptions (Traps, Interrupts, Faults)",
+        "name_zh": "异常",
+        "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel."
+      },
+      "right": {
+        "graph_id": "introduction_to_computer_science",
+        "node_id": "c_exceptions",
+        "canonical_id": "pc_d81d4c1556aa0164bed1ed9dc3b7d6f1",
+        "name": "Exceptions",
+        "name_zh": "异常",
+        "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic."
+      },
+      "signals": {
+        "exact_english_name": false,
+        "exact_chinese_name": true,
+        "name_jaccard": 0.25,
+        "description_jaccard": 0.03
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_systems",
+        "node_id": "c7_1",
+        "canonical_id": "pc_8bfe2667c4fbdecc2589f9b5c104999a",
+        "name": "Exceptions (Traps, Interrupts, Faults)",
+        "name_zh": "异常",
+        "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel."
+      },
+      "right": {
+        "graph_id": "sicp_cs61a",
+        "node_id": "exceptions",
+        "canonical_id": "pc_15115642e6932bf3ca41a482937692ad",
+        "name": "Exceptions",
+        "name_zh": "异常",
+        "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler."
+      },
+      "signals": {
+        "exact_english_name": false,
+        "exact_chinese_name": true,
+        "name_jaccard": 0.25,
+        "description_jaccard": 0.138
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "computer_systems",
+        "node_id": "c7_1",
+        "canonical_id": "pc_8bfe2667c4fbdecc2589f9b5c104999a",
+        "name": "Exceptions (Traps, Interrupts, Faults)",
+        "name_zh": "异常",
+        "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel."
+      },
+      "right": {
+        "graph_id": "software_construction",
+        "node_id": "c_mit6031_exceptions",
+        "canonical_id": "pc_46fdf9b38393a0e7c4b645226a8c694b",
+        "name": "Exceptions",
+        "name_zh": "异常",
+        "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs."
+      },
+      "signals": {
+        "exact_english_name": false,
+        "exact_chinese_name": true,
+        "name_jaccard": 0.25,
+        "description_jaccard": 0.036
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_projectiles",
+        "canonical_id": "pc_6127d5b7a479fb2563498a8b785982e6",
+        "name": "Projectiles",
+        "name_zh": "抛体运动",
+        "description": "Projectile motion analysed by resolving into independent horizontal and vertical components of motion under gravity."
+      },
+      "right": {
+        "graph_id": "a_level_physics",
+        "node_id": "phy_projectile",
+        "canonical_id": "pc_d70290c162ab51f34692a09802b52453",
+        "name": "Projectile Motion",
+        "name_zh": "抛体运动",
+        "description": "Projectile motion analysed by treating the horizontal and vertical components independently under constant gravitational acceleration."
+      },
+      "signals": {
+        "exact_english_name": false,
+        "exact_chinese_name": true,
+        "name_jaccard": 0,
+        "description_jaccard": 0.471
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    },
+    {
+      "left": {
+        "graph_id": "a_level_mathematics",
+        "node_id": "mat_perm_comb",
+        "canonical_id": "pc_72b8e1a7b680bd575ff6d93a1e2c592b",
+        "name": "Permutations and Combinations",
+        "name_zh": "排列组合",
+        "description": "Permutations and combinations counting ordered arrangements and unordered selections of objects."
+      },
+      "right": {
+        "graph_id": "discrete_math_and_probability",
+        "node_id": "combinations_permutations",
+        "canonical_id": "pc_4fc75b6c1b1cfa0437d46dbc1908097c",
+        "name": "Combinations and Permutations",
+        "name_zh": "组合与排列",
+        "description": "Counting ordered selections (permutations) and unordered selections (combinations) of items from a set, with their factorial formulas."
+      },
+      "signals": {
+        "exact_english_name": false,
+        "exact_chinese_name": false,
+        "name_jaccard": 1,
+        "description_jaccard": 0.429
+      },
+      "decision": "needs_review",
+      "note_zh": "仅为重复候选；定义、适用范围和课程深度未经人工核对，不得自动合并。"
+    }
+  ]
+}

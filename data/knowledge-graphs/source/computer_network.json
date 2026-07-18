@@ -1,324 +1,403 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "computer_network",
   "subject": "Computer Networking",
-  "schema": {
-    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
-    "node_fields": {
-      "id": "globally unique id",
-      "kind": "topic | concept",
-      "name": "concept name",
-      "topic": "owning topic id; null for topic nodes",
-      "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "from must be learned before to; strength=hard|soft"
-    },
-    "concept_node_definition": "concept = smallest independently quiz-testable skill"
-  },
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_computer_network"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "net_arch",
       "kind": "topic",
       "name": "Network Layering and OSI Model",
+      "name_zh": "网络分层与OSI模型",
       "topic": null,
       "default_order": 1,
-      "name_zh": "网络分层与OSI模型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_arch_net_tcpip",
       "kind": "topic",
       "name": "TCP/IP Model and Encapsulation",
+      "name_zh": "TCP/IP模型与封装",
       "topic": null,
       "default_order": 2,
-      "name_zh": "TCP/IP模型与封装"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_link",
       "kind": "topic",
       "name": "Link Layer Services and MAC Addressing",
+      "name_zh": "链路层服务与MAC地址",
       "topic": null,
       "default_order": 3,
-      "name_zh": "链路层服务与MAC地址"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_link_net_ethernet",
       "kind": "topic",
       "name": "Ethernet and Switching",
+      "name_zh": "以太网与交换",
       "topic": null,
       "default_order": 4,
-      "name_zh": "以太网与交换"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_network",
       "kind": "topic",
       "name": "IP Addressing and IPv4 and IPv6",
+      "name_zh": "IP寻址与IPv4与IPv6",
       "topic": null,
       "default_order": 5,
-      "name_zh": "IP寻址与IPv4与IPv6"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_network_net_forwarding",
       "kind": "topic",
       "name": "Forwarding and Routers and Routing Algorithms",
+      "name_zh": "转发与路由器与路由算法",
       "topic": null,
       "default_order": 6,
-      "name_zh": "转发与路由器与路由算法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_transport_part1",
       "kind": "topic",
       "name": "Transport Layer: UDP and TCP",
+      "name_zh": "传输层：UDP 与 TCP",
       "topic": null,
       "default_order": 7,
-      "name_zh": "传输层：UDP 与 TCP"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_transport_part2",
       "kind": "topic",
       "name": "Transport Layer: Reliability and Control",
+      "name_zh": "传输层：可靠传输与拥塞控制",
       "topic": null,
       "default_order": 8,
-      "name_zh": "传输层：可靠传输与拥塞控制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_application",
       "kind": "topic",
       "name": "Application Layer",
+      "name_zh": "应用层",
       "topic": null,
       "default_order": 9,
-      "name_zh": "应用层"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_layering",
+      "canonical_id": "pc_4fa8910769b75d8e4d0fa4d0e29af62e",
       "kind": "concept",
       "name": "Network Layering",
+      "name_zh": "网络分层",
       "topic": "net_arch",
       "description": "Decomposing network functionality into independent protocol layers, each providing services to the layer above and using the layer below, simplifying design and interoperability.",
       "default_order": 1,
       "centrality": 0.1845,
-      "name_zh": "网络分层",
       "visual": "diagram",
-      "visual_hint": "Diagram the protocol-layer stack and how layers nest."
+      "visual_hint": "Diagram the protocol-layer stack and how layers nest.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_osi",
+      "canonical_id": "pc_633a85508558ca04505ca3a55ec2ddcd",
       "kind": "concept",
       "name": "OSI Model",
+      "name_zh": "OSI模型",
       "topic": "net_arch",
       "description": "The seven-layer OSI reference model—physical, data link, network, transport, session, presentation, application—providing a conceptual framework for describing network protocol functions.",
       "default_order": 2,
       "centrality": 0.094,
-      "name_zh": "OSI模型",
       "visual": "diagram",
-      "visual_hint": "Diagram the seven OSI layers and their roles."
+      "visual_hint": "Diagram the seven OSI layers and their roles.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_tcpip",
+      "canonical_id": "pc_f935279a4d6822dee0a2fe2c8ad113a9",
       "kind": "concept",
       "name": "TCP/IP Model",
+      "name_zh": "TCP/IP模型",
       "topic": "net_arch_net_tcpip",
       "description": "The practical Internet protocol stack of link, internet, transport, and application layers, organising the protocols that actually run the global Internet.",
       "default_order": 1,
       "centrality": 0.1629,
-      "name_zh": "TCP/IP模型",
       "visual": "diagram",
-      "visual_hint": "Diagram the four-layer TCP/IP stack."
+      "visual_hint": "Diagram the four-layer TCP/IP stack.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_encapsulation",
+      "canonical_id": "pc_26a0a304f9acaced4c6de2fdcb174cf9",
       "kind": "concept",
       "name": "Encapsulation",
+      "name_zh": "封装",
       "topic": "net_arch_net_tcpip",
       "description": "The process by which each layer wraps data from the layer above in its own header, building nested protocol data units for transmission.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "封装",
       "visual": "diagram",
-      "visual_hint": "Diagram each layer wrapping the layer above with its header."
+      "visual_hint": "Diagram each layer wrapping the layer above with its header.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_link_services",
+      "canonical_id": "pc_4493af4a840dfbc55ef6bd6b68c47491",
       "kind": "concept",
       "name": "Link Layer Services",
+      "name_zh": "链路层服务",
       "topic": "net_link",
       "description": "Services the link layer provides over a single hop, including framing bits into packets and detecting transmission errors with checksums.",
       "default_order": 1,
       "centrality": 0.2065,
-      "name_zh": "链路层服务"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_mac",
+      "canonical_id": "pc_f514eff58ddd555d602dbc3d2d460614",
       "kind": "concept",
       "name": "MAC Addressing",
+      "name_zh": "MAC地址",
       "topic": "net_link",
       "description": "Media access control assigning hardware addresses to interfaces and arbitrating shared-medium access so multiple stations can transmit without persistent collisions.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "MAC地址"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_ethernet",
+      "canonical_id": "pc_4924be1a8c48de12303d738e6ff9221a",
       "kind": "concept",
       "name": "Ethernet",
+      "name_zh": "以太网",
       "topic": "net_link_net_ethernet",
       "description": "The dominant wired LAN technology defining frame formats, MAC addressing, and historically CSMA/CD media access over switched links.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "以太网"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_switching",
+      "canonical_id": "pc_aa5aa4ebbebd47dc2722332a2057a15a",
       "kind": "concept",
       "name": "Switching",
+      "name_zh": "交换",
       "topic": "net_link_net_ethernet",
       "description": "Layer-2 switches forwarding frames within a LAN by learning MAC-address-to-port mappings and flooding unknown destinations, building forwarding tables dynamically.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "交换"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_ip_addressing",
+      "canonical_id": "pc_0ead82735d0dabaa7bb1a1dd1d1c0e9f",
       "kind": "concept",
       "name": "IP Addressing",
+      "name_zh": "IP寻址",
       "topic": "net_network",
       "description": "Hierarchical IP addressing dividing addresses into network and host portions, with subnetting and CIDR enabling flexible allocation and route aggregation.",
       "default_order": 1,
       "centrality": 0.3001,
-      "name_zh": "IP寻址",
       "visual": "diagram",
-      "visual_hint": "Diagram an IP address split into network and host portions."
+      "visual_hint": "Diagram an IP address split into network and host portions.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_ipv4_ipv6",
+      "canonical_id": "pc_dd69dac439e811dc0e5a2e3676042dd9",
       "kind": "concept",
       "name": "IPv4 and IPv6",
+      "name_zh": "IPv4与IPv6",
       "topic": "net_network",
       "description": "The two Internet addressing versions: 32-bit IPv4 with its address exhaustion, and 128-bit IPv6 expanding the space and simplifying headers.",
       "default_order": 2,
       "centrality": 0.0443,
-      "name_zh": "IPv4与IPv6"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_forwarding",
+      "canonical_id": "pc_ec4693d96c73f3f636af47b6ba702567",
       "kind": "concept",
       "name": "Forwarding and Routers",
+      "name_zh": "转发与路由器",
       "topic": "net_network_net_forwarding",
       "description": "How routers forward packets by consulting a forwarding table to select an output interface using the destination address's longest prefix match.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "转发与路由器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_routing",
+      "canonical_id": "pc_32297c22cf1b8fa2c586cff5cf47c694",
       "kind": "concept",
       "name": "Routing Algorithms",
+      "name_zh": "路由算法",
       "topic": "net_network_net_forwarding",
       "description": "Distributed routing algorithms—link-state and distance-vector—by which routers exchange information to compute the paths that populate their forwarding tables.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "路由算法",
       "visual": "algorithm",
-      "visual_hint": "Animate link-state/distance-vector routing building forwarding tables."
+      "visual_hint": "Animate link-state/distance-vector routing building forwarding tables.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_transport_services",
+      "canonical_id": "pc_df0494315592248e4d4bacd4fa3ab2b0",
       "kind": "concept",
       "name": "Transport Layer Services",
+      "name_zh": "传输层服务",
       "topic": "net_transport_part1",
       "description": "End-to-end transport services running on hosts, multiplexing data to applications via ports and providing delivery semantics atop the network layer.",
       "default_order": 1,
       "centrality": 0.2308,
-      "name_zh": "传输层服务"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_udp",
+      "canonical_id": "pc_c6746f27077faac5c76254e46fa40dde",
       "kind": "concept",
       "name": "UDP",
+      "name_zh": "UDP",
       "topic": "net_transport_part1",
       "description": "A connectionless transport protocol offering minimal, unreliable, unordered datagram delivery with low overhead, suited to latency-sensitive applications.",
       "default_order": 2,
       "centrality": 0.1328,
-      "name_zh": "UDP"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_tcp",
+      "canonical_id": "pc_37cce4e5b7bddf09018c0c6f460a7bc7",
       "kind": "concept",
       "name": "TCP",
+      "name_zh": "TCP",
       "topic": "net_transport_part1",
       "description": "A connection-oriented transport protocol providing reliable, ordered byte-stream delivery using handshakes, sequence numbers, acknowledgements, and retransmission.",
       "default_order": 3,
       "centrality": 0.2189,
-      "name_zh": "TCP",
       "visual": "diagram",
-      "visual_hint": "Sequence diagram of the TCP three-way handshake."
+      "visual_hint": "Sequence diagram of the TCP three-way handshake.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_rdt",
+      "canonical_id": "pc_6272f49ea1ea6004d0a8195540de37d1",
       "kind": "concept",
       "name": "Reliable Data Transfer",
+      "name_zh": "可靠数据传输",
       "topic": "net_transport_part2",
       "description": "Principles of reliable data transfer over unreliable channels using sequence numbers, acknowledgements, timeouts, and automatic repeat request (ARQ) protocols.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "可靠数据传输",
       "visual": "diagram",
-      "visual_hint": "Sequence diagram of reliable transfer with sequence numbers and acks."
+      "visual_hint": "Sequence diagram of reliable transfer with sequence numbers and acks.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_flow_control",
+      "canonical_id": "pc_54826eba1e354ad6307d28c1ea37fb82",
       "kind": "concept",
       "name": "Flow Control",
+      "name_zh": "流量控制",
       "topic": "net_transport_part2",
       "description": "A receiver-driven mechanism using a sliding advertised window to prevent a fast sender from overwhelming a slow receiver's buffer.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "流量控制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_congestion",
+      "canonical_id": "pc_c867e1e0470f54ad79a51457adc3d84e",
       "kind": "concept",
       "name": "Congestion Control",
+      "name_zh": "拥塞控制",
       "topic": "net_transport_part2",
       "description": "Sender-side algorithms that infer congestion from loss or delay and adjust the sending rate to share capacity fairly and avoid collapse.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "拥塞控制",
       "visual": "function",
-      "visual_hint": "Plot the TCP congestion window growing and backing off over time."
+      "visual_hint": "Plot the TCP congestion window growing and backing off over time.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_http",
+      "canonical_id": "pc_bd05379aa5934bbd6467ac3868c61484",
       "kind": "concept",
       "name": "HTTP",
+      "name_zh": "HTTP",
       "topic": "net_application",
       "description": "The application-layer request-response protocol of the web, using methods, headers, and status codes to transfer resources, typically over TCP.",
       "default_order": 1,
       "centrality": 0.1203,
-      "name_zh": "HTTP"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_dns",
+      "canonical_id": "pc_5d0e80d978b601d67a6434c7ca42d5fd",
       "kind": "concept",
       "name": "DNS",
+      "name_zh": "DNS",
       "topic": "net_application",
       "description": "The Internet's distributed, hierarchical naming system that resolves human-readable hostnames into IP addresses through recursive and iterative queries.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "DNS",
       "visual": "diagram",
-      "visual_hint": "Diagram hierarchical DNS resolution of a hostname."
+      "visual_hint": "Diagram hierarchical DNS resolution of a hostname.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "net_app_protocols",
+      "canonical_id": "pc_44fbe4464d350a3888b76d7f3c09ad1f",
       "kind": "concept",
       "name": "Other Application Protocols",
+      "name_zh": "其他应用层协议",
       "topic": "net_application",
       "description": "Common application-layer protocols such as SMTP for email and FTP for file transfer, built atop transport services to deliver specific functions.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "其他应用层协议"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -326,157 +405,209 @@
       "from": "net_layering",
       "to": "net_osi",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_osi",
       "to": "net_tcpip",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_tcpip",
       "to": "net_encapsulation",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_link_services",
       "to": "net_mac",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_mac",
       "to": "net_ethernet",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_ethernet",
       "to": "net_switching",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_ip_addressing",
       "to": "net_ipv4_ipv6",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_ipv4_ipv6",
       "to": "net_forwarding",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_forwarding",
       "to": "net_routing",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_transport_services",
       "to": "net_udp",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_udp",
       "to": "net_tcp",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_tcp",
       "to": "net_rdt",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_rdt",
       "to": "net_flow_control",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_flow_control",
       "to": "net_congestion",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_http",
       "to": "net_dns",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_dns",
       "to": "net_app_protocols",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_layering",
       "to": "net_tcpip",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_layering",
       "to": "net_encapsulation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_link_services",
       "to": "net_ip_addressing",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_ip_addressing",
       "to": "net_forwarding",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_ip_addressing",
       "to": "net_transport_services",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_transport_services",
       "to": "net_tcp",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_tcp",
       "to": "net_http",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_udp",
       "to": "net_dns",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_tcp",
       "to": "net_app_protocols",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_tcpip",
       "to": "net_ip_addressing",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

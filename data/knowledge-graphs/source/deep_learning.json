@@ -1,560 +1,705 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "deep_learning",
   "subject": "Introduction to Deep Learning",
-  "schema": {
-    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
-    "node_fields": {
-      "id": "globally unique id",
-      "kind": "topic | concept",
-      "name": "concept name",
-      "topic": "owning topic id; null for topic nodes",
-      "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "from must be learned before to; strength=hard|soft"
-    },
-    "concept_node_definition": "concept = smallest independently quiz-testable skill"
-  },
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_deep_learning"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "dl_foundations_part1",
       "kind": "topic",
       "name": "Neural Network Foundations: Architecture",
+      "name_zh": "神经网络基础：网络结构",
       "topic": null,
       "default_order": 1,
-      "name_zh": "神经网络基础：网络结构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_foundations_part2",
       "kind": "topic",
       "name": "Neural Network Foundations: Training",
+      "name_zh": "神经网络基础：训练与反向传播",
       "topic": null,
       "default_order": 2,
-      "name_zh": "神经网络基础：训练与反向传播"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_optim",
       "kind": "topic",
       "name": "Optimization",
+      "name_zh": "优化算法",
       "topic": null,
       "default_order": 3,
-      "name_zh": "优化算法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_optim_stability",
       "kind": "topic",
       "name": "Adaptive Optimizers and Learning Rate Schedules",
+      "name_zh": "高级优化器与学习率衰减策略",
       "topic": null,
       "default_order": 4,
-      "name_zh": "高级优化器与学习率衰减策略"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_optim_stability_dl_vanishing_grad",
       "kind": "topic",
       "name": "Vanishing/Exploding Gradients and Weight Initialization",
+      "name_zh": "梯度消失与梯度爆炸与权重初始化",
       "topic": null,
       "default_order": 5,
-      "name_zh": "梯度消失与梯度爆炸与权重初始化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_training",
       "kind": "topic",
       "name": "Regularization and Stabilization",
+      "name_zh": "深度网络训练",
       "topic": null,
       "default_order": 6,
-      "name_zh": "深度网络训练"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_cnn",
       "kind": "topic",
       "name": "Convolutional Neural Networks",
+      "name_zh": "CNN",
       "topic": null,
       "default_order": 7,
-      "name_zh": "CNN"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_architectures_transfer",
       "kind": "topic",
       "name": "CNN Architectures and Residual Networks",
+      "name_zh": "CNN 架构与残差网络 (ResNet)",
       "topic": null,
       "default_order": 8,
-      "name_zh": "CNN 架构与残差网络 (ResNet)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_architectures_transfer_dl_transfer_learning",
       "kind": "topic",
       "name": "Transfer Learning and Recurrent Neural Networks",
+      "name_zh": "迁移学习与循环神经网络",
       "topic": null,
       "default_order": 9,
-      "name_zh": "迁移学习与循环神经网络"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_rnn_seq",
       "kind": "topic",
       "name": "Backpropagation Through Time and Long-Range Dependencies",
+      "name_zh": "时间反向传播与长期依赖问题",
       "topic": null,
       "default_order": 10,
-      "name_zh": "时间反向传播与长期依赖问题"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_rnn_seq_dl_lstm",
       "kind": "topic",
       "name": "LSTM and GRU",
+      "name_zh": "LSTM/GRU 循环网络与门控循环单元 (GRU)",
       "topic": null,
       "default_order": 11,
-      "name_zh": "LSTM/GRU 循环网络与门控循环单元 (GRU)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_attn_part1",
       "kind": "topic",
       "name": "Attention and Transformers: Mechanisms",
+      "name_zh": "注意力与Transformer：注意力机制",
       "topic": null,
       "default_order": 12,
-      "name_zh": "注意力与Transformer：注意力机制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_attn_part2",
       "kind": "topic",
       "name": "Attention and Transformers: Architecture and Pretraining",
+      "name_zh": "注意力与Transformer：架构与预训练",
       "topic": null,
       "default_order": 13,
-      "name_zh": "注意力与Transformer：架构与预训练"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_generative_part1",
       "kind": "topic",
       "name": "Generative Models: Autoencoders and GANs",
+      "name_zh": "生成模型：自编码器与GAN",
       "topic": null,
       "default_order": 14,
-      "name_zh": "生成模型：自编码器与GAN"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_generative_part2",
       "kind": "topic",
       "name": "Generative Models: Diffusion and Flows",
+      "name_zh": "生成模型：扩散模型与流模型",
       "topic": null,
       "default_order": 15,
-      "name_zh": "生成模型：扩散模型与流模型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_perceptron",
+      "canonical_id": "pc_4ac4d56b7c525132c7a7794442a6efb5",
       "kind": "concept",
       "name": "Perceptron",
+      "name_zh": "感知机",
       "topic": "dl_foundations_part1",
       "description": "The perceptron, a single linear threshold unit computing a weighted sum passed through a step function, the historical building block of neural networks.",
       "default_order": 1,
       "centrality": 0.2146,
-      "name_zh": "感知机"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_mlp",
+      "canonical_id": "pc_c3413085941fb2e7fc1ef09d40d16119",
       "kind": "concept",
       "name": "Multilayer Perceptron",
+      "name_zh": "多层感知机",
       "topic": "dl_foundations_part1",
       "description": "A multilayer perceptron stacking fully connected layers with nonlinear activations, a universal approximator able to represent complex input-output mappings.",
       "default_order": 2,
       "centrality": 0.4466,
-      "name_zh": "多层感知机"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_activation",
+      "canonical_id": "pc_f8e7add33b7e8946bbcdd19aa1734799",
       "kind": "concept",
       "name": "Activation Functions",
+      "name_zh": "激活函数",
       "topic": "dl_foundations_part1",
       "description": "Activation functions such as ReLU, sigmoid, and tanh introducing nonlinearity between layers, enabling networks to represent non-linear functions.",
       "default_order": 3,
       "centrality": 0.138,
-      "name_zh": "激活函数",
       "visual": "function",
-      "visual_hint": "Plot ReLU, sigmoid, and tanh activation functions."
+      "visual_hint": "Plot ReLU, sigmoid, and tanh activation functions.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_forward",
+      "canonical_id": "pc_0258396da7c216cbd7f4ef24fd389687",
       "kind": "concept",
       "name": "Forward Propagation",
+      "name_zh": "前向传播",
       "topic": "dl_foundations_part2",
       "description": "Forward propagation computing a network's output by passing inputs through successive layers, applying weights, biases, and activations stage by stage.",
       "default_order": 1,
       "centrality": 0.1332,
-      "name_zh": "前向传播"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_computational_graph",
+      "canonical_id": "pc_b35b4bc4302a615b0f167f54809f5fb0",
       "kind": "concept",
       "name": "Computational Graphs",
+      "name_zh": "计算图",
       "topic": "dl_foundations_part2",
       "description": "A computational graph representing a computation as nodes and edges, enabling automatic differentiation by systematically propagating derivatives.",
       "default_order": 2,
       "centrality": 0.072,
-      "name_zh": "计算图",
       "visual": "diagram",
-      "visual_hint": "Diagram a computation as a graph of nodes and edges for autodiff."
+      "visual_hint": "Diagram a computation as a graph of nodes and edges for autodiff.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_backprop",
+      "canonical_id": "pc_4e11259278b69fb2d7b40dbb8177f88f",
       "kind": "concept",
       "name": "Backpropagation",
+      "name_zh": "反向传播",
       "topic": "dl_foundations_part2",
       "description": "Backpropagation computing loss gradients with respect to every parameter by applying the chain rule in reverse through the computational graph.",
       "default_order": 3,
       "centrality": 0.1666,
-      "name_zh": "反向传播",
       "visual": "diagram",
-      "visual_hint": "Diagram gradients flowing backward through the computational graph."
+      "visual_hint": "Diagram gradients flowing backward through the computational graph.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_loss",
+      "canonical_id": "pc_95ce8dfde44fc0a85b256df2558f012c",
       "kind": "concept",
       "name": "Loss Functions",
+      "name_zh": "损失函数",
       "topic": "dl_optim",
       "description": "Loss functions quantifying prediction error, such as cross-entropy for classification and mean squared error for regression, that guide optimisation.",
       "default_order": 1,
       "centrality": 0.0666,
-      "name_zh": "损失函数",
       "visual": "function",
-      "visual_hint": "Plot cross-entropy and squared-error loss against the prediction."
+      "visual_hint": "Plot cross-entropy and squared-error loss against the prediction.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_optimization",
+      "canonical_id": "pc_c9b3e384978fbb1ff0da34b48636fde7",
       "kind": "concept",
       "name": "Stochastic Gradient Descent",
+      "name_zh": "梯度下降优化",
       "topic": "dl_optim",
       "description": "Stochastic gradient descent updating network parameters from mini-batch gradient estimates, the core optimisation procedure for training deep networks.",
       "default_order": 2,
       "centrality": 0.0985,
-      "name_zh": "梯度下降优化",
       "visual": "function",
-      "visual_hint": "Animate gradient descent stepping down a loss surface."
+      "visual_hint": "Animate gradient descent stepping down a loss surface.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_momentum",
+      "canonical_id": "pc_c54aa3c6a29437907a27a5783b7b98bf",
       "kind": "concept",
       "name": "Momentum",
+      "name_zh": "动量法",
       "topic": "dl_optim",
       "description": "Momentum accumulating an exponentially decaying average of past gradients to accelerate descent along consistent directions and dampen oscillation.",
       "default_order": 3,
       "centrality": 0.0638,
-      "name_zh": "动量法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_optimizers",
+      "canonical_id": "pc_7707ff134e4f357d597ff7222ec42469",
       "kind": "concept",
       "name": "Adaptive Optimizers",
+      "name_zh": "高级优化器",
       "topic": "dl_optim_stability",
       "description": "Adaptive optimisers like Adam and RMSProp scaling per-parameter learning rates from gradient statistics, often speeding and stabilising training.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "高级优化器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_lr_schedule",
+      "canonical_id": "pc_68d1266437da5789a94ae0c36937672f",
       "kind": "concept",
       "name": "Learning Rate Schedules",
+      "name_zh": "学习率衰减策略",
       "topic": "dl_optim_stability",
       "description": "Learning-rate schedules varying the step size during training, such as warmup and decay, to improve convergence speed and final performance.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "学习率衰减策略"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_vanishing_grad",
+      "canonical_id": "pc_008deb0508417be71425326c9f7317da",
       "kind": "concept",
       "name": "Vanishing/Exploding Gradients",
+      "name_zh": "梯度消失与梯度爆炸",
       "topic": "dl_optim_stability_dl_vanishing_grad",
       "description": "The vanishing and exploding gradient problem, where gradients shrink or grow across many layers, hampering the training of deep networks.",
       "default_order": 1,
       "centrality": 0.1002,
-      "name_zh": "梯度消失与梯度爆炸",
       "visual": "function",
-      "visual_hint": "Plot how gradients shrink or grow across many layers."
+      "visual_hint": "Plot how gradients shrink or grow across many layers.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_weight_init",
+      "canonical_id": "pc_ce7ea07a33086dd6913906225316d651",
       "kind": "concept",
       "name": "Weight Initialization",
+      "name_zh": "权重初始化",
       "topic": "dl_optim_stability_dl_vanishing_grad",
       "description": "Weight initialisation schemes such as Xavier and He setting initial parameter scales to preserve signal variance and ease optimisation.",
       "default_order": 2,
       "centrality": 0.0436,
-      "name_zh": "权重初始化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_batchnorm",
+      "canonical_id": "pc_495b086c2aedf50abc8b9e78f3992b63",
       "kind": "concept",
       "name": "Batch Normalization",
+      "name_zh": "批归一化",
       "topic": "dl_training",
       "description": "Batch normalisation standardising layer activations per mini-batch with learnable scale and shift, accelerating and stabilising deep-network training.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "批归一化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_regularization",
+      "canonical_id": "pc_18fbf1e867f1b86c93be3fab0af23e9d",
       "kind": "concept",
       "name": "Regularization",
+      "name_zh": "正则化",
       "topic": "dl_training",
       "description": "Regularisation techniques like weight decay and early stopping that constrain model complexity to reduce overfitting and improve generalisation.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "正则化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_dropout",
+      "canonical_id": "pc_1de17bea9d0ccd125ec62412e0293e97",
       "kind": "concept",
       "name": "Dropout",
+      "name_zh": "暂退法 (Dropout)",
       "topic": "dl_training",
       "description": "Dropout randomly deactivating units during training, preventing co-adaptation and acting as an implicit ensemble to improve generalisation.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "暂退法 (Dropout)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_convolution",
+      "canonical_id": "pc_1c99f49e25cc6757df5565a5219459a0",
       "kind": "concept",
       "name": "Convolution",
+      "name_zh": "卷积",
       "topic": "dl_cnn",
       "description": "Convolutional layers applying learnable filters across spatial positions, exploiting locality and weight sharing to extract translation-equivariant features.",
       "default_order": 1,
       "centrality": 0.091,
-      "name_zh": "卷积",
       "visual": "interactive",
-      "visual_hint": "Slide a filter across an image grid producing a feature map."
+      "visual_hint": "Slide a filter across an image grid producing a feature map.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_padding_stride",
+      "canonical_id": "pc_c36558e03cbf77ae1763ec4c29cb1814",
       "kind": "concept",
       "name": "Padding and Stride",
+      "name_zh": "填充与步幅",
       "topic": "dl_cnn",
       "description": "Padding adding border values and stride setting the filter step size, jointly controlling the spatial dimensions of convolutional outputs.",
       "default_order": 2,
       "centrality": 0.0779,
-      "name_zh": "填充与步幅"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_pooling",
+      "canonical_id": "pc_189bfa41b2d8bc03abafcf9c9dc357c4",
       "kind": "concept",
       "name": "Pooling",
+      "name_zh": "池化",
       "topic": "dl_cnn",
       "description": "Pooling layers downsampling feature maps by summarising local regions with maximum or average operations, reducing resolution and adding invariance.",
       "default_order": 3,
       "centrality": 0.0624,
-      "name_zh": "池化",
       "visual": "interactive",
-      "visual_hint": "Downsample a feature map with max and average pooling windows."
+      "visual_hint": "Downsample a feature map with max and average pooling windows.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_cnn_arch",
+      "canonical_id": "pc_39de4637b55c24e62dd36918c7b41727",
       "kind": "concept",
       "name": "CNN Architectures",
+      "name_zh": "CNN 架构",
       "topic": "dl_architectures_transfer",
       "description": "Classic convolutional architectures such as LeNet, AlexNet, and VGG, stacking convolution, activation, and pooling blocks for image recognition.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "CNN 架构",
       "visual": "diagram",
-      "visual_hint": "Diagram stacked convolution and pooling layers of a CNN."
+      "visual_hint": "Diagram stacked convolution and pooling layers of a CNN.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_resnet",
+      "canonical_id": "pc_3057ed9956ff7704a6e502f1337bf540",
       "kind": "concept",
       "name": "Residual Networks",
+      "name_zh": "残差网络 (ResNet)",
       "topic": "dl_architectures_transfer",
       "description": "Residual networks adding skip connections that let layers learn residual functions, enabling stable training of very deep networks.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "残差网络 (ResNet)",
       "visual": "diagram",
-      "visual_hint": "Diagram a residual block with its skip connection."
+      "visual_hint": "Diagram a residual block with its skip connection.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_transfer_learning",
+      "canonical_id": "pc_b98d33a53156dae4ee9a275f8f13b10b",
       "kind": "concept",
       "name": "Transfer Learning",
+      "name_zh": "迁移学习",
       "topic": "dl_architectures_transfer_dl_transfer_learning",
       "description": "Transfer learning reusing features from a network pretrained on a large dataset, fine-tuning them for a related task with limited data.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "迁移学习"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_rnn",
+      "canonical_id": "pc_b5144f7046285c1fb7e6973eb1116ec5",
       "kind": "concept",
       "name": "Recurrent Neural Networks",
+      "name_zh": "循环神经网络",
       "topic": "dl_architectures_transfer_dl_transfer_learning",
       "description": "Recurrent neural networks processing sequences by maintaining a hidden state updated at each step and sharing parameters across time.",
       "default_order": 2,
       "centrality": 0.1812,
-      "name_zh": "循环神经网络",
       "visual": "diagram",
-      "visual_hint": "Diagram a recurrent cell unrolled over a sequence."
+      "visual_hint": "Diagram a recurrent cell unrolled over a sequence.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_bptt",
+      "canonical_id": "pc_d239d174992602ffd4025943fa56e4e9",
       "kind": "concept",
       "name": "Backpropagation Through Time",
+      "name_zh": "时间反向传播",
       "topic": "dl_rnn_seq",
       "description": "Backpropagation through time unrolling a recurrent network over the sequence and applying backpropagation to compute gradients across time steps.",
       "default_order": 1,
       "centrality": 0.079,
-      "name_zh": "时间反向传播"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_seq_vanishing",
+      "canonical_id": "pc_fc1c455f2570c6d67b63d2d54a1afba8",
       "kind": "concept",
       "name": "Long-Range Dependencies",
+      "name_zh": "长期依赖问题",
       "topic": "dl_rnn_seq",
       "description": "The difficulty recurrent networks face learning long-range dependencies, because gradients vanish or explode when propagated over many time steps.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "长期依赖问题"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_lstm",
+      "canonical_id": "pc_9eb8ef2f88f45ff93d377268590ea94e",
       "kind": "concept",
       "name": "LSTM",
+      "name_zh": "LSTM/GRU 循环网络",
       "topic": "dl_rnn_seq_dl_lstm",
       "description": "Long short-term memory units using input, forget, and output gates with a cell state to preserve information over long sequences.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "LSTM/GRU 循环网络",
       "visual": "diagram",
-      "visual_hint": "Diagram the LSTM input, forget, and output gates and cell state."
+      "visual_hint": "Diagram the LSTM input, forget, and output gates and cell state.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_gru",
+      "canonical_id": "pc_f9d1aaf877d1b599170d4acc9fc272d8",
       "kind": "concept",
       "name": "GRU",
+      "name_zh": "门控循环单元 (GRU)",
       "topic": "dl_rnn_seq_dl_lstm",
       "description": "Gated recurrent units, a streamlined gating mechanism with fewer parameters than LSTMs, mitigating vanishing gradients in recurrent models.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "门控循环单元 (GRU)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_attention",
+      "canonical_id": "pc_6c8cbd6f6519cceab62c3ad2c8caa09c",
       "kind": "concept",
       "name": "Attention Mechanism",
+      "name_zh": "注意力机制",
       "topic": "dl_attn_part1",
       "description": "Attention mechanisms computing a weighted combination of values, where the weights reflect the relevance of each input to the current query.",
       "default_order": 1,
       "centrality": 0.1051,
-      "name_zh": "注意力机制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_self_attention",
+      "canonical_id": "pc_6d7f390f8396e5b25ab618b888e81e90",
       "kind": "concept",
       "name": "Self-Attention",
+      "name_zh": "自注意力",
       "topic": "dl_attn_part1",
       "description": "Self-attention relating all positions in a single sequence to one another, letting each element aggregate context from the whole sequence.",
       "default_order": 2,
       "centrality": 0.0944,
-      "name_zh": "自注意力",
       "visual": "interactive",
-      "visual_hint": "Visualise attention weights linking positions in a sequence."
+      "visual_hint": "Visualise attention weights linking positions in a sequence.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_multihead",
+      "canonical_id": "pc_e88de0ce9220267b94e01022dda608be",
       "kind": "concept",
       "name": "Multi-Head Attention",
+      "name_zh": "多头注意力机制",
       "topic": "dl_attn_part1",
       "description": "Multi-head attention running several attention operations in parallel subspaces, letting the model jointly attend to different representation aspects.",
       "default_order": 3,
       "centrality": 0.0819,
-      "name_zh": "多头注意力机制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_positional",
+      "canonical_id": "pc_0fc9559af4cb593ae5b536f82801fe18",
       "kind": "concept",
       "name": "Positional Encoding",
+      "name_zh": "位置编码",
       "topic": "dl_attn_part2",
       "description": "Positional encoding injecting token-order information into otherwise permutation-invariant attention through fixed or learned position representations.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "位置编码"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_transformer",
+      "canonical_id": "pc_f998c612da65c93f6a32324cefe900ab",
       "kind": "concept",
       "name": "Transformer Architecture",
+      "name_zh": "Transformer",
       "topic": "dl_attn_part2",
       "description": "The Transformer, an attention-only encoder-decoder architecture that processes sequences in parallel, underpinning modern language and vision models.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "Transformer",
       "visual": "diagram",
-      "visual_hint": "Diagram the Transformer encoder-decoder with attention blocks."
+      "visual_hint": "Diagram the Transformer encoder-decoder with attention blocks.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_pretraining",
+      "canonical_id": "pc_21eb0d0fce7861b2b11dc779c6166721",
       "kind": "concept",
       "name": "Pretraining & Fine-tuning",
+      "name_zh": "预训练与微调",
       "topic": "dl_attn_part2",
       "description": "Pretraining on large unlabelled corpora with self-supervised objectives, then fine-tuning on downstream tasks, the dominant paradigm for transformers.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "预训练与微调"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_autoencoder",
+      "canonical_id": "pc_65c167d3d84a14ecc8695a51c05762a5",
       "kind": "concept",
       "name": "Autoencoders",
+      "name_zh": "自编码器",
       "topic": "dl_generative_part1",
       "description": "Autoencoders learning compressed representations by training a network to reconstruct its input through a low-dimensional bottleneck.",
       "default_order": 1,
       "centrality": 0.0549,
-      "name_zh": "自编码器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_vae",
+      "canonical_id": "pc_7ea784134e36c934e7fd6177f7ebd0ec",
       "kind": "concept",
       "name": "Variational Autoencoders",
+      "name_zh": "变分自编码器",
       "topic": "dl_generative_part1",
       "description": "Variational autoencoders, probabilistic generative models learning a latent distribution via a variational objective to generate new samples.",
       "default_order": 2,
       "centrality": 0.0708,
-      "name_zh": "变分自编码器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_gan",
+      "canonical_id": "pc_c73c0fcecd76311fafd8e502f2befb9c",
       "kind": "concept",
       "name": "Generative Adversarial Networks",
+      "name_zh": "生成对抗网络（GAN）",
       "topic": "dl_generative_part1",
       "description": "Generative adversarial networks pitting a generator against a discriminator in a minimax game, learning to synthesise realistic data.",
       "default_order": 3,
       "centrality": 0.0624,
-      "name_zh": "生成对抗网络（GAN）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_gan_training",
+      "canonical_id": "pc_f2733d1b6c34fecd94d07a33c077f87f",
       "kind": "concept",
       "name": "GAN Training Dynamics",
+      "name_zh": "GAN 训练动态",
       "topic": "dl_generative_part2",
       "description": "The dynamics and difficulties of training GANs, including instability and mode collapse, addressed by careful loss design and training techniques.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "GAN 训练动态"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_diffusion",
+      "canonical_id": "pc_42b7639321d6955dca16467ae8fb6b12",
       "kind": "concept",
       "name": "Diffusion Models",
+      "name_zh": "扩散模型",
       "topic": "dl_generative_part2",
       "description": "Diffusion models generating data by learning to reverse a gradual noising process, denoising random noise into samples step by step.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "扩散模型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dl_flow",
+      "canonical_id": "pc_af98bd91f8d5dd8a9185dbdb06fe7f51",
       "kind": "concept",
       "name": "Normalizing Flows",
+      "name_zh": "流模型 (Normalizing Flows)",
       "topic": "dl_generative_part2",
       "description": "Normalizing flows transforming a simple base distribution through invertible mappings, enabling exact likelihood evaluation and sampling.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "流模型 (Normalizing Flows)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -562,271 +707,361 @@
       "from": "dl_perceptron",
       "to": "dl_mlp",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_mlp",
       "to": "dl_activation",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_activation",
       "to": "dl_forward",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_forward",
       "to": "dl_computational_graph",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_computational_graph",
       "to": "dl_backprop",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_loss",
       "to": "dl_optimization",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_optimization",
       "to": "dl_momentum",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_momentum",
       "to": "dl_optimizers",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_optimizers",
       "to": "dl_lr_schedule",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_vanishing_grad",
       "to": "dl_weight_init",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_weight_init",
       "to": "dl_batchnorm",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_batchnorm",
       "to": "dl_regularization",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_regularization",
       "to": "dl_dropout",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_convolution",
       "to": "dl_padding_stride",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_padding_stride",
       "to": "dl_pooling",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_pooling",
       "to": "dl_cnn_arch",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_cnn_arch",
       "to": "dl_resnet",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_resnet",
       "to": "dl_transfer_learning",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_rnn",
       "to": "dl_bptt",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_bptt",
       "to": "dl_seq_vanishing",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_seq_vanishing",
       "to": "dl_lstm",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_lstm",
       "to": "dl_gru",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_attention",
       "to": "dl_self_attention",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_self_attention",
       "to": "dl_multihead",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_multihead",
       "to": "dl_positional",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_positional",
       "to": "dl_transformer",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_transformer",
       "to": "dl_pretraining",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_autoencoder",
       "to": "dl_vae",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_vae",
       "to": "dl_gan",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_gan",
       "to": "dl_gan_training",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_gan_training",
       "to": "dl_diffusion",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_diffusion",
       "to": "dl_flow",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_forward",
       "to": "dl_backprop",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_backprop",
       "to": "dl_loss",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_backprop",
       "to": "dl_vanishing_grad",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_vanishing_grad",
       "to": "dl_batchnorm",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_optimization",
       "to": "dl_regularization",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_mlp",
       "to": "dl_convolution",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_vanishing_grad",
       "to": "dl_resnet",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_mlp",
       "to": "dl_rnn",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_rnn",
       "to": "dl_attention",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_multihead",
       "to": "dl_transformer",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_mlp",
       "to": "dl_autoencoder",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_mlp",
       "to": "dl_gan",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "dl_vae",
       "to": "dl_diffusion",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

@@ -1,848 +1,1073 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "a_level_biology",
   "subject": "Biology",
-  "schema": {
-    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
-    "node_fields": {
-      "id": "globally unique id",
-      "kind": "topic | concept",
-      "name": "concept name",
-      "topic": "owning topic id; null for topic nodes",
-      "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "from must be learned before to; strength=hard|soft"
-    },
-    "concept_node_definition": "concept = smallest independently quiz-testable skill"
-  },
+  "jurisdictions": [
+    "international"
+  ],
+  "source_ids": [
+    "src_cambridge_9700_2025_2027"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "bio_cell_structure",
       "kind": "topic",
       "name": "Microscopy and Eukaryotic Organelles",
+      "name_zh": "显微镜与真核细胞器",
       "topic": null,
       "default_order": 1,
-      "name_zh": "显微镜与真核细胞器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_cell_structure_bio_prokaryotes",
       "kind": "topic",
       "name": "Prokaryotic Cells and Cell Size and Magnification",
+      "name_zh": "原核细胞与细胞大小与放大",
       "topic": null,
       "default_order": 2,
-      "name_zh": "原核细胞与细胞大小与放大"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_molecules",
       "kind": "topic",
       "name": "Water and Carbohydrates",
+      "name_zh": "水与碳水化合物",
       "topic": null,
       "default_order": 3,
-      "name_zh": "水与碳水化合物"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_molecules_bio_lipids",
       "kind": "topic",
       "name": "Lipids, Proteins, and Biochemical Tests",
+      "name_zh": "脂质、蛋白质与生化检测",
       "topic": null,
       "default_order": 4,
-      "name_zh": "脂质、蛋白质与生化检测"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_enzymes",
       "kind": "topic",
       "name": "Enzymes",
+      "name_zh": "酶",
       "topic": null,
       "default_order": 5,
-      "name_zh": "酶"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_membranes",
       "kind": "topic",
       "name": "Cell Membranes and Transport",
+      "name_zh": "细胞膜与运输",
       "topic": null,
       "default_order": 6,
-      "name_zh": "细胞膜与运输"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_chromosomes_dna",
       "kind": "topic",
       "name": "Chromosome Behaviour and Mitosis",
+      "name_zh": "染色体行为与有丝分裂",
       "topic": null,
       "default_order": 7,
-      "name_zh": "染色体行为与有丝分裂"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_chromosomes_dna_bio_dna_structure",
       "kind": "topic",
       "name": "DNA Structure and DNA Replication",
+      "name_zh": "DNA结构与DNA复制",
       "topic": null,
       "default_order": 8,
-      "name_zh": "DNA结构与DNA复制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_nucleic_acids",
       "kind": "topic",
       "name": "Nucleic Acids and Protein Synthesis",
+      "name_zh": "核酸与蛋白质合成",
       "topic": null,
       "default_order": 9,
-      "name_zh": "核酸与蛋白质合成"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_transport_plants",
       "kind": "topic",
       "name": "Transport in Plants",
+      "name_zh": "植物运输",
       "topic": null,
       "default_order": 10,
-      "name_zh": "植物运输"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_circulation_gas_exchange",
       "kind": "topic",
       "name": "The Heart and Blood Vessels",
+      "name_zh": "心脏与血管",
       "topic": null,
       "default_order": 11,
-      "name_zh": "心脏与血管"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_circulation_gas_exchange_bio_haemoglobin",
       "kind": "topic",
       "name": "Haemoglobin and Oxygen Transport and Gas Exchange in the Lungs",
+      "name_zh": "血红蛋白与氧气运输与肺部气体交换",
       "topic": null,
       "default_order": 12,
-      "name_zh": "血红蛋白与氧气运输与肺部气体交换"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_disease",
       "kind": "topic",
       "name": "Infectious Disease and Immunity",
+      "name_zh": "传染病与免疫",
       "topic": null,
       "default_order": 13,
-      "name_zh": "传染病与免疫"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_respiration",
       "kind": "topic",
       "name": "Glycolysis and Link Reaction and Krebs Cycle",
+      "name_zh": "糖酵解与连接反应与Krebs循环",
       "topic": null,
       "default_order": 14,
-      "name_zh": "糖酵解与连接反应与Krebs循环"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_respiration_bio_oxidative",
       "kind": "topic",
       "name": "Oxidative Phosphorylation and Anaerobic Respiration",
+      "name_zh": "氧化磷酸化与无氧呼吸",
       "topic": null,
       "default_order": 15,
-      "name_zh": "氧化磷酸化与无氧呼吸"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_photosynthesis",
       "kind": "topic",
       "name": "Photosynthesis",
+      "name_zh": "光合作用",
       "topic": null,
       "default_order": 16,
-      "name_zh": "光合作用"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_homeostasis",
       "kind": "topic",
       "name": "Homeostasis",
+      "name_zh": "体内平衡",
       "topic": null,
       "default_order": 17,
-      "name_zh": "体内平衡"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_coordination",
       "kind": "topic",
       "name": "Nervous Transmission and Synapses",
+      "name_zh": "神经传导与突触",
       "topic": null,
       "default_order": 18,
-      "name_zh": "神经传导与突触"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_coordination_bio_hormonal",
       "kind": "topic",
       "name": "Hormonal Control and Plant Responses",
+      "name_zh": "激素控制与植物响应",
       "topic": null,
       "default_order": 19,
-      "name_zh": "激素控制与植物响应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_inheritance",
       "kind": "topic",
       "name": "Meiosis and Genetic Crosses",
+      "name_zh": "减数分裂与遗传杂交",
       "topic": null,
       "default_order": 20,
-      "name_zh": "减数分裂与遗传杂交"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_inheritance_bio_linkage",
       "kind": "topic",
       "name": "Gene Linkage and Crossing Over and Control of Gene Expression",
+      "name_zh": "基因连锁与交换与基因表达控制",
       "topic": null,
       "default_order": 21,
-      "name_zh": "基因连锁与交换与基因表达控制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_evolution",
       "kind": "topic",
       "name": "Selection and Evolution",
+      "name_zh": "选择与进化",
       "topic": null,
       "default_order": 22,
-      "name_zh": "选择与进化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_biodiversity",
       "kind": "topic",
       "name": "Biodiversity and Conservation",
+      "name_zh": "生物多样性与保护",
       "topic": null,
       "default_order": 23,
-      "name_zh": "生物多样性与保护"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_genetic_tech",
       "kind": "topic",
       "name": "Genetic Technology",
+      "name_zh": "遗传技术",
       "topic": null,
       "default_order": 24,
-      "name_zh": "遗传技术"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_microscopy",
+      "canonical_id": "pc_d5815de3434dae31f62e356dddae9f85",
       "kind": "concept",
       "name": "Microscopy",
+      "name_zh": "显微镜",
       "topic": "bio_cell_structure",
       "description": "The use of light and electron microscopes to view cells, where resolution—the ability to distinguish two close points—and magnification determine the detail observable.",
       "default_order": 1,
       "centrality": 0.1233,
-      "name_zh": "显微镜"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_organelles",
+      "canonical_id": "pc_cb341a51c60bb212ac55750a84630c03",
       "kind": "concept",
       "name": "Eukaryotic Organelles",
+      "name_zh": "真核细胞器",
       "topic": "bio_cell_structure",
       "description": "Membrane-bound and non-membrane structures within eukaryotic cells, such as the nucleus, mitochondria, and endoplasmic reticulum, each performing specialised functions.",
       "default_order": 2,
       "centrality": 0.1159,
-      "name_zh": "真核细胞器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_prokaryotes",
+      "canonical_id": "pc_73b46a23c7b4bbe42eefc3cac483d36a",
       "kind": "concept",
       "name": "Prokaryotic Cells",
+      "name_zh": "原核细胞",
       "topic": "bio_cell_structure_bio_prokaryotes",
       "description": "Bacterial cells lacking a nucleus and membrane-bound organelles, with circular DNA, smaller ribosomes, and a cell wall, contrasted with eukaryotic cells.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "原核细胞"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_cell_size",
+      "canonical_id": "pc_76b905a85c4968a11c22e7c09fef5111",
       "kind": "concept",
       "name": "Cell Size and Magnification",
+      "name_zh": "细胞大小与放大",
       "topic": "bio_cell_structure_bio_prokaryotes",
       "description": "Calculating actual cell size, magnification, and image size using the relationship that magnification equals image size divided by actual size, with consistent units.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "细胞大小与放大"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_water",
+      "canonical_id": "pc_63dfa087168bfb9834409155d515790e",
       "kind": "concept",
       "name": "Water",
+      "name_zh": "水",
       "topic": "bio_molecules",
       "description": "The properties of water arising from its polarity and hydrogen bonding, including its role as a solvent, high specific heat capacity, and cohesion important to life.",
       "default_order": 1,
       "centrality": 0.1373,
-      "name_zh": "水"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_carbohydrates",
+      "canonical_id": "pc_d2d44c20526a3ef06addda76bd0c3a1a",
       "kind": "concept",
       "name": "Carbohydrates",
+      "name_zh": "碳水化合物",
       "topic": "bio_molecules",
       "description": "Sugars and polysaccharides built from monosaccharides via glycosidic bonds, including glucose, starch, glycogen, and cellulose, serving energy and structural roles.",
       "default_order": 2,
       "centrality": 0.2648,
-      "name_zh": "碳水化合物"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_lipids",
+      "canonical_id": "pc_a25a3778f32928001d458246f6e48696",
       "kind": "concept",
       "name": "Lipids",
+      "name_zh": "脂质",
       "topic": "bio_molecules_bio_lipids",
       "description": "Hydrophobic molecules including triglycerides for energy storage and phospholipids whose amphipathic structure forms the bilayer of cell membranes.",
       "default_order": 1,
       "centrality": 0.27,
-      "name_zh": "脂质"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_proteins",
+      "canonical_id": "pc_e6ccc14f032828a2848774a7431ee682",
       "kind": "concept",
       "name": "Proteins",
+      "name_zh": "蛋白质",
       "topic": "bio_molecules_bio_lipids",
       "description": "Polymers of amino acids joined by peptide bonds, folding through primary, secondary, tertiary, and quaternary structure that determines their biological function.",
       "default_order": 2,
       "centrality": 0.3728,
-      "name_zh": "蛋白质"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_tests",
+      "canonical_id": "pc_e95a1de3cbc7890fd1bbfb09d8d336c5",
       "kind": "concept",
       "name": "Biochemical Tests",
+      "name_zh": "生化检测",
       "topic": "bio_molecules_bio_lipids",
       "description": "Qualitative biochemical tests identifying biological molecules, such as Benedict's for reducing sugars, iodine for starch, biuret for protein, and the emulsion test for lipids.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "生化检测"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_enzyme_action",
+      "canonical_id": "pc_eb22ca391770b29f75a2f022a09e31af",
       "kind": "concept",
       "name": "Enzyme Action",
+      "name_zh": "酶作用",
       "topic": "bio_enzymes",
       "description": "Enzymes as biological catalysts lowering activation energy, binding substrates at their active site according to the induced-fit model to form products.",
       "default_order": 1,
       "centrality": 0.1392,
-      "name_zh": "酶作用",
       "visual": "interactive",
-      "visual_hint": "Drag a substrate into the active site; show activation energy lowered on a reaction profile."
+      "visual_hint": "Drag a substrate into the active site; show activation energy lowered on a reaction profile.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_enzyme_factors",
+      "canonical_id": "pc_564bc6d850ae2725515787c450597c10",
       "kind": "concept",
       "name": "Factors Affecting Enzyme Activity",
+      "name_zh": "影响酶活性的因素",
       "topic": "bio_enzymes",
       "description": "How temperature, pH, substrate concentration, and enzyme concentration affect the rate of enzyme-catalysed reactions, including denaturation at extremes.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "影响酶活性的因素",
       "visual": "function",
-      "visual_hint": "Plot enzyme activity against temperature, pH, and substrate concentration."
+      "visual_hint": "Plot enzyme activity against temperature, pH, and substrate concentration.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_enzyme_inhibition",
+      "canonical_id": "pc_7c23b0b8f83f4faeae423854bbff0d4c",
       "kind": "concept",
       "name": "Enzyme Inhibition",
+      "name_zh": "酶抑制",
       "topic": "bio_enzymes",
       "description": "Reduction of enzyme activity by inhibitors, with competitive inhibitors binding the active site and non-competitive inhibitors binding elsewhere to alter it.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "酶抑制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_membrane_structure",
+      "canonical_id": "pc_5ff2cda97c05cbe449e6d6bcff0c0834",
       "kind": "concept",
       "name": "Membrane Structure",
+      "name_zh": "膜结构",
       "topic": "bio_membranes",
       "description": "The fluid mosaic model describing the cell membrane as a phospholipid bilayer with embedded proteins, cholesterol, and glycoproteins controlling exchange.",
       "default_order": 1,
       "centrality": 0.2042,
-      "name_zh": "膜结构",
       "visual": "diagram",
-      "visual_hint": "Labelled fluid-mosaic diagram of the phospholipid bilayer and membrane proteins."
+      "visual_hint": "Labelled fluid-mosaic diagram of the phospholipid bilayer and membrane proteins.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_passive_transport",
+      "canonical_id": "pc_c2e6fec2c47cd86ee9b8726b908a7a8b",
       "kind": "concept",
       "name": "Diffusion and Osmosis",
+      "name_zh": "扩散与渗透",
       "topic": "bio_membranes",
       "description": "Movement of substances down a concentration gradient without energy, by diffusion and facilitated diffusion, and the osmosis of water across membranes.",
       "default_order": 2,
       "centrality": 0.1662,
-      "name_zh": "扩散与渗透",
       "visual": "interactive",
-      "visual_hint": "Animate particles diffusing down a concentration gradient across a membrane."
+      "visual_hint": "Animate particles diffusing down a concentration gradient across a membrane.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_active_transport",
+      "canonical_id": "pc_0e1132fcaae68d745353f67bc9411890",
       "kind": "concept",
       "name": "Active Transport",
+      "name_zh": "主动运输",
       "topic": "bio_membranes",
       "description": "Movement of substances against a concentration gradient using ATP and carrier proteins, including bulk transport by endocytosis and exocytosis.",
       "default_order": 3,
       "centrality": 0.0779,
-      "name_zh": "主动运输"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_chromosomes",
+      "canonical_id": "pc_41f9701a3bd0fb4527df662b596620b5",
       "kind": "concept",
       "name": "Chromosome Behaviour",
+      "name_zh": "染色体行为",
       "topic": "bio_chromosomes_dna",
       "description": "The structure of chromosomes as DNA wound around histone proteins, and their replication and condensation in preparation for nuclear division.",
       "default_order": 1,
       "centrality": 0.0769,
-      "name_zh": "染色体行为"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_mitosis",
+      "canonical_id": "pc_e8a318724c6c8e8096b98fc763ca69c6",
       "kind": "concept",
       "name": "Mitosis",
+      "name_zh": "有丝分裂",
       "topic": "bio_chromosomes_dna",
       "description": "Nuclear division producing two genetically identical daughter cells through prophase, metaphase, anaphase, and telophase, underlying growth and repair.",
       "default_order": 2,
       "centrality": 0.1227,
-      "name_zh": "有丝分裂",
       "visual": "diagram",
-      "visual_hint": "Diagram the stages of mitosis."
+      "visual_hint": "Diagram the stages of mitosis.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_dna_structure",
+      "canonical_id": "pc_6a00c0df14c5b18459964bd5ccb5c243",
       "kind": "concept",
       "name": "DNA Structure",
+      "name_zh": "DNA结构",
       "topic": "bio_chromosomes_dna_bio_dna_structure",
       "description": "DNA as a double helix of two antiparallel nucleotide strands held together by complementary base pairing between adenine-thymine and guanine-cytosine.",
       "default_order": 1,
       "centrality": 0.19,
-      "name_zh": "DNA结构",
       "visual": "interactive",
-      "visual_hint": "Interactive double helix showing antiparallel strands and complementary base pairing."
+      "visual_hint": "Interactive double helix showing antiparallel strands and complementary base pairing.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_dna_replication",
+      "canonical_id": "pc_04b4d91c6cced626ffbf487f19cdfefe",
       "kind": "concept",
       "name": "DNA Replication",
+      "name_zh": "DNA复制",
       "topic": "bio_chromosomes_dna_bio_dna_structure",
       "description": "Semi-conservative replication in which the double helix unwinds and each strand templates a new complementary strand via DNA polymerase.",
       "default_order": 2,
       "centrality": 0.1034,
-      "name_zh": "DNA复制",
       "visual": "diagram",
-      "visual_hint": "Diagram semi-conservative replication unwinding and templating each strand."
+      "visual_hint": "Diagram semi-conservative replication unwinding and templating each strand.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_transcription",
+      "canonical_id": "pc_7674a139c06bd613155a2e3818756eb6",
       "kind": "concept",
       "name": "Transcription",
+      "name_zh": "转录",
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a messenger RNA copy of a gene by RNA polymerase, using one DNA strand as a template in the nucleus.",
       "default_order": 1,
       "centrality": 0.0812,
-      "name_zh": "转录",
       "visual": "diagram",
-      "visual_hint": "Diagram RNA polymerase synthesising mRNA from the template strand."
+      "visual_hint": "Diagram RNA polymerase synthesising mRNA from the template strand.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_translation",
+      "canonical_id": "pc_5f5a971454fc73259add3a98f4ad69cd",
       "kind": "concept",
       "name": "Translation",
+      "name_zh": "翻译",
       "topic": "bio_nucleic_acids",
       "description": "The synthesis of a polypeptide at the ribosome, where transfer RNA matches anticodons to mRNA codons to assemble amino acids in sequence.",
       "default_order": 2,
       "centrality": 0.0539,
-      "name_zh": "翻译",
       "visual": "diagram",
-      "visual_hint": "Diagram the ribosome matching tRNA anticodons to mRNA codons to build a polypeptide."
+      "visual_hint": "Diagram the ribosome matching tRNA anticodons to mRNA codons to build a polypeptide.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_mutation",
+      "canonical_id": "pc_aa917911c35a5a84a131d3c4b99b89af",
       "kind": "concept",
       "name": "Gene Mutation",
+      "name_zh": "基因突变",
       "topic": "bio_nucleic_acids",
       "description": "Changes to the DNA base sequence, such as substitutions, insertions, and deletions, which may alter the resulting protein and the phenotype.",
       "default_order": 3,
       "centrality": 0.0685,
-      "name_zh": "基因突变"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_xylem",
+      "canonical_id": "pc_eaac05ec18f4256f6a2eb41ca33b0969",
       "kind": "concept",
       "name": "Xylem and Water Transport",
+      "name_zh": "木质部与水分运输",
       "topic": "bio_transport_plants",
       "description": "The transport of water and mineral ions upward through dead, lignified xylem vessels, driven by transpiration pull via the cohesion-tension mechanism.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "木质部与水分运输"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_transpiration",
+      "canonical_id": "pc_343bb046f420bef0f9c91c013382427e",
       "kind": "concept",
       "name": "Transpiration",
+      "name_zh": "蒸腾作用",
       "topic": "bio_transport_plants",
       "description": "The loss of water vapour from leaves through stomata, and the effect of light, temperature, humidity, and air movement on its rate.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "蒸腾作用"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_phloem",
+      "canonical_id": "pc_fcdfd6ff2ea888cea137488f28fb500c",
       "kind": "concept",
       "name": "Phloem and Translocation",
+      "name_zh": "韧皮部与转运",
       "topic": "bio_transport_plants",
       "description": "The translocation of sucrose and other assimilates through living phloem sieve tubes from sources to sinks by pressure flow.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "韧皮部与转运"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_heart",
+      "canonical_id": "pc_4c972e4adf7a6e4ecf2b706d784548f6",
       "kind": "concept",
       "name": "The Heart",
+      "name_zh": "心脏",
       "topic": "bio_circulation_gas_exchange",
       "description": "The structure of the mammalian heart and the cardiac cycle of atrial and ventricular systole and diastole, coordinated to pump blood.",
       "default_order": 1,
       "centrality": 0.0548,
-      "name_zh": "心脏",
       "visual": "diagram",
-      "visual_hint": "Labelled heart diagram showing the flow of the cardiac cycle."
+      "visual_hint": "Labelled heart diagram showing the flow of the cardiac cycle.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_blood_vessels",
+      "canonical_id": "pc_ff5a585bec0e26749bef92e5b2ec6c2c",
       "kind": "concept",
       "name": "Blood Vessels",
+      "name_zh": "血管",
       "topic": "bio_circulation_gas_exchange",
       "description": "The structure and function of arteries, veins, and capillaries, whose walls suit carrying blood at different pressures and exchanging materials.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "血管"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_haemoglobin",
+      "canonical_id": "pc_fe4116678178832b32b28ac69f4a3068",
       "kind": "concept",
       "name": "Haemoglobin and Oxygen Transport",
+      "name_zh": "血红蛋白与氧气运输",
       "topic": "bio_circulation_gas_exchange_bio_haemoglobin",
       "description": "Haemoglobin's reversible binding of oxygen described by the sigmoid dissociation curve, and the Bohr effect that shifts it with carbon dioxide.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "血红蛋白与氧气运输",
       "visual": "function",
-      "visual_hint": "Plot the sigmoid oxygen dissociation curve and the Bohr shift."
+      "visual_hint": "Plot the sigmoid oxygen dissociation curve and the Bohr shift.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_lungs",
+      "canonical_id": "pc_023dd94962e430b671d1014972b54342",
       "kind": "concept",
       "name": "Gas Exchange in the Lungs",
+      "name_zh": "肺部气体交换",
       "topic": "bio_circulation_gas_exchange_bio_haemoglobin",
       "description": "Gas exchange in the alveoli, whose large, thin, moist surface and rich blood supply maximise diffusion of oxygen and carbon dioxide.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "肺部气体交换"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_infectious",
+      "canonical_id": "pc_8110548193b005037315e0b115ce5fd8",
       "kind": "concept",
       "name": "Infectious Disease",
+      "name_zh": "传染病",
       "topic": "bio_disease",
       "description": "Diseases caused by pathogens such as bacteria, viruses, fungi, and protoctists, and the ways they are transmitted between hosts.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "传染病"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_immune_response",
+      "canonical_id": "pc_b396f7788c77baeecc089eeec83538e5",
       "kind": "concept",
       "name": "Immune Response",
+      "name_zh": "免疫应答",
       "topic": "bio_disease",
       "description": "The body's defence against pathogens through phagocytes engulfing invaders and lymphocytes mounting specific cell-mediated and humoral responses.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "免疫应答"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_antibodies",
+      "canonical_id": "pc_4e3f76f101debb1e241b0bab776e4cf1",
       "kind": "concept",
       "name": "Antibodies and Vaccination",
+      "name_zh": "抗体与疫苗接种",
       "topic": "bio_disease",
       "description": "Antibodies as proteins binding specific antigens to neutralise pathogens, and vaccination conferring active immunity through memory cells.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "抗体与疫苗接种"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_glycolysis",
+      "canonical_id": "pc_2fbda0110630d41f4792066ddae82f27",
       "kind": "concept",
       "name": "Glycolysis",
+      "name_zh": "糖酵解",
       "topic": "bio_respiration",
       "description": "The cytoplasmic breakdown of glucose into pyruvate, producing a small net yield of ATP and reduced NAD without requiring oxygen.",
       "default_order": 1,
       "centrality": 0.0887,
-      "name_zh": "糖酵解",
       "visual": "diagram",
-      "visual_hint": "Flow diagram of glycolysis from glucose to pyruvate."
+      "visual_hint": "Flow diagram of glycolysis from glucose to pyruvate.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_krebs",
+      "canonical_id": "pc_ae13d4aab464e4aaeeb019b31d5433b1",
       "kind": "concept",
       "name": "Link Reaction and Krebs Cycle",
+      "name_zh": "连接反应与Krebs循环",
       "topic": "bio_respiration",
       "description": "The link reaction converting pyruvate to acetyl coenzyme A, and the Krebs cycle oxidising it to release carbon dioxide and reduced coenzymes.",
       "default_order": 2,
       "centrality": 0.0628,
-      "name_zh": "连接反应与Krebs循环",
       "visual": "diagram",
-      "visual_hint": "Cycle diagram of the link reaction and Krebs cycle."
+      "visual_hint": "Cycle diagram of the link reaction and Krebs cycle.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_oxidative",
+      "canonical_id": "pc_f9019fae31d0d89640aa7147bd1511ba",
       "kind": "concept",
       "name": "Oxidative Phosphorylation",
+      "name_zh": "氧化磷酸化",
       "topic": "bio_respiration_bio_oxidative",
       "description": "Oxidative phosphorylation using the electron transport chain and chemiosmosis across the inner mitochondrial membrane to synthesise most ATP.",
       "default_order": 1,
       "centrality": 0.0895,
-      "name_zh": "氧化磷酸化",
       "visual": "diagram",
-      "visual_hint": "Diagram the electron transport chain and chemiosmosis."
+      "visual_hint": "Diagram the electron transport chain and chemiosmosis.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_anaerobic",
+      "canonical_id": "pc_5a0f5971baa0deb8b3f7f7b3d2718a86",
       "kind": "concept",
       "name": "Anaerobic Respiration",
+      "name_zh": "无氧呼吸",
       "topic": "bio_respiration_bio_oxidative",
       "description": "Respiration without oxygen, regenerating NAD through lactate fermentation in animals or ethanol fermentation in yeast and plants, yielding little ATP.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "无氧呼吸"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_light_dependent",
+      "canonical_id": "pc_04f61e525cd19d1f02e6846892d426c8",
       "kind": "concept",
       "name": "Light-Dependent Reactions",
+      "name_zh": "光依赖反应",
       "topic": "bio_photosynthesis",
       "description": "The light-dependent reactions in the thylakoids capturing light to produce ATP and reduced NADP while splitting water to release oxygen.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "光依赖反应",
       "visual": "diagram",
-      "visual_hint": "Diagram the light-dependent reactions in the thylakoid."
+      "visual_hint": "Diagram the light-dependent reactions in the thylakoid.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_calvin",
+      "canonical_id": "pc_4b41c3d012fb26c23a16100b7cbafcd5",
       "kind": "concept",
       "name": "Calvin Cycle",
+      "name_zh": "Calvin循环",
       "topic": "bio_photosynthesis",
       "description": "The Calvin cycle in the stroma fixing carbon dioxide using ATP and reduced NADP to synthesise carbohydrate via the enzyme RuBisCO.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "Calvin循环",
       "visual": "diagram",
-      "visual_hint": "Cycle diagram of the Calvin cycle fixing carbon dioxide."
+      "visual_hint": "Cycle diagram of the Calvin cycle fixing carbon dioxide.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_limiting_factors",
+      "canonical_id": "pc_b86d98177d0cea6644418b8e93b142b0",
       "kind": "concept",
       "name": "Limiting Factors",
+      "name_zh": "限制因素",
       "topic": "bio_photosynthesis",
       "description": "Environmental factors such as light intensity, carbon dioxide concentration, and temperature that limit the overall rate of photosynthesis.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "限制因素"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_homeostasis_principles",
+      "canonical_id": "pc_2a9c578569ae3d146bdaf824188b711a",
       "kind": "concept",
       "name": "Homeostasis Principles",
+      "name_zh": "体内平衡原理",
       "topic": "bio_homeostasis",
       "description": "The maintenance of a stable internal environment through negative feedback, where deviations from set points trigger corrective responses.",
       "default_order": 1,
       "centrality": 0.0848,
-      "name_zh": "体内平衡原理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_kidney",
+      "canonical_id": "pc_dc1ea419f7f0124901b64a622aee0648",
       "kind": "concept",
       "name": "The Kidney and Osmoregulation",
+      "name_zh": "肾脏与渗透压调节",
       "topic": "bio_homeostasis",
       "description": "Ultrafiltration and selective reabsorption in the nephron forming urine, and the osmoregulation of water balance through the action of ADH.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "肾脏与渗透压调节",
       "visual": "diagram",
-      "visual_hint": "Labelled nephron diagram showing ultrafiltration and reabsorption."
+      "visual_hint": "Labelled nephron diagram showing ultrafiltration and reabsorption.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_glucose_control",
+      "canonical_id": "pc_6f2fdad0698885c810176f4c7f506bae",
       "kind": "concept",
       "name": "Control of Blood Glucose",
+      "name_zh": "血糖控制",
       "topic": "bio_homeostasis",
       "description": "Regulation of blood glucose by insulin and glucagon from the pancreas, and the disruption of this control in diabetes mellitus.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "血糖控制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_nervous",
+      "canonical_id": "pc_944f33c2a947e2a2f5d42856cb825a4a",
       "kind": "concept",
       "name": "Nervous Transmission",
+      "name_zh": "神经传导",
       "topic": "bio_coordination",
       "description": "The transmission of nerve impulses as action potentials, generated by the movement of sodium and potassium ions across the neurone membrane.",
       "default_order": 1,
       "centrality": 0.0624,
-      "name_zh": "神经传导",
       "visual": "function",
-      "visual_hint": "Plot the action-potential membrane voltage over time."
+      "visual_hint": "Plot the action-potential membrane voltage over time.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_synapses",
+      "canonical_id": "pc_0df40f95b0a4b28f4ac9880528a91fde",
       "kind": "concept",
       "name": "Synapses",
+      "name_zh": "突触",
       "topic": "bio_coordination",
       "description": "Chemical transmission across synapses, where neurotransmitter released from the presynaptic neurone diffuses to receptors on the postsynaptic membrane.",
       "default_order": 2,
       "centrality": 0.0443,
-      "name_zh": "突触",
       "visual": "diagram",
-      "visual_hint": "Diagram neurotransmitter release and receptor binding at a synapse."
+      "visual_hint": "Diagram neurotransmitter release and receptor binding at a synapse.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_hormonal",
+      "canonical_id": "pc_c7f7ea6f7ce0f78324c900821216e75c",
       "kind": "concept",
       "name": "Hormonal Control",
+      "name_zh": "激素控制",
       "topic": "bio_coordination_bio_hormonal",
       "description": "Endocrine coordination in which hormones secreted by glands travel in the blood to target cells, producing slower, longer-lasting responses.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "激素控制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_plant_responses",
+      "canonical_id": "pc_ec9ed2577284952c142079dc7a389627",
       "kind": "concept",
       "name": "Plant Responses",
+      "name_zh": "植物响应",
       "topic": "bio_coordination_bio_hormonal",
       "description": "Plant responses to stimuli, including tropisms controlled by auxin and other growth regulators that direct growth toward or away from stimuli.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "植物响应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_meiosis",
+      "canonical_id": "pc_9a64e0d9f35ef30bda722f5b7364e0c4",
       "kind": "concept",
       "name": "Meiosis",
+      "name_zh": "减数分裂",
       "topic": "bio_inheritance",
       "description": "Reduction division producing four genetically varied haploid gametes, with crossing over and independent assortment generating genetic variation.",
       "default_order": 1,
       "centrality": 0.1151,
-      "name_zh": "减数分裂",
       "visual": "diagram",
-      "visual_hint": "Diagram meiosis producing four haploid gametes, including crossing over."
+      "visual_hint": "Diagram meiosis producing four haploid gametes, including crossing over.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_genetic_crosses",
+      "canonical_id": "pc_0a20187ab8711d84834ffc5e887d019b",
       "kind": "concept",
       "name": "Genetic Crosses",
+      "name_zh": "遗传杂交",
       "topic": "bio_inheritance",
       "description": "Predicting inheritance using monohybrid and dihybrid crosses, applying dominance, codominance, and the characteristic ratios of Mendelian genetics.",
       "default_order": 2,
       "centrality": 0.0548,
-      "name_zh": "遗传杂交",
       "visual": "diagram",
-      "visual_hint": "Punnett-square diagram predicting offspring genotype ratios."
+      "visual_hint": "Punnett-square diagram predicting offspring genotype ratios.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_linkage",
+      "canonical_id": "pc_cf480d2c17869e9f06f3980b2bd57ea2",
       "kind": "concept",
       "name": "Gene Linkage and Crossing Over",
+      "name_zh": "基因连锁与交换",
       "topic": "bio_inheritance_bio_linkage",
       "description": "Genes on the same chromosome inherited together as linked genes, with crossing over producing recombinants at a frequency reflecting their distance.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "基因连锁与交换"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_gene_control",
+      "canonical_id": "pc_56602e952c30d81d754e3900e34590cf",
       "kind": "concept",
       "name": "Control of Gene Expression",
+      "name_zh": "基因表达控制",
       "topic": "bio_inheritance_bio_linkage",
       "description": "The regulation of gene expression in eukaryotes, including transcriptional control and the role of regulatory proteins in switching genes on and off.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "基因表达控制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_variation",
+      "canonical_id": "pc_592a494ab52d102d4cb731b24a77b320",
       "kind": "concept",
       "name": "Variation",
+      "name_zh": "变异",
       "topic": "bio_evolution",
       "description": "Genetic and environmental variation among individuals, with continuous and discontinuous variation arising from genes, environment, and their interaction.",
       "default_order": 1,
       "centrality": 0.1029,
-      "name_zh": "变异"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_natural_selection",
+      "canonical_id": "pc_a87eb54cbeafebfc2ba275effe0eaa14",
       "kind": "concept",
       "name": "Natural Selection",
+      "name_zh": "自然选择",
       "topic": "bio_evolution",
       "description": "Differential survival and reproduction of individuals with advantageous alleles, changing allele frequencies in a population over generations.",
       "default_order": 2,
       "centrality": 0.0919,
-      "name_zh": "自然选择"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_speciation",
+      "canonical_id": "pc_1ff54d59bd08ce31d146088b725569e6",
       "kind": "concept",
       "name": "Speciation",
+      "name_zh": "物种形成",
       "topic": "bio_evolution",
       "description": "The formation of new species when populations become reproductively isolated, allowing them to diverge through allopatric or sympatric mechanisms.",
       "default_order": 3,
       "centrality": 0.079,
-      "name_zh": "物种形成"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_classification",
+      "canonical_id": "pc_71fd336e183a13297655fa7d7be1aa3e",
       "kind": "concept",
       "name": "Classification",
+      "name_zh": "分类",
       "topic": "bio_biodiversity",
       "description": "The hierarchical classification of organisms into taxa and the three-domain system, reflecting their evolutionary relationships.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "分类",
       "visual": "diagram",
-      "visual_hint": "Hierarchical taxonomy tree of the classification taxa."
+      "visual_hint": "Hierarchical taxonomy tree of the classification taxa.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_biodiversity_sampling",
+      "canonical_id": "pc_ff6c4a398294b049cadd95acd7c8ace2",
       "kind": "concept",
       "name": "Biodiversity and Sampling",
+      "name_zh": "生物多样性调查",
       "topic": "bio_biodiversity",
       "description": "Measuring biodiversity using random sampling and indices such as Simpson's index to quantify species richness and evenness in a habitat.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "生物多样性调查"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_conservation",
+      "canonical_id": "pc_aa24b4324d962f7ab29f0ddeb0f63405",
       "kind": "concept",
       "name": "Conservation",
+      "name_zh": "保护",
       "topic": "bio_biodiversity",
       "description": "Methods of maintaining biodiversity and ecosystems, balancing human activity with the protection of species and their habitats.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "保护"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_gene_tech",
+      "canonical_id": "pc_0185ccac3ad47cd14f266d12099ab528",
       "kind": "concept",
       "name": "Gene Technology",
+      "name_zh": "基因技术",
       "topic": "bio_genetic_tech",
       "description": "Recombinant DNA technology cutting and joining DNA with enzymes to insert genes into vectors, enabling gene cloning and expression.",
       "default_order": 1,
       "centrality": 0.0503,
-      "name_zh": "基因技术"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_pcr_electrophoresis",
+      "canonical_id": "pc_34ea6cd352a80ebb4206a31163684ba6",
       "kind": "concept",
       "name": "PCR and Electrophoresis",
+      "name_zh": "PCR与电泳",
       "topic": "bio_genetic_tech",
       "description": "The polymerase chain reaction amplifying DNA in vitro, and gel electrophoresis separating DNA fragments by size for analysis.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "PCR与电泳"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bio_gene_applications",
+      "canonical_id": "pc_30f178143e2c42de28b6d054fb8f8e88",
       "kind": "concept",
       "name": "Applications of Genetic Technology",
+      "name_zh": "遗传技术应用",
       "topic": "bio_genetic_tech",
       "description": "Applications of genetic technology in medicine and agriculture, including genetically modified organisms, gene therapy, and genetic screening.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "遗传技术应用"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -850,409 +1075,545 @@
       "from": "bio_microscopy",
       "to": "bio_organelles",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_organelles",
       "to": "bio_prokaryotes",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_prokaryotes",
       "to": "bio_cell_size",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_water",
       "to": "bio_carbohydrates",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_carbohydrates",
       "to": "bio_lipids",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_lipids",
       "to": "bio_proteins",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_proteins",
       "to": "bio_tests",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_enzyme_action",
       "to": "bio_enzyme_factors",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_enzyme_factors",
       "to": "bio_enzyme_inhibition",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_membrane_structure",
       "to": "bio_passive_transport",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_passive_transport",
       "to": "bio_active_transport",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_chromosomes",
       "to": "bio_mitosis",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_dna_structure",
       "to": "bio_dna_replication",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_dna_replication",
       "to": "bio_transcription",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_transcription",
       "to": "bio_translation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_translation",
       "to": "bio_mutation",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_xylem",
       "to": "bio_transpiration",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_transpiration",
       "to": "bio_phloem",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_heart",
       "to": "bio_blood_vessels",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_blood_vessels",
       "to": "bio_haemoglobin",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_infectious",
       "to": "bio_immune_response",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_immune_response",
       "to": "bio_antibodies",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_glycolysis",
       "to": "bio_krebs",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_krebs",
       "to": "bio_oxidative",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_oxidative",
       "to": "bio_anaerobic",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_light_dependent",
       "to": "bio_calvin",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_calvin",
       "to": "bio_limiting_factors",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_homeostasis_principles",
       "to": "bio_kidney",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_kidney",
       "to": "bio_glucose_control",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_nervous",
       "to": "bio_synapses",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_synapses",
       "to": "bio_hormonal",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_hormonal",
       "to": "bio_plant_responses",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_meiosis",
       "to": "bio_genetic_crosses",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_genetic_crosses",
       "to": "bio_linkage",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_linkage",
       "to": "bio_gene_control",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_variation",
       "to": "bio_natural_selection",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_natural_selection",
       "to": "bio_speciation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_classification",
       "to": "bio_biodiversity_sampling",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_biodiversity_sampling",
       "to": "bio_conservation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_gene_tech",
       "to": "bio_pcr_electrophoresis",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_pcr_electrophoresis",
       "to": "bio_gene_applications",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_proteins",
       "to": "bio_enzyme_action",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_carbohydrates",
       "to": "bio_tests",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_lipids",
       "to": "bio_membrane_structure",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_proteins",
       "to": "bio_membrane_structure",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_organelles",
       "to": "bio_mitosis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_proteins",
       "to": "bio_dna_structure",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_dna_structure",
       "to": "bio_transcription",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_dna_replication",
       "to": "bio_mutation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_passive_transport",
       "to": "bio_xylem",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_proteins",
       "to": "bio_haemoglobin",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_passive_transport",
       "to": "bio_lungs",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_proteins",
       "to": "bio_immune_response",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_enzyme_action",
       "to": "bio_glycolysis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_membrane_structure",
       "to": "bio_oxidative",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_glycolysis",
       "to": "bio_anaerobic",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_oxidative",
       "to": "bio_light_dependent",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_homeostasis_principles",
       "to": "bio_glucose_control",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_active_transport",
       "to": "bio_nervous",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_homeostasis_principles",
       "to": "bio_hormonal",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_mitosis",
       "to": "bio_meiosis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_transcription",
       "to": "bio_gene_control",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_mutation",
       "to": "bio_variation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_meiosis",
       "to": "bio_variation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_speciation",
       "to": "bio_classification",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_dna_replication",
       "to": "bio_pcr_electrophoresis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_dna_structure",
       "to": "bio_gene_tech",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bio_gene_tech",
       "to": "bio_gene_applications",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }
