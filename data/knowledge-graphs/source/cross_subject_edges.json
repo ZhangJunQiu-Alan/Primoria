@@ -1,16 +1,40 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "description": "Cross-subject prerequisite edges. Endpoints are globally-unique concept ids living in different subject graphs. Direction: prerequisite -> dependent.",
   "source_ids": [
-    "src_unverified_cross_subject_prerequisites"
+    "src_berkeley_cs188_textbook_2026",
+    "src_berkeley_cs61a_summer_2026",
+    "src_berkeley_cs61b_fall_2024",
+    "src_berkeley_cs70_summer_2026",
+    "src_cambridge_9701_2025_2027",
+    "src_cambridge_9702_2025_2027",
+    "src_cambridge_9709_2026_2027",
+    "src_cmu_15213_2026",
+    "src_d2l_1_0_3",
+    "src_harvard_cs50x_2026",
+    "src_mit_6_031_spring_2018",
+    "src_mit_ocw_18_01sc_fall_2010",
+    "src_mit_ocw_18_02sc_fall_2010",
+    "src_mit_ocw_18_06sc_fall_2011",
+    "src_mit_ocw_18_330_spring_2012",
+    "src_mit_ocw_6_441_spring_2010",
+    "src_python_docs_3_14",
+    "src_stanford_cs144_2026",
+    "src_stanford_cs229_2026",
+    "src_stanford_cs236g_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立跨学科先修边的来源与审核基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "用端点权威证据审核跨学科先修边，移除同概念伪先修和三条方向不成立的边。"
     }
   ],
   "edges": [
@@ -21,8 +45,17 @@
       "strength": "hard",
       "from_graph": "linear_algebra.json",
       "to_graph": "machine_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Matrix Operations and Inverses and LU Factorization"
+        },
+        {
+          "source_id": "src_stanford_cs229_2026",
+          "locator": "Syllabus and course-schedule lecture entry: Linear Regression: Model and Gradient Descent"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_mit1806_projections",
@@ -31,8 +64,17 @@
       "strength": "soft",
       "from_graph": "linear_algebra.json",
       "to_graph": "machine_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Orthogonal Vectors and Subspaces and Projections onto Subspaces"
+        },
+        {
+          "source_id": "src_stanford_cs229_2026",
+          "locator": "Syllabus and course-schedule lecture entry: Linear Regression: Model and Gradient Descent"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_1802_gradient",
@@ -41,8 +83,17 @@
       "strength": "hard",
       "from_graph": "mit_calculus.json",
       "to_graph": "machine_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        },
+        {
+          "source_id": "src_stanford_cs229_2026",
+          "locator": "Syllabus and course-schedule lecture entry: Linear Regression: Model and Gradient Descent"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_mit1806_eigen",
@@ -51,8 +102,17 @@
       "strength": "hard",
       "from_graph": "linear_algebra.json",
       "to_graph": "machine_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Cramer's Rule and Volumes and Eigenvalues and Eigenvectors"
+        },
+        {
+          "source_id": "src_stanford_cs229_2026",
+          "locator": "Syllabus and course-schedule lecture entry: Gaussian Mixtures via EM, Principal Component Analysis, and Independent Component Analysis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "probability_spaces",
@@ -61,8 +121,17 @@
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "machine_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_stanford_cs229_2026",
+          "locator": "Syllabus and course-schedule lecture entry: Logistic Regression and Sigmoid & Decision Boundary"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "normal_distribution",
@@ -71,8 +140,17 @@
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "machine_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Uniform and Exponential Distributions and Normal Distribution"
+        },
+        {
+          "source_id": "src_stanford_cs229_2026",
+          "locator": "Syllabus and course-schedule lecture entry: Generative vs Discriminative and Gaussian Discriminant Analysis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "conditional_probability",
@@ -81,8 +159,17 @@
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "machine_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_stanford_cs229_2026",
+          "locator": "Syllabus and course-schedule lecture entry: Naive Bayes and Laplace Smoothing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_1801_chain_rule",
@@ -91,8 +178,17 @@
       "strength": "hard",
       "from_graph": "mit_calculus.json",
       "to_graph": "machine_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        },
+        {
+          "source_id": "src_stanford_cs229_2026",
+          "locator": "Syllabus and course-schedule lecture entry: Neural Networks and Backpropagation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_1801_chain_rule",
@@ -101,8 +197,17 @@
       "strength": "hard",
       "from_graph": "mit_calculus.json",
       "to_graph": "deep_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation Techniques and Related Rates"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Training"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_mit1806_matrix_ops",
@@ -111,8 +216,17 @@
       "strength": "hard",
       "from_graph": "linear_algebra.json",
       "to_graph": "deep_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Matrix Operations and Inverses and LU Factorization"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Neural Network Foundations: Architecture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_1802_gradient",
@@ -121,8 +235,17 @@
       "strength": "hard",
       "from_graph": "mit_calculus.json",
       "to_graph": "deep_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Course unit/session index: Multivariable Chain Rule and Gradient and Directional Derivative"
+        },
+        {
+          "source_id": "src_d2l_1_0_3",
+          "locator": "D2L 1.0.3 table-of-contents unit: Optimization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "probability_spaces",
@@ -131,8 +254,17 @@
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "deep_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_stanford_cs236g_2026",
+          "locator": "Syllabus unit: Generative Models: Autoencoders and GANs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "probability_spaces",
@@ -141,18 +273,17 @@
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "artificial_intelligence.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "bayes_rule",
-      "to": "ai_bayes_rule",
-      "type": "prereq",
-      "strength": "hard",
-      "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "artificial_intelligence.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "markov_chains_basics",
@@ -161,8 +292,17 @@
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "artificial_intelligence.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Markov Chains Basics and Hitting Times"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "conditional_probability",
@@ -171,8 +311,17 @@
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "artificial_intelligence.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "probability_spaces",
@@ -181,8 +330,17 @@
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "information_theory.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_mit_ocw_6_441_spring_2010",
+          "locator": "Syllabus and lecture-notes unit: Entropy and Information Measures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "expectation",
@@ -191,8 +349,17 @@
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "information_theory.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Discrete Random Variables and Expectation"
+        },
+        {
+          "source_id": "src_mit_ocw_6_441_spring_2010",
+          "locator": "Syllabus and lecture-notes unit: Entropy and Information Measures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "conditional_probability",
@@ -201,8 +368,17 @@
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "information_theory.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Probability Spaces and Conditional Probability"
+        },
+        {
+          "source_id": "src_mit_ocw_6_441_spring_2010",
+          "locator": "Syllabus and lecture-notes unit: Entropy and Information Measures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "normal_distribution",
@@ -211,8 +387,17 @@
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "information_theory.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Uniform and Exponential Distributions and Normal Distribution"
+        },
+        {
+          "source_id": "src_mit_ocw_6_441_spring_2010",
+          "locator": "Syllabus and lecture-notes unit: Continuous Channels"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_mit1806_elimination",
@@ -221,8 +406,17 @@
       "strength": "hard",
       "from_graph": "linear_algebra.json",
       "to_graph": "numerical_analysis.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Vectors and Linear Combinations and Elimination with Matrices"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Linear Systems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_1801_deriv_def",
@@ -231,8 +425,17 @@
       "strength": "hard",
       "from_graph": "mit_calculus.json",
       "to_graph": "numerical_analysis.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Root Finding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_1801_definite_integral",
@@ -241,8 +444,17 @@
       "strength": "hard",
       "from_graph": "mit_calculus.json",
       "to_graph": "numerical_analysis.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Riemann Sums and Definite Integrals"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Newton-Cotes Formulas and Gaussian Quadrature"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_1801_taylor_series",
@@ -251,8 +463,17 @@
       "strength": "soft",
       "from_graph": "mit_calculus.json",
       "to_graph": "numerical_analysis.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Course unit/session index: Power Series and Taylor Series"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_mit1806_least_squares",
@@ -261,8 +482,17 @@
       "strength": "hard",
       "from_graph": "linear_algebra.json",
       "to_graph": "numerical_analysis.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_06sc_fall_2011",
+          "locator": "Resource Index lecture entries: Least Squares Approximations and Orthogonal Bases and Gram-Schmidt"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "simple_induction",
@@ -271,8 +501,17 @@
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "data_structures_and_algorithms.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Simple Induction and Strong Induction"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "basic_counting_rules",
@@ -281,8 +520,17 @@
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "data_structures_and_algorithms.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Basic Counting Rules and Combinations and Permutations"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "graph_basics",
@@ -291,8 +539,17 @@
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
       "to_graph": "data_structures_and_algorithms.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 lecture/note entry: Graph Basics and Eulerian Tours"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "mat_vector_basics",
@@ -301,8 +558,25 @@
       "strength": "hard",
       "from_graph": "a_level_mathematics.json",
       "to_graph": "a_level_physics.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.29; 3.7 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.16; 1.4 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "mat_trig_ratios",
@@ -311,8 +585,25 @@
       "strength": "soft",
       "from_graph": "a_level_mathematics.json",
       "to_graph": "a_level_physics.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.21; 1.5 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.24; 2.3 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "mat_exp_func",
@@ -321,8 +612,25 @@
       "strength": "soft",
       "from_graph": "a_level_mathematics.json",
       "to_graph": "a_level_physics.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.36; 23.2 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.36; 23.2 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "mat_exp_func",
@@ -331,8 +639,25 @@
       "strength": "soft",
       "from_graph": "a_level_mathematics.json",
       "to_graph": "a_level_physics.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.32; 19.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.32; 19.3 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "mat_log_laws",
@@ -341,8 +666,25 @@
       "strength": "hard",
       "from_graph": "a_level_mathematics.json",
       "to_graph": "a_level_chemistry.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "mat_exp_func",
@@ -351,8 +693,25 @@
       "strength": "soft",
       "from_graph": "a_level_mathematics.json",
       "to_graph": "a_level_chemistry.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.23; 2.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9709_2026_2027",
+          "locator": "PDF p.27; 3.2 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.43; 26.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_python_syntax",
@@ -361,8 +720,17 @@
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
       "to_graph": "python_fundamentals.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Running Python Programs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_lists_dicts",
@@ -371,8 +739,17 @@
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
       "to_graph": "python_fundamentals.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        },
+        {
+          "source_id": "src_python_docs_3_14",
+          "locator": "Python 3.14 Tutorial/Library Reference section: Dictionaries and Keyed Data"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "oop",
@@ -381,8 +758,17 @@
       "strength": "hard",
       "from_graph": "sicp_cs61a.json",
       "to_graph": "data_structures_and_algorithms.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Mutability and Object-Oriented Programming"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "recursion",
@@ -391,28 +777,17 @@
       "strength": "soft",
       "from_graph": "sicp_cs61a.json",
       "to_graph": "data_structures_and_algorithms.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "data_abs",
-      "to": "c_ucb61b_java_basics",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "sicp_cs61a.json",
-      "to_graph": "data_structures_and_algorithms.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "c_trees",
-      "to": "c_ucb61b_trees_intro",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "data_structures_and_algorithms.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61a_summer_2026",
+          "locator": "Summer 2026 course schedule/textbook unit: Recursion and Tree Recursion"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Asymptotics and Algorithmic Analysis"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_hash_tables",
@@ -421,8 +796,17 @@
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
       "to_graph": "data_structures_and_algorithms.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        },
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Hash Functions and Object.hashCode() and Separate Chaining"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_ucb61b_classes_objects",
@@ -431,38 +815,17 @@
       "strength": "soft",
       "from_graph": "data_structures_and_algorithms.json",
       "to_graph": "software_construction.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "c_ucb61b_bst_operations",
-      "to": "c_mit6031_recursive_data",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "data_structures_and_algorithms.json",
-      "to_graph": "software_construction.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "concept_integer_rep",
-      "to": "c1_2",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "computer_architecture.json",
-      "to_graph": "computer_systems.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "concept_floating_point",
-      "to": "c1_4",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "computer_architecture.json",
-      "to_graph": "computer_systems.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Java Basics and Syntax"
+        },
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "net_ip_addressing",
@@ -471,58 +834,17 @@
       "strength": "soft",
       "from_graph": "computer_network.json",
       "to_graph": "computer_systems.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "net_tcp",
-      "to": "c10_3",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "computer_network.json",
-      "to_graph": "computer_systems.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "c_js",
-      "to": "web_javascript",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "web_applications.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "c_html",
-      "to": "web_html",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "web_applications.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "c_relational_db",
-      "to": "web_relational",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "web_applications.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "net_http",
-      "to": "web_http",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "computer_network.json",
-      "to_graph": "web_applications.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Network Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_ucb61b_bfs",
@@ -531,8 +853,17 @@
       "strength": "hard",
       "from_graph": "data_structures_and_algorithms.json",
       "to_graph": "artificial_intelligence.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Breadth-First Search (BFS) and Topological Sort"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "c_ucb61b_graph_api",
@@ -541,18 +872,17 @@
       "strength": "soft",
       "from_graph": "data_structures_and_algorithms.json",
       "to_graph": "artificial_intelligence.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
-    },
-    {
-      "from": "c_ucb61b_big_theta",
-      "to": "ml_gradient_descent",
-      "type": "prereq",
-      "strength": "soft",
-      "from_graph": "data_structures_and_algorithms.json",
-      "to_graph": "machine_learning.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs61b_fall_2024",
+          "locator": "Fall 2024 weekly schedule lecture entry: Graph API and Adjacency Lists and Depth-First Search (DFS)"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "che_covalent",
@@ -561,8 +891,25 @@
       "strength": "soft",
       "from_graph": "a_level_chemistry.json",
       "to_graph": "a_level_biology.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.19; 3.1 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.20; 3.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "che_imf",
@@ -571,8 +918,25 @@
       "strength": "hard",
       "from_graph": "a_level_chemistry.json",
       "to_graph": "a_level_biology.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.21; 3.6 outcome 4"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.22; 4.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "che_amino_acids",
@@ -581,8 +945,25 @@
       "strength": "hard",
       "from_graph": "a_level_chemistry.json",
       "to_graph": "a_level_biology.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.52; 34.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.53; 35.1 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "che_collision",
@@ -591,8 +972,25 @@
       "strength": "soft",
       "from_graph": "a_level_chemistry.json",
       "to_graph": "a_level_biology.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.23; 5.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9701_2025_2027",
+          "locator": "PDF p.25; 8.2 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "phy_kinetic_theory",
@@ -601,8 +999,25 @@
       "strength": "hard",
       "from_graph": "a_level_physics.json",
       "to_graph": "a_level_chemistry.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.28; 15.3 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.28; 15.3 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.28; 15.3 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.28; 15.3 outcome 4"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "phy_nuclear_structure",
@@ -611,8 +1026,25 @@
       "strength": "hard",
       "from_graph": "a_level_physics.json",
       "to_graph": "a_level_chemistry.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.25; 11.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.25; 11.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.25; 11.1 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.25; 11.1 outcome 5"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "phy_energy_levels",
@@ -621,8 +1053,25 @@
       "strength": "hard",
       "from_graph": "a_level_physics.json",
       "to_graph": "a_level_chemistry.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.35; 22.4 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.35; 22.4 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.35; 22.4 outcome 3"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.39; 25.3 outcome 1"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "from": "phy_internal_energy",
@@ -631,8 +1080,25 @@
       "strength": "soft",
       "from_graph": "a_level_physics.json",
       "to_graph": "a_level_chemistry.json",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.29; 16.1 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.29; 16.1 outcome 2"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.29; 16.2 outcome 1"
+        },
+        {
+          "source_id": "src_cambridge_9702_2025_2027",
+          "locator": "PDF p.29; 16.2 outcome 2"
+        }
+      ],
+      "review_status": "approved"
     }
   ]
 }

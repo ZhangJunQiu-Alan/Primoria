@@ -2,7 +2,7 @@
   "graphId": "artificial_intelligence",
   "subject": "Introduction to Artificial Intelligence",
   "generatedFrom": "data/knowledge-graphs/source/artificial_intelligence.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -473,167 +473,200 @@
     {
       "from": "ai_arc_consistency",
       "to": "ai_local_search",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“约束传播”为学习“局部搜索”提供背景与解题基础。"
     },
     {
       "from": "ai_backtracking",
       "to": "ai_arc_consistency",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“约束传播”需要先掌握“回溯搜索”的定义、表示或操作方法。"
     },
     {
       "from": "ai_bayes_nets",
       "to": "ai_bn_inference",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“贝叶斯网络推理”需要先掌握“贝叶斯网络”的定义、表示或操作方法。"
     },
     {
       "from": "ai_bayes_rule",
       "to": "ai_bayes_nets",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“贝叶斯网络”需要先掌握“贝叶斯规则”的定义、表示或操作方法。"
     },
     {
       "from": "ai_bayes_rule",
       "to": "ai_naive_bayes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“朴素贝叶斯”需要先掌握“贝叶斯规则”的定义、表示或操作方法。"
     },
     {
       "from": "ai_bellman",
       "to": "ai_policy_iteration",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“策略迭代”需要先掌握“Bellman方程”的定义、表示或操作方法。"
     },
     {
       "from": "ai_bellman",
       "to": "ai_value_iteration",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“价值迭代”需要先掌握“Bellman方程”的定义、表示或操作方法。"
     },
     {
       "from": "ai_csp_def",
       "to": "ai_backtracking",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“回溯搜索”需要先掌握“约束满足问题”的定义、表示或操作方法。"
     },
     {
       "from": "ai_exploration",
       "to": "ai_approx_q",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“探索与利用”为学习“近似Q学习”提供背景与解题基础。"
     },
     {
       "from": "ai_forward",
       "to": "ai_viterbi",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“维特比算法”需要先掌握“前向算法”的定义、表示或操作方法。"
     },
     {
       "from": "ai_heuristics",
       "to": "ai_informed",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“有信息搜索（A*）”需要先掌握“启发式与可容性”的定义、表示或操作方法。"
     },
     {
       "from": "ai_hmm",
       "to": "ai_forward",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“前向算法”需要先掌握“隐马尔可夫模型”的定义、表示或操作方法。"
     },
     {
       "from": "ai_hmm",
       "to": "ai_particle",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“粒子滤波”需要先掌握“隐马尔可夫模型”的定义、表示或操作方法。"
     },
     {
       "from": "ai_informed",
       "to": "ai_minimax",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“有信息搜索（A*）”为学习“对抗搜索（Minimax）”提供背景与解题基础。"
     },
     {
       "from": "ai_markov_chain",
       "to": "ai_hmm",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“隐马尔可夫模型”需要先掌握“马尔可夫模型”的定义、表示或操作方法。"
     },
     {
       "from": "ai_mdp_def",
       "to": "ai_bellman",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Bellman方程”需要先掌握“马尔可夫决策过程”的定义、表示或操作方法。"
     },
     {
       "from": "ai_mdp_def",
       "to": "ai_rl_framework",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“强化学习框架”需要先掌握“马尔可夫决策过程”的定义、表示或操作方法。"
     },
     {
       "from": "ai_minimax",
       "to": "ai_alphabeta",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Alpha-Beta剪枝”需要先掌握“对抗搜索（Minimax）”的定义、表示或操作方法。"
     },
     {
       "from": "ai_naive_bayes",
       "to": "ai_perceptron",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“朴素贝叶斯”为学习“感知机”提供背景与解题基础。"
     },
     {
       "from": "ai_neural_nets",
       "to": "ai_generalization",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“神经网络”为学习“泛化与过拟合”提供背景与解题基础。"
     },
     {
       "from": "ai_perceptron",
       "to": "ai_neural_nets",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“神经网络”需要先掌握“感知机”的定义、表示或操作方法。"
     },
     {
       "from": "ai_prob",
       "to": "ai_bayes_rule",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“贝叶斯规则”需要先掌握“概率基础”的定义、表示或操作方法。"
     },
     {
       "from": "ai_prob",
       "to": "ai_markov_chain",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“马尔可夫模型”需要先掌握“概率基础”的定义、表示或操作方法。"
     },
     {
       "from": "ai_qlearning",
       "to": "ai_approx_q",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“近似Q学习”需要先掌握“Q学习”的定义、表示或操作方法。"
     },
     {
       "from": "ai_qlearning",
       "to": "ai_exploration",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“Q学习”为学习“探索与利用”提供背景与解题基础。"
     },
     {
       "from": "ai_rl_framework",
       "to": "ai_td",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“时序差分学习”需要先掌握“强化学习框架”的定义、表示或操作方法。"
     },
     {
       "from": "ai_search_problem",
       "to": "ai_csp_def",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“搜索问题建模”为学习“约束满足问题”提供背景与解题基础。"
     },
     {
       "from": "ai_search_problem",
       "to": "ai_uninformed",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“无信息搜索”需要先掌握“搜索问题建模”的定义、表示或操作方法。"
     },
     {
       "from": "ai_td",
       "to": "ai_qlearning",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Q学习”需要先掌握“时序差分学习”的定义、表示或操作方法。"
     },
     {
       "from": "ai_uninformed",
       "to": "ai_heuristics",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“无信息搜索”为学习“启发式与可容性”提供背景与解题基础。"
     },
     {
       "from": "ai_uninformed",
       "to": "ai_informed",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“有信息搜索（A*）”需要先掌握“无信息搜索”的定义、表示或操作方法。"
     },
     {
       "from": "ai_value_iteration",
       "to": "ai_policy_iteration",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“价值迭代”为学习“策略迭代”提供背景与解题基础。"
     },
     {
       "from": "ai_viterbi",
       "to": "ai_particle",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“维特比算法”为学习“粒子滤波”提供背景与解题基础。"
     }
   ]
 }

@@ -2,7 +2,7 @@
   "graphId": "machine_learning",
   "subject": "Machine Learning",
   "generatedFrom": "data/knowledge-graphs/source/machine_learning.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -632,222 +632,266 @@
     {
       "from": "ml_bias_variance",
       "to": "ml_cross_val",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“交叉验证”需要先掌握“偏差-方差权衡”的定义、表示或操作方法。"
     },
     {
       "from": "ml_bias_variance",
       "to": "ml_regularization",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“正则化”需要先掌握“偏差-方差权衡”的定义、表示或操作方法。"
     },
     {
       "from": "ml_cost_mse",
       "to": "ml_gradient_descent",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“梯度下降”需要先掌握“均方误差代价函数”的定义、表示或操作方法。"
     },
     {
       "from": "ml_cross_val",
       "to": "ml_vc_dimension",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“交叉验证”为学习“VC 维与泛化误差界”提供背景与解题基础。"
     },
     {
       "from": "ml_em_algorithm",
       "to": "ml_gmm_em",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“高斯混合与EM”需要先掌握“EM 算法 (期望最大化)”的定义、表示或操作方法。"
     },
     {
       "from": "ml_exp_family",
       "to": "ml_glm",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“广义线性模型”需要先掌握“指数族分布”的定义、表示或操作方法。"
     },
     {
       "from": "ml_gda",
       "to": "ml_naive_bayes",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“高斯判别分析”为学习“朴素贝叶斯”提供背景与解题基础。"
     },
     {
       "from": "ml_generative_vs_disc",
       "to": "ml_gda",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“生成模型与判别模型”为学习“高斯判别分析”提供背景与解题基础。"
     },
     {
       "from": "ml_gmm_em",
       "to": "ml_pca",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“高斯混合与EM”为学习“主成分分析”提供背景与解题基础。"
     },
     {
       "from": "ml_gradient_descent",
       "to": "ml_backprop",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“反向传播”需要先掌握“梯度下降”的定义、表示或操作方法。"
     },
     {
       "from": "ml_gradient_descent",
       "to": "ml_logistic_reg",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“逻辑回归”需要先掌握“梯度下降”的定义、表示或操作方法。"
     },
     {
       "from": "ml_gradient_descent",
       "to": "ml_sgd",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“随机与小批量梯度下降”需要先掌握“梯度下降”的定义、表示或操作方法。"
     },
     {
       "from": "ml_kernels",
       "to": "ml_mercer",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“核方法”为学习“有效核函数（Mercer 定理）”提供背景与解题基础。"
     },
     {
       "from": "ml_kmeans",
       "to": "ml_em_algorithm",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“K均值聚类”为学习“EM 算法 (期望最大化)”提供背景与解题基础。"
     },
     {
       "from": "ml_lagrange_duality",
       "to": "ml_svm_dual",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“支持向量机对偶问题”需要先掌握“拉格朗日对偶性与 KKT 条件”的定义、表示或操作方法。"
     },
     {
       "from": "ml_linear_reg",
       "to": "ml_bias_variance",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“偏差-方差权衡”需要先掌握“线性回归”的定义、表示或操作方法。"
     },
     {
       "from": "ml_linear_reg",
       "to": "ml_cost_mse",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“线性回归”为学习“均方误差代价函数”提供背景与解题基础。"
     },
     {
       "from": "ml_linear_reg",
       "to": "ml_normal_eq",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“正规方程”需要先掌握“线性回归”的定义、表示或操作方法。"
     },
     {
       "from": "ml_logistic_mle",
       "to": "ml_newton_method",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“逻辑回归极大似然估计与梯度”为学习“牛顿法”提供背景与解题基础。"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_generative_vs_disc",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“逻辑回归”为学习“生成模型与判别模型”提供背景与解题基础。"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_glm",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“逻辑回归”为学习“广义线性模型”提供背景与解题基础。"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_logistic_mle",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“逻辑回归极大似然估计与梯度”需要先掌握“逻辑回归”的定义、表示或操作方法。"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_neural_nets",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“神经网络”需要先掌握“逻辑回归”的定义、表示或操作方法。"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_sigmoid",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“逻辑回归”为学习“Sigmoid 与决策边界”提供背景与解题基础。"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_softmax",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Softmax 回归”需要先掌握“逻辑回归”的定义、表示或操作方法。"
     },
     {
       "from": "ml_margins",
       "to": "ml_optimal_margin",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“最优间隔分类器”需要先掌握“间隔与SVM”的定义、表示或操作方法。"
     },
     {
       "from": "ml_mdp",
       "to": "ml_value_policy",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“价值与策略迭代”需要先掌握“马尔可夫决策过程”的定义、表示或操作方法。"
     },
     {
       "from": "ml_mercer",
       "to": "ml_soft_margin",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“有效核函数（Mercer 定理）”为学习“软间隔与松弛变量”提供背景与解题基础。"
     },
     {
       "from": "ml_naive_bayes",
       "to": "ml_laplace",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“拉普拉斯平滑”需要先掌握“朴素贝叶斯”的定义、表示或操作方法。"
     },
     {
       "from": "ml_neural_nets",
       "to": "ml_backprop",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“反向传播”需要先掌握“神经网络”的定义、表示或操作方法。"
     },
     {
       "from": "ml_newton_method",
       "to": "ml_softmax",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“牛顿法”为学习“Softmax 回归”提供背景与解题基础。"
     },
     {
       "from": "ml_normal_eq",
       "to": "ml_feature_scaling",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“正规方程”为学习“特征缩放与学习率”提供背景与解题基础。"
     },
     {
       "from": "ml_optimal_margin",
       "to": "ml_lagrange_duality",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“拉格朗日对偶性与 KKT 条件”需要先掌握“最优间隔分类器”的定义、表示或操作方法。"
     },
     {
       "from": "ml_pca",
       "to": "ml_ica",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“主成分分析”为学习“独立成分分析”提供背景与解题基础。"
     },
     {
       "from": "ml_q_learning",
       "to": "ml_value_approx",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“Q-学习”为学习“价值函数逼近”提供背景与解题基础。"
     },
     {
       "from": "ml_regularization",
       "to": "ml_cross_val",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“正则化”为学习“交叉验证”提供背景与解题基础。"
     },
     {
       "from": "ml_sgd",
       "to": "ml_normal_eq",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“随机与小批量梯度下降”为学习“正规方程”提供背景与解题基础。"
     },
     {
       "from": "ml_sigmoid",
       "to": "ml_logistic_mle",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“Sigmoid 与决策边界”为学习“逻辑回归极大似然估计与梯度”提供背景与解题基础。"
     },
     {
       "from": "ml_soft_margin",
       "to": "ml_smo",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“软间隔与松弛变量”为学习“SMO 算法”提供背景与解题基础。"
     },
     {
       "from": "ml_softmax",
       "to": "ml_exp_family",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“Softmax 回归”为学习“指数族分布”提供背景与解题基础。"
     },
     {
       "from": "ml_svm_dual",
       "to": "ml_kernels",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“核方法”需要先掌握“支持向量机对偶问题”的定义、表示或操作方法。"
     },
     {
       "from": "ml_svm_dual",
       "to": "ml_smo",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“SMO 算法”需要先掌握“支持向量机对偶问题”的定义、表示或操作方法。"
     },
     {
       "from": "ml_value_policy",
       "to": "ml_q_learning",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“价值与策略迭代”为学习“Q-学习”提供背景与解题基础。"
     },
     {
       "from": "ml_vc_dimension",
       "to": "ml_model_selection",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“VC 维与泛化误差界”为学习“模型与特征选择”提供背景与解题基础。"
     }
   ]
 }

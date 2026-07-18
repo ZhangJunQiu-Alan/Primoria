@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-18",
+  "required": true,
+  "graph_ids": [
+    "a_level_mathematics",
+    "a_level_physics",
+    "a_level_chemistry",
+    "a_level_biology"
+  ],
+  "reasons_zh": [
+    "四科新增或修改了 Concept 名称、描述或结构，发布到数据库前必须重建 embeddings。",
+    "其余 17 图只变更来源、证据、审核状态和 canonical alias，不需要因本批次单独重嵌入。"
+  ],
+  "release_note_zh": "本 worktree 不执行 embeddings 或共享数据库写入；等待单独发布授权。"
+}

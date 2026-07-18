@@ -2,7 +2,7 @@
   "graphId": "numerical_analysis",
   "subject": "Introduction to Numerical Analysis",
   "generatedFrom": "data/knowledge-graphs/source/numerical_analysis.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -251,82 +251,98 @@
     {
       "from": "c_mit18330_bisection",
       "to": "c_mit18330_newton",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“牛顿法”需要先掌握“二分法”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_conditioning",
       "to": "c_mit18330_lu",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“LU 分解”需要先掌握“条件数”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_bisection",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“误差分析”为学习“二分法”提供背景与解题基础。"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_conditioning",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“条件数”需要先掌握“误差分析”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_euler",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“欧拉法”需要先掌握“误差分析”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_polynomial_interp",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“多项式插值”需要先掌握“误差分析”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_euler",
       "to": "c_mit18330_ode_stability",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“ODE 稳定性”需要先掌握“欧拉法”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_euler",
       "to": "c_mit18330_runge_kutta",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Runge-Kutta 法”需要先掌握“欧拉法”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_floating_point",
       "to": "c_mit18330_error_analysis",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“误差分析”需要先掌握“浮点表示”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_lu",
       "to": "c_mit18330_cholesky",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Cholesky 分解”需要先掌握“LU 分解”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_lu",
       "to": "c_mit18330_iterative_linear",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“LU 分解”为学习“迭代法”提供背景与解题基础。"
     },
     {
       "from": "c_mit18330_lu",
       "to": "c_mit18330_least_squares",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“最小二乘逼近”需要先掌握“LU 分解”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_newton",
       "to": "c_mit18330_secant",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“割线法”需要先掌握“牛顿法”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_polynomial_interp",
       "to": "c_mit18330_gaussian_quad",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“高斯求积”需要先掌握“多项式插值”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_polynomial_interp",
       "to": "c_mit18330_newton_cotes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Newton-Cotes 公式”需要先掌握“多项式插值”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_polynomial_interp",
       "to": "c_mit18330_splines",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“样条插值”需要先掌握“多项式插值”的定义、表示或操作方法。"
     }
   ]
 }

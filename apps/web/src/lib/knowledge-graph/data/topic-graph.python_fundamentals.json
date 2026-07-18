@@ -2,7 +2,7 @@
   "graphId": "python_fundamentals",
   "subject": "Python Fundamentals",
   "generatedFrom": "data/knowledge-graphs/source/python_fundamentals.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -1082,467 +1082,560 @@
     {
       "from": "pyf_block_indentation",
       "to": "pyf_condition_controlled_loops",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“条件控制循环”需要先掌握“代码块缩进”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_block_indentation",
       "to": "pyf_conditional_branching",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“条件分支”需要先掌握“代码块缩进”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_block_indentation",
       "to": "pyf_for_iteration",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“for 迭代”需要先掌握“代码块缩进”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_block_indentation",
       "to": "pyf_function_definition_calls",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“函数定义与调用”需要先掌握“代码块缩进”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_class_definitions_instances",
       "to": "pyf_class_inheritance",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“类继承”需要先掌握“类定义与实例”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_class_definitions_instances",
       "to": "pyf_instance_attributes",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“实例属性”需要先掌握“类定义与实例”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_class_definitions_instances",
       "to": "pyf_object_composition",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“对象组合”需要先掌握“类定义与实例”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_class_inheritance",
       "to": "pyf_method_overriding",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“方法重写”需要先掌握“类继承”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_comparison_expressions",
       "to": "pyf_compound_conditions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“复合条件”需要先掌握“比较表达式”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_comparison_expressions",
       "to": "pyf_unit_testing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“单元测试”需要先掌握“比较表达式”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_compound_conditions",
       "to": "pyf_condition_controlled_loops",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“条件控制循环”需要先掌握“复合条件”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_compound_conditions",
       "to": "pyf_conditional_branching",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“条件分支”需要先掌握“复合条件”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_condition_controlled_loops",
       "to": "pyf_loop_control",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“循环控制”需要先掌握“条件控制循环”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_condition_controlled_loops",
       "to": "pyf_sentinel_flag_loops",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“哨兵与标志循环”需要先掌握“条件控制循环”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_conditional_branching",
       "to": "pyf_collection_filtering",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“集合筛选”需要先掌握“条件分支”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_debugging_workflow",
       "to": "pyf_refactoring_readability",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“调试流程”为学习“重构与可读性”提供背景与解题基础。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_dictionary_iteration",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“字典遍历”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_incremental_data_collection",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“增量数据收集”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_json_persistence",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“JSON 持久化”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_nested_collections",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“嵌套集合”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_safe_dictionary_lookup",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“安全字典查找”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_dictionary_operations",
       "to": "pyf_variadic_keyword_arguments",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“可变关键字实参”需要先掌握“字典操作”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_file_paths_contexts",
       "to": "pyf_text_file_io",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“文本文件输入输出”需要先掌握“文件路径与上下文”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_collection_filtering",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“集合筛选”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_dictionary_iteration",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“字典遍历”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_list_comprehensions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“列表推导式”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_nested_data_traversal",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“嵌套数据遍历”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_for_iteration",
       "to": "pyf_tuple_traversal",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“元组遍历”需要先掌握“for 迭代”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_class_definitions_instances",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“类定义与实例”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_function_return_values",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“函数返回值”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_module_imports",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“模块导入”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_parameters_arguments",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“形参与实参”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_refactoring_readability",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“重构与可读性”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_definition_calls",
       "to": "pyf_variable_scope",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“变量作用域”需要先掌握“函数定义与调用”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_function_return_values",
       "to": "pyf_unit_testing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“单元测试”需要先掌握“函数返回值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_instance_attributes",
       "to": "pyf_instance_methods",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“实例方法”需要先掌握“实例属性”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_instance_attributes",
       "to": "pyf_object_composition",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“对象组合”需要先掌握“实例属性”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_instance_methods",
       "to": "pyf_class_inheritance",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“类继承”需要先掌握“实例方法”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_instance_methods",
       "to": "pyf_method_overriding",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“方法重写”需要先掌握“实例方法”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_interactive_execution",
       "to": "pyf_script_execution",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“交互式执行”为学习“脚本执行”提供背景与解题基础。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_for_iteration",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“for 迭代”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_list_comprehensions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“列表推导式”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_list_mutation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“列表修改”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_nested_collections",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“嵌套集合”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_sequence_indexing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“序列索引”需要先掌握“列表构造”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_construction",
       "to": "pyf_tuple_immutability",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“列表构造”为学习“元组不可变性”提供背景与解题基础。"
     },
     {
       "from": "pyf_list_mutation",
       "to": "pyf_collection_filtering",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“集合筛选”需要先掌握“列表修改”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_list_mutation",
       "to": "pyf_list_ordering",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“列表修改”为学习“列表排序”提供背景与解题基础。"
     },
     {
       "from": "pyf_list_mutation",
       "to": "pyf_mutable_argument_effects",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“可变实参效应”需要先掌握“列表修改”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_module_imports",
       "to": "pyf_import_aliases",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“模块导入”为学习“导入别名”提供背景与解题基础。"
     },
     {
       "from": "pyf_module_imports",
       "to": "pyf_standard_library_use",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“标准库使用”需要先掌握“模块导入”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_nested_collections",
       "to": "pyf_nested_data_traversal",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“嵌套数据遍历”需要先掌握“嵌套集合”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_numeric_types",
       "to": "pyf_arithmetic_expressions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“算术表达式”需要先掌握“数值类型”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_numeric_types",
       "to": "pyf_explicit_type_conversion",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“显式类型转换”需要先掌握“数值类型”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_numeric_types",
       "to": "pyf_range_sequences",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“range 序列”需要先掌握“数值类型”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_instance_methods",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“实例方法”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_mutable_argument_effects",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“可变实参效应”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_positional_keyword_arguments",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“位置实参与关键字实参”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_variadic_keyword_arguments",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“可变关键字实参”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_parameters_arguments",
       "to": "pyf_variadic_positional_arguments",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“可变位置实参”需要先掌握“形参与实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_positional_keyword_arguments",
       "to": "pyf_default_optional_parameters",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“默认与可选参数”需要先掌握“位置实参与关键字实参”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_exceptions",
       "to": "pyf_debugging_workflow",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“调试流程”需要先掌握“运行时异常”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_exceptions",
       "to": "pyf_try_except_control_flow",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“try-except 控制流”需要先掌握“运行时异常”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_values",
       "to": "pyf_comparison_expressions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“比较表达式”需要先掌握“运行时值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_values",
       "to": "pyf_numeric_types",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“数值类型”需要先掌握“运行时值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_values",
       "to": "pyf_string_values",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“字符串值”需要先掌握“运行时值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_runtime_values",
       "to": "pyf_variable_binding",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“变量绑定”需要先掌握“运行时值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_block_indentation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“代码块缩进”需要先掌握“脚本执行”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_file_paths_contexts",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“文件路径与上下文”需要先掌握“脚本执行”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_function_definition_calls",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“函数定义与调用”需要先掌握“脚本执行”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_runtime_exceptions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“运行时异常”需要先掌握“脚本执行”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_runtime_values",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“脚本执行”为学习“运行时值”提供背景与解题基础。"
     },
     {
       "from": "pyf_script_execution",
       "to": "pyf_text_input",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“文本输入”需要先掌握“脚本执行”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_sentinel_flag_loops",
       "to": "pyf_incremental_data_collection",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“增量数据收集”需要先掌握“哨兵与标志循环”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_sequence_indexing",
       "to": "pyf_list_length",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“序列索引”为学习“列表长度”提供背景与解题基础。"
     },
     {
       "from": "pyf_sequence_indexing",
       "to": "pyf_list_mutation",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“列表修改”需要先掌握“序列索引”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_sequence_indexing",
       "to": "pyf_sequence_slicing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“序列切片”需要先掌握“序列索引”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_sequence_slicing",
       "to": "pyf_mutable_argument_effects",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“序列切片”为学习“可变实参效应”提供背景与解题基础。"
     },
     {
       "from": "pyf_string_values",
       "to": "pyf_file_paths_contexts",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“文件路径与上下文”需要先掌握“字符串值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_string_values",
       "to": "pyf_formatted_strings",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“格式化字符串”需要先掌握“字符串值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_string_values",
       "to": "pyf_string_transformations",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“字符串转换”需要先掌握“字符串值”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_text_file_io",
       "to": "pyf_json_persistence",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“JSON 持久化”需要先掌握“文本文件输入输出”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_text_input",
       "to": "pyf_explicit_type_conversion",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“显式类型转换”需要先掌握“文本输入”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_text_input",
       "to": "pyf_input_prompt_design",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“文本输入”为学习“输入提示设计”提供背景与解题基础。"
     },
     {
       "from": "pyf_text_input",
       "to": "pyf_sentinel_flag_loops",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“哨兵与标志循环”需要先掌握“文本输入”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_try_except_control_flow",
       "to": "pyf_selective_error_handling",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“选择性错误处理”需要先掌握“try-except 控制流”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_unit_testing",
       "to": "pyf_debugging_workflow",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“单元测试”为学习“调试流程”提供背景与解题基础。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_class_definitions_instances",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“类定义与实例”需要先掌握“变量绑定”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_dictionary_operations",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“字典操作”需要先掌握“变量绑定”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_identifier_rules",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“变量绑定”为学习“标识符规则”提供背景与解题基础。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_list_construction",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“列表构造”需要先掌握“变量绑定”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_parameters_arguments",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“形参与实参”需要先掌握“变量绑定”的定义、表示或操作方法。"
     },
     {
       "from": "pyf_variable_binding",
       "to": "pyf_variable_scope",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“变量作用域”需要先掌握“变量绑定”的定义、表示或操作方法。"
     }
   ]
 }

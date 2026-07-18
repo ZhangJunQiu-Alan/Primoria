@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "computer_systems",
   "subject": "Computer Systems",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_computer_systems"
+    "src_cmu_15213_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "比特与字节与整数表示",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Bits and Bytes and Integer Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t1_c1_3",
@@ -33,8 +43,13 @@
       "name_zh": "整数运算与浮点数表示",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Integer Arithmetic and Floating Point Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_float_machine_ops",
@@ -43,8 +58,13 @@
       "name_zh": "浮点运算与x86-64数据传输",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Floating Point Operations and x86-64 Data Movement"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_float_machine_ops_c2_2",
@@ -53,8 +73,13 @@
       "name_zh": "算术与逻辑运算与控制流",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_procedures_arch",
@@ -63,8 +88,13 @@
       "name_zh": "过程与调用栈与数组与结构体",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Procedures and Call Stack and Arrays and Structs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_procedures_arch_c3_1",
@@ -73,8 +103,13 @@
       "name_zh": "指令集体系结构与顺序CPU实现",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Instruction Set Architecture (Y86-64) and Sequential CPU Implementation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t3",
@@ -83,8 +118,13 @@
       "name_zh": "处理器体系结构",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Processor Architecture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t4",
@@ -93,8 +133,13 @@
       "name_zh": "代码优化",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_optimization_locality",
@@ -103,8 +148,13 @@
       "name_zh": "内存别名与性能分析工具",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Aliasing and Profiling Tools"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_optimization_locality_c5_1",
@@ -113,8 +163,13 @@
       "name_zh": "存储技术与局部性原理",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Storage Technologies and Principle of Locality"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t5",
@@ -123,8 +178,13 @@
       "name_zh": "存储层次与缓存",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t6",
@@ -133,8 +193,13 @@
       "name_zh": "链接",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Linking"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_linking_processes",
@@ -143,8 +208,13 @@
       "name_zh": "重定位与动态链接",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Relocation and Dynamic Linking"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_linking_processes_c7_1",
@@ -153,8 +223,13 @@
       "name_zh": "异常与进程与上下文切换",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t7",
@@ -163,8 +238,13 @@
       "name_zh": "异常控制流",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptional Control Flow"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t8",
@@ -173,8 +253,13 @@
       "name_zh": "虚拟内存",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Virtual Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_memmgmt_unixio",
@@ -183,8 +268,13 @@
       "name_zh": "动态内存分配与垃圾回收基础",
       "topic": null,
       "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Dynamic Memory Allocation and Garbage Collection Basics"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_memmgmt_unixio_c9_1",
@@ -193,8 +283,13 @@
       "name_zh": "Unix 输入输出与文件元数据",
       "topic": null,
       "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Unix I/O and File Metadata"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t9",
@@ -203,8 +298,13 @@
       "name_zh": "系统级I/O",
       "topic": null,
       "default_order": 19,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: System-Level I/O"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t10",
@@ -213,8 +313,13 @@
       "name_zh": "网络编程",
       "topic": null,
       "default_order": 20,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Network Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_network_concurrency",
@@ -223,8 +328,13 @@
       "name_zh": "套接字接口与HTTP协议基础",
       "topic": null,
       "default_order": 21,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Sockets Interface and HTTP Protocol Basics"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_network_concurrency_c11_1",
@@ -233,8 +343,13 @@
       "name_zh": "线程基础与共享变量",
       "topic": null,
       "default_order": 22,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Thread Basics and Shared Variables"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t11",
@@ -243,8 +358,13 @@
       "name_zh": "并发编程",
       "topic": null,
       "default_order": 23,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Concurrent Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c1_1",
@@ -256,12 +376,17 @@
       "description": "Information encoded as bit patterns grouped into bytes, with hexadecimal notation used as a compact human-readable representation of the underlying binary machine state.",
       "default_order": 1,
       "centrality": 0.2211,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Bits and Bytes and Integer Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c1_2",
-      "canonical_id": "pc_5567d6cb33f4cbd87a14033b010eac6c",
+      "canonical_id": "pc_4b1450986e2eb588329ebce0b5865084",
       "kind": "concept",
       "name": "Integer Representation",
       "name_zh": "整数表示",
@@ -271,8 +396,13 @@
       "centrality": 0.4161,
       "visual": "diagram",
       "visual_hint": "Diagram fixed-width integer encodings including two's complement.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Bits and Bytes and Integer Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c1_3",
@@ -284,12 +414,17 @@
       "description": "Addition, subtraction, and multiplication on fixed-width integers, including modular wraparound and overflow that follow from finite two's-complement and unsigned encodings.",
       "default_order": 1,
       "centrality": 0.4603,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Integer Arithmetic and Floating Point Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c1_4",
-      "canonical_id": "pc_8918cca1ec876db0fee0e831889860ae",
+      "canonical_id": "pc_ebeceaa256b9a24b42b1ef0234b977bd",
       "kind": "concept",
       "name": "Floating Point Representation",
       "name_zh": "浮点数表示",
@@ -299,8 +434,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Diagram the IEEE 754 sign, exponent, and fraction fields.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Integer Arithmetic and Floating Point Representation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c1_5",
@@ -312,8 +452,13 @@
       "description": "Arithmetic on IEEE 754 values, where results are rounded to representable numbers, making operations non-associative and introducing rounding error and special-case behaviour.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Floating Point Operations and x86-64 Data Movement"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c2_1",
@@ -325,8 +470,13 @@
       "description": "x86-64 instructions that move data between registers and memory, using addressing modes and operand sizes to load, store, and copy machine words.",
       "default_order": 2,
       "centrality": 0.5124,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Floating Point Operations and x86-64 Data Movement"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c2_2",
@@ -338,8 +488,13 @@
       "description": "x86-64 instructions performing integer arithmetic, bitwise logic, and shifts on registers and memory, updating condition-code flags used by later conditional instructions.",
       "default_order": 1,
       "centrality": 0.1923,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c2_3",
@@ -351,8 +506,13 @@
       "description": "Implementing conditionals and loops in assembly using condition-code flags, conditional jumps, and comparison instructions to direct the processor's instruction stream.",
       "default_order": 2,
       "centrality": 0.1971,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c2_4",
@@ -366,8 +526,13 @@
       "centrality": 0.1029,
       "visual": "diagram",
       "visual_hint": "Diagram the call stack passing arguments and saving the return address.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Procedures and Call Stack and Arrays and Structs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c2_5",
@@ -381,8 +546,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram array and struct memory layout and element addressing.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Procedures and Call Stack and Arrays and Structs"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c3_1",
@@ -394,8 +564,13 @@
       "description": "The Y86-64 instruction set, a simplified teaching ISA defining registers, instruction encodings, and semantics used to study processor implementation.",
       "default_order": 1,
       "centrality": 0.2087,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Instruction Set Architecture (Y86-64) and Sequential CPU Implementation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c3_2",
@@ -407,12 +582,17 @@
       "description": "A sequential processor design executing each instruction through fetch, decode, execute, memory, and write-back stages within a single clock cycle.",
       "default_order": 2,
       "centrality": 0.2163,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Instruction Set Architecture (Y86-64) and Sequential CPU Implementation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c3_3",
-      "canonical_id": "pc_f5cd74edf2f8774a3009082b89fe88b7",
+      "canonical_id": "pc_97f69843c3d9b62a3ecc1529fc063cb1",
       "kind": "concept",
       "name": "Pipelining Principles",
       "name_zh": "流水线原理",
@@ -422,12 +602,17 @@
       "centrality": 0.2253,
       "visual": "diagram",
       "visual_hint": "Pipeline stage diagram of overlapping instructions.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Processor Architecture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c3_4",
-      "canonical_id": "pc_22a8f2ff69723129d2fafb6fb09b9069",
+      "canonical_id": "pc_a83b891c43ca1b7636adc077e56a0114",
       "kind": "concept",
       "name": "Pipeline Hazards and Forwarding",
       "name_zh": "流水线冒险与转发",
@@ -437,8 +622,13 @@
       "centrality": 0.2235,
       "visual": "diagram",
       "visual_hint": "Diagram a pipeline hazard resolved by forwarding.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Processor Architecture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c3_5",
@@ -450,8 +640,13 @@
       "description": "Handling exceptions in a pipelined processor, requiring precise state by detecting events in order and squashing partially executed younger instructions.",
       "default_order": 3,
       "centrality": 0.2338,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Processor Architecture"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c4_1",
@@ -463,8 +658,13 @@
       "description": "Reasons compilers cannot fully optimise code, including memory aliasing, function side effects, and conservative assumptions that block otherwise valid transformations.",
       "default_order": 1,
       "centrality": 0.0998,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c4_2",
@@ -476,8 +676,13 @@
       "description": "An optimisation that replicates loop bodies to reduce loop-control overhead and expose more independent instructions for instruction-level parallelism.",
       "default_order": 2,
       "centrality": 0.0564,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c4_3",
@@ -489,8 +694,13 @@
       "description": "Executing independent instructions simultaneously on superscalar, pipelined hardware, limited by data dependencies and the processor's functional-unit latency and throughput.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c4_4",
@@ -502,8 +712,13 @@
       "description": "When two pointers may reference the same memory location, forcing the compiler to preserve memory accesses and preventing certain optimisations.",
       "default_order": 1,
       "centrality": 0.0318,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Aliasing and Profiling Tools"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c4_5",
@@ -515,8 +730,13 @@
       "description": "Tools that measure where a program spends time, identifying performance bottlenecks so optimisation effort targets the most costly code paths.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Aliasing and Profiling Tools"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c5_1",
@@ -528,8 +748,13 @@
       "description": "Characteristics and trends of storage technologies such as SRAM, DRAM, disks, and SSDs, differing in speed, capacity, volatility, and cost per byte.",
       "default_order": 1,
       "centrality": 0.1479,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Storage Technologies and Principle of Locality"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c5_2",
@@ -541,8 +766,13 @@
       "description": "Programs tend to reuse recently accessed data (temporal locality) and nearby data (spatial locality), a behaviour that caching exploits to improve performance.",
       "default_order": 2,
       "centrality": 0.1448,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Storage Technologies and Principle of Locality"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c5_3",
@@ -556,8 +786,13 @@
       "centrality": 0.1412,
       "visual": "diagram",
       "visual_hint": "Diagram cache organisation into sets, lines, and blocks with tags.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c5_4",
@@ -569,8 +804,13 @@
       "description": "Metrics such as hit rate, miss rate, miss penalty, and average memory access time used to evaluate cache effectiveness.",
       "default_order": 2,
       "centrality": 0.0318,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c5_5",
@@ -582,8 +822,13 @@
       "description": "Structuring data access patterns to maximise temporal and spatial locality, improving cache hit rates and overall program performance.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c6_1",
@@ -595,8 +840,13 @@
       "description": "Combining relocatable object files at build time into a single executable by resolving symbols and merging sections into the final image.",
       "default_order": 1,
       "centrality": 0.0919,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Linking"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c6_2",
@@ -608,8 +858,13 @@
       "description": "The Executable and Linkable Format that structures object files into sections and symbol tables used by linkers and loaders.",
       "default_order": 2,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Linking"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c6_3",
@@ -621,8 +876,13 @@
       "description": "The linker step associating each symbol reference with exactly one symbol definition across object files and libraries, detecting duplicates.",
       "default_order": 3,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Linking"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c6_4",
@@ -634,8 +894,13 @@
       "description": "The linker step that assigns final run-time addresses to merged sections and patches symbol references to point at those addresses.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Relocation and Dynamic Linking"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c6_5",
@@ -647,8 +912,13 @@
       "description": "Deferring symbol resolution to load or run time by linking against shared libraries, reducing executable size and enabling code sharing.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Relocation and Dynamic Linking"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c7_1",
@@ -660,8 +930,13 @@
       "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel.",
       "default_order": 1,
       "centrality": 0.2459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c7_2",
@@ -675,8 +950,13 @@
       "centrality": 0.2602,
       "visual": "diagram",
       "visual_hint": "Diagram a context switch between processes.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c7_3",
@@ -688,8 +968,13 @@
       "description": "System calls that create processes with fork, load new programs with execve, and reap children with wait, managing the process lifecycle.",
       "default_order": 1,
       "centrality": 0.1827,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptional Control Flow"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c7_4",
@@ -701,8 +986,13 @@
       "description": "A mechanism delivering asynchronous notifications to processes, with handlers that interrupt normal control flow to respond to events.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptional Control Flow"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c7_5",
@@ -714,8 +1004,13 @@
       "description": "Transferring control across function boundaries using setjmp and longjmp, bypassing the normal call-return discipline for error recovery.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptional Control Flow"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c8_1",
@@ -729,8 +1024,13 @@
       "centrality": 0.0969,
       "visual": "diagram",
       "visual_hint": "Diagram MMU address translation from virtual to physical.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Virtual Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c8_2",
@@ -744,12 +1044,17 @@
       "centrality": 0.0848,
       "visual": "diagram",
       "visual_hint": "Diagram a multi-level page table mapping pages to frames.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Virtual Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c8_3",
-      "canonical_id": "pc_ad68c66b5ea959eee0738d75ee26324d",
+      "canonical_id": "pc_7c3aac7db19c521b97172ca9c914c7f3",
       "kind": "concept",
       "name": "Translation Lookaside Buffer (TLB)",
       "name_zh": "地址转换后备缓冲器（TLB）",
@@ -757,8 +1062,13 @@
       "description": "A small hardware cache of recent virtual-to-physical translations that accelerates address translation by avoiding repeated page-table walks.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Virtual Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c8_4",
@@ -770,8 +1080,13 @@
       "description": "Managing heap memory at run time with allocators like malloc and free, balancing throughput, fragmentation, and memory utilisation.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Dynamic Memory Allocation and Garbage Collection Basics"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c8_5",
@@ -783,8 +1098,13 @@
       "description": "Automatic reclamation of unreachable heap memory by tracing or counting references, freeing the programmer from explicit deallocation.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Dynamic Memory Allocation and Garbage Collection Basics"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c9_1",
@@ -796,8 +1116,13 @@
       "description": "The Unix model treating files, devices, and sockets uniformly through descriptors and the open, read, write, and close system calls.",
       "default_order": 1,
       "centrality": 0.1399,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Unix I/O and File Metadata"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c9_2",
@@ -809,8 +1134,13 @@
       "description": "Information about a file stored separately from its contents, such as size, permissions, and timestamps, accessed via the stat system call.",
       "default_order": 2,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Unix I/O and File Metadata"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c9_3",
@@ -822,8 +1152,13 @@
       "description": "A buffered, portable I/O library layered over Unix system calls that reduces system-call overhead through stream buffering.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: System-Level I/O"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c9_4",
@@ -835,8 +1170,13 @@
       "description": "How descriptors, open-file table entries, and inodes interact so processes can share open files and offsets, especially after fork.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: System-Level I/O"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c9_5",
@@ -848,8 +1188,13 @@
       "description": "Redirecting a process's standard input or output to files using dup2 to duplicate descriptors onto the standard descriptor numbers.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: System-Level I/O"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c10_1",
@@ -861,8 +1206,13 @@
       "description": "A networking model where client processes request services and server processes provide them, communicating over a transport-layer connection.",
       "default_order": 1,
       "centrality": 0.0468,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Network Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c10_2",
@@ -874,12 +1224,17 @@
       "description": "The network-layer protocol providing best-effort, connectionless delivery of packets across interconnected networks using hierarchical IP addressing.",
       "default_order": 2,
       "centrality": 0.0519,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Network Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c10_3",
-      "canonical_id": "pc_70fb2dabf5aec3e6ae75f0c83c488a12",
+      "canonical_id": "pc_37cce4e5b7bddf09018c0c6f460a7bc7",
       "kind": "concept",
       "name": "Transmission Control Protocol (TCP)",
       "name_zh": "TCP协议",
@@ -887,8 +1242,13 @@
       "description": "The transport protocol providing reliable, ordered, connection-oriented byte streams over IP using acknowledgements, retransmission, and flow control.",
       "default_order": 3,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Network Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c10_4",
@@ -900,8 +1260,13 @@
       "description": "The API for network programming that abstracts connections as file descriptors, with calls such as socket, bind, listen, connect, and accept.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Sockets Interface and HTTP Protocol Basics"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c10_5",
@@ -913,8 +1278,13 @@
       "description": "The application-layer request-response protocol underlying the web, using methods, headers, and status codes to transfer resources over TCP.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Sockets Interface and HTTP Protocol Basics"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c11_1",
@@ -926,8 +1296,13 @@
       "description": "Threads as independent logical flows sharing a process's address space, created and joined to achieve concurrency within a single process.",
       "default_order": 1,
       "centrality": 0.0942,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Thread Basics and Shared Variables"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c11_2",
@@ -939,8 +1314,13 @@
       "description": "How threads share global and heap variables, and the memory model determining when one thread's writes become visible to others.",
       "default_order": 2,
       "centrality": 0.0817,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Thread Basics and Shared Variables"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c11_3",
@@ -954,8 +1334,13 @@
       "centrality": 0.0669,
       "visual": "diagram",
       "visual_hint": "Diagram two threads coordinating with a semaphore's P and V.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Concurrent Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c11_4",
@@ -967,8 +1352,13 @@
       "description": "Properties making functions safe to call concurrently, including reentrancy and avoiding unsynchronised access to shared mutable state.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Concurrent Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c11_5",
@@ -982,8 +1372,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram a deadlock as a cycle of threads waiting on resources.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Concurrent Programming"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -992,456 +1387,914 @@
       "from": "c1_1",
       "to": "c1_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Bits and Bytes and Integer Representation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“整数表示”需要先掌握“比特与字节”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c1_2",
       "to": "c1_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Bits and Bytes and Integer Representation"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Integer Arithmetic and Floating Point Representation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“整数运算”需要先掌握“整数表示”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c1_1",
       "to": "c1_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Bits and Bytes and Integer Representation"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Integer Arithmetic and Floating Point Representation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“浮点数表示”需要先掌握“比特与字节”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c1_4",
       "to": "c1_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Integer Arithmetic and Floating Point Representation"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Floating Point Operations and x86-64 Data Movement"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“浮点运算”需要先掌握“浮点数表示”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c2_1",
       "to": "c2_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Floating Point Operations and x86-64 Data Movement"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“算术与逻辑运算”需要先掌握“x86-64数据传输”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c2_2",
       "to": "c2_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“控制流”需要先掌握“算术与逻辑运算”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c2_3",
       "to": "c2_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Procedures and Call Stack and Arrays and Structs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“过程与调用栈”需要先掌握“控制流”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c2_1",
       "to": "c2_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Floating Point Operations and x86-64 Data Movement"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Procedures and Call Stack and Arrays and Structs"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“数组与结构体”需要先掌握“x86-64数据传输”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c3_1",
       "to": "c3_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Instruction Set Architecture (Y86-64) and Sequential CPU Implementation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“顺序CPU实现”需要先掌握“指令集体系结构”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c3_2",
       "to": "c3_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Instruction Set Architecture (Y86-64) and Sequential CPU Implementation"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Processor Architecture"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“流水线原理”需要先掌握“顺序CPU实现”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c3_3",
       "to": "c3_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Processor Architecture"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“流水线冒险与转发”需要先掌握“流水线原理”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c3_4",
       "to": "c3_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Processor Architecture"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“流水线异常”需要先掌握“流水线冒险与转发”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c4_1",
       "to": "c4_2",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“编译器局限”为学习“循环展开”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "c4_2",
       "to": "c4_3",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“循环展开”为学习“指令级并行”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "c4_1",
       "to": "c4_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Aliasing and Profiling Tools"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“内存别名”需要先掌握“编译器局限”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c4_2",
       "to": "c4_5",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Aliasing and Profiling Tools"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“循环展开”为学习“性能分析工具”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "c5_1",
       "to": "c5_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Storage Technologies and Principle of Locality"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“局部性原理”需要先掌握“存储技术”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c5_2",
       "to": "c5_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Storage Technologies and Principle of Locality"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“缓存组织”需要先掌握“局部性原理”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c5_3",
       "to": "c5_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“缓存性能指标”需要先掌握“缓存组织”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c5_4",
       "to": "c5_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“缓存友好代码”需要先掌握“缓存性能指标”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c5_3",
       "to": "c5_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“缓存友好代码”需要先掌握“缓存组织”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c6_1",
       "to": "c6_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Linking"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“目标文件(ELF)”需要先掌握“静态链接”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c6_2",
       "to": "c6_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Linking"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“符号解析”需要先掌握“目标文件(ELF)”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c6_3",
       "to": "c6_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Linking"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Relocation and Dynamic Linking"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“重定位”需要先掌握“符号解析”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c6_4",
       "to": "c6_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Relocation and Dynamic Linking"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“动态链接”需要先掌握“重定位”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c7_1",
       "to": "c7_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“进程与上下文切换”需要先掌握“异常”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c7_2",
       "to": "c7_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptional Control Flow"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“进程控制”需要先掌握“进程与上下文切换”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c7_3",
       "to": "c7_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptional Control Flow"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“信号与信号处理”需要先掌握“进程控制”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c7_4",
       "to": "c7_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptional Control Flow"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“非局部跳转”需要先掌握“信号与信号处理”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c8_1",
       "to": "c8_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Virtual Memory"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“页表”需要先掌握“地址转换”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c8_2",
       "to": "c8_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Virtual Memory"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“地址转换后备缓冲器（TLB）”需要先掌握“页表”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c8_2",
       "to": "c8_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Virtual Memory"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Dynamic Memory Allocation and Garbage Collection Basics"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“动态内存分配”需要先掌握“页表”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c8_4",
       "to": "c8_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Dynamic Memory Allocation and Garbage Collection Basics"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“垃圾回收基础”需要先掌握“动态内存分配”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c9_1",
       "to": "c9_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Unix I/O and File Metadata"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“文件元数据”需要先掌握“Unix 输入输出”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c9_1",
       "to": "c9_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Unix I/O and File Metadata"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: System-Level I/O"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“标准I/O库”需要先掌握“Unix 输入输出”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c9_2",
       "to": "c9_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Unix I/O and File Metadata"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: System-Level I/O"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“文件共享”需要先掌握“文件元数据”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c9_4",
       "to": "c9_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: System-Level I/O"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“I/O重定向”需要先掌握“文件共享”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c10_1",
       "to": "c10_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Network Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“IP协议”需要先掌握“客户端-服务器模型”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c10_2",
       "to": "c10_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Network Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“TCP协议”需要先掌握“IP协议”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c10_3",
       "to": "c10_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Network Programming"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Sockets Interface and HTTP Protocol Basics"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“套接字接口”需要先掌握“TCP协议”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c10_4",
       "to": "c10_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Sockets Interface and HTTP Protocol Basics"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“HTTP协议基础”需要先掌握“套接字接口”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c11_1",
       "to": "c11_2",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Thread Basics and Shared Variables"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“共享变量”需要先掌握“线程基础”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c11_2",
       "to": "c11_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Thread Basics and Shared Variables"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Concurrent Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“同步（信号量）”需要先掌握“共享变量”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c11_3",
       "to": "c11_4",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Concurrent Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线程安全”需要先掌握“同步（信号量）”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c11_3",
       "to": "c11_5",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Concurrent Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“死锁”需要先掌握“同步（信号量）”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c1_3",
       "to": "c2_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Integer Arithmetic and Floating Point Representation"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Floating Point Operations and x86-64 Data Movement"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“x86-64数据传输”需要先掌握“整数运算”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c2_3",
       "to": "c4_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“编译器局限”需要先掌握“控制流”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c2_1",
       "to": "c3_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Floating Point Operations and x86-64 Data Movement"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Instruction Set Architecture (Y86-64) and Sequential CPU Implementation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“指令集体系结构”需要先掌握“x86-64数据传输”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c2_1",
       "to": "c5_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Floating Point Operations and x86-64 Data Movement"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Storage Technologies and Principle of Locality"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“存储技术”需要先掌握“x86-64数据传输”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c2_4",
       "to": "c6_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Procedures and Call Stack and Arrays and Structs"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Linking"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“静态链接”需要先掌握“过程与调用栈”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c3_5",
       "to": "c7_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Processor Architecture"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“异常”需要先掌握“流水线异常”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c3_3",
       "to": "c4_3",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Processor Architecture"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Code Optimization"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“指令级并行”需要先掌握“流水线原理”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c4_4",
       "to": "c5_5",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Aliasing and Profiling Tools"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“内存别名”为学习“缓存友好代码”提供背景与解题基础。"
     },
     {
       "type": "prereq",
       "from": "c5_3",
       "to": "c8_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Memory Hierarchy and Cache"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Virtual Memory"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“地址转换”需要先掌握“缓存组织”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c7_3",
       "to": "c9_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptional Control Flow"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Unix I/O and File Metadata"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Unix 输入输出”需要先掌握“进程控制”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c7_2",
       "to": "c11_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Thread Basics and Shared Variables"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线程基础”需要先掌握“进程与上下文切换”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c9_1",
       "to": "c10_1",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Unix I/O and File Metadata"
+        },
+        {
+          "source_id": "src_cmu_15213_2026",
+          "locator": "Course schedule and CS:APP-aligned unit: Network Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“客户端-服务器模型”需要先掌握“Unix 输入输出”的定义、表示或操作方法。"
     }
   ]
 }

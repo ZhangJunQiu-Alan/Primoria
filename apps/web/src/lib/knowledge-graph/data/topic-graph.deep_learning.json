@@ -2,7 +2,7 @@
   "graphId": "deep_learning",
   "subject": "Introduction to Deep Learning",
   "generatedFrom": "data/knowledge-graphs/source/deep_learning.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -585,227 +585,272 @@
     {
       "from": "dl_activation",
       "to": "dl_forward",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“前向传播”需要先掌握“激活函数”的定义、表示或操作方法。"
     },
     {
       "from": "dl_attention",
       "to": "dl_self_attention",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“自注意力”需要先掌握“注意力机制”的定义、表示或操作方法。"
     },
     {
       "from": "dl_autoencoder",
       "to": "dl_vae",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“变分自编码器”需要先掌握“自编码器”的定义、表示或操作方法。"
     },
     {
       "from": "dl_backprop",
       "to": "dl_loss",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“反向传播”为学习“损失函数”提供背景与解题基础。"
     },
     {
       "from": "dl_backprop",
       "to": "dl_vanishing_grad",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“梯度消失与梯度爆炸”需要先掌握“反向传播”的定义、表示或操作方法。"
     },
     {
       "from": "dl_batchnorm",
       "to": "dl_regularization",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“批归一化”为学习“正则化”提供背景与解题基础。"
     },
     {
       "from": "dl_bptt",
       "to": "dl_seq_vanishing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“长期依赖问题”需要先掌握“时间反向传播”的定义、表示或操作方法。"
     },
     {
       "from": "dl_cnn_arch",
       "to": "dl_resnet",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“残差网络 (ResNet)”需要先掌握“CNN 架构”的定义、表示或操作方法。"
     },
     {
       "from": "dl_computational_graph",
       "to": "dl_backprop",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“反向传播”需要先掌握“计算图”的定义、表示或操作方法。"
     },
     {
       "from": "dl_convolution",
       "to": "dl_padding_stride",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“填充与步幅”需要先掌握“卷积”的定义、表示或操作方法。"
     },
     {
       "from": "dl_diffusion",
       "to": "dl_flow",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“扩散模型”为学习“流模型 (Normalizing Flows)”提供背景与解题基础。"
     },
     {
       "from": "dl_forward",
       "to": "dl_backprop",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“反向传播”需要先掌握“前向传播”的定义、表示或操作方法。"
     },
     {
       "from": "dl_forward",
       "to": "dl_computational_graph",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“前向传播”为学习“计算图”提供背景与解题基础。"
     },
     {
       "from": "dl_gan",
       "to": "dl_gan_training",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“GAN 训练动态”需要先掌握“生成对抗网络（GAN）”的定义、表示或操作方法。"
     },
     {
       "from": "dl_gan_training",
       "to": "dl_diffusion",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“GAN 训练动态”为学习“扩散模型”提供背景与解题基础。"
     },
     {
       "from": "dl_loss",
       "to": "dl_optimization",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“梯度下降优化”需要先掌握“损失函数”的定义、表示或操作方法。"
     },
     {
       "from": "dl_lstm",
       "to": "dl_gru",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“LSTM/GRU 循环网络”为学习“门控循环单元 (GRU)”提供背景与解题基础。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_activation",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“多层感知机”为学习“激活函数”提供背景与解题基础。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_autoencoder",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“自编码器”需要先掌握“多层感知机”的定义、表示或操作方法。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_convolution",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“卷积”需要先掌握“多层感知机”的定义、表示或操作方法。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_gan",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“生成对抗网络（GAN）”需要先掌握“多层感知机”的定义、表示或操作方法。"
     },
     {
       "from": "dl_mlp",
       "to": "dl_rnn",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“循环神经网络”需要先掌握“多层感知机”的定义、表示或操作方法。"
     },
     {
       "from": "dl_momentum",
       "to": "dl_optimizers",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“高级优化器”需要先掌握“动量法”的定义、表示或操作方法。"
     },
     {
       "from": "dl_multihead",
       "to": "dl_positional",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“多头注意力机制”为学习“位置编码”提供背景与解题基础。"
     },
     {
       "from": "dl_multihead",
       "to": "dl_transformer",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Transformer”需要先掌握“多头注意力机制”的定义、表示或操作方法。"
     },
     {
       "from": "dl_optimization",
       "to": "dl_momentum",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“动量法”需要先掌握“梯度下降优化”的定义、表示或操作方法。"
     },
     {
       "from": "dl_optimization",
       "to": "dl_regularization",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“梯度下降优化”为学习“正则化”提供背景与解题基础。"
     },
     {
       "from": "dl_optimizers",
       "to": "dl_lr_schedule",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“高级优化器”为学习“学习率衰减策略”提供背景与解题基础。"
     },
     {
       "from": "dl_padding_stride",
       "to": "dl_pooling",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“填充与步幅”为学习“池化”提供背景与解题基础。"
     },
     {
       "from": "dl_perceptron",
       "to": "dl_mlp",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“感知机”为学习“多层感知机”提供背景与解题基础。"
     },
     {
       "from": "dl_pooling",
       "to": "dl_cnn_arch",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“CNN 架构”需要先掌握“池化”的定义、表示或操作方法。"
     },
     {
       "from": "dl_positional",
       "to": "dl_transformer",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Transformer”需要先掌握“位置编码”的定义、表示或操作方法。"
     },
     {
       "from": "dl_regularization",
       "to": "dl_dropout",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“正则化”为学习“暂退法 (Dropout)”提供背景与解题基础。"
     },
     {
       "from": "dl_resnet",
       "to": "dl_transfer_learning",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“残差网络 (ResNet)”为学习“迁移学习”提供背景与解题基础。"
     },
     {
       "from": "dl_rnn",
       "to": "dl_attention",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“循环神经网络”为学习“注意力机制”提供背景与解题基础。"
     },
     {
       "from": "dl_rnn",
       "to": "dl_bptt",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“时间反向传播”需要先掌握“循环神经网络”的定义、表示或操作方法。"
     },
     {
       "from": "dl_self_attention",
       "to": "dl_multihead",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“多头注意力机制”需要先掌握“自注意力”的定义、表示或操作方法。"
     },
     {
       "from": "dl_seq_vanishing",
       "to": "dl_lstm",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“LSTM/GRU 循环网络”需要先掌握“长期依赖问题”的定义、表示或操作方法。"
     },
     {
       "from": "dl_transformer",
       "to": "dl_pretraining",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“预训练与微调”需要先掌握“Transformer”的定义、表示或操作方法。"
     },
     {
       "from": "dl_vae",
       "to": "dl_diffusion",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“变分自编码器”为学习“扩散模型”提供背景与解题基础。"
     },
     {
       "from": "dl_vae",
       "to": "dl_gan",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“变分自编码器”为学习“生成对抗网络（GAN）”提供背景与解题基础。"
     },
     {
       "from": "dl_vanishing_grad",
       "to": "dl_batchnorm",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“批归一化”需要先掌握“梯度消失与梯度爆炸”的定义、表示或操作方法。"
     },
     {
       "from": "dl_vanishing_grad",
       "to": "dl_resnet",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“梯度消失与梯度爆炸”为学习“残差网络 (ResNet)”提供背景与解题基础。"
     },
     {
       "from": "dl_vanishing_grad",
       "to": "dl_weight_init",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“梯度消失与梯度爆炸”为学习“权重初始化”提供背景与解题基础。"
     },
     {
       "from": "dl_weight_init",
       "to": "dl_batchnorm",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“权重初始化”为学习“批归一化”提供背景与解题基础。"
     }
   ]
 }

@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "computer_network",
   "subject": "Computer Networking",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_computer_network"
+    "src_stanford_cs144_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "网络分层与OSI模型",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Network Layering and OSI Model"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_arch_net_tcpip",
@@ -33,8 +43,13 @@
       "name_zh": "TCP/IP模型与封装",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: TCP/IP Model and Encapsulation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_link",
@@ -43,8 +58,13 @@
       "name_zh": "链路层服务与MAC地址",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Link Layer Services and MAC Addressing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_link_net_ethernet",
@@ -53,8 +73,13 @@
       "name_zh": "以太网与交换",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Ethernet and Switching"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_network",
@@ -63,8 +88,13 @@
       "name_zh": "IP寻址与IPv4与IPv6",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_network_net_forwarding",
@@ -73,8 +103,13 @@
       "name_zh": "转发与路由器与路由算法",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Forwarding and Routers and Routing Algorithms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_transport_part1",
@@ -83,8 +118,13 @@
       "name_zh": "传输层：UDP 与 TCP",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_transport_part2",
@@ -93,8 +133,13 @@
       "name_zh": "传输层：可靠传输与拥塞控制",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: Reliability and Control"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_application",
@@ -103,8 +148,13 @@
       "name_zh": "应用层",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Application Layer"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_layering",
@@ -118,8 +168,13 @@
       "centrality": 0.1845,
       "visual": "diagram",
       "visual_hint": "Diagram the protocol-layer stack and how layers nest.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Network Layering and OSI Model"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_osi",
@@ -133,8 +188,13 @@
       "centrality": 0.094,
       "visual": "diagram",
       "visual_hint": "Diagram the seven OSI layers and their roles.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Network Layering and OSI Model"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_tcpip",
@@ -148,8 +208,13 @@
       "centrality": 0.1629,
       "visual": "diagram",
       "visual_hint": "Diagram the four-layer TCP/IP stack.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: TCP/IP Model and Encapsulation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_encapsulation",
@@ -163,8 +228,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram each layer wrapping the layer above with its header.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: TCP/IP Model and Encapsulation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_link_services",
@@ -176,8 +246,13 @@
       "description": "Services the link layer provides over a single hop, including framing bits into packets and detecting transmission errors with checksums.",
       "default_order": 1,
       "centrality": 0.2065,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Link Layer Services and MAC Addressing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_mac",
@@ -189,8 +264,13 @@
       "description": "Media access control assigning hardware addresses to interfaces and arbitrating shared-medium access so multiple stations can transmit without persistent collisions.",
       "default_order": 2,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Link Layer Services and MAC Addressing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_ethernet",
@@ -202,8 +282,13 @@
       "description": "The dominant wired LAN technology defining frame formats, MAC addressing, and historically CSMA/CD media access over switched links.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Ethernet and Switching"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_switching",
@@ -215,8 +300,13 @@
       "description": "Layer-2 switches forwarding frames within a LAN by learning MAC-address-to-port mappings and flooding unknown destinations, building forwarding tables dynamically.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Ethernet and Switching"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_ip_addressing",
@@ -230,8 +320,13 @@
       "centrality": 0.3001,
       "visual": "diagram",
       "visual_hint": "Diagram an IP address split into network and host portions.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_ipv4_ipv6",
@@ -243,8 +338,13 @@
       "description": "The two Internet addressing versions: 32-bit IPv4 with its address exhaustion, and 128-bit IPv6 expanding the space and simplifying headers.",
       "default_order": 2,
       "centrality": 0.0443,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_forwarding",
@@ -256,8 +356,13 @@
       "description": "How routers forward packets by consulting a forwarding table to select an output interface using the destination address's longest prefix match.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Forwarding and Routers and Routing Algorithms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_routing",
@@ -271,8 +376,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Animate link-state/distance-vector routing building forwarding tables.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Forwarding and Routers and Routing Algorithms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_transport_services",
@@ -284,8 +394,13 @@
       "description": "End-to-end transport services running on hosts, multiplexing data to applications via ports and providing delivery semantics atop the network layer.",
       "default_order": 1,
       "centrality": 0.2308,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_udp",
@@ -297,8 +412,13 @@
       "description": "A connectionless transport protocol offering minimal, unreliable, unordered datagram delivery with low overhead, suited to latency-sensitive applications.",
       "default_order": 2,
       "centrality": 0.1328,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_tcp",
@@ -312,8 +432,13 @@
       "centrality": 0.2189,
       "visual": "diagram",
       "visual_hint": "Sequence diagram of the TCP three-way handshake.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_rdt",
@@ -327,8 +452,13 @@
       "centrality": 0.0638,
       "visual": "diagram",
       "visual_hint": "Sequence diagram of reliable transfer with sequence numbers and acks.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: Reliability and Control"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_flow_control",
@@ -340,8 +470,13 @@
       "description": "A receiver-driven mechanism using a sliding advertised window to prevent a fast sender from overwhelming a slow receiver's buffer.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: Reliability and Control"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_congestion",
@@ -355,8 +490,13 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Plot the TCP congestion window growing and backing off over time.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: Reliability and Control"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_http",
@@ -368,8 +508,13 @@
       "description": "The application-layer request-response protocol of the web, using methods, headers, and status codes to transfer resources, typically over TCP.",
       "default_order": 1,
       "centrality": 0.1203,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Application Layer"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_dns",
@@ -383,8 +528,13 @@
       "centrality": 0.0353,
       "visual": "diagram",
       "visual_hint": "Diagram hierarchical DNS resolution of a hostname.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Application Layer"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "net_app_protocols",
@@ -396,8 +546,13 @@
       "description": "Common application-layer protocols such as SMTP for email and FTP for file transfer, built atop transport services to deliver specific functions.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Application Layer"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -406,208 +561,416 @@
       "to": "net_osi",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Network Layering and OSI Model"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“OSI模型”需要先掌握“网络分层”的定义、表示或操作方法。"
     },
     {
       "from": "net_osi",
       "to": "net_tcpip",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Network Layering and OSI Model"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: TCP/IP Model and Encapsulation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“OSI模型”为学习“TCP/IP模型”提供背景与解题基础。"
     },
     {
       "from": "net_tcpip",
       "to": "net_encapsulation",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: TCP/IP Model and Encapsulation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“TCP/IP模型”为学习“封装”提供背景与解题基础。"
     },
     {
       "from": "net_link_services",
       "to": "net_mac",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Link Layer Services and MAC Addressing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“MAC地址”需要先掌握“链路层服务”的定义、表示或操作方法。"
     },
     {
       "from": "net_mac",
       "to": "net_ethernet",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Link Layer Services and MAC Addressing"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Ethernet and Switching"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“以太网”需要先掌握“MAC地址”的定义、表示或操作方法。"
     },
     {
       "from": "net_ethernet",
       "to": "net_switching",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Ethernet and Switching"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“交换”需要先掌握“以太网”的定义、表示或操作方法。"
     },
     {
       "from": "net_ip_addressing",
       "to": "net_ipv4_ipv6",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“IPv4与IPv6”需要先掌握“IP寻址”的定义、表示或操作方法。"
     },
     {
       "from": "net_ipv4_ipv6",
       "to": "net_forwarding",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Forwarding and Routers and Routing Algorithms"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“IPv4与IPv6”为学习“转发与路由器”提供背景与解题基础。"
     },
     {
       "from": "net_forwarding",
       "to": "net_routing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Forwarding and Routers and Routing Algorithms"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“路由算法”需要先掌握“转发与路由器”的定义、表示或操作方法。"
     },
     {
       "from": "net_transport_services",
       "to": "net_udp",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“UDP”需要先掌握“传输层服务”的定义、表示或操作方法。"
     },
     {
       "from": "net_udp",
       "to": "net_tcp",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“UDP”为学习“TCP”提供背景与解题基础。"
     },
     {
       "from": "net_tcp",
       "to": "net_rdt",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: Reliability and Control"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“可靠数据传输”需要先掌握“TCP”的定义、表示或操作方法。"
     },
     {
       "from": "net_rdt",
       "to": "net_flow_control",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: Reliability and Control"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“流量控制”需要先掌握“可靠数据传输”的定义、表示或操作方法。"
     },
     {
       "from": "net_flow_control",
       "to": "net_congestion",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: Reliability and Control"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“拥塞控制”需要先掌握“流量控制”的定义、表示或操作方法。"
     },
     {
       "from": "net_http",
       "to": "net_dns",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Application Layer"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“HTTP”为学习“DNS”提供背景与解题基础。"
     },
     {
       "from": "net_dns",
       "to": "net_app_protocols",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Application Layer"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“DNS”为学习“其他应用层协议”提供背景与解题基础。"
     },
     {
       "from": "net_layering",
       "to": "net_tcpip",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Network Layering and OSI Model"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: TCP/IP Model and Encapsulation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“TCP/IP模型”需要先掌握“网络分层”的定义、表示或操作方法。"
     },
     {
       "from": "net_layering",
       "to": "net_encapsulation",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Network Layering and OSI Model"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: TCP/IP Model and Encapsulation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“封装”需要先掌握“网络分层”的定义、表示或操作方法。"
     },
     {
       "from": "net_link_services",
       "to": "net_ip_addressing",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Link Layer Services and MAC Addressing"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“链路层服务”为学习“IP寻址”提供背景与解题基础。"
     },
     {
       "from": "net_ip_addressing",
       "to": "net_forwarding",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Forwarding and Routers and Routing Algorithms"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“转发与路由器”需要先掌握“IP寻址”的定义、表示或操作方法。"
     },
     {
       "from": "net_ip_addressing",
       "to": "net_transport_services",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“传输层服务”需要先掌握“IP寻址”的定义、表示或操作方法。"
     },
     {
       "from": "net_transport_services",
       "to": "net_tcp",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“TCP”需要先掌握“传输层服务”的定义、表示或操作方法。"
     },
     {
       "from": "net_tcp",
       "to": "net_http",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Application Layer"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“HTTP”需要先掌握“TCP”的定义、表示或操作方法。"
     },
     {
       "from": "net_udp",
       "to": "net_dns",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Application Layer"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“DNS”需要先掌握“UDP”的定义、表示或操作方法。"
     },
     {
       "from": "net_tcp",
       "to": "net_app_protocols",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Transport Layer: UDP and TCP"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: Application Layer"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“TCP”为学习“其他应用层协议”提供背景与解题基础。"
     },
     {
       "from": "net_tcpip",
       "to": "net_ip_addressing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: TCP/IP Model and Encapsulation"
+        },
+        {
+          "source_id": "src_stanford_cs144_2026",
+          "locator": "Course lecture and lab sequence: IP Addressing and IPv4 and IPv6"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“IP寻址”需要先掌握“TCP/IP模型”的定义、表示或操作方法。"
     }
   ]
 }

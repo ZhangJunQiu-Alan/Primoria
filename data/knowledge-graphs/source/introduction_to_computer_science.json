@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "introduction_to_computer_science",
   "subject": "Introduction to Computer Science",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_introduction_to_computer_science"
+    "src_harvard_cs50x_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "Scratch",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Scratch"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_control_flow_c",
@@ -33,8 +43,13 @@
       "name_zh": "控制流与 C 语言基础",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week1",
@@ -43,8 +58,13 @@
       "name_zh": "C 语言",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: C Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week2",
@@ -53,8 +73,13 @@
       "name_zh": "调试与数组",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week2_strings",
@@ -63,8 +88,13 @@
       "name_zh": "字符串与命令行参数",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Strings and Command-line Arguments"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week3",
@@ -73,8 +103,13 @@
       "name_zh": "算法",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_complexity_memory",
@@ -83,8 +118,13 @@
       "name_zh": "算法复杂度与内存",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week4",
@@ -93,8 +133,13 @@
       "name_zh": "内存",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week5",
@@ -103,8 +148,13 @@
       "name_zh": "数据结构",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_adv_data_python",
@@ -113,8 +163,13 @@
       "name_zh": "高级数据结构与 Python",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week6",
@@ -123,8 +178,13 @@
       "name_zh": "Python",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week7",
@@ -133,8 +193,13 @@
       "name_zh": "关系数据库与SQL查询",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Relational Databases and SQL Queries"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week7_joins",
@@ -143,8 +208,13 @@
       "name_zh": "SQL连接与SQL索引",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: SQL Joins and SQL Indexes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week8",
@@ -153,8 +223,13 @@
       "name_zh": "HTML与CSS",
       "topic": null,
       "default_order": 14,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: HTML and CSS"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week8_js",
@@ -163,8 +238,13 @@
       "name_zh": "JavaScript与DOM 操作",
       "topic": null,
       "default_order": 15,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: JavaScript and DOM Manipulation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week9",
@@ -173,8 +253,13 @@
       "name_zh": "Flask",
       "topic": null,
       "default_order": 16,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_web_state_security",
@@ -183,8 +268,13 @@
       "name_zh": "Web 状态、API 与安全",
       "topic": null,
       "default_order": 17,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "topic_week10",
@@ -193,8 +283,13 @@
       "name_zh": "网络安全",
       "topic": null,
       "default_order": 18,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Cybersecurity"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_functions",
@@ -206,8 +301,13 @@
       "description": "Reusable named blocks of code that take inputs and produce outputs, letting programs be organised into smaller, composable, repeatable pieces.",
       "default_order": 1,
       "centrality": 0.3471,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Scratch"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_events",
@@ -219,8 +319,13 @@
       "description": "Programming constructs that respond to occurrences such as user input or messages, central to event-driven environments like Scratch.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Scratch"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_conditions",
@@ -232,8 +337,13 @@
       "description": "Conditional statements that execute different code branches depending on whether a boolean expression evaluates to true or false.",
       "default_order": 3,
       "centrality": 0.3081,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Scratch"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_loops",
@@ -245,8 +355,13 @@
       "description": "Control structures that repeat a block of code, either a fixed number of times or while a condition holds, to automate repetition.",
       "default_order": 1,
       "centrality": 0.3081,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_abstraction",
@@ -258,8 +373,13 @@
       "description": "Hiding implementation detail behind simpler interfaces so complex systems can be built and reasoned about in manageable layers.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_c_syntax",
@@ -271,8 +391,13 @@
       "description": "The grammatical rules of the C language governing how statements, expressions, and declarations are written so the compiler can interpret them.",
       "default_order": 3,
       "centrality": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_data_types",
@@ -284,8 +409,13 @@
       "description": "Categories such as int, char, float, and double specifying how values are stored, their size in memory, and the operations allowed on them.",
       "default_order": 1,
       "centrality": 0.3899,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: C Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_operators",
@@ -297,8 +427,13 @@
       "description": "Symbols performing computations on values, including arithmetic, relational, logical, and assignment operators, combined to form expressions.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: C Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_compilation",
@@ -310,8 +445,13 @@
       "description": "The process translating C source code into an executable through preprocessing, compiling, assembling, and linking stages.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: C Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_debugging",
@@ -323,8 +463,13 @@
       "description": "The systematic process of locating and fixing program defects using tools, print statements, and reasoning about expected versus actual behaviour.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_arrays",
@@ -336,8 +481,13 @@
       "description": "Contiguous, fixed-size collections of same-typed elements accessed by integer index in constant time, the basis of many data structures.",
       "default_order": 2,
       "centrality": 0.3033,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_strings",
@@ -349,8 +499,13 @@
       "description": "Sequences of characters represented in C as null-terminated arrays of chars, manipulated through library functions and pointer operations.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Strings and Command-line Arguments"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_cli_args",
@@ -362,8 +517,13 @@
       "description": "Arguments passed to a program at launch, received through argc and argv, letting users configure behaviour from the command line.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Strings and Command-line Arguments"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_linear_search",
@@ -377,8 +537,13 @@
       "centrality": 0.0459,
       "visual": "algorithm",
       "visual_hint": "Scan an array element by element highlighting the comparison until found.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_binary_search",
@@ -392,8 +557,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Halve a sorted array each step, narrowing the search interval.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_sorting",
@@ -407,8 +577,13 @@
       "centrality": 0.0459,
       "visual": "algorithm",
       "visual_hint": "Animate bubble, selection, and merge sort rearranging an array.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithms"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_recursion",
@@ -422,8 +597,13 @@
       "centrality": 0.0459,
       "visual": "algorithm",
       "visual_hint": "Step recursive calls building up and unwinding on the call stack.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_big_o",
@@ -437,8 +617,13 @@
       "centrality": 0.0248,
       "visual": "chart",
       "visual_hint": "Plot growth of constant, log, linear, n-log-n, and quadratic complexity.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_pointers",
@@ -452,12 +637,17 @@
       "centrality": 0.2531,
       "visual": "diagram",
       "visual_hint": "Box-and-pointer diagram of variables holding memory addresses.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_malloc",
-      "canonical_id": "pc_a84ae49584a745b90c9015a431c2be65",
+      "canonical_id": "pc_402b5f3e7a405462d2dbc62cae584314",
       "kind": "concept",
       "name": "Dynamic Memory Allocation",
       "name_zh": "动态内存分配",
@@ -465,8 +655,13 @@
       "description": "Dynamic memory allocation requesting heap memory at run time with malloc and releasing it with free, enabling data sized during execution.",
       "default_order": 1,
       "centrality": 0.0604,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_call_stack",
@@ -480,8 +675,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram stack frames pushed and popped as functions are called.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_file_io",
@@ -493,8 +693,13 @@
       "description": "Reading from and writing to files using library functions, enabling programs to persist and retrieve data beyond their execution.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Memory"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_linked_lists",
@@ -508,8 +713,13 @@
       "centrality": 0.0839,
       "visual": "diagram",
       "visual_hint": "Box-and-pointer chain of nodes linked by next pointers.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_hash_tables",
@@ -523,8 +733,13 @@
       "centrality": 0.1391,
       "visual": "algorithm",
       "visual_hint": "Hash keys into buckets and resolve a collision.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_trees",
@@ -538,8 +753,13 @@
       "centrality": 0.1414,
       "visual": "algorithm",
       "visual_hint": "Insert and search nodes in a binary search tree.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_tries",
@@ -551,8 +771,13 @@
       "description": "Tree structures indexing strings by their characters along paths, enabling fast prefix-based search and autocomplete at the cost of memory.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_queues_stacks",
@@ -566,8 +791,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Animate push/pop on a stack and enqueue/dequeue on a queue.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_python_syntax",
@@ -579,8 +809,13 @@
       "description": "The readable, indentation-based syntax of Python, a high-level interpreted language emphasising concise expression of common programming constructs.",
       "default_order": 3,
       "centrality": 0.581,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_lists_dicts",
@@ -592,8 +827,13 @@
       "description": "Python's core collections: ordered, mutable lists and dictionaries mapping keys to values, supporting flexible data manipulation.",
       "default_order": 1,
       "centrality": 0.1841,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_oop",
@@ -605,12 +845,17 @@
       "description": "Object-oriented programming in Python organising code into classes that bundle data and methods, supporting encapsulation, inheritance, and reuse.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_exceptions",
-      "canonical_id": "pc_d81d4c1556aa0164bed1ed9dc3b7d6f1",
+      "canonical_id": "pc_8dab11c0374fd5cac3b9c36296a00ab8",
       "kind": "concept",
       "name": "Exceptions",
       "name_zh": "异常",
@@ -618,8 +863,13 @@
       "description": "Python's mechanism for handling run-time errors by raising and catching exceptions with try-except blocks, separating error handling from normal logic.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_relational_db",
@@ -631,8 +881,13 @@
       "description": "Databases storing data in related tables of rows and columns, with keys linking tables, managed through a relational database system.",
       "default_order": 1,
       "centrality": 0.1359,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Relational Databases and SQL Queries"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_sql_queries",
@@ -644,8 +899,13 @@
       "description": "SQL statements that retrieve and modify data in relational tables, expressing selection, filtering, and ordering declaratively.",
       "default_order": 2,
       "centrality": 0.0669,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Relational Databases and SQL Queries"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_joins",
@@ -657,8 +917,13 @@
       "description": "SQL joins combining rows from multiple tables based on related columns, enabling queries that span relationships between tables.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: SQL Joins and SQL Indexes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_indexes",
@@ -670,8 +935,13 @@
       "description": "Database indexes, auxiliary structures that speed up lookups on chosen columns at the cost of extra storage and slower writes.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: SQL Joins and SQL Indexes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_html",
@@ -683,8 +953,13 @@
       "description": "HyperText Markup Language defining the structure and content of web pages through nested, semantic tags rendered by browsers.",
       "default_order": 1,
       "centrality": 0.2737,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: HTML and CSS"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_css",
@@ -696,8 +971,13 @@
       "description": "Cascading Style Sheets controlling the visual presentation of HTML, including layout, colours, fonts, and responsive design via rules.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: HTML and CSS"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_js",
@@ -709,8 +989,13 @@
       "description": "JavaScript, the browser's programming language adding interactivity and dynamic behaviour to web pages through an event-driven model.",
       "default_order": 1,
       "centrality": 0.1067,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: JavaScript and DOM Manipulation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_dom",
@@ -724,12 +1009,17 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Tree diagram of the DOM nodes of a web page.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: JavaScript and DOM Manipulation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_http",
-      "canonical_id": "pc_87fc4cc9f262094f52a3a6de85339208",
+      "canonical_id": "pc_bd05379aa5934bbd6467ac3868c61484",
       "kind": "concept",
       "name": "HTTP Protocol",
       "name_zh": "HTTP 协议",
@@ -737,8 +1027,13 @@
       "description": "The HyperText Transfer Protocol governing request-response communication between web clients and servers using methods and status codes.",
       "default_order": 1,
       "centrality": 0.1491,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_flask",
@@ -750,8 +1045,13 @@
       "description": "Flask, a lightweight Python web framework for building web applications and APIs by mapping URL routes to handler functions.",
       "default_order": 2,
       "centrality": 0.0669,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mvc",
@@ -763,8 +1063,13 @@
       "description": "The Model-View-Controller pattern separating data, presentation, and control logic to organise web application code cleanly.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_sessions",
@@ -776,8 +1081,13 @@
       "description": "Sessions and cookies maintaining state across stateless HTTP requests, identifying users and remembering data between page visits.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_apis",
@@ -789,8 +1099,13 @@
       "description": "Application programming interfaces exposing functionality and data over the web, commonly returning JSON for other programs to consume.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_cybersecurity",
@@ -802,8 +1117,13 @@
       "description": "The practice of protecting systems, networks, and data from attack, covering the confidentiality, integrity, and availability of information.",
       "default_order": 3,
       "centrality": 0.088,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_encryption",
@@ -815,8 +1135,13 @@
       "description": "Transforming data into ciphertext using algorithms and keys so that only authorised parties can read it, underpinning secure communication.",
       "default_order": 1,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Cybersecurity"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_authentication",
@@ -828,8 +1153,13 @@
       "description": "Verifying the identity of a user or system, typically through passwords, tokens, or biometrics, before granting access to resources.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Cybersecurity"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_vulnerabilities",
@@ -841,8 +1171,13 @@
       "description": "Weaknesses in software or systems that attackers can exploit, such as injection or buffer overflows, requiring mitigation and patching.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Cybersecurity"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -851,392 +1186,846 @@
       "from": "c_functions",
       "to": "c_c_syntax",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Scratch"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“C 语法”需要先掌握“函数”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_loops",
       "to": "c_c_syntax",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“C 语法”需要先掌握“循环”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_conditions",
       "to": "c_c_syntax",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Scratch"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“C 语法”需要先掌握“条件语句”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_c_syntax",
       "to": "c_data_types",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: C Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“数据类型”需要先掌握“C 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_data_types",
       "to": "c_operators",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: C Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“运算符”需要先掌握“数据类型”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_c_syntax",
       "to": "c_compilation",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: C Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“编译过程”需要先掌握“C 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_c_syntax",
       "to": "c_arrays",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“数组”需要先掌握“C 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_data_types",
       "to": "c_arrays",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: C Programming"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“数组”需要先掌握“数据类型”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_strings",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Strings and Command-line Arguments"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“字符串”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_cli_args",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Strings and Command-line Arguments"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“命令行参数”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_linear_search",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithms"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线性搜索”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_linear_search",
       "to": "c_binary_search",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithms"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“二分搜索”需要先掌握“线性搜索”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_sorting",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithms"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“排序算法”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_functions",
       "to": "c_recursion",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Scratch"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“递归”需要先掌握“函数”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_sorting",
       "to": "c_big_o",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithms"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“大O表示法”需要先掌握“排序算法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_data_types",
       "to": "c_pointers",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: C Programming"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“指针”需要先掌握“数据类型”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_pointers",
       "to": "c_malloc",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Memory"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“动态内存分配”需要先掌握“指针”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_recursion",
       "to": "c_call_stack",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Memory"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“调用栈”需要先掌握“递归”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_pointers",
       "to": "c_file_io",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Memory"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“文件I/O”需要先掌握“指针”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_pointers",
       "to": "c_linked_lists",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“链表”需要先掌握“指针”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_malloc",
       "to": "c_linked_lists",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Memory"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“链表”需要先掌握“动态内存分配”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_linked_lists",
       "to": "c_hash_tables",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“哈希表”需要先掌握“链表”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_hash_tables",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“哈希表”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_pointers",
       "to": "c_trees",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Algorithmic Complexity and Memory"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“树”需要先掌握“指针”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_trees",
       "to": "c_tries",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“字典树”需要先掌握“树”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_queues_stacks",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“队列与栈”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_c_syntax",
       "to": "c_python_syntax",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Control Flow and C Foundations"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Python 语法”需要先掌握“C 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_arrays",
       "to": "c_lists_dicts",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Debugging and Arrays"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“列表和字典”需要先掌握“数组”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_hash_tables",
       "to": "c_lists_dicts",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Data Structures"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“列表和字典”需要先掌握“哈希表”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_python_syntax",
       "to": "c_oop",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“OOP”需要先掌握“Python 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_python_syntax",
       "to": "c_exceptions",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“异常”需要先掌握“Python 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_lists_dicts",
       "to": "c_relational_db",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Python"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Relational Databases and SQL Queries"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“关系数据库”需要先掌握“列表和字典”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_relational_db",
       "to": "c_sql_queries",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Relational Databases and SQL Queries"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“SQL查询”需要先掌握“关系数据库”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_sql_queries",
       "to": "c_joins",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Relational Databases and SQL Queries"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: SQL Joins and SQL Indexes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“SQL连接”需要先掌握“SQL查询”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_sql_queries",
       "to": "c_indexes",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Relational Databases and SQL Queries"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: SQL Joins and SQL Indexes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“SQL索引”需要先掌握“SQL查询”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_python_syntax",
       "to": "c_js",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: JavaScript and DOM Manipulation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“JavaScript”需要先掌握“Python 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_html",
       "to": "c_dom",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: HTML and CSS"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: JavaScript and DOM Manipulation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“DOM 操作”需要先掌握“HTML”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_js",
       "to": "c_dom",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: JavaScript and DOM Manipulation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“DOM 操作”需要先掌握“JavaScript”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_html",
       "to": "c_css",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: HTML and CSS"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“CSS”需要先掌握“HTML”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_html",
       "to": "c_http",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: HTML and CSS"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“HTTP 协议”需要先掌握“HTML”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_python_syntax",
       "to": "c_flask",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Advanced Data Structures and Python"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Flask 框架”需要先掌握“Python 语法”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_http",
       "to": "c_flask",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Flask 框架”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_flask",
       "to": "c_mvc",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“MVC 架构”需要先掌握“Flask 框架”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_flask",
       "to": "c_sessions",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“会话与 Cookie”需要先掌握“Flask 框架”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_http",
       "to": "c_apis",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“API”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_http",
       "to": "c_cybersecurity",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Flask"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“网络安全基础”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_cybersecurity",
       "to": "c_encryption",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Cybersecurity"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“加密”需要先掌握“网络安全基础”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_cybersecurity",
       "to": "c_authentication",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Cybersecurity"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“身份认证”需要先掌握“网络安全基础”的定义、表示或操作方法。"
     },
     {
       "type": "prereq",
       "from": "c_cybersecurity",
       "to": "c_vulnerabilities",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Web State, APIs and Security"
+        },
+        {
+          "source_id": "src_harvard_cs50x_2026",
+          "locator": "CS50x 2026 syllabus week/unit: Cybersecurity"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“安全漏洞”需要先掌握“网络安全基础”的定义、表示或操作方法。"
     }
   ]
 }

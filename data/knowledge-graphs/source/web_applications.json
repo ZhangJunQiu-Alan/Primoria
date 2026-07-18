@@ -1,18 +1,28 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "web_applications",
   "subject": "Web Applications",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_web_applications"
+    "src_mdn_curriculum_2025",
+    "src_react_learn_2026",
+    "src_node_learn_2026",
+    "src_express_docs_2026",
+    "src_mongodb_manual_2026",
+    "src_owasp_wstg_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +33,13 @@
       "name_zh": "Web 基础",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Web Foundations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_frontend_part1",
@@ -33,8 +48,13 @@
       "name_zh": "前端：HTML、CSS、JavaScript",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Frontend: HTML, CSS, JavaScript"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_frontend_part2",
@@ -43,8 +63,13 @@
       "name_zh": "前端：DOM 与 React",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_react_learn_2026",
+          "locator": "Learn: Describing the UI and Adding Interactivity"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_backend",
@@ -53,8 +78,13 @@
       "name_zh": "Node.js与Express 与路由",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: Node.js and Express and Routing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_backend_web_rest",
@@ -63,8 +93,13 @@
       "name_zh": "REST API与认证与会话",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: REST APIs and Authentication and Sessions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_data",
@@ -73,8 +108,13 @@
       "name_zh": "数据库",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mongodb_manual_2026",
+          "locator": "Manual: CRUD Operations and Data Modeling"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_security",
@@ -83,12 +123,17 @@
       "name_zh": "Web 安全",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_owasp_wstg_2026",
+          "locator": "Web Application Security Testing: Input Validation and Session Management"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_http",
-      "canonical_id": "pc_ea66b2ba94e6834dee11a1bc83ddcb6b",
+      "canonical_id": "pc_bd05379aa5934bbd6467ac3868c61484",
       "kind": "concept",
       "name": "HTTP Protocol",
       "name_zh": "HTTP 协议",
@@ -98,8 +143,13 @@
       "centrality": 0.0947,
       "visual": "diagram",
       "visual_hint": "Sequence diagram of an HTTP request-response exchange.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Web Foundations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_url_dns",
@@ -111,12 +161,17 @@
       "description": "How web resources are named by URLs and located by resolving the hostname through DNS into an IP address before connecting.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Web Foundations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_client_server",
-      "canonical_id": "pc_bf23f1d17bb91d608dd0ca67b2ffddb7",
+      "canonical_id": "pc_dc84a27e32610ced0216df6b639bb740",
       "kind": "concept",
       "name": "Client-Server Model",
       "name_zh": "客户端-服务器模型",
@@ -126,12 +181,17 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram the browser-client and server request flow.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Web Foundations"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_html",
-      "canonical_id": "pc_3ca716076188568a6ec860858e52b9e5",
+      "canonical_id": "pc_f5321e408c25b62f8f2ff4a412d644a5",
       "kind": "concept",
       "name": "HTML",
       "name_zh": "HTML",
@@ -139,12 +199,17 @@
       "description": "HyperText Markup Language structuring web page content as a tree of nested elements with semantic tags that browsers parse and render.",
       "default_order": 1,
       "centrality": 0.1065,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Frontend: HTML, CSS, JavaScript"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_css",
-      "canonical_id": "pc_ed2825b00d85ac8aa84bf96e4f3883c3",
+      "canonical_id": "pc_b0a282c9627b592fb3dc02a81fb4de95",
       "kind": "concept",
       "name": "CSS",
       "name_zh": "CSS",
@@ -152,12 +217,17 @@
       "description": "Cascading Style Sheets describing the presentation of HTML, controlling layout, colour, and typography through selectors, the box model, and cascading rules.",
       "default_order": 2,
       "centrality": 0.0962,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Frontend: HTML, CSS, JavaScript"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_javascript",
-      "canonical_id": "pc_7832e0602308da46c87fd49e91f9ed8e",
+      "canonical_id": "pc_59b5064f2521bf1b820e003b03084bbb",
       "kind": "concept",
       "name": "JavaScript",
       "name_zh": "JavaScript",
@@ -165,12 +235,17 @@
       "description": "The browser's scripting language adding interactivity to pages, manipulating content and responding to events with an event-driven, single-threaded model.",
       "default_order": 3,
       "centrality": 0.168,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Frontend: HTML, CSS, JavaScript"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_dom",
-      "canonical_id": "pc_b93c0c7239cd774426d888d252796a73",
+      "canonical_id": "pc_8ee6058763ed99be5ed1743f86fbb627",
       "kind": "concept",
       "name": "DOM Manipulation",
       "name_zh": "DOM 操作",
@@ -180,8 +255,13 @@
       "centrality": 0.0976,
       "visual": "diagram",
       "visual_hint": "Tree diagram of the DOM nodes of a web page.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_react_learn_2026",
+          "locator": "Learn: Describing the UI and Adding Interactivity"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_react",
@@ -195,8 +275,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Component-tree diagram of nested React components.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_react_learn_2026",
+          "locator": "Learn: Describing the UI and Adding Interactivity"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_state_props",
@@ -210,8 +295,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram props flowing down and state updates re-rendering a component tree.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_react_learn_2026",
+          "locator": "Learn: Describing the UI and Adding Interactivity"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_node",
@@ -223,8 +313,13 @@
       "description": "A server-side JavaScript runtime built on the V8 engine, using an event-driven, non-blocking I/O model to build scalable network applications.",
       "default_order": 1,
       "centrality": 0.0708,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: Node.js and Express and Routing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_express",
@@ -238,8 +333,13 @@
       "centrality": 0.0542,
       "visual": "diagram",
       "visual_hint": "Diagram an Express request passing through routing and middleware.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: Node.js and Express and Routing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_rest",
@@ -253,8 +353,13 @@
       "centrality": 0.0692,
       "visual": "diagram",
       "visual_hint": "Diagram REST resources and their HTTP-method operations.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: REST APIs and Authentication and Sessions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_auth",
@@ -268,12 +373,17 @@
       "centrality": 0.0398,
       "visual": "diagram",
       "visual_hint": "Sequence diagram of authentication establishing a session.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: REST APIs and Authentication and Sessions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_relational",
-      "canonical_id": "pc_219618e56bb81367b92a389c7f283d22",
+      "canonical_id": "pc_da5b2a9ed513849fe40cac6e84f54b58",
       "kind": "concept",
       "name": "Relational Databases",
       "name_zh": "关系型数据库",
@@ -281,8 +391,13 @@
       "description": "Databases organising data into tables of rows and columns, with primary and foreign keys expressing relationships, queried using SQL.",
       "default_order": 1,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mongodb_manual_2026",
+          "locator": "Manual: CRUD Operations and Data Modeling"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_sql",
@@ -294,8 +409,13 @@
       "description": "Structured Query Language for defining and manipulating relational data, expressing selection, filtering, joining, and aggregation declaratively.",
       "default_order": 2,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mongodb_manual_2026",
+          "locator": "Manual: CRUD Operations and Data Modeling"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_nosql",
@@ -307,8 +427,13 @@
       "description": "Non-relational document stores like MongoDB holding schema-flexible JSON-like documents, trading relational guarantees for scalability and flexibility.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mongodb_manual_2026",
+          "locator": "Manual: CRUD Operations and Data Modeling"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_xss",
@@ -320,8 +445,13 @@
       "description": "Cross-site scripting, a vulnerability where attacker-supplied scripts execute in victims' browsers, mitigated by escaping output and content security policies.",
       "default_order": 1,
       "centrality": 0.0398,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_owasp_wstg_2026",
+          "locator": "Web Application Security Testing: Input Validation and Session Management"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_csrf",
@@ -333,8 +463,13 @@
       "description": "Cross-site request forgery, an attack tricking an authenticated browser into sending unintended requests, defended with anti-CSRF tokens and SameSite cookies.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_owasp_wstg_2026",
+          "locator": "Web Application Security Testing: Input Validation and Session Management"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "web_sql_injection",
@@ -346,8 +481,13 @@
       "description": "An attack inserting malicious SQL through unsanitised input to manipulate database queries, prevented with parameterised queries and input validation.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_owasp_wstg_2026",
+          "locator": "Web Application Security Testing: Input Validation and Session Management"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -356,168 +496,326 @@
       "to": "web_url_dns",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Web Foundations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“HTTP 协议”为学习“URL 与 DNS”提供背景与解题基础。"
     },
     {
       "from": "web_url_dns",
       "to": "web_client_server",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Web Foundations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“URL 与 DNS”为学习“客户端-服务器模型”提供背景与解题基础。"
     },
     {
       "from": "web_html",
       "to": "web_css",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Frontend: HTML, CSS, JavaScript"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“CSS”需要先掌握“HTML”的定义、表示或操作方法。"
     },
     {
       "from": "web_css",
       "to": "web_javascript",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Frontend: HTML, CSS, JavaScript"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“CSS”为学习“JavaScript”提供背景与解题基础。"
     },
     {
       "from": "web_javascript",
       "to": "web_dom",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Frontend: HTML, CSS, JavaScript"
+        },
+        {
+          "source_id": "src_react_learn_2026",
+          "locator": "Learn: Describing the UI and Adding Interactivity"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“DOM 操作”需要先掌握“JavaScript”的定义、表示或操作方法。"
     },
     {
       "from": "web_dom",
       "to": "web_react",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_react_learn_2026",
+          "locator": "Learn: Describing the UI and Adding Interactivity"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“React 组件”需要先掌握“DOM 操作”的定义、表示或操作方法。"
     },
     {
       "from": "web_react",
       "to": "web_state_props",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_react_learn_2026",
+          "locator": "Learn: Describing the UI and Adding Interactivity"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“状态与属性”需要先掌握“React 组件”的定义、表示或操作方法。"
     },
     {
       "from": "web_node",
       "to": "web_express",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: Node.js and Express and Routing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Express 与路由”需要先掌握“Node.js”的定义、表示或操作方法。"
     },
     {
       "from": "web_express",
       "to": "web_rest",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: Node.js and Express and Routing"
+        },
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: REST APIs and Authentication and Sessions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“REST API”需要先掌握“Express 与路由”的定义、表示或操作方法。"
     },
     {
       "from": "web_rest",
       "to": "web_auth",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: REST APIs and Authentication and Sessions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“认证与会话”需要先掌握“REST API”的定义、表示或操作方法。"
     },
     {
       "from": "web_relational",
       "to": "web_sql",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mongodb_manual_2026",
+          "locator": "Manual: CRUD Operations and Data Modeling"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“SQL”需要先掌握“关系型数据库”的定义、表示或操作方法。"
     },
     {
       "from": "web_sql",
       "to": "web_nosql",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mongodb_manual_2026",
+          "locator": "Manual: CRUD Operations and Data Modeling"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“SQL”为学习“NoSQL 与 MongoDB”提供背景与解题基础。"
     },
     {
       "from": "web_xss",
       "to": "web_csrf",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_owasp_wstg_2026",
+          "locator": "Web Application Security Testing: Input Validation and Session Management"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“跨站脚本攻击（XSS）”为学习“跨站请求伪造（CSRF）”提供背景与解题基础。"
     },
     {
       "from": "web_csrf",
       "to": "web_sql_injection",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_owasp_wstg_2026",
+          "locator": "Web Application Security Testing: Input Validation and Session Management"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“跨站请求伪造（CSRF）”为学习“SQL 注入”提供背景与解题基础。"
     },
     {
       "from": "web_http",
       "to": "web_client_server",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Web Foundations"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“客户端-服务器模型”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "from": "web_javascript",
       "to": "web_node",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Frontend: HTML, CSS, JavaScript"
+        },
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: Node.js and Express and Routing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Node.js”需要先掌握“JavaScript”的定义、表示或操作方法。"
     },
     {
       "from": "web_http",
       "to": "web_rest",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mdn_curriculum_2025",
+          "locator": "Curriculum module: Web Foundations"
+        },
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: REST APIs and Authentication and Sessions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“REST API”需要先掌握“HTTP 协议”的定义、表示或操作方法。"
     },
     {
       "from": "web_dom",
       "to": "web_xss",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_react_learn_2026",
+          "locator": "Learn: Describing the UI and Adding Interactivity"
+        },
+        {
+          "source_id": "src_owasp_wstg_2026",
+          "locator": "Web Application Security Testing: Input Validation and Session Management"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“跨站脚本攻击（XSS）”需要先掌握“DOM 操作”的定义、表示或操作方法。"
     },
     {
       "from": "web_auth",
       "to": "web_csrf",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: REST APIs and Authentication and Sessions"
+        },
+        {
+          "source_id": "src_owasp_wstg_2026",
+          "locator": "Web Application Security Testing: Input Validation and Session Management"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“跨站请求伪造（CSRF）”需要先掌握“认证与会话”的定义、表示或操作方法。"
     },
     {
       "from": "web_sql",
       "to": "web_sql_injection",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mongodb_manual_2026",
+          "locator": "Manual: CRUD Operations and Data Modeling"
+        },
+        {
+          "source_id": "src_owasp_wstg_2026",
+          "locator": "Web Application Security Testing: Input Validation and Session Management"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“SQL 注入”需要先掌握“SQL”的定义、表示或操作方法。"
     },
     {
       "from": "web_rest",
       "to": "web_nosql",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_express_docs_2026",
+          "locator": "Guide/reference section: REST APIs and Authentication and Sessions"
+        },
+        {
+          "source_id": "src_mongodb_manual_2026",
+          "locator": "Manual: CRUD Operations and Data Modeling"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“REST API”为学习“NoSQL 与 MongoDB”提供背景与解题基础。"
     }
   ]
 }

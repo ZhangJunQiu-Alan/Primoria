@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "software_construction",
   "subject": "Software Construction",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_software_construction"
+    "src_mit_6_031_spring_2018"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "静态检查与不可变性",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Static Checking and Immutability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit6031_foundations_specs_mit6031_specs",
@@ -33,8 +43,13 @@
       "name_zh": "规格、测试策略与异常",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Specifications, Testing Strategies, and Exceptions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit6031_adt",
@@ -43,8 +58,13 @@
       "name_zh": "ADT 概念与表示独立性",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit6031_adt_mit6031_rep_invariant",
@@ -53,8 +73,13 @@
       "name_zh": "表示不变量与抽象函数",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Rep Invariants and Abstraction Functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit6031_oop",
@@ -63,8 +88,13 @@
       "name_zh": "面向对象编程",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit6031_concurrency",
@@ -73,8 +103,13 @@
       "name_zh": "并发基础与线程安全",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Concurrency Basics and Thread Safety"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit6031_concurrency_mit6031_locks",
@@ -83,8 +118,13 @@
       "name_zh": "锁与同步与消息传递",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Locks and Synchronization and Message Passing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_static_checking",
@@ -96,8 +136,13 @@
       "description": "Catching errors before run time through static type checking, contrasted with dynamic checking, to make bugs visible early and cheaply.",
       "default_order": 1,
       "centrality": 0.1973,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Static Checking and Immutability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_immutability",
@@ -109,8 +154,13 @@
       "description": "Designing types whose values cannot change after construction, eliminating aliasing bugs and making code easier to reason about and share safely.",
       "default_order": 2,
       "centrality": 0.0804,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Static Checking and Immutability"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_specs",
@@ -124,8 +174,13 @@
       "centrality": 0.1226,
       "visual": "diagram",
       "visual_hint": "Diagram preconditions and postconditions as a contract boundary.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Specifications, Testing Strategies, and Exceptions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_testing",
@@ -139,12 +194,17 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram partitioning the input space into equivalence classes.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Specifications, Testing Strategies, and Exceptions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_exceptions",
-      "canonical_id": "pc_46fdf9b38393a0e7c4b645226a8c694b",
+      "canonical_id": "pc_8dab11c0374fd5cac3b9c36296a00ab8",
       "kind": "concept",
       "name": "Exceptions",
       "name_zh": "异常",
@@ -152,8 +212,13 @@
       "description": "Using exceptions to signal errors, distinguishing checked exceptions for expected conditions from unchecked exceptions that indicate bugs.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Specifications, Testing Strategies, and Exceptions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_adt_basics",
@@ -165,8 +230,13 @@
       "description": "Abstract data types defined by their operations—creators, producers, observers, and mutators—rather than by their internal representation.",
       "default_order": 1,
       "centrality": 0.1964,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_rep_independence",
@@ -178,8 +248,13 @@
       "description": "Designing an ADT so clients depend only on its abstract specification, allowing the internal representation to change without breaking them.",
       "default_order": 2,
       "centrality": 0.0638,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_rep_invariant",
@@ -191,8 +266,13 @@
       "description": "A condition every valid object of a type must satisfy, checked to ensure the internal representation stays consistent.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Rep Invariants and Abstraction Functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_abstraction_function",
@@ -206,8 +286,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram the abstraction function mapping representation to abstract value.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Rep Invariants and Abstraction Functions"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_interfaces",
@@ -219,8 +304,13 @@
       "description": "Interfaces specifying behaviour that multiple implementations provide, enabling subtype polymorphism where subtypes are substitutable for supertypes.",
       "default_order": 1,
       "centrality": 0.0564,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_equality",
@@ -232,8 +322,13 @@
       "description": "Defining when two objects are equal, distinguishing observational equality of abstract values from reference identity, subject to consistency requirements.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_recursive_data",
@@ -247,8 +342,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram a recursive data type such as an immutable list.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_concurrency_intro",
@@ -260,12 +360,17 @@
       "description": "Concurrent execution via threads or processes, introducing interleaving, race conditions, and the central challenge of shared mutable state.",
       "default_order": 1,
       "centrality": 0.0817,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Concurrency Basics and Thread Safety"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_thread_safety",
-      "canonical_id": "pc_fd2933b36279e1e27022d995939d3b3b",
+      "canonical_id": "pc_d3f8414aadf19541f98d0e657b1cea68",
       "kind": "concept",
       "name": "Thread Safety",
       "name_zh": "线程安全",
@@ -273,8 +378,13 @@
       "description": "Strategies ensuring correct behaviour under concurrent access, including confinement, immutability, and synchronisation of shared data.",
       "default_order": 2,
       "centrality": 0.0669,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Concurrency Basics and Thread Safety"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_locks",
@@ -288,8 +398,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "State diagram of threads acquiring locks and a deadlock cycle.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Locks and Synchronization and Message Passing"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit6031_message_passing",
@@ -303,8 +418,13 @@
       "centrality": 0.0248,
       "visual": "diagram",
       "visual_hint": "Diagram components communicating by messages over channels.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Locks and Synchronization and Message Passing"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -313,128 +433,256 @@
       "to": "c_mit6031_immutability",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Static Checking and Immutability"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“不可变性”需要先掌握“静态检查”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_static_checking",
       "to": "c_mit6031_specs",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Static Checking and Immutability"
+        },
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Specifications, Testing Strategies, and Exceptions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“规格”需要先掌握“静态检查”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_specs",
       "to": "c_mit6031_testing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Specifications, Testing Strategies, and Exceptions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“测试策略”需要先掌握“规格”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_specs",
       "to": "c_mit6031_exceptions",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Specifications, Testing Strategies, and Exceptions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“规格”为学习“异常”提供背景与解题基础。"
     },
     {
       "from": "c_mit6031_specs",
       "to": "c_mit6031_adt_basics",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Specifications, Testing Strategies, and Exceptions"
+        },
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“ADT 概念”需要先掌握“规格”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_immutability",
       "to": "c_mit6031_adt_basics",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Static Checking and Immutability"
+        },
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“ADT 概念”需要先掌握“不可变性”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_adt_basics",
       "to": "c_mit6031_rep_independence",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“表示独立性”需要先掌握“ADT 概念”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_rep_independence",
       "to": "c_mit6031_rep_invariant",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        },
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Rep Invariants and Abstraction Functions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“表示不变量”需要先掌握“表示独立性”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_rep_invariant",
       "to": "c_mit6031_abstraction_function",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Rep Invariants and Abstraction Functions"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“抽象函数”需要先掌握“表示不变量”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_adt_basics",
       "to": "c_mit6031_interfaces",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        },
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“接口与子类型”需要先掌握“ADT 概念”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_interfaces",
       "to": "c_mit6031_equality",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“相等性”需要先掌握“接口与子类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_interfaces",
       "to": "c_mit6031_recursive_data",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Object-Oriented Programming"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“接口与子类型”为学习“递归数据类型”提供背景与解题基础。"
     },
     {
       "from": "c_mit6031_adt_basics",
       "to": "c_mit6031_concurrency_intro",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: ADT Concepts and Representation Independence"
+        },
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Concurrency Basics and Thread Safety"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“并发基础”需要先掌握“ADT 概念”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_concurrency_intro",
       "to": "c_mit6031_thread_safety",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Concurrency Basics and Thread Safety"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“线程安全”需要先掌握“并发基础”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_thread_safety",
       "to": "c_mit6031_locks",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Concurrency Basics and Thread Safety"
+        },
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Locks and Synchronization and Message Passing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“锁与同步”需要先掌握“线程安全”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_thread_safety",
       "to": "c_mit6031_message_passing",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Concurrency Basics and Thread Safety"
+        },
+        {
+          "source_id": "src_mit_6_031_spring_2018",
+          "locator": "Readings 01-22 index entry: Locks and Synchronization and Message Passing"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“消息传递”需要先掌握“线程安全”的定义、表示或操作方法。"
     }
   ]
 }

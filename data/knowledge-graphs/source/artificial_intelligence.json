@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "artificial_intelligence",
   "subject": "Introduction to Artificial Intelligence",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_artificial_intelligence"
+    "src_berkeley_cs188_textbook_2026"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "搜索：无信息搜索与启发式",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_search_part2",
@@ -33,8 +43,13 @@
       "name_zh": "搜索：有信息与对抗搜索",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapters 1 and 3: Search and Games"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_csp",
@@ -43,8 +58,13 @@
       "name_zh": "约束满足问题与回溯搜索",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_csp_ai_arc_consistency",
@@ -53,8 +73,13 @@
       "name_zh": "约束传播与局部搜索",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_mdp",
@@ -63,8 +88,13 @@
       "name_zh": "马尔可夫决策过程与Bellman方程",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_mdp_ai_value_iteration",
@@ -73,8 +103,13 @@
       "name_zh": "价值迭代与策略迭代",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_rl",
@@ -83,8 +118,13 @@
       "name_zh": "强化学习框架与时序差分学习",
       "topic": null,
       "default_order": 7,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_rl_ai_qlearning",
@@ -93,8 +133,13 @@
       "name_zh": "Q学习、探索与利用与近似Q学习",
       "topic": null,
       "default_order": 8,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_probability",
@@ -103,8 +148,13 @@
       "name_zh": "概率基础与贝叶斯规则",
       "topic": null,
       "default_order": 9,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_probability_ai_bayes_nets",
@@ -113,8 +163,13 @@
       "name_zh": "贝叶斯网络与贝叶斯网络推理",
       "topic": null,
       "default_order": 10,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_markov_models",
@@ -123,8 +178,13 @@
       "name_zh": "马尔可夫模型与HMM",
       "topic": null,
       "default_order": 11,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_inference_naive_bayes",
@@ -133,8 +193,13 @@
       "name_zh": "概率推断与朴素贝叶斯",
       "topic": null,
       "default_order": 12,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_ml",
@@ -143,8 +208,13 @@
       "name_zh": "机器学习",
       "topic": null,
       "default_order": 13,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 9: Machine Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_search_problem",
@@ -156,8 +226,13 @@
       "description": "Formulating a problem for search as states, actions, a transition model, a goal test, and path costs, enabling systematic solution finding.",
       "default_order": 1,
       "centrality": 0.1327,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_uninformed",
@@ -171,8 +246,13 @@
       "centrality": 0.096,
       "visual": "algorithm",
       "visual_hint": "Animate BFS and DFS exploring a search tree/graph with the frontier.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_heuristics",
@@ -184,8 +264,13 @@
       "description": "Heuristic functions estimating the cost to reach the goal, where admissibility (never overestimating) and consistency guarantee optimal informed search.",
       "default_order": 3,
       "centrality": 0.0519,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_informed",
@@ -199,8 +284,13 @@
       "centrality": 0.0638,
       "visual": "algorithm",
       "visual_hint": "Animate A* expanding nodes by f = g + h on a grid.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapters 1 and 3: Search and Games"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_minimax",
@@ -214,8 +304,13 @@
       "centrality": 0.0459,
       "visual": "algorithm",
       "visual_hint": "Step a minimax game tree backing up values from the leaves.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapters 1 and 3: Search and Games"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_alphabeta",
@@ -229,8 +324,13 @@
       "centrality": 0.0248,
       "visual": "algorithm",
       "visual_hint": "Step minimax with alpha-beta pruning, showing cut branches.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapters 1 and 3: Search and Games"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_csp_def",
@@ -242,8 +342,13 @@
       "description": "Constraint satisfaction problems defined by variables, domains, and constraints, seeking assignments that satisfy all constraints simultaneously.",
       "default_order": 1,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_backtracking",
@@ -257,8 +362,13 @@
       "centrality": 0.0638,
       "visual": "algorithm",
       "visual_hint": "Animate backtracking search assigning CSP variables and backing up on failure.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_arc_consistency",
@@ -270,8 +380,13 @@
       "description": "Constraint propagation that prunes domain values inconsistent with constraints, with arc consistency and forward checking reducing search effort.",
       "default_order": 1,
       "centrality": 0.0459,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_local_search",
@@ -283,8 +398,13 @@
       "description": "Search that iteratively improves a complete assignment using local moves, such as hill climbing and min-conflicts, trading completeness for scalability.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_mdp_def",
@@ -296,8 +416,13 @@
       "description": "Markov decision processes modelling sequential decisions under uncertainty with states, actions, stochastic transitions, rewards, and a discount factor.",
       "default_order": 1,
       "centrality": 0.1595,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_bellman",
@@ -309,8 +434,13 @@
       "description": "The Bellman equations recursively expressing the optimal value of a state as the best expected immediate reward plus discounted future value.",
       "default_order": 2,
       "centrality": 0.0654,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_value_iteration",
@@ -324,8 +454,13 @@
       "centrality": 0.0353,
       "visual": "algorithm",
       "visual_hint": "Iterate MDP state values on a grid until convergence.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_policy_iteration",
@@ -337,8 +472,13 @@
       "description": "An MDP algorithm alternating policy evaluation, computing a policy's values, with policy improvement, acting greedily, until the policy stabilises.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_rl_framework",
@@ -350,8 +490,13 @@
       "description": "Reinforcement learning, where an agent learns optimal behaviour by interacting with an unknown environment and receiving rewards, without a transition model.",
       "default_order": 1,
       "centrality": 0.0931,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_td",
@@ -363,8 +508,13 @@
       "description": "Temporal-difference learning updating value estimates from successive observations, bootstrapping from later estimates without waiting for final outcomes.",
       "default_order": 2,
       "centrality": 0.0803,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_qlearning",
@@ -378,8 +528,13 @@
       "centrality": 0.0654,
       "visual": "algorithm",
       "visual_hint": "Update a Q-table as an agent moves through a gridworld.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_exploration",
@@ -391,8 +546,13 @@
       "description": "The exploration-exploitation tradeoff balancing trying new actions to gain information against choosing currently best actions to maximise reward.",
       "default_order": 2,
       "centrality": 0.0353,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_approx_q",
@@ -404,8 +564,13 @@
       "description": "Approximate Q-learning representing the value function with features and weights, generalising across states too numerous to store in a table.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_prob",
@@ -417,8 +582,13 @@
       "description": "Probability fundamentals for AI, including random variables, joint and marginal distributions, and independence, used to reason under uncertainty.",
       "default_order": 1,
       "centrality": 0.1063,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_bayes_rule",
@@ -430,8 +600,13 @@
       "description": "Bayes' rule inverting conditional probabilities to update beliefs about hypotheses given observed evidence, combining prior probabilities with likelihoods.",
       "default_order": 2,
       "centrality": 0.0973,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_bayes_nets",
@@ -445,8 +620,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Directed acyclic graph of a Bayesian network with conditional dependencies.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_bn_inference",
@@ -458,8 +638,13 @@
       "description": "Inference in Bayesian networks computing posterior probabilities via exact methods like variable elimination or approximate sampling techniques.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_markov_chain",
@@ -471,8 +656,13 @@
       "description": "Markov models representing stochastic state sequences satisfying the Markov property, where the next state depends only on the current state.",
       "default_order": 1,
       "centrality": 0.0944,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_hmm",
@@ -486,8 +676,13 @@
       "centrality": 0.0819,
       "visual": "diagram",
       "visual_hint": "Trellis diagram of hidden states and observations over time.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_forward",
@@ -499,8 +694,13 @@
       "description": "The forward algorithm computing the filtered belief over hidden states given the observations seen so far, via recursive probability updates.",
       "default_order": 3,
       "centrality": 0.0548,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_viterbi",
@@ -514,8 +714,13 @@
       "centrality": 0.0353,
       "visual": "algorithm",
       "visual_hint": "Step the Viterbi trellis selecting the most likely hidden-state path.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_particle",
@@ -527,8 +732,13 @@
       "description": "Particle filtering approximating the belief over states with weighted samples, propagated and resampled to track distributions in large state spaces.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_naive_bayes",
@@ -540,8 +750,13 @@
       "description": "A simple probabilistic classifier applying Bayes' rule under the assumption that features are conditionally independent given the class label.",
       "default_order": 3,
       "centrality": 0.079,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_perceptron",
@@ -555,8 +770,13 @@
       "centrality": 0.0638,
       "visual": "function",
       "visual_hint": "Plot a linear decision boundary updating as the perceptron learns.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 9: Machine Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_neural_nets",
@@ -570,8 +790,13 @@
       "centrality": 0.0459,
       "visual": "diagram",
       "visual_hint": "Diagram a multilayer network of weighted connections and activations.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 9: Machine Learning"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "ai_generalization",
@@ -583,8 +808,13 @@
       "description": "Generalisation describing how well a model performs on unseen data, with overfitting and model capacity governing the gap between training and test error.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 9: Machine Learning"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -593,264 +823,490 @@
       "to": "ai_uninformed",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“无信息搜索”需要先掌握“搜索问题建模”的定义、表示或操作方法。"
     },
     {
       "from": "ai_uninformed",
       "to": "ai_heuristics",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“无信息搜索”为学习“启发式与可容性”提供背景与解题基础。"
     },
     {
       "from": "ai_heuristics",
       "to": "ai_informed",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapters 1 and 3: Search and Games"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“有信息搜索（A*）”需要先掌握“启发式与可容性”的定义、表示或操作方法。"
     },
     {
       "from": "ai_informed",
       "to": "ai_minimax",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapters 1 and 3: Search and Games"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“有信息搜索（A*）”为学习“对抗搜索（Minimax）”提供背景与解题基础。"
     },
     {
       "from": "ai_minimax",
       "to": "ai_alphabeta",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapters 1 and 3: Search and Games"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Alpha-Beta剪枝”需要先掌握“对抗搜索（Minimax）”的定义、表示或操作方法。"
     },
     {
       "from": "ai_csp_def",
       "to": "ai_backtracking",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“回溯搜索”需要先掌握“约束满足问题”的定义、表示或操作方法。"
     },
     {
       "from": "ai_backtracking",
       "to": "ai_arc_consistency",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“约束传播”需要先掌握“回溯搜索”的定义、表示或操作方法。"
     },
     {
       "from": "ai_arc_consistency",
       "to": "ai_local_search",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“约束传播”为学习“局部搜索”提供背景与解题基础。"
     },
     {
       "from": "ai_mdp_def",
       "to": "ai_bellman",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Bellman方程”需要先掌握“马尔可夫决策过程”的定义、表示或操作方法。"
     },
     {
       "from": "ai_bellman",
       "to": "ai_value_iteration",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“价值迭代”需要先掌握“Bellman方程”的定义、表示或操作方法。"
     },
     {
       "from": "ai_value_iteration",
       "to": "ai_policy_iteration",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“价值迭代”为学习“策略迭代”提供背景与解题基础。"
     },
     {
       "from": "ai_rl_framework",
       "to": "ai_td",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“时序差分学习”需要先掌握“强化学习框架”的定义、表示或操作方法。"
     },
     {
       "from": "ai_td",
       "to": "ai_qlearning",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Q学习”需要先掌握“时序差分学习”的定义、表示或操作方法。"
     },
     {
       "from": "ai_qlearning",
       "to": "ai_exploration",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“Q学习”为学习“探索与利用”提供背景与解题基础。"
     },
     {
       "from": "ai_exploration",
       "to": "ai_approx_q",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“探索与利用”为学习“近似Q学习”提供背景与解题基础。"
     },
     {
       "from": "ai_prob",
       "to": "ai_bayes_rule",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“贝叶斯规则”需要先掌握“概率基础”的定义、表示或操作方法。"
     },
     {
       "from": "ai_bayes_rule",
       "to": "ai_bayes_nets",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“贝叶斯网络”需要先掌握“贝叶斯规则”的定义、表示或操作方法。"
     },
     {
       "from": "ai_bayes_nets",
       "to": "ai_bn_inference",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“贝叶斯网络推理”需要先掌握“贝叶斯网络”的定义、表示或操作方法。"
     },
     {
       "from": "ai_markov_chain",
       "to": "ai_hmm",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“隐马尔可夫模型”需要先掌握“马尔可夫模型”的定义、表示或操作方法。"
     },
     {
       "from": "ai_hmm",
       "to": "ai_forward",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“前向算法”需要先掌握“隐马尔可夫模型”的定义、表示或操作方法。"
     },
     {
       "from": "ai_forward",
       "to": "ai_viterbi",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“维特比算法”需要先掌握“前向算法”的定义、表示或操作方法。"
     },
     {
       "from": "ai_viterbi",
       "to": "ai_particle",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“维特比算法”为学习“粒子滤波”提供背景与解题基础。"
     },
     {
       "from": "ai_naive_bayes",
       "to": "ai_perceptron",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 9: Machine Learning"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“朴素贝叶斯”为学习“感知机”提供背景与解题基础。"
     },
     {
       "from": "ai_perceptron",
       "to": "ai_neural_nets",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 9: Machine Learning"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“神经网络”需要先掌握“感知机”的定义、表示或操作方法。"
     },
     {
       "from": "ai_neural_nets",
       "to": "ai_generalization",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 9: Machine Learning"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“神经网络”为学习“泛化与过拟合”提供背景与解题基础。"
     },
     {
       "from": "ai_uninformed",
       "to": "ai_informed",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapters 1 and 3: Search and Games"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“有信息搜索（A*）”需要先掌握“无信息搜索”的定义、表示或操作方法。"
     },
     {
       "from": "ai_search_problem",
       "to": "ai_csp_def",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 1: Search"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 2: Constraint Satisfaction Problems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“搜索问题建模”为学习“约束满足问题”提供背景与解题基础。"
     },
     {
       "from": "ai_bellman",
       "to": "ai_policy_iteration",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“策略迭代”需要先掌握“Bellman方程”的定义、表示或操作方法。"
     },
     {
       "from": "ai_mdp_def",
       "to": "ai_rl_framework",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 4: Markov Decision Processes"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“强化学习框架”需要先掌握“马尔可夫决策过程”的定义、表示或操作方法。"
     },
     {
       "from": "ai_qlearning",
       "to": "ai_approx_q",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 5: Reinforcement Learning"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“近似Q学习”需要先掌握“Q学习”的定义、表示或操作方法。"
     },
     {
       "from": "ai_prob",
       "to": "ai_markov_chain",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“马尔可夫模型”需要先掌握“概率基础”的定义、表示或操作方法。"
     },
     {
       "from": "ai_hmm",
       "to": "ai_particle",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“粒子滤波”需要先掌握“隐马尔可夫模型”的定义、表示或操作方法。"
     },
     {
       "from": "ai_bayes_rule",
       "to": "ai_naive_bayes",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 6: Bayes Nets"
+        },
+        {
+          "source_id": "src_berkeley_cs188_textbook_2026",
+          "locator": "Textbook Chapter 8: Hidden Markov Models"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“朴素贝叶斯”需要先掌握“贝叶斯规则”的定义、表示或操作方法。"
     }
   ]
 }

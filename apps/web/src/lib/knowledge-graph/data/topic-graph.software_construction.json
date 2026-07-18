@@ -2,7 +2,7 @@
   "graphId": "software_construction",
   "subject": "Software Construction",
   "generatedFrom": "data/knowledge-graphs/source/software_construction.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -256,82 +256,98 @@
     {
       "from": "c_mit6031_adt_basics",
       "to": "c_mit6031_concurrency_intro",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“并发基础”需要先掌握“ADT 概念”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_adt_basics",
       "to": "c_mit6031_interfaces",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“接口与子类型”需要先掌握“ADT 概念”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_adt_basics",
       "to": "c_mit6031_rep_independence",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“表示独立性”需要先掌握“ADT 概念”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_concurrency_intro",
       "to": "c_mit6031_thread_safety",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线程安全”需要先掌握“并发基础”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_immutability",
       "to": "c_mit6031_adt_basics",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“ADT 概念”需要先掌握“不可变性”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_interfaces",
       "to": "c_mit6031_equality",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“相等性”需要先掌握“接口与子类型”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_interfaces",
       "to": "c_mit6031_recursive_data",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“接口与子类型”为学习“递归数据类型”提供背景与解题基础。"
     },
     {
       "from": "c_mit6031_rep_independence",
       "to": "c_mit6031_rep_invariant",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“表示不变量”需要先掌握“表示独立性”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_rep_invariant",
       "to": "c_mit6031_abstraction_function",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“抽象函数”需要先掌握“表示不变量”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_specs",
       "to": "c_mit6031_adt_basics",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“ADT 概念”需要先掌握“规格”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_specs",
       "to": "c_mit6031_exceptions",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“规格”为学习“异常”提供背景与解题基础。"
     },
     {
       "from": "c_mit6031_specs",
       "to": "c_mit6031_testing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“测试策略”需要先掌握“规格”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_static_checking",
       "to": "c_mit6031_immutability",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“不可变性”需要先掌握“静态检查”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_static_checking",
       "to": "c_mit6031_specs",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“规格”需要先掌握“静态检查”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_thread_safety",
       "to": "c_mit6031_locks",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“锁与同步”需要先掌握“线程安全”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit6031_thread_safety",
       "to": "c_mit6031_message_passing",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“消息传递”需要先掌握“线程安全”的定义、表示或操作方法。"
     }
   ]
 }

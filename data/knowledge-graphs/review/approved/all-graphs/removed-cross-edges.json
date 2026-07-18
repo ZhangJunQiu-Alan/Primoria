@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0.0",
+  "reviewed_at": "2026-07-18T18:00:00+08:00",
+  "reviewer_id": "primoria_owner",
+  "edges": [
+    {
+      "from": "bayes_rule",
+      "to": "ai_bayes_rule",
+      "type": "prereq",
+      "strength": "hard",
+      "from_graph": "discrete_math_and_probability.json",
+      "to_graph": "artificial_intelligence.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "端点已合并为同一 canonical 概念，不应再表示为先修关系。"
+    },
+    {
+      "from": "data_abs",
+      "to": "c_ucb61b_java_basics",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "sicp_cs61a.json",
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "人工复核后判定先修方向或必要性不成立。"
+    },
+    {
+      "from": "c_trees",
+      "to": "c_ucb61b_trees_intro",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "端点已合并为同一 canonical 概念，不应再表示为先修关系。"
+    },
+    {
+      "from": "c_ucb61b_bst_operations",
+      "to": "c_mit6031_recursive_data",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "data_structures_and_algorithms.json",
+      "to_graph": "software_construction.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "人工复核后判定先修方向或必要性不成立。"
+    },
+    {
+      "from": "concept_integer_rep",
+      "to": "c1_2",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "computer_architecture.json",
+      "to_graph": "computer_systems.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "端点已合并为同一 canonical 概念，不应再表示为先修关系。"
+    },
+    {
+      "from": "concept_floating_point",
+      "to": "c1_4",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "computer_architecture.json",
+      "to_graph": "computer_systems.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "端点已合并为同一 canonical 概念，不应再表示为先修关系。"
+    },
+    {
+      "from": "net_tcp",
+      "to": "c10_3",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "computer_network.json",
+      "to_graph": "computer_systems.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "端点已合并为同一 canonical 概念，不应再表示为先修关系。"
+    },
+    {
+      "from": "c_js",
+      "to": "web_javascript",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "web_applications.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "端点已合并为同一 canonical 概念，不应再表示为先修关系。"
+    },
+    {
+      "from": "c_html",
+      "to": "web_html",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "web_applications.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "端点已合并为同一 canonical 概念，不应再表示为先修关系。"
+    },
+    {
+      "from": "c_relational_db",
+      "to": "web_relational",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "introduction_to_computer_science.json",
+      "to_graph": "web_applications.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "端点已合并为同一 canonical 概念，不应再表示为先修关系。"
+    },
+    {
+      "from": "net_http",
+      "to": "web_http",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "computer_network.json",
+      "to_graph": "web_applications.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "端点已合并为同一 canonical 概念，不应再表示为先修关系。"
+    },
+    {
+      "from": "c_ucb61b_big_theta",
+      "to": "ml_gradient_descent",
+      "type": "prereq",
+      "strength": "soft",
+      "from_graph": "data_structures_and_algorithms.json",
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed",
+      "removal_reason_zh": "人工复核后判定先修方向或必要性不成立。"
+    }
+  ]
+}

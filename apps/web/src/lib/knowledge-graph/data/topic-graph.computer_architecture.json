@@ -2,7 +2,7 @@
   "graphId": "computer_architecture",
   "subject": "Great Ideas in Computer Architecture",
   "generatedFrom": "data/knowledge-graphs/source/computer_architecture.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -31,6 +31,10 @@
       "successors": [
         {
           "topicId": "topic_data_rep_floating_point",
+          "hard": true
+        },
+        {
+          "topicId": "topic_pipeline_cache_cache_basics",
           "hard": true
         }
       ],
@@ -155,6 +159,10 @@
         {
           "topicId": "topic_riscv_logic",
           "hard": true
+        },
+        {
+          "topicId": "topic_parallel_io_memory_mapped_io",
+          "hard": true
         }
       ],
       "prereqTopics": [],
@@ -181,7 +189,12 @@
           "centrality": 0.0248
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "topic_cpu",
+          "hard": true
+        }
+      ],
       "prereqTopics": [
         "topic_riscv"
       ],
@@ -249,7 +262,12 @@
           "visualHint": "State-transition diagram of a finite state machine."
         }
       ],
-      "successors": [],
+      "successors": [
+        {
+          "topicId": "topic_cpu",
+          "hard": false
+        }
+      ],
       "prereqTopics": [
         "topic_riscv_logic_boolean_algebra"
       ],
@@ -293,8 +311,11 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "topic_riscv_logic",
+        "topic_sds"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "topic_pipeline_cache",
@@ -354,8 +375,10 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "topic_data_rep"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "topic_memory",
@@ -486,8 +509,10 @@
           "hard": true
         }
       ],
-      "prereqTopics": [],
-      "isRoot": true
+      "prereqTopics": [
+        "topic_riscv"
+      ],
+      "isRoot": false
     },
     {
       "topicId": "topic_io_dep",
@@ -528,177 +553,236 @@
     {
       "from": "concept_amdahls_law",
       "to": "concept_simd",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“Amdahl定律”为学习“数据级并行(SIMD)”提供背景与解题基础。"
     },
     {
       "from": "concept_associative_caches",
       "to": "concept_cache_performance",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“AMAT与缓存未命中”需要先掌握“关联缓存”的定义、表示或操作方法。"
+    },
+    {
+      "from": "concept_binary_hex",
+      "to": "concept_cache_basics",
+      "strength": "hard",
+      "reason": "直接映射缓存的 tag、index 和 offset 需要二进制地址分解。"
     },
     {
       "from": "concept_binary_hex",
       "to": "concept_floating_point",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“IEEE 754浮点数”需要先掌握“二进制与十六进制”的定义、表示或操作方法。"
     },
     {
       "from": "concept_binary_hex",
       "to": "concept_integer_rep",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“补码与整数表示”需要先掌握“二进制与十六进制”的定义、表示或操作方法。"
     },
     {
       "from": "concept_boolean_algebra",
       "to": "concept_combinational_logic",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“组合逻辑块”需要先掌握“布尔代数与逻辑门”的定义、表示或操作方法。"
     },
     {
       "from": "concept_c_basics",
       "to": "concept_pointers_arrays",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“指针与数组”需要先掌握“C基础与控制流”的定义、表示或操作方法。"
     },
     {
       "from": "concept_cache_basics",
       "to": "concept_associative_caches",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“关联缓存”需要先掌握“缓存基础与直接映射”的定义、表示或操作方法。"
     },
     {
       "from": "concept_cache_basics",
       "to": "concept_virtual_memory",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“虚拟内存与页表”需要先掌握“缓存基础与直接映射”的定义、表示或操作方法。"
     },
     {
       "from": "concept_cache_coherence",
       "to": "concept_warehouse_scale",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“缓存一致性与伪共享”为学习“仓库级计算”提供背景与解题基础。"
     },
     {
       "from": "concept_cache_performance",
       "to": "concept_virtual_memory",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“AMAT与缓存未命中”为学习“虚拟内存与页表”提供背景与解题基础。"
     },
     {
       "from": "concept_combinational_logic",
       "to": "concept_state_elements",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“状态元件（触发器）”需要先掌握“组合逻辑块”的定义、表示或操作方法。"
     },
     {
       "from": "concept_cpu_control",
       "to": "concept_pipelining",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“CPU控制逻辑”为学习“流水线原理”提供背景与解题基础。"
     },
     {
       "from": "concept_dma",
       "to": "concept_ecc_parity",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“直接内存访问（DMA）”为学习“纠错码”提供背景与解题基础。"
     },
     {
       "from": "concept_ecc_parity",
       "to": "concept_raid",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“RAID与可靠性”需要先掌握“纠错码”的定义、表示或操作方法。"
     },
     {
       "from": "concept_floating_point",
       "to": "concept_endianness",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“IEEE 754浮点数”为学习“字节序与内存布局”提供背景与解题基础。"
+    },
+    {
+      "from": "concept_fsm",
+      "to": "concept_single_cycle",
+      "strength": "soft",
+      "reason": "有限状态与同步控制知识帮助理解处理器控制逻辑。"
     },
     {
       "from": "concept_integer_rep",
       "to": "concept_floating_point",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“补码与整数表示”为学习“IEEE 754浮点数”提供背景与解题基础。"
     },
     {
       "from": "concept_memory_management",
       "to": "concept_structs_unions",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“动态内存管理”为学习“结构体、联合体与typedef”提供背景与解题基础。"
     },
     {
       "from": "concept_memory_mapped_io",
       "to": "concept_polling_interrupts",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“内存映射I/O”为学习“轮询与中断”提供背景与解题基础。"
     },
     {
       "from": "concept_multithreading",
       "to": "concept_cache_coherence",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“缓存一致性与伪共享”需要先掌握“线程级并行(OpenMP)”的定义、表示或操作方法。"
     },
     {
       "from": "concept_pipeline_hazards",
       "to": "concept_branch_prediction",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“分支预测”需要先掌握“流水线冒险与转发”的定义、表示或操作方法。"
     },
     {
       "from": "concept_pipelining",
       "to": "concept_pipeline_hazards",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“流水线冒险与转发”需要先掌握“流水线原理”的定义、表示或操作方法。"
     },
     {
       "from": "concept_pointers_arrays",
       "to": "concept_memory_management",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“动态内存管理”需要先掌握“指针与数组”的定义、表示或操作方法。"
     },
     {
       "from": "concept_pointers_arrays",
       "to": "concept_structs_unions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“结构体、联合体与typedef”需要先掌握“指针与数组”的定义、表示或操作方法。"
     },
     {
       "from": "concept_polling_interrupts",
       "to": "concept_dma",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“直接内存访问（DMA）”需要先掌握“轮询与中断”的定义、表示或操作方法。"
+    },
+    {
+      "from": "concept_riscv_basics",
+      "to": "concept_memory_mapped_io",
+      "strength": "hard",
+      "reason": "内存映射 I/O 通过处理器的加载和存储指令访问设备寄存器。"
     },
     {
       "from": "concept_riscv_basics",
       "to": "concept_riscv_control",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“控制流与分支”需要先掌握“寄存器与基本指令”的定义、表示或操作方法。"
     },
     {
       "from": "concept_riscv_control",
       "to": "concept_riscv_functions",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“函数调用约定”需要先掌握“控制流与分支”的定义、表示或操作方法。"
     },
     {
       "from": "concept_riscv_formats",
       "to": "concept_call_pipeline",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“指令格式”为学习“编译器、汇编器、链接器、加载器”提供背景与解题基础。"
+    },
+    {
+      "from": "concept_riscv_formats",
+      "to": "concept_single_cycle",
+      "strength": "hard",
+      "reason": "单周期数据通路按 RISC-V 指令格式拆分并传递字段。"
     },
     {
       "from": "concept_riscv_functions",
       "to": "concept_call_pipeline",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“编译器、汇编器、链接器、加载器”需要先掌握“函数调用约定”的定义、表示或操作方法。"
     },
     {
       "from": "concept_riscv_functions",
       "to": "concept_riscv_formats",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“函数调用约定”为学习“指令格式”提供背景与解题基础。"
     },
     {
       "from": "concept_sequential_logic",
       "to": "concept_fsm",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“有限状态机”需要先掌握“时序逻辑与时序”的定义、表示或操作方法。"
     },
     {
       "from": "concept_simd",
       "to": "concept_multithreading",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“数据级并行(SIMD)”为学习“线程级并行(OpenMP)”提供背景与解题基础。"
     },
     {
       "from": "concept_single_cycle",
       "to": "concept_cpu_control",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“单周期数据通路”为学习“CPU控制逻辑”提供背景与解题基础。"
     },
     {
       "from": "concept_single_cycle",
       "to": "concept_pipelining",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“流水线原理”需要先掌握“单周期数据通路”的定义、表示或操作方法。"
     },
     {
       "from": "concept_state_elements",
       "to": "concept_sequential_logic",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“时序逻辑与时序”需要先掌握“状态元件（触发器）”的定义、表示或操作方法。"
     },
     {
       "from": "concept_virtual_memory",
       "to": "concept_tlb",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“地址转换后备缓冲器（TLB）”需要先掌握“虚拟内存与页表”的定义、表示或操作方法。"
     }
   ]
 }

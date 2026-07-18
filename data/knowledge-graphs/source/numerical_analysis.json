@@ -1,18 +1,23 @@
 {
   "schema_version": "2.0.0",
-  "content_version": "1.0.0",
+  "content_version": "1.1.0",
   "graph_id": "numerical_analysis",
   "subject": "Introduction to Numerical Analysis",
   "jurisdictions": [],
   "source_ids": [
-    "src_unverified_numerical_analysis"
+    "src_mit_ocw_18_330_spring_2012"
   ],
-  "review_status": "unreviewed",
+  "review_status": "approved",
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-07-17",
       "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "完成权威来源替换、章节级证据、canonical 去重、全节点与先修边人工批准。"
     }
   ],
   "nodes": [
@@ -23,8 +28,13 @@
       "name_zh": "误差与计算机运算",
       "topic": null,
       "default_order": 1,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit18330_root_finding",
@@ -33,8 +43,13 @@
       "name_zh": "求根",
       "topic": null,
       "default_order": 2,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Root Finding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit18330_linear_systems",
@@ -43,8 +58,13 @@
       "name_zh": "线性方程组",
       "topic": null,
       "default_order": 3,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Linear Systems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit18330_interpolation",
@@ -53,8 +73,13 @@
       "name_zh": "插值与逼近",
       "topic": null,
       "default_order": 4,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit18330_integration_odes",
@@ -63,8 +88,13 @@
       "name_zh": "Newton-Cotes 公式与高斯求积",
       "topic": null,
       "default_order": 5,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Newton-Cotes Formulas and Gaussian Quadrature"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "t_mit18330_integration_odes_mit18330_euler",
@@ -73,12 +103,17 @@
       "name_zh": "欧拉法、Runge-Kutta 法与ODE 稳定性",
       "topic": null,
       "default_order": 6,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_floating_point",
-      "canonical_id": "pc_004e3ffa7a8d3ee909a189f585e86e27",
+      "canonical_id": "pc_ebeceaa256b9a24b42b1ef0234b977bd",
       "kind": "concept",
       "name": "Floating Point Representation",
       "name_zh": "浮点表示",
@@ -86,8 +121,13 @@
       "description": "Finite-precision IEEE 754 representation of reals, introducing machine epsilon and rounding error that limit the accuracy of numerical computation.",
       "default_order": 1,
       "centrality": 0.1243,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_error_analysis",
@@ -99,8 +139,13 @@
       "description": "Quantifying computational error through forward and backward error and assessing an algorithm's stability under rounding and perturbations.",
       "default_order": 2,
       "centrality": 0.2342,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_conditioning",
@@ -112,8 +157,13 @@
       "description": "The condition number measuring how sensitively a problem's output responds to input perturbations, independent of the algorithm used.",
       "default_order": 3,
       "centrality": 0.0577,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_bisection",
@@ -127,12 +177,17 @@
       "centrality": 0.0443,
       "visual": "function",
       "visual_hint": "Halve a bracketing interval each step converging on a root.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Root Finding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_newton",
-      "canonical_id": "pc_ff4e9538f80554892ba2e2b3c1047a99",
+      "canonical_id": "pc_46ef33ef787a8de0a55c2125d6918ec6",
       "kind": "concept",
       "name": "Newton's Method",
       "name_zh": "牛顿法",
@@ -142,8 +197,13 @@
       "centrality": 0.0459,
       "visual": "function",
       "visual_hint": "Step Newton's method following tangents to a root.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Root Finding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_secant",
@@ -157,12 +217,17 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Step the secant method using a chord to approach a root.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Root Finding"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_lu",
-      "canonical_id": "pc_365b937d8328d40e691e22d713152492",
+      "canonical_id": "pc_d4cb5f921745c636b7472b931132f611",
       "kind": "concept",
       "name": "LU Factorization",
       "name_zh": "LU 分解",
@@ -170,8 +235,13 @@
       "description": "Factoring a matrix into lower and upper triangular factors via Gaussian elimination, enabling efficient repeated solution of linear systems.",
       "default_order": 1,
       "centrality": 0.0775,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Linear Systems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_cholesky",
@@ -183,8 +253,13 @@
       "description": "A specialised factorisation of symmetric positive-definite matrices into a lower triangular factor times its transpose, faster than general LU.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Linear Systems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_iterative_linear",
@@ -196,12 +271,17 @@
       "description": "Iterative solvers such as Jacobi and Gauss-Seidel that refine an approximate solution to a linear system, suited to large sparse matrices.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Linear Systems"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_polynomial_interp",
-      "canonical_id": "pc_4034145337bdaae9379481a7abc44369",
+      "canonical_id": "pc_256b19aeee3d4707363b64510c81960d",
       "kind": "concept",
       "name": "Polynomial Interpolation",
       "name_zh": "多项式插值",
@@ -211,8 +291,13 @@
       "centrality": 0.0775,
       "visual": "function",
       "visual_hint": "Fit an interpolating polynomial through given data points.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_splines",
@@ -226,8 +311,13 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Fit a smooth piecewise spline through knots without oscillation.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_least_squares",
@@ -241,8 +331,13 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Fit a least-squares line minimising the squared residuals.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_newton_cotes",
@@ -256,8 +351,13 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Approximate an integral with trapezoidal and Simpson's-rule strips.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Newton-Cotes Formulas and Gaussian Quadrature"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_gaussian_quad",
@@ -269,8 +369,13 @@
       "description": "Numerical integration choosing optimal nodes and weights to integrate polynomials of the highest possible degree exactly.",
       "default_order": 2,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Newton-Cotes Formulas and Gaussian Quadrature"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_euler",
@@ -284,8 +389,13 @@
       "centrality": 0.0669,
       "visual": "function",
       "visual_hint": "Step Euler's method along a slope field approximating an ODE solution.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_runge_kutta",
@@ -299,8 +409,13 @@
       "centrality": 0.0248,
       "visual": "function",
       "visual_hint": "Compare RK4 against Euler approximating an ODE solution.",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods"
+        }
+      ],
+      "review_status": "approved"
     },
     {
       "id": "c_mit18330_ode_stability",
@@ -312,8 +427,13 @@
       "description": "Stability of ODE solvers, including A-stability and the difficulty stiff equations pose, which constrains the usable step size.",
       "default_order": 3,
       "centrality": 0.0248,
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods"
+        }
+      ],
+      "review_status": "approved"
     }
   ],
   "edges": [
@@ -322,128 +442,252 @@
       "to": "c_mit18330_error_analysis",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“误差分析”需要先掌握“浮点表示”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_conditioning",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“条件数”需要先掌握“误差分析”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_bisection",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Root Finding"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“误差分析”为学习“二分法”提供背景与解题基础。"
     },
     {
       "from": "c_mit18330_bisection",
       "to": "c_mit18330_newton",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Root Finding"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“牛顿法”需要先掌握“二分法”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_newton",
       "to": "c_mit18330_secant",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Root Finding"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“割线法”需要先掌握“牛顿法”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_conditioning",
       "to": "c_mit18330_lu",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Linear Systems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“LU 分解”需要先掌握“条件数”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_lu",
       "to": "c_mit18330_cholesky",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Linear Systems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Cholesky 分解”需要先掌握“LU 分解”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_lu",
       "to": "c_mit18330_iterative_linear",
       "type": "prereq",
       "strength": "soft",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Linear Systems"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "“LU 分解”为学习“迭代法”提供背景与解题基础。"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_polynomial_interp",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“多项式插值”需要先掌握“误差分析”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_polynomial_interp",
       "to": "c_mit18330_splines",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“样条插值”需要先掌握“多项式插值”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_lu",
       "to": "c_mit18330_least_squares",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Linear Systems"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“最小二乘逼近”需要先掌握“LU 分解”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_polynomial_interp",
       "to": "c_mit18330_newton_cotes",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Newton-Cotes Formulas and Gaussian Quadrature"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Newton-Cotes 公式”需要先掌握“多项式插值”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_polynomial_interp",
       "to": "c_mit18330_gaussian_quad",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Interpolation and Approximation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Newton-Cotes Formulas and Gaussian Quadrature"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“高斯求积”需要先掌握“多项式插值”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_euler",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Errors and Computer Arithmetic"
+        },
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“欧拉法”需要先掌握“误差分析”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_euler",
       "to": "c_mit18330_runge_kutta",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“Runge-Kutta 法”需要先掌握“欧拉法”的定义、表示或操作方法。"
     },
     {
       "from": "c_mit18330_euler",
       "to": "c_mit18330_ode_stability",
       "type": "prereq",
       "strength": "hard",
-      "evidence_refs": [],
-      "review_status": "unreviewed"
+      "evidence_refs": [
+        {
+          "source_id": "src_mit_ocw_18_330_spring_2012",
+          "locator": "Syllabus topics and lecture-notes unit: Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods"
+        }
+      ],
+      "review_status": "approved",
+      "reason": "理解“ODE 稳定性”需要先掌握“欧拉法”的定义、表示或操作方法。"
     }
   ]
 }

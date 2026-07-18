@@ -2,7 +2,7 @@
   "graphId": "computer_systems",
   "subject": "Computer Systems",
   "generatedFrom": "data/knowledge-graphs/source/computer_systems.json",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "note": "Topic-level DAG collapsed from concept prereq edges. successors are prerequisite relations; curriculum progression follows the immediate next defaultOrder topic. conceptEdges keeps the concept-grain prereq DAG for the concept-frontier outline builder.",
   "topics": [
     {
@@ -837,287 +837,344 @@
     {
       "from": "c1_1",
       "to": "c1_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“整数表示”需要先掌握“比特与字节”的定义、表示或操作方法。"
     },
     {
       "from": "c1_1",
       "to": "c1_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“浮点数表示”需要先掌握“比特与字节”的定义、表示或操作方法。"
     },
     {
       "from": "c1_2",
       "to": "c1_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“整数运算”需要先掌握“整数表示”的定义、表示或操作方法。"
     },
     {
       "from": "c1_3",
       "to": "c2_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“x86-64数据传输”需要先掌握“整数运算”的定义、表示或操作方法。"
     },
     {
       "from": "c1_4",
       "to": "c1_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“浮点运算”需要先掌握“浮点数表示”的定义、表示或操作方法。"
     },
     {
       "from": "c10_1",
       "to": "c10_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“IP协议”需要先掌握“客户端-服务器模型”的定义、表示或操作方法。"
     },
     {
       "from": "c10_2",
       "to": "c10_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“TCP协议”需要先掌握“IP协议”的定义、表示或操作方法。"
     },
     {
       "from": "c10_3",
       "to": "c10_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“套接字接口”需要先掌握“TCP协议”的定义、表示或操作方法。"
     },
     {
       "from": "c10_4",
       "to": "c10_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“HTTP协议基础”需要先掌握“套接字接口”的定义、表示或操作方法。"
     },
     {
       "from": "c11_1",
       "to": "c11_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“共享变量”需要先掌握“线程基础”的定义、表示或操作方法。"
     },
     {
       "from": "c11_2",
       "to": "c11_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“同步（信号量）”需要先掌握“共享变量”的定义、表示或操作方法。"
     },
     {
       "from": "c11_3",
       "to": "c11_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线程安全”需要先掌握“同步（信号量）”的定义、表示或操作方法。"
     },
     {
       "from": "c11_3",
       "to": "c11_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“死锁”需要先掌握“同步（信号量）”的定义、表示或操作方法。"
     },
     {
       "from": "c2_1",
       "to": "c2_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“算术与逻辑运算”需要先掌握“x86-64数据传输”的定义、表示或操作方法。"
     },
     {
       "from": "c2_1",
       "to": "c2_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“数组与结构体”需要先掌握“x86-64数据传输”的定义、表示或操作方法。"
     },
     {
       "from": "c2_1",
       "to": "c3_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“指令集体系结构”需要先掌握“x86-64数据传输”的定义、表示或操作方法。"
     },
     {
       "from": "c2_1",
       "to": "c5_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“存储技术”需要先掌握“x86-64数据传输”的定义、表示或操作方法。"
     },
     {
       "from": "c2_2",
       "to": "c2_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“控制流”需要先掌握“算术与逻辑运算”的定义、表示或操作方法。"
     },
     {
       "from": "c2_3",
       "to": "c2_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“过程与调用栈”需要先掌握“控制流”的定义、表示或操作方法。"
     },
     {
       "from": "c2_3",
       "to": "c4_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“编译器局限”需要先掌握“控制流”的定义、表示或操作方法。"
     },
     {
       "from": "c2_4",
       "to": "c6_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“静态链接”需要先掌握“过程与调用栈”的定义、表示或操作方法。"
     },
     {
       "from": "c3_1",
       "to": "c3_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“顺序CPU实现”需要先掌握“指令集体系结构”的定义、表示或操作方法。"
     },
     {
       "from": "c3_2",
       "to": "c3_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“流水线原理”需要先掌握“顺序CPU实现”的定义、表示或操作方法。"
     },
     {
       "from": "c3_3",
       "to": "c3_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“流水线冒险与转发”需要先掌握“流水线原理”的定义、表示或操作方法。"
     },
     {
       "from": "c3_3",
       "to": "c4_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“指令级并行”需要先掌握“流水线原理”的定义、表示或操作方法。"
     },
     {
       "from": "c3_4",
       "to": "c3_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“流水线异常”需要先掌握“流水线冒险与转发”的定义、表示或操作方法。"
     },
     {
       "from": "c3_5",
       "to": "c7_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“异常”需要先掌握“流水线异常”的定义、表示或操作方法。"
     },
     {
       "from": "c4_1",
       "to": "c4_2",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“编译器局限”为学习“循环展开”提供背景与解题基础。"
     },
     {
       "from": "c4_1",
       "to": "c4_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“内存别名”需要先掌握“编译器局限”的定义、表示或操作方法。"
     },
     {
       "from": "c4_2",
       "to": "c4_3",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“循环展开”为学习“指令级并行”提供背景与解题基础。"
     },
     {
       "from": "c4_2",
       "to": "c4_5",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“循环展开”为学习“性能分析工具”提供背景与解题基础。"
     },
     {
       "from": "c4_4",
       "to": "c5_5",
-      "strength": "soft"
+      "strength": "soft",
+      "reason": "“内存别名”为学习“缓存友好代码”提供背景与解题基础。"
     },
     {
       "from": "c5_1",
       "to": "c5_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“局部性原理”需要先掌握“存储技术”的定义、表示或操作方法。"
     },
     {
       "from": "c5_2",
       "to": "c5_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“缓存组织”需要先掌握“局部性原理”的定义、表示或操作方法。"
     },
     {
       "from": "c5_3",
       "to": "c5_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“缓存性能指标”需要先掌握“缓存组织”的定义、表示或操作方法。"
     },
     {
       "from": "c5_3",
       "to": "c5_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“缓存友好代码”需要先掌握“缓存组织”的定义、表示或操作方法。"
     },
     {
       "from": "c5_3",
       "to": "c8_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“地址转换”需要先掌握“缓存组织”的定义、表示或操作方法。"
     },
     {
       "from": "c5_4",
       "to": "c5_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“缓存友好代码”需要先掌握“缓存性能指标”的定义、表示或操作方法。"
     },
     {
       "from": "c6_1",
       "to": "c6_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“目标文件(ELF)”需要先掌握“静态链接”的定义、表示或操作方法。"
     },
     {
       "from": "c6_2",
       "to": "c6_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“符号解析”需要先掌握“目标文件(ELF)”的定义、表示或操作方法。"
     },
     {
       "from": "c6_3",
       "to": "c6_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“重定位”需要先掌握“符号解析”的定义、表示或操作方法。"
     },
     {
       "from": "c6_4",
       "to": "c6_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“动态链接”需要先掌握“重定位”的定义、表示或操作方法。"
     },
     {
       "from": "c7_1",
       "to": "c7_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“进程与上下文切换”需要先掌握“异常”的定义、表示或操作方法。"
     },
     {
       "from": "c7_2",
       "to": "c11_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“线程基础”需要先掌握“进程与上下文切换”的定义、表示或操作方法。"
     },
     {
       "from": "c7_2",
       "to": "c7_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“进程控制”需要先掌握“进程与上下文切换”的定义、表示或操作方法。"
     },
     {
       "from": "c7_3",
       "to": "c7_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“信号与信号处理”需要先掌握“进程控制”的定义、表示或操作方法。"
     },
     {
       "from": "c7_3",
       "to": "c9_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“Unix 输入输出”需要先掌握“进程控制”的定义、表示或操作方法。"
     },
     {
       "from": "c7_4",
       "to": "c7_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“非局部跳转”需要先掌握“信号与信号处理”的定义、表示或操作方法。"
     },
     {
       "from": "c8_1",
       "to": "c8_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“页表”需要先掌握“地址转换”的定义、表示或操作方法。"
     },
     {
       "from": "c8_2",
       "to": "c8_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“地址转换后备缓冲器（TLB）”需要先掌握“页表”的定义、表示或操作方法。"
     },
     {
       "from": "c8_2",
       "to": "c8_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“动态内存分配”需要先掌握“页表”的定义、表示或操作方法。"
     },
     {
       "from": "c8_4",
       "to": "c8_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“垃圾回收基础”需要先掌握“动态内存分配”的定义、表示或操作方法。"
     },
     {
       "from": "c9_1",
       "to": "c10_1",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“客户端-服务器模型”需要先掌握“Unix 输入输出”的定义、表示或操作方法。"
     },
     {
       "from": "c9_1",
       "to": "c9_2",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“文件元数据”需要先掌握“Unix 输入输出”的定义、表示或操作方法。"
     },
     {
       "from": "c9_1",
       "to": "c9_3",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“标准I/O库”需要先掌握“Unix 输入输出”的定义、表示或操作方法。"
     },
     {
       "from": "c9_2",
       "to": "c9_4",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“文件共享”需要先掌握“文件元数据”的定义、表示或操作方法。"
     },
     {
       "from": "c9_4",
       "to": "c9_5",
-      "strength": "hard"
+      "strength": "hard",
+      "reason": "理解“I/O重定向”需要先掌握“文件共享”的定义、表示或操作方法。"
     }
   ]
 }
