@@ -9,8 +9,8 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
 ## Implemented product loop
 
 - Self-owned email/password auth, sessions, password reset, and rate limiting.
-- Cold-start onboarding for learning goal, KG anchor, knowledge background,
-  Tutor style, first-course preparation, stale-run recovery, and fact sync.
+- Cold-start onboarding for learning goal, KG anchor, background Facts intake,
+  Tutor style, first-course readiness, stale-run recovery, and direct fact sync.
 - Main CopilotKit Tutor connected to the durable `primoria_tutor` runtime.
 - Postgres-backed chat threads and New chat lifecycle.
 - KG positioning across library graphs with generated-graph coverage fallback
@@ -27,7 +27,8 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
   guild ranks, three daily quests, course quest map, and ten Profile
   achievements. Full RPG presentation is Profile-only; older learning history
   is excluded by each player's progression start time.
-- Post-lesson Extractor jobs and reviewable/dismissible learner facts.
+- Durable onboarding/Settings intake jobs plus post-lesson Extractor jobs and
+  reviewable/editable/dismissible learner facts across six categories.
 - Immutable snapshot course sharing with idempotent import.
 - Global user-agnostic generated-image cache.
 - Chinese/English interface dictionaries and separate content-language handling.
@@ -71,7 +72,9 @@ workers consume Postgres queues:
 
 - `worker:lesson-generation`;
 - `worker:learning-progress`;
-- `worker:extractor`.
+- `worker:extractor`, which prioritizes `profile_fact_intake_jobs` from
+  onboarding/Settings and consumes lesson `extractor_jobs` when no intake is
+  waiting.
 
 The Agent owns only its isolated `agent_runtime` schema plus the existing
 bounded owner-scoped course-card read. Web remains the owner of product writes.
