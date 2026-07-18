@@ -17,6 +17,7 @@ const workers = {
   lessonGeneration: { workerId: "lesson", ageSeconds: 1, stale: false },
   learningProgress: { workerId: "progress", ageSeconds: 1, stale: false },
   extractor: { workerId: "extractor", ageSeconds: 1, stale: false },
+  profileFactIntake: { workerId: "extractor", ageSeconds: 1, stale: false },
 };
 
 describe("job queue health", () => {
@@ -43,7 +44,7 @@ describe("job queue health", () => {
     expect(health.status).toBe("stalled");
   });
 
-  it("aggregates counts from all three job tables", async () => {
+  it("aggregates counts from all four job tables", async () => {
     const queried: string[] = [];
     const health = await checkJobQueueHealth(async (text) => {
       queried.push(text);
@@ -53,10 +54,11 @@ describe("job queue health", () => {
       return { rows: [{ queued: "2", running: "1", failed: "0", oldest_queued_seconds: "42", oldest_running_seconds: "12", latest_job_heartbeat_seconds: "3", expired_leases: "0" }] };
     }, 600);
 
-    expect(queried).toHaveLength(4);
+    expect(queried).toHaveLength(5);
     expect(queried.join(" ")).toContain("lesson_generation_jobs");
     expect(queried.join(" ")).toContain("learning_progress_jobs");
     expect(queried.join(" ")).toContain("extractor_jobs");
+    expect(queried.join(" ")).toContain("profile_fact_intake_jobs");
     expect(health.status).toBe("ok");
     expect(health.queues.lessonGeneration).toEqual({
       queued: 2,

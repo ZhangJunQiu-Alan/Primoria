@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 
 import { requireAuthUser } from "@/lib/auth/guard";
 import {
-  buildOnboardingCourseWithStatus,
   OnboardingCourseBuildError,
 } from "@/lib/learner-profile/onboarding-course-build";
+import { buildOnboardingCourseIfReady } from "@/lib/learner-profile/onboarding-course-readiness";
 import { getLearnerOnboardingState, getLearnerProfile } from "@/lib/learner-profile/store";
 
 export const runtime = "nodejs";
@@ -24,7 +24,7 @@ export async function POST() {
   }
 
   try {
-    const course = await buildOnboardingCourseWithStatus(user.id, profile);
+    const course = await buildOnboardingCourseIfReady(user.id, profile);
     return NextResponse.json({ ...(await getLearnerOnboardingState(user.id)), course });
   } catch (error) {
     if (error instanceof OnboardingCourseBuildError) {

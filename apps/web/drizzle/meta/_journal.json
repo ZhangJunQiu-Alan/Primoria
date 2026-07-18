@@ -337,6 +337,13 @@
       "when": 1784303549217,
       "tag": "0047_slim_earthquake",
       "breakpoints": true
+    },
+    {
+      "idx": 48,
+      "version": "7",
+      "when": 1784358622421,
+      "tag": "0048_salty_sunspot",
+      "breakpoints": true
     }
   ]
 }

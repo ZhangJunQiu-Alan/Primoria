@@ -16,21 +16,27 @@ function fact(partial: Partial<LearnerFact> & { id: string; text: string; catego
 }
 
 function main() {
-  // goal facts are excluded from generation; the other three are kept.
+  // goal/profile context are excluded; interest is teaching-relevant but lowest priority.
   const picked = selectPlannerFacts([
     fact({ id: "f1", text: "wants A-Level prep", category: "goal", confidence: 0.99 }),
     fact({ id: "f2", text: "prefers visuals", category: "preference", confidence: 0.7 }),
     fact({ id: "f3", text: "knows matrices", category: "prior_knowledge", confidence: 0.6 }),
     fact({ id: "f4", text: "confuses class vs object", category: "learning_gap", confidence: 0.8 }),
+    fact({ id: "f5", text: "interested in robotics", category: "interest", confidence: 0.99 }),
+    fact({ id: "f6", text: "lives in Singapore", category: "profile_context", confidence: 0.99 }),
   ]);
   assert(!picked.some((f) => (f.category as string) === "goal"), "goal facts are not fed to the planner");
-  assert(picked.length === 3, "the three teaching categories are kept");
-  // ranked by confidence desc → learning_gap(0.8) before preference(0.7) before prior_knowledge(0.6)
-  assert(picked[0].text === "confuses class vs object", "highest-confidence fact ranked first");
+  assert(!picked.some((f) => (f.category as string) === "profile_context"), "profile context is not fed to the planner");
+  assert(picked.length === 4, "the four teaching categories are kept");
+  assert(picked[0].text === "confuses class vs object", "learning gaps are ranked before other categories");
+  assert(picked.at(-1)?.category === "interest", "interests are lowest priority");
 
   // cap at 8
   const many = Array.from({ length: 12 }, (_, i) => fact({ id: `f${i}`, text: `pref ${i}`, category: "preference", confidence: i / 12 }));
   assert(selectPlannerFacts(many).length === 8, "facts capped at 8");
+
+  const interests = Array.from({ length: 5 }, (_, i) => fact({ id: `i${i}`, text: `interest ${i}`, category: "interest", confidence: 1 }));
+  assert(selectPlannerFacts(interests).length === 2, "interest facts are capped at 2");
 
   process.stdout.write("[facts-consumption.unit] ALL CHECKS PASSED\n");
 }

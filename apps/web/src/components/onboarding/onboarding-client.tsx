@@ -7,7 +7,6 @@ import { useEffect, useMemo, useState } from "react";
 import {
   isTutorStyle,
   type GoalPositioningCandidate,
-  type KnowledgeBackground,
   type LearnerOnboardingState,
   type OnboardingStep,
   type TutorStyle,
@@ -46,7 +45,7 @@ type OnboardingVisual = {
   height: number;
 };
 
-const STEP_ORDER: OnboardingStep[] = ["goal", "background", "style"];
+const STEP_ORDER: OnboardingStep[] = ["goal", "facts", "style"];
 const DEFAULT_TUTOR_STYLE: TutorStyle = "feynman";
 
 const GOAL_EXAMPLES = [
@@ -55,14 +54,10 @@ const GOAL_EXAMPLES = [
   "Teach me Python from the beginning",
 ];
 
-const BACKGROUNDS: Array<{
-  id: KnowledgeBackground;
-  title: string;
-  meta: string;
-}> = [
-  { id: "high_school", title: "High school", meta: "高中" },
-  { id: "undergraduate", title: "University", meta: "大学" },
-  { id: "graduate", title: "Graduate", meta: "研究生" },
+const FACTS_EXAMPLES = [
+  "I study computer science and have taken CS61A and CS61B",
+  "我对算法和大模型架构感兴趣",
+  "I learn best from concrete examples before formal definitions",
 ];
 
 const TUTOR_STYLES: Array<{
@@ -104,10 +99,10 @@ const STEP_VISUALS: Record<OnboardingStep, OnboardingVisual> = {
     width: 720,
     height: 840,
   },
-  background: {
+  facts: {
     src: "/onboarding/background-layers.svg",
-    title: "Set the starting depth",
-    body: "The first lesson adjusts its pace before any course content is written.",
+    title: "Build your starting context",
+    body: "Share what you have studied, what interests you, and how you like to learn.",
     mark: "02",
     width: 720,
     height: 840,
@@ -170,6 +165,10 @@ function debugOnboardingResponse(
     onboardingCourseStatus: null,
     onboardingCourseMessage: null,
     onboardingCourseUpdatedAt: null,
+    factsIntakeStatus: null,
+    factsIntakeJobId: null,
+    factsIntakeMessage: null,
+    factsIntakeUpdatedAt: null,
     knowledgeBackground: null,
     knowledgeBackgroundSkippedAt: null,
     tutorStyle: null,
@@ -184,7 +183,7 @@ function debugOnboardingResponse(
     if (body.skip) {
       return {
         profile: { ...profile, goalSkippedAt: now, learningGoal: null, updatedAt: now },
-        nextStep: "background",
+        nextStep: "facts",
         complete: false,
       };
     }
@@ -205,7 +204,7 @@ function debugOnboardingResponse(
         onboardingCourseUpdatedAt: now,
         updatedAt: now,
       },
-      nextStep: "background",
+      nextStep: "facts",
       complete: false,
       anchor: {
         graphSubject: "Data Structures and Algorithms",
@@ -215,11 +214,15 @@ function debugOnboardingResponse(
     };
   }
 
-  if (path.endsWith("/background")) {
+  if (path.endsWith("/facts")) {
     return {
       profile: {
         ...profile,
-        knowledgeBackground: body.skip ? null : (body.knowledgeBackground as KnowledgeBackground),
+        factsIntakeStatus: body.skip ? "skipped" : "completed",
+        factsIntakeJobId: body.skip ? null : "debug-intake-job",
+        factsIntakeMessage: null,
+        factsIntakeUpdatedAt: now,
+        knowledgeBackground: null,
         knowledgeBackgroundSkippedAt: body.skip ? now : null,
         onboardingCourseStatus: profile.goalSkippedAt ? null : "ready",
         onboardingCourseMessage: null,
@@ -254,9 +257,7 @@ function debugOnboardingResponse(
 export function OnboardingClient({ initialState, debugMode = false }: OnboardingClientProps) {
   const [state, setState] = useState<LearnerOnboardingState>(initialState);
   const [learningGoal, setLearningGoal] = useState(initialState.profile?.learningGoal ?? "");
-  const [background, setBackground] = useState<KnowledgeBackground | "">(
-    initialState.profile?.knowledgeBackground ?? "",
-  );
+  const [factsIntroduction, setFactsIntroduction] = useState("");
   const [style, setStyle] = useState<TutorStyle>(() => normalizeTutorStyle(initialState.profile?.tutorStyle));
   const [anchor, setAnchor] = useState<GoalAnchorSummary | null>(null);
   const [clarify, setClarify] = useState<GoalClarify | null>(null);
@@ -275,6 +276,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
       : { src: visual.src, width: visual.width, height: visual.height };
   const savedLearningGoal = state.profile?.learningGoal ?? learningGoal;
   const goalStatus = state.profile?.goalPositioningStatus ?? null;
+  const factsWaiting = state.profile?.factsIntakeStatus === "pending";
   const courseStatus =
     state.profile?.onboardingCourseStatus ??
     (courseId ? "ready" : state.profile?.goalGraphId ? "pending" : null);
@@ -395,7 +397,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
   function resetPreview() {
     setState(initialState);
     setLearningGoal(initialState.profile?.learningGoal ?? "");
-    setBackground(initialState.profile?.knowledgeBackground ?? "");
+    setFactsIntroduction("");
     setStyle(normalizeTutorStyle(initialState.profile?.tutorStyle));
     setAnchor(null);
     setClarify(null);
@@ -481,39 +483,41 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
             </div>
           ) : null}
 
-          {step === "background" ? (
+          {step === "facts" ? (
             <div className="onboarding-step">
               <div className="onboarding-step-copy">
-                <p className="onboarding-kicker">Knowledge background</p>
-                <h1>Set the level of the first explanation.</h1>
-                <p className="onboarding-copy">This changes the pace and prerequisite assumptions of the generated course.</p>
+                <p className="onboarding-kicker">About your learning</p>
+                <h1>Tell Primoria what you already bring.</h1>
+                <p className="onboarding-copy">Share your studies, interests, goals, or learning preferences in your own words.</p>
               </div>
               <div className="onboarding-control-region">
-                <div className="onboarding-choice-list">
-                  {BACKGROUNDS.map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      className={background === item.id ? "selected" : ""}
-                      onClick={() => setBackground(item.id)}
-                    >
-                      <strong>{item.title}</strong>
-                      <span>{item.meta}</span>
+                <textarea
+                  value={factsIntroduction}
+                  maxLength={2_000}
+                  onChange={(event) => setFactsIntroduction(event.target.value)}
+                  placeholder="e.g. I study at JCU, I am interested in algorithms and LLM architecture, and I have taken CS61A and CS61B"
+                  rows={5}
+                  className="onboarding-goal-input onboarding-facts-input"
+                />
+                <div className="onboarding-example-list" aria-label="Introduction examples">
+                  {FACTS_EXAMPLES.map((example) => (
+                    <button key={example} type="button" onClick={() => setFactsIntroduction(example)}>
+                      {example}
                     </button>
                   ))}
                 </div>
               </div>
-              <p className="onboarding-note onboarding-note-empty">Background controls the generated lesson depth.</p>
+              <p className="onboarding-note onboarding-note-empty">Continue immediately; Primoria will organize useful facts in the background.</p>
               <div className="onboarding-actions">
                 <button
                   type="button"
                   className="onboarding-primary"
-                  disabled={busy || !background}
-                  onClick={() => run(() => submit("/api/onboarding/background", { knowledgeBackground: background }))}
+                  disabled={busy || factsIntroduction.trim().length < 2}
+                  onClick={() => run(() => submit("/api/onboarding/facts", { text: factsIntroduction }))}
                 >
-                  {busy ? "Preparing course…" : "Continue"}
+                  {busy ? "Saving…" : "Continue"}
                 </button>
-                <button type="button" className="onboarding-skip" disabled={busy} onClick={() => run(() => submit("/api/onboarding/background", { skip: true }))}>
+                <button type="button" className="onboarding-skip" disabled={busy} onClick={() => run(() => submit("/api/onboarding/facts", { skip: true }))}>
                   Skip this question
                 </button>
               </div>
@@ -568,6 +572,8 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
                     ? "Choose a subject"
                     : goalStatus === "pending"
                       ? "Preparing path"
+                      : factsWaiting
+                        ? "Personalizing"
                       : courseFailed
                         ? "Course preparation failed"
                         : courseWaiting
@@ -579,6 +585,8 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
                     ? "Which subject should Primoria start from?"
                     : goalStatus === "pending"
                       ? "Your learning path is being prepared."
+                      : factsWaiting
+                        ? "Your course will be prepared in the background."
                       : courseFailed
                         ? "We couldn't prepare your course."
                         : courseWaiting
@@ -594,6 +602,8 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
                     ? finalClarify.message
                     : goalStatus === "pending"
                       ? "Primoria is matching your goal in the background. You can enter the workspace while it finishes."
+                      : factsWaiting
+                        ? "Primoria is organizing your introduction first. You can enter the workspace while it finishes."
                       : courseFailed
                         ? (state.profile?.onboardingCourseMessage ?? "We couldn't prepare your course right now. Please retry.")
                         : courseWaiting
@@ -628,6 +638,8 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
                     ? "The next screen will open the generated course outline."
                     : goalStatus === "pending"
                       ? "Course preparation will continue in the background."
+                      : factsWaiting
+                        ? "Course preparation starts automatically when personalization finishes."
                       : courseFailed
                         ? "Retry keeps your learning goal and starts course preparation again."
                         : courseWaiting
@@ -637,7 +649,11 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
                         : "No course was created because the learning goal was skipped."}
               </p>
               <div className="onboarding-actions">
-                {finalClarify ? null : courseFailed || courseStatus === "pending" ? (
+                {finalClarify ? null : factsWaiting ? (
+                  <button type="button" className="onboarding-primary" disabled>
+                    Preparing profile…
+                  </button>
+                ) : courseFailed || courseStatus === "pending" ? (
                   <button
                     type="button"
                     className="onboarding-primary"
@@ -655,6 +671,7 @@ export function OnboardingClient({ initialState, debugMode = false }: Onboarding
                     {completionLabel}
                   </Link>
                 )}
+                {courseWaiting ? <Link className="onboarding-skip" href="/">Enter workspace while this continues</Link> : null}
                 {debugMode ? (
                   <button type="button" className="onboarding-skip" onClick={resetPreview}>
                     Restart preview

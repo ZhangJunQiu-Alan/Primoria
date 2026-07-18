@@ -6,13 +6,12 @@ import { logKnowledgeGraphError, toSafeKnowledgeGraphError } from "@/lib/knowled
 import { createServerTiming } from "@/lib/observability/server-timing";
 import { syncOnboardingFact } from "@/lib/learner-facts/store";
 import {
-  buildOnboardingCourseWithStatus,
   OnboardingCourseBuildError,
 } from "@/lib/learner-profile/onboarding-course-build";
+import { buildOnboardingCourseIfReady } from "@/lib/learner-profile/onboarding-course-readiness";
 import { resolveOnboardingGoalAnchor } from "@/lib/learner-profile/onboarding-positioning";
 import {
   getLearnerOnboardingState,
-  getLearnerProfile,
   isLearningGoalPositioningAttemptPending,
   saveLearningGoal,
   saveLearningGoalClarification,
@@ -31,15 +30,6 @@ const RequestSchema = z.object({
   graphId: z.string().min(1).optional(),
   skip: z.boolean().optional(),
 }).strict();
-
-function profileHasCourseDepth(profile: Awaited<ReturnType<typeof getLearnerProfile>>) {
-  return Boolean(profile?.knowledgeBackground || profile?.knowledgeBackgroundSkippedAt);
-}
-
-async function buildCourseIfReady(ownerId: string, profile: Awaited<ReturnType<typeof getLearnerProfile>>) {
-  if (!profileHasCourseDepth(profile)) return null;
-  return buildOnboardingCourseWithStatus(ownerId, profile);
-}
 
 async function positionLearningGoalInBackground(ownerId: string, learningGoal: string, attemptId: string) {
   if (!(await isLearningGoalPositioningAttemptPending(ownerId, attemptId))) return;
@@ -74,7 +64,7 @@ async function positionLearningGoalInBackground(ownerId: string, learningGoal: s
         targetConceptId: anchor.targetConceptId,
       }),
     );
-    if (profile) await timing.time("build_course", () => buildCourseIfReady(ownerId, profile));
+    if (profile) await timing.time("build_course", () => buildOnboardingCourseIfReady(ownerId, profile));
     timing.log("onboarding/goal:background");
   } catch (error) {
     timing.log("onboarding/goal:background");
@@ -150,7 +140,7 @@ export async function POST(request: Request) {
     await timing.time("sync_fact", () =>
       syncOnboardingFact(user.id, { kind: "learning_goal", value: body.learningGoal! }),
     );
-    const course = await timing.time("build_course", () => buildCourseIfReady(user.id, profile));
+    const course = await timing.time("build_course", () => buildOnboardingCourseIfReady(user.id, profile));
 
     return respond({
       ...(await timing.time("state", () => getLearnerOnboardingState(user.id))),

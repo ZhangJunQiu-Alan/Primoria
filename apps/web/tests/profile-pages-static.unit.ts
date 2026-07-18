@@ -95,7 +95,7 @@ async function main() {
   const factsComponent = read("src/components/profile/facts-about-you.tsx");
   assert(factsComponent.includes('method = editingId ? "PATCH" : "POST"'), "facts component saves add and edit through the API");
   assert(factsComponent.includes('method: "DELETE"') && factsComponent.includes("/api/learner-facts"), "facts component deletes via the learner-facts API");
-  assert(factsComponent.includes("disabled"), "facts component does not expose a fake extractor action");
+  assert(factsComponent.includes('/api/learner-facts/intake') && factsComponent.includes("setTimeout(poll, 2_000)"), "facts component queues and polls real background extraction");
   const factsRoute = read("src/app/api/learner-facts/route.ts");
   assert(factsRoute.includes("export async function GET") && factsRoute.includes("listActiveFacts"), "facts API lists active facts");
   assert(factsRoute.includes("export async function POST") && factsRoute.includes("addManualFact"), "facts API adds manual facts");

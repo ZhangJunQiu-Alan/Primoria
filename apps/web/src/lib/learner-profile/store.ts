@@ -4,9 +4,11 @@ import { and, eq, inArray, isNull, lte, or } from "drizzle-orm";
 
 import { getDb, hasDatabaseUrl } from "@/lib/db/client";
 import { learnerProfiles, type LearnerProfileRow } from "@/lib/db/schema";
+import { failStaleProfileFactIntake, skipOnboardingProfileFactIntake } from "@/lib/learner-facts/intake-jobs";
 import {
   type GoalPositioningCandidate,
   type GoalPositioningStatus,
+  type FactsIntakeStatus,
   isKnowledgeBackground,
   isTutorStyle,
   type KnowledgeBackground,
@@ -19,6 +21,7 @@ import {
 
 const GOAL_POSITIONING_STATUSES: readonly GoalPositioningStatus[] = ["pending", "positioned", "clarify", "failed"];
 const ONBOARDING_COURSE_STATUSES: readonly OnboardingCourseStatus[] = ["pending", "building", "ready", "failed"];
+const FACTS_INTAKE_STATUSES: readonly FactsIntakeStatus[] = ["pending", "completed", "skipped", "failed"];
 
 function iso(value: Date | string | null | undefined) {
   if (!value) return null;
@@ -40,6 +43,10 @@ export function rowToLearnerProfile(row: LearnerProfileRow): LearnerProfile {
     onboardingCourseStatus: isOnboardingCourseStatus(row.onboardingCourseStatus) ? row.onboardingCourseStatus : null,
     onboardingCourseMessage: row.onboardingCourseMessage ?? null,
     onboardingCourseUpdatedAt: iso(row.onboardingCourseUpdatedAt),
+    factsIntakeStatus: isFactsIntakeStatus(row.factsIntakeStatus) ? row.factsIntakeStatus : null,
+    factsIntakeJobId: row.factsIntakeJobId ?? null,
+    factsIntakeMessage: row.factsIntakeMessage ?? null,
+    factsIntakeUpdatedAt: iso(row.factsIntakeUpdatedAt),
     knowledgeBackground: isKnowledgeBackground(row.knowledgeBackground) ? row.knowledgeBackground : null,
     knowledgeBackgroundSkippedAt: iso(row.knowledgeBackgroundSkippedAt),
     tutorStyle: isTutorStyle(row.tutorStyle) ? row.tutorStyle : null,
@@ -55,8 +62,8 @@ function hasGoal(profile: LearnerProfile | null) {
   return Boolean(profile?.goalSkippedAt || profile?.learningGoal?.trim() || (profile?.goalGraphId && profile.goalStartTopicId));
 }
 
-function hasBackground(profile: LearnerProfile | null) {
-  return Boolean(profile?.knowledgeBackground || profile?.knowledgeBackgroundSkippedAt);
+function hasFactsIntake(profile: LearnerProfile | null) {
+  return Boolean(profile?.factsIntakeStatus || profile?.knowledgeBackground || profile?.knowledgeBackgroundSkippedAt);
 }
 
 function hasStyle(profile: LearnerProfile | null) {
@@ -70,14 +77,14 @@ export function isLearnerOnboardingComplete(profile: LearnerProfile | null) {
     profile.onboardingCourseStatus &&
     profile.onboardingCourseStatus !== "ready"
   ) return false;
-  return Boolean(profile?.onboardingCompletedAt || profile?.onboardingSkippedAt || (hasGoal(profile) && hasBackground(profile) && hasStyle(profile)));
+  return Boolean(profile?.onboardingCompletedAt || profile?.onboardingSkippedAt || (hasGoal(profile) && hasFactsIntake(profile) && hasStyle(profile)));
 }
 
 export function nextOnboardingStep(profile: LearnerProfile | null): OnboardingStep {
-  if (profile?.goalPositioningStatus === "clarify" && hasBackground(profile) && hasStyle(profile) && !profile.goalGraphId) return "done";
+  if (profile?.goalPositioningStatus === "clarify" && hasFactsIntake(profile) && hasStyle(profile) && !profile.goalGraphId) return "done";
   if (isLearnerOnboardingComplete(profile)) return "done";
   if (!hasGoal(profile)) return "goal";
-  if (!hasBackground(profile)) return "background";
+  if (!hasFactsIntake(profile)) return "facts";
   if (!hasStyle(profile)) return "style";
   return "done";
 }
@@ -177,6 +184,28 @@ async function failStaleOnboardingWork(
         repaired = rowToLearnerProfile(currentRows[0]);
         courseAttemptId = currentRows[0].onboardingCourseAttemptId ?? null;
       }
+    }
+  }
+
+  if (repaired.factsIntakeStatus === "pending" && isStaleTimestamp(repaired.factsIntakeUpdatedAt, cutoff)) {
+    const jobId = repaired.factsIntakeJobId;
+    if (jobId && await failStaleProfileFactIntake(repaired.ownerId, jobId, cutoff)) {
+      repaired = (await getLearnerProfile(repaired.ownerId)) ?? repaired;
+    } else if (!jobId) {
+      const rows = await getDb()
+        .update(learnerProfiles)
+        .set({
+          factsIntakeStatus: "failed",
+          factsIntakeMessage: "Personalization was interrupted, so we continued with the default background.",
+          factsIntakeUpdatedAt: now,
+          updatedAt: now,
+        })
+        .where(and(
+          eq(learnerProfiles.ownerId, repaired.ownerId),
+          eq(learnerProfiles.factsIntakeStatus, "pending"),
+        ))
+        .returning();
+      if (rows[0]) repaired = rowToLearnerProfile(rows[0]);
     }
   }
 
@@ -281,6 +310,10 @@ function isGoalPositioningStatus(value: unknown): value is GoalPositioningStatus
 
 function isOnboardingCourseStatus(value: unknown): value is OnboardingCourseStatus {
   return typeof value === "string" && (ONBOARDING_COURSE_STATUSES as readonly string[]).includes(value);
+}
+
+function isFactsIntakeStatus(value: unknown): value is FactsIntakeStatus {
+  return typeof value === "string" && (FACTS_INTAKE_STATUSES as readonly string[]).includes(value);
 }
 
 function normalizeGoalPositioningCandidates(value: unknown): GoalPositioningCandidate[] {
@@ -499,6 +532,10 @@ export async function skipKnowledgeBackground(ownerId: string) {
     knowledgeBackgroundSkippedAt: new Date(),
     onboardingSkippedAt: null,
   });
+}
+
+export async function skipFactsIntake(ownerId: string) {
+  return rowToLearnerProfile(await skipOnboardingProfileFactIntake(ownerId));
 }
 
 export async function saveTutorStyle(ownerId: string, tutorStyle: TutorStyle) {
