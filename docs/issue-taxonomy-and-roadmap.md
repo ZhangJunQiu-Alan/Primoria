@@ -84,22 +84,23 @@ Use four label families on implementation issues:
 | `status:blocked` | Waiting on another issue or external decision. |
 | `status:baseline` | A usable baseline exists in the current product; future issues should be narrow hardening slices. |
 
-## Current Issue Mapping
+## Tracker Synchronization
 
-| Issue | Labels | Why |
-| --- | --- | --- |
-| #26 Search/retrieval as first-class surface | `type:search`, `area:agent`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:needs-slice` | Seed issue for retrieval/discovery across planning and runtime state. |
-| #18 Roadmap: adaptive learning system | `type:roadmap`, `area:adaptive-learning`, `priority:P0`, `status:umbrella` | Parent direction for the learning loop. |
-| #25 Adaptive course growth | `type:learning-signal`, `area:adaptive-learning`, `area:course`, `priority:P0`, `status:baseline` | Quiz attempts, learning events, mastery projection, generation decisions, and course progress exist; dependable remediation/resume decisions remain narrow follow-ups. |
-| #14 Block revision history | `type:learning-signal`, `type:memory`, `area:course`, `area:memory`, `priority:P0`, `status:ready` | Existing course edit events are the nearest raw evidence source. |
-| #1 Course Tutor context/actions | `type:course-tutor`, `area:course`, `priority:P0`, `status:baseline` | Lesson pages now pass current course, lesson, visible blocks, selected block, and selected text into Course Tutor; future work should be hardening, not first implementation. |
-| #10 Selected-text Course Tutor UI | `type:course-tutor`, `area:course`, `priority:P0`, `status:baseline` | Selected-text context is attached to Course Tutor and block actions; remaining work should target reliability and evidence capture. |
-| #17 React artifact renderer | `type:renderer`, `area:artifact`, `priority:P1`, `status:baseline` | Nineteen typed React visualization components are production-routable; unified persistence for arbitrary generated React apps remains future work. |
-| #5 Long-term memory | `type:memory`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:baseline` | Learner profiles/facts, background onboarding intake, Settings edit/delete controls, extractor jobs, and mastery exist; provenance presentation and stronger adaptive consumption remain. |
-| #8 Classroom/collaboration | `type:classroom`, `area:classroom`, `priority:P2`, `status:needs-slice` | Future scope after the personal loop is stable; the old workspace-agent runtime no longer exists. |
-| #15 Onboarding preferences | `type:onboarding`, `area:memory`, `priority:P1`, `status:baseline` | Completed onboarding persists the learning goal, a skippable free-text Facts intake, and Tutor style. Facts are extracted asynchronously; education stage is derived only from explicit evidence. |
-| #16 Postgres-first architecture | `type:data-architecture`, `area:infra`, `priority:P1`, `status:baseline` | The current modular-monolith-plus deployment is Postgres-first with explicit Web and Agent schema ownership. |
-| #13 Course sharing and paths | `type:sharing`, `area:course`, `priority:P2`, `status:baseline` | Read-only course publication and sharing exist; collaborative editing and learning-path composition remain future work. |
+Do not maintain a hand-written issue-number mapping in this document. The July
+2026 mapping reused numbers from an older Builder-era tracker and no longer
+matched the actual GitHub issues.
+
+Before planning against the external tracker, read it directly:
+
+```bash
+gh issue list --repo ZhangJunQiu-Alan/Primoria --state all --limit 100
+```
+
+Then either relabel/close legacy Builder and Studio issues or create a focused
+issue for one implementation slice below. A PR may reference an issue number
+only after its title, state, and labels have been verified in the same work
+session. The implementation slices in this file describe product direction;
+they are not aliases for fixed GitHub issue numbers.
 
 ## Immediate Implementation Slices
 

@@ -2,11 +2,11 @@
 
 > 状态：2026 年 7 月保留的视觉研究素材，不是当前产品规范或实现清单。
 > 当前 Primoria 是个人学习产品；教师、家长、课堂和移动端入口均为未来方向。
-> 当前交互组件样式以 [`交互组件规范.md`](./交互组件规范.md) 和生产代码为准。
+> 当前交互组件样式以 [`交互组件规范.md`](../../交互组件规范.md) 和生产代码为准。
 
 参考页面：https://www.craft.do
 
-截图文件：[craft-homepage.png](./craft-homepage.png)
+截图文件：[craft-homepage-2026-07.png](./craft-homepage-2026-07.png)
 
 > 说明：原计划使用 Firecrawl 截图，但当前环境缺少 Firecrawl Python 包和 `FIRECRAWL_API_KEY`。本次实际使用 Playwright CLI 完成页面全页截图。
 

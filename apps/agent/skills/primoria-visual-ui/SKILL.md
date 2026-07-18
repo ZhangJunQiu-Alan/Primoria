@@ -1,21 +1,21 @@
 ---
 name: "primoria-visual-ui"
-description: "Use for interactive educational widgets, algorithm visualizations, simulations, diagrams, and visual explanations in Primoria."
-allowed-tools: []
+description: "Use only for custom interactive educational widgets that do not fit the reviewed catalog or a specialized structured renderer."
+allowed-tools: ["plan_visualization", "widgetRenderer"]
 ---
 
 # Primoria visual UI
 
 ## Response pattern
 
-For visual requests, use the OpenGenerativeUI-style pipeline:
+Use the production routing order before applying this fallback:
 
-1. Acknowledge briefly in 1-2 sentences.
-2. Call `plan_visualization` with the approach, technology, and 2-4 key elements.
-3. Call `widgetRenderer` with a complete self-contained HTML fragment.
-4. Stop after the widget tool returns; the widget itself is the answer.
+1. If a reviewed Catalog component fits, call `open_interactive_component`; do not use this skill.
+2. If a specialized chart, diagram, physics, algorithm, math, 3D, wave, graph, or molecule renderer fits, call that renderer directly; do not use this skill.
+3. Only for a remaining custom sandbox case, acknowledge briefly, call `plan_visualization`, then immediately call `widgetRenderer` with a complete self-contained HTML fragment.
+4. Stop after `widgetRenderer` returns; the widget itself is the answer.
 
-Never paste HTML/CSS/JS in normal assistant text. HTML belongs only inside `widgetRenderer.html`.
+`plan_visualization` and `widgetRenderer` are an inseparable fallback pair. Never paste HTML/CSS/JS in normal assistant text; HTML belongs only inside `widgetRenderer.html`.
 
 ## Widget rules
 

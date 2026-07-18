@@ -10,7 +10,8 @@ AG-UI Agent runtime; it is not a static mock and has no Supabase runtime path.
 
 - Self-owned email/password auth, sessions, password reset, and rate limiting.
 - Cold-start onboarding for learning goal, KG anchor, background Facts intake,
-  Tutor style, first-course readiness, stale-run recovery, and direct fact sync.
+  Tutor style, first-course readiness, stale-run recovery, and asynchronous fact
+  extraction after durable enqueue.
 - Main CopilotKit Tutor connected to the durable `primoria_tutor` runtime.
 - Postgres-backed chat threads and New chat lifecycle.
 - KG positioning across library graphs with generated-graph coverage fallback
