@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..", "..", "..");
 
 const PORT = process.env.PORT || "3117";
-const BASE = `http://127.0.0.1:${PORT}`;
+const BASE = `http://localhost:${PORT}`;
 const ROUTE = `${BASE}/qa/widget-renderer`;
 const READY_TIMEOUT_MS = 90_000;
 
@@ -63,6 +63,7 @@ async function main() {
       acceptDownloads: true,
       permissions: ["clipboard-read", "clipboard-write"],
     });
+    await context.route("**/api/telemetry/visualization", (route) => route.fulfill({ status: 204 }));
     await context.addCookies([{ name: "primoria_session", value: "widget-renderer-e2e", url: BASE }]);
     const page = await context.newPage();
     const consoleErrors = [];
