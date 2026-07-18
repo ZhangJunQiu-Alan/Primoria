@@ -1,219 +1,273 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "information_theory",
   "subject": "Information Theory and Entropy",
-  "schema": {
-    "description": "Knowledge graph for Information Theory and Entropy",
-    "node_fields": {
-      "id": "unique id",
-      "kind": "topic | concept",
-      "name": "node name",
-      "topic": "parent topic id or null",
-      "description": "concept description",
-      "default_order": "integer",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "hard or soft"
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_information_theory"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
     }
-  },
+  ],
   "nodes": [
     {
       "id": "t_infotheory_basics",
       "kind": "topic",
       "name": "Entropy and Information Measures",
+      "name_zh": "熵与信息测度",
       "topic": null,
       "default_order": 1,
-      "name_zh": "熵与信息测度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_infotheory_measures_typicality",
       "kind": "topic",
       "name": "Information Measures and Typicality",
+      "name_zh": "信息测度与典型性",
       "topic": null,
       "default_order": 2,
-      "name_zh": "信息测度与典型性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_infotheory_source_coding",
       "kind": "topic",
       "name": "Source Coding",
+      "name_zh": "信源编码",
       "topic": null,
       "default_order": 3,
-      "name_zh": "信源编码"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_infotheory_channel_capacity",
       "kind": "topic",
       "name": "Channel Capacity",
+      "name_zh": "信道容量",
       "topic": null,
       "default_order": 4,
-      "name_zh": "信道容量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_infotheory_continuous",
       "kind": "topic",
       "name": "Continuous Channels",
+      "name_zh": "连续信道",
       "topic": null,
       "default_order": 5,
-      "name_zh": "连续信道"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_entropy",
+      "canonical_id": "pc_2addc5a719ddcd33479244ee34dc3b1e",
       "kind": "concept",
       "name": "Shannon Entropy",
+      "name_zh": "香农熵",
       "topic": "t_infotheory_basics",
       "description": "Shannon entropy, the average number of bits needed to describe a random variable's outcome, quantifying its inherent uncertainty.",
       "default_order": 1,
       "centrality": 0.1534,
-      "name_zh": "香农熵",
       "visual": "function",
-      "visual_hint": "Plot binary entropy H(p) against the probability p."
+      "visual_hint": "Plot binary entropy H(p) against the probability p.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_joint_entropy",
+      "canonical_id": "pc_f1a46545ce5addc2f7debf3a0923ddf2",
       "kind": "concept",
       "name": "Joint and Conditional Entropy",
+      "name_zh": "联合与条件熵",
       "topic": "t_infotheory_basics",
       "description": "Joint entropy measuring the uncertainty of several variables together, and conditional entropy measuring remaining uncertainty given another variable.",
       "default_order": 2,
       "centrality": 0.0765,
-      "name_zh": "联合与条件熵"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_mutual_info",
+      "canonical_id": "pc_6bcff39e01264a686824712768fa5cf8",
       "kind": "concept",
       "name": "Mutual Information",
+      "name_zh": "互信息",
       "topic": "t_infotheory_basics",
       "description": "Mutual information quantifying the reduction in uncertainty about one variable gained from observing another, the information they share.",
       "default_order": 3,
       "centrality": 0.0609,
-      "name_zh": "互信息",
       "visual": "diagram",
-      "visual_hint": "Venn-style diagram of entropies, joint entropy, and mutual information."
+      "visual_hint": "Venn-style diagram of entropies, joint entropy, and mutual information.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_kl_divergence",
+      "canonical_id": "pc_85d1823335f88fc976171933d656bacb",
       "kind": "concept",
       "name": "Kullback-Leibler Divergence",
+      "name_zh": "KL 散度",
       "topic": "t_infotheory_measures_typicality",
       "description": "Kullback-Leibler divergence, the relative entropy measuring the inefficiency of assuming one distribution when another is true; non-negative and asymmetric.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "KL 散度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_data_processing",
+      "canonical_id": "pc_031330d9d9523e6b113b1091de423b34",
       "kind": "concept",
       "name": "Data Processing Inequality",
+      "name_zh": "数据处理不等式",
       "topic": "t_infotheory_measures_typicality",
       "description": "The data-processing inequality stating that processing a signal cannot increase the mutual information it carries about a source.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "数据处理不等式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_aep",
+      "canonical_id": "pc_db6754623f4d4e508bed2fa738e47e16",
       "kind": "concept",
       "name": "Asymptotic Equipartition Property",
+      "name_zh": "渐近等分特性",
       "topic": "t_infotheory_measures_typicality",
       "description": "The asymptotic equipartition property, showing long sequences fall into a typical set of nearly equal probability, underpinning the coding theorems.",
       "default_order": 3,
       "centrality": 0.0564,
-      "name_zh": "渐近等分特性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_kraft",
+      "canonical_id": "pc_d6cf7b521c6bc8632facaf334c4e8270",
       "kind": "concept",
       "name": "Kraft Inequality",
+      "name_zh": "Kraft 不等式",
       "topic": "t_infotheory_source_coding",
       "description": "The Kraft inequality giving the necessary and sufficient condition on codeword lengths for a uniquely decodable prefix code to exist.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "Kraft 不等式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_shannon_coding",
+      "canonical_id": "pc_172228bd8ad3adbebf9b7b477e8fe488",
       "kind": "concept",
       "name": "Shannon Source Coding Theorem",
+      "name_zh": "香农信源编码定理",
       "topic": "t_infotheory_source_coding",
       "description": "Shannon's source coding theorem establishing entropy as the fundamental limit on the average rate of lossless data compression.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "香农信源编码定理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_huffman",
+      "canonical_id": "pc_a07e8a5c587f6c87f444dccee458cd37",
       "kind": "concept",
       "name": "Huffman Coding",
+      "name_zh": "Huffman 编码",
       "topic": "t_infotheory_source_coding",
       "description": "Huffman coding, a greedy algorithm building optimal prefix-free codes that minimise expected codeword length for known symbol probabilities.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "Huffman 编码",
       "visual": "algorithm",
-      "visual_hint": "Build a Huffman tree by merging the two lowest-frequency symbols."
+      "visual_hint": "Build a Huffman tree by merging the two lowest-frequency symbols.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_dmc",
+      "canonical_id": "pc_fdc8556cef552544d50e27308fadf214",
       "kind": "concept",
       "name": "Discrete Memoryless Channels",
+      "name_zh": "离散无记忆信道",
       "topic": "t_infotheory_channel_capacity",
       "description": "Discrete memoryless channels modelling noisy transmission where each output depends only on the current input via fixed transition probabilities.",
       "default_order": 1,
       "centrality": 0.0398,
-      "name_zh": "离散无记忆信道"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_channel_capacity_def",
+      "canonical_id": "pc_e3da3c1a22a8a88f57dd74060a1766d0",
       "kind": "concept",
       "name": "Channel Capacity",
+      "name_zh": "信道容量定义",
       "topic": "t_infotheory_channel_capacity",
       "description": "Channel capacity, the maximum mutual information over input distributions, defining the highest rate of reliable communication.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "信道容量定义"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_shannon_channel",
+      "canonical_id": "pc_53ca39d1db688a0f416d86cff72fa02a",
       "kind": "concept",
       "name": "Shannon Channel Coding Theorem",
+      "name_zh": "香农信道编码定理",
       "topic": "t_infotheory_channel_capacity",
       "description": "Shannon's channel coding theorem proving that reliable communication is achievable below capacity and impossible above it.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "香农信道编码定理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_differential_entropy",
+      "canonical_id": "pc_3eaaacd3da61716119ba8337a25767a9",
       "kind": "concept",
       "name": "Differential Entropy",
+      "name_zh": "微分熵",
       "topic": "t_infotheory_continuous",
       "description": "Differential entropy extending entropy to continuous random variables as an integral, with properties differing from the discrete case.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "微分熵"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_awgn",
+      "canonical_id": "pc_d19369040b00175a9d42356ef5b1db32",
       "kind": "concept",
       "name": "AWGN Channel",
+      "name_zh": "AWGN 信道",
       "topic": "t_infotheory_continuous",
       "description": "The additive white Gaussian noise channel, a continuous model where transmitted signals are corrupted by independent Gaussian noise.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "AWGN 信道"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_infotheory_shannon_hartley",
+      "canonical_id": "pc_0e74c0236ab807508ad700d598d47ba5",
       "kind": "concept",
       "name": "Shannon-Hartley Theorem",
+      "name_zh": "香农-哈特利定理",
       "topic": "t_infotheory_continuous",
       "description": "The Shannon-Hartley theorem giving the capacity of a bandlimited AWGN channel as a function of bandwidth and signal-to-noise ratio.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "香农-哈特利定理",
       "visual": "function",
-      "visual_hint": "Plot channel capacity against bandwidth and signal-to-noise ratio."
+      "visual_hint": "Plot channel capacity against bandwidth and signal-to-noise ratio.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -221,85 +275,113 @@
       "from": "c_infotheory_entropy",
       "to": "c_infotheory_joint_entropy",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_joint_entropy",
       "to": "c_infotheory_mutual_info",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_entropy",
       "to": "c_infotheory_kl_divergence",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_mutual_info",
       "to": "c_infotheory_data_processing",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_entropy",
       "to": "c_infotheory_aep",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_aep",
       "to": "c_infotheory_shannon_coding",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_kraft",
       "to": "c_infotheory_huffman",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_mutual_info",
       "to": "c_infotheory_channel_capacity_def",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_dmc",
       "to": "c_infotheory_channel_capacity_def",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_channel_capacity_def",
       "to": "c_infotheory_shannon_channel",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_aep",
       "to": "c_infotheory_shannon_channel",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_entropy",
       "to": "c_infotheory_differential_entropy",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_differential_entropy",
       "to": "c_infotheory_awgn",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_infotheory_awgn",
       "to": "c_infotheory_shannon_hartley",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

@@ -1,795 +1,989 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "computer_systems",
   "subject": "Computer Systems",
-  "schema": {
-    "nodeTypes": {
-      "topic": {
-        "description": "A broad module containing 4-5 concepts",
-        "properties": [
-          "id",
-          "type",
-          "name"
-        ]
-      },
-      "concept": {
-        "description": "A minimal testable concept",
-        "properties": [
-          "id",
-          "type",
-          "name",
-          "parentTopic"
-        ]
-      }
-    },
-    "edgeTypes": {
-      "prereq": {
-        "description": "Prerequisite relationship between concepts or topics",
-        "properties": [
-          "source",
-          "target",
-          "type",
-          "prereqType"
-        ]
-      }
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_computer_systems"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
     }
-  },
+  ],
   "nodes": [
     {
       "id": "t1",
       "kind": "topic",
       "name": "Bits and Bytes and Integer Representation",
+      "name_zh": "比特与字节与整数表示",
       "topic": null,
       "default_order": 1,
-      "name_zh": "比特与字节与整数表示"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t1_c1_3",
       "kind": "topic",
       "name": "Integer Arithmetic and Floating Point Representation",
+      "name_zh": "整数运算与浮点数表示",
       "topic": null,
       "default_order": 2,
-      "name_zh": "整数运算与浮点数表示"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_float_machine_ops",
       "kind": "topic",
       "name": "Floating Point Operations and x86-64 Data Movement",
+      "name_zh": "浮点运算与x86-64数据传输",
       "topic": null,
       "default_order": 3,
-      "name_zh": "浮点运算与x86-64数据传输"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_float_machine_ops_c2_2",
       "kind": "topic",
       "name": "Arithmetic and Logical Operations and Control Flow (Conditionals and Loops)",
+      "name_zh": "算术与逻辑运算与控制流",
       "topic": null,
       "default_order": 4,
-      "name_zh": "算术与逻辑运算与控制流"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_procedures_arch",
       "kind": "topic",
       "name": "Procedures and Call Stack and Arrays and Structs",
+      "name_zh": "过程与调用栈与数组与结构体",
       "topic": null,
       "default_order": 5,
-      "name_zh": "过程与调用栈与数组与结构体"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_procedures_arch_c3_1",
       "kind": "topic",
       "name": "Instruction Set Architecture (Y86-64) and Sequential CPU Implementation",
+      "name_zh": "指令集体系结构与顺序CPU实现",
       "topic": null,
       "default_order": 6,
-      "name_zh": "指令集体系结构与顺序CPU实现"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t3",
       "kind": "topic",
       "name": "Processor Architecture",
+      "name_zh": "处理器体系结构",
       "topic": null,
       "default_order": 7,
-      "name_zh": "处理器体系结构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t4",
       "kind": "topic",
       "name": "Code Optimization",
+      "name_zh": "代码优化",
       "topic": null,
       "default_order": 8,
-      "name_zh": "代码优化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_optimization_locality",
       "kind": "topic",
       "name": "Memory Aliasing and Profiling Tools",
+      "name_zh": "内存别名与性能分析工具",
       "topic": null,
       "default_order": 9,
-      "name_zh": "内存别名与性能分析工具"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_optimization_locality_c5_1",
       "kind": "topic",
       "name": "Storage Technologies and Principle of Locality",
+      "name_zh": "存储技术与局部性原理",
       "topic": null,
       "default_order": 10,
-      "name_zh": "存储技术与局部性原理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t5",
       "kind": "topic",
       "name": "Memory Hierarchy and Cache",
+      "name_zh": "存储层次与缓存",
       "topic": null,
       "default_order": 11,
-      "name_zh": "存储层次与缓存"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t6",
       "kind": "topic",
       "name": "Linking",
+      "name_zh": "链接",
       "topic": null,
       "default_order": 12,
-      "name_zh": "链接"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_linking_processes",
       "kind": "topic",
       "name": "Relocation and Dynamic Linking",
+      "name_zh": "重定位与动态链接",
       "topic": null,
       "default_order": 13,
-      "name_zh": "重定位与动态链接"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_linking_processes_c7_1",
       "kind": "topic",
       "name": "Exceptions (Traps, Interrupts, Faults) and Processes and Context Switches",
+      "name_zh": "异常与进程与上下文切换",
       "topic": null,
       "default_order": 14,
-      "name_zh": "异常与进程与上下文切换"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t7",
       "kind": "topic",
       "name": "Exceptional Control Flow",
+      "name_zh": "异常控制流",
       "topic": null,
       "default_order": 15,
-      "name_zh": "异常控制流"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t8",
       "kind": "topic",
       "name": "Virtual Memory",
+      "name_zh": "虚拟内存",
       "topic": null,
       "default_order": 16,
-      "name_zh": "虚拟内存"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_memmgmt_unixio",
       "kind": "topic",
       "name": "Dynamic Memory Allocation and Garbage Collection Basics",
+      "name_zh": "动态内存分配与垃圾回收基础",
       "topic": null,
       "default_order": 17,
-      "name_zh": "动态内存分配与垃圾回收基础"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_memmgmt_unixio_c9_1",
       "kind": "topic",
       "name": "Unix I/O and File Metadata",
+      "name_zh": "Unix 输入输出与文件元数据",
       "topic": null,
       "default_order": 18,
-      "name_zh": "Unix 输入输出与文件元数据"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t9",
       "kind": "topic",
       "name": "System-Level I/O",
+      "name_zh": "系统级I/O",
       "topic": null,
       "default_order": 19,
-      "name_zh": "系统级I/O"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t10",
       "kind": "topic",
       "name": "Network Programming",
+      "name_zh": "网络编程",
       "topic": null,
       "default_order": 20,
-      "name_zh": "网络编程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_network_concurrency",
       "kind": "topic",
       "name": "Sockets Interface and HTTP Protocol Basics",
+      "name_zh": "套接字接口与HTTP协议基础",
       "topic": null,
       "default_order": 21,
-      "name_zh": "套接字接口与HTTP协议基础"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_network_concurrency_c11_1",
       "kind": "topic",
       "name": "Thread Basics and Shared Variables",
+      "name_zh": "线程基础与共享变量",
       "topic": null,
       "default_order": 22,
-      "name_zh": "线程基础与共享变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t11",
       "kind": "topic",
       "name": "Concurrent Programming",
+      "name_zh": "并发编程",
       "topic": null,
       "default_order": 23,
-      "name_zh": "并发编程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c1_1",
-      "name": "Bits and Bytes",
-      "topic": "t1",
+      "canonical_id": "pc_9e3eb6403a57ec51340caf61557d4a1a",
       "kind": "concept",
+      "name": "Bits and Bytes",
+      "name_zh": "比特与字节",
+      "topic": "t1",
+      "description": "Information encoded as bit patterns grouped into bytes, with hexadecimal notation used as a compact human-readable representation of the underlying binary machine state.",
       "default_order": 1,
       "centrality": 0.2211,
-      "description": "Information encoded as bit patterns grouped into bytes, with hexadecimal notation used as a compact human-readable representation of the underlying binary machine state.",
-      "name_zh": "比特与字节"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c1_2",
-      "name": "Integer Representation",
-      "topic": "t1",
+      "canonical_id": "pc_5567d6cb33f4cbd87a14033b010eac6c",
       "kind": "concept",
+      "name": "Integer Representation",
+      "name_zh": "整数表示",
+      "topic": "t1",
+      "description": "How fixed-width integers are encoded in hardware, using unsigned binary for non-negative values and two's complement for signed values, determining the representable ranges.",
       "default_order": 2,
       "centrality": 0.4161,
-      "description": "How fixed-width integers are encoded in hardware, using unsigned binary for non-negative values and two's complement for signed values, determining the representable ranges.",
-      "name_zh": "整数表示",
       "visual": "diagram",
-      "visual_hint": "Diagram fixed-width integer encodings including two's complement."
+      "visual_hint": "Diagram fixed-width integer encodings including two's complement.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c1_3",
-      "name": "Integer Arithmetic",
-      "topic": "t1_c1_3",
+      "canonical_id": "pc_441e0e33915669e8b3319f4cd0d57068",
       "kind": "concept",
+      "name": "Integer Arithmetic",
+      "name_zh": "整数运算",
+      "topic": "t1_c1_3",
+      "description": "Addition, subtraction, and multiplication on fixed-width integers, including modular wraparound and overflow that follow from finite two's-complement and unsigned encodings.",
       "default_order": 1,
       "centrality": 0.4603,
-      "description": "Addition, subtraction, and multiplication on fixed-width integers, including modular wraparound and overflow that follow from finite two's-complement and unsigned encodings.",
-      "name_zh": "整数运算"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c1_4",
-      "name": "Floating Point Representation",
-      "topic": "t1_c1_3",
+      "canonical_id": "pc_8918cca1ec876db0fee0e831889860ae",
       "kind": "concept",
+      "name": "Floating Point Representation",
+      "name_zh": "浮点数表示",
+      "topic": "t1_c1_3",
+      "description": "The IEEE 754 standard encoding real numbers as sign, biased exponent, and fraction fields, supporting normalised, denormalised, infinity, and NaN values.",
       "default_order": 2,
       "centrality": 0.0459,
-      "description": "The IEEE 754 standard encoding real numbers as sign, biased exponent, and fraction fields, supporting normalised, denormalised, infinity, and NaN values.",
-      "name_zh": "浮点数表示",
       "visual": "diagram",
-      "visual_hint": "Diagram the IEEE 754 sign, exponent, and fraction fields."
+      "visual_hint": "Diagram the IEEE 754 sign, exponent, and fraction fields.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c1_5",
-      "name": "Floating Point Operations",
-      "topic": "t_float_machine_ops",
+      "canonical_id": "pc_1ff2b4d1f472353ede73e35e5411c4a3",
       "kind": "concept",
+      "name": "Floating Point Operations",
+      "name_zh": "浮点运算",
+      "topic": "t_float_machine_ops",
+      "description": "Arithmetic on IEEE 754 values, where results are rounded to representable numbers, making operations non-associative and introducing rounding error and special-case behaviour.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Arithmetic on IEEE 754 values, where results are rounded to representable numbers, making operations non-associative and introducing rounding error and special-case behaviour.",
-      "name_zh": "浮点运算"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c2_1",
-      "name": "x86-64 Data Movement",
-      "topic": "t_float_machine_ops",
+      "canonical_id": "pc_c2ca93e797171d2db041a2459cab3fb3",
       "kind": "concept",
+      "name": "x86-64 Data Movement",
+      "name_zh": "x86-64数据传输",
+      "topic": "t_float_machine_ops",
+      "description": "x86-64 instructions that move data between registers and memory, using addressing modes and operand sizes to load, store, and copy machine words.",
       "default_order": 2,
       "centrality": 0.5124,
-      "description": "x86-64 instructions that move data between registers and memory, using addressing modes and operand sizes to load, store, and copy machine words.",
-      "name_zh": "x86-64数据传输"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c2_2",
-      "name": "Arithmetic and Logical Operations",
-      "topic": "t_float_machine_ops_c2_2",
+      "canonical_id": "pc_75801755c62ced4bf0c4e7883bfc8b93",
       "kind": "concept",
+      "name": "Arithmetic and Logical Operations",
+      "name_zh": "算术与逻辑运算",
+      "topic": "t_float_machine_ops_c2_2",
+      "description": "x86-64 instructions performing integer arithmetic, bitwise logic, and shifts on registers and memory, updating condition-code flags used by later conditional instructions.",
       "default_order": 1,
       "centrality": 0.1923,
-      "description": "x86-64 instructions performing integer arithmetic, bitwise logic, and shifts on registers and memory, updating condition-code flags used by later conditional instructions.",
-      "name_zh": "算术与逻辑运算"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c2_3",
-      "name": "Control Flow (Conditionals and Loops)",
-      "topic": "t_float_machine_ops_c2_2",
+      "canonical_id": "pc_b961dd15decd6e0c09b2ef17f50a301a",
       "kind": "concept",
+      "name": "Control Flow (Conditionals and Loops)",
+      "name_zh": "控制流",
+      "topic": "t_float_machine_ops_c2_2",
+      "description": "Implementing conditionals and loops in assembly using condition-code flags, conditional jumps, and comparison instructions to direct the processor's instruction stream.",
       "default_order": 2,
       "centrality": 0.1971,
-      "description": "Implementing conditionals and loops in assembly using condition-code flags, conditional jumps, and comparison instructions to direct the processor's instruction stream.",
-      "name_zh": "控制流"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c2_4",
-      "name": "Procedures and Call Stack",
-      "topic": "t_procedures_arch",
+      "canonical_id": "pc_a3facc7a20be64a80375974de676a3e1",
       "kind": "concept",
+      "name": "Procedures and Call Stack",
+      "name_zh": "过程与调用栈",
+      "topic": "t_procedures_arch",
+      "description": "How procedures are called using the runtime stack to pass arguments, save return addresses, allocate local storage, and follow register-saving conventions.",
       "default_order": 1,
       "centrality": 0.1029,
-      "description": "How procedures are called using the runtime stack to pass arguments, save return addresses, allocate local storage, and follow register-saving conventions.",
-      "name_zh": "过程与调用栈",
       "visual": "diagram",
-      "visual_hint": "Diagram the call stack passing arguments and saving the return address."
+      "visual_hint": "Diagram the call stack passing arguments and saving the return address.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c2_5",
-      "name": "Arrays and Structs",
-      "topic": "t_procedures_arch",
+      "canonical_id": "pc_88e2f6d27fc8ccc9aabf34a475e56c0c",
       "kind": "concept",
+      "name": "Arrays and Structs",
+      "name_zh": "数组与结构体",
+      "topic": "t_procedures_arch",
+      "description": "The memory layout of arrays and structures, including element addressing arithmetic, field offsets, and alignment requirements imposed by the architecture.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The memory layout of arrays and structures, including element addressing arithmetic, field offsets, and alignment requirements imposed by the architecture.",
-      "name_zh": "数组与结构体",
       "visual": "diagram",
-      "visual_hint": "Diagram array and struct memory layout and element addressing."
+      "visual_hint": "Diagram array and struct memory layout and element addressing.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c3_1",
-      "name": "Instruction Set Architecture (Y86-64)",
-      "topic": "t_procedures_arch_c3_1",
+      "canonical_id": "pc_b549294ec56d74f82b63f0fc51ec703d",
       "kind": "concept",
+      "name": "Instruction Set Architecture (Y86-64)",
+      "name_zh": "指令集体系结构",
+      "topic": "t_procedures_arch_c3_1",
+      "description": "The Y86-64 instruction set, a simplified teaching ISA defining registers, instruction encodings, and semantics used to study processor implementation.",
       "default_order": 1,
       "centrality": 0.2087,
-      "description": "The Y86-64 instruction set, a simplified teaching ISA defining registers, instruction encodings, and semantics used to study processor implementation.",
-      "name_zh": "指令集体系结构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c3_2",
-      "name": "Sequential CPU Implementation",
-      "topic": "t_procedures_arch_c3_1",
+      "canonical_id": "pc_f23a164d4145055c30e9adfb872973fe",
       "kind": "concept",
+      "name": "Sequential CPU Implementation",
+      "name_zh": "顺序CPU实现",
+      "topic": "t_procedures_arch_c3_1",
+      "description": "A sequential processor design executing each instruction through fetch, decode, execute, memory, and write-back stages within a single clock cycle.",
       "default_order": 2,
       "centrality": 0.2163,
-      "description": "A sequential processor design executing each instruction through fetch, decode, execute, memory, and write-back stages within a single clock cycle.",
-      "name_zh": "顺序CPU实现"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c3_3",
-      "name": "Pipelining Principles",
-      "topic": "t3",
+      "canonical_id": "pc_f5cd74edf2f8774a3009082b89fe88b7",
       "kind": "concept",
+      "name": "Pipelining Principles",
+      "name_zh": "流水线原理",
+      "topic": "t3",
+      "description": "Overlapping the execution of multiple instructions across pipeline stages to increase instruction throughput, ideally completing one instruction per clock cycle.",
       "default_order": 1,
       "centrality": 0.2253,
-      "description": "Overlapping the execution of multiple instructions across pipeline stages to increase instruction throughput, ideally completing one instruction per clock cycle.",
-      "name_zh": "流水线原理",
       "visual": "diagram",
-      "visual_hint": "Pipeline stage diagram of overlapping instructions."
+      "visual_hint": "Pipeline stage diagram of overlapping instructions.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c3_4",
-      "name": "Pipeline Hazards and Forwarding",
-      "topic": "t3",
+      "canonical_id": "pc_22a8f2ff69723129d2fafb6fb09b9069",
       "kind": "concept",
+      "name": "Pipeline Hazards and Forwarding",
+      "name_zh": "流水线冒险与转发",
+      "topic": "t3",
+      "description": "Data, control, and structural hazards that stall pipelines, and forwarding techniques that resolve data dependencies without waiting for write-back.",
       "default_order": 2,
       "centrality": 0.2235,
-      "description": "Data, control, and structural hazards that stall pipelines, and forwarding techniques that resolve data dependencies without waiting for write-back.",
-      "name_zh": "流水线冒险与转发",
       "visual": "diagram",
-      "visual_hint": "Diagram a pipeline hazard resolved by forwarding."
+      "visual_hint": "Diagram a pipeline hazard resolved by forwarding.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c3_5",
-      "name": "Exceptions in Pipelines",
-      "topic": "t3",
+      "canonical_id": "pc_aa91f40956e9a1d873b43ccedfdffd03",
       "kind": "concept",
+      "name": "Exceptions in Pipelines",
+      "name_zh": "流水线异常",
+      "topic": "t3",
+      "description": "Handling exceptions in a pipelined processor, requiring precise state by detecting events in order and squashing partially executed younger instructions.",
       "default_order": 3,
       "centrality": 0.2338,
-      "description": "Handling exceptions in a pipelined processor, requiring precise state by detecting events in order and squashing partially executed younger instructions.",
-      "name_zh": "流水线异常"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c4_1",
-      "name": "Compiler Limitations",
-      "topic": "t4",
+      "canonical_id": "pc_ac22975c578a8c1962855ca26c186428",
       "kind": "concept",
+      "name": "Compiler Limitations",
+      "name_zh": "编译器局限",
+      "topic": "t4",
+      "description": "Reasons compilers cannot fully optimise code, including memory aliasing, function side effects, and conservative assumptions that block otherwise valid transformations.",
       "default_order": 1,
       "centrality": 0.0998,
-      "description": "Reasons compilers cannot fully optimise code, including memory aliasing, function side effects, and conservative assumptions that block otherwise valid transformations.",
-      "name_zh": "编译器局限"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c4_2",
-      "name": "Loop Unrolling",
-      "topic": "t4",
+      "canonical_id": "pc_6abf743997a8947c6019269d54729934",
       "kind": "concept",
+      "name": "Loop Unrolling",
+      "name_zh": "循环展开",
+      "topic": "t4",
+      "description": "An optimisation that replicates loop bodies to reduce loop-control overhead and expose more independent instructions for instruction-level parallelism.",
       "default_order": 2,
       "centrality": 0.0564,
-      "description": "An optimisation that replicates loop bodies to reduce loop-control overhead and expose more independent instructions for instruction-level parallelism.",
-      "name_zh": "循环展开"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c4_3",
-      "name": "Instruction-Level Parallelism",
-      "topic": "t4",
+      "canonical_id": "pc_04b5e89f70aa370f506c8f5f2fcd7f92",
       "kind": "concept",
+      "name": "Instruction-Level Parallelism",
+      "name_zh": "指令级并行",
+      "topic": "t4",
+      "description": "Executing independent instructions simultaneously on superscalar, pipelined hardware, limited by data dependencies and the processor's functional-unit latency and throughput.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Executing independent instructions simultaneously on superscalar, pipelined hardware, limited by data dependencies and the processor's functional-unit latency and throughput.",
-      "name_zh": "指令级并行"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c4_4",
-      "name": "Memory Aliasing",
-      "topic": "t_optimization_locality",
+      "canonical_id": "pc_3d27bfa0c9d71751cf66f735eb26eda2",
       "kind": "concept",
+      "name": "Memory Aliasing",
+      "name_zh": "内存别名",
+      "topic": "t_optimization_locality",
+      "description": "When two pointers may reference the same memory location, forcing the compiler to preserve memory accesses and preventing certain optimisations.",
       "default_order": 1,
       "centrality": 0.0318,
-      "description": "When two pointers may reference the same memory location, forcing the compiler to preserve memory accesses and preventing certain optimisations.",
-      "name_zh": "内存别名"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c4_5",
-      "name": "Profiling Tools",
-      "topic": "t_optimization_locality",
+      "canonical_id": "pc_830603d8f871c878c67293d6f478413a",
       "kind": "concept",
+      "name": "Profiling Tools",
+      "name_zh": "性能分析工具",
+      "topic": "t_optimization_locality",
+      "description": "Tools that measure where a program spends time, identifying performance bottlenecks so optimisation effort targets the most costly code paths.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Tools that measure where a program spends time, identifying performance bottlenecks so optimisation effort targets the most costly code paths.",
-      "name_zh": "性能分析工具"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c5_1",
-      "name": "Storage Technologies",
-      "topic": "t_optimization_locality_c5_1",
+      "canonical_id": "pc_558cb11671e10666b8212bacfa169879",
       "kind": "concept",
+      "name": "Storage Technologies",
+      "name_zh": "存储技术",
+      "topic": "t_optimization_locality_c5_1",
+      "description": "Characteristics and trends of storage technologies such as SRAM, DRAM, disks, and SSDs, differing in speed, capacity, volatility, and cost per byte.",
       "default_order": 1,
       "centrality": 0.1479,
-      "description": "Characteristics and trends of storage technologies such as SRAM, DRAM, disks, and SSDs, differing in speed, capacity, volatility, and cost per byte.",
-      "name_zh": "存储技术"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c5_2",
-      "name": "Principle of Locality",
-      "topic": "t_optimization_locality_c5_1",
+      "canonical_id": "pc_775353567d44d03062359d8c23b90671",
       "kind": "concept",
+      "name": "Principle of Locality",
+      "name_zh": "局部性原理",
+      "topic": "t_optimization_locality_c5_1",
+      "description": "Programs tend to reuse recently accessed data (temporal locality) and nearby data (spatial locality), a behaviour that caching exploits to improve performance.",
       "default_order": 2,
       "centrality": 0.1448,
-      "description": "Programs tend to reuse recently accessed data (temporal locality) and nearby data (spatial locality), a behaviour that caching exploits to improve performance.",
-      "name_zh": "局部性原理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c5_3",
-      "name": "Cache Memory Organization",
-      "topic": "t5",
+      "canonical_id": "pc_bea08ae55a0893d476470eda0f58da5a",
       "kind": "concept",
+      "name": "Cache Memory Organization",
+      "name_zh": "缓存组织",
+      "topic": "t5",
+      "description": "How caches are organised into sets, lines, and blocks with tags, governing the placement, lookup, and replacement of cached memory blocks.",
       "default_order": 1,
       "centrality": 0.1412,
-      "description": "How caches are organised into sets, lines, and blocks with tags, governing the placement, lookup, and replacement of cached memory blocks.",
-      "name_zh": "缓存组织",
       "visual": "diagram",
-      "visual_hint": "Diagram cache organisation into sets, lines, and blocks with tags."
+      "visual_hint": "Diagram cache organisation into sets, lines, and blocks with tags.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c5_4",
-      "name": "Cache Performance Metrics",
-      "topic": "t5",
+      "canonical_id": "pc_c944db036ecb3316fee84194125de539",
       "kind": "concept",
+      "name": "Cache Performance Metrics",
+      "name_zh": "缓存性能指标",
+      "topic": "t5",
+      "description": "Metrics such as hit rate, miss rate, miss penalty, and average memory access time used to evaluate cache effectiveness.",
       "default_order": 2,
       "centrality": 0.0318,
-      "description": "Metrics such as hit rate, miss rate, miss penalty, and average memory access time used to evaluate cache effectiveness.",
-      "name_zh": "缓存性能指标"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c5_5",
-      "name": "Writing Cache-Friendly Code",
-      "topic": "t5",
+      "canonical_id": "pc_5b8c656a0a3d6f44ad7b51249aac694c",
       "kind": "concept",
+      "name": "Writing Cache-Friendly Code",
+      "name_zh": "缓存友好代码",
+      "topic": "t5",
+      "description": "Structuring data access patterns to maximise temporal and spatial locality, improving cache hit rates and overall program performance.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Structuring data access patterns to maximise temporal and spatial locality, improving cache hit rates and overall program performance.",
-      "name_zh": "缓存友好代码"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c6_1",
-      "name": "Static Linking",
-      "topic": "t6",
+      "canonical_id": "pc_a12f320f14f3b24be7d675ec1f4c6d99",
       "kind": "concept",
+      "name": "Static Linking",
+      "name_zh": "静态链接",
+      "topic": "t6",
+      "description": "Combining relocatable object files at build time into a single executable by resolving symbols and merging sections into the final image.",
       "default_order": 1,
       "centrality": 0.0919,
-      "description": "Combining relocatable object files at build time into a single executable by resolving symbols and merging sections into the final image.",
-      "name_zh": "静态链接"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c6_2",
-      "name": "Object Files (ELF)",
-      "topic": "t6",
+      "canonical_id": "pc_226a8702aa9dfa838e20a265202d65f2",
       "kind": "concept",
+      "name": "Object Files (ELF)",
+      "name_zh": "目标文件(ELF)",
+      "topic": "t6",
+      "description": "The Executable and Linkable Format that structures object files into sections and symbol tables used by linkers and loaders.",
       "default_order": 2,
       "centrality": 0.079,
-      "description": "The Executable and Linkable Format that structures object files into sections and symbol tables used by linkers and loaders.",
-      "name_zh": "目标文件(ELF)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c6_3",
-      "name": "Symbol Resolution",
-      "topic": "t6",
+      "canonical_id": "pc_722ae980aeff7357d33643e9ea011465",
       "kind": "concept",
+      "name": "Symbol Resolution",
+      "name_zh": "符号解析",
+      "topic": "t6",
+      "description": "The linker step associating each symbol reference with exactly one symbol definition across object files and libraries, detecting duplicates.",
       "default_order": 3,
       "centrality": 0.0638,
-      "description": "The linker step associating each symbol reference with exactly one symbol definition across object files and libraries, detecting duplicates.",
-      "name_zh": "符号解析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c6_4",
-      "name": "Relocation",
-      "topic": "t_linking_processes",
+      "canonical_id": "pc_9cf61d65012057807b208b83c2c3fd98",
       "kind": "concept",
+      "name": "Relocation",
+      "name_zh": "重定位",
+      "topic": "t_linking_processes",
+      "description": "The linker step that assigns final run-time addresses to merged sections and patches symbol references to point at those addresses.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "The linker step that assigns final run-time addresses to merged sections and patches symbol references to point at those addresses.",
-      "name_zh": "重定位"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c6_5",
-      "name": "Dynamic Linking",
-      "topic": "t_linking_processes",
+      "canonical_id": "pc_744ce08313d7dc745bc73fd672986839",
       "kind": "concept",
+      "name": "Dynamic Linking",
+      "name_zh": "动态链接",
+      "topic": "t_linking_processes",
+      "description": "Deferring symbol resolution to load or run time by linking against shared libraries, reducing executable size and enabling code sharing.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Deferring symbol resolution to load or run time by linking against shared libraries, reducing executable size and enabling code sharing.",
-      "name_zh": "动态链接"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c7_1",
-      "name": "Exceptions (Traps, Interrupts, Faults)",
-      "topic": "t_linking_processes_c7_1",
+      "canonical_id": "pc_8bfe2667c4fbdecc2589f9b5c104999a",
       "kind": "concept",
+      "name": "Exceptions (Traps, Interrupts, Faults)",
+      "name_zh": "异常",
+      "topic": "t_linking_processes_c7_1",
+      "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel.",
       "default_order": 1,
       "centrality": 0.2459,
-      "description": "Abrupt changes in control flow triggered by events, classified as traps, interrupts, faults, and aborts, that transfer control to the kernel.",
-      "name_zh": "异常"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c7_2",
-      "name": "Processes and Context Switches",
-      "topic": "t_linking_processes_c7_1",
+      "canonical_id": "pc_6d8e398809dfc04b3a76d1ec877bbd89",
       "kind": "concept",
+      "name": "Processes and Context Switches",
+      "name_zh": "进程与上下文切换",
+      "topic": "t_linking_processes_c7_1",
+      "description": "The process abstraction giving each program a private address space and logical control flow, switched by the kernel saving and restoring context.",
       "default_order": 2,
       "centrality": 0.2602,
-      "description": "The process abstraction giving each program a private address space and logical control flow, switched by the kernel saving and restoring context.",
-      "name_zh": "进程与上下文切换",
       "visual": "diagram",
-      "visual_hint": "Diagram a context switch between processes."
+      "visual_hint": "Diagram a context switch between processes.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c7_3",
-      "name": "Process Control (fork, execve)",
-      "topic": "t7",
+      "canonical_id": "pc_19ebd779431f40c0c27b465dd493faf5",
       "kind": "concept",
+      "name": "Process Control (fork, execve)",
+      "name_zh": "进程控制",
+      "topic": "t7",
+      "description": "System calls that create processes with fork, load new programs with execve, and reap children with wait, managing the process lifecycle.",
       "default_order": 1,
       "centrality": 0.1827,
-      "description": "System calls that create processes with fork, load new programs with execve, and reap children with wait, managing the process lifecycle.",
-      "name_zh": "进程控制"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c7_4",
-      "name": "Signals and Signal Handling",
-      "topic": "t7",
+      "canonical_id": "pc_e8e9af234eb0d4fe585d33f2c29dfc03",
       "kind": "concept",
+      "name": "Signals and Signal Handling",
+      "name_zh": "信号与信号处理",
+      "topic": "t7",
+      "description": "A mechanism delivering asynchronous notifications to processes, with handlers that interrupt normal control flow to respond to events.",
       "default_order": 2,
       "centrality": 0.0459,
-      "description": "A mechanism delivering asynchronous notifications to processes, with handlers that interrupt normal control flow to respond to events.",
-      "name_zh": "信号与信号处理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c7_5",
-      "name": "Non-local Jumps",
-      "topic": "t7",
+      "canonical_id": "pc_a5dcc30db0f1653711cf8e5d9a0be1a1",
       "kind": "concept",
+      "name": "Non-local Jumps",
+      "name_zh": "非局部跳转",
+      "topic": "t7",
+      "description": "Transferring control across function boundaries using setjmp and longjmp, bypassing the normal call-return discipline for error recovery.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Transferring control across function boundaries using setjmp and longjmp, bypassing the normal call-return discipline for error recovery.",
-      "name_zh": "非局部跳转"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c8_1",
-      "name": "Address Translation",
-      "topic": "t8",
+      "canonical_id": "pc_6da43e8ac5cb62bde1c8b7dbdf7d09bf",
       "kind": "concept",
+      "name": "Address Translation",
+      "name_zh": "地址转换",
+      "topic": "t8",
+      "description": "Hardware mapping of virtual addresses to physical addresses via the MMU and page tables, giving each process its own address space.",
       "default_order": 1,
       "centrality": 0.0969,
-      "description": "Hardware mapping of virtual addresses to physical addresses via the MMU and page tables, giving each process its own address space.",
-      "name_zh": "地址转换",
       "visual": "diagram",
-      "visual_hint": "Diagram MMU address translation from virtual to physical."
+      "visual_hint": "Diagram MMU address translation from virtual to physical.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c8_2",
-      "name": "Page Tables",
-      "topic": "t8",
+      "canonical_id": "pc_b7657b86f0ffba6fe189c9bd48282b5b",
       "kind": "concept",
+      "name": "Page Tables",
+      "name_zh": "页表",
+      "topic": "t8",
+      "description": "Multi-level data structures mapping virtual pages to physical frames, storing permission and presence bits used during address translation.",
       "default_order": 2,
       "centrality": 0.0848,
-      "description": "Multi-level data structures mapping virtual pages to physical frames, storing permission and presence bits used during address translation.",
-      "name_zh": "页表",
       "visual": "diagram",
-      "visual_hint": "Diagram a multi-level page table mapping pages to frames."
+      "visual_hint": "Diagram a multi-level page table mapping pages to frames.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c8_3",
-      "name": "Translation Lookaside Buffer (TLB)",
-      "topic": "t8",
+      "canonical_id": "pc_ad68c66b5ea959eee0738d75ee26324d",
       "kind": "concept",
+      "name": "Translation Lookaside Buffer (TLB)",
+      "name_zh": "地址转换后备缓冲器（TLB）",
+      "topic": "t8",
+      "description": "A small hardware cache of recent virtual-to-physical translations that accelerates address translation by avoiding repeated page-table walks.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "A small hardware cache of recent virtual-to-physical translations that accelerates address translation by avoiding repeated page-table walks.",
-      "name_zh": "地址转换后备缓冲器（TLB）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c8_4",
-      "name": "Dynamic Memory Allocation",
-      "topic": "t_memmgmt_unixio",
+      "canonical_id": "pc_402b5f3e7a405462d2dbc62cae584314",
       "kind": "concept",
+      "name": "Dynamic Memory Allocation",
+      "name_zh": "动态内存分配",
+      "topic": "t_memmgmt_unixio",
+      "description": "Managing heap memory at run time with allocators like malloc and free, balancing throughput, fragmentation, and memory utilisation.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "Managing heap memory at run time with allocators like malloc and free, balancing throughput, fragmentation, and memory utilisation.",
-      "name_zh": "动态内存分配"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c8_5",
-      "name": "Garbage Collection Basics",
-      "topic": "t_memmgmt_unixio",
+      "canonical_id": "pc_0cbbefd2828c790540dd48efe8fc6149",
       "kind": "concept",
+      "name": "Garbage Collection Basics",
+      "name_zh": "垃圾回收基础",
+      "topic": "t_memmgmt_unixio",
+      "description": "Automatic reclamation of unreachable heap memory by tracing or counting references, freeing the programmer from explicit deallocation.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Automatic reclamation of unreachable heap memory by tracing or counting references, freeing the programmer from explicit deallocation.",
-      "name_zh": "垃圾回收基础"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c9_1",
-      "name": "Unix I/O",
-      "topic": "t_memmgmt_unixio_c9_1",
+      "canonical_id": "pc_976eba5f05eaf24cc571523eaedc9c2e",
       "kind": "concept",
+      "name": "Unix I/O",
+      "name_zh": "Unix 输入输出",
+      "topic": "t_memmgmt_unixio_c9_1",
+      "description": "The Unix model treating files, devices, and sockets uniformly through descriptors and the open, read, write, and close system calls.",
       "default_order": 1,
       "centrality": 0.1399,
-      "description": "The Unix model treating files, devices, and sockets uniformly through descriptors and the open, read, write, and close system calls.",
-      "name_zh": "Unix 输入输出"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c9_2",
-      "name": "File Metadata",
-      "topic": "t_memmgmt_unixio_c9_1",
+      "canonical_id": "pc_311e0ad76e74c2e044825561cf2a989b",
       "kind": "concept",
+      "name": "File Metadata",
+      "name_zh": "文件元数据",
+      "topic": "t_memmgmt_unixio_c9_1",
+      "description": "Information about a file stored separately from its contents, such as size, permissions, and timestamps, accessed via the stat system call.",
       "default_order": 2,
       "centrality": 0.0638,
-      "description": "Information about a file stored separately from its contents, such as size, permissions, and timestamps, accessed via the stat system call.",
-      "name_zh": "文件元数据"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c9_3",
-      "name": "Standard I/O Library",
-      "topic": "t9",
+      "canonical_id": "pc_a594edf6335998d5a08da60711ec176f",
       "kind": "concept",
+      "name": "Standard I/O Library",
+      "name_zh": "标准I/O库",
+      "topic": "t9",
+      "description": "A buffered, portable I/O library layered over Unix system calls that reduces system-call overhead through stream buffering.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "A buffered, portable I/O library layered over Unix system calls that reduces system-call overhead through stream buffering.",
-      "name_zh": "标准I/O库"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c9_4",
-      "name": "File Sharing",
-      "topic": "t9",
+      "canonical_id": "pc_1f05921a574e9fe55b5b1476f8ecac14",
       "kind": "concept",
+      "name": "File Sharing",
+      "name_zh": "文件共享",
+      "topic": "t9",
+      "description": "How descriptors, open-file table entries, and inodes interact so processes can share open files and offsets, especially after fork.",
       "default_order": 2,
       "centrality": 0.0459,
-      "description": "How descriptors, open-file table entries, and inodes interact so processes can share open files and offsets, especially after fork.",
-      "name_zh": "文件共享"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c9_5",
-      "name": "I/O Redirection",
-      "topic": "t9",
+      "canonical_id": "pc_7d11d83022f03e91ee7d863e2ab07515",
       "kind": "concept",
+      "name": "I/O Redirection",
+      "name_zh": "I/O重定向",
+      "topic": "t9",
+      "description": "Redirecting a process's standard input or output to files using dup2 to duplicate descriptors onto the standard descriptor numbers.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Redirecting a process's standard input or output to files using dup2 to duplicate descriptors onto the standard descriptor numbers.",
-      "name_zh": "I/O重定向"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c10_1",
-      "name": "Client-Server Model",
-      "topic": "t10",
+      "canonical_id": "pc_dc84a27e32610ced0216df6b639bb740",
       "kind": "concept",
+      "name": "Client-Server Model",
+      "name_zh": "客户端-服务器模型",
+      "topic": "t10",
+      "description": "A networking model where client processes request services and server processes provide them, communicating over a transport-layer connection.",
       "default_order": 1,
       "centrality": 0.0468,
-      "description": "A networking model where client processes request services and server processes provide them, communicating over a transport-layer connection.",
-      "name_zh": "客户端-服务器模型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c10_2",
-      "name": "Internet Protocol (IP)",
-      "topic": "t10",
+      "canonical_id": "pc_cf3495181f9f91f890bdd0fafa7b57e1",
       "kind": "concept",
+      "name": "Internet Protocol (IP)",
+      "name_zh": "IP协议",
+      "topic": "t10",
+      "description": "The network-layer protocol providing best-effort, connectionless delivery of packets across interconnected networks using hierarchical IP addressing.",
       "default_order": 2,
       "centrality": 0.0519,
-      "description": "The network-layer protocol providing best-effort, connectionless delivery of packets across interconnected networks using hierarchical IP addressing.",
-      "name_zh": "IP协议"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c10_3",
-      "name": "Transmission Control Protocol (TCP)",
-      "topic": "t10",
+      "canonical_id": "pc_70fb2dabf5aec3e6ae75f0c83c488a12",
       "kind": "concept",
+      "name": "Transmission Control Protocol (TCP)",
+      "name_zh": "TCP协议",
+      "topic": "t10",
+      "description": "The transport protocol providing reliable, ordered, connection-oriented byte streams over IP using acknowledgements, retransmission, and flow control.",
       "default_order": 3,
       "centrality": 0.0638,
-      "description": "The transport protocol providing reliable, ordered, connection-oriented byte streams over IP using acknowledgements, retransmission, and flow control.",
-      "name_zh": "TCP协议"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c10_4",
-      "name": "Sockets Interface",
-      "topic": "t_network_concurrency",
+      "canonical_id": "pc_e03dbd1fbc576e2fad9730457c4d7489",
       "kind": "concept",
+      "name": "Sockets Interface",
+      "name_zh": "套接字接口",
+      "topic": "t_network_concurrency",
+      "description": "The API for network programming that abstracts connections as file descriptors, with calls such as socket, bind, listen, connect, and accept.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "The API for network programming that abstracts connections as file descriptors, with calls such as socket, bind, listen, connect, and accept.",
-      "name_zh": "套接字接口"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c10_5",
-      "name": "HTTP Protocol Basics",
-      "topic": "t_network_concurrency",
+      "canonical_id": "pc_cc4aa2f3fc9c9d725b74e7367afa1ecc",
       "kind": "concept",
+      "name": "HTTP Protocol Basics",
+      "name_zh": "HTTP协议基础",
+      "topic": "t_network_concurrency",
+      "description": "The application-layer request-response protocol underlying the web, using methods, headers, and status codes to transfer resources over TCP.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The application-layer request-response protocol underlying the web, using methods, headers, and status codes to transfer resources over TCP.",
-      "name_zh": "HTTP协议基础"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c11_1",
-      "name": "Thread Basics",
-      "topic": "t_network_concurrency_c11_1",
+      "canonical_id": "pc_b388c0c0aaa3c2d872d5ec41476b2b7a",
       "kind": "concept",
+      "name": "Thread Basics",
+      "name_zh": "线程基础",
+      "topic": "t_network_concurrency_c11_1",
+      "description": "Threads as independent logical flows sharing a process's address space, created and joined to achieve concurrency within a single process.",
       "default_order": 1,
       "centrality": 0.0942,
-      "description": "Threads as independent logical flows sharing a process's address space, created and joined to achieve concurrency within a single process.",
-      "name_zh": "线程基础"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c11_2",
-      "name": "Shared Variables",
-      "topic": "t_network_concurrency_c11_1",
+      "canonical_id": "pc_145a0ee2e48b56d4d9ecf6bddca9fcd0",
       "kind": "concept",
+      "name": "Shared Variables",
+      "name_zh": "共享变量",
+      "topic": "t_network_concurrency_c11_1",
+      "description": "How threads share global and heap variables, and the memory model determining when one thread's writes become visible to others.",
       "default_order": 2,
       "centrality": 0.0817,
-      "description": "How threads share global and heap variables, and the memory model determining when one thread's writes become visible to others.",
-      "name_zh": "共享变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c11_3",
-      "name": "Synchronization (Semaphores)",
-      "topic": "t11",
+      "canonical_id": "pc_f545ada2cf4f8506b0d8681cbd80ff0c",
       "kind": "concept",
+      "name": "Synchronization (Semaphores)",
+      "name_zh": "同步（信号量）",
+      "topic": "t11",
+      "description": "Coordinating threads using semaphores, counting primitives whose P and V operations enforce mutual exclusion and scheduling constraints.",
       "default_order": 1,
       "centrality": 0.0669,
-      "description": "Coordinating threads using semaphores, counting primitives whose P and V operations enforce mutual exclusion and scheduling constraints.",
-      "name_zh": "同步（信号量）",
       "visual": "diagram",
-      "visual_hint": "Diagram two threads coordinating with a semaphore's P and V."
+      "visual_hint": "Diagram two threads coordinating with a semaphore's P and V.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c11_4",
-      "name": "Thread Safety",
-      "topic": "t11",
+      "canonical_id": "pc_d3f8414aadf19541f98d0e657b1cea68",
       "kind": "concept",
+      "name": "Thread Safety",
+      "name_zh": "线程安全",
+      "topic": "t11",
+      "description": "Properties making functions safe to call concurrently, including reentrancy and avoiding unsynchronised access to shared mutable state.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Properties making functions safe to call concurrently, including reentrancy and avoiding unsynchronised access to shared mutable state.",
-      "name_zh": "线程安全"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c11_5",
-      "name": "Deadlocks",
-      "topic": "t11",
+      "canonical_id": "pc_deaeb9547101c95ce0a9cf3e8a5f50e7",
       "kind": "concept",
+      "name": "Deadlocks",
+      "name_zh": "死锁",
+      "topic": "t11",
+      "description": "A state where threads are permanently blocked, each waiting for resources held by others, arising when the four Coffman conditions hold.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "A state where threads are permanently blocked, each waiting for resources held by others, arising when the four Coffman conditions hold.",
-      "name_zh": "死锁",
       "visual": "diagram",
-      "visual_hint": "Diagram a deadlock as a cycle of threads waiting on resources."
+      "visual_hint": "Diagram a deadlock as a cycle of threads waiting on resources.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -797,343 +991,457 @@
       "type": "prereq",
       "from": "c1_1",
       "to": "c1_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c1_2",
       "to": "c1_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c1_1",
       "to": "c1_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c1_4",
       "to": "c1_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c2_1",
       "to": "c2_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c2_2",
       "to": "c2_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c2_3",
       "to": "c2_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c2_1",
       "to": "c2_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c3_1",
       "to": "c3_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c3_2",
       "to": "c3_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c3_3",
       "to": "c3_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c3_4",
       "to": "c3_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c4_1",
       "to": "c4_2",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c4_2",
       "to": "c4_3",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c4_1",
       "to": "c4_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c4_2",
       "to": "c4_5",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c5_1",
       "to": "c5_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c5_2",
       "to": "c5_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c5_3",
       "to": "c5_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c5_4",
       "to": "c5_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c5_3",
       "to": "c5_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c6_1",
       "to": "c6_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c6_2",
       "to": "c6_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c6_3",
       "to": "c6_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c6_4",
       "to": "c6_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c7_1",
       "to": "c7_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c7_2",
       "to": "c7_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c7_3",
       "to": "c7_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c7_4",
       "to": "c7_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c8_1",
       "to": "c8_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c8_2",
       "to": "c8_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c8_2",
       "to": "c8_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c8_4",
       "to": "c8_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c9_1",
       "to": "c9_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c9_1",
       "to": "c9_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c9_2",
       "to": "c9_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c9_4",
       "to": "c9_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c10_1",
       "to": "c10_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c10_2",
       "to": "c10_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c10_3",
       "to": "c10_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c10_4",
       "to": "c10_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c11_1",
       "to": "c11_2",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c11_2",
       "to": "c11_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c11_3",
       "to": "c11_4",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c11_3",
       "to": "c11_5",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c1_3",
       "to": "c2_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c2_3",
       "to": "c4_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c2_1",
       "to": "c3_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c2_1",
       "to": "c5_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c2_4",
       "to": "c6_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c3_5",
       "to": "c7_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c3_3",
       "to": "c4_3",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c4_4",
       "to": "c5_5",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c5_3",
       "to": "c8_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c7_3",
       "to": "c9_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c7_2",
       "to": "c11_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "c9_1",
       "to": "c10_1",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

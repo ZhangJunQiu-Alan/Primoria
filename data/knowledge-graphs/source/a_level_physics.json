@@ -1,1372 +1,1737 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "a_level_physics",
   "subject": "Physics",
-  "schema": {
-    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
-    "node_fields": {
-      "id": "globally unique id",
-      "kind": "topic | concept",
-      "name": "concept name",
-      "topic": "owning topic id; null for topic nodes",
-      "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "from must be learned before to; strength=hard|soft"
-    },
-    "concept_node_definition": "concept = smallest independently quiz-testable skill"
-  },
+  "jurisdictions": [
+    "international"
+  ],
+  "source_ids": [
+    "src_cambridge_9702_2025_2027"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "phy_measurement",
       "kind": "topic",
       "name": "Physical Quantities and Units",
+      "name_zh": "物理量与单位",
       "topic": null,
       "default_order": 1,
-      "name_zh": "物理量与单位"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_measurement_motion",
       "kind": "topic",
       "name": "Errors and Uncertainties and Combining Uncertainties",
+      "name_zh": "误差与不确定度与不确定度合成",
       "topic": null,
       "default_order": 2,
-      "name_zh": "误差与不确定度与不确定度合成"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_measurement_motion_phy_motion_quantities",
       "kind": "topic",
       "name": "Displacement Velocity Acceleration and Equations of Motion",
+      "name_zh": "位移速度加速度与运动方程",
       "topic": null,
       "default_order": 3,
-      "name_zh": "位移速度加速度与运动方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_kinematics",
       "kind": "topic",
       "name": "Kinematics",
+      "name_zh": "运动学",
       "topic": null,
       "default_order": 4,
-      "name_zh": "运动学"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_dynamics",
       "kind": "topic",
       "name": "Dynamics",
+      "name_zh": "动力学",
       "topic": null,
       "default_order": 5,
-      "name_zh": "动力学"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_momentum_forces",
       "kind": "topic",
       "name": "Conservation of Momentum and Impulse and Collisions",
+      "name_zh": "动量守恒与冲量与碰撞",
       "topic": null,
       "default_order": 6,
-      "name_zh": "动量守恒与冲量与碰撞"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_momentum_forces_phy_force_types",
       "kind": "topic",
       "name": "Types of Force and Moments and Couples",
+      "name_zh": "力的类型与力矩与力偶",
       "topic": null,
       "default_order": 7,
-      "name_zh": "力的类型与力矩与力偶"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_forces",
       "kind": "topic",
       "name": "Forces, Density and Pressure",
+      "name_zh": "力、密度与压强",
       "topic": null,
       "default_order": 8,
-      "name_zh": "力、密度与压强"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_work_energy",
       "kind": "topic",
       "name": "Work Done and Kinetic and Potential Energy",
+      "name_zh": "做功与动能与势能",
       "topic": null,
       "default_order": 9,
-      "name_zh": "做功与动能与势能"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_work_energy_phy_energy_conservation",
       "kind": "topic",
       "name": "Conservation of Energy and Power and Efficiency",
+      "name_zh": "能量守恒与功率与效率",
       "topic": null,
       "default_order": 10,
-      "name_zh": "能量守恒与功率与效率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_deformation",
       "kind": "topic",
       "name": "Hooke's Law and Stress, Strain and Young Modulus",
+      "name_zh": "胡克定律与应力、应变与杨氏模量",
       "topic": null,
       "default_order": 11,
-      "name_zh": "胡克定律与应力、应变与杨氏模量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_deformation_phy_elastic_plastic",
       "kind": "topic",
       "name": "Elastic and Plastic Behaviour and Elastic Strain Energy",
+      "name_zh": "弹性与塑性行为与弹性势能",
       "topic": null,
       "default_order": 12,
-      "name_zh": "弹性与塑性行为与弹性势能"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_waves",
       "kind": "topic",
       "name": "Waves",
+      "name_zh": "波动",
       "topic": null,
       "default_order": 13,
-      "name_zh": "波动"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_waves_superposition",
       "kind": "topic",
       "name": "Electromagnetic Spectrum and Doppler Effect",
+      "name_zh": "电磁波谱与多普勒效应",
       "topic": null,
       "default_order": 14,
-      "name_zh": "电磁波谱与多普勒效应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_waves_superposition_phy_superposition_principle",
       "kind": "topic",
       "name": "Principle of Superposition and Two-Source Interference",
+      "name_zh": "叠加原理与双源干涉",
       "topic": null,
       "default_order": 15,
-      "name_zh": "叠加原理与双源干涉"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_superposition",
       "kind": "topic",
       "name": "Superposition",
+      "name_zh": "波的叠加",
       "topic": null,
       "default_order": 16,
-      "name_zh": "波的叠加"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_electricity",
       "kind": "topic",
       "name": "Current of Electricity",
+      "name_zh": "电流",
       "topic": null,
       "default_order": 17,
-      "name_zh": "电流"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_circuits_kirchhoff",
       "kind": "topic",
       "name": "Electrical Characteristics and Kirchhoff's Laws",
+      "name_zh": "电学特性与基尔霍夫定律",
       "topic": null,
       "default_order": 18,
-      "name_zh": "电学特性与基尔霍夫定律"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_dc_circuits",
       "kind": "topic",
       "name": "DC Circuits",
+      "name_zh": "直流电路",
       "topic": null,
       "default_order": 19,
-      "name_zh": "直流电路"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_circular",
       "kind": "topic",
       "name": "Motion in a Circle",
+      "name_zh": "圆周运动",
       "topic": null,
       "default_order": 20,
-      "name_zh": "圆周运动"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_gravitation",
       "kind": "topic",
       "name": "Newton's Law of Gravitation and Gravitational Field Strength",
+      "name_zh": "牛顿引力定律与引力场强度",
       "topic": null,
       "default_order": 21,
-      "name_zh": "牛顿引力定律与引力场强度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_gravitation_phy_grav_potential",
       "kind": "topic",
       "name": "Gravitational Potential and Orbital Motion",
+      "name_zh": "引力势与轨道运动",
       "topic": null,
       "default_order": 22,
-      "name_zh": "引力势与轨道运动"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_oscillations",
       "kind": "topic",
       "name": "Simple Harmonic Motion and SHM Energy",
+      "name_zh": "简谐运动与SHM能量",
       "topic": null,
       "default_order": 23,
-      "name_zh": "简谐运动与SHM能量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_oscillations_phy_damping",
       "kind": "topic",
       "name": "Damping and Resonance",
+      "name_zh": "阻尼与共振",
       "topic": null,
       "default_order": 24,
-      "name_zh": "阻尼与共振"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_thermal",
       "kind": "topic",
       "name": "Temperature and Thermal Equilibrium and Specific Heat and Latent Heat",
+      "name_zh": "温度与热平衡与比热与潜热",
       "topic": null,
       "default_order": 25,
-      "name_zh": "温度与热平衡与比热与潜热"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_thermal_phy_kinetic_theory",
       "kind": "topic",
       "name": "Kinetic Theory of Gases, Ideal Gas Law, and Internal Energy and First Law",
+      "name_zh": "气体动理论、理想气体定律与内能与第一定律",
       "topic": null,
       "default_order": 26,
-      "name_zh": "气体动理论、理想气体定律与内能与第一定律"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_electric_fields",
       "kind": "topic",
       "name": "Coulomb's Law and Electric Field Strength",
+      "name_zh": "库仑定律与电场强度",
       "topic": null,
       "default_order": 27,
-      "name_zh": "库仑定律与电场强度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_electric_fields_phy_e_potential",
       "kind": "topic",
       "name": "Electric Potential and Gravitational and Electric Field Analogy",
+      "name_zh": "电势与引力场与电场类比",
       "topic": null,
       "default_order": 28,
-      "name_zh": "电势与引力场与电场类比"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_capacitance",
       "kind": "topic",
       "name": "Capacitance and Capacitors in Series and Parallel",
+      "name_zh": "电容与串并联电容",
       "topic": null,
       "default_order": 29,
-      "name_zh": "电容与串并联电容"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_capacitance_phy_capacitor_energy",
       "kind": "topic",
       "name": "Energy Stored in a Capacitor and Charging and Discharging",
+      "name_zh": "电容储能与充放电",
       "topic": null,
       "default_order": 30,
-      "name_zh": "电容储能与充放电"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_magnetic_fields",
       "kind": "topic",
       "name": "Magnetic Flux Density and Force on a Current-Carrying Conductor",
+      "name_zh": "磁通密度与载流导线受力",
       "topic": null,
       "default_order": 31,
-      "name_zh": "磁通密度与载流导线受力"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_magnetic_fields_phy_force_charge",
       "kind": "topic",
       "name": "Force on a Moving Charge and Magnetic Fields Due to Currents",
+      "name_zh": "运动电荷受力与电流磁场",
       "topic": null,
       "default_order": 32,
-      "name_zh": "运动电荷受力与电流磁场"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_induction",
       "kind": "topic",
       "name": "Electromagnetic Induction",
+      "name_zh": "电磁感应",
       "topic": null,
       "default_order": 33,
-      "name_zh": "电磁感应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_ac",
       "kind": "topic",
       "name": "Alternating Currents",
+      "name_zh": "交流电",
       "topic": null,
       "default_order": 34,
-      "name_zh": "交流电"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_quantum",
       "kind": "topic",
       "name": "Photon Energy and Photoelectric Effect",
+      "name_zh": "光子能量与光电效应",
       "topic": null,
       "default_order": 35,
-      "name_zh": "光子能量与光电效应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_quantum_phy_wave_particle",
       "kind": "topic",
       "name": "Wave-Particle Duality and Energy Levels and Line Spectra",
+      "name_zh": "波粒二象性与能级与线光谱",
       "topic": null,
       "default_order": 36,
-      "name_zh": "波粒二象性与能级与线光谱"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_nuclear",
       "kind": "topic",
       "name": "Nuclear Physics",
+      "name_zh": "核物理",
       "topic": null,
       "default_order": 37,
-      "name_zh": "核物理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_radioactivity",
       "kind": "topic",
       "name": "Nuclear Reactions and Radioactivity",
+      "name_zh": "核反应与放射性",
       "topic": null,
       "default_order": 38,
-      "name_zh": "核反应与放射性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_astro",
       "kind": "topic",
       "name": "Luminosity and Radiant Flux Intensity and Standard Candles",
+      "name_zh": "亮度与辐射通量与标准烛光",
       "topic": null,
       "default_order": 39,
-      "name_zh": "亮度与辐射通量与标准烛光"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_astro_phy_stellar_radii",
       "kind": "topic",
       "name": "Stellar Radii and Hubble's Law and the Big Bang",
+      "name_zh": "恒星半径与哈勃定律与大爆炸",
       "topic": null,
       "default_order": 40,
-      "name_zh": "恒星半径与哈勃定律与大爆炸"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_si_units",
+      "canonical_id": "pc_e03867bb23bc3a3fd6f1df51e33df6db",
       "kind": "concept",
       "name": "SI Base Units",
+      "name_zh": "SI基本单位",
       "topic": "phy_measurement",
       "description": "The seven SI base units from which all other units are derived, used to express physical quantities consistently in measurement and calculation.",
       "default_order": 1,
       "centrality": 0.1494,
-      "name_zh": "SI基本单位"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_homogeneity",
+      "canonical_id": "pc_659047a2a210ccb579d6d2b51739686b",
       "kind": "concept",
       "name": "Homogeneity of Equations",
+      "name_zh": "方程齐次性",
       "topic": "phy_measurement",
       "description": "Checking the homogeneity of an equation by ensuring both sides have the same base units, a test of its dimensional consistency.",
       "default_order": 2,
       "centrality": 0.1466,
-      "name_zh": "方程齐次性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_scalars_vectors",
+      "canonical_id": "pc_aa196745e5823a6104ad69bb2bc8784d",
       "kind": "concept",
       "name": "Scalars and Vectors",
+      "name_zh": "标量与矢量",
       "topic": "phy_measurement",
       "description": "The distinction between scalar quantities having only magnitude and vector quantities having both magnitude and direction, with vector addition and resolution.",
       "default_order": 3,
       "centrality": 0.4299,
-      "name_zh": "标量与矢量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_uncertainty",
+      "canonical_id": "pc_52275c8fb3b88ed545f621000eafe00d",
       "kind": "concept",
       "name": "Errors and Uncertainties",
+      "name_zh": "误差与不确定度",
       "topic": "phy_measurement_motion",
       "description": "Systematic and random errors in measurement, and expressing the uncertainty of a reading as an absolute, fractional, or percentage uncertainty.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "误差与不确定度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_combine_uncertainty",
+      "canonical_id": "pc_382f58e17c810fc4d5122246b19d54a9",
       "kind": "concept",
       "name": "Combining Uncertainties",
+      "name_zh": "不确定度合成",
       "topic": "phy_measurement_motion",
       "description": "Combining uncertainties through calculations by adding absolute uncertainties for sums and fractional uncertainties for products and powers.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "不确定度合成"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_motion_quantities",
+      "canonical_id": "pc_b1d5952208604e883f66b4659242fea1",
       "kind": "concept",
       "name": "Displacement Velocity Acceleration",
+      "name_zh": "位移速度加速度",
       "topic": "phy_measurement_motion_phy_motion_quantities",
       "description": "Displacement, velocity, and acceleration as related vector quantities describing motion, defined through rates of change of position.",
       "default_order": 1,
       "centrality": 0.4308,
-      "name_zh": "位移速度加速度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_suvat",
+      "canonical_id": "pc_cee2843193f234b6e2ec3291ef31565c",
       "kind": "concept",
       "name": "Equations of Motion",
+      "name_zh": "运动方程",
       "topic": "phy_measurement_motion_phy_motion_quantities",
       "description": "The equations of motion for uniform acceleration relating displacement, initial and final velocity, acceleration, and time.",
       "default_order": 2,
       "centrality": 0.4776,
-      "name_zh": "运动方程",
       "visual": "simulation",
-      "visual_hint": "Animate uniform-acceleration motion with adjustable acceleration and initial velocity."
+      "visual_hint": "Animate uniform-acceleration motion with adjustable acceleration and initial velocity.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_motion_graphs",
+      "canonical_id": "pc_cc3a0693029e43a99012e87778407b3f",
       "kind": "concept",
       "name": "Motion Graphs",
+      "name_zh": "运动图像",
       "topic": "phy_kinematics",
       "description": "Interpreting displacement-time and velocity-time graphs, where gradients give velocity and acceleration and areas give displacement.",
       "default_order": 1,
       "centrality": 0.0548,
-      "name_zh": "运动图像",
       "visual": "function",
-      "visual_hint": "Plot displacement-time and velocity-time graphs, relating gradients and areas."
+      "visual_hint": "Plot displacement-time and velocity-time graphs, relating gradients and areas.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_free_fall",
+      "canonical_id": "pc_20e213f19ebd72ac2ca4d405aa25eb92",
       "kind": "concept",
       "name": "Free Fall",
+      "name_zh": "自由落体",
       "topic": "phy_kinematics",
       "description": "Motion under gravity alone with constant acceleration g, including the experimental determination of the acceleration of free fall.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "自由落体",
       "visual": "simulation",
-      "visual_hint": "Drop an object under gravity showing constant acceleration g."
+      "visual_hint": "Drop an object under gravity showing constant acceleration g.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_projectile",
+      "canonical_id": "pc_d70290c162ab51f34692a09802b52453",
       "kind": "concept",
       "name": "Projectile Motion",
+      "name_zh": "抛体运动",
       "topic": "phy_kinematics",
       "description": "Projectile motion analysed by treating the horizontal and vertical components independently under constant gravitational acceleration.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "抛体运动",
       "visual": "simulation",
-      "visual_hint": "Launch a projectile with sliders for speed and angle showing the parabolic path."
+      "visual_hint": "Launch a projectile with sliders for speed and angle showing the parabolic path.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_newton_laws",
+      "canonical_id": "pc_4ab1f5ee000e0ffbdff106fdebd1bb17",
       "kind": "concept",
       "name": "Newton's Laws of Motion",
+      "name_zh": "牛顿运动定律",
       "topic": "phy_dynamics",
       "description": "Newton's three laws of motion relating force, mass, and acceleration and describing action-reaction force pairs.",
       "default_order": 1,
       "centrality": 0.391,
-      "name_zh": "牛顿运动定律",
       "visual": "simulation",
-      "visual_hint": "Apply a force to a mass and watch the resulting acceleration."
+      "visual_hint": "Apply a force to a mass and watch the resulting acceleration.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_mass_weight",
+      "canonical_id": "pc_e89c4895cbf9c4d6568f7dfad6ffb5eb",
       "kind": "concept",
       "name": "Mass and Weight",
+      "name_zh": "质量与重量",
       "topic": "phy_dynamics",
       "description": "The distinction between mass as the amount of matter and weight as the gravitational force on a mass, related by the field strength g.",
       "default_order": 2,
       "centrality": 0.0717,
-      "name_zh": "质量与重量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_momentum",
+      "canonical_id": "pc_1b1cfdc0850fea8f19cc8c2d58758e2c",
       "kind": "concept",
       "name": "Linear Momentum",
+      "name_zh": "线性动量",
       "topic": "phy_dynamics",
       "description": "Linear momentum as the product of mass and velocity, a vector quantity central to analysing motion and collisions.",
       "default_order": 3,
       "centrality": 0.1104,
-      "name_zh": "线性动量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_momentum_conservation",
+      "canonical_id": "pc_300e93cc3bff752aacf16632746d31d2",
       "kind": "concept",
       "name": "Conservation of Momentum",
+      "name_zh": "动量守恒",
       "topic": "phy_momentum_forces",
       "description": "The principle of conservation of momentum, where total momentum is conserved in a closed system with no external resultant force.",
       "default_order": 1,
       "centrality": 0.1007,
-      "name_zh": "动量守恒",
       "visual": "simulation",
-      "visual_hint": "Animate a collision conserving total momentum."
+      "visual_hint": "Animate a collision conserving total momentum.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_impulse",
+      "canonical_id": "pc_7e101f9ad4ea81a7ec552eba2b48f745",
       "kind": "concept",
       "name": "Impulse and Collisions",
+      "name_zh": "冲量与碰撞",
       "topic": "phy_momentum_forces",
       "description": "Impulse as the product of force and time, equal to the change in momentum, applied to analyse elastic and inelastic collisions.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "冲量与碰撞"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_force_types",
+      "canonical_id": "pc_7a4b1f0c0833180c2f630c367c02cc0a",
       "kind": "concept",
       "name": "Types of Force",
+      "name_zh": "力的类型",
       "topic": "phy_momentum_forces_phy_force_types",
       "description": "The types of force acting on bodies, including gravitational, normal contact, friction, tension, and upthrust forces.",
       "default_order": 1,
       "centrality": 0.1567,
-      "name_zh": "力的类型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_moments",
+      "canonical_id": "pc_e187e0ecc95069bb8486ab30bf437e00",
       "kind": "concept",
       "name": "Moments and Couples",
+      "name_zh": "力矩与力偶",
       "topic": "phy_momentum_forces_phy_force_types",
       "description": "The moment of a force as force times perpendicular distance, and couples producing rotation, with the principle of moments for equilibrium.",
       "default_order": 2,
       "centrality": 0.0519,
-      "name_zh": "力矩与力偶",
       "visual": "interactive",
-      "visual_hint": "Balance a beam by adjusting forces and distances (moments)."
+      "visual_hint": "Balance a beam by adjusting forces and distances (moments).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_equilibrium",
+      "canonical_id": "pc_270019e3817b82fe7c7dac8eb6422dc1",
       "kind": "concept",
       "name": "Equilibrium of Forces",
+      "name_zh": "力的平衡",
       "topic": "phy_forces",
       "description": "The conditions for equilibrium, where both the resultant force and the resultant moment acting on a body are zero.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "力的平衡"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_density_pressure",
+      "canonical_id": "pc_4405d9d25f9715d1d5862ce1888d71bc",
       "kind": "concept",
       "name": "Density and Pressure",
+      "name_zh": "密度与压强",
       "topic": "phy_forces",
       "description": "Density as mass per unit volume and pressure as force per unit area, including the variation of pressure with depth in a fluid.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "密度与压强"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_upthrust",
+      "canonical_id": "pc_30c4c0fd91c8d0f52169d9fb3e37d9be",
       "kind": "concept",
       "name": "Upthrust and Archimedes",
+      "name_zh": "浮力与阿基米德",
       "topic": "phy_forces",
       "description": "Upthrust as the buoyant force on a body in a fluid, equal by Archimedes' principle to the weight of fluid displaced.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "浮力与阿基米德",
       "visual": "simulation",
-      "visual_hint": "Float or sink an object showing upthrust versus weight."
+      "visual_hint": "Float or sink an object showing upthrust versus weight.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_work",
+      "canonical_id": "pc_a52c805e6ece9b48168340e9eb886aaf",
       "kind": "concept",
       "name": "Work Done",
+      "name_zh": "做功",
       "topic": "phy_work_energy",
       "description": "Work done as the product of force and displacement in the direction of the force, transferring energy to or from a system.",
       "default_order": 1,
       "centrality": 0.1075,
-      "name_zh": "做功"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_ke_pe",
+      "canonical_id": "pc_94622268081f1c4560a463b79eece9a8",
       "kind": "concept",
       "name": "Kinetic and Potential Energy",
+      "name_zh": "动能与势能",
       "topic": "phy_work_energy",
       "description": "Kinetic energy of a moving body and gravitational potential energy due to position, with their defining formulae.",
       "default_order": 2,
       "centrality": 0.0973,
-      "name_zh": "动能与势能"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_energy_conservation",
+      "canonical_id": "pc_16e60ad8536c19468a26bfce26abd36b",
       "kind": "concept",
       "name": "Conservation of Energy",
+      "name_zh": "能量守恒",
       "topic": "phy_work_energy_phy_energy_conservation",
       "description": "The principle of conservation of energy, where energy is transferred between forms but the total amount remains constant.",
       "default_order": 1,
       "centrality": 0.073,
-      "name_zh": "能量守恒"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_power_efficiency",
+      "canonical_id": "pc_806d801e011ab24bec868b691726c944",
       "kind": "concept",
       "name": "Power and Efficiency",
+      "name_zh": "功率与效率",
       "topic": "phy_work_energy_phy_energy_conservation",
       "description": "Power as the rate of doing work or transferring energy, and efficiency as the ratio of useful output to total input energy.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "功率与效率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_hookes_law",
+      "canonical_id": "pc_37e89857c5223b0e022c1109441ccd39",
       "kind": "concept",
       "name": "Hooke's Law",
+      "name_zh": "胡克定律",
       "topic": "phy_deformation",
       "description": "Hooke's law stating that the extension of a spring is proportional to the applied force up to the limit of proportionality.",
       "default_order": 1,
       "centrality": 0.0714,
-      "name_zh": "胡克定律",
       "visual": "function",
-      "visual_hint": "Plot force against extension for a spring with a slider for stiffness."
+      "visual_hint": "Plot force against extension for a spring with a slider for stiffness.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_stress_strain",
+      "canonical_id": "pc_9b8463dd7fb075923f7cc892713807a1",
       "kind": "concept",
       "name": "Stress, Strain and Young Modulus",
+      "name_zh": "应力、应变与杨氏模量",
       "topic": "phy_deformation",
       "description": "Tensile stress as force per unit area and strain as fractional extension, related by the Young modulus for an elastic material.",
       "default_order": 2,
       "centrality": 0.0548,
-      "name_zh": "应力、应变与杨氏模量",
       "visual": "function",
-      "visual_hint": "Plot a stress-strain curve up to fracture."
+      "visual_hint": "Plot a stress-strain curve up to fracture.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_elastic_plastic",
+      "canonical_id": "pc_0a3947e780f2fb38acc363f3429f9c06",
       "kind": "concept",
       "name": "Elastic and Plastic Behaviour",
+      "name_zh": "弹性与塑性行为",
       "topic": "phy_deformation_phy_elastic_plastic",
       "description": "Elastic behaviour where a material returns to its original shape and plastic behaviour where deformation is permanent beyond the elastic limit.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "弹性与塑性行为"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_strain_energy",
+      "canonical_id": "pc_158616964925661b17972079dc845e71",
       "kind": "concept",
       "name": "Elastic Strain Energy",
+      "name_zh": "弹性势能",
       "topic": "phy_deformation_phy_elastic_plastic",
       "description": "Elastic strain energy stored in a deformed material, equal to the area under its force-extension graph.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "弹性势能"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_progressive_waves",
+      "canonical_id": "pc_e2ba314d63487e951e37fee09f09b8f3",
       "kind": "concept",
       "name": "Progressive Waves",
+      "name_zh": "行波",
       "topic": "phy_waves",
       "description": "Progressive waves transferring energy through a medium, described by displacement, amplitude, wavelength, frequency, and speed.",
       "default_order": 1,
       "centrality": 0.3608,
-      "name_zh": "行波",
       "visual": "function",
-      "visual_hint": "Animate a progressive wave with sliders for amplitude, wavelength, and frequency."
+      "visual_hint": "Animate a progressive wave with sliders for amplitude, wavelength, and frequency.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_wave_types",
+      "canonical_id": "pc_9c2707bdb1b3b76d6a27631d8d2b4ac9",
       "kind": "concept",
       "name": "Transverse and Longitudinal Waves",
+      "name_zh": "横波与纵波",
       "topic": "phy_waves",
       "description": "The distinction between transverse waves oscillating perpendicular to the direction of travel and longitudinal waves oscillating parallel to it.",
       "default_order": 2,
       "centrality": 0.3034,
-      "name_zh": "横波与纵波",
       "visual": "interactive",
-      "visual_hint": "Animate transverse versus longitudinal wave oscillation."
+      "visual_hint": "Animate transverse versus longitudinal wave oscillation.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_intensity",
+      "canonical_id": "pc_24acbcc41dd4d81b78d083bdb3c9eb76",
       "kind": "concept",
       "name": "Wave Intensity",
+      "name_zh": "波强度",
       "topic": "phy_waves",
       "description": "Wave intensity as power per unit area, proportional to the square of the amplitude and decreasing with distance from the source.",
       "default_order": 3,
       "centrality": 0.3277,
-      "name_zh": "波强度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_em_spectrum",
+      "canonical_id": "pc_ff3aafe811b49dfdca598b2667c1db93",
       "kind": "concept",
       "name": "Electromagnetic Spectrum",
+      "name_zh": "电磁波谱",
       "topic": "phy_waves_superposition",
       "description": "The electromagnetic spectrum of transverse waves travelling at the speed of light, ranging from radio waves to gamma rays.",
       "default_order": 1,
       "centrality": 0.3045,
-      "name_zh": "电磁波谱",
       "visual": "diagram",
-      "visual_hint": "Labelled electromagnetic spectrum ordered by wavelength and frequency."
+      "visual_hint": "Labelled electromagnetic spectrum ordered by wavelength and frequency.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_doppler",
+      "canonical_id": "pc_848e887fae7cc6a91b04034356837749",
       "kind": "concept",
       "name": "Doppler Effect",
+      "name_zh": "多普勒效应",
       "topic": "phy_waves_superposition",
       "description": "The Doppler effect, the change in observed frequency when a wave source and observer move relative to one another.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "多普勒效应",
       "visual": "simulation",
-      "visual_hint": "Move a wave source and show the observed frequency shift (Doppler effect)."
+      "visual_hint": "Move a wave source and show the observed frequency shift (Doppler effect).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_superposition_principle",
+      "canonical_id": "pc_96e41b9ba6a6d60711d999b04e3ee970",
       "kind": "concept",
       "name": "Principle of Superposition",
+      "name_zh": "叠加原理",
       "topic": "phy_waves_superposition_phy_superposition_principle",
       "description": "The principle of superposition stating that when waves meet, the resultant displacement is the vector sum of the individual displacements.",
       "default_order": 1,
       "centrality": 0.0919,
-      "name_zh": "叠加原理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_interference",
+      "canonical_id": "pc_e63810d1054dbf432df743db7574fc27",
       "kind": "concept",
       "name": "Two-Source Interference",
+      "name_zh": "双源干涉",
       "topic": "phy_waves_superposition_phy_superposition_principle",
       "description": "Two-source interference producing constructive and destructive fringes where coherent waves meet in phase and out of phase.",
       "default_order": 2,
       "centrality": 0.079,
-      "name_zh": "双源干涉",
       "visual": "function",
-      "visual_hint": "Two-source interference producing constructive and destructive fringes."
+      "visual_hint": "Two-source interference producing constructive and destructive fringes.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_diffraction",
+      "canonical_id": "pc_e7db3c8e907de6d7f3bef2c8cccc4eb1",
       "kind": "concept",
       "name": "Diffraction",
+      "name_zh": "衍射",
       "topic": "phy_superposition",
       "description": "The spreading of waves passing through a gap or around an obstacle, most pronounced when the gap is comparable to the wavelength.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "衍射"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_diffraction_grating",
+      "canonical_id": "pc_8af61d68a90fecc641a5fad83024882b",
       "kind": "concept",
       "name": "Diffraction Grating",
+      "name_zh": "衍射光栅",
       "topic": "phy_superposition",
       "description": "A diffraction grating producing sharp maxima at angles given by the grating equation, used to measure wavelength accurately.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "衍射光栅"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_stationary_waves",
+      "canonical_id": "pc_2711ba8178289331c48ea895409a482a",
       "kind": "concept",
       "name": "Stationary Waves",
+      "name_zh": "驻波",
       "topic": "phy_superposition",
       "description": "Stationary waves formed by superposition of two opposite progressive waves, with fixed nodes and antinodes and no net energy transfer.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "驻波",
       "visual": "function",
-      "visual_hint": "Animate a standing wave with nodes and antinodes; slider for the harmonic."
+      "visual_hint": "Animate a standing wave with nodes and antinodes; slider for the harmonic.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_current_charge",
+      "canonical_id": "pc_62a6d88e535c20e54fc65c369645f13d",
       "kind": "concept",
       "name": "Electric Current and Charge",
+      "name_zh": "电流与电荷",
       "topic": "phy_electricity",
       "description": "Electric current as the rate of flow of charge, with charge quantised in units of the elementary charge carried by electrons.",
       "default_order": 1,
       "centrality": 0.2021,
-      "name_zh": "电流与电荷"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_pd_emf",
+      "canonical_id": "pc_2c6fac377de551f06f129beb0bd0767f",
       "kind": "concept",
       "name": "Potential Difference and EMF",
+      "name_zh": "电势差与EMF",
       "topic": "phy_electricity",
       "description": "Potential difference as energy transferred per unit charge by a component and electromotive force as energy supplied per unit charge by a source.",
       "default_order": 2,
       "centrality": 0.1767,
-      "name_zh": "电势差与EMF"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_resistance_ohm",
+      "canonical_id": "pc_6a2c33585e2f59dc88ebd095503f1547",
       "kind": "concept",
       "name": "Resistance and Ohm's Law",
+      "name_zh": "电阻与欧姆定律",
       "topic": "phy_electricity",
       "description": "Resistance as the ratio of potential difference to current, with Ohm's law holding when resistance is constant at fixed temperature.",
       "default_order": 3,
       "centrality": 0.1325,
-      "name_zh": "电阻与欧姆定律"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_resistivity",
+      "canonical_id": "pc_68b39aa539b16990c8b6da472e8ff615",
       "kind": "concept",
       "name": "Resistivity",
+      "name_zh": "电阻率",
       "topic": "phy_circuits_kirchhoff",
       "description": "Resistivity as a material property relating a conductor's resistance to its length and cross-sectional area.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "电阻率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_iv_characteristics",
+      "canonical_id": "pc_5bc23ed38df27b3a2a11bd2f17fb1fb1",
       "kind": "concept",
       "name": "I-V Characteristics",
+      "name_zh": "I-V特性",
       "topic": "phy_circuits_kirchhoff",
       "description": "Current-voltage characteristics of components such as resistors, filament lamps, and diodes, revealing their electrical behaviour.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "I-V特性",
       "visual": "function",
-      "visual_hint": "Plot I-V characteristics for a resistor, filament lamp, and diode."
+      "visual_hint": "Plot I-V characteristics for a resistor, filament lamp, and diode.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_kirchhoff",
+      "canonical_id": "pc_25028ede682da65993323dd0b92f1be2",
       "kind": "concept",
       "name": "Kirchhoff's Laws",
+      "name_zh": "基尔霍夫定律",
       "topic": "phy_circuits_kirchhoff",
       "description": "Kirchhoff's first and second laws expressing the conservation of charge at junctions and of energy around circuit loops.",
       "default_order": 3,
       "centrality": 0.079,
-      "name_zh": "基尔霍夫定律",
       "visual": "diagram",
-      "visual_hint": "Circuit diagram applying Kirchhoff's current and voltage laws."
+      "visual_hint": "Circuit diagram applying Kirchhoff's current and voltage laws.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_series_parallel",
+      "canonical_id": "pc_bca889f92c123c04cec219d0a9311714",
       "kind": "concept",
       "name": "Series and Parallel Resistors",
+      "name_zh": "串并联电阻",
       "topic": "phy_dc_circuits",
       "description": "Combining resistors in series and parallel using the total-resistance rules derived from Kirchhoff's laws.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "串并联电阻",
       "visual": "interactive",
-      "visual_hint": "Build series and parallel resistor networks and compute total resistance."
+      "visual_hint": "Build series and parallel resistor networks and compute total resistance.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_potential_divider",
+      "canonical_id": "pc_1930b8c847023ca24d637697d9313a1f",
       "kind": "concept",
       "name": "Potential Dividers",
+      "name_zh": "分压器",
       "topic": "phy_dc_circuits",
       "description": "A potential divider using resistors in series to produce a desired fraction of the supply voltage, including with sensors.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "分压器",
       "visual": "interactive",
-      "visual_hint": "Slider on a potential divider showing the output voltage."
+      "visual_hint": "Slider on a potential divider showing the output voltage.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_internal_resistance",
+      "canonical_id": "pc_182d374b27a6ff4f7176260222560fcf",
       "kind": "concept",
       "name": "Internal Resistance",
+      "name_zh": "内阻",
       "topic": "phy_dc_circuits",
       "description": "The internal resistance of a source causing the terminal potential difference to fall below the EMF when current flows.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "内阻"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_angular_speed",
+      "canonical_id": "pc_1cdef285fa4deb8906190252b2af65bb",
       "kind": "concept",
       "name": "Radian Measure and Angular Speed",
+      "name_zh": "弧度与角速度",
       "topic": "phy_circular",
       "description": "Angular displacement in radians and angular speed as the rate of change of angle, related to linear speed by the radius.",
       "default_order": 1,
       "centrality": 0.0746,
-      "name_zh": "弧度与角速度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_centripetal_accel",
+      "canonical_id": "pc_3f0ccb62f5bbfadba05ddf6910d6a2b1",
       "kind": "concept",
       "name": "Centripetal Acceleration",
+      "name_zh": "向心加速度",
       "topic": "phy_circular",
       "description": "Centripetal acceleration directed toward the centre of a circular path, with magnitude expressed in terms of speed and radius.",
       "default_order": 2,
       "centrality": 0.0586,
-      "name_zh": "向心加速度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_centripetal_force",
+      "canonical_id": "pc_564a46a0b8681d3ee2bfb13b78e2cbe0",
       "kind": "concept",
       "name": "Centripetal Force",
+      "name_zh": "向心力",
       "topic": "phy_circular",
       "description": "The resultant centripetal force required for circular motion, directed toward the centre and provided by a real force.",
       "default_order": 3,
       "centrality": 0.0794,
-      "name_zh": "向心力",
       "visual": "simulation",
-      "visual_hint": "Swing a mass in a circle, varying speed and radius for centripetal force."
+      "visual_hint": "Swing a mass in a circle, varying speed and radius for centripetal force.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_newton_gravitation",
+      "canonical_id": "pc_a5f4af08fa5b345a74638ec79495b81f",
       "kind": "concept",
       "name": "Newton's Law of Gravitation",
+      "name_zh": "牛顿引力定律",
       "topic": "phy_gravitation",
       "description": "Newton's law of gravitation stating the attractive force between two point masses is proportional to their product and inversely to distance squared.",
       "default_order": 1,
       "centrality": 0.0774,
-      "name_zh": "牛顿引力定律"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_grav_field_strength",
+      "canonical_id": "pc_8132f2ed61568084c95301dcc5de1540",
       "kind": "concept",
       "name": "Gravitational Field Strength",
+      "name_zh": "引力场强度",
       "topic": "phy_gravitation",
       "description": "Gravitational field strength as the gravitational force per unit mass at a point, a vector directed toward the mass.",
       "default_order": 2,
       "centrality": 0.0618,
-      "name_zh": "引力场强度",
       "visual": "function",
-      "visual_hint": "Plot gravitational field strength against distance (inverse square)."
+      "visual_hint": "Plot gravitational field strength against distance (inverse square).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_grav_potential",
+      "canonical_id": "pc_3484d91ddcc8007ca82b0d63c0e64b21",
       "kind": "concept",
       "name": "Gravitational Potential",
+      "name_zh": "引力势",
       "topic": "phy_gravitation_phy_grav_potential",
       "description": "Gravitational potential as the work done per unit mass to bring a mass from infinity to a point, always negative.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "引力势"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_orbits",
+      "canonical_id": "pc_5ae39810b5a928dac2a4845e04b072bf",
       "kind": "concept",
       "name": "Orbital Motion",
+      "name_zh": "轨道运动",
       "topic": "phy_gravitation_phy_grav_potential",
       "description": "Orbital motion where gravitation provides the centripetal force, relating orbital speed, radius, and period as in Kepler's third law.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "轨道运动",
       "visual": "simulation",
-      "visual_hint": "Orbit a satellite where gravity provides the centripetal force."
+      "visual_hint": "Orbit a satellite where gravity provides the centripetal force.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_shm",
+      "canonical_id": "pc_d392d3b9e47c3030f36d48d1130068da",
       "kind": "concept",
       "name": "Simple Harmonic Motion",
+      "name_zh": "简谐运动",
       "topic": "phy_oscillations",
       "description": "Simple harmonic motion where acceleration is proportional to displacement and directed toward equilibrium, producing sinusoidal motion.",
       "default_order": 1,
       "centrality": 0.0519,
-      "name_zh": "简谐运动",
       "visual": "simulation",
-      "visual_hint": "Animate a pendulum or spring in simple harmonic motion and plot displacement."
+      "visual_hint": "Animate a pendulum or spring in simple harmonic motion and plot displacement.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_shm_energy",
+      "canonical_id": "pc_74b714c7e1f6d1705f9d3fc949aad583",
       "kind": "concept",
       "name": "SHM Energy",
+      "name_zh": "SHM能量",
       "topic": "phy_oscillations",
       "description": "The interchange between kinetic and potential energy in simple harmonic motion, with total energy constant in the absence of damping.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "SHM能量",
       "visual": "function",
-      "visual_hint": "Plot the kinetic and potential energy interchange in SHM."
+      "visual_hint": "Plot the kinetic and potential energy interchange in SHM.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_damping",
+      "canonical_id": "pc_9a90a4d8241fb756ffe456ec77edbe82",
       "kind": "concept",
       "name": "Damping",
+      "name_zh": "阻尼",
       "topic": "phy_oscillations_phy_damping",
       "description": "Damping reducing the amplitude of oscillations through energy loss, classified as light, critical, or heavy damping.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "阻尼"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_resonance",
+      "canonical_id": "pc_ddddcd9c5533562635adc0202fd181f7",
       "kind": "concept",
       "name": "Resonance",
+      "name_zh": "共振",
       "topic": "phy_oscillations_phy_damping",
       "description": "Resonance where a system driven at its natural frequency oscillates with maximum amplitude, with damping reducing the peak.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "共振",
       "visual": "function",
-      "visual_hint": "Plot amplitude against driving frequency showing a resonance peak."
+      "visual_hint": "Plot amplitude against driving frequency showing a resonance peak.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_temperature",
+      "canonical_id": "pc_c625010f4166e3a97ef4ebbd075529de",
       "kind": "concept",
       "name": "Temperature and Thermal Equilibrium",
+      "name_zh": "温度与热平衡",
       "topic": "phy_thermal",
       "description": "Temperature as a measure of the average kinetic energy of particles, with thermal equilibrium reached when no net heat flows.",
       "default_order": 1,
       "centrality": 0.0925,
-      "name_zh": "温度与热平衡"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_heat_capacity",
+      "canonical_id": "pc_c1e051825280f0df065d218085a84d1d",
       "kind": "concept",
       "name": "Specific Heat and Latent Heat",
+      "name_zh": "比热与潜热",
       "topic": "phy_thermal",
       "description": "Specific heat capacity for raising temperature and specific latent heat for changes of state, relating energy to mass and temperature.",
       "default_order": 2,
       "centrality": 0.0796,
-      "name_zh": "比热与潜热"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_kinetic_theory",
+      "canonical_id": "pc_4acc9b751e6be25c2980eb631eb901b0",
       "kind": "concept",
       "name": "Kinetic Theory of Gases",
+      "name_zh": "气体动理论",
       "topic": "phy_thermal_phy_kinetic_theory",
       "description": "The kinetic theory modelling a gas as many small particles in random motion, relating pressure to their mean square speed.",
       "default_order": 1,
       "centrality": 0.129,
-      "name_zh": "气体动理论",
       "visual": "simulation",
-      "visual_hint": "Animate gas particles in random motion inside a box."
+      "visual_hint": "Animate gas particles in random motion inside a box.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_ideal_gas",
+      "canonical_id": "pc_5cccaa716cd0dc884949fd601339e85a",
       "kind": "concept",
       "name": "Ideal Gas Law",
+      "name_zh": "理想气体定律",
       "topic": "phy_thermal_phy_kinetic_theory",
       "description": "The ideal gas equation pV equals nRT relating the pressure, volume, temperature, and amount of an ideal gas.",
       "default_order": 2,
       "centrality": 0.0872,
-      "name_zh": "理想气体定律",
       "visual": "function",
-      "visual_hint": "Plot pV = nRT relationships between pressure, volume, and temperature."
+      "visual_hint": "Plot pV = nRT relationships between pressure, volume, and temperature.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_internal_energy",
+      "canonical_id": "pc_8bf886ad6cb9328616d017e223a93562",
       "kind": "concept",
       "name": "Internal Energy and First Law",
+      "name_zh": "内能与第一定律",
       "topic": "phy_thermal_phy_kinetic_theory",
       "description": "Internal energy as the sum of the random kinetic and potential energies of particles, and the first law relating it to heat and work.",
       "default_order": 3,
       "centrality": 0.0735,
-      "name_zh": "内能与第一定律"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_coulomb",
+      "canonical_id": "pc_f0a5eab16aacea4e38969075c8cb44f5",
       "kind": "concept",
       "name": "Coulomb's Law",
+      "name_zh": "库仑定律",
       "topic": "phy_electric_fields",
       "description": "Coulomb's law giving the electrostatic force between two point charges as proportional to their product and inversely to distance squared.",
       "default_order": 1,
       "centrality": 0.0852,
-      "name_zh": "库仑定律",
       "visual": "function",
-      "visual_hint": "Plot the Coulomb force against separation (inverse square)."
+      "visual_hint": "Plot the Coulomb force against separation (inverse square).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_e_field_strength",
+      "canonical_id": "pc_cf0a24f8dd938cdfcc8ea4466833fd4e",
       "kind": "concept",
       "name": "Electric Field Strength",
+      "name_zh": "电场强度",
       "topic": "phy_electric_fields",
       "description": "Electric field strength as the force per unit positive charge at a point, a vector quantity directed along the field.",
       "default_order": 2,
       "centrality": 0.0711,
-      "name_zh": "电场强度",
       "visual": "interactive",
-      "visual_hint": "Show electric field lines around point charges."
+      "visual_hint": "Show electric field lines around point charges.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_e_potential",
+      "canonical_id": "pc_d5eb2984fe400640527611f8af20f25d",
       "kind": "concept",
       "name": "Electric Potential",
+      "name_zh": "电势",
       "topic": "phy_electric_fields_phy_e_potential",
       "description": "Electric potential as the work done per unit positive charge to bring a charge from infinity to a point in the field.",
       "default_order": 1,
       "centrality": 0.0925,
-      "name_zh": "电势"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_field_analogy",
+      "canonical_id": "pc_ba2bb06ca73e3fe6b18b0fbdcf9e808f",
       "kind": "concept",
       "name": "Gravitational and Electric Field Analogy",
+      "name_zh": "引力场与电场类比",
       "topic": "phy_electric_fields_phy_e_potential",
       "description": "The analogy between gravitational and electric fields in their inverse-square laws, field strength, and potential, noting key differences.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "引力场与电场类比"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_capacitance_def",
+      "canonical_id": "pc_174ec83f100a8bd42d282cc0a10d4d91",
       "kind": "concept",
       "name": "Capacitance",
+      "name_zh": "电容",
       "topic": "phy_capacitance",
       "description": "Capacitance as the charge stored per unit potential difference, a measure of a capacitor's ability to store charge.",
       "default_order": 1,
       "centrality": 0.0714,
-      "name_zh": "电容"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_capacitor_networks",
+      "canonical_id": "pc_10ffbecc8782e0542aeb9c2437a95476",
       "kind": "concept",
       "name": "Capacitors in Series and Parallel",
+      "name_zh": "串并联电容",
       "topic": "phy_capacitance",
       "description": "Combining capacitors in series and parallel using the total-capacitance rules, which are opposite to those for resistors.",
       "default_order": 2,
       "centrality": 0.0548,
-      "name_zh": "串并联电容"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_capacitor_energy",
+      "canonical_id": "pc_2b36e7b49bf60c458d55f899753ba2a8",
       "kind": "concept",
       "name": "Energy Stored in a Capacitor",
+      "name_zh": "电容储能",
       "topic": "phy_capacitance_phy_capacitor_energy",
       "description": "The energy stored in a charged capacitor, equal to the area under its charge-voltage graph.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "电容储能"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_capacitor_discharge",
+      "canonical_id": "pc_595bfdd91050c60ee25046df6982a655",
       "kind": "concept",
       "name": "Charging and Discharging",
+      "name_zh": "充放电",
       "topic": "phy_capacitance_phy_capacitor_energy",
       "description": "The exponential charging and discharging of a capacitor through a resistor, characterised by the time constant RC.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "充放电",
       "visual": "function",
-      "visual_hint": "Plot exponential capacitor charge and discharge against time."
+      "visual_hint": "Plot exponential capacitor charge and discharge against time.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_flux_density",
+      "canonical_id": "pc_9647bc019f27fd232ce00c144b507faa",
       "kind": "concept",
       "name": "Magnetic Flux Density",
+      "name_zh": "磁通密度",
       "topic": "phy_magnetic_fields",
       "description": "Magnetic flux density as a measure of the strength of a magnetic field, defined through the force on a current-carrying conductor.",
       "default_order": 1,
       "centrality": 0.1202,
-      "name_zh": "磁通密度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_force_conductor",
+      "canonical_id": "pc_295634d2bf2b6baea0ca509c07ee5143",
       "kind": "concept",
       "name": "Force on a Current-Carrying Conductor",
+      "name_zh": "载流导线受力",
       "topic": "phy_magnetic_fields",
       "description": "The force on a current-carrying conductor in a magnetic field, given by F equals BIL, with direction from Fleming's left-hand rule.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "载流导线受力",
       "visual": "interactive",
-      "visual_hint": "Show the motor-effect force on a current-carrying conductor (Fleming's left hand)."
+      "visual_hint": "Show the motor-effect force on a current-carrying conductor (Fleming's left hand).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_force_charge",
+      "canonical_id": "pc_1ca0904b6ae91d6ca3fc8e304aaf7ed2",
       "kind": "concept",
       "name": "Force on a Moving Charge",
+      "name_zh": "运动电荷受力",
       "topic": "phy_magnetic_fields_phy_force_charge",
       "description": "The force on a charge moving through a magnetic field, given by F equals Bqv, causing charged particles to follow circular paths.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "运动电荷受力"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_fields_currents",
+      "canonical_id": "pc_21210700d95c5fb054342d60854fa86a",
       "kind": "concept",
       "name": "Magnetic Fields Due to Currents",
+      "name_zh": "电流磁场",
       "topic": "phy_magnetic_fields_phy_force_charge",
       "description": "The magnetic fields produced by currents in long straight wires, flat coils, and solenoids, with their characteristic field patterns.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "电流磁场"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_flux_linkage",
+      "canonical_id": "pc_de2f2c2a673d0e9c8fcbca0343cc3a10",
       "kind": "concept",
       "name": "Magnetic Flux and Flux Linkage",
+      "name_zh": "磁通与磁链",
       "topic": "phy_induction",
       "description": "Magnetic flux through a coil and flux linkage as the product of flux and the number of turns, central to electromagnetic induction.",
       "default_order": 1,
       "centrality": 0.0803,
-      "name_zh": "磁通与磁链"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_faraday",
+      "canonical_id": "pc_ef89f015bb0ebd4763d7cc0623222573",
       "kind": "concept",
       "name": "Faraday's Law",
+      "name_zh": "法拉第定律",
       "topic": "phy_induction",
       "description": "Faraday's law stating that the induced EMF is proportional to the rate of change of magnetic flux linkage.",
       "default_order": 2,
       "centrality": 0.0654,
-      "name_zh": "法拉第定律",
       "visual": "interactive",
-      "visual_hint": "Move a magnet through a coil to induce an EMF (Faraday and Lenz)."
+      "visual_hint": "Move a magnet through a coil to induce an EMF (Faraday and Lenz).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_lenz",
+      "canonical_id": "pc_53b1902430dd730851cf421e4c339a79",
       "kind": "concept",
       "name": "Lenz's Law",
+      "name_zh": "楞次定律",
       "topic": "phy_induction",
       "description": "Lenz's law stating that an induced current opposes the change producing it, a consequence of the conservation of energy.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "楞次定律"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_ac_rms",
+      "canonical_id": "pc_59e12d506a4af7b6eb6e216f444dacee",
       "kind": "concept",
       "name": "AC and RMS Values",
+      "name_zh": "交流电与RMS值",
       "topic": "phy_ac",
       "description": "Alternating current varying sinusoidally with time, and root-mean-square values giving the equivalent steady current for power.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "交流电与RMS值",
       "visual": "function",
-      "visual_hint": "Plot a sinusoidal AC waveform and its RMS value."
+      "visual_hint": "Plot a sinusoidal AC waveform and its RMS value.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_transformers",
+      "canonical_id": "pc_78474e07c21918d091cc439beb2aaf1c",
       "kind": "concept",
       "name": "Transformers",
+      "name_zh": "变压器",
       "topic": "phy_ac",
       "description": "Transformers changing alternating voltage using the ratio of turns in the primary and secondary coils, ideally conserving power.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "变压器",
       "visual": "diagram",
-      "visual_hint": "Transformer diagram relating the turns ratio to the voltage ratio."
+      "visual_hint": "Transformer diagram relating the turns ratio to the voltage ratio.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_rectification",
+      "canonical_id": "pc_e095807fe1747bf031b5340e9fddbb32",
       "kind": "concept",
       "name": "Rectification",
+      "name_zh": "整流",
       "topic": "phy_ac",
       "description": "Rectification converting alternating current to direct current using diodes, in half-wave and full-wave bridge circuits.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "整流"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_photon",
+      "canonical_id": "pc_667d6af1c79afd71fbd2dedbccfcc217",
       "kind": "concept",
       "name": "Photon Energy",
+      "name_zh": "光子能量",
       "topic": "phy_quantum",
       "description": "The photon as a quantum of electromagnetic energy, with energy proportional to frequency given by E equals hf.",
       "default_order": 1,
       "centrality": 0.3043,
-      "name_zh": "光子能量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_photoelectric",
+      "canonical_id": "pc_003acb7c39b07ad46c4076a4e11cb799",
       "kind": "concept",
       "name": "Photoelectric Effect",
+      "name_zh": "光电效应",
       "topic": "phy_quantum",
       "description": "The photoelectric effect, the emission of electrons from a metal by incident light above a threshold frequency, evidence for photons.",
       "default_order": 2,
       "centrality": 0.1646,
-      "name_zh": "光电效应",
       "visual": "function",
-      "visual_hint": "Plot photoelectric stopping voltage against frequency."
+      "visual_hint": "Plot photoelectric stopping voltage against frequency.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_wave_particle",
+      "canonical_id": "pc_5214d7b845cac7c061ea53ff5618d522",
       "kind": "concept",
       "name": "Wave-Particle Duality",
+      "name_zh": "波粒二象性",
       "topic": "phy_quantum_phy_wave_particle",
       "description": "Wave-particle duality, where matter and radiation exhibit both wave and particle behaviour, with the de Broglie wavelength for particles.",
       "default_order": 1,
       "centrality": 0.1644,
-      "name_zh": "波粒二象性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_energy_levels",
+      "canonical_id": "pc_677afe173bf9a50c0abd70b650d0b052",
       "kind": "concept",
       "name": "Energy Levels and Line Spectra",
+      "name_zh": "能级与线光谱",
       "topic": "phy_quantum_phy_wave_particle",
       "description": "Discrete electron energy levels in atoms, with line spectra arising from photons emitted or absorbed during transitions between levels.",
       "default_order": 2,
       "centrality": 0.3286,
-      "name_zh": "能级与线光谱",
       "visual": "diagram",
-      "visual_hint": "Energy-level diagram with photon emission producing line spectra."
+      "visual_hint": "Energy-level diagram with photon emission producing line spectra.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_nuclear_structure",
+      "canonical_id": "pc_e180a73d3a69ee874db1ed7939a2c604",
       "kind": "concept",
       "name": "Atomic and Nuclear Structure",
+      "name_zh": "原子核结构",
       "topic": "phy_nuclear",
       "description": "The nuclear model of the atom with protons and neutrons in a small dense nucleus, described by proton and nucleon numbers.",
       "default_order": 1,
       "centrality": 0.3444,
-      "name_zh": "原子核结构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_fundamental_particles",
+      "canonical_id": "pc_94222e8aaf4615bf99c8f875f21b6623",
       "kind": "concept",
       "name": "Fundamental Particles and Quarks",
+      "name_zh": "基本粒子与夸克",
       "topic": "phy_nuclear",
       "description": "Fundamental particles classified as quarks and leptons, with hadrons such as protons and neutrons composed of quarks.",
       "default_order": 2,
       "centrality": 0.057,
-      "name_zh": "基本粒子与夸克"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_binding_energy",
+      "canonical_id": "pc_9f2be083a041085b002a4e3208749f17",
       "kind": "concept",
       "name": "Mass Defect and Binding Energy",
+      "name_zh": "质量亏损与结合能",
       "topic": "phy_nuclear",
       "description": "Mass defect as the difference between nucleon and nuclear mass, and binding energy as the equivalent energy holding the nucleus together.",
       "default_order": 3,
       "centrality": 0.0759,
-      "name_zh": "质量亏损与结合能",
       "visual": "function",
-      "visual_hint": "Plot binding energy per nucleon against nucleon number."
+      "visual_hint": "Plot binding energy per nucleon against nucleon number.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_fission_fusion",
+      "canonical_id": "pc_45e557e295944b395f08bb30c4bb963e",
       "kind": "concept",
       "name": "Nuclear Fission and Fusion",
+      "name_zh": "核裂变与核聚变",
       "topic": "phy_radioactivity",
       "description": "Nuclear fission of heavy nuclei and fusion of light nuclei both release energy by moving towards higher binding energy per nucleon; the basis of nuclear power, reactors, and stellar energy.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "核裂变与核聚变"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_radioactive_decay",
+      "canonical_id": "pc_3e8b875dc1b24a5df264e9dc062a1087",
       "kind": "concept",
       "name": "Radioactive Decay",
+      "name_zh": "放射性衰变",
       "topic": "phy_radioactivity",
       "description": "Spontaneous, random radioactive decay of unstable nuclei by alpha, beta, and gamma emission, modelled by the decay constant.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "放射性衰变",
       "visual": "function",
-      "visual_hint": "Plot exponential radioactive decay with a slider for half-life."
+      "visual_hint": "Plot exponential radioactive decay with a slider for half-life.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_half_life",
+      "canonical_id": "pc_649a1d43ba4b608b73c82a3c774ad268",
       "kind": "concept",
       "name": "Half-Life",
+      "name_zh": "半衰期",
       "topic": "phy_radioactivity",
       "description": "Half-life as the average time for half the nuclei in a sample to decay, related to the decay constant in exponential decay.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "半衰期"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_luminosity",
+      "canonical_id": "pc_116d8255bf4e5d91a4bb8b00b396c359",
       "kind": "concept",
       "name": "Luminosity and Radiant Flux Intensity",
+      "name_zh": "亮度与辐射通量",
       "topic": "phy_astro",
       "description": "Luminosity as the total power radiated by a star and radiant flux intensity as the power received per unit area at a distance.",
       "default_order": 1,
       "centrality": 0.0519,
-      "name_zh": "亮度与辐射通量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_standard_candles",
+      "canonical_id": "pc_c29aa6fca50290fd8771d27bf786c0ba",
       "kind": "concept",
       "name": "Standard Candles",
+      "name_zh": "标准烛光",
       "topic": "phy_astro",
       "description": "Standard candles as objects of known luminosity used to determine astronomical distances from their observed brightness.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "标准烛光"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_stellar_radii",
+      "canonical_id": "pc_69a0f22be0d88d4f2a820f13c4954c35",
       "kind": "concept",
       "name": "Stellar Radii",
+      "name_zh": "恒星半径",
       "topic": "phy_astro_phy_stellar_radii",
       "description": "Estimating stellar radii by combining luminosity with surface temperature using the Stefan-Boltzmann law and Wien's law.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "恒星半径"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "phy_hubble",
+      "canonical_id": "pc_5d9dee2a58066ff7f48e93bb2a816e31",
       "kind": "concept",
       "name": "Hubble's Law and the Big Bang",
+      "name_zh": "哈勃定律与大爆炸",
       "topic": "phy_astro_phy_stellar_radii",
       "description": "Hubble's law relating a galaxy's recession speed to its distance, providing evidence for an expanding universe and the Big Bang.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "哈勃定律与大爆炸",
       "visual": "function",
-      "visual_hint": "Plot recession speed against distance (Hubble's law)."
+      "visual_hint": "Plot recession speed against distance (Hubble's law).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -1374,619 +1739,825 @@
       "from": "phy_si_units",
       "to": "phy_homogeneity",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_homogeneity",
       "to": "phy_scalars_vectors",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_scalars_vectors",
       "to": "phy_uncertainty",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_uncertainty",
       "to": "phy_combine_uncertainty",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_motion_quantities",
       "to": "phy_suvat",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_suvat",
       "to": "phy_motion_graphs",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_motion_graphs",
       "to": "phy_free_fall",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_free_fall",
       "to": "phy_projectile",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_mass_weight",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_mass_weight",
       "to": "phy_momentum",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_momentum",
       "to": "phy_momentum_conservation",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_momentum_conservation",
       "to": "phy_impulse",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_force_types",
       "to": "phy_moments",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_moments",
       "to": "phy_equilibrium",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_equilibrium",
       "to": "phy_density_pressure",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_density_pressure",
       "to": "phy_upthrust",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_work",
       "to": "phy_ke_pe",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_ke_pe",
       "to": "phy_energy_conservation",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_energy_conservation",
       "to": "phy_power_efficiency",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_hookes_law",
       "to": "phy_stress_strain",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_stress_strain",
       "to": "phy_elastic_plastic",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_elastic_plastic",
       "to": "phy_strain_energy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_progressive_waves",
       "to": "phy_wave_types",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_wave_types",
       "to": "phy_intensity",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_intensity",
       "to": "phy_em_spectrum",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_em_spectrum",
       "to": "phy_doppler",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_superposition_principle",
       "to": "phy_interference",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_interference",
       "to": "phy_diffraction",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_diffraction",
       "to": "phy_diffraction_grating",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_diffraction_grating",
       "to": "phy_stationary_waves",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_current_charge",
       "to": "phy_pd_emf",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_pd_emf",
       "to": "phy_resistance_ohm",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_resistance_ohm",
       "to": "phy_resistivity",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_resistivity",
       "to": "phy_iv_characteristics",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_kirchhoff",
       "to": "phy_series_parallel",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_series_parallel",
       "to": "phy_potential_divider",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_potential_divider",
       "to": "phy_internal_resistance",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_angular_speed",
       "to": "phy_centripetal_accel",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_centripetal_accel",
       "to": "phy_centripetal_force",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_newton_gravitation",
       "to": "phy_grav_field_strength",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_grav_field_strength",
       "to": "phy_grav_potential",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_grav_potential",
       "to": "phy_orbits",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_shm",
       "to": "phy_shm_energy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_shm_energy",
       "to": "phy_damping",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_damping",
       "to": "phy_resonance",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_temperature",
       "to": "phy_heat_capacity",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_heat_capacity",
       "to": "phy_kinetic_theory",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_kinetic_theory",
       "to": "phy_ideal_gas",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_ideal_gas",
       "to": "phy_internal_energy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_coulomb",
       "to": "phy_e_field_strength",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_e_field_strength",
       "to": "phy_e_potential",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_e_potential",
       "to": "phy_field_analogy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_capacitance_def",
       "to": "phy_capacitor_networks",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_capacitor_networks",
       "to": "phy_capacitor_energy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_capacitor_energy",
       "to": "phy_capacitor_discharge",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_flux_density",
       "to": "phy_force_conductor",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_force_conductor",
       "to": "phy_force_charge",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_force_charge",
       "to": "phy_fields_currents",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_flux_linkage",
       "to": "phy_faraday",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_faraday",
       "to": "phy_lenz",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_ac_rms",
       "to": "phy_transformers",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_transformers",
       "to": "phy_rectification",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_photon",
       "to": "phy_photoelectric",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_photoelectric",
       "to": "phy_wave_particle",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_wave_particle",
       "to": "phy_energy_levels",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_nuclear_structure",
       "to": "phy_fundamental_particles",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_fundamental_particles",
       "to": "phy_binding_energy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_binding_energy",
       "to": "phy_radioactive_decay",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_radioactive_decay",
       "to": "phy_half_life",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_luminosity",
       "to": "phy_standard_candles",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_standard_candles",
       "to": "phy_stellar_radii",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_stellar_radii",
       "to": "phy_hubble",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_scalars_vectors",
       "to": "phy_motion_quantities",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_suvat",
       "to": "phy_projectile",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_suvat",
       "to": "phy_newton_laws",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_momentum",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_force_types",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_force_types",
       "to": "phy_equilibrium",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_work",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_force_types",
       "to": "phy_hookes_law",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_ke_pe",
       "to": "phy_strain_energy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_progressive_waves",
       "to": "phy_superposition_principle",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_resistance_ohm",
       "to": "phy_kirchhoff",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_resistance_ohm",
       "to": "phy_iv_characteristics",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_suvat",
       "to": "phy_angular_speed",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_newton_laws",
       "to": "phy_centripetal_force",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_centripetal_force",
       "to": "phy_orbits",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_centripetal_force",
       "to": "phy_shm",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_energy_conservation",
       "to": "phy_shm_energy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_momentum_conservation",
       "to": "phy_kinetic_theory",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_pd_emf",
       "to": "phy_e_potential",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_grav_field_strength",
       "to": "phy_field_analogy",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_e_field_strength",
       "to": "phy_field_analogy",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_e_potential",
       "to": "phy_capacitance_def",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_current_charge",
       "to": "phy_force_conductor",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_flux_density",
       "to": "phy_flux_linkage",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_faraday",
       "to": "phy_transformers",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_em_spectrum",
       "to": "phy_photon",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_photon",
       "to": "phy_energy_levels",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_nuclear_structure",
       "to": "phy_binding_energy",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_intensity",
       "to": "phy_luminosity",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_energy_levels",
       "to": "phy_standard_candles",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_binding_energy",
       "to": "phy_fission_fusion",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

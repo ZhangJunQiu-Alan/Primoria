@@ -1,803 +1,1010 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "data_structures_and_algorithms",
   "subject": "Data Structures and Algorithms",
-  "schema": {
-    "description": "Knowledge graph representing the structured curriculum of Data Structures and Algorithms, capturing topics, minimal testable concepts, and their dependency DAG.",
-    "node_fields": {
-      "id": "unique id",
-      "kind": "topic | concept",
-      "name": "node name",
-      "topic": "parent topic id or null",
-      "description": "brief explanation of the concept",
-      "default_order": 1,
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "hard or soft"
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_data_structures_and_algorithms"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
     }
-  },
+  ],
   "nodes": [
     {
       "id": "t_ucb61b_java_intro",
       "kind": "topic",
       "name": "Java Basics and Syntax",
+      "name_zh": "Java基础与语法",
       "topic": null,
       "default_order": 1,
-      "name_zh": "Java基础与语法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_lists_arrays",
       "kind": "topic",
       "name": "Singly Linked Lists (SLList) and Doubly Linked Lists with Sentinels",
+      "name_zh": "单向链表 (SLList)与带头哨兵的双向链表",
       "topic": null,
       "default_order": 2,
-      "name_zh": "单向链表 (SLList)与带头哨兵的双向链表"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_lists_arrays_ucb61b_arrays",
       "kind": "topic",
       "name": "Fixed-Size Arrays and Resizing Arrays (ArrayList)",
+      "name_zh": "定长数组与动态数组 (ArrayList)",
       "topic": null,
       "default_order": 3,
-      "name_zh": "定长数组与动态数组 (ArrayList)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_oop",
       "kind": "topic",
       "name": "Unit Testing with JUnit and Interfaces and Overriding",
+      "name_zh": "JUnit 单元测试与接口与重写",
       "topic": null,
       "default_order": 4,
-      "name_zh": "JUnit 单元测试与接口与重写"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_oop_ucb61b_inheritance",
       "kind": "topic",
       "name": "Implementation Inheritance (Extends), Subtype Polymorphism and Dynamic Dispatch, and Iterators and Iterables",
+      "name_zh": "实现继承 (Extends)、子类型多态与动态分派与迭代器与可迭代",
       "topic": null,
       "default_order": 5,
-      "name_zh": "实现继承 (Extends)、子类型多态与动态分派与迭代器与可迭代"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_disjoint_sets",
       "kind": "topic",
       "name": "Quick Find and Quick Union",
+      "name_zh": "快速查找与快速合并",
       "topic": null,
       "default_order": 6,
-      "name_zh": "快速查找与快速合并"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_disjoint_sets_ucb61b_wqu",
       "kind": "topic",
       "name": "Weighted Quick Union and Path Compression",
+      "name_zh": "加权快速合并与路径压缩",
       "topic": null,
       "default_order": 7,
-      "name_zh": "加权快速合并与路径压缩"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_asymptotics",
       "kind": "topic",
       "name": "Asymptotics and Algorithmic Analysis",
+      "name_zh": "渐近分析与算法分析",
       "topic": null,
       "default_order": 8,
-      "name_zh": "渐近分析与算法分析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_bst",
       "kind": "topic",
       "name": "Trees and Binary Search Trees",
+      "name_zh": "树与二叉搜索树",
       "topic": null,
       "default_order": 9,
-      "name_zh": "树与二叉搜索树"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_balanced_trees",
       "kind": "topic",
       "name": "Balanced Search Trees",
+      "name_zh": "平衡搜索树",
       "topic": null,
       "default_order": 10,
-      "name_zh": "平衡搜索树"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_hashing",
       "kind": "topic",
       "name": "Hash Functions and Object.hashCode() and Separate Chaining",
+      "name_zh": "哈希函数与Object.hashCode()与分离链接",
       "topic": null,
       "default_order": 11,
-      "name_zh": "哈希函数与Object.hashCode()与分离链接"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_hashing_ucb61b_linear_probing",
       "kind": "topic",
       "name": "Linear Probing and Load Factor and Resizing",
+      "name_zh": "线性探测与负载因子与扩容",
       "topic": null,
       "default_order": 12,
-      "name_zh": "线性探测与负载因子与扩容"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_priority_queues",
       "kind": "topic",
       "name": "Priority Queue ADT and Binary Min/Max Heaps",
+      "name_zh": "优先队列 ADT与二叉最小/最大堆",
       "topic": null,
       "default_order": 13,
-      "name_zh": "优先队列 ADT与二叉最小/最大堆"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_priority_queues_ucb61b_heap_operations",
       "kind": "topic",
       "name": "Swim, Sink, and Insert/Delete and Array Representation of Heaps",
+      "name_zh": "上浮、下沉、插入/删除与堆的数组表示",
       "topic": null,
       "default_order": 14,
-      "name_zh": "上浮、下沉、插入/删除与堆的数组表示"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_graphs",
       "kind": "topic",
       "name": "Graph API and Adjacency Lists and Depth-First Search (DFS)",
+      "name_zh": "图 API 与邻接表与深度优先搜索 (DFS)",
       "topic": null,
       "default_order": 15,
-      "name_zh": "图 API 与邻接表与深度优先搜索 (DFS)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_graphs_ucb61b_bfs",
       "kind": "topic",
       "name": "Breadth-First Search (BFS) and Topological Sort",
+      "name_zh": "广度优先搜索 (BFS)与拓扑排序",
       "topic": null,
       "default_order": 16,
-      "name_zh": "广度优先搜索 (BFS)与拓扑排序"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_shortest_paths",
       "kind": "topic",
       "name": "Shortest Paths",
+      "name_zh": "最短路径",
       "topic": null,
       "default_order": 17,
-      "name_zh": "最短路径"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_mst",
       "kind": "topic",
       "name": "Minimum Spanning Trees",
+      "name_zh": "最小生成树",
       "topic": null,
       "default_order": 18,
-      "name_zh": "最小生成树"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_spatial_string_indexes",
       "kind": "topic",
       "name": "1D Range Searching and K-D Trees",
+      "name_zh": "一维范围查询与K-D 树",
       "topic": null,
       "default_order": 19,
-      "name_zh": "一维范围查询与K-D 树"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_spatial_string_indexes_ucb61b_trie_basics",
       "kind": "topic",
       "name": "Trie Structure and Trie String Operations",
+      "name_zh": "Trie 结构与Trie 字符串操作",
       "topic": null,
       "default_order": 20,
-      "name_zh": "Trie 结构与Trie 字符串操作"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_sorting",
       "kind": "topic",
       "name": "Selection and Insertion Sort and Merge Sort",
+      "name_zh": "选择与插入排序与归并排序",
       "topic": null,
       "default_order": 21,
-      "name_zh": "选择与插入排序与归并排序"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_sorting_ucb61b_quick_sort",
       "kind": "topic",
       "name": "Quicksort and Lower Bounds of Comparison Sorting",
+      "name_zh": "快速排序与排序下界",
       "topic": null,
       "default_order": 22,
-      "name_zh": "快速排序与排序下界"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_ucb61b_radix_sorting",
       "kind": "topic",
       "name": "Radix Sorting",
+      "name_zh": "基数排序",
       "topic": null,
       "default_order": 23,
-      "name_zh": "基数排序"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_java_basics",
+      "canonical_id": "pc_01099a85ff6422776e07b8b7f18b06c7",
       "kind": "concept",
       "name": "Types, Control Flow, and Functions",
+      "name_zh": "类型、控制流与函数",
       "topic": "t_ucb61b_java_intro",
       "description": "Basic syntax of Java including static typing, loops, conditionals, and defining static methods.",
       "default_order": 1,
       "centrality": 0.3006,
-      "name_zh": "类型、控制流与函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_classes_objects",
+      "canonical_id": "pc_4f7579a99d686ef7fdf4e587802c06bf",
       "kind": "concept",
       "name": "Classes and Object Instantiation",
+      "name_zh": "类与对象实例化",
       "topic": "t_ucb61b_java_intro",
       "description": "Creating classes, instance variables, constructors, and instantiating objects using the 'new' keyword.",
       "default_order": 2,
       "centrality": 0.6489,
-      "name_zh": "类与对象实例化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_references",
+      "canonical_id": "pc_2a040d558cd45c2538b4f5d929f99dfc",
       "kind": "concept",
       "name": "Reference Types vs Primitive Types",
+      "name_zh": "引用类型与基本类型",
       "topic": "t_ucb61b_java_intro",
       "description": "Understanding how primitive types store values directly while reference types store memory addresses (pointers).",
       "default_order": 3,
       "centrality": 0.5084,
-      "name_zh": "引用类型与基本类型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_sllist",
+      "canonical_id": "pc_3c6905500f0b14d5be94b2fdc1839525",
       "kind": "concept",
       "name": "Singly Linked Lists (SLList)",
+      "name_zh": "单向链表 (SLList)",
       "topic": "t_ucb61b_lists_arrays",
       "description": "Building chains of nodes connected by forward pointers, hiding raw recursive list nodes via a wrapper class.",
       "default_order": 1,
       "centrality": 0.1272,
-      "name_zh": "单向链表 (SLList)",
       "visual": "diagram",
-      "visual_hint": "Box-and-pointer singly linked list of nodes with forward pointers."
+      "visual_hint": "Box-and-pointer singly linked list of nodes with forward pointers.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_dllist",
+      "canonical_id": "pc_26e524f818751eec617861c80d5b4b92",
       "kind": "concept",
       "name": "Doubly Linked Lists with Sentinels",
+      "name_zh": "带头哨兵的双向链表",
       "topic": "t_ucb61b_lists_arrays",
       "description": "Improving list operations with backward pointers and a sentinel node to avoid null pointer edge cases.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "带头哨兵的双向链表",
       "visual": "diagram",
-      "visual_hint": "Doubly linked list with backward pointers and a sentinel node."
+      "visual_hint": "Doubly linked list with backward pointers and a sentinel node.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_arrays",
+      "canonical_id": "pc_5f17a5736687fe8449c214f423a4e328",
       "kind": "concept",
       "name": "Fixed-Size Arrays",
+      "name_zh": "定长数组",
       "topic": "t_ucb61b_lists_arrays_ucb61b_arrays",
       "description": "Contiguous memory structures with constant time indexing and fixed capacity.",
       "default_order": 1,
       "centrality": 0.3294,
-      "name_zh": "定长数组"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_alist",
+      "canonical_id": "pc_f9d52434bc6adc31835427d561cf60a2",
       "kind": "concept",
       "name": "Resizing Arrays (ArrayList)",
+      "name_zh": "动态数组 (ArrayList)",
       "topic": "t_ucb61b_lists_arrays_ucb61b_arrays",
       "description": "Dynamically resizing arrays through geometric expansion to achieve amortized constant time appends.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "动态数组 (ArrayList)",
       "visual": "algorithm",
-      "visual_hint": "Geometrically resize an array on overflow (amortised growth)."
+      "visual_hint": "Geometrically resize an array on overflow (amortised growth).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_testing",
+      "canonical_id": "pc_f2a124ac86f469384536095bc9e5b8f7",
       "kind": "concept",
       "name": "Unit Testing with JUnit",
+      "name_zh": "JUnit 单元测试",
       "topic": "t_ucb61b_oop",
       "description": "Writing automated tests using JUnit assertions to verify component behaviors in isolation.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "JUnit 单元测试"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_interfaces",
+      "canonical_id": "pc_d2a88265e424e4da16bff66898acf09e",
       "kind": "concept",
       "name": "Interfaces and Overriding",
+      "name_zh": "接口与重写",
       "topic": "t_ucb61b_oop",
       "description": "Defining strict behavioral contracts (APIs) and implementing them via method overriding.",
       "default_order": 2,
       "centrality": 0.1356,
-      "name_zh": "接口与重写"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_inheritance",
+      "canonical_id": "pc_b0866fee77ba45fd0b9bb4d6eec31038",
       "kind": "concept",
       "name": "Implementation Inheritance (Extends)",
+      "name_zh": "实现继承 (Extends)",
       "topic": "t_ucb61b_oop_ucb61b_inheritance",
       "description": "Reusing code by inheriting fields and methods from a superclass using the 'extends' keyword.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "实现继承 (Extends)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_polymorphism",
+      "canonical_id": "pc_82987217253a85bfabecb9e097922da5",
       "kind": "concept",
       "name": "Subtype Polymorphism and Dynamic Dispatch",
+      "name_zh": "子类型多态与动态分派",
       "topic": "t_ucb61b_oop_ucb61b_inheritance",
       "description": "Using supertype variables to hold subtype objects, relying on dynamic method selection at runtime.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "子类型多态与动态分派"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_iterators",
+      "canonical_id": "pc_5a84dbe8be206df6bcf74af6bb6a3d2c",
       "kind": "concept",
       "name": "Iterators and Iterables",
+      "name_zh": "迭代器与可迭代",
       "topic": "t_ucb61b_oop_ucb61b_inheritance",
       "description": "Implementing the Iterable and Iterator interfaces to allow standard 'for-each' loop functionality.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "迭代器与可迭代"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_quick_find",
+      "canonical_id": "pc_5033018fa4741be1baf9f2fa544aa026",
       "kind": "concept",
       "name": "Quick Find",
+      "name_zh": "快速查找",
       "topic": "t_ucb61b_disjoint_sets",
       "description": "An array-based approach to the Union-Find problem optimizing for constant-time connectivity checks.",
       "default_order": 1,
       "centrality": 0.0866,
-      "name_zh": "快速查找"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_quick_union",
+      "canonical_id": "pc_79d6bde1d7c74137d64456a6779bd7c0",
       "kind": "concept",
       "name": "Quick Union",
+      "name_zh": "快速合并",
       "topic": "t_ucb61b_disjoint_sets",
       "description": "Using a parent-link forest representation to optimize connection speeds at the cost of find times.",
       "default_order": 2,
       "centrality": 0.0727,
-      "name_zh": "快速合并",
       "visual": "algorithm",
-      "visual_hint": "Union-Find as a parent-link forest; union and find operations."
+      "visual_hint": "Union-Find as a parent-link forest; union and find operations.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_wqu",
+      "canonical_id": "pc_499e53fcdbac9dbe52f322b13d058ec8",
       "kind": "concept",
       "name": "Weighted Quick Union",
+      "name_zh": "加权快速合并",
       "topic": "t_ucb61b_disjoint_sets_ucb61b_wqu",
       "description": "Preventing tall trees by always linking the root of the smaller tree to the root of the larger tree.",
       "default_order": 1,
       "centrality": 0.0564,
-      "name_zh": "加权快速合并",
       "visual": "algorithm",
-      "visual_hint": "Weighted quick-union linking the smaller tree under the larger."
+      "visual_hint": "Weighted quick-union linking the smaller tree under the larger.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_path_compression",
+      "canonical_id": "pc_ac8092c291aa5a5348113983bcdc0a05",
       "kind": "concept",
       "name": "Path Compression",
+      "name_zh": "路径压缩",
       "topic": "t_ucb61b_disjoint_sets_ucb61b_wqu",
       "description": "Flattening the tree dynamically during find operations to achieve practically constant time operations.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "路径压缩",
       "visual": "algorithm",
-      "visual_hint": "Flatten the union-find tree during find via path compression."
+      "visual_hint": "Flatten the union-find tree during find via path compression.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_big_theta",
+      "canonical_id": "pc_4775ba7a973e46ef70582497a59ec125",
       "kind": "concept",
       "name": "Big-Theta, Big-O, Big-Omega",
+      "name_zh": "大Θ、大O、大Ω",
       "topic": "t_ucb61b_asymptotics",
       "description": "Formalizing runtime bounding: upper bounds (O), lower bounds (Omega), and tight bounds (Theta).",
       "default_order": 1,
       "centrality": 0.131,
-      "name_zh": "大Θ、大O、大Ω",
       "visual": "chart",
-      "visual_hint": "Plot O, Omega, and Theta bounds sandwiching a running time."
+      "visual_hint": "Plot O, Omega, and Theta bounds sandwiching a running time.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_loop_analysis",
+      "canonical_id": "pc_4acccb192612e8644ff945ff8932be28",
       "kind": "concept",
       "name": "Loop and Summation Analysis",
+      "name_zh": "循环与求和分析",
       "topic": "t_ucb61b_asymptotics",
       "description": "Analyzing nested loops by translating them into mathematical summations and resolving bounds.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "循环与求和分析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_recursion_analysis",
+      "canonical_id": "pc_b030176c4b3d09df28ae407107c4e0d0",
       "kind": "concept",
       "name": "Recursive Runtime Analysis",
+      "name_zh": "递归时间复杂度分析",
       "topic": "t_ucb61b_asymptotics",
       "description": "Determining the time complexity of recursive functions through recurrence trees and geometric series.",
       "default_order": 3,
       "centrality": 0.0443,
-      "name_zh": "递归时间复杂度分析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_trees_intro",
+      "canonical_id": "pc_14a07c675e876398cd60700d6a8f5a68",
       "kind": "concept",
       "name": "Tree Definitions and Traversals",
+      "name_zh": "树的定义与遍历",
       "topic": "t_ucb61b_bst",
       "description": "Understanding rooted trees, depths, heights, and Pre-order, In-order, Post-order traversals.",
       "default_order": 1,
       "centrality": 0.2247,
-      "name_zh": "树的定义与遍历",
       "visual": "algorithm",
-      "visual_hint": "Animate pre-order, in-order, and post-order tree traversals."
+      "visual_hint": "Animate pre-order, in-order, and post-order tree traversals.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_bst_property",
+      "canonical_id": "pc_056b5ba604b79f37c095812c14b1d560",
       "kind": "concept",
       "name": "Binary Search Tree Invariant",
+      "name_zh": "二叉搜索树不变量",
       "topic": "t_ucb61b_bst",
       "description": "The rule that all left descendants are strictly less than the node, and all right descendants are strictly greater.",
       "default_order": 2,
       "centrality": 0.139,
-      "name_zh": "二叉搜索树不变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_bst_operations",
+      "canonical_id": "pc_64575a11e85a5f22bc2847192f74afcb",
       "kind": "concept",
       "name": "BST Search, Insert, and Delete",
+      "name_zh": "BST 查找、插入与删除",
       "topic": "t_ucb61b_bst",
       "description": "Implementing search, insertion, and Hibbard deletion within a BST structure.",
       "default_order": 3,
       "centrality": 0.1344,
-      "name_zh": "BST 查找、插入与删除",
       "visual": "algorithm",
-      "visual_hint": "Search, insert, and Hibbard-delete in a binary search tree."
+      "visual_hint": "Search, insert, and Hibbard-delete in a binary search tree.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_tree_rotation",
+      "canonical_id": "pc_87f32ce41e87f86809a1231ce239e32c",
       "kind": "concept",
       "name": "Tree Rotation",
+      "name_zh": "树旋转",
       "topic": "t_ucb61b_balanced_trees",
       "description": "Local structural transformations (rotateLeft, rotateRight) that preserve BST invariants while modifying height.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "树旋转",
       "visual": "algorithm",
-      "visual_hint": "Rotate a BST node left and right preserving the search order."
+      "visual_hint": "Rotate a BST node left and right preserving the search order.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_b_trees",
+      "canonical_id": "pc_52120ccd9629fa60ea00c7705e00ed98",
       "kind": "concept",
       "name": "B-Trees (2-3 Trees)",
+      "name_zh": "B树 (2-3树)",
       "topic": "t_ucb61b_balanced_trees",
       "description": "Perfectly balanced search trees with overstuffed nodes and splitting mechanics to maintain O(log N) heights.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "B树 (2-3树)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_llrb",
+      "canonical_id": "pc_a3f0258047600a3c4a21d0359b13614e",
       "kind": "concept",
       "name": "Left-Leaning Red-Black Trees",
+      "name_zh": "左倾红黑树",
       "topic": "t_ucb61b_balanced_trees",
       "description": "BST isomers of 2-3 trees that enforce balance through color invariants and local rotations.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "左倾红黑树",
       "visual": "algorithm",
-      "visual_hint": "Insert into a left-leaning red-black tree with rotations and colour flips."
+      "visual_hint": "Insert into a left-leaning red-black tree with rotations and colour flips.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_hash_code",
+      "canonical_id": "pc_bc058bfcc4e0b63089317361b34c6bfd",
       "kind": "concept",
       "name": "Hash Functions and Object.hashCode()",
+      "name_zh": "哈希函数与Object.hashCode()",
       "topic": "t_ucb61b_hashing",
       "description": "Mapping arbitrary data types to integers deterministically while minimizing collisions.",
       "default_order": 1,
       "centrality": 0.0848,
-      "name_zh": "哈希函数与Object.hashCode()"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_separate_chaining",
+      "canonical_id": "pc_1c0843025b2df4a41ec61a961d030bf2",
       "kind": "concept",
       "name": "Separate Chaining",
+      "name_zh": "分离链接",
       "topic": "t_ucb61b_hashing",
       "description": "Resolving hash collisions by storing multiple key-value pairs in buckets (usually linked lists) at each array index.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "分离链接",
       "visual": "algorithm",
-      "visual_hint": "Resolve hash collisions by chaining entries in buckets."
+      "visual_hint": "Resolve hash collisions by chaining entries in buckets.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_linear_probing",
+      "canonical_id": "pc_47dd9a4680dcbbd4a51f800fb295f0f2",
       "kind": "concept",
       "name": "Linear Probing",
+      "name_zh": "线性探测",
       "topic": "t_ucb61b_hashing_ucb61b_linear_probing",
       "description": "Resolving collisions via open addressing, scanning sequentially forward in the array for an empty slot.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "线性探测",
       "visual": "algorithm",
-      "visual_hint": "Resolve collisions by linear probing to the next open slot."
+      "visual_hint": "Resolve collisions by linear probing to the next open slot.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_load_factor",
+      "canonical_id": "pc_fb3f0933868e3392ba893718fd06b6aa",
       "kind": "concept",
       "name": "Load Factor and Resizing",
+      "name_zh": "负载因子与扩容",
       "topic": "t_ucb61b_hashing_ucb61b_linear_probing",
       "description": "Monitoring the items-to-buckets ratio and dynamically doubling array size when it crosses a threshold.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "负载因子与扩容"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_pq_interface",
+      "canonical_id": "pc_c4fc68b04b614a4e5e3435bd932b23fb",
       "kind": "concept",
       "name": "Priority Queue ADT",
+      "name_zh": "优先队列 ADT",
       "topic": "t_ucb61b_priority_queues",
       "description": "An Abstract Data Type enabling efficient insertion and removal of the 'smallest' or 'largest' elements.",
       "default_order": 1,
       "centrality": 0.0721,
-      "name_zh": "优先队列 ADT"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_binary_heap",
+      "canonical_id": "pc_29b56cabb0d672e4ede671699ac307ae",
       "kind": "concept",
       "name": "Binary Min/Max Heaps",
+      "name_zh": "二叉最小/最大堆",
       "topic": "t_ucb61b_priority_queues",
       "description": "Complete binary trees fulfilling the heap property (parents always smaller than children in min-heaps).",
       "default_order": 2,
       "centrality": 0.0548,
-      "name_zh": "二叉最小/最大堆",
       "visual": "algorithm",
-      "visual_hint": "Swim and sink nodes to maintain a binary heap."
+      "visual_hint": "Swim and sink nodes to maintain a binary heap.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_heap_operations",
+      "canonical_id": "pc_aa0bb28dca5934d11c62f2d79f99ee6a",
       "kind": "concept",
       "name": "Swim, Sink, and Insert/Delete",
+      "name_zh": "上浮、下沉、插入/删除",
       "topic": "t_ucb61b_priority_queues_ucb61b_heap_operations",
       "description": "Promoting or demoting nodes to restore heap invariants after insertion or deletion of the root.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "上浮、下沉、插入/删除"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_array_heap",
+      "canonical_id": "pc_44fa6019b04e34f240e15ad59d7881db",
       "kind": "concept",
       "name": "Array Representation of Heaps",
+      "name_zh": "堆的数组表示",
       "topic": "t_ucb61b_priority_queues_ucb61b_heap_operations",
       "description": "Flattening a complete binary tree into an array via arithmetic index relations (e.g. leftChild = 2k).",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "堆的数组表示",
       "visual": "diagram",
-      "visual_hint": "Map a complete binary heap onto an array by index arithmetic."
+      "visual_hint": "Map a complete binary heap onto an array by index arithmetic.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_graph_api",
+      "canonical_id": "pc_83efee1d38ce15d3df85b7aae9db2405",
       "kind": "concept",
       "name": "Graph API and Adjacency Lists",
+      "name_zh": "图 API 与邻接表",
       "topic": "t_ucb61b_graphs",
       "description": "Modeling networks using vertices and edges, predominantly mapped in memory using Adjacency Lists.",
       "default_order": 1,
       "centrality": 0.2871,
-      "name_zh": "图 API 与邻接表"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_dfs",
+      "canonical_id": "pc_3be5e1beff495534320b484132030812",
       "kind": "concept",
       "name": "Depth-First Search (DFS)",
+      "name_zh": "深度优先搜索 (DFS)",
       "topic": "t_ucb61b_graphs",
       "description": "Exploring graphs deeply by following paths to their ends before backtracking, inherently recursive.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "深度优先搜索 (DFS)",
       "visual": "algorithm",
-      "visual_hint": "Animate depth-first search exploring a graph with backtracking."
+      "visual_hint": "Animate depth-first search exploring a graph with backtracking.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_bfs",
+      "canonical_id": "pc_055a482fb063c423f865d775ec197616",
       "kind": "concept",
       "name": "Breadth-First Search (BFS)",
+      "name_zh": "广度优先搜索 (BFS)",
       "topic": "t_ucb61b_graphs_ucb61b_bfs",
       "description": "Exploring graphs broadly layer-by-layer using a queue, implicitly computing unweighted shortest paths.",
       "default_order": 1,
       "centrality": 0.107,
-      "name_zh": "广度优先搜索 (BFS)",
       "visual": "algorithm",
-      "visual_hint": "Animate breadth-first search exploring a graph layer by layer with a queue."
+      "visual_hint": "Animate breadth-first search exploring a graph layer by layer with a queue.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_topological_sort",
+      "canonical_id": "pc_05dfdea4b0e671ef9c6447acbbc28740",
       "kind": "concept",
       "name": "Topological Sort",
+      "name_zh": "拓扑排序",
       "topic": "t_ucb61b_graphs_ucb61b_bfs",
       "description": "Linearizing a Directed Acyclic Graph (DAG) using post-order DFS to process dependencies sequentially.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "拓扑排序",
       "visual": "algorithm",
-      "visual_hint": "Linearise a DAG by post-order DFS into a topological order."
+      "visual_hint": "Linearise a DAG by post-order DFS into a topological order.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_edge_relaxation",
+      "canonical_id": "pc_bf048ed5059990dcbd9546ffb86f005b",
       "kind": "concept",
       "name": "Edge Relaxation",
+      "name_zh": "边松弛",
       "topic": "t_ucb61b_shortest_paths",
       "description": "Updating the shortest known distance to a vertex if passing through an intermediate vertex yields a better path.",
       "default_order": 1,
       "centrality": 0.0488,
-      "name_zh": "边松弛"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_dijkstra",
+      "canonical_id": "pc_c81eaea937dadfccf619d1f922c91bf6",
       "kind": "concept",
       "name": "Dijkstra's Algorithm",
+      "name_zh": "Dijkstra 算法",
       "topic": "t_ucb61b_shortest_paths",
       "description": "A greedy shortest-path algorithm for non-negative edge weights utilizing a priority queue of distances.",
       "default_order": 2,
       "centrality": 0.0564,
-      "name_zh": "Dijkstra 算法",
       "visual": "algorithm",
-      "visual_hint": "Run Dijkstra's algorithm relaxing edges with a priority queue."
+      "visual_hint": "Run Dijkstra's algorithm relaxing edges with a priority queue.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_a_star",
+      "canonical_id": "pc_7e8f067225522e69b017d1a7cb312e7d",
       "kind": "concept",
       "name": "A* Search Algorithm",
+      "name_zh": "A* 搜索算法",
       "topic": "t_ucb61b_shortest_paths",
       "description": "An optimized variant of Dijkstra's algorithm that biases search directions using a heuristic estimate.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "A* 搜索算法",
       "visual": "algorithm",
-      "visual_hint": "Run A* search biasing exploration with a heuristic on a grid."
+      "visual_hint": "Run A* search biasing exploration with a heuristic on a grid.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_mst_property",
+      "canonical_id": "pc_b395021048f50eb01de258bdf47963f3",
       "kind": "concept",
       "name": "Cut Property",
+      "name_zh": "割性质",
       "topic": "t_ucb61b_mst",
       "description": "The foundational theorem proving that the minimum weight crossing edge in any cut belongs to the MST.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "割性质"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_prim",
+      "canonical_id": "pc_6c7d05e02691832cbe7062c9112292a1",
       "kind": "concept",
       "name": "Prim's Algorithm",
+      "name_zh": "Prim 算法",
       "topic": "t_ucb61b_mst",
       "description": "Growing an MST incrementally outward from a starting vertex, highly similar to Dijkstra's algorithm.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "Prim 算法",
       "visual": "algorithm",
-      "visual_hint": "Grow a minimum spanning tree outward with Prim's algorithm."
+      "visual_hint": "Grow a minimum spanning tree outward with Prim's algorithm.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_kruskal",
+      "canonical_id": "pc_7c2da0569372fecffda1e93b2a4582d0",
       "kind": "concept",
       "name": "Kruskal's Algorithm",
+      "name_zh": "Kruskal 算法",
       "topic": "t_ucb61b_mst",
       "description": "Building an MST by sorting edges globally and adding them unless they create cycles (checked via Disjoint Sets).",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "Kruskal 算法",
       "visual": "algorithm",
-      "visual_hint": "Build an MST by adding sorted edges that avoid cycles (Kruskal)."
+      "visual_hint": "Build an MST by adding sorted edges that avoid cycles (Kruskal).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_1d_range_search",
+      "canonical_id": "pc_ca8f194223a6f55f25462d4c0dca4977",
       "kind": "concept",
       "name": "1D Range Searching",
+      "name_zh": "一维范围查询",
       "topic": "t_ucb61b_spatial_string_indexes",
       "description": "Finding all points within a 1-dimensional bounded range efficiently using a standard BST.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "一维范围查询"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_kd_trees",
+      "canonical_id": "pc_0aff46837d31754b65cc504dfb37af7f",
       "kind": "concept",
       "name": "K-D Trees",
+      "name_zh": "K-D 树",
       "topic": "t_ucb61b_spatial_string_indexes",
       "description": "Multi-dimensional spatial partitioning trees where each level discriminates along an alternating spatial axis.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "K-D 树",
       "visual": "diagram",
-      "visual_hint": "Partition the plane recursively with a 2-D tree."
+      "visual_hint": "Partition the plane recursively with a 2-D tree.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_trie_basics",
+      "canonical_id": "pc_4d82254ef2487420dc9499233bf3b4a4",
       "kind": "concept",
       "name": "Trie Structure",
+      "name_zh": "Trie 结构",
       "topic": "t_ucb61b_spatial_string_indexes_ucb61b_trie_basics",
       "description": "A character-based prefix tree structure offering fast multi-way branches for string storage and retrieval.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "Trie 结构",
       "visual": "diagram",
-      "visual_hint": "Prefix tree (trie) branching strings by character."
+      "visual_hint": "Prefix tree (trie) branching strings by character.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_trie_string_ops",
+      "canonical_id": "pc_9e31559588ce2510980e0ffc254eb93a",
       "kind": "concept",
       "name": "Trie String Operations",
+      "name_zh": "Trie 字符串操作",
       "topic": "t_ucb61b_spatial_string_indexes_ucb61b_trie_basics",
       "description": "Algorithms traversing the trie for operations like longest prefix matching and auto-complete collection.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "Trie 字符串操作"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_selection_insertion_sort",
+      "canonical_id": "pc_9cfb7de9165293c7fa61e9b9a899861e",
       "kind": "concept",
       "name": "Selection and Insertion Sort",
+      "name_zh": "选择与插入排序",
       "topic": "t_ucb61b_sorting",
       "description": "Basic O(N^2) sorting algorithms; Insertion sort is particularly efficient on nearly sorted arrays.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "选择与插入排序",
       "visual": "algorithm",
-      "visual_hint": "Animate selection and insertion sort rearranging an array."
+      "visual_hint": "Animate selection and insertion sort rearranging an array.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_merge_sort",
+      "canonical_id": "pc_525c8f42c3b70c8ad25ea2c56020be55",
       "kind": "concept",
       "name": "Merge Sort",
+      "name_zh": "归并排序",
       "topic": "t_ucb61b_sorting",
       "description": "A stable O(N log N) divide-and-conquer sort that recursively merges sorted sub-arrays.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "归并排序",
       "visual": "algorithm",
-      "visual_hint": "Recursively split and merge an array (merge sort)."
+      "visual_hint": "Recursively split and merge an array (merge sort).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_quick_sort",
+      "canonical_id": "pc_6025c102356e36eea52eaf403026dbc1",
       "kind": "concept",
       "name": "Quicksort",
+      "name_zh": "快速排序",
       "topic": "t_ucb61b_sorting_ucb61b_quick_sort",
       "description": "An in-place divide-and-conquer sort utilizing a pivot to partition elements, operating fast in practice.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "快速排序",
       "visual": "algorithm",
-      "visual_hint": "Partition around a pivot and recurse (quicksort)."
+      "visual_hint": "Partition around a pivot and recurse (quicksort).",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_sort_bounds",
+      "canonical_id": "pc_74f353dbf3bffe55c958e3eeb3270380",
       "kind": "concept",
       "name": "Lower Bounds of Comparison Sorting",
+      "name_zh": "排序下界",
       "topic": "t_ucb61b_sorting_ucb61b_quick_sort",
       "description": "Mathematical proof establishing that comparison-based sorting algorithms cannot be faster than Omega(N log N).",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "排序下界"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_counting_sort",
+      "canonical_id": "pc_0c8cd6a315b2156dbe4411ac2ab70574",
       "kind": "concept",
       "name": "Counting Sort",
+      "name_zh": "计数排序",
       "topic": "t_ucb61b_radix_sorting",
       "description": "An O(N+R) non-comparison sort that tallies occurrences of discrete integer values in a frequency array.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "计数排序",
       "visual": "algorithm",
-      "visual_hint": "Tally counts and place keys for counting sort."
+      "visual_hint": "Tally counts and place keys for counting sort.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_lsd_radix",
+      "canonical_id": "pc_76bbde5e999a21c9fcc5c9b73b068ece",
       "kind": "concept",
       "name": "LSD Radix Sort",
+      "name_zh": "LSD 基数排序",
       "topic": "t_ucb61b_radix_sorting",
       "description": "Sorting values digit-by-digit moving from the Least Significant Digit upwards, using stable counting sort.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "LSD 基数排序",
       "visual": "algorithm",
-      "visual_hint": "Sort keys digit by digit from the least significant digit."
+      "visual_hint": "Sort keys digit by digit from the least significant digit.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_ucb61b_msd_radix",
+      "canonical_id": "pc_98c578b393f1e0d0f2607ef26699dcec",
       "kind": "concept",
       "name": "MSD Radix Sort",
+      "name_zh": "MSD 基数排序",
       "topic": "t_ucb61b_radix_sorting",
       "description": "Sorting by Most Significant Digit first, recursively subdividing inputs into buckets like a Trie.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "MSD 基数排序"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -805,379 +1012,505 @@
       "from": "c_ucb61b_java_basics",
       "to": "c_ucb61b_classes_objects",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_classes_objects",
       "to": "c_ucb61b_references",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_references",
       "to": "c_ucb61b_sllist",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_sllist",
       "to": "c_ucb61b_dllist",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_references",
       "to": "c_ucb61b_arrays",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_alist",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_classes_objects",
       "to": "c_ucb61b_testing",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_classes_objects",
       "to": "c_ucb61b_interfaces",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_interfaces",
       "to": "c_ucb61b_inheritance",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_inheritance",
       "to": "c_ucb61b_polymorphism",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_interfaces",
       "to": "c_ucb61b_iterators",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_alist",
       "to": "c_ucb61b_iterators",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_quick_find",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_quick_find",
       "to": "c_ucb61b_quick_union",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_quick_union",
       "to": "c_ucb61b_wqu",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_wqu",
       "to": "c_ucb61b_path_compression",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_loop_analysis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_recursion_analysis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_references",
       "to": "c_ucb61b_trees_intro",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_bst_property",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_bst_property",
       "to": "c_ucb61b_bst_operations",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_bst_operations",
       "to": "c_ucb61b_tree_rotation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_bst_operations",
       "to": "c_ucb61b_b_trees",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_tree_rotation",
       "to": "c_ucb61b_llrb",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_b_trees",
       "to": "c_ucb61b_llrb",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_hash_code",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_hash_code",
       "to": "c_ucb61b_separate_chaining",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_hash_code",
       "to": "c_ucb61b_linear_probing",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_separate_chaining",
       "to": "c_ucb61b_load_factor",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_interfaces",
       "to": "c_ucb61b_pq_interface",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_binary_heap",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_pq_interface",
       "to": "c_ucb61b_binary_heap",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_binary_heap",
       "to": "c_ucb61b_heap_operations",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_heap_operations",
       "to": "c_ucb61b_array_heap",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_array_heap",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_graph_api",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_sllist",
       "to": "c_ucb61b_graph_api",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_graph_api",
       "to": "c_ucb61b_dfs",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_graph_api",
       "to": "c_ucb61b_bfs",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_dfs",
       "to": "c_ucb61b_topological_sort",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_bfs",
       "to": "c_ucb61b_edge_relaxation",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_edge_relaxation",
       "to": "c_ucb61b_dijkstra",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_pq_interface",
       "to": "c_ucb61b_dijkstra",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_dijkstra",
       "to": "c_ucb61b_a_star",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_mst_property",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_graph_api",
       "to": "c_ucb61b_mst_property",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_mst_property",
       "to": "c_ucb61b_prim",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_dijkstra",
       "to": "c_ucb61b_prim",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_mst_property",
       "to": "c_ucb61b_kruskal",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_wqu",
       "to": "c_ucb61b_kruskal",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_bst_operations",
       "to": "c_ucb61b_1d_range_search",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_1d_range_search",
       "to": "c_ucb61b_kd_trees",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_selection_insertion_sort",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_selection_insertion_sort",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_selection_insertion_sort",
       "to": "c_ucb61b_merge_sort",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_recursion_analysis",
       "to": "c_ucb61b_merge_sort",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_merge_sort",
       "to": "c_ucb61b_quick_sort",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_big_theta",
       "to": "c_ucb61b_sort_bounds",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_arrays",
       "to": "c_ucb61b_counting_sort",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_counting_sort",
       "to": "c_ucb61b_lsd_radix",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_lsd_radix",
       "to": "c_ucb61b_msd_radix",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_trees_intro",
       "to": "c_ucb61b_trie_basics",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_trie_basics",
       "to": "c_ucb61b_trie_string_ops",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

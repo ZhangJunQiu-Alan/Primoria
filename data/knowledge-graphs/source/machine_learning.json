@@ -1,604 +1,761 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "machine_learning",
   "subject": "Machine Learning",
-  "schema": {
-    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
-    "node_fields": {
-      "id": "globally unique id",
-      "kind": "topic | concept",
-      "name": "concept name",
-      "topic": "owning topic id; null for topic nodes",
-      "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "from must be learned before to; strength=hard|soft"
-    },
-    "concept_node_definition": "concept = smallest independently quiz-testable skill"
-  },
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_machine_learning"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "ml_linear_part1",
       "kind": "topic",
       "name": "Linear Regression: Model and Gradient Descent",
+      "name_zh": "线性回归：模型与梯度下降",
       "topic": null,
       "default_order": 1,
-      "name_zh": "线性回归：模型与梯度下降"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_linear_part2",
       "kind": "topic",
       "name": "Linear Regression: Optimization Methods",
+      "name_zh": "线性回归：优化方法",
       "topic": null,
       "default_order": 2,
-      "name_zh": "线性回归：优化方法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_classification_part1",
       "kind": "topic",
       "name": "Logistic Regression and Sigmoid & Decision Boundary",
+      "name_zh": "逻辑回归与Sigmoid 与决策边界",
       "topic": null,
       "default_order": 3,
-      "name_zh": "逻辑回归与Sigmoid 与决策边界"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_classification_part1_ml_logistic_mle",
       "kind": "topic",
       "name": "Logistic MLE & Gradient and Newton's Method",
+      "name_zh": "逻辑回归极大似然估计与梯度与牛顿法",
       "topic": null,
       "default_order": 4,
-      "name_zh": "逻辑回归极大似然估计与梯度与牛顿法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_classification_part2",
       "kind": "topic",
       "name": "Classification: Softmax and GLMs",
+      "name_zh": "分类：Softmax 与广义线性模型",
       "topic": null,
       "default_order": 5,
-      "name_zh": "分类：Softmax 与广义线性模型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_generative",
       "kind": "topic",
       "name": "Generative vs Discriminative and Gaussian Discriminant Analysis",
+      "name_zh": "生成模型与判别模型与高斯判别分析",
       "topic": null,
       "default_order": 6,
-      "name_zh": "生成模型与判别模型与高斯判别分析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_generative_ml_naive_bayes",
       "kind": "topic",
       "name": "Naive Bayes and Laplace Smoothing",
+      "name_zh": "朴素贝叶斯与拉普拉斯平滑",
       "topic": null,
       "default_order": 7,
-      "name_zh": "朴素贝叶斯与拉普拉斯平滑"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_svm_margin",
       "kind": "topic",
       "name": "Functional & Geometric Margins and Optimal Margin Classifier",
+      "name_zh": "间隔与SVM与最优间隔分类器",
       "topic": null,
       "default_order": 8,
-      "name_zh": "间隔与SVM与最优间隔分类器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_svm_margin_ml_lagrange_duality",
       "kind": "topic",
       "name": "Lagrange Duality & KKT and SVM Dual Problem",
+      "name_zh": "拉格朗日对偶性与 KKT 条件与支持向量机对偶问题",
       "topic": null,
       "default_order": 9,
-      "name_zh": "拉格朗日对偶性与 KKT 条件与支持向量机对偶问题"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_svm_kernel",
       "kind": "topic",
       "name": "Kernel Trick and Valid Kernels (Mercer)",
+      "name_zh": "核方法与有效核函数（Mercer 定理）",
       "topic": null,
       "default_order": 10,
-      "name_zh": "核方法与有效核函数（Mercer 定理）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_svm_kernel_ml_soft_margin",
       "kind": "topic",
       "name": "Soft Margin & Slack and SMO Algorithm",
+      "name_zh": "软间隔与松弛变量与SMO 算法",
       "topic": null,
       "default_order": 11,
-      "name_zh": "软间隔与松弛变量与SMO 算法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_theory",
       "kind": "topic",
       "name": "Learning Theory",
+      "name_zh": "学习理论",
       "topic": null,
       "default_order": 12,
-      "name_zh": "学习理论"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_generalization_nn",
       "kind": "topic",
       "name": "VC Dimension & Bounds and Model & Feature Selection",
+      "name_zh": "VC 维与泛化误差界与模型与特征选择",
       "topic": null,
       "default_order": 13,
-      "name_zh": "VC 维与泛化误差界与模型与特征选择"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_generalization_nn_ml_neural_nets",
       "kind": "topic",
       "name": "Neural Networks and Backpropagation",
+      "name_zh": "神经网络与反向传播",
       "topic": null,
       "default_order": 14,
-      "name_zh": "神经网络与反向传播"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_unsupervised",
       "kind": "topic",
       "name": "K-Means Clustering and EM Algorithm",
+      "name_zh": "K均值聚类与EM 算法 (期望最大化)",
       "topic": null,
       "default_order": 15,
-      "name_zh": "K均值聚类与EM 算法 (期望最大化)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_unsupervised_ml_gmm_em",
       "kind": "topic",
       "name": "Gaussian Mixtures via EM, Principal Component Analysis, and Independent Component Analysis",
+      "name_zh": "高斯混合与EM、主成分分析与独立成分分析",
       "topic": null,
       "default_order": 16,
-      "name_zh": "高斯混合与EM、主成分分析与独立成分分析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_rl",
       "kind": "topic",
       "name": "Markov Decision Processes and Value & Policy Iteration",
+      "name_zh": "马尔可夫决策过程与价值与策略迭代",
       "topic": null,
       "default_order": 17,
-      "name_zh": "马尔可夫决策过程与价值与策略迭代"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_rl_ml_q_learning",
       "kind": "topic",
       "name": "Q-Learning and Value Function Approximation",
+      "name_zh": "Q-学习与价值函数逼近",
       "topic": null,
       "default_order": 18,
-      "name_zh": "Q-学习与价值函数逼近"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_linear_reg",
+      "canonical_id": "pc_ed18cde6c3d7e08e9e371061418a7424",
       "kind": "concept",
       "name": "Linear Regression Model",
+      "name_zh": "线性回归",
       "topic": "ml_linear_part1",
       "description": "A supervised model predicting a continuous target as a linear combination of input features, fitted by minimising the squared error between predictions and observations.",
       "default_order": 1,
       "centrality": 0.1837,
-      "name_zh": "线性回归",
       "visual": "function",
-      "visual_hint": "Fit a regression line to scattered points; drag the line to see the error."
+      "visual_hint": "Fit a regression line to scattered points; drag the line to see the error.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_cost_mse",
+      "canonical_id": "pc_fd25da7375039d04a44e4b77cfc7fdd3",
       "kind": "concept",
       "name": "Mean Squared Error Cost",
+      "name_zh": "均方误差代价函数",
       "topic": "ml_linear_part1",
       "description": "The mean squared error cost averaging squared residuals between predictions and targets, a convex objective whose minimisation defines least-squares regression.",
       "default_order": 2,
       "centrality": 0.068,
-      "name_zh": "均方误差代价函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_gradient_descent",
+      "canonical_id": "pc_915051ec035cd691c4389f2cd64fe4e6",
       "kind": "concept",
       "name": "Batch Gradient Descent",
+      "name_zh": "梯度下降",
       "topic": "ml_linear_part1",
       "description": "An iterative optimiser updating parameters along the negative gradient of the cost, using the entire training batch to compute each gradient step.",
       "default_order": 3,
       "centrality": 0.1525,
-      "name_zh": "梯度下降",
       "visual": "function",
-      "visual_hint": "Animate gradient descent stepping down a cost surface."
+      "visual_hint": "Animate gradient descent stepping down a cost surface.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_sgd",
+      "canonical_id": "pc_3d795d802ae463ad56ecbcbbeb5910ad",
       "kind": "concept",
       "name": "Stochastic & Mini-batch GD",
+      "name_zh": "随机与小批量梯度下降",
       "topic": "ml_linear_part2",
       "description": "Gradient-descent variants updating parameters from one example (stochastic) or a small subset (mini-batch), trading gradient noise for faster, scalable updates.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "随机与小批量梯度下降"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_normal_eq",
+      "canonical_id": "pc_fb534529cd40544ce4b1066eac6a2ba2",
       "kind": "concept",
       "name": "Normal Equations",
+      "name_zh": "正规方程",
       "topic": "ml_linear_part2",
       "description": "A closed-form solution for linear regression obtained by setting the cost's gradient to zero and solving the resulting linear system without iteration.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "正规方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_feature_scaling",
+      "canonical_id": "pc_eea58d14bbdb070465dc34e15218555e",
       "kind": "concept",
       "name": "Feature Scaling & Learning Rate",
+      "name_zh": "特征缩放与学习率",
       "topic": "ml_linear_part2",
       "description": "Normalising features to comparable ranges and choosing an appropriate learning rate, both of which speed and stabilise gradient-descent convergence.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "特征缩放与学习率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_logistic_reg",
+      "canonical_id": "pc_8e48273b176f7496da6ca6edcc75ff8e",
       "kind": "concept",
       "name": "Logistic Regression",
+      "name_zh": "逻辑回归",
       "topic": "ml_classification_part1",
       "description": "A probabilistic linear classifier modelling the probability of a binary class with the logistic function, fitted by maximising the likelihood of the labels.",
       "default_order": 1,
       "centrality": 0.1954,
-      "name_zh": "逻辑回归",
       "visual": "function",
-      "visual_hint": "Plot the logistic decision boundary separating two classes."
+      "visual_hint": "Plot the logistic decision boundary separating two classes.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_sigmoid",
+      "canonical_id": "pc_db43584d54f32f0295aafd05404cf90e",
       "kind": "concept",
       "name": "Sigmoid & Decision Boundary",
+      "name_zh": "Sigmoid 与决策边界",
       "topic": "ml_classification_part1",
       "description": "The sigmoid function mapping real scores to probabilities in (0,1), inducing a linear decision boundary where the predicted probability equals one half.",
       "default_order": 2,
       "centrality": 0.0527,
-      "name_zh": "Sigmoid 与决策边界",
       "visual": "function",
-      "visual_hint": "Plot the sigmoid mapping scores to probabilities and its decision boundary."
+      "visual_hint": "Plot the sigmoid mapping scores to probabilities and its decision boundary.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_logistic_mle",
+      "canonical_id": "pc_d544d40fe8bac84eda367c5780901855",
       "kind": "concept",
       "name": "Logistic MLE & Gradient",
+      "name_zh": "逻辑回归极大似然估计与梯度",
       "topic": "ml_classification_part1_ml_logistic_mle",
       "description": "Estimating logistic-regression parameters by maximising the log-likelihood of the labels, whose gradient drives the gradient-ascent or descent updates.",
       "default_order": 1,
       "centrality": 0.0657,
-      "name_zh": "逻辑回归极大似然估计与梯度"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_newton_method",
+      "canonical_id": "pc_46ef33ef787a8de0a55c2125d6918ec6",
       "kind": "concept",
       "name": "Newton's Method",
+      "name_zh": "牛顿法",
       "topic": "ml_classification_part1_ml_logistic_mle",
       "description": "A second-order optimisation method using the Hessian to take curvature-aware steps, converging in few iterations for logistic regression.",
       "default_order": 2,
       "centrality": 0.0481,
-      "name_zh": "牛顿法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_softmax",
+      "canonical_id": "pc_bcbb99b837dd6c755e5d79f7d0d3f9d7",
       "kind": "concept",
       "name": "Softmax Regression",
+      "name_zh": "Softmax 回归",
       "topic": "ml_classification_part2",
       "description": "Softmax regression generalising logistic regression to multiple classes by producing a normalised probability distribution over the class scores.",
       "default_order": 1,
       "centrality": 0.0548,
-      "name_zh": "Softmax 回归",
       "visual": "interactive",
-      "visual_hint": "Show softmax turning class scores into a probability distribution."
+      "visual_hint": "Show softmax turning class scores into a probability distribution.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_exp_family",
+      "canonical_id": "pc_849155bf09a79df4c3a5ca77d3df00ac",
       "kind": "concept",
       "name": "Exponential Family",
+      "name_zh": "指数族分布",
       "topic": "ml_classification_part2",
       "description": "A family of distributions sharing a canonical exponential form, unifying common distributions and providing the foundation for generalised linear models.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "指数族分布"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_glm",
+      "canonical_id": "pc_ce58790c3816da4a45fa41e5cad865d7",
       "kind": "concept",
       "name": "Generalized Linear Models",
+      "name_zh": "广义线性模型",
       "topic": "ml_classification_part2",
       "description": "Generalised linear models relating a linear predictor to a response from the exponential family through a link function, generalising ordinary regression.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "广义线性模型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_generative_vs_disc",
+      "canonical_id": "pc_6a6b0220ee38415efb2eeb46ea517ced",
       "kind": "concept",
       "name": "Generative vs Discriminative",
+      "name_zh": "生成模型与判别模型",
       "topic": "ml_generative",
       "description": "The contrast between generative models that learn the joint distribution p(x,y) and discriminative models that learn the conditional p(y|x) directly.",
       "default_order": 1,
       "centrality": 0.0436,
-      "name_zh": "生成模型与判别模型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_gda",
+      "canonical_id": "pc_784e4034245e9d9939c9bbda85f6704d",
       "kind": "concept",
       "name": "Gaussian Discriminant Analysis",
+      "name_zh": "高斯判别分析",
       "topic": "ml_generative",
       "description": "Gaussian discriminant analysis, a generative classifier modelling each class's features as a multivariate Gaussian and applying Bayes' rule to classify.",
       "default_order": 2,
       "centrality": 0.0443,
-      "name_zh": "高斯判别分析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_naive_bayes",
+      "canonical_id": "pc_45c1a0e365841fb764b85b59457f3270",
       "kind": "concept",
       "name": "Naive Bayes",
+      "name_zh": "朴素贝叶斯",
       "topic": "ml_generative_ml_naive_bayes",
       "description": "A generative classifier assuming features are conditionally independent given the class, enabling simple, scalable estimation popular for text classification.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "朴素贝叶斯"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_laplace",
+      "canonical_id": "pc_298ea3a43f05370c8cdd586fd5bb227c",
       "kind": "concept",
       "name": "Laplace Smoothing",
+      "name_zh": "拉普拉斯平滑",
       "topic": "ml_generative_ml_naive_bayes",
       "description": "Laplace (add-one) smoothing adding pseudocounts to probability estimates so that unseen feature-class combinations receive nonzero probability.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "拉普拉斯平滑"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_margins",
+      "canonical_id": "pc_ab18435a8e78aa6e6d27303737f359ca",
       "kind": "concept",
       "name": "Functional & Geometric Margins",
+      "name_zh": "间隔与SVM",
       "topic": "ml_svm_margin",
       "description": "Functional and geometric margins measuring a classifier's confidence and the signed distance from examples to the decision boundary, central to SVMs.",
       "default_order": 1,
       "centrality": 0.1227,
-      "name_zh": "间隔与SVM"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_optimal_margin",
+      "canonical_id": "pc_149e291e93802bf7640fe0965c1a7796",
       "kind": "concept",
       "name": "Optimal Margin Classifier",
+      "name_zh": "最优间隔分类器",
       "topic": "ml_svm_margin",
       "description": "The optimal margin classifier, a convex primal optimisation finding the hyperplane that maximises the geometric margin to the nearest training points.",
       "default_order": 2,
       "centrality": 0.1152,
-      "name_zh": "最优间隔分类器",
       "visual": "interactive",
-      "visual_hint": "Drag points to show the max-margin hyperplane and its support vectors."
+      "visual_hint": "Drag points to show the max-margin hyperplane and its support vectors.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_lagrange_duality",
+      "canonical_id": "pc_edf30ce778078058a948f2ffba611fae",
       "kind": "concept",
       "name": "Lagrange Duality & KKT",
+      "name_zh": "拉格朗日对偶性与 KKT 条件",
       "topic": "ml_svm_margin_ml_lagrange_duality",
       "description": "Lagrange duality reformulating a constrained optimisation via its dual, with the KKT conditions characterising optimal primal-dual solutions for SVMs.",
       "default_order": 1,
       "centrality": 0.1064,
-      "name_zh": "拉格朗日对偶性与 KKT 条件"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_svm_dual",
+      "canonical_id": "pc_c5784c25bee057cf89144f9743556352",
       "kind": "concept",
       "name": "SVM Dual Problem",
+      "name_zh": "支持向量机对偶问题",
       "topic": "ml_svm_margin_ml_lagrange_duality",
       "description": "The SVM dual problem expressing the optimisation in terms of inner products between examples, exposing support vectors and enabling kernels.",
       "default_order": 2,
       "centrality": 0.096,
-      "name_zh": "支持向量机对偶问题"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_kernels",
+      "canonical_id": "pc_c69910c5203cdaea4db7172d791d4bd7",
       "kind": "concept",
       "name": "Kernel Trick",
+      "name_zh": "核方法",
       "topic": "ml_svm_kernel",
       "description": "The kernel trick computing inner products in a high-dimensional feature space implicitly, letting linear algorithms learn nonlinear decision boundaries.",
       "default_order": 1,
       "centrality": 0.0714,
-      "name_zh": "核方法",
       "visual": "interactive",
-      "visual_hint": "Lift non-separable points into a higher dimension where they separate."
+      "visual_hint": "Lift non-separable points into a higher dimension where they separate.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_mercer",
+      "canonical_id": "pc_6543f3186fbb791be34f038be0d874db",
       "kind": "concept",
       "name": "Valid Kernels (Mercer)",
+      "name_zh": "有效核函数（Mercer 定理）",
       "topic": "ml_svm_kernel",
       "description": "Mercer's condition characterising valid kernels as functions yielding positive semidefinite Gram matrices, guaranteeing a corresponding feature space.",
       "default_order": 2,
       "centrality": 0.0548,
-      "name_zh": "有效核函数（Mercer 定理）"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_soft_margin",
+      "canonical_id": "pc_ebbd1254a7fa65e6dea970098d48753e",
       "kind": "concept",
       "name": "Soft Margin & Slack",
+      "name_zh": "软间隔与松弛变量",
       "topic": "ml_svm_kernel_ml_soft_margin",
       "description": "A soft-margin SVM introducing slack variables and a penalty parameter to tolerate misclassification, balancing margin width against training errors.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "软间隔与松弛变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_smo",
+      "canonical_id": "pc_f0fb7099a21bd33cf144c22879a0c326",
       "kind": "concept",
       "name": "SMO Algorithm",
+      "name_zh": "SMO 算法",
       "topic": "ml_svm_kernel_ml_soft_margin",
       "description": "Sequential minimal optimisation, a coordinate-ascent algorithm solving the SVM dual by analytically optimising pairs of Lagrange multipliers at a time.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "SMO 算法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_bias_variance",
+      "canonical_id": "pc_7a04f5d6c848b71ba90d0c3567272333",
       "kind": "concept",
       "name": "Bias-Variance Tradeoff",
+      "name_zh": "偏差-方差权衡",
       "topic": "ml_theory",
       "description": "The bias-variance tradeoff decomposing generalisation error into bias from oversimplification and variance from sensitivity to the training sample.",
       "default_order": 1,
       "centrality": 0.096,
-      "name_zh": "偏差-方差权衡",
       "visual": "function",
-      "visual_hint": "Plot training and validation error against model complexity."
+      "visual_hint": "Plot training and validation error against model complexity.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_regularization",
+      "canonical_id": "pc_202c9e63b8b11b6d699061e9dd8db8e7",
       "kind": "concept",
       "name": "Regularization (L1/L2)",
+      "name_zh": "正则化",
       "topic": "ml_theory",
       "description": "Adding an L1 or L2 penalty on parameters to the cost, discouraging large weights to reduce overfitting and, for L1, inducing sparse solutions.",
       "default_order": 2,
       "centrality": 0.0519,
-      "name_zh": "正则化",
       "visual": "function",
-      "visual_hint": "Show L1 and L2 penalties shrinking fitted coefficients."
+      "visual_hint": "Show L1 and L2 penalties shrinking fitted coefficients.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_cross_val",
+      "canonical_id": "pc_770d6498fbb42b47c05f9bb649fafae5",
       "kind": "concept",
       "name": "Cross-Validation",
+      "name_zh": "交叉验证",
       "topic": "ml_theory",
       "description": "Cross-validation estimating generalisation by repeatedly training on subsets and validating on held-out folds, used for model selection and tuning.",
       "default_order": 3,
       "centrality": 0.0638,
-      "name_zh": "交叉验证"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_vc_dimension",
+      "canonical_id": "pc_627d6ebc4519e921c224598f37bd1e74",
       "kind": "concept",
       "name": "VC Dimension & Bounds",
+      "name_zh": "VC 维与泛化误差界",
       "topic": "ml_generalization_nn",
       "description": "The VC dimension measuring a hypothesis class's capacity as the largest set it can shatter, bounding the gap between training and true error.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "VC 维与泛化误差界"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_model_selection",
+      "canonical_id": "pc_a8002ce4a701cd1333dd912430796fa5",
       "kind": "concept",
       "name": "Model & Feature Selection",
+      "name_zh": "模型与特征选择",
       "topic": "ml_generalization_nn",
       "description": "Choosing among models and feature subsets to balance fit and complexity, using validation performance and selection procedures to avoid overfitting.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "模型与特征选择"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_neural_nets",
+      "canonical_id": "pc_b2ab97b39e262f28f15880f92ce9e173",
       "kind": "concept",
       "name": "Neural Networks",
+      "name_zh": "神经网络",
       "topic": "ml_generalization_nn_ml_neural_nets",
       "description": "Neural networks composing layers of weighted sums and nonlinear activations to learn flexible, nonlinear mappings from inputs to outputs.",
       "default_order": 1,
       "centrality": 0.0318,
-      "name_zh": "神经网络",
       "visual": "diagram",
-      "visual_hint": "Diagram a layered network of weighted sums and activations."
+      "visual_hint": "Diagram a layered network of weighted sums and activations.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_backprop",
+      "canonical_id": "pc_f6522a5189adcc826fbc1eff7b44d185",
       "kind": "concept",
       "name": "Backpropagation",
+      "name_zh": "反向传播",
       "topic": "ml_generalization_nn_ml_neural_nets",
       "description": "Backpropagation efficiently computing gradients of the loss with respect to all weights by applying the chain rule backward through the network.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "反向传播"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_kmeans",
+      "canonical_id": "pc_0502040e986ccce94d14c8be8f51e9f9",
       "kind": "concept",
       "name": "K-Means Clustering",
+      "name_zh": "K均值聚类",
       "topic": "ml_unsupervised",
       "description": "K-means clustering partitioning data into K clusters by alternately assigning points to the nearest centroid and recomputing centroids to minimise inertia.",
       "default_order": 1,
       "centrality": 0.0779,
-      "name_zh": "K均值聚类",
       "visual": "algorithm",
-      "visual_hint": "Animate K-means alternating assignment and centroid updates."
+      "visual_hint": "Animate K-means alternating assignment and centroid updates.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_em_algorithm",
+      "canonical_id": "pc_c15db5b193c74e26f62c547cb0717762",
       "kind": "concept",
       "name": "EM Algorithm",
+      "name_zh": "EM 算法 (期望最大化)",
       "topic": "ml_unsupervised",
       "description": "Expectation-maximisation, an iterative method for maximum-likelihood estimation with latent variables, alternating expected-completion and parameter-update steps.",
       "default_order": 2,
       "centrality": 0.0624,
-      "name_zh": "EM 算法 (期望最大化)"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_gmm_em",
+      "canonical_id": "pc_ca978c016469c0930c3b3944cb90e2c9",
       "kind": "concept",
       "name": "Gaussian Mixtures via EM",
+      "name_zh": "高斯混合与EM",
       "topic": "ml_unsupervised_ml_gmm_em",
       "description": "Gaussian mixture models representing data as a weighted mixture of Gaussians, fitted by expectation-maximisation to perform soft probabilistic clustering.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "高斯混合与EM"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_pca",
+      "canonical_id": "pc_1c0fdfd78b0baef4f973edeaa2bb3a2d",
       "kind": "concept",
       "name": "Principal Component Analysis",
+      "name_zh": "主成分分析",
       "topic": "ml_unsupervised_ml_gmm_em",
       "description": "Principal component analysis reducing dimensionality by projecting data onto orthogonal directions of greatest variance, the leading eigenvectors of the covariance.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "主成分分析",
       "visual": "interactive",
-      "visual_hint": "Project a 2-D cloud onto its principal component directions."
+      "visual_hint": "Project a 2-D cloud onto its principal component directions.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_ica",
+      "canonical_id": "pc_831b55dc70de498171a72c74f970caf6",
       "kind": "concept",
       "name": "Independent Component Analysis",
+      "name_zh": "独立成分分析",
       "topic": "ml_unsupervised_ml_gmm_em",
       "description": "Independent component analysis separating a multivariate signal into statistically independent, non-Gaussian source components, as in blind source separation.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "独立成分分析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_mdp",
+      "canonical_id": "pc_a0b94d6e9524a91138fdc6a76b5479a1",
       "kind": "concept",
       "name": "Markov Decision Processes",
+      "name_zh": "马尔可夫决策过程",
       "topic": "ml_rl",
       "description": "Markov decision processes formalising sequential decision-making under uncertainty with states, actions, transition probabilities, rewards, and a discount factor.",
       "default_order": 1,
       "centrality": 0.079,
-      "name_zh": "马尔可夫决策过程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_value_policy",
+      "canonical_id": "pc_df9c51a3d2c67d97e6bc7b02d55d841a",
       "kind": "concept",
       "name": "Value & Policy Iteration",
+      "name_zh": "价值与策略迭代",
       "topic": "ml_rl",
       "description": "Value iteration and policy iteration, dynamic-programming algorithms computing optimal policies for a known MDP via the Bellman equations.",
       "default_order": 2,
       "centrality": 0.0638,
-      "name_zh": "价值与策略迭代",
       "visual": "algorithm",
-      "visual_hint": "Iterate values and policy on an MDP gridworld until convergence."
+      "visual_hint": "Iterate values and policy on an MDP gridworld until convergence.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_q_learning",
+      "canonical_id": "pc_68634bdda9516ed34e11dde61c7313ec",
       "kind": "concept",
       "name": "Q-Learning",
+      "name_zh": "Q-学习",
       "topic": "ml_rl_ml_q_learning",
       "description": "Q-learning, a model-free, off-policy algorithm learning optimal action-value estimates from sampled transitions without knowing the environment's dynamics.",
       "default_order": 1,
       "centrality": 0.0459,
-      "name_zh": "Q-学习",
       "visual": "algorithm",
-      "visual_hint": "Update a Q-table as an agent explores a gridworld."
+      "visual_hint": "Update a Q-table as an agent explores a gridworld.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "ml_value_approx",
+      "canonical_id": "pc_685c69e9ef7ecb72241cfedc42ce0b29",
       "kind": "concept",
       "name": "Value Function Approximation",
+      "name_zh": "价值函数逼近",
       "topic": "ml_rl_ml_q_learning",
       "description": "Value function approximation generalising value estimates across large or continuous state spaces using parameterised functions like linear models or networks.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "价值函数逼近"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -606,265 +763,353 @@
       "from": "ml_linear_reg",
       "to": "ml_cost_mse",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_cost_mse",
       "to": "ml_gradient_descent",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_gradient_descent",
       "to": "ml_sgd",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_sgd",
       "to": "ml_normal_eq",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_normal_eq",
       "to": "ml_feature_scaling",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_sigmoid",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_sigmoid",
       "to": "ml_logistic_mle",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_logistic_mle",
       "to": "ml_newton_method",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_newton_method",
       "to": "ml_softmax",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_softmax",
       "to": "ml_exp_family",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_exp_family",
       "to": "ml_glm",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_generative_vs_disc",
       "to": "ml_gda",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_gda",
       "to": "ml_naive_bayes",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_naive_bayes",
       "to": "ml_laplace",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_margins",
       "to": "ml_optimal_margin",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_optimal_margin",
       "to": "ml_lagrange_duality",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_lagrange_duality",
       "to": "ml_svm_dual",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_kernels",
       "to": "ml_mercer",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_mercer",
       "to": "ml_soft_margin",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_soft_margin",
       "to": "ml_smo",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_bias_variance",
       "to": "ml_regularization",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_regularization",
       "to": "ml_cross_val",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_cross_val",
       "to": "ml_vc_dimension",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_vc_dimension",
       "to": "ml_model_selection",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_neural_nets",
       "to": "ml_backprop",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_kmeans",
       "to": "ml_em_algorithm",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_em_algorithm",
       "to": "ml_gmm_em",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_gmm_em",
       "to": "ml_pca",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_pca",
       "to": "ml_ica",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_mdp",
       "to": "ml_value_policy",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_value_policy",
       "to": "ml_q_learning",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_q_learning",
       "to": "ml_value_approx",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_linear_reg",
       "to": "ml_normal_eq",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_gradient_descent",
       "to": "ml_logistic_reg",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_logistic_mle",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_softmax",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_glm",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_generative_vs_disc",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_svm_dual",
       "to": "ml_kernels",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_svm_dual",
       "to": "ml_smo",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_linear_reg",
       "to": "ml_bias_variance",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_bias_variance",
       "to": "ml_cross_val",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_logistic_reg",
       "to": "ml_neural_nets",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "ml_gradient_descent",
       "to": "ml_backprop",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

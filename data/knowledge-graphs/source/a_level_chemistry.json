@@ -1,1016 +1,1293 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "a_level_chemistry",
   "subject": "Chemistry",
-  "schema": {
-    "description": "Attribution tree via each concept's `topic` field; `edges` holds only prereq edges.",
-    "node_fields": {
-      "id": "globally unique id",
-      "kind": "topic | concept",
-      "name": "concept name",
-      "topic": "owning topic id; null for topic nodes",
-      "description": "one-sentence definition for prompting/RAG",
-      "default_order": "default teaching order within the topic",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "from must be learned before to; strength=hard|soft"
-    },
-    "concept_node_definition": "concept = smallest independently quiz-testable skill"
-  },
+  "jurisdictions": [
+    "international"
+  ],
+  "source_ids": [
+    "src_cambridge_9701_2025_2027"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "che_atomic",
       "kind": "topic",
       "name": "Subatomic Particles and Isotopes",
+      "name_zh": "亚原子粒子与同位素",
       "topic": null,
       "default_order": 1,
-      "name_zh": "亚原子粒子与同位素"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_atomic_che_electron_config",
       "kind": "topic",
       "name": "Electronic Configuration and Ionisation Energy",
+      "name_zh": "电子排布与电离能",
       "topic": null,
       "default_order": 2,
-      "name_zh": "电子排布与电离能"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_stoichiometry",
       "kind": "topic",
       "name": "The Mole and Avogadro Constant and Empirical and Molecular Formulae",
+      "name_zh": "摩尔与阿伏伽德罗常数与实验式与分子式",
       "topic": null,
       "default_order": 3,
-      "name_zh": "摩尔与阿伏伽德罗常数与实验式与分子式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_stoichiometry_che_reacting_masses",
       "kind": "topic",
       "name": "Reacting Masses and Gas Volumes and Concentration and Titration",
+      "name_zh": "反应质量与气体体积与浓度与滴定",
       "topic": null,
       "default_order": 4,
-      "name_zh": "反应质量与气体体积与浓度与滴定"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_bonding_part1",
       "kind": "topic",
       "name": "Chemical Bonding: Types of Bonds",
+      "name_zh": "化学键：成键类型",
       "topic": null,
       "default_order": 5,
-      "name_zh": "化学键：成键类型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_bonding_part2",
       "kind": "topic",
       "name": "Chemical Bonding: Shapes and Intermolecular Forces",
+      "name_zh": "化学键：分子形状与分子间作用力",
       "topic": null,
       "default_order": 6,
-      "name_zh": "化学键：分子形状与分子间作用力"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_states_enthalpy",
       "kind": "topic",
       "name": "States of Matter and Enthalpy",
+      "name_zh": "物态与焓变",
       "topic": null,
       "default_order": 7,
-      "name_zh": "物态与焓变"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_energetics",
       "kind": "topic",
       "name": "Chemical Energetics",
+      "name_zh": "化学能",
       "topic": null,
       "default_order": 8,
-      "name_zh": "化学能"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_kinetics_part1",
       "kind": "topic",
       "name": "Reaction Kinetics: Rates and Collision Theory",
+      "name_zh": "反应动力学：速率与碰撞理论",
       "topic": null,
       "default_order": 9,
-      "name_zh": "反应动力学：速率与碰撞理论"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_kinetics_part2",
       "kind": "topic",
       "name": "Reaction Kinetics: Rate Equations and Catalysis",
+      "name_zh": "反应动力学：速率方程与催化",
       "topic": null,
       "default_order": 10,
-      "name_zh": "反应动力学：速率方程与催化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_equilibria_acidbase",
       "kind": "topic",
       "name": "Dynamic Equilibrium and Le Chatelier's Principle",
+      "name_zh": "动态平衡与勒夏特列原理",
       "topic": null,
       "default_order": 11,
-      "name_zh": "动态平衡与勒夏特列原理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_equilibria_acidbase_che_kc_kp",
       "kind": "topic",
       "name": "Equilibrium Constants Kc and Kp and Brønsted-Lowry Theory",
+      "name_zh": "平衡常数 Kc 与 Kp与布朗斯特-洛瑞理论",
       "topic": null,
       "default_order": 12,
-      "name_zh": "平衡常数 Kc 与 Kp与布朗斯特-洛瑞理论"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_acids",
       "kind": "topic",
       "name": "Strong and Weak Acids and pH and Acid Dissociation Constant",
+      "name_zh": "强酸与弱酸与pH 与酸解离常数",
       "topic": null,
       "default_order": 13,
-      "name_zh": "强酸与弱酸与pH 与酸解离常数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_acids_che_buffers",
       "kind": "topic",
       "name": "Buffers and Solubility Product",
+      "name_zh": "缓冲剂与溶度积",
       "topic": null,
       "default_order": 14,
-      "name_zh": "缓冲剂与溶度积"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_redox",
       "kind": "topic",
       "name": "Redox and Electrochemistry",
+      "name_zh": "氧化还原与电化学",
       "topic": null,
       "default_order": 15,
-      "name_zh": "氧化还原与电化学"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_electrochem_thermo",
       "kind": "topic",
       "name": "Electrochemical Cells and Electrolysis",
+      "name_zh": "电化学电池与电解",
       "topic": null,
       "default_order": 16,
-      "name_zh": "电化学电池与电解"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_electrochem_thermo_che_born_haber",
       "kind": "topic",
       "name": "Lattice Energy and Born-Haber Cycles and Entropy",
+      "name_zh": "晶格能与玻恩-哈伯循环与熵",
       "topic": null,
       "default_order": 17,
-      "name_zh": "晶格能与玻恩-哈伯循环与熵"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_free_energy_periodicity",
       "kind": "topic",
       "name": "Free Energy and Periodicity",
+      "name_zh": "自由能与周期性",
       "topic": null,
       "default_order": 18,
-      "name_zh": "自由能与周期性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_groups",
       "kind": "topic",
       "name": "Inorganic Group Chemistry",
+      "name_zh": "无机元素族化学",
       "topic": null,
       "default_order": 19,
-      "name_zh": "无机元素族化学"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_transition",
       "kind": "topic",
       "name": "Transition Elements",
+      "name_zh": "过渡金属元素",
       "topic": null,
       "default_order": 20,
-      "name_zh": "过渡金属元素"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_organic_basics",
       "kind": "topic",
       "name": "Nomenclature and Isomerism",
+      "name_zh": "命名法与同分异构",
       "topic": null,
       "default_order": 21,
-      "name_zh": "命名法与同分异构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_organic_basics_che_bond_fission",
       "kind": "topic",
       "name": "Bond Fission and Reactive Species and Reaction Mechanism Types",
+      "name_zh": "键断裂与反应物种与反应机理类型",
       "topic": null,
       "default_order": 22,
-      "name_zh": "键断裂与反应物种与反应机理类型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_hydrocarbons",
       "kind": "topic",
       "name": "Hydrocarbons",
+      "name_zh": "烃",
       "topic": null,
       "default_order": 23,
-      "name_zh": "烃"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_halogenoalkanes_alcohols",
       "kind": "topic",
       "name": "Nucleophilic Substitution and Elimination Reactions",
+      "name_zh": "亲核取代与消去反应",
       "topic": null,
       "default_order": 24,
-      "name_zh": "亲核取代与消去反应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
       "kind": "topic",
       "name": "Alcohols and Their Reactions and Oxidation of Alcohols",
+      "name_zh": "醇的反应与醇的氧化",
       "topic": null,
       "default_order": 25,
-      "name_zh": "醇的反应与醇的氧化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_carbonyls",
       "kind": "topic",
       "name": "Carbonyl and Carboxylic Compounds",
+      "name_zh": "羰基化合物",
       "topic": null,
       "default_order": 26,
-      "name_zh": "羰基化合物"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_nitrogen_org",
       "kind": "topic",
       "name": "Nitrogen Compounds and Polymers",
+      "name_zh": "含氮化合物",
       "topic": null,
       "default_order": 27,
-      "name_zh": "含氮化合物"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_arenes_mass_spec",
       "kind": "topic",
       "name": "Arenes and Mass Spectrometry",
+      "name_zh": "芳香烃与质谱分析",
       "topic": null,
       "default_order": 28,
-      "name_zh": "芳香烃与质谱分析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_analysis",
       "kind": "topic",
       "name": "Analytical Techniques",
+      "name_zh": "分析技术",
       "topic": null,
       "default_order": 29,
-      "name_zh": "分析技术"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_subatomic",
+      "canonical_id": "pc_d3750ab7dae24f534aee9f39f91e5f71",
       "kind": "concept",
       "name": "Subatomic Particles",
+      "name_zh": "亚原子粒子",
       "topic": "che_atomic",
       "description": "Protons, neutrons, and electrons making up the atom, whose relative masses and charges determine atomic number, mass number, and chemical behaviour.",
       "default_order": 1,
       "centrality": 0.281,
-      "name_zh": "亚原子粒子"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_isotopes",
+      "canonical_id": "pc_6a27f090d384dbc6be61017193c58dae",
       "kind": "concept",
       "name": "Isotopes",
+      "name_zh": "同位素",
       "topic": "che_atomic",
       "description": "Atoms of the same element with equal protons but different numbers of neutrons, giving different mass numbers but identical chemical properties.",
       "default_order": 2,
       "centrality": 0.3014,
-      "name_zh": "同位素"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_electron_config",
+      "canonical_id": "pc_4ee1addaa1bb88db1bc738c8909840bb",
       "kind": "concept",
       "name": "Electronic Configuration",
+      "name_zh": "电子排布",
       "topic": "che_atomic_che_electron_config",
       "description": "The arrangement of electrons in shells, subshells, and orbitals following the Aufbau principle, Hund's rule, and the Pauli exclusion principle.",
       "default_order": 1,
       "centrality": 0.651,
-      "name_zh": "电子排布",
       "visual": "diagram",
-      "visual_hint": "Orbital filling diagram across shells and subshells."
+      "visual_hint": "Orbital filling diagram across shells and subshells.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_ionisation",
+      "canonical_id": "pc_4e357bba20ab4ba89207b97a6dc2e610",
       "kind": "concept",
       "name": "Ionisation Energy",
+      "name_zh": "电离能",
       "topic": "che_atomic_che_electron_config",
       "description": "The energy required to remove electrons from gaseous atoms, whose successive values and periodic trends provide evidence for electronic structure.",
       "default_order": 2,
       "centrality": 0.1021,
-      "name_zh": "电离能",
       "visual": "chart",
-      "visual_hint": "Plot successive ionisation energies revealing shell structure."
+      "visual_hint": "Plot successive ionisation energies revealing shell structure.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_mole",
+      "canonical_id": "pc_df12800116ac8b3b4f1232118ed6a5e6",
       "kind": "concept",
       "name": "The Mole and Avogadro Constant",
+      "name_zh": "摩尔与阿伏伽德罗常数",
       "topic": "che_stoichiometry",
       "description": "The mole as the amount containing Avogadro's number of particles, linking number of particles, mass, and molar quantities in calculations.",
       "default_order": 1,
       "centrality": 0.1799,
-      "name_zh": "摩尔与阿伏伽德罗常数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_formulae",
+      "canonical_id": "pc_f143886b125448b751d8adcc1cc7aaa9",
       "kind": "concept",
       "name": "Empirical and Molecular Formulae",
+      "name_zh": "实验式与分子式",
       "topic": "che_stoichiometry",
       "description": "Empirical formulae giving the simplest whole-number ratio of atoms and molecular formulae giving the actual numbers, determined from composition data.",
       "default_order": 2,
       "centrality": 0.0686,
-      "name_zh": "实验式与分子式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_reacting_masses",
+      "canonical_id": "pc_ebe03cb9fd9f38885b0b5f72e57af97f",
       "kind": "concept",
       "name": "Reacting Masses and Gas Volumes",
+      "name_zh": "反应质量与气体体积",
       "topic": "che_stoichiometry_che_reacting_masses",
       "description": "Using balanced equations and the mole concept to calculate reacting masses, gas volumes, and theoretical yields in stoichiometric problems.",
       "default_order": 1,
       "centrality": 0.103,
-      "name_zh": "反应质量与气体体积"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_titration",
+      "canonical_id": "pc_40e84973ce28c8bfbe369bab4f213754",
       "kind": "concept",
       "name": "Concentration and Titration",
+      "name_zh": "浓度与滴定",
       "topic": "che_stoichiometry_che_reacting_masses",
       "description": "Determining unknown concentrations by titration, using the mole ratio in a balanced equation and an indicated end point to calculate the result.",
       "default_order": 2,
       "centrality": 0.0348,
-      "name_zh": "浓度与滴定"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_ionic",
+      "canonical_id": "pc_4b92b05bd4662531b6bc415778fee240",
       "kind": "concept",
       "name": "Ionic Bonding",
+      "name_zh": "离子键",
       "topic": "che_bonding_part1",
       "description": "Bonding by electrostatic attraction between oppositely charged ions formed by electron transfer, producing giant ionic lattices with high melting points.",
       "default_order": 1,
       "centrality": 0.2939,
-      "name_zh": "离子键",
       "visual": "diagram",
-      "visual_hint": "Dot-and-cross diagram of electron transfer forming ions."
+      "visual_hint": "Dot-and-cross diagram of electron transfer forming ions.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_covalent",
+      "canonical_id": "pc_76c78ee2b35eca2b943816eb56dbac2a",
       "kind": "concept",
       "name": "Covalent Bonding",
+      "name_zh": "共价键",
       "topic": "che_bonding_part1",
       "description": "Bonding by shared pairs of electrons between non-metal atoms, including single, double, triple, and dative (coordinate) covalent bonds.",
       "default_order": 2,
       "centrality": 0.5537,
-      "name_zh": "共价键",
       "visual": "diagram",
-      "visual_hint": "Dot-and-cross diagram of shared electron pairs."
+      "visual_hint": "Dot-and-cross diagram of shared electron pairs.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_metallic",
+      "canonical_id": "pc_f2a9c19ab3c922280139d1ca1fda33ba",
       "kind": "concept",
       "name": "Metallic Bonding",
+      "name_zh": "金属键",
       "topic": "che_bonding_part1",
       "description": "Bonding in metals as a lattice of positive ions in a sea of delocalised electrons, explaining conductivity, malleability, and high melting points.",
       "default_order": 3,
       "centrality": 0.0615,
-      "name_zh": "金属键"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_vsepr",
+      "canonical_id": "pc_efe51eb9f4ef6303c37411a09a459344",
       "kind": "concept",
       "name": "Shapes of Molecules (VSEPR)",
+      "name_zh": "VSEPR 分子形状",
       "topic": "che_bonding_part2",
       "description": "Predicting molecular shapes and bond angles using valence-shell electron-pair repulsion, where electron pairs arrange to minimise mutual repulsion.",
       "default_order": 1,
       "centrality": 0.0865,
-      "name_zh": "VSEPR 分子形状",
       "visual": "interactive",
-      "visual_hint": "Rotate 3D molecular shapes showing bond angles for each electron-pair geometry."
+      "visual_hint": "Rotate 3D molecular shapes showing bond angles for each electron-pair geometry.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_electronegativity",
+      "canonical_id": "pc_eed2c090eb2027bca1d0484dc93fee0f",
       "kind": "concept",
       "name": "Electronegativity and Polarity",
+      "name_zh": "电负性与极性",
       "topic": "che_bonding_part2",
       "description": "The tendency of an atom to attract a shared electron pair, whose differences create bond polarity and overall molecular dipoles.",
       "default_order": 2,
       "centrality": 0.1451,
-      "name_zh": "电负性与极性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_imf",
+      "canonical_id": "pc_614f3b0e205dabe62760af3243c960e1",
       "kind": "concept",
       "name": "Intermolecular Forces",
+      "name_zh": "分子间作用力",
       "topic": "che_bonding_part2",
       "description": "Forces between molecules—van der Waals, permanent dipole-dipole, and hydrogen bonding—that determine physical properties such as boiling point.",
       "default_order": 3,
       "centrality": 0.1415,
-      "name_zh": "分子间作用力"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_gas_laws",
+      "canonical_id": "pc_18388a54522ee3202a5121faa939f897",
       "kind": "concept",
       "name": "Ideal Gas Behaviour",
+      "name_zh": "理想气体",
       "topic": "che_states_enthalpy",
       "description": "The behaviour of ideal gases described by the equation pV equals nRT, relating pressure, volume, temperature, and amount of gas.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "理想气体",
       "visual": "function",
-      "visual_hint": "Plot pV = nRT relationships between pressure, volume, and temperature."
+      "visual_hint": "Plot pV = nRT relationships between pressure, volume, and temperature.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_solids",
+      "canonical_id": "pc_a4b86c05308a1e5a1bda8192168cddbc",
       "kind": "concept",
       "name": "Solid Structures",
+      "name_zh": "固体结构",
       "topic": "che_states_enthalpy",
       "description": "Giant ionic, giant covalent, simple molecular, and metallic solid structures, whose bonding and arrangement determine their physical properties.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "固体结构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_enthalpy",
+      "canonical_id": "pc_e69d28c59b3a7c85a8366e77b73f49d0",
       "kind": "concept",
       "name": "Enthalpy Changes",
+      "name_zh": "焓变",
       "topic": "che_states_enthalpy",
       "description": "Enthalpy changes of reactions measured at constant pressure, including standard enthalpies of formation, combustion, and reaction.",
       "default_order": 3,
       "centrality": 0.1145,
-      "name_zh": "焓变",
       "visual": "diagram",
-      "visual_hint": "Energy-profile diagram of enthalpy change with activation energy."
+      "visual_hint": "Energy-profile diagram of enthalpy change with activation energy.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_hess",
+      "canonical_id": "pc_5228fc493b409be3407c6661aed3da92",
       "kind": "concept",
       "name": "Hess's Law",
+      "name_zh": "盖斯定律",
       "topic": "che_energetics",
       "description": "Hess's law stating that the enthalpy change of a reaction is independent of the route taken, allowing indirect calculation via energy cycles.",
       "default_order": 1,
       "centrality": 0.0631,
-      "name_zh": "盖斯定律",
       "visual": "diagram",
-      "visual_hint": "Hess-cycle diagram of alternative reaction routes."
+      "visual_hint": "Hess-cycle diagram of alternative reaction routes.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_bond_enthalpy",
+      "canonical_id": "pc_b35d6548b40342a4e7e95af4650c7349",
       "kind": "concept",
       "name": "Bond Enthalpy",
+      "name_zh": "键能",
       "topic": "che_energetics",
       "description": "The average energy needed to break one mole of a given bond in the gas phase, used to estimate reaction enthalpy changes.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "键能"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_calorimetry",
+      "canonical_id": "pc_15992a7e0497388298726130f75cad83",
       "kind": "concept",
       "name": "Calorimetry",
+      "name_zh": "量热法",
       "topic": "che_energetics",
       "description": "Measuring enthalpy changes experimentally from temperature changes using the relationship q equals mcΔT in a calorimeter.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "量热法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_rate",
+      "canonical_id": "pc_9149d04521bbf394cffde8a4040d28ed",
       "kind": "concept",
       "name": "Rate of Reaction",
+      "name_zh": "反应速率",
       "topic": "che_kinetics_part1",
       "description": "The rate of reaction as the change in concentration of a reactant or product per unit time, and the factors that affect it.",
       "default_order": 1,
       "centrality": 0.1523,
-      "name_zh": "反应速率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_collision",
+      "canonical_id": "pc_2a4571ab0da3a12f57b0c311f63f1bee",
       "kind": "concept",
       "name": "Collision Theory",
+      "name_zh": "碰撞理论",
       "topic": "che_kinetics_part1",
       "description": "Collision theory explaining rates through the frequency of collisions and the proportion exceeding the activation energy with correct orientation.",
       "default_order": 2,
       "centrality": 0.1347,
-      "name_zh": "碰撞理论"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_boltzmann",
+      "canonical_id": "pc_04253132571da061a274475a1620d120",
       "kind": "concept",
       "name": "Maxwell-Boltzmann Distribution",
+      "name_zh": "Maxwell-Boltzmann分布",
       "topic": "che_kinetics_part1",
       "description": "The Maxwell-Boltzmann distribution of molecular energies, used to explain the effect of temperature and catalysts on reaction rate.",
       "default_order": 3,
       "centrality": 0.0408,
-      "name_zh": "Maxwell-Boltzmann分布",
       "visual": "function",
-      "visual_hint": "Plot the Maxwell-Boltzmann energy distribution and the effect of temperature and catalyst."
+      "visual_hint": "Plot the Maxwell-Boltzmann energy distribution and the effect of temperature and catalyst.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_catalysis",
+      "canonical_id": "pc_3acf09a2d45e4a4379136a369085e5f8",
       "kind": "concept",
       "name": "Catalysis",
+      "name_zh": "催化",
       "topic": "che_kinetics_part2",
       "description": "Catalysts increasing reaction rate by providing an alternative pathway of lower activation energy, classified as homogeneous or heterogeneous.",
       "default_order": 1,
       "centrality": 0.0378,
-      "name_zh": "催化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_rate_equation",
+      "canonical_id": "pc_291961cf58135ba94c28bbda239d23ec",
       "kind": "concept",
       "name": "Rate Equations and Orders",
+      "name_zh": "速率方程与反应级数",
       "topic": "che_kinetics_part2",
       "description": "Rate equations relating rate to reactant concentrations raised to their orders, with the rate constant determined experimentally.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "速率方程与反应级数",
       "visual": "function",
-      "visual_hint": "Plot reaction rate against concentration for zero, first, and second order."
+      "visual_hint": "Plot reaction rate against concentration for zero, first, and second order.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_rds",
+      "canonical_id": "pc_cb40576691a93cdc979f318c9e746398",
       "kind": "concept",
       "name": "Rate-Determining Step",
+      "name_zh": "速控步",
       "topic": "che_kinetics_part2",
       "description": "The rate-determining step as the slowest step in a mechanism, whose reactants appear in the experimentally determined rate equation.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "速控步"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_dynamic_eq",
+      "canonical_id": "pc_f2db072d9b9ecf3925965c5aec1b340e",
       "kind": "concept",
       "name": "Dynamic Equilibrium",
+      "name_zh": "动态平衡",
       "topic": "che_equilibria_acidbase",
       "description": "Dynamic equilibrium in a closed system where the forward and reverse reactions proceed at equal rates and concentrations remain constant.",
       "default_order": 1,
       "centrality": 0.1202,
-      "name_zh": "动态平衡"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_le_chatelier",
+      "canonical_id": "pc_11136627f33775e0a74e8d42c8e86361",
       "kind": "concept",
       "name": "Le Chatelier's Principle",
+      "name_zh": "勒夏特列原理",
       "topic": "che_equilibria_acidbase",
       "description": "Le Chatelier's principle predicting how an equilibrium position shifts to oppose changes in concentration, pressure, or temperature.",
       "default_order": 2,
       "centrality": 0.0348,
-      "name_zh": "勒夏特列原理",
       "visual": "interactive",
-      "visual_hint": "Shift an equilibrium with sliders for concentration, pressure, and temperature."
+      "visual_hint": "Shift an equilibrium with sliders for concentration, pressure, and temperature.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_kc_kp",
+      "canonical_id": "pc_4386477346f4fa3dfe6f31ec2435e3b2",
       "kind": "concept",
       "name": "Equilibrium Constants Kc and Kp",
+      "name_zh": "平衡常数 Kc 与 Kp",
       "topic": "che_equilibria_acidbase_che_kc_kp",
       "description": "Equilibrium constants Kc and Kp expressing the position of equilibrium in terms of concentrations or partial pressures at a given temperature.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "平衡常数 Kc 与 Kp"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_bronsted",
+      "canonical_id": "pc_e0e23323fa5580b7eaff3277d809f5b1",
       "kind": "concept",
       "name": "Brønsted-Lowry Theory",
+      "name_zh": "布朗斯特-洛瑞理论",
       "topic": "che_equilibria_acidbase_che_kc_kp",
       "description": "The Brønsted-Lowry theory defining acids as proton donors and bases as proton acceptors, related through conjugate acid-base pairs.",
       "default_order": 2,
       "centrality": 0.0657,
-      "name_zh": "布朗斯特-洛瑞理论"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_strong_weak",
+      "canonical_id": "pc_f6b7711a788cbc8c837f448c591f0fa4",
       "kind": "concept",
       "name": "Strong and Weak Acids",
+      "name_zh": "强酸与弱酸",
       "topic": "che_acids",
       "description": "The distinction between strong acids that fully dissociate and weak acids that only partially dissociate in aqueous solution.",
       "default_order": 1,
       "centrality": 0.0481,
-      "name_zh": "强酸与弱酸"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_ph_ka",
+      "canonical_id": "pc_77fa4fcddfbfac708e8026c8cc77b391",
       "kind": "concept",
       "name": "pH and Acid Dissociation Constant",
+      "name_zh": "pH 与酸解离常数",
       "topic": "che_acids",
       "description": "The pH scale measuring hydrogen-ion concentration and the acid dissociation constant Ka quantifying the strength of a weak acid.",
       "default_order": 2,
       "centrality": 0.0548,
-      "name_zh": "pH 与酸解离常数",
       "visual": "function",
-      "visual_hint": "Plot a titration pH curve and locate the equivalence point."
+      "visual_hint": "Plot a titration pH curve and locate the equivalence point.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_buffers",
+      "canonical_id": "pc_82c006666402fb0151977a37993a8809",
       "kind": "concept",
       "name": "Buffers",
+      "name_zh": "缓冲剂",
       "topic": "che_acids_che_buffers",
       "description": "Buffer solutions resisting pH change on adding small amounts of acid or base, formed from a weak acid and its conjugate base.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "缓冲剂"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_ksp",
+      "canonical_id": "pc_a4e09c1b07331a56753ee7884854992a",
       "kind": "concept",
       "name": "Solubility Product",
+      "name_zh": "溶度积",
       "topic": "che_acids_che_buffers",
       "description": "The solubility product Ksp as the equilibrium constant for a sparingly soluble salt dissolving, predicting precipitation and the common-ion effect.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "溶度积"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_oxidation_number",
+      "canonical_id": "pc_042f315c4fd69794846195086e9611ec",
       "kind": "concept",
       "name": "Oxidation Numbers",
+      "name_zh": "氧化数",
       "topic": "che_redox",
       "description": "Oxidation numbers assigned by rules to track electron transfer, identifying which species are oxidised and reduced in a redox reaction.",
       "default_order": 1,
       "centrality": 0.1074,
-      "name_zh": "氧化数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_redox_equations",
+      "canonical_id": "pc_4b8778a639899b2be00ad35d38df1699",
       "kind": "concept",
       "name": "Redox Equations",
+      "name_zh": "氧化还原方程",
       "topic": "che_redox",
       "description": "Constructing balanced redox equations by combining oxidation and reduction half-equations so that electrons gained equal electrons lost.",
       "default_order": 2,
       "centrality": 0.0819,
-      "name_zh": "氧化还原方程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_electrode_potential",
+      "canonical_id": "pc_bfa955bbd69e70b920c7ee7eb712d904",
       "kind": "concept",
       "name": "Electrode Potentials",
+      "name_zh": "电极电势",
       "topic": "che_redox",
       "description": "Standard electrode potentials measuring a half-cell's tendency to gain electrons relative to the standard hydrogen electrode.",
       "default_order": 3,
       "centrality": 0.0548,
-      "name_zh": "电极电势"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_cells",
+      "canonical_id": "pc_ddaa179ab823ea748d4ad05e53ee9187",
       "kind": "concept",
       "name": "Electrochemical Cells",
+      "name_zh": "电化学电池",
       "topic": "che_electrochem_thermo",
       "description": "Electrochemical cells generating an EMF from two half-cells, with the cell potential calculated from standard electrode potentials.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "电化学电池"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_electrolysis",
+      "canonical_id": "pc_4375fb1d523a4b08df3b42fab0c0642e",
       "kind": "concept",
       "name": "Electrolysis",
+      "name_zh": "电解",
       "topic": "che_electrochem_thermo",
       "description": "The decomposition of molten or aqueous compounds by passing electricity, with products predicted from electrode reactions and Faraday's laws.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "电解"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_born_haber",
+      "canonical_id": "pc_b07a0adc94a1badb983bbfc538a4e611",
       "kind": "concept",
       "name": "Lattice Energy and Born-Haber Cycles",
+      "name_zh": "晶格能与玻恩-哈伯循环",
       "topic": "che_electrochem_thermo_che_born_haber",
       "description": "Born-Haber cycles applying Hess's law to determine lattice energy from enthalpies of formation, atomisation, ionisation, and electron affinity.",
       "default_order": 1,
       "centrality": 0.0548,
-      "name_zh": "晶格能与玻恩-哈伯循环",
       "visual": "diagram",
-      "visual_hint": "Born-Haber cycle diagram of the lattice-energy enthalpy steps."
+      "visual_hint": "Born-Haber cycle diagram of the lattice-energy enthalpy steps.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_entropy",
+      "canonical_id": "pc_796efe527a46546cb476af1d40c1c1f5",
       "kind": "concept",
       "name": "Entropy",
+      "name_zh": "熵",
       "topic": "che_electrochem_thermo_che_born_haber",
       "description": "Entropy as a measure of the disorder of a system, with spontaneous change tending toward increased total entropy.",
       "default_order": 2,
       "centrality": 0.0353,
-      "name_zh": "熵"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_gibbs",
+      "canonical_id": "pc_c912d7aa7e95cc5c77a18f6f5aae0a0c",
       "kind": "concept",
       "name": "Gibbs Free Energy",
+      "name_zh": "吉布斯自由能",
       "topic": "che_free_energy_periodicity",
       "description": "Gibbs free energy combining enthalpy and entropy, where a negative value of ΔG indicates a thermodynamically feasible reaction.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "吉布斯自由能"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_periodic_trends",
+      "canonical_id": "pc_d8222e150de1d5b8d93389c00a07fabe",
       "kind": "concept",
       "name": "Periodic Trends",
+      "name_zh": "周期趋势",
       "topic": "che_free_energy_periodicity",
       "description": "Trends across periods and down groups in atomic radius, ionisation energy, and electronegativity, explained by nuclear charge and shielding.",
       "default_order": 2,
       "centrality": 0.091,
-      "name_zh": "周期趋势",
       "visual": "chart",
-      "visual_hint": "Plot periodic trends in atomic radius and ionisation energy across a period."
+      "visual_hint": "Plot periodic trends in atomic radius and ionisation energy across a period.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_period3",
+      "canonical_id": "pc_c4ce91b9f4d4bfaccf0f26f7514f8896",
       "kind": "concept",
       "name": "Period 3 Elements and Oxides",
+      "name_zh": "第3周期元素与氧化物",
       "topic": "che_free_energy_periodicity",
       "description": "The properties of Period 3 elements and their oxides and chlorides, showing the trend from metallic to covalent character.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "第3周期元素与氧化物"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_group2",
+      "canonical_id": "pc_a6e7944a78479506d087a525f81e2e58",
       "kind": "concept",
       "name": "Group 2 Chemistry",
+      "name_zh": "第2族元素化学",
       "topic": "che_groups",
       "description": "The chemistry of Group 2 metals, including reactions with water and oxygen and trends in reactivity and thermal stability of compounds.",
       "default_order": 1,
       "centrality": 0.0378,
-      "name_zh": "第2族元素化学"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_group17",
+      "canonical_id": "pc_89785b3e05b48942229592971697422a",
       "kind": "concept",
       "name": "Group 17 Halogens",
+      "name_zh": "第17族卤素",
       "topic": "che_groups",
       "description": "The chemistry of Group 17 halogens, including trends in volatility and oxidising power and their displacement reactions.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "第17族卤素"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_nitrogen_sulfur",
+      "canonical_id": "pc_c48d9a41a4f7fd5a7ddc4ca53ba4a7ac",
       "kind": "concept",
       "name": "Nitrogen and Sulfur",
+      "name_zh": "氮和硫",
       "topic": "che_groups",
       "description": "The chemistry of nitrogen and sulfur, including ammonia, the oxides of nitrogen and sulfur, and their environmental significance.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "氮和硫"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_transition_props",
+      "canonical_id": "pc_db9856c274d202c3b699aa0300f025f9",
       "kind": "concept",
       "name": "Transition Element Properties",
+      "name_zh": "过渡金属性质",
       "topic": "che_transition",
       "description": "Characteristic properties of transition elements, including variable oxidation states, catalytic activity, coloured ions, and complex formation.",
       "default_order": 1,
       "centrality": 0.0638,
-      "name_zh": "过渡金属性质"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_complex_ions",
+      "canonical_id": "pc_1701653e84db7e3257e7e55c4b77abdc",
       "kind": "concept",
       "name": "Complex Ions and Ligands",
+      "name_zh": "配位离子与配体",
       "topic": "che_transition",
       "description": "Complex ions formed by a central metal ion bonded to ligands through dative covalent bonds, with characteristic coordination numbers and shapes.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "配位离子与配体"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_colour_catalysis",
+      "canonical_id": "pc_7a5e53969c10be449d1bf85837722d5a",
       "kind": "concept",
       "name": "Colour and Catalysis",
+      "name_zh": "颜色与催化",
       "topic": "che_transition",
       "description": "The origin of colour in transition-metal complexes from d-orbital splitting, and their use as homogeneous and heterogeneous catalysts.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "颜色与催化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_nomenclature",
+      "canonical_id": "pc_0b65c6a9710a1310be1f9b285ed88e74",
       "kind": "concept",
       "name": "Nomenclature",
+      "name_zh": "命名法",
       "topic": "che_organic_basics",
       "description": "The systematic IUPAC naming of organic compounds based on chain length, functional groups, and the positions of substituents.",
       "default_order": 1,
       "centrality": 0.2772,
-      "name_zh": "命名法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_isomerism",
+      "canonical_id": "pc_e3ad1e8ae27f757ccf5d59c333f04d7a",
       "kind": "concept",
       "name": "Isomerism",
+      "name_zh": "同分异构",
       "topic": "che_organic_basics",
       "description": "Structural isomerism and stereoisomerism, including cis-trans and optical isomers, arising from different arrangements of the same atoms.",
       "default_order": 2,
       "centrality": 0.1693,
-      "name_zh": "同分异构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_bond_fission",
+      "canonical_id": "pc_f04539036aca6084074f399276e5f01d",
       "kind": "concept",
       "name": "Bond Fission and Reactive Species",
+      "name_zh": "键断裂与反应物种",
       "topic": "che_organic_basics_che_bond_fission",
       "description": "Homolytic and heterolytic bond fission producing free radicals or ions respectively, generating the reactive species in organic mechanisms.",
       "default_order": 1,
       "centrality": 0.147,
-      "name_zh": "键断裂与反应物种"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_mechanism_types",
+      "canonical_id": "pc_9826358783352bf325f9299146a78a37",
       "kind": "concept",
       "name": "Reaction Mechanism Types",
+      "name_zh": "反应机理类型",
       "topic": "che_organic_basics_che_bond_fission",
       "description": "Classifying organic reactions as substitution, addition, and elimination, with curly-arrow notation representing the movement of electron pairs.",
       "default_order": 2,
       "centrality": 0.1438,
-      "name_zh": "反应机理类型"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_alkanes",
+      "canonical_id": "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
       "kind": "concept",
       "name": "Alkanes",
+      "name_zh": "烷烃",
       "topic": "che_hydrocarbons",
       "description": "Saturated hydrocarbons with single carbon-carbon bonds, their relative unreactivity, combustion, and free-radical substitution with halogens.",
       "default_order": 1,
       "centrality": 0.2553,
-      "name_zh": "烷烃"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_alkenes",
+      "canonical_id": "pc_ae2a8392fd9b93c33bc41d65e28fa8dc",
       "kind": "concept",
       "name": "Alkenes",
+      "name_zh": "烯烃",
       "topic": "che_hydrocarbons",
       "description": "Unsaturated hydrocarbons containing a carbon-carbon double bond, undergoing electrophilic addition and characterised by their greater reactivity.",
       "default_order": 2,
       "centrality": 0.2712,
-      "name_zh": "烯烃"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_addition_polymer",
+      "canonical_id": "pc_cd9220ccd4a94d9511b50e51680a585c",
       "kind": "concept",
       "name": "Addition Polymerisation",
+      "name_zh": "加聚反应",
       "topic": "che_hydrocarbons",
       "description": "Addition polymerisation joining many alkene monomers into long-chain polymers, and the environmental issues surrounding their disposal.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "加聚反应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_nucleophilic_sub",
+      "canonical_id": "pc_0d3043e5274fde266129817ca29a57f7",
       "kind": "concept",
       "name": "Nucleophilic Substitution",
+      "name_zh": "亲核取代",
       "topic": "che_halogenoalkanes_alcohols",
       "description": "Nucleophilic substitution of halogenoalkanes, proceeding by SN1 or SN2 mechanisms in which a nucleophile replaces the halogen.",
       "default_order": 1,
       "centrality": 0.2651,
-      "name_zh": "亲核取代"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_elimination",
+      "canonical_id": "pc_aa4bce8524adca25c22fe40ce6e9f542",
       "kind": "concept",
       "name": "Elimination Reactions",
+      "name_zh": "消去反应",
       "topic": "che_halogenoalkanes_alcohols",
       "description": "Elimination reactions of halogenoalkanes removing a hydrogen halide to form an alkene, competing with nucleophilic substitution.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "消去反应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_alcohol_reactions",
+      "canonical_id": "pc_42ea5b997cbab553b5f29d052a9d06aa",
       "kind": "concept",
       "name": "Alcohols and Their Reactions",
+      "name_zh": "醇的反应",
       "topic": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
       "description": "The reactions of alcohols, including combustion, substitution to halogenoalkanes, dehydration to alkenes, and esterification.",
       "default_order": 1,
       "centrality": 0.1453,
-      "name_zh": "醇的反应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_alcohol_oxidation",
+      "canonical_id": "pc_3ebd79c190b474a0044f5c7d9e8cd92f",
       "kind": "concept",
       "name": "Oxidation of Alcohols",
+      "name_zh": "醇的氧化",
       "topic": "che_halogenoalkanes_alcohols_che_alcohol_reactions",
       "description": "The oxidation of primary alcohols to aldehydes and carboxylic acids and secondary alcohols to ketones, with tertiary alcohols resistant.",
       "default_order": 2,
       "centrality": 0.1417,
-      "name_zh": "醇的氧化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_aldehydes_ketones",
+      "canonical_id": "pc_0c458f45bd014438bcb506f21ad5e902",
       "kind": "concept",
       "name": "Aldehydes and Ketones",
+      "name_zh": "醛和酮",
       "topic": "che_carbonyls",
       "description": "Carbonyl compounds containing a C=O group, undergoing nucleophilic addition and distinguished by oxidation and characteristic tests.",
       "default_order": 1,
       "centrality": 0.1376,
-      "name_zh": "醛和酮"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_carboxylic_acids",
+      "canonical_id": "pc_3f37112bc196b1765029aad7952026ca",
       "kind": "concept",
       "name": "Carboxylic Acids",
+      "name_zh": "羧酸",
       "topic": "che_carbonyls",
       "description": "Organic acids containing the carboxyl group, showing acidic behaviour and reactions forming salts, esters, and acyl derivatives.",
       "default_order": 2,
       "centrality": 0.1327,
-      "name_zh": "羧酸"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_esters",
+      "canonical_id": "pc_c9da2c88a8c94e76a31e705076b2a010",
       "kind": "concept",
       "name": "Esters and Acyl Chlorides",
+      "name_zh": "酯和酰氯",
       "topic": "che_carbonyls",
       "description": "Esters formed by condensation of acids and alcohols, their hydrolysis, and the more reactive acyl chlorides used as acylating agents.",
       "default_order": 3,
       "centrality": 0.0318,
-      "name_zh": "酯和酰氯"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_amines",
+      "canonical_id": "pc_1472e2980e7244beb53eecfa3bcd4051",
       "kind": "concept",
       "name": "Amines",
+      "name_zh": "胺",
       "topic": "che_nitrogen_org",
       "description": "Organic bases derived from ammonia, whose basicity arises from the nitrogen lone pair, along with their formation and reactions.",
       "default_order": 1,
       "centrality": 0.1127,
-      "name_zh": "胺"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_amino_acids",
+      "canonical_id": "pc_ae3e202342d0768f17e63d904381b461",
       "kind": "concept",
       "name": "Amino Acids and Proteins",
+      "name_zh": "氨基酸与蛋白质",
       "topic": "che_nitrogen_org",
       "description": "Amino acids bearing both amino and carboxyl groups, their zwitterion behaviour, and condensation into peptides and proteins.",
       "default_order": 2,
       "centrality": 0.1902,
-      "name_zh": "氨基酸与蛋白质"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_condensation_polymer",
+      "canonical_id": "pc_4fa4bd24c7e8cdf839921a3fb5f37bde",
       "kind": "concept",
       "name": "Condensation Polymers",
+      "name_zh": "缩聚反应",
       "topic": "che_nitrogen_org",
       "description": "Condensation polymers such as polyesters and polyamides formed by joining monomers with loss of a small molecule like water.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "缩聚反应"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_benzene",
+      "canonical_id": "pc_d67a8e73f965a59d3be0c55d71b80819",
       "kind": "concept",
       "name": "Benzene Structure",
+      "name_zh": "苯的结构",
       "topic": "che_arenes_mass_spec",
       "description": "The structure of benzene as a planar ring with delocalised pi electrons, explaining its stability and resistance to addition reactions.",
       "default_order": 1,
       "centrality": 0.0353,
-      "name_zh": "苯的结构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_electrophilic_sub",
+      "canonical_id": "pc_5994fcd6bac7f4fb2932ed47bb531cac",
       "kind": "concept",
       "name": "Electrophilic Substitution",
+      "name_zh": "亲电取代",
       "topic": "che_arenes_mass_spec",
       "description": "Electrophilic substitution of arenes, including nitration and halogenation, in which an electrophile replaces a ring hydrogen.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "亲电取代"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_mass_spec",
+      "canonical_id": "pc_6db4c3c8a688125ae68bfe172a744ac5",
       "kind": "concept",
       "name": "Mass Spectrometry",
+      "name_zh": "质谱分析",
       "topic": "che_arenes_mass_spec",
       "description": "Mass spectrometry determining relative molecular mass and structure from the mass-to-charge ratios of ionised molecular fragments.",
       "default_order": 3,
       "centrality": 0.0624,
-      "name_zh": "质谱分析",
       "visual": "chart",
-      "visual_hint": "Plot a mass spectrum of m/z peaks."
+      "visual_hint": "Plot a mass spectrum of m/z peaks.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_ir",
+      "canonical_id": "pc_be8194ec0ada9714cc5a11129041379c",
       "kind": "concept",
       "name": "Infrared Spectroscopy",
+      "name_zh": "红外光谱",
       "topic": "che_analysis",
       "description": "Infrared spectroscopy identifying functional groups from the characteristic absorption of bonds vibrating at specific frequencies.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "红外光谱"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_nmr",
+      "canonical_id": "pc_726c4810fd4590e4416c4c336a4e4ef2",
       "kind": "concept",
       "name": "NMR Spectroscopy",
+      "name_zh": "NMR光谱",
       "topic": "che_analysis",
       "description": "Nuclear magnetic resonance spectroscopy determining molecular structure from the chemical environments of hydrogen or carbon nuclei.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "NMR光谱",
       "visual": "chart",
-      "visual_hint": "Plot an NMR spectrum of chemical-shift peaks."
+      "visual_hint": "Plot an NMR spectrum of chemical-shift peaks.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "che_chromatography",
+      "canonical_id": "pc_c4dd935c7ad3b4429321fa1c103185a4",
       "kind": "concept",
       "name": "Chromatography",
+      "name_zh": "色谱法",
       "topic": "che_analysis",
       "description": "Chromatography separating mixtures by differential partition between a stationary and a mobile phase, characterised by Rf values or retention times.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "色谱法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -1018,541 +1295,721 @@
       "from": "che_subatomic",
       "to": "che_isotopes",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_isotopes",
       "to": "che_electron_config",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_electron_config",
       "to": "che_ionisation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_mole",
       "to": "che_formulae",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_formulae",
       "to": "che_reacting_masses",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_reacting_masses",
       "to": "che_titration",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_ionic",
       "to": "che_covalent",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_covalent",
       "to": "che_metallic",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_metallic",
       "to": "che_vsepr",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_vsepr",
       "to": "che_electronegativity",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_electronegativity",
       "to": "che_imf",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_gas_laws",
       "to": "che_solids",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_enthalpy",
       "to": "che_hess",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_hess",
       "to": "che_bond_enthalpy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_bond_enthalpy",
       "to": "che_calorimetry",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_rate",
       "to": "che_collision",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_collision",
       "to": "che_boltzmann",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_boltzmann",
       "to": "che_catalysis",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_catalysis",
       "to": "che_rate_equation",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_rate_equation",
       "to": "che_rds",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_dynamic_eq",
       "to": "che_le_chatelier",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_le_chatelier",
       "to": "che_kc_kp",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_bronsted",
       "to": "che_strong_weak",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_strong_weak",
       "to": "che_ph_ka",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_ph_ka",
       "to": "che_buffers",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_buffers",
       "to": "che_ksp",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_oxidation_number",
       "to": "che_redox_equations",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_redox_equations",
       "to": "che_electrode_potential",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_electrode_potential",
       "to": "che_cells",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_cells",
       "to": "che_electrolysis",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_born_haber",
       "to": "che_entropy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_entropy",
       "to": "che_gibbs",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_periodic_trends",
       "to": "che_period3",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_group2",
       "to": "che_group17",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_group17",
       "to": "che_nitrogen_sulfur",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_transition_props",
       "to": "che_complex_ions",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_complex_ions",
       "to": "che_colour_catalysis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_nomenclature",
       "to": "che_isomerism",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_isomerism",
       "to": "che_bond_fission",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_bond_fission",
       "to": "che_mechanism_types",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_alkanes",
       "to": "che_alkenes",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_alkenes",
       "to": "che_addition_polymer",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_nucleophilic_sub",
       "to": "che_elimination",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_alcohol_reactions",
       "to": "che_alcohol_oxidation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_aldehydes_ketones",
       "to": "che_carboxylic_acids",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_carboxylic_acids",
       "to": "che_esters",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_amines",
       "to": "che_amino_acids",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_amino_acids",
       "to": "che_condensation_polymer",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_benzene",
       "to": "che_electrophilic_sub",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_mass_spec",
       "to": "che_ir",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_ir",
       "to": "che_nmr",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_nmr",
       "to": "che_chromatography",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_electron_config",
       "to": "che_ionic",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_electron_config",
       "to": "che_covalent",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_covalent",
       "to": "che_vsepr",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_covalent",
       "to": "che_electronegativity",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_mole",
       "to": "che_reacting_masses",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_ionic",
       "to": "che_solids",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_reacting_masses",
       "to": "che_enthalpy",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_enthalpy",
       "to": "che_bond_enthalpy",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_enthalpy",
       "to": "che_calorimetry",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_collision",
       "to": "che_catalysis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_rate",
       "to": "che_rate_equation",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_dynamic_eq",
       "to": "che_kc_kp",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_titration",
       "to": "che_kc_kp",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_dynamic_eq",
       "to": "che_bronsted",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_kc_kp",
       "to": "che_ksp",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_redox_equations",
       "to": "che_electrolysis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_hess",
       "to": "che_born_haber",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_ionic",
       "to": "che_born_haber",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_enthalpy",
       "to": "che_gibbs",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_ionisation",
       "to": "che_periodic_trends",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_periodic_trends",
       "to": "che_group2",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_periodic_trends",
       "to": "che_group17",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_oxidation_number",
       "to": "che_group17",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_electron_config",
       "to": "che_transition_props",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_covalent",
       "to": "che_nomenclature",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_nomenclature",
       "to": "che_alkanes",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_mechanism_types",
       "to": "che_alkanes",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_alkenes",
       "to": "che_nucleophilic_sub",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_nucleophilic_sub",
       "to": "che_alcohol_reactions",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_alcohol_oxidation",
       "to": "che_aldehydes_ketones",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_nucleophilic_sub",
       "to": "che_amines",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_carboxylic_acids",
       "to": "che_amino_acids",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_esters",
       "to": "che_condensation_polymer",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_amines",
       "to": "che_condensation_polymer",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_covalent",
       "to": "che_benzene",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_mechanism_types",
       "to": "che_electrophilic_sub",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_isomerism",
       "to": "che_nmr",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_mole",
       "to": "che_mass_spec",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

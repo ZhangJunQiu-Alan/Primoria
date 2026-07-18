@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "human_approval_required": true,
+  "states": [
+    "unreviewed",
+    "needs_review",
+    "approved",
+    "rejected",
+    "superseded"
+  ],
+  "allowed_transitions": {
+    "unreviewed": ["needs_review", "rejected"],
+    "needs_review": ["approved", "rejected"],
+    "approved": ["superseded"],
+    "rejected": ["needs_review"],
+    "superseded": []
+  },
+  "authority_tiers": {
+    "A": "官方课程标准、法规、官方数据或原始研究",
+    "B": "同行评审综述、权威教材或学术参考书",
+    "C": "可信教育机构或经过编辑审核的开放资源",
+    "D": "来源未确认、二手总结或仅可作为候选线索的内容"
+  },
+  "license_defaults": {
+    "unknown_or_restricted": "metadata_only",
+    "open_license": "licensed_fulltext",
+    "public_download_is_not_open_license": true
+  },
+  "promotion_rules": {
+    "approved_requires_human_reviewer": true,
+    "approved_requires_decision_record": true,
+    "approved_node_requires_evidence": true,
+    "approved_edge_requires_evidence": true,
+    "verified_source_requires_checksum": true,
+    "unreviewed_content_may_remain_runtime_compatible": true
+  }
+}

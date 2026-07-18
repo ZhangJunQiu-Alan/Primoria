@@ -1,257 +1,319 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "numerical_analysis",
   "subject": "Introduction to Numerical Analysis",
-  "schema": {
-    "description": "Knowledge graph for Introduction to Numerical Analysis",
-    "node_fields": {
-      "id": "unique id",
-      "kind": "topic | concept",
-      "name": "node name",
-      "topic": "parent topic id or null",
-      "description": "concept description",
-      "default_order": "integer",
-      "visual": "interactive | simulation | algorithm | function | chart | diagram | none (optional; absent = none)",
-      "visual_hint": "one-line description of what to show/manipulate; required when visual is set and != none"
-    },
-    "edge_types": {
-      "prereq": "hard or soft"
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_numerical_analysis"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
     }
-  },
+  ],
   "nodes": [
     {
       "id": "t_mit18330_errors",
       "kind": "topic",
       "name": "Errors and Computer Arithmetic",
+      "name_zh": "误差与计算机运算",
       "topic": null,
       "default_order": 1,
-      "name_zh": "误差与计算机运算"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit18330_root_finding",
       "kind": "topic",
       "name": "Root Finding",
+      "name_zh": "求根",
       "topic": null,
       "default_order": 2,
-      "name_zh": "求根"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit18330_linear_systems",
       "kind": "topic",
       "name": "Linear Systems",
+      "name_zh": "线性方程组",
       "topic": null,
       "default_order": 3,
-      "name_zh": "线性方程组"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit18330_interpolation",
       "kind": "topic",
       "name": "Interpolation and Approximation",
+      "name_zh": "插值与逼近",
       "topic": null,
       "default_order": 4,
-      "name_zh": "插值与逼近"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit18330_integration_odes",
       "kind": "topic",
       "name": "Newton-Cotes Formulas and Gaussian Quadrature",
+      "name_zh": "Newton-Cotes 公式与高斯求积",
       "topic": null,
       "default_order": 5,
-      "name_zh": "Newton-Cotes 公式与高斯求积"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "t_mit18330_integration_odes_mit18330_euler",
       "kind": "topic",
       "name": "Euler's Method, Runge-Kutta Methods, and Stability of ODE Methods",
+      "name_zh": "欧拉法、Runge-Kutta 法与ODE 稳定性",
       "topic": null,
       "default_order": 6,
-      "name_zh": "欧拉法、Runge-Kutta 法与ODE 稳定性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_floating_point",
+      "canonical_id": "pc_004e3ffa7a8d3ee909a189f585e86e27",
       "kind": "concept",
       "name": "Floating Point Representation",
+      "name_zh": "浮点表示",
       "topic": "t_mit18330_errors",
       "description": "Finite-precision IEEE 754 representation of reals, introducing machine epsilon and rounding error that limit the accuracy of numerical computation.",
       "default_order": 1,
       "centrality": 0.1243,
-      "name_zh": "浮点表示"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_error_analysis",
+      "canonical_id": "pc_a458ac5c156f6b1894b4dee955888b34",
       "kind": "concept",
       "name": "Error Analysis",
+      "name_zh": "误差分析",
       "topic": "t_mit18330_errors",
       "description": "Quantifying computational error through forward and backward error and assessing an algorithm's stability under rounding and perturbations.",
       "default_order": 2,
       "centrality": 0.2342,
-      "name_zh": "误差分析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_conditioning",
+      "canonical_id": "pc_b1696ceb8fb57a447ee5772e70fe66b3",
       "kind": "concept",
       "name": "Conditioning",
+      "name_zh": "条件数",
       "topic": "t_mit18330_errors",
       "description": "The condition number measuring how sensitively a problem's output responds to input perturbations, independent of the algorithm used.",
       "default_order": 3,
       "centrality": 0.0577,
-      "name_zh": "条件数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_bisection",
+      "canonical_id": "pc_d14f06a56976778d0616245d88284721",
       "kind": "concept",
       "name": "Bisection Method",
+      "name_zh": "二分法",
       "topic": "t_mit18330_root_finding",
       "description": "A robust root-finding method repeatedly halving a bracketing interval where the function changes sign, converging linearly to a root.",
       "default_order": 1,
       "centrality": 0.0443,
-      "name_zh": "二分法",
       "visual": "function",
-      "visual_hint": "Halve a bracketing interval each step converging on a root."
+      "visual_hint": "Halve a bracketing interval each step converging on a root.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_newton",
+      "canonical_id": "pc_ff4e9538f80554892ba2e2b3c1047a99",
       "kind": "concept",
       "name": "Newton's Method",
+      "name_zh": "牛顿法",
       "topic": "t_mit18330_root_finding",
       "description": "An iterative root-finding method using the function and its derivative, converging quadratically near simple roots from a good initial guess.",
       "default_order": 2,
       "centrality": 0.0459,
-      "name_zh": "牛顿法",
       "visual": "function",
-      "visual_hint": "Step Newton's method following tangents to a root."
+      "visual_hint": "Step Newton's method following tangents to a root.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_secant",
+      "canonical_id": "pc_59d415efde12e955410195957cb2e9cf",
       "kind": "concept",
       "name": "Secant Method",
+      "name_zh": "割线法",
       "topic": "t_mit18330_root_finding",
       "description": "A derivative-free root-finding method approximating Newton's slope with a finite difference of recent iterates, converging superlinearly.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "割线法",
       "visual": "function",
-      "visual_hint": "Step the secant method using a chord to approach a root."
+      "visual_hint": "Step the secant method using a chord to approach a root.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_lu",
+      "canonical_id": "pc_365b937d8328d40e691e22d713152492",
       "kind": "concept",
       "name": "LU Factorization",
+      "name_zh": "LU 分解",
       "topic": "t_mit18330_linear_systems",
       "description": "Factoring a matrix into lower and upper triangular factors via Gaussian elimination, enabling efficient repeated solution of linear systems.",
       "default_order": 1,
       "centrality": 0.0775,
-      "name_zh": "LU 分解"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_cholesky",
+      "canonical_id": "pc_1d8479686ccc595e34205cc5a118a931",
       "kind": "concept",
       "name": "Cholesky Factorization",
+      "name_zh": "Cholesky 分解",
       "topic": "t_mit18330_linear_systems",
       "description": "A specialised factorisation of symmetric positive-definite matrices into a lower triangular factor times its transpose, faster than general LU.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "Cholesky 分解"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_iterative_linear",
+      "canonical_id": "pc_5a75ee05f145d9e223726b6f0fc59be7",
       "kind": "concept",
       "name": "Iterative Methods",
+      "name_zh": "迭代法",
       "topic": "t_mit18330_linear_systems",
       "description": "Iterative solvers such as Jacobi and Gauss-Seidel that refine an approximate solution to a linear system, suited to large sparse matrices.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "迭代法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_polynomial_interp",
+      "canonical_id": "pc_4034145337bdaae9379481a7abc44369",
       "kind": "concept",
       "name": "Polynomial Interpolation",
+      "name_zh": "多项式插值",
       "topic": "t_mit18330_interpolation",
       "description": "Constructing a polynomial passing through given data points, expressed in Lagrange or Newton form, to approximate functions between samples.",
       "default_order": 1,
       "centrality": 0.0775,
-      "name_zh": "多项式插值",
       "visual": "function",
-      "visual_hint": "Fit an interpolating polynomial through given data points."
+      "visual_hint": "Fit an interpolating polynomial through given data points.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_splines",
+      "canonical_id": "pc_927a54e0a486d8cc94a07e17b26cf5e5",
       "kind": "concept",
       "name": "Spline Interpolation",
+      "name_zh": "样条插值",
       "topic": "t_mit18330_interpolation",
       "description": "Piecewise low-degree polynomials joined smoothly at knots, avoiding the oscillation of high-degree interpolation while fitting data.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "样条插值",
       "visual": "function",
-      "visual_hint": "Fit a smooth piecewise spline through knots without oscillation."
+      "visual_hint": "Fit a smooth piecewise spline through knots without oscillation.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_least_squares",
+      "canonical_id": "pc_ea1e0c1f6f6b96b426b9641d319f71b0",
       "kind": "concept",
       "name": "Least Squares Approximation",
+      "name_zh": "最小二乘逼近",
       "topic": "t_mit18330_interpolation",
       "description": "Fitting overdetermined systems by minimising squared residuals, solved through the normal equations or orthogonal factorisations.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "最小二乘逼近",
       "visual": "function",
-      "visual_hint": "Fit a least-squares line minimising the squared residuals."
+      "visual_hint": "Fit a least-squares line minimising the squared residuals.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_newton_cotes",
+      "canonical_id": "pc_7af257eea265c94808fe3a9552d89587",
       "kind": "concept",
       "name": "Newton-Cotes Formulas",
+      "name_zh": "Newton-Cotes 公式",
       "topic": "t_mit18330_integration_odes",
       "description": "Numerical integration rules such as the trapezoidal and Simpson's rules that approximate integrals using equally spaced sample points.",
       "default_order": 1,
       "centrality": 0.0248,
-      "name_zh": "Newton-Cotes 公式",
       "visual": "function",
-      "visual_hint": "Approximate an integral with trapezoidal and Simpson's-rule strips."
+      "visual_hint": "Approximate an integral with trapezoidal and Simpson's-rule strips.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_gaussian_quad",
+      "canonical_id": "pc_a06967dbc0a8bdb5dde8a4bdb1bb249f",
       "kind": "concept",
       "name": "Gaussian Quadrature",
+      "name_zh": "高斯求积",
       "topic": "t_mit18330_integration_odes",
       "description": "Numerical integration choosing optimal nodes and weights to integrate polynomials of the highest possible degree exactly.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "高斯求积"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_euler",
+      "canonical_id": "pc_b519ec7d14dfd7d630b311da0a8ff71a",
       "kind": "concept",
       "name": "Euler's Method",
+      "name_zh": "欧拉法",
       "topic": "t_mit18330_integration_odes_mit18330_euler",
       "description": "The simplest numerical method for ODEs, stepping forward (explicit) or backward (implicit) using the slope to advance the solution.",
       "default_order": 1,
       "centrality": 0.0669,
-      "name_zh": "欧拉法",
       "visual": "function",
-      "visual_hint": "Step Euler's method along a slope field approximating an ODE solution."
+      "visual_hint": "Step Euler's method along a slope field approximating an ODE solution.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_runge_kutta",
+      "canonical_id": "pc_b852aaf8eb9ed4a7e75c0fc1380c89d2",
       "kind": "concept",
       "name": "Runge-Kutta Methods",
+      "name_zh": "Runge-Kutta 法",
       "topic": "t_mit18330_integration_odes_mit18330_euler",
       "description": "A family of higher-order explicit ODE methods, notably RK4, combining several slope evaluations per step for greater accuracy.",
       "default_order": 2,
       "centrality": 0.0248,
-      "name_zh": "Runge-Kutta 法",
       "visual": "function",
-      "visual_hint": "Compare RK4 against Euler approximating an ODE solution."
+      "visual_hint": "Compare RK4 against Euler approximating an ODE solution.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "c_mit18330_ode_stability",
+      "canonical_id": "pc_da18d8cf63043888c86a585b46a7d02a",
       "kind": "concept",
       "name": "Stability of ODE Methods",
+      "name_zh": "ODE 稳定性",
       "topic": "t_mit18330_integration_odes_mit18330_euler",
       "description": "Stability of ODE solvers, including A-stability and the difficulty stiff equations pose, which constrains the usable step size.",
       "default_order": 3,
       "centrality": 0.0248,
-      "name_zh": "ODE 稳定性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -259,97 +321,129 @@
       "from": "c_mit18330_floating_point",
       "to": "c_mit18330_error_analysis",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_conditioning",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_bisection",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_bisection",
       "to": "c_mit18330_newton",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_newton",
       "to": "c_mit18330_secant",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_conditioning",
       "to": "c_mit18330_lu",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_lu",
       "to": "c_mit18330_cholesky",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_lu",
       "to": "c_mit18330_iterative_linear",
       "type": "prereq",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_polynomial_interp",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_polynomial_interp",
       "to": "c_mit18330_splines",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_lu",
       "to": "c_mit18330_least_squares",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_polynomial_interp",
       "to": "c_mit18330_newton_cotes",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_polynomial_interp",
       "to": "c_mit18330_gaussian_quad",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_error_analysis",
       "to": "c_mit18330_euler",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_euler",
       "to": "c_mit18330_runge_kutta",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit18330_euler",
       "to": "c_mit18330_ode_stability",
       "type": "prereq",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

@@ -1,941 +1,1201 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "discrete_math_and_probability",
   "subject": "Discrete Math and Probability Theory",
-  "schema": {
-    "nodes": {
-      "topic": "A broad module containing 4-5 concepts",
-      "concept": "A minimal testable concept"
-    },
-    "edges": {
-      "contains": "Topic to concept inclusion",
-      "prereq": "Dependency relationship, property 'condition' specifies hard or soft"
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_discrete_math_and_probability"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
     }
-  },
+  ],
   "nodes": [
     {
       "id": "topic_logic",
       "kind": "topic",
       "name": "Propositional Logic and Direct Proofs",
+      "name_zh": "命题逻辑与直接证明",
       "topic": null,
       "default_order": 1,
-      "name_zh": "命题逻辑与直接证明"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_logic_proof_by_contraposition",
       "kind": "topic",
       "name": "Proof by Contraposition and Proof by Contradiction",
+      "name_zh": "逆否证明与反证法",
       "topic": null,
       "default_order": 2,
-      "name_zh": "逆否证明与反证法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_induction",
       "kind": "topic",
       "name": "Simple Induction and Strong Induction",
+      "name_zh": "简单归纳与强归纳",
       "topic": null,
       "default_order": 3,
-      "name_zh": "简单归纳与强归纳"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_induction_well_ordering_principle",
       "kind": "topic",
       "name": "Well-Ordering Principle and Structural Induction",
+      "name_zh": "良序原理与结构归纳",
       "topic": null,
       "default_order": 4,
-      "name_zh": "良序原理与结构归纳"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_matching",
       "kind": "topic",
       "name": "Stable Matching Problem and Gale-Shapley Algorithm",
+      "name_zh": "稳定匹配问题与Gale-Shapley算法",
       "topic": null,
       "default_order": 5,
-      "name_zh": "稳定匹配问题与Gale-Shapley算法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_matching_matching_optimality",
       "kind": "topic",
       "name": "Matching Optimality and Matching Pessimality",
+      "name_zh": "匹配最优性与匹配最差性",
       "topic": null,
       "default_order": 6,
-      "name_zh": "匹配最优性与匹配最差性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_graphs",
       "kind": "topic",
       "name": "Graph Basics and Eulerian Tours",
+      "name_zh": "图基础与欧拉回路",
       "topic": null,
       "default_order": 7,
-      "name_zh": "图基础与欧拉回路"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_graphs_trees",
       "kind": "topic",
       "name": "Trees, Planar Graphs, and Hypercubes",
+      "name_zh": "树、平面图与超立方体",
       "topic": null,
       "default_order": 8,
-      "name_zh": "树、平面图与超立方体"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_modular_arithmetic",
       "kind": "topic",
       "name": "Euclid's Algorithm and Extended Euclid",
+      "name_zh": "欧几里得算法与扩展欧几里得",
       "topic": null,
       "default_order": 9,
-      "name_zh": "欧几里得算法与扩展欧几里得"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_modular_arithmetic_chinese_remainder_theorem",
       "kind": "topic",
       "name": "Chinese Remainder Theorem and Fermat's Little Theorem",
+      "name_zh": "中国剩余定理与费马小定理",
       "topic": null,
       "default_order": 10,
-      "name_zh": "中国剩余定理与费马小定理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_crypto",
       "kind": "topic",
       "name": "Symmetric Cryptography and RSA Setup and Encryption",
+      "name_zh": "对称密码与RSA设置与加密",
       "topic": null,
       "default_order": 11,
-      "name_zh": "对称密码与RSA设置与加密"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_crypto_rsa_decryption_proof",
       "kind": "topic",
       "name": "RSA Decryption Proof and Digital Signatures",
+      "name_zh": "RSA解密证明与数字签名",
       "topic": null,
       "default_order": 12,
-      "name_zh": "RSA解密证明与数字签名"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_polynomials",
       "kind": "topic",
       "name": "Polynomial Roots and Degree and Polynomial Interpolation",
+      "name_zh": "多项式根与次数与多项式插值",
       "topic": null,
       "default_order": 13,
-      "name_zh": "多项式根与次数与多项式插值"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_polynomials_secret_sharing",
       "kind": "topic",
       "name": "Secret Sharing and Error Correcting Codes",
+      "name_zh": "秘密分享与纠错码",
       "topic": null,
       "default_order": 14,
-      "name_zh": "秘密分享与纠错码"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_countability_computability",
       "kind": "topic",
       "name": "Countability and Computability",
+      "name_zh": "可数性与可计算性",
       "topic": null,
       "default_order": 15,
-      "name_zh": "可数性与可计算性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_computability_counting",
       "kind": "topic",
       "name": "The Halting Problem and Undecidability",
+      "name_zh": "停机问题与不可判定性",
       "topic": null,
       "default_order": 16,
-      "name_zh": "停机问题与不可判定性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_computability_counting_basic_counting_rules",
       "kind": "topic",
       "name": "Basic Counting Rules and Combinations and Permutations",
+      "name_zh": "基础计数规则与组合与排列",
       "topic": null,
       "default_order": 17,
-      "name_zh": "基础计数规则与组合与排列"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_counting",
       "kind": "topic",
       "name": "Counting",
+      "name_zh": "计数",
       "topic": null,
       "default_order": 18,
-      "name_zh": "计数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_discrete_prob",
       "kind": "topic",
       "name": "Probability Spaces and Conditional Probability",
+      "name_zh": "概率空间与条件概率",
       "topic": null,
       "default_order": 19,
-      "name_zh": "概率空间与条件概率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_discrete_prob_bayes_rule",
       "kind": "topic",
       "name": "Bayes' Rule and Event Independence",
+      "name_zh": "贝叶斯法则与事件独立性",
       "topic": null,
       "default_order": 20,
-      "name_zh": "贝叶斯法则与事件独立性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_random_vars",
       "kind": "topic",
       "name": "Discrete Random Variables and Expectation",
+      "name_zh": "离散随机变量与期望",
       "topic": null,
       "default_order": 21,
-      "name_zh": "离散随机变量与期望"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_random_vars_linearity_of_expectation",
       "kind": "topic",
       "name": "Linearity of Expectation and Variance and Covariance",
+      "name_zh": "期望的线性与方差与协方差",
       "topic": null,
       "default_order": 22,
-      "name_zh": "期望的线性与方差与协方差"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_discrete_dists",
       "kind": "topic",
       "name": "Bernoulli and Binomial Distributions and Geometric Distribution",
+      "name_zh": "伯努利与二项分布与几何分布",
       "topic": null,
       "default_order": 23,
-      "name_zh": "伯努利与二项分布与几何分布"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_discrete_dists_poisson_distribution",
       "kind": "topic",
       "name": "Poisson Distribution and Hypergeometric Distribution",
+      "name_zh": "泊松分布与超几何分布",
       "topic": null,
       "default_order": 24,
-      "name_zh": "泊松分布与超几何分布"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_continuous_prob",
       "kind": "topic",
       "name": "Continuous Probability",
+      "name_zh": "连续概率",
       "topic": null,
       "default_order": 25,
-      "name_zh": "连续概率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_continuous_concentration",
       "kind": "topic",
       "name": "Uniform and Exponential Distributions and Normal Distribution",
+      "name_zh": "均匀与指数分布与正态分布",
       "topic": null,
       "default_order": 26,
-      "name_zh": "均匀与指数分布与正态分布"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_continuous_concentration_markovs_inequality",
       "kind": "topic",
       "name": "Markov's Inequality and Chebyshev's Inequality",
+      "name_zh": "马尔可夫不等式与切比雪夫不等式",
       "topic": null,
       "default_order": 27,
-      "name_zh": "马尔可夫不等式与切比雪夫不等式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_concentration",
       "kind": "topic",
       "name": "Concentration Inequalities",
+      "name_zh": "集中不等式",
       "topic": null,
       "default_order": 28,
-      "name_zh": "集中不等式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_markov",
       "kind": "topic",
       "name": "Markov Chains Basics and Hitting Times",
+      "name_zh": "马尔可夫链基础与首达时间",
       "topic": null,
       "default_order": 29,
-      "name_zh": "马尔可夫链基础与首达时间"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_markov_stationary_distributions",
       "kind": "topic",
       "name": "Stationary Distributions and PageRank Algorithm",
+      "name_zh": "平稳分布与PageRank 算法",
       "topic": null,
       "default_order": 30,
-      "name_zh": "平稳分布与PageRank 算法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "propositional_logic",
-      "topic": "topic_logic",
-      "name": "Propositional Logic",
+      "canonical_id": "pc_d5bec4f6173c3415d0f2a5968a66c69d",
       "kind": "concept",
+      "name": "Propositional Logic",
+      "name_zh": "命题逻辑",
+      "topic": "topic_logic",
+      "description": "The study of propositions combined with logical connectives such as and, or, not, and implication, with truth tables defining their meaning.",
       "default_order": 1,
       "centrality": 0.5144,
-      "description": "The study of propositions combined with logical connectives such as and, or, not, and implication, with truth tables defining their meaning.",
-      "name_zh": "命题逻辑"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "direct_proofs",
-      "topic": "topic_logic",
-      "name": "Direct Proofs",
+      "canonical_id": "pc_fe7515e47a3858a7ed714ad02916b6fb",
       "kind": "concept",
+      "name": "Direct Proofs",
+      "name_zh": "直接证明",
+      "topic": "topic_logic",
+      "description": "A proof technique establishing an implication by assuming the hypothesis and deducing the conclusion through a chain of valid logical steps.",
       "default_order": 2,
       "centrality": 0.4203,
-      "description": "A proof technique establishing an implication by assuming the hypothesis and deducing the conclusion through a chain of valid logical steps.",
-      "name_zh": "直接证明"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "proof_by_contraposition",
-      "topic": "topic_logic_proof_by_contraposition",
-      "name": "Proof by Contraposition",
+      "canonical_id": "pc_9692c6701fd953686d4f672caedfa333",
       "kind": "concept",
+      "name": "Proof by Contraposition",
+      "name_zh": "逆否证明",
+      "topic": "topic_logic_proof_by_contraposition",
+      "description": "Proving an implication 'p implies q' by instead proving its logically equivalent contrapositive, 'not q implies not p'.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Proving an implication 'p implies q' by instead proving its logically equivalent contrapositive, 'not q implies not p'.",
-      "name_zh": "逆否证明"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "proof_by_contradiction",
-      "topic": "topic_logic_proof_by_contraposition",
-      "name": "Proof by Contradiction",
+      "canonical_id": "pc_b910dffe73b0166ffccb081792c534cb",
       "kind": "concept",
+      "name": "Proof by Contradiction",
+      "name_zh": "反证法",
+      "topic": "topic_logic_proof_by_contraposition",
+      "description": "Proving a statement by assuming its negation and deriving a logical contradiction, forcing the original statement to be true.",
       "default_order": 2,
       "centrality": 0.1309,
-      "description": "Proving a statement by assuming its negation and deriving a logical contradiction, forcing the original statement to be true.",
-      "name_zh": "反证法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "simple_induction",
-      "topic": "topic_induction",
-      "name": "Simple Induction",
+      "canonical_id": "pc_df97475e26e51590665327783b653a8a",
       "kind": "concept",
+      "name": "Simple Induction",
+      "name_zh": "简单归纳",
+      "topic": "topic_induction",
+      "description": "Mathematical induction proving a statement for all naturals by establishing a base case and an inductive step from n to n+1.",
       "default_order": 1,
       "centrality": 0.4653,
-      "description": "Mathematical induction proving a statement for all naturals by establishing a base case and an inductive step from n to n+1.",
-      "name_zh": "简单归纳",
       "visual": "diagram",
-      "visual_hint": "Domino-chain diagram of the induction base case and inductive step."
+      "visual_hint": "Domino-chain diagram of the induction base case and inductive step.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "strong_induction",
-      "topic": "topic_induction",
-      "name": "Strong Induction",
+      "canonical_id": "pc_6edf3a384624ff002beb27e079cb5313",
       "kind": "concept",
+      "name": "Strong Induction",
+      "name_zh": "强归纳",
+      "topic": "topic_induction",
+      "description": "A variant of induction whose inductive step may assume the statement for all smaller values, not just the immediate predecessor.",
       "default_order": 2,
       "centrality": 0.0459,
-      "description": "A variant of induction whose inductive step may assume the statement for all smaller values, not just the immediate predecessor.",
-      "name_zh": "强归纳"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "well_ordering_principle",
-      "topic": "topic_induction_well_ordering_principle",
-      "name": "Well-Ordering Principle",
+      "canonical_id": "pc_49f678bd425946deafa412f5edf0ab5b",
       "kind": "concept",
+      "name": "Well-Ordering Principle",
+      "name_zh": "良序原理",
+      "topic": "topic_induction_well_ordering_principle",
+      "description": "The principle that every nonempty set of natural numbers contains a least element, equivalent to and underpinning induction.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "The principle that every nonempty set of natural numbers contains a least element, equivalent to and underpinning induction.",
-      "name_zh": "良序原理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "structural_induction",
-      "topic": "topic_induction_well_ordering_principle",
-      "name": "Structural Induction",
+      "canonical_id": "pc_8c68f8c7e7e97eed75edeb8449ee514f",
       "kind": "concept",
+      "name": "Structural Induction",
+      "name_zh": "结构归纳",
+      "topic": "topic_induction_well_ordering_principle",
+      "description": "Induction over recursively defined structures, proving a property holds for base cases and is preserved by the construction rules.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Induction over recursively defined structures, proving a property holds for base cases and is preserved by the construction rules.",
-      "name_zh": "结构归纳"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "stable_matching_problem",
-      "topic": "topic_matching",
-      "name": "Stable Matching Problem",
+      "canonical_id": "pc_e36c6bd1aa1b6659d2ba34ee71154ae6",
       "kind": "concept",
+      "name": "Stable Matching Problem",
+      "name_zh": "稳定匹配问题",
+      "topic": "topic_matching",
+      "description": "The problem of pairing two sides given preferences so that no two unmatched participants both prefer each other over their assigned partners.",
       "default_order": 1,
       "centrality": 0.079,
-      "description": "The problem of pairing two sides given preferences so that no two unmatched participants both prefer each other over their assigned partners.",
-      "name_zh": "稳定匹配问题"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "gale_shapley_algorithm",
-      "topic": "topic_matching",
-      "name": "Gale-Shapley Algorithm",
+      "canonical_id": "pc_4c057459af74142f3c2b6d00a99c513d",
       "kind": "concept",
+      "name": "Gale-Shapley Algorithm",
+      "name_zh": "Gale-Shapley算法",
+      "topic": "topic_matching",
+      "description": "The Gale-Shapley deferred-acceptance algorithm producing a stable matching through rounds of proposals and tentative acceptances.",
       "default_order": 2,
       "centrality": 0.0638,
-      "description": "The Gale-Shapley deferred-acceptance algorithm producing a stable matching through rounds of proposals and tentative acceptances.",
-      "name_zh": "Gale-Shapley算法",
       "visual": "algorithm",
-      "visual_hint": "Step the Gale-Shapley deferred-acceptance proposals to a stable matching."
+      "visual_hint": "Step the Gale-Shapley deferred-acceptance proposals to a stable matching.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "matching_optimality",
-      "topic": "topic_matching_matching_optimality",
-      "name": "Matching Optimality",
+      "canonical_id": "pc_d891548818f91a8fdfb9e5d672d4d103",
       "kind": "concept",
+      "name": "Matching Optimality",
+      "name_zh": "匹配最优性",
+      "topic": "topic_matching_matching_optimality",
+      "description": "The result that Gale-Shapley yields the matching most preferred by every member of the proposing side among all stable matchings.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "The result that Gale-Shapley yields the matching most preferred by every member of the proposing side among all stable matchings.",
-      "name_zh": "匹配最优性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "matching_pessimality",
-      "topic": "topic_matching_matching_optimality",
-      "name": "Matching Pessimality",
+      "canonical_id": "pc_87fb1f6a4a48a48c539d90edff96fb82",
       "kind": "concept",
+      "name": "Matching Pessimality",
+      "name_zh": "匹配最差性",
+      "topic": "topic_matching_matching_optimality",
+      "description": "The corresponding result that the proposing-side-optimal matching is simultaneously the worst stable matching for the receiving side.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The corresponding result that the proposing-side-optimal matching is simultaneously the worst stable matching for the receiving side.",
-      "name_zh": "匹配最差性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "graph_basics",
-      "topic": "topic_graphs",
-      "name": "Graph Basics",
+      "canonical_id": "pc_5b4123f6094b63c51e7ac9e7cc68ea8e",
       "kind": "concept",
+      "name": "Graph Basics",
+      "name_zh": "图基础",
+      "topic": "topic_graphs",
+      "description": "Graphs as sets of vertices joined by edges, with the fundamental notions of degree, paths, connectivity, and cycles.",
       "default_order": 1,
       "centrality": 0.1873,
-      "description": "Graphs as sets of vertices joined by edges, with the fundamental notions of degree, paths, connectivity, and cycles.",
-      "name_zh": "图基础",
       "visual": "diagram",
-      "visual_hint": "Diagram vertices and edges with degree and adjacency."
+      "visual_hint": "Diagram vertices and edges with degree and adjacency.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "eulerian_tours",
-      "topic": "topic_graphs",
-      "name": "Eulerian Tours",
+      "canonical_id": "pc_ec269c01a7112c859fdeea4fe1e54bde",
       "kind": "concept",
+      "name": "Eulerian Tours",
+      "name_zh": "欧拉回路",
+      "topic": "topic_graphs",
+      "description": "Closed walks traversing every edge exactly once, existing precisely when a graph is connected with all vertices of even degree.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Closed walks traversing every edge exactly once, existing precisely when a graph is connected with all vertices of even degree.",
-      "name_zh": "欧拉回路",
       "visual": "algorithm",
-      "visual_hint": "Trace an Eulerian tour visiting every edge once."
+      "visual_hint": "Trace an Eulerian tour visiting every edge once.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "trees",
-      "topic": "topic_graphs_trees",
-      "name": "Trees",
+      "canonical_id": "pc_66d2f94ec12953d388c8e69a7dc2c689",
       "kind": "concept",
+      "name": "Trees",
+      "name_zh": "树",
+      "topic": "topic_graphs_trees",
+      "description": "Connected acyclic graphs, equivalently graphs with a unique path between any two vertices, having exactly one fewer edge than vertices.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "Connected acyclic graphs, equivalently graphs with a unique path between any two vertices, having exactly one fewer edge than vertices.",
-      "name_zh": "树",
       "visual": "diagram",
-      "visual_hint": "Diagram a tree as a connected acyclic graph with a unique path between nodes."
+      "visual_hint": "Diagram a tree as a connected acyclic graph with a unique path between nodes.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "planar_graphs",
-      "topic": "topic_graphs_trees",
-      "name": "Planar Graphs",
+      "canonical_id": "pc_48712b750583ab4dab54780d8560cffb",
       "kind": "concept",
+      "name": "Planar Graphs",
+      "name_zh": "平面图",
+      "topic": "topic_graphs_trees",
+      "description": "Graphs drawable in the plane without edge crossings, constrained by Euler's formula relating vertices, edges, and faces.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Graphs drawable in the plane without edge crossings, constrained by Euler's formula relating vertices, edges, and faces.",
-      "name_zh": "平面图",
       "visual": "diagram",
-      "visual_hint": "Draw a planar graph without edge crossings and check Euler's formula."
+      "visual_hint": "Draw a planar graph without edge crossings and check Euler's formula.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "hypercubes",
-      "topic": "topic_graphs_trees",
-      "name": "Hypercubes",
+      "canonical_id": "pc_804c70f6010312947dcdd55f55b9c123",
       "kind": "concept",
+      "name": "Hypercubes",
+      "name_zh": "超立方体",
+      "topic": "topic_graphs_trees",
+      "description": "Recursively defined hypercube graphs whose vertices are binary strings, with edges joining strings that differ in a single bit.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Recursively defined hypercube graphs whose vertices are binary strings, with edges joining strings that differ in a single bit.",
-      "name_zh": "超立方体",
       "visual": "diagram",
-      "visual_hint": "Diagram the recursive construction of hypercube graphs."
+      "visual_hint": "Diagram the recursive construction of hypercube graphs.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "euclids_algorithm",
-      "topic": "topic_modular_arithmetic",
-      "name": "Euclid's Algorithm",
+      "canonical_id": "pc_b3985cda1103975b8eb695f059280c17",
       "kind": "concept",
+      "name": "Euclid's Algorithm",
+      "name_zh": "欧几里得算法",
+      "topic": "topic_modular_arithmetic",
+      "description": "Euclid's algorithm computing the greatest common divisor of two integers by repeatedly replacing the larger with its remainder modulo the smaller.",
       "default_order": 1,
       "centrality": 0.1818,
-      "description": "Euclid's algorithm computing the greatest common divisor of two integers by repeatedly replacing the larger with its remainder modulo the smaller.",
-      "name_zh": "欧几里得算法",
       "visual": "algorithm",
-      "visual_hint": "Step Euclid's algorithm reducing the pair until the GCD remains."
+      "visual_hint": "Step Euclid's algorithm reducing the pair until the GCD remains.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "extended_euclid",
-      "topic": "topic_modular_arithmetic",
-      "name": "Extended Euclid",
+      "canonical_id": "pc_79a9f743f6f46066b07226e7b6ddd778",
       "kind": "concept",
+      "name": "Extended Euclid",
+      "name_zh": "扩展欧几里得",
+      "topic": "topic_modular_arithmetic",
+      "description": "The extended Euclidean algorithm computing Bézout coefficients that express the gcd as an integer combination, yielding modular inverses.",
       "default_order": 2,
       "centrality": 0.1847,
-      "description": "The extended Euclidean algorithm computing Bézout coefficients that express the gcd as an integer combination, yielding modular inverses.",
-      "name_zh": "扩展欧几里得"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "chinese_remainder_theorem",
-      "topic": "topic_modular_arithmetic_chinese_remainder_theorem",
-      "name": "Chinese Remainder Theorem",
+      "canonical_id": "pc_51f6f9339ea4c4310c6b3f939bab415c",
       "kind": "concept",
+      "name": "Chinese Remainder Theorem",
+      "name_zh": "中国剩余定理",
+      "topic": "topic_modular_arithmetic_chinese_remainder_theorem",
+      "description": "The Chinese remainder theorem giving a unique solution modulo the product for a system of congruences with pairwise coprime moduli.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "The Chinese remainder theorem giving a unique solution modulo the product for a system of congruences with pairwise coprime moduli.",
-      "name_zh": "中国剩余定理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "fermats_little_theorem",
-      "topic": "topic_modular_arithmetic_chinese_remainder_theorem",
-      "name": "Fermat's Little Theorem",
+      "canonical_id": "pc_a91b817595b4a4beb8e4abaf08b553af",
       "kind": "concept",
+      "name": "Fermat's Little Theorem",
+      "name_zh": "费马小定理",
+      "topic": "topic_modular_arithmetic_chinese_remainder_theorem",
+      "description": "Fermat's little theorem stating that a raised to the power p minus one is congruent to one modulo a prime p not dividing a.",
       "default_order": 2,
       "centrality": 0.0817,
-      "description": "Fermat's little theorem stating that a raised to the power p minus one is congruent to one modulo a prime p not dividing a.",
-      "name_zh": "费马小定理"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "symmetric_cryptography",
-      "topic": "topic_crypto",
-      "name": "Symmetric Cryptography",
+      "canonical_id": "pc_9b66f2d2615f9321f73830dd3fbf9f85",
       "kind": "concept",
+      "name": "Symmetric Cryptography",
+      "name_zh": "对称密码",
+      "topic": "topic_crypto",
+      "description": "Encryption schemes where sender and receiver share a single secret key used for both encryption and decryption of messages.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Encryption schemes where sender and receiver share a single secret key used for both encryption and decryption of messages.",
-      "name_zh": "对称密码"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "rsa_setup_and_encryption",
-      "topic": "topic_crypto",
-      "name": "RSA Setup and Encryption",
+      "canonical_id": "pc_7e18656dc8b6c9f4b90de447117f3ee2",
       "kind": "concept",
+      "name": "RSA Setup and Encryption",
+      "name_zh": "RSA设置与加密",
+      "topic": "topic_crypto",
+      "description": "The RSA public-key scheme generating keys from two large primes and encrypting messages by modular exponentiation with the public exponent.",
       "default_order": 2,
       "centrality": 0.0669,
-      "description": "The RSA public-key scheme generating keys from two large primes and encrypting messages by modular exponentiation with the public exponent.",
-      "name_zh": "RSA设置与加密"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "rsa_decryption_proof",
-      "topic": "topic_crypto_rsa_decryption_proof",
-      "name": "RSA Decryption Proof",
+      "canonical_id": "pc_fde74475d4de2692d550e06c9d528491",
       "kind": "concept",
+      "name": "RSA Decryption Proof",
+      "name_zh": "RSA解密证明",
+      "topic": "topic_crypto_rsa_decryption_proof",
+      "description": "The proof that RSA decryption inverts encryption, relying on Euler's theorem and the relationship between the public and private exponents.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "The proof that RSA decryption inverts encryption, relying on Euler's theorem and the relationship between the public and private exponents.",
-      "name_zh": "RSA解密证明"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "digital_signatures",
-      "topic": "topic_crypto_rsa_decryption_proof",
-      "name": "Digital Signatures",
+      "canonical_id": "pc_18d201852c8f041d0c43fd60c23873f6",
       "kind": "concept",
+      "name": "Digital Signatures",
+      "name_zh": "数字签名",
+      "topic": "topic_crypto_rsa_decryption_proof",
+      "description": "Cryptographic signatures authenticating a message by signing with a private key so that anyone can verify authenticity with the public key.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Cryptographic signatures authenticating a message by signing with a private key so that anyone can verify authenticity with the public key.",
-      "name_zh": "数字签名"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "polynomial_roots_and_degree",
-      "topic": "topic_polynomials",
-      "name": "Polynomial Roots and Degree",
+      "canonical_id": "pc_5d57009d5ff9b9dc7fc1628d6c1d8aa3",
       "kind": "concept",
+      "name": "Polynomial Roots and Degree",
+      "name_zh": "多项式根与次数",
+      "topic": "topic_polynomials",
+      "description": "Properties of polynomials over a field, including that a nonzero degree-d polynomial has at most d roots, used throughout the course.",
       "default_order": 1,
       "centrality": 0.0817,
-      "description": "Properties of polynomials over a field, including that a nonzero degree-d polynomial has at most d roots, used throughout the course.",
-      "name_zh": "多项式根与次数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "polynomial_interpolation",
-      "topic": "topic_polynomials",
-      "name": "Polynomial Interpolation",
+      "canonical_id": "pc_256b19aeee3d4707363b64510c81960d",
       "kind": "concept",
+      "name": "Polynomial Interpolation",
+      "name_zh": "多项式插值",
+      "topic": "topic_polynomials",
+      "description": "The fact that d+1 points uniquely determine a degree-d polynomial, recovered by Lagrange interpolation over a field.",
       "default_order": 2,
       "centrality": 0.0669,
-      "description": "The fact that d+1 points uniquely determine a degree-d polynomial, recovered by Lagrange interpolation over a field.",
-      "name_zh": "多项式插值"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "secret_sharing",
-      "topic": "topic_polynomials_secret_sharing",
-      "name": "Secret Sharing",
+      "canonical_id": "pc_293d46b09d010b020ef9f88b8138f746",
       "kind": "concept",
+      "name": "Secret Sharing",
+      "name_zh": "秘密分享",
+      "topic": "topic_polynomials_secret_sharing",
+      "description": "Shamir's secret sharing splitting a secret among parties as points on a polynomial so that any sufficient subset can reconstruct it.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Shamir's secret sharing splitting a secret among parties as points on a polynomial so that any sufficient subset can reconstruct it.",
-      "name_zh": "秘密分享"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "error_correcting_codes",
-      "topic": "topic_polynomials_secret_sharing",
-      "name": "Error Correcting Codes",
+      "canonical_id": "pc_a15a8a6a41428eb1b5a7fcf1bdcdd9e5",
       "kind": "concept",
+      "name": "Error Correcting Codes",
+      "name_zh": "纠错码",
+      "topic": "topic_polynomials_secret_sharing",
+      "description": "Polynomial-based codes such as Reed-Solomon adding redundancy so messages can be recovered despite a bounded number of errors or erasures.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Polynomial-based codes such as Reed-Solomon adding redundancy so messages can be recovered despite a bounded number of errors or erasures.",
-      "name_zh": "纠错码"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bijections_and_cardinality",
-      "topic": "topic_countability_computability",
-      "name": "Bijections and Cardinality",
+      "canonical_id": "pc_febd186ab8286acbeeb07f908ce9764b",
       "kind": "concept",
+      "name": "Bijections and Cardinality",
+      "name_zh": "双射与基数",
+      "topic": "topic_countability_computability",
+      "description": "Comparing the sizes of sets using bijections, defining two sets as equinumerous when a one-to-one correspondence exists between them.",
       "default_order": 1,
       "centrality": 0.0638,
-      "description": "Comparing the sizes of sets using bijections, defining two sets as equinumerous when a one-to-one correspondence exists between them.",
-      "name_zh": "双射与基数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "cantors_diagonalization",
-      "topic": "topic_countability_computability",
-      "name": "Cantor's Diagonalization",
+      "canonical_id": "pc_527ad7aed5e98dedd503037f66ead072",
       "kind": "concept",
+      "name": "Cantor's Diagonalization",
+      "name_zh": "康托尔对角线法",
+      "topic": "topic_countability_computability",
+      "description": "Cantor's diagonal argument constructing an element differing from every member of a list, proving that certain sets are uncountable.",
       "default_order": 2,
       "centrality": 0.0459,
-      "description": "Cantor's diagonal argument constructing an element differing from every member of a list, proving that certain sets are uncountable.",
-      "name_zh": "康托尔对角线法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "uncountability_of_reals",
-      "topic": "topic_countability_computability",
-      "name": "Uncountability of Reals",
+      "canonical_id": "pc_041f095c223065889ece40ba12161621",
       "kind": "concept",
+      "name": "Uncountability of Reals",
+      "name_zh": "实数不可数性",
+      "topic": "topic_countability_computability",
+      "description": "The proof, via diagonalization, that the real numbers cannot be put in bijection with the naturals and are therefore uncountable.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "The proof, via diagonalization, that the real numbers cannot be put in bijection with the naturals and are therefore uncountable.",
-      "name_zh": "实数不可数性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "the_halting_problem",
-      "topic": "topic_computability_counting",
-      "name": "The Halting Problem",
+      "canonical_id": "pc_717de483b0345e6aaf5bef54780a9eb9",
       "kind": "concept",
+      "name": "The Halting Problem",
+      "name_zh": "停机问题",
+      "topic": "topic_computability_counting",
+      "description": "The halting problem, the undecidable task of determining whether an arbitrary program halts on a given input, proved by diagonalization.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "The halting problem, the undecidable task of determining whether an arbitrary program halts on a given input, proved by diagonalization.",
-      "name_zh": "停机问题"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "undecidability",
-      "topic": "topic_computability_counting",
-      "name": "Undecidability",
+      "canonical_id": "pc_c03ef2209cb6fd1be87a40fa3ed9a1cf",
       "kind": "concept",
+      "name": "Undecidability",
+      "name_zh": "不可判定性",
+      "topic": "topic_computability_counting",
+      "description": "The existence of well-defined problems that no algorithm can solve for all inputs, established by reduction from the halting problem.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The existence of well-defined problems that no algorithm can solve for all inputs, established by reduction from the halting problem.",
-      "name_zh": "不可判定性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "basic_counting_rules",
-      "topic": "topic_computability_counting_basic_counting_rules",
-      "name": "Basic Counting Rules",
+      "canonical_id": "pc_ed1975437bea9857b07a63df257a2fab",
       "kind": "concept",
+      "name": "Basic Counting Rules",
+      "name_zh": "基础计数规则",
+      "topic": "topic_computability_counting_basic_counting_rules",
+      "description": "The fundamental sum and product rules counting the outcomes of disjoint choices and of sequences of independent choices.",
       "default_order": 1,
       "centrality": 0.8696,
-      "description": "The fundamental sum and product rules counting the outcomes of disjoint choices and of sequences of independent choices.",
-      "name_zh": "基础计数规则"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "combinations_permutations",
-      "topic": "topic_computability_counting_basic_counting_rules",
-      "name": "Combinations and Permutations",
+      "canonical_id": "pc_4fc75b6c1b1cfa0437d46dbc1908097c",
       "kind": "concept",
+      "name": "Combinations and Permutations",
+      "name_zh": "组合与排列",
+      "topic": "topic_computability_counting_basic_counting_rules",
+      "description": "Counting ordered selections (permutations) and unordered selections (combinations) of items from a set, with their factorial formulas.",
       "default_order": 2,
       "centrality": 0.0669,
-      "description": "Counting ordered selections (permutations) and unordered selections (combinations) of items from a set, with their factorial formulas.",
-      "name_zh": "组合与排列",
       "visual": "diagram",
-      "visual_hint": "Decision-tree diagram of ordered and unordered selections."
+      "visual_hint": "Decision-tree diagram of ordered and unordered selections.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "combinatorial_proofs",
-      "topic": "topic_counting",
-      "name": "Combinatorial Proofs",
+      "canonical_id": "pc_4cc02594e33054da222655e16cbe2dae",
       "kind": "concept",
+      "name": "Combinatorial Proofs",
+      "name_zh": "组合证明",
+      "topic": "topic_counting",
+      "description": "Proving identities by counting the same quantity in two different ways, showing that the two expressions must be equal.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Proving identities by counting the same quantity in two different ways, showing that the two expressions must be equal.",
-      "name_zh": "组合证明"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "stars_and_bars",
-      "topic": "topic_counting",
-      "name": "Stars and Bars",
+      "canonical_id": "pc_0d02d24165455aea7be449388dc5e372",
       "kind": "concept",
+      "name": "Stars and Bars",
+      "name_zh": "星号与条形法",
+      "topic": "topic_counting",
+      "description": "The stars-and-bars technique counting the nonnegative integer solutions of an equation, equivalently distributions of identical items into bins.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The stars-and-bars technique counting the nonnegative integer solutions of an equation, equivalently distributions of identical items into bins.",
-      "name_zh": "星号与条形法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "inclusion_exclusion",
-      "topic": "topic_counting",
-      "name": "Inclusion-Exclusion",
+      "canonical_id": "pc_179acf6ee29ee1fe052b51560d8dcc76",
       "kind": "concept",
+      "name": "Inclusion-Exclusion",
+      "name_zh": "容斥原理",
+      "topic": "topic_counting",
+      "description": "The inclusion-exclusion principle counting the size of a union by alternately adding and subtracting the sizes of intersections.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "The inclusion-exclusion principle counting the size of a union by alternately adding and subtracting the sizes of intersections.",
-      "name_zh": "容斥原理",
       "visual": "diagram",
-      "visual_hint": "Venn-style diagram of the alternating inclusion-exclusion sum."
+      "visual_hint": "Venn-style diagram of the alternating inclusion-exclusion sum.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "probability_spaces",
-      "topic": "topic_discrete_prob",
-      "name": "Probability Spaces",
+      "canonical_id": "pc_4dc6f43a3fef8af04213c7aa936a2031",
       "kind": "concept",
+      "name": "Probability Spaces",
+      "name_zh": "概率空间",
+      "topic": "topic_discrete_prob",
+      "description": "A probability space comprising a sample space of outcomes, events as subsets, and a probability measure satisfying Kolmogorov's axioms.",
       "default_order": 1,
       "centrality": 0.8897,
-      "description": "A probability space comprising a sample space of outcomes, events as subsets, and a probability measure satisfying Kolmogorov's axioms.",
-      "name_zh": "概率空间"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "conditional_probability",
-      "topic": "topic_discrete_prob",
-      "name": "Conditional Probability",
+      "canonical_id": "pc_41665cc8086f7dedb65c12adb4dc9ca6",
       "kind": "concept",
+      "name": "Conditional Probability",
+      "name_zh": "条件概率",
+      "topic": "topic_discrete_prob",
+      "description": "The probability of an event given that another has occurred, defined by normalising their joint probability by the conditioning event's probability.",
       "default_order": 2,
       "centrality": 0.285,
-      "description": "The probability of an event given that another has occurred, defined by normalising their joint probability by the conditioning event's probability.",
-      "name_zh": "条件概率"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bayes_rule",
-      "topic": "topic_discrete_prob_bayes_rule",
-      "name": "Bayes' Rule",
+      "canonical_id": "pc_0d586d859f7281e0164ef0443e297633",
       "kind": "concept",
+      "name": "Bayes' Rule",
+      "name_zh": "贝叶斯法则",
+      "topic": "topic_discrete_prob_bayes_rule",
+      "description": "Bayes' rule inverting conditional probabilities to update the probability of a hypothesis given evidence, combining priors and likelihoods.",
       "default_order": 1,
       "centrality": 0.0662,
-      "description": "Bayes' rule inverting conditional probabilities to update the probability of a hypothesis given evidence, combining priors and likelihoods.",
-      "name_zh": "贝叶斯法则",
       "visual": "diagram",
-      "visual_hint": "Tree diagram inverting conditional probabilities with Bayes' rule."
+      "visual_hint": "Tree diagram inverting conditional probabilities with Bayes' rule.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "event_independence",
-      "topic": "topic_discrete_prob_bayes_rule",
-      "name": "Event Independence",
+      "canonical_id": "pc_e49409332f2ff6e17899d2b7d3e6d7fe",
       "kind": "concept",
+      "name": "Event Independence",
+      "name_zh": "事件独立性",
+      "topic": "topic_discrete_prob_bayes_rule",
+      "description": "Two events are independent when the occurrence of one does not change the probability of the other, equivalently their joint equals the product.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Two events are independent when the occurrence of one does not change the probability of the other, equivalently their joint equals the product.",
-      "name_zh": "事件独立性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "discrete_random_variables",
-      "topic": "topic_random_vars",
-      "name": "Discrete Random Variables",
+      "canonical_id": "pc_5820b8687540b56f80968bdb114b5afe",
       "kind": "concept",
+      "name": "Discrete Random Variables",
+      "name_zh": "离散随机变量",
+      "topic": "topic_random_vars",
+      "description": "Random variables taking values in a discrete set, described by a probability mass function assigning probabilities to each possible value.",
       "default_order": 1,
       "centrality": 0.4165,
-      "description": "Random variables taking values in a discrete set, described by a probability mass function assigning probabilities to each possible value.",
-      "name_zh": "离散随机变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "expectation",
-      "topic": "topic_random_vars",
-      "name": "Expectation",
+      "canonical_id": "pc_d9a0d8a8f6fc271c56cb2d9dde6576ec",
       "kind": "concept",
+      "name": "Expectation",
+      "name_zh": "期望",
+      "topic": "topic_random_vars",
+      "description": "The expectation of a random variable, its probability-weighted average value, summarising the centre of its distribution.",
       "default_order": 2,
       "centrality": 0.2213,
-      "description": "The expectation of a random variable, its probability-weighted average value, summarising the centre of its distribution.",
-      "name_zh": "期望"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "linearity_of_expectation",
-      "topic": "topic_random_vars_linearity_of_expectation",
-      "name": "Linearity of Expectation",
+      "canonical_id": "pc_b6750b642b1740984d0882a287a035df",
       "kind": "concept",
+      "name": "Linearity of Expectation",
+      "name_zh": "期望的线性",
+      "topic": "topic_random_vars_linearity_of_expectation",
+      "description": "The property that the expectation of a sum equals the sum of expectations, holding even when the variables are dependent.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "The property that the expectation of a sum equals the sum of expectations, holding even when the variables are dependent.",
-      "name_zh": "期望的线性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "variance_and_covariance",
-      "topic": "topic_random_vars_linearity_of_expectation",
-      "name": "Variance and Covariance",
+      "canonical_id": "pc_8d0a38a8e8f86cd83ae1f091a62f2cad",
       "kind": "concept",
+      "name": "Variance and Covariance",
+      "name_zh": "方差与协方差",
+      "topic": "topic_random_vars_linearity_of_expectation",
+      "description": "Variance measuring a variable's spread about its mean, and covariance measuring the degree to which two variables vary together.",
       "default_order": 2,
       "centrality": 0.0481,
-      "description": "Variance measuring a variable's spread about its mean, and covariance measuring the degree to which two variables vary together.",
-      "name_zh": "方差与协方差"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bernoulli_binomial_distributions",
-      "topic": "topic_discrete_dists",
-      "name": "Bernoulli and Binomial Distributions",
+      "canonical_id": "pc_0fc276b900647a3e308ddab8a237ead5",
       "kind": "concept",
+      "name": "Bernoulli and Binomial Distributions",
+      "name_zh": "伯努利与二项分布",
+      "topic": "topic_discrete_dists",
+      "description": "The Bernoulli distribution modelling a single success/failure trial and the binomial modelling the number of successes in independent trials.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "The Bernoulli distribution modelling a single success/failure trial and the binomial modelling the number of successes in independent trials.",
-      "name_zh": "伯努利与二项分布",
       "visual": "chart",
-      "visual_hint": "Bar chart of the binomial distribution with sliders for n and p."
+      "visual_hint": "Bar chart of the binomial distribution with sliders for n and p.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "geometric_distribution",
-      "topic": "topic_discrete_dists",
-      "name": "Geometric Distribution",
+      "canonical_id": "pc_6cfd2d4ead9cfe1bee0c6681f41206be",
       "kind": "concept",
+      "name": "Geometric Distribution",
+      "name_zh": "几何分布",
+      "topic": "topic_discrete_dists",
+      "description": "The geometric distribution modelling the number of independent Bernoulli trials until the first success, with its memoryless property.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The geometric distribution modelling the number of independent Bernoulli trials until the first success, with its memoryless property.",
-      "name_zh": "几何分布",
       "visual": "chart",
-      "visual_hint": "Bar chart of the geometric distribution."
+      "visual_hint": "Bar chart of the geometric distribution.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "poisson_distribution",
-      "topic": "topic_discrete_dists_poisson_distribution",
-      "name": "Poisson Distribution",
+      "canonical_id": "pc_d3e1d025e365c8dfa8abca60e870ca6b",
       "kind": "concept",
+      "name": "Poisson Distribution",
+      "name_zh": "泊松分布",
+      "topic": "topic_discrete_dists_poisson_distribution",
+      "description": "The Poisson distribution modelling counts of rare independent events in a fixed interval, the limit of the binomial for many trials.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "The Poisson distribution modelling counts of rare independent events in a fixed interval, the limit of the binomial for many trials.",
-      "name_zh": "泊松分布",
       "visual": "chart",
-      "visual_hint": "Bar chart of the Poisson distribution with a slider for lambda."
+      "visual_hint": "Bar chart of the Poisson distribution with a slider for lambda.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "hypergeometric_distribution",
-      "topic": "topic_discrete_dists_poisson_distribution",
-      "name": "Hypergeometric Distribution",
+      "canonical_id": "pc_4239b99f594044841a693275213720b9",
       "kind": "concept",
+      "name": "Hypergeometric Distribution",
+      "name_zh": "超几何分布",
+      "topic": "topic_discrete_dists_poisson_distribution",
+      "description": "The hypergeometric distribution modelling the number of successes when sampling without replacement from a finite population.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The hypergeometric distribution modelling the number of successes when sampling without replacement from a finite population.",
-      "name_zh": "超几何分布"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "continuous_random_variables",
-      "topic": "topic_continuous_prob",
-      "name": "Continuous Random Variables",
+      "canonical_id": "pc_5f55e60931935e299996e34826f1a0e9",
       "kind": "concept",
+      "name": "Continuous Random Variables",
+      "name_zh": "连续随机变量",
+      "topic": "topic_continuous_prob",
+      "description": "Random variables taking values over a continuum, described by a probability density rather than a probability mass function.",
       "default_order": 1,
       "centrality": 0.1404,
-      "description": "Random variables taking values over a continuum, described by a probability density rather than a probability mass function.",
-      "name_zh": "连续随机变量"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "probability_density_function",
-      "topic": "topic_continuous_prob",
-      "name": "Probability Density Function",
+      "canonical_id": "pc_e21f9bf6f3f146e8a0b6e61e0b0adf33",
       "kind": "concept",
+      "name": "Probability Density Function",
+      "name_zh": "概率密度函数",
+      "topic": "topic_continuous_prob",
+      "description": "A probability density function whose integral over an interval gives the probability that the continuous variable falls within that interval.",
       "default_order": 2,
       "centrality": 0.136,
-      "description": "A probability density function whose integral over an interval gives the probability that the continuous variable falls within that interval.",
-      "name_zh": "概率密度函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "cumulative_distribution_function",
-      "topic": "topic_continuous_prob",
-      "name": "Cumulative Distribution Function",
+      "canonical_id": "pc_24a95488b6ee7f5a748ddc591ba30994",
       "kind": "concept",
+      "name": "Cumulative Distribution Function",
+      "name_zh": "累积分布函数",
+      "topic": "topic_continuous_prob",
+      "description": "The cumulative distribution function giving the probability that a random variable is at most a given value, defined for any distribution.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "The cumulative distribution function giving the probability that a random variable is at most a given value, defined for any distribution.",
-      "name_zh": "累积分布函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "uniform_exponential_distributions",
-      "topic": "topic_continuous_concentration",
-      "name": "Uniform and Exponential Distributions",
+      "canonical_id": "pc_46379eb4ad0b345712c279e4518d3ad2",
       "kind": "concept",
+      "name": "Uniform and Exponential Distributions",
+      "name_zh": "均匀与指数分布",
+      "topic": "topic_continuous_concentration",
+      "description": "The uniform distribution spreading probability evenly over an interval and the memoryless exponential distribution modelling waiting times.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "The uniform distribution spreading probability evenly over an interval and the memoryless exponential distribution modelling waiting times.",
-      "name_zh": "均匀与指数分布"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "normal_distribution",
-      "topic": "topic_continuous_concentration",
-      "name": "Normal Distribution",
+      "canonical_id": "pc_e5893aa094f52cda17b10c07964cf9cc",
       "kind": "concept",
+      "name": "Normal Distribution",
+      "name_zh": "正态分布",
+      "topic": "topic_continuous_concentration",
+      "description": "The normal (Gaussian) distribution, a symmetric bell-shaped law parametrised by mean and variance, central to statistics and the central limit theorem.",
       "default_order": 2,
       "centrality": 0.0813,
-      "description": "The normal (Gaussian) distribution, a symmetric bell-shaped law parametrised by mean and variance, central to statistics and the central limit theorem.",
-      "name_zh": "正态分布",
       "visual": "function",
-      "visual_hint": "Plot the normal bell curve with sliders for mean and standard deviation."
+      "visual_hint": "Plot the normal bell curve with sliders for mean and standard deviation.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "markovs_inequality",
-      "topic": "topic_continuous_concentration_markovs_inequality",
-      "name": "Markov's Inequality",
+      "canonical_id": "pc_139c9da9b205c9bc81072653c569433b",
       "kind": "concept",
+      "name": "Markov's Inequality",
+      "name_zh": "马尔可夫不等式",
+      "topic": "topic_continuous_concentration_markovs_inequality",
+      "description": "Markov's inequality bounding the probability that a nonnegative random variable exceeds a value using only its mean.",
       "default_order": 1,
       "centrality": 0.0692,
-      "description": "Markov's inequality bounding the probability that a nonnegative random variable exceeds a value using only its mean.",
-      "name_zh": "马尔可夫不等式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "chebyshevs_inequality",
-      "topic": "topic_continuous_concentration_markovs_inequality",
-      "name": "Chebyshev's Inequality",
+      "canonical_id": "pc_7010574a525b519d62c8eee80f1caf88",
       "kind": "concept",
+      "name": "Chebyshev's Inequality",
+      "name_zh": "切比雪夫不等式",
+      "topic": "topic_continuous_concentration_markovs_inequality",
+      "description": "Chebyshev's inequality bounding the probability that a variable deviates far from its mean using its variance.",
       "default_order": 2,
       "centrality": 0.0548,
-      "description": "Chebyshev's inequality bounding the probability that a variable deviates far from its mean using its variance.",
-      "name_zh": "切比雪夫不等式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "chernoff_bounds",
-      "topic": "topic_concentration",
-      "name": "Chernoff Bounds",
+      "canonical_id": "pc_584924ada648c5f856ac1d48b5fdadd0",
       "kind": "concept",
+      "name": "Chernoff Bounds",
+      "name_zh": "Chernoff 不等式",
+      "topic": "topic_concentration",
+      "description": "Chernoff bounds giving exponentially decaying tail bounds for sums of independent random variables via the moment-generating function.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Chernoff bounds giving exponentially decaying tail bounds for sums of independent random variables via the moment-generating function.",
-      "name_zh": "Chernoff 不等式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "weak_law_of_large_numbers",
-      "topic": "topic_concentration",
-      "name": "Weak Law of Large Numbers",
+      "canonical_id": "pc_fef0d15b02ad6301f84478e717ddb9ce",
       "kind": "concept",
+      "name": "Weak Law of Large Numbers",
+      "name_zh": "弱大数定律",
+      "topic": "topic_concentration",
+      "description": "The weak law of large numbers stating the sample mean of independent identically distributed variables converges in probability to the true mean.",
       "default_order": 2,
       "centrality": 0.0353,
-      "description": "The weak law of large numbers stating the sample mean of independent identically distributed variables converges in probability to the true mean.",
-      "name_zh": "弱大数定律"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "central_limit_theorem",
-      "topic": "topic_concentration",
-      "name": "Central Limit Theorem",
+      "canonical_id": "pc_2e9fda1932139d389e99613d454f355c",
       "kind": "concept",
+      "name": "Central Limit Theorem",
+      "name_zh": "中心极限定理",
+      "topic": "topic_concentration",
+      "description": "The central limit theorem stating that the normalised sum of many independent variables converges in distribution to a normal distribution.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "The central limit theorem stating that the normalised sum of many independent variables converges in distribution to a normal distribution.",
-      "name_zh": "中心极限定理",
       "visual": "interactive",
-      "visual_hint": "Resample means and watch the sampling distribution approach a normal curve."
+      "visual_hint": "Resample means and watch the sampling distribution approach a normal curve.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "markov_chains_basics",
-      "topic": "topic_markov",
-      "name": "Markov Chains Basics",
+      "canonical_id": "pc_db8666c27a2eb8d0007e39b21bb9f493",
       "kind": "concept",
+      "name": "Markov Chains Basics",
+      "name_zh": "马尔可夫链基础",
+      "topic": "topic_markov",
+      "description": "Markov chains modelling random processes that transition between states with probabilities depending only on the current state.",
       "default_order": 1,
       "centrality": 0.1144,
-      "description": "Markov chains modelling random processes that transition between states with probabilities depending only on the current state.",
-      "name_zh": "马尔可夫链基础",
       "visual": "diagram",
-      "visual_hint": "State-transition diagram of a Markov chain with edge probabilities."
+      "visual_hint": "State-transition diagram of a Markov chain with edge probabilities.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "hitting_times",
-      "topic": "topic_markov",
-      "name": "Hitting Times",
+      "canonical_id": "pc_d681648e41fc72ea013ff533ac1c702e",
       "kind": "concept",
+      "name": "Hitting Times",
+      "name_zh": "首达时间",
+      "topic": "topic_markov",
+      "description": "Hitting times, the expected number of steps for a Markov chain to first reach a specified state from a given starting state.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Hitting times, the expected number of steps for a Markov chain to first reach a specified state from a given starting state.",
-      "name_zh": "首达时间"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "stationary_distributions",
-      "topic": "topic_markov_stationary_distributions",
-      "name": "Stationary Distributions",
+      "canonical_id": "pc_45070cec8103577af13d0fc3965cad4f",
       "kind": "concept",
+      "name": "Stationary Distributions",
+      "name_zh": "平稳分布",
+      "topic": "topic_markov_stationary_distributions",
+      "description": "A stationary distribution unchanged by the chain's transitions, describing the long-run fraction of time spent in each state.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "A stationary distribution unchanged by the chain's transitions, describing the long-run fraction of time spent in each state.",
-      "name_zh": "平稳分布"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "page_rank_algorithm",
-      "topic": "topic_markov_stationary_distributions",
-      "name": "PageRank Algorithm",
+      "canonical_id": "pc_fc6210c47ffc729663ddb4d158031019",
       "kind": "concept",
+      "name": "PageRank Algorithm",
+      "name_zh": "PageRank 算法",
+      "topic": "topic_markov_stationary_distributions",
+      "description": "PageRank ranking web pages by the stationary distribution of a random-surfer Markov chain over the hyperlink graph.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "PageRank ranking web pages by the stationary distribution of a random-surfer Markov chain over the hyperlink graph.",
-      "name_zh": "PageRank 算法",
       "visual": "algorithm",
-      "visual_hint": "Iterate PageRank over a small web graph until the ranks converge."
+      "visual_hint": "Iterate PageRank over a small web graph until the ranks converge.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -943,391 +1203,521 @@
       "type": "prereq",
       "from": "propositional_logic",
       "to": "direct_proofs",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "propositional_logic",
       "to": "proof_by_contraposition",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "propositional_logic",
       "to": "proof_by_contradiction",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "direct_proofs",
       "to": "simple_induction",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "strong_induction",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "strong_induction",
       "to": "well_ordering_principle",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "structural_induction",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "proof_by_contradiction",
       "to": "stable_matching_problem",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "stable_matching_problem",
       "to": "gale_shapley_algorithm",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "gale_shapley_algorithm",
       "to": "matching_optimality",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "matching_optimality",
       "to": "matching_pessimality",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "graph_basics",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "graph_basics",
       "to": "eulerian_tours",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "graph_basics",
       "to": "trees",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "trees",
       "to": "planar_graphs",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "graph_basics",
       "to": "hypercubes",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "euclids_algorithm",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "euclids_algorithm",
       "to": "extended_euclid",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "extended_euclid",
       "to": "chinese_remainder_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "extended_euclid",
       "to": "fermats_little_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "fermats_little_theorem",
       "to": "rsa_setup_and_encryption",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "rsa_setup_and_encryption",
       "to": "rsa_decryption_proof",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "rsa_setup_and_encryption",
       "to": "digital_signatures",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "extended_euclid",
       "to": "polynomial_roots_and_degree",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "polynomial_roots_and_degree",
       "to": "polynomial_interpolation",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "polynomial_interpolation",
       "to": "secret_sharing",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "polynomial_interpolation",
       "to": "error_correcting_codes",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "simple_induction",
       "to": "bijections_and_cardinality",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "bijections_and_cardinality",
       "to": "cantors_diagonalization",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "cantors_diagonalization",
       "to": "uncountability_of_reals",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "proof_by_contradiction",
       "to": "the_halting_problem",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "the_halting_problem",
       "to": "undecidability",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "basic_counting_rules",
       "to": "combinations_permutations",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "combinations_permutations",
       "to": "combinatorial_proofs",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "combinations_permutations",
       "to": "stars_and_bars",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "basic_counting_rules",
       "to": "inclusion_exclusion",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "basic_counting_rules",
       "to": "probability_spaces",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "probability_spaces",
       "to": "conditional_probability",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "conditional_probability",
       "to": "bayes_rule",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "conditional_probability",
       "to": "event_independence",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "probability_spaces",
       "to": "discrete_random_variables",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "expectation",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "expectation",
       "to": "linearity_of_expectation",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "expectation",
       "to": "variance_and_covariance",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "bernoulli_binomial_distributions",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "geometric_distribution",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "poisson_distribution",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "hypergeometric_distribution",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "discrete_random_variables",
       "to": "continuous_random_variables",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "continuous_random_variables",
       "to": "probability_density_function",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "probability_density_function",
       "to": "cumulative_distribution_function",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "probability_density_function",
       "to": "uniform_exponential_distributions",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "probability_density_function",
       "to": "normal_distribution",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "expectation",
       "to": "markovs_inequality",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "markovs_inequality",
       "to": "chebyshevs_inequality",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "variance_and_covariance",
       "to": "chebyshevs_inequality",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "markovs_inequality",
       "to": "chernoff_bounds",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "chebyshevs_inequality",
       "to": "weak_law_of_large_numbers",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "normal_distribution",
       "to": "central_limit_theorem",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "weak_law_of_large_numbers",
       "to": "central_limit_theorem",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "conditional_probability",
       "to": "markov_chains_basics",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "markov_chains_basics",
       "to": "hitting_times",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "expectation",
       "to": "hitting_times",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "markov_chains_basics",
       "to": "stationary_distributions",
-      "strength": "hard"
+      "strength": "hard",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "from": "stationary_distributions",
       "to": "page_rank_algorithm",
-      "strength": "soft"
+      "strength": "soft",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

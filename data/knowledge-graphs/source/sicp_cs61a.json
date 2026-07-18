@@ -1,560 +1,719 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
+  "graph_id": "sicp_cs61a",
   "subject": "Structure and Interpretation of Computer Programs (CS61A)",
-  "schema": {
-    "node_types": [
-      "topic",
-      "concept"
-    ],
-    "edge_types": [
-      "prereq"
-    ]
-  },
+  "jurisdictions": [],
+  "source_ids": [
+    "src_unverified_sicp_cs61a"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立来源、版本、许可证、审核状态和稳定概念 ID 基线。"
+    }
+  ],
   "nodes": [
     {
       "id": "topic_intro",
       "kind": "topic",
       "name": "Expressions and Statements and Control Structures",
+      "name_zh": "表达式与语句与控制结构",
       "topic": null,
       "default_order": 1,
-      "name_zh": "表达式与语句与控制结构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_intro_pure_func",
       "kind": "topic",
       "name": "Pure vs Non-Pure Functions and Environment Diagrams",
+      "name_zh": "纯函数与副作用函数与环境图",
       "topic": null,
       "default_order": 2,
-      "name_zh": "纯函数与副作用函数与环境图"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_hof",
       "kind": "topic",
       "name": "Higher-Order Functions",
+      "name_zh": "高阶函数",
       "topic": null,
       "default_order": 3,
-      "name_zh": "高阶函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_func_data_processing",
       "kind": "topic",
       "name": "Currying and Decorators",
+      "name_zh": "柯里化与装饰器",
       "topic": null,
       "default_order": 4,
-      "name_zh": "柯里化与装饰器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_func_data_processing_seq",
       "kind": "topic",
       "name": "Sequences and Slicing and List Comprehensions",
+      "name_zh": "序列与切片与列表推导式",
       "topic": null,
       "default_order": 5,
-      "name_zh": "序列与切片与列表推导式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_data",
       "kind": "topic",
       "name": "Data Abstraction and Sequences",
+      "name_zh": "数据抽象与序列",
       "topic": null,
       "default_order": 6,
-      "name_zh": "数据抽象与序列"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_recursion",
       "kind": "topic",
       "name": "Recursion and Tree Recursion",
+      "name_zh": "递归与树递归",
       "topic": null,
       "default_order": 7,
-      "name_zh": "递归与树递归"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_recursion_tree_abs",
       "kind": "topic",
       "name": "Tree Data Abstraction and Tree Traversal",
+      "name_zh": "树数据抽象与树遍历",
       "topic": null,
       "default_order": 8,
-      "name_zh": "树数据抽象与树遍历"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_mut_oop",
       "kind": "topic",
       "name": "Mutability and Object-Oriented Programming",
+      "name_zh": "可变性与面向对象编程",
       "topic": null,
       "default_order": 9,
-      "name_zh": "可变性与面向对象编程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_mut_oop_inherit_comp",
       "kind": "topic",
       "name": "Inheritance and Composition, Class and Instance Attributes, and String Representation",
+      "name_zh": "继承与组合、类与实例属性与字符串表示",
       "topic": null,
       "default_order": 10,
-      "name_zh": "继承与组合、类与实例属性与字符串表示"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_adv_data",
       "kind": "topic",
       "name": "Linked Lists and Mutable Trees",
+      "name_zh": "链表与可变树",
       "topic": null,
       "default_order": 11,
-      "name_zh": "链表与可变树"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_adv_data_iterators",
       "kind": "topic",
       "name": "Iterators and Generators",
+      "name_zh": "迭代器与生成器",
       "topic": null,
       "default_order": 12,
-      "name_zh": "迭代器与生成器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_scheme",
       "kind": "topic",
       "name": "Scheme Syntax and Scheme Lists and Pairs",
+      "name_zh": "Scheme 语法与Scheme 列表与序对",
       "topic": null,
       "default_order": 13,
-      "name_zh": "Scheme 语法与Scheme 列表与序对"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_scheme_tail_calls",
       "kind": "topic",
       "name": "Tail Calls and Optimization and Macros",
+      "name_zh": "尾调用与优化与宏",
       "topic": null,
       "default_order": 14,
-      "name_zh": "尾调用与优化与宏"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_interp",
       "kind": "topic",
       "name": "Lexical Analysis and Parsing and Evaluation Process",
+      "name_zh": "词法分析与解析与求值过程",
       "topic": null,
       "default_order": 15,
-      "name_zh": "词法分析与解析与求值过程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_interp_apply",
       "kind": "topic",
       "name": "Application Process and Exceptions",
+      "name_zh": "应用过程与异常",
       "topic": null,
       "default_order": 16,
-      "name_zh": "应用过程与异常"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_declarative",
       "kind": "topic",
       "name": "Regular Expressions and BNF Context-Free Grammars",
+      "name_zh": "正则表达式与BNF 上下文无关文法",
       "topic": null,
       "default_order": 17,
-      "name_zh": "正则表达式与BNF 上下文无关文法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "topic_declarative_sql_queries",
       "kind": "topic",
       "name": "SQL Tables and Queries and SQL Joins and Aggregation",
+      "name_zh": "SQL 表与查询与SQL 连接与聚合",
       "topic": null,
       "default_order": 18,
-      "name_zh": "SQL 表与查询与SQL 连接与聚合"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "expr_stmt",
-      "topic": "topic_intro",
-      "name": "Expressions and Statements",
+      "canonical_id": "pc_626ee4254218af3fb81077dd1955ff3e",
       "kind": "concept",
+      "name": "Expressions and Statements",
+      "name_zh": "表达式与语句",
+      "topic": "topic_intro",
+      "description": "The distinction between expressions that evaluate to values and statements that perform actions, including assignment that binds names to values in a frame.",
       "default_order": 1,
       "centrality": 0.786,
-      "description": "The distinction between expressions that evaluate to values and statements that perform actions, including assignment that binds names to values in a frame.",
-      "name_zh": "表达式与语句"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "control",
-      "topic": "topic_intro",
-      "name": "Control Structures",
+      "canonical_id": "pc_8bf9332facec88f180fe9d64bb53fb73",
       "kind": "concept",
+      "name": "Control Structures",
+      "name_zh": "控制结构",
+      "topic": "topic_intro",
+      "description": "Conditional statements and loops that direct which code executes and how often, controlling a program's flow based on boolean tests.",
       "default_order": 2,
       "centrality": 0.0913,
-      "description": "Conditional statements and loops that direct which code executes and how often, controlling a program's flow based on boolean tests.",
-      "name_zh": "控制结构"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "pure_func",
-      "topic": "topic_intro_pure_func",
-      "name": "Pure vs Non-Pure Functions",
+      "canonical_id": "pc_72571a3390a0e0553daeddbd98c19631",
       "kind": "concept",
+      "name": "Pure vs Non-Pure Functions",
+      "name_zh": "纯函数与副作用函数",
+      "topic": "topic_intro_pure_func",
+      "description": "Pure functions that depend only on their arguments and return values without side effects, contrasted with non-pure functions that alter state or perform I/O.",
       "default_order": 1,
       "centrality": 0.1498,
-      "description": "Pure functions that depend only on their arguments and return values without side effects, contrasted with non-pure functions that alter state or perform I/O.",
-      "name_zh": "纯函数与副作用函数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "env_diag",
-      "topic": "topic_intro_pure_func",
-      "name": "Environment Diagrams",
+      "canonical_id": "pc_e19b350a71e03e7d00fd68e4facfc197",
       "kind": "concept",
+      "name": "Environment Diagrams",
+      "name_zh": "环境图",
+      "topic": "topic_intro_pure_func",
+      "description": "A model of execution tracking frames, bindings, and parent environments to explain how names resolve and how functions create local scopes.",
       "default_order": 2,
       "centrality": 0.1471,
-      "description": "A model of execution tracking frames, bindings, and parent environments to explain how names resolve and how functions create local scopes.",
-      "name_zh": "环境图",
       "visual": "diagram",
-      "visual_hint": "Diagram execution frames, variable bindings, and parent-environment links."
+      "visual_hint": "Diagram execution frames, variable bindings, and parent-environment links.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "func_arg",
-      "topic": "topic_hof",
-      "name": "Functions as Arguments",
+      "canonical_id": "pc_6cdbcf880f4f0c96d94394af64162c91",
       "kind": "concept",
+      "name": "Functions as Arguments",
+      "name_zh": "函数作参数",
+      "topic": "topic_hof",
+      "description": "Treating functions as first-class values by passing them as arguments, enabling higher-order functions that abstract over computational patterns.",
       "default_order": 1,
       "centrality": 0.1439,
-      "description": "Treating functions as first-class values by passing them as arguments, enabling higher-order functions that abstract over computational patterns.",
-      "name_zh": "函数作参数"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "func_ret",
-      "topic": "topic_hof",
-      "name": "Functions as Return Values",
+      "canonical_id": "pc_b11b3116e1ae88788f3f82c8d77aa86d",
       "kind": "concept",
+      "name": "Functions as Return Values",
+      "name_zh": "函数作返回值",
+      "topic": "topic_hof",
+      "description": "Returning functions from other functions, creating closures that capture enclosing variables to build configurable, stateful behaviour.",
       "default_order": 2,
       "centrality": 0.0848,
-      "description": "Returning functions from other functions, creating closures that capture enclosing variables to build configurable, stateful behaviour.",
-      "name_zh": "函数作返回值"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "lambda",
-      "topic": "topic_hof",
-      "name": "Lambda Expressions",
+      "canonical_id": "pc_2bebf36674ddd17cbcd9a4cf99903a08",
       "kind": "concept",
+      "name": "Lambda Expressions",
+      "name_zh": "Lambda 表达式",
+      "topic": "topic_hof",
+      "description": "Anonymous function expressions created with lambda, producing function values inline without binding them to a name.",
       "default_order": 3,
       "centrality": 0.0459,
-      "description": "Anonymous function expressions created with lambda, producing function values inline without binding them to a name.",
-      "name_zh": "Lambda 表达式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "currying",
-      "topic": "topic_func_data_processing",
-      "name": "Currying",
+      "canonical_id": "pc_89f2b90032ed2d703853604d65c5d2b7",
       "kind": "concept",
+      "name": "Currying",
+      "name_zh": "柯里化",
+      "topic": "topic_func_data_processing",
+      "description": "Transforming a multi-argument function into a chain of single-argument functions, each returning another function until all arguments are supplied.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Transforming a multi-argument function into a chain of single-argument functions, each returning another function until all arguments are supplied.",
-      "name_zh": "柯里化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "decorators",
-      "topic": "topic_func_data_processing",
-      "name": "Decorators",
+      "canonical_id": "pc_c7c1b0392c37e5e7790df3ebfc2e2e2b",
       "kind": "concept",
+      "name": "Decorators",
+      "name_zh": "装饰器",
+      "topic": "topic_func_data_processing",
+      "description": "Higher-order functions applied with @ syntax that wrap another function to extend or modify its behaviour without changing its source.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Higher-order functions applied with @ syntax that wrap another function to extend or modify its behaviour without changing its source.",
-      "name_zh": "装饰器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "seq",
-      "topic": "topic_func_data_processing_seq",
-      "name": "Sequences and Slicing",
+      "canonical_id": "pc_7cd63ac6e8bbe8fed567a270a9dd732e",
       "kind": "concept",
+      "name": "Sequences and Slicing",
+      "name_zh": "序列与切片",
+      "topic": "topic_func_data_processing_seq",
+      "description": "Ordered collections such as lists and strings supporting indexing and slicing to extract individual elements and subsequences by position.",
       "default_order": 1,
       "centrality": 0.6472,
-      "description": "Ordered collections such as lists and strings supporting indexing and slicing to extract individual elements and subsequences by position.",
-      "name_zh": "序列与切片"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "list_comp",
-      "topic": "topic_func_data_processing_seq",
-      "name": "List Comprehensions",
+      "canonical_id": "pc_a533b9e69b9b341de441de120c5dd7c7",
       "kind": "concept",
+      "name": "List Comprehensions",
+      "name_zh": "列表推导式",
+      "topic": "topic_func_data_processing_seq",
+      "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "A concise expression for constructing a list by transforming and optionally filtering elements drawn from an existing iterable.",
-      "name_zh": "列表推导式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "data_abs",
-      "topic": "topic_data",
-      "name": "Data Abstraction",
+      "canonical_id": "pc_c8341f8e298ddb9d3392f2bcbfba2df6",
       "kind": "concept",
+      "name": "Data Abstraction",
+      "name_zh": "数据抽象",
+      "topic": "topic_data",
+      "description": "Separating how data is used from how it is represented by defining constructors and selectors, isolating clients from representation changes.",
       "default_order": 1,
       "centrality": 0.3292,
-      "description": "Separating how data is used from how it is represented by defining constructors and selectors, isolating clients from representation changes.",
-      "name_zh": "数据抽象"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "dict",
-      "topic": "topic_data",
-      "name": "Dictionaries",
+      "canonical_id": "pc_f54640a559f7f95acfbcc1376abe0f7c",
       "kind": "concept",
+      "name": "Dictionaries",
+      "name_zh": "字典",
+      "topic": "topic_data",
+      "description": "A mutable mapping from unique keys to values supporting efficient lookup, insertion, and deletion by key rather than by position.",
       "default_order": 2,
       "centrality": 0.1891,
-      "description": "A mutable mapping from unique keys to values supporting efficient lookup, insertion, and deletion by key rather than by position.",
-      "name_zh": "字典"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "box_pointer",
-      "topic": "topic_data",
-      "name": "Box-and-Pointer Diagrams",
+      "canonical_id": "pc_0e106aad883af41f52bcc7d55a2edfa2",
       "kind": "concept",
+      "name": "Box-and-Pointer Diagrams",
+      "name_zh": "箱指针图",
+      "topic": "topic_data",
+      "description": "A diagram depicting lists and pairs as boxes containing pointers, visualising the structure, sharing, and mutation of compound data.",
       "default_order": 3,
       "centrality": 0.1891,
-      "description": "A diagram depicting lists and pairs as boxes containing pointers, visualising the structure, sharing, and mutation of compound data.",
-      "name_zh": "箱指针图",
       "visual": "diagram",
-      "visual_hint": "Box-and-pointer diagram of lists and pairs as boxes holding pointers."
+      "visual_hint": "Box-and-pointer diagram of lists and pairs as boxes holding pointers.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "recursion",
-      "topic": "topic_recursion",
-      "name": "Recursion",
+      "canonical_id": "pc_3d5dc10768df0b601d8ef58a3971fbb4",
       "kind": "concept",
+      "name": "Recursion",
+      "name_zh": "递归",
+      "topic": "topic_recursion",
+      "description": "A technique where a function calls itself on smaller subproblems, combining base cases and recursive cases so the computation terminates correctly.",
       "default_order": 1,
       "centrality": 0.1105,
-      "description": "A technique where a function calls itself on smaller subproblems, combining base cases and recursive cases so the computation terminates correctly.",
-      "name_zh": "递归",
       "visual": "algorithm",
-      "visual_hint": "Step through recursive calls accumulating and unwinding on the call stack."
+      "visual_hint": "Step through recursive calls accumulating and unwinding on the call stack.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "tree_recur",
-      "topic": "topic_recursion",
-      "name": "Tree Recursion",
+      "canonical_id": "pc_39f0d9148b7ae9eb0b5e6a5b58e41fd4",
       "kind": "concept",
+      "name": "Tree Recursion",
+      "name_zh": "树递归",
+      "topic": "topic_recursion",
+      "description": "Recursion making multiple recursive calls per invocation, branching like a tree, as in computing Fibonacci numbers or counting partitions.",
       "default_order": 2,
       "centrality": 0.0737,
-      "description": "Recursion making multiple recursive calls per invocation, branching like a tree, as in computing Fibonacci numbers or counting partitions.",
-      "name_zh": "树递归",
       "visual": "algorithm",
-      "visual_hint": "Draw the branching recursive calls as a recursion tree."
+      "visual_hint": "Draw the branching recursive calls as a recursion tree.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "tree_abs",
-      "topic": "topic_recursion_tree_abs",
-      "name": "Tree Data Abstraction",
+      "canonical_id": "pc_6c522719d961551fa551752d300f9ea9",
       "kind": "concept",
+      "name": "Tree Data Abstraction",
+      "name_zh": "树数据抽象",
+      "topic": "topic_recursion_tree_abs",
+      "description": "Representing tree structures using constructor and selector functions, hiding the underlying representation behind a data abstraction.",
       "default_order": 1,
       "centrality": 0.1151,
-      "description": "Representing tree structures using constructor and selector functions, hiding the underlying representation behind a data abstraction.",
-      "name_zh": "树数据抽象"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "tree_trav",
-      "topic": "topic_recursion_tree_abs",
-      "name": "Tree Traversal",
+      "canonical_id": "pc_8427597dabd256f30270bd3c97a64fc7",
       "kind": "concept",
+      "name": "Tree Traversal",
+      "name_zh": "树遍历",
+      "topic": "topic_recursion_tree_abs",
+      "description": "Systematically visiting every node of a tree, typically via recursion, to process or aggregate the data the tree contains.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Systematically visiting every node of a tree, typically via recursion, to process or aggregate the data the tree contains.",
-      "name_zh": "树遍历",
       "visual": "algorithm",
-      "visual_hint": "Animate visiting tree nodes in pre-order, in-order, and post-order."
+      "visual_hint": "Animate visiting tree nodes in pre-order, in-order, and post-order.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mutability",
-      "topic": "topic_mut_oop",
-      "name": "Mutability",
+      "canonical_id": "pc_a0d492e844bf8c91557e845323b245b0",
       "kind": "concept",
+      "name": "Mutability",
+      "name_zh": "可变性",
+      "topic": "topic_mut_oop",
+      "description": "The property of objects whose state can change after creation, introducing aliasing where multiple names refer to the same mutable object.",
       "default_order": 1,
       "centrality": 0.3866,
-      "description": "The property of objects whose state can change after creation, introducing aliasing where multiple names refer to the same mutable object.",
-      "name_zh": "可变性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "oop",
-      "topic": "topic_mut_oop",
-      "name": "Object-Oriented Programming",
+      "canonical_id": "pc_686b508d38906d53f40416fd520fe62b",
       "kind": "concept",
+      "name": "Object-Oriented Programming",
+      "name_zh": "面向对象编程",
+      "topic": "topic_mut_oop",
+      "description": "A paradigm organising programs around objects that bundle state and behaviour, defined by classes with attributes and methods.",
       "default_order": 2,
       "centrality": 0.4028,
-      "description": "A paradigm organising programs around objects that bundle state and behaviour, defined by classes with attributes and methods.",
-      "name_zh": "面向对象编程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "inherit_comp",
-      "topic": "topic_mut_oop_inherit_comp",
-      "name": "Inheritance and Composition",
+      "canonical_id": "pc_860efc0b4bf0fbe790dab79b4ab4d24e",
       "kind": "concept",
+      "name": "Inheritance and Composition",
+      "name_zh": "继承与组合",
+      "topic": "topic_mut_oop_inherit_comp",
+      "description": "Two reuse mechanisms: inheritance deriving subclasses that specialise a base class, and composition assembling objects from other objects.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Two reuse mechanisms: inheritance deriving subclasses that specialise a base class, and composition assembling objects from other objects.",
-      "name_zh": "继承与组合"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "class_attr",
-      "topic": "topic_mut_oop_inherit_comp",
-      "name": "Class and Instance Attributes",
+      "canonical_id": "pc_13615987feeae5f2898979dc4bde4c51",
       "kind": "concept",
+      "name": "Class and Instance Attributes",
+      "name_zh": "类与实例属性",
+      "topic": "topic_mut_oop_inherit_comp",
+      "description": "The difference between class attributes shared by all instances of a class and instance attributes stored separately on each object.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "The difference between class attributes shared by all instances of a class and instance attributes stored separately on each object.",
-      "name_zh": "类与实例属性"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "string_rep",
-      "topic": "topic_mut_oop_inherit_comp",
-      "name": "String Representation",
+      "canonical_id": "pc_46944fc01ef91a330881fd2ed902f688",
       "kind": "concept",
+      "name": "String Representation",
+      "name_zh": "字符串表示",
+      "topic": "topic_mut_oop_inherit_comp",
+      "description": "Defining how objects display through __str__ for readable output and __repr__ for unambiguous, often reconstructable representations.",
       "default_order": 3,
       "centrality": 0.0248,
-      "description": "Defining how objects display through __str__ for readable output and __repr__ for unambiguous, often reconstructable representations.",
-      "name_zh": "字符串表示"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "linked_lists",
-      "topic": "topic_adv_data",
-      "name": "Linked Lists",
+      "canonical_id": "pc_a5524799d8afaf0212874c01094d6f65",
       "kind": "concept",
+      "name": "Linked Lists",
+      "name_zh": "链表",
+      "topic": "topic_adv_data",
+      "description": "A recursive structure of nodes each holding a value and a reference to the next, supporting sequential access and structural sharing.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "A recursive structure of nodes each holding a value and a reference to the next, supporting sequential access and structural sharing.",
-      "name_zh": "链表",
       "visual": "diagram",
-      "visual_hint": "Box-and-pointer chain of nodes linked by next references."
+      "visual_hint": "Box-and-pointer chain of nodes linked by next references.",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "mut_trees",
-      "topic": "topic_adv_data",
-      "name": "Mutable Trees",
+      "canonical_id": "pc_f843380cb108d72d3b492966bc87eaeb",
       "kind": "concept",
+      "name": "Mutable Trees",
+      "name_zh": "可变树",
+      "topic": "topic_adv_data",
+      "description": "Tree structures whose nodes can be modified in place, allowing branches and values to change after the tree is constructed.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Tree structures whose nodes can be modified in place, allowing branches and values to change after the tree is constructed.",
-      "name_zh": "可变树"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "iterators",
-      "topic": "topic_adv_data_iterators",
-      "name": "Iterators",
+      "canonical_id": "pc_61ba833749625c7cbec9bb2d4c970a21",
       "kind": "concept",
+      "name": "Iterators",
+      "name_zh": "迭代器",
+      "topic": "topic_adv_data_iterators",
+      "description": "Objects implementing the iterator protocol with __iter__ and __next__, producing elements one at a time and raising StopIteration when exhausted.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "Objects implementing the iterator protocol with __iter__ and __next__, producing elements one at a time and raising StopIteration when exhausted.",
-      "name_zh": "迭代器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "generators",
-      "topic": "topic_adv_data_iterators",
-      "name": "Generators",
+      "canonical_id": "pc_e091cbfe068ad3b643fabbe7c9045169",
       "kind": "concept",
+      "name": "Generators",
+      "name_zh": "生成器",
+      "topic": "topic_adv_data_iterators",
+      "description": "Functions using yield to lazily produce a sequence of values on demand, suspending and resuming their state between successive calls.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Functions using yield to lazily produce a sequence of values on demand, suspending and resuming their state between successive calls.",
-      "name_zh": "生成器"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "scheme_syntax",
-      "topic": "topic_scheme",
-      "name": "Scheme Syntax",
+      "canonical_id": "pc_889fad787376b754b3478233b5d198f6",
       "kind": "concept",
+      "name": "Scheme Syntax",
+      "name_zh": "Scheme 语法",
+      "topic": "topic_scheme",
+      "description": "Scheme's parenthesised prefix notation, where every expression is an atom or a list whose first element names the operator or special form.",
       "default_order": 1,
       "centrality": 0.0864,
-      "description": "Scheme's parenthesised prefix notation, where every expression is an atom or a list whose first element names the operator or special form.",
-      "name_zh": "Scheme 语法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "scheme_lists",
-      "topic": "topic_scheme",
-      "name": "Scheme Lists and Pairs",
+      "canonical_id": "pc_4a0f2bbd37ae93e6b96103bbc93fecd6",
       "kind": "concept",
+      "name": "Scheme Lists and Pairs",
+      "name_zh": "Scheme 列表与序对",
+      "topic": "topic_scheme",
+      "description": "Scheme's fundamental pairs built with cons and accessed by car and cdr, composed to form lists and other recursive structures.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Scheme's fundamental pairs built with cons and accessed by car and cdr, composed to form lists and other recursive structures.",
-      "name_zh": "Scheme 列表与序对"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "tail_calls",
-      "topic": "topic_scheme_tail_calls",
-      "name": "Tail Calls and Optimization",
+      "canonical_id": "pc_80aaaacfc32f317e809d58c5248de8ad",
       "kind": "concept",
+      "name": "Tail Calls and Optimization",
+      "name_zh": "尾调用与优化",
+      "topic": "topic_scheme_tail_calls",
+      "description": "Calls in tail position whose results are returned directly, letting interpreters reuse stack frames so recursion runs in constant space.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "Calls in tail position whose results are returned directly, letting interpreters reuse stack frames so recursion runs in constant space.",
-      "name_zh": "尾调用与优化"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "macros",
-      "topic": "topic_scheme_tail_calls",
-      "name": "Macros",
+      "canonical_id": "pc_c44c81e175fa1f91f3da59f4eccfdf52",
       "kind": "concept",
+      "name": "Macros",
+      "name_zh": "宏",
+      "topic": "topic_scheme_tail_calls",
+      "description": "Scheme macros that transform unevaluated source expressions into new code before evaluation, extending the language with new syntactic forms.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Scheme macros that transform unevaluated source expressions into new code before evaluation, extending the language with new syntactic forms.",
-      "name_zh": "宏"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "parsing",
-      "topic": "topic_interp",
-      "name": "Lexical Analysis and Parsing",
+      "canonical_id": "pc_365ca3f43dc0025a9c146e8598ad7ddc",
       "kind": "concept",
+      "name": "Lexical Analysis and Parsing",
+      "name_zh": "词法分析与解析",
+      "topic": "topic_interp",
+      "description": "Converting program text into structured form by lexical analysis into tokens followed by parsing into an abstract syntax tree.",
       "default_order": 1,
       "centrality": 0.0443,
-      "description": "Converting program text into structured form by lexical analysis into tokens followed by parsing into an abstract syntax tree.",
-      "name_zh": "词法分析与解析"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "eval",
-      "topic": "topic_interp",
-      "name": "Evaluation Process",
+      "canonical_id": "pc_c2a4eee2c1331b3f706067f85b605c29",
       "kind": "concept",
+      "name": "Evaluation Process",
+      "name_zh": "求值过程",
+      "topic": "topic_interp",
+      "description": "The interpreter step that evaluates an expression in an environment, recursively reducing it to a value according to evaluation rules.",
       "default_order": 2,
       "centrality": 0.0459,
-      "description": "The interpreter step that evaluates an expression in an environment, recursively reducing it to a value according to evaluation rules.",
-      "name_zh": "求值过程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "apply",
-      "topic": "topic_interp_apply",
-      "name": "Application Process",
+      "canonical_id": "pc_db96b399bc3d15f7163c9aa37641ed36",
       "kind": "concept",
+      "name": "Application Process",
+      "name_zh": "应用过程",
+      "topic": "topic_interp_apply",
+      "description": "The interpreter step that applies a procedure to evaluated arguments by binding parameters in a new frame and evaluating the body.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "The interpreter step that applies a procedure to evaluated arguments by binding parameters in a new frame and evaluating the body.",
-      "name_zh": "应用过程"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "exceptions",
-      "topic": "topic_interp_apply",
-      "name": "Exceptions",
+      "canonical_id": "pc_15115642e6932bf3ca41a482937692ad",
       "kind": "concept",
+      "name": "Exceptions",
+      "name_zh": "异常",
+      "topic": "topic_interp_apply",
+      "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "A control-flow mechanism for signalling and handling errors by raising exceptions that propagate up the call stack until caught by a handler.",
-      "name_zh": "异常"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "regex",
-      "topic": "topic_declarative",
-      "name": "Regular Expressions",
+      "canonical_id": "pc_2f3f82dd5cb629b6acfce195af23b7b0",
       "kind": "concept",
+      "name": "Regular Expressions",
+      "name_zh": "正则表达式",
+      "topic": "topic_declarative",
+      "description": "A notation describing text patterns used to search, match, and extract substrings using character classes, quantifiers, and grouping.",
       "default_order": 1,
       "centrality": 0.0248,
-      "description": "A notation describing text patterns used to search, match, and extract substrings using character classes, quantifiers, and grouping.",
-      "name_zh": "正则表达式"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "bnf",
-      "topic": "topic_declarative",
-      "name": "BNF Context-Free Grammars",
+      "canonical_id": "pc_4a90a6f5f1af4a0223b22f12e1822c5d",
       "kind": "concept",
+      "name": "BNF Context-Free Grammars",
+      "name_zh": "BNF 上下文无关文法",
+      "topic": "topic_declarative",
+      "description": "Backus-Naur Form, a notation for context-free grammars that specifies a language's syntax through production rules over terminals and non-terminals.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Backus-Naur Form, a notation for context-free grammars that specifies a language's syntax through production rules over terminals and non-terminals.",
-      "name_zh": "BNF 上下文无关文法"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "sql_queries",
-      "topic": "topic_declarative_sql_queries",
-      "name": "SQL Tables and Queries",
+      "canonical_id": "pc_34984cc2716abeec8a6d2e07c4325fbc",
       "kind": "concept",
+      "name": "SQL Tables and Queries",
+      "name_zh": "SQL 表与查询",
+      "topic": "topic_declarative_sql_queries",
+      "description": "Declarative SQL queries that select, filter, and order rows from tables to retrieve data without specifying procedural steps.",
       "default_order": 1,
       "centrality": 0.0459,
-      "description": "Declarative SQL queries that select, filter, and order rows from tables to retrieve data without specifying procedural steps.",
-      "name_zh": "SQL 表与查询"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "id": "sql_joins",
-      "topic": "topic_declarative_sql_queries",
-      "name": "SQL Joins and Aggregation",
+      "canonical_id": "pc_3daf18474f01bd4e7c728585f30255ef",
       "kind": "concept",
+      "name": "SQL Joins and Aggregation",
+      "name_zh": "SQL 连接与聚合",
+      "topic": "topic_declarative_sql_queries",
+      "description": "Combining rows from multiple tables on related columns and summarising groups with aggregate functions such as count, sum, and average.",
       "default_order": 2,
       "centrality": 0.0248,
-      "description": "Combining rows from multiple tables on related columns and summarising groups with aggregate functions such as count, sum, and average.",
-      "name_zh": "SQL 连接与聚合"
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ],
   "edges": [
@@ -562,271 +721,361 @@
       "type": "prereq",
       "strength": "hard",
       "from": "expr_stmt",
-      "to": "control"
+      "to": "control",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "pure_func",
-      "to": "env_diag"
+      "to": "env_diag",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "env_diag",
-      "to": "func_arg"
+      "to": "func_arg",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "func_arg",
-      "to": "func_ret"
+      "to": "func_ret",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "func_ret",
-      "to": "lambda"
+      "to": "lambda",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "lambda",
-      "to": "currying"
+      "to": "currying",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "func_ret",
-      "to": "decorators"
+      "to": "decorators",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "control",
-      "to": "recursion"
+      "to": "recursion",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "func_arg",
-      "to": "recursion"
+      "to": "recursion",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "recursion",
-      "to": "tree_recur"
+      "to": "tree_recur",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "expr_stmt",
-      "to": "seq"
+      "to": "seq",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "seq",
-      "to": "list_comp"
+      "to": "list_comp",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "seq",
-      "to": "data_abs"
+      "to": "data_abs",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "seq",
-      "to": "dict"
+      "to": "dict",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "seq",
-      "to": "box_pointer"
+      "to": "box_pointer",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "data_abs",
-      "to": "tree_abs"
+      "to": "tree_abs",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "tree_recur",
-      "to": "tree_abs"
+      "to": "tree_abs",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "tree_abs",
-      "to": "tree_trav"
+      "to": "tree_trav",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "box_pointer",
-      "to": "mutability"
+      "to": "mutability",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "dict",
-      "to": "mutability"
+      "to": "mutability",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "mutability",
-      "to": "oop"
+      "to": "oop",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "oop",
-      "to": "inherit_comp"
+      "to": "inherit_comp",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "oop",
-      "to": "class_attr"
+      "to": "class_attr",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "oop",
-      "to": "string_rep"
+      "to": "string_rep",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "mutability",
-      "to": "linked_lists"
+      "to": "linked_lists",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "oop",
-      "to": "linked_lists"
+      "to": "linked_lists",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "linked_lists",
-      "to": "mut_trees"
+      "to": "mut_trees",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "tree_abs",
-      "to": "mut_trees"
+      "to": "mut_trees",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "control",
-      "to": "iterators"
+      "to": "iterators",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "oop",
-      "to": "iterators"
+      "to": "iterators",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "iterators",
-      "to": "generators"
+      "to": "generators",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "expr_stmt",
-      "to": "scheme_syntax"
+      "to": "scheme_syntax",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "linked_lists",
-      "to": "scheme_lists"
+      "to": "scheme_lists",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "scheme_syntax",
-      "to": "scheme_lists"
+      "to": "scheme_lists",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "recursion",
-      "to": "tail_calls"
+      "to": "tail_calls",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "scheme_syntax",
-      "to": "tail_calls"
+      "to": "tail_calls",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "scheme_syntax",
-      "to": "macros"
+      "to": "macros",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "tree_abs",
-      "to": "parsing"
+      "to": "parsing",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "parsing",
-      "to": "eval"
+      "to": "eval",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "eval",
-      "to": "apply"
+      "to": "apply",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "scheme_syntax",
-      "to": "eval"
+      "to": "eval",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "expr_stmt",
-      "to": "regex"
+      "to": "regex",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "tree_abs",
-      "to": "bnf"
+      "to": "bnf",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "soft",
       "from": "expr_stmt",
-      "to": "sql_queries"
+      "to": "sql_queries",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "type": "prereq",
       "strength": "hard",
       "from": "sql_queries",
-      "to": "sql_joins"
+      "to": "sql_joins",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

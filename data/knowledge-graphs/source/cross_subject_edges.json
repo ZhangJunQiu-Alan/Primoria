@@ -1,5 +1,18 @@
 {
+  "schema_version": "2.0.0",
+  "content_version": "1.0.0",
   "description": "Cross-subject prerequisite edges. Endpoints are globally-unique concept ids living in different subject graphs. Direction: prerequisite -> dependent.",
+  "source_ids": [
+    "src_unverified_cross_subject_prerequisites"
+  ],
+  "review_status": "unreviewed",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-17",
+      "summary_zh": "建立跨学科先修边的来源与审核基线。"
+    }
+  ],
   "edges": [
     {
       "from": "c_mit1806_matrix_ops",
@@ -7,7 +20,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "linear_algebra.json",
-      "to_graph": "machine_learning.json"
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_projections",
@@ -15,7 +30,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "linear_algebra.json",
-      "to_graph": "machine_learning.json"
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_gradient",
@@ -23,7 +40,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "mit_calculus.json",
-      "to_graph": "machine_learning.json"
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_eigen",
@@ -31,7 +50,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "linear_algebra.json",
-      "to_graph": "machine_learning.json"
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "probability_spaces",
@@ -39,7 +60,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "machine_learning.json"
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "normal_distribution",
@@ -47,7 +70,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "machine_learning.json"
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "conditional_probability",
@@ -55,7 +80,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "machine_learning.json"
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_chain_rule",
@@ -63,7 +90,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "mit_calculus.json",
-      "to_graph": "machine_learning.json"
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_chain_rule",
@@ -71,7 +100,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "mit_calculus.json",
-      "to_graph": "deep_learning.json"
+      "to_graph": "deep_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_matrix_ops",
@@ -79,7 +110,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "linear_algebra.json",
-      "to_graph": "deep_learning.json"
+      "to_graph": "deep_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1802_gradient",
@@ -87,7 +120,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "mit_calculus.json",
-      "to_graph": "deep_learning.json"
+      "to_graph": "deep_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "probability_spaces",
@@ -95,7 +130,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "deep_learning.json"
+      "to_graph": "deep_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "probability_spaces",
@@ -103,7 +140,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "artificial_intelligence.json"
+      "to_graph": "artificial_intelligence.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "bayes_rule",
@@ -111,7 +150,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "artificial_intelligence.json"
+      "to_graph": "artificial_intelligence.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "markov_chains_basics",
@@ -119,7 +160,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "artificial_intelligence.json"
+      "to_graph": "artificial_intelligence.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "conditional_probability",
@@ -127,7 +170,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "artificial_intelligence.json"
+      "to_graph": "artificial_intelligence.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "probability_spaces",
@@ -135,7 +180,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "information_theory.json"
+      "to_graph": "information_theory.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "expectation",
@@ -143,7 +190,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "information_theory.json"
+      "to_graph": "information_theory.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "conditional_probability",
@@ -151,7 +200,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "information_theory.json"
+      "to_graph": "information_theory.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "normal_distribution",
@@ -159,7 +210,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "information_theory.json"
+      "to_graph": "information_theory.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_elimination",
@@ -167,7 +220,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "linear_algebra.json",
-      "to_graph": "numerical_analysis.json"
+      "to_graph": "numerical_analysis.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_deriv_def",
@@ -175,7 +230,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "mit_calculus.json",
-      "to_graph": "numerical_analysis.json"
+      "to_graph": "numerical_analysis.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_definite_integral",
@@ -183,7 +240,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "mit_calculus.json",
-      "to_graph": "numerical_analysis.json"
+      "to_graph": "numerical_analysis.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_1801_taylor_series",
@@ -191,7 +250,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "mit_calculus.json",
-      "to_graph": "numerical_analysis.json"
+      "to_graph": "numerical_analysis.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_mit1806_least_squares",
@@ -199,7 +260,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "linear_algebra.json",
-      "to_graph": "numerical_analysis.json"
+      "to_graph": "numerical_analysis.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "simple_induction",
@@ -207,7 +270,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "data_structures_and_algorithms.json"
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "basic_counting_rules",
@@ -215,7 +280,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "data_structures_and_algorithms.json"
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "graph_basics",
@@ -223,7 +290,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "discrete_math_and_probability.json",
-      "to_graph": "data_structures_and_algorithms.json"
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_vector_basics",
@@ -231,7 +300,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "a_level_mathematics.json",
-      "to_graph": "a_level_physics.json"
+      "to_graph": "a_level_physics.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_trig_ratios",
@@ -239,7 +310,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "a_level_mathematics.json",
-      "to_graph": "a_level_physics.json"
+      "to_graph": "a_level_physics.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_exp_func",
@@ -247,7 +320,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "a_level_mathematics.json",
-      "to_graph": "a_level_physics.json"
+      "to_graph": "a_level_physics.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_exp_func",
@@ -255,7 +330,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "a_level_mathematics.json",
-      "to_graph": "a_level_physics.json"
+      "to_graph": "a_level_physics.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_log_laws",
@@ -263,7 +340,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "a_level_mathematics.json",
-      "to_graph": "a_level_chemistry.json"
+      "to_graph": "a_level_chemistry.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "mat_exp_func",
@@ -271,7 +350,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "a_level_mathematics.json",
-      "to_graph": "a_level_chemistry.json"
+      "to_graph": "a_level_chemistry.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_python_syntax",
@@ -279,7 +360,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "python_fundamentals.json"
+      "to_graph": "python_fundamentals.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_lists_dicts",
@@ -287,7 +370,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "python_fundamentals.json"
+      "to_graph": "python_fundamentals.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "oop",
@@ -295,7 +380,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "sicp_cs61a.json",
-      "to_graph": "data_structures_and_algorithms.json"
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "recursion",
@@ -303,7 +390,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "sicp_cs61a.json",
-      "to_graph": "data_structures_and_algorithms.json"
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "data_abs",
@@ -311,7 +400,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "sicp_cs61a.json",
-      "to_graph": "data_structures_and_algorithms.json"
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_trees",
@@ -319,7 +410,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "data_structures_and_algorithms.json"
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_hash_tables",
@@ -327,7 +420,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "data_structures_and_algorithms.json"
+      "to_graph": "data_structures_and_algorithms.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_classes_objects",
@@ -335,7 +430,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "data_structures_and_algorithms.json",
-      "to_graph": "software_construction.json"
+      "to_graph": "software_construction.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_bst_operations",
@@ -343,7 +440,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "data_structures_and_algorithms.json",
-      "to_graph": "software_construction.json"
+      "to_graph": "software_construction.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_integer_rep",
@@ -351,7 +450,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "computer_architecture.json",
-      "to_graph": "computer_systems.json"
+      "to_graph": "computer_systems.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "concept_floating_point",
@@ -359,7 +460,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "computer_architecture.json",
-      "to_graph": "computer_systems.json"
+      "to_graph": "computer_systems.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_ip_addressing",
@@ -367,7 +470,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "computer_network.json",
-      "to_graph": "computer_systems.json"
+      "to_graph": "computer_systems.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_tcp",
@@ -375,7 +480,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "computer_network.json",
-      "to_graph": "computer_systems.json"
+      "to_graph": "computer_systems.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_js",
@@ -383,7 +490,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "web_applications.json"
+      "to_graph": "web_applications.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_html",
@@ -391,7 +500,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "web_applications.json"
+      "to_graph": "web_applications.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_relational_db",
@@ -399,7 +510,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "introduction_to_computer_science.json",
-      "to_graph": "web_applications.json"
+      "to_graph": "web_applications.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "net_http",
@@ -407,7 +520,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "computer_network.json",
-      "to_graph": "web_applications.json"
+      "to_graph": "web_applications.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_bfs",
@@ -415,7 +530,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "data_structures_and_algorithms.json",
-      "to_graph": "artificial_intelligence.json"
+      "to_graph": "artificial_intelligence.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_graph_api",
@@ -423,7 +540,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "data_structures_and_algorithms.json",
-      "to_graph": "artificial_intelligence.json"
+      "to_graph": "artificial_intelligence.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "c_ucb61b_big_theta",
@@ -431,7 +550,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "data_structures_and_algorithms.json",
-      "to_graph": "machine_learning.json"
+      "to_graph": "machine_learning.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_covalent",
@@ -439,7 +560,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "a_level_chemistry.json",
-      "to_graph": "a_level_biology.json"
+      "to_graph": "a_level_biology.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_imf",
@@ -447,7 +570,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "a_level_chemistry.json",
-      "to_graph": "a_level_biology.json"
+      "to_graph": "a_level_biology.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_amino_acids",
@@ -455,7 +580,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "a_level_chemistry.json",
-      "to_graph": "a_level_biology.json"
+      "to_graph": "a_level_biology.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "che_collision",
@@ -463,7 +590,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "a_level_chemistry.json",
-      "to_graph": "a_level_biology.json"
+      "to_graph": "a_level_biology.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_kinetic_theory",
@@ -471,7 +600,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "a_level_physics.json",
-      "to_graph": "a_level_chemistry.json"
+      "to_graph": "a_level_chemistry.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_nuclear_structure",
@@ -479,7 +610,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "a_level_physics.json",
-      "to_graph": "a_level_chemistry.json"
+      "to_graph": "a_level_chemistry.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_energy_levels",
@@ -487,7 +620,9 @@
       "type": "prereq",
       "strength": "hard",
       "from_graph": "a_level_physics.json",
-      "to_graph": "a_level_chemistry.json"
+      "to_graph": "a_level_chemistry.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     },
     {
       "from": "phy_internal_energy",
@@ -495,7 +630,9 @@
       "type": "prereq",
       "strength": "soft",
       "from_graph": "a_level_physics.json",
-      "to_graph": "a_level_chemistry.json"
+      "to_graph": "a_level_chemistry.json",
+      "evidence_refs": [],
+      "review_status": "unreviewed"
     }
   ]
 }

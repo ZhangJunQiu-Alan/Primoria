@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://primoria.local/schemas/cross-subject-edges-v2.schema.json",
+  "title": "Primoria CrossSubjectEdgesV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "content_version",
+    "description",
+    "source_ids",
+    "review_status",
+    "changelog",
+    "edges"
+  ],
+  "properties": {
+    "schema_version": { "const": "2.0.0" },
+    "content_version": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$" },
+    "description": { "type": "string", "minLength": 1 },
+    "source_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^src_[a-z0-9_]+$" }
+    },
+    "review_status": { "enum": ["unreviewed", "needs_review", "approved", "rejected", "superseded"] },
+    "changelog": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["version", "date", "summary_zh"],
+        "properties": {
+          "version": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$" },
+          "date": { "type": "string", "format": "date" },
+          "summary_zh": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "from",
+          "to",
+          "type",
+          "strength",
+          "from_graph",
+          "to_graph",
+          "evidence_refs",
+          "review_status"
+        ],
+        "properties": {
+          "from": { "type": "string", "minLength": 1 },
+          "to": { "type": "string", "minLength": 1 },
+          "type": { "const": "prereq" },
+          "strength": { "enum": ["hard", "soft"] },
+          "from_graph": { "type": "string", "pattern": "^[a-z][a-z0-9_]*\\.json$" },
+          "to_graph": { "type": "string", "pattern": "^[a-z][a-z0-9_]*\\.json$" },
+          "reason": { "type": "string", "minLength": 1, "maxLength": 240 },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["source_id", "locator"],
+              "properties": {
+                "source_id": { "type": "string", "pattern": "^src_[a-z0-9_]+$" },
+                "locator": { "type": "string", "minLength": 1 },
+                "note_zh": { "type": "string", "minLength": 1 }
+              }
+            }
+          },
+          "review_status": { "enum": ["unreviewed", "needs_review", "approved", "rejected", "superseded"] }
+        }
+      }
+    }
+  }
+}
