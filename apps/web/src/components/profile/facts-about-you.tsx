@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import type { FactCategory } from "@/lib/learner-profile/types";
 
 export type LearnerFactView = { id: string; text: string; category: FactCategory };
@@ -9,7 +9,9 @@ const CATEGORY_OPTIONS: Array<{ value: FactCategory; label: string }> = [
   { value: "preference", label: "Learning preference" },
   { value: "prior_knowledge", label: "Background" },
   { value: "learning_gap", label: "Learning gap" },
+  { value: "interest", label: "Interest" },
   { value: "goal", label: "Goal" },
+  { value: "profile_context", label: "Other context" },
 ];
 
 const EMPTY_FORM = { text: "", category: "preference" as FactCategory };
@@ -24,8 +26,54 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
   const [editingId, setEditingId] = useState<string | null>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [extractOpen, setExtractOpen] = useState(false);
+  const [extractText, setExtractText] = useState("");
+  const [intakeJobId, setIntakeJobId] = useState<string | null>(null);
+  const [intakeStatus, setIntakeStatus] = useState<"queued" | "running" | "completed" | "failed" | null>(null);
   const [isPending, startTransition] = useTransition();
   const editing = editingId ? facts.find((fact) => fact.id === editingId) : null;
+
+  useEffect(() => {
+    if (!intakeJobId || (intakeStatus !== "queued" && intakeStatus !== "running")) return;
+    let cancelled = false;
+    let timer: number | undefined;
+    const poll = async () => {
+      try {
+        const response = await fetch(`/api/learner-facts/intake?jobId=${encodeURIComponent(intakeJobId)}`, { cache: "no-store" });
+        const data = (await response.json().catch(() => ({}))) as {
+          status?: "queued" | "running" | "completed" | "failed";
+          error?: string | null;
+        };
+        if (!response.ok) throw new Error(data.error ?? "status failed");
+        if (cancelled || !data.status) return;
+        setIntakeStatus(data.status);
+        if (data.status === "completed") {
+          const factsResponse = await fetch("/api/learner-facts", { cache: "no-store" });
+          const factsData = (await factsResponse.json().catch(() => ({}))) as { facts?: LearnerFactView[] };
+          if (!factsResponse.ok) throw new Error("facts refresh failed");
+          if (!cancelled) {
+            setFacts(factsData.facts ?? []);
+            setExtractText("");
+            setExtractOpen(false);
+          }
+        } else if (data.status === "failed") {
+          setError(data.error ?? "Could not extract facts from that text.");
+        } else if (!cancelled) {
+          timer = window.setTimeout(poll, 2_000);
+        }
+      } catch {
+        if (!cancelled) {
+          setError("Could not check fact extraction status.");
+          timer = window.setTimeout(poll, 2_000);
+        }
+      }
+    };
+    timer = window.setTimeout(poll, 2_000);
+    return () => {
+      cancelled = true;
+      if (timer) window.clearTimeout(timer);
+    };
+  }, [intakeJobId, intakeStatus]);
 
   function resetForm() {
     setForm(EMPTY_FORM);
@@ -92,6 +140,34 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
     });
   }
 
+  function startExtraction() {
+    const text = extractText.trim();
+    if (text.length < 2) {
+      setError("Add a short introduction first.");
+      return;
+    }
+    setError(null);
+    startTransition(async () => {
+      try {
+        const response = await fetch("/api/learner-facts/intake", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+        const data = (await response.json().catch(() => ({}))) as {
+          jobId?: string;
+          status?: "queued" | "running";
+          error?: string;
+        };
+        if (!response.ok || !data.jobId || !data.status) throw new Error(data.error ?? "start failed");
+        setIntakeJobId(data.jobId);
+        setIntakeStatus(data.status);
+      } catch (cause) {
+        setError(cause instanceof Error ? cause.message : "Could not start fact extraction.");
+      }
+    });
+  }
+
   return (
     <div className="facts-manager">
       <div className="facts-composer" aria-label="Add or edit facts about you">
@@ -114,10 +190,37 @@ export function FactsAboutYou({ initialFacts }: { initialFacts: LearnerFactView[
             <span aria-hidden="true">{editing ? "✓" : "+"}</span>
             {editing ? "Save fact" : "Add fact"}
           </button>
-          <button type="button" className="facts-secondary-action" disabled title="Extractor import will use the learner-facts distiller in a later pass">
-            Extract from text
+          <button
+            type="button"
+            className="facts-secondary-action"
+            disabled={intakeStatus === "queued" || intakeStatus === "running"}
+            onClick={() => setExtractOpen((open) => !open)}
+          >
+            {intakeStatus === "queued" || intakeStatus === "running" ? "Extracting…" : "Extract from text"}
           </button>
         </div>
+        {extractOpen ? (
+          <div className="facts-extract-panel">
+            <textarea
+              value={extractText}
+              maxLength={2_000}
+              rows={5}
+              placeholder="Describe your studies, interests, goals, or learning preferences. Primoria will organize useful facts in the background."
+              onChange={(event) => setExtractText(event.target.value)}
+            />
+            <div className="facts-extract-actions">
+              <span>{extractText.length}/2000</span>
+              <button
+                type="button"
+                className="facts-primary-action"
+                disabled={isPending || extractText.trim().length < 2}
+                onClick={startExtraction}
+              >
+                Start extraction
+              </button>
+            </div>
+          </div>
+        ) : null}
         {editing ? (
           <button type="button" className="facts-cancel-edit" onClick={resetForm}>
             Cancel editing “{editing.text}”

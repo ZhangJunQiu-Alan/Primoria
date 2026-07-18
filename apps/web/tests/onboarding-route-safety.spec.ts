@@ -29,6 +29,8 @@ const mockState = vi.hoisted(() => ({
   completeOnboardingCourseBuild: vi.fn(),
   failOnboardingCourseBuild: vi.fn(),
   skipKnowledgeBackground: vi.fn(),
+  enqueueProfileFactIntakeJob: vi.fn(),
+  skipFactsIntake: vi.fn(),
 }));
 
 vi.mock("next/server", async (importOriginal) => {
@@ -68,6 +70,12 @@ vi.mock("@/lib/learner-profile/store", () => ({
   completeOnboardingCourseBuild: mockState.completeOnboardingCourseBuild,
   failOnboardingCourseBuild: mockState.failOnboardingCourseBuild,
   skipKnowledgeBackground: mockState.skipKnowledgeBackground,
+  skipFactsIntake: mockState.skipFactsIntake,
+}));
+
+vi.mock("@/lib/learner-facts/intake-jobs", () => ({
+  enqueueProfileFactIntakeJob: mockState.enqueueProfileFactIntakeJob,
+  ProfileFactIntakeBusyError: class ProfileFactIntakeBusyError extends Error {},
 }));
 
 vi.mock("@/lib/learner-profile/types", () => ({
@@ -251,24 +259,44 @@ describe("onboarding route error safety", () => {
     expectNoLeak(JSON.stringify(body));
   });
 
-  it("returns a safe response when the background course build fails with a raw DB error", async () => {
-    const { POST } = await import("../src/app/api/onboarding/background/route");
-    mockState.buildOnboardingCourse.mockRejectedValue(Object.assign(new Error(RAW_SQL_MESSAGE), { code: "42P01" }));
-    mockState.saveKnowledgeBackground.mockResolvedValue({
-      ownerId: "u1",
-      goalGraphId: "physics",
-      goalStartTopicId: "mechanics",
-    });
+  it("returns a safe response when facts intake enqueue fails with a raw DB error", async () => {
+    const { POST } = await import("../src/app/api/onboarding/facts/route");
+    mockState.enqueueProfileFactIntakeJob.mockRejectedValue(Object.assign(new Error(RAW_SQL_MESSAGE), { code: "42P01" }));
 
-    const response = await POST(postRequest({ knowledgeBackground: "beginner" }));
+    const response = await POST(postRequest({ text: "I study algorithms" }));
     expect(response.status).toBe(503);
     expectNoLeak(JSON.stringify(await response.json()));
-    expect(mockState.beginOnboardingCourseBuild).toHaveBeenCalledWith("u1");
-    expect(mockState.failOnboardingCourseBuild).toHaveBeenCalledWith({
-      ownerId: "u1",
-      attemptId: COURSE_ATTEMPT_ID,
-      message: "We couldn't prepare your course right now. Please retry.",
+    expect(mockState.buildOnboardingCourse).not.toHaveBeenCalled();
+  });
+
+  it("queues facts and advances immediately without scheduling model work in the request", async () => {
+    mockState.enqueueProfileFactIntakeJob.mockResolvedValue({
+      kind: "queued",
+      job: { id: "facts-job-1", status: "queued" },
     });
-    expectNoLeak(JSON.stringify(mockState.failOnboardingCourseBuild.mock.calls[0][0]));
+    mockState.getLearnerOnboardingState.mockResolvedValue({ nextStep: "style", complete: false });
+    const { POST } = await import("../src/app/api/onboarding/facts/route");
+
+    const response = await POST(postRequest({ text: "I study algorithms" }));
+
+    expect(response.status).toBe(202);
+    expect(await response.json()).toMatchObject({
+      nextStep: "style",
+      intake: { jobId: "facts-job-1", status: "queued" },
+    });
+    expect(mockState.afterCallbacks).toHaveLength(0);
+    expect(mockState.buildOnboardingCourse).not.toHaveBeenCalled();
+  });
+
+  it("skips facts without creating an intake job", async () => {
+    mockState.skipFactsIntake.mockResolvedValue({ ownerId: "u1", factsIntakeStatus: "skipped" });
+    mockState.getLearnerOnboardingState.mockResolvedValue({ nextStep: "style", complete: false });
+    const { POST } = await import("../src/app/api/onboarding/facts/route");
+
+    const response = await POST(postRequest({ skip: true }));
+
+    expect(response.status).toBe(200);
+    expect(mockState.skipFactsIntake).toHaveBeenCalledWith("u1");
+    expect(mockState.enqueueProfileFactIntakeJob).not.toHaveBeenCalled();
   });
 });

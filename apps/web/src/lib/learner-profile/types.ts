@@ -4,23 +4,27 @@ export type KnowledgeBackground = (typeof KNOWLEDGE_BACKGROUNDS)[number];
 export const TUTOR_STYLES = ["socratic", "feynman", "euclid"] as const;
 export type TutorStyle = (typeof TUTOR_STYLES)[number];
 
-// Distilled "facts about the learner" (docs/product/feature_specification.md §101), produced
-// by the Extractor Agent. `category` routes consumption: preference /
-// prior_knowledge / learning_gap feed the lesson Planner + tutor; goal is
-// long-term profile only (not fed into generation to avoid polluting the current
-// course with stale goals).
-export const FACT_CATEGORIES = ["preference", "prior_knowledge", "learning_gap", "goal"] as const;
+// Distilled facts produced from explicit intake or learning events. Category
+// routes consumption: gaps/background/preferences and bounded interests can
+// influence teaching; goal/profile_context remain profile-only.
+export const FACT_CATEGORIES = ["preference", "prior_knowledge", "learning_gap", "interest", "goal", "profile_context"] as const;
 export type FactCategory = (typeof FACT_CATEGORIES)[number];
 
 // Categories that influence how a lesson/tutor teaches (vs. goal, which is
 // profile-only). Callers filter to these before injecting into a prompt.
-export const PLANNER_FACT_CATEGORIES: readonly FactCategory[] = ["preference", "prior_knowledge", "learning_gap"];
+export const PLANNER_FACT_CATEGORIES: readonly FactCategory[] = ["preference", "prior_knowledge", "learning_gap", "interest"];
 
 export function isFactCategory(value: unknown): value is FactCategory {
   return typeof value === "string" && (FACT_CATEGORIES as readonly string[]).includes(value);
 }
 
-export type FactEvidence = { lessonId: string | null; eventIds: string[]; at: string };
+export type FactEvidence = {
+  lessonId: string | null;
+  eventIds: string[];
+  at: string;
+  source?: "lesson" | "manual" | "onboarding" | "onboarding_intake" | "settings_intake";
+  sourceQuote?: string;
+};
 
 export type LearnerFact = {
   id: string;
@@ -37,9 +41,10 @@ export type LearnerFact = {
   updatedAt: string | null;
 };
 
-export type OnboardingStep = "goal" | "background" | "style" | "done";
+export type OnboardingStep = "goal" | "facts" | "style" | "done";
 export type GoalPositioningStatus = "pending" | "positioned" | "clarify" | "failed";
 export type OnboardingCourseStatus = "pending" | "building" | "ready" | "failed";
+export type FactsIntakeStatus = "pending" | "completed" | "skipped" | "failed";
 export type GoalPositioningCandidate = { graphId: string; subject: string; startTopicId: string };
 
 export type LearnerProfile = {
@@ -56,6 +61,10 @@ export type LearnerProfile = {
   onboardingCourseStatus: OnboardingCourseStatus | null;
   onboardingCourseMessage: string | null;
   onboardingCourseUpdatedAt: string | null;
+  factsIntakeStatus: FactsIntakeStatus | null;
+  factsIntakeJobId: string | null;
+  factsIntakeMessage: string | null;
+  factsIntakeUpdatedAt: string | null;
   knowledgeBackground: KnowledgeBackground | null;
   knowledgeBackgroundSkippedAt: string | null;
   tutorStyle: TutorStyle | null;

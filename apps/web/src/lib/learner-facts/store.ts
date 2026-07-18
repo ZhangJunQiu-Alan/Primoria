@@ -31,6 +31,46 @@ export function normalizeFactText(text: string) {
   return text.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
+const SEMANTIC_STOP_WORDS = new Set([
+  "a", "an", "the", "i", "me", "my", "am", "is", "are", "was", "were",
+  "at", "in", "on", "of", "to", "currently", "previously", "really", "very",
+]);
+
+function semanticTokens(text: string) {
+  return text
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()
+    .split(/\s+/)
+    .filter((token) => token && !SEMANTIC_STOP_WORDS.has(token))
+    .map((token) => token.replace(/(?:ing|ed|es|s)$/u, ""));
+}
+
+export function isLikelySemanticFactDuplicate(left: string, right: string) {
+  const normalizedLeft = normalizeFactText(left);
+  const normalizedRight = normalizeFactText(right);
+  if (normalizedLeft === normalizedRight) return true;
+  const leftNegated = /\b(?:no|not|never|don't|doesn't|didn't)\b|不|没|无/u.test(normalizedLeft);
+  const rightNegated = /\b(?:no|not|never|don't|doesn't|didn't)\b|不|没|无/u.test(normalizedRight);
+  if (leftNegated !== rightNegated) return false;
+
+  const leftCompact = normalizedLeft.normalize("NFKC").replace(/[^\p{L}\p{N}]+/gu, "").replace(/[我也很正目前现在]/gu, "");
+  const rightCompact = normalizedRight.normalize("NFKC").replace(/[^\p{L}\p{N}]+/gu, "").replace(/[我也很正目前现在]/gu, "");
+  if (/\p{Script=Han}/u.test(leftCompact + rightCompact)) {
+    const shorter = leftCompact.length <= rightCompact.length ? leftCompact : rightCompact;
+    const longer = leftCompact.length <= rightCompact.length ? rightCompact : leftCompact;
+    return shorter.length >= 4 && longer.includes(shorter);
+  }
+
+  const leftTokens = new Set(semanticTokens(left));
+  const rightTokens = new Set(semanticTokens(right));
+  if (leftTokens.size < 2 || rightTokens.size < 2) return false;
+  let overlap = 0;
+  for (const token of leftTokens) if (rightTokens.has(token)) overlap += 1;
+  return overlap / Math.min(leftTokens.size, rightTokens.size) >= 0.8;
+}
+
 export type OnboardingFactInput =
   | { kind: "learning_goal"; value: string | null }
   | { kind: "knowledge_background"; value: KnowledgeBackground | null }
@@ -99,7 +139,7 @@ export async function syncOnboardingFact(ownerId: string, input: OnboardingFactI
   }
 
   const now = new Date();
-  const evidence: FactEvidence = { lessonId: null, eventIds: [descriptor.sourceId], at: now.toISOString() };
+  const evidence: FactEvidence = { lessonId: null, eventIds: [descriptor.sourceId], at: now.toISOString(), source: "onboarding" };
   if (sourced) {
     await getDb()
       .update(learnerFacts)
@@ -160,6 +200,7 @@ export function planFactMutations(existing: LearnerFact[], ops: FactExtractionOp
   const byId = new Map(existing.map((f) => [f.id, f]));
   // Track normalized text seen so duplicate adds within one batch also collapse.
   const seenNorm = new Map(existing.map((f) => [normalizeFactText(f.text), f] as const));
+  const seenFacts = [...existing];
   const occByIdInBatch = new Map<string, number>();
   const evByIdInBatch = new Map<string, FactEvidence[]>();
   const mutations: FactMutation[] = [];
@@ -176,12 +217,14 @@ export function planFactMutations(existing: LearnerFact[], ops: FactExtractionOp
 
     if (op.op === "add") {
       const norm = normalizeFactText(op.text);
-      if (seenNorm.has(norm)) {
+      if (seenNorm.has(norm) || seenFacts.some((fact) =>
+        fact.category === op.category && isLikelySemanticFactDuplicate(fact.text, op.text))) {
         mutations.push({ kind: "skip" });
         skipped += 1;
         continue;
       }
       seenNorm.set(norm, { text: op.text } as LearnerFact);
+      seenFacts.push({ text: op.text, category: op.category } as LearnerFact);
       mutations.push({ kind: "insert", text: op.text, category: op.category, confidence: op.confidence ?? null, evidence: op.evidence });
       added += 1;
       continue;
@@ -323,7 +366,7 @@ export async function addManualFact(ownerId: string, text: string, category: Fac
   }
 
   const id = randomId();
-  const evidence: FactEvidence = { lessonId: null, eventIds: ["manual"], at: now.toISOString() };
+  const evidence: FactEvidence = { lessonId: null, eventIds: ["manual"], at: now.toISOString(), source: "manual" };
   await getDb().insert(learnerFacts).values({
     id,
     ownerId,

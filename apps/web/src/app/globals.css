@@ -334,6 +334,10 @@ button {
   box-shadow: inset 0 -2px 0 #578a3d;
 }
 
+.onboarding-facts-input {
+  min-height: 124px;
+}
+
 .onboarding-example-list,
 .onboarding-choice-list {
   display: grid;
@@ -9944,6 +9948,42 @@ a.guild-quest-node:hover {
   background: #f1ece2;
   color: #7b6e63;
   box-shadow: 0 5px 0 rgba(23, 19, 15, 0.12);
+}
+
+.facts-extract-panel {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid rgba(23, 19, 15, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 253, 244, 0.62);
+}
+
+.facts-extract-panel textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 12px 14px;
+  border: 1px solid rgba(23, 19, 15, 0.16);
+  border-radius: 12px;
+  background: #fffdf7;
+  color: #19120f;
+  font: inherit;
+  line-height: 1.5;
+}
+
+.facts-extract-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #7a6e64;
+  font-size: 12px;
+}
+
+.facts-extract-actions .facts-primary-action {
+  min-height: 42px;
+  border: 0;
+  border-radius: 999px;
 }
 
 .facts-primary-action:disabled,

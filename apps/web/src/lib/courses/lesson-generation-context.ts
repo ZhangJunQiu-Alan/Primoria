@@ -11,16 +11,34 @@ import { listConceptMasteryByOwner } from "../mastery/owner-store";
 import type { MasteryStatus } from "../mastery/store";
 
 const MAX_PLANNER_FACTS = 8;
+const MAX_INTEREST_FACTS = 2;
+const FACT_CATEGORY_PRIORITY: Record<FactCategory, number> = {
+  learning_gap: 0,
+  prior_knowledge: 1,
+  preference: 2,
+  interest: 3,
+  goal: 4,
+  profile_context: 5,
+};
 
-// Pick the facts that personalize teaching (preference / prior_knowledge /
-// learning_gap — never goal), ranked by confidence then recency, capped to bound
-// the prompt. Returns the shape the CourseContext carries.
+// Pick teaching-relevant facts in category priority order, with interest capped
+// below gaps/background/preferences. Goal/profile_context never enter the
+// planner prompt.
 export function selectPlannerFacts(facts: LearnerFact[]): { text: string; category: FactCategory }[] {
-  return facts
+  const ranked = facts
     .filter((f) => PLANNER_FACT_CATEGORIES.includes(f.category))
-    .sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0) || (Date.parse(b.lastSeenAt ?? "") || 0) - (Date.parse(a.lastSeenAt ?? "") || 0))
-    .slice(0, MAX_PLANNER_FACTS)
-    .map((f) => ({ text: f.text, category: f.category }));
+    .sort((a, b) => FACT_CATEGORY_PRIORITY[a.category] - FACT_CATEGORY_PRIORITY[b.category]
+      || (b.confidence ?? 0) - (a.confidence ?? 0)
+      || (Date.parse(b.lastSeenAt ?? "") || 0) - (Date.parse(a.lastSeenAt ?? "") || 0));
+  const selected: { text: string; category: FactCategory }[] = [];
+  let interests = 0;
+  for (const fact of ranked) {
+    if (fact.category === "interest" && interests >= MAX_INTEREST_FACTS) continue;
+    selected.push({ text: fact.text, category: fact.category });
+    if (fact.category === "interest") interests += 1;
+    if (selected.length >= MAX_PLANNER_FACTS) break;
+  }
+  return selected;
 }
 
 // Immutable generation context loaded by the worker from explicit ownerId (doc

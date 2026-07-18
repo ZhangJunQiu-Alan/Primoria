@@ -66,6 +66,10 @@ export const learnerProfiles = pgTable(
     onboardingCourseAttemptId: text("onboarding_course_attempt_id"),
     onboardingCourseMessage: text("onboarding_course_message"),
     onboardingCourseUpdatedAt: timestamp("onboarding_course_updated_at", { withTimezone: true }),
+    factsIntakeStatus: text("facts_intake_status"),
+    factsIntakeJobId: text("facts_intake_job_id"),
+    factsIntakeMessage: text("facts_intake_message"),
+    factsIntakeUpdatedAt: timestamp("facts_intake_updated_at", { withTimezone: true }),
     knowledgeBackground: text("knowledge_background"),
     knowledgeBackgroundSkippedAt: timestamp("knowledge_background_skipped_at", { withTimezone: true }),
     tutorStyle: text("tutor_style"),
@@ -77,6 +81,7 @@ export const learnerProfiles = pgTable(
   },
   (table) => ({
     completedIdx: index("learner_profiles_completed_idx").on(table.onboardingCompletedAt),
+    factsIntakeStatusCheck: check("learner_profiles_facts_intake_status_check", sql`${table.factsIntakeStatus} is null or ${table.factsIntakeStatus} in ('pending', 'completed', 'skipped', 'failed')`),
   }),
 );
 
@@ -632,20 +637,20 @@ export const mediaAssets = pgTable(
   }),
 );
 
-// Core memory layer (docs/product/feature_specification.md §101): distilled "facts about the
-// learner" produced by the Extractor Agent from learning_events. One row per
-// fact. `category` routes consumption (preference/prior_knowledge/learning_gap
-// feed the lesson Planner + tutor; goal is long-term profile only). `status`
+// Core memory layer: distilled "facts about the learner" produced from explicit
+// profile intake or learning events. One row per fact. `category` routes
+// consumption; goal/profile_context remain profile-only and interest is bounded
+// below higher-priority teaching signals. `status`
 // active facts apply immediately; a user-dismissed fact becomes a permanent
 // tombstone the extractor must never re-create (semantic skip). `evidence` keeps
-// the supporting events ([{ lessonId, eventIds[], at }]) for grounding/decay.
+// the supporting events or intake quote for grounding/decay.
 export const learnerFacts = pgTable(
   "learner_facts",
   {
     id: text("id").primaryKey(),
     ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     text: text("text").notNull(),
-    // preference | prior_knowledge | learning_gap | goal
+    // preference | prior_knowledge | learning_gap | interest | goal | profile_context
     category: text("category").notNull(),
     // active | dismissed
     status: text("status").notNull().default("active"),
@@ -660,7 +665,7 @@ export const learnerFacts = pgTable(
   (table) => ({
     ownerStatusIdx: index("learner_facts_owner_status_idx").on(table.ownerId, table.status),
     ownerCategoryIdx: index("learner_facts_owner_category_idx").on(table.ownerId, table.category),
-    categoryCheck: check("learner_facts_category_check", sql`${table.category} in ('preference', 'prior_knowledge', 'learning_gap', 'goal')`),
+    categoryCheck: check("learner_facts_category_check", sql`${table.category} in ('preference', 'prior_knowledge', 'learning_gap', 'interest', 'goal', 'profile_context')`),
     statusCheck: check("learner_facts_status_check", sql`${table.status} in ('active', 'dismissed')`),
     confidenceCheck: check("learner_facts_confidence_check", sql`${table.confidence} is null or (${table.confidence} >= 0 and ${table.confidence} <= 1)`),
     occurrencesCheck: check("learner_facts_occurrences_check", sql`${table.occurrences} >= 1`),
@@ -705,6 +710,46 @@ export const extractorJobs = pgTable(
   }),
 );
 
+// Durable, owner-scoped onboarding/Settings source-text intake. This is
+// separate from extractor_jobs because lesson/course foreign keys do not apply.
+// Raw source_text is retained only while queued/running and is cleared at every
+// terminal transition.
+export const profileFactIntakeJobs = pgTable(
+  "profile_fact_intake_jobs",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    sourceKind: text("source_kind").notNull(),
+    sourceText: text("source_text"),
+    sourceHash: text("source_hash").notNull(),
+    status: text("status").notNull().default("queued"),
+    attempts: integer("attempts").notNull().default(0),
+    maxAttempts: integer("max_attempts").notNull().default(2),
+    leaseOwner: text("lease_owner"),
+    leaseToken: text("lease_token"),
+    leaseExpiresAt: timestamp("lease_expires_at", { withTimezone: true }),
+    heartbeatAt: timestamp("heartbeat_at", { withTimezone: true }),
+    result: jsonb("result"),
+    lastError: text("last_error"),
+    errorCategory: text("error_category"),
+    startedAt: timestamp("started_at", { withTimezone: true }),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    activeOwnerUnique: uniqueIndex("profile_fact_intake_jobs_active_owner_uidx")
+      .on(table.ownerId)
+      .where(sql`${table.status} in ('queued', 'running')`),
+    leaseTokenUnique: uniqueIndex("profile_fact_intake_jobs_lease_token_uidx").on(table.leaseToken),
+    ownerStatusUpdatedIdx: index("profile_fact_intake_jobs_owner_status_updated_idx").on(table.ownerId, table.status, table.updatedAt),
+    statusLeaseIdx: index("profile_fact_intake_jobs_status_lease_idx").on(table.status, table.leaseExpiresAt),
+    sourceKindCheck: check("profile_fact_intake_jobs_source_kind_check", sql`${table.sourceKind} in ('onboarding', 'settings')`),
+    statusCheck: check("profile_fact_intake_jobs_status_check", sql`${table.status} in ('queued', 'running', 'completed', 'failed')`),
+    attemptsCheck: check("profile_fact_intake_jobs_attempts_check", sql`${table.attempts} >= 0 and ${table.maxAttempts} > 0`),
+  }),
+);
+
 export const workerHeartbeats = pgTable("worker_heartbeats", {
   workerType: text("worker_type").primaryKey(),
   workerId: text("worker_id").notNull(),
@@ -746,5 +791,6 @@ export type MediaAssetRow = typeof mediaAssets.$inferSelect;
 export type LearnerProfileRow = typeof learnerProfiles.$inferSelect;
 export type LearnerFactRow = typeof learnerFacts.$inferSelect;
 export type ExtractorJobRow = typeof extractorJobs.$inferSelect;
+export type ProfileFactIntakeJobRow = typeof profileFactIntakeJobs.$inferSelect;
 export type IdentityRow = typeof identities.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;

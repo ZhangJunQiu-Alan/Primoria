@@ -39,6 +39,7 @@ describe("onboarding course build status", () => {
       ownerId: "u1",
       goalGraphId: "physics",
       goalStartTopicId: "mechanics",
+      factsIntakeStatus: "completed",
     });
     mockState.getLearnerOnboardingState.mockResolvedValue({
       profile: { ownerId: "u1", onboardingCourseStatus: "ready" },

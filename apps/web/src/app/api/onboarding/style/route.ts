@@ -4,9 +4,9 @@ import { z } from "zod";
 import { requireAuthUser } from "@/lib/auth/guard";
 import { syncOnboardingFact } from "@/lib/learner-facts/store";
 import {
-  buildOnboardingCourseWithStatus,
   OnboardingCourseBuildError,
 } from "@/lib/learner-profile/onboarding-course-build";
+import { buildOnboardingCourseIfReady } from "@/lib/learner-profile/onboarding-course-readiness";
 import { getLearnerOnboardingState, saveTutorStyle, skipTutorStyle } from "@/lib/learner-profile/store";
 import { isTutorStyle } from "@/lib/learner-profile/types";
 
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Choose a tutor style or skip this step." }, { status: 400 });
     }
 
-    const course = await buildOnboardingCourseWithStatus(user.id, profile);
+    const course = await buildOnboardingCourseIfReady(user.id, profile);
     return NextResponse.json({ ...(await getLearnerOnboardingState(user.id)), course });
   } catch (error) {
     if (error instanceof z.ZodError) {

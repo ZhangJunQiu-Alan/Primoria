@@ -30,6 +30,10 @@ function profile(patch: Partial<LearnerProfile> = {}): LearnerProfile {
     onboardingCourseStatus: null,
     onboardingCourseMessage: null,
     onboardingCourseUpdatedAt: null,
+    factsIntakeStatus: null,
+    factsIntakeJobId: null,
+    factsIntakeMessage: null,
+    factsIntakeUpdatedAt: null,
     knowledgeBackground: null,
     knowledgeBackgroundSkippedAt: null,
     tutorStyle: null,
@@ -44,14 +48,14 @@ function profile(patch: Partial<LearnerProfile> = {}): LearnerProfile {
 
 function main() {
   assert(nextOnboardingStep(null) === "goal", "missing profile starts at goal");
-  assert(nextOnboardingStep(profile({ goalSkippedAt: "now" })) === "background", "goal can be skipped");
+  assert(nextOnboardingStep(profile({ goalSkippedAt: "now" })) === "facts", "goal can be skipped");
   assert(
-    nextOnboardingStep(profile({ learningGoal: "learn DSA", goalPositioningStatus: "pending" })) === "background",
-    "pending goal positioning does not block background step",
+    nextOnboardingStep(profile({ learningGoal: "learn DSA", goalPositioningStatus: "pending" })) === "facts",
+    "pending goal positioning does not block facts step",
   );
   assert(
-    nextOnboardingStep(profile({ goalGraphId: "g", goalStartTopicId: "t", knowledgeBackgroundSkippedAt: "now" })) === "style",
-    "background can be skipped after goal anchor",
+    nextOnboardingStep(profile({ goalGraphId: "g", goalStartTopicId: "t", factsIntakeStatus: "skipped" })) === "style",
+    "facts intake can be skipped after goal anchor",
   );
   assert(
     nextOnboardingStep(profile({ learningGoal: "science", goalPositioningStatus: "clarify", knowledgeBackgroundSkippedAt: "now", tutorStyleSkippedAt: "now" })) === "done",
@@ -102,9 +106,9 @@ function main() {
   assert(goalRoute.includes("savePositionedLearningGoalIfPending"), "background goal result uses an atomic pending-goal write fence");
   assert(goalRoute.includes("skipLearningGoal"), "goal route supports step skip");
 
-  const backgroundRoute = src("app/api/onboarding/background/route.ts");
-  assert(backgroundRoute.includes("buildOnboardingCourse"), "background route triggers course build");
-  assert(backgroundRoute.includes("skipKnowledgeBackground"), "background route supports step skip");
+  const factsRoute = src("app/api/onboarding/facts/route.ts");
+  assert(factsRoute.includes("enqueueProfileFactIntakeJob"), "facts route enqueues background extraction without calling the model");
+  assert(factsRoute.includes("skipFactsIntake"), "facts route supports step skip");
 
   const courseGenerator = src("lib/ai/deepagent/course-generator.ts");
   assert(courseGenerator.includes("isOwnerGraphUniqueViolation"), "course init recovers from owner+graph race");
@@ -151,7 +155,7 @@ function main() {
   assert(onboardingCourseBuild.includes("failOnboardingCourseBuild"), "course build records failure through its attempt fence");
 
   const onboardingRetryRoute = src("app/api/onboarding/course/route.ts");
-  assert(onboardingRetryRoute.includes("buildOnboardingCourseWithStatus"), "course retry route uses tracked build state");
+  assert(onboardingRetryRoute.includes("buildOnboardingCourseIfReady"), "course retry route uses the facts-aware readiness gate");
 
   const lessonContext = src("lib/courses/lesson-generation-context.ts");
   assert(lessonContext.includes("getLearnerProfile"), "lesson generation loads learner profile");

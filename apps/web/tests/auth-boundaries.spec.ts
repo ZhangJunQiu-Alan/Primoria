@@ -81,6 +81,7 @@ describe("API auth contracts", () => {
     "src/app/api/copilot-threads/[id]/messages/route.ts",
     "src/app/api/courses/[id]/quiz/route.ts",
     "src/app/api/learner-facts/route.ts",
+    "src/app/api/learner-facts/intake/route.ts",
     "src/app/api/learning-events/feedback/route.ts",
     "src/app/api/profile/route.ts",
   ];

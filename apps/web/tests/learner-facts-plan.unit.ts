@@ -46,6 +46,20 @@ function main() {
     assert(plan.added === 0 && plan.skipped === 1, "dup of dismissed add → skip");
   }
 
+  // near-semantic duplicate of an active fact → skip even when wording differs
+  {
+    const existing = [fact({ id: "f1", text: "I am interested in algorithms", category: "interest" })];
+    const plan = planFactMutations(existing, [{ op: "add", text: "Interested in algorithm", category: "interest", evidence: ev(null) }]);
+    assert(plan.added === 0 && plan.skipped === 1, "semantic duplicate of active fact → skip");
+  }
+
+  // negation prevents an opposite statement from being collapsed as a duplicate
+  {
+    const existing = [fact({ id: "f1", text: "Prefers concise explanations" })];
+    const plan = planFactMutations(existing, [{ op: "add", text: "Does not prefer concise explanations", category: "preference", evidence: ev(null) }]);
+    assert(plan.added === 1, "opposite fact with negation remains distinct");
+  }
+
   // two adds with same text in one batch → second collapses
   {
     const plan = planFactMutations(

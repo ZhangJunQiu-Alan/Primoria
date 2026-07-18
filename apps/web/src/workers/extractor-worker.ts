@@ -23,10 +23,20 @@ import {
 } from "../lib/courses/extractor-jobs";
 import { processExtractorJob } from "../lib/courses/extractor-processor";
 import { recordWorkerHeartbeat } from "../lib/courses/worker-health";
+import {
+  claimNextProfileFactIntakeJob,
+  failExhaustedProfileFactIntakeJobs,
+  failProfileFactIntakeJob,
+  renewProfileFactIntakeLease,
+  PROFILE_INTAKE_HEARTBEAT_INTERVAL_MS,
+  type ProfileFactIntakeClaim,
+} from "../lib/learner-facts/intake-jobs";
+import { processProfileFactIntakeJob } from "../lib/learner-facts/intake-processor";
+import { buildOnboardingCourseIfReady } from "../lib/learner-profile/onboarding-course-readiness";
 
-// Long-running recoverable Extractor Worker (web package). After a learner
-// finishes a lesson it distills durable "facts about the learner" from that
-// lesson's activity into learner_facts. Run with:
+// Long-running recoverable Extractor Worker (web package). It prioritizes
+// explicit profile-intake jobs, then distills lesson activity into durable
+// learner_facts. Run with:
 //   pnpm --filter @primoria/web worker:extractor
 // A crashed worker's lease expires and another worker re-runs the (idempotent)
 // job. Independent of the learning-progress worker so a slow/failing LLM
@@ -36,9 +46,11 @@ const WORKER_ID = `extractor_worker_${hostname()}_${process.pid}_${randomBytes(3
 const SHUTDOWN_GRACE_MS = 10_000;
 const RECONCILE_INTERVAL_MS = 15 * 60_000;
 const RECONCILE_BATCH_SIZE = 100;
+const PROFILE_INTAKE_RECONCILE_INTERVAL_MS = 60_000;
 
 let running = true;
 let lastReconciledAt = 0;
+let lastProfileIntakeReconciledAt = 0;
 
 function log(level: "info" | "warn" | "error", message: string, fields: Record<string, unknown> = {}) {
   const line = { ts: new Date().toISOString(), workerId: WORKER_ID, message, ...fields };
@@ -46,6 +58,10 @@ function log(level: "info" | "warn" | "error", message: string, fields: Record<s
   if (level === "error") console.error(text);
   else if (level === "warn") console.warn(text);
   else console.log(text);
+}
+
+function errorName(error: unknown) {
+  return error instanceof Error ? error.name : "unknown_error";
 }
 
 function sleep(ms: number): Promise<void> {
@@ -94,6 +110,31 @@ function startHeartbeat(claim: ExtractorClaim) {
   };
 }
 
+function startProfileIntakeHeartbeat(claim: ProfileFactIntakeClaim) {
+  let stopped = false;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const tick = async () => {
+    if (stopped) return;
+    try {
+      const ok = await renewProfileFactIntakeLease(claim.job.id, claim.workerId, claim.leaseToken);
+      if (!ok) {
+        log("warn", "profile intake lease lost; stopping heartbeat", { jobId: claim.job.id });
+        return;
+      }
+    } catch (error) {
+      log("warn", "profile intake heartbeat renewal threw", { jobId: claim.job.id, error: String(error) });
+    }
+    if (!stopped) timer = setTimeout(tick, PROFILE_INTAKE_HEARTBEAT_INTERVAL_MS);
+  };
+  timer = setTimeout(tick, PROFILE_INTAKE_HEARTBEAT_INTERVAL_MS);
+  return {
+    stop() {
+      stopped = true;
+      if (timer) clearTimeout(timer);
+    },
+  };
+}
+
 async function processClaim(claim: ExtractorClaim) {
   const { id: jobId, ownerId, courseId, lessonId, attempts } = claim.job;
   const fence = { jobId, workerId: claim.workerId, leaseToken: claim.leaseToken };
@@ -122,9 +163,82 @@ async function processClaim(claim: ExtractorClaim) {
   }
 }
 
+async function processProfileIntakeClaim(claim: ProfileFactIntakeClaim) {
+  const { id: jobId, ownerId, sourceKind, attempts } = claim.job;
+  const fence = { jobId, workerId: claim.workerId, leaseToken: claim.leaseToken };
+  const startedAt = Date.now();
+  log("info", "claimed profile intake job", { jobId, ownerId, sourceKind, attempt: attempts });
+  const heartbeat = startProfileIntakeHeartbeat(claim);
+  try {
+    const outcome = await processProfileFactIntakeJob(claim);
+    log("info", "profile intake job completed", {
+      jobId,
+      ownerId,
+      sourceKind,
+      added: outcome.added,
+      reinforced: outcome.reinforced,
+      skipped: outcome.skipped,
+      durationMs: Date.now() - startedAt,
+    });
+  } catch (error) {
+    const { category, retryable } = classifyGenerationError(error);
+    const message = error instanceof Error ? error.message : String(error);
+    if (category === "lease_lost") {
+      log("warn", "profile intake abandoned after lease loss", { jobId, ownerId, sourceKind });
+      return;
+    }
+    log("error", "profile intake attempt failed", {
+      jobId,
+      ownerId,
+      sourceKind,
+      errorCategory: category,
+      retryable,
+      durationMs: Date.now() - startedAt,
+    });
+    const result = await failProfileFactIntakeJob(fence, { error: message, category, retryable }).catch((failError) => {
+      log("error", "failed to record profile intake failure", { jobId, ownerId, errorName: errorName(failError) });
+      return { ok: false } as const;
+    });
+    if (result.ok) {
+      log("info", "profile intake transition recorded", { jobId, status: result.status });
+      if (result.status === "failed" && sourceKind === "onboarding") {
+        await buildOnboardingCourseIfReady(ownerId).catch((buildError) => {
+          log("error", "course build after profile intake failure failed", { jobId, ownerId, errorName: errorName(buildError) });
+        });
+      }
+    }
+  } finally {
+    heartbeat.stop();
+  }
+}
+
 async function loop() {
   log("info", "extractor worker started", { idlePollMs: WORKER_IDLE_POLL_MS });
   while (running) {
+    if (Date.now() - lastProfileIntakeReconciledAt >= PROFILE_INTAKE_RECONCILE_INTERVAL_MS) {
+      try {
+        const failed = await failExhaustedProfileFactIntakeJobs(RECONCILE_BATCH_SIZE);
+        for (const job of failed) {
+          log("warn", "expired profile intake marked failed", {
+            jobId: job.jobId,
+            ownerId: job.ownerId,
+            sourceKind: job.sourceKind,
+          });
+          if (job.sourceKind === "onboarding") {
+            await buildOnboardingCourseIfReady(job.ownerId).catch((error) => {
+              log("error", "course build after expired profile intake failed", {
+                jobId: job.jobId,
+                ownerId: job.ownerId,
+                errorName: errorName(error),
+              });
+            });
+          }
+        }
+      } catch (error) {
+        log("error", "profile intake reconciliation failed", { errorName: errorName(error) });
+      }
+      lastProfileIntakeReconciledAt = Date.now();
+    }
     if (Date.now() - lastReconciledAt >= RECONCILE_INTERVAL_MS) {
       try {
         const queued = await reconcileMissingExtractorJobs(RECONCILE_BATCH_SIZE);
@@ -134,15 +248,24 @@ async function loop() {
       }
       lastReconciledAt = Date.now();
     }
+    let profileClaim: ProfileFactIntakeClaim | undefined;
     let claim: ExtractorClaim | undefined;
     try {
-      claim = await claimNextExtractorJob({ workerId: WORKER_ID });
-      await recordWorkerHeartbeat("extractor", WORKER_ID).catch((error) => {
+      profileClaim = await claimNextProfileFactIntakeJob({ workerId: WORKER_ID });
+      if (!profileClaim) claim = await claimNextExtractorJob({ workerId: WORKER_ID });
+      await Promise.all([
+        recordWorkerHeartbeat("extractor", WORKER_ID),
+        recordWorkerHeartbeat("profileFactIntake", WORKER_ID),
+      ]).catch((error) => {
         log("warn", "worker heartbeat write failed", { error: String(error) });
       });
     } catch (error) {
       log("error", "claim query failed", { error: String(error) });
       await sleep(WORKER_IDLE_POLL_MS);
+      continue;
+    }
+    if (profileClaim) {
+      await processProfileIntakeClaim(profileClaim);
       continue;
     }
     if (!claim) {

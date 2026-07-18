@@ -17,6 +17,8 @@ async function main() {
   if (skipWithoutTestDb(NAME)) return;
   const sql = await setupTestDb();
   const store = await import("../src/lib/courses/extractor-jobs");
+  const intakeStore = await import("../src/lib/learner-facts/intake-jobs");
+  const { getDb } = await import("../src/lib/db/client");
 
   let seq = 0;
   async function freshLesson() {
@@ -113,6 +115,111 @@ async function main() {
       ok(await store.reconcileMissingExtractorJobs(100) === 0, "reconciliation is idempotent");
       const [job] = await sql`select status, graph_id from extractor_jobs where lesson_id=${lessonId}`;
       ok(job.status === "queued" && job.graph_id === "g-reconcile", "reconciled job preserves completion context");
+    }
+
+    // ── profile intake enqueue / claim / fence / raw-text cleanup ───────────
+    {
+      const ownerId = "profile_intake_owner_1";
+      await seedUser(sql, ownerId);
+      const e1 = await intakeStore.enqueueProfileFactIntakeJob({
+        ownerId,
+        sourceKind: "settings",
+        sourceText: "I am interested in algorithms.",
+      });
+      const e2 = await intakeStore.enqueueProfileFactIntakeJob({
+        ownerId,
+        sourceKind: "settings",
+        sourceText: "I am interested in algorithms.",
+      });
+      ok(e1.job.id === e2.job.id, "profile intake repeated enqueue reuses the active job");
+      let busy = false;
+      try {
+        await intakeStore.enqueueProfileFactIntakeJob({
+          ownerId,
+          sourceKind: "onboarding",
+          sourceText: "A different introduction must not replace the Settings job.",
+        });
+      } catch (error) {
+        busy = error instanceof intakeStore.ProfileFactIntakeBusyError;
+      }
+      ok(busy, "a different active intake cannot replace queued text or change its source kind");
+
+      const [a, b] = await Promise.all([
+        intakeStore.claimNextProfileFactIntakeJob({ workerId: "profile-wa" }),
+        intakeStore.claimNextProfileFactIntakeJob({ workerId: "profile-wb" }),
+      ]);
+      const winners = [a, b].filter((claim) => claim?.job.id === e1.job.id);
+      ok(winners.length === 1, "exactly one worker wins a profile intake claim");
+      const claim = winners[0]!;
+      const staleFence = { jobId: claim.job.id, workerId: "wrong-worker", leaseToken: claim.leaseToken };
+      ok(!(await intakeStore.completeProfileFactIntakeJobTx(getDb(), staleFence, { added: 1, reinforced: 0, skipped: 0 })), "stale profile intake fence cannot complete");
+      const fence = { jobId: claim.job.id, workerId: claim.workerId, leaseToken: claim.leaseToken };
+      ok(await intakeStore.completeProfileFactIntakeJobTx(getDb(), fence, { added: 1, reinforced: 0, skipped: 0 }), "active profile intake fence completes");
+      const [completed] = await sql`select status, source_text, result from profile_fact_intake_jobs where id=${claim.job.id}`;
+      ok(completed.status === "completed" && completed.source_text === null, "successful profile intake clears raw source text");
+      ok(Number(completed.result.added) === 1, "successful profile intake stores result counts");
+    }
+
+    // ── profile intake retries twice, then fails and clears source ───────────
+    {
+      const ownerId = "profile_intake_owner_2";
+      await seedUser(sql, ownerId);
+      const enqueued = await intakeStore.enqueueProfileFactIntakeJob({
+        ownerId,
+        sourceKind: "settings",
+        sourceText: "I prefer concise explanations.",
+      });
+      const claim1 = await intakeStore.claimNextProfileFactIntakeJob({ workerId: "profile-wc" });
+      const first = await intakeStore.failProfileFactIntakeJob(
+        { jobId: enqueued.job.id, workerId: claim1!.workerId, leaseToken: claim1!.leaseToken },
+        { error: "provider unavailable", category: "provider", retryable: true },
+      );
+      ok(first.ok && first.status === "queued", "profile intake retryable first failure requeues");
+      const claim2 = await intakeStore.claimNextProfileFactIntakeJob({ workerId: "profile-wd" });
+      const second = await intakeStore.failProfileFactIntakeJob(
+        { jobId: enqueued.job.id, workerId: claim2!.workerId, leaseToken: claim2!.leaseToken },
+        { error: "provider unavailable", category: "provider", retryable: true },
+      );
+      ok(second.ok && second.status === "failed", "profile intake second failure is permanent");
+      const [failed] = await sql`select status, source_text from profile_fact_intake_jobs where id=${enqueued.job.id}`;
+      ok(failed.status === "failed" && failed.source_text === null, "permanent profile intake failure clears raw source text");
+    }
+
+    // ── skip cancels an active onboarding job atomically ────────────────────
+    {
+      const ownerId = "profile_intake_owner_3";
+      await seedUser(sql, ownerId);
+      const enqueued = await intakeStore.enqueueProfileFactIntakeJob({
+        ownerId,
+        sourceKind: "onboarding",
+        sourceText: "I study at university.",
+      });
+      await intakeStore.skipOnboardingProfileFactIntake(ownerId);
+      const [job] = await sql`select status, source_text from profile_fact_intake_jobs where id=${enqueued.job.id}`;
+      const [profile] = await sql`select facts_intake_status, facts_intake_job_id from learner_profiles where owner_id=${ownerId}`;
+      ok(job.status === "failed" && job.source_text === null, "skip cancels the active onboarding job and clears raw text");
+      ok(profile.facts_intake_status === "skipped" && profile.facts_intake_job_id === null, "skip records a terminal profile intake state");
+    }
+
+    // ── an expired final lease becomes a fenced permanent failure ───────────
+    {
+      const ownerId = "profile_intake_owner_4";
+      await seedUser(sql, ownerId);
+      const enqueued = await intakeStore.enqueueProfileFactIntakeJob({
+        ownerId,
+        sourceKind: "onboarding",
+        sourceText: "I am interested in graph algorithms.",
+      });
+      const first = await intakeStore.claimNextProfileFactIntakeJob({ workerId: "profile-we" });
+      await sql`update profile_fact_intake_jobs set lease_expires_at=now() - interval '1 second' where id=${first!.job.id}`;
+      const second = await intakeStore.claimNextProfileFactIntakeJob({ workerId: "profile-wf" });
+      await sql`update profile_fact_intake_jobs set lease_expires_at=now() - interval '1 second' where id=${second!.job.id}`;
+      const exhausted = await intakeStore.failExhaustedProfileFactIntakeJobs();
+      ok(exhausted.some((job) => job.jobId === enqueued.job.id), "expired final profile intake lease is recovered");
+      const [job] = await sql`select status, source_text from profile_fact_intake_jobs where id=${enqueued.job.id}`;
+      const [profile] = await sql`select facts_intake_status from learner_profiles where owner_id=${ownerId}`;
+      ok(job.status === "failed" && job.source_text === null, "expired final lease clears raw source text");
+      ok(profile.facts_intake_status === "failed", "expired onboarding intake releases course readiness");
     }
 
     finish(NAME);

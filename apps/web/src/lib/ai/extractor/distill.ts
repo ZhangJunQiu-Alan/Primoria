@@ -28,9 +28,11 @@ export type DistillContext = {
 
 const CATEGORY_GUIDE = [
   "- preference: how they like to learn (e.g. \"prefers worked examples before definitions\", \"wants visual/geometric intuition\", \"likes terse answers\"). Changes HOW we teach.",
-  "- prior_knowledge: background they already hold (e.g. \"knows matrix multiplication\", \"comfortable with high-school mechanics\"). Lets us skip or compress.",
+  "- prior_knowledge: background they already hold (e.g. \"knows matrix multiplication\", \"comfortable with high-school mechanics\"). May adjust explanation depth but never skip required KG coverage.",
   "- learning_gap: a recurring weak spot / misconception / sticking point (e.g. \"confuses class and object\", \"misses recursion base cases\"). NOT a single wrong answer — a pattern. Tells us where to add prerequisites, practice, or analogies.",
+  "- interest: a subject, domain, technology, or application the learner is durably interested in. Use it for examples and analogies, never as proof of knowledge.",
   "- goal: what/why they want to learn (e.g. \"preparing for A-Level Physics\"). Long-term profile only.",
+  "- profile_context: durable learning-relevant context with no safe teaching behavior yet. Profile-only; prefer this over forcing a statement into the wrong category.",
 ].join("\n");
 
 export function buildDistillPrompt(ctx: DistillContext): { system: string; user: string } {
@@ -48,7 +50,7 @@ export function buildDistillPrompt(ctx: DistillContext): { system: string; user:
     "- NEVER re-create a DISMISSED fact: if an observation is the same kind as any dismissed fact, use op \"skip\". The learner removed it on purpose.",
     "- For every add/reinforce, cite the supporting evidence event ids in evidenceEventIds (must be ids from the EVENTS list).",
     "",
-    "OUTPUT: {\"facts\":[{\"op\":\"add|reinforce|skip\",\"text\":\"...\",\"category\":\"preference|prior_knowledge|learning_gap|goal\",\"confidence\":0..1,\"factId\":\"<for reinforce>\",\"evidenceEventIds\":[\"...\"]}]}",
+    "OUTPUT: {\"facts\":[{\"op\":\"add|reinforce|skip\",\"text\":\"...\",\"category\":\"preference|prior_knowledge|learning_gap|interest|goal|profile_context\",\"confidence\":0..1,\"factId\":\"<for reinforce>\",\"evidenceEventIds\":[\"...\"]}]}",
   ].join("\n");
 
   const existing = ctx.existingFacts.length

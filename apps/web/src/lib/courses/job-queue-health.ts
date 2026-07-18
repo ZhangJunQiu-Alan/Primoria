@@ -5,6 +5,7 @@ const JOB_QUEUE_TABLES = {
   lessonGeneration: "lesson_generation_jobs",
   learningProgress: "learning_progress_jobs",
   extractor: "extractor_jobs",
+  profileFactIntake: "profile_fact_intake_jobs",
 } as const;
 
 export type JobQueueName = keyof typeof JOB_QUEUE_TABLES;
