@@ -15,6 +15,7 @@ use the priority order below and verify behavior against the code.
 ## Current product and architecture
 
 - [`product/feature_specification.md`](product/feature_specification.md) — current product behavior, ownership boundaries, implemented capabilities, and roadmap.
+- [`product/facts-intake.md`](product/facts-intake.md) — onboarding/Settings background Facts intake contract, queue lifecycle, classification, and mastery boundary.
 - [`product-architecture.md`](product-architecture.md) — long-horizon system design; every future-only section is labeled.
 - [`web-implementation-status.md`](web-implementation-status.md) — concise implementation inventory and remaining hardening work.
 - [`long-horizon-learning-principles.md`](long-horizon-learning-principles.md) — stable product principles behind the adaptive loop.
@@ -47,6 +48,7 @@ use the priority order below and verify behavior against the code.
 
 - [`ui-reference-craft.md`](ui-reference-craft.md) — dated visual research reference; it is not a statement of implemented roles or screens.
 - [`craft-homepage.png`](craft-homepage.png) — screenshot evidence used by that reference.
+- [`../temple/upgrade_plan.md`](../temple/upgrade_plan.md) — unapproved architecture proposal covering Trace Forest, Solve-Check, protocol/auth migration, and package boundaries; it is not current implementation or an accepted roadmap.
 
 ## Maintenance rule
 

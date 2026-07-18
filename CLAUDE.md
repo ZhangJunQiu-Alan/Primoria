@@ -154,16 +154,21 @@ Lesson titles and descriptions start as deterministic concept-name templates; af
 
 ### Onboarding, mastery, and learner facts
 
-Onboarding persists the learning goal/KG anchor, knowledge background, and Tutor
-style in `learner_profiles` and prepares the first course. Those three choices
-are mirrored into evidence-backed `learner_facts`; changing or skipping a
-choice updates or dismisses its corresponding fact.
+Onboarding persists the learning goal/KG anchor, a skippable free-text Facts
+intake, and Tutor style in `learner_profiles`. `POST /api/onboarding/facts`
+durably enqueues `profile_fact_intake_jobs` and advances immediately; the shared
+Extractor Worker prioritizes those jobs, directly writes supported facts, and
+derives `knowledgeBackground` only from explicit education-stage evidence.
+Course preparation waits for goal positioning plus a terminal intake state,
+while pending intake never blocks workspace entry. Settings uses the same queue.
 
 Keep mastery and facts distinct. `user_concept_mastery` is rule/evidence-driven
 concept state written by the learning-progress worker. `learner_facts` stores
-durable preferences, prior knowledge, learning gaps, and goals, written by
-onboarding sync or the Extractor worker. Only active teaching-relevant fact
-categories enter Tutor/planner context; stale goals do not drive lesson content.
+durable preferences, prior knowledge, learning gaps, interests, goals, and
+profile context, written manually in Settings or by the Extractor worker. Only active
+teaching-relevant categories enter Tutor/planner context; interest is
+lower-priority and capped at two, while goal and profile_context remain
+profile-only. Self-report evidence never writes mastery.
 
 ### Personal progression and guild profile
 
@@ -204,7 +209,7 @@ Public routes are defined once in `apps/web/src/lib/auth/routes.ts` and shared b
 
 ### DB
 
-ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include users, identities, sessions, rate limits, courses, lessons, jobs, learning events, mastery, learner profiles/facts, `player_progress`, `xp_awards`, `daily_quest_completions`, `achievement_unlocks`, chat messages, media assets, and settings.
+ORM: Drizzle + `postgres` driver. Drizzle owns App/Auth/Course schema; versioned Web SQL owns KG/pgvector; `apps/agent/db/migrations/` owns only `agent_runtime`. `pnpm db:bootstrap` applies all three owners idempotently. KG source data and embeddings are imported separately with `pnpm db:initialize:kg`. Core App tables include users, identities, sessions, rate limits, courses, lessons, lesson/progress/extractor jobs, `profile_fact_intake_jobs`, learning events, mastery, learner profiles/facts, `player_progress`, `xp_awards`, `daily_quest_completions`, `achievement_unlocks`, chat messages, media assets, and settings.
 
 Local development uses the Docker Compose PostgreSQL service (`pgvector/pgvector:pg16`) bound to `127.0.0.1:5432`. The old `127.0.0.1:15432` Tencent Cloud SSH tunnel is a remote-database fallback only, not the default local path. Supabase runtime helpers have been removed; do not add new Supabase URL/anon-key paths unless the database/auth strategy is intentionally changed.
 
@@ -221,7 +226,7 @@ KG embeddings are configured separately through `KG_EMBEDDING_PROVIDER`. Current
 
 ### Deployment
 
-Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, App/KG and Agent-runtime migration jobs, web, the self-hosted Node/AG-UI agent, three workers, and Caddy. Web waits for Agent readiness; Agent shutdown drains active runs. Only Caddy is public; port 2024 must never be published. Full runbook: README "Deployment (Single Server)"; credential timing, preflight gates, rollback, and commit/push handoff: `docs/deployment-preflight.md`. Do not request deployment credentials, deploy, commit, or push until the user explicitly asks.
+Production is a single-server Docker Compose stack (`docker-compose.prod.yml`): postgres, App/KG and Agent-runtime migration jobs, web, the self-hosted Node/AG-UI agent, three workers, and Caddy. `agent-migrate` initializes the LangGraph checkpoint schema before Agent startup. Web waits for Agent readiness; Agent shutdown drains active runs. Only Caddy is public; port 2024 must never be published. Full runbook: README "Deployment (Single Server)"; credential timing, preflight gates, rollback, and commit/push handoff: `docs/deployment-preflight.md`. Do not request deployment credentials, deploy, commit, or push until the user explicitly asks.
 
 The internal visualization analytics page is `/internal/visualization-analytics`.
 Production access fails closed unless `PRIMORIA_ENABLE_INTERNAL_ANALYTICS=1`

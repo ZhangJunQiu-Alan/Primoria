@@ -437,7 +437,9 @@ docker compose -f docker-compose.prod.yml run --rm migrate \
 ```
 
 Startup order is enforced by the compose file: postgres (healthcheck) →
-`migrate` (App/KG) → `agent-migrate` (`agent_runtime`) → healthy Agent → Web.
+`migrate` (App/KG) → `agent-migrate` (`agent_runtime` tables plus LangGraph
+checkpoint schema) → healthy Agent → Web. Schema setup belongs to the one-shot
+migration service; the long-running Agent only opens the persisted checkpointer.
 KG data and embedding imports remain separate
 because an external model outage must not block a normal application release.
 
@@ -623,19 +625,23 @@ Lesson materialization is recoverable and worker-driven:
 
 - `worker:lesson-generation` writes planned lesson content.
 - `worker:learning-progress` updates concept mastery and produces next-step recommendations after lesson completion.
-- `worker:extractor` distills durable learner facts from learning events.
+- `worker:extractor` prioritizes onboarding/Settings fact-intake jobs, then distills durable learner facts from learning events.
 
-Cold start is also persistent. Onboarding captures a learning goal, knowledge
-background, and Tutor style, positions or generates the required graph, and
-prepares the first course. Those three choices are mirrored into evidence-backed
-learner facts. Later lesson completion queues both mastery/diagnosis work and an
-idempotent Extractor job; active facts are visible and dismissible from Settings.
+Cold start is also persistent. Onboarding captures a learning goal, a skippable
+free-text introduction, and Tutor style. The introduction is durably queued and
+the learner advances immediately; the Extractor later writes supported facts and
+derives `knowledgeBackground` only from an explicit education-stage statement.
+First-course preparation waits for goal positioning and a terminal intake state,
+but the pending intake never blocks entry to the workspace. Later lesson
+completion queues both mastery/diagnosis work and an idempotent Extractor job;
+Settings can queue the same direct-write intake and still lets the learner edit
+or dismiss every active fact.
 
 Course sharing uses immutable, sanitized snapshots in `course_share_links`.
 Public links never read live course rows, revocation rotates the token, and
 imports are idempotent per learner.
 
-The main persistence tables include `courses`, `lessons`, `lesson_generation_jobs`, `lesson_generation_checkpoints`, `learning_events`, `learning_progress_jobs`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `extractor_jobs`, `player_progress`, `xp_awards`, `daily_quest_completions`, and `achievement_unlocks`.
+The main persistence tables include `courses`, `lessons`, `lesson_generation_jobs`, `lesson_generation_checkpoints`, `learning_events`, `learning_progress_jobs`, `user_concept_mastery`, `learner_profiles`, `learner_facts`, `extractor_jobs`, `profile_fact_intake_jobs`, `player_progress`, `xp_awards`, `daily_quest_completions`, and `achievement_unlocks`.
 
 ### Personal Progression and Guild Profile
 

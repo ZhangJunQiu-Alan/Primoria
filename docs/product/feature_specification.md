@@ -61,17 +61,21 @@ directions, not active runtime capabilities.
 Onboarding captures three explicit signals:
 
 1. learning goal;
-2. knowledge background (`high_school`, `undergraduate`, or `graduate`);
+2. a skippable 2–2000 character self-introduction for Facts intake;
 3. Tutor style (`socratic`, `feynman`, or `euclid`).
 
 The goal is positioned against library KGs. If the subject is outside library
 coverage and infrastructure is healthy, Primoria may create or reuse a
-generated graph. Onboarding prepares the first course and persists recovery
-state so interrupted positioning/building can be retried.
+generated graph. Submitting the introduction only queues durable work and moves
+the learner directly to Tutor style; it never waits for a model response or
+shows a candidate-review step. First-course preparation begins only after goal
+positioning and Facts intake reaches `completed`, `skipped`, or `failed`.
+Pending intake does not block onboarding completion or workspace entry.
 
-Each saved onboarding choice is also synchronized into one evidence-backed
-learner fact. Changing the choice updates that fact; skipping/removing it
-dismisses the fact instead of leaving stale personalization behind.
+The Extractor writes supported statements directly as evidence-backed Facts.
+It derives `knowledgeBackground` (`high_school`, `undergraduate`, or `graduate`)
+only when the introduction explicitly names the education stage; course names
+or apparent sophistication are not sufficient evidence.
 
 ### 3.3 Main Tutor
 
@@ -203,20 +207,27 @@ IANA timezone from `user_settings`; missing values fall back to UTC.
 
 ### 3.7 Learner profile and facts
 
-`learner_profiles` stores explicit cold-start choices and onboarding lifecycle.
-`learner_facts` stores durable statements in four categories:
+`learner_profiles` stores explicit cold-start choices and onboarding lifecycle,
+including Facts intake status/job/message timestamps. `learner_facts` stores
+durable statements in six categories:
 
 - `preference`;
 - `prior_knowledge`;
 - `learning_gap`;
-- `goal`.
+- `interest`;
+- `goal`;
+- `profile_context`.
 
-Facts come from onboarding synchronization or the post-lesson Extractor worker.
+Facts come from onboarding/Settings intake, manual Settings writes, or the
+post-lesson Extractor worker. `profile_fact_intake_jobs` keeps temporary
+source text only while queued/running and clears it on completion or permanent
+failure. Intake evidence records its source, job ID, and exact source quote.
 Every fact carries confidence, evidence, occurrences, and active/dismissed
 status. Dismissal is a tombstone: extraction must not silently recreate the
 same fact. Tutor and planner prompts receive only active teaching-relevant
-facts (`preference`, `prior_knowledge`, `learning_gap`) with a bounded count;
-goals remain profile context and do not contaminate unrelated course content.
+facts (`learning_gap`, `prior_knowledge`, `preference`, then at most two
+lower-priority `interest` facts) with a bounded count; `goal` and
+`profile_context` remain profile-only.
 
 The Extractor does not update mastery, decide remediation, create lessons,
 replace KG positioning, or generate “perfect notes.”

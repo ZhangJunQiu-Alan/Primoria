@@ -95,9 +95,9 @@ Use four label families on implementation issues:
 | #1 Course Tutor context/actions | `type:course-tutor`, `area:course`, `priority:P0`, `status:baseline` | Lesson pages now pass current course, lesson, visible blocks, selected block, and selected text into Course Tutor; future work should be hardening, not first implementation. |
 | #10 Selected-text Course Tutor UI | `type:course-tutor`, `area:course`, `priority:P0`, `status:baseline` | Selected-text context is attached to Course Tutor and block actions; remaining work should target reliability and evidence capture. |
 | #17 React artifact renderer | `type:renderer`, `area:artifact`, `priority:P1`, `status:baseline` | Nineteen typed React visualization components are production-routable; unified persistence for arbitrary generated React apps remains future work. |
-| #5 Long-term memory | `type:memory`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:baseline` | Learner profiles/facts, onboarding facts, extractor jobs, and mastery exist; review/correction UX and stronger adaptive consumption remain. |
+| #5 Long-term memory | `type:memory`, `area:memory`, `area:adaptive-learning`, `priority:P1`, `status:baseline` | Learner profiles/facts, background onboarding intake, Settings edit/delete controls, extractor jobs, and mastery exist; provenance presentation and stronger adaptive consumption remain. |
 | #8 Classroom/collaboration | `type:classroom`, `area:classroom`, `priority:P2`, `status:needs-slice` | Future scope after the personal loop is stable; the old workspace-agent runtime no longer exists. |
-| #15 Onboarding preferences | `type:onboarding`, `area:memory`, `priority:P1`, `status:baseline` | Completed onboarding persists goals, prior learning, teaching preferences, tutor selection, and background into profile/fact state. |
+| #15 Onboarding preferences | `type:onboarding`, `area:memory`, `priority:P1`, `status:baseline` | Completed onboarding persists the learning goal, a skippable free-text Facts intake, and Tutor style. Facts are extracted asynchronously; education stage is derived only from explicit evidence. |
 | #16 Postgres-first architecture | `type:data-architecture`, `area:infra`, `priority:P1`, `status:baseline` | The current modular-monolith-plus deployment is Postgres-first with explicit Web and Agent schema ownership. |
 | #13 Course sharing and paths | `type:sharing`, `area:course`, `priority:P2`, `status:baseline` | Read-only course publication and sharing exist; collaborative editing and learning-path composition remain future work. |
 
@@ -192,11 +192,12 @@ current ownership boundary:
 ### P1: Memory As Reviewed Evidence
 
 Raw evidence remains in product tables. Existing learner facts are derived from
-explicit onboarding data and extractor jobs; the next slices add review and
-correction rather than inventing another memory store:
+explicit onboarding/Settings intake and lesson extractor jobs. Settings already
+supports correction and deletion; the next slices improve transparency rather
+than inventing another memory store:
 
-- expose fact provenance and confidence
-- let the learner correct or delete inferred facts
+- expose fact provenance, source quote, and confidence in the UI
+- make background import failures and deduplication outcomes easier to inspect
 - keep explicit onboarding facts distinguishable from model inference
 - measure whether retrieved facts improve Tutor/course decisions
 

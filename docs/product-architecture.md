@@ -120,7 +120,8 @@ turning XP into a competence score:
   completed since joining the system?” It uses an append-only XP ledger, daily
   quests, streaks, levels, and achievements.
 - **Learner facts** answer “what durable context helps teach this person?” They
-  remain reviewable preference, background, gap, and goal statements.
+  remain reviewable preference, prior-knowledge, gap, interest, goal, and
+  profile-context statements. Self-reported facts never establish mastery.
 
 The full RPG presentation exists only on `/profile`. Course and quiz surfaces
 can show transient rewards after committed writes; Stats and Weekly Report show

@@ -117,10 +117,10 @@ The core loop is:
 
 | Principle | Current implementation | Remaining gap |
 | --- | --- | --- |
-| Goal and cold start | Onboarding captures prior learning, desired learning, teaching preferences, tutor choice, and background | Make later goal changes and conflicts reviewable |
+| Goal and cold start | Onboarding captures the desired learning goal, a skippable free-text Facts intake, and Tutor style; the intake is processed after navigation | Make later goal changes and conflicting facts reviewable |
 | Structured progress | Courses, lessons, blocks, generation decisions, and progress state are persisted | Improve recovery/resume and intervention explanations |
 | Evidence | Quiz attempts, learning events, course edits, and Tutor conversations provide raw evidence | Normalize success criteria across teaching methods |
-| Learner state | Concept mastery, learner profiles/facts, mastery jobs, and extractor jobs | Add learner-facing provenance, correction, and deletion controls |
+| Learner state | Concept mastery, six-category learner facts, profile-intake/lesson extractor jobs, and Settings correction/deletion controls | Surface source quotes and confidence more clearly, then measure adaptive value |
 | Motivation feedback | Private XP ledger, eight guild ranks, three daily quests, streaks, course quest map, and ten achievements on Profile | Observe pace and quest quality before changing the fixed launch economy |
 | Method choice | Course blocks, quizzes, catalog interactions, structured artifacts, and sandbox widgets provide multiple teaching forms | Measure which method helped and route from that evidence |
 | Repetition | Cross-session state is durable | Explicit spaced-repetition scheduling remains future work |

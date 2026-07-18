@@ -91,11 +91,16 @@ capability restrictions in `docker-compose.prod.yml`.
 3. Record the currently deployed Git SHA and image IDs for rollback.
 4. Build images, then start the Compose stack.
 5. Allow `migrate`, `agent-migrate`, and `grant-runtime` to finish in order.
+   `agent-migrate` owns both the `agent_runtime` tables and LangGraph checkpoint
+   schema setup; the long-running Agent must not create schema at startup.
 6. Confirm that long-running services use `primoria_runtime`, never
    `primoria_migrator`.
 7. On the first deployment only, initialize KG data and embeddings.
 8. Verify health, authentication, course access, one quiz submission/replay,
    Tutor streaming, Worker queue consumption, email delivery, and public TLS.
+   Include one onboarding or Settings Facts intake: the request should return
+   before model extraction, `worker-extractor` should complete the queued job,
+   and `/api/health` should report no stalled profile-intake work.
 9. In the main Tutor, open two instances of the same catalog component. Confirm
    their configs remain independent, then reference one instance explicitly in
    a spoken adjustment and confirm only that instance receives a patch.
