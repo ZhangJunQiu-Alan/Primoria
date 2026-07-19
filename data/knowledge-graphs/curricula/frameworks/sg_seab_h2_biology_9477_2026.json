@@ -1,0 +1,2429 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.3.0",
+  "framework_id": "cfw_sg_seab_h2_biology_9477_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_biology_9477_2026",
+  "curriculum_kind": "examination_syllabus",
+  "title": "Singapore-Cambridge GCE Advanced Level H2 Biology 9477 outcome coverage",
+  "title_zh": "新加坡剑桥 GCE A-Level H2 生物 9477（2026）学习成果级覆盖",
+  "jurisdiction": "SG",
+  "subject": "Biology",
+  "education_stage": "pre_university",
+  "levels": [
+    {
+      "level_id": "h2_9477",
+      "label": "H2 Biology 9477",
+      "label_zh": "H2 生物 9477"
+    }
+  ],
+  "languages": [
+    "en",
+    "zh-CN"
+  ],
+  "valid_from": "2026-01-01",
+  "valid_to": null,
+  "source_ids": [
+    "src_sg_seab_h2_biology_9477_2026"
+  ],
+  "requirement_granularity": "outcome",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "用官方 101 项内容成果和 7 项实验能力取代 6 个主题导航映射。"
+    }
+  ],
+  "scope_exclusions": [
+    {
+      "scope": "specific amino-acid R-group formulae",
+      "rationale_zh": "Topic 1(g) 明确不要求不同氨基酸 R 基的具体化学式。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "haemoglobin and collagen residue counts or detailed secondary structures",
+      "rationale_zh": "Topic 1(o) 明确不要求氨基酸数量及详细二级结构。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "mitochondrial and chloroplast DNA structure and roles",
+      "rationale_zh": "Topic 2(a) 明确不要求线粒体和叶绿体 DNA。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "Hfr conjugation",
+      "rationale_zh": "Topic 2(g) 明确不要求 Hfr。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "transposons, satellite DNA, pseudogenes and segmental duplication",
+      "rationale_zh": "Topic 2(h) 明确排除这些非编码 DNA 细节。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "detailed mitotic checkpoint mechanisms",
+      "rationale_zh": "Topic 2(o) 只要求检查点失调与癌症的联系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "meiotic prophase subdivisions",
+      "rationale_zh": "Topic 2(s) 不要求前期各亚阶段。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "named ETC complexes, detailed ATP synthase mechanism and total ATP yield",
+      "rationale_zh": "Topic 3(c,h,l) 明确排除电子传递链复合体名称、ATP 合酶细节和总 ATP 产量。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "intracellular receptor signalling",
+      "rationale_zh": "Topic 3(m) 明确不要求细胞内受体。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "specific second messengers and kinases in insulin/glucagon pathways",
+      "rationale_zh": "Topic 3(p) 明确不要求具体第二信使和激酶细节。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "memorised epistasis ratios",
+      "rationale_zh": "Topic 2(aa) 明确强调问题解决而非背诵固定比例。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF pp.12-21, explicit bracketed scope statements"
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_a",
+      "code": "1.a",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "概述细胞是生命最小单位、来自已有细胞且生物由细胞组成的细胞学说",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_b",
+      "code": "1.b",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "识别显微图像中的细胞结构与细胞器，并理解显微镜测量情境",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_c",
+      "code": "1.c",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "概述指定细胞结构和细胞器的功能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_d",
+      "code": "1.d",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "描述典型细菌细胞的结构特征",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_e",
+      "code": "1.e",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "描述包膜病毒和噬菌体等病毒的结构组分并解释图像",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_f",
+      "code": "1.f",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "讨论病毒如何挑战细胞学说与生命定义",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_g",
+      "code": "1.g",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "描述 α/β-葡萄糖、甘油和脂肪酸、氨基酸等单体的结构与性质",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_h",
+      "code": "1.h",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "描述糖苷键、酯键和肽键的形成与断裂",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_i",
+      "code": "1.i",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "联系淀粉、纤维素、糖原、甘油三酯和磷脂的结构、性质与功能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_j",
+      "code": "1.j",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "解释流动镶嵌模型及膜中磷脂、蛋白质、糖脂、糖蛋白和胆固醇的作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_k",
+      "code": "1.k",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "概述细胞表面膜和细胞内膜的功能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_l",
+      "code": "1.l",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "解释物质通过扩散、渗透、易化扩散、主动运输、胞吞和胞吐跨膜移动",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_m",
+      "code": "1.m",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "解释蛋白质四级结构层次及维持构象的作用力",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_n",
+      "code": "1.n",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "解释温度和 pH 对蛋白质结构的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_o",
+      "code": "1.o",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "联系血红蛋白和胶原蛋白的分子结构与运输或支撑功能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_p",
+      "code": "1.p",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "用活性位点、酶底物复合物、活化能、锁钥和诱导契合解释酶作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (p)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_q",
+      "code": "1.q",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "探究并解释温度、pH、酶浓度和底物浓度对酶促反应速率的影响",
+      "requirement_type": "skill",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (q)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_r",
+      "code": "1.r",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "联系结合位点描述竞争性和非竞争性抑制剂的结构",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (r)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_s",
+      "code": "1.s",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "解释竞争性、非竞争性及变构抑制剂对酶活性的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (s)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_t",
+      "code": "1.t",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "比较合子、胚胎及血液干细胞的全能性、多能性和多潜能性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (t)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_u",
+      "code": "1.u",
+      "title": "The Cell and Biomolecules of Life",
+      "title_zh": "细胞与生命的生物分子",
+      "summary_zh": "解释胚胎干细胞与淋巴系、髓系血液干细胞在生物体内的正常功能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (u)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_a",
+      "code": "2.a",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述 DNA 及 tRNA、rRNA、mRNA 的结构和作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_b",
+      "code": "2.b",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述 DNA 复制并解释末端复制问题如何产生",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_c",
+      "code": "2.c",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述转录、真核 pre-mRNA 加工和翻译如何把 DNA 信息用于合成多肽",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_d",
+      "code": "2.d",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "比较病毒、原核和真核基因组的核酸类型、链型、包装、线性及内含子组织",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_e",
+      "code": "2.e",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "概述噬菌体裂解/溶原、流感病毒和 HIV 的繁殖周期及基因组继承",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_f",
+      "code": "2.f",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述抗原漂移和抗原转变等病毒基因组变异来源",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_g",
+      "code": "2.g",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "概述细菌二分裂及转化、转导和含 F 质粒接合造成的基因组变异",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_h",
+      "code": "2.h",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述内含子、着丝粒、端粒、启动子、增强子和沉默子等非编码 DNA 的结构与功能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_i",
+      "code": "2.i",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "解释真核差异基因表达在染色质、转录、转录后、翻译和翻译后层面的调控",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_j",
+      "code": "2.j",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述 PCR、凝胶电泳、Southern 印迹和核酸杂交的原理与步骤",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_k",
+      "code": "2.k",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "区分基因突变和染色体畸变并解释碱基改变、移码、非整倍体和结构畸变",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_l",
+      "code": "2.l",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "解释基因突变如何导致包括镰状细胞贫血在内的疾病",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_m",
+      "code": "2.m",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "讨论包括 21 三体在内的遗传性母体筛查生物伦理",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_n",
+      "code": "2.n",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述有丝分裂细胞周期事件及染色体、核膜、细胞膜和中心粒行为",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_o",
+      "code": "2.o",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "解释有丝分裂在生长、修复和无性生殖中的意义及检查点失调与癌症的联系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_p",
+      "code": "2.p",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "识别遗传因素、化学致癌物、电离辐射和免疫丧失等癌变危险因素",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (p)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_q",
+      "code": "2.q",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "解释抑癌基因功能缺失和原癌基因功能增强如何造成细胞分裂失控",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (q)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_r",
+      "code": "2.r",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述癌症通过突变积累、血管生成和转移发展的多步骤过程",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (r)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_s",
+      "code": "2.s",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述减数分裂周期的主要阶段及细胞结构行为",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (s)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_t",
+      "code": "2.t",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "解释减数分裂和随机受精如何产生遗传变异",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (t)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_u",
+      "code": "2.u",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "正确解释基因、等位基因、位点、纯合、杂合、显隐性、基因型和表型等遗传术语",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (u)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_v",
+      "code": "2.v",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "解释基因如何通过生殖细胞或配子代际遗传",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (v)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_w",
+      "code": "2.w",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "解释基因型与表型的联系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (w)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_x",
+      "code": "2.x",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "用遗传图解解决含共显性、多等位、伴性、常染色体连锁和上位性的双因子问题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (x)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_y",
+      "code": "2.y",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "用遗传图解解决测交问题",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (y)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_z",
+      "code": "2.z",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "解释连锁和交换及其对双因子杂交表型比例的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (z)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_aa",
+      "code": "2.aa",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "描述位点间上位性并预测表型比例，而不背诵固定比例",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (aa)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_bb",
+      "code": "2.bb",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "用蜜蜂营养分化等实例解释环境如何影响表型",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (bb)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_cc",
+      "code": "2.cc",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "比较多基因加性控制的连续变异与少数基因控制的不连续变异",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (cc)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_dd",
+      "code": "2.dd",
+      "title": "Genetics and Inheritance",
+      "title_zh": "遗传与继承",
+      "summary_zh": "用卡方检验判断观察值与期望值差异的显著性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (dd)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_a",
+      "code": "3.a",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "在图像和显微图中识别叶绿体和线粒体组分",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_b",
+      "code": "3.b",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "解释光合色素的吸收光谱和作用光谱",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_c",
+      "code": "3.c",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "联系叶绿体结构解释光反应如何把光能转为化学能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_d",
+      "code": "3.d",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "概述 C3 植物 Calvin 循环的固定、还原和 RuBP 再生及 rubisco、ATP、NADPH 作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_e",
+      "code": "3.e",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "讨论并探究温度、光强和二氧化碳浓度等光合作用限制因素",
+      "requirement_type": "skill",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_f",
+      "code": "3.f",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "概述糖酵解的位置、原料和产物",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_g",
+      "code": "3.g",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "概述连接反应和 Krebs 循环的位置、原料、产物、脱氢和脱羧",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_h",
+      "code": "3.h",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "概述氧化磷酸化中氧和电子传递链的作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_i",
+      "code": "3.i",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "解释酵母和哺乳动物肌肉在无氧条件下产生少量 ATP",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_j",
+      "code": "3.j",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "解释形成乙醇或乳酸对再生 NAD 的意义",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_k",
+      "code": "3.k",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "探究底物浓度、氧浓度和温度对呼吸速率的影响",
+      "requirement_type": "skill",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "analyze",
+        "evaluate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_l",
+      "code": "3.l",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "概述光合作用和呼吸作用中的化学渗透",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_m",
+      "code": "3.m",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "概述配体受体结合、磷酸化级联、信号放大和基因表达响应等细胞信号阶段",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_n",
+      "code": "3.n",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "解释包括 cAMP 在内的第二信使的性质和作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_o",
+      "code": "3.o",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "解释激酶和磷酸酶在信号放大中的作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_p",
+      "code": "3.p",
+      "title": "Energy and Equilibrium",
+      "title_zh": "能量与平衡",
+      "summary_zh": "概述胰岛素和胰高血糖素分别经受体酪氨酸激酶和 G 蛋白偶联受体调节血糖",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (p)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_a",
+      "code": "4.a",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "解释由突变、减数分裂和有性生殖产生的变异为何是自然选择的基础",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_b",
+      "code": "4.b",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "用实例解释环境因素如何形成自然选择压力",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_c",
+      "code": "4.c",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "解释自然选择在进化中的作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_d",
+      "code": "4.d",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "解释种群为何是能够进化的最小单位",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_e",
+      "code": "4.e",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "解释包括有害隐性等位基因在内的遗传变异如何在自然种群中保留",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_f",
+      "code": "4.f",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "定义进化为伴随改变的传承并联系微观进化与宏观进化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_g",
+      "code": "4.g",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "综合分子同源、化石解剖同源和 Wallace 生物地理证据支持进化理论",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_h",
+      "code": "4.h",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "解释生物学物种概念及其局限",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_i",
+      "code": "4.i",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "定义生物分类并说明共享特征如何用于建立进化关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_j",
+      "code": "4.j",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "解释地理隔离的异域物种形成和同地行为或生理隔离的物种形成",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_k",
+      "code": "4.k",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "定义以进化关系组织物种的系统发育",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_l",
+      "code": "4.l",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "解释基因组序列和核苷酸/氨基酸多序列比对重建系统发育的优势",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_m",
+      "code": "4.m",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "解释 Hardy-Weinberg 模型及其成立条件",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_n",
+      "code": "4.n",
+      "title": "Biological Evolution",
+      "title_zh": "生物进化",
+      "summary_zh": "用 Hardy-Weinberg 方程计算双等位基因的等位、基因型和表型频率",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_a",
+      "code": "A.a",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "比较特异性和非特异性免疫，以及主动、被动、自然获得和人工获得免疫",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_b",
+      "code": "A.b",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "概述 B/T 淋巴细胞、抗原呈递细胞和记忆细胞在初次及二次免疫应答中的作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_c",
+      "code": "A.c",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "以 IgG 为例联系抗体分子结构与功能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_d",
+      "code": "A.d",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "解释体细胞重组、超突变和类别转换如何产生大量不同抗体",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_e",
+      "code": "A.e",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "讨论疫苗如何诱导免疫、通过群体覆盖打断传播并控制或消灭疾病",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_f",
+      "code": "A.f",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "讨论疫苗接种的收益与风险",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_g",
+      "code": "A.g",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "解释流感病毒和 HIV 如何破坏宿主组织与功能而致病",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_h",
+      "code": "A.h",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "用典型细菌病原体解释传播方式和感染过程",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_i",
+      "code": "A.i",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "描述包括青霉素在内的抗生素对细菌的作用方式",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_j",
+      "code": "A.j",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "解释基本再生数 R0 的含义及其对传染性和暴发进程预测的用途",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_k",
+      "code": "A.k",
+      "title": "Infectious Diseases",
+      "title_zh": "传染病",
+      "summary_zh": "区分传染病的暴发、流行和大流行",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_a",
+      "code": "B.a",
+      "title": "Impact of Climate Change on Animals and Plants",
+      "title_zh": "气候变化对动植物的影响",
+      "summary_zh": "解释化石燃料、清林和肉类消费如何增加二氧化碳或甲烷并推动气候变化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_b",
+      "code": "B.b",
+      "title": "Impact of Climate Change on Animals and Plants",
+      "title_zh": "气候变化对动植物的影响",
+      "summary_zh": "解释温室气体排放造成海冰消融、海平面上升、极端天气、水压力和生态迁移等影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_c",
+      "code": "B.c",
+      "title": "Impact of Climate Change on Animals and Plants",
+      "title_zh": "气候变化对动植物的影响",
+      "summary_zh": "解释红树林生态系统如何缓解气候变化影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_d",
+      "code": "B.d",
+      "title": "Impact of Climate Change on Animals and Plants",
+      "title_zh": "气候变化对动植物的影响",
+      "summary_zh": "比较清林、不同能源和动植物食物生产活动的相对碳足迹",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_e",
+      "code": "B.e",
+      "title": "Impact of Climate Change on Animals and Plants",
+      "title_zh": "气候变化对动植物的影响",
+      "summary_zh": "讨论升温和极端天气造成的环境压力对可持续食物供应的后果",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_f",
+      "code": "B.f",
+      "title": "Impact of Climate Change on Animals and Plants",
+      "title_zh": "气候变化对动植物的影响",
+      "summary_zh": "讨论气候压力对栖息地、生物、食物链和生态位占据的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_g",
+      "code": "B.g",
+      "title": "Impact of Climate Change on Animals and Plants",
+      "title_zh": "气候变化对动植物的影响",
+      "summary_zh": "讨论气候变化对热带生物多样性、潜在生物医药和粮食遗传资源的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_h",
+      "code": "B.h",
+      "title": "Impact of Climate Change on Animals and Plants",
+      "title_zh": "气候变化对动植物的影响",
+      "summary_zh": "解释温度如何影响昆虫代谢、耐受范围和蚊媒生命周期",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_i",
+      "code": "B.i",
+      "title": "Impact of Climate Change on Animals and Plants",
+      "title_zh": "气候变化对动植物的影响",
+      "summary_zh": "解释全球变暖如何使疟疾和登革热等蚊媒传染病扩展到热带以外",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_planning",
+      "code": "P.planning",
+      "title": "Practical Assessment",
+      "title_zh": "实验评测",
+      "summary_zh": "界定实验问题并给出清晰、合逻辑和可执行的实验程序",
+      "requirement_type": "practice",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, Planning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_risk",
+      "code": "P.risk",
+      "title": "Practical Assessment",
+      "title_zh": "实验评测",
+      "summary_zh": "评估实验风险并说明把风险降至最低的防护措施",
+      "requirement_type": "practice",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, Planning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_manipulation_measurement",
+      "code": "P.manipulation_measurement",
+      "title": "Practical Assessment",
+      "title_zh": "实验评测",
+      "summary_zh": "熟练操作并以适当精度记录观察和测量，识别异常值",
+      "requirement_type": "practice",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, MMO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_data_presentation",
+      "code": "P.data_presentation",
+      "title": "Practical Assessment",
+      "title_zh": "实验评测",
+      "summary_zh": "以恰当形式、精度和有效数据处理呈现观察与定量结果",
+      "requirement_type": "practice",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, PDO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_analysis",
+      "code": "P.analysis",
+      "title": "Practical Assessment",
+      "title_zh": "实验评测",
+      "summary_zh": "依据任务和生物学原理分析、解释数据或观察",
+      "requirement_type": "practice",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_conclusion_prediction",
+      "code": "P.conclusion_prediction",
+      "title": "Practical Assessment",
+      "title_zh": "实验评测",
+      "summary_zh": "由证据得出结论并作出有依据的预测",
+      "requirement_type": "practice",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_evaluation_improvement",
+      "code": "P.evaluation_improvement",
+      "title": "Practical Assessment",
+      "title_zh": "实验评测",
+      "summary_zh": "识别重要误差和局限，解释影响并提出可验证的改进",
+      "requirement_type": "practice",
+      "level_id": "h2_9477",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

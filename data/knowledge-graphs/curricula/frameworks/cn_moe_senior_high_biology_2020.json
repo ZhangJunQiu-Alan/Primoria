@@ -1,0 +1,2590 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.3.0",
+  "framework_id": "cfw_cn_moe_senior_high_biology_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_biology_2020",
+  "curriculum_kind": "national_standard",
+  "title": "China senior-high biology curriculum-standard outcome coverage",
+  "title_zh": "中国普通高中生物学课程标准（2017 年版 2020 年修订）成果级覆盖",
+  "subject": "Biology",
+  "jurisdiction": "CN-MAINLAND",
+  "education_stage": "senior_secondary",
+  "requirement_granularity": "outcome",
+  "levels": [
+    {
+      "level_id": "rc",
+      "label": "Required: Molecules and Cells",
+      "label_zh": "必修·分子与细胞"
+    },
+    {
+      "level_id": "rg",
+      "label": "Required: Genetics and Evolution",
+      "label_zh": "必修·遗传与进化"
+    },
+    {
+      "level_id": "sh",
+      "label": "Selective required: Homeostasis and Regulation",
+      "label_zh": "选择性必修·稳态与调节"
+    },
+    {
+      "level_id": "se",
+      "label": "Selective required: Biology and Environment",
+      "label_zh": "选择性必修·生物与环境"
+    },
+    {
+      "level_id": "sb",
+      "label": "Selective required: Biotechnology and Engineering",
+      "label_zh": "选择性必修·生物技术与工程"
+    }
+  ],
+  "languages": [
+    "zh-CN",
+    "en"
+  ],
+  "source_ids": [
+    "src_cn_moe_senior_high_biology_2020"
+  ],
+  "valid_from": "2020-05-11",
+  "valid_to": null,
+  "review_status": "needs_review",
+  "scope_exclusions": [],
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "建立主题级候选框架。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "复核主题边界并撤销未经逐项证明的完整覆盖声明。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "按课程标准 120 条编号内容要求建立成果级框架，并将两项纯价值立场分流至实践层。"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_1_cellular_elements_carbon_skeletons",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.1.1",
+      "title": "Cellular elements and carbon skeletons",
+      "title_zh": "细胞元素与碳链骨架",
+      "summary_zh": "说明细胞主要元素如何以碳链为骨架形成复杂生物大分子。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_2_cellular_water",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.1.2",
+      "title": "Water in cells",
+      "title_zh": "细胞中的水",
+      "summary_zh": "说明自由水和结合水赋予细胞的特性及其生命活动作用。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_3_cellular_inorganic_salts",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.1.3",
+      "title": "Inorganic salts in cells",
+      "title_zh": "细胞中的无机盐",
+      "summary_zh": "举例说明少量无机盐对细胞生命活动的重要作用。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_4_carbohydrate_roles",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.1.4",
+      "title": "Cellular roles of carbohydrates",
+      "title_zh": "糖类的结构与供能作用",
+      "summary_zh": "概述糖类类型及其作为结构成分和主要能源物质的作用。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.4），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_5_lipid_roles",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.1.5",
+      "title": "Cellular roles of lipids",
+      "title_zh": "脂质的结构与功能作用",
+      "summary_zh": "举例说明不同脂质维持细胞结构和功能的作用。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.5），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_6_protein_structure_function",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.1.6",
+      "title": "Protein structure and function",
+      "title_zh": "蛋白质结构与功能",
+      "summary_zh": "说明氨基酸序列、空间结构与蛋白质功能之间的关系。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.6），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_1_7_nucleic_acids_information",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.1.7",
+      "title": "Nucleic acids and information",
+      "title_zh": "核酸与遗传信息",
+      "summary_zh": "概述核苷酸聚合形成核酸及其储存和传递遗传信息的功能。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.7），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_2_1_plasma_membrane_functions",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.2.1",
+      "title": "Plasma-membrane functions",
+      "title_zh": "质膜的边界、运输与交流功能",
+      "summary_zh": "说明质膜分隔环境、控制物质进出并参与细胞间信息交流。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_2_2_organelle_functions",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.2.2",
+      "title": "Organelle functions",
+      "title_zh": "细胞器分工",
+      "summary_zh": "说明细胞器在运输、合成、分解、能量转换和信息传递中的分工。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_2_3_nucleus_genetic_information",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.2.3",
+      "title": "Nucleus and genetic information",
+      "title_zh": "细胞核与遗传信息",
+      "summary_zh": "说明真核细胞遗传信息主要储存在细胞核中。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_2_4_organelle_coordination",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.2.4",
+      "title": "Coordination among cell structures",
+      "title_zh": "细胞结构的协调合作",
+      "summary_zh": "说明细胞各部分相互联系、协调执行生命活动。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.4），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_3_1_cellular_unity_diversity",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.3.1",
+      "title": "Cellular unity and diversity",
+      "title_zh": "细胞结构统一性与形态功能多样性",
+      "summary_zh": "比较单细胞和多细胞生物的细胞结构共性及形态功能差异。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.3.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_1_3_2_prokaryotic_eukaryotic_cells",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·1.3.2",
+      "title": "Prokaryotic and eukaryotic cells",
+      "title_zh": "原核细胞与真核细胞",
+      "summary_zh": "以是否具有核膜包被的细胞核区分原核细胞与真核细胞。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.3.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_1_1_selective_permeability",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.1.1",
+      "title": "Selective permeability",
+      "title_zh": "质膜的选择透过性",
+      "summary_zh": "说明质膜选择性控制不同物质通过。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_1_2_passive_active_transport",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.1.2",
+      "title": "Passive and active transport",
+      "title_zh": "被动运输与主动运输",
+      "summary_zh": "比较顺浓度梯度的被动运输和需要能量、载体的主动运输。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_1_3_endocytosis_exocytosis",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.1.3",
+      "title": "Endocytosis and exocytosis",
+      "title_zh": "胞吞与胞吐",
+      "summary_zh": "说明大分子通过胞吞和胞吐进出细胞。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_2_1_enzymes_environment",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.2.1",
+      "title": "Enzymes and environmental factors",
+      "title_zh": "酶及其环境影响因素",
+      "summary_zh": "说明酶的蛋白质本质、催化作用及温度和 pH 对活性的影响。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.2.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_2_2_atp_direct_energy",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.2.2",
+      "title": "ATP as direct energy source",
+      "title_zh": "ATP 是直接能源物质",
+      "summary_zh": "解释 ATP 如何直接驱动细胞生命活动。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.2.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_2_3_photosynthetic_energy_conversion",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.2.3",
+      "title": "Photosynthetic energy conversion",
+      "title_zh": "光合作用能量转换",
+      "summary_zh": "说明叶绿体将光能转换并储存在糖分子的化学能中。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.2.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_2_4_respiratory_energy_conversion",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.2.4",
+      "title": "Respiratory energy conversion",
+      "title_zh": "细胞呼吸能量转换",
+      "summary_zh": "说明细胞呼吸将有机分子能量转化为生命活动可利用的能量。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.2.4），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_3_1_mitosis_information_continuity",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.3.1",
+      "title": "Mitosis and genetic continuity",
+      "title_zh": "有丝分裂与遗传信息连续性",
+      "summary_zh": "说明有丝分裂保证亲代与子代细胞遗传信息一致。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.1），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_3_2_cell_differentiation",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.3.2",
+      "title": "Cell differentiation",
+      "title_zh": "细胞分化",
+      "summary_zh": "说明细胞形态、结构和功能的特异性分化如何形成多细胞生物体。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.2），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rc_2_3_3_cell_senescence_death",
+      "parent_requirement_id": null,
+      "code": "必修·分子与细胞·2.3.3",
+      "title": "Cellular senescence and death",
+      "title_zh": "细胞衰老与死亡",
+      "summary_zh": "说明正常细胞衰老和死亡是自然生理过程。",
+      "requirement_type": "knowledge",
+      "level_id": "rc",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.3），必修·分子与细胞"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_1_gene_nucleic_acid_segment",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.1.1",
+      "title": "Genes as nucleic-acid segments",
+      "title_zh": "基因是核酸功能片段",
+      "summary_zh": "说明多数生物基因位于 DNA，部分病毒基因位于 RNA。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_2_dna_structure_information",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.1.2",
+      "title": "DNA structure and encoded information",
+      "title_zh": "DNA 结构与遗传信息编码",
+      "summary_zh": "说明 DNA 双螺旋、反向平行和碱基互补配对如何承载遗传信息。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_3_semiconservative_replication",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.1.3",
+      "title": "Semiconservative DNA replication",
+      "title_zh": "DNA 半保留复制",
+      "summary_zh": "概述 DNA 的半保留复制。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.3），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_4_gene_expression_traits",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.1.4",
+      "title": "Gene expression and traits",
+      "title_zh": "遗传信息表达、分化与性状",
+      "summary_zh": "说明转录和翻译、基因选择性表达以及蛋白质与性状的关系。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_1_5_epigenetic_phenomena",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.1.5",
+      "title": "Epigenetic phenomena",
+      "title_zh": "表观遗传现象",
+      "summary_zh": "说明碱基序列不变而表型改变的表观遗传现象。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.5），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_2_1_meiotic_reduction",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.2.1",
+      "title": "Meiotic chromosome reduction",
+      "title_zh": "减数分裂与染色体减半",
+      "summary_zh": "说明减数分裂产生染色体数量减半的精细胞或卵细胞。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_2_2_gametic_inheritance",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.2.2",
+      "title": "Inheritance through gametes",
+      "title_zh": "遗传信息经配子传递",
+      "summary_zh": "说明有性生殖中遗传信息通过配子传给子代。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_2_3_segregation_independent_assortment",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.2.3",
+      "title": "Segregation and independent assortment",
+      "title_zh": "分离与自由组合",
+      "summary_zh": "使用基因分离和自由组合预测子代基因型与表型。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.3），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_2_4_sex_linked_inheritance",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.2.4",
+      "title": "Sex-linked inheritance",
+      "title_zh": "伴性遗传",
+      "summary_zh": "说明性染色体基因的传递与性别相关联。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_1_mutation_sequence_changes",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.3.1",
+      "title": "Mutation as sequence change",
+      "title_zh": "基因突变的序列改变",
+      "summary_zh": "说明碱基替换、插入或缺失如何改变基因序列。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_2_mutation_protein_function",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.3.2",
+      "title": "Mutation, protein and cell function",
+      "title_zh": "突变、蛋白质与细胞功能",
+      "summary_zh": "说明基因序列改变可能影响蛋白质、细胞功能和个体生存。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_3_mutagens_cancer",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.3.3",
+      "title": "Mutagens and cancer",
+      "title_zh": "诱变因素与癌变",
+      "summary_zh": "说明化学物质、射线和病毒可能提高突变概率，部分突变导致分裂失控。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.3），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_4_meiotic_recombination",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.3.4",
+      "title": "Meiotic recombination",
+      "title_zh": "减数分裂中的基因重组",
+      "summary_zh": "说明自由组合和交叉互换如何导致基因重组和子代变异。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_5_chromosomal_variation",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.3.5",
+      "title": "Chromosomal variation",
+      "title_zh": "染色体结构与数量变异",
+      "summary_zh": "说明染色体结构和数量变异可能改变性状甚至导致死亡。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_3_3_6_genetic_disease_screening",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·3.3.6",
+      "title": "Genetic-disease screening and prevention",
+      "title_zh": "人类遗传病检测与预防",
+      "summary_zh": "举例说明人类遗传病的检测和预防。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_1_1_common_ancestry_fossil_anatomy",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·4.1.1",
+      "title": "Evidence from fossils and comparative anatomy",
+      "title_zh": "化石、比较解剖与胚胎学的共同祖先证据",
+      "summary_zh": "使用化石、比较解剖和胚胎学事实说明共同祖先。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_1_2_common_ancestry_cell_molecular",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·4.1.2",
+      "title": "Cellular and molecular evidence of common ancestry",
+      "title_zh": "细胞与分子层面的共同祖先证据",
+      "summary_zh": "使用代谢和 DNA 结构功能共性说明共同祖先。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_1_heritable_advantage",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·4.2.1",
+      "title": "Heritable variation and advantage",
+      "title_zh": "可遗传变异与适合度优势",
+      "summary_zh": "说明某些可遗传变异在特定环境中带来生存和繁殖优势。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.1），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_2_selection_frequency_change",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·4.2.2",
+      "title": "Selection and frequency change",
+      "title_zh": "选择导致性状频率变化",
+      "summary_zh": "说明优势性状个体在种群中的比例随选择而增加。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.2），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_3_adaptation_natural_selection",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·4.2.3",
+      "title": "Adaptation by natural selection",
+      "title_zh": "自然选择与适应",
+      "summary_zh": "说明自然选择促进种群适应特定环境。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.3），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_4_modern_evolutionary_theory",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·4.2.4",
+      "title": "Modern evolutionary theory",
+      "title_zh": "现代生物进化理论",
+      "summary_zh": "概述以自然选择为核心的现代生物进化理论。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.4），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_rg_4_2_5_speciation_variation_selection_isolation",
+      "parent_requirement_id": null,
+      "code": "必修·遗传与进化·4.2.5",
+      "title": "Variation, selection, isolation and speciation",
+      "title_zh": "变异、选择、隔离与物种形成",
+      "summary_zh": "说明变异、选择和隔离如何导致新物种形成。",
+      "requirement_type": "knowledge",
+      "level_id": "rg",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.2.5），必修·遗传与进化"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_1_1_internal_environment_fluids",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.1.1",
+      "title": "Internal-environment fluids",
+      "title_zh": "内环境的细胞外液组成",
+      "summary_zh": "说明血浆、组织液和淋巴等细胞外液共同构成内环境。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_1_2_internal_external_exchange",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.1.2",
+      "title": "Exchange through the internal environment",
+      "title_zh": "细胞经内环境与外界交换",
+      "summary_zh": "说明细胞通过内环境与外界交换并参与内环境维持。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_1_3_organ_system_exchange",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.1.3",
+      "title": "Organ systems in material exchange",
+      "title_zh": "器官系统参与内外环境物质交换",
+      "summary_zh": "说明呼吸、消化、循环和泌尿系统如何参与内外环境交换。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_2_1_homeostatic_variables",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.2.1",
+      "title": "Homeostatic variables",
+      "title_zh": "血糖、体温、pH 与渗透压稳态",
+      "summary_zh": "以血糖、体温、pH 和渗透压说明内环境相对稳定。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.2.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_2_2_organ_coordination_homeostasis",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.2.2",
+      "title": "Organ coordination in homeostasis",
+      "title_zh": "器官系统协调维持稳态",
+      "summary_zh": "说明器官和系统协调是维持内环境稳态的基础。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.2.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_1_reflex_arc",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.3.1",
+      "title": "Reflexes and the reflex arc",
+      "title_zh": "反射与反射弧",
+      "summary_zh": "说明条件和非条件反射及反射弧结构。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_2_resting_action_potentials",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.3.2",
+      "title": "Resting and action potentials",
+      "title_zh": "静息电位、动作电位与传导",
+      "summary_zh": "说明神经细胞静息电位、动作电位及沿神经纤维传导。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_3_chemical_synaptic_transmission",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.3.3",
+      "title": "Chemical synaptic transmission",
+      "title_zh": "突触的化学传递",
+      "summary_zh": "说明神经冲动通常在突触处通过化学方式传递。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_4_central_nervous_hierarchy",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.3.4",
+      "title": "Coordination of spinal and brain centres",
+      "title_zh": "脊髓与脑高级中枢协调",
+      "summary_zh": "说明低级和高级神经中枢协调调控器官和系统。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_5_autonomic_nervous_regulation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.3.5",
+      "title": "Autonomic nervous regulation",
+      "title_zh": "自主神经调节内脏",
+      "summary_zh": "说明中枢神经系统通过自主神经调节内脏活动。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_3_6_cortical_higher_activity",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.3.6",
+      "title": "Cortical higher nervous activity",
+      "title_zh": "大脑皮层高级神经活动",
+      "summary_zh": "说明语言活动和条件反射由大脑皮层控制。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.6），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_4_1_endocrine_system",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.4.1",
+      "title": "Endocrine-system organisation",
+      "title_zh": "内分泌系统组成",
+      "summary_zh": "识别主要内分泌腺及其激素调节作用。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_4_2_hormonal_feedback_hierarchies",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.4.2",
+      "title": "Hormonal feedback and hierarchical control",
+      "title_zh": "激素的分级与反馈调节",
+      "summary_zh": "说明激素分级和反馈调节维持甲状腺与血糖稳态。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_4_3_neuroendocrine_coordination",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.4.3",
+      "title": "Neuroendocrine coordination",
+      "title_zh": "神经与体液调节协调",
+      "summary_zh": "说明神经和体液调节共同维持体温与水盐平衡。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_4_4_humoral_respiratory_regulation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.4.4",
+      "title": "Humoral regulation of breathing",
+      "title_zh": "体液成分调节呼吸",
+      "summary_zh": "说明二氧化碳等体液成分参与呼吸运动调节。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_5_1_immune_system_components",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.5.1",
+      "title": "Immune-system components",
+      "title_zh": "免疫系统的结构与物质基础",
+      "summary_zh": "说明免疫细胞、器官和活性物质构成免疫调节基础。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_5_2_innate_adaptive_immunity",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.5.2",
+      "title": "Innate and adaptive immunity",
+      "title_zh": "非特异性与特异性免疫",
+      "summary_zh": "比较先天非特异性免疫和后天特异性免疫。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_5_3_humoral_cellular_immunity",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.5.3",
+      "title": "Humoral and cellular immunity",
+      "title_zh": "体液免疫与细胞免疫",
+      "summary_zh": "说明特异性免疫通过体液免疫和细胞免疫应答特定病原体。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_5_4_immune_disorders",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.5.4",
+      "title": "Immune disorders",
+      "title_zh": "免疫功能异常与疾病",
+      "summary_zh": "比较过敏、自身免疫病、艾滋病和先天免疫缺陷。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_6_1_auxin_dual_effects",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.6.1",
+      "title": "Auxin discovery and dual effects",
+      "title_zh": "生长素发现与两重性",
+      "summary_zh": "说明生长素的发现及其促进或抑制生长的两重性。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.6.1），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_6_2_plant_hormone_coordination",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.6.2",
+      "title": "Coordination among plant hormones",
+      "title_zh": "植物激素的协同与拮抗",
+      "summary_zh": "说明主要植物激素通过协同或拮抗共同调节生命活动。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.6.2），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_6_3_plant_growth_regulator_applications",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.6.3",
+      "title": "Applications of plant growth regulators",
+      "title_zh": "植物激素及类似物的生产应用",
+      "summary_zh": "说明主要植物激素及类似物在生产中的应用。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 1.6.3），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sh_1_6_4_environmental_plant_regulation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·稳态与调节·1.6.4",
+      "title": "Environmental regulation of plants",
+      "title_zh": "光、重力和温度调节植物活动",
+      "summary_zh": "说明光、重力和温度等非激素因素参与植物生命活动调节。",
+      "requirement_type": "knowledge",
+      "level_id": "sh",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 1.6.4），选择性必修·稳态与调节"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_1_population_characteristics",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.1.1",
+      "title": "Population characteristics",
+      "title_zh": "种群特征",
+      "summary_zh": "说明种群密度、出生死亡率、迁入迁出率、年龄结构和性别比例。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_2_population_growth_models",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.1.2",
+      "title": "Population-growth models",
+      "title_zh": "种群数量变化模型",
+      "summary_zh": "建立数学模型解释种群数量变动。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_3_population_limiting_factors",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.1.3",
+      "title": "Factors affecting populations",
+      "title_zh": "种群特征的生物与非生物影响因素",
+      "summary_zh": "说明非生物因素和种间作用如何影响种群特征。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_4_community_structure",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.1.4",
+      "title": "Community structure",
+      "title_zh": "群落垂直、水平结构及时间变化",
+      "summary_zh": "描述群落的垂直和水平结构及其时间变化。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_5_ecological_succession",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.1.5",
+      "title": "Ecological succession",
+      "title_zh": "初生演替与次生演替",
+      "summary_zh": "说明群落演替及初生、次生演替的区别。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_1_6_community_adaptations",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.1.6",
+      "title": "Adaptations within communities",
+      "title_zh": "群落生物的适应特征",
+      "summary_zh": "分析群落生物与环境相适应的形态、生理和分布特点。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.6），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_1_ecosystem_components",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.2.1",
+      "title": "Ecosystem components",
+      "title_zh": "生态系统组成与统一结构",
+      "summary_zh": "说明生产者、消费者、分解者和非生物因素构成生态系统。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_2_food_chains_webs",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.2.2",
+      "title": "Food chains and food webs",
+      "title_zh": "食物链与食物网",
+      "summary_zh": "说明生产者和消费者通过食物链、食物网形成营养结构。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_3_matter_cycles_energy_flow",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.2.3",
+      "title": "Matter cycling and energy flow",
+      "title_zh": "物质循环与能量流动",
+      "summary_zh": "说明物质循环、能量单向流动和逐级递减规律。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_4_ecological_resource_use",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.2.4",
+      "title": "Ecological resource use",
+      "title_zh": "生态规律与资源利用",
+      "summary_zh": "应用物质循环和能量流动规律提高生态资源利用效率。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_5_ecological_pyramids",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.2.5",
+      "title": "Ecological pyramids",
+      "title_zh": "数量、生物量和能量金字塔",
+      "summary_zh": "说明生态金字塔如何表征营养级数量、生物量和能量关系。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_6_biomagnification",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.2.6",
+      "title": "Biomagnification",
+      "title_zh": "食物链中的有害物质富集",
+      "summary_zh": "说明有害物质沿食物链不断富集。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_7_ecosystem_information_transfer",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.2.7",
+      "title": "Information transfer in ecosystems",
+      "title_zh": "生态系统信息传递",
+      "summary_zh": "说明物理、化学和行为信息对生命活动、繁衍和种间关系的作用。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.7），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_2_8_trophic_structure_factors",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.2.8",
+      "title": "Determinants of trophic structure",
+      "title_zh": "营养结构的生物与非生物决定因素",
+      "summary_zh": "分析特定生态系统的生物和非生物因素如何决定营养结构。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.8），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_3_1_ecosystem_stability",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.3.1",
+      "title": "Ecosystem stability",
+      "title_zh": "生态系统稳定性",
+      "summary_zh": "说明生态系统保持或恢复结构功能和动态平衡的能力。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_3_2_ecosystem_disturbances",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.3.2",
+      "title": "Ecosystem disturbances",
+      "title_zh": "生态系统干扰因素",
+      "summary_zh": "说明气候、自然事件、人类活动和外来物种对稳定性的影响。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_3_3_ecosystem_self_regulation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.3.3",
+      "title": "Ecosystem self-regulation",
+      "title_zh": "生态系统自我调节",
+      "summary_zh": "说明生态系统在一定干扰限度内通过自我调节维持稳定。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_1_population_environment_pressure",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.4.1",
+      "title": "Population pressure on the environment",
+      "title_zh": "人口增长的环境压力",
+      "summary_zh": "说明人口增长如何对环境造成压力。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.1），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_2_global_environmental_change",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.4.2",
+      "title": "Global environmental change",
+      "title_zh": "全球环境问题与生物圈稳态",
+      "summary_zh": "说明气候、水资源、臭氧、酸雨、荒漠化和污染对生物圈与人的影响。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.2），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_3_biodiversity_importance",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.4.3",
+      "title": "Importance of biodiversity",
+      "title_zh": "生物多样性的生态与社会价值",
+      "summary_zh": "说明生物多样性对生态稳定和人类发展的重要性。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.3），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_4_ecological_engineering_circularity",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.4.4",
+      "title": "Ecological engineering and circularity",
+      "title_zh": "生态工程与资源循环利用",
+      "summary_zh": "说明依据生态学原理和系统工程实现资源多层次循环利用。",
+      "requirement_type": "knowledge",
+      "level_id": "se",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.4），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_se_2_4_5_environmental_responsibility",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物与环境·2.4.5",
+      "title": "Environmental responsibility",
+      "title_zh": "从我做起的环境保护意识",
+      "summary_zh": "形成个人参与环境保护的责任意识。",
+      "requirement_type": "practice",
+      "level_id": "se",
+      "cognitive_processes": [
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.5），选择性必修·生物与环境"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_1_sterilisation_microbe_culture",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·3.1.1",
+      "title": "Sterilisation for pure culture",
+      "title_zh": "纯培养中的灭菌",
+      "summary_zh": "说明灭菌是获得纯净微生物培养物的前提。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_2_aseptic_technique",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·3.1.2",
+      "title": "Aseptic technique",
+      "title_zh": "无菌技术",
+      "summary_zh": "说明操作中保持无菌物品和区域不被污染的技术。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_3_selective_culture_media",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·3.1.3",
+      "title": "Selective culture media",
+      "title_zh": "培养基配方与目的培养",
+      "summary_zh": "说明调整培养基配方可有目的地培养微生物。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_4_microbial_isolation_methods",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·3.1.4",
+      "title": "Microbial isolation methods",
+      "title_zh": "平板划线与稀释涂布分离",
+      "summary_zh": "比较平板划线法和稀释涂布平板法的分离纯化用途。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_1_5_microbial_counting_methods",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·3.1.5",
+      "title": "Microbial counting methods",
+      "title_zh": "稀释涂布与显微镜计数",
+      "summary_zh": "比较稀释涂布平板法和显微镜计数法测定微生物数量。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.5），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_2_1_traditional_fermentation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·3.2.1",
+      "title": "Traditional fermentation",
+      "title_zh": "传统发酵食品",
+      "summary_zh": "说明微生物在传统发酵食品生产中的作用。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_2_2_industrial_fermentation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·3.2.2",
+      "title": "Industrial fermentation",
+      "title_zh": "现代发酵工程",
+      "summary_zh": "说明现代工程技术利用微生物功能工业化生产产品。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_3_2_3_fermentation_applications",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·3.2.3",
+      "title": "Applications of fermentation engineering",
+      "title_zh": "发酵工程应用",
+      "summary_zh": "说明发酵工程在医药、食品和工农业中的应用价值。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_1_1_plant_tissue_culture",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.1.1",
+      "title": "Plant tissue culture",
+      "title_zh": "植物组织培养",
+      "summary_zh": "说明离体材料形成愈伤组织、再分化并形成完整植株的过程。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_1_2_plant_somatic_hybridisation",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.1.2",
+      "title": "Plant somatic hybridisation",
+      "title_zh": "植物体细胞杂交",
+      "summary_zh": "说明不同植物体细胞融合并培育新植物体的技术。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_1_3_plant_cell_engineering_applications",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.1.3",
+      "title": "Applications of plant-cell engineering",
+      "title_zh": "植物细胞工程应用",
+      "summary_zh": "说明快速繁殖、脱毒、次生代谢产物生产和育种应用。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_1_animal_cell_culture",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.2.1",
+      "title": "Animal cell culture",
+      "title_zh": "动物细胞培养",
+      "summary_zh": "说明动物组织分散成细胞并在适宜条件下培养增殖的过程。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_2_somatic_cell_nuclear_transfer",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.2.2",
+      "title": "Somatic-cell nuclear transfer",
+      "title_zh": "动物体细胞核移植",
+      "summary_zh": "说明体细胞核移入去核卵母细胞并发育为新个体的过程。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_3_animal_cell_fusion",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.2.3",
+      "title": "Animal cell fusion",
+      "title_zh": "动物细胞融合",
+      "summary_zh": "说明物理、化学或生物手段使动物细胞融合。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_4_monoclonal_antibody_production",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.2.4",
+      "title": "Monoclonal-antibody production",
+      "title_zh": "单克隆抗体制备",
+      "summary_zh": "说明细胞融合技术在单克隆抗体制备中的作用。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_2_5_stem_cell_applications",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.2.5",
+      "title": "Stem-cell applications",
+      "title_zh": "干细胞的生物医学应用",
+      "summary_zh": "说明干细胞在生物医学工程中的应用价值。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.5），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_3_1_fertilisation_early_embryo",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.3.1",
+      "title": "Fertilisation and early embryonic development",
+      "title_zh": "受精与早期胚胎发育",
+      "summary_zh": "说明胚胎形成经历受精和早期发育。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_4_3_2_embryo_engineering",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·4.3.2",
+      "title": "Embryo engineering",
+      "title_zh": "体外受精、胚胎移植与分割",
+      "summary_zh": "说明体外受精、胚胎移植和胚胎分割等胚胎工程技术。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_1_1_gene_engineering_foundations",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·5.1.1",
+      "title": "Foundations of genetic engineering",
+      "title_zh": "基因工程的学科基础",
+      "summary_zh": "说明基因工程建立在遗传、微生物、生化和分子生物学之上。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_1_2_gene_engineering_tools",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·5.1.2",
+      "title": "Tools of genetic engineering",
+      "title_zh": "限制酶、连接酶与载体",
+      "summary_zh": "说明限制性内切核酸酶、DNA 连接酶和载体的作用。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_1_3_gene_engineering_workflow",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·5.1.3",
+      "title": "Genetic-engineering workflow",
+      "title_zh": "基因工程基本操作程序",
+      "summary_zh": "说明目的基因获取、载体构建、导入和检测鉴定的流程。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.3），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_1_4_gene_engineering_applications",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·5.1.4",
+      "title": "Applications of genetic engineering",
+      "title_zh": "基因工程的行业应用",
+      "summary_zh": "说明基因工程在农牧、食品和医药行业中的应用。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.4），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_2_1_protein_engineering_design",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·5.2.1",
+      "title": "Protein-engineering design",
+      "title_zh": "蛋白质工程设计与改造",
+      "summary_zh": "说明依据基因工程原理设计、改造蛋白质以满足需求。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_5_2_2_protein_engineering_process",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·5.2.2",
+      "title": "Protein-engineering process",
+      "title_zh": "蛋白质工程实现过程",
+      "summary_zh": "说明通过基因改造生产目标蛋白的过程。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_1_1_gmo_products",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·6.1.1",
+      "title": "Genetically modified products",
+      "title_zh": "转基因产品实例",
+      "summary_zh": "识别日常生活中的转基因产品。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.1.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_1_2_gmo_impacts",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·6.1.2",
+      "title": "Impacts of genetically modified technology",
+      "title_zh": "转基因技术影响",
+      "summary_zh": "比较转基因技术应用可能带来的收益、风险和社会影响。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.1.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_2_1_reproductive_cloning_ethics",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·6.2.1",
+      "title": "Ethics of human reproductive cloning",
+      "title_zh": "生殖性克隆人的伦理问题",
+      "summary_zh": "说明生殖性克隆人面临的伦理问题。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_2_2_reproductive_cloning_china_policy",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·6.2.2",
+      "title": "China policy on reproductive cloning",
+      "title_zh": "中国禁止生殖性克隆人",
+      "summary_zh": "说明中国不赞成、不允许、不支持、不接受生殖性克隆人实验的理由。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_3_1_biological_weapons_harms",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·6.3.1",
+      "title": "Harms of biological weapons",
+      "title_zh": "生物武器的威胁与伤害",
+      "summary_zh": "说明生物武器对人类造成的严重威胁和伤害。",
+      "requirement_type": "knowledge",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.1），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_cn_sh_bio_2020_o_sb_6_3_2_oppose_biological_weapons",
+      "parent_requirement_id": null,
+      "code": "选择性必修·生物技术与工程·6.3.2",
+      "title": "Opposition to biological weapons",
+      "title_zh": "反对生物武器扩散的立场",
+      "summary_zh": "认同反对生物武器及其技术和设备扩散的社会责任。",
+      "requirement_type": "practice",
+      "level_id": "sb",
+      "cognitive_processes": [
+        "evaluate",
+        "communicate"
+      ],
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.2），选择性必修·生物技术与工程"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

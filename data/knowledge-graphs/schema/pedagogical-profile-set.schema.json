@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://primoria.local/schemas/pedagogical-profile-set.schema.json",
+  "title": "Primoria Concept Pedagogical Profile Set",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "content_version",
+    "profile_set_id",
+    "jurisdictions",
+    "subjects",
+    "source_ids",
+    "generated_at",
+    "review_status",
+    "changelog",
+    "profiles"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "content_version": { "$ref": "#/$defs/semver" },
+    "profile_set_id": { "type": "string", "pattern": "^pps_[a-z0-9_]+$" },
+    "jurisdictions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["CN-MAINLAND", "SG"] }
+    },
+    "subjects": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "source_ids": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/sourceId" }
+    },
+    "generated_at": { "type": "string", "format": "date" },
+    "review_status": { "$ref": "#/$defs/reviewStatus" },
+    "changelog": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/changelogEntry" }
+    },
+    "profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/profile" }
+    }
+  },
+  "$defs": {
+    "semver": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$" },
+    "sourceId": { "type": "string", "pattern": "^src_[a-z0-9_]+$" },
+    "canonicalId": { "type": "string", "pattern": "^pc_[a-f0-9]{32}$" },
+    "reviewStatus": { "enum": ["unreviewed", "needs_review", "approved", "rejected", "superseded"] },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "locator"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/sourceId" },
+        "locator": { "type": "string", "minLength": 1 },
+        "note_zh": { "type": "string", "minLength": 1 }
+      }
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/evidenceRef" }
+    },
+    "changelogEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "date", "summary_zh"],
+      "properties": {
+        "version": { "$ref": "#/$defs/semver" },
+        "date": { "type": "string", "format": "date" },
+        "summary_zh": { "type": "string", "minLength": 1 }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_id",
+        "canonical_id",
+        "graph_id",
+        "node_id",
+        "subject",
+        "jurisdictions",
+        "title_zh",
+        "misconception_candidates",
+        "instructional_strategies",
+        "assessment_probes",
+        "evidence_refs",
+        "review_status"
+      ],
+      "properties": {
+        "profile_id": { "type": "string", "pattern": "^ped_profile_[a-z0-9_]+$" },
+        "canonical_id": { "$ref": "#/$defs/canonicalId" },
+        "graph_id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "node_id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "subject": { "type": "string", "minLength": 1 },
+        "jurisdictions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["CN-MAINLAND", "SG"] }
+        },
+        "title_zh": { "type": "string", "minLength": 1 },
+        "misconception_candidates": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/misconception" }
+        },
+        "instructional_strategies": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/strategy" }
+        },
+        "assessment_probes": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/probe" }
+        },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+        "review_status": { "$ref": "#/$defs/reviewStatus" }
+      }
+    },
+    "misconception": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "misconception_id",
+        "statement_zh",
+        "diagnostic_signal_zh",
+        "correction_zh",
+        "prevalence_basis",
+        "evidence_refs",
+        "review_status"
+      ],
+      "properties": {
+        "misconception_id": { "type": "string", "pattern": "^mis_[a-z0-9_]+$" },
+        "statement_zh": { "type": "string", "minLength": 1 },
+        "diagnostic_signal_zh": { "type": "string", "minLength": 1 },
+        "correction_zh": { "type": "string", "minLength": 1 },
+        "prevalence_basis": { "enum": ["diagnostic_hypothesis", "empirically_documented"] },
+        "empirical_support": { "$ref": "#/$defs/empiricalSupport" },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+        "review_status": { "$ref": "#/$defs/reviewStatus" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "prevalence_basis": { "const": "empirically_documented" } },
+            "required": ["prevalence_basis"]
+          },
+          "then": {
+            "properties": { "empirical_support": { "$ref": "#/$defs/empiricalSupport" } },
+            "required": ["empirical_support"]
+          },
+          "else": { "not": { "required": ["empirical_support"] } }
+        }
+      ]
+    },
+    "empiricalSupport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_scope",
+        "population_zh",
+        "study_context_zh",
+        "finding_zh",
+        "generalisability_zh"
+      ],
+      "properties": {
+        "claim_scope": { "enum": ["observed_in_study_population", "reported_by_examiners"] },
+        "population_zh": { "type": "string", "minLength": 1 },
+        "study_context_zh": { "type": "string", "minLength": 1 },
+        "finding_zh": { "type": "string", "minLength": 1 },
+        "generalisability_zh": { "type": "string", "minLength": 1 }
+      }
+    },
+    "strategy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy_id",
+        "sequence_zh",
+        "rationale_zh",
+        "avoid_zh",
+        "evidence_basis",
+        "evidence_refs",
+        "review_status"
+      ],
+      "properties": {
+        "strategy_id": { "type": "string", "pattern": "^strategy_[a-z0-9_]+$" },
+        "sequence_zh": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "rationale_zh": { "type": "string", "minLength": 1 },
+        "avoid_zh": { "type": "string", "minLength": 1 },
+        "evidence_basis": { "enum": ["concept_boundary_design", "empirical_education_research"] },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+        "review_status": { "$ref": "#/$defs/reviewStatus" }
+      }
+    },
+    "probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probe_id",
+        "prompt_zh",
+        "expected_evidence_zh",
+        "scoring_criteria_zh",
+        "targets_misconception_ids",
+        "evidence_basis",
+        "evidence_refs",
+        "review_status"
+      ],
+      "properties": {
+        "probe_id": { "type": "string", "pattern": "^probe_[a-z0-9_]+$" },
+        "prompt_zh": { "type": "string", "minLength": 1 },
+        "expected_evidence_zh": { "type": "string", "minLength": 1 },
+        "scoring_criteria_zh": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "targets_misconception_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^mis_[a-z0-9_]+$" }
+        },
+        "evidence_basis": { "enum": ["curriculum_assessment_alignment", "empirical_education_research"] },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+        "review_status": { "$ref": "#/$defs/reviewStatus" }
+      }
+    }
+  }
+}

@@ -1,0 +1,288 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "practice_set_id": "cpk_cn_moe_senior_high_physics_2020",
+  "framework_id": "cfw_cn_moe_senior_high_physics_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_physics_2020",
+  "subject": "Physics",
+  "source_ids": [
+    "src_cn_moe_senior_high_physics_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "把 14 项科学史、证据与守恒方法要求分流到教学评测知识层。"
+    }
+  ],
+  "items": [
+    {
+      "practice_id": "practice_cn_sh_physics_2020_r1_1_1_1_experimental_science_history",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_1_1_experimental_science_history"
+      ],
+      "kind": "inquiry_process",
+      "name": "Rise of experimental science",
+      "name_zh": "近代实验科学与物理学发展",
+      "description_zh": "认识实验对近代物理学发展的推动作用，并能结合伽利略研究说明证据与方法的意义。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.1），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_r1_1_1_3c_investigate_uniform_acceleration",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_1_3c_investigate_uniform_acceleration"
+      ],
+      "kind": "inquiry_process",
+      "name": "Investigating uniformly accelerated motion",
+      "name_zh": "实验探究匀变速直线运动",
+      "description_zh": "选择计时与位置测量工具，处理数据并检验匀变速直线运动规律。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.3），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_r1_1_2_3a_investigate_newton_second",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_2_3a_investigate_newton_second"
+      ],
+      "kind": "inquiry_process",
+      "name": "Investigating acceleration, force and mass",
+      "name_zh": "实验探究加速度、力与质量关系",
+      "description_zh": "用控制变量实验获取并分析加速度、受力和质量数据。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_r2_2_1_4b_verify_mechanical_energy",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_1_4b_verify_mechanical_energy"
+      ],
+      "kind": "inquiry_process",
+      "name": "Verifying conservation of mechanical energy",
+      "name_zh": "实验验证机械能守恒",
+      "description_zh": "设计测量、处理动能和势能数据，并评价机械能守恒实验误差。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.1.4），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_r3_3_2_1b_multimeter_use",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_2_1b_multimeter_use"
+      ],
+      "kind": "inquiry_process",
+      "name": "Using a multimeter",
+      "name_zh": "使用多用电表",
+      "description_zh": "选择量程和接线方式，规范使用多用电表并读取测量结果。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_r3_3_2_2b_measure_resistivity",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_2_2b_measure_resistivity"
+      ],
+      "kind": "inquiry_process",
+      "name": "Measuring resistivity",
+      "name_zh": "测量金属丝电阻率",
+      "description_zh": "设计并实施电阻率测量，处理长度、截面积、电压和电流数据。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_r3_3_2_4b_measure_emf_internal_resistance",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_2_4b_measure_emf_internal_resistance"
+      ],
+      "kind": "inquiry_process",
+      "name": "Measuring source EMF and internal resistance",
+      "name_zh": "测量电源电动势和内阻",
+      "description_zh": "通过端电压—电流数据和图像测量电源电动势与内阻。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_sr1_1_1_3_conservation_reasoning",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_1_3_conservation_reasoning"
+      ],
+      "kind": "inquiry_process",
+      "name": "Reasoning with conservation laws",
+      "name_zh": "用守恒定律分析问题",
+      "description_zh": "比较守恒视角与其他方法，体会守恒定律在物理推理中的统一作用。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.33（正文对应内容要求 1.1.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_sr1_1_2_2b_measure_g_pendulum",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_2_2b_measure_g_pendulum"
+      ],
+      "kind": "inquiry_process",
+      "name": "Measuring g with a pendulum",
+      "name_zh": "用单摆测量重力加速度",
+      "description_zh": "设计单摆实验、处理周期和摆长数据并评价误差。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_sr1_1_3_1b_measure_refractive_index",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_3_1b_measure_refractive_index"
+      ],
+      "kind": "inquiry_process",
+      "name": "Measuring refractive index",
+      "name_zh": "测量材料折射率",
+      "description_zh": "设计光路、测量入射角和折射角并求材料折射率。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.3.1），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_sr1_1_3_3c_double_slit_wavelength",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_3_3c_double_slit_wavelength"
+      ],
+      "kind": "inquiry_process",
+      "name": "Measuring wavelength by double-slit interference",
+      "name_zh": "用双缝干涉测量光波长",
+      "description_zh": "测量条纹间距和装置参数并计算光波长、评价误差。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_sr2_2_4_2b_build_sensor_control",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_4_2b_build_sensor_control"
+      ],
+      "kind": "inquiry_process",
+      "name": "Building a sensor control device",
+      "name_zh": "制作传感器自动控制装置",
+      "description_zh": "选择传感器和电路元件，制作并调试简单自动控制装置。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.2），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_sr3_3_1_1a_oil_film_molecule_size",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_1_1a_oil_film_molecule_size"
+      ],
+      "kind": "inquiry_process",
+      "name": "Estimating molecular size by an oil film",
+      "name_zh": "油膜法估测分子大小",
+      "description_zh": "实施油膜法测量并处理体积和面积数据，评价数量级和误差。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_physics_2020_sr3_3_3_5_matter_exploration_history",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_3_5_matter_exploration_history"
+      ],
+      "kind": "inquiry_process",
+      "name": "History of exploring matter structure",
+      "name_zh": "物质结构探索历程",
+      "description_zh": "梳理人类探索物质结构的证据、仪器与模型演进。",
+      "instructional_use_zh": "以物理史证据或多种解法比较组织教学，要求学生明确证据如何支持模型或守恒观点，而非只记结论。",
+      "assessment_evidence_zh": "能引用具体实验、证据或守恒条件说明推理链，区分物理概念结论与方法论评价。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.5），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

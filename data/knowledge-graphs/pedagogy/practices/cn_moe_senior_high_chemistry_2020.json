@@ -1,0 +1,592 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "practice_set_id": "cpk_cn_moe_senior_high_chemistry_2020",
+  "framework_id": "cfw_cn_moe_senior_high_chemistry_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_chemistry_2020",
+  "subject": "Chemistry",
+  "source_ids": [
+    "src_cn_moe_senior_high_chemistry_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "把 30 项实验、探究、证据、安全和工程实践分流到教学评测知识层。"
+    }
+  ],
+  "items": [
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_1_1b_chemical_evidence_models",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_1b_chemical_evidence_models"
+      ],
+      "kind": "inquiry_process",
+      "name": "Evidence and models in chemistry",
+      "name_zh": "化学中的实证、推理与模型",
+      "description_zh": "在化学问题中区分实验事实、假说、模型、比较和分类的作用。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_1_2a_inquiry_question_hypothesis",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_2a_inquiry_question_hypothesis"
+      ],
+      "kind": "inquiry_process",
+      "name": "Inquiry questions and hypotheses",
+      "name_zh": "探究问题与假设",
+      "description_zh": "从现象提出可检验问题，形成有依据的预测或假设。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_1_2b_inquiry_design_evidence",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_2b_inquiry_design_evidence"
+      ],
+      "kind": "inquiry_process",
+      "name": "Inquiry design and evidence",
+      "name_zh": "探究方案、证据与结论",
+      "description_zh": "依据目的设计方案、获取证据、分析解释并评价结论。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_1_3a_chemical_experiment_roles",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_3a_chemical_experiment_roles"
+      ],
+      "kind": "inquiry_process",
+      "name": "Roles of chemical experiments",
+      "name_zh": "化学实验的功能",
+      "description_zh": "根据研究目的选择性质研究、分离、检验或制备实验的基本思路。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_1_3b_separation_purification_solution",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_3b_separation_purification_solution"
+      ],
+      "kind": "inquiry_process",
+      "name": "Separation, purification and solution preparation",
+      "name_zh": "分离、提纯、检验与溶液配制",
+      "description_zh": "规范选择和实施物质检验、分离、提纯与溶液配制的基本操作。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_1_3c_experimental_condition_control",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_3c_experimental_condition_control"
+      ],
+      "kind": "inquiry_process",
+      "name": "Control of experimental conditions",
+      "name_zh": "实验条件控制",
+      "description_zh": "识别并控制影响化学实验结论的关键变量和条件。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_1_4a_scientific_attitude_collaboration",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_4a_scientific_attitude_collaboration"
+      ],
+      "kind": "reporting_integrity",
+      "name": "Scientific attitude and collaboration",
+      "name_zh": "科学态度、质疑与合作",
+      "description_zh": "如实记录证据，严谨交流，并在合作中提出有依据的质疑和改进。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_1_4b_laboratory_safety_waste",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_4b_laboratory_safety_waste"
+      ],
+      "kind": "assessment_task",
+      "name": "Laboratory safety and waste",
+      "name_zh": "实验安全、废弃物与突发事件",
+      "description_zh": "识别化学品安全标识，选择废弃物处理和实验室突发事件应对措施。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_1_5a_prepare_molar_solution",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_5a_prepare_molar_solution"
+      ],
+      "kind": "inquiry_process",
+      "name": "Preparing a molar solution",
+      "name_zh": "配制一定物质的量浓度的溶液",
+      "description_zh": "选择容量仪器，完成称量或移液、溶解、转移、定容和误差检查。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.20（正文对应内容要求 1.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_2_7a_iron_compounds_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_7a_iron_compounds_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Iron-compound investigation",
+      "name_zh": "铁及其化合物性质实验",
+      "description_zh": "设计并实施铁及其化合物性质和价态转化实验。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.7），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_2_7b_sulfur_valence_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_7b_sulfur_valence_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Sulfur valence-state conversion",
+      "name_zh": "不同价态含硫物质转化实验",
+      "description_zh": "通过证据判断不同价态含硫物质间的氧化还原转化。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.7），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_2_7c_coarse_salt_purification",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_7c_coarse_salt_purification"
+      ],
+      "kind": "inquiry_process",
+      "name": "Purifying crude salt",
+      "name_zh": "粗盐杂质离子的沉淀去除",
+      "description_zh": "选择沉淀剂和操作顺序去除粗盐中杂质离子并评价方案。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.7），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_3_3c_rate_variable_control",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_3_3c_rate_variable_control"
+      ],
+      "kind": "inquiry_process",
+      "name": "Variable control in rate studies",
+      "name_zh": "反应速率变量控制",
+      "description_zh": "使用控制变量法探究影响反应速率的因素并评价证据。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_3_5a_periodic_trends_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_3_5a_periodic_trends_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Periodic-trend investigation",
+      "name_zh": "同周期同主族性质递变实验",
+      "description_zh": "用实验事实和数据检验同周期、同主族元素性质递变。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.27（正文对应内容要求 3.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_3_5b_rate_factors_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_3_5b_rate_factors_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Reaction-rate factors investigation",
+      "name_zh": "反应速率影响因素实验",
+      "description_zh": "控制变量并测量影响反应速率的因素。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.27（正文对应内容要求 3.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_3_5c_chemical_to_electrical_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_3_5c_chemical_to_electrical_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Chemical-to-electrical energy experiment",
+      "name_zh": "化学能转化为电能实验",
+      "description_zh": "搭建并检验简单原电池，记录电极和电流方向证据。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.27（正文对应内容要求 3.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_4_4a_organic_model_building",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_4_4a_organic_model_building"
+      ],
+      "kind": "modelling_process",
+      "name": "Organic molecular model building",
+      "name_zh": "有机分子球棍模型",
+      "description_zh": "搭建球棍模型并用模型比较有机分子结构。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.30（正文对应内容要求 4.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_r_4_4b_ethanol_ethanoic_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_4_4b_ethanol_ethanoic_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Ethanol and ethanoic-acid experiment",
+      "name_zh": "乙醇、乙酸性质实验",
+      "description_zh": "实施乙醇、乙酸性质实验并以证据联系官能团。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.30（正文对应内容要求 4.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_se_1_4a_electroplating_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_1_4a_electroplating_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Electroplating experiment",
+      "name_zh": "简单电镀实验",
+      "description_zh": "搭建电解装置实施简单电镀并解释电极产物。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.4），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_se_1_4b_fuel_cell_build",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_1_4b_fuel_cell_build"
+      ],
+      "kind": "modelling_process",
+      "name": "Building a fuel cell",
+      "name_zh": "制作简单燃料电池",
+      "description_zh": "制作简单燃料电池并用电极反应证据评价其工作。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.4），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_se_2_4a_equilibrium_shift_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_2_4a_equilibrium_shift_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Equilibrium-shift investigation",
+      "name_zh": "影响化学平衡移动因素实验",
+      "description_zh": "控制变量探究浓度、压强或温度对平衡移动的影响。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.4），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_se_3_2c_ph_measurement",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_3_2c_ph_measurement"
+      ],
+      "kind": "inquiry_process",
+      "name": "Measuring solution pH",
+      "name_zh": "溶液 pH 检测",
+      "description_zh": "选择试纸或仪器测定 pH，记录并评价测量精度。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_se_3_6a_acid_base_titration",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_3_6a_acid_base_titration"
+      ],
+      "kind": "inquiry_process",
+      "name": "Strong acid-base titration",
+      "name_zh": "强酸强碱中和滴定",
+      "description_zh": "规范实施中和滴定，判断终点并计算未知浓度。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.6），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_se_3_6b_salt_hydrolysis_application_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_3_6b_salt_hydrolysis_application_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Salt-hydrolysis application",
+      "name_zh": "盐类水解应用实验",
+      "description_zh": "设计实验检验盐类水解及其影响因素和应用。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.6），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_ss_1_1a_electron_model_history",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_1_1a_electron_model_history"
+      ],
+      "kind": "inquiry_process",
+      "name": "History of electron models",
+      "name_zh": "核外电子运动模型演进",
+      "description_zh": "用光谱等证据比较核外电子运动模型及其局限。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_ss_2_5a_prepare_complex_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_2_5a_prepare_complex_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Preparing a simple complex",
+      "name_zh": "简单配合物制备",
+      "description_zh": "制备简单配合物并用现象支持配位形成判断。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.5），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_ss_3_1a_structure_scale_model_evolution",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_3_1a_structure_scale_model_evolution"
+      ],
+      "kind": "inquiry_process",
+      "name": "Structure scales and model evolution",
+      "name_zh": "物质结构尺度与模型演进",
+      "description_zh": "比较原子、分子和超分子尺度模型，并用证据说明模型演进。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_so_2_5a_ethyl_ethanoate_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_2_5a_ethyl_ethanoate_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Ethyl ethanoate preparation",
+      "name_zh": "乙酸乙酯制备与性质",
+      "description_zh": "制备乙酸乙酯，控制条件并检验产物性质。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.5），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_so_2_5b_functional_group_test_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_2_5b_functional_group_test_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Functional-group testing",
+      "name_zh": "有机官能团检验实验",
+      "description_zh": "设计并实施常见官能团检验，处理干扰并解释证据。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.5），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_chem_2020_so_3_4a_carbohydrate_properties_lab",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_3_4a_carbohydrate_properties_lab"
+      ],
+      "kind": "inquiry_process",
+      "name": "Carbohydrate properties",
+      "name_zh": "糖类性质实验",
+      "description_zh": "实施糖类性质实验并用反应证据区分相关物质。",
+      "instructional_use_zh": "以真实化学问题组织可复核的实验、证据或安全决策过程，要求说明变量、操作、证据与结论的关系。",
+      "assessment_evidence_zh": "提交可复核的方案、操作记录、现象或数据、风险控制及基于证据的解释；不能只用记忆性结论替代过程证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.4），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

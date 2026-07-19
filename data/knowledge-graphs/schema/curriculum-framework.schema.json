@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://primoria.local/schemas/curriculum-framework.schema.json",
+  "title": "Primoria Curriculum Framework",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "content_version",
+    "framework_id",
+    "curriculum_id",
+    "curriculum_kind",
+    "title",
+    "title_zh",
+    "subject",
+    "jurisdiction",
+    "education_stage",
+    "requirement_granularity",
+    "levels",
+    "languages",
+    "source_ids",
+    "valid_from",
+    "valid_to",
+    "review_status",
+    "changelog",
+    "requirements"
+  ],
+  "properties": {
+    "schema_version": { "const": "2.0.0" },
+    "content_version": { "$ref": "#/$defs/semver" },
+    "framework_id": { "$ref": "#/$defs/frameworkId" },
+    "curriculum_id": { "$ref": "#/$defs/curriculumId" },
+    "curriculum_kind": {
+      "enum": ["national_standard", "national_syllabus", "examination_syllabus"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "title_zh": { "type": "string", "minLength": 1 },
+    "subject": { "type": "string", "minLength": 1 },
+    "jurisdiction": { "enum": ["CN-MAINLAND", "SG"] },
+    "education_stage": { "enum": ["secondary", "senior_secondary", "pre_university"] },
+    "requirement_granularity": { "enum": ["strand", "unit", "subtopic", "outcome"] },
+    "levels": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["level_id", "label", "label_zh"],
+        "properties": {
+          "level_id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "label": { "type": "string", "minLength": 1 },
+          "label_zh": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "languages": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 }
+    },
+    "source_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/sourceId" }
+    },
+    "valid_from": { "type": ["string", "null"], "format": "date" },
+    "valid_to": { "type": ["string", "null"], "format": "date" },
+    "review_status": { "$ref": "#/$defs/reviewStatus" },
+    "changelog": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["version", "date", "summary_zh"],
+        "properties": {
+          "version": { "$ref": "#/$defs/semver" },
+          "date": { "type": "string", "format": "date" },
+          "summary_zh": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/requirement" }
+    },
+    "scope_exclusions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/scopeExclusion" }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "frameworkId": { "type": "string", "pattern": "^cfw_[a-z0-9_]+$" },
+    "curriculumId": { "type": "string", "pattern": "^cur_[a-z0-9_]+$" },
+    "requirementId": { "type": "string", "pattern": "^req_[a-z0-9_]+$" },
+    "sourceId": { "type": "string", "pattern": "^src_[a-z0-9_]+$" },
+    "reviewStatus": {
+      "enum": ["unreviewed", "needs_review", "approved", "rejected", "superseded"]
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "locator"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/sourceId" },
+        "locator": { "type": "string", "minLength": 1 },
+        "note_zh": { "type": "string", "minLength": 1 }
+      }
+    },
+    "scopeExclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "rationale_zh", "evidence_refs"],
+      "properties": {
+        "scope": { "type": "string", "minLength": 1 },
+        "rationale_zh": { "type": "string", "minLength": 1 },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceRef" }
+        }
+      }
+    },
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirement_id",
+        "parent_requirement_id",
+        "code",
+        "title",
+        "title_zh",
+        "summary_zh",
+        "requirement_type",
+        "level_id",
+        "cognitive_processes",
+        "evidence_refs",
+        "review_status"
+      ],
+      "properties": {
+        "requirement_id": { "$ref": "#/$defs/requirementId" },
+        "parent_requirement_id": {
+          "anyOf": [{ "$ref": "#/$defs/requirementId" }, { "type": "null" }]
+        },
+        "code": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "title_zh": { "type": "string", "minLength": 1 },
+        "summary_zh": { "type": "string", "minLength": 1 },
+        "requirement_type": {
+          "enum": ["knowledge", "skill", "practice", "assessment_objective"]
+        },
+        "level_id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "cognitive_processes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create", "model", "reason", "communicate"]
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceRef" }
+        },
+        "review_status": { "$ref": "#/$defs/reviewStatus" }
+      }
+    }
+  }
+}

@@ -1,0 +1,288 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "practice_set_id": "cpk_sg_seab_h2_physics_9478_2026",
+  "framework_id": "cfw_sg_seab_h2_physics_9478_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_physics_9478_2026",
+  "subject": "Physics",
+  "source_ids": [
+    "src_sg_seab_h2_physics_9478_2026"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "将 14 项估测、表示、实验与电子表格要求分流到教学和评测知识层。"
+    }
+  ],
+  "items": [
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_1_estimate_physical_quantities",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_1_estimate_physical_quantities"
+      ],
+      "kind": "assessment_task",
+      "name": "Reasonable physical estimates",
+      "name_zh": "对课程内物理量作合理数量级估测",
+      "description_zh": "对课程内物理量作合理数量级估测",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.11, topic 1 Quantities and Measurement, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_2_free_body_vector_triangles",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_2_free_body_vector_triangles"
+      ],
+      "kind": "assessment_task",
+      "name": "Free-body diagrams and vector triangles",
+      "name_zh": "用自由体图和矢量三角形表示平动与转动平衡中的力",
+      "description_zh": "用自由体图和矢量三角形表示平动与转动平衡中的力",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.12, topic 2 Forces and Moments, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_9_investigate_oscillator",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_9_investigate_oscillator"
+      ],
+      "kind": "assessment_task",
+      "name": "Investigate oscillator motion",
+      "name_zh": "用实验和图像方法研究振子运动",
+      "description_zh": "用实验和图像方法研究振子运动",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.18, topic 9 Oscillations, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_17_current_balance_measurement",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_17_current_balance_measurement"
+      ],
+      "kind": "assessment_task",
+      "name": "Current-balance measurement of flux density",
+      "name_zh": "说明如何用电流天平测量磁场磁通密度",
+      "description_zh": "说明如何用电流天平测量磁场磁通密度",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_pos_wotd",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_pos_wotd"
+      ],
+      "kind": "inquiry_process",
+      "name": "Ways of thinking and doing",
+      "name_zh": "提出问题、设计和实施调查、分析数据、以证据交流和辩护、作负责任决定、使用模型并建构解释或方案。",
+      "description_zh": "提出问题、设计和实施调查、分析数据、以证据交流和辩护、作负责任决定、使用模型并建构解释或方案。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.4, Practices of Science 1.1-1.8"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_pos_nos",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_pos_nos"
+      ],
+      "kind": "inquiry_process",
+      "name": "Nature of scientific knowledge",
+      "name_zh": "理解科学以证据和模型建构对现实的认识，假设自然系统有秩序与一致性，并通过规范程序和批判讨论形成可修正知识。",
+      "description_zh": "理解科学以证据和模型建构对现实的认识，假设自然系统有秩序与一致性，并通过规范程序和批判讨论形成可修正知识。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.4, Practices of Science 2.1-2.4"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_pos_stse",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_pos_stse"
+      ],
+      "kind": "inquiry_process",
+      "name": "Science, technology, society and environment",
+      "name_zh": "评价科学应用的风险、收益及伦理、社会、经济和环境影响，并理解科学发现与技术进步的双向推动。",
+      "description_zh": "评价科学应用的风险、收益及伦理、社会、经济和环境影响，并理解科学发现与技术进步的双向推动。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.4, Practices of Science 3.1-3.3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_practical_planning",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_practical_planning"
+      ],
+      "kind": "inquiry_process",
+      "name": "Practical planning",
+      "name_zh": "定义实验问题，给出清晰程序和数据处理计划，评估风险并提出预防措施。",
+      "description_zh": "定义实验问题，给出清晰程序和数据处理计划，评估风险并提出预防措施。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.31, Practical Assessment: Planning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_practical_mmo",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_practical_mmo"
+      ],
+      "kind": "inquiry_process",
+      "name": "Manipulation, measurement and observation",
+      "name_zh": "熟练操作，按适当精密度记录观察和测量，作测量决策并识别异常数据。",
+      "description_zh": "熟练操作，按适当精密度记录观察和测量，作测量决策并识别异常数据。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.31, Practical Assessment: MMO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_practical_pdo",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_practical_pdo"
+      ],
+      "kind": "inquiry_process",
+      "name": "Presentation of data and observations",
+      "name_zh": "以适当形式呈现信息和定量数据，处理测量以识别趋势并使用合适小数位或有效数字。",
+      "description_zh": "以适当形式呈现信息和定量数据，处理测量以识别趋势并使用合适小数位或有效数字。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.31, Practical Assessment: PDO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_practical_ace",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_practical_ace"
+      ],
+      "kind": "inquiry_process",
+      "name": "Analysis, conclusions and evaluation",
+      "name_zh": "分析解释数据、作结论和预测，识别显著误差与局限并提出可行改进。",
+      "description_zh": "分析解释数据、作结论和预测，识别显著误差与局限并提出可行改进。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.31, Practical Assessment: ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_spreadsheet_data",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_spreadsheet_data"
+      ],
+      "kind": "inquiry_process",
+      "name": "Spreadsheet data input",
+      "name_zh": "导入 xlsx 数据或录入实验数据供后续处理。",
+      "description_zh": "导入 xlsx 数据或录入实验数据供后续处理。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.36, Spreadsheet requirements: Data input"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_spreadsheet_operations",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_spreadsheet_operations"
+      ],
+      "kind": "inquiry_process",
+      "name": "Spreadsheet numerical operations",
+      "name_zh": "在电子表格中使用公式、科学记数法、三角函数、指数、对数并复制公式和格式。",
+      "description_zh": "在电子表格中使用公式、科学记数法、三角函数、指数、对数并复制公式和格式。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.36, Spreadsheet requirements: Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_h2_physics_9478_2026_practice_spreadsheet_graphs",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_practice_spreadsheet_graphs"
+      ],
+      "kind": "inquiry_process",
+      "name": "Spreadsheet graph analysis",
+      "name_zh": "绘制带标签折线图，调轴、拟合趋势线、显示方程并数值估计曲线下面积和局部梯度。",
+      "description_zh": "绘制带标签折线图，调轴、拟合趋势线、显示方程并数值估计曲线下面积和局部梯度。",
+      "instructional_use_zh": "以真实或模拟物理任务明确操作、表示、数据、风险和论证要求；让学习者保留可复核过程证据并解释局限。",
+      "assessment_evidence_zh": "提交可检查的实验计划、操作记录、图表、电子表格或物理表示；评价正确性、精密度、推理、安全与改进，而非只看最终数值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.36, Spreadsheet requirements: Graphs"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

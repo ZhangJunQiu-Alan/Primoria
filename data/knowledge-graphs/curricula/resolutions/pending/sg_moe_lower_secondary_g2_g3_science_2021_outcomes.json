@@ -1,0 +1,1464 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "resolution_set_id": "cgr_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
+  "gap_set_id": "cgs_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
+  "framework_id": "cfw_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
+  "curriculum_id": "cur_sg_moe_lower_secondary_g2_g3_science_2021",
+  "subject": "Science",
+  "source_ids": [
+    "src_sg_moe_lower_secondary_g2_g3_science_2021",
+    "src_openstax_chemistry_2e_2019",
+    "src_openstax_college_physics_2e_2022",
+    "src_openstax_biology_2e_2018",
+    "src_openstax_university_physics_v2_2016",
+    "src_openstax_microbiology_2016"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "完成 62 项低年级科学知识缺口的反向查重、概念归并、稳定 ID 和双类证据登记。"
+    }
+  ],
+  "resolutions": [
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_2_observable_measurable_physical_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_acb504f185f379ee5f759c6278b4de41"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_physical_properties_density"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§1.3-1.4, Physical and Chemical Properties; Measurements"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_2_mass_volume_density_relation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_acb504f185f379ee5f759c6278b4de41"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_physical_properties_density"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§1.3-1.4, Physical and Chemical Properties; Measurements"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_elements_building_blocks",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_56d4acd737ea166a07f3b71fd00853d8"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_elements_compounds"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §2.5, The Periodic Table"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_element_types_periodic_table",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_56d4acd737ea166a07f3b71fd00853d8"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_elements_compounds"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §2.5, The Periodic Table"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_compound_definition",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_56d4acd737ea166a07f3b71fd00853d8"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_elements_compounds"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §2.5, The Periodic Table"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_compound_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_56d4acd737ea166a07f3b71fd00853d8"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_elements_compounds"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §2.5, The Periodic Table"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_mixture_definition",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_752fa3f5d1eac58c509e0bdc8d8c6fc4"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_mixtures_solutions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §§11.1-11.3, Solutions and Solubility"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_mixture_constituent_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_752fa3f5d1eac58c509e0bdc8d8c6fc4"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_mixtures_solutions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §§11.1-11.3, Solutions and Solubility"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_solute_solvent_solution",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_752fa3f5d1eac58c509e0bdc8d8c6fc4"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_mixtures_solutions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §§11.1-11.3, Solutions and Solubility"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_solutions_suspensions_mixtures",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_752fa3f5d1eac58c509e0bdc8d8c6fc4"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_mixtures_solutions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §§11.1-11.3, Solutions and Solubility"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_4_separation_by_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9bf9b032f3146edd9d8a91105fed0b4c"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_separation_principles"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, physical separation of mixtures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_4_separation_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0c81afd79095d9235cc8411f42db3cae"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_separation_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, mixture classification and physical separation; Chapter 11, Solutions and Colloids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_ray_model_path",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_08700b1c7475321c42e828e4a0bb64c1"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_ray_model_reflection"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.1-25.2, The Ray Aspect of Light; The Law of Reflection"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_reflecting_surfaces_effects_uses",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_08700b1c7475321c42e828e4a0bb64c1"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_ray_model_reflection"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.1-25.2, The Ray Aspect of Light; The Law of Reflection"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_smooth_rough_reflection",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_08700b1c7475321c42e828e4a0bb64c1"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_ray_model_reflection"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.1-25.2, The Ray Aspect of Light; The Law of Reflection"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_refraction_speed_media",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_248f955c8b0ba5448b7cdbc5f83f8924"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_refraction_dispersion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.3 and 25.5, The Law of Refraction; Dispersion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_refraction_effects",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_248f955c8b0ba5448b7cdbc5f83f8924"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_refraction_dispersion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.3 and 25.5, The Law of Refraction; Dispersion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_white_light_dispersion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_248f955c8b0ba5448b7cdbc5f83f8924"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_refraction_dispersion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.3 and 25.5, The Law of Refraction; Dispersion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_6_typical_cell_part_functions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a82d89e1adb88a35ab909417af6ab3ae"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_typical_cell_structure_function"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§4.1-4.3, Studying Cells; Eukaryotic Cells"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_6_cells_tissues_organs_systems",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7212a518c9c8036f2265d4acf5252e3a"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_multicellular_organisation_labour"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §4.1, Studying Cells, cells to tissues, organs and organ systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_6_cellular_division_of_labour",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7212a518c9c8036f2265d4acf5252e3a"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_multicellular_organisation_labour"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §4.1, Studying Cells, cells to tissues, organs and organ systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_7_particulate_model_random_motion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b72b1512a68ac9780b8d10c2ba4770ca"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_particle_model_states"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases of matter; §§10.1-10.3, intermolecular forces and phase transitions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_7_particle_arrangement_states",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b72b1512a68ac9780b8d10c2ba4770ca"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_particle_model_states"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases of matter; §§10.1-10.3, intermolecular forces and phase transitions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_7_thermal_expansion_mass_conservation_model",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_86ed3ab2f88330914fa596aee84f4a4c"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_particle_model_thermal_changes"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases and conservation of matter; §10.3, Phase Transitions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_7_state_changes_particle_model",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_86ed3ab2f88330914fa596aee84f4a4c"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_particle_model_thermal_changes"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases and conservation of matter; §10.3, Phase Transitions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_8_atomic_mass_nucleus",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_160785ca7ae85410ff7cc39aece277f9"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_atomic_identity_mass"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§2.2-2.3, Evolution of Atomic Theory; Atomic Structure and Symbolism"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_8_element_unique_proton_number",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_160785ca7ae85410ff7cc39aece277f9"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_atomic_identity_mass"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§2.2-2.3, Evolution of Atomic Theory; Atomic Structure and Symbolism"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_8_molecule_definition",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_74c4b2b549494758e1ccc2908ac95a75"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_molecules_formula_reading"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Atoms and Molecules; §2.4, Chemical Formulas"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_8_read_atoms_from_symbols_formulae",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_74c4b2b549494758e1ccc2908ac95a75"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_molecules_formula_reading"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Atoms and Molecules; §2.4, Chemical Formulas"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_9_force_effects_energy_transfer",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_67a0afb131c38475a8e4c21481aa72e7"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_force_effects_energy_transfer"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e Chapter 4, Dynamics; Chapter 7, Work, Energy, and Energy Resources"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_9_pressure_everyday_phenomena",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_402d7a7201336b8eaacbd59f78132ca0"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_solid_atmospheric_liquid_pressure"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e Chapter 11, Fluid Statics, pressure and pressure variation with depth"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_thermal_expansion_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7113fbc5a4ef488a96a1b081372a7a0f"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_thermal_expansion_density"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.3, Thermal Expansion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_heat_transfer_modes",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5f2f865e928b7d9853b5ff0f3a36ac9d"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_heat_transfer_mechanisms"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, Mechanisms of Heat Transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_radiation_rate_surface_temperature",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d8fe80b5a0d79f5b1bf058ab5dae2c02"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_thermal_radiation_rate_factors"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, radiation and net radiative heat transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_conduction_convection_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5f2f865e928b7d9853b5ff0f3a36ac9d"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_heat_transfer_mechanisms"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, Mechanisms of Heat Transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_radiation_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5f2f865e928b7d9853b5ff0f3a36ac9d"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_heat_transfer_mechanisms"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, Mechanisms of Heat Transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_chemical_change_new_substances",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_17badbba5f1a657337be2ac1a9e3ca1f"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_chemical_change_particle_conservation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, conservation of matter; §4.1, Writing and Balancing Chemical Equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_word_equations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_23422169f21190dc7b0d1a12280f73d1"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_word_equations_reaction_types"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§4.1-4.2, Writing and Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_reaction_atomic_rearrangement",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_17badbba5f1a657337be2ac1a9e3ca1f"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_chemical_change_particle_conservation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, conservation of matter; §4.1, Writing and Balancing Chemical Equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_reaction_mass_conservation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_17badbba5f1a657337be2ac1a9e3ca1f"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_chemical_change_particle_conservation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, conservation of matter; §4.1, Writing and Balancing Chemical Equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_types_of_chemical_change",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_23422169f21190dc7b0d1a12280f73d1"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_word_equations_reaction_types"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§4.1-4.2, Writing and Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_12_abiotic_factors_survival",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d706f88202e583528d4f1f83d2e85c5f"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_ecosystem_factors_adaptation_interactions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §45.6, Community Ecology; §46.1, Ecology of Ecosystems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_12_adaptation_environment_survival",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d706f88202e583528d4f1f83d2e85c5f"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_ecosystem_factors_adaptation_interactions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §45.6, Community Ecology; §46.1, Ecology of Ecosystems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_12_community_interrelationships",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d706f88202e583528d4f1f83d2e85c5f"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_ecosystem_factors_adaptation_interactions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §45.6, Community Ecology; §46.1, Ecology of Ecosystems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_12_decomposer_nutrient_recycling",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f3b207423938d8fbb250235729a2670f"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_decomposers_nutrient_cycle"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§46.1 and 46.3, Ecosystems; Biogeochemical Cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_13_current_chemical_heating_magnetic_effects",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_dce77a366079ff45fc84832ef21777a8",
+        "pc_b9c4eb98603bcc5d7ab33a9b52e84bdf"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_current_chemical_heating_effects",
+        "sg_lss_science_current_magnetic_effect"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 2 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §17.7, Electrolysis"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §20.4, Electric Power and Energy"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §22.1, Magnetic Fields Produced by Currents"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_14_digestive_system_importance",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0d37b9ca5c8c1c5c1795f6a2249253fd"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_digestive_system_structure_process"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§34.1 and 34.3, Digestive Systems; Digestive System Processes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_14_digestive_parts_system_function",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0d37b9ca5c8c1c5c1795f6a2249253fd"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_digestive_system_structure_process"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§34.1 and 34.3, Digestive Systems; Digestive System Processes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_14_digestion_of_food",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0d37b9ca5c8c1c5c1795f6a2249253fd"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_digestive_system_structure_process"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§34.1 and 34.3, Digestive Systems; Digestive System Processes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_14_digestion_products_cellular_use",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d87ceac09c7741db036b133798f10ebe"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_digestion_products_cellular_use"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §34.3, digestion and absorption; §7.2, Glycolysis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_15_blood_vessel_transport_functions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_074ebebe17312ddb0b1987476802f71a"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_multicellular_transport_blood_exchange"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§40.1 and 40.3, Overview of the Circulatory System; Mammalian Heart and Blood Vessels"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_15_need_multicellular_transport",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_074ebebe17312ddb0b1987476802f71a"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_multicellular_transport_blood_exchange"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§40.1 and 40.3, Overview of the Circulatory System; Mammalian Heart and Blood Vessels"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_15_diffusion_human_transport",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_074ebebe17312ddb0b1987476802f71a"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_multicellular_transport_blood_exchange"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§40.1 and 40.3, Overview of the Circulatory System; Mammalian Heart and Blood Vessels"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_15_diffusion_plant_transport",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9797430f71b69978f7a1471603f9fba3"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_plant_diffusion_transport"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §5.2, Passive Transport; §30.5, Transport of Water and Solutes in Plants"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_sexual_reproduction_heredity",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_90f9aa090780caaed790708026e919ee"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_sexual_reproduction_heredity_anatomy"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.3, Human Reproductive Anatomy and Gametogenesis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_unique_parental_genetic_combination",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_90f9aa090780caaed790708026e919ee"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_sexual_reproduction_heredity_anatomy"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.3, Human Reproductive Anatomy and Gametogenesis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_puberty_hormone_changes",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_600c72889c4a447d64b3695f7b5f2b37"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_puberty_menstrual_cycle"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.4, Hormonal Control of Human Reproduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_reproductive_parts_fertilisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_90f9aa090780caaed790708026e919ee"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_sexual_reproduction_heredity_anatomy"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.3, Human Reproductive Anatomy and Gametogenesis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_female_parts_menstrual_cycle",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_600c72889c4a447d64b3695f7b5f2b37"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_puberty_menstrual_cycle"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.4, Hormonal Control of Human Reproduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_birth_control_mechanisms",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5251a65531e5efed32f519ad93528e7e"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_contraception_mechanisms"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.5, Human Pregnancy and Birth, Contraception and Birth Control"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_sti_harmful_consequences",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d42f9981e5d8d6a91cc8b23de471eb36"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_sti_consequences_treatment"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§23.3-23.4, Bacterial and Viral Infections of the Reproductive System"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_bacterial_viral_sti_treatment",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d42f9981e5d8d6a91cc8b23de471eb36"
+      ],
+      "created_node_ids": [
+        "sg_lss_science_sti_consequences_treatment"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "把相近学习成果合并到 1 个可独立出题诊断、但不过度切碎的低年级概念；未保留只部分匹配或捆绑高级内容的旧 canonical。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§23.3-23.4, Bacterial and Viral Infections of the Reproductive System"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

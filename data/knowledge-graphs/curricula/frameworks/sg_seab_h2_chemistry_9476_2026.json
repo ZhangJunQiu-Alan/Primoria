@@ -1,0 +1,4389 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.3.0",
+  "framework_id": "cfw_sg_seab_h2_chemistry_9476_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_chemistry_9476_2026",
+  "curriculum_kind": "examination_syllabus",
+  "title": "Singapore-Cambridge GCE Advanced Level H2 Chemistry 9476 outcome coverage",
+  "title_zh": "新加坡剑桥 GCE A-Level H2 化学 9476（2026）学习成果级覆盖",
+  "jurisdiction": "SG",
+  "subject": "Chemistry",
+  "education_stage": "pre_university",
+  "levels": [
+    {
+      "level_id": "h2_9476",
+      "label": "H2 Chemistry 9476",
+      "label_zh": "H2 化学 9476"
+    }
+  ],
+  "languages": [
+    "en",
+    "zh-CN"
+  ],
+  "valid_from": "2026-01-01",
+  "valid_to": null,
+  "source_ids": [
+    "src_sg_seab_h2_chemistry_9476_2026"
+  ],
+  "requirement_granularity": "outcome",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "用官方 194 项字母编号学科成果和 7 项跨主题实践取代 13 个主题导航映射。"
+    }
+  ],
+  "scope_exclusions": [
+    {
+      "scope": "atomic orbital wave functions",
+      "rationale_zh": "Topic 1(g) 明确不要求波函数知识。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "quantitative electronegativity",
+      "rationale_zh": "Topic 2(f) 只要求定性使用电负性。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "crystallographic unit cells",
+      "rationale_zh": "Topic 2(l) 明确不要求晶胞概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "Kp-Kc conversion relationship",
+      "rationale_zh": "Topic 9(d) 明确不要求 Kp 与 Kc 的换算关系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "integrated rate equations",
+      "rationale_zh": "Topic 8(b) 明确不要求积分速率方程。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "quantitative entropy from standard entropy tables",
+      "rationale_zh": "Topic 7 不要求定量熵处理或由标准熵计算反应熵。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "quadratic equilibrium and weak-acid calculations",
+      "rationale_zh": "Topics 9–10 不要求需要解二次方程的平衡计算。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "E/Z nomenclature and diastereomer terminology",
+      "rationale_zh": "Topic 11.2 不要求 E/Z 命名和非对映体术语。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "detailed enzyme protein structure and denaturation",
+      "rationale_zh": "Topic 8(k) 不要求蛋白质结构层级与变性细节。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "mechanistic ozone-depletion chemistry",
+      "rationale_zh": "Topic 11.5(e) 不要求 CFC 与 HCFC 破坏臭氧层的机理细节。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "industrial electrolysis technical details",
+      "rationale_zh": "Topic 12(o) 不要求工业过程技术细节。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    },
+    {
+      "scope": "relative ligand-field strength ordering",
+      "rationale_zh": "Topic 13(l) 不要求配体场强弱序列。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF pp.13-35, explicit bracketed scope statements"
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_a",
+      "code": "1.a",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "比较质子、中子和电子的相对质量与电荷",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_b",
+      "code": "1.b",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "由带电性推断质子、中子和电子束在电场中的偏转",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_c",
+      "code": "1.c",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "说明原子中质量与电荷的分布",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_d",
+      "code": "1.d",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "由质子数、核子数和电荷确定原子或离子的质子、中子、电子数",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_e",
+      "code": "1.e",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "用质子数、核子数和中子数区分原子核与同位素",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_f",
+      "code": "1.f",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "说明 1–3 主量子层及 4s、4p 中 s、p、d 轨道的数目和相对能量",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_g",
+      "code": "1.g",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "描述 s、p、d 原子轨道形状；不要求波函数",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_h",
+      "code": "1.h",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "由质子数和电荷写出原子与离子的电子排布",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_i",
+      "code": "1.i",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "解释影响元素电离能的因素",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_j",
+      "code": "1.j",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "由连续电离能数据推断电子排布",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_1_k",
+      "code": "1.k",
+      "title": "Atomic Structure",
+      "title_zh": "原子结构",
+      "summary_zh": "由连续电离能数据推断元素在周期表中的位置",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.13, topic 1 Atomic Structure, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_a",
+      "code": "2.a",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "以静电作用定义离子键、共价键和金属键",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_b",
+      "code": "2.b",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "用点叉图表示离子键、共价键和配位键",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_c",
+      "code": "2.c",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "以 s、p 轨道重叠说明 σ 键与 π 键",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_d",
+      "code": "2.d",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "用 VSEPR 解释指定分子的形状和键角",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_e",
+      "code": "2.e",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "预测与指定实例类似的分子形状和键角",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_f",
+      "code": "2.f",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "用电负性解释并推断键的极性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_g",
+      "code": "2.g",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "结合键极性与分子形状推断分子极性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_h",
+      "code": "2.h",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "描述永久或瞬时偶极作用与氢键",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_i",
+      "code": "2.i",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "说明氢键对冰、水等物质物理性质的重要性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.14, topic 2 Chemical Bonding, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_j",
+      "code": "2.j",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "解释共价键的键能与键长",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_k",
+      "code": "2.k",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "用键能、键长和键极性比较共价键反应性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_l",
+      "code": "2.l",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "描述离子、简单分子、巨型共价、氢键和金属晶格；不要求晶胞",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_m",
+      "code": "2.m",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "解释并预测结构和成键类型对物理性质的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_2_n",
+      "code": "2.n",
+      "title": "Chemical Bonding",
+      "title_zh": "化学键",
+      "summary_zh": "由物理化学信息推断物质的结构与成键类型",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 2 Chemical Bonding, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_3_a",
+      "code": "3.a",
+      "title": "The Gaseous State",
+      "title_zh": "气态",
+      "summary_zh": "陈述理想气体动理论的基本假设",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 3 The Gaseous State, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_3_b",
+      "code": "3.b",
+      "title": "The Gaseous State",
+      "title_zh": "气态",
+      "summary_zh": "从分子大小和分子间作用解释接近或偏离理想行为的条件",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 3 The Gaseous State, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_3_c",
+      "code": "3.c",
+      "title": "The Gaseous State",
+      "title_zh": "气态",
+      "summary_zh": "用 pV=nRT 计算并测定相对分子质量",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 3 The Gaseous State, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_3_d",
+      "code": "3.d",
+      "title": "The Gaseous State",
+      "title_zh": "气态",
+      "summary_zh": "用道尔顿分压定律计算混合气体分压",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 3 The Gaseous State, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_4_a",
+      "code": "4.a",
+      "title": "Theories of Acids and Bases",
+      "title_zh": "酸碱理论",
+      "summary_zh": "理解并应用 Arrhenius 酸碱理论",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 4 Theories of Acids and Bases, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_4_b",
+      "code": "4.b",
+      "title": "Theories of Acids and Bases",
+      "title_zh": "酸碱理论",
+      "summary_zh": "应用 Brønsted–Lowry 酸碱和共轭酸碱对理论",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_4_c",
+      "code": "4.c",
+      "title": "Theories of Acids and Bases",
+      "title_zh": "酸碱理论",
+      "summary_zh": "应用 Lewis 酸碱理论分析非水体系与配位加合",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_a",
+      "code": "5.a",
+      "title": "The Periodic Table",
+      "title_zh": "周期表",
+      "summary_zh": "识别跨周期与沿族的电子排布变化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_b",
+      "code": "5.b",
+      "title": "The Periodic Table",
+      "title_zh": "周期表",
+      "summary_zh": "用屏蔽、核电荷和电子层解释原子半径、离子半径、电离能和电负性趋势",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_c",
+      "code": "5.c",
+      "title": "The Periodic Table",
+      "title_zh": "周期表",
+      "summary_zh": "用结构与成键解释同周期熔点和电导率变化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_d",
+      "code": "5.d",
+      "title": "The Periodic Table",
+      "title_zh": "周期表",
+      "summary_zh": "用瞬时偶极—诱导偶极作用解释第 17 族挥发性趋势",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_e",
+      "code": "5.e",
+      "title": "The Periodic Table",
+      "title_zh": "周期表",
+      "summary_zh": "解释第 3 周期氧化物和氯化物的氧化态、成键、水解及酸碱性质",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 5 The Periodic Table, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_f",
+      "code": "5.f",
+      "title": "The Periodic Table",
+      "title_zh": "周期表",
+      "summary_zh": "用标准电极电势比较第 2 族还原性和第 17 族氧化性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.17, topic 5 The Periodic Table, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_g",
+      "code": "5.g",
+      "title": "The Periodic Table",
+      "title_zh": "周期表",
+      "summary_zh": "解释第 2 族碳酸盐和第 17 族氢化物热稳定性趋势",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.17, topic 5 The Periodic Table, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_h",
+      "code": "5.h",
+      "title": "The Periodic Table",
+      "title_zh": "周期表",
+      "summary_zh": "依据周期性预测同族元素的特征性质",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.17, topic 5 The Periodic Table, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_5_i",
+      "code": "5.i",
+      "title": "The Periodic Table",
+      "title_zh": "周期表",
+      "summary_zh": "由物理化学性质推断未知元素的性质、周期表位置与身份",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.17, topic 5 The Periodic Table, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_a",
+      "code": "6.a",
+      "title": "The Mole Concept and Stoichiometry",
+      "title_zh": "摩尔概念与化学计量",
+      "summary_zh": "定义相对原子质量、同位素质量、分子质量和式量",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_b",
+      "code": "6.b",
+      "title": "The Mole Concept and Stoichiometry",
+      "title_zh": "摩尔概念与化学计量",
+      "summary_zh": "用阿伏伽德罗常数定义摩尔",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_c",
+      "code": "6.c",
+      "title": "The Mole Concept and Stoichiometry",
+      "title_zh": "摩尔概念与化学计量",
+      "summary_zh": "由同位素相对丰度计算相对原子质量",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_d",
+      "code": "6.d",
+      "title": "The Mole Concept and Stoichiometry",
+      "title_zh": "摩尔概念与化学计量",
+      "summary_zh": "定义实验式与分子式",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_e",
+      "code": "6.e",
+      "title": "The Mole Concept and Stoichiometry",
+      "title_zh": "摩尔概念与化学计量",
+      "summary_zh": "由燃烧数据或质量组成计算实验式与分子式",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_f",
+      "code": "6.f",
+      "title": "The Mole Concept and Stoichiometry",
+      "title_zh": "摩尔概念与化学计量",
+      "summary_zh": "书写并配平化学方程式",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_g",
+      "code": "6.g",
+      "title": "The Mole Concept and Stoichiometry",
+      "title_zh": "摩尔概念与化学计量",
+      "summary_zh": "用摩尔概念计算反应质量、气体体积和溶液体积浓度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_6_h",
+      "code": "6.h",
+      "title": "The Mole Concept and Stoichiometry",
+      "title_zh": "摩尔概念与化学计量",
+      "summary_zh": "由定量计算推断化学计量关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 6 The Mole Concept and Stoichiometry, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_a",
+      "code": "7.a",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "联系化学键断裂形成解释放热与吸热反应",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.18, topic 7 Chemical Energetics, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_b",
+      "code": "7.b",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "构建并解释含焓变与活化能的能量剖面图",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_c",
+      "code": "7.c",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "解释标准反应焓、键能和晶格能等术语及符号约定",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_d",
+      "code": "7.d",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "由实验结果用 q=mcΔT 计算焓变",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_e",
+      "code": "7.e",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "定性解释离子电荷和半径对晶格能大小的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_f",
+      "code": "7.f",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "用 Hess 循环和 Born–Haber 循环计算不能直接测量的焓变",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_g",
+      "code": "7.g",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "解释并使用熵的概念",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_h",
+      "code": "7.h",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "讨论温度、相态和粒子数变化对体系熵的定性影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_i",
+      "code": "7.i",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "判断过程或反应熵变的正负",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_j",
+      "code": "7.j",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "使用 ΔG°=ΔH°−TΔS°",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_k",
+      "code": "7.k",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "用 ΔG° 符号判断反应或过程自发性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_l",
+      "code": "7.l",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "说明用标准 Gibbs 自由能预测自发性的限制",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_7_m",
+      "code": "7.m",
+      "title": "Chemical Energetics",
+      "title_zh": "化学能量学",
+      "summary_zh": "由标准焓变和熵变预测温度对自发性的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_a",
+      "code": "8.a",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "解释速率方程、级数、速率常数、半衰期、速控步、活化能和催化等术语",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_b",
+      "code": "8.b",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "由初速、浓度—时间图和机理构建并验证简单速率方程",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_c",
+      "code": "8.c",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "说明一级反应半衰期与浓度无关并进行计算",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_d",
+      "code": "8.d",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "用初速法计算速率常数",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_e",
+      "code": "8.e",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "由给定信息设计研究反应速率的实验技术",
+      "requirement_type": "practice",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "create",
+        "evaluate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_f",
+      "code": "8.f",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "用碰撞频率解释浓度变化对反应速率的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_g",
+      "code": "8.g",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "结合 Boltzmann 分布理解活化能",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_h",
+      "code": "8.h",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "用 Boltzmann 分布和碰撞频率解释温度对速率常数与速率的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_i",
+      "code": "8.i",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "解释催化剂以低活化能机理提高速率常数并联系 Boltzmann 分布",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_j",
+      "code": "8.j",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "说明均相和非均相催化在 Haber、尾气、酸雨及 Fe²⁺ 催化体系中的作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.20, topic 8 Reaction Kinetics, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_8_k",
+      "code": "8.k",
+      "title": "Reaction Kinetics",
+      "title_zh": "反应动力学",
+      "summary_zh": "说明酶作为蛋白质催化剂的专一性、锁钥模型及温度和 pH 敏感性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 8 Reaction Kinetics, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_a",
+      "code": "9.a",
+      "title": "Chemical Equilibria",
+      "title_zh": "化学平衡",
+      "summary_zh": "用正逆反应速率解释可逆反应与动态平衡",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_b",
+      "code": "9.b",
+      "title": "Chemical Equilibria",
+      "title_zh": "化学平衡",
+      "summary_zh": "应用勒夏特列原理判断浓度、压力和温度对平衡组成的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_c",
+      "code": "9.c",
+      "title": "Chemical Equilibria",
+      "title_zh": "化学平衡",
+      "summary_zh": "判断浓度、压力、温度和催化剂是否改变平衡常数",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_d",
+      "code": "9.d",
+      "title": "Chemical Equilibria",
+      "title_zh": "化学平衡",
+      "summary_zh": "写出 Kc 与 Kp 表达式；不要求二者换算关系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_e",
+      "code": "9.e",
+      "title": "Chemical Equilibria",
+      "title_zh": "化学平衡",
+      "summary_zh": "由浓度或分压数据计算平衡常数",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_f",
+      "code": "9.f",
+      "title": "Chemical Equilibria",
+      "title_zh": "化学平衡",
+      "summary_zh": "由给定数据计算平衡组成；不要求解二次方程",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_9_g",
+      "code": "9.g",
+      "title": "Chemical Equilibria",
+      "title_zh": "化学平衡",
+      "summary_zh": "结合工业取舍解释 Haber 法条件",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 9 Chemical Equilibria, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_a",
+      "code": "10_1.a",
+      "title": "Acid-Base Equilibria",
+      "title_zh": "酸碱平衡",
+      "summary_zh": "用解离程度解释强弱酸碱行为差异",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_b",
+      "code": "10_1.b",
+      "title": "Acid-Base Equilibria",
+      "title_zh": "酸碱平衡",
+      "summary_zh": "解释并计算 pH、Ka、pKa、Kb、pKb、Kw 及 Kw=KaKb",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_c",
+      "code": "10_1.c",
+      "title": "Acid-Base Equilibria",
+      "title_zh": "酸碱平衡",
+      "summary_zh": "计算强弱单元酸碱的氢离子浓度与 pH；不要求解二次方程",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_d",
+      "code": "10_1.d",
+      "title": "Acid-Base Equilibria",
+      "title_zh": "酸碱平衡",
+      "summary_zh": "描述酸碱滴定 pH 变化并以酸碱强度解释曲线",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_e",
+      "code": "10_1.e",
+      "title": "Acid-Base Equilibria",
+      "title_zh": "酸碱平衡",
+      "summary_zh": "由数据选择适当酸碱滴定指示剂",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_f",
+      "code": "10_1.f",
+      "title": "Acid-Base Equilibria",
+      "title_zh": "酸碱平衡",
+      "summary_zh": "解释缓冲作用、用途、海洋碳酸盐缓冲与二氧化碳驱动的海洋酸化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_1_g",
+      "code": "10_1.g",
+      "title": "Acid-Base Equilibria",
+      "title_zh": "酸碱平衡",
+      "summary_zh": "由给定数据计算缓冲溶液 pH",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_2_a",
+      "code": "10_2.a",
+      "title": "Solubility Equilibria",
+      "title_zh": "溶解平衡",
+      "summary_zh": "理解并应用溶度积 Ksp",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_2 Solubility Equilibria, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_2_b",
+      "code": "10_2.b",
+      "title": "Solubility Equilibria",
+      "title_zh": "溶解平衡",
+      "summary_zh": "在 Ksp 与平衡浓度之间进行计算",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_2 Solubility Equilibria, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_10_2_c",
+      "code": "10_2.c",
+      "title": "Solubility Equilibria",
+      "title_zh": "溶解平衡",
+      "summary_zh": "讨论同离子效应和配离子形成对离子盐溶解度的影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.23, topic 10_2 Solubility Equilibria, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_1_a",
+      "code": "11_1.a",
+      "title": "Organic Chemistry Introduction",
+      "title_zh": "有机化学导论",
+      "summary_zh": "解释并使用主要有机化合物类别的命名、通式与结构表示",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_1_b",
+      "code": "11_1.b",
+      "title": "Organic Chemistry Introduction",
+      "title_zh": "有机化学导论",
+      "summary_zh": "用乙烷、乙烯、苯和乙炔说明 sp³、sp²、sp 杂化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_1_c",
+      "code": "11_1.c",
+      "title": "Organic Chemistry Introduction",
+      "title_zh": "有机化学导论",
+      "summary_zh": "联系 σ、π 键解释指定有机分子的形状和键角",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_1_d",
+      "code": "11_1.d",
+      "title": "Organic Chemistry Introduction",
+      "title_zh": "有机化学导论",
+      "summary_zh": "预测相似有机分子的形状和键角",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.25, topic 11_1 Organic Chemistry Introduction, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_a",
+      "code": "11_2.a",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "描述构造异构",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_b",
+      "code": "11_2.b",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "从 π 键限制旋转解释烯烃顺反异构；不要求 E/Z 命名",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_c",
+      "code": "11_2.c",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "解释手性中心",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_d",
+      "code": "11_2.d",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "由手性中心与对称面判断分子是否手性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_e",
+      "code": "11_2.e",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "联系手性分子与旋转平面偏振光识别旋光样品",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_f",
+      "code": "11_2.f",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "比较对映体除旋光方向外相同的物理性质",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_g",
+      "code": "11_2.g",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "说明对映体通常化学性质相同但与手性对象作用可不同",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_h",
+      "code": "11_2.h",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "说明立体异构体可能具有不同生物作用与药效",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_i",
+      "code": "11_2.i",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "由分子式推断可能的有机异构体",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_2_j",
+      "code": "11_2.j",
+      "title": "Isomerism",
+      "title_zh": "同分异构",
+      "summary_zh": "从结构式识别手性中心和顺反异构",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_2 Isomerism, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_a",
+      "code": "11_3.a",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "解释并使用官能团、取代度、键裂、反应物种及反应类型术语",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_b",
+      "code": "11_3.b",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "用离域、给吸电子效应和位阻解释有机反应性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_c",
+      "code": "11_3.c",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "解释烷烃对极性试剂的一般惰性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_d",
+      "code": "11_3.d",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "解释烯烃对亲电试剂的一般反应性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_e",
+      "code": "11_3.e",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "用 π 电子离域比较苯和烯烃的反应性及苯偏好取代的原因",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_f",
+      "code": "11_3.f",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "用碳卤键强度解释卤代烷水解反应性差异",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_g",
+      "code": "11_3.g",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "用孤对电子离域与位阻解释氯苯对亲核取代的惰性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_h",
+      "code": "11_3.h",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "解释羰基化合物对氰化氢等亲核试剂的反应性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_i",
+      "code": "11_3.i",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "把反应术语与反应性术语用于结构、成键和机理解释",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_j",
+      "code": "11_3.j",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "用电子从富电子位点流向缺电子位点解释极性反应机理",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_k",
+      "code": "11_3.k",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "描述乙烷氯化自由基取代的引发、传播和终止",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_l",
+      "code": "11_3.l",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "描述乙烯与溴的亲电加成机理",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_m",
+      "code": "11_3.m",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "描述苯单溴化的亲电取代机理及离域影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_n",
+      "code": "11_3.n",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "以碳正离子稳定性和位阻解释卤代烷 SN1 与 SN2 机理",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_3_o",
+      "code": "11_3.o",
+      "title": "Organic Reactions and Mechanisms",
+      "title_zh": "有机反应与机理",
+      "summary_zh": "描述氰化氢与醛酮的亲核加成机理",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.27, topic 11_3 Organic Reactions and Mechanisms, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_a",
+      "code": "11_4.a",
+      "title": "Hydrocarbons",
+      "title_zh": "烃",
+      "summary_zh": "描述乙烷燃烧和紫外光下自由基卤代",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_b",
+      "code": "11_4.b",
+      "title": "Hydrocarbons",
+      "title_zh": "烃",
+      "summary_zh": "描述乙烯的亲电加成、催化加氢及冷、热锰酸根氧化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.28, topic 11_4 Hydrocarbons, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_c",
+      "code": "11_4.c",
+      "title": "Hydrocarbons",
+      "title_zh": "烃",
+      "summary_zh": "应用 Markovnikov 规则并以碳正离子稳定性解释产物组成",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_d",
+      "code": "11_4.d",
+      "title": "Hydrocarbons",
+      "title_zh": "烃",
+      "summary_zh": "描述苯和甲苯的卤化、硝化与 Friedel–Crafts 烷基化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_e",
+      "code": "11_4.e",
+      "title": "Hydrocarbons",
+      "title_zh": "烃",
+      "summary_zh": "描述甲苯侧链的自由基卤代与完全氧化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_f",
+      "code": "11_4.f",
+      "title": "Hydrocarbons",
+      "title_zh": "烃",
+      "summary_zh": "由条件判断芳烃卤化发生在侧链还是芳环",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_g",
+      "code": "11_4.g",
+      "title": "Hydrocarbons",
+      "title_zh": "烃",
+      "summary_zh": "应用单取代芳烃亲电取代的定位规律",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_4_h",
+      "code": "11_4.h",
+      "title": "Hydrocarbons",
+      "title_zh": "烃",
+      "summary_zh": "说明内燃机污染物、催化净化及增强温室效应气体的环境后果",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_a",
+      "code": "11_5.a",
+      "title": "Halogen Derivatives",
+      "title_zh": "卤素衍生物",
+      "summary_zh": "描述卤代烷的亲核取代与消去反应及条件",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_b",
+      "code": "11_5.b",
+      "title": "Halogen Derivatives",
+      "title_zh": "卤素衍生物",
+      "summary_zh": "解释手性底物 SN2 构型反转与 SN1 外消旋化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_c",
+      "code": "11_5.c",
+      "title": "Halogen Derivatives",
+      "title_zh": "卤素衍生物",
+      "summary_zh": "设计特征反应区分不同卤代烷及卤代烷与卤代芳烃",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_d",
+      "code": "11_5.d",
+      "title": "Halogen Derivatives",
+      "title_zh": "卤素衍生物",
+      "summary_zh": "用相对惰性解释氟代烷与氟卤代烷的用途",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_5_e",
+      "code": "11_5.e",
+      "title": "Halogen Derivatives",
+      "title_zh": "卤素衍生物",
+      "summary_zh": "说明 CFC 对臭氧层及 HFC、HCFC 替代物的显著环境影响",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_a",
+      "code": "11_6.a",
+      "title": "Hydroxy Compounds",
+      "title_zh": "羟基化合物",
+      "summary_zh": "描述乙醇燃烧、取代、与钠反应、氧化及脱水",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_6 Hydroxy Compounds, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_b",
+      "code": "11_6.b",
+      "title": "Hydroxy Compounds",
+      "title_zh": "羟基化合物",
+      "summary_zh": "用特征反应区分伯、仲、叔醇",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_6 Hydroxy Compounds, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_c",
+      "code": "11_6.c",
+      "title": "Hydroxy Compounds",
+      "title_zh": "羟基化合物",
+      "summary_zh": "用三碘甲烷反应检验 CH3CH(OH)– 结构",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_6 Hydroxy Compounds, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_d",
+      "code": "11_6.d",
+      "title": "Hydroxy Compounds",
+      "title_zh": "羟基化合物",
+      "summary_zh": "描述苯酚与碱、钠及芳环硝化和溴化反应",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.30, topic 11_6 Hydroxy Compounds, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_6_e",
+      "code": "11_6.e",
+      "title": "Hydroxy Compounds",
+      "title_zh": "羟基化合物",
+      "summary_zh": "从结构解释水、苯酚和乙醇在水中的相对酸性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.30, topic 11_6 Hydroxy Compounds, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_a",
+      "code": "11_7.a",
+      "title": "Carbonyl Compounds",
+      "title_zh": "羰基化合物",
+      "summary_zh": "描述醛酮由醇形成及还原回伯仲醇",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_b",
+      "code": "11_7.b",
+      "title": "Carbonyl Compounds",
+      "title_zh": "羰基化合物",
+      "summary_zh": "描述醛酮与氰化氢的反应",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_c",
+      "code": "11_7.c",
+      "title": "Carbonyl Compounds",
+      "title_zh": "羰基化合物",
+      "summary_zh": "用 2,4-DNPH 检验羰基化合物",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_d",
+      "code": "11_7.d",
+      "title": "Carbonyl Compounds",
+      "title_zh": "羰基化合物",
+      "summary_zh": "用 Fehling、Tollens 和氧化结果区分未知醛酮",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_7_e",
+      "code": "11_7.e",
+      "title": "Carbonyl Compounds",
+      "title_zh": "羰基化合物",
+      "summary_zh": "用三碘甲烷反应检验 CH3CO– 结构",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_7 Carbonyl Compounds, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_a",
+      "code": "11_8.a",
+      "title": "Carboxylic Acids and Derivatives",
+      "title_zh": "羧酸及其衍生物",
+      "summary_zh": "由伯醇、醛和腈制备羧酸",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_b",
+      "code": "11_8.b",
+      "title": "Carboxylic Acids and Derivatives",
+      "title_zh": "羧酸及其衍生物",
+      "summary_zh": "描述羧酸形成盐、酯、酰氯及还原成伯醇",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_c",
+      "code": "11_8.c",
+      "title": "Carboxylic Acids and Derivatives",
+      "title_zh": "羧酸及其衍生物",
+      "summary_zh": "从结构解释羧酸和氯代乙酸的酸性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_d",
+      "code": "11_8.d",
+      "title": "Carboxylic Acids and Derivatives",
+      "title_zh": "羧酸及其衍生物",
+      "summary_zh": "描述酰氯与水的水解",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_e",
+      "code": "11_8.e",
+      "title": "Carboxylic Acids and Derivatives",
+      "title_zh": "羧酸及其衍生物",
+      "summary_zh": "描述酰氯与醇、苯酚和伯胺的缩合",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_f",
+      "code": "11_8.f",
+      "title": "Carboxylic Acids and Derivatives",
+      "title_zh": "羧酸及其衍生物",
+      "summary_zh": "解释酰氯、卤代烷和卤代芳烃水解难易差异",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_g",
+      "code": "11_8.g",
+      "title": "Carboxylic Acids and Derivatives",
+      "title_zh": "羧酸及其衍生物",
+      "summary_zh": "描述酰氯缩合形成酯",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_8_h",
+      "code": "11_8.h",
+      "title": "Carboxylic Acids and Derivatives",
+      "title_zh": "羧酸及其衍生物",
+      "summary_zh": "描述酯的酸性和碱性水解",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_8 Carboxylic Acids and Derivatives, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_a",
+      "code": "11_9.a",
+      "title": "Nitrogen Compounds",
+      "title_zh": "含氮化合物",
+      "summary_zh": "由酰胺、腈和硝基苯制备乙胺或苯胺",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_9 Nitrogen Compounds, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_b",
+      "code": "11_9.b",
+      "title": "Nitrogen Compounds",
+      "title_zh": "含氮化合物",
+      "summary_zh": "描述胺形成盐的反应",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_9 Nitrogen Compounds, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_c",
+      "code": "11_9.c",
+      "title": "Nitrogen Compounds",
+      "title_zh": "含氮化合物",
+      "summary_zh": "以 Lewis 碱解释气相伯仲叔胺碱性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.31, topic 11_9 Nitrogen Compounds, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_d",
+      "code": "11_9.d",
+      "title": "Nitrogen Compounds",
+      "title_zh": "含氮化合物",
+      "summary_zh": "从结构解释水相氨、乙胺和苯胺的相对碱性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_e",
+      "code": "11_9.e",
+      "title": "Nitrogen Compounds",
+      "title_zh": "含氮化合物",
+      "summary_zh": "描述苯胺与溴水反应",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_f",
+      "code": "11_9.f",
+      "title": "Nitrogen Compounds",
+      "title_zh": "含氮化合物",
+      "summary_zh": "描述伯胺与酰氯缩合形成酰胺",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_g",
+      "code": "11_9.g",
+      "title": "Nitrogen Compounds",
+      "title_zh": "含氮化合物",
+      "summary_zh": "用氮孤对电子离域解释酰胺中性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_h",
+      "code": "11_9.h",
+      "title": "Nitrogen Compounds",
+      "title_zh": "含氮化合物",
+      "summary_zh": "描述酰胺的酸碱水解及 LiAlH4 还原",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_9_i",
+      "code": "11_9.i",
+      "title": "Nitrogen Compounds",
+      "title_zh": "含氮化合物",
+      "summary_zh": "描述氨基酸的酸碱性质",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_9 Nitrogen Compounds, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_a",
+      "code": "11_10.a",
+      "title": "Polymers",
+      "title_zh": "聚合物",
+      "summary_zh": "识别由单体构成且达到规定平均相对分子质量或重复单元数的聚合物",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_b",
+      "code": "11_10.b",
+      "title": "Polymers",
+      "title_zh": "聚合物",
+      "summary_zh": "分类并解释加聚与缩聚的差异",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_c",
+      "code": "11_10.c",
+      "title": "Polymers",
+      "title_zh": "聚合物",
+      "summary_zh": "把蛋白质描述为 α-氨基酸经肽键形成的缩聚物",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_d",
+      "code": "11_10.d",
+      "title": "Polymers",
+      "title_zh": "聚合物",
+      "summary_zh": "描述蛋白质的酸碱水解",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_e",
+      "code": "11_10.e",
+      "title": "Polymers",
+      "title_zh": "聚合物",
+      "summary_zh": "联系化学惰性说明聚烯烃难生物降解",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_f",
+      "code": "11_10.f",
+      "title": "Polymers",
+      "title_zh": "聚合物",
+      "summary_zh": "联系水解说明聚酯和聚酰胺通常可生物降解",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.32, topic 11_10 Polymers, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_11_10_g",
+      "code": "11_10.g",
+      "title": "Polymers",
+      "title_zh": "聚合物",
+      "summary_zh": "从经济、环境与社会因素评价塑料回收及有限资源使用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 11_10 Polymers, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_a",
+      "code": "12.a",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "用电子转移和氧化数变化解释氧化还原过程",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_b",
+      "code": "12.b",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "定义标准电极电势和标准电池电势",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_c",
+      "code": "12.c",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "描述标准氢电极",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_d",
+      "code": "12.d",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "描述测量金属或非金属电极及同元素不同氧化态电极电势的方法",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_e",
+      "code": "12.e",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "由两个标准电极电势计算标准电池电势",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_f",
+      "code": "12.f",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "用标准电池电势推断电子流方向与反应自发性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_g",
+      "code": "12.g",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "说明用标准电池电势预测反应自发性的限制",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_h",
+      "code": "12.h",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "用半反应构建氧化还原方程",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_i",
+      "code": "12.i",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "在电化学电池中应用 ΔG°=−nFE°",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_j",
+      "code": "12.j",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "定性预测电极电势随水溶液离子浓度的变化",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_k",
+      "code": "12.k",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "比较氢氧燃料电池和改良电池在尺寸、质量与电压上的潜在优势",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_l",
+      "code": "12.l",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "应用 F=Le 联系法拉第常数、阿伏伽德罗常数和电子电荷",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_m",
+      "code": "12.m",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "由电解质状态、电势序列和浓度预测电解产物",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_n",
+      "code": "12.n",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "计算电解电量及析出物质的质量或体积",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 12 Electrochemistry, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_12_o",
+      "code": "12.o",
+      "title": "Electrochemistry",
+      "title_zh": "电化学",
+      "summary_zh": "用电极反应解释铝阳极氧化和铜电解精炼；不要求技术细节",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 12 Electrochemistry, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_a",
+      "code": "13.a",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "以原子或离子具有未充满 d 亚层定义过渡元素",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_b",
+      "code": "13.b",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "写出第一过渡系元素及其离子的电子排布",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_c",
+      "code": "13.c",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "解释过渡元素原子半径和第一电离能相对不变",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_d",
+      "code": "13.d",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "定性比较过渡元素与典型 s 区钙的熔点和密度",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_e",
+      "code": "13.e",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "描述过渡元素具有可变氧化态的倾向",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_f",
+      "code": "13.f",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "由电子排布预测过渡元素可能氧化态",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_g",
+      "code": "13.g",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "用 Fe³⁺/Fe²⁺、MnO4⁻/Mn²⁺、Cr2O7²⁻/Cr³⁺ 解释过渡元素氧化还原体系",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_h",
+      "code": "13.h",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "用标准电极电势预测过渡元素氧化还原反应可能性",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_i",
+      "code": "13.i",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "以铜离子的水、氨和氯配合物定义配体与配合物",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_j",
+      "code": "13.j",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "解释配体交换、颜色变化及血红蛋白中 CO/O2 交换",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_k",
+      "code": "13.k",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "用 d 轨道形状与方向说明八面体配合物 d 轨道分裂",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_l",
+      "code": "13.l",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "用 d 轨道分裂和 d-d 跃迁解释配合物通常有色",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_13_m",
+      "code": "13.m",
+      "title": "Chemistry of Transition Elements",
+      "title_zh": "过渡元素化学",
+      "summary_zh": "解释过渡元素及其化合物的催化作用",
+      "requirement_type": "knowledge",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "understand",
+        "apply"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_pos_wotd",
+      "code": "P.pos_wotd",
+      "title": "Practices of Science and Practical Assessment",
+      "title_zh": "科学实践与实验评测",
+      "summary_zh": "科学思维与实践：提出问题、形成假设、用证据和模型解释化学系统",
+      "requirement_type": "practice",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.4, Practices of Science, component 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_pos_nos",
+      "code": "P.pos_nos",
+      "title": "Practices of Science and Practical Assessment",
+      "title_zh": "科学实践与实验评测",
+      "summary_zh": "科学知识本质：评价模型、理论、证据、可重复性与知识限制",
+      "requirement_type": "practice",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.4, Practices of Science, component 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_pos_stse",
+      "code": "P.pos_stse",
+      "title": "Practices of Science and Practical Assessment",
+      "title_zh": "科学实践与实验评测",
+      "summary_zh": "科学、技术、社会与环境：评价化学应用的收益、风险、伦理和可持续性",
+      "requirement_type": "practice",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.4, Practices of Science, component 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_practical_planning",
+      "code": "P.practical_planning",
+      "title": "Practices of Science and Practical Assessment",
+      "title_zh": "科学实践与实验评测",
+      "summary_zh": "实验计划：定义问题、设计步骤、使用数据、评估风险并控制风险",
+      "requirement_type": "practice",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.36, Practical Assessment, Planning; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_practical_mmo",
+      "code": "P.practical_mmo",
+      "title": "Practices of Science and Practical Assessment",
+      "title_zh": "科学实践与实验评测",
+      "summary_zh": "实验操作、测量与观察：安全操作、精确记录、选择测量并识别异常",
+      "requirement_type": "practice",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.36, Practical Assessment, MMO; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_practical_pdo",
+      "code": "P.practical_pdo",
+      "title": "Practices of Science and Practical Assessment",
+      "title_zh": "科学实践与实验评测",
+      "summary_zh": "数据与观察呈现：选择适当形式、处理测量并识别趋势",
+      "requirement_type": "practice",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.37, Practical Assessment, PDO; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "requirement_id": "req_sg_h2_chemistry_9476_2026_o_practice_practical_ace",
+      "code": "P.practical_ace",
+      "title": "Practices of Science and Practical Assessment",
+      "title_zh": "科学实践与实验评测",
+      "summary_zh": "分析、结论与评价：解释数据、处理不确定度、评价方法并提出改进",
+      "requirement_type": "practice",
+      "level_id": "h2_9476",
+      "cognitive_processes": [
+        "apply",
+        "evaluate",
+        "communicate"
+      ],
+      "parent_requirement_id": null,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.37, Practical Assessment, ACE; assessment summary on p.9"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

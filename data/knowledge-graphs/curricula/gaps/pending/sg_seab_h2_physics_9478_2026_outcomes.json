@@ -1,0 +1,278 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "gap_set_id": "cgs_sg_seab_h2_physics_9478_2026_outcomes",
+  "framework_id": "cfw_sg_seab_h2_physics_9478_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_physics_9478_2026",
+  "subject": "Physics",
+  "source_ids": [
+    "src_sg_seab_h2_physics_9478_2026"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "记录全部 partial 与 unmapped 物理概念缺口；实践要求不作为 KG 缺口。"
+    }
+  ],
+  "candidates": [
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_4_field_lines_equipotentials",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_4_field_lines_equipotentials"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Field lines and equipotential surfaces",
+      "proposed_name_zh": "用均匀场和径向场的场线表示引力场与电场，并联系等势面",
+      "scope_zh": "用均匀场和径向场的场线表示引力场与电场，并联系等势面",
+      "existing_canonical_ids": [
+        "pc_6320bd87e27eecb487c13e120a8f578f",
+        "pc_ba2bb06ca73e3fe6b18b0fbdcf9e808f"
+      ],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "已有概念只能覆盖组成部分或范围过宽，需要新增窄概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.14, topic 4 Energy and Fields, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_17_crossed_field_velocity_selector",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_17_crossed_field_velocity_selector"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Crossed-field velocity selector",
+      "proposed_name_zh": "解释垂直电场和磁场如何选择带电粒子速度",
+      "scope_zh": "解释垂直电场和磁场如何选择带电粒子速度",
+      "existing_canonical_ids": [
+        "pc_1ca0904b6ae91d6ca3fc8e304aaf7ed2",
+        "pc_cf0a24f8dd938cdfcc8ea4466833fd4e"
+      ],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "已有概念只能覆盖组成部分或范围过宽，需要新增窄概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.26, topic 17 Electromagnetic Forces, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_wavefunction_probability_density",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_19_wavefunction_probability_density"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Wavefunction and probability density",
+      "proposed_name_zh": "用波函数表示粒子状态，把 |ψ|² 解释为概率密度并归一化方形和正弦波函数",
+      "scope_zh": "用波函数表示粒子状态，把 |ψ|² 解释为概率密度并归一化方形和正弦波函数",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_wavefunction_superposition",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_19_wavefunction_superposition"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Superposition of wavefunctions",
+      "proposed_name_zh": "把叠加原理用于位置波函数，联系势阱驻波与单粒子双缝干涉",
+      "scope_zh": "把叠加原理用于位置波函数，联系势阱驻波与单粒子双缝干涉",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_heisenberg_uncertainty",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_19_heisenberg_uncertainty"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Heisenberg position-momentum uncertainty",
+      "proposed_name_zh": "把位置动量不确定性联系到局域粒子需要动量展宽并解题",
+      "scope_zh": "把位置动量不确定性联系到局域粒子需要动量展宽并解题",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_infinite_well_wavefunctions",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_19_infinite_well_wavefunctions"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Infinite-well standing wavefunctions",
+      "proposed_name_zh": "理解一维无限深方势阱中的驻波本征态 ψn",
+      "scope_zh": "理解一维无限深方势阱中的驻波本征态 ψn",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_19_infinite_well_energy_levels",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_19_infinite_well_energy_levels"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Infinite-well energy levels",
+      "proposed_name_zh": "应用一维无限深方势阱允许能级关系",
+      "scope_zh": "应用一维无限深方势阱允许能级关系",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.28, topic 19 Quantum Physics, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_background_radiation",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_20_background_radiation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Origin and significance of background radiation",
+      "proposed_name_zh": "解释本底辐射的来源和意义",
+      "scope_zh": "解释本底辐射的来源和意义",
+      "existing_canonical_ids": [
+        "pc_3e8b875dc1b24a5df264e9dc062a1087"
+      ],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "已有概念只能覆盖组成部分或范围过宽，需要新增窄概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_alpha_beta_gamma_properties",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_20_alpha_beta_gamma_properties"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Properties of alpha, beta and gamma radiation",
+      "proposed_name_zh": "理解 α、β、γ 辐射的本质和性质，不要求正电子发射",
+      "scope_zh": "理解 α、β、γ 辐射的本质和性质，不要求正电子发射",
+      "existing_canonical_ids": [
+        "pc_3e8b875dc1b24a5df264e9dc062a1087"
+      ],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "已有概念只能覆盖组成部分或范围过宽，需要新增窄概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_nuclear_equations",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_20_nuclear_equations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Nuclear equations",
+      "proposed_name_zh": "用核方程表示简单核反应",
+      "scope_zh": "用核方程表示简单核反应",
+      "existing_canonical_ids": [
+        "pc_e180a73d3a69ee874db1ed7939a2c604",
+        "pc_3e8b875dc1b24a5df264e9dc062a1087"
+      ],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "已有概念只能覆盖组成部分或范围过宽，需要新增窄概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_nuclear_conservation_laws",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_20_nuclear_conservation_laws"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Conservation laws in nuclear processes",
+      "proposed_name_zh": "在核过程解题中应用核子数、电荷和质能守恒",
+      "scope_zh": "在核过程解题中应用核子数、电荷和质能守恒",
+      "existing_canonical_ids": [
+        "pc_e180a73d3a69ee874db1ed7939a2c604",
+        "pc_9f2be083a041085b002a4e3208749f17"
+      ],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "已有概念只能覆盖组成部分或范围过宽，需要新增窄概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_physics_9478_2026_o_20_neutrino_prediction",
+      "requirement_ids": [
+        "req_sg_h2_physics_9478_2026_o_20_neutrino_prediction"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Neutrino prediction from conservation laws",
+      "proposed_name_zh": "说明如何由 β 衰变能量和动量守恒预测中微子或反中微子存在，不扩展到粒子动物园",
+      "scope_zh": "说明如何由 β 衰变能量和动量守恒预测中微子或反中微子存在，不扩展到粒子动物园",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_h2_physics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_physics_9478_2026",
+          "locator": "PDF p.29, topic 20 Nuclear Physics, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

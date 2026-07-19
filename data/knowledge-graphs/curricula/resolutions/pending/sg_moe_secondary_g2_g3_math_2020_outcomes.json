@@ -1,0 +1,2730 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "resolution_set_id": "cgr_sg_moe_secondary_g2_g3_math_2020_outcomes",
+  "gap_set_id": "cgs_sg_moe_secondary_g2_g3_math_2020_outcomes",
+  "framework_id": "cfw_sg_moe_secondary_g2_g3_math_2020_outcomes",
+  "curriculum_id": "cur_sg_moe_secondary_g2_g3_math_2020",
+  "subject": "Mathematics",
+  "source_ids": [
+    "src_sg_moe_secondary_g2_g3_math_2020",
+    "src_openstax_contemporary_mathematics_2026",
+    "src_openstax_precalculus_2e_2026",
+    "src_openstax_introductory_statistics_2e_2026"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "完成 118 项 G2/G3 数学缺口的跨层级查重、53 个概念新增或 alias 解析及双类证据登记。"
+    }
+  ],
+  "resolutions": [
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_secondary_all_personal_finance",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0035396047335920724c5a50e48736a4"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_personal_finance"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 个人与家庭金融数学 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.13, g3 secondary all, Personal and household finance"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF Chapter 6 Money Management, printed pp.543-706"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_secondary_all_motion_data_graphs",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2773177458caa7328645c0f0d304fbc9"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_motion_data_graphs"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 路程—时间与速度—时间图像 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.14, g3 secondary all, Distance-time and speed-time graphs"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§1.3 and 2.2, printed pp.27-39 and 189-205"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_prime_factorisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ef2bd7b2bbab07b9c004309c8f0bae24"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_prime_factorisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 质因数分解、公因倍数与方根 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Prime factorisation, HCF, LCM and roots"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.1 Prime and Composite Numbers, printed pp.128-148"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_real_number_operations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_215f79963d339e5cdffa19299629d2fe"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_real_number_operations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 实数运算、数轴与大小关系 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Real-number operations and order"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§3.2-3.6 Real Number Systems, printed pp.149-210"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_approximation_estimation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2fafc753b71eb0586f200d6255e6d156"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_approximation_estimation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 取整、近似与估算 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Approximation and estimation"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.9 Scientific Notation, printed pp.227-238"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_ratio",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8396d50d2a90e5d83b9dc099398d8ef3"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_ratio"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 比与按比分配 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Ratios with rational quantities"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.4 Ratios and Proportions, printed pp.366-375"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_percentage",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6c734715b50b77ef6f24871baa834f83"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_percentage"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 百分数表示、比较与变化 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Percentage comparison and change"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§6.1-6.2 Percent, Discounts, Markups and Sales Tax, printed pp.544-565"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_rate_speed",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_48618600ad3adf13d961a619b532eedd"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_rate_speed"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 率、路程、时间与速度 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Rate and speed"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, printed pp.27-39"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_algebra_notation_evaluation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5e0f4f344259b5ebc17ecb23c9c49115"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebra_notation_evaluation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 代数记号与代入求值 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic notation and evaluation"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.1 Algebraic Expressions, printed pp.334-345"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_algebra_translation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b8681872460e1ec21b74eafa7d1620a7"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebra_translation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 把简单情境表示为代数式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Translating situations into algebra"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§5.1-5.2 Algebraic Expressions and Applications, printed pp.334-355"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_nth_term_patterns",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_fa3d1adfea0227a8f6b9c9b24b726304"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_nth_term_patterns"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 用代数通项表示规律 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Algebraic nth-term patterns"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.10 Arithmetic Sequences, printed pp.239-245"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_linear_expressions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8269caa3a2876c8df937c31ec1fa8cf7"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_expressions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 一次式的运算与化简 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.15, g3 sec1, Operations on linear expressions"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.1 Algebraic Expressions, printed pp.334-345"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_coordinate_relationships",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_43232f4e8e5445fc6169006d5681f732"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_coordinate_relationships"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 二维坐标中的变量关系表示 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Coordinates and variable relationships"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§1.1 and 2.2, printed pp.7-21 and 189-205"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_linear_fractional_equations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f8029da3342530575f9ea5dae5ddd1f7"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_fractional_equations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 含分数形式的一次方程 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Linear and reducible fractional equations"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §2.1 Linear Functions and §3.7 Rational Functions, printed pp.170-188 and 340-364"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_angle_relationships",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_04ea2830751757a6b38f545e638bb3f6"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_angle_relationships"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 角的类型与基本关系 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Angle relationships"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.2 Angles, printed pp.1007-1018"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_triangle_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_dddd87a5aa9f0d0de98de641d2e71916"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_triangle_properties"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 三角形性质与分类 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Triangle properties"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.3 Triangles, printed pp.1019-1034"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_polygon_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f6953bbfa35fb2292dad3e721606667a"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_polygon_properties"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 四边形与多边形性质 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Quadrilaterals and regular polygons"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.4 Polygons, Perimeter and Circumference, printed pp.1035-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_geometric_construction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8204d8e8132790908d8ac9cfd08014ca"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_geometric_construction"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 几何作图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Geometric construction"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.1-10.3 Points, Lines, Angles and Triangles, printed pp.994-1034"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_plane_mensuration",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2fea18f07e7d3874be1ad3c07a2e7d43"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_plane_mensuration"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 组合平面图形的周长与面积 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Area and composite plane figures"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§9.2 and 10.6 Measuring Area, printed pp.952-959 and 1068-1086"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_solid_mensuration",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "第二轮逐定义复核确认，现有 canonical 组合已经完整覆盖该成果；原先 partial 是主题级保守判定，不需要复制新节点。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Prisms, cylinders and composite solids"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.7 Volume and Surface Area, printed pp.1087-1097"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_data_collection",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d496e16963961ec00c57f63bdc93ab19"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_data_collection"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 数据收集、分类与制表 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Collecting, classifying and tabulating data"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.1 Gathering and Organizing Data, printed pp.816-826"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_statistical_representations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8c501cd4b04f2e3ab0c424ad09fcc14e"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_statistical_representations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 选择和解释统计表示 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Reading and choosing statistical representations"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.2 Visualizing Data, printed pp.827-856"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec1_misleading_diagrams",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_556fa04ba7f3b979476b0cc147b23720"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_misleading_diagrams"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 识别误导性统计图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.16, g3 sec1, Misleading statistical diagrams"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.2 Visualizing Data, printed pp.827-856"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_scale_proportion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_14da60ce2cc89759b132a22227040e3e"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_scale_proportion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 地图比例尺与正反比例 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Map scales and proportion"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.4 Ratios and Proportions, printed pp.366-375"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_algebra_expansion_identities",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_37efdccc48565e833f89715be7bcdb65"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebra_expansion_identities"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 代数展开与基本恒等式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Expansion and algebraic identities"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2-3.4 Quadratic and Polynomial Functions, printed pp.255-315"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_formula_rearrangement",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_93a0d2c5aebad77851a87bb60b75f16b"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_formula_rearrangement"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 改变公式主项与未知量求值 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Changing the subject of a formula"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§5.1-5.2 Algebraic Expressions and Linear Equations, printed pp.334-355"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_factorisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f0f451916c42f12800200d683aef2376"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_factorisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 一次式与二次式因式分解 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Linear and quadratic factorisation"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2-3.5 Quadratic and Polynomial Functions, printed pp.255-325"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_algebraic_fractions_multiply_divide",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_15c649df7800fe1b3ca94e60f96513d8"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebraic_fractions_multiply_divide"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 代数分式乘除 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Multiplying and dividing algebraic fractions"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.7 Rational Functions, printed pp.340-364"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_algebraic_fractions_add_subtract",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ee5e980fe9f65a9f13a1edb86253a1bf"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebraic_fractions_add_subtract"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 代数分式加减 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Adding and subtracting algebraic fractions"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.7 Rational Functions, printed pp.340-364"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_simple_linear_inequalities",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b8e922438c5de1840ad2ef00400070be"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_inequalities"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 简单与联立一元一次不等式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Simple linear inequalities"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.3 Linear Inequalities in One Variable, printed pp.356-365"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_quadratic_factorisation_solve",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_178d30f2870e67bdf24249ddba825997"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_quadratic_factorisation_solve"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 因式分解法解二次方程 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.17, g3 sec2, Solving quadratics by factorisation"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_congruence_similarity_foundations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e6ca7a0d3df677d8c407bd47798531d9"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_congruence_similarity_foundations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 全等与相似基础 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Congruence and similarity foundations"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.3-10.4 Triangles and Polygons, printed pp.1019-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_congruence_similarity_enlargement",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_762c0ab945b9e36ad8fc899b2d596340"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_congruence_similarity_enlargement"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 放缩与比例作图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Enlargement and reduction"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§5.4 and 10.3-10.4, printed pp.366-375 and 1019-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_pythagoras",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cd44c4602467808d0664260064ac2f58"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_pythagoras"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 勾股定理及逆定理 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Pythagoras theorem and converse"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.3 and 10.8, printed pp.1019-1034 and 1098-1116"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_right_triangle_trig",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_55b7ab76aeec1ea42cda56f714fc2853"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_right_triangle_trig"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 直角三角形三角比 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Trigonometry in right triangles"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.8 Right Triangle Trigonometry, printed pp.1098-1116"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_distribution_diagrams",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6d74d544d28698e9d61d7ae1e5691cab"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_distribution_diagrams"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 点图、直方图与茎叶图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.2 Visualizing Data, printed pp.827-856"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec2_central_tendency",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b0f426fa7ff2e1150d95beab326aa71d"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_central_tendency"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 平均数、中位数、众数与分组均值 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.18, g3 sec2, Measures of central tendency"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.3 Mean, Median and Mode, printed pp.857-872"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_standard_form",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ba9ab55c8fa45ca1d909474c1482313c"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_standard_form"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 整数次幂标准式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Standard form"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.9 Scientific Notation, printed pp.227-238"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_indices",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_1add3aa204b9f7ebde97168966ddc984"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_indices"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 整数与分数指数及指数律 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Indices and their laws"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.8 Exponents, printed pp.218-226"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_tangent_gradient",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d15e4876926cc2580ff4808653357b4f"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_tangent_gradient"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 用切线估计曲线斜率 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Estimating curve gradient with a tangent"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, printed pp.27-39"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_quadratic_formula_complete_graph",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_17734ef6df479e2834d50b676271d92d"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_quadratic_formula_complete_graph"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 公式、配方与图像法解二次方程 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Solving quadratic equations by standard methods"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_fractional_quadratic_equations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_1a74a0765adb9da5ef0aae6b6558f3b6"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_fractional_quadratic_equations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 可化为二次方程的分式方程 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Fractional equations reducible to quadratics"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.7 and 9.3, printed pp.340-364 and 925-936"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_congruence_similarity_enlargement",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_762c0ab945b9e36ad8fc899b2d596340"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_congruence_similarity_enlargement"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 放缩与比例作图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Scale drawings, enlargement and reduction"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§5.4 and 10.3-10.4, printed pp.366-375 and 1019-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_bisector_construction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8204d8e8132790908d8ac9cfd08014ca"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_geometric_construction"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 几何作图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Perpendicular and angle bisectors"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.1-10.3 Points, Lines, Angles and Triangles, printed pp.994-1034"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_circle_chord_tangent",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_367201efd937747abdefe2f3739e5132"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_circle_chord_tangent"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 圆的弦与切线性质 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Chord and tangent properties"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.1-10.4 Euclidean Geometry Foundations, printed pp.994-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_circle_angles",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d46035586f5c24f181969a36ed456bf5"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_circle_angles"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 圆的角性质 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Circle angle properties"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.2-10.4 Angles, Triangles and Polygons, printed pp.1007-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_triangle_trigonometry",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_217987a9c88ae06397d8e62abf847891"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_triangle_trigonometry"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 任意三角形的三角计算 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Trigonometry for general triangles"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§8.1-8.2 Law of Sines and Law of Cosines, printed pp.767-805"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_spatial_trigonometry",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6ee0bb592a0fde530ae9f3ec96dfd28f"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_spatial_trigonometry"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 二维与三维三角问题 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Two- and three-dimensional trigonometric problems"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§7.2 and 8.1-8.2, printed pp.713-729 and 767-805"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_circle_mensuration",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_04897092166e867a8d93f1382fb4e3c1"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_circle_mensuration"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 弧长、扇形面积与弓形面积 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Arc, sector and segment measures"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §5.1 Angles, printed pp.507-520"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_quartiles_spread",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e27f4d18434be33a5d90fcbf0ac6926c"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_quartiles_spread"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 四分位数、百分位数与离散程度 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Quartiles, percentiles and spread"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§2.2 and 2.5 Measures of Location and Spread, printed pp.77-93 and 99-111"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_cumulative_box",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_daa080e67e644277c09d3965ff40ef90"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_cumulative_box"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 累积频数图与箱线图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Cumulative-frequency and box plots"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §2.4 Box Plots, printed pp.94-98; cumulative-frequency tables in Chapter 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_standard_deviation_compare",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f622b985ca319c5dafccfad432b71c27"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_standard_deviation_compare"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 计算标准差并比较数据集 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Calculating and comparing standard deviation"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.4 Range and Standard Deviation, printed pp.873-878"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_combined_probability",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_368281a2f6ec71f3e8a782e510871a58"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_combined_probability"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 复合事件概率表示 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.21, g3 sec3 4, Combined-event probability representations"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§7.4-7.5 Tree Diagrams, Tables, Outcomes and Probability, printed pp.738-762"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_compound_linear_inequalities",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b8e922438c5de1840ad2ef00400070be"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_inequalities"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 简单与联立一元一次不等式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Compound linear inequalities"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.3 Linear Inequalities in One Variable, printed pp.356-365"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_elementary_matrices",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_565f1698f0475654a9d3e8fe5ce43bf4"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_elementary_matrices"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 初等矩阵表示与运算 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.19, g3 sec3 4, Elementary matrix representation and operations"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §9.5 Matrices and Matrix Operations, printed pp.946-960"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_congruence_similarity_tests",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e2a2524edb746a003e7b535fa8188937"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_congruence_similarity_tests"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 三角形全等相似判定与尺度比 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Triangle congruence, similarity and scale ratios"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §8.1-8.2 Non-right Triangles, printed pp.767-805"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_vector_representation",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "第二轮逐定义复核确认，现有 canonical 组合已经完整覆盖该成果；原先 partial 是主题级保守判定，不需要复制新节点。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Plane-vector representation"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §8.8 Vectors, printed pp.864-883"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g3_sec3_4_vector_operations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_d4b7e2b6e2c8459d849405a8f6fc0b79"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "第二轮逐定义复核确认，现有 canonical 组合已经完整覆盖该成果；原先 partial 是主题级保守判定，不需要复制新节点。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.20, g3 sec3 4, Plane-vector operations"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §8.8 Vectors, printed pp.864-883"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_secondary_all_personal_finance",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0035396047335920724c5a50e48736a4"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_personal_finance"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 个人与家庭金融数学 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.23, g2 secondary all, Personal and household finance"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF Chapter 6 Money Management, printed pp.543-706"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_secondary_all_motion_data_graphs",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2773177458caa7328645c0f0d304fbc9"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_motion_data_graphs"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 路程—时间与速度—时间图像 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.24, g2 secondary all, Distance-time and speed-time graphs"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§1.3 and 2.2, printed pp.27-39 and 189-205"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_prime_factorisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ef2bd7b2bbab07b9c004309c8f0bae24"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_prime_factorisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 质因数分解、公因倍数与方根 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Prime factorisation, HCF, LCM and roots"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.1 Prime and Composite Numbers, printed pp.128-148"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_real_number_operations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_215f79963d339e5cdffa19299629d2fe"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_real_number_operations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 实数运算、数轴与大小关系 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Real-number operations and order"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§3.2-3.6 Real Number Systems, printed pp.149-210"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_approximation_estimation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2fafc753b71eb0586f200d6255e6d156"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_approximation_estimation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 取整、近似与估算 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Approximation and estimation"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.9 Scientific Notation, printed pp.227-238"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_ratio",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8396d50d2a90e5d83b9dc099398d8ef3"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_ratio"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 比与按比分配 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Ratio, fractions and division"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.4 Ratios and Proportions, printed pp.366-375"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_percentage",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6c734715b50b77ef6f24871baa834f83"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_percentage"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 百分数表示、比较与变化 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Percentage forms and change"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§6.1-6.2 Percent, Discounts, Markups and Sales Tax, printed pp.544-565"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_rate_speed",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_48618600ad3adf13d961a619b532eedd"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_rate_speed"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 率、路程、时间与速度 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Distance, time, rate and speed"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, printed pp.27-39"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_algebra_notation_evaluation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5e0f4f344259b5ebc17ecb23c9c49115"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebra_notation_evaluation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 代数记号与代入求值 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.25, g2 sec1, Algebraic notation and evaluation"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.1 Algebraic Expressions, printed pp.334-345"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_algebra_translation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b8681872460e1ec21b74eafa7d1620a7"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebra_translation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 把简单情境表示为代数式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Translating situations into algebra"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§5.1-5.2 Algebraic Expressions and Applications, printed pp.334-355"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_nth_term_patterns",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_fa3d1adfea0227a8f6b9c9b24b726304"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_nth_term_patterns"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 用代数通项表示规律 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Algebraic nth-term patterns"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.10 Arithmetic Sequences, printed pp.239-245"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_linear_expressions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8269caa3a2876c8df937c31ec1fa8cf7"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_expressions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 一次式的运算与化简 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Operations on linear expressions"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.1 Algebraic Expressions, printed pp.334-345"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_linear_integer_equations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7a3ed0313c37ee78a2ffc1d5f58fa52d"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_integer_equations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 整数系数一元一次方程 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Linear equations with integer coefficients"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.2 Linear Equations in One Variable, printed pp.346-355"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_angle_relationships",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_04ea2830751757a6b38f545e638bb3f6"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_angle_relationships"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 角的类型与基本关系 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Angle relationships"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.2 Angles, printed pp.1007-1018"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_triangle_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_dddd87a5aa9f0d0de98de641d2e71916"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_triangle_properties"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 三角形性质与分类 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Triangle properties"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.3 Triangles, printed pp.1019-1034"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_plane_mensuration",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2fea18f07e7d3874be1ad3c07a2e7d43"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_plane_mensuration"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 组合平面图形的周长与面积 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Area and composite plane figures"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§9.2 and 10.6 Measuring Area, printed pp.952-959 and 1068-1086"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_solid_mensuration",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_75a504416c16571e44cc269b50bb6db3"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "第二轮逐定义复核确认，现有 canonical 组合已经完整覆盖该成果；原先 partial 是主题级保守判定，不需要复制新节点。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Prisms, cylinders and composite solids"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.7 Volume and Surface Area, printed pp.1087-1097"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_data_collection",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d496e16963961ec00c57f63bdc93ab19"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_data_collection"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 数据收集、分类与制表 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Collecting, classifying and tabulating data"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.1 Gathering and Organizing Data, printed pp.816-826"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_statistical_representations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8c501cd4b04f2e3ab0c424ad09fcc14e"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_statistical_representations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 选择和解释统计表示 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Reading and choosing statistical representations"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.2 Visualizing Data, printed pp.827-856"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec1_misleading_diagrams",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_556fa04ba7f3b979476b0cc147b23720"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_misleading_diagrams"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 识别误导性统计图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.26, g2 sec1, Misleading statistical diagrams"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.2 Visualizing Data, printed pp.827-856"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_scale_proportion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_14da60ce2cc89759b132a22227040e3e"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_scale_proportion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 地图比例尺与正反比例 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Map scales and proportion"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.4 Ratios and Proportions, printed pp.366-375"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_linear_fractional_coefficients",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8269caa3a2876c8df937c31ec1fa8cf7"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_expressions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 一次式的运算与化简 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear expressions with fractional coefficients"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.1 Algebraic Expressions, printed pp.334-345"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_algebra_expansion_identities",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_37efdccc48565e833f89715be7bcdb65"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebra_expansion_identities"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 代数展开与基本恒等式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Expansion and algebraic identities"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2-3.4 Quadratic and Polynomial Functions, printed pp.255-315"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_factorisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f0f451916c42f12800200d683aef2376"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_factorisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 一次式与二次式因式分解 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Common-factor and quadratic factorisation"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2-3.5 Quadratic and Polynomial Functions, printed pp.255-325"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_algebraic_fractions_multiply_divide",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_15c649df7800fe1b3ca94e60f96513d8"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebraic_fractions_multiply_divide"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 代数分式乘除 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Multiplying and dividing algebraic fractions"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.7 Rational Functions, printed pp.340-364"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_linear_fractional_equations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f8029da3342530575f9ea5dae5ddd1f7"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_fractional_equations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 含分数形式的一次方程 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Linear and reducible fractional equations"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §2.1 Linear Functions and §3.7 Rational Functions, printed pp.170-188 and 340-364"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_simple_linear_inequalities",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b8e922438c5de1840ad2ef00400070be"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_inequalities"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 简单与联立一元一次不等式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.27, g2 sec2, Simple linear inequalities"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.3 Linear Inequalities in One Variable, printed pp.356-365"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_polygon_properties",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f6953bbfa35fb2292dad3e721606667a"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_polygon_properties"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 四边形与多边形性质 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Quadrilaterals and regular polygons"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.4 Polygons, Perimeter and Circumference, printed pp.1035-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_geometric_construction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8204d8e8132790908d8ac9cfd08014ca"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_geometric_construction"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 几何作图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Geometric construction"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.1-10.3 Points, Lines, Angles and Triangles, printed pp.994-1034"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_congruence_similarity_foundations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e6ca7a0d3df677d8c407bd47798531d9"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_congruence_similarity_foundations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 全等与相似基础 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Congruence and similarity foundations"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.3-10.4 Triangles and Polygons, printed pp.1019-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_pythagoras",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cd44c4602467808d0664260064ac2f58"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_pythagoras"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 勾股定理及逆定理 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Pythagoras theorem and converse"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.3 and 10.8, printed pp.1019-1034 and 1098-1116"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_distribution_diagrams",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6d74d544d28698e9d61d7ae1e5691cab"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_distribution_diagrams"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 点图、直方图与茎叶图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Dot plots, histograms and stem-and-leaf diagrams"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.2 Visualizing Data, printed pp.827-856"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec2_central_tendency",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b0f426fa7ff2e1150d95beab326aa71d"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_central_tendency"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 平均数、中位数、众数与分组均值 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.28, g2 sec2, Measures of central tendency"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.3 Mean, Median and Mode, printed pp.857-872"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_standard_form",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ba9ab55c8fa45ca1d909474c1482313c"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_standard_form"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 整数次幂标准式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Standard form"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.9 Scientific Notation, printed pp.227-238"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_indices",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_1add3aa204b9f7ebde97168966ddc984"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_indices"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 整数与分数指数及指数律 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Indices and their laws"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §3.8 Exponents, printed pp.218-226"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_tangent_gradient",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d15e4876926cc2580ff4808653357b4f"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_tangent_gradient"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 用切线估计曲线斜率 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Estimating curve gradient with a tangent"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.3 Rates of Change and Behavior of Graphs, printed pp.27-39"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_quadratic_methods",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_178d30f2870e67bdf24249ddba825997",
+        "pc_17734ef6df479e2834d50b676271d92d"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_quadratic_factorisation_solve",
+        "sg_sec_math_quadratic_formula_complete_graph"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 因式分解法解二次方程、公式、配方与图像法解二次方程 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Solving quadratic equations by standard methods"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.6 Quadratic Equations in One Variable, printed pp.403-426"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_fractional_quadratic_equations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_1a74a0765adb9da5ef0aae6b6558f3b6"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_fractional_quadratic_equations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 可化为二次方程的分式方程 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Fractional equations reducible to quadratics"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.7 and 9.3, printed pp.340-364 and 925-936"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_grouped_linear_factorisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f0f451916c42f12800200d683aef2376"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_factorisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 一次式与二次式因式分解 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Factorising grouped linear expressions"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2-3.5 Quadratic and Polynomial Functions, printed pp.255-325"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_algebra_expansion_identities",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_37efdccc48565e833f89715be7bcdb65"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebra_expansion_identities"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 代数展开与基本恒等式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Expansion of algebraic expressions"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2-3.4 Quadratic and Polynomial Functions, printed pp.255-315"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_formula_rearrangement",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_93a0d2c5aebad77851a87bb60b75f16b"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_formula_rearrangement"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 改变公式主项与未知量求值 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Changing the subject and evaluating formulae"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§5.1-5.2 Algebraic Expressions and Linear Equations, printed pp.334-355"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_algebraic_fractions_add_subtract",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ee5e980fe9f65a9f13a1edb86253a1bf"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_algebraic_fractions_add_subtract"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 代数分式加减 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.29, g2 sec3 4, Adding and subtracting algebraic fractions"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.7 Rational Functions, printed pp.340-364"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_congruence_similarity_enlargement",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_762c0ab945b9e36ad8fc899b2d596340"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_congruence_similarity_enlargement"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 放缩与比例作图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Scale drawings, enlargement and reduction"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§5.4 and 10.3-10.4, printed pp.366-375 and 1019-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_bisector_construction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8204d8e8132790908d8ac9cfd08014ca"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_geometric_construction"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 几何作图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Perpendicular and angle bisectors"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.1-10.3 Points, Lines, Angles and Triangles, printed pp.994-1034"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_circle_chord_tangent",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_367201efd937747abdefe2f3739e5132"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_circle_chord_tangent"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 圆的弦与切线性质 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Chord and tangent properties"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.1-10.4 Euclidean Geometry Foundations, printed pp.994-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_circle_angles",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d46035586f5c24f181969a36ed456bf5"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_circle_angles"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 圆的角性质 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Circle angle properties"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.2-10.4 Angles, Triangles and Polygons, printed pp.1007-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_triangle_trigonometry",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_217987a9c88ae06397d8e62abf847891"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_triangle_trigonometry"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 任意三角形的三角计算 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Trigonometry for general triangles"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§8.1-8.2 Law of Sines and Law of Cosines, printed pp.767-805"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_spatial_trigonometry",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6ee0bb592a0fde530ae9f3ec96dfd28f"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_spatial_trigonometry"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 二维与三维三角问题 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Two- and three-dimensional trigonometric problems"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§7.2 and 8.1-8.2, printed pp.713-729 and 767-805"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_circle_mensuration",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_04897092166e867a8d93f1382fb4e3c1"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_circle_mensuration"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 弧长、扇形面积与弓形面积 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Arc, sector and segment measures"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §5.1 Angles, printed pp.507-520"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_quartiles_spread",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e27f4d18434be33a5d90fcbf0ac6926c"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_quartiles_spread"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 四分位数、百分位数与离散程度 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Quartiles, percentiles and spread"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§2.2 and 2.5 Measures of Location and Spread, printed pp.77-93 and 99-111"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_cumulative_box",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_daa080e67e644277c09d3965ff40ef90"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_cumulative_box"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 累积频数图与箱线图 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Cumulative-frequency and box plots"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §2.4 Box Plots, printed pp.94-98; cumulative-frequency tables in Chapter 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_standard_deviation_compare",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f622b985ca319c5dafccfad432b71c27"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_standard_deviation_compare"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 计算标准差并比较数据集 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Calculating and comparing standard deviation"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §8.4 Range and Standard Deviation, printed pp.873-878"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_combined_probability",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_368281a2f6ec71f3e8a782e510871a58"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_combined_probability"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 复合事件概率表示 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.31, g2 sec3 4, Combined-event probability representations"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§7.4-7.5 Tree Diagrams, Tables, Outcomes and Probability, printed pp.738-762"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_congruence_similarity_problems",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e6ca7a0d3df677d8c407bd47798531d9"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_congruence_similarity_foundations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 全等与相似基础 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Congruence and similarity problems"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §§10.3-10.4 Triangles and Polygons, printed pp.1019-1051"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec3_4_right_triangle_trig",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_55b7ab76aeec1ea42cda56f714fc2853"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_right_triangle_trig"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 直角三角形三角比 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.30, g2 sec3 4, Trigonometry in right triangles"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §10.8 Right Triangle Trigonometry, printed pp.1098-1116"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_compound_linear_inequalities",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b8e922438c5de1840ad2ef00400070be"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_linear_inequalities"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 简单与联立一元一次不等式 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Compound linear inequalities"
+        },
+        {
+          "source_id": "src_openstax_contemporary_mathematics_2026",
+          "locator": "PDF §5.3 Linear Inequalities in One Variable, printed pp.356-365"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_elementary_matrices",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_565f1698f0475654a9d3e8fe5ce43bf4"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_elementary_matrices"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 初等矩阵表示与运算 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.32, g2 sec5 bridge, Elementary matrix representation and operations"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §9.5 Matrices and Matrix Operations, printed pp.946-960"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_congruence_similarity_tests",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e2a2524edb746a003e7b535fa8188937"
+      ],
+      "created_node_ids": [
+        "sg_sec_math_congruence_similarity_tests"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "跨 G2/G3 去重后，以 三角形全等相似判定与尺度比 的最小诊断边界解析；不同年级条目共享 canonical ID，但各自保留官方页码证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Triangle congruence, similarity and scale ratios"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §8.1-8.2 Non-right Triangles, printed pp.767-805"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_vector_representation",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "第二轮逐定义复核确认，现有 canonical 组合已经完整覆盖该成果；原先 partial 是主题级保守判定，不需要复制新节点。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector representation"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §8.8 Vectors, printed pp.864-883"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_sec_math_2020_g2_sec5_bridge_vector_operations",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_d4b7e2b6e2c8459d849405a8f6fc0b79"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "第二轮逐定义复核确认，现有 canonical 组合已经完整覆盖该成果；原先 partial 是主题级保守判定，不需要复制新节点。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_secondary_g2_g3_math_2020",
+          "locator": "PDF p.33, g2 sec5 bridge, Plane-vector operations"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §8.8 Vectors, printed pp.864-883"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

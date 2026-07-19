@@ -1,0 +1,532 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "resolution_set_id": "cgr_sg_seab_h2_chemistry_9476_2026_outcomes",
+  "gap_set_id": "cgs_sg_seab_h2_chemistry_9476_2026_outcomes",
+  "framework_id": "cfw_sg_seab_h2_chemistry_9476_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_chemistry_9476_2026",
+  "subject": "Chemistry",
+  "source_ids": [
+    "src_sg_seab_h2_chemistry_9476_2026",
+    "src_openstax_chemistry_2e_2019",
+    "src_openstax_organic_chemistry_2023"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "完成 21 项 H2 化学缺口的反向查重、概念归并、稳定 ID 和双类证据登记。"
+    }
+  ],
+  "resolutions": [
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_3_d",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7d39e3cc0d5dad70557185c466c60fdd"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_ideal_gas_mixture_partial_pressures"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 3 The Gaseous State, outcome (d)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §9.3, Stoichiometry of Gaseous Substances, Mixtures, and Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_4_a",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e349920621ebd3ae42cabdebf4f12b67"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_acid_base_models_arrhenius_lewis"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 4 Theories of Acids and Bases, outcome (a)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (c)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_4_c",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e349920621ebd3ae42cabdebf4f12b67"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_acid_base_models_arrhenius_lewis"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.15, topic 4 Theories of Acids and Bases, outcome (a)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.16, topic 4 Theories of Acids and Bases, outcome (c)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §14.1, Brønsted-Lowry Acids and Bases, historical Arrhenius model; §15.2, Lewis Acids and Bases"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_7_e",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_57a133d096ce11555111fb8bc61b0ffb"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_lattice_energy_ionic_factors"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §7.1, Ionic Bonding, lattice energy and ionic charge-distance effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_7_l",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_07b55d0cfd5599dbd5c011cf702082bf"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_standard_state_prediction_limits"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (l)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §16.4, Free Energy; §17.4, Potential, Free Energy, and Equilibrium"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_8_k",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_87c55b2fc3a957385772212c65ab3929"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_enzyme_catalysis_specificity_conditions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.21, topic 8 Reaction Kinetics, outcome (k)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §12.7, Catalysis, Enzyme Structure and Function"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_b",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_25a151cded112622c6511c38293ea36f"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_base_dissociation_water_ionic_product"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§14.1-14.3, Brønsted-Lowry Acids and Bases; pH and pOH; Relative Strengths of Acids and Bases"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_d",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8d1c44cf2a5bd1f8942eddce18c0704b"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_titration_curves_indicator_selection"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (d)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_e",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8d1c44cf2a5bd1f8942eddce18c0704b"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_titration_curves_indicator_selection"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (d)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §14.7, Acid-Base Titrations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_1_f",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9b34bdf046e84b83e6eb72fb0ba9718b"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_ocean_carbonate_buffer_acidification"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.22, topic 10_1 Acid-Base Equilibria, outcome (f)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §14.6, Buffers; §15.3, Coupled Equilibria, ocean acidification"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_10_2_c",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_67e0b7f2de055a585de0d8a32c508d20"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_complex_ion_solubility_control"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.23, topic 10_2 Solubility Equilibria, outcome (c)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§15.2-15.3, Lewis Acids and Bases; Coupled Equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_3_b",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0cc9920d6c67e98c3dd9404cd91f8510"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_organic_electronic_steric_effects"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.26, topic 11_3 Organic Reactions and Mechanisms, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "OpenStax Organic Chemistry §§6.2, 7.9 and 11.3, mechanisms, electronic effects and steric effects in substitution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_4_h",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_bd4d1bfb66e3b10472e49fdc81a72eef"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_combustion_pollutants_greenhouse"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_4 Hydrocarbons, outcome (h)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§12.7 and 18.9, catalytic converters; atmospheric oxygen compounds and combustion impacts"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_5_b",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_146233f82cd4fdbdf0addf3541ab2779"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_nucleophilic_substitution_stereochemistry"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (b)"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "OpenStax Organic Chemistry §§11.2 and 11.4, The SN2 Reaction; The SN1 Reaction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_5_e",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_3fac0ca9aef16809a14f9562a720c6f1"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_halocarbon_environmental_impacts"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.29, topic 11_5 Halogen Derivatives, outcome (e)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §18.8, Occurrence, Preparation, and Properties of the Halogens, halocarbon environmental context"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_11_10_g",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_96b9e7054c566e5de380ab0cd98a508b"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_polymer_recycling_sustainability"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 11_10 Polymers, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "OpenStax Organic Chemistry Chapter 31, Synthetic Polymers; Chapter 11 Chemistry Matters—Green Chemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_12_g",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_07b55d0cfd5599dbd5c011cf702082bf"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_standard_state_prediction_limits"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.19, topic 7 Chemical Energetics, outcome (l)"
+        },
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (g)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §16.4, Free Energy; §17.4, Potential, Free Energy, and Equilibrium"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_12_j",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8464330d881b25624fdd2e71b0ffb90e"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_electrode_potential_concentration_trends"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.33, topic 12 Electrochemistry, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §17.4, Potential, Free Energy, and Equilibrium, nonstandard conditions and the Nernst equation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_12_o",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_666ec83467e2fd50bdae1ffb00690078"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_industrial_electrolysis_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 12 Electrochemistry, outcome (o)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §17.7, Electrolysis, electroplating and metal purification applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_13_c",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_93d9babd0894b9a85da3874f2c9e6228"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_transition_periodic_invariance"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (c)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§6.5 and 19.1, Periodic Variations in Element Properties; Properties of Transition Metals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_chemistry_9476_2026_o_13_j",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_3e5fd22316ea97b5c19b13761d4d624b"
+      ],
+      "created_node_ids": [
+        "sg_h2_chemistry_ligand_exchange_complex_contexts"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "经反向查重，既有概念未同时满足该成果的完整范围、H2 深度和可独立诊断粒度；新增或共享一个窄概念，不改旧 legacy ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_chemistry_9476_2026",
+          "locator": "PDF p.34, topic 13 Chemistry of Transition Elements, outcome (j)"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §19.2, Coordination Chemistry of Transition Metals, ligand substitution and complex formation"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

@@ -1,0 +1,1661 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "gap_set_id": "cgs_cn_moe_senior_high_physics_2020_outcomes",
+  "framework_id": "cfw_cn_moe_senior_high_physics_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_physics_2020",
+  "subject": "Physics",
+  "source_ids": [
+    "src_cn_moe_senior_high_physics_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "逐编号反向查重并记录 partial 与 unmapped 概念缺口；方法实践不进入概念缺口。"
+    }
+  ],
+  "candidates": [
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_1_2_particle_model",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_1_2_particle_model"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Particle model and its conditions",
+      "proposed_name_zh": "质点模型及适用条件",
+      "scope_zh": "经历质点模型建构，判断特定情境能否把物体抽象为质点，并解释模型的作用与边界。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.2），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_1_4_free_fall",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_1_4_free_fall"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Free-fall motion",
+      "proposed_name_zh": "自由落体运动",
+      "scope_zh": "理解自由落体的理想化条件和匀加速规律，并用运动方程分析简单情境。",
+      "existing_canonical_ids": [
+        "pc_cee2843193f234b6e2ec3291ef31565c"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.1.4），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_1a_gravity_elastic_force",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_2_1a_gravity_elastic_force"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Gravity and elastic force",
+      "proposed_name_zh": "重力与弹力",
+      "scope_zh": "识别重力和弹力，判断方向并分析常见接触约束。",
+      "existing_canonical_ids": [
+        "pc_7a4b1f0c0833180c2f630c367c02cc0a"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_1c_friction",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_2_1c_friction"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Static and kinetic friction",
+      "proposed_name_zh": "静摩擦与滑动摩擦",
+      "scope_zh": "区分静摩擦与滑动摩擦并用动摩擦因数计算滑动摩擦力。",
+      "existing_canonical_ids": [
+        "pc_7a4b1f0c0833180c2f630c367c02cc0a"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_2a_force_composition_vectors",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_2_2a_force_composition_vectors"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Force composition and decomposition",
+      "proposed_name_zh": "力的合成分解与矢量",
+      "scope_zh": "区分矢量和标量，用平行四边形法则合成或分解力。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_3c_overweight_weightlessness",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_2_3c_overweight_weightlessness"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Overweight and weightlessness",
+      "proposed_name_zh": "超重与失重",
+      "scope_zh": "分析支持力变化并解释超重、失重和完全失重情境。",
+      "existing_canonical_ids": [
+        "pc_b2063844cb1a96c55e14253c14719d9f"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_4_si_mechanics_units",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r1_1_2_4_si_mechanics_units"
+      ],
+      "action": "add_concept",
+      "proposed_name": "SI mechanics units",
+      "proposed_name_zh": "国际单位制中的力学单位",
+      "scope_zh": "使用国际单位制的力学基本和导出单位，并说明一致单位制的重要性。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.4），必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_1_2_kinetic_energy_theorem",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_1_2_kinetic_energy_theorem"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Kinetic energy theorem",
+      "proposed_name_zh": "动能与动能定理",
+      "scope_zh": "理解动能和动能定理，并用动能定理解释或解决生产生活现象。",
+      "existing_canonical_ids": [
+        "pc_94622268081f1c4560a463b79eece9a8"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_1_3a_gravitational_potential_energy",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_1_3a_gravitational_potential_energy"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Gravitational potential energy",
+      "proposed_name_zh": "重力势能",
+      "scope_zh": "联系重力做功与重力势能变化，选择参考零势能面。",
+      "existing_canonical_ids": [
+        "pc_94622268081f1c4560a463b79eece9a8"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_1_3b_elastic_potential_energy",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_1_3b_elastic_potential_energy"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Elastic potential energy",
+      "proposed_name_zh": "弹性势能",
+      "scope_zh": "定性理解弹性势能及其与形变量的关系。",
+      "existing_canonical_ids": [
+        "pc_94622268081f1c4560a463b79eece9a8"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_2_1_curvilinear_motion_condition",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_2_1_curvilinear_motion_condition"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Curvilinear motion and its condition",
+      "proposed_name_zh": "曲线运动及发生条件",
+      "scope_zh": "判断物体发生曲线运动时合力与速度的方向关系，并解释轨迹弯曲的条件。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.1），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_2_3c_centrifugal_phenomena",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_2_3c_centrifugal_phenomena"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Centrifugal phenomena and applications",
+      "proposed_name_zh": "离心现象及应用",
+      "scope_zh": "从惯性和向心力不足解释生产生活中的离心现象。",
+      "existing_canonical_ids": [
+        "pc_564a46a0b8681d3ee2bfb13b78e2cbe0"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_2_5b_cosmic_velocities",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_2_5b_cosmic_velocities"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Second and third cosmic velocities",
+      "proposed_name_zh": "第二与第三宇宙速度",
+      "scope_zh": "区分第二和第三宇宙速度及其物理意义。",
+      "existing_canonical_ids": [
+        "pc_5ae39810b5a928dac2a4845e04b072bf"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.2.5），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_3_1_newtonian_limits",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_3_1_newtonian_limits"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Limits of Newtonian mechanics",
+      "proposed_name_zh": "牛顿力学的局限性",
+      "scope_zh": "说明牛顿力学的适用范围和局限，认识物理理论会随证据和尺度拓展。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.1），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_3_2_relativistic_spacetime",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_3_2_relativistic_spacetime"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Introductory relativistic spacetime",
+      "proposed_name_zh": "相对论时空观初步",
+      "scope_zh": "初步理解相对论时空观，包括长度收缩、时间延缓及时空弯曲的定性含义。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.2），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_3_3_cosmic_evolution",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r2_2_3_3_cosmic_evolution"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Origin and evolution of the universe",
+      "proposed_name_zh": "宇宙起源与演化",
+      "scope_zh": "概述宇宙起源和演化研究的主要证据，并说明典型恒星演化过程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.3），必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_1_electrostatic_charge_conservation",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_1_1_electrostatic_charge_conservation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Electrostatic phenomena and charge conservation",
+      "proposed_name_zh": "静电现象与电荷守恒",
+      "scope_zh": "用原子结构模型和电荷守恒分析摩擦起电、接触起电与静电感应。",
+      "existing_canonical_ids": [
+        "pc_62a6d88e535c20e54fc65c369645f13d"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_2a_point_charge_model",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_1_2a_point_charge_model"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Point-charge model",
+      "proposed_name_zh": "点电荷模型",
+      "scope_zh": "判断带电体可被抽象为点电荷的条件和模型边界。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_3b_electric_field_lines",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_1_3b_electric_field_lines"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Electric field-line model",
+      "proposed_name_zh": "电场线模型",
+      "scope_zh": "用电场线描述典型电场并解释疏密和方向含义。",
+      "existing_canonical_ids": [
+        "pc_cf0a24f8dd938cdfcc8ea4466833fd4e"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_4_electrostatic_applications",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_1_4_electrostatic_applications"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Electrostatic applications and protection",
+      "proposed_name_zh": "静电利用与防护",
+      "scope_zh": "解释静电除尘、喷雾、打印等应用并分析可燃粉尘环境的静电防护。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_5a_electric_potential_quantities",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_1_5a_electric_potential_quantities"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Electric potential energy, potential and potential difference",
+      "proposed_name_zh": "电势能、电势与电势差",
+      "scope_zh": "理解静电场中的电势能、电势和电势差，并使用匀强电场强度关系。",
+      "existing_canonical_ids": [
+        "pc_d5eb2984fe400640527611f8af20f25d",
+        "pc_cf0a24f8dd938cdfcc8ea4466833fd4e"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_5b_charged_particle_electric_motion",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_1_5b_charged_particle_electric_motion"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Charged-particle motion in electric fields",
+      "proposed_name_zh": "带电粒子在电场中的运动",
+      "scope_zh": "分析带电粒子在匀强电场中的受力、运动和能量变化。",
+      "existing_canonical_ids": [
+        "pc_cf0a24f8dd938cdfcc8ea4466833fd4e",
+        "pc_b2063844cb1a96c55e14253c14719d9f"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_6a_capacitance",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_1_6a_capacitance"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Capacitors and capacitance",
+      "proposed_name_zh": "电容器与电容",
+      "scope_zh": "识别常见电容器并理解电容表示储存电荷能力。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_6b_capacitor_charge_discharge",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_1_6b_capacitor_charge_discharge"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Capacitor charging, discharging and applications",
+      "proposed_name_zh": "电容器充放电与应用",
+      "scope_zh": "描述电容器充放电过程中电荷、电流和电压的变化，并解释闪光灯等应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_1a_circuit_components",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_2_1a_circuit_components"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Circuit components and functions",
+      "proposed_name_zh": "电路元件及作用",
+      "scope_zh": "识别常见电路元件并解释其在电路中的作用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_2a_resistance_geometry_material",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_2_2a_resistance_geometry_material"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Resistance, geometry and material",
+      "proposed_name_zh": "电阻与材料、长度和横截面积",
+      "scope_zh": "理解金属导体电阻与材料、长度和横截面积的定量关系，并解释 I-U 特性。",
+      "existing_canonical_ids": [
+        "pc_6a2c33585e2f59dc88ebd095503f1547"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_4a_closed_circuit_ohm",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_2_4a_closed_circuit_ohm"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Closed-circuit Ohm's law",
+      "proposed_name_zh": "闭合电路欧姆定律",
+      "scope_zh": "理解端电压、电动势、内阻和电流的关系并分析闭合电路。",
+      "existing_canonical_ids": [
+        "pc_2c6fac377de551f06f129beb0bd0767f",
+        "pc_6a2c33585e2f59dc88ebd095503f1547"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_5a_electrical_work_power",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_2_5a_electrical_work_power"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Electrical work and power",
+      "proposed_name_zh": "电功与电功率",
+      "scope_zh": "计算电功、电功率和用电量并解释额定量。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_5b_joule_law",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_2_5b_joule_law"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Joule's law",
+      "proposed_name_zh": "焦耳定律",
+      "scope_zh": "使用焦耳定律计算电热并解释电热现象。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_6_household_electricity_safety",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_2_6_household_electricity_safety"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Household circuits and electrical safety",
+      "proposed_name_zh": "家庭电路与安全节约用电",
+      "scope_zh": "分析家庭电路中的简单问题，把安全和节约用电原则应用于实际。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.2.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_1_magnetism_applications_history",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_3_1_magnetism_applications_history"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Magnetic applications and historical contributions",
+      "proposed_name_zh": "磁现象应用与历史贡献",
+      "scope_zh": "列举磁现象的典型应用，说明中国古代磁学成果及其与现代磁技术的联系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_2_magnetic_field_lines",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_3_2_magnetic_field_lines"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Magnetic flux density and field lines",
+      "proposed_name_zh": "磁感应强度与磁感线",
+      "scope_zh": "理解磁场和磁感应强度，并用磁感线描述电流周围的典型磁场。",
+      "existing_canonical_ids": [
+        "pc_21210700d95c5fb054342d60854fa86a",
+        "pc_9647bc019f27fd232ce00c144b507faa"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_3b_induction_conditions",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_3_3b_induction_conditions"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Conditions for induced current",
+      "proposed_name_zh": "产生感应电流的条件",
+      "scope_zh": "判断闭合回路磁通量变化与感应电流产生的关系，并说明典型应用。",
+      "existing_canonical_ids": [
+        "pc_ef89f015bb0ebd4763d7cc0623222573"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.3），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_4_electromagnetic_field_waves",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_3_4_electromagnetic_field_waves"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Electromagnetic waves and field materiality",
+      "proposed_name_zh": "电磁波与电磁场物质性",
+      "scope_zh": "说明电磁波由变化的电场和磁场传播，并解释电磁场具有物质性的含义。",
+      "existing_canonical_ids": [
+        "pc_ff3aafe811b49dfdca598b2667c1db93"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_5_electromagnetic_wave_applications",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_3_5_electromagnetic_wave_applications"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Electromagnetic-wave applications",
+      "proposed_name_zh": "电磁波应用与影响",
+      "scope_zh": "解释通信等电磁波应用并评价其社会影响。",
+      "existing_canonical_ids": [
+        "pc_ff3aafe811b49dfdca598b2667c1db93"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.5），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_6b_light_energy_quantisation",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_3_6b_light_energy_quantisation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Quantisation of light energy",
+      "proposed_name_zh": "光能量不连续与量子化",
+      "scope_zh": "说明光能量不连续并初步解释微观世界量子化。",
+      "existing_canonical_ids": [
+        "pc_667d6af1c79afd71fbd2dedbccfcc217"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.6），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_1a_renewable_energy_technologies",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_4_1a_renewable_energy_technologies"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Water, wind and solar energy technologies",
+      "proposed_name_zh": "水能、风能与太阳能利用",
+      "scope_zh": "说明水能、风能和太阳能转化为可用能源的基本方式。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_1b_nuclear_energy_intro",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_4_1b_nuclear_energy_intro"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Introductory nuclear energy",
+      "proposed_name_zh": "核能利用初步",
+      "scope_zh": "初步区分核裂变与核聚变释放能量的方式。",
+      "existing_canonical_ids": [
+        "pc_45e557e295944b395f08bb30c4bb963e"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_2b_energy_conversion_directionality",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_4_2b_energy_conversion_directionality"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Directionality of energy conversion",
+      "proposed_name_zh": "能量转化的方向性",
+      "scope_zh": "解释实际能量转化的方向性和可用能品质变化。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.2），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_3_renewable_environment",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_4_3_renewable_environment"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Renewable energy and environmental impact",
+      "proposed_name_zh": "可再生能源与环境影响",
+      "scope_zh": "分类可再生和不可再生能源，分析能源过度开发利用对环境的影响。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.3），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_4_pollution_sustainable_development",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_r3_3_4_4_pollution_sustainable_development"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Pollution and coordinated sustainable development",
+      "proposed_name_zh": "污染防治与协调发展",
+      "scope_zh": "认识环境污染危害，说明科学、技术、社会与环境协调发展的重要性。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.4），必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_2a_simple_pendulum_period",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_2_2a_simple_pendulum_period"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Simple-pendulum period",
+      "proposed_name_zh": "单摆周期规律",
+      "scope_zh": "理解单摆周期与摆长、重力加速度的定量关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_3a_forced_vibration",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_2_3a_forced_vibration"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Forced vibration",
+      "proposed_name_zh": "受迫振动",
+      "scope_zh": "理解受迫振动及稳态振动频率与驱动力频率的关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_5a_wave_reflection_refraction",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_2_5a_wave_reflection_refraction"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Wave reflection and refraction",
+      "proposed_name_zh": "波的反射与折射",
+      "scope_zh": "识别并解释波的反射和折射现象。",
+      "existing_canonical_ids": [
+        "pc_e2ba314d63487e951e37fee09f09b8f3"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.5），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_5b_wave_interference_diffraction",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_2_5b_wave_interference_diffraction"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Wave interference and diffraction",
+      "proposed_name_zh": "波的干涉与衍射",
+      "scope_zh": "识别波的干涉与衍射条件，并用叠加原理解释典型图样。",
+      "existing_canonical_ids": [
+        "pc_96e41b9ba6a6d60711d999b04e3ee970",
+        "pc_e7db3c8e907de6d7f3bef2c8cccc4eb1"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.5），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_6_doppler_effect",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_2_6_doppler_effect"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Doppler effect",
+      "proposed_name_zh": "多普勒效应",
+      "scope_zh": "解释多普勒效应的产生原因，并判断相对运动对接收频率的影响和典型应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.6），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_1a_light_refraction_law",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_3_1a_light_refraction_law"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Law of refraction",
+      "proposed_name_zh": "光的折射定律",
+      "scope_zh": "理解并使用光的折射定律。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.3.1），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_2a_total_internal_reflection",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_3_2a_total_internal_reflection"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Total internal reflection",
+      "proposed_name_zh": "全反射及条件",
+      "scope_zh": "判断全反射发生条件并计算或比较临界角。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_2b_optical_fibre",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_3_2b_optical_fibre"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Optical-fibre principle and applications",
+      "proposed_name_zh": "光纤原理与应用",
+      "scope_zh": "用全反射解释光纤工作原理和生产生活应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_3b_light_polarisation",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_3_3b_light_polarisation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Polarisation and transverse nature of light",
+      "proposed_name_zh": "光的偏振与横波性质",
+      "scope_zh": "解释偏振现象，并据此说明光是横波。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_4_laser",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr1_1_3_4_laser"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Laser properties and applications",
+      "proposed_name_zh": "激光特性与应用",
+      "scope_zh": "说明激光的单色性、方向性等主要特征及其技术应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.4），选择性必修 1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_1_3_charged_particle_magnetic_motion",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_1_3_charged_particle_magnetic_motion"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Charged-particle motion in a magnetic field",
+      "proposed_name_zh": "带电粒子在磁场中的运动",
+      "scope_zh": "用洛伦兹力分析匀强磁场中的圆周运动和偏转，并解释质谱仪或回旋加速器。",
+      "existing_canonical_ids": [
+        "pc_1ca0904b6ae91d6ca3fc8e304aaf7ed2",
+        "pc_564a46a0b8681d3ee2bfb13b78e2cbe0"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.37（正文对应内容要求 2.1.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_3a_self_induction",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_2_3a_self_induction"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Self-induction",
+      "proposed_name_zh": "自感现象",
+      "scope_zh": "解释自感电动势对电流变化的阻碍作用及典型应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_3b_eddy_currents",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_2_3b_eddy_currents"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Eddy currents",
+      "proposed_name_zh": "涡流现象",
+      "scope_zh": "解释涡流的形成条件及其在电磁炉、阻尼等装置中的作用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_4_sinusoidal_ac",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_2_4_sinusoidal_ac"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Sinusoidal alternating current",
+      "proposed_name_zh": "正弦交变电流",
+      "scope_zh": "用公式和图像描述正弦交流，并区分瞬时值、峰值和有效值。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.4），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_5b_high_voltage_transmission",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_2_5b_high_voltage_transmission"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "High-voltage power transmission",
+      "proposed_name_zh": "远距离高压输电",
+      "scope_zh": "分析输电损耗因素并解释采用高压输电的原因。",
+      "existing_canonical_ids": [
+        "pc_78474e07c21918d091cc439beb2aaf1c"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.5），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_6_generator_motor_energy",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_2_6_generator_motor_energy"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Generator and motor energy conversion",
+      "proposed_name_zh": "发电机与电动机能量转化",
+      "scope_zh": "说明发电机和电动机工作过程中的能量转化及其社会作用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.6），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_3_1_maxwell_field_theory",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_3_1_maxwell_field_theory"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Introductory Maxwell electromagnetic-field theory",
+      "proposed_name_zh": "麦克斯韦电磁场理论初步",
+      "scope_zh": "初步理解麦克斯韦电磁场理论、场的统一性和多样性。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.1），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_3_2_electromagnetic_oscillation",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_3_2_electromagnetic_oscillation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Electromagnetic oscillation",
+      "proposed_name_zh": "电磁振荡",
+      "scope_zh": "描述电磁振荡中电场能与磁场能的周期性转换过程。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.2），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_3_3_em_wave_transmission",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_3_3_em_wave_transmission"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Emission, propagation and reception of electromagnetic waves",
+      "proposed_name_zh": "电磁波的发射、传播与接收",
+      "scope_zh": "说明电磁波发射、传播和接收的基本过程。",
+      "existing_canonical_ids": [
+        "pc_ff3aafe811b49dfdca598b2667c1db93"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_4_1_sensor_conversion",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_4_1_sensor_conversion"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Conversion of non-electrical to electrical quantities",
+      "proposed_name_zh": "非电学量到电学量的转换",
+      "scope_zh": "说明把非电学量转换为电学量的技术意义和测量链路。",
+      "existing_canonical_ids": [
+        "pc_59edde8ba6869a6d649ea0bead7ef1d5"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.1），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_4_2a_sensor_principles",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_4_2a_sensor_principles"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Principles of common sensors",
+      "proposed_name_zh": "常见传感器工作原理",
+      "scope_zh": "解释热敏、光敏等常见传感器把非电学量转换为电学量的原理。",
+      "existing_canonical_ids": [
+        "pc_59edde8ba6869a6d649ea0bead7ef1d5",
+        "pc_1930b8c847023ca24d637697d9313a1f"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.2），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_4_3_sensor_applications",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr2_2_4_3_sensor_applications"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Sensor applications",
+      "proposed_name_zh": "传感器应用",
+      "scope_zh": "列举并解释传感器在生产生活中的应用。",
+      "existing_canonical_ids": [
+        "pc_59edde8ba6869a6d649ea0bead7ef1d5"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.3），选择性必修 2"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_1b_molecular_kinetic_theory_evidence",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_1_1b_molecular_kinetic_theory_evidence"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Molecular kinetic theory and evidence",
+      "proposed_name_zh": "分子动理论及实验证据",
+      "scope_zh": "理解分子动理论基本观点并说明支持这些观点的实验证据。",
+      "existing_canonical_ids": [
+        "pc_4acc9b751e6be25c2980eb631eb901b0"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_2a_diffusion_brownian",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_1_2a_diffusion_brownian"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Diffusion and Brownian motion",
+      "proposed_name_zh": "扩散与布朗运动",
+      "scope_zh": "解释扩散与布朗运动，并用分子无规则运动说明其微观原因。",
+      "existing_canonical_ids": [
+        "pc_4acc9b751e6be25c2980eb631eb901b0"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_2b_molecular_speed_distribution",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_1_2b_molecular_speed_distribution"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Molecular-speed distribution",
+      "proposed_name_zh": "分子运动速率分布",
+      "scope_zh": "解释分子速率分布的统计规律和图像物理意义。",
+      "existing_canonical_ids": [
+        "pc_4acc9b751e6be25c2980eb631eb901b0"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_3a_crystalline_amorphous",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_1_3a_crystalline_amorphous"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Crystalline and amorphous solids",
+      "proposed_name_zh": "晶体与非晶体",
+      "scope_zh": "比较晶体和非晶体微观结构、各向异性和宏观特点。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_3b_liquid_crystals",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_1_3b_liquid_crystals"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Liquid crystals",
+      "proposed_name_zh": "液晶性质与应用",
+      "scope_zh": "说明液晶主要性质及其在显示技术中的应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_4a_semiconductor_materials",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_1_4a_semiconductor_materials"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Semiconductor materials",
+      "proposed_name_zh": "半导体材料",
+      "scope_zh": "说明半导体特点和技术应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_4b_nanomaterials",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_1_4b_nanomaterials"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Nanomaterials",
+      "proposed_name_zh": "纳米材料",
+      "scope_zh": "说明纳米材料特性、应用及可能带来的问题。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_5_surface_tension_capillarity",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_1_5_surface_tension_capillarity"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Surface tension and capillarity",
+      "proposed_name_zh": "表面张力与毛细现象",
+      "scope_zh": "解释表面张力的微观原因，并判断浸润、非浸润和毛细现象。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.1.5），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_2_3_second_law_thermodynamics",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_2_3_second_law_thermodynamics"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Second law of thermodynamics",
+      "proposed_name_zh": "热力学第二定律",
+      "scope_zh": "由宏观过程方向性理解热力学第二定律并判断永动机不可能性。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.2.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_1a_atomic_nuclear_model",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_3_1a_atomic_nuclear_model"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Atomic nuclear model",
+      "proposed_name_zh": "原子核式结构模型",
+      "scope_zh": "概述原子结构探索证据并理解核式结构模型。",
+      "existing_canonical_ids": [
+        "pc_e180a73d3a69ee874db1ed7939a2c604"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.1），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_2a_nuclear_composition_force",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_3_2a_nuclear_composition_force"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Nuclear composition and nuclear force",
+      "proposed_name_zh": "原子核组成与核力",
+      "scope_zh": "理解原子核组成和核力性质。",
+      "existing_canonical_ids": [
+        "pc_e180a73d3a69ee874db1ed7939a2c604"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_2b_fundamental_interactions",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_3_2b_fundamental_interactions"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Four fundamental interactions",
+      "proposed_name_zh": "四种基本相互作用",
+      "scope_zh": "识别四种基本相互作用及其典型尺度。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_2c_nuclear_reaction_equations",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_3_2c_nuclear_reaction_equations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Nuclear reaction equations",
+      "proposed_name_zh": "核反应方程",
+      "scope_zh": "根据质量数和电荷守恒写出并检查核反应方程。",
+      "existing_canonical_ids": [
+        "pc_e180a73d3a69ee874db1ed7939a2c604"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_3b_radioisotope_application_safety",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_3_3b_radioisotope_application_safety"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Radioisotope applications and radiation safety",
+      "proposed_name_zh": "放射性同位素应用与射线防护",
+      "scope_zh": "说明放射性同位素应用，并评价射线危害和防护。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.3），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_4_2_matter_waves_quantisation",
+      "requirement_ids": [
+        "req_cn_sh_physics_2020_o_sr3_3_4_2_matter_waves_quantisation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Matter waves and quantisation",
+      "proposed_name_zh": "实物粒子波动性与量子化",
+      "scope_zh": "说明实物粒子具有波动性，并联系电子衍射理解微观世界量子化。",
+      "existing_canonical_ids": [
+        "pc_5214d7b845cac7c061ea53ff5618d522"
+      ],
+      "suggested_graph_id": "senior_secondary_physics",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.4.2），选择性必修 3"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

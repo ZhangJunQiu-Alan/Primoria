@@ -1,0 +1,1369 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "resolution_set_id": "cgr_cn_moe_senior_high_chemistry_2020_outcomes",
+  "gap_set_id": "cgs_cn_moe_senior_high_chemistry_2020_outcomes",
+  "framework_id": "cfw_cn_moe_senior_high_chemistry_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_chemistry_2020",
+  "subject": "Chemistry",
+  "source_ids": [
+    "src_cn_moe_senior_high_chemistry_2020",
+    "src_openstax_chemistry_2e_2019",
+    "src_openstax_organic_chemistry_2023",
+    "src_cn_state_council_hazardous_chemicals_2013"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "完成 57 项化学知识缺口逐项定义复核、稳定 ID 复用、新概念建立和双来源证据绑定。"
+    }
+  ],
+  "resolutions": [
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_1_1a_chemical_science_scope",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b793cabfc6adc098cd6407d4d067ef2f"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_chemical_science_scope"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_1a_substance_classification_conversion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_75b3836fc0d83d4b0cdc346c8ac5d125"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_substance_classification_conversion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§1.2-1.3 Phases and Classification of Matter; Physical and Chemical Properties; §4.2 Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_1b_element_valence_conversion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_042f315c4fd69794846195086e9611ec",
+        "pc_48c23386b228371864ca5fe0f1632f1d"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_element_valence_conversion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_1c_colloidal_dispersions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_beb45d013bb8fe55d38730f8c8caf40e"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_colloidal_dispersions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.5 Colloids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_2a_redox_electron_transfer",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_042f315c4fd69794846195086e9611ec",
+        "pc_4b8778a639899b2be00ad35d38df1699"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖该诊断结果；不创建捆绑式包装概念或一对多伪 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_2b_oxidising_reducing_agents",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_042f315c4fd69794846195086e9611ec",
+        "pc_377dad2703bed7f040a5cf507fd3022b"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_oxidising_reducing_agents"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; §17.1 Review of Redox Chemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_3a_electrolyte_ionisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e0e23323fa5580b7eaff3277d809f5b1",
+        "pc_f6b7711a788cbc8c837f448c591f0fa4",
+        "pc_f7c04a5105eb18e7aff30b03775453df"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_electrolyte_ionisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; §4.2 Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_3b_ionic_reaction_conditions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a45921260ca525ac9bf3e69edfc293ab"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_ionic_reaction_conditions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; §4.2 Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_3c_common_ion_tests",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2d39a426abf9824742b1287d073caf9b"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_common_ion_tests"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.5 Quantitative Chemical Analysis; Chapter 15 Equilibria of Other Reaction Classes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_4a_sodium_compounds",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e5aff6eb70c25f008fbf7139bccb2f5e"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_sodium_compounds"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 18, sections on the occurrence, preparation, properties and uses of representative metals"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_4b_iron_compounds",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_db9856c274d202c3b699aa0300f025f9",
+        "pc_bfed5c3af1308dfe9e373df84e4f47c7"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_iron_compounds"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 19 Transition Metals and Coordination Chemistry; occurrence, preparation and properties of iron"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_5b_nitrogen_compounds",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c48d9a41a4f7fd5a7ddc4ca53ba4a7ac",
+        "pc_fa18ca8a34ff92855c12ed2a9333b352"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_nitrogen_compounds"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 18, sections on the occurrence, preparation, properties and uses of nitrogen and sulfur"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_5c_sulfur_compounds",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c48d9a41a4f7fd5a7ddc4ca53ba4a7ac",
+        "pc_1ba2aafb506f153663e2ec775895f553"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_sulfur_compounds"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 18, sections on the occurrence, preparation, properties and uses of nitrogen and sulfur"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_6a_inorganic_conversion_pathways",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_73476caa93ea9100a33aa2cb05d49c25"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_inorganic_conversion_pathways"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.2 Classifying Chemical Reactions; Chapters 18-19 representative and transition-element chemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_6b_inorganic_stse_value",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cfad06f00128c04d39e47fa742513249"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_inorganic_stse_value"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 18-19, preparation, uses and environmental context of inorganic substances"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_3_2c_bond_changes_reaction_energy",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_b35d6548b40342a4e7e95af4650c7349"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖该诊断结果；不创建捆绑式包装概念或一对多伪 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.2），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §7.5 Strengths of Ionic and Covalent Bonds; Chapter 5 Thermochemistry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_3_4c_fuel_battery_evaluation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7eed0f70fe0b90b51729bf5de0a91ac2"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_fuel_battery_evaluation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §17.5 Batteries and Fuel Cells"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_4_1a_carbon_bonding_geometry",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_b7cf8d670e2f37db41a760a401141534",
+        "pc_76c78ee2b35eca2b943816eb56dbac2a"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖该诊断结果；不创建捆绑式包装概念或一对多伪 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.1），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 1-2 Structure and Bonding; Polar Covalent Bonds, Acids, and Bases"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_4_2c_intro_organic_reaction_types",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_9826358783352bf325f9299146a78a37",
+        "pc_cd9220ccd4a94d9511b50e51680a585c",
+        "pc_3ebd79c190b474a0044f5c7d9e8cd92f"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖该诊断结果；不创建捆绑式包装概念或一对多伪 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.2），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 6 An Overview of Organic Reactions; Chapters 7-11 addition, substitution and elimination; Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_4_3a_organic_synthesis_value",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_96c8edf3efb4fb0b372ae363534dec31"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_organic_synthesis_value"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 6 An Overview of Organic Reactions; Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_4_3b_intro_macromolecule_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cd9220ccd4a94d9511b50e51680a585c",
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde",
+        "pc_ae3e202342d0768f17e63d904381b461",
+        "pc_6584aaea12fe36af1f97d5ade42e4386"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_intro_macromolecule_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 25-28 Biomolecules; Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_1a_chemistry_sustainable_development",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c3131ea59560f498b6982176cdeb8913"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_chemistry_sustainable_development"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context; Chapters 17-20 energy, materials and organic-chemistry applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_1b_green_chemistry_principles",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2c0adadb1e67172588d738b6b7641726"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_green_chemistry_principles"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.4 Reaction Yields; Chapter 16 Thermodynamics; Chapters 18-20 resource and process applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_2a_chemistry_materials",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d929d58ea205d5447fbe57bd97b9739d"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_chemistry_materials"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §10.6 Lattice Structures in Crystalline Solids; Chapters 18-20 metals, nonmetals and organic materials"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_2b_chemistry_health",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0e325dcddd180ae322ba3e28f7d99c25"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_chemistry_health"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 25-28 carbohydrates, proteins, lipids and nucleic acids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_3a_fossil_resource_utilisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
+        "pc_ae2a8392fd9b93c33bc41d65e28fa8dc",
+        "pc_d67a8e73f965a59d3be0c55d71b80819",
+        "pc_25bba2e8b8bf7802c9e134ed6ab58e21"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_fossil_resource_utilisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 3, 7 and 15 alkanes, alkenes and aromatic compounds"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_3b_energy_resource_systems",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_bcee33dfe384aed022e1af81bfb9384f"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_energy_resource_systems"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 5 Thermochemistry; §17.5 Batteries and Fuel Cells; Chapters 18 and 20 resource applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_4a_pollutant_detection_treatment",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_78a50d8641d4b0678e159d7c139530f4"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_pollutant_detection_treatment"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.5 Quantitative Chemical Analysis; Chapters 11 and 15 separation, precipitation and solution equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_4b_clean_production_circularity",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a933378eb31c78b07a59cc030c9fafc4"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_clean_production_circularity"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §4.4 Reaction Yields; Chapter 16 Thermodynamics; Chapters 18-20 resource and process applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_5a_chemical_rules_safe_use",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5ec1709b8d3d731aa8552cf0828ef253"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_chemical_rules_safe_use"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.5），必修"
+        },
+        {
+          "source_id": "src_cn_state_council_hazardous_chemicals_2013",
+          "locator": "第二条（生产、储存、使用、经营和运输的安全管理范围）与第四条（安全第一、预防为主、综合治理）"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_1_1a_energy_forms_conservation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e69d28c59b3a7c85a8366e77b73f49d0",
+        "pc_ddaa179ab823ea748d4ad05e53ee9187",
+        "pc_24ba4230641410361421c44883b583a4"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_energy_forms_conservation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_1_1b_internal_energy_state",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_57e67f0b2d828d124fc1ed6b252442c7"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_internal_energy_state"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 5 Thermochemistry; Chapter 16 Thermodynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_1_3c_electrochemical_corrosion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_eb79e19103c45ee35d2e6d1e7bf11c08"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_electrochemical_corrosion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §17.6 Corrosion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_2_1c_reaction_quotient_direction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4386477346f4fa3dfe6f31ec2435e3b2",
+        "pc_89e2557a2afb5105f1b6fdb45f2c8557"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_reaction_quotient_direction"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§13.2-13.3 Equilibrium Constants; Shifting Equilibria: Le Châtelier's Principle"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_2_2c_reaction_path_activation",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_2a4571ab0da3a12f57b0c311f63f1bee",
+        "pc_cb40576691a93cdc979f318c9e746398"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖该诊断结果；不创建捆绑式包装概念或一对多伪 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.2），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§12.5-12.7 Collision Theory; Reaction Mechanisms; Catalysis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_2_3a_industrial_condition_optimisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7c98c67402dacc3d9d7e3db6b4c7b1f4"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_industrial_condition_optimisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §12.7 Catalysis; §13.3 Shifting Equilibria: Le Châtelier's Principle"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_3_1a_aqueous_electrolyte_systems",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e0e23323fa5580b7eaff3277d809f5b1",
+        "pc_f6b7711a788cbc8c837f448c591f0fa4",
+        "pc_4d60857bbc8efac2d15739195c48b4fb"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_aqueous_electrolyte_systems"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.1），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §11.2 Electrolytes; Chapters 14-15 aqueous acid-base and solubility equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_3_2b_water_ionisation_ph",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_77fa4fcddfbfac708e8026c8cc77b391",
+        "pc_9bbd098371d4d3b54f8c721fa44edce9"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_water_ionisation_ph"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, water autoionisation, pH and pOH"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_3_3a_salt_hydrolysis",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_328cda31419ed2b8c55cf39d1cc44cae"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_salt_hydrolysis"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapter 14, acid-base properties and hydrolysis of salt solutions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_3_5a_aqueous_equilibrium_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e65a80e3ebb618b67421efebbe223d4a"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_aqueous_equilibrium_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 14-15 acid-base, buffer, precipitation and complex-ion equilibria"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_1_1b_quantised_levels_transitions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4ee1addaa1bb88db1bc738c8909840bb",
+        "pc_18741f38cfd4c697036aee6fe4658797"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_quantised_levels_transitions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§6.1-6.3 Electromagnetic Energy; The Bohr Model; Development of Quantum Theory"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_2_3b_structure_measurement",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_be8194ec0ada9714cc5a11129041379c",
+        "pc_726c4810fd4590e4416c4c336a4e4ef2",
+        "pc_c65a64a6433978912db1af23a08dd44b"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_spectroscopy_xrd_methods"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §10.6 Lattice Structures in Crystalline Solids; X-ray diffraction"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 mass spectrometry, infrared, nuclear magnetic resonance and ultraviolet spectroscopy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_2_3c_molecular_polarity_chirality",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_eed2c090eb2027bca1d0484dc93fee0f",
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖该诊断结果；不创建捆绑式包装概念或一对多伪 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 2 Polar Covalent Bonds; Chapter 5 Stereochemistry at Tetrahedral Centers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_2_4b_transitional_mixed_crystals",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_09d7deaa84a83cf94fcb0b1c3f8d1b48"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_transitional_mixed_crystals"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§10.1-10.6 intermolecular forces, states of matter, phase behaviour and crystal structures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_2_4c_aggregation_state_materials",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ad4a725dfac81fa47283f00bb46d8b4c"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_aggregation_state_materials"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §§10.1-10.6 intermolecular forces, states of matter, phase behaviour and crystal structures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_3_2a_spectroscopy_xrd_methods",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_be8194ec0ada9714cc5a11129041379c",
+        "pc_726c4810fd4590e4416c4c336a4e4ef2",
+        "pc_c65a64a6433978912db1af23a08dd44b"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_spectroscopy_xrd_methods"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.2），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §10.6 Lattice Structures in Crystalline Solids; X-ray diffraction"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 mass spectrometry, infrared, nuclear magnetic resonance and ultraviolet spectroscopy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_3_3a_structure_guided_material_design",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_bc4434394172ce6789e764c282f12a2e"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_structure_guided_material_design"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web Chapters 7 and 10 bonding, molecular geometry, intermolecular forces and crystal structures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_3_3b_structure_methods_life_science",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_06a35cc7966558ea8c51e3c5184153fe"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_structure_methods_life_science"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 structure determination; Chapters 25-28 biomolecular structure"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_1_1a_organic_connectivity_geometry",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_b7cf8d670e2f37db41a760a401141534",
+        "pc_76c78ee2b35eca2b943816eb56dbac2a"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖该诊断结果；不创建捆绑式包装概念或一对多伪 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.1），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 1-2 Structure and Bonding; Polar Covalent Bonds, Acids, and Bases"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_1_2b_functional_group_properties_conversion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b7cf8d670e2f37db41a760a401141534",
+        "pc_9826358783352bf325f9299146a78a37",
+        "pc_1b9d0c4713e1e96792abd35a2860e4e8"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_functional_group_properties_conversion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 6-24 reaction families and functional-group interconversions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_1_2c_functional_group_tests",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0c458f45bd014438bcb506f21ad5e902",
+        "pc_b1b08174971c68ef5b60cadcd6c7f22a"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_functional_group_tests"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 12-14 spectroscopic identification; Chapters 17-24 characteristic functional-group reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_2_3b_organic_synthesis_routes",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e27c68a56f8ce39167fc39768f956ba0"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_organic_synthesis_routes"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapters 6-24 reaction mechanisms, carbon-skeleton construction and functional-group interconversions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_2_4a_organic_safety_green_synthesis",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_98510162e1e934be009d93665229c064"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_organic_safety_green_synthesis"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.4），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "Web §1.1 Chemistry in Context; §4.4 Reaction Yields; Chapter 16 Thermodynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_3_1a_polymer_monomer_repeat_unit",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cd9220ccd4a94d9511b50e51680a585c",
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde",
+        "pc_886ababec38c47f72220f747b1afd3d8"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_polymer_monomer_repeat_unit"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_3_2a_carbohydrates",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e19f4ce3dfe214b9941a293fb43de7b0"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_carbohydrates"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 25 Biomolecules: Carbohydrates"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_3_2c_dna_rna",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_86fb27c4713339280eebe9dac099b314"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_dna_rna"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 28 Biomolecules: Nucleic Acids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_3_3a_synthetic_polymers_materials",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cd9220ccd4a94d9511b50e51680a585c",
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde",
+        "pc_3cab9d25d2a79faaf4e4267df1439df1"
+      ],
+      "created_node_ids": [
+        "cn_sh_chem_synthetic_polymers_materials"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.3），选择性必修·有机化学基础"
+        },
+        {
+          "source_id": "src_openstax_organic_chemistry_2023",
+          "locator": "Web Chapter 31 Synthetic Polymers"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

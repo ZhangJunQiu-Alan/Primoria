@@ -53,7 +53,16 @@
           "uniqueItems": true
         },
         "resource_type": {
-          "enum": ["curriculum_standard", "course_material", "textbook", "reference", "dataset", "unverified_origin"]
+          "enum": [
+            "curriculum_standard",
+            "course_material",
+            "textbook",
+            "reference",
+            "dataset",
+            "education_research",
+            "examiner_report",
+            "unverified_origin"
+          ]
         },
         "landing_page_url": { "type": ["string", "null"], "format": "uri" },
         "document_url": { "type": ["string", "null"], "format": "uri" },

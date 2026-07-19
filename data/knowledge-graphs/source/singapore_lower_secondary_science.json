@@ -1,0 +1,1408 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.1.0",
+  "graph_id": "singapore_lower_secondary_science",
+  "subject": "Science",
+  "jurisdictions": [
+    "SG"
+  ],
+  "source_ids": [
+    "src_sg_moe_lower_secondary_g2_g3_science_2021",
+    "src_openstax_chemistry_2e_2019",
+    "src_openstax_college_physics_2e_2022",
+    "src_openstax_biology_2e_2018",
+    "src_openstax_university_physics_v2_2016",
+    "src_openstax_microbiology_2016"
+  ],
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "根据 MOE 159 条学习成果审查建立 32 个最小可诊断概念；每个概念同时登记官方课程与开放学科教材证据。"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "sg_lss_science_topic_matter_properties_composition",
+      "kind": "topic",
+      "name": "Matter properties and composition",
+      "name_zh": "物质性质与组成",
+      "topic": null,
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§1.3-1.4, Physical and Chemical Properties; Measurements"
+        },
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §2.5, The Periodic Table"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §§11.1-11.3, Solutions and Solubility"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_mixture_separation",
+      "kind": "topic",
+      "name": "Mixture separation",
+      "name_zh": "混合物分离",
+      "topic": null,
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, physical separation of mixtures"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, mixture classification and physical separation; Chapter 11, Solutions and Colloids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_light_ray_model",
+      "kind": "topic",
+      "name": "Ray model of light",
+      "name_zh": "光的射线模型",
+      "topic": null,
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.1-25.2, The Ray Aspect of Light; The Law of Reflection"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.3 and 25.5, The Law of Refraction; Dispersion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_cell_model",
+      "kind": "topic",
+      "name": "Cell models and organisation",
+      "name_zh": "细胞模型与结构层级",
+      "topic": null,
+      "default_order": 4,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§4.1-4.3, Studying Cells; Eukaryotic Cells"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §4.1, Studying Cells, cells to tissues, organs and organ systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_particle_matter",
+      "kind": "topic",
+      "name": "Particle model of matter",
+      "name_zh": "物质粒子模型",
+      "topic": null,
+      "default_order": 5,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases of matter; §§10.1-10.3, intermolecular forces and phase transitions"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases and conservation of matter; §10.3, Phase Transitions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_atoms_molecules",
+      "kind": "topic",
+      "name": "Atoms and molecules",
+      "name_zh": "原子与分子",
+      "topic": null,
+      "default_order": 6,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§2.2-2.3, Evolution of Atomic Theory; Atomic Structure and Symbolism"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Atoms and Molecules; §2.4, Chemical Formulas"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_forces_pressure",
+      "kind": "topic",
+      "name": "Forces, energy transfer and pressure",
+      "name_zh": "力、能量转移与压强",
+      "topic": null,
+      "default_order": 7,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e Chapter 4, Dynamics; Chapter 7, Work, Energy, and Energy Resources"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e Chapter 11, Fluid Statics, pressure and pressure variation with depth"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_thermal_transfer",
+      "kind": "topic",
+      "name": "Thermal transfer and expansion",
+      "name_zh": "热传递与热膨胀",
+      "topic": null,
+      "default_order": 8,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.3, Thermal Expansion"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, Mechanisms of Heat Transfer"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, radiation and net radiative heat transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_chemical_change",
+      "kind": "topic",
+      "name": "Chemical change",
+      "name_zh": "化学变化",
+      "topic": null,
+      "default_order": 9,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, conservation of matter; §4.1, Writing and Balancing Chemical Equations"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§4.1-4.2, Writing and Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_ecosystem_interactions",
+      "kind": "topic",
+      "name": "Ecosystem interactions and cycling",
+      "name_zh": "生态相互作用与物质循环",
+      "topic": null,
+      "default_order": 10,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §45.6, Community Ecology; §46.1, Ecology of Ecosystems"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§46.1 and 46.3, Ecosystems; Biogeochemical Cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_current_effects",
+      "kind": "topic",
+      "name": "Effects of electric current",
+      "name_zh": "电流的效应",
+      "topic": null,
+      "default_order": 11,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §17.7, Electrolysis"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §20.4, Electric Power and Energy"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §22.1, Magnetic Fields Produced by Currents"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_digestion",
+      "kind": "topic",
+      "name": "Human digestion",
+      "name_zh": "人体消化",
+      "topic": null,
+      "default_order": 12,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§34.1 and 34.3, Digestive Systems; Digestive System Processes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §34.3, digestion and absorption; §7.2, Glycolysis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_transport",
+      "kind": "topic",
+      "name": "Transport in living things",
+      "name_zh": "生物体内的运输",
+      "topic": null,
+      "default_order": 13,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§40.1 and 40.3, Overview of the Circulatory System; Mammalian Heart and Blood Vessels"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §5.2, Passive Transport; §30.5, Transport of Water and Solutes in Plants"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_reproductive_foundations",
+      "kind": "topic",
+      "name": "Human reproductive foundations",
+      "name_zh": "人类生殖基础",
+      "topic": null,
+      "default_order": 14,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.3, Human Reproductive Anatomy and Gametogenesis"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.4, Hormonal Control of Human Reproduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_topic_reproductive_health",
+      "kind": "topic",
+      "name": "Reproductive health",
+      "name_zh": "生殖健康",
+      "topic": null,
+      "default_order": 15,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.5, Human Pregnancy and Birth, Contraception and Birth Control"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§23.3-23.4, Bacterial and Viral Infections of the Reproductive System"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_physical_properties_density",
+      "canonical_id": "pc_acb504f185f379ee5f759c6278b4de41",
+      "kind": "concept",
+      "name": "Physical properties, mass, volume and density",
+      "name_zh": "物理性质、质量、体积与密度",
+      "topic": "sg_lss_science_topic_matter_properties_composition",
+      "description": "Observing and measuring material properties, relating mass and volume to density, and using those properties to compare or classify materials at lower-secondary depth.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§1.3-1.4, Physical and Chemical Properties; Measurements"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_elements_compounds",
+      "canonical_id": "pc_56d4acd737ea166a07f3b71fd00853d8",
+      "kind": "concept",
+      "name": "Elements, compounds and their distinguishing properties",
+      "name_zh": "元素、化合物及其性质边界",
+      "topic": "sg_lss_science_topic_matter_properties_composition",
+      "description": "Distinguishing elements from compounds, recognising metals and non-metals in the periodic table, and explaining why a compound has properties different from its constituent elements.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §2.5, The Periodic Table"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_mixtures_solutions",
+      "canonical_id": "pc_752fa3f5d1eac58c509e0bdc8d8c6fc4",
+      "kind": "concept",
+      "name": "Mixtures, solutions and suspensions",
+      "name_zh": "混合物、溶液与悬浊液",
+      "topic": "sg_lss_science_topic_matter_properties_composition",
+      "description": "Explaining that mixtures are not chemically combined and retain constituent properties, while distinguishing solute, solvent, solution and suspension.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §§11.1-11.3, Solutions and Solubility"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_separation_principles",
+      "canonical_id": "pc_9bf9b032f3146edd9d8a91105fed0b4c",
+      "kind": "concept",
+      "name": "Principles of mixture separation",
+      "name_zh": "混合物分离原理",
+      "topic": "sg_lss_science_topic_mixture_separation",
+      "description": "Selecting magnetic attraction, filtration, evaporation, distillation or paper chromatography according to differences in constituent properties.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, physical separation of mixtures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_separation_applications",
+      "canonical_id": "pc_0c81afd79095d9235cc8411f42db3cae",
+      "kind": "concept",
+      "name": "Applications of separation techniques",
+      "name_zh": "分离技术的生活与工业应用",
+      "topic": "sg_lss_science_topic_mixture_separation",
+      "description": "Connecting separation principles to water treatment, food safety, recycling and waste-management applications without assuming that one method fits every mixture.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, mixture classification and physical separation; Chapter 11, Solutions and Colloids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_ray_model_reflection",
+      "canonical_id": "pc_08700b1c7475321c42e828e4a0bb64c1",
+      "kind": "concept",
+      "name": "Ray model and reflection from surfaces",
+      "name_zh": "射线模型与表面反射",
+      "topic": "sg_lss_science_topic_light_ray_model",
+      "description": "Using directed rays to represent light paths and distinguish reflection by plane, curved, smooth and rough surfaces, including image and application reasoning.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.1-25.2, The Ray Aspect of Light; The Law of Reflection"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_refraction_dispersion",
+      "canonical_id": "pc_248f955c8b0ba5448b7cdbc5f83f8924",
+      "kind": "concept",
+      "name": "Qualitative refraction and dispersion",
+      "name_zh": "定性折射与色散",
+      "topic": "sg_lss_science_topic_light_ray_model",
+      "description": "Explaining refraction as a change of light speed across media, describing observable effects, and representing prism dispersion without requiring angle calculations.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.3 and 25.5, The Law of Refraction; Dispersion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_typical_cell_structure_function",
+      "canonical_id": "pc_a82d89e1adb88a35ab909417af6ab3ae",
+      "kind": "concept",
+      "name": "Typical plant and animal cell structures and functions",
+      "name_zh": "典型动植物细胞结构与功能",
+      "topic": "sg_lss_science_topic_cell_model",
+      "description": "Relating the cell wall, membrane, cytoplasm, nucleus, vacuole and chloroplast to their functions while treating typical plant and animal cells as simplified models.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§4.1-4.3, Studying Cells; Eukaryotic Cells"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_multicellular_organisation_labour",
+      "canonical_id": "pc_7212a518c9c8036f2265d4acf5252e3a",
+      "kind": "concept",
+      "name": "Multicellular organisation and division of labour",
+      "name_zh": "多细胞生物的结构层级与细胞分工",
+      "topic": "sg_lss_science_topic_cell_model",
+      "description": "Connecting specialised cells to tissues, organs and organ systems and explaining why division of labour supports multicellular functions.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §4.1, Studying Cells, cells to tissues, organs and organ systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_particle_model_states",
+      "canonical_id": "pc_b72b1512a68ac9780b8d10c2ba4770ca",
+      "kind": "concept",
+      "name": "Particle model of solids, liquids and gases",
+      "name_zh": "固液气三态的粒子模型",
+      "topic": "sg_lss_science_topic_particle_matter",
+      "description": "Representing matter as discrete particles in constant random motion and comparing particle arrangement and movement in solids, liquids and gases.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases of matter; §§10.1-10.3, intermolecular forces and phase transitions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_particle_model_thermal_changes",
+      "canonical_id": "pc_86ed3ab2f88330914fa596aee84f4a4c",
+      "kind": "concept",
+      "name": "Particle explanation of thermal expansion and state change",
+      "name_zh": "粒子模型解释热胀冷缩与物态变化",
+      "topic": "sg_lss_science_topic_particle_matter",
+      "description": "Using particle spacing and motion to explain expansion, contraction, melting and boiling while preserving mass through physical changes.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases and conservation of matter; §10.3, Phase Transitions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_atomic_identity_mass",
+      "canonical_id": "pc_160785ca7ae85410ff7cc39aece277f9",
+      "kind": "concept",
+      "name": "Proton number, nuclear mass and elemental identity",
+      "name_zh": "质子数、原子核质量与元素身份",
+      "topic": "sg_lss_science_topic_atoms_molecules",
+      "description": "Explaining that atomic mass is concentrated in the nucleus and that the number of protons uniquely identifies an element.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§2.2-2.3, Evolution of Atomic Theory; Atomic Structure and Symbolism"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_molecules_formula_reading",
+      "canonical_id": "pc_74c4b2b549494758e1ccc2908ac95a75",
+      "kind": "concept",
+      "name": "Molecules and reading chemical formulae",
+      "name_zh": "分子及化学式信息读取",
+      "topic": "sg_lss_science_topic_atoms_molecules",
+      "description": "Defining a molecule as chemically combined atoms and reading the types and counts of atoms from an element symbol or given compound formula without requiring formula construction.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Atoms and Molecules; §2.4, Chemical Formulas"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_force_effects_energy_transfer",
+      "canonical_id": "pc_67a0afb131c38475a8e4c21481aa72e7",
+      "kind": "concept",
+      "name": "Effects of force and associated energy transfer",
+      "name_zh": "力的效应及其能量转移",
+      "topic": "sg_lss_science_topic_forces_pressure",
+      "description": "Relating interactions and forces to changes in motion, turning, size or shape, while recognising that such interactions transfer energy.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e Chapter 4, Dynamics; Chapter 7, Work, Energy, and Energy Resources"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_solid_atmospheric_liquid_pressure",
+      "canonical_id": "pc_402d7a7201336b8eaacbd59f78132ca0",
+      "kind": "concept",
+      "name": "Solid, atmospheric and liquid pressure in context",
+      "name_zh": "固体、大气与液体压强情境",
+      "topic": "sg_lss_science_topic_forces_pressure",
+      "description": "Using force per area and fluid-pressure ideas to explain cutting edges, suction, drinking straws and depth-related pressure without adding advanced fluid dynamics.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e Chapter 11, Fluid Statics, pressure and pressure variation with depth"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_thermal_expansion_density",
+      "canonical_id": "pc_7113fbc5a4ef488a96a1b081372a7a0f",
+      "kind": "concept",
+      "name": "Thermal expansion, contraction and density change",
+      "name_zh": "热胀冷缩与密度变化",
+      "topic": "sg_lss_science_topic_thermal_transfer",
+      "description": "Explaining everyday expansion and contraction and inferring how a temperature-driven volume change affects density when mass is unchanged.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.3, Thermal Expansion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_heat_transfer_mechanisms",
+      "canonical_id": "pc_5f2f865e928b7d9853b5ff0f3a36ac9d",
+      "kind": "concept",
+      "name": "Conduction, convection and thermal radiation",
+      "name_zh": "传导、对流与热辐射",
+      "topic": "sg_lss_science_topic_thermal_transfer",
+      "description": "Distinguishing conduction, convection and radiation as heat-transfer mechanisms and applying them to heating, cooling, insulation and radiant-energy contexts.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, Mechanisms of Heat Transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_thermal_radiation_rate_factors",
+      "canonical_id": "pc_d8fe80b5a0d79f5b1bf058ab5dae2c02",
+      "kind": "concept",
+      "name": "Surface and temperature factors in thermal radiation",
+      "name_zh": "影响热辐射速率的表面与温度因素",
+      "topic": "sg_lss_science_topic_thermal_transfer",
+      "description": "Reasoning qualitatively about how surface colour, texture and temperature affect the rate at which a body gains or loses energy by radiation.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, radiation and net radiative heat transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_chemical_change_particle_conservation",
+      "canonical_id": "pc_17badbba5f1a657337be2ac1a9e3ca1f",
+      "kind": "concept",
+      "name": "Chemical change, atomic rearrangement and mass conservation",
+      "name_zh": "化学变化、原子重排与质量守恒",
+      "topic": "sg_lss_science_topic_chemical_change",
+      "description": "Identifying chemical change by formation of new substances and explaining reactions as atomic rearrangements that conserve atoms and total mass.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, conservation of matter; §4.1, Writing and Balancing Chemical Equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_word_equations_reaction_types",
+      "canonical_id": "pc_23422169f21190dc7b0d1a12280f73d1",
+      "kind": "concept",
+      "name": "Word equations and introductory reaction types",
+      "name_zh": "文字方程式与基础反应类型",
+      "topic": "sg_lss_science_topic_chemical_change",
+      "description": "Representing reactions with reactant and product names and recognising combustion, thermal decomposition, oxidation and neutralisation without requiring symbolic balancing.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§4.1-4.2, Writing and Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_ecosystem_factors_adaptation_interactions",
+      "canonical_id": "pc_d706f88202e583528d4f1f83d2e85c5f",
+      "kind": "concept",
+      "name": "Abiotic factors, adaptations and community interactions",
+      "name_zh": "非生物因素、适应与群落关系",
+      "topic": "sg_lss_science_topic_ecosystem_interactions",
+      "description": "Relating environmental factors and structural or behavioural adaptations to survival and distinguishing predator-prey, mutualistic and parasitic relationships.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §45.6, Community Ecology; §46.1, Ecology of Ecosystems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_decomposers_nutrient_cycle",
+      "canonical_id": "pc_f3b207423938d8fbb250235729a2670f",
+      "kind": "concept",
+      "name": "Decomposers and nutrient recycling",
+      "name_zh": "分解者与营养物质循环",
+      "topic": "sg_lss_science_topic_ecosystem_interactions",
+      "description": "Explaining how decomposers return nutrients from dead organisms and wastes to the environment for reuse in ecosystem cycles.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§46.1 and 46.3, Ecosystems; Biogeochemical Cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_current_chemical_heating_effects",
+      "canonical_id": "pc_dce77a366079ff45fc84832ef21777a8",
+      "kind": "concept",
+      "name": "Chemical and heating effects of electric current",
+      "name_zh": "电流的化学效应与热效应",
+      "topic": "sg_lss_science_topic_current_effects",
+      "description": "Connecting current to resistive heating and introductory electrochemical changes, and selecting applications without requiring electrode-detail calculations.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §17.7, Electrolysis"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §20.4, Electric Power and Energy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_current_magnetic_effect",
+      "canonical_id": "pc_b9c4eb98603bcc5d7ab33a9b52e84bdf",
+      "kind": "concept",
+      "name": "Magnetic effect of electric current",
+      "name_zh": "电流的磁效应",
+      "topic": "sg_lss_science_topic_current_effects",
+      "description": "Explaining that electric current produces a magnetic field and relating that effect to simple devices and applications.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §22.1, Magnetic Fields Produced by Currents"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_digestive_system_structure_process",
+      "canonical_id": "pc_0d37b9ca5c8c1c5c1795f6a2249253fd",
+      "kind": "concept",
+      "name": "Digestive-system structure and the process of digestion",
+      "name_zh": "消化系统结构与消化过程",
+      "topic": "sg_lss_science_topic_digestion",
+      "description": "Explaining why digestion is necessary and how the mouth, oesophagus, stomach, small and large intestines, rectum and anus work together in digestion, absorption and elimination.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§34.1 and 34.3, Digestive Systems; Digestive System Processes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_digestion_products_cellular_use",
+      "canonical_id": "pc_d87ceac09c7741db036b133798f10ebe",
+      "kind": "concept",
+      "name": "Absorbed digestion products in cellular processes",
+      "name_zh": "消化吸收产物在细胞过程中的用途",
+      "topic": "sg_lss_science_topic_digestion",
+      "description": "Connecting absorbed small molecules to cellular respiration, growth and tissue repair without conflating digestion with those downstream cellular processes.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §34.3, digestion and absorption; §7.2, Glycolysis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_multicellular_transport_blood_exchange",
+      "canonical_id": "pc_074ebebe17312ddb0b1987476802f71a",
+      "kind": "concept",
+      "name": "Need for multicellular transport and blood-vessel exchange",
+      "name_zh": "多细胞运输需求与血管交换",
+      "topic": "sg_lss_science_topic_transport",
+      "description": "Explaining why diffusion alone is insufficient over large multicellular distances and relating arteries, veins and capillaries to bulk transport and tissue exchange without requiring detailed vessel anatomy.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§40.1 and 40.3, Overview of the Circulatory System; Mammalian Heart and Blood Vessels"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_plant_diffusion_transport",
+      "canonical_id": "pc_9797430f71b69978f7a1471603f9fba3",
+      "kind": "concept",
+      "name": "Diffusion in plant transport",
+      "name_zh": "植物运输中的扩散",
+      "topic": "sg_lss_science_topic_transport",
+      "description": "Applying diffusion to gases and mineral ions moving into and out of plant cells while distinguishing it from xylem bulk flow and phloem translocation.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §5.2, Passive Transport; §30.5, Transport of Water and Solutes in Plants"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_sexual_reproduction_heredity_anatomy",
+      "canonical_id": "pc_90f9aa090780caaed790708026e919ee",
+      "kind": "concept",
+      "name": "Human reproductive anatomy, fertilisation and heredity",
+      "name_zh": "人类生殖结构、受精与遗传",
+      "topic": "sg_lss_science_topic_reproductive_foundations",
+      "description": "Relating male and female reproductive structures to fertilisation and explaining how sexual reproduction transmits a unique combination of parental genetic information.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.3, Human Reproductive Anatomy and Gametogenesis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_puberty_menstrual_cycle",
+      "canonical_id": "pc_600c72889c4a447d64b3695f7b5f2b37",
+      "kind": "concept",
+      "name": "Puberty and the menstrual cycle",
+      "name_zh": "青春期与月经周期",
+      "topic": "sg_lss_science_topic_reproductive_foundations",
+      "description": "Connecting hormonal changes to puberty and describing how female reproductive structures participate in the menstrual cycle without requiring detailed endocrine pathways.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.4, Hormonal Control of Human Reproduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_contraception_mechanisms",
+      "canonical_id": "pc_5251a65531e5efed32f519ad93528e7e",
+      "kind": "concept",
+      "name": "Temporary and permanent contraception mechanisms",
+      "name_zh": "临时与永久避孕机制",
+      "topic": "sg_lss_science_topic_reproductive_health",
+      "description": "Classifying contraception by the reproductive process or organ function it disrupts and distinguishing temporary from permanent approaches.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.5, Human Pregnancy and Birth, Contraception and Birth Control"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_lss_science_sti_consequences_treatment",
+      "canonical_id": "pc_d42f9981e5d8d6a91cc8b23de471eb36",
+      "kind": "concept",
+      "name": "Consequences and treatment boundaries of sexually transmitted infections",
+      "name_zh": "性传播感染的危害与治疗边界",
+      "topic": "sg_lss_science_topic_reproductive_health",
+      "description": "Relating selected bacterial and viral STIs to harmful consequences and explaining why antibiotics may treat susceptible bacterial infections but do not cure viral infections.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "OpenStax Microbiology §§23.3-23.4, Bacterial and Viral Infections of the Reproductive System"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ],
+  "edges": [
+    {
+      "from": "sg_lss_science_elements_compounds",
+      "to": "sg_lss_science_mixtures_solutions",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "区分混合物前需要先理解元素与化合物作为纯物质类别及其性质边界。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §2.5, The Periodic Table"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §§11.1-11.3, Solutions and Solubility"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_physical_properties_density",
+      "to": "sg_lss_science_separation_principles",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "依据物理性质选择分离方法，需要先能识别和比较相关性质。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§1.3-1.4, Physical and Chemical Properties; Measurements"
+        },
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, physical separation of mixtures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_mixtures_solutions",
+      "to": "sg_lss_science_separation_principles",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "分离混合物前需要先辨认组分、溶液与悬浊液的组成关系。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Phases and Classification of Matter; §§11.1-11.3, Solutions and Solubility"
+        },
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, physical separation of mixtures"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_separation_principles",
+      "to": "sg_lss_science_separation_applications",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "评价水处理等应用前需要先理解各分离方法利用的性质差异。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, physical separation of mixtures"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, mixture classification and physical separation; Chapter 11, Solutions and Colloids"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_ray_model_reflection",
+      "to": "sg_lss_science_refraction_dispersion",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "用射线表示折射和色散路径，需要先掌握射线模型的方向与画法。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.1-25.2, The Ray Aspect of Light; The Law of Reflection"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e §§25.3 and 25.5, The Law of Refraction; Dispersion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_typical_cell_structure_function",
+      "to": "sg_lss_science_multicellular_organisation_labour",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解细胞分工及结构层级需要先能联系典型细胞结构与功能。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§4.1-4.3, Studying Cells; Eukaryotic Cells"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §4.1, Studying Cells, cells to tissues, organs and organ systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_particle_model_states",
+      "to": "sg_lss_science_particle_model_thermal_changes",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "用粒子运动解释熔化、沸腾和热胀冷缩，需要先掌握三态粒子排列与运动。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases of matter; §§10.1-10.3, intermolecular forces and phase transitions"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, phases and conservation of matter; §10.3, Phase Transitions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_atomic_identity_mass",
+      "to": "sg_lss_science_molecules_formula_reading",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "理解分子和化学式中的原子种类，需要先掌握原子与元素身份。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§2.2-2.3, Evolution of Atomic Theory; Atomic Structure and Symbolism"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, Atoms and Molecules; §2.4, Chemical Formulas"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_force_effects_energy_transfer",
+      "to": "sg_lss_science_solid_atmospheric_liquid_pressure",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "压强是力在面积上的作用结果，解释压强情境前需先理解力的效应。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e Chapter 4, Dynamics; Chapter 7, Work, Energy, and Energy Resources"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "OpenStax College Physics 2e Chapter 11, Fluid Statics, pressure and pressure variation with depth"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_heat_transfer_mechanisms",
+      "to": "sg_lss_science_thermal_radiation_rate_factors",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "分析表面和温度对辐射速率的影响，需要先区分辐射与传导、对流。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, Mechanisms of Heat Transfer"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "OpenStax University Physics Volume 2 §1.6, radiation and net radiative heat transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_chemical_change_particle_conservation",
+      "to": "sg_lss_science_word_equations_reaction_types",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "用文字方程式表示并分类反应前，需要先理解新物质形成、原子重排和质量守恒。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §1.2, conservation of matter; §4.1, Writing and Balancing Chemical Equations"
+        },
+        {
+          "source_id": "src_openstax_chemistry_2e_2019",
+          "locator": "OpenStax Chemistry 2e §§4.1-4.2, Writing and Classifying Chemical Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_ecosystem_factors_adaptation_interactions",
+      "to": "sg_lss_science_decomposers_nutrient_cycle",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释分解者在生态系统中的循环作用，需要先理解环境因素与群落相互作用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §45.6, Community Ecology; §46.1, Ecology of Ecosystems"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§46.1 and 46.3, Ecosystems; Biogeochemical Cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_digestive_system_structure_process",
+      "to": "sg_lss_science_digestion_products_cellular_use",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释消化产物的细胞用途前，需要先理解消化、吸收和系统各部分的作用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §§34.1 and 34.3, Digestive Systems; Digestive System Processes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §34.3, digestion and absorption; §7.2, Glycolysis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_sexual_reproduction_heredity_anatomy",
+      "to": "sg_lss_science_puberty_menstrual_cycle",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "描述月经周期中各部分的作用，需要先认识生殖系统结构及基本功能。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.3, Human Reproductive Anatomy and Gametogenesis"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.4, Hormonal Control of Human Reproduction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_lss_science_sexual_reproduction_heredity_anatomy",
+      "to": "sg_lss_science_contraception_mechanisms",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释避孕方法中断何种过程或器官功能，需要先掌握生殖结构与受精过程。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.3, Human Reproductive Anatomy and Gametogenesis"
+        },
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "OpenStax Biology 2e §43.5, Human Pregnancy and Birth, Contraception and Birth Control"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

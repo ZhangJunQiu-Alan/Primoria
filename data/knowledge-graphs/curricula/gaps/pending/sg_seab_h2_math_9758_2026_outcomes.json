@@ -1,0 +1,762 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "gap_set_id": "cgs_sg_seab_h2_math_9758_2026_outcomes",
+  "framework_id": "cfw_sg_seab_h2_math_9758_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_math_9758_2026",
+  "subject": "Mathematics",
+  "source_ids": [
+    "src_sg_seab_h2_math_9758_2026"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "成果级反向查重后记录全部 partial 与 unmapped 候选；明确排除项只保留在覆盖矩阵，不作为 KG 缺口。"
+    }
+  ],
+  "candidates": [
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_inverse_existence_restriction",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_inverse_existence_restriction"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Inverse existence and domain restriction",
+      "proposed_name_zh": "反函数存在条件与定义域限制",
+      "scope_zh": "判断反函数是否存在，必要时限制定义域，并联系一一函数与反函数图像。",
+      "existing_canonical_ids": [
+        "pc_d547d8eb03df4b28cc0357c7cae1d164"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_standard_graph_characteristics",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_standard_graph_characteristics"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Characteristics of standard graphs",
+      "proposed_name_zh": "常见函数图像特征",
+      "scope_zh": "识别指定函数及圆锥曲线图像的对称性、截距、转折点和渐近线。",
+      "existing_canonical_ids": [
+        "pc_133d40fa0e72c29c5eb6ec7a9852c80c",
+        "pc_58591fb3c8294a83a9405568a100991e",
+        "pc_76707a52fc4d807bbdfb0e56f509c17e",
+        "pc_d236c68eb711f9a26eb4250a7843b517",
+        "pc_2fd09e919b7e73069c83ce49007f17d2"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_parametric_graphs",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_parametric_graphs"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Simple parametric equations and graphs",
+      "proposed_name_zh": "简单参数方程与图像",
+      "scope_zh": "解释简单参数方程并画出或识别其平面曲线图像。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_formulate_equations",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_formulate_equations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Formulating equations and inequalities",
+      "proposed_name_zh": "从情境建立方程与不等式",
+      "scope_zh": "从问题情境建立方程、线性方程组或不等式并解释变量约束。",
+      "existing_canonical_ids": [
+        "pc_204206c0b72ea40b72d3055124b579af",
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_rational_quadratic_inequalities",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_rational_quadratic_inequalities"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Rational and quadratic inequalities",
+      "proposed_name_zh": "分式与二次不等式",
+      "scope_zh": "用代数或图像方法求解由一次式或二次式组成的分式不等式。",
+      "existing_canonical_ids": [
+        "pc_4307437065fb6fce9aa3b4c05e7ed82d"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_recurrence_sequences",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_recurrence_sequences"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Recurrence-generated sequences",
+      "proposed_name_zh": "递推数列",
+      "scope_zh": "由递推关系生成数列，计算后继项并分析数列行为。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "统一 KG 没有足以独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_series_operations_convergence",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_series_operations_convergence"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Series operations and convergence",
+      "proposed_name_zh": "级数运算与收敛",
+      "scope_zh": "完成两个级数的和差，判断收敛并解释无穷和。",
+      "existing_canonical_ids": [
+        "pc_105655e3b7f36e0d0c2488e7d3e47a3a"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_vector_operations_geometry",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_vector_operations_geometry"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Vector operations and geometry",
+      "proposed_name_zh": "向量运算及几何解释",
+      "scope_zh": "在二维和三维中完成向量加减与数乘，并解释其几何意义。",
+      "existing_canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_vector_types_magnitude",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_vector_types_magnitude"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Position, displacement and direction vectors",
+      "proposed_name_zh": "位置、位移、方向与单位向量",
+      "scope_zh": "区分位置、位移和方向向量，计算向量大小、单位向量及两点距离。",
+      "existing_canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2",
+        "pc_64e61e1cee5471619fa54db48800b916"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_collinearity_ratio",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_collinearity_ratio"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Collinearity and ratio theorem",
+      "proposed_name_zh": "共线与向量比例定理",
+      "scope_zh": "用向量判断共线，并使用比例定理解决几何分点问题。",
+      "existing_canonical_ids": [
+        "pc_9ae5f17312ee21050edf3e4bd9b005a2"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, collinearity; PDF p.8, ratio theorem, sub-topic 3.1"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_point_line_plane_distance",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_point_line_plane_distance"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Perpendicular foot and distance",
+      "proposed_name_zh": "垂足及点到直线或平面的距离",
+      "scope_zh": "求点到直线或平面的垂足和距离。",
+      "existing_canonical_ids": [
+        "pc_b70bbfb827c2b527f128f02bf360675e",
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_relative_positions_3d",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_relative_positions_3d"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Relative positions in three dimensions",
+      "proposed_name_zh": "三维线面位置关系",
+      "scope_zh": "判断两直线、线面或两平面的平行、相交、重合及异面关系。",
+      "existing_canonical_ids": [
+        "pc_8386363188df11ab28ae08ef72342a47"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_complex_extension_roots",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_complex_extension_roots"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Number-system extension and complex roots",
+      "proposed_name_zh": "数系扩充与复二次根",
+      "scope_zh": "从实数扩充到复数并求实系数二次方程的复根。",
+      "existing_canonical_ids": [
+        "pc_a2d1c2c86661b6706ceb2919619b89e5",
+        "pc_fc9bb3961ffd0d45670252b69c41d19c"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_complex_mod_arg_conjugate",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_complex_mod_arg_conjugate"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Modulus, argument and conjugate in cartesian form",
+      "proposed_name_zh": "笛卡尔形式的模、辐角与共轭",
+      "scope_zh": "在不使用极形式的前提下求复数的模、主辐角和共轭。",
+      "existing_canonical_ids": [
+        "pc_84fa9a959816d2fd778aec459c7e0020",
+        "pc_8b0b34fcb52404046ccbf41b402895fd"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_conjugate_polynomial_roots",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_conjugate_polynomial_roots"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Conjugate roots of real polynomials",
+      "proposed_name_zh": "实系数多项式的共轭根",
+      "scope_zh": "使用实系数多项式的非实根成共轭对性质。",
+      "existing_canonical_ids": [
+        "pc_fc9bb3961ffd0d45670252b69c41d19c"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_complex_geometric_effects",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_complex_geometric_effects"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Geometric effects of complex operations",
+      "proposed_name_zh": "复数运算的几何效果",
+      "scope_zh": "在阿根图解释共轭、取负、加减及乘以 i 的几何效果。",
+      "existing_canonical_ids": [
+        "pc_8b0b34fcb52404046ccbf41b402895fd",
+        "pc_c04ce0aed24384aaa5b223f59282d31c"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_derivative_graph_relations",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_derivative_graph_relations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Derivative signs and graph relations",
+      "proposed_name_zh": "导数符号与函数图像关系",
+      "scope_zh": "由一阶、二阶导数符号解释函数图像，并联系 f 与 f' 的图像。",
+      "existing_canonical_ids": [
+        "pc_f9249fb783344fbbcfe32c05267ebcb8"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_series_approximations",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_series_approximations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Series and small-angle approximations",
+      "proposed_name_zh": "级数近似与小角近似",
+      "scope_zh": "把麦克劳林级数作为函数近似，并使用规定的小角近似。",
+      "existing_canonical_ids": [
+        "pc_c1be934889ced7140179984f36bd37cf"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_separable_ode_solutions",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_separable_ode_solutions"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Separable differential-equation solutions",
+      "proposed_name_zh": "可分离微分方程通解与特解",
+      "scope_zh": "求可分离一阶微分方程的通解和满足初值的特解，包括按给定换元化为可分离形式。",
+      "existing_canonical_ids": [
+        "pc_19b4d23ab3a52e66c899dbf16e583835"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_interpret_ode_solution",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_interpret_ode_solution"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Interpreting differential-equation solutions",
+      "proposed_name_zh": "解释微分方程及其解",
+      "scope_zh": "在问题情境中解释微分方程、初值和解的含义及限制。",
+      "existing_canonical_ids": [
+        "pc_1c40f01e7df9a2f35a81598b9edf2a2a",
+        "pc_19b4d23ab3a52e66c899dbf16e583835"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_counting_arrangements",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_counting_arrangements"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Counting principles and arrangements",
+      "proposed_name_zh": "计数原理与排列组合",
+      "scope_zh": "使用加法、乘法原理及排列组合处理直线或圆周排列、重复和限制。",
+      "existing_canonical_ids": [
+        "pc_72b8e1a7b680bd575ff6d93a1e2c592b"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_probability_representations",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_probability_representations"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Probability representations",
+      "proposed_name_zh": "概率表格、Venn 图与树图",
+      "scope_zh": "使用结果表、Venn 图、树图及排列组合方法组织样本空间并计算概率。",
+      "existing_canonical_ids": [
+        "pc_c1ed59c17771ca7dfcca90c7c55fadc1",
+        "pc_cf8dbc5bcf596f0c4db74ea9886540a1",
+        "pc_0c7c408f2fb208ecfb0b6758b1cd4a0a",
+        "pc_72b8e1a7b680bd575ff6d93a1e2c592b"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_normal_probabilities_parameters",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_normal_probabilities_parameters"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Normal probabilities and inverse problems",
+      "proposed_name_zh": "正态概率与参数反求",
+      "scope_zh": "标准化正态变量，利用对称性求概率或由概率反求阈值和参数关系。",
+      "existing_canonical_ids": [
+        "pc_23858effd2dd68284bd0c6b645607386"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_linear_transform_moments",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_linear_transform_moments"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Moments of a linear transform",
+      "proposed_name_zh": "线性变换的期望与方差",
+      "scope_zh": "计算 E(aX+b) 与 Var(aX+b)。",
+      "existing_canonical_ids": [
+        "pc_d9a0d8a8f6fc271c56cb2d9dde6576ec",
+        "pc_8d0a38a8e8f86cd83ae1f091a62f2cad"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_independent_sum_moments",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_independent_sum_moments"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Moments of independent linear combinations",
+      "proposed_name_zh": "独立随机变量线性组合的期望与方差",
+      "scope_zh": "对独立 X、Y 计算 E(aX+bY) 与 Var(aX+bY)。",
+      "existing_canonical_ids": [
+        "pc_d9a0d8a8f6fc271c56cb2d9dde6576ec",
+        "pc_8d0a38a8e8f86cd83ae1f091a62f2cad"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_hypothesis_test_concepts",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_hypothesis_test_concepts"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Hypothesis-test concepts",
+      "proposed_name_zh": "假设检验基本概念",
+      "scope_zh": "理解原假设、备择假设、检验统计量、临界域、显著性水平和 p 值。",
+      "existing_canonical_ids": [
+        "pc_5e8204fe2f43100f3de7f78a5824d321"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_one_mean_hypothesis_test",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_one_mean_hypothesis_test"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "One-mean hypothesis tests",
+      "proposed_name_zh": "总体均值假设检验",
+      "scope_zh": "针对已知方差正态总体样本或任意总体大样本建立并执行总体均值检验。",
+      "existing_canonical_ids": [
+        "pc_5e8204fe2f43100f3de7f78a5824d321",
+        "pc_14be091db45947021ec317ac23ac5401",
+        "pc_23858effd2dd68284bd0c6b645607386"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_one_two_tailed_tests",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_one_two_tailed_tests"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "One- and two-tailed tests",
+      "proposed_name_zh": "单尾与双尾检验",
+      "scope_zh": "根据备择假设选择单尾或双尾检验及相应临界域。",
+      "existing_canonical_ids": [
+        "pc_5e8204fe2f43100f3de7f78a5824d321"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_interpret_hypothesis_result",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_interpret_hypothesis_result"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Interpreting test results",
+      "proposed_name_zh": "解释假设检验结论",
+      "scope_zh": "在问题语境中解释拒绝或不拒绝原假设的含义，不扩展到大纲排除的错误类型。",
+      "existing_canonical_ids": [
+        "pc_5e8204fe2f43100f3de7f78a5824d321"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_scatter_linear_plausibility",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_scatter_linear_plausibility"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Scatter diagrams and linear plausibility",
+      "proposed_name_zh": "散点图与线性关系判断",
+      "scope_zh": "由散点图判断变量间是否存在可信的线性关系。",
+      "existing_canonical_ids": [
+        "pc_629b0c54807299e247ddd77ea5076dd6"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_pmcc_interpretation",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_pmcc_interpretation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Product-moment correlation coefficient",
+      "proposed_name_zh": "积矩相关系数解释",
+      "scope_zh": "把积矩相关系数解释为线性模型拟合程度，特别解释接近 -1、0、1 的情形。",
+      "existing_canonical_ids": [
+        "pc_629b0c54807299e247ddd77ea5076dd6"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_least_squares_regression",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_least_squares_regression"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Least-squares linear regression",
+      "proposed_name_zh": "最小二乘线性回归",
+      "scope_zh": "使用最小二乘法求二元数据的线性回归方程。",
+      "existing_canonical_ids": [
+        "pc_ed18cde6c3d7e08e9e371061418a7424"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_h2_math_9758_2026_o_transform_to_linearity",
+      "requirement_ids": [
+        "req_sg_h2_math_9758_2026_o_transform_to_linearity"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Transforming data to linearity",
+      "proposed_name_zh": "变量变换实现线性化",
+      "scope_zh": "使用平方、倒数或对数变换把关系转化为线性形式。",
+      "existing_canonical_ids": [
+        "pc_1ea1ea6ee0e270c4aad9c97a380db664"
+      ],
+      "suggested_graph_id": "singapore_h2_mathematics",
+      "rationale_zh": "已有概念仅覆盖部分范围或捆绑大纲排除内容，需新增窄概念或复用更准确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

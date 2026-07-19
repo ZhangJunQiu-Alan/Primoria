@@ -1,0 +1,1232 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "gap_set_id": "cgs_cn_moe_senior_high_chemistry_2020_outcomes",
+  "framework_id": "cfw_cn_moe_senior_high_chemistry_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_chemistry_2020",
+  "subject": "Chemistry",
+  "source_ids": [
+    "src_cn_moe_senior_high_chemistry_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "逐成果反向查重并记录 partial 与 unmapped 缺口；实验和安全实践不进入概念缺口。"
+    }
+  ],
+  "candidates": [
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_1_1a_chemical_science_scope",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_1_1a_chemical_science_scope"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Scope of chemical science",
+      "proposed_name_zh": "化学科学的研究对象与特征",
+      "scope_zh": "说明化学在原子、分子层次研究并创造物质的主要特征及发展趋势。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.19（正文对应内容要求 1.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_1a_substance_classification_conversion",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_1a_substance_classification_conversion"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Substance classification and conversion",
+      "proposed_name_zh": "物质分类与类别转化",
+      "scope_zh": "依据组成和性质分类物质，并说明同类物质的共性及类别间转化条件。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_1b_element_valence_conversion",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_1b_element_valence_conversion"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Element valence-state conversion",
+      "proposed_name_zh": "元素价态与物质转化",
+      "scope_zh": "依据元素价态分析同一元素不同价态物质间的氧化还原转化。",
+      "existing_canonical_ids": [
+        "pc_042f315c4fd69794846195086e9611ec"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_1c_colloidal_dispersions",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_1c_colloidal_dispersions"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Colloidal dispersions",
+      "proposed_name_zh": "胶体与分散系",
+      "scope_zh": "区分溶液、胶体等分散系并解释胶体的典型特征。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.22（正文对应内容要求 2.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_2a_redox_electron_transfer",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_2a_redox_electron_transfer"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Redox and electron transfer",
+      "proposed_name_zh": "氧化还原与电子转移",
+      "scope_zh": "从化合价变化和电子转移判断氧化还原反应并说明其本质。",
+      "existing_canonical_ids": [
+        "pc_042f315c4fd69794846195086e9611ec",
+        "pc_4b8778a639899b2be00ad35d38df1699"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_2b_oxidising_reducing_agents",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_2b_oxidising_reducing_agents"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Oxidising and reducing agents",
+      "proposed_name_zh": "氧化剂与还原剂",
+      "scope_zh": "识别常见氧化剂和还原剂并判断反应中的氧化、还原过程。",
+      "existing_canonical_ids": [
+        "pc_042f315c4fd69794846195086e9611ec"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_3a_electrolyte_ionisation",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_3a_electrolyte_ionisation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Electrolyte ionisation",
+      "proposed_name_zh": "电解质与电离",
+      "scope_zh": "说明酸、碱、盐等电解质在水溶液或熔融状态中的电离并书写简单电离方程式。",
+      "existing_canonical_ids": [
+        "pc_e0e23323fa5580b7eaff3277d809f5b1",
+        "pc_f6b7711a788cbc8c837f448c591f0fa4"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_3b_ionic_reaction_conditions",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_3b_ionic_reaction_conditions"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Conditions for ionic reactions",
+      "proposed_name_zh": "离子反应及发生条件",
+      "scope_zh": "从溶液中离子变化判断离子反应发生条件并书写简单离子方程式。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_3c_common_ion_tests",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_3c_common_ion_tests"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Tests for common ions",
+      "proposed_name_zh": "常见离子的检验",
+      "scope_zh": "根据特征反应和干扰因素选择试剂并解释常见离子检验现象。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_4a_sodium_compounds",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_4a_sodium_compounds"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Sodium and its compounds",
+      "proposed_name_zh": "钠及其重要化合物",
+      "scope_zh": "说明钠及其重要化合物的主要性质、转化和生产生活应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_4b_iron_compounds",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_4b_iron_compounds"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Iron and its compounds",
+      "proposed_name_zh": "铁及其重要化合物",
+      "scope_zh": "说明铁及其重要化合物不同价态的性质、转化和应用。",
+      "existing_canonical_ids": [
+        "pc_db9856c274d202c3b699aa0300f025f9"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_5b_nitrogen_compounds",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_5b_nitrogen_compounds"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Nitrogen and its compounds",
+      "proposed_name_zh": "氮及其重要化合物",
+      "scope_zh": "说明氮及其重要化合物的性质、转化和工业应用。",
+      "existing_canonical_ids": [
+        "pc_c48d9a41a4f7fd5a7ddc4ca53ba4a7ac"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_5c_sulfur_compounds",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_5c_sulfur_compounds"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Sulfur and its compounds",
+      "proposed_name_zh": "硫及其重要化合物",
+      "scope_zh": "说明硫及其重要化合物的价态、性质、转化和工业应用。",
+      "existing_canonical_ids": [
+        "pc_c48d9a41a4f7fd5a7ddc4ca53ba4a7ac"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_6a_inorganic_conversion_pathways",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_6a_inorganic_conversion_pathways"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Inorganic conversion pathways",
+      "proposed_name_zh": "无机物性质与转化路径",
+      "scope_zh": "从物质类别和元素价态设计常见无机物的转化路径。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_2_6b_inorganic_stse_value",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_2_6b_inorganic_stse_value"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Value and impact of inorganic chemistry",
+      "proposed_name_zh": "无机物应用价值与环境影响",
+      "scope_zh": "评价常见无机物转化对资源利用、社会发展和环境的影响。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.23（正文对应内容要求 2.6），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_3_2c_bond_changes_reaction_energy",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_3_2c_bond_changes_reaction_energy"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Bond changes and reaction energy",
+      "proposed_name_zh": "化学键变化与反应能量",
+      "scope_zh": "用化学键断裂与形成解释物质变化和反应能量变化。",
+      "existing_canonical_ids": [
+        "pc_b35d6548b40342a4e7e95af4650c7349"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_3_4c_fuel_battery_evaluation",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_3_4c_fuel_battery_evaluation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Fuel and battery evaluation",
+      "proposed_name_zh": "燃料效率与化学电源价值",
+      "scope_zh": "从能量、资源和环境角度比较燃料与化学电源的使用价值。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.26（正文对应内容要求 3.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_4_1a_carbon_bonding_geometry",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_4_1a_carbon_bonding_geometry"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Carbon bonding and molecular geometry",
+      "proposed_name_zh": "碳原子成键与有机分子空间结构",
+      "scope_zh": "以甲烷、乙烯、乙炔和苯说明碳原子的成键特点和分子空间结构。",
+      "existing_canonical_ids": [
+        "pc_b7cf8d670e2f37db41a760a401141534",
+        "pc_76c78ee2b35eca2b943816eb56dbac2a"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_4_2c_intro_organic_reaction_types",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_4_2c_intro_organic_reaction_types"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Introductory organic reaction types",
+      "proposed_name_zh": "有机反应类型与转化初步",
+      "scope_zh": "识别氧化、加成、取代和聚合反应，并说明简单有机物间的转化。",
+      "existing_canonical_ids": [
+        "pc_9826358783352bf325f9299146a78a37",
+        "pc_cd9220ccd4a94d9511b50e51680a585c"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_4_3a_organic_synthesis_value",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_4_3a_organic_synthesis_value"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Value of organic synthesis",
+      "proposed_name_zh": "有机合成创造新物质",
+      "scope_zh": "说明有机合成在创造新物质和改善生活中的作用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_4_3b_intro_macromolecule_applications",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_4_3b_intro_macromolecule_applications"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Introductory macromolecule applications",
+      "proposed_name_zh": "高分子与生物大分子应用初步",
+      "scope_zh": "概述高分子、油脂、糖类和蛋白质在生产生活中的应用。",
+      "existing_canonical_ids": [
+        "pc_cd9220ccd4a94d9511b50e51680a585c",
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde",
+        "pc_ae3e202342d0768f17e63d904381b461"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.29（正文对应内容要求 4.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_1a_chemistry_sustainable_development",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_5_1a_chemistry_sustainable_development"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Chemistry and sustainable development",
+      "proposed_name_zh": "化学促进可持续发展",
+      "scope_zh": "从资源、能源、材料和环境案例说明化学对可持续发展的作用与限制。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_1b_green_chemistry_principles",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_5_1b_green_chemistry_principles"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Green chemistry principles",
+      "proposed_name_zh": "绿色化学基本思想",
+      "scope_zh": "从原料、过程、能耗、产物和废物角度解释绿色化学的基本取向。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.31（正文对应内容要求 5.1），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_2a_chemistry_materials",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_5_2a_chemistry_materials"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Chemistry in materials science",
+      "proposed_name_zh": "化学与材料科学",
+      "scope_zh": "说明化学在金属、无机非金属、高分子和复合材料开发中的作用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_2b_chemistry_health",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_5_2b_chemistry_health"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Chemistry and human health",
+      "proposed_name_zh": "化学与人类健康",
+      "scope_zh": "说明化学在药物、营养、检测和健康风险管理中的作用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.2），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_3a_fossil_resource_utilisation",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_5_3a_fossil_resource_utilisation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Integrated use of fossil resources",
+      "proposed_name_zh": "化石资源综合利用",
+      "scope_zh": "比较煤、石油和天然气的组成、加工转化与综合利用路径。",
+      "existing_canonical_ids": [
+        "pc_25af0b0d2ddbcd075e92f8f6d504dc1a",
+        "pc_ae2a8392fd9b93c33bc41d65e28fa8dc",
+        "pc_d67a8e73f965a59d3be0c55d71b80819"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_3b_energy_resource_systems",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_5_3b_energy_resource_systems"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Energy-resource systems",
+      "proposed_name_zh": "自然资源与能源综合利用",
+      "scope_zh": "从物质转化、能量效率和环境影响评价自然资源与能源利用方案。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.3），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_4a_pollutant_detection_treatment",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_5_4a_pollutant_detection_treatment"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Pollutant detection and treatment",
+      "proposed_name_zh": "污染物检测与治理",
+      "scope_zh": "根据污染物性质选择检测、分离、转化或无害化处理思路。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_4b_clean_production_circularity",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_5_4b_clean_production_circularity"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Clean production and circularity",
+      "proposed_name_zh": "清洁生产与循环利用",
+      "scope_zh": "说明清洁生产、废物资源化和循环利用中的化学原理。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.4），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_r_5_5a_chemical_rules_safe_use",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_r_5_5a_chemical_rules_safe_use"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Chemical application laws and rules",
+      "proposed_name_zh": "化学应用法律法规与规则意识",
+      "scope_zh": "说明遵守化学品应用、化工生产、环境保护、食品与药品安全等法律法规的重要性。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.32（正文对应内容要求 5.5），必修"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_1_1a_energy_forms_conservation",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_1_1a_energy_forms_conservation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Energy forms and conservation",
+      "proposed_name_zh": "化学能转化与能量守恒",
+      "scope_zh": "说明化学能与热能、电能等形式相互转化且遵循能量守恒。",
+      "existing_canonical_ids": [
+        "pc_e69d28c59b3a7c85a8366e77b73f49d0",
+        "pc_ddaa179ab823ea748d4ad05e53ee9187"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_1_1b_internal_energy_state",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_1_1b_internal_energy_state"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Internal energy and state variables",
+      "proposed_name_zh": "内能与体系状态",
+      "scope_zh": "说明内能与体系温度、压强、组成和聚集状态的关系。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_1_3c_electrochemical_corrosion",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_1_3c_electrochemical_corrosion"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Electrochemical corrosion and protection",
+      "proposed_name_zh": "金属电化学腐蚀与防护",
+      "scope_zh": "从电化学过程解释金属腐蚀，并比较常见防腐措施。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.36（正文对应内容要求 1.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_2_1c_reaction_quotient_direction",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_2_1c_reaction_quotient_direction"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Reaction quotient and direction",
+      "proposed_name_zh": "浓度商与反应方向",
+      "scope_zh": "比较浓度商与平衡常数，判断是否平衡及净反应方向。",
+      "existing_canonical_ids": [
+        "pc_4386477346f4fa3dfe6f31ec2435e3b2"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.38（正文对应内容要求 2.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_2_2c_reaction_path_activation",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_2_2c_reaction_path_activation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Reaction pathways and activation energy",
+      "proposed_name_zh": "反应历程与活化能",
+      "scope_zh": "说明基元反应、反应历程和活化能如何约束宏观反应速率。",
+      "existing_canonical_ids": [
+        "pc_2a4571ab0da3a12f57b0c311f63f1bee",
+        "pc_cb40576691a93cdc979f318c9e746398"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_2_3a_industrial_condition_optimisation",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_2_3a_industrial_condition_optimisation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Industrial condition optimisation",
+      "proposed_name_zh": "化工反应条件综合优化",
+      "scope_zh": "从速率、限度、能耗、安全和成本综合比较生产条件。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.39（正文对应内容要求 2.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_3_1a_aqueous_electrolyte_systems",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_3_1a_aqueous_electrolyte_systems"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Aqueous electrolyte systems",
+      "proposed_name_zh": "电解质水溶液体系",
+      "scope_zh": "从电离、离子反应和化学平衡统一分析电解质水溶液的组成、性质和反应。",
+      "existing_canonical_ids": [
+        "pc_e0e23323fa5580b7eaff3277d809f5b1",
+        "pc_f6b7711a788cbc8c837f448c591f0fa4"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.1），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_3_2b_water_ionisation_ph",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_3_2b_water_ionisation_ph"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Water ionisation, ionic product and pH",
+      "proposed_name_zh": "水的电离、离子积与 pH",
+      "scope_zh": "使用水的离子积和 pH 表示溶液酸碱性并进行简单计算。",
+      "existing_canonical_ids": [
+        "pc_77fa4fcddfbfac708e8026c8cc77b391"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.41（正文对应内容要求 3.2），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_3_3a_salt_hydrolysis",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_3_3a_salt_hydrolysis"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Salt hydrolysis",
+      "proposed_name_zh": "盐类水解平衡",
+      "scope_zh": "从离子与水反应解释盐溶液酸碱性及影响水解的主要因素。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.3），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_se_3_5a_aqueous_equilibrium_applications",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_se_3_5a_aqueous_equilibrium_applications"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Applications of aqueous equilibria",
+      "proposed_name_zh": "水溶液离子平衡应用",
+      "scope_zh": "综合电离、水解和沉淀平衡解决检测、分离和物质转化问题。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.42（正文对应内容要求 3.5），选择性必修·化学反应原理"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_1_1b_quantised_levels_transitions",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_1_1b_quantised_levels_transitions"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Quantised energy levels and transitions",
+      "proposed_name_zh": "电子能级、激发与跃迁",
+      "scope_zh": "说明电子能量状态量子化以及能级间激发和跃迁。",
+      "existing_canonical_ids": [
+        "pc_4ee1addaa1bb88db1bc738c8909840bb"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.44（正文对应内容要求 1.1），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_2_3b_structure_measurement",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_2_3b_structure_measurement"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Molecular-structure measurement",
+      "proposed_name_zh": "分子结构测定方法",
+      "scope_zh": "说明波谱和晶体 X 射线衍射信息如何支持分子结构模型。",
+      "existing_canonical_ids": [
+        "pc_be8194ec0ada9714cc5a11129041379c",
+        "pc_726c4810fd4590e4416c4c336a4e4ef2"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_2_3c_molecular_polarity_chirality",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_2_3c_molecular_polarity_chirality"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Molecular polarity and chirality",
+      "proposed_name_zh": "分子极性与手性",
+      "scope_zh": "由键极性和空间结构判断分子极性，并说明手性对性质的影响。",
+      "existing_canonical_ids": [
+        "pc_eed2c090eb2027bca1d0484dc93fee0f",
+        "pc_e3ad1e8ae27f757ccf5d59c333f04d7a"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_2_4b_transitional_mixed_crystals",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_2_4b_transitional_mixed_crystals"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Transitional and mixed crystals",
+      "proposed_name_zh": "过渡晶体与混合型晶体",
+      "scope_zh": "解释典型晶体模型之间存在连续过渡和混合型结构。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_2_4c_aggregation_state_materials",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_2_4c_aggregation_state_materials"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Aggregation states and materials",
+      "proposed_name_zh": "聚集状态、微粒作用与材料性质",
+      "scope_zh": "从微粒种类、作用和聚集程度解释聚集状态与材料性质。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.48（正文对应内容要求 2.4），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_3_2a_spectroscopy_xrd_methods",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_3_2a_spectroscopy_xrd_methods"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Spectroscopy and X-ray diffraction",
+      "proposed_name_zh": "光谱与晶体 X 射线衍射",
+      "scope_zh": "区分原子光谱、分子光谱和晶体 X 射线衍射所提供的结构信息。",
+      "existing_canonical_ids": [
+        "pc_be8194ec0ada9714cc5a11129041379c",
+        "pc_726c4810fd4590e4416c4c336a4e4ef2"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.2），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_3_3a_structure_guided_material_design",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_3_3a_structure_guided_material_design"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Structure-guided material design",
+      "proposed_name_zh": "结构—性质与材料设计",
+      "scope_zh": "利用结构—性质关系解释材料优化和预期性质新物质设计。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_ss_3_3b_structure_methods_life_science",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_ss_3_3b_structure_methods_life_science"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Structure methods in life science",
+      "proposed_name_zh": "结构理论与生命科学",
+      "scope_zh": "说明结构理论和分析测试技术对生命科学问题研究的支持。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.51（正文对应内容要求 3.3），选择性必修·物质结构与性质"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_1_1a_organic_connectivity_geometry",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_1_1a_organic_connectivity_geometry"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Organic connectivity, bonding and geometry",
+      "proposed_name_zh": "有机分子连接、成键与空间排布",
+      "scope_zh": "说明原子连接顺序、成键方式和空间排布共同决定有机分子结构。",
+      "existing_canonical_ids": [
+        "pc_b7cf8d670e2f37db41a760a401141534",
+        "pc_76c78ee2b35eca2b943816eb56dbac2a"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.1），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_1_2b_functional_group_properties_conversion",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_1_2b_functional_group_properties_conversion"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Functional-group properties and conversion",
+      "proposed_name_zh": "官能团性质、相互影响与转化",
+      "scope_zh": "由官能团和基团间相互影响预测特征性质与官能团转化。",
+      "existing_canonical_ids": [
+        "pc_b7cf8d670e2f37db41a760a401141534",
+        "pc_9826358783352bf325f9299146a78a37"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_1_2c_functional_group_tests",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_1_2c_functional_group_tests"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Tests for functional groups",
+      "proposed_name_zh": "常见官能团检验",
+      "scope_zh": "根据特征反应和干扰选择常见官能团检验并解释现象。",
+      "existing_canonical_ids": [
+        "pc_0c458f45bd014438bcb506f21ad5e902"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.53（正文对应内容要求 1.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_2_3b_organic_synthesis_routes",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_2_3b_organic_synthesis_routes"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Organic synthesis routes",
+      "proposed_name_zh": "有机合成路线设计",
+      "scope_zh": "围绕碳骨架构建和官能团转化设计、比较简单有机合成路线。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.3），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_2_4a_organic_safety_green_synthesis",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_2_4a_organic_safety_green_synthesis"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Organic safety and green synthesis",
+      "proposed_name_zh": "有机物安全与绿色合成",
+      "scope_zh": "评价有机物对环境健康的影响，并用绿色化学思想比较合成方案。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.56（正文对应内容要求 2.4），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_3_1a_polymer_monomer_repeat_unit",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_3_1a_polymer_monomer_repeat_unit"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Polymer, monomer and repeat unit",
+      "proposed_name_zh": "聚合物、单体与链节",
+      "scope_zh": "由聚合物结构识别单体、链节和聚合方式。",
+      "existing_canonical_ids": [
+        "pc_cd9220ccd4a94d9511b50e51680a585c",
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.58（正文对应内容要求 3.1），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_3_2a_carbohydrates",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_3_2a_carbohydrates"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Carbohydrates",
+      "proposed_name_zh": "糖类、葡萄糖、淀粉与纤维素",
+      "scope_zh": "说明葡萄糖、淀粉和纤维素的结构关系、主要性质和应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_3_2c_dna_rna",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_3_2c_dna_rna"
+      ],
+      "action": "add_concept",
+      "proposed_name": "DNA and RNA",
+      "proposed_name_zh": "DNA、RNA 结构与功能",
+      "scope_zh": "概述 DNA、RNA 的基本结构特点、生物功能及人工合成意义。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "全库未找到语义等价且粒度相同的现有概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.2），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_chem_2020_o_so_3_3a_synthetic_polymers_materials",
+      "requirement_ids": [
+        "req_cn_sh_chem_2020_o_so_3_3a_synthetic_polymers_materials"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Synthetic polymers and advanced materials",
+      "proposed_name_zh": "合成高分子与新型材料",
+      "scope_zh": "比较塑料、合成橡胶、合成纤维的结构特点和新型高分子材料应用。",
+      "existing_canonical_ids": [
+        "pc_cd9220ccd4a94d9511b50e51680a585c",
+        "pc_4fa4bd24c7e8cdf839921a3fb5f37bde"
+      ],
+      "suggested_graph_id": "senior_secondary_chemistry",
+      "rationale_zh": "现有概念只覆盖部分范围或边界过宽，需要新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_chemistry_2020",
+          "locator": "化学标准PDF p.59（正文对应内容要求 3.3），选择性必修·有机化学基础"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

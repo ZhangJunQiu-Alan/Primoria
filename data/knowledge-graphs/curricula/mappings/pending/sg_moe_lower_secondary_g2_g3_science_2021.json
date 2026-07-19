@@ -1,0 +1,2909 @@
+{
+  "schema_version": "3.0.0",
+  "content_version": "0.4.0",
+  "mapping_set_id": "cms_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
+  "framework_id": "cfw_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
+  "curriculum_id": "cur_sg_moe_lower_secondary_g2_g3_science_2021",
+  "subject": "Science",
+  "mapping_scope": "outcome_coverage",
+  "source_ids": [
+    "src_sg_moe_lower_secondary_g2_g3_science_2021"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-18",
+      "summary_zh": "建立主题级保守映射。"
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-07-18",
+      "summary_zh": "撤销未经逐条成果证明的完整覆盖声明。"
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "替换为 159 条成果级映射，严格区分知识概念、科学实践和价值伦理要求。"
+    },
+    {
+      "version": "0.4.0",
+      "date": "2026-07-19",
+      "summary_zh": "将 62 项知识缺口解析为 32 个低年级科学概念；80 项 Core Ideas 均达到 full，79 项实践和价值要求继续保持 excluded。"
+    }
+  ],
+  "mappings": [
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_science_beyond_laboratory",
+      "requirement_id": "req_sg_lss_science_2021_o_se_science_beyond_laboratory",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_curiosity_natural_phenomena",
+      "requirement_id": "req_sg_lss_science_2021_o_se_curiosity_natural_phenomena",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_science_human_endeavour",
+      "requirement_id": "req_sg_lss_science_2021_o_se_science_human_endeavour",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_evidence_types_senses_instruments",
+      "requirement_id": "req_sg_lss_science_2021_o_se_evidence_types_senses_instruments",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_evidence_reasoning_knowledge_building",
+      "requirement_id": "req_sg_lss_science_2021_o_se_evidence_reasoning_knowledge_building",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_multiple_evidence_interpretations",
+      "requirement_id": "req_sg_lss_science_2021_o_se_multiple_evidence_interpretations",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_scientific_inquiry_cycle",
+      "requirement_id": "req_sg_lss_science_2021_o_se_scientific_inquiry_cycle",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_measurement_accuracy",
+      "requirement_id": "req_sg_lss_science_2021_o_se_measurement_accuracy",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_measurement_precision",
+      "requirement_id": "req_sg_lss_science_2021_o_se_measurement_precision",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_zero_error",
+      "requirement_id": "req_sg_lss_science_2021_o_se_zero_error",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_parallax_error",
+      "requirement_id": "req_sg_lss_science_2021_o_se_parallax_error",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_unpredictable_consistent_errors",
+      "requirement_id": "req_sg_lss_science_2021_o_se_unpredictable_consistent_errors",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_inquiry_dispositions",
+      "requirement_id": "req_sg_lss_science_2021_o_se_inquiry_dispositions",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_investigation_safety",
+      "requirement_id": "req_sg_lss_science_2021_o_se_investigation_safety",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_technology_benefits_harms",
+      "requirement_id": "req_sg_lss_science_2021_o_se_technology_benefits_harms",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_science_social_ethics",
+      "requirement_id": "req_sg_lss_science_2021_o_se_science_social_ethics",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_science_technology_limitations",
+      "requirement_id": "req_sg_lss_science_2021_o_se_science_technology_limitations",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_se_responsible_science_technology",
+      "requirement_id": "req_sg_lss_science_2021_o_se_responsible_science_technology",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_observable_measurable_physical_properties",
+      "requirement_id": "req_sg_lss_science_2021_o_2_observable_measurable_physical_properties",
+      "canonical_ids": [
+        "pc_acb504f185f379ee5f759c6278b4de41"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_acb504f185f379ee5f759c6278b4de41 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_mass_volume_density_relation",
+      "requirement_id": "req_sg_lss_science_2021_o_2_mass_volume_density_relation",
+      "canonical_ids": [
+        "pc_acb504f185f379ee5f759c6278b4de41"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_acb504f185f379ee5f759c6278b4de41 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_classify_everyday_objects",
+      "requirement_id": "req_sg_lss_science_2021_o_2_classify_everyday_objects",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_evaluate_material_use",
+      "requirement_id": "req_sg_lss_science_2021_o_2_evaluate_material_use",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_communicate_classification",
+      "requirement_id": "req_sg_lss_science_2021_o_2_communicate_classification",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_estimate_length_mass_volume",
+      "requirement_id": "req_sg_lss_science_2021_o_2_estimate_length_mass_volume",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_measure_length_mass_volume",
+      "requirement_id": "req_sg_lss_science_2021_o_2_measure_length_mass_volume",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_volume_displacement",
+      "requirement_id": "req_sg_lss_science_2021_o_2_volume_displacement",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_density_sink_float_prediction",
+      "requirement_id": "req_sg_lss_science_2021_o_2_density_sink_float_prediction",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_density_calculation_units",
+      "requirement_id": "req_sg_lss_science_2021_o_2_density_calculation_units",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_sustainable_material_choices",
+      "requirement_id": "req_sg_lss_science_2021_o_2_sustainable_material_choices",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_2_alternative_materials_environment",
+      "requirement_id": "req_sg_lss_science_2021_o_2_alternative_materials_environment",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_elements_building_blocks",
+      "requirement_id": "req_sg_lss_science_2021_o_3_elements_building_blocks",
+      "canonical_ids": [
+        "pc_56d4acd737ea166a07f3b71fd00853d8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_56d4acd737ea166a07f3b71fd00853d8 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_element_types_periodic_table",
+      "requirement_id": "req_sg_lss_science_2021_o_3_element_types_periodic_table",
+      "canonical_ids": [
+        "pc_56d4acd737ea166a07f3b71fd00853d8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_56d4acd737ea166a07f3b71fd00853d8 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_compound_definition",
+      "requirement_id": "req_sg_lss_science_2021_o_3_compound_definition",
+      "canonical_ids": [
+        "pc_56d4acd737ea166a07f3b71fd00853d8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_56d4acd737ea166a07f3b71fd00853d8 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_compound_properties",
+      "requirement_id": "req_sg_lss_science_2021_o_3_compound_properties",
+      "canonical_ids": [
+        "pc_56d4acd737ea166a07f3b71fd00853d8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_56d4acd737ea166a07f3b71fd00853d8 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_mixture_definition",
+      "requirement_id": "req_sg_lss_science_2021_o_3_mixture_definition",
+      "canonical_ids": [
+        "pc_752fa3f5d1eac58c509e0bdc8d8c6fc4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_752fa3f5d1eac58c509e0bdc8d8c6fc4 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_mixture_constituent_properties",
+      "requirement_id": "req_sg_lss_science_2021_o_3_mixture_constituent_properties",
+      "canonical_ids": [
+        "pc_752fa3f5d1eac58c509e0bdc8d8c6fc4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_752fa3f5d1eac58c509e0bdc8d8c6fc4 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_solute_solvent_solution",
+      "requirement_id": "req_sg_lss_science_2021_o_3_solute_solvent_solution",
+      "canonical_ids": [
+        "pc_752fa3f5d1eac58c509e0bdc8d8c6fc4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_752fa3f5d1eac58c509e0bdc8d8c6fc4 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_solutions_suspensions_mixtures",
+      "requirement_id": "req_sg_lss_science_2021_o_3_solutions_suspensions_mixtures",
+      "canonical_ids": [
+        "pc_752fa3f5d1eac58c509e0bdc8d8c6fc4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_752fa3f5d1eac58c509e0bdc8d8c6fc4 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_distinguish_element_compound_mixture",
+      "requirement_id": "req_sg_lss_science_2021_o_3_distinguish_element_compound_mixture",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_classify_by_chemical_composition",
+      "requirement_id": "req_sg_lss_science_2021_o_3_classify_by_chemical_composition",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_dissolving_rate_solubility_factors",
+      "requirement_id": "req_sg_lss_science_2021_o_3_dissolving_rate_solubility_factors",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_waste_classification_recycling",
+      "requirement_id": "req_sg_lss_science_2021_o_3_waste_classification_recycling",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_3_composition_benefits_harms",
+      "requirement_id": "req_sg_lss_science_2021_o_3_composition_benefits_harms",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_4_separation_by_properties",
+      "requirement_id": "req_sg_lss_science_2021_o_4_separation_by_properties",
+      "canonical_ids": [
+        "pc_9bf9b032f3146edd9d8a91105fed0b4c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_9bf9b032f3146edd9d8a91105fed0b4c 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_4_separation_applications",
+      "requirement_id": "req_sg_lss_science_2021_o_4_separation_applications",
+      "canonical_ids": [
+        "pc_0c81afd79095d9235cc8411f42db3cae"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_0c81afd79095d9235cc8411f42db3cae 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_4_investigate_mixture_separation",
+      "requirement_id": "req_sg_lss_science_2021_o_4_investigate_mixture_separation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_4_water_precious_conservation",
+      "requirement_id": "req_sg_lss_science_2021_o_4_water_precious_conservation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_4_singapore_sustainable_water",
+      "requirement_id": "req_sg_lss_science_2021_o_4_singapore_sustainable_water",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_ray_model_path",
+      "requirement_id": "req_sg_lss_science_2021_o_5_ray_model_path",
+      "canonical_ids": [
+        "pc_08700b1c7475321c42e828e4a0bb64c1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_08700b1c7475321c42e828e4a0bb64c1 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_reflecting_surfaces_effects_uses",
+      "requirement_id": "req_sg_lss_science_2021_o_5_reflecting_surfaces_effects_uses",
+      "canonical_ids": [
+        "pc_08700b1c7475321c42e828e4a0bb64c1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_08700b1c7475321c42e828e4a0bb64c1 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_smooth_rough_reflection",
+      "requirement_id": "req_sg_lss_science_2021_o_5_smooth_rough_reflection",
+      "canonical_ids": [
+        "pc_08700b1c7475321c42e828e4a0bb64c1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_08700b1c7475321c42e828e4a0bb64c1 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_refraction_speed_media",
+      "requirement_id": "req_sg_lss_science_2021_o_5_refraction_speed_media",
+      "canonical_ids": [
+        "pc_248f955c8b0ba5448b7cdbc5f83f8924"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_248f955c8b0ba5448b7cdbc5f83f8924 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_refraction_effects",
+      "requirement_id": "req_sg_lss_science_2021_o_5_refraction_effects",
+      "canonical_ids": [
+        "pc_248f955c8b0ba5448b7cdbc5f83f8924"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_248f955c8b0ba5448b7cdbc5f83f8924 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_white_light_dispersion",
+      "requirement_id": "req_sg_lss_science_2021_o_5_white_light_dispersion",
+      "canonical_ids": [
+        "pc_248f955c8b0ba5448b7cdbc5f83f8924"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_248f955c8b0ba5448b7cdbc5f83f8924 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_plane_mirror_image_investigation",
+      "requirement_id": "req_sg_lss_science_2021_o_5_plane_mirror_image_investigation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_law_of_reflection_investigation",
+      "requirement_id": "req_sg_lss_science_2021_o_5_law_of_reflection_investigation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_em_radiation_benefits_harms",
+      "requirement_id": "req_sg_lss_science_2021_o_5_em_radiation_benefits_harms",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_5_technology_light_impact",
+      "requirement_id": "req_sg_lss_science_2021_o_5_technology_light_impact",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_6_typical_cell_part_functions",
+      "requirement_id": "req_sg_lss_science_2021_o_6_typical_cell_part_functions",
+      "canonical_ids": [
+        "pc_a82d89e1adb88a35ab909417af6ab3ae"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_a82d89e1adb88a35ab909417af6ab3ae 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_6_plant_animal_cell_models",
+      "requirement_id": "req_sg_lss_science_2021_o_6_plant_animal_cell_models",
+      "canonical_ids": [
+        "pc_64852ab0501ee4d7b32d11655eb6b808"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "细胞结构统一性与多样性概念直接覆盖典型模型与真实细胞差异。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_6_cells_tissues_organs_systems",
+      "requirement_id": "req_sg_lss_science_2021_o_6_cells_tissues_organs_systems",
+      "canonical_ids": [
+        "pc_7212a518c9c8036f2265d4acf5252e3a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_7212a518c9c8036f2265d4acf5252e3a 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_6_cellular_division_of_labour",
+      "requirement_id": "req_sg_lss_science_2021_o_6_cellular_division_of_labour",
+      "canonical_ids": [
+        "pc_7212a518c9c8036f2265d4acf5252e3a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_7212a518c9c8036f2265d4acf5252e3a 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_6_microscope_cell_identification",
+      "requirement_id": "req_sg_lss_science_2021_o_6_microscope_cell_identification",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_6_infer_plant_or_animal_cell",
+      "requirement_id": "req_sg_lss_science_2021_o_6_infer_plant_or_animal_cell",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_6_microscope_technology_knowledge",
+      "requirement_id": "req_sg_lss_science_2021_o_6_microscope_technology_knowledge",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_7_particulate_model_random_motion",
+      "requirement_id": "req_sg_lss_science_2021_o_7_particulate_model_random_motion",
+      "canonical_ids": [
+        "pc_b72b1512a68ac9780b8d10c2ba4770ca"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_b72b1512a68ac9780b8d10c2ba4770ca 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_7_particle_arrangement_states",
+      "requirement_id": "req_sg_lss_science_2021_o_7_particle_arrangement_states",
+      "canonical_ids": [
+        "pc_b72b1512a68ac9780b8d10c2ba4770ca"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_b72b1512a68ac9780b8d10c2ba4770ca 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_7_diffusion_concentration_gradient",
+      "requirement_id": "req_sg_lss_science_2021_o_7_diffusion_concentration_gradient",
+      "canonical_ids": [
+        "pc_cb05fe82422660602c2d01c5c94d17df",
+        "pc_c2e6fec2c47cd86ee9b8726b908a7a8b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "一般扩散与生物被动运输两个概念共同直接覆盖定义和浓度梯度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_7_thermal_expansion_mass_conservation_model",
+      "requirement_id": "req_sg_lss_science_2021_o_7_thermal_expansion_mass_conservation_model",
+      "canonical_ids": [
+        "pc_86ed3ab2f88330914fa596aee84f4a4c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_86ed3ab2f88330914fa596aee84f4a4c 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_7_state_changes_particle_model",
+      "requirement_id": "req_sg_lss_science_2021_o_7_state_changes_particle_model",
+      "canonical_ids": [
+        "pc_86ed3ab2f88330914fa596aee84f4a4c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_86ed3ab2f88330914fa596aee84f4a4c 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_7_model_creativity_revision",
+      "requirement_id": "req_sg_lss_science_2021_o_7_model_creativity_revision",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_8_neutral_atom_structure",
+      "requirement_id": "req_sg_lss_science_2021_o_8_neutral_atom_structure",
+      "canonical_ids": [
+        "pc_d3750ab7dae24f534aee9f39f91e5f71",
+        "pc_e180a73d3a69ee874db1ed7939a2c604"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "亚原子粒子与核式结构模型组合直接覆盖电荷、组成和核外电子。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_8_atomic_mass_nucleus",
+      "requirement_id": "req_sg_lss_science_2021_o_8_atomic_mass_nucleus",
+      "canonical_ids": [
+        "pc_160785ca7ae85410ff7cc39aece277f9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_160785ca7ae85410ff7cc39aece277f9 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_8_element_unique_proton_number",
+      "requirement_id": "req_sg_lss_science_2021_o_8_element_unique_proton_number",
+      "canonical_ids": [
+        "pc_160785ca7ae85410ff7cc39aece277f9"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_160785ca7ae85410ff7cc39aece277f9 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_8_molecule_definition",
+      "requirement_id": "req_sg_lss_science_2021_o_8_molecule_definition",
+      "canonical_ids": [
+        "pc_74c4b2b549494758e1ccc2908ac95a75"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_74c4b2b549494758e1ccc2908ac95a75 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_8_read_atoms_from_symbols_formulae",
+      "requirement_id": "req_sg_lss_science_2021_o_8_read_atoms_from_symbols_formulae",
+      "canonical_ids": [
+        "pc_74c4b2b549494758e1ccc2908ac95a75"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_74c4b2b549494758e1ccc2908ac95a75 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_8_compare_atom_everyday_size",
+      "requirement_id": "req_sg_lss_science_2021_o_8_compare_atom_everyday_size",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_8_compare_atoms_molecules",
+      "requirement_id": "req_sg_lss_science_2021_o_8_compare_atoms_molecules",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_8_atomic_models_revision",
+      "requirement_id": "req_sg_lss_science_2021_o_8_atomic_models_revision",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_8_atomic_technology_ethics",
+      "requirement_id": "req_sg_lss_science_2021_o_8_atomic_technology_ethics",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_contact_noncontact_forces",
+      "requirement_id": "req_sg_lss_science_2021_o_9_contact_noncontact_forces",
+      "canonical_ids": [
+        "pc_7a4b1f0c0833180c2f630c367c02cc0a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有力的类型概念直接覆盖接触力和非接触力分类。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_force_effects_energy_transfer",
+      "requirement_id": "req_sg_lss_science_2021_o_9_force_effects_energy_transfer",
+      "canonical_ids": [
+        "pc_67a0afb131c38475a8e4c21481aa72e7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_67a0afb131c38475a8e4c21481aa72e7 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_pressure_everyday_phenomena",
+      "requirement_id": "req_sg_lss_science_2021_o_9_pressure_everyday_phenomena",
+      "canonical_ids": [
+        "pc_402d7a7201336b8eaacbd59f78132ca0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_402d7a7201336b8eaacbd59f78132ca0 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_joule_unit_work_energy",
+      "requirement_id": "req_sg_lss_science_2021_o_9_joule_unit_work_energy",
+      "canonical_ids": [
+        "pc_a52c805e6ece9b48168340e9eb886aaf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有做功概念直接包含焦耳单位和能量转移。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_work_as_energy_transfer",
+      "requirement_id": "req_sg_lss_science_2021_o_9_work_as_energy_transfer",
+      "canonical_ids": [
+        "pc_a52c805e6ece9b48168340e9eb886aaf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有做功概念直接覆盖位移、力和能量转移。 本成果对 G2 可选，不能作为所有 G2 学习者的强制掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_energy_conservation_transfer_conversion",
+      "requirement_id": "req_sg_lss_science_2021_o_9_energy_conservation_transfer_conversion",
+      "canonical_ids": [
+        "pc_16e60ad8536c19468a26bfce26abd36b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有能量守恒概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.42, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_measure_force_newton",
+      "requirement_id": "req_sg_lss_science_2021_o_9_measure_force_newton",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_compare_mass_weight",
+      "requirement_id": "req_sg_lss_science_2021_o_9_compare_mass_weight",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_investigate_pressure_formula",
+      "requirement_id": "req_sg_lss_science_2021_o_9_investigate_pressure_formula",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_infer_energy_conversion",
+      "requirement_id": "req_sg_lss_science_2021_o_9_infer_energy_conversion",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_natural_force_hazards_curiosity",
+      "requirement_id": "req_sg_lss_science_2021_o_9_natural_force_hazards_curiosity",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_9_energy_sources_environment",
+      "requirement_id": "req_sg_lss_science_2021_o_9_energy_sources_environment",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_kelvin_temperature_unit",
+      "requirement_id": "req_sg_lss_science_2021_o_10_kelvin_temperature_unit",
+      "canonical_ids": [
+        "pc_c625010f4166e3a97ef4ebbd075529de"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有温度与热平衡概念直接包含开尔文温标。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_thermal_expansion_applications",
+      "requirement_id": "req_sg_lss_science_2021_o_10_thermal_expansion_applications",
+      "canonical_ids": [
+        "pc_7113fbc5a4ef488a96a1b081372a7a0f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_7113fbc5a4ef488a96a1b081372a7a0f 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_heat_transfer_modes",
+      "requirement_id": "req_sg_lss_science_2021_o_10_heat_transfer_modes",
+      "canonical_ids": [
+        "pc_5f2f865e928b7d9853b5ff0f3a36ac9d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_5f2f865e928b7d9853b5ff0f3a36ac9d 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_radiation_rate_surface_temperature",
+      "requirement_id": "req_sg_lss_science_2021_o_10_radiation_rate_surface_temperature",
+      "canonical_ids": [
+        "pc_d8fe80b5a0d79f5b1bf058ab5dae2c02"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_d8fe80b5a0d79f5b1bf058ab5dae2c02 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_conduction_convection_applications",
+      "requirement_id": "req_sg_lss_science_2021_o_10_conduction_convection_applications",
+      "canonical_ids": [
+        "pc_5f2f865e928b7d9853b5ff0f3a36ac9d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_5f2f865e928b7d9853b5ff0f3a36ac9d 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_radiation_applications",
+      "requirement_id": "req_sg_lss_science_2021_o_10_radiation_applications",
+      "canonical_ids": [
+        "pc_5f2f865e928b7d9853b5ff0f3a36ac9d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_5f2f865e928b7d9853b5ff0f3a36ac9d 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_infer_thermal_expansion",
+      "requirement_id": "req_sg_lss_science_2021_o_10_infer_thermal_expansion",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_infer_expansion_density_change",
+      "requirement_id": "req_sg_lss_science_2021_o_10_infer_expansion_density_change",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_compare_heat_transfer_rates",
+      "requirement_id": "req_sg_lss_science_2021_o_10_compare_heat_transfer_rates",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_10_climate_change_causes",
+      "requirement_id": "req_sg_lss_science_2021_o_10_climate_change_causes",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_11_chemical_change_new_substances",
+      "requirement_id": "req_sg_lss_science_2021_o_11_chemical_change_new_substances",
+      "canonical_ids": [
+        "pc_17badbba5f1a657337be2ac1a9e3ca1f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_17badbba5f1a657337be2ac1a9e3ca1f 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_11_word_equations",
+      "requirement_id": "req_sg_lss_science_2021_o_11_word_equations",
+      "canonical_ids": [
+        "pc_23422169f21190dc7b0d1a12280f73d1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_23422169f21190dc7b0d1a12280f73d1 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_11_reaction_atomic_rearrangement",
+      "requirement_id": "req_sg_lss_science_2021_o_11_reaction_atomic_rearrangement",
+      "canonical_ids": [
+        "pc_17badbba5f1a657337be2ac1a9e3ca1f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_17badbba5f1a657337be2ac1a9e3ca1f 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_11_reaction_mass_conservation",
+      "requirement_id": "req_sg_lss_science_2021_o_11_reaction_mass_conservation",
+      "canonical_ids": [
+        "pc_17badbba5f1a657337be2ac1a9e3ca1f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_17badbba5f1a657337be2ac1a9e3ca1f 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_11_types_of_chemical_change",
+      "requirement_id": "req_sg_lss_science_2021_o_11_types_of_chemical_change",
+      "canonical_ids": [
+        "pc_23422169f21190dc7b0d1a12280f73d1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_23422169f21190dc7b0d1a12280f73d1 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_11_investigate_acid_reactions",
+      "requirement_id": "req_sg_lss_science_2021_o_11_investigate_acid_reactions",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_11_investigate_indicators",
+      "requirement_id": "req_sg_lss_science_2021_o_11_investigate_indicators",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_11_investigate_chemical_change_conditions",
+      "requirement_id": "req_sg_lss_science_2021_o_11_investigate_chemical_change_conditions",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_11_chemical_reactions_benefit_harm",
+      "requirement_id": "req_sg_lss_science_2021_o_11_chemical_reactions_benefit_harm",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_environmental_conservation_importance",
+      "requirement_id": "req_sg_lss_science_2021_o_12_environmental_conservation_importance",
+      "canonical_ids": [
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有保护概念直接覆盖保护价值、威胁和行动。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_abiotic_factors_survival",
+      "requirement_id": "req_sg_lss_science_2021_o_12_abiotic_factors_survival",
+      "canonical_ids": [
+        "pc_d706f88202e583528d4f1f83d2e85c5f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_d706f88202e583528d4f1f83d2e85c5f 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_adaptation_environment_survival",
+      "requirement_id": "req_sg_lss_science_2021_o_12_adaptation_environment_survival",
+      "canonical_ids": [
+        "pc_d706f88202e583528d4f1f83d2e85c5f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_d706f88202e583528d4f1f83d2e85c5f 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_ecosystem_community_environment",
+      "requirement_id": "req_sg_lss_science_2021_o_12_ecosystem_community_environment",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有生态系统与生态位概念直接覆盖定义。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_community_interrelationships",
+      "requirement_id": "req_sg_lss_science_2021_o_12_community_interrelationships",
+      "canonical_ids": [
+        "pc_d706f88202e583528d4f1f83d2e85c5f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_d706f88202e583528d4f1f83d2e85c5f 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_food_web_energy_flow",
+      "requirement_id": "req_sg_lss_science_2021_o_12_food_web_energy_flow",
+      "canonical_ids": [
+        "pc_70da4d7e60b713056853543f2b486297",
+        "pc_a26230828b27cf03028e959c4472f5f1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "食物链食物网和能量流动概念组合直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_decomposer_nutrient_recycling",
+      "requirement_id": "req_sg_lss_science_2021_o_12_decomposer_nutrient_recycling",
+      "canonical_ids": [
+        "pc_f3b207423938d8fbb250235729a2670f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_f3b207423938d8fbb250235729a2670f 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_measure_environmental_factors",
+      "requirement_id": "req_sg_lss_science_2021_o_12_measure_environmental_factors",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_human_technology_environment_impact",
+      "requirement_id": "req_sg_lss_science_2021_o_12_human_technology_environment_impact",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_12_cultural_sustainable_living",
+      "requirement_id": "req_sg_lss_science_2021_o_12_cultural_sustainable_living",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_current_voltage_resistance_units",
+      "requirement_id": "req_sg_lss_science_2021_o_13_current_voltage_resistance_units",
+      "canonical_ids": [
+        "pc_62a6d88e535c20e54fc65c369645f13d",
+        "pc_2c6fac377de551f06f129beb0bd0767f",
+        "pc_6a2c33585e2f59dc88ebd095503f1547"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "三个现有 canonical 概念直接覆盖相应量、关系和单位。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_current_chemical_heating_magnetic_effects",
+      "requirement_id": "req_sg_lss_science_2021_o_13_current_chemical_heating_magnetic_effects",
+      "canonical_ids": [
+        "pc_dce77a366079ff45fc84832ef21777a8",
+        "pc_b9c4eb98603bcc5d7ab33a9b52e84bdf"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_dce77a366079ff45fc84832ef21777a8、pc_b9c4eb98603bcc5d7ab33a9b52e84bdf 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_electrical_hazards_from_system_changes",
+      "requirement_id": "req_sg_lss_science_2021_o_13_electrical_hazards_from_system_changes",
+      "canonical_ids": [
+        "pc_29c1e5800d16e059b57e43dce0511d8f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "家庭电路与安全用电概念直接覆盖过载、短路和触电等风险。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_household_electrical_precautions",
+      "requirement_id": "req_sg_lss_science_2021_o_13_household_electrical_precautions",
+      "canonical_ids": [
+        "pc_29c1e5800d16e059b57e43dce0511d8f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有家庭电路安全概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_electrical_power_output_unit",
+      "requirement_id": "req_sg_lss_science_2021_o_13_electrical_power_output_unit",
+      "canonical_ids": [
+        "pc_d402d63a7ae8461cf8182aba31d92622"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有电功与电功率概念直接覆盖定义、输出和单位。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_draw_build_measure_circuits",
+      "requirement_id": "req_sg_lss_science_2021_o_13_draw_build_measure_circuits",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_series_parallel_resistor_investigation",
+      "requirement_id": "req_sg_lss_science_2021_o_13_series_parallel_resistor_investigation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_resistance_current_investigation",
+      "requirement_id": "req_sg_lss_science_2021_o_13_resistance_current_investigation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_electricity_cost_kwh",
+      "requirement_id": "req_sg_lss_science_2021_o_13_electricity_cost_kwh",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_13_reduce_household_electricity",
+      "requirement_id": "req_sg_lss_science_2021_o_13_reduce_household_electricity",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_14_digestive_system_importance",
+      "requirement_id": "req_sg_lss_science_2021_o_14_digestive_system_importance",
+      "canonical_ids": [
+        "pc_0d37b9ca5c8c1c5c1795f6a2249253fd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_0d37b9ca5c8c1c5c1795f6a2249253fd 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_14_digestive_parts_system_function",
+      "requirement_id": "req_sg_lss_science_2021_o_14_digestive_parts_system_function",
+      "canonical_ids": [
+        "pc_0d37b9ca5c8c1c5c1795f6a2249253fd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_0d37b9ca5c8c1c5c1795f6a2249253fd 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_14_digestion_of_food",
+      "requirement_id": "req_sg_lss_science_2021_o_14_digestion_of_food",
+      "canonical_ids": [
+        "pc_0d37b9ca5c8c1c5c1795f6a2249253fd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_0d37b9ca5c8c1c5c1795f6a2249253fd 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_14_digestion_products_cellular_use",
+      "requirement_id": "req_sg_lss_science_2021_o_14_digestion_products_cellular_use",
+      "canonical_ids": [
+        "pc_d87ceac09c7741db036b133798f10ebe"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_d87ceac09c7741db036b133798f10ebe 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_14_digestive_enzyme_investigation",
+      "requirement_id": "req_sg_lss_science_2021_o_14_digestive_enzyme_investigation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_14_food_lifestyle_diabetes",
+      "requirement_id": "req_sg_lss_science_2021_o_14_food_lifestyle_diabetes",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_14_gut_bacteria_benefits_harms",
+      "requirement_id": "req_sg_lss_science_2021_o_14_gut_bacteria_benefits_harms",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_15_blood_vessel_transport_functions",
+      "requirement_id": "req_sg_lss_science_2021_o_15_blood_vessel_transport_functions",
+      "canonical_ids": [
+        "pc_074ebebe17312ddb0b1987476802f71a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_074ebebe17312ddb0b1987476802f71a 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_15_xylem_phloem_transport",
+      "requirement_id": "req_sg_lss_science_2021_o_15_xylem_phloem_transport",
+      "canonical_ids": [
+        "pc_eaac05ec18f4256f6a2eb41ca33b0969",
+        "pc_fcdfd6ff2ea888cea137488f28fb500c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "两个现有 canonical 概念分别直接覆盖木质部和韧皮部运输。 本成果对 G2 可选，不能作为所有 G2 学习者的强制掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_15_need_multicellular_transport",
+      "requirement_id": "req_sg_lss_science_2021_o_15_need_multicellular_transport",
+      "canonical_ids": [
+        "pc_074ebebe17312ddb0b1987476802f71a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_074ebebe17312ddb0b1987476802f71a 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_15_diffusion_human_transport",
+      "requirement_id": "req_sg_lss_science_2021_o_15_diffusion_human_transport",
+      "canonical_ids": [
+        "pc_074ebebe17312ddb0b1987476802f71a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_074ebebe17312ddb0b1987476802f71a 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_15_diffusion_plant_transport",
+      "requirement_id": "req_sg_lss_science_2021_o_15_diffusion_plant_transport",
+      "canonical_ids": [
+        "pc_9797430f71b69978f7a1471603f9fba3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_9797430f71b69978f7a1471603f9fba3 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_15_osmosis_root_water_absorption",
+      "requirement_id": "req_sg_lss_science_2021_o_15_osmosis_root_water_absorption",
+      "canonical_ids": [
+        "pc_c2e6fec2c47cd86ee9b8726b908a7a8b",
+        "pc_eaac05ec18f4256f6a2eb41ca33b0969"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "渗透与木质部水分运输概念组合直接覆盖。 本成果对 G2 可选，不能作为所有 G2 学习者的强制掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_15_investigate_xylem_transport",
+      "requirement_id": "req_sg_lss_science_2021_o_15_investigate_xylem_transport",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_15_drug_abuse_transport_system",
+      "requirement_id": "req_sg_lss_science_2021_o_15_drug_abuse_transport_system",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_15_heart_transplant_ethics",
+      "requirement_id": "req_sg_lss_science_2021_o_15_heart_transplant_ethics",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_fertilisation_new_individual",
+      "requirement_id": "req_sg_lss_science_2021_o_16_fertilisation_new_individual",
+      "canonical_ids": [
+        "pc_2bb6c5caf86fb9a1beb4b9ed7331d3fc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有受精与早期胚胎发育概念直接覆盖。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_sexual_reproduction_heredity",
+      "requirement_id": "req_sg_lss_science_2021_o_16_sexual_reproduction_heredity",
+      "canonical_ids": [
+        "pc_90f9aa090780caaed790708026e919ee"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_90f9aa090780caaed790708026e919ee 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_unique_parental_genetic_combination",
+      "requirement_id": "req_sg_lss_science_2021_o_16_unique_parental_genetic_combination",
+      "canonical_ids": [
+        "pc_90f9aa090780caaed790708026e919ee"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_90f9aa090780caaed790708026e919ee 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_puberty_hormone_changes",
+      "requirement_id": "req_sg_lss_science_2021_o_16_puberty_hormone_changes",
+      "canonical_ids": [
+        "pc_600c72889c4a447d64b3695f7b5f2b37"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_600c72889c4a447d64b3695f7b5f2b37 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_reproductive_parts_fertilisation",
+      "requirement_id": "req_sg_lss_science_2021_o_16_reproductive_parts_fertilisation",
+      "canonical_ids": [
+        "pc_90f9aa090780caaed790708026e919ee"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_90f9aa090780caaed790708026e919ee 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_female_parts_menstrual_cycle",
+      "requirement_id": "req_sg_lss_science_2021_o_16_female_parts_menstrual_cycle",
+      "canonical_ids": [
+        "pc_600c72889c4a447d64b3695f7b5f2b37"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_600c72889c4a447d64b3695f7b5f2b37 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_birth_control_mechanisms",
+      "requirement_id": "req_sg_lss_science_2021_o_16_birth_control_mechanisms",
+      "canonical_ids": [
+        "pc_5251a65531e5efed32f519ad93528e7e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_5251a65531e5efed32f519ad93528e7e 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_sti_harmful_consequences",
+      "requirement_id": "req_sg_lss_science_2021_o_16_sti_harmful_consequences",
+      "canonical_ids": [
+        "pc_d42f9981e5d8d6a91cc8b23de471eb36"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_d42f9981e5d8d6a91cc8b23de471eb36 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_bacterial_viral_sti_treatment",
+      "requirement_id": "req_sg_lss_science_2021_o_16_bacterial_viral_sti_treatment",
+      "canonical_ids": [
+        "pc_d42f9981e5d8d6a91cc8b23de471eb36"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "经全库反向查重、年龄段边界和成果粒度复核，现由 pc_d42f9981e5d8d6a91cc8b23de471eb36 完整覆盖；新节点仍待人工批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_evaluate_abortion_premarital_sex",
+      "requirement_id": "req_sg_lss_science_2021_o_16_evaluate_abortion_premarital_sex",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "科学实践要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_substance_abuse_foetus",
+      "requirement_id": "req_sg_lss_science_2021_o_16_substance_abuse_foetus",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_lss_science_2021_o_16_human_population_growth_reasons",
+      "requirement_id": "req_sg_lss_science_2021_o_16_human_population_growth_reasons",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "价值、伦理与态度要求不应伪装成可独立掌握的学科概念，转入教学与评测知识层。 本成果对 G2 可选。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

@@ -1,0 +1,1820 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "resolution_set_id": "cgr_cn_moe_senior_high_biology_2020_outcomes",
+  "gap_set_id": "cgs_cn_moe_senior_high_biology_2020_outcomes",
+  "framework_id": "cfw_cn_moe_senior_high_biology_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_biology_2020",
+  "subject": "Biology",
+  "source_ids": [
+    "src_cn_moe_senior_high_biology_2020",
+    "src_openstax_biology_2e_2018",
+    "src_ncbi_neuroscience_2e_2001",
+    "src_openstax_microbiology_2016",
+    "src_pmc_apiaceae_protoplast_somatic_hybridisation_2023",
+    "src_pmc_plant_tissue_culture_applications_2023",
+    "src_fao_cattle_embryo_transfer_manual_1991",
+    "src_ncbi_genomes_2e_protein_engineering_2002",
+    "src_cn_nhc_assisted_reproduction_ethics_2003"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "完成 76 项生物学知识缺口逐项定义复核、稳定 ID 建立和双来源证据绑定。"
+    }
+  ],
+  "resolutions": [
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_1_1_cellular_elements_carbon_skeletons",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_fa5e5c389a8f790944f2e6049357654b",
+        "pc_b010170fadec4b31174da9a87a4332e1"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_cellular_elements_carbon_skeletons"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§2.1-2.4 atoms, water, carbon and biological macromolecules"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_1_3_cellular_inorganic_salts",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c088a7df0656c7e3658e30f9fda3d609"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_cellular_inorganic_salts"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.21（正文对应内容要求 1.1.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§2.1-2.4 atoms, water, carbon and biological macromolecules"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_2_1_plasma_membrane_functions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5ff2cda97c05cbe449e6d6bcff0c0834",
+        "pc_7f67c92fa0c79a54f0822060ac8a4080"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_plasma_membrane_functions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_2_3_nucleus_genetic_information",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6a00c0df14c5b18459964bd5ccb5c243",
+        "pc_cb341a51c60bb212ac55750a84630c03",
+        "pc_f25b23ea81c506e587d3067e86866c09"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_nucleus_genetic_information"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 4 Cell Structure, especially §§4.2-4.6 prokaryotic/eukaryotic cells, organelles and cellular connections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_2_4_organelle_coordination",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cb341a51c60bb212ac55750a84630c03",
+        "pc_78dd182e4fbad59e57aeb4484e1c3954"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_organelle_coordination"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.2.4），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 4 Cell Structure, especially §§4.2-4.6 prokaryotic/eukaryotic cells, organelles and cellular connections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_1_3_1_cellular_unity_diversity",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_64852ab0501ee4d7b32d11655eb6b808"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_cellular_unity_diversity"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 1.3.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 4 Cell Structure, especially §§4.2-4.6 prokaryotic/eukaryotic cells, organelles and cellular connections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_2_1_1_selective_permeability",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5ff2cda97c05cbe449e6d6bcff0c0834",
+        "pc_c2e6fec2c47cd86ee9b8726b908a7a8b",
+        "pc_4e487be68da0fcc9a3f8c5df2493c062"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_selective_permeability"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.1），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_2_1_3_endocytosis_exocytosis",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_1264ba133e13ba77487296037ce4c00e"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_endocytosis_exocytosis"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.22（正文对应内容要求 2.1.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 5 Structure and Function of Plasma Membranes, especially §§5.1-5.4"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_2_3_2_cell_differentiation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_56602e952c30d81d754e3900e34590cf",
+        "pc_603e03befcc0fac76e8a059261559f56"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_cell_differentiation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.2），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §16.3 Eukaryotic Epigenetic Gene Regulation; differential gene expression and cell differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rc_2_3_3_cell_senescence_death",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_53d0352a79deedffc387d00ac17676a7"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_cell_senescence_death"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.23（正文对应内容要求 2.3.3），必修·分子与细胞"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§10.2-10.4 cell cycle control, cancer and programmed cell death"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_1_1_gene_nucleic_acid_segment",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6a00c0df14c5b18459964bd5ccb5c243",
+        "pc_7c8644ecf9e964364af575d584241cf8",
+        "pc_a5f0cc3dc0636e18a4fef67d49bec23e",
+        "pc_4968ce1f12aa3d8827a46863b03b81d2"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_gene_nucleic_acid_segment"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.1），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 14 DNA Structure and Function; Chapter 15 Genes and Proteins; §17.1 Biotechnology"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_1_5_epigenetic_phenomena",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_db8e1b5b05c1c8cc184a64e1c68c3435"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_epigenetic_phenomena"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.1.5），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §16.3 Eukaryotic Epigenetic Gene Regulation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_2_2_gametic_inheritance",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9a64e0d9f35ef30bda722f5b7364e0c4",
+        "pc_f90fa4062e2970091368eb5d22919cf4"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_gametic_inheritance"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.2），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 11 Meiosis and Sexual Reproduction; Chapter 13 Modern Understandings of Inheritance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_2_4_sex_linked_inheritance",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8533c5cf0c58c968c6990001ab576642"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_sex_linked_inheritance"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.25（正文对应内容要求 3.2.4），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 11 Meiosis and Sexual Reproduction; Chapter 13 Modern Understandings of Inheritance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_3_3_mutagens_cancer",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_aa917911c35a5a84a131d3c4b99b89af",
+        "pc_043f05d8ef096d7bbdf67578bcc00662"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_mutagens_cancer"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.3），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §10.4 Cancer and the Cell Cycle; §14.6 DNA Repair"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_3_5_chromosomal_variation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_41f9701a3bd0fb4527df662b596620b5",
+        "pc_592a494ab52d102d4cb731b24a77b320",
+        "pc_86f481ac1e4983f5844e9bf459df5d7e"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_chromosomal_variation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.5），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §13.2 Chromosomal Basis of Inherited Disorders"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_3_3_6_genetic_disease_screening",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2fa1c85e0d7a4075a6c60f671d363261"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_genetic_disease_screening"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 3.3.6），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; genetic diagnosis and gene therapy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_4_1_1_common_ancestry_fossil_anatomy",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_67cb55267032c55bab697c87ee0f205f"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_common_ancestry_fossil_anatomy"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.1），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §18.1 Understanding Evolution; fossil, anatomical and embryological evidence"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_rg_4_1_2_common_ancestry_cell_molecular",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d83debf48c4c993831d6b7beb3321029"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_common_ancestry_cell_molecular"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.26（正文对应内容要求 4.1.2），必修·遗传与进化"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §20.2 Determining Evolutionary Relationships; molecular and cellular homology"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_1_1_internal_environment_fluids",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_990d45746021a0258ffce6947d5c9c25"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_internal_environment_fluids"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §33.3 Homeostasis; Chapters 40-41 circulatory, respiratory, excretory and osmoregulatory exchange"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_1_2_internal_external_exchange",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_fea026b56e9f7d027299b4484d6be477"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_internal_external_exchange"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.2），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §33.3 Homeostasis; Chapters 40-41 circulatory, respiratory, excretory and osmoregulatory exchange"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_1_3_organ_system_exchange",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_023dd94962e430b671d1014972b54342",
+        "pc_ff5a585bec0e26749bef92e5b2ec6c2c",
+        "pc_dc1ea419f7f0124901b64a622aee0648",
+        "pc_169fad745be0c7b18694394af7fb06fe"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_organ_system_exchange"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.1.3），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §33.3 Homeostasis; Chapters 40-41 circulatory, respiratory, excretory and osmoregulatory exchange"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_1_reflex_arc",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_46347b1ad33ab3d77b635c228957c4fd"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_reflex_arc"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 35 The Nervous System, especially §§35.1-35.3 neurons, central and peripheral nervous systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_4_central_nervous_hierarchy",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_944f33c2a947e2a2f5d42856cb825a4a",
+        "pc_7865cefc3b34beceb184b410f393c1ba"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_central_nervous_hierarchy"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.4），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 35 The Nervous System, especially §§35.1-35.3 neurons, central and peripheral nervous systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_5_autonomic_nervous_regulation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_05a4fbd93dd3ebc240adc1e06c52f9a1"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_autonomic_nervous_regulation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.5），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 35 The Nervous System, especially §§35.1-35.3 neurons, central and peripheral nervous systems"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_3_6_cortical_higher_activity",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0083b75b35558081f0f25304f33efa6e"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_cortical_higher_activity"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.29（正文对应内容要求 1.3.6），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_ncbi_neuroscience_2e_2001",
+          "locator": "Part V Complex Brain Functions, especially Chapters 27 and 31; cortical language function and the neural basis of learning and memory"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_4_1_endocrine_system",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c7f7ea6f7ce0f78324c900821216e75c",
+        "pc_73decdd85804bf6c56ea96df910916d1"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_endocrine_system"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 37 The Endocrine System; §33.3 Homeostasis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_4_3_neuroendocrine_coordination",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_944f33c2a947e2a2f5d42856cb825a4a",
+        "pc_c7f7ea6f7ce0f78324c900821216e75c",
+        "pc_dc1ea419f7f0124901b64a622aee0648",
+        "pc_a129b516baefe0c88abd508e71bb0e00"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_neuroendocrine_coordination"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.3），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 37 The Endocrine System; §33.3 Homeostasis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_4_4_humoral_respiratory_regulation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c9fd444d9acfb11faef011f5755c1418",
+        "pc_023dd94962e430b671d1014972b54342",
+        "pc_c351ce3400d2b06f7e3fb6a7f25c9528"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_humoral_respiratory_regulation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.4.4），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §39.3 Breathing; carbon-dioxide and pH control of ventilation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_5_2_innate_adaptive_immunity",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b396f7788c77baeecc089eeec83538e5",
+        "pc_94f54f11e23c1c3e407c8036fb6321b6"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_innate_adaptive_immunity"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.2），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_5_4_immune_disorders",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5f99a9c2ac6e1cab9e53477e2842eb6b"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_immune_disorders"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.5.4），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 42 The Immune System, especially §§42.1-42.4 innate, adaptive and disrupted immunity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_6_1_auxin_dual_effects",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ec9ed2577284952c142079dc7a389627",
+        "pc_3b0475fedf65a19d4227115cc008b92d"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_auxin_dual_effects"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.30（正文对应内容要求 1.6.1），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §30.6 Plant Sensory Systems and Responses; auxin, tropisms and agricultural applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sh_1_6_3_plant_growth_regulator_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ec9ed2577284952c142079dc7a389627",
+        "pc_e8352e234d2f8fb344dafcdbd894f99e",
+        "pc_0758d51c8b98059f1780aee07c326953"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_plant_growth_regulator_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.31（正文对应内容要求 1.6.3），选择性必修·稳态与调节"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §30.6 Plant Sensory Systems and Responses; auxin, tropisms and agricultural applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_1_population_characteristics",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a9447add767e7c509fb5f3725435137d"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_population_characteristics"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.1 Population Demography; population size, density, distribution and life-history structure"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_2_population_growth_models",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ceeb7c1f2db353b57d85fa869f5bda71"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_population_growth_models"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.3 Environmental Limits to Population Growth; exponential and logistic growth models"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_3_population_limiting_factors",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_7634f823e7f43393e5a89d2fb684676e"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_population_limiting_factors"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.4 Population Dynamics and Regulation; density-dependent and density-independent limiting factors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_4_community_structure",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_738afe02309cf9d584681e013e11fe69"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_community_structure"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 45 Population and Community Ecology; community structure and succession"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_1_5_ecological_succession",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_40daa84cf8496038cb7d02572227bac9"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_ecological_succession"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.1.5），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 45 Population and Community Ecology; community structure and succession"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_2_food_chains_webs",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_70da4d7e60b713056853543f2b486297"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_food_chains_webs"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_3_matter_cycles_energy_flow",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a26230828b27cf03028e959c4472f5f1"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_matter_cycles_energy_flow"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_4_ecological_resource_use",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405",
+        "pc_3104e1f4e490282faddf07783c2399b8"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_ecological_resource_use"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.33（正文对应内容要求 2.2.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_5_ecological_pyramids",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_305adf8ebeefac092af08b8ad4ce31b5"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_ecological_pyramids"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.5），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_6_biomagnification",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_eec94f4451e73065d30fd63abe099466"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_biomagnification"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.6），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_7_ecosystem_information_transfer",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ba3fe6583fb4d40f15c1573e314b2897"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_ecosystem_information_transfer"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.7），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.7 Behavioral Biology; communication by visual, chemical, aural and tactile signals and its roles in reproduction and social behaviour"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_2_8_trophic_structure_factors",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_5e3af190cf5d812135bc6cfb8de91b73"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_trophic_structure_factors"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.2.8），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web Chapter 46 Ecosystems; trophic structure, energy flow, biogeochemical cycles and ecosystem dynamics"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_3_1_ecosystem_stability",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_a853ca2b6804c3743c7a40f1c2ae5081"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_ecosystem_stability"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_3_2_ecosystem_disturbances",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_cee4cb6816eac128a0e6f36535957b6a"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_ecosystem_disturbances"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_3_3_ecosystem_self_regulation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e842f2edde8b384472460c753b197e3f"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_ecosystem_self_regulation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.3.3），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§46.1-46.3 ecosystem dynamics, trophic interactions and biogeochemical cycles"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_4_1_population_environment_pressure",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d736b9e86a2f00629df578cf4d065b89"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_population_environment_pressure"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.1），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §45.5 Human Population Growth; demographic transition, resource demand and carrying capacity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_4_2_global_environmental_change",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405",
+        "pc_3c7141a671b5d3b21d36e648301947f1"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_global_environmental_change"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.2），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §44.5 Climate and the Effects of Global Climate Change; §47.3 Threats to Biodiversity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_se_2_4_4_ecological_engineering_circularity",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba",
+        "pc_aa24b4324d962f7ab29f0ddeb0f63405",
+        "pc_d31768fc6f80dfb5ffee5fdcb356a5dd"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_ecological_engineering_circularity"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.34（正文对应内容要求 2.4.4），选择性必修·生物与环境"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §22.5 Beneficial Prokaryotes: bioremediation; §46.3 Biogeochemical Cycles; Chapter 47 conservation, restoration and sustainable resource use"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_1_sterilisation_microbe_culture",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_02db8c75f6ee755edfdd44db1800d190"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_sterilisation_microbe_culture"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 13 Control of Microbial Growth; physical and chemical control methods and aseptic practice"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_2_aseptic_technique",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_da199aa16f2cf927e3eb52617c37220d"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_aseptic_technique"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 13 Control of Microbial Growth; physical and chemical control methods and aseptic practice"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_3_selective_culture_media",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_3ffc91735aa4009319d97d82b2bd6cb1"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_selective_culture_media"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 9 Microbial Growth; culture media, isolation and direct/viable counting methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_4_microbial_isolation_methods",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9d5bceaf3c265dcafdaa249db80ad329"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_microbial_isolation_methods"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.4），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 9 Microbial Growth; culture media, isolation and direct/viable counting methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_1_5_microbial_counting_methods",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d5a40034050d02c152d7f51ce3bd2513"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_microbial_counting_methods"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.36（正文对应内容要求 3.1.5），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web Chapter 9 Microbial Growth; culture media, isolation and direct/viable counting methods"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_2_1_traditional_fermentation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_316272b1915e07a00215e5b2801d2772"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_traditional_fermentation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §1.1 What Our Ancestors Knew and §8.4 Fermentation; traditional food and beverage fermentation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_2_2_industrial_fermentation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_339a5f3174c1fa2f8c4273228d1abe4d"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_industrial_fermentation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §8.4 Fermentation; commercial food, pharmaceutical, solvent, vitamin and biofuel products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_3_2_3_fermentation_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_1fffd89a6d612ed5bd06d8559028652b"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_fermentation_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 3.2.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §8.4 Fermentation; commercial food, pharmaceutical, solvent, vitamin and biofuel products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_1_1_plant_tissue_culture",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6cc7ae70a5a7f498efda3c0155ece301"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_plant_tissue_culture"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §32.3 Asexual Reproduction; micropropagation, disease-free stock and plant tissue culture"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_1_2_plant_somatic_hybridisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_23f52412736512b8f40fac9958079322"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_plant_somatic_hybridisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_apiaceae_protoplast_somatic_hybridisation_2023",
+          "locator": "Sections 1 and 9; protoplast isolation, chemical or electrical fusion, hybrid-plant regeneration and breeding applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_1_3_plant_cell_engineering_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d30f1f836c9100c1462e7a4a389ce02f"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_plant_cell_engineering_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.1.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_pmc_plant_tissue_culture_applications_2023",
+          "locator": "Sections 4.1-4.2; rapid micropropagation, virus-free plants, genetic improvement and secondary-metabolite production"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_1_animal_cell_culture",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_df3d6997dd440131a8dad40c4acbc338"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_animal_cell_culture"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.37（正文对应内容要求 4.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production; tissue culture and hybridoma cell fusion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_2_somatic_cell_nuclear_transfer",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0185ccac3ad47cd14f266d12099ab528",
+        "pc_73b8a50a14796395bbb0ae7525ab1b99"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_somatic_cell_nuclear_transfer"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; somatic-cell nuclear transfer and reproductive cloning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_3_animal_cell_fusion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ab54a12e8f3ea29b213314991f5dccfc"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_animal_cell_fusion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.3），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production; tissue culture and hybridoma cell fusion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_4_monoclonal_antibody_production",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4e3f76f101debb1e241b0bab776e4cf1",
+        "pc_076accb0e6c48dc5a6b42dcc36152da3"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_monoclonal_antibody_production"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.4），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §20.1 Polyclonal and Monoclonal Antibody Production"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_2_5_stem_cell_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f24ca070bfceb1f905930f4386fc0b75"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_stem_cell_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.2.5），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §§43.6-43.7 early embryonic development, embryonic stem cells and differentiation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_3_1_fertilisation_early_embryo",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2bb6c5caf86fb9a1beb4b9ed7331d3fc"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_fertilisation_early_embryo"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §43.6 Fertilization and Early Embryonic Development"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_4_3_2_embryo_engineering",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_fea1ab91762f39ce21af7aee8d10f9b1"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_embryo_engineering"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 4.3.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_fao_cattle_embryo_transfer_manual_1991",
+          "locator": "Chapters 6-10, especially Chapter 10 Splitting Embryos; embryo recovery, transfer, bisection and demi-embryo transfer"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_5_1_2_gene_engineering_tools",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0185ccac3ad47cd14f266d12099ab528",
+        "pc_2453884856757a434254e3d2465428a9"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_gene_engineering_tools"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; recombinant-DNA tools, cloning, expression and engineered products"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_5_2_1_protein_engineering_design",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c106243302f8fd6e37f9a27d11d0c458"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_protein_engineering"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "该成果与另一课标成果描述同一知识概念的不同表现，共享一个稳定 canonical 概念，避免重复 ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_ncbi_genomes_2e_protein_engineering_2002",
+          "locator": "Chapter 7 §7.2.3; protein engineering by targeted gene alteration to change protein structure, activity and application properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_5_2_2_protein_engineering_process",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c106243302f8fd6e37f9a27d11d0c458"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_protein_engineering"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "该成果与另一课标成果描述同一知识概念的不同表现，共享一个稳定 canonical 概念，避免重复 ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 5.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_ncbi_genomes_2e_protein_engineering_2002",
+          "locator": "Chapter 7 §7.2.3; protein engineering by targeted gene alteration to change protein structure, activity and application properties"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_6_1_2_gmo_impacts",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_c3e39f880db577df6f6c3b5c414c354c"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_gmo_impacts"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.1.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §17.1 Biotechnology; agricultural, medical and ethical impacts of genetic modification"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_6_2_1_reproductive_cloning_ethics",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8fdb51d08a8ed66fb99b97be9cfdd375"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_reproductive_cloning_ethics"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_biology_2e_2018",
+          "locator": "Web §1.1 The Science of Biology: scientific ethics; §17.1 Biotechnology: reproductive cloning, safety and social consequences"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_6_2_2_reproductive_cloning_china_policy",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_daad7f4952e846d491f4766b7ec46c7a"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_reproductive_cloning_china_policy"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.2.2），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_cn_nhc_assisted_reproduction_ethics_2003",
+          "locator": "附件1 行为准则第（十五）项‘禁止克隆人’；附件3 社会公益原则第3项‘不得实施生殖性克隆技术’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_bio_2020_o_sb_6_3_1_biological_weapons_harms",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_1a63fde8aa0fbbde94fa5ea18f52d1a5"
+      ],
+      "created_node_ids": [
+        "cn_sh_bio_biological_weapons_harms"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分边界，不能独立诊断该课标成果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_biology_2020",
+          "locator": "生物学标准PDF p.38（正文对应内容要求 6.3.1），选择性必修·生物技术与工程"
+        },
+        {
+          "source_id": "src_openstax_microbiology_2016",
+          "locator": "Web §21.2 Bacterial Infections of the Skin and Eyes; anthrax as a biological weapon and documented harms"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

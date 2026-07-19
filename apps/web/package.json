@@ -26,6 +26,8 @@
     "build:kg-source-registry": "node scripts/build-kg-source-registry.mjs",
     "find:kg-duplicate-candidates": "node scripts/find-kg-duplicate-candidates.mjs",
     "build:kg-review-packs": "node scripts/build-a-level-review-packs.mjs",
+    "build:curriculum-review-packs": "node scripts/build-curriculum-review-packs.mjs",
+    "build:core-pedagogy": "node scripts/build-cn-sg-core-pedagogy.mjs",
     "calibrate:kg-floor": "node scripts/calibrate-kg-floor.mjs",
     "db:bootstrap": "tsx scripts/bootstrap-database.ts",
     "db:migrate:kg": "tsx scripts/migrate-kg.ts",

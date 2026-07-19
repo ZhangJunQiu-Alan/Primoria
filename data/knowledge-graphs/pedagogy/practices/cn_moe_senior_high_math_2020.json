@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "practice_set_id": "cpk_cn_moe_senior_high_math_2020",
+  "framework_id": "cfw_cn_moe_senior_high_math_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_math_2020",
+  "subject": "Mathematics",
+  "source_ids": [
+    "src_cn_moe_senior_high_math_2020"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "将建模、探究、报告与进阶项目要求从学科概念掌握度分流到教学和评测知识层。"
+    }
+  ],
+  "items": [
+    {
+      "practice_id": "practice_cn_sh_math_2020_modelling_formulate",
+      "requirement_ids": [
+        "req_cn_sh_math_2020_o_modelling_formulate"
+      ],
+      "kind": "modelling_process",
+      "name": "Formulating a modelling problem",
+      "name_zh": "发现问题并数学化表达",
+      "description_zh": "从现实情境发现和提出问题，识别变量、假设和参数并形成数学表达。",
+      "instructional_use_zh": "使用真实情境引导学习者明确问题、变量、参数、约束和可检验假设，再形成数学表达。",
+      "assessment_evidence_zh": "问题陈述、变量与参数表、假设及约束说明、数学化表达之间能够相互对应。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_math_2020_modelling_solve",
+      "requirement_ids": [
+        "req_cn_sh_math_2020_o_modelling_solve"
+      ],
+      "kind": "modelling_process",
+      "name": "Building and solving a model",
+      "name_zh": "构建并求解模型",
+      "description_zh": "选择数学方法构建模型、计算求解并记录关键决策。",
+      "instructional_use_zh": "要求学习者说明模型选择、求解路径、工具使用和关键决策，而不只提交数值答案。",
+      "assessment_evidence_zh": "模型结构、推导或计算过程、工具输出与关键决策记录完整且可复核。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_math_2020_modelling_validate",
+      "requirement_ids": [
+        "req_cn_sh_math_2020_o_modelling_validate"
+      ],
+      "kind": "modelling_process",
+      "name": "Validating and improving a model",
+      "name_zh": "检验并改进模型",
+      "description_zh": "把结果带回现实检验，分析局限并据此改进模型。",
+      "instructional_use_zh": "把数学结果带回原情境，通过数据、边界情形或敏感性分析检验并改进模型。",
+      "assessment_evidence_zh": "现实检验、误差或局限分析、改进理由以及改进前后比较均有明确证据。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_math_2020_inquiry_pose_conjecture",
+      "requirement_ids": [
+        "req_cn_sh_math_2020_o_inquiry_pose_conjecture"
+      ],
+      "kind": "inquiry_process",
+      "name": "Posing questions and conjectures",
+      "name_zh": "数学探究问题与猜想",
+      "description_zh": "提出有意义的数学问题并形成可检验的合理猜想。",
+      "instructional_use_zh": "从实例、反例和模式观察中形成边界明确、能够被证明或否证的数学猜想。",
+      "assessment_evidence_zh": "探究问题有数学对象和范围，猜想可检验，并记录支持例与潜在反例。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_math_2020_inquiry_plan_prove",
+      "requirement_ids": [
+        "req_cn_sh_math_2020_o_inquiry_plan_prove"
+      ],
+      "kind": "inquiry_process",
+      "name": "Planning inquiry and proving conclusions",
+      "name_zh": "探究方案与论证",
+      "description_zh": "设计探究方案，通过自主或合作探索形成并论证结论。",
+      "instructional_use_zh": "在证明前明确探究步骤、所需定义与定理、分工和反例检查，再形成论证链。",
+      "assessment_evidence_zh": "方案可执行，论证每一步有依据，能够处理反例或说明结论成立的条件。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_math_2020_research_report_integrity",
+      "requirement_ids": [
+        "req_cn_sh_math_2020_o_research_report_integrity"
+      ],
+      "kind": "reporting_integrity",
+      "name": "Research reporting and integrity",
+      "name_zh": "研究报告、交流与学术规范",
+      "description_zh": "完成建模或探究课题，整理资料、撰写报告、答辩交流并遵守学术诚信。",
+      "instructional_use_zh": "把资料管理、引用归因、过程记录、报告结构和答辩交流作为项目教学的一部分。",
+      "assessment_evidence_zh": "报告、引用、数据或代码来源、过程记录与答辩材料完整，且不存在未归因使用。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.42-44（正文p.34-36），必修主题五‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_math_2020_extended_research_project",
+      "requirement_ids": [
+        "req_cn_sh_math_2020_o_extended_research_project"
+      ],
+      "kind": "assessment_task",
+      "name": "Extended modelling or inquiry project",
+      "name_zh": "完成进阶建模或探究课题",
+      "description_zh": "在已有或新选题上完成一个比必修阶段更深入的数学建模或数学探究课题。",
+      "instructional_use_zh": "在必修项目基础上增加新的问题范围、方法、数据或验证深度，并明确与旧项目的差异。",
+      "assessment_evidence_zh": "完整项目档案能够证明问题、方法或结果至少一项较必修项目有实质推进。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.58（正文p.50），选择性必修主题四‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_cn_sh_math_2020_extended_project_report",
+      "requirement_ids": [
+        "req_cn_sh_math_2020_o_extended_project_report"
+      ],
+      "kind": "assessment_task",
+      "name": "Extended project report",
+      "name_zh": "进阶课题成果与说明",
+      "description_zh": "以研究报告、程序、测量报告或其他合适形式说明新思路、新方法、新结果及与必修课题的差异。",
+      "instructional_use_zh": "允许报告、程序、测量记录等多种成果形式，但必须解释新思路、新方法、新结果及局限。",
+      "assessment_evidence_zh": "成果物可运行或可复核，说明材料明确标出创新点、证据、限制和与必修课题的差异。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_math_2020",
+          "locator": "数学课程标准PDF p.58（正文p.50），选择性必修主题四‘数学建模活动与数学探究活动’"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

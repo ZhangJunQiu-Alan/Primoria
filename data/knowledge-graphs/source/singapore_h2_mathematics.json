@@ -1,0 +1,1349 @@
+{
+  "schema_version": "2.0.0",
+  "content_version": "0.1.0",
+  "graph_id": "singapore_h2_mathematics",
+  "subject": "Mathematics",
+  "jurisdictions": [
+    "SG"
+  ],
+  "source_ids": [
+    "src_sg_seab_h2_math_9758_2026",
+    "src_openstax_precalculus_2e_2026",
+    "src_mit_ocw_18_02sc_fall_2010",
+    "src_mit_ocw_strang_calculus_ch9_2023",
+    "src_mit_ocw_18_01sc_fall_2010",
+    "src_openstax_introductory_statistics_2e_2026",
+    "src_berkeley_cs70_summer_2026"
+  ],
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "根据 SEAB 9758 逐成果覆盖审查建立 33 个最小可诊断概念，并为每个概念补齐考试大纲与开放教材或大学课程两类证据。"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "sg_h2_math_topic_function_graphs",
+      "kind": "topic",
+      "name": "Functions and graphs",
+      "name_zh": "函数与图像",
+      "topic": null,
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.7 Inverse Functions, printed pp.130-149"
+        },
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2 and 3.7, printed pp.255-274 and 340-364; §§10.1-10.3, printed pp.1010-1055"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§8.6-8.7 Parametric Equations and Graphs, printed pp.839-863"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_algebraic_modelling",
+      "kind": "topic",
+      "name": "Algebraic modelling and inequalities",
+      "name_zh": "代数建模与不等式",
+      "topic": null,
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §2.3 Modeling with Linear Functions, printed pp.206-219; §§9.1-9.3, printed pp.896-936"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.7 Rational Functions, printed pp.340-364; §9.3 Nonlinear Equations and Inequalities, printed pp.925-936"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_sequences_series",
+      "kind": "topic",
+      "name": "Sequences and series",
+      "name_zh": "数列与级数",
+      "topic": null,
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.1 Sequences and Their Notations, printed pp.1089-1103"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.4 Series and Their Notations, printed pp.1124-1136"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_vector_foundations",
+      "kind": "topic",
+      "name": "Vector foundations and geometry",
+      "name_zh": "向量基础与几何",
+      "topic": null,
+      "default_order": 4,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: vector components, lengths and directions"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: vectors, dot products, lengths, angles and components"
+        },
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, collinearity; PDF p.8, ratio theorem, sub-topic 3.1"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: vector components and geometric vector reasoning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_vector_geometry_3d",
+      "kind": "topic",
+      "name": "Three-dimensional vector geometry",
+      "name_zh": "三维向量几何",
+      "topic": null,
+      "default_order": 5,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Sessions 3, 8, 12, 15 and 16: projections, planes, lines and intersections"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Sessions 8, 12, 15 and 16: equations and intersections of lines and planes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_complex_foundations",
+      "kind": "topic",
+      "name": "Complex number foundations",
+      "name_zh": "复数基础",
+      "topic": null,
+      "default_order": 6,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.1 and 3.6 Complex Numbers and Polynomial Zeros, printed pp.245-254 and 326-339"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, printed pp.245-254; complex plane, modulus and conjugates"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_complex_roots_geometry",
+      "kind": "topic",
+      "name": "Complex roots and geometry",
+      "name_zh": "复数根与几何",
+      "topic": null,
+      "default_order": 7,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.6 Zeros of Polynomial Functions, printed pp.326-339"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): complex operations and vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_calculus_approximations",
+      "kind": "topic",
+      "name": "Calculus graphs and approximations",
+      "name_zh": "微积分图像与近似",
+      "topic": null,
+      "default_order": 8,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part A, Sessions 27-28: curve sketching from first and second derivatives"
+        },
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 5 Part B, Sessions 98-99: Taylor series and approximation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_differential_equations",
+      "kind": "topic",
+      "name": "Differential equations",
+      "name_zh": "微分方程",
+      "topic": null,
+      "default_order": 9,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part C, Sessions 39-40: introduction to differential equations and separation of variables"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part C, Sessions 39-40 and worked examples on differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_counting_probability",
+      "kind": "topic",
+      "name": "Counting and probability representations",
+      "name_zh": "计数与概率表示",
+      "topic": null,
+      "default_order": 10,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.5 Counting Principles, printed pp.1137-1147"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.7 Probability, printed pp.1154-1164"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_normal_moments",
+      "kind": "topic",
+      "name": "Normal distributions and moments",
+      "name_zh": "正态分布与矩",
+      "topic": null,
+      "default_order": 11,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 Notes 16-17: Random Variables I (Distribution and Expectation) and II (Variance and Covariance)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_hypothesis_testing",
+      "kind": "topic",
+      "name": "Hypothesis testing",
+      "name_zh": "假设检验",
+      "topic": null,
+      "default_order": 12,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.1 and 9.4, printed pp.462-463 and 467-468"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.1 and 9.4-9.5, printed pp.462-463 and 467-482"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.3 and 9.6, printed pp.466 and 483-485"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_statistical_interpretation",
+      "kind": "topic",
+      "name": "Statistical evidence interpretation",
+      "name_zh": "统计证据解释",
+      "topic": null,
+      "default_order": 13,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.4-9.5 Rare Events, Decision and Full Examples, printed pp.467-482"
+        },
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §12.2 Scatter Plots, printed pp.620-622"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.3-12.4 Regression and Correlation, printed pp.623-634"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_topic_regression",
+      "kind": "topic",
+      "name": "Regression and linearisation",
+      "name_zh": "回归与线性化",
+      "topic": null,
+      "default_order": 14,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §12.3 The Regression Equation, printed pp.623-630"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.4 and 4.7 Fitting and Modeling, printed pp.220-232 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_inverse_existence_restriction",
+      "canonical_id": "pc_5f10437c0846188d853443ee76c29385",
+      "kind": "concept",
+      "name": "Inverse-function existence and domain restriction",
+      "name_zh": "反函数存在条件与定义域限制",
+      "topic": "sg_h2_math_topic_function_graphs",
+      "description": "Determining whether an inverse exists, restricting a domain to make a function one-to-one, and relating inverse graphs by reflection.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.1 Functions"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §1.7 Inverse Functions, printed pp.130-149"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_standard_graph_characteristics",
+      "canonical_id": "pc_01bf6e2b919084e9537bb1dae27d1509",
+      "kind": "concept",
+      "name": "Characteristics of standard algebraic graphs",
+      "name_zh": "常见代数函数图像特征",
+      "topic": "sg_h2_math_topic_function_graphs",
+      "description": "Identifying symmetry, intercepts, turning points, asymptotes and value restrictions for the prescribed polynomial, rational and conic graphs.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.2 and 3.7, printed pp.255-274 and 340-364; §§10.1-10.3, printed pp.1010-1055"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_parametric_graphs",
+      "canonical_id": "pc_044eaaf9e74e43e4aee3e6898c91a012",
+      "kind": "concept",
+      "name": "Simple parametric equations and plane graphs",
+      "name_zh": "简单参数方程与平面图像",
+      "topic": "sg_h2_math_topic_function_graphs",
+      "description": "Eliminating or varying a parameter to interpret and sketch a plane curve given by simple parametric equations.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.6, sub-topic 1.2 Graphs and transformations"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§8.6-8.7 Parametric Equations and Graphs, printed pp.839-863"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_formulate_equations",
+      "canonical_id": "pc_2c7c77c12eaf42efced7f2a956e1bb16",
+      "kind": "concept",
+      "name": "Formulating equations and inequalities from context",
+      "name_zh": "从情境建立方程与不等式",
+      "topic": "sg_h2_math_topic_algebraic_modelling",
+      "description": "Selecting variables and constraints to translate a problem situation into an equation, linear system or inequality and interpreting admissible solutions.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §2.3 Modeling with Linear Functions, printed pp.206-219; §§9.1-9.3, printed pp.896-936"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_rational_quadratic_inequalities",
+      "canonical_id": "pc_afd49425ab0864c75dcf18868acbba73",
+      "kind": "concept",
+      "name": "Rational inequalities with linear and quadratic factors",
+      "name_zh": "一次与二次因式构成的分式不等式",
+      "topic": "sg_h2_math_topic_algebraic_modelling",
+      "description": "Solving rational inequalities whose numerator and denominator contain linear or quadratic expressions by sign analysis or graph reasoning.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 1.3 Equations and inequalities"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.7 Rational Functions, printed pp.340-364; §9.3 Nonlinear Equations and Inequalities, printed pp.925-936"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_recurrence_sequences",
+      "canonical_id": "pc_751f6453ef98be2b89e76c9a253bef03",
+      "kind": "concept",
+      "name": "Recurrence-generated sequences",
+      "name_zh": "递推数列",
+      "topic": "sg_h2_math_topic_sequences_series",
+      "description": "Using initial values and a recurrence relation to generate successive terms and analyse the resulting sequence.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.1 Sequences and Their Notations, printed pp.1089-1103"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_series_operations_convergence",
+      "canonical_id": "pc_08b1eb5f8f685706a847adee808f59f9",
+      "kind": "concept",
+      "name": "Series operations, convergence and infinite sums",
+      "name_zh": "级数运算、收敛与无穷和",
+      "topic": "sg_h2_math_topic_sequences_series",
+      "description": "Adding or subtracting series, distinguishing convergence from divergence, and interpreting a convergent infinite sum.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 2.1 Sequences and series"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.4 Series and Their Notations, printed pp.1124-1136"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_vector_operations_geometry",
+      "canonical_id": "pc_d4b7e2b6e2c8459d849405a8f6fc0b79",
+      "kind": "concept",
+      "name": "Geometric interpretation of vector operations",
+      "name_zh": "向量运算的几何解释",
+      "topic": "sg_h2_math_topic_vector_foundations",
+      "description": "Interpreting vector addition, subtraction and scalar multiplication geometrically in two and three dimensions.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: vectors, dot products, lengths, angles and components"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_vector_types_magnitude",
+      "canonical_id": "pc_621b21298876e61af0ada0dde5521dd6",
+      "kind": "concept",
+      "name": "Position and displacement vectors with point distance",
+      "name_zh": "位置、位移向量与两点距离",
+      "topic": "sg_h2_math_topic_vector_foundations",
+      "description": "Distinguishing position and displacement vectors and connecting their component difference to the distance between two points; magnitude, direction and unit-vector skills remain mapped to the existing canonical concept.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: vector components, lengths and directions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_collinearity_ratio",
+      "canonical_id": "pc_c4a9b18aaa8cac61cd5719c4de9d6879",
+      "kind": "concept",
+      "name": "Vector collinearity and ratio theorem",
+      "name_zh": "向量共线与比例定理",
+      "topic": "sg_h2_math_topic_vector_foundations",
+      "description": "Testing collinearity with vectors and using internal or external division ratios in geometric applications.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, collinearity; PDF p.8, ratio theorem, sub-topic 3.1"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: vector components and geometric vector reasoning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_point_line_plane_distance",
+      "canonical_id": "pc_44258dcc263e1037c0cac100f62afaa6",
+      "kind": "concept",
+      "name": "Perpendicular feet and point-to-line or plane distance",
+      "name_zh": "垂足及点到直线或平面的距离",
+      "topic": "sg_h2_math_topic_vector_geometry_3d",
+      "description": "Finding perpendicular feet and distances from a point to a line or plane using projections and vector equations.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Sessions 3, 8, 12, 15 and 16: projections, planes, lines and intersections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_relative_positions_3d",
+      "canonical_id": "pc_e6bc28a8a732ece9251e6d7d12525dee",
+      "kind": "concept",
+      "name": "Relative positions of lines and planes in three dimensions",
+      "name_zh": "三维直线与平面的相对位置",
+      "topic": "sg_h2_math_topic_vector_geometry_3d",
+      "description": "Classifying intersections, parallelism, coincidence, coplanarity and skewness for pairs of lines, a line and plane, or two planes.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Sessions 8, 12, 15 and 16: equations and intersections of lines and planes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_complex_extension_roots",
+      "canonical_id": "pc_24330767cc56747db538e56a7aaff4d4",
+      "kind": "concept",
+      "name": "Non-real roots of real-coefficient quadratic equations",
+      "name_zh": "实系数二次方程的非实根",
+      "topic": "sg_h2_math_topic_complex_foundations",
+      "description": "Solving real-coefficient quadratic equations with non-real roots; the number-system extension remains mapped to the existing complex-introduction canonical concept.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.1 and 3.6 Complex Numbers and Polynomial Zeros, printed pp.245-254 and 326-339"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_complex_mod_arg_conjugate",
+      "canonical_id": "pc_08a0b36d500f85a79ecd1a38f6cef808",
+      "kind": "concept",
+      "name": "Modulus and principal argument from Cartesian form",
+      "name_zh": "由笛卡尔形式求模与主辐角",
+      "topic": "sg_h2_math_topic_complex_foundations",
+      "description": "Finding modulus and principal argument directly from Cartesian form without requiring polar or exponential representation; conjugation remains mapped to the existing complex-arithmetic canonical concept.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.1 Complex Numbers, printed pp.245-254; complex plane, modulus and conjugates"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_conjugate_polynomial_roots",
+      "canonical_id": "pc_8b92b1da4df755ca8679ce69d4471470",
+      "kind": "concept",
+      "name": "Conjugate roots of real-coefficient polynomials",
+      "name_zh": "实系数多项式的共轭根",
+      "topic": "sg_h2_math_topic_complex_roots_geometry",
+      "description": "Using the conjugate-root theorem to identify or construct non-real roots of polynomials with real coefficients.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.6 Zeros of Polynomial Functions, printed pp.326-339"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_complex_geometric_effects",
+      "canonical_id": "pc_415bf497b8b12033e4f00630f6180261",
+      "kind": "concept",
+      "name": "Geometric effects of Cartesian complex operations",
+      "name_zh": "复数运算的几何效果",
+      "topic": "sg_h2_math_topic_complex_roots_geometry",
+      "description": "Interpreting conjugation, negation, addition, subtraction and multiplication by i as transformations in the Argand plane.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        },
+        {
+          "source_id": "src_mit_ocw_strang_calculus_ch9_2023",
+          "locator": "Chapter 9 §9.4, printed pp.425-426 (PDF pp.14-15): complex operations and vector geometry"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_derivative_graph_relations",
+      "canonical_id": "pc_4d08149f9dd7b5784cadd265396b01c3",
+      "kind": "concept",
+      "name": "Relations among a function and its derivative graphs",
+      "name_zh": "函数与导函数图像关系",
+      "topic": "sg_h2_math_topic_calculus_approximations",
+      "description": "Inferring the sign and qualitative behaviour of first and second derivatives from a function graph and conversely reconstructing function behaviour from derivative graphs.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.1 Differentiation"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part A, Sessions 27-28: curve sketching from first and second derivatives"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_series_approximations",
+      "canonical_id": "pc_155158921b82586ddb35fdb4e5be126e",
+      "kind": "concept",
+      "name": "Maclaurin and small-angle approximations",
+      "name_zh": "麦克劳林与小角近似",
+      "topic": "sg_h2_math_topic_calculus_approximations",
+      "description": "Using truncated Maclaurin series as local approximations, including the prescribed small-angle approximations and their range of validity.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.9, sub-topic 5.2 Maclaurin series"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 5 Part B, Sessions 98-99: Taylor series and approximation"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_separable_ode_solutions",
+      "canonical_id": "pc_3abc241a0eedef6ba58bf1ae2d6eb93a",
+      "kind": "concept",
+      "name": "Separable differential equations with initial conditions and substitution",
+      "name_zh": "含初值与给定换元的可分离微分方程",
+      "topic": "sg_h2_math_topic_differential_equations",
+      "description": "Finding general and particular solutions of separable first-order differential equations, including equations reduced to separable form by a given substitution.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part C, Sessions 39-40: introduction to differential equations and separation of variables"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_interpret_ode_solution",
+      "canonical_id": "pc_baed7089af5b006e15f04221326d2a5d",
+      "kind": "concept",
+      "name": "Interpreting differential equations and solutions in context",
+      "name_zh": "情境中解释微分方程及其解",
+      "topic": "sg_h2_math_topic_differential_equations",
+      "description": "Interpreting variables, initial conditions, solution behaviour and limitations of a differential-equation model in its problem context.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part C, Sessions 39-40 and worked examples on differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_counting_arrangements",
+      "canonical_id": "pc_eef96c990935a92e07a3e4f266c6d8b7",
+      "kind": "concept",
+      "name": "Restricted, repeated and circular arrangements",
+      "name_zh": "受限、重复与圆周排列",
+      "topic": "sg_h2_math_topic_counting_probability",
+      "description": "Applying addition and multiplication principles, permutations and combinations to linear or circular arrangements with restrictions or repeated objects.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.5 Counting Principles, printed pp.1137-1147"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_probability_representations",
+      "canonical_id": "pc_d087f482be941779c1774129f95c83cb",
+      "kind": "concept",
+      "name": "Probability representations and sample-space conversion",
+      "name_zh": "概率表示与样本空间转换",
+      "topic": "sg_h2_math_topic_counting_probability",
+      "description": "Organising and translating a probability problem among outcome tables, Venn diagrams, tree diagrams and counting representations.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.7 Probability, printed pp.1154-1164"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_normal_probabilities_parameters",
+      "canonical_id": "pc_d3fe5191e8f9cbcc11d138b2398d7d39",
+      "kind": "concept",
+      "name": "Normal probabilities and inverse parameter problems",
+      "name_zh": "正态概率与参数反求",
+      "topic": "sg_h2_math_topic_normal_moments",
+      "description": "Using standardisation and symmetry to calculate normal probabilities and solve inverse problems for thresholds, means or standard deviations.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_linear_transform_moments",
+      "canonical_id": "pc_6e5628aaaaa688905edfcdb9e9bd31de",
+      "kind": "concept",
+      "name": "Expectation and variance under an affine transformation",
+      "name_zh": "随机变量线性变换的期望与方差",
+      "topic": "sg_h2_math_topic_normal_moments",
+      "description": "Applying E(aX+b)=aE(X)+b and Var(aX+b)=a²Var(X) to a transformed random variable.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 Notes 16-17: Random Variables I (Distribution and Expectation) and II (Variance and Covariance)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_independent_sum_moments",
+      "canonical_id": "pc_b6ae379a519add3186b6f9563641f292",
+      "kind": "concept",
+      "name": "Moments of independent linear combinations",
+      "name_zh": "独立随机变量线性组合的期望与方差",
+      "topic": "sg_h2_math_topic_normal_moments",
+      "description": "Computing expectation and variance of aX+bY when X and Y are independent, including the absence of a covariance term.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 Notes 16-17: Random Variables I (Distribution and Expectation) and II (Variance and Covariance)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_hypothesis_test_concepts",
+      "canonical_id": "pc_1b57223154105f385a53683ed93b8917",
+      "kind": "concept",
+      "name": "Hypothesis-test concepts, critical regions and p-values",
+      "name_zh": "假设检验概念、临界域与 p 值",
+      "topic": "sg_h2_math_topic_hypothesis_testing",
+      "description": "Relating null and alternative hypotheses, test statistics, critical values and regions, significance levels and p-values.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.1 and 9.4, printed pp.462-463 and 467-468"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_one_mean_hypothesis_test",
+      "canonical_id": "pc_0c7cea3a120654ca950f6328bada7f29",
+      "kind": "concept",
+      "name": "One-sample tests for a population mean",
+      "name_zh": "单总体均值假设检验",
+      "topic": "sg_h2_math_topic_hypothesis_testing",
+      "description": "Formulating and performing a one-sample mean test for a normal population with known variance or a large sample from any population.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.3 and 9.6, printed pp.466 and 483-485"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_one_two_tailed_tests",
+      "canonical_id": "pc_f415daef0495c59dcc47d3019cc79bc6",
+      "kind": "concept",
+      "name": "One-tailed and two-tailed hypothesis tests",
+      "name_zh": "单尾与双尾假设检验",
+      "topic": "sg_h2_math_topic_hypothesis_testing",
+      "description": "Selecting a one- or two-tailed test from the alternative hypothesis and allocating the critical region consistently.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.1 and 9.4-9.5, printed pp.462-463 and 467-482"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_interpret_hypothesis_result",
+      "canonical_id": "pc_5199b5ff650e904e87b0e95d4228f807",
+      "kind": "concept",
+      "name": "Interpreting hypothesis-test decisions in context",
+      "name_zh": "情境中解释假设检验结论",
+      "topic": "sg_h2_math_topic_statistical_interpretation",
+      "description": "Expressing reject or do-not-reject decisions in the problem context without claiming proof or introducing excluded error terminology.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.4-9.5 Rare Events, Decision and Full Examples, printed pp.467-482"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_scatter_linear_plausibility",
+      "canonical_id": "pc_e509f13c1e239978b74733175b7f064c",
+      "kind": "concept",
+      "name": "Scatter plots and plausibility of a linear relationship",
+      "name_zh": "散点图与线性关系合理性",
+      "topic": "sg_h2_math_topic_statistical_interpretation",
+      "description": "Using the form, direction and anomalies of a scatter plot to judge whether a linear relationship is plausible.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §12.2 Scatter Plots, printed pp.620-622"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_pmcc_interpretation",
+      "canonical_id": "pc_ad7a1774c52a28bad236b9cd642c8867",
+      "kind": "concept",
+      "name": "Product-moment correlation coefficient interpretation",
+      "name_zh": "积矩相关系数解释",
+      "topic": "sg_h2_math_topic_statistical_interpretation",
+      "description": "Interpreting a product-moment correlation coefficient as the direction and strength of linear fit, especially near -1, 0 and 1.",
+      "default_order": 3,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.3-12.4 Regression and Correlation, printed pp.623-634"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_least_squares_regression",
+      "canonical_id": "pc_8c40d58addedb33cf22ac1efd9905af4",
+      "kind": "concept",
+      "name": "Least-squares regression for bivariate data",
+      "name_zh": "二元数据最小二乘回归",
+      "topic": "sg_h2_math_topic_regression",
+      "description": "Finding and interpreting the least-squares regression line for two variables by minimising the sum of squared residuals.",
+      "default_order": 1,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §12.3 The Regression Equation, printed pp.623-630"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "sg_h2_math_transform_to_linearity",
+      "canonical_id": "pc_e36b98906e813a98f82ca4c1f2f8a68c",
+      "kind": "concept",
+      "name": "Transforming variables to achieve linearity",
+      "name_zh": "变量变换实现线性化",
+      "topic": "sg_h2_math_topic_regression",
+      "description": "Applying square, reciprocal or logarithmic transformations and fitting a line to determine parameters of a non-linear relationship.",
+      "default_order": 2,
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.4 and 4.7 Fitting and Modeling, printed pp.220-232 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ],
+  "edges": [
+    {
+      "from": "sg_h2_math_vector_operations_geometry",
+      "to": "sg_h2_math_collinearity_ratio",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "向量共线与分点计算建立在加减和数乘的几何解释之上。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: vectors, dot products, lengths, angles and components"
+        },
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, collinearity; PDF p.8, ratio theorem, sub-topic 3.1"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: vector components and geometric vector reasoning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_vector_operations_geometry",
+      "to": "sg_h2_math_point_line_plane_distance",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "投影和距离算法需要能正确组合与缩放向量。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.7, sub-topic 3.1 Basic properties of vectors"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Part A, Sessions 1-4: vectors, dot products, lengths, angles and components"
+        },
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 3.3 Three-dimensional vector geometry"
+        },
+        {
+          "source_id": "src_mit_ocw_18_02sc_fall_2010",
+          "locator": "Unit 1 Sessions 3, 8, 12, 15 and 16: projections, planes, lines and intersections"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_complex_extension_roots",
+      "to": "sg_h2_math_conjugate_polynomial_roots",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "使用实系数多项式共轭根定理前，需要先能求二次方程的非实根并识别共轭对。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.8, sub-topic 4.1 Complex numbers in cartesian form and Argand diagrams"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§3.1 and 3.6 Complex Numbers and Polynomial Zeros, printed pp.245-254 and 326-339"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §3.6 Zeros of Polynomial Functions, printed pp.326-339"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_separable_ode_solutions",
+      "to": "sg_h2_math_interpret_ode_solution",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释微分方程解的情境含义需要先能求出通解和满足初值的特解。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.10, sub-topic 5.5 Differential equations"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part C, Sessions 39-40: introduction to differential equations and separation of variables"
+        },
+        {
+          "source_id": "src_mit_ocw_18_01sc_fall_2010",
+          "locator": "Unit 2 Part C, Sessions 39-40 and worked examples on differential equations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_counting_arrangements",
+      "to": "sg_h2_math_probability_representations",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "使用排列组合构造概率表示需要先能准确计数受限样本空间。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.11, sub-topic 6.1 Probability"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.5 Counting Principles, printed pp.1137-1147"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §11.7 Probability, printed pp.1154-1164"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_normal_probabilities_parameters",
+      "to": "sg_h2_math_one_mean_hypothesis_test",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "已知方差总体均值检验需要先能进行正态标准化和反向概率判断。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§6.1-6.2 The Standard Normal Distribution and Using the Normal Distribution, printed pp.336-346"
+        },
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.3 and 9.6, printed pp.466 and 483-485"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_linear_transform_moments",
+      "to": "sg_h2_math_independent_sum_moments",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "计算独立随机变量线性组合的矩需要先掌握单个随机变量仿射变换的期望与方差法则。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.12, sub-topic 6.3 Normal distribution"
+        },
+        {
+          "source_id": "src_berkeley_cs70_summer_2026",
+          "locator": "Summer 2026 Notes 16-17: Random Variables I (Distribution and Expectation) and II (Variance and Covariance)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_hypothesis_test_concepts",
+      "to": "sg_h2_math_one_two_tailed_tests",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "选择检验尾部和临界域需要先理解假设、显著性水平与 p 值。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.1 and 9.4, printed pp.462-463 and 467-468"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.1 and 9.4-9.5, printed pp.462-463 and 467-482"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_one_two_tailed_tests",
+      "to": "sg_h2_math_one_mean_hypothesis_test",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "执行总体均值检验前需要依据备择假设确定单尾或双尾程序。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.1 and 9.4-9.5, printed pp.462-463 and 467-482"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.3 and 9.6, printed pp.466 and 483-485"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_one_mean_hypothesis_test",
+      "to": "sg_h2_math_interpret_hypothesis_result",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释检验结论需要先正确完成检验并得到拒绝或不拒绝决策。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.5 Hypothesis testing"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.3 and 9.6, printed pp.466 and 483-485"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§9.4-9.5 Rare Events, Decision and Full Examples, printed pp.467-482"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_scatter_linear_plausibility",
+      "to": "sg_h2_math_pmcc_interpretation",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "解释相关系数前应先确认散点图中线性关系是否合理。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §12.2 Scatter Plots, printed pp.620-622"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §§12.3-12.4 Regression and Correlation, printed pp.623-634"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "from": "sg_h2_math_least_squares_regression",
+      "to": "sg_h2_math_transform_to_linearity",
+      "type": "prereq",
+      "strength": "soft",
+      "reason": "用变量变换实现线性化后拟合参数，需要先理解最小二乘回归线。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_math_9758_2026",
+          "locator": "PDF p.13, sub-topic 6.6 Correlation and linear regression"
+        },
+        {
+          "source_id": "src_openstax_introductory_statistics_2e_2026",
+          "locator": "PDF §12.3 The Regression Equation, printed pp.623-630"
+        },
+        {
+          "source_id": "src_openstax_precalculus_2e_2026",
+          "locator": "PDF §§2.4 and 4.7 Fitting and Modeling, printed pp.220-232 and 484-502"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

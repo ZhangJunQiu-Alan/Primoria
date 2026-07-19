@@ -1,0 +1,2090 @@
+{
+  "schema_version": "3.0.0",
+  "content_version": "0.4.0",
+  "mapping_set_id": "cms_sg_seab_h2_biology_9477_2026_outcomes",
+  "framework_id": "cfw_sg_seab_h2_biology_9477_2026_outcomes",
+  "curriculum_id": "cur_sg_seab_h2_biology_9477_2026",
+  "subject": "Biology",
+  "source_ids": [
+    "src_sg_seab_h2_biology_9477_2026"
+  ],
+  "mapping_scope": "outcome_coverage",
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.3.0",
+      "date": "2026-07-19",
+      "summary_zh": "逐项映射 101 项内容成果，另外分流 7 项实验能力，并保守登记真实概念缺口。"
+    },
+    {
+      "version": "0.4.0",
+      "date": "2026-07-19",
+      "summary_zh": "将 45 项 H2 生物缺口解析为 42 个概念；101 项内容成果全部达到 full，7 项通用实验能力保持 excluded。"
+    }
+  ],
+  "mappings": [
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_a",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_a",
+      "canonical_ids": [
+        "pc_fbf734590d69356e6620de58900890b7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_fbf734590d69356e6620de58900890b7 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_b",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_b",
+      "canonical_ids": [
+        "pc_d5815de3434dae31f62e356dddae9f85",
+        "pc_cb341a51c60bb212ac55750a84630c03"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_c",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_c",
+      "canonical_ids": [
+        "pc_cb341a51c60bb212ac55750a84630c03"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_d",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_d",
+      "canonical_ids": [
+        "pc_73b46a23c7b4bbe42eefc3cac483d36a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_e",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_e",
+      "canonical_ids": [
+        "pc_a5f0cc3dc0636e18a4fef67d49bec23e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_f",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_f",
+      "canonical_ids": [
+        "pc_6dc6738077c8e4b6d5ce05c88301b7f1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_6dc6738077c8e4b6d5ce05c88301b7f1 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_g",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_g",
+      "canonical_ids": [
+        "pc_fa5e5c389a8f790944f2e6049357654b",
+        "pc_d2d44c20526a3ef06addda76bd0c3a1a",
+        "pc_a25a3778f32928001d458246f6e48696",
+        "pc_e6ccc14f032828a2848774a7431ee682"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_h",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_h",
+      "canonical_ids": [
+        "pc_fa5e5c389a8f790944f2e6049357654b",
+        "pc_d2d44c20526a3ef06addda76bd0c3a1a",
+        "pc_a25a3778f32928001d458246f6e48696",
+        "pc_e6ccc14f032828a2848774a7431ee682"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.12, topic 1 The Cell and Biomolecules of Life, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_i",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_i",
+      "canonical_ids": [
+        "pc_d2d44c20526a3ef06addda76bd0c3a1a",
+        "pc_a25a3778f32928001d458246f6e48696"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_j",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_j",
+      "canonical_ids": [
+        "pc_5ff2cda97c05cbe449e6d6bcff0c0834"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_k",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_k",
+      "canonical_ids": [
+        "pc_5ff2cda97c05cbe449e6d6bcff0c0834"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_l",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_l",
+      "canonical_ids": [
+        "pc_c2e6fec2c47cd86ee9b8726b908a7a8b",
+        "pc_0e1132fcaae68d745353f67bc9411890",
+        "pc_1264ba133e13ba77487296037ce4c00e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_m",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_m",
+      "canonical_ids": [
+        "pc_e6ccc14f032828a2848774a7431ee682"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_n",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_n",
+      "canonical_ids": [
+        "pc_e6ccc14f032828a2848774a7431ee682"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_o",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_o",
+      "canonical_ids": [
+        "pc_fe4116678178832b32b28ac69f4a3068",
+        "pc_11471626c86cc0bd6446e054bb89757f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_p",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_p",
+      "canonical_ids": [
+        "pc_eb22ca391770b29f75a2f022a09e31af"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (p)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_q",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_q",
+      "canonical_ids": [
+        "pc_564bc6d850ae2725515787c450597c10"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (q)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_r",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_r",
+      "canonical_ids": [
+        "pc_7c23b0b8f83f4faeae423854bbff0d4c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (r)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_s",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_s",
+      "canonical_ids": [
+        "pc_7c23b0b8f83f4faeae423854bbff0d4c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (s)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_t",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_t",
+      "canonical_ids": [
+        "pc_135065621595f495cc5dbad83d71a736"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_135065621595f495cc5dbad83d71a736 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (t)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_1_u",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_1_u",
+      "canonical_ids": [
+        "pc_221d25cb3f73143fcd2b69d321f352b0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_221d25cb3f73143fcd2b69d321f352b0 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.13, topic 1 The Cell and Biomolecules of Life, outcome (u)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_a",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_a",
+      "canonical_ids": [
+        "pc_6a00c0df14c5b18459964bd5ccb5c243",
+        "pc_7c8644ecf9e964364af575d584241cf8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_b",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_b",
+      "canonical_ids": [
+        "pc_592815451c087a8d756c14e831e52d9c"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_592815451c087a8d756c14e831e52d9c 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_c",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_c",
+      "canonical_ids": [
+        "pc_7674a139c06bd613155a2e3818756eb6",
+        "pc_5f5a971454fc73259add3a98f4ad69cd"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_d",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_d",
+      "canonical_ids": [
+        "pc_537aba421c041ae37f65cd32932fec27"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_537aba421c041ae37f65cd32932fec27 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_e",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_e",
+      "canonical_ids": [
+        "pc_ae6cc43dff9fb9761d5d4726b4a09b99"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_ae6cc43dff9fb9761d5d4726b4a09b99 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_f",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_f",
+      "canonical_ids": [
+        "pc_83b60c915b393962bc20085ab5ed558a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_83b60c915b393962bc20085ab5ed558a 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_g",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_g",
+      "canonical_ids": [
+        "pc_ca343b4bd2c01e20b01d5e64c3cecaec"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_ca343b4bd2c01e20b01d5e64c3cecaec 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_h",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_h",
+      "canonical_ids": [
+        "pc_db3e62fe08b80340a769dc3839070f1e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_db3e62fe08b80340a769dc3839070f1e 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.14, topic 2 Genetics and Inheritance, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_i",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_i",
+      "canonical_ids": [
+        "pc_7e223bfc05f6ec9124d8aee5193decc1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_7e223bfc05f6ec9124d8aee5193decc1 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_j",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_j",
+      "canonical_ids": [
+        "pc_c83a8b007ebf17728bb76b2ece193f67"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_c83a8b007ebf17728bb76b2ece193f67 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_k",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_k",
+      "canonical_ids": [
+        "pc_aa917911c35a5a84a131d3c4b99b89af",
+        "pc_86f481ac1e4983f5844e9bf459df5d7e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_l",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_l",
+      "canonical_ids": [
+        "pc_aa917911c35a5a84a131d3c4b99b89af"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_m",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_m",
+      "canonical_ids": [
+        "pc_5ee270f8ca4283376f94e53152f85c08"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_5ee270f8ca4283376f94e53152f85c08 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_n",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_n",
+      "canonical_ids": [
+        "pc_e8a318724c6c8e8096b98fc763ca69c6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_o",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_o",
+      "canonical_ids": [
+        "pc_499991bf33c64eba5ad5578e4807fcc1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_499991bf33c64eba5ad5578e4807fcc1 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_p",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_p",
+      "canonical_ids": [
+        "pc_499991bf33c64eba5ad5578e4807fcc1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_499991bf33c64eba5ad5578e4807fcc1 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (p)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_q",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_q",
+      "canonical_ids": [
+        "pc_bd589da3ada63146c5f5b029f0064d07"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_bd589da3ada63146c5f5b029f0064d07 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (q)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_r",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_r",
+      "canonical_ids": [
+        "pc_9763501544d8bfe2340c69f5168122ef"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_9763501544d8bfe2340c69f5168122ef 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (r)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_s",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_s",
+      "canonical_ids": [
+        "pc_9a64e0d9f35ef30bda722f5b7364e0c4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (s)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_t",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_t",
+      "canonical_ids": [
+        "pc_9a64e0d9f35ef30bda722f5b7364e0c4",
+        "pc_592a494ab52d102d4cb731b24a77b320"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (t)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_u",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_u",
+      "canonical_ids": [
+        "pc_0a20187ab8711d84834ffc5e887d019b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (u)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_v",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_v",
+      "canonical_ids": [
+        "pc_f90fa4062e2970091368eb5d22919cf4"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (v)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_w",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_w",
+      "canonical_ids": [
+        "pc_0a20187ab8711d84834ffc5e887d019b",
+        "pc_592a494ab52d102d4cb731b24a77b320"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.15, topic 2 Genetics and Inheritance, outcome (w)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_x",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_x",
+      "canonical_ids": [
+        "pc_0a20187ab8711d84834ffc5e887d019b",
+        "pc_cf480d2c17869e9f06f3980b2bd57ea2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (x)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_y",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_y",
+      "canonical_ids": [
+        "pc_0a20187ab8711d84834ffc5e887d019b"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (y)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_z",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_z",
+      "canonical_ids": [
+        "pc_cf480d2c17869e9f06f3980b2bd57ea2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (z)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_aa",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_aa",
+      "canonical_ids": [
+        "pc_8e4f9fe204596ba3cffe0a866b752acc"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_8e4f9fe204596ba3cffe0a866b752acc 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (aa)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_bb",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_bb",
+      "canonical_ids": [
+        "pc_26342a7db434bca7f388ae17a9185c9f"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_26342a7db434bca7f388ae17a9185c9f 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (bb)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_cc",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_cc",
+      "canonical_ids": [
+        "pc_592a494ab52d102d4cb731b24a77b320"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (cc)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_2_dd",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_2_dd",
+      "canonical_ids": [
+        "pc_c19d99d4e72b2403c4a171b6d31c3c94"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.16, topic 2 Genetics and Inheritance, outcome (dd)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_a",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_a",
+      "canonical_ids": [
+        "pc_cb341a51c60bb212ac55750a84630c03"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_b",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_b",
+      "canonical_ids": [
+        "pc_977c5f3889a072ba8904338b9ddf03a7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_c",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_c",
+      "canonical_ids": [
+        "pc_04f61e525cd19d1f02e6846892d426c8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_d",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_d",
+      "canonical_ids": [
+        "pc_4b41c3d012fb26c23a16100b7cbafcd5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_e",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_e",
+      "canonical_ids": [
+        "pc_b86d98177d0cea6644418b8e93b142b0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_f",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_f",
+      "canonical_ids": [
+        "pc_2fbda0110630d41f4792066ddae82f27"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_g",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_g",
+      "canonical_ids": [
+        "pc_ae13d4aab464e4aaeeb019b31d5433b1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_h",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_h",
+      "canonical_ids": [
+        "pc_f9019fae31d0d89640aa7147bd1511ba"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_i",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_i",
+      "canonical_ids": [
+        "pc_5a0f5971baa0deb8b3f7f7b3d2718a86"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_j",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_j",
+      "canonical_ids": [
+        "pc_5a0f5971baa0deb8b3f7f7b3d2718a86"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_k",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_k",
+      "canonical_ids": [
+        "pc_2fbda0110630d41f4792066ddae82f27",
+        "pc_ae13d4aab464e4aaeeb019b31d5433b1",
+        "pc_f9019fae31d0d89640aa7147bd1511ba",
+        "pc_5a0f5971baa0deb8b3f7f7b3d2718a86"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_l",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_l",
+      "canonical_ids": [
+        "pc_04f61e525cd19d1f02e6846892d426c8",
+        "pc_f9019fae31d0d89640aa7147bd1511ba"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.17, topic 3 Energy and Equilibrium, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_m",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_m",
+      "canonical_ids": [
+        "pc_3ac937bdebb4ad7797e85cc8b7d9f724"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_3ac937bdebb4ad7797e85cc8b7d9f724 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_n",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_n",
+      "canonical_ids": [
+        "pc_89fe9703885466be0c72a2bd8ff474d1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_89fe9703885466be0c72a2bd8ff474d1 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_o",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_o",
+      "canonical_ids": [
+        "pc_4e374f5b44ab4f7b3b4f0fe61343d1a7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_4e374f5b44ab4f7b3b4f0fe61343d1a7 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (o)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_3_p",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_3_p",
+      "canonical_ids": [
+        "pc_de08a6e55637e2602e66ed4106e226c5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_de08a6e55637e2602e66ed4106e226c5 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.18, topic 3 Energy and Equilibrium, outcome (p)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_a",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_a",
+      "canonical_ids": [
+        "pc_592a494ab52d102d4cb731b24a77b320",
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_b",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_b",
+      "canonical_ids": [
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_c",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_c",
+      "canonical_ids": [
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_d",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_d",
+      "canonical_ids": [
+        "pc_a87eb54cbeafebfc2ba275effe0eaa14",
+        "pc_f0a830e611bfffffd41f5757e75d4804"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_e",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_e",
+      "canonical_ids": [
+        "pc_24f7468eb16b3deb8939b301b540fa6d"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_24f7468eb16b3deb8939b301b540fa6d 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_f",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_f",
+      "canonical_ids": [
+        "pc_bd1067e6725705e4fdfa03eea740a3ca"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_bd1067e6725705e4fdfa03eea740a3ca 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_g",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_g",
+      "canonical_ids": [
+        "pc_bc4e3b704ae858690db84875134dd94a"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_bc4e3b704ae858690db84875134dd94a 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_h",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_h",
+      "canonical_ids": [
+        "pc_4e68c5823f659e70812a25fdd648eb6e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_4e68c5823f659e70812a25fdd648eb6e 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_i",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_i",
+      "canonical_ids": [
+        "pc_71fd336e183a13297655fa7d7be1aa3e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_j",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_j",
+      "canonical_ids": [
+        "pc_1ff54d59bd08ce31d146088b725569e6"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_k",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_k",
+      "canonical_ids": [
+        "pc_39ea2f145fd0890bf614289d08b77ce3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_39ea2f145fd0890bf614289d08b77ce3 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_l",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_l",
+      "canonical_ids": [
+        "pc_39ea2f145fd0890bf614289d08b77ce3"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_39ea2f145fd0890bf614289d08b77ce3 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (l)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_m",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_m",
+      "canonical_ids": [
+        "pc_f0a830e611bfffffd41f5757e75d4804"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (m)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_4_n",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_4_n",
+      "canonical_ids": [
+        "pc_f0a830e611bfffffd41f5757e75d4804"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.19, topic 4 Biological Evolution, outcome (n)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_a",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_a",
+      "canonical_ids": [
+        "pc_94f54f11e23c1c3e407c8036fb6321b6",
+        "pc_b396f7788c77baeecc089eeec83538e5"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_b",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_b",
+      "canonical_ids": [
+        "pc_d936b5538a6e6efea0a86a5c61d4e7f8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_d936b5538a6e6efea0a86a5c61d4e7f8 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_c",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_c",
+      "canonical_ids": [
+        "pc_4e3f76f101debb1e241b0bab776e4cf1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_d",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_d",
+      "canonical_ids": [
+        "pc_ba9ef4894326b03822a9ce369153bdf1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_ba9ef4894326b03822a9ce369153bdf1 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_e",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_e",
+      "canonical_ids": [
+        "pc_2a1d5be94da2719c6b406a95faba674e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_2a1d5be94da2719c6b406a95faba674e 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_f",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_f",
+      "canonical_ids": [
+        "pc_2a1d5be94da2719c6b406a95faba674e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_2a1d5be94da2719c6b406a95faba674e 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_g",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_g",
+      "canonical_ids": [
+        "pc_2764b729ab7775f74e2d91a89df45cb7"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_2764b729ab7775f74e2d91a89df45cb7 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_h",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_h",
+      "canonical_ids": [
+        "pc_8110548193b005037315e0b115ce5fd8"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_i",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_i",
+      "canonical_ids": [
+        "pc_cd2b7974451c31f7abce21cc90110697"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "现有统一 KG 中存在范围与 H2 诊断粒度相符的概念，可直接复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_j",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_j",
+      "canonical_ids": [
+        "pc_ce2b49c3c95511238c3d7aab749233e1"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_ce2b49c3c95511238c3d7aab749233e1 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (j)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_a_k",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_a_k",
+      "canonical_ids": [
+        "pc_82bbf3cc11d075387a78803f6848b7d2"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_82bbf3cc11d075387a78803f6848b7d2 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.20, topic A Infectious Diseases, outcome (k)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_b_a",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_a",
+      "canonical_ids": [
+        "pc_319573f1dca6e679a2190e2a0cb2fa47"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_319573f1dca6e679a2190e2a0cb2fa47 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (a)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_b_b",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_b",
+      "canonical_ids": [
+        "pc_2749a18428b999a138d50408dbe6ade0"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_2749a18428b999a138d50408dbe6ade0 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (b)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_b_c",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_c",
+      "canonical_ids": [
+        "pc_a0e33d77e9874ae332cc68f48f6afcad"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_a0e33d77e9874ae332cc68f48f6afcad 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (c)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_b_d",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_d",
+      "canonical_ids": [
+        "pc_4f4af16b906ef8ca4809dbec4bbe1cae"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_4f4af16b906ef8ca4809dbec4bbe1cae 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (d)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_b_e",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_e",
+      "canonical_ids": [
+        "pc_ac5535dab2f267fa369064b9b6c18143"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_ac5535dab2f267fa369064b9b6c18143 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (e)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_b_f",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_f",
+      "canonical_ids": [
+        "pc_6ecac9d7cebd37963fde0acddff3be22"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_6ecac9d7cebd37963fde0acddff3be22 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (f)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_b_g",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_g",
+      "canonical_ids": [
+        "pc_8c1f65f463454e88852c30db0397bf45"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_8c1f65f463454e88852c30db0397bf45 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (g)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_b_h",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_h",
+      "canonical_ids": [
+        "pc_e15b0826aa2278c39f7c816e8ec8dddb"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_e15b0826aa2278c39f7c816e8ec8dddb 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (h)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_b_i",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_b_i",
+      "canonical_ids": [
+        "pc_6b8c57b0c399f1e72abda5b9a54c7c2e"
+      ],
+      "coverage_status": "full",
+      "relation": "required",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "概念边界与官方 outcome 对齐，由 pc_6b8c57b0c399f1e72abda5b9a54c7c2e 完整覆盖；新增节点仍待项目所有者批准。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.21, topic B Impact of Climate Change on Animals and Plants, outcome (i)"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_planning",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_planning",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是实验实践能力，进入教学与评测知识层，不作为生物学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, Planning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_risk",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_risk",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是实验实践能力，进入教学与评测知识层，不作为生物学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, Planning"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_manipulation_measurement",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_manipulation_measurement",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是实验实践能力，进入教学与评测知识层，不作为生物学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, MMO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_data_presentation",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_data_presentation",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是实验实践能力，进入教学与评测知识层，不作为生物学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, PDO"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_analysis",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_analysis",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是实验实践能力，进入教学与评测知识层，不作为生物学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_conclusion_prediction",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_conclusion_prediction",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是实验实践能力，进入教学与评测知识层，不作为生物学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "mapping_id": "map_sg_h2_biology_9477_2026_o_practice_evaluation_improvement",
+      "requirement_id": "req_sg_h2_biology_9477_2026_o_practice_evaluation_improvement",
+      "canonical_ids": [],
+      "coverage_status": "excluded",
+      "relation": "not_applicable",
+      "mapping_basis": "semantic_inference",
+      "confidence": "high",
+      "rationale_zh": "这是实验实践能力，进入教学与评测知识层，不作为生物学概念掌握度。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_seab_h2_biology_9477_2026",
+          "locator": "PDF p.22, Practical Assessment, ACE"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

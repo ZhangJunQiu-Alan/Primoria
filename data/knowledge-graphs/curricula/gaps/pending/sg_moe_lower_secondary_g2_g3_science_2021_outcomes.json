@@ -1,0 +1,1350 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "gap_set_id": "cgs_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
+  "framework_id": "cfw_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
+  "curriculum_id": "cur_sg_moe_lower_secondary_g2_g3_science_2021",
+  "subject": "Science",
+  "source_ids": [
+    "src_sg_moe_lower_secondary_g2_g3_science_2021"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "逐条记录 80 项知识成果中的 partial 与 unmapped 缺口；实践和价值要求不作为 KG 缺口。"
+    }
+  ],
+  "candidates": [
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_2_observable_measurable_physical_properties",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_2_observable_measurable_physical_properties"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Observable and measurable physical properties",
+      "proposed_name_zh": "可观察与可测量的物理性质",
+      "scope_zh": "描述导电性、导热性、熔沸点、密度以及材料强度、硬度和柔韧性等物理性质。（其中强度、硬度和柔韧性对 G2 可选；其余部分对 G2 和 G3 均在范围内。）",
+      "existing_canonical_ids": [
+        "pc_4405d9d25f9715d1d5862ce1888d71bc"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_2_mass_volume_density_relation",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_2_mass_volume_density_relation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Mass, volume and density",
+      "proposed_name_zh": "质量、体积与密度关系",
+      "scope_zh": "说明质量和体积如何共同影响密度。",
+      "existing_canonical_ids": [
+        "pc_4405d9d25f9715d1d5862ce1888d71bc"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_elements_building_blocks",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_elements_building_blocks"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Elements as building blocks of matter",
+      "proposed_name_zh": "元素是物质的基本构成",
+      "scope_zh": "说明元素是生物与非生物物质的基本构成。",
+      "existing_canonical_ids": [
+        "pc_75b3836fc0d83d4b0cdc346c8ac5d125"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_element_types_periodic_table",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_element_types_periodic_table"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Types of elements in the Periodic Table",
+      "proposed_name_zh": "周期表中的元素类型",
+      "scope_zh": "认识周期表中有不同类型的元素，例如金属与非金属。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_compound_definition",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_compound_definition"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Compounds as chemically combined elements",
+      "proposed_name_zh": "化合物由元素化学结合形成",
+      "scope_zh": "说明化合物由两种或以上元素化学结合而成。",
+      "existing_canonical_ids": [
+        "pc_75b3836fc0d83d4b0cdc346c8ac5d125"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_compound_properties",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_compound_properties"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Properties of compounds and constituent elements",
+      "proposed_name_zh": "化合物与组成元素的性质差异",
+      "scope_zh": "说明化合物的性质不同于组成它的元素。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_mixture_definition",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_mixture_definition"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Mixtures are not chemically combined",
+      "proposed_name_zh": "混合物未经化学结合",
+      "scope_zh": "说明混合物由两种或以上未发生化学结合的元素和/或化合物组成。",
+      "existing_canonical_ids": [
+        "pc_75b3836fc0d83d4b0cdc346c8ac5d125"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_mixture_constituent_properties",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_mixture_constituent_properties"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Mixtures retain constituent properties",
+      "proposed_name_zh": "混合物保留组分性质",
+      "scope_zh": "说明混合物表现其各组分的性质。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_solute_solvent_solution",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_solute_solvent_solution"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Solute, solvent and solution",
+      "proposed_name_zh": "溶质、溶剂与溶液",
+      "scope_zh": "区分溶质、溶剂和溶液。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_3_solutions_suspensions_mixtures",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_solutions_suspensions_mixtures"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Solutions and suspensions as mixtures",
+      "proposed_name_zh": "溶液与悬浊液属于混合物",
+      "scope_zh": "说明溶液和悬浊液都属于混合物。",
+      "existing_canonical_ids": [
+        "pc_beb45d013bb8fe55d38730f8c8caf40e"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_4_separation_by_properties",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_4_separation_by_properties"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Separating mixtures by physical properties",
+      "proposed_name_zh": "依据物理性质分离混合物",
+      "scope_zh": "解释如何用磁吸、过滤、蒸发、蒸馏和纸色谱按性质分离混合物组分。",
+      "existing_canonical_ids": [
+        "pc_c4dd935c7ad3b4429321fa1c103185a4"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_4_separation_applications",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_4_separation_applications"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Applications of separation techniques",
+      "proposed_name_zh": "分离技术的生活与工业应用",
+      "scope_zh": "说明分离技术在水处理、食品安全和废物管理等生活与工业情境中的应用。（其中反渗透示例对 G2 可选；其余部分对 G2 和 G3 均在范围内。）",
+      "existing_canonical_ids": [
+        "pc_c4dd935c7ad3b4429321fa1c103185a4"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_ray_model_path",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_5_ray_model_path"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Ray model as the path of light",
+      "proposed_name_zh": "射线模型表示光的路径",
+      "scope_zh": "说明射线模型表示光传播所经过的路径。",
+      "existing_canonical_ids": [
+        "pc_baa60c957b8bd7b6c51f2aca82fea230"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_reflecting_surfaces_effects_uses",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_5_reflecting_surfaces_effects_uses"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Effects and uses of reflecting surfaces",
+      "proposed_name_zh": "反射面的效果与用途",
+      "scope_zh": "描述平面和曲面反射面的效果与用途。",
+      "existing_canonical_ids": [
+        "pc_baa60c957b8bd7b6c51f2aca82fea230"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_smooth_rough_reflection",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_5_smooth_rough_reflection"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Reflection from smooth and rough surfaces",
+      "proposed_name_zh": "光滑与粗糙表面的反射",
+      "scope_zh": "用射线模型解释光滑与粗糙表面对反射的影响。",
+      "existing_canonical_ids": [
+        "pc_baa60c957b8bd7b6c51f2aca82fea230"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_refraction_speed_media",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_5_refraction_speed_media"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Refraction from speed change between media",
+      "proposed_name_zh": "介质中光速变化导致折射",
+      "scope_zh": "说明光在不同介质中速度改变可导致折射，不要求角度计算。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [
+        "pc_f2190132d4ec3c5684fa2dc0daf6888a"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_refraction_effects",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_5_refraction_effects"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Effects of refraction",
+      "proposed_name_zh": "折射现象的效果",
+      "scope_zh": "描述若干折射造成的可观察效果。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [
+        "pc_f2190132d4ec3c5684fa2dc0daf6888a"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_5_white_light_dispersion",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_5_white_light_dispersion"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Dispersion of white light by a prism",
+      "proposed_name_zh": "棱镜对白光的色散",
+      "scope_zh": "用射线模型描述棱镜使白光发生色散。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_6_typical_cell_part_functions",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_6_typical_cell_part_functions"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Functions of parts of a typical cell",
+      "proposed_name_zh": "典型细胞各部分的功能",
+      "scope_zh": "说明细胞壁、细胞膜、细胞质、细胞核、液泡和叶绿体等结构的功能，并认识细胞核含可遗传的 DNA。",
+      "existing_canonical_ids": [
+        "pc_cb341a51c60bb212ac55750a84630c03",
+        "pc_4968ce1f12aa3d8827a46863b03b81d2"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_6_cells_tissues_organs_systems",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_6_cells_tissues_organs_systems"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Cells, tissues, organs and systems",
+      "proposed_name_zh": "细胞、组织、器官与系统层级",
+      "scope_zh": "说明多细胞生物由细胞组成组织、器官和系统。",
+      "existing_canonical_ids": [
+        "pc_169fad745be0c7b18694394af7fb06fe"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_6_cellular_division_of_labour",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_6_cellular_division_of_labour"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Division of labour among cells",
+      "proposed_name_zh": "细胞层级的分工",
+      "scope_zh": "解释多细胞生物中细胞分工的重要性。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [
+        "pc_603e03befcc0fac76e8a059261559f56"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_7_particulate_model_random_motion",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_7_particulate_model_random_motion"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Particulate model and random motion",
+      "proposed_name_zh": "粒子模型与随机运动",
+      "scope_zh": "说明物质粒子模型把物质表示为不断随机运动的微小离散粒子。",
+      "existing_canonical_ids": [
+        "pc_cb05fe82422660602c2d01c5c94d17df"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_7_particle_arrangement_states",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_7_particle_arrangement_states"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Particle arrangement and motion in states",
+      "proposed_name_zh": "三态粒子排列与运动",
+      "scope_zh": "用粒子模型描述固态、液态和气态中粒子的排列与运动。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_7_thermal_expansion_mass_conservation_model",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_7_thermal_expansion_mass_conservation_model"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Expansion, contraction and mass conservation",
+      "proposed_name_zh": "热胀冷缩及质量守恒模型",
+      "scope_zh": "用模型解释膨胀、收缩以及这些过程中质量守恒。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_7_state_changes_particle_model",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_7_state_changes_particle_model"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Melting and boiling in the particle model",
+      "proposed_name_zh": "粒子模型解释熔化与沸腾",
+      "scope_zh": "用粒子模型解释三态转换中的熔化和沸腾。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_8_atomic_mass_nucleus",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_8_atomic_mass_nucleus"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Atomic mass is concentrated in the nucleus",
+      "proposed_name_zh": "原子质量主要集中在原子核",
+      "scope_zh": "认识原子质量主要由原子核质量贡献。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [
+        "pc_e180a73d3a69ee874db1ed7939a2c604"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_8_element_unique_proton_number",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_8_element_unique_proton_number"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Elements have unique proton numbers",
+      "proposed_name_zh": "元素具有唯一质子数",
+      "scope_zh": "认识同一元素的原子具有唯一的质子数。",
+      "existing_canonical_ids": [
+        "pc_d3750ab7dae24f534aee9f39f91e5f71"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_8_molecule_definition",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_8_molecule_definition"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Molecules as chemically combined atoms",
+      "proposed_name_zh": "分子由原子化学结合形成",
+      "scope_zh": "说明分子是两个或以上原子化学结合形成的粒子。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_8_read_atoms_from_symbols_formulae",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_8_read_atoms_from_symbols_formulae"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Read atoms from symbols and formulae",
+      "proposed_name_zh": "由符号和化学式读取原子",
+      "scope_zh": "由元素符号或化合物化学式说出原子的种类和数目，不要求书写化学式。",
+      "existing_canonical_ids": [
+        "pc_f143886b125448b751d8adcc1cc7aaa9"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_9_force_effects_energy_transfer",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_9_force_effects_energy_transfer"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Force effects and energy transfer",
+      "proposed_name_zh": "力的效应与能量转移",
+      "scope_zh": "说明物体相互作用伴随能量转移，并可能改变静止或运动状态、产生转动、形变或压强。",
+      "existing_canonical_ids": [
+        "pc_7a4b1f0c0833180c2f630c367c02cc0a",
+        "pc_e187e0ecc95069bb8486ab30bf437e00",
+        "pc_0a3947e780f2fb38acc363f3429f9c06",
+        "pc_4405d9d25f9715d1d5862ce1888d71bc"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_9_pressure_everyday_phenomena",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_9_pressure_everyday_phenomena"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Pressure phenomena in daily life",
+      "proposed_name_zh": "日常生活中的压强现象",
+      "scope_zh": "解释固体压强、大气压和液体压强的日常现象。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [
+        "pc_4405d9d25f9715d1d5862ce1888d71bc"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_thermal_expansion_applications",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_10_thermal_expansion_applications"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Effects and applications of thermal expansion",
+      "proposed_name_zh": "热胀冷缩的效应与应用",
+      "scope_zh": "描述日常生活中热胀冷缩的效应和应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_heat_transfer_modes",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_10_heat_transfer_modes"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Conduction, convection and radiation",
+      "proposed_name_zh": "传导、对流与辐射",
+      "scope_zh": "解释热能通过传导、对流和辐射传递。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_radiation_rate_surface_temperature",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_10_radiation_rate_surface_temperature"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Factors affecting thermal-radiation rate",
+      "proposed_name_zh": "影响热辐射速率的因素",
+      "scope_zh": "说明物体通过辐射得失热能的速率受表面颜色、质地和表面温度影响。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_conduction_convection_applications",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_10_conduction_convection_applications"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Applications of conduction and convection",
+      "proposed_name_zh": "传导与对流的应用",
+      "scope_zh": "解释传导与对流在冷却、加热和隔热中的应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_10_radiation_applications",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_10_radiation_applications"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Applications of thermal radiation",
+      "proposed_name_zh": "热辐射的应用",
+      "scope_zh": "解释辐射加热器和太阳辐射等热辐射应用。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_chemical_change_new_substances",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_11_chemical_change_new_substances"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Chemical changes form new substances",
+      "proposed_name_zh": "化学变化生成新物质",
+      "scope_zh": "识别导致新物质形成的变化是化学变化。",
+      "existing_canonical_ids": [
+        "pc_75b3836fc0d83d4b0cdc346c8ac5d125"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_word_equations",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_11_word_equations"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Word equations for chemical reactions",
+      "proposed_name_zh": "用文字方程式表示化学反应",
+      "scope_zh": "使用文字方程式表示化学反应，不要求化学方程式。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_reaction_atomic_rearrangement",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_11_reaction_atomic_rearrangement"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Atomic rearrangement in reactions",
+      "proposed_name_zh": "反应中的原子重排",
+      "scope_zh": "说明化学反应涉及原子重新排列，原子既不产生也不消失。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_reaction_mass_conservation",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_11_reaction_mass_conservation"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Conservation of mass in reactions",
+      "proposed_name_zh": "化学反应中的质量守恒",
+      "scope_zh": "说明化学反应过程中质量守恒。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_11_types_of_chemical_change",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_11_types_of_chemical_change"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Types of chemical change",
+      "proposed_name_zh": "化学变化的类型",
+      "scope_zh": "认识燃烧、热分解、氧化、中和等不同类型的化学变化。",
+      "existing_canonical_ids": [
+        "pc_75b3836fc0d83d4b0cdc346c8ac5d125"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_12_abiotic_factors_survival",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_12_abiotic_factors_survival"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Abiotic factors and organism survival",
+      "proposed_name_zh": "非生物因素与生物生存",
+      "scope_zh": "解释空气、水、温度、光、矿物质和酸碱性等物理因素对生物生存的重要性。",
+      "existing_canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_12_adaptation_environment_survival",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_12_adaptation_environment_survival"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Adaptive traits, environmental change and survival",
+      "proposed_name_zh": "适应性特征、环境变化与生存",
+      "scope_zh": "说明结构或行为适应性特征及环境条件变化如何影响生物生存。",
+      "existing_canonical_ids": [
+        "pc_cee4cb6816eac128a0e6f36535957b6a"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_12_community_interrelationships",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_12_community_interrelationships"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Interrelationships within a community",
+      "proposed_name_zh": "群落中的生物关系",
+      "scope_zh": "说明捕食、互利共生和寄生等群落生物关系。",
+      "existing_canonical_ids": [
+        "pc_ecfaff613c7086e0cece6014f44b68ba"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_12_decomposer_nutrient_recycling",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_12_decomposer_nutrient_recycling"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Nutrient recycling by decomposers",
+      "proposed_name_zh": "分解者参与营养物质循环",
+      "scope_zh": "描述分解者如何使生物体内的营养物质在环境中循环。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [
+        "pc_a26230828b27cf03028e959c4472f5f1"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_13_current_chemical_heating_magnetic_effects",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_13_current_chemical_heating_magnetic_effects"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Chemical, heating and magnetic effects of current",
+      "proposed_name_zh": "电流的化学、热和磁效应",
+      "scope_zh": "描述电流的化学效应、热效应和磁效应的应用。",
+      "existing_canonical_ids": [
+        "pc_62a6d88e535c20e54fc65c369645f13d",
+        "pc_21210700d95c5fb054342d60854fa86a",
+        "pc_d402d63a7ae8461cf8182aba31d92622"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_14_digestive_system_importance",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_14_digestive_system_importance"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Importance of the digestive system",
+      "proposed_name_zh": "消化系统的重要性",
+      "scope_zh": "解释人体消化系统的重要性。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_14_digestive_parts_system_function",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_14_digestive_parts_system_function"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Digestive-system parts working together",
+      "proposed_name_zh": "消化系统各部分协同工作",
+      "scope_zh": "说明口腔、食道、胃、小肠、大肠、直肠和肛门如何协同完成消化功能。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_14_digestion_of_food",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_14_digestion_of_food"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Digestion of food",
+      "proposed_name_zh": "食物的消化",
+      "scope_zh": "描述人体消化系统如何消化食物。",
+      "existing_canonical_ids": [
+        "pc_eb22ca391770b29f75a2f022a09e31af"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_14_digestion_products_cellular_use",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_14_digestion_products_cellular_use"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Cellular uses of digestion products",
+      "proposed_name_zh": "消化终产物的细胞用途",
+      "scope_zh": "说明消化终产物用于呼吸作用、生长和组织修复等细胞过程。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_15_blood_vessel_transport_functions",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_15_blood_vessel_transport_functions"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Transport functions of blood vessels",
+      "proposed_name_zh": "血管的运输功能",
+      "scope_zh": "描述动脉把血液带离心脏、静脉把血液送回心脏、毛细血管是物质交换场所；不要求血管和心脏结构。",
+      "existing_canonical_ids": [
+        "pc_ff5a585bec0e26749bef92e5b2ec6c2c"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_15_need_multicellular_transport",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_15_need_multicellular_transport"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Need for transport in multicellular organisms",
+      "proposed_name_zh": "多细胞生物需要运输系统",
+      "scope_zh": "解释多细胞生物为什么需要运输系统。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [
+        "pc_169fad745be0c7b18694394af7fb06fe"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_15_diffusion_human_transport",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_15_diffusion_human_transport"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Diffusion in human transport",
+      "proposed_name_zh": "扩散促进人体物质运输",
+      "scope_zh": "解释已消化食物和氧等物质如何由血液扩散到组织。",
+      "existing_canonical_ids": [
+        "pc_c2e6fec2c47cd86ee9b8726b908a7a8b",
+        "pc_ff5a585bec0e26749bef92e5b2ec6c2c"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_15_diffusion_plant_transport",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_15_diffusion_plant_transport"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Diffusion in plant transport",
+      "proposed_name_zh": "扩散促进植物物质运输",
+      "scope_zh": "解释气体和无机盐如何扩散进出植物细胞。",
+      "existing_canonical_ids": [
+        "pc_c2e6fec2c47cd86ee9b8726b908a7a8b"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_sexual_reproduction_heredity",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_sexual_reproduction_heredity"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Sexual reproduction and heredity",
+      "proposed_name_zh": "有性生殖与遗传",
+      "scope_zh": "说明有性生殖系统使遗传物质能够由一代传到下一代。",
+      "existing_canonical_ids": [
+        "pc_2bb6c5caf86fb9a1beb4b9ed7331d3fc",
+        "pc_4968ce1f12aa3d8827a46863b03b81d2"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_unique_parental_genetic_combination",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_unique_parental_genetic_combination"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Unique parental genetic combination",
+      "proposed_name_zh": "双亲遗传信息的独特组合",
+      "scope_zh": "说明有性生殖产生的新个体从父母双方获得独特遗传信息组合，因而与父母及兄弟姐妹既相似又不同。（整项对 G2 可选；G3 范围内。）",
+      "existing_canonical_ids": [
+        "pc_2bb6c5caf86fb9a1beb4b9ed7331d3fc",
+        "pc_4968ce1f12aa3d8827a46863b03b81d2"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_puberty_hormone_changes",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_puberty_hormone_changes"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Hormonal changes during puberty",
+      "proposed_name_zh": "青春期激素引起的身体变化",
+      "scope_zh": "说明青春期和早期青少年阶段由激素影响其他系统而产生的若干身体变化，不要求激素系统细节。",
+      "existing_canonical_ids": [
+        "pc_73decdd85804bf6c56ea96df910916d1"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_reproductive_parts_fertilisation",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_reproductive_parts_fertilisation"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Reproductive-system parts in fertilisation",
+      "proposed_name_zh": "生殖系统各部分参与受精",
+      "scope_zh": "简述男女生殖系统各部分如何参与受精。",
+      "existing_canonical_ids": [
+        "pc_2bb6c5caf86fb9a1beb4b9ed7331d3fc"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_female_parts_menstrual_cycle",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_female_parts_menstrual_cycle"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Female reproductive parts in the menstrual cycle",
+      "proposed_name_zh": "女性生殖系统与月经周期",
+      "scope_zh": "描述女性生殖系统各部分如何参与月经周期。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_birth_control_mechanisms",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_birth_control_mechanisms"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Temporary and permanent birth control",
+      "proposed_name_zh": "临时与永久避孕机制",
+      "scope_zh": "概述临时和永久避孕方法如何通过中断生殖过程或器官功能来防止受孕。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_sti_harmful_consequences",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_sti_harmful_consequences"
+      ],
+      "action": "add_concept",
+      "proposed_name": "Harmful consequences of sexually transmitted infections",
+      "proposed_name_zh": "性传播感染的危害",
+      "scope_zh": "说明梅毒、淋病和艾滋病等性传播感染的有害后果。",
+      "existing_canonical_ids": [],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "统一 KG 没有足以按本课程深度独立诊断该成果的概念，建议新增待审概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_sg_lss_science_2021_o_16_bacterial_viral_sti_treatment",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_bacterial_viral_sti_treatment"
+      ],
+      "action": "split_or_narrow_existing",
+      "proposed_name": "Bacterial and viral STI treatment",
+      "proposed_name_zh": "细菌性与病毒性 STI 的治疗差异",
+      "scope_zh": "说明部分细菌性性传播感染可用抗生素治愈，而病毒性性传播感染不能。",
+      "existing_canonical_ids": [
+        "pc_cd2b7974451c31f7abce21cc90110697",
+        "pc_a5f0cc3dc0636e18a4fef67d49bec23e"
+      ],
+      "suggested_graph_id": "singapore_lower_secondary_science",
+      "rationale_zh": "现有概念只覆盖部分范围、捆绑超出本课程的内容或缺少该年龄段边界，需新增窄概念或精确 alias。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.51, topic 16 learning outcomes"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

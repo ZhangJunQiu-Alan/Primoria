@@ -1,0 +1,659 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "practice_set_id": "cpk_sg_moe_lower_secondary_g2_g3_science_2021",
+  "framework_id": "cfw_sg_moe_lower_secondary_g2_g3_science_2021_outcomes",
+  "curriculum_id": "cur_sg_moe_lower_secondary_g2_g3_science_2021",
+  "subject": "Science",
+  "source_ids": [
+    "src_sg_moe_lower_secondary_g2_g3_science_2021"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "将 46 项科学实践与 33 项价值伦理成果按主题归并到教学与评测知识层。"
+    }
+  ],
+  "items": [
+    {
+      "practice_id": "practice_sg_lss_science_2021_se_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_se_science_beyond_laboratory",
+        "req_sg_lss_science_2021_o_se_curiosity_natural_phenomena",
+        "req_sg_lss_science_2021_o_se_science_human_endeavour",
+        "req_sg_lss_science_2021_o_se_inquiry_dispositions",
+        "req_sg_lss_science_2021_o_se_technology_benefits_harms",
+        "req_sg_lss_science_2021_o_se_science_social_ethics",
+        "req_sg_lss_science_2021_o_se_science_technology_limitations",
+        "req_sg_lss_science_2021_o_se_responsible_science_technology"
+      ],
+      "kind": "assessment_task",
+      "name": "科学探究事业 values and ethics",
+      "name_zh": "科学探究事业：价值、伦理与态度",
+      "description_zh": "认识科学存在于日常生活的各个方面。；对世界中的自然现象表现出健康的好奇心。；理解不同文明在数百年间共同贡献科学知识。；在探究中体现创造力、客观性、诚信、开放态度与毅力。；讨论科学与技术应用给社会带来的有益和有害后果。；把科学应用联系到具体社会和伦理问题。；说明科学与技术解决社会问题时的当前局限。；认识使用技术与科学知识时对社会和环境负有责任。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes；本组覆盖 8 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_se_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_se_evidence_types_senses_instruments",
+        "req_sg_lss_science_2021_o_se_evidence_reasoning_knowledge_building",
+        "req_sg_lss_science_2021_o_se_multiple_evidence_interpretations",
+        "req_sg_lss_science_2021_o_se_scientific_inquiry_cycle",
+        "req_sg_lss_science_2021_o_se_measurement_accuracy",
+        "req_sg_lss_science_2021_o_se_measurement_precision",
+        "req_sg_lss_science_2021_o_se_zero_error",
+        "req_sg_lss_science_2021_o_se_parallax_error",
+        "req_sg_lss_science_2021_o_se_unpredictable_consistent_errors",
+        "req_sg_lss_science_2021_o_se_investigation_safety"
+      ],
+      "kind": "inquiry_process",
+      "name": "科学探究事业 scientific practices",
+      "name_zh": "科学探究事业：科学实践",
+      "description_zh": "辨认定量或定性证据，并理解感官与仪器都可用于收集证据。；由系统收集、分析证据和基于证据的严谨推理说明科学知识如何形成。；识别同一科学证据可能支持多种解释，并比较解释的依据。；提出问题，规划和实施调查，评价实验结果并交流发现；在各主题中使用估测、SI 单位和合适单位。；解释准确度是测量值与被测量真值接近的程度。；解释精密度是重复测量所得数值彼此接近的程度。；识别仪器在本应无读数时仍显示读数的零点误差。；识别因观察方向不正确而造成的仪器刻度读数误差。；区分不可预测误差与一致性误差，并说明它们可能同时存在。（整项对 G2 可选；G3 范围内。）；开展调查时保持安全意识并采用安全操作。",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.30, The Scientific Endeavour learning outcomes；本组覆盖 10 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_2_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_2_classify_everyday_objects",
+        "req_sg_lss_science_2021_o_2_evaluate_material_use",
+        "req_sg_lss_science_2021_o_2_communicate_classification",
+        "req_sg_lss_science_2021_o_2_estimate_length_mass_volume",
+        "req_sg_lss_science_2021_o_2_measure_length_mass_volume",
+        "req_sg_lss_science_2021_o_2_volume_displacement",
+        "req_sg_lss_science_2021_o_2_density_sink_float_prediction",
+        "req_sg_lss_science_2021_o_2_density_calculation_units"
+      ],
+      "kind": "inquiry_process",
+      "name": "物质的物理性质 scientific practices",
+      "name_zh": "物质的物理性质：科学实践",
+      "description_zh": "对常见物体分类，并认识同一组物体可按不同准则分类。；使用物理性质数据评价材料在产品或情境中的适用性。；交流分类结果并说明所选分类准则。；估测物体的长度、质量和体积。；用合适仪器和方法准确测量长度、质量以及液体和固体的体积。；应用体积排水原理求不规则物体的体积。（整项对 G2 可选；G3 范围内。）；比较物体与周围介质的密度，预测物体沉浮。；使用密度等于质量除以体积计算，并使用合适单位。",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes；本组覆盖 8 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_2_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_2_sustainable_material_choices",
+        "req_sg_lss_science_2021_o_2_alternative_materials_environment"
+      ],
+      "kind": "assessment_task",
+      "name": "物质的物理性质 values and ethics",
+      "name_zh": "物质的物理性质：价值、伦理与态度",
+      "description_zh": "依据材料物理性质，对家用产品作安全、适当且可持续的选择。；认识以性质相近的替代材料减少不可持续材料用量可降低环境影响。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.32, topic 2 learning outcomes；本组覆盖 2 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_3_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_distinguish_element_compound_mixture",
+        "req_sg_lss_science_2021_o_3_classify_by_chemical_composition",
+        "req_sg_lss_science_2021_o_3_dissolving_rate_solubility_factors"
+      ],
+      "kind": "inquiry_process",
+      "name": "物质的化学组成 scientific practices",
+      "name_zh": "物质的化学组成：科学实践",
+      "description_zh": "依据组成与结合方式区分元素、化合物和混合物。；依据化学组成把物质分类为元素、化合物或混合物。；调查影响溶解速率以及物质溶解度的因素。（其中溶解度部分对 G2 可选；其余部分对 G2 和 G3 均在范围内。）",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes；本组覆盖 3 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_3_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_3_waste_classification_recycling",
+        "req_sg_lss_science_2021_o_3_composition_benefits_harms"
+      ],
+      "kind": "assessment_task",
+      "name": "物质的化学组成 values and ethics",
+      "name_zh": "物质的化学组成：价值、伦理与态度",
+      "description_zh": "理解按化学组成分类废物可促进贵重材料回收与再利用。；认识了解日用品化学组成可帮助判断其有益或有害用途。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.33, topic 3 learning outcomes；本组覆盖 2 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_4_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_4_investigate_mixture_separation"
+      ],
+      "kind": "inquiry_process",
+      "name": "混合物分离 scientific practices",
+      "name_zh": "混合物分离：科学实践",
+      "description_zh": "依据基本原理实验比较磁吸、过滤、蒸发、蒸馏和纸色谱。",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes；本组覆盖 1 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_4_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_4_water_precious_conservation",
+        "req_sg_lss_science_2021_o_4_singapore_sustainable_water"
+      ],
+      "kind": "assessment_task",
+      "name": "混合物分离 values and ethics",
+      "name_zh": "混合物分离：价值、伦理与态度",
+      "description_zh": "理解水是珍贵资源并需要节约。；理解新加坡如何利用分离技术保障可持续饮用水来源。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.34, topic 4 learning outcomes；本组覆盖 2 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_5_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_5_plane_mirror_image_investigation",
+        "req_sg_lss_science_2021_o_5_law_of_reflection_investigation"
+      ],
+      "kind": "inquiry_process",
+      "name": "光的射线模型 scientific practices",
+      "name_zh": "光的射线模型：科学实践",
+      "description_zh": "实验调查平面镜所成像的特征。；相对法线调查反射角等于入射角。（整项对 G2 可选；G3 范围内。）",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_5_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_5_em_radiation_benefits_harms",
+        "req_sg_lss_science_2021_o_5_technology_light_impact"
+      ],
+      "kind": "assessment_task",
+      "name": "光的射线模型 values and ethics",
+      "name_zh": "光的射线模型：价值、伦理与态度",
+      "description_zh": "认识红外线、紫外线和可见光等电磁辐射既有益也可能有害。；评价技术产生的光对社会和环境的正负影响，例如夜间可见度、光污染、鸟类迷航和能源使用。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.36, topic 5 learning outcomes；本组覆盖 2 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_6_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_6_microscope_cell_identification",
+        "req_sg_lss_science_2021_o_6_infer_plant_or_animal_cell"
+      ],
+      "kind": "inquiry_process",
+      "name": "细胞模型 scientific practices",
+      "name_zh": "细胞模型：科学实践",
+      "description_zh": "使用显微镜辨认典型植物或动物细胞的主要结构。（其中安全且正确操作显微镜的部分对 G2 可选；其余部分对 G2 和 G3 均在范围内。）；依据细胞结构推断生物属于动物还是植物。",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes；本组覆盖 2 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_6_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_6_microscope_technology_knowledge"
+      ],
+      "kind": "assessment_task",
+      "name": "细胞模型 values and ethics",
+      "name_zh": "细胞模型：价值、伦理与态度",
+      "description_zh": "理解显微镜等技术进步与科学知识建构之间的关系。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.37, topic 6 learning outcomes；本组覆盖 1 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_7_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_7_model_creativity_revision"
+      ],
+      "kind": "assessment_task",
+      "name": "物质粒子模型 values and ethics",
+      "name_zh": "物质粒子模型：价值、伦理与态度",
+      "description_zh": "欣赏以创造力和开放态度建构、检验并修正物质粒子模型的科学实践。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.38, topic 7 learning outcomes；本组覆盖 1 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_8_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_8_compare_atom_everyday_size",
+        "req_sg_lss_science_2021_o_8_compare_atoms_molecules"
+      ],
+      "kind": "inquiry_process",
+      "name": "原子与分子模型 scientific practices",
+      "name_zh": "原子与分子模型：科学实践",
+      "description_zh": "比较原子与日常物体的大小尺度。；比较原子和分子的共同点与差异。",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes；本组覆盖 2 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_8_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_8_atomic_models_revision",
+        "req_sg_lss_science_2021_o_8_atomic_technology_ethics"
+      ],
+      "kind": "assessment_task",
+      "name": "原子与分子模型 values and ethics",
+      "name_zh": "原子与分子模型：价值、伦理与态度",
+      "description_zh": "理解原子模型如何依据新现象和数据被建构、论证并持续修正。（整项对 G2 可选；G3 范围内。）；认识原子知识衍生技术带来的社会伦理问题、风险和成本。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.39, topic 8 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_9_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_9_measure_force_newton",
+        "req_sg_lss_science_2021_o_9_compare_mass_weight",
+        "req_sg_lss_science_2021_o_9_investigate_pressure_formula",
+        "req_sg_lss_science_2021_o_9_infer_energy_conversion"
+      ],
+      "kind": "inquiry_process",
+      "name": "力与能量转移 scientific practices",
+      "name_zh": "力与能量转移：科学实践",
+      "description_zh": "使用合适仪器测量力并以牛顿为 SI 单位。；比较质量和重量的含义与单位。；通过调查应用压强等于力除以面积的关系。（整项对 G2 可选；G3 范围内。）；依据现象推断能量可由一种形式转化为另一种形式。",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes；本组覆盖 4 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_9_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_9_natural_force_hazards_curiosity",
+        "req_sg_lss_science_2021_o_9_energy_sources_environment"
+      ],
+      "kind": "assessment_task",
+      "name": "力与能量转移 values and ethics",
+      "name_zh": "力与能量转移：价值、伦理与态度",
+      "description_zh": "对地震、海啸、火山喷发和热带气旋等自然力的破坏作用保持求知意识。；评价化石燃料、太阳能、水能、风能、地热能、生物燃料和核能的用途及环境影响。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.41, topic 9 learning outcomes；本组覆盖 2 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_10_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_10_infer_thermal_expansion",
+        "req_sg_lss_science_2021_o_10_infer_expansion_density_change",
+        "req_sg_lss_science_2021_o_10_compare_heat_transfer_rates"
+      ],
+      "kind": "inquiry_process",
+      "name": "热能传递 scientific practices",
+      "name_zh": "热能传递：科学实践",
+      "description_zh": "推断固体、液体和气体通常在吸热时膨胀、放热时收缩。；由热膨胀造成体积变化，推断物质密度随之改变。；由实验推断不同材料具有不同热能传递速率。",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes；本组覆盖 3 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_10_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_10_climate_change_causes"
+      ],
+      "kind": "assessment_task",
+      "name": "热能传递 values and ethics",
+      "name_zh": "热能传递：价值、伦理与态度",
+      "description_zh": "认识气候变化可能有多种人为和自然原因。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.43, topic 10 learning outcomes；本组覆盖 1 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_11_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_11_investigate_acid_reactions",
+        "req_sg_lss_science_2021_o_11_investigate_indicators",
+        "req_sg_lss_science_2021_o_11_investigate_chemical_change_conditions"
+      ],
+      "kind": "inquiry_process",
+      "name": "化学变化 scientific practices",
+      "name_zh": "化学变化：科学实践",
+      "description_zh": "调查酸与碱、金属和碳酸盐的反应。（其中酸与金属、酸与碳酸盐反应对 G2 可选；其余部分对 G2 和 G3 均在范围内。）；调查酸性、碱性和中性溶液对石蕊、通用指示剂和天然指示剂的影响。；调查混合、加热、光照、与氧相互作用及电流作用下的化学变化。（其中电流作用（电镀）示例对 G2 可选；其余部分对 G2 和 G3 均在范围内。）",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes；本组覆盖 3 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_11_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_11_chemical_reactions_benefit_harm"
+      ],
+      "kind": "assessment_task",
+      "name": "化学变化 values and ethics",
+      "name_zh": "化学变化：价值、伦理与态度",
+      "description_zh": "认识化学反应可有益于生活，也可能危害健康和环境。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.44, topic 11 learning outcomes；本组覆盖 1 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_12_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_12_measure_environmental_factors"
+      ],
+      "kind": "inquiry_process",
+      "name": "生态系统相互作用 scientific practices",
+      "name_zh": "生态系统相互作用：科学实践",
+      "description_zh": "用数据记录器和探头等仪器收集 pH、温度和光照强度数据。（整项对 G2 可选；G3 范围内。）",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes；本组覆盖 1 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_12_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_12_human_technology_environment_impact",
+        "req_sg_lss_science_2021_o_12_cultural_sustainable_living"
+      ],
+      "kind": "assessment_task",
+      "name": "生态系统相互作用 values and ethics",
+      "name_zh": "生态系统相互作用：价值、伦理与态度",
+      "description_zh": "评价机动车和现代生活方式等人类活动与技术对环境的影响。；认识某些文化如何通过与环境互动践行可持续生活。（整项对 G2 可选；G3 范围内。）",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.45, topic 12 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_13_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_13_draw_build_measure_circuits",
+        "req_sg_lss_science_2021_o_13_series_parallel_resistor_investigation",
+        "req_sg_lss_science_2021_o_13_resistance_current_investigation",
+        "req_sg_lss_science_2021_o_13_electricity_cost_kwh"
+      ],
+      "kind": "inquiry_process",
+      "name": "电学系统 scientific practices",
+      "name_zh": "电学系统：科学实践",
+      "description_zh": "绘制和解释电路图，搭建含电源、开关、灯、定值与可变电阻、电流表和电压表的电路。；调查定值电阻串联或并联如何影响电路电流。（整项对 G2 可选；G3 范围内。）；用定值或可变电阻调查改变电阻对电流的影响，不要求 V=IR。（整项对 G2 可选；G3 范围内。）；使用千瓦时作为电能消耗单位，计算使用电器的成本。（整项对 G2 可选；G3 范围内。）",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes；本组覆盖 4 项，其中 3 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_13_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_13_reduce_household_electricity"
+      ],
+      "kind": "assessment_task",
+      "name": "电学系统 values and ethics",
+      "name_zh": "电学系统：价值、伦理与态度",
+      "description_zh": "认识减少家庭电能消耗的方法。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.47, topic 13 learning outcomes；本组覆盖 1 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_14_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_14_digestive_enzyme_investigation"
+      ],
+      "kind": "inquiry_process",
+      "name": "人体消化系统 scientific practices",
+      "name_zh": "人体消化系统：科学实践",
+      "description_zh": "调查糖酶、蛋白酶和脂肪酶等酶类在消化中的作用，不要求具体酶名。（整项对 G2 可选；G3 范围内。）",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes；本组覆盖 1 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_14_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_14_food_lifestyle_diabetes",
+        "req_sg_lss_science_2021_o_14_gut_bacteria_benefits_harms"
+      ],
+      "kind": "assessment_task",
+      "name": "人体消化系统 values and ethics",
+      "name_zh": "人体消化系统：价值、伦理与态度",
+      "description_zh": "理解合理饮食和生活方式选择对预防糖尿病的重要性。；认识消化道细菌可能帮助消化，也可能引起感染。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.48, topic 14 learning outcomes；本组覆盖 2 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_15_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_15_investigate_xylem_transport"
+      ],
+      "kind": "inquiry_process",
+      "name": "生物运输系统 scientific practices",
+      "name_zh": "生物运输系统：科学实践",
+      "description_zh": "由调查推断木质部运输水和无机盐。（整项对 G2 可选；G3 范围内。）",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes；本组覆盖 1 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_15_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_15_drug_abuse_transport_system",
+        "req_sg_lss_science_2021_o_15_heart_transplant_ethics"
+      ],
+      "kind": "assessment_task",
+      "name": "生物运输系统 values and ethics",
+      "name_zh": "生物运输系统：价值、伦理与态度",
+      "description_zh": "认识药物滥用会损害人体多个系统，包括运输系统。；讨论捐献者同意和器官分配优先次序等心脏移植伦理问题。",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.49, topic 15 learning outcomes；本组覆盖 2 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_16_practice",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_evaluate_abortion_premarital_sex"
+      ],
+      "kind": "inquiry_process",
+      "name": "人类有性生殖系统 scientific practices",
+      "name_zh": "人类有性生殖系统：科学实践",
+      "description_zh": "评价堕胎和婚前性行为的后果与相关问题。",
+      "instructional_use_zh": "以可观察的调查、测量、建模、分类、推理或交流任务教学；先明确变量、仪器、单位、安全和证据要求，再让学习者解释结论与局限。",
+      "assessment_evidence_zh": "学习者提交可复核的过程证据、数据、图表、模型或解释；评价操作正确性、推理链、误差与安全，而非只看最终答案。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes；本组覆盖 1 项"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "practice_id": "practice_sg_lss_science_2021_16_value",
+      "requirement_ids": [
+        "req_sg_lss_science_2021_o_16_substance_abuse_foetus",
+        "req_sg_lss_science_2021_o_16_human_population_growth_reasons"
+      ],
+      "kind": "assessment_task",
+      "name": "人类有性生殖系统 values and ethics",
+      "name_zh": "人类有性生殖系统：价值、伦理与态度",
+      "description_zh": "认识吸烟、饮酒和滥用药物可对胎儿造成负面影响。；提出医学进步和卫生改善等世界人口增长原因。（整项对 G2 可选；G3 范围内。）",
+      "instructional_use_zh": "用真实科学、社会和环境情境组织资料辨析与责任决策；教师应区分事实判断、价值判断和可执行行动，不把态度口号当作学科知识。",
+      "assessment_evidence_zh": "学习者提交有事实依据的立场、影响分析或行动方案，能说明权衡和证据局限；不得仅凭表态判定通过。",
+      "evidence_refs": [
+        {
+          "source_id": "src_sg_moe_lower_secondary_g2_g3_science_2021",
+          "locator": "PDF p.50, topic 16 learning outcomes；本组覆盖 2 项，其中 1 项对 G2 可选"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}

@@ -1,0 +1,1845 @@
+{
+  "schema_version": "1.0.0",
+  "content_version": "0.1.0",
+  "resolution_set_id": "cgr_cn_moe_senior_high_physics_2020_outcomes",
+  "gap_set_id": "cgs_cn_moe_senior_high_physics_2020_outcomes",
+  "framework_id": "cfw_cn_moe_senior_high_physics_2020_outcomes",
+  "curriculum_id": "cur_cn_moe_senior_high_physics_2020",
+  "subject": "Physics",
+  "source_ids": [
+    "src_cn_moe_senior_high_physics_2020",
+    "src_openstax_university_physics_v1_2016",
+    "src_openstax_university_physics_v3_2016",
+    "src_openstax_university_physics_v2_2016",
+    "src_openstax_college_physics_2e_2022"
+  ],
+  "generated_at": "2026-07-19",
+  "review_status": "needs_review",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-07-19",
+      "summary_zh": "完成 78 项物理知识缺口逐项定义复核、稳定 ID 复用、新概念建立和双来源证据绑定。"
+    }
+  ],
+  "resolutions": [
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_1_2_particle_model",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7fb3bae053e05c19a673406d9390ce1e"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_particle_model"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.20（正文对应内容要求 1.1.2），必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §§1.1-1.2 The Scope and Scale of Physics; Units and Standards"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_1_4_free_fall",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cee2843193f234b6e2ec3291ef31565c",
+        "pc_c20a5606c91decfdafc12760a58c69e6"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_free_fall"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.1.4），必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §§3.4-3.5 Motion with Constant Acceleration; Free Fall"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_1a_gravity_elastic_force",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7a4b1f0c0833180c2f630c367c02cc0a",
+        "pc_bc7b7594d3874b58a8c13a1451316ee9"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_gravity_elastic_force"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §5.6 Common Forces; §12.3 Stress, Strain, and Elastic Modulus"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_1c_friction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_7a4b1f0c0833180c2f630c367c02cc0a",
+        "pc_fc76f40e045f7ff96fc05caea20f543d"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_friction"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.1），必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §6.2 Friction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_2a_force_composition_vectors",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_123685f6debed5592b49d13d9647519f"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_force_composition_vectors"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.21（正文对应内容要求 1.2.2），必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §§2.1-2.3 Scalars and Vectors; Components; Algebra of Vectors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_3c_overweight_weightlessness",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b2063844cb1a96c55e14253c14719d9f",
+        "pc_1b9339cdffec05a6abf0da3466233d50"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_overweight_weightlessness"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.3），必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §6.1 Solving Problems with Newton's Laws; Chapter 6 conceptual questions on free-fall scale readings"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r1_1_2_4_si_mechanics_units",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d16520079cd127b461c2f1e5ff9eedca"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_si_mechanics_units"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.22（正文对应内容要求 1.2.4），必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §§1.2-1.4 Units and Standards; Unit Conversion; Dimensional Analysis"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_1_2_kinetic_energy_theorem",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_94622268081f1c4560a463b79eece9a8",
+        "pc_84347af49c149c10e606c6999c858087"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_kinetic_energy_theorem"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.2），必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §§7.2-7.4 Kinetic Energy and the Work-Energy Theorem"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_1_3a_gravitational_potential_energy",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_94622268081f1c4560a463b79eece9a8",
+        "pc_4fbe69f2cb33cc9b3613d86361b2a01e"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_gravitational_potential_energy"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §8.1 Potential Energy of a System"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_1_3b_elastic_potential_energy",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_94622268081f1c4560a463b79eece9a8",
+        "pc_573ab5ecc0a3e03c345c23eb655557f4"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_elastic_potential_energy"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.23（正文对应内容要求 2.1.3），必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §8.2 Conservative and Non-Conservative Forces; spring potential energy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_2_1_curvilinear_motion_condition",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e0018e74d862f9477ad37ad0939a3362"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_curvilinear_motion_condition"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.1），必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §§4.1-4.4 Motion in Two and Three Dimensions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_2_3c_centrifugal_phenomena",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_564a46a0b8681d3ee2bfb13b78e2cbe0",
+        "pc_287fa88ea36743cd92be22351d689a3a"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_centrifugal_phenomena"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.24（正文对应内容要求 2.2.3），必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §6.3 Centripetal Force"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_2_5b_cosmic_velocities",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5ae39810b5a928dac2a4845e04b072bf",
+        "pc_442bac9d4cb17c3539b6cc37295efd60"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_cosmic_velocities"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.2.5），必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §§13.3-13.5 Gravitational Potential Energy; Satellite Orbits; Kepler's Laws"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_3_1_newtonian_limits",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6a2a85c34fe54bb286d41539f7ae263a"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_newtonian_limits"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.1），必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §5.1 Invariance of Physical Laws; classical-limit discussion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_3_2_relativistic_spacetime",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_793feb1134d27401f95626172db26847"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_relativistic_spacetime"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.2），必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§5.3-5.7 Time Dilation, Length Contraction, Lorentz Transformation and Relativistic Velocity"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r2_2_3_3_cosmic_evolution",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cb71c8e25ad3454622e1bcfc3f8f0d20"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_cosmic_evolution"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.25（正文对应内容要求 2.3.3），必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§11.5-11.7 Cosmology, The Big Bang and Evolution of the Early Universe"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_1_electrostatic_charge_conservation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_62a6d88e535c20e54fc65c369645f13d",
+        "pc_e147ac958d91375f7fea37654f554a3a"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_electrostatic_charge_conservation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.1），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §5.1 Electric Charge"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_2a_point_charge_model",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_79180076d6d14044ff49035198534f04"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_point_charge_model"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.2），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §5.2 Conductors, Insulators, and Charging by Induction; §5.3 Coulomb's Law"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_3b_electric_field_lines",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cf0a24f8dd938cdfcc8ea4466833fd4e",
+        "pc_6320bd87e27eecb487c13e120a8f578f"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_electric_field_lines"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.3），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §5.6 Electric Field Lines"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_4_electrostatic_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_85636deb6d3ee6b648adf30795ea0f68"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_electrostatic_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.27（正文对应内容要求 3.1.4），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§5.2 and 6.4 Charging by Induction; Conductors in Electrostatic Equilibrium"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_5a_electric_potential_quantities",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d5eb2984fe400640527611f8af20f25d",
+        "pc_cf0a24f8dd938cdfcc8ea4466833fd4e",
+        "pc_f2e136fce8543aed60ca1f7af1dfaf13"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_electric_potential_quantities"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§7.1-7.5 Electric Potential Energy, Potential and Equipotential Surfaces"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_5b_charged_particle_electric_motion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_cf0a24f8dd938cdfcc8ea4466833fd4e",
+        "pc_b2063844cb1a96c55e14253c14719d9f",
+        "pc_b4fdea67698c9135acc93ced186faba5"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_charged_particle_electric_motion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.5），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§5.4-5.5 Electric Field and Calculating Electric Fields"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_6a_capacitance",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d30b430694ad09839f45be80b1955de3"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_capacitance"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§8.1-8.2 Capacitors and Capacitance; Capacitors in Series and Parallel"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_1_6b_capacitor_charge_discharge",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_b88238663b2ae4ead83c9ee371f549e3"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_capacitor_charge_discharge"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.1.6），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §10.5 RC Circuits"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_1a_circuit_components",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ba42e2ddad519230d0c77b2fca8ae0cf"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_circuit_components"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.1），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web Chapter 10 introduction and §§10.1-10.5 Direct-Current Circuits"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_2a_resistance_geometry_material",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_6a2c33585e2f59dc88ebd095503f1547",
+        "pc_95dca3ee10c643b31c1be9d5d2d48fec"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_resistance_geometry_material"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.2），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§9.3-9.4 Resistivity and Resistance; Ohm's Law"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_4a_closed_circuit_ohm",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2c6fac377de551f06f129beb0bd0767f",
+        "pc_6a2c33585e2f59dc88ebd095503f1547",
+        "pc_13793e5fd99f9e6fdda988d5880aff75"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_closed_circuit_ohm"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.4），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §10.1 Electromotive Force; internal resistance and terminal voltage"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_5a_electrical_work_power",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_d402d63a7ae8461cf8182aba31d92622"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_electrical_work_power"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §9.5 Electrical Energy and Power"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_5b_joule_law",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_12ff13ed776c84dc25e4bd78668623f8"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_joule_law"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.28（正文对应内容要求 3.2.5），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §9.5 Electrical Energy and Power; resistive heating"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_2_6_household_electricity_safety",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_29c1e5800d16e059b57e43dce0511d8f"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_household_electricity_safety"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.2.6），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §10.6 Household Wiring and Electrical Safety"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_1_magnetism_applications_history",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_88829f1af51723e0a7cf75e937a04343"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_magnetism_applications_history"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.1），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web Chapter 11 introduction and §§11.1-11.5 Magnetic Forces and Fields"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_2_magnetic_field_lines",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_21210700d95c5fb054342d60854fa86a",
+        "pc_9647bc019f27fd232ce00c144b507faa"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖知识结果；实验动作属于教学实施方式，不据此制造重复概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.2），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§11.2-11.4 Magnetic Fields and Forces; Chapter 12 current-source field patterns"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_3b_induction_conditions",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_ef89f015bb0ebd4763d7cc0623222573"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖知识结果；实验动作属于教学实施方式，不据此制造重复概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.29（正文对应内容要求 3.3.3），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §13.1 Faraday's Law"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_4_electromagnetic_field_waves",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ff3aafe811b49dfdca598b2667c1db93",
+        "pc_a407e4c3440aecc21479b8f773e137c9"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_electromagnetic_field_waves"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.4），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§16.1-16.2 Maxwell's Equations and Electromagnetic Waves"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_5_electromagnetic_wave_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ff3aafe811b49dfdca598b2667c1db93",
+        "pc_1846ae0685154fc196157c6506215fcc"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_electromagnetic_wave_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.5），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §16.5 The Electromagnetic Spectrum"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_3_6b_light_energy_quantisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_667d6af1c79afd71fbd2dedbccfcc217"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_light_energy_quantisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "定义边界与现有全局概念一致；建立中国高中课程 alias 并复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.3.6），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§6.1-6.2 Blackbody Radiation and Photoelectric Effect; photon energy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_1a_renewable_energy_technologies",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_065b015f63b476f3b83f88259be64412"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_renewable_energy_technologies"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §8.5 Sources of Energy; hydropower, wind power and solar power"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_1b_nuclear_energy_intro",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_45e557e295944b395f08bb30c4bb963e"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_nuclear_energy_intro"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "定义边界与现有全局概念一致；建立中国高中课程 alias 并复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.1），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§10.5-10.6 Fission and Nuclear Fusion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_2b_energy_conversion_directionality",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f8d4382299ba2e0232145d7818fc7206"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_energy_conversion_directionality"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.2），必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web Chapter 4 The Second Law of Thermodynamics, especially §§4.5-4.7"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_3_renewable_environment",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_2b5c32948baf2a177d94d9e594242e82"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_renewable_environment"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.3），必修 3"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "Web §7.9 World Energy Use; renewable/nonrenewable resources, sustainability and environmental effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_r3_3_4_4_pollution_sustainable_development",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_3ced0e502ae3b2861e8da5823f7d3649"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_pollution_sustainable_development"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.30（正文对应内容要求 3.4.4），必修 3"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "Web §7.9 World Energy Use; renewable/nonrenewable resources, sustainability and environmental effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_2a_simple_pendulum_period",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_83cad2456d43a26f267261822a91d449"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_simple_pendulum_period"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.2），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §15.4 Pendulums"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_3a_forced_vibration",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_17856051bac1b5be7b444701e14f24f2"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_forced_vibration"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.3），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §15.6 Forced Oscillations"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_5a_wave_reflection_refraction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e2ba314d63487e951e37fee09f09b8f3",
+        "pc_baa60c957b8bd7b6c51f2aca82fea230"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_wave_reflection_refraction"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.5），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web Chapter 16 Waves, §§16.4-16.6 boundary behaviour, interference and standing waves"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_5b_wave_interference_diffraction",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_96e41b9ba6a6d60711d999b04e3ee970",
+        "pc_e7db3c8e907de6d7f3bef2c8cccc4eb1"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖知识结果；实验动作属于教学实施方式，不据此制造重复概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.5），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §§16.5-16.6 Interference of Waves and Standing Waves and Resonance"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_2_6_doppler_effect",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8daa13d21dfd8cd7e4561012246f68cc"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_doppler_effect"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.2.6），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v1_2016",
+          "locator": "Web §17.7 The Doppler Effect"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_1a_light_refraction_law",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f2190132d4ec3c5684fa2dc0daf6888a"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_light_refraction_law"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.34（正文对应内容要求 1.3.1），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §1.3 Refraction"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_2a_total_internal_reflection",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_9dac179aedcc728d49f421cb6908c6b2"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_total_internal_reflection"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §1.4 Total Internal Reflection"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_2b_optical_fibre",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0db53597fda7cbb1ea2407af96cb265b"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_optical_fibre"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.2），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §1.4 Total Internal Reflection; optical-fibre applications"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_3b_light_polarisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_bcee2cb1e819542548c9098aefd73ff9"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_light_polarisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.3），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §1.7 Polarization"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr1_1_3_4_laser",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_787cb9a8a80843d1930816359c97c50b"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_laser"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.35（正文对应内容要求 1.3.4），选择性必修 1"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §8.6 Lasers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_1_3_charged_particle_magnetic_motion",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_1ca0904b6ae91d6ca3fc8e304aaf7ed2",
+        "pc_564a46a0b8681d3ee2bfb13b78e2cbe0"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖知识结果；实验动作属于教学实施方式，不据此制造重复概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.37（正文对应内容要求 2.1.3），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §11.4 Motion of a Charged Particle in a Magnetic Field"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_3a_self_induction",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4a30c7ba9271dd524cee1cb3e6bdab46"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_self_induction"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §14.2 Self-Inductance and Inductors"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_3b_eddy_currents",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_79fbed1f3ffcc8b03c467c171390cf70"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_eddy_currents"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.3），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §13.6 Eddy Currents"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_4_sinusoidal_ac",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_fd8661f816e736459ba628095958da85"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_sinusoidal_ac"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.4），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§15.1-15.5 AC Sources and RLC Circuits"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_5b_high_voltage_transmission",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_78474e07c21918d091cc439beb2aaf1c",
+        "pc_da42cb6c0901bbe4b87a49172d5172ec"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_high_voltage_transmission"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.5），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §15.6 Transformers"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_2_6_generator_motor_energy",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_0fc2e0f1983ac1d525683f57221f0772"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_generator_motor_energy"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.2.6），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§13.7-13.8 Electric Generators, Motors and Back EMF"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_3_1_maxwell_field_theory",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e08e0dd9c57cdbbcfd833bd336f4c744"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_maxwell_field_theory"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.1），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §16.1 Maxwell's Equations and Electromagnetic Waves"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_3_2_electromagnetic_oscillation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_eb0a897ab926d93363953f80856adbcb"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_electromagnetic_oscillation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.2），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §14.6 RLC Series Circuits; electromagnetic energy exchange"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_3_3_em_wave_transmission",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_ff3aafe811b49dfdca598b2667c1db93",
+        "pc_c52be7f06085dd048f1063059f6d8096"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_em_wave_transmission"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.38（正文对应内容要求 2.3.3），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§16.2-16.4 Plane Electromagnetic Waves, Energy and Momentum"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_4_1_sensor_conversion",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_59edde8ba6869a6d649ea0bead7ef1d5",
+        "pc_b1b3332692ad44148b1cb42ff1c82dc3"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_sensor_conversion"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.1），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §10.4 Electrical Measuring Instruments; measurement conversion chain"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_4_2a_sensor_principles",
+      "resolution_action": "reuse_existing",
+      "canonical_ids": [
+        "pc_59edde8ba6869a6d649ea0bead7ef1d5",
+        "pc_1930b8c847023ca24d637697d9313a1f"
+      ],
+      "created_node_ids": [],
+      "practice_ids": [],
+      "rationale_zh": "逐项定义复核确认现有 canonical 概念组合已完整覆盖知识结果；实验动作属于教学实施方式，不据此制造重复概念。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.2），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §9.3 Resistivity and Resistance; thermistors and photoresistors; §10.2 potential-divider circuits"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr2_2_4_3_sensor_applications",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_59edde8ba6869a6d649ea0bead7ef1d5",
+        "pc_c69b42d81d603b1034a3c2bc057b5aaa"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_sensor_applications"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.39（正文对应内容要求 2.4.3），选择性必修 2"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§9.6-9.7 Semiconductors, Doping and Semiconductor Devices"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_1b_molecular_kinetic_theory_evidence",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4acc9b751e6be25c2980eb631eb901b0",
+        "pc_895b0802ab654d1e537de5624fc9f8bf"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_molecular_kinetic_theory_evidence"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.1），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §§2.1-2.3 Molecular Model, Pressure and Temperature in the Kinetic Theory of Gases"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_2a_diffusion_brownian",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4acc9b751e6be25c2980eb631eb901b0",
+        "pc_cb05fe82422660602c2d01c5c94d17df"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_diffusion_brownian"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §2.1 Molecular Model of an Ideal Gas; microscopic evidence for molecular motion"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_2b_molecular_speed_distribution",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_4acc9b751e6be25c2980eb631eb901b0",
+        "pc_5567ab4be147f7cd49dd73ae063fb3a8"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_molecular_speed_distribution"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.2），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web §2.4 Distribution of Molecular Speeds"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_3a_crystalline_amorphous",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_f2d5920b935fa1941ed8eea5a7ec98a1"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_crystalline_amorphous"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §9.3 Bonding in Crystalline Solids; amorphous-solid comparison"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_3b_liquid_crystals",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_73a5664c023f0ccdea64ccd51f4a7e98"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_liquid_crystals"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.3），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §1.7 Polarization; Liquid Crystals and Other Polarization Effects in Materials"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_4a_semiconductor_materials",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_314b37a6ddc248324fdf1ae9dd177b1b"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_semiconductor_materials"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§9.5-9.7 Band Theory, Semiconductors and Semiconductor Devices"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_4b_nanomaterials",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_50984ebc22df3740a780fe892474f3a0"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_nanomaterials"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.41（正文对应内容要求 3.1.4），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§6.6 and 7.6 Electron microscopy, nanotechnology and quantum tunnelling devices"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_1_5_surface_tension_capillarity",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_8ebdca4ce1113ba75b3fc3bafb3f2ae0"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_surface_tension_capillarity"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.1.5），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_college_physics_2e_2022",
+          "locator": "Web §11.8 Cohesion and Adhesion in Liquids: Surface Tension and Capillary Action"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_2_3_second_law_thermodynamics",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_72fae358c1f9bb3f59ce7282cb5891f8"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_second_law_thermodynamics"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.42（正文对应内容要求 3.2.3），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v2_2016",
+          "locator": "Web Chapter 4 The Second Law of Thermodynamics, §§4.1-4.7"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_1a_atomic_nuclear_model",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e180a73d3a69ee874db1ed7939a2c604"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_atomic_nuclear_model"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "定义边界与现有全局概念一致；建立中国高中课程 alias 并复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.1），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §6.4 Bohr's Model of the Hydrogen Atom; Rutherford nuclear model"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_2a_nuclear_composition_force",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e180a73d3a69ee874db1ed7939a2c604",
+        "pc_5a045330530d10a53c7a176f80e7a63f"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_nuclear_composition_force"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§10.1-10.2 Properties of Nuclei and Nuclear Binding Energy"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_2b_fundamental_interactions",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e83d1287ee15af0cbd8bbd3db36814e9"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_fundamental_interactions"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §11.1 Introduction to Particle Physics; fundamental interactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_2c_nuclear_reaction_equations",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_e180a73d3a69ee874db1ed7939a2c604",
+        "pc_918c5fb223d3bb0c98a102afd38c6cfb"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_nuclear_reaction_equations"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.2），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §10.4 Nuclear Reactions"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_3_3b_radioisotope_application_safety",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_704f1cc8e86c80f5fc328baea2156ff3"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_radioisotope_application_safety"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "现有统一 KG 只覆盖上位概念或部分公式，不能独立诊断该课标结果；新增窄粒度稳定概念并保留相关 canonical 映射。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.3.3），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§10.3 and 10.7 Radioactive Decay; Medical Applications and Biological Effects"
+        }
+      ],
+      "review_status": "needs_review"
+    },
+    {
+      "gap_id": "gap_cn_sh_physics_2020_o_sr3_3_4_2_matter_waves_quantisation",
+      "resolution_action": "add_or_alias_concepts",
+      "canonical_ids": [
+        "pc_5214d7b845cac7c061ea53ff5618d522"
+      ],
+      "created_node_ids": [
+        "cn_sh_physics_matter_waves_quantisation"
+      ],
+      "practice_ids": [],
+      "rationale_zh": "定义边界与现有全局概念一致；建立中国高中课程 alias 并复用稳定 canonical ID。",
+      "evidence_refs": [
+        {
+          "source_id": "src_cn_moe_senior_high_physics_2020",
+          "locator": "物理标准PDF p.43（正文对应内容要求 3.4.2），选择性必修 3"
+        },
+        {
+          "source_id": "src_openstax_university_physics_v3_2016",
+          "locator": "Web §§6.5-6.6 De Broglie's Matter Waves and Wave-Particle Duality"
+        }
+      ],
+      "review_status": "needs_review"
+    }
+  ]
+}
